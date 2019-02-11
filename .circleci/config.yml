@@ -11,6 +11,8 @@ jobs:
 
         environment:
           SKIP_PREFLIGHT_CHECK: "true"
+          REACT_APP_WEBSITE_NAME: "Reveal"
+          REACT_APP_THEME_COLOR: "000000"
 
     working_directory: ~/repo
 
