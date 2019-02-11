@@ -1,0 +1,11 @@
+.bg-light {
+  background-color: #f7f7f9 !important;
+}
+
+.reveal-breadcrumb {
+  margin-top: 15px;
+}
+
+.reveal-breadcrumb .breadcrumb {
+  background-color: #eceeef;
+}

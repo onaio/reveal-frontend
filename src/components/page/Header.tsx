@@ -1,5 +1,7 @@
 import * as React from 'react';
 import {
+  Breadcrumb,
+  BreadcrumbItem,
   Collapse,
   DropdownItem,
   DropdownMenu,
@@ -12,8 +14,8 @@ import {
   NavLink,
   UncontrolledDropdown,
 } from 'reactstrap';
-
 import { WEBSITE_NAME } from '../../constants';
+import './Header.css';
 
 interface State {
   isOpen: boolean;
@@ -57,6 +59,15 @@ class Header extends React.Component<any, State> {
             </Nav>
           </Collapse>
         </Navbar>
+        <Breadcrumb className="reveal-breadcrumb">
+          <BreadcrumbItem>
+            <a href="#">Home</a>
+          </BreadcrumbItem>
+          <BreadcrumbItem>
+            <a href="#">Library</a>
+          </BreadcrumbItem>
+          <BreadcrumbItem active={true}>Data</BreadcrumbItem>
+        </Breadcrumb>
       </div>
     );
   }
