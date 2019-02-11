@@ -19,7 +19,7 @@ interface State {
   isOpen: boolean;
 }
 
-class Header extends React.Component<State> {
+class Header extends React.Component<any, State> {
   constructor(props: any) {
     super(props);
 
@@ -29,11 +29,7 @@ class Header extends React.Component<State> {
     };
   }
 
-  private toggle() {
-    this.setState({ isOpen: !this.state.isOpen });
-  }
-
-  private render() {
+  public render() {
     return (
       <div>
         <Navbar color="light" light={true} expand="md">
@@ -63,6 +59,10 @@ class Header extends React.Component<State> {
         </Navbar>
       </div>
     );
+  }
+
+  private toggle() {
+    this.setState({ isOpen: !this.state.isOpen });
   }
 }
 
