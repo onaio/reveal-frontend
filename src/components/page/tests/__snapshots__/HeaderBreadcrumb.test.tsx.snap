@@ -46,32 +46,13 @@ exports[`components/page/HeaderBreadcrumb renders HeaderBreadcrumb correctly 1`]
               >
                 <Link
                   replace={false}
-                  to="/"
+                  to="/irs"
                 >
                   <a
-                    href="/"
+                    href="/irs"
                     onClick={[Function]}
                   >
-                    Home
-                  </a>
-                </Link>
-              </li>
-            </BreadcrumbItem>
-            <BreadcrumbItem
-              tag="li"
-            >
-              <li
-                className="breadcrumb-item"
-              >
-                <Link
-                  replace={false}
-                  to="/"
-                >
-                  <a
-                    href="/"
-                    onClick={[Function]}
-                  >
-                    Library
+                    IRS
                   </a>
                 </Link>
               </li>
@@ -84,7 +65,7 @@ exports[`components/page/HeaderBreadcrumb renders HeaderBreadcrumb correctly 1`]
                 aria-current="page"
                 className="active breadcrumb-item"
               >
-                Data
+                The Current Page
               </li>
             </BreadcrumbItem>
           </ol>
