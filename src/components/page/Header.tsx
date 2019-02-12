@@ -21,8 +21,8 @@ interface State {
   isOpen: boolean;
 }
 
-class Header extends React.Component<any, State> {
-  constructor(props: any) {
+class Header extends React.Component<{}, State> {
+  constructor(props: {}) {
     super(props);
 
     this.toggle = this.toggle.bind(this);
