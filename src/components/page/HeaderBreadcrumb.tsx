@@ -13,12 +13,9 @@ class HeaderBreadcrumb extends React.Component<{}, {}> {
       <div>
         <Breadcrumb className="reveal-breadcrumb">
           <BreadcrumbItem>
-            <Link to="/">Home</Link>
+            <Link to="/irs">IRS</Link>
           </BreadcrumbItem>
-          <BreadcrumbItem>
-            <Link to="/">Library</Link>
-          </BreadcrumbItem>
-          <BreadcrumbItem active={true}>Data</BreadcrumbItem>
+          <BreadcrumbItem active={true}>The Current Page</BreadcrumbItem>
         </Breadcrumb>
       </div>
     );
