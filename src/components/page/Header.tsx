@@ -1,10 +1,8 @@
 // This component represents the header part of the web app
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as React from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import {
-  Breadcrumb,
-  BreadcrumbItem,
   Collapse,
   DropdownItem,
   DropdownMenu,
@@ -79,15 +77,6 @@ class Header extends React.Component<{}, State> {
             </Nav>
           </Collapse>
         </Navbar>
-        <Breadcrumb className="reveal-breadcrumb">
-          <BreadcrumbItem>
-            <Link to="/">Home</Link>
-          </BreadcrumbItem>
-          <BreadcrumbItem>
-            <Link to="#">Library</Link>
-          </BreadcrumbItem>
-          <BreadcrumbItem active={true}>Data</BreadcrumbItem>
-        </Breadcrumb>
       </div>
     );
   }
