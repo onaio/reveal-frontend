@@ -1,0 +1,96 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components/page/HeaderBreadcrumb renders HeaderBreadcrumb correctly 1`] = `
+<Router
+  history={
+    Object {
+      "action": "POP",
+      "block": [Function],
+      "createHref": [Function],
+      "go": [Function],
+      "goBack": [Function],
+      "goForward": [Function],
+      "length": 1,
+      "listen": [Function],
+      "location": Object {
+        "hash": "",
+        "pathname": "/",
+        "search": "",
+        "state": undefined,
+      },
+      "push": [Function],
+      "replace": [Function],
+    }
+  }
+>
+  <HeaderBreadcrumb>
+    <div>
+      <Breadcrumb
+        aria-label="breadcrumb"
+        className="reveal-breadcrumb"
+        listTag="ol"
+        tag="nav"
+      >
+        <nav
+          aria-label="breadcrumb"
+          className="reveal-breadcrumb"
+        >
+          <ol
+            className="breadcrumb"
+          >
+            <BreadcrumbItem
+              tag="li"
+            >
+              <li
+                className="breadcrumb-item"
+              >
+                <Link
+                  replace={false}
+                  to="/"
+                >
+                  <a
+                    href="/"
+                    onClick={[Function]}
+                  >
+                    Home
+                  </a>
+                </Link>
+              </li>
+            </BreadcrumbItem>
+            <BreadcrumbItem
+              tag="li"
+            >
+              <li
+                className="breadcrumb-item"
+              >
+                <Link
+                  replace={false}
+                  to="/"
+                >
+                  <a
+                    href="/"
+                    onClick={[Function]}
+                  >
+                    Library
+                  </a>
+                </Link>
+              </li>
+            </BreadcrumbItem>
+            <BreadcrumbItem
+              active={true}
+              tag="li"
+            >
+              <li
+                aria-current="page"
+                className="active breadcrumb-item"
+              >
+                Data
+              </li>
+            </BreadcrumbItem>
+          </ol>
+        </nav>
+      </Breadcrumb>
+    </div>
+  </HeaderBreadcrumb>
+</Router>
+`;
