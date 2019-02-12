@@ -1,0 +1,113 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`containers/pages/Home renders Home correctly 1`] = `
+<Home>
+  <div
+    className="text-center"
+  >
+    <Row
+      className="welcome-box"
+      tag="div"
+    >
+      <div
+        className="welcome-box row"
+      >
+        <Col
+          tag="div"
+          widths={
+            Array [
+              "xs",
+              "sm",
+              "md",
+              "lg",
+              "xl",
+            ]
+          }
+        >
+          <div
+            className="col"
+          >
+            <h3>
+              Welcome to Reveal
+            </h3>
+            <p>
+              Get started by selecting an intervention below
+            </p>
+          </div>
+        </Col>
+      </div>
+    </Row>
+    <Row
+      className="intervention-box"
+      tag="div"
+    >
+      <div
+        className="intervention-box row"
+      >
+        <Col
+          md="6"
+          tag="div"
+          widths={
+            Array [
+              "xs",
+              "sm",
+              "md",
+              "lg",
+              "xl",
+            ]
+          }
+        >
+          <div
+            className="col-md-6"
+          >
+            <Button
+              className="btn-intervention btn-lg btn-block btn-outline-dark"
+              color="outline"
+              tag="button"
+            >
+              <button
+                aria-label={null}
+                className="btn-intervention btn-lg btn-block btn-outline-dark btn btn-outline"
+                onClick={[Function]}
+              >
+                IRS
+              </button>
+            </Button>
+          </div>
+        </Col>
+        <Col
+          md="6"
+          tag="div"
+          widths={
+            Array [
+              "xs",
+              "sm",
+              "md",
+              "lg",
+              "xl",
+            ]
+          }
+        >
+          <div
+            className="col-md-6"
+          >
+            <Button
+              className="btn-intervention btn-lg btn-block btn-outline-dark"
+              color="outline"
+              tag="button"
+            >
+              <button
+                aria-label={null}
+                className="btn-intervention btn-lg btn-block btn-outline-dark btn btn-outline"
+                onClick={[Function]}
+              >
+                Focus Investigation
+              </button>
+            </Button>
+          </div>
+        </Col>
+      </div>
+    </Row>
+  </div>
+</Home>
+`;
