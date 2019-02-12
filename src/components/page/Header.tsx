@@ -1,5 +1,7 @@
+// This component represents the header part of the web app
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as React from 'react';
+import { Link, NavLink } from 'react-router-dom';
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -12,7 +14,6 @@ import {
   NavbarBrand,
   NavbarToggler,
   NavItem,
-  NavLink,
   UncontrolledDropdown,
 } from 'reactstrap';
 import { WEBSITE_NAME } from '../../constants';
@@ -41,19 +42,29 @@ class Header extends React.Component<{}, State> {
           <Collapse isOpen={this.state.isOpen} navbar={true}>
             <Nav className="mr-auto" navbar={true}>
               <NavItem>
-                <NavLink href="#">Home</NavLink>
+                <NavLink to="/" className="nav-link" activeClassName="active">
+                  Home
+                </NavLink>
               </NavItem>
               <NavItem>
-                <NavLink href="#">IRS</NavLink>
+                <NavLink to="/irs" className="nav-link" activeClassName="active">
+                  IRS
+                </NavLink>
               </NavItem>
               <NavItem>
-                <NavLink href="#">Focus Investigation</NavLink>
+                <NavLink to="#" className="nav-link" activeClassName="active">
+                  Focus Investigation
+                </NavLink>
               </NavItem>
               <NavItem>
-                <NavLink href="#">Users</NavLink>
+                <NavLink to="#" className="nav-link" activeClassName="active">
+                  Users
+                </NavLink>
               </NavItem>
               <NavItem>
-                <NavLink href="#">About</NavLink>
+                <NavLink to="#" className="nav-link" activeClassName="active">
+                  About
+                </NavLink>
               </NavItem>
             </Nav>
             <Nav className="ml-0" navbar={true}>
@@ -70,10 +81,10 @@ class Header extends React.Component<{}, State> {
         </Navbar>
         <Breadcrumb className="reveal-breadcrumb">
           <BreadcrumbItem>
-            <a href="#">Home</a>
+            <Link to="/">Home</Link>
           </BreadcrumbItem>
           <BreadcrumbItem>
-            <a href="#">Library</a>
+            <Link to="#">Library</Link>
           </BreadcrumbItem>
           <BreadcrumbItem active={true}>Data</BreadcrumbItem>
         </Breadcrumb>
