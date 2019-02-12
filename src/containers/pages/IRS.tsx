@@ -1,5 +1,6 @@
 // this is the IRS page component
 import * as React from 'react';
+import HeaderBreadcrumb from '../../components/page/HeaderBreadcrumb';
 
 class IRS extends React.Component<{}, {}> {
   constructor(props: {}) {
@@ -7,7 +8,12 @@ class IRS extends React.Component<{}, {}> {
   }
 
   public render() {
-    return <div>IRS</div>;
+    return (
+      <div>
+        <HeaderBreadcrumb />
+        <div>IRS</div>
+      </div>
+    );
   }
 }
 
