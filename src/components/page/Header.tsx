@@ -50,17 +50,17 @@ class Header extends React.Component<{}, State> {
                 </NavLink>
               </NavItem>
               <NavItem>
-                <NavLink to="#" className="nav-link" activeClassName="active">
+                <NavLink to="/404" className="nav-link" activeClassName="active">
                   Focus Investigation
                 </NavLink>
               </NavItem>
               <NavItem>
-                <NavLink to="#" className="nav-link" activeClassName="active">
+                <NavLink to="/404" className="nav-link" activeClassName="active">
                   Users
                 </NavLink>
               </NavItem>
               <NavItem>
-                <NavLink to="#" className="nav-link" activeClassName="active">
+                <NavLink to="/404" className="nav-link" activeClassName="active">
                   About
                 </NavLink>
               </NavItem>
