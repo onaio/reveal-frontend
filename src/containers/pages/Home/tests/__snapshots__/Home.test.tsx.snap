@@ -128,11 +128,11 @@ exports[`containers/pages/Home renders Home correctly 1`] = `
               <Link
                 className="intervention-link"
                 replace={false}
-                to="/404"
+                to="/focus-investigation"
               >
                 <a
                   className="intervention-link"
-                  href="/404"
+                  href="/focus-investigation"
                   onClick={[Function]}
                 >
                   <Button

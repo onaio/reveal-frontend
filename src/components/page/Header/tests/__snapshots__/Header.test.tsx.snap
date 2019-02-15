@@ -186,21 +186,21 @@ exports[`components/page/Header renders header correctly 1`] = `
                           activeClassName="active"
                           aria-current="page"
                           className="nav-link"
-                          to="/404"
+                          to="/focus-investigation"
                         >
                           <Route
-                            path="\\\\/404"
+                            path="\\\\/focus-investigation"
                           >
                             <Link
                               aria-current={null}
                               className="nav-link"
                               replace={false}
-                              to="/404"
+                              to="/focus-investigation"
                             >
                               <a
                                 aria-current={null}
                                 className="nav-link"
-                                href="/404"
+                                href="/focus-investigation"
                                 onClick={[Function]}
                               >
                                 Focus Investigation
