@@ -3,9 +3,9 @@ import { faUser } from '@fortawesome/free-regular-svg-icons';
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router';
 import { Col, Container, Row } from 'reactstrap';
-import Header from './components/page/Header';
-import Home from './containers/pages/Home';
-import IRS from './containers/pages/IRS';
+import Header from './components/page/Header/Header';
+import Home from './containers/pages/Home/Home';
+import IRS from './containers/pages/IRS/IRS';
 
 library.add(faUser);
 

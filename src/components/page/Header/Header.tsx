@@ -14,7 +14,7 @@ import {
   NavItem,
   UncontrolledDropdown,
 } from 'reactstrap';
-import { WEBSITE_NAME } from '../../constants';
+import { WEBSITE_NAME } from '../../../constants';
 import './Header.css';
 
 interface State {

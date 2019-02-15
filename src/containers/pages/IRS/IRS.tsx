@@ -1,6 +1,6 @@
 // this is the IRS page component
 import * as React from 'react';
-import HeaderBreadcrumb from '../../components/page/HeaderBreadcrumb';
+import HeaderBreadcrumb from '../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 
 class IRS extends React.Component<{}, {}> {
   constructor(props: {}) {
