@@ -13,6 +13,7 @@ import {
   NavItem,
   UncontrolledDropdown,
 } from 'reactstrap';
+import logo from '../../../assets/images/logo.png';
 import { FOCUS_INVESTIGATION_URL, IRS_URL, WEBSITE_NAME } from '../../../constants';
 import './Header.css';
 
@@ -36,7 +37,7 @@ class Header extends React.Component<{}, State> {
         <Navbar color="light" light={true} expand="md">
           <nav className="navbar navbar-expand-md navbar-light bg-light">
             <Link to="/" className="navbar-brand">
-              {WEBSITE_NAME}
+              <img src={logo} alt={WEBSITE_NAME} />
             </Link>
           </nav>
           <NavbarToggler onClick={this.toggle} />
