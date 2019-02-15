@@ -1,0 +1,84 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`containers/pages/FocusInvestigation renders FocusInvestigation correctly 1`] = `
+<Router
+  history={
+    Object {
+      "action": "POP",
+      "block": [Function],
+      "createHref": [Function],
+      "go": [Function],
+      "goBack": [Function],
+      "goForward": [Function],
+      "length": 1,
+      "listen": [Function],
+      "location": Object {
+        "hash": "",
+        "pathname": "/",
+        "search": "",
+        "state": undefined,
+      },
+      "push": [Function],
+      "replace": [Function],
+    }
+  }
+>
+  <FocusInvestigation>
+    <div>
+      <HeaderBreadcrumb>
+        <div>
+          <Breadcrumb
+            aria-label="breadcrumb"
+            className="reveal-breadcrumb"
+            listTag="ol"
+            tag="nav"
+          >
+            <nav
+              aria-label="breadcrumb"
+              className="reveal-breadcrumb"
+            >
+              <ol
+                className="breadcrumb"
+              >
+                <BreadcrumbItem
+                  tag="li"
+                >
+                  <li
+                    className="breadcrumb-item"
+                  >
+                    <Link
+                      replace={false}
+                      to="/irs"
+                    >
+                      <a
+                        href="/irs"
+                        onClick={[Function]}
+                      >
+                        IRS
+                      </a>
+                    </Link>
+                  </li>
+                </BreadcrumbItem>
+                <BreadcrumbItem
+                  active={true}
+                  tag="li"
+                >
+                  <li
+                    aria-current="page"
+                    className="active breadcrumb-item"
+                  >
+                    The Current Page
+                  </li>
+                </BreadcrumbItem>
+              </ol>
+            </nav>
+          </Breadcrumb>
+        </div>
+      </HeaderBreadcrumb>
+      <div>
+        Focus Investigation
+      </div>
+    </div>
+  </FocusInvestigation>
+</Router>
+`;
