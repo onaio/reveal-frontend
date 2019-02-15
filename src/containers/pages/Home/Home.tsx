@@ -2,6 +2,7 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Col, Row } from 'reactstrap';
+import { FOCUS_INVESTIGATION_URL, IRS_URL } from '../../../constants';
 import './Home.css';
 
 class Home extends React.Component<{}, {}> {
@@ -20,7 +21,7 @@ class Home extends React.Component<{}, {}> {
         </Row>
         <Row className="intervention-box">
           <Col md="6">
-            <Link to="/irs" className="intervention-link">
+            <Link to={IRS_URL} className="intervention-link">
               <Button
                 color="outline"
                 className="btn-intervention btn-lg btn-block btn-outline-dark"
@@ -30,7 +31,7 @@ class Home extends React.Component<{}, {}> {
             </Link>
           </Col>
           <Col md="6">
-            <Link to="/404" className="intervention-link">
+            <Link to={FOCUS_INVESTIGATION_URL} className="intervention-link">
               <Button
                 color="outline"
                 className="btn-intervention btn-lg btn-block btn-outline-dark"
