@@ -1,0 +1,17 @@
+.navbar-brand img {
+  max-height: 30px;
+  position: relative;
+  top: -8px;
+}
+
+.bg-light {
+  background-color: #f7f7f9 !important;
+}
+
+.reveal-breadcrumb {
+  margin-top: 15px;
+}
+
+.reveal-breadcrumb .breadcrumb {
+  background-color: #eceeef;
+}

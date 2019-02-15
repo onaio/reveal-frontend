@@ -1,0 +1,20 @@
+.btn-intervention {
+  min-height: 234px;
+}
+
+.intervention-link,
+.intervention-link:hover {
+  text-decoration: none;
+}
+
+.btn-outline-dark.btn-intervention {
+  border-color: #cccccc;
+}
+
+.welcome-box {
+  margin-top: 75px;
+}
+
+.intervention-box {
+  margin-top: 55px;
+}

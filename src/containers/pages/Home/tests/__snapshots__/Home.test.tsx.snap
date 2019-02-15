@@ -1,0 +1,160 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`containers/pages/Home renders Home correctly 1`] = `
+<Router
+  history={
+    Object {
+      "action": "POP",
+      "block": [Function],
+      "createHref": [Function],
+      "go": [Function],
+      "goBack": [Function],
+      "goForward": [Function],
+      "length": 1,
+      "listen": [Function],
+      "location": Object {
+        "hash": "",
+        "pathname": "/",
+        "search": "",
+        "state": undefined,
+      },
+      "push": [Function],
+      "replace": [Function],
+    }
+  }
+>
+  <Home>
+    <div
+      className="text-center"
+    >
+      <Row
+        className="welcome-box"
+        tag="div"
+      >
+        <div
+          className="welcome-box row"
+        >
+          <Col
+            tag="div"
+            widths={
+              Array [
+                "xs",
+                "sm",
+                "md",
+                "lg",
+                "xl",
+              ]
+            }
+          >
+            <div
+              className="col"
+            >
+              <h3>
+                Welcome to Reveal
+              </h3>
+              <p>
+                Get started by selecting an intervention below
+              </p>
+            </div>
+          </Col>
+        </div>
+      </Row>
+      <Row
+        className="intervention-box"
+        tag="div"
+      >
+        <div
+          className="intervention-box row"
+        >
+          <Col
+            md="6"
+            tag="div"
+            widths={
+              Array [
+                "xs",
+                "sm",
+                "md",
+                "lg",
+                "xl",
+              ]
+            }
+          >
+            <div
+              className="col-md-6"
+            >
+              <Link
+                className="intervention-link"
+                replace={false}
+                to="/irs"
+              >
+                <a
+                  className="intervention-link"
+                  href="/irs"
+                  onClick={[Function]}
+                >
+                  <Button
+                    className="btn-intervention btn-lg btn-block btn-outline-dark"
+                    color="outline"
+                    tag="button"
+                  >
+                    <button
+                      aria-label={null}
+                      className="btn-intervention btn-lg btn-block btn-outline-dark btn btn-outline"
+                      onClick={[Function]}
+                    >
+                      IRS
+                    </button>
+                  </Button>
+                </a>
+              </Link>
+            </div>
+          </Col>
+          <Col
+            md="6"
+            tag="div"
+            widths={
+              Array [
+                "xs",
+                "sm",
+                "md",
+                "lg",
+                "xl",
+              ]
+            }
+          >
+            <div
+              className="col-md-6"
+            >
+              <Link
+                className="intervention-link"
+                replace={false}
+                to="/focus-investigation"
+              >
+                <a
+                  className="intervention-link"
+                  href="/focus-investigation"
+                  onClick={[Function]}
+                >
+                  <Button
+                    className="btn-intervention btn-lg btn-block btn-outline-dark"
+                    color="outline"
+                    tag="button"
+                  >
+                    <button
+                      aria-label={null}
+                      className="btn-intervention btn-lg btn-block btn-outline-dark btn btn-outline"
+                      onClick={[Function]}
+                    >
+                      Focus Investigation
+                    </button>
+                  </Button>
+                </a>
+              </Link>
+            </div>
+          </Col>
+        </div>
+      </Row>
+    </div>
+  </Home>
+</Router>
+`;
