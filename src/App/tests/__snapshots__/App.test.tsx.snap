@@ -41,17 +41,26 @@ exports[`App renders App correctly 1`] = `
               <nav
                 className="navbar navbar-expand-md navbar-light bg-light"
               >
-                <NavbarBrand
-                  href="/"
-                  tag="a"
+                <nav
+                  className="navbar navbar-expand-md navbar-light bg-light"
                 >
-                  <a
+                  <Link
                     className="navbar-brand"
-                    href="/"
+                    replace={false}
+                    to="/"
                   >
-                    Reveal
-                  </a>
-                </NavbarBrand>
+                    <a
+                      className="navbar-brand"
+                      href="/"
+                      onClick={[Function]}
+                    >
+                      <img
+                        alt="Reveal"
+                        src="logo.png"
+                      />
+                    </a>
+                  </Link>
+                </nav>
                 <NavbarToggler
                   onClick={[Function]}
                   tag="button"
