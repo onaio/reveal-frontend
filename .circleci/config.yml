@@ -33,5 +33,7 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
+      # run linter
+      - run: yarn lint-ts
       # run tests!
       - run: yarn test --verbose --coverage=true --forceExit --detectOpenHandles
