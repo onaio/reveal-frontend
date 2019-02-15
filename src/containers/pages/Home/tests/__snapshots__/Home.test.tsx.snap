@@ -1,113 +1,160 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`containers/pages/Home renders Home correctly 1`] = `
-<Home>
-  <div
-    className="text-center"
-  >
-    <Row
-      className="welcome-box"
-      tag="div"
+<Router
+  history={
+    Object {
+      "action": "POP",
+      "block": [Function],
+      "createHref": [Function],
+      "go": [Function],
+      "goBack": [Function],
+      "goForward": [Function],
+      "length": 1,
+      "listen": [Function],
+      "location": Object {
+        "hash": "",
+        "pathname": "/",
+        "search": "",
+        "state": undefined,
+      },
+      "push": [Function],
+      "replace": [Function],
+    }
+  }
+>
+  <Home>
+    <div
+      className="text-center"
     >
-      <div
-        className="welcome-box row"
+      <Row
+        className="welcome-box"
+        tag="div"
       >
-        <Col
-          tag="div"
-          widths={
-            Array [
-              "xs",
-              "sm",
-              "md",
-              "lg",
-              "xl",
-            ]
-          }
+        <div
+          className="welcome-box row"
         >
-          <div
-            className="col"
+          <Col
+            tag="div"
+            widths={
+              Array [
+                "xs",
+                "sm",
+                "md",
+                "lg",
+                "xl",
+              ]
+            }
           >
-            <h3>
-              Welcome to Reveal
-            </h3>
-            <p>
-              Get started by selecting an intervention below
-            </p>
-          </div>
-        </Col>
-      </div>
-    </Row>
-    <Row
-      className="intervention-box"
-      tag="div"
-    >
-      <div
-        className="intervention-box row"
+            <div
+              className="col"
+            >
+              <h3>
+                Welcome to Reveal
+              </h3>
+              <p>
+                Get started by selecting an intervention below
+              </p>
+            </div>
+          </Col>
+        </div>
+      </Row>
+      <Row
+        className="intervention-box"
+        tag="div"
       >
-        <Col
-          md="6"
-          tag="div"
-          widths={
-            Array [
-              "xs",
-              "sm",
-              "md",
-              "lg",
-              "xl",
-            ]
-          }
+        <div
+          className="intervention-box row"
         >
-          <div
-            className="col-md-6"
+          <Col
+            md="6"
+            tag="div"
+            widths={
+              Array [
+                "xs",
+                "sm",
+                "md",
+                "lg",
+                "xl",
+              ]
+            }
           >
-            <Button
-              className="btn-intervention btn-lg btn-block btn-outline-dark"
-              color="outline"
-              tag="button"
+            <div
+              className="col-md-6"
             >
-              <button
-                aria-label={null}
-                className="btn-intervention btn-lg btn-block btn-outline-dark btn btn-outline"
-                onClick={[Function]}
+              <Link
+                className="intervention-link"
+                replace={false}
+                to="/irs"
               >
-                IRS
-              </button>
-            </Button>
-          </div>
-        </Col>
-        <Col
-          md="6"
-          tag="div"
-          widths={
-            Array [
-              "xs",
-              "sm",
-              "md",
-              "lg",
-              "xl",
-            ]
-          }
-        >
-          <div
-            className="col-md-6"
+                <a
+                  className="intervention-link"
+                  href="/irs"
+                  onClick={[Function]}
+                >
+                  <Button
+                    className="btn-intervention btn-lg btn-block btn-outline-dark"
+                    color="outline"
+                    tag="button"
+                  >
+                    <button
+                      aria-label={null}
+                      className="btn-intervention btn-lg btn-block btn-outline-dark btn btn-outline"
+                      onClick={[Function]}
+                    >
+                      IRS
+                    </button>
+                  </Button>
+                </a>
+              </Link>
+            </div>
+          </Col>
+          <Col
+            md="6"
+            tag="div"
+            widths={
+              Array [
+                "xs",
+                "sm",
+                "md",
+                "lg",
+                "xl",
+              ]
+            }
           >
-            <Button
-              className="btn-intervention btn-lg btn-block btn-outline-dark"
-              color="outline"
-              tag="button"
+            <div
+              className="col-md-6"
             >
-              <button
-                aria-label={null}
-                className="btn-intervention btn-lg btn-block btn-outline-dark btn btn-outline"
-                onClick={[Function]}
+              <Link
+                className="intervention-link"
+                replace={false}
+                to="/404"
               >
-                Focus Investigation
-              </button>
-            </Button>
-          </div>
-        </Col>
-      </div>
-    </Row>
-  </div>
-</Home>
+                <a
+                  className="intervention-link"
+                  href="/404"
+                  onClick={[Function]}
+                >
+                  <Button
+                    className="btn-intervention btn-lg btn-block btn-outline-dark"
+                    color="outline"
+                    tag="button"
+                  >
+                    <button
+                      aria-label={null}
+                      className="btn-intervention btn-lg btn-block btn-outline-dark btn btn-outline"
+                      onClick={[Function]}
+                    >
+                      Focus Investigation
+                    </button>
+                  </Button>
+                </a>
+              </Link>
+            </div>
+          </Col>
+        </div>
+      </Row>
+    </div>
+  </Home>
+</Router>
 `;

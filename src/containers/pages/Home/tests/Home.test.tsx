@@ -1,7 +1,11 @@
 import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
+import { createBrowserHistory } from 'history';
 import React from 'react';
+import { Router } from 'react-router';
 import Home from '../Home';
+
+const history = createBrowserHistory();
 
 describe('containers/pages/Home', () => {
   beforeEach(() => {
@@ -9,11 +13,19 @@ describe('containers/pages/Home', () => {
   });
 
   it('renders without crashing', () => {
-    shallow(<Home />);
+    shallow(
+      <Router history={history}>
+        <Home />
+      </Router>
+    );
   });
 
   it('renders Home correctly', () => {
-    const wrapper = mount(<Home />);
+    const wrapper = mount(
+      <Router history={history}>
+        <Home />
+      </Router>
+    );
     expect(toJson(wrapper)).toMatchSnapshot();
     wrapper.unmount();
   });

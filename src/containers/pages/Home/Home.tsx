@@ -1,5 +1,6 @@
 // this is the home page component
 import * as React from 'react';
+import { Link } from 'react-router-dom';
 import { Button, Col, Row } from 'reactstrap';
 import './Home.css';
 
@@ -19,14 +20,24 @@ class Home extends React.Component<{}, {}> {
         </Row>
         <Row className="intervention-box">
           <Col md="6">
-            <Button color="outline" className="btn-intervention btn-lg btn-block btn-outline-dark">
-              IRS
-            </Button>
+            <Link to="/irs" className="intervention-link">
+              <Button
+                color="outline"
+                className="btn-intervention btn-lg btn-block btn-outline-dark"
+              >
+                IRS
+              </Button>
+            </Link>
           </Col>
           <Col md="6">
-            <Button color="outline" className="btn-intervention btn-lg btn-block btn-outline-dark">
-              Focus Investigation
-            </Button>
+            <Link to="/404" className="intervention-link">
+              <Button
+                color="outline"
+                className="btn-intervention btn-lg btn-block btn-outline-dark"
+              >
+                Focus Investigation
+              </Button>
+            </Link>
           </Col>
         </Row>
       </div>

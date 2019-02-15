@@ -555,19 +555,31 @@ exports[`App renders App correctly 1`] = `
                               <div
                                 className="col-md-6"
                               >
-                                <Button
-                                  className="btn-intervention btn-lg btn-block btn-outline-dark"
-                                  color="outline"
-                                  tag="button"
+                                <Link
+                                  className="intervention-link"
+                                  replace={false}
+                                  to="/irs"
                                 >
-                                  <button
-                                    aria-label={null}
-                                    className="btn-intervention btn-lg btn-block btn-outline-dark btn btn-outline"
+                                  <a
+                                    className="intervention-link"
+                                    href="/irs"
                                     onClick={[Function]}
                                   >
-                                    IRS
-                                  </button>
-                                </Button>
+                                    <Button
+                                      className="btn-intervention btn-lg btn-block btn-outline-dark"
+                                      color="outline"
+                                      tag="button"
+                                    >
+                                      <button
+                                        aria-label={null}
+                                        className="btn-intervention btn-lg btn-block btn-outline-dark btn btn-outline"
+                                        onClick={[Function]}
+                                      >
+                                        IRS
+                                      </button>
+                                    </Button>
+                                  </a>
+                                </Link>
                               </div>
                             </Col>
                             <Col
@@ -586,19 +598,31 @@ exports[`App renders App correctly 1`] = `
                               <div
                                 className="col-md-6"
                               >
-                                <Button
-                                  className="btn-intervention btn-lg btn-block btn-outline-dark"
-                                  color="outline"
-                                  tag="button"
+                                <Link
+                                  className="intervention-link"
+                                  replace={false}
+                                  to="/404"
                                 >
-                                  <button
-                                    aria-label={null}
-                                    className="btn-intervention btn-lg btn-block btn-outline-dark btn btn-outline"
+                                  <a
+                                    className="intervention-link"
+                                    href="/404"
                                     onClick={[Function]}
                                   >
-                                    Focus Investigation
-                                  </button>
-                                </Button>
+                                    <Button
+                                      className="btn-intervention btn-lg btn-block btn-outline-dark"
+                                      color="outline"
+                                      tag="button"
+                                    >
+                                      <button
+                                        aria-label={null}
+                                        className="btn-intervention btn-lg btn-block btn-outline-dark btn btn-outline"
+                                        onClick={[Function]}
+                                      >
+                                        Focus Investigation
+                                      </button>
+                                    </Button>
+                                  </a>
+                                </Link>
                               </div>
                             </Col>
                           </div>
