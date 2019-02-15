@@ -1,7 +1,7 @@
 // This component represents the header part of the web app
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as React from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import {
   Collapse,
   DropdownItem,
@@ -9,7 +9,6 @@ import {
   DropdownToggle,
   Nav,
   Navbar,
-  NavbarBrand,
   NavbarToggler,
   NavItem,
   UncontrolledDropdown,
@@ -35,7 +34,11 @@ class Header extends React.Component<{}, State> {
     return (
       <div>
         <Navbar color="light" light={true} expand="md">
-          <NavbarBrand href="/">{WEBSITE_NAME}</NavbarBrand>
+          <nav className="navbar navbar-expand-md navbar-light bg-light">
+            <Link to="/" className="navbar-brand">
+              {WEBSITE_NAME}
+            </Link>
+          </nav>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar={true}>
             <Nav className="mr-auto" navbar={true}>
