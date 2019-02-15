@@ -1,3 +1,5 @@
+import { mount } from 'enzyme';
+import toJson from 'enzyme-to-json';
 import { createBrowserHistory } from 'history';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -20,5 +22,15 @@ describe('App', () => {
       div
     );
     ReactDOM.unmountComponentAtNode(div);
+  });
+
+  it('renders App correctly', () => {
+    const wrapper = mount(
+      <Router history={history}>
+        <App />
+      </Router>
+    );
+    expect(toJson(wrapper)).toMatchSnapshot();
+    wrapper.unmount();
   });
 });
