@@ -2,7 +2,8 @@
 import * as React from 'react';
 import HeaderBreadcrumb from '../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 
-class FocusInvestigation extends React.Component<{}, {}> {
+/** Historical data reporting for Focus Investigation */
+class HistoricalFocusInvestigation extends React.Component<{}, {}> {
   constructor(props: {}) {
     super(props);
   }
@@ -17,4 +18,4 @@ class FocusInvestigation extends React.Component<{}, {}> {
   }
 }
 
-export default FocusInvestigation;
+export default HistoricalFocusInvestigation;

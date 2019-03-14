@@ -3,7 +3,7 @@ import toJson from 'enzyme-to-json';
 import { createBrowserHistory } from 'history';
 import React from 'react';
 import { Router } from 'react-router';
-import FocusInvestigation from '../FocusInvestigation';
+import HistoricalFocusInvestigation from '../HistoricalFocusInvestigation';
 
 const history = createBrowserHistory();
 
@@ -15,7 +15,7 @@ describe('containers/pages/FocusInvestigation', () => {
   it('renders without crashing', () => {
     shallow(
       <Router history={history}>
-        <FocusInvestigation />
+        <HistoricalFocusInvestigation />
       </Router>
     );
   });
@@ -23,7 +23,7 @@ describe('containers/pages/FocusInvestigation', () => {
   it('renders FocusInvestigation correctly', () => {
     const wrapper = mount(
       <Router history={history}>
-        <FocusInvestigation />
+        <HistoricalFocusInvestigation />
       </Router>
     );
     expect(toJson(wrapper)).toMatchSnapshot();
