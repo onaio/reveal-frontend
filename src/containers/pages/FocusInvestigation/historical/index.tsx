@@ -1,6 +1,6 @@
 // this is the FocusInvestigation page component
 import * as React from 'react';
-import HeaderBreadcrumb from '../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
+import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 
 /** Historical data reporting for Focus Investigation */
 class HistoricalFocusInvestigation extends React.Component<{}, {}> {

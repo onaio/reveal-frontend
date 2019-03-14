@@ -3,11 +3,11 @@ import toJson from 'enzyme-to-json';
 import { createBrowserHistory } from 'history';
 import React from 'react';
 import { Router } from 'react-router';
-import HistoricalFocusInvestigation from '../HistoricalFocusInvestigation';
+import HistoricalFocusInvestigation from '../../historical';
 
 const history = createBrowserHistory();
 
-describe('containers/pages/FocusInvestigation', () => {
+describe('containers/pages/HistoricalFocusInvestigation', () => {
   beforeEach(() => {
     jest.resetAllMocks();
   });
@@ -20,7 +20,7 @@ describe('containers/pages/FocusInvestigation', () => {
     );
   });
 
-  it('renders FocusInvestigation correctly', () => {
+  it('renders HistoricalFocusInvestigation correctly', () => {
     const wrapper = mount(
       <Router history={history}>
         <HistoricalFocusInvestigation />

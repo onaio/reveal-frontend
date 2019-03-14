@@ -5,7 +5,7 @@ import { Route, Switch } from 'react-router';
 import { Col, Container, Row } from 'reactstrap';
 import Header from '../components/page/Header/Header';
 import { FOCUS_INVESTIGATION_URL, IRS_URL } from '../constants';
-import HistoricalFocusInvestigation from '../containers/pages/FocusInvestigation/HistoricalFocusInvestigation';
+import HistoricalFocusInvestigation from '../containers/pages/FocusInvestigation/historical';
 import Home from '../containers/pages/Home/Home';
 import IRS from '../containers/pages/IRS/IRS';
 

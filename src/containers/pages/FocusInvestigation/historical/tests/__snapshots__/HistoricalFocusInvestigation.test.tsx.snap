@@ -23,7 +23,7 @@ exports[`containers/pages/FocusInvestigation renders FocusInvestigation correctl
     }
   }
 >
-  <FocusInvestigation>
+  <HistoricalFocusInvestigation>
     <div>
       <HeaderBreadcrumb>
         <div>
@@ -79,6 +79,6 @@ exports[`containers/pages/FocusInvestigation renders FocusInvestigation correctl
         Focus Investigation
       </div>
     </div>
-  </FocusInvestigation>
+  </HistoricalFocusInvestigation>
 </Router>
 `;
