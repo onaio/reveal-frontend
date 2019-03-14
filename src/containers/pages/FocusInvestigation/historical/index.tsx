@@ -1,7 +1,9 @@
 // this is the FocusInvestigation page component
 import DrillDownTable from '@onaio/drill-down-table';
 import * as React from 'react';
+import { CellInfo } from 'react-table';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
+import { getTableCellIndicator } from '../../../../helpers/indicators';
 import { data } from './tests/fixtures';
 
 /** Historical data reporting for Focus Investigation */
@@ -11,7 +13,10 @@ class HistoricalFocusInvestigation extends React.Component<{}, {}> {
   }
 
   public render() {
+    // const ProgressCell =
+
     const tableProps = {
+      className: 'table',
       columns: [
         {
           Header: 'Location',
@@ -55,15 +60,17 @@ class HistoricalFocusInvestigation extends React.Component<{}, {}> {
               accessor: 'Number',
             },
             {
+              Cell: (cell: CellInfo) => getTableCellIndicator(cell),
               Header: '%',
               accessor: '%',
             },
           ],
         },
         {
-          Header: 'F1 response',
+          Header: 'FI response',
           columns: [
             {
+              Cell: (cell: CellInfo) => getTableCellIndicator(cell),
               Header: 'adherence',
               accessor: 'Adherence',
             },
