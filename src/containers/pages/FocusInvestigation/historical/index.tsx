@@ -13,8 +13,6 @@ class HistoricalFocusInvestigation extends React.Component<{}, {}> {
   }
 
   public render() {
-    // const ProgressCell =
-
     const tableProps = {
       className: 'table',
       columns: [

@@ -10,6 +10,7 @@ import {
   YELLOW_THRESHOLD,
 } from '../constants';
 
+/** Returns a table cell rendered with different colors based on row value */
 export function getTableCellIndicator(row: CellInfo) {
   return (
     <div
