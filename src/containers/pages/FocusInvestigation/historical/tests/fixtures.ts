@@ -43,7 +43,7 @@ export const data = [
     '%': 0.87,
     A1: 60,
     A2: 30,
-    Adherence: 0.98,
+    Adherence: 0.18,
     B1: 14,
     B2: 3,
     Number: 52,
