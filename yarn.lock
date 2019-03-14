@@ -945,6 +945,30 @@
   resolved "https://registry.yarnpkg.com/@nodelib/fs.stat/-/fs.stat-1.1.3.tgz#2b5a3ab3f918cca48a8c754c08168e3f03eba61b"
   integrity sha512-shAmDyaQC4H92APFoIaVDHCx5bStIocgvbwQyxPRrbUY20V1EYTbSDchWbuwlMG3V17cprZhA6+78JfB+3DTPw==
 
+"@onaio/drill-down-table@^0.0.6":
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/@onaio/drill-down-table/-/drill-down-table-0.0.6.tgz#74377fb18766193f8fc1bb38bd073c91725db479"
+  integrity sha512-dA0OsbxjqFHoBa3/Vu5hsB2Y97Z7ows4KWRqmGa29qT6h+VduqwFFC25XABSGiZ82Q0zXaD1bNZQImE+PMztWw==
+  dependencies:
+    "@types/react-table" "^6.7.22"
+    prop-types "^15.6.1"
+    react-table "^6.9.2"
+
+"@onaio/element-map@^0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@onaio/element-map/-/element-map-0.0.1.tgz#cc5e920293d996e6cca0f12523c7cd31e0ddedb0"
+  integrity sha512-+Po9VCFKbuCb/mjDusRdjxEj32lWDeTNTcPzzupG/z1oLTwp11yW7OhZHIufXTcApmWD32Fl6ZL/ETjDgW83NQ==
+  dependencies:
+    prop-types "^15.6.1"
+
+"@onaio/redux-reducer-registry@^0.0.6":
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/@onaio/redux-reducer-registry/-/redux-reducer-registry-0.0.6.tgz#1c05bac1899ac2f957005edff41b89e1c6101bef"
+  integrity sha512-DEUXKYKITziE+nJkyE5mtkv+Moqo5vkAo2LYZa1REPt6pPdCGgz5MmI35H8+Tv6SnY+F+JbYSKDI1XtJU/URhg==
+  dependencies:
+    "@types/redux" "^3.6.0"
+    redux "^4.0.1"
+
 "@samverschueren/stream-to-observable@^0.3.0":
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/@samverschueren/stream-to-observable/-/stream-to-observable-0.3.0.tgz#ecdf48d532c58ea477acfcab80348424f8d0662f"
@@ -1081,6 +1105,13 @@
     "@types/history" "*"
     "@types/react" "*"
 
+"@types/react-table@^6.7.22":
+  version "6.7.23"
+  resolved "https://registry.yarnpkg.com/@types/react-table/-/react-table-6.7.23.tgz#c42a249c2d1ba5a157ae7e65a9cd5459006feb85"
+  integrity sha512-iwDrGpvlHmgATVTtW4nXhlr/RsRuZEWBy70Wh5Ir+ia3UPvkU+Zuyt3Hzrql6Xcr0CK+5gQ0+1W80PeuIt402A==
+  dependencies:
+    "@types/react" "*"
+
 "@types/react@*", "@types/react@^16.8.2":
   version "16.8.2"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-16.8.2.tgz#3b7a7f7ea89d1c7d68b00849fb5de839011c077b"
@@ -1096,6 +1127,13 @@
   dependencies:
     "@types/react" "*"
     popper.js "^1.14.1"
+
+"@types/redux@^3.6.0":
+  version "3.6.0"
+  resolved "https://registry.yarnpkg.com/@types/redux/-/redux-3.6.0.tgz#f1ebe1e5411518072e4fdfca5c76e16e74c1399a"
+  integrity sha1-8evh5UEVGAcuT9/KXHbhbnTBOZo=
+  dependencies:
+    redux "*"
 
 "@types/sizzle@*":
   version "2.3.2"
@@ -2459,7 +2497,7 @@ class-utils@^0.3.5:
     isobject "^3.0.0"
     static-extend "^0.1.1"
 
-classnames@^2.2.3:
+classnames@^2.2.3, classnames@^2.2.5:
   version "2.2.6"
   resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.2.6.tgz#43935bffdd291f326dad0a205309b38d00f650ce"
   integrity sha512-JR/iSQOSt+LQIWwrwEzJ9uk0xfN3mTVYMwt1Ir5mUcSN6pU+V4zQFFaJsclJbPuAUQH+yfWef6tm7l1quW3C8Q==
@@ -8998,6 +9036,13 @@ react-scripts@2.1.3:
   optionalDependencies:
     fsevents "1.2.4"
 
+react-table@^6.9.2:
+  version "6.9.2"
+  resolved "https://registry.yarnpkg.com/react-table/-/react-table-6.9.2.tgz#6a59adfeb8d5deced288241ed1c7847035b5ec5f"
+  integrity sha512-sTbNHU8Um0xRtmCd1js873HXnXaMWeBwZoiljuj0l1d44eaqjKyYPK/3HCBbJg1yeE2O5pQJ3Km0tlm9niNL9w==
+  dependencies:
+    classnames "^2.2.5"
+
 react-test-renderer@^16.0.0-0, react-test-renderer@^16.8.1:
   version "16.8.1"
   resolved "https://registry.yarnpkg.com/react-test-renderer/-/react-test-renderer-16.8.1.tgz#72845ad9269be526126e97853311982f781767be"
@@ -9146,7 +9191,7 @@ redux-thunk@^2.3.0:
   resolved "https://registry.yarnpkg.com/redux-thunk/-/redux-thunk-2.3.0.tgz#51c2c19a185ed5187aaa9a2d08b666d0d6467622"
   integrity sha512-km6dclyFnmcvxhAcrQV2AkZmPQjzPDjgVlQtR0EQjxZPyJ0BnMf3in1ryuR8A2qU0HldVRfxYXbFSKlI3N7Slw==
 
-redux@^4.0.0, redux@^4.0.1:
+redux@*, redux@^4.0.0, redux@^4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/redux/-/redux-4.0.1.tgz#436cae6cc40fbe4727689d7c8fae44808f1bfef5"
   integrity sha512-R7bAtSkk7nY6O/OYMVR9RiBI+XghjF9rlbl5806HJbQph0LJVHZrU5oaO4q70eUKiqMRqm4y07KLTlMZ2BlVmg==
