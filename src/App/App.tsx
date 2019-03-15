@@ -28,6 +28,11 @@ class App extends Component {
                 path={FOCUS_INVESTIGATION_URL}
                 component={HistoricalFocusInvestigation}
               />
+              <Route
+                exact={true}
+                path={`${FOCUS_INVESTIGATION_URL}/:id`}
+                component={HistoricalFocusInvestigation}
+              />
             </Switch>
           </Col>
         </Row>
