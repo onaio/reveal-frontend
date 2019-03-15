@@ -1,18 +1,37 @@
 // this is the FocusInvestigation page component
 import DrillDownTable from '@onaio/drill-down-table';
 import * as React from 'react';
+import { RouteComponentProps } from 'react-router';
+import { Link } from 'react-router-dom';
 import { CellInfo } from 'react-table';
+import NotFound from '../../../../components/NotFound';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
+import { FOCUS_INVESTIGATION_URL } from '../../../../constants';
 import { getTableCellIndicator } from '../../../../helpers/indicators';
+import { FlexObject } from '../../../../helpers/utils';
 import { data } from './tests/fixtures';
 
+/** Route params interface */
+interface RouteParams {
+  id: string;
+}
+
 /** Historical data reporting for Focus Investigation */
-class HistoricalFocusInvestigation extends React.Component<{}, {}> {
-  constructor(props: {}) {
+class HistoricalFocusInvestigation extends React.Component<RouteComponentProps<RouteParams>, {}> {
+  constructor(props: RouteComponentProps<RouteParams>) {
     super(props);
   }
 
   public render() {
+    const id = this.props.match.params.id;
+    if (id !== undefined) {
+      const theObject = data.filter((el: FlexObject) => el.name === id);
+
+      if (theObject.length < 1) {
+        return <NotFound />;
+      }
+    }
+
     const tableProps = {
       className: 'table',
       columns: [
@@ -20,6 +39,9 @@ class HistoricalFocusInvestigation extends React.Component<{}, {}> {
           Header: 'Location',
           columns: [
             {
+              Cell: (cell: CellInfo) => {
+                return <Link to={`${FOCUS_INVESTIGATION_URL}/${cell.value}`}>{cell.value}</Link>;
+              },
               Header: '',
               accessor: 'name',
             },
@@ -80,7 +102,7 @@ class HistoricalFocusInvestigation extends React.Component<{}, {}> {
       linkerField: 'name',
       minRows: 0,
       parentIdentifierField: 'parent',
-      rootParentId: null,
+      rootParentId: id || null,
       showPageSizeOptions: false,
       showPagination: false,
     };
