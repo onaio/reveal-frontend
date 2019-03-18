@@ -4,6 +4,8 @@ import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import { Link } from 'react-router-dom';
 import { CellInfo } from 'react-table';
+import 'react-table/react-table.css';
+import DrillDownTableLinkedCell from '../../../../components/DrillDownTableLinkedCell';
 import NotFound from '../../../../components/NotFound';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import { FOCUS_INVESTIGATION_URL } from '../../../../constants';
@@ -16,32 +18,53 @@ interface RouteParams {
   id: string;
 }
 
+/** State interface */
+interface State {
+  id: string;
+  location: FlexObject;
+}
+
 /** Historical data reporting for Focus Investigation */
-class HistoricalFocusInvestigation extends React.Component<RouteComponentProps<RouteParams>, {}> {
+class HistoricalFocusInvestigation extends React.Component<
+  RouteComponentProps<RouteParams>,
+  State
+> {
   constructor(props: RouteComponentProps<RouteParams>) {
     super(props);
+
+    this.state = {
+      id: this.props.match.params.id,
+      location: this.props.location,
+    };
+  }
+
+  public componentDidUpdate() {
+    const { id: prevId, location: prevLocation } = this.state;
+
+    const id = this.props.match.params.id;
+    const location = this.props.location;
+
+    if (id !== prevId && location !== prevLocation) {
+      this.setState({ id, location });
+    }
   }
 
   public render() {
-    const id = this.props.match.params.id;
+    const { id, location } = this.state;
     if (id !== undefined) {
       const theObject = data.filter((el: FlexObject) => el.name === id);
-
       if (theObject.length < 1) {
         return <NotFound />;
       }
     }
 
     const tableProps = {
-      className: 'table',
+      CellComponent: DrillDownTableLinkedCell,
       columns: [
         {
           Header: 'Location',
           columns: [
             {
-              Cell: (cell: CellInfo) => {
-                return <Link to={`${FOCUS_INVESTIGATION_URL}/${cell.value}`}>{cell.value}</Link>;
-              },
               Header: '',
               accessor: 'name',
             },
@@ -100,11 +123,13 @@ class HistoricalFocusInvestigation extends React.Component<RouteComponentProps<R
       data,
       identifierField: 'name',
       linkerField: 'name',
+      location,
       minRows: 0,
       parentIdentifierField: 'parent',
       rootParentId: id || null,
       showPageSizeOptions: false,
       showPagination: false,
+      useDrillDownTrProps: false,
     };
     return (
       <div>
