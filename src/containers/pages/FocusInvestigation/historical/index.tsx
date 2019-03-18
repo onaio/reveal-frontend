@@ -2,13 +2,11 @@
 import DrillDownTable from '@onaio/drill-down-table';
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
-import { Link } from 'react-router-dom';
 import { CellInfo } from 'react-table';
 import 'react-table/react-table.css';
 import DrillDownTableLinkedCell from '../../../../components/DrillDownTableLinkedCell';
 import NotFound from '../../../../components/NotFound';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
-import { FOCUS_INVESTIGATION_URL } from '../../../../constants';
 import { getTableCellIndicator } from '../../../../helpers/indicators';
 import { FlexObject } from '../../../../helpers/utils';
 import { data } from './tests/fixtures';
@@ -31,7 +29,6 @@ class HistoricalFocusInvestigation extends React.Component<
 > {
   constructor(props: RouteComponentProps<RouteParams>) {
     super(props);
-
     this.state = {
       id: this.props.match.params.id,
       location: this.props.location,
@@ -40,10 +37,8 @@ class HistoricalFocusInvestigation extends React.Component<
 
   public componentDidUpdate() {
     const { id: prevId, location: prevLocation } = this.state;
-
     const id = this.props.match.params.id;
     const location = this.props.location;
-
     if (id !== prevId && location !== prevLocation) {
       this.setState({ id, location });
     }
