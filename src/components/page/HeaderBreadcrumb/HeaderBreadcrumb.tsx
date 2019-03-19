@@ -9,7 +9,7 @@ interface Page {
 }
 
 export interface BreadCrumbItems {
-  currentPage: string;
+  currentPage: Page;
   pages: Page[];
 }
 
@@ -35,7 +35,7 @@ class HeaderBreadcrumb extends React.Component<BreadCrumbItems, {}> {
       <div>
         <Breadcrumb className="reveal-breadcrumb">
           {linkList}
-          <BreadcrumbItem active={true}>{currentPage}</BreadcrumbItem>
+          <BreadcrumbItem active={true}>{currentPage.label}</BreadcrumbItem>
         </Breadcrumb>
       </div>
     );
