@@ -1,0 +1,22 @@
+/** Holds styling for tables */
+.ReactTable .rt-td.centered {
+  text-align: center;
+}
+
+.ReactTable .rt-td.indicator {
+  padding: 0;
+}
+
+.ReactTable .rt-td .indicator-container {
+  padding: 7px 5px;
+}
+
+.ReactTable .rt-thead .rt-th {
+  background: #fff;
+  font-weight: bold;
+}
+
+.ReactTable .rt-thead.-header {
+  box-shadow: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
