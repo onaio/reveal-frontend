@@ -23,7 +23,26 @@ exports[`components/page/HeaderBreadcrumb renders HeaderBreadcrumb correctly 1`]
     }
   }
 >
-  <HeaderBreadcrumb>
+  <HeaderBreadcrumb
+    currentPage={
+      Object {
+        "label": "IRS",
+        "url": "/irs",
+      }
+    }
+    pages={
+      Array [
+        Object {
+          "label": "Home",
+          "url": "/",
+        },
+        Object {
+          "label": "Programs",
+          "url": "/programs",
+        },
+      ]
+    }
+  >
     <div>
       <Breadcrumb
         aria-label="breadcrumb"
@@ -39,20 +58,43 @@ exports[`components/page/HeaderBreadcrumb renders HeaderBreadcrumb correctly 1`]
             className="breadcrumb"
           >
             <BreadcrumbItem
+              key="0"
               tag="li"
             >
               <li
                 className="breadcrumb-item"
               >
                 <Link
+                  key="0"
                   replace={false}
-                  to="/irs"
+                  to="/"
                 >
                   <a
-                    href="/irs"
+                    href="/"
                     onClick={[Function]}
                   >
-                    IRS
+                    Home
+                  </a>
+                </Link>
+              </li>
+            </BreadcrumbItem>
+            <BreadcrumbItem
+              key="1"
+              tag="li"
+            >
+              <li
+                className="breadcrumb-item"
+              >
+                <Link
+                  key="1"
+                  replace={false}
+                  to="/programs"
+                >
+                  <a
+                    href="/programs"
+                    onClick={[Function]}
+                  >
+                    Programs
                   </a>
                 </Link>
               </li>
@@ -65,7 +107,7 @@ exports[`components/page/HeaderBreadcrumb renders HeaderBreadcrumb correctly 1`]
                 aria-current="page"
                 className="active breadcrumb-item"
               >
-                The Current Page
+                IRS
               </li>
             </BreadcrumbItem>
           </ol>
