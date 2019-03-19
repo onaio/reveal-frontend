@@ -183,9 +183,22 @@ class HistoricalFocusInvestigation extends React.Component<
       ];
     }
 
+    const breadcrumbProps = {
+      currentPage: {
+        label: 'Focus Investigation',
+        url: '/focus',
+      },
+      pages: [
+        {
+          label: 'Home',
+          url: '/',
+        },
+      ],
+    };
+
     return (
       <div>
-        <HeaderBreadcrumb />
+        <HeaderBreadcrumb {...breadcrumbProps} />
         <div>
           <DrillDownTable {...tableProps} />
         </div>
