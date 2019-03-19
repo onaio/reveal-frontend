@@ -3,19 +3,39 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 
-class HeaderBreadcrumb extends React.Component<{}, {}> {
-  constructor(props: {}) {
+interface Page {
+  url: string;
+  label: string;
+}
+
+export interface BreadCrumbItems {
+  currentPage: string;
+  pages: Page[];
+}
+
+class HeaderBreadcrumb extends React.Component<BreadCrumbItems, {}> {
+  constructor(props: BreadCrumbItems) {
     super(props);
   }
 
   public render() {
+    const { currentPage, pages } = this.props;
+
+    const linkList = pages.map((page, key) => {
+      return (
+        <BreadcrumbItem key={key}>
+          <Link to={page.url} key={key}>
+            {page.label}
+          </Link>
+        </BreadcrumbItem>
+      );
+    });
+
     return (
       <div>
         <Breadcrumb className="reveal-breadcrumb">
-          <BreadcrumbItem>
-            <Link to="/irs">IRS</Link>
-          </BreadcrumbItem>
-          <BreadcrumbItem active={true}>The Current Page</BreadcrumbItem>
+          {linkList}
+          <BreadcrumbItem active={true}>{currentPage}</BreadcrumbItem>
         </Breadcrumb>
       </div>
     );
