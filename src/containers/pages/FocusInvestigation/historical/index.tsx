@@ -126,6 +126,50 @@ class HistoricalFocusInvestigation extends React.Component<
       showPagination: false,
       useDrillDownTrProps: false,
     };
+
+    const currLevelData = data.filter(el => el.parent === id);
+
+    if (currLevelData.length > 0 && currLevelData[0].type === 'Foci Area') {
+      tableProps.columns = [
+        {
+          Header: 'Location',
+          columns: [
+            {
+              Header: '',
+              accessor: 'name',
+            },
+          ],
+        },
+        {
+          Header: 'Status',
+          columns: [
+            {
+              Header: '',
+              accessor: 'status',
+            },
+          ],
+        },
+        {
+          Header: 'Last Visit',
+          columns: [
+            {
+              Header: '',
+              accessor: 'lastVisit',
+            },
+          ],
+        },
+        {
+          Header: 'FI response',
+          columns: [
+            {
+              Header: 'adherence',
+              accessor: 'Adherence',
+            },
+          ],
+        },
+      ];
+    }
+
     return (
       <div>
         <HeaderBreadcrumb />
