@@ -14,6 +14,7 @@ import {
 export function getTableCellIndicator(row: CellInfo) {
   return (
     <div
+      className="indicator-container"
       style={{
         backgroundColor:
           row.value >= GREEN_THRESHOLD

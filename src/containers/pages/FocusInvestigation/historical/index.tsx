@@ -8,6 +8,7 @@ import DrillDownTableLinkedCell from '../../../../components/DrillDownTableLinke
 import NotFound from '../../../../components/NotFound';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import { getTableCellIndicator } from '../../../../helpers/indicators';
+import '../../../../helpers/tables.css';
 import { FlexObject } from '../../../../helpers/utils';
 import { data } from './tests/fixtures';
 
@@ -71,22 +72,27 @@ class HistoricalFocusInvestigation extends React.Component<
             {
               Header: 'Total',
               accessor: 'Total',
+              className: 'centered',
             },
             {
               Header: 'A1',
               accessor: 'A1',
+              className: 'centered',
             },
             {
               Header: 'A2',
               accessor: 'A2',
+              className: 'centered',
             },
             {
               Header: 'B1',
               accessor: 'B1',
+              className: 'centered',
             },
             {
               Header: 'B2',
               accessor: 'B2',
+              className: 'centered',
             },
           ],
         },
@@ -96,11 +102,13 @@ class HistoricalFocusInvestigation extends React.Component<
             {
               Header: 'Number',
               accessor: 'Number',
+              className: 'centered',
             },
             {
               Cell: (cell: CellInfo) => getTableCellIndicator(cell),
               Header: '%',
               accessor: '%',
+              className: 'centered indicator',
             },
           ],
         },
@@ -111,6 +119,7 @@ class HistoricalFocusInvestigation extends React.Component<
               Cell: (cell: CellInfo) => getTableCellIndicator(cell),
               Header: 'adherence',
               accessor: 'Adherence',
+              className: 'centered indicator',
             },
           ],
         },
@@ -137,6 +146,7 @@ class HistoricalFocusInvestigation extends React.Component<
             {
               Header: '',
               accessor: 'name',
+              className: 'centered',
             },
           ],
         },
@@ -146,6 +156,7 @@ class HistoricalFocusInvestigation extends React.Component<
             {
               Header: '',
               accessor: 'status',
+              className: 'centered',
             },
           ],
         },
@@ -155,6 +166,7 @@ class HistoricalFocusInvestigation extends React.Component<
             {
               Header: '',
               accessor: 'lastVisit',
+              className: 'centered',
             },
           ],
         },
@@ -164,6 +176,7 @@ class HistoricalFocusInvestigation extends React.Component<
             {
               Header: 'adherence',
               accessor: 'Adherence',
+              className: 'centered',
             },
           ],
         },
