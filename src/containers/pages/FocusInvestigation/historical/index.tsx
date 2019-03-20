@@ -1,6 +1,5 @@
 // this is the FocusInvestigation page component
 import DrillDownTable from '@onaio/drill-down-table';
-import { Location } from 'history';
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import { CellInfo } from 'react-table';
@@ -8,7 +7,7 @@ import 'react-table/react-table.css';
 import DrillDownTableLinkedCell from '../../../../components/DrillDownTableLinkedCell';
 import NotFound from '../../../../components/NotFound';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
-import { FOCUS_INVESTIGATION_URL } from '../../../../constants';
+import { FI_URL, FOCUS_INVESTIGATIONS, HOME, PROVINCE } from '../../../../constants';
 import { getTableCellIndicator } from '../../../../helpers/indicators';
 import '../../../../helpers/tables.css';
 import { FlexObject } from '../../../../helpers/utils';
@@ -71,15 +70,17 @@ class HistoricalFocusInvestigation extends React.Component<
   }
 
   public render() {
+    let locationLabel: string = PROVINCE;
+    let pageTitle: string = FOCUS_INVESTIGATIONS;
     const baseFIPage = {
-      label: 'Focus Investigation',
-      url: `${FOCUS_INVESTIGATION_URL}`,
+      label: FOCUS_INVESTIGATIONS,
+      url: `${FI_URL}`,
     };
     const breadcrumbProps = {
       currentPage: baseFIPage,
       pages: [
         {
-          label: 'Home',
+          label: HOME,
           url: '/',
         },
       ],
@@ -90,14 +91,19 @@ class HistoricalFocusInvestigation extends React.Component<
       if (theObject.length < 1) {
         return <NotFound />;
       }
+
+      pageTitle = `${pageTitle} in ${theObject[0].name}`;
+
+      // deal with breadcrumbs
       breadcrumbProps.pages.push(baseFIPage);
+
       if (theObject[0].parent !== null) {
         const theTree = this.getTree(data, theObject[0]);
         theTree.reverse();
         const pages = theTree.map(el => {
           return {
             label: el.name,
-            url: `${FOCUS_INVESTIGATION_URL}/${el.name}`,
+            url: `${FI_URL}/${el.name}`,
           };
         });
         const newPages = breadcrumbProps.pages.concat(pages);
@@ -106,16 +112,22 @@ class HistoricalFocusInvestigation extends React.Component<
 
       const currentPage = {
         label: theObject[0].name,
-        url: `${FOCUS_INVESTIGATION_URL}/${theObject[0].name}`,
+        url: `${FI_URL}/${theObject[0].name}`,
       };
       breadcrumbProps.currentPage = currentPage;
+    }
+
+    const currLevelData = data.filter(el => el.parent === id);
+
+    if (currLevelData.length > 0) {
+      locationLabel = currLevelData[0].type;
     }
 
     const tableProps = {
       CellComponent: DrillDownTableLinkedCell,
       columns: [
         {
-          Header: 'Location',
+          Header: locationLabel,
           columns: [
             {
               Header: '',
@@ -192,12 +204,10 @@ class HistoricalFocusInvestigation extends React.Component<
       useDrillDownTrProps: false,
     };
 
-    const currLevelData = data.filter(el => el.parent === id);
-
     if (currLevelData.length > 0 && currLevelData[0].type === 'Foci Area') {
       tableProps.columns = [
         {
-          Header: 'Location',
+          Header: locationLabel,
           columns: [
             {
               Header: '',
@@ -241,6 +251,7 @@ class HistoricalFocusInvestigation extends React.Component<
     return (
       <div>
         <HeaderBreadcrumb {...breadcrumbProps} />
+        <h3 className="mb-3 page-title">{pageTitle}</h3>
         <div>
           <DrillDownTable {...tableProps} />
         </div>
