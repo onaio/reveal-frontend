@@ -8,6 +8,7 @@ import 'react-table/react-table.css';
 import DrillDownTableLinkedCell from '../../../../components/DrillDownTableLinkedCell';
 import NotFound from '../../../../components/NotFound';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
+import { FOCUS_INVESTIGATION_URL } from '../../../../constants';
 import { getTableCellIndicator } from '../../../../helpers/indicators';
 import '../../../../helpers/tables.css';
 import { FlexObject } from '../../../../helpers/utils';
@@ -54,13 +55,60 @@ class HistoricalFocusInvestigation extends React.Component<
     }
   }
 
+  public getTree(tree: FlexObject[], item: FlexObject, result: FlexObject[] = []): FlexObject[] {
+    if (item.parent === null && !result.includes(item)) {
+      result.push(item);
+    } else {
+      const parentItems = tree.filter(el => el.name === item.parent);
+      if (parentItems.length > 0) {
+        if (!result.includes(parentItems[0])) {
+          result.push(parentItems[0]);
+        }
+        return this.getTree(tree, parentItems[0], result);
+      }
+    }
+    return result;
+  }
+
   public render() {
+    const baseFIPage = {
+      label: 'Focus Investigation',
+      url: `${FOCUS_INVESTIGATION_URL}`,
+    };
+    const breadcrumbProps = {
+      currentPage: baseFIPage,
+      pages: [
+        {
+          label: 'Home',
+          url: '/',
+        },
+      ],
+    };
     const { id } = this.state;
     if (id !== undefined) {
       const theObject = data.filter((el: FlexObject) => el.name === id);
       if (theObject.length < 1) {
         return <NotFound />;
       }
+      breadcrumbProps.pages.push(baseFIPage);
+      if (theObject[0].parent !== null) {
+        const theTree = this.getTree(data, theObject[0]);
+        theTree.reverse();
+        const pages = theTree.map(el => {
+          return {
+            label: el.name,
+            url: `${FOCUS_INVESTIGATION_URL}/${el.name}`,
+          };
+        });
+        const newPages = breadcrumbProps.pages.concat(pages);
+        breadcrumbProps.pages = newPages;
+      }
+
+      const currentPage = {
+        label: theObject[0].name,
+        url: `${FOCUS_INVESTIGATION_URL}/${theObject[0].name}`,
+      };
+      breadcrumbProps.currentPage = currentPage;
     }
 
     const tableProps = {
@@ -190,20 +238,6 @@ class HistoricalFocusInvestigation extends React.Component<
         },
       ];
     }
-
-    const breadcrumbProps = {
-      currentPage: {
-        label: 'Focus Investigation',
-        url: '/focus',
-      },
-      pages: [
-        {
-          label: 'Home',
-          url: '/',
-        },
-      ],
-    };
-
     return (
       <div>
         <HeaderBreadcrumb {...breadcrumbProps} />
