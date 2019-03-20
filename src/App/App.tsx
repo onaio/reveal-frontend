@@ -18,7 +18,7 @@ class App extends Component {
     return (
       <Container>
         <Header />
-        <Row>
+        <Row id="main-page-row">
           <Col>
             <Switch>
               <Route exact={true} path="/" component={Home} />

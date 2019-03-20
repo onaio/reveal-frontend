@@ -426,10 +426,12 @@ exports[`App renders App correctly 1`] = `
           </div>
         </Header>
         <Row
+          id="main-page-row"
           tag="div"
         >
           <div
             className="row"
+            id="main-page-row"
           >
             <Col
               tag="div"
