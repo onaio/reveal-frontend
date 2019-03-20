@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { Route, Switch } from 'react-router';
 import { Col, Container, Row } from 'reactstrap';
 import Header from '../components/page/Header/Header';
-import { FOCUS_INVESTIGATION_URL, IRS_URL } from '../constants';
+import { FI_URL, IRS_URL } from '../constants';
 import HistoricalFocusInvestigation from '../containers/pages/FocusInvestigation/historical';
 import Home from '../containers/pages/Home/Home';
 import IRS from '../containers/pages/IRS/IRS';
@@ -23,16 +23,8 @@ class App extends Component {
             <Switch>
               <Route exact={true} path="/" component={Home} />
               <Route exact={true} path={IRS_URL} component={IRS} />
-              <Route
-                exact={true}
-                path={FOCUS_INVESTIGATION_URL}
-                component={HistoricalFocusInvestigation}
-              />
-              <Route
-                exact={true}
-                path={`${FOCUS_INVESTIGATION_URL}/:id`}
-                component={HistoricalFocusInvestigation}
-              />
+              <Route exact={true} path={FI_URL} component={HistoricalFocusInvestigation} />
+              <Route exact={true} path={`${FI_URL}/:id`} component={HistoricalFocusInvestigation} />
             </Switch>
           </Col>
         </Row>
