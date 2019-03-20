@@ -81,6 +81,7 @@ describe('containers/pages/HistoricalFocusInvestigation', () => {
     expect(toJson(wrapper.find('HeaderBreadcrumb'))).toMatchSnapshot();
     expect(wrapper.find('HeaderBreadcrumb li').length).toEqual(2);
     expect(wrapper.find('HeaderBreadcrumb a').length).toEqual(1);
+    expect(toJson(wrapper.find('h3.page-title'))).toMatchSnapshot();
     expect(toJson(wrapper.find('ReactTable'))).toMatchSnapshot();
     expect(wrapper.find('.rt-td a[href$="focus-investigation/Province 1"]').length).toEqual(1);
     wrapper
@@ -94,6 +95,7 @@ describe('containers/pages/HistoricalFocusInvestigation', () => {
     expect(toJson(wrapper.find('HeaderBreadcrumb'))).toMatchSnapshot();
     expect(wrapper.find('HeaderBreadcrumb li').length).toEqual(3);
     expect(wrapper.find('HeaderBreadcrumb a').length).toEqual(2);
+    expect(toJson(wrapper.find('h3.page-title'))).toMatchSnapshot();
     expect(toJson(wrapper.find('ReactTable'))).toMatchSnapshot();
     expect(wrapper.find('a[href$="focus-investigation/District 1"]').length).toEqual(1);
     wrapper
@@ -107,6 +109,7 @@ describe('containers/pages/HistoricalFocusInvestigation', () => {
     expect(toJson(wrapper.find('HeaderBreadcrumb'))).toMatchSnapshot();
     expect(wrapper.find('HeaderBreadcrumb li').length).toEqual(4);
     expect(wrapper.find('HeaderBreadcrumb a').length).toEqual(3);
+    expect(toJson(wrapper.find('h3.page-title'))).toMatchSnapshot();
     expect(toJson(wrapper.find('ReactTable'))).toMatchSnapshot();
     expect(wrapper.find('a[href$="focus-investigation/Canton 1"]').length).toEqual(1);
     wrapper
@@ -120,6 +123,7 @@ describe('containers/pages/HistoricalFocusInvestigation', () => {
     expect(toJson(wrapper.find('HeaderBreadcrumb'))).toMatchSnapshot();
     expect(wrapper.find('HeaderBreadcrumb li').length).toEqual(5);
     expect(wrapper.find('HeaderBreadcrumb a').length).toEqual(4);
+    expect(toJson(wrapper.find('h3.page-title'))).toMatchSnapshot();
     expect(toJson(wrapper.find('ReactTable'))).toMatchSnapshot();
     expect(wrapper.find('a[href$="focus-investigation/Village 1"]').length).toEqual(1);
     wrapper
@@ -133,6 +137,7 @@ describe('containers/pages/HistoricalFocusInvestigation', () => {
     expect(toJson(wrapper.find('HeaderBreadcrumb'))).toMatchSnapshot();
     expect(wrapper.find('HeaderBreadcrumb li').length).toEqual(6);
     expect(wrapper.find('HeaderBreadcrumb a').length).toEqual(5);
+    expect(toJson(wrapper.find('h3.page-title'))).toMatchSnapshot();
     expect(toJson(wrapper.find('ReactTable'))).toMatchSnapshot();
     wrapper.unmount();
   });
