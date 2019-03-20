@@ -1896,7 +1896,7 @@ exports[`containers/pages/HistoricalFocusInvestigation renders HistoricalFocusIn
         currentPage={
           Object {
             "label": "Focus Investigation",
-            "url": "/focus",
+            "url": "/focus-investigation",
           }
         }
         pages={
