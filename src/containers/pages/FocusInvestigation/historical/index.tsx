@@ -1,5 +1,6 @@
 // this is the FocusInvestigation page component
 import DrillDownTable from '@onaio/drill-down-table';
+import { Location } from 'history';
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import { CellInfo } from 'react-table';
@@ -14,13 +15,12 @@ import { data } from './tests/fixtures';
 
 /** Route params interface */
 interface RouteParams {
-  id: string;
+  id?: string;
 }
 
 /** State interface */
 interface State {
-  id: string;
-  location: FlexObject;
+  id?: string;
 }
 
 /** Historical data reporting for Focus Investigation */
@@ -30,23 +30,28 @@ class HistoricalFocusInvestigation extends React.Component<
 > {
   constructor(props: RouteComponentProps<RouteParams>) {
     super(props);
-    this.state = {
-      id: this.props.match.params.id,
-      location: this.props.location,
-    };
+    if (this.props.match && this.props.match.params && this.props.match.params.id) {
+      this.state = {
+        id: this.props.match.params.id,
+      };
+    } else {
+      this.state = {};
+    }
   }
 
   public componentDidUpdate() {
-    const { id: prevId, location: prevLocation } = this.state;
-    const id = this.props.match.params.id;
-    const location = this.props.location;
-    if (id !== prevId && location !== prevLocation) {
-      this.setState({ id, location });
+    const { id: prevId } = this.state;
+    if (this.props.match && this.props.match.params && this.props.match.params.id) {
+      const id = this.props.match.params.id;
+
+      if (id !== prevId) {
+        this.setState({ id });
+      }
     }
   }
 
   public render() {
-    const { id, location } = this.state;
+    const { id } = this.state;
     if (id !== undefined) {
       const theObject = data.filter((el: FlexObject) => el.name === id);
       if (theObject.length < 1) {
@@ -127,7 +132,6 @@ class HistoricalFocusInvestigation extends React.Component<
       data,
       identifierField: 'name',
       linkerField: 'name',
-      location,
       minRows: 0,
       parentIdentifierField: 'parent',
       rootParentId: id || null,
