@@ -43,9 +43,13 @@ class HistoricalFocusInvestigation extends React.Component<
     const { id: prevId } = this.state;
     if (this.props.match && this.props.match.params && this.props.match.params.id) {
       const id = this.props.match.params.id;
-
       if (id !== prevId) {
         this.setState({ id });
+      }
+    } else {
+      if (prevId !== undefined) {
+        // if we get in here it means the `id` variable in state needs to be reset
+        this.setState({ id: undefined });
       }
     }
   }
