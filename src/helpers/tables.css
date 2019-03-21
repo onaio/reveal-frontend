@@ -20,3 +20,15 @@
   box-shadow: none;
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
+
+.ReactTable {
+  border: none;
+}
+
+.ReactTable .rt-thead .rt-th {
+  border-right: none;
+}
+
+.ReactTable .rt-thead.-headerGroups {
+  border-bottom: none;
+}
