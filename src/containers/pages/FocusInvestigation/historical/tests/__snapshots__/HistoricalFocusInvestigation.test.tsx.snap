@@ -1415,16 +1415,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                           viewIndex={0}
                           width={100}
                         >
-                          <div
-                            className="indicator-container"
-                            style={
-                              Object {
-                                "backgroundColor": "#ff8533",
-                              }
-                            }
-                          >
-                            0.88
-                          </div>
+                          88%
                         </Cell>
                       </div>
                     </TdComponent>
@@ -1588,7 +1579,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                               }
                             }
                           >
-                            0.94
+                            94%
                           </div>
                         </Cell>
                       </div>
@@ -2092,16 +2083,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                           viewIndex={1}
                           width={100}
                         >
-                          <div
-                            className="indicator-container"
-                            style={
-                              Object {
-                                "backgroundColor": "#33ad33",
-                              }
-                            }
-                          >
-                            1
-                          </div>
+                          100%
                         </Cell>
                       </div>
                     </TdComponent>
@@ -2265,7 +2247,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                               }
                             }
                           >
-                            1
+                            100%
                           </div>
                         </Cell>
                       </div>
@@ -2769,16 +2751,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                           viewIndex={2}
                           width={100}
                         >
-                          <div
-                            className="indicator-container"
-                            style={
-                              Object {
-                                "backgroundColor": "#ff5c33",
-                              }
-                            }
-                          >
-                            0.67
-                          </div>
+                          67%
                         </Cell>
                       </div>
                     </TdComponent>
@@ -2942,7 +2915,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                               }
                             }
                           >
-                            0.79
+                            79%
                           </div>
                         </Cell>
                       </div>
@@ -3446,16 +3419,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                           viewIndex={3}
                           width={100}
                         >
-                          <div
-                            className="indicator-container"
-                            style={
-                              Object {
-                                "backgroundColor": "#ff8533",
-                              }
-                            }
-                          >
-                            0.87
-                          </div>
+                          87%
                         </Cell>
                       </div>
                     </TdComponent>
@@ -3619,7 +3583,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                               }
                             }
                           >
-                            0.18
+                            18%
                           </div>
                         </Cell>
                       </div>
@@ -5103,16 +5067,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                           viewIndex={0}
                           width={100}
                         >
-                          <div
-                            className="indicator-container"
-                            style={
-                              Object {
-                                "backgroundColor": "#ff8533",
-                              }
-                            }
-                          >
-                            0.83
-                          </div>
+                          83%
                         </Cell>
                       </div>
                     </TdComponent>
@@ -5276,7 +5231,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                               }
                             }
                           >
-                            0.94
+                            94%
                           </div>
                         </Cell>
                       </div>
@@ -5780,16 +5735,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                           viewIndex={1}
                           width={100}
                         >
-                          <div
-                            className="indicator-container"
-                            style={
-                              Object {
-                                "backgroundColor": "#ff8533",
-                              }
-                            }
-                          >
-                            0.81
-                          </div>
+                          81%
                         </Cell>
                       </div>
                     </TdComponent>
@@ -5953,7 +5899,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                               }
                             }
                           >
-                            1
+                            100%
                           </div>
                         </Cell>
                       </div>
@@ -6457,16 +6403,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                           viewIndex={2}
                           width={100}
                         >
-                          <div
-                            className="indicator-container"
-                            style={
-                              Object {
-                                "backgroundColor": "#ff5c33",
-                              }
-                            }
-                          >
-                            0.55
-                          </div>
+                          55%
                         </Cell>
                       </div>
                     </TdComponent>
@@ -6630,7 +6567,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                               }
                             }
                           >
-                            0.95
+                            95%
                           </div>
                         </Cell>
                       </div>
@@ -7134,16 +7071,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                           viewIndex={3}
                           width={100}
                         >
-                          <div
-                            className="indicator-container"
-                            style={
-                              Object {
-                                "backgroundColor": "#33ad33",
-                              }
-                            }
-                          >
-                            0.95
-                          </div>
+                          95%
                         </Cell>
                       </div>
                     </TdComponent>
@@ -7307,7 +7235,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                               }
                             }
                           >
-                            0.98
+                            98%
                           </div>
                         </Cell>
                       </div>
@@ -7811,16 +7739,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                           viewIndex={4}
                           width={100}
                         >
-                          <div
-                            className="indicator-container"
-                            style={
-                              Object {
-                                "backgroundColor": "#33ad33",
-                              }
-                            }
-                          >
-                            1
-                          </div>
+                          100%
                         </Cell>
                       </div>
                     </TdComponent>
@@ -7984,7 +7903,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                               }
                             }
                           >
-                            0.67
+                            67%
                           </div>
                         </Cell>
                       </div>
@@ -9467,16 +9386,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                           viewIndex={0}
                           width={100}
                         >
-                          <div
-                            className="indicator-container"
-                            style={
-                              Object {
-                                "backgroundColor": "#33ad33",
-                              }
-                            }
-                          >
-                            0.92
-                          </div>
+                          92%
                         </Cell>
                       </div>
                     </TdComponent>
@@ -9640,7 +9550,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                               }
                             }
                           >
-                            0.94
+                            94%
                           </div>
                         </Cell>
                       </div>
@@ -10144,16 +10054,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                           viewIndex={1}
                           width={100}
                         >
-                          <div
-                            className="indicator-container"
-                            style={
-                              Object {
-                                "backgroundColor": "#ff5c33",
-                              }
-                            }
-                          >
-                            0.6
-                          </div>
+                          60%
                         </Cell>
                       </div>
                     </TdComponent>
@@ -10317,7 +10218,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                               }
                             }
                           >
-                            1
+                            100%
                           </div>
                         </Cell>
                       </div>
@@ -10821,16 +10722,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                           viewIndex={2}
                           width={100}
                         >
-                          <div
-                            className="indicator-container"
-                            style={
-                              Object {
-                                "backgroundColor": "#33ad33",
-                              }
-                            }
-                          >
-                            1
-                          </div>
+                          100%
                         </Cell>
                       </div>
                     </TdComponent>
@@ -10994,7 +10886,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                               }
                             }
                           >
-                            0.79
+                            79%
                           </div>
                         </Cell>
                       </div>
@@ -12502,16 +12394,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                           viewIndex={0}
                           width={100}
                         >
-                          <div
-                            className="indicator-container"
-                            style={
-                              Object {
-                                "backgroundColor": "#ff5c33",
-                              }
-                            }
-                          >
-                            0.5
-                          </div>
+                          50%
                         </Cell>
                       </div>
                     </TdComponent>
@@ -12675,7 +12558,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                               }
                             }
                           >
-                            0.8
+                            80%
                           </div>
                         </Cell>
                       </div>
@@ -13179,16 +13062,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                           viewIndex={1}
                           width={100}
                         >
-                          <div
-                            className="indicator-container"
-                            style={
-                              Object {
-                                "backgroundColor": "#ff8533",
-                              }
-                            }
-                          >
-                            0.8
-                          </div>
+                          80%
                         </Cell>
                       </div>
                     </TdComponent>
@@ -13352,7 +13226,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                               }
                             }
                           >
-                            1
+                            100%
                           </div>
                         </Cell>
                       </div>
@@ -13856,16 +13730,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                           viewIndex={2}
                           width={100}
                         >
-                          <div
-                            className="indicator-container"
-                            style={
-                              Object {
-                                "backgroundColor": "#ff5c33",
-                              }
-                            }
-                          >
-                            0.5
-                          </div>
+                          50%
                         </Cell>
                       </div>
                     </TdComponent>
@@ -14029,7 +13894,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                               }
                             }
                           >
-                            0.75
+                            75%
                           </div>
                         </Cell>
                       </div>
@@ -17860,16 +17725,7 @@ exports[`containers/pages/HistoricalFocusInvestigation renders HistoricalFocusIn
                                     viewIndex={0}
                                     width={100}
                                   >
-                                    <div
-                                      className="indicator-container"
-                                      style={
-                                        Object {
-                                          "backgroundColor": "#ff8533",
-                                        }
-                                      }
-                                    >
-                                      0.88
-                                    </div>
+                                    88%
                                   </Cell>
                                 </div>
                               </TdComponent>
@@ -18033,7 +17889,7 @@ exports[`containers/pages/HistoricalFocusInvestigation renders HistoricalFocusIn
                                         }
                                       }
                                     >
-                                      0.94
+                                      94%
                                     </div>
                                   </Cell>
                                 </div>
@@ -18537,16 +18393,7 @@ exports[`containers/pages/HistoricalFocusInvestigation renders HistoricalFocusIn
                                     viewIndex={1}
                                     width={100}
                                   >
-                                    <div
-                                      className="indicator-container"
-                                      style={
-                                        Object {
-                                          "backgroundColor": "#33ad33",
-                                        }
-                                      }
-                                    >
-                                      1
-                                    </div>
+                                    100%
                                   </Cell>
                                 </div>
                               </TdComponent>
@@ -18710,7 +18557,7 @@ exports[`containers/pages/HistoricalFocusInvestigation renders HistoricalFocusIn
                                         }
                                       }
                                     >
-                                      1
+                                      100%
                                     </div>
                                   </Cell>
                                 </div>
@@ -19214,16 +19061,7 @@ exports[`containers/pages/HistoricalFocusInvestigation renders HistoricalFocusIn
                                     viewIndex={2}
                                     width={100}
                                   >
-                                    <div
-                                      className="indicator-container"
-                                      style={
-                                        Object {
-                                          "backgroundColor": "#ff5c33",
-                                        }
-                                      }
-                                    >
-                                      0.67
-                                    </div>
+                                    67%
                                   </Cell>
                                 </div>
                               </TdComponent>
@@ -19387,7 +19225,7 @@ exports[`containers/pages/HistoricalFocusInvestigation renders HistoricalFocusIn
                                         }
                                       }
                                     >
-                                      0.79
+                                      79%
                                     </div>
                                   </Cell>
                                 </div>
@@ -19891,16 +19729,7 @@ exports[`containers/pages/HistoricalFocusInvestigation renders HistoricalFocusIn
                                     viewIndex={3}
                                     width={100}
                                   >
-                                    <div
-                                      className="indicator-container"
-                                      style={
-                                        Object {
-                                          "backgroundColor": "#ff8533",
-                                        }
-                                      }
-                                    >
-                                      0.87
-                                    </div>
+                                    87%
                                   </Cell>
                                 </div>
                               </TdComponent>
@@ -20064,7 +19893,7 @@ exports[`containers/pages/HistoricalFocusInvestigation renders HistoricalFocusIn
                                         }
                                       }
                                     >
-                                      0.18
+                                      18%
                                     </div>
                                   </Cell>
                                 </div>
@@ -20094,6 +19923,260 @@ exports[`containers/pages/HistoricalFocusInvestigation renders HistoricalFocusIn
             </div>
           </ReactTable>
         </DrillDownTable>
+        <h5
+          className="mt-5"
+        >
+          Definitions
+        </h5>
+        <Table
+          responsiveTag="div"
+          tag="table"
+        >
+          <table
+            className="table"
+          >
+            <tbody>
+              <tr
+                key="A1"
+              >
+                <ElementMap
+                  HTMLTag="td"
+                  className="element-map"
+                  items={
+                    Array [
+                      "A1",
+                      "Active",
+                      "Indigenous case recorded within the last year.",
+                    ]
+                  }
+                >
+                  <td
+                    className="element-map"
+                    key="0"
+                  >
+                    A1
+                  </td>
+                  <td
+                    className="element-map"
+                    key="1"
+                  >
+                    Active
+                  </td>
+                  <td
+                    className="element-map"
+                    key="2"
+                  >
+                    Indigenous case recorded within the last year.
+                  </td>
+                </ElementMap>
+              </tr>
+              <tr
+                key="A2"
+              >
+                <ElementMap
+                  HTMLTag="td"
+                  className="element-map"
+                  items={
+                    Array [
+                      "A2",
+                      "Residual Non-Active",
+                      "No indigenous case during the last year, but withing the last 3 years.",
+                    ]
+                  }
+                >
+                  <td
+                    className="element-map"
+                    key="0"
+                  >
+                    A2
+                  </td>
+                  <td
+                    className="element-map"
+                    key="1"
+                  >
+                    Residual Non-Active
+                  </td>
+                  <td
+                    className="element-map"
+                    key="2"
+                  >
+                    No indigenous case during the last year, but withing the last 3 years.
+                  </td>
+                </ElementMap>
+              </tr>
+              <tr
+                key="B1"
+              >
+                <ElementMap
+                  HTMLTag="td"
+                  className="element-map"
+                  items={
+                    Array [
+                      "B1",
+                      "Cleared Receptive",
+                      "Receptive area but no indigenous cases within the last 3 years.",
+                    ]
+                  }
+                >
+                  <td
+                    className="element-map"
+                    key="0"
+                  >
+                    B1
+                  </td>
+                  <td
+                    className="element-map"
+                    key="1"
+                  >
+                    Cleared Receptive
+                  </td>
+                  <td
+                    className="element-map"
+                    key="2"
+                  >
+                    Receptive area but no indigenous cases within the last 3 years.
+                  </td>
+                </ElementMap>
+              </tr>
+              <tr
+                key="B2"
+              >
+                <ElementMap
+                  HTMLTag="td"
+                  className="element-map"
+                  items={
+                    Array [
+                      "B2",
+                      "Cleared Non-Receptive",
+                      "Non-receptive area.",
+                    ]
+                  }
+                >
+                  <td
+                    className="element-map"
+                    key="0"
+                  >
+                    B2
+                  </td>
+                  <td
+                    className="element-map"
+                    key="1"
+                  >
+                    Cleared Non-Receptive
+                  </td>
+                  <td
+                    className="element-map"
+                    key="2"
+                  >
+                    Non-receptive area.
+                  </td>
+                </ElementMap>
+              </tr>
+            </tbody>
+          </table>
+        </Table>
+        <ResponseAdherence>
+          <div>
+            <h5
+              className="mt-4 mb-3"
+            >
+              Conditional Formatting
+            </h5>
+            <h6
+              className="mb-3"
+            >
+              FI Response Adherence
+            </h6>
+            <div
+              className="row"
+            >
+              <div
+                className="col-3"
+              >
+                <Table
+                  className="text-center"
+                  responsiveTag="div"
+                  tag="table"
+                >
+                  <table
+                    className="text-center table"
+                  >
+                    <tbody>
+                      <tr
+                        style={
+                          Object {
+                            "background": "#33ad33",
+                          }
+                        }
+                      >
+                        <td>
+                          Green
+                        </td>
+                        <td>
+                          &gt;=
+                        </td>
+                        <td>
+                          90%
+                        </td>
+                      </tr>
+                      <tr
+                        style={
+                          Object {
+                            "background": "#ff8533",
+                          }
+                        }
+                      >
+                        <td>
+                          Orange
+                        </td>
+                        <td>
+                          90%
+                        </td>
+                        <td>
+                          80%
+                        </td>
+                      </tr>
+                      <tr
+                        style={
+                          Object {
+                            "background": "#ff5c33",
+                          }
+                        }
+                      >
+                        <td>
+                          Red
+                        </td>
+                        <td>
+                          80%
+                        </td>
+                        <td>
+                          20%
+                        </td>
+                      </tr>
+                      <tr
+                        style={
+                          Object {
+                            "background": "#ff3",
+                          }
+                        }
+                      >
+                        <td>
+                          Yellow
+                        </td>
+                        <td>
+                          &gt;=
+                        </td>
+                        <td>
+                          20%
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </Table>
+              </div>
+            </div>
+          </div>
+        </ResponseAdherence>
       </div>
     </div>
   </HistoricalFocusInvestigation>
