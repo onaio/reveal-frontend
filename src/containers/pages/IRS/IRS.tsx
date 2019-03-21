@@ -8,9 +8,21 @@ class IRS extends React.Component<{}, {}> {
   }
 
   public render() {
+    const breadcrumbProps = {
+      currentPage: {
+        label: 'IRS',
+        url: '/irs',
+      },
+      pages: [
+        {
+          label: 'Home',
+          url: '/',
+        },
+      ],
+    };
     return (
       <div>
-        <HeaderBreadcrumb />
+        <HeaderBreadcrumb {...breadcrumbProps} />
         <div>IRS</div>
       </div>
     );

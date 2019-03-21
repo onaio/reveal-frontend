@@ -14,7 +14,7 @@ import {
   UncontrolledDropdown,
 } from 'reactstrap';
 import logo from '../../../assets/images/logo.png';
-import { FOCUS_INVESTIGATION_URL, IRS_URL, WEBSITE_NAME } from '../../../constants';
+import { FI_URL, IRS_URL, WEBSITE_NAME } from '../../../constants';
 import './Header.css';
 
 interface State {
@@ -54,7 +54,7 @@ class Header extends React.Component<{}, State> {
                 </NavLink>
               </NavItem>
               <NavItem>
-                <NavLink to={FOCUS_INVESTIGATION_URL} className="nav-link" activeClassName="active">
+                <NavLink to={FI_URL} className="nav-link" activeClassName="active">
                   Focus Investigation
                 </NavLink>
               </NavItem>

@@ -13,17 +13,45 @@ describe('components/page/HeaderBreadcrumb', () => {
   });
 
   it('renders without crashing', () => {
+    const props = {
+      currentPage: {
+        label: 'IRS',
+        url: '/irs',
+      },
+      pages: [
+        {
+          label: 'Home',
+          url: '/',
+        },
+      ],
+    };
     shallow(
       <Router history={history}>
-        <HeaderBreadcrumb />
+        <HeaderBreadcrumb {...props} />
       </Router>
     );
   });
 
   it('renders HeaderBreadcrumb correctly', () => {
+    const props = {
+      currentPage: {
+        label: 'IRS',
+        url: '/irs',
+      },
+      pages: [
+        {
+          label: 'Home',
+          url: '/',
+        },
+        {
+          label: 'Programs',
+          url: '/programs',
+        },
+      ],
+    };
     const wrapper = mount(
       <Router history={history}>
-        <HeaderBreadcrumb />
+        <HeaderBreadcrumb {...props} />
       </Router>
     );
     expect(toJson(wrapper)).toMatchSnapshot();
