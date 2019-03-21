@@ -3615,6 +3615,256 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
 `;
 
 exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalFocusInvestigation works correctly 4`] = `
+<table
+  className="definitions table"
+>
+  <tbody>
+    <tr
+      key="A1"
+    >
+      <ElementMap
+        HTMLTag="td"
+        className="element-map"
+        items={
+          Array [
+            "A1",
+            "Active",
+            "Indigenous case recorded within the last year.",
+          ]
+        }
+      >
+        <td
+          className="element-map"
+          key="0"
+        >
+          A1
+        </td>
+        <td
+          className="element-map"
+          key="1"
+        >
+          Active
+        </td>
+        <td
+          className="element-map"
+          key="2"
+        >
+          Indigenous case recorded within the last year.
+        </td>
+      </ElementMap>
+    </tr>
+    <tr
+      key="A2"
+    >
+      <ElementMap
+        HTMLTag="td"
+        className="element-map"
+        items={
+          Array [
+            "A2",
+            "Residual Non-Active",
+            "No indigenous case during the last year, but withing the last 3 years.",
+          ]
+        }
+      >
+        <td
+          className="element-map"
+          key="0"
+        >
+          A2
+        </td>
+        <td
+          className="element-map"
+          key="1"
+        >
+          Residual Non-Active
+        </td>
+        <td
+          className="element-map"
+          key="2"
+        >
+          No indigenous case during the last year, but withing the last 3 years.
+        </td>
+      </ElementMap>
+    </tr>
+    <tr
+      key="B1"
+    >
+      <ElementMap
+        HTMLTag="td"
+        className="element-map"
+        items={
+          Array [
+            "B1",
+            "Cleared Receptive",
+            "Receptive area but no indigenous cases within the last 3 years.",
+          ]
+        }
+      >
+        <td
+          className="element-map"
+          key="0"
+        >
+          B1
+        </td>
+        <td
+          className="element-map"
+          key="1"
+        >
+          Cleared Receptive
+        </td>
+        <td
+          className="element-map"
+          key="2"
+        >
+          Receptive area but no indigenous cases within the last 3 years.
+        </td>
+      </ElementMap>
+    </tr>
+    <tr
+      key="B2"
+    >
+      <ElementMap
+        HTMLTag="td"
+        className="element-map"
+        items={
+          Array [
+            "B2",
+            "Cleared Non-Receptive",
+            "Non-receptive area.",
+          ]
+        }
+      >
+        <td
+          className="element-map"
+          key="0"
+        >
+          B2
+        </td>
+        <td
+          className="element-map"
+          key="1"
+        >
+          Cleared Non-Receptive
+        </td>
+        <td
+          className="element-map"
+          key="2"
+        >
+          Non-receptive area.
+        </td>
+      </ElementMap>
+    </tr>
+  </tbody>
+</table>
+`;
+
+exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalFocusInvestigation works correctly 5`] = `
+<ResponseAdherence>
+  <div>
+    <h5
+      className="mt-4 mb-3"
+    >
+      Conditional Formatting
+    </h5>
+    <h6
+      className="mb-3"
+    >
+      FI Response Adherence
+    </h6>
+    <div
+      className="row"
+    >
+      <div
+        className="col-3"
+      >
+        <Table
+          className="text-center"
+          responsiveTag="div"
+          tag="table"
+        >
+          <table
+            className="text-center table"
+          >
+            <tbody>
+              <tr
+                style={
+                  Object {
+                    "background": "#33ad33",
+                  }
+                }
+              >
+                <td>
+                  Green
+                </td>
+                <td>
+                  &gt;=
+                </td>
+                <td>
+                  90%
+                </td>
+              </tr>
+              <tr
+                style={
+                  Object {
+                    "background": "#ff8533",
+                  }
+                }
+              >
+                <td>
+                  Orange
+                </td>
+                <td>
+                  90%
+                </td>
+                <td>
+                  80%
+                </td>
+              </tr>
+              <tr
+                style={
+                  Object {
+                    "background": "#ff5c33",
+                  }
+                }
+              >
+                <td>
+                  Red
+                </td>
+                <td>
+                  80%
+                </td>
+                <td>
+                  20%
+                </td>
+              </tr>
+              <tr
+                style={
+                  Object {
+                    "background": "#ff3",
+                  }
+                }
+              >
+                <td>
+                  Yellow
+                </td>
+                <td>
+                  &gt;=
+                </td>
+                <td>
+                  20%
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </Table>
+      </div>
+    </div>
+  </div>
+</ResponseAdherence>
+`;
+
+exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalFocusInvestigation works correctly 6`] = `
 <HeaderBreadcrumb
   currentPage={
     Object {
@@ -3709,7 +3959,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
 </HeaderBreadcrumb>
 `;
 
-exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalFocusInvestigation works correctly 5`] = `
+exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalFocusInvestigation works correctly 7`] = `
 <h3
   className="mb-3 page-title"
 >
@@ -3717,7 +3967,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
 </h3>
 `;
 
-exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalFocusInvestigation works correctly 6`] = `
+exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalFocusInvestigation works correctly 8`] = `
 <ReactTable
   AggregatedComponent={[Function]}
   CellComponent={[Function]}
@@ -7934,7 +8184,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
 </ReactTable>
 `;
 
-exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalFocusInvestigation works correctly 7`] = `
+exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalFocusInvestigation works correctly 9`] = `
 <HeaderBreadcrumb
   currentPage={
     Object {
@@ -8054,7 +8304,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
 </HeaderBreadcrumb>
 `;
 
-exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalFocusInvestigation works correctly 8`] = `
+exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalFocusInvestigation works correctly 10`] = `
 <h3
   className="mb-3 page-title"
 >
@@ -8062,7 +8312,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
 </h3>
 `;
 
-exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalFocusInvestigation works correctly 9`] = `
+exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalFocusInvestigation works correctly 11`] = `
 <ReactTable
   AggregatedComponent={[Function]}
   CellComponent={[Function]}
@@ -10917,7 +11167,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
 </ReactTable>
 `;
 
-exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalFocusInvestigation works correctly 10`] = `
+exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalFocusInvestigation works correctly 12`] = `
 <HeaderBreadcrumb
   currentPage={
     Object {
@@ -11062,7 +11312,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
 </HeaderBreadcrumb>
 `;
 
-exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalFocusInvestigation works correctly 11`] = `
+exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalFocusInvestigation works correctly 13`] = `
 <h3
   className="mb-3 page-title"
 >
@@ -11070,7 +11320,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
 </h3>
 `;
 
-exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalFocusInvestigation works correctly 12`] = `
+exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalFocusInvestigation works correctly 14`] = `
 <ReactTable
   AggregatedComponent={[Function]}
   CellComponent={[Function]}
@@ -13925,7 +14175,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
 </ReactTable>
 `;
 
-exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalFocusInvestigation works correctly 13`] = `
+exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalFocusInvestigation works correctly 15`] = `
 <HeaderBreadcrumb
   currentPage={
     Object {
@@ -14095,7 +14345,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
 </HeaderBreadcrumb>
 `;
 
-exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalFocusInvestigation works correctly 14`] = `
+exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalFocusInvestigation works correctly 16`] = `
 <h3
   className="mb-3 page-title"
 >
@@ -14103,7 +14353,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
 </h3>
 `;
 
-exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalFocusInvestigation works correctly 15`] = `
+exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalFocusInvestigation works correctly 17`] = `
 <ReactTable
   AggregatedComponent={[Function]}
   CellComponent={[Function]}
@@ -19929,11 +20179,12 @@ exports[`containers/pages/HistoricalFocusInvestigation renders HistoricalFocusIn
           Definitions
         </h5>
         <Table
+          className="definitions"
           responsiveTag="div"
           tag="table"
         >
           <table
-            className="table"
+            className="definitions table"
           >
             <tbody>
               <tr
