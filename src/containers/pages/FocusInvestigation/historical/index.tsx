@@ -7,7 +7,7 @@ import 'react-table/react-table.css';
 import DrillDownTableLinkedCell from '../../../../components/DrillDownTableLinkedCell';
 import NotFound from '../../../../components/NotFound';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
-import { FI_URL, FOCUS_INVESTIGATIONS, HOME, PROVINCE } from '../../../../constants';
+import { FI_URL, FOCUS_INVESTIGATIONS, HOME, HOME_URL, PROVINCE } from '../../../../constants';
 import { getTableCellIndicator } from '../../../../helpers/indicators';
 import '../../../../helpers/tables.css';
 import { FlexObject } from '../../../../helpers/utils';
@@ -81,7 +81,7 @@ class HistoricalFocusInvestigation extends React.Component<
       pages: [
         {
           label: HOME,
-          url: '/',
+          url: HOME_URL,
         },
       ],
     };
