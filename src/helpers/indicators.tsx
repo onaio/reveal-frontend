@@ -1,14 +1,8 @@
 import * as React from 'react';
 import { CellInfo } from 'react-table';
-import {
-  GREEN,
-  GREEN_THRESHOLD,
-  ORANGE,
-  ORANGE_THRESHOLD,
-  RED,
-  YELLOW,
-  YELLOW_THRESHOLD,
-} from '../constants';
+import { GREEN, ORANGE, RED, YELLOW } from '../colors';
+import { GREEN_THRESHOLD, ORANGE_THRESHOLD, YELLOW_THRESHOLD } from '../constants';
+import { percentage } from '../helpers/utils';
 
 /** Returns a table cell rendered with different colors based on row value */
 export function getTableCellIndicator(row: CellInfo) {
@@ -26,7 +20,7 @@ export function getTableCellIndicator(row: CellInfo) {
             : YELLOW,
       }}
     >
-      {row.value}
+      {percentage(row.value)}
     </div>
   );
 }
