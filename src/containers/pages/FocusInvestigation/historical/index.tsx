@@ -1,16 +1,20 @@
 // this is the FocusInvestigation page component
 import DrillDownTable from '@onaio/drill-down-table';
+import ElementMap from '@onaio/element-map';
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import { CellInfo } from 'react-table';
 import 'react-table/react-table.css';
+import { Table } from 'reactstrap';
 import DrillDownTableLinkedCell from '../../../../components/DrillDownTableLinkedCell';
+import ResponseAdherence from '../../../../components/formatting/ResponseAdherence';
 import NotFound from '../../../../components/NotFound';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
+import { ThailandClassifications } from '../../../../configs/fi';
 import { FI_URL, FOCUS_INVESTIGATIONS, HOME, HOME_URL, PROVINCE } from '../../../../constants';
 import { getTableCellIndicator } from '../../../../helpers/indicators';
 import '../../../../helpers/tables.css';
-import { FlexObject } from '../../../../helpers/utils';
+import { FlexObject, percentage } from '../../../../helpers/utils';
 import { data } from './tests/fixtures';
 
 /** Route params interface */
@@ -67,6 +71,14 @@ class HistoricalFocusInvestigation extends React.Component<
       }
     }
     return result;
+  }
+
+  public renderRow(rowObject: FlexObject) {
+    return (
+      <tr key={rowObject.code}>
+        <ElementMap items={[rowObject.code, rowObject.name, rowObject.description]} HTMLTag="td" />
+      </tr>
+    );
   }
 
   public render() {
@@ -174,7 +186,7 @@ class HistoricalFocusInvestigation extends React.Component<
               className: 'centered',
             },
             {
-              Cell: (cell: CellInfo) => getTableCellIndicator(cell),
+              Cell: (cell: CellInfo) => percentage(cell.value),
               Header: '%',
               accessor: '%',
               className: 'centered indicator',
@@ -248,12 +260,22 @@ class HistoricalFocusInvestigation extends React.Component<
         },
       ];
     }
+
     return (
       <div>
         <HeaderBreadcrumb {...breadcrumbProps} />
         <h3 className="mb-3 page-title">{pageTitle}</h3>
         <div>
           <DrillDownTable {...tableProps} />
+          <h5 className="mt-5">Definitions</h5>
+          <Table>
+            <tbody>{ThailandClassifications.map(el => this.renderRow(el))}</tbody>
+          </Table>
+          {currLevelData.length > 0 && currLevelData[0].type === 'Foci Area' ? (
+            ''
+          ) : (
+            <ResponseAdherence />
+          )}
         </div>
       </div>
     );
