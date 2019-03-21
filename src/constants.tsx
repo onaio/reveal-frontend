@@ -23,13 +23,13 @@ export const FI_URL = '/focus-investigation';
 export type FI_URL = typeof FI_URL;
 
 // colors
-export const GREEN = '#33ad33';
+export const GREEN = 'Green';
 export type GREEN = typeof GREEN;
-export const YELLOW = '#ff3';
+export const YELLOW = 'Yellow';
 export type YELLOW = typeof YELLOW;
-export const ORANGE = '#ff8533';
+export const ORANGE = 'Orange';
 export type ORANGE = typeof ORANGE;
-export const RED = '#ff5c33';
+export const RED = 'Red';
 export type RED = typeof RED;
 
 // thresholds
