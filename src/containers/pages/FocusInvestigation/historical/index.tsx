@@ -268,7 +268,7 @@ class HistoricalFocusInvestigation extends React.Component<
         <div>
           <DrillDownTable {...tableProps} />
           <h5 className="mt-5">Definitions</h5>
-          <Table>
+          <Table className="definitions">
             <tbody>{ThailandClassifications.map(el => this.renderRow(el))}</tbody>
           </Table>
           {currLevelData.length > 0 && currLevelData[0].type === 'Foci Area' ? (
