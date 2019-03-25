@@ -5,7 +5,7 @@ import React, { Component } from 'react';
 import { Route, Switch } from 'react-router';
 import { Col, Container, Row } from 'reactstrap';
 import Header from '../components/page/Header/Header';
-import { FI_URL, IRS_URL } from '../constants';
+import { FI_HISTORICAL_URL, FI_URL, IRS_URL } from '../constants';
 import ActiveFocusInvestigation from '../containers/pages/FocusInvestigation/active';
 import HistoricalFocusInvestigation from '../containers/pages/FocusInvestigation/historical';
 import Home from '../containers/pages/Home/Home';
@@ -29,12 +29,12 @@ class App extends Component {
               <Route exact={true} path={FI_URL} component={ActiveFocusInvestigation} />
               <Route
                 exact={true}
-                path={`${FI_URL}/historical`}
+                path={`${FI_HISTORICAL_URL}`}
                 component={HistoricalFocusInvestigation}
               />
               <Route
                 exact={true}
-                path={`${FI_URL}/historical/:id`}
+                path={`${FI_HISTORICAL_URL}/:id`}
                 component={HistoricalFocusInvestigation}
               />
             </Switch>

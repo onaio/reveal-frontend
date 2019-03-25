@@ -21,6 +21,8 @@ export const IRS_URL = '/irs';
 export type IRS_URL = typeof IRS_URL;
 export const FI_URL = '/focus-investigation';
 export type FI_URL = typeof FI_URL;
+export const FI_HISTORICAL_URL = '/focus-investigation/historical';
+export type FI_HISTORICAL_URL = typeof FI_HISTORICAL_URL;
 
 // colors
 export const GREEN = 'Green';

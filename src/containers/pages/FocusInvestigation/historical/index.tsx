@@ -10,7 +10,13 @@ import ResponseAdherence from '../../../../components/formatting/ResponseAdheren
 import NotFound from '../../../../components/NotFound';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import { FIClassifications } from '../../../../configs/fi';
-import { FI_URL, FOCUS_INVESTIGATIONS, HOME, HOME_URL, PROVINCE } from '../../../../constants';
+import {
+  FI_HISTORICAL_URL,
+  FOCUS_INVESTIGATIONS,
+  HOME,
+  HOME_URL,
+  PROVINCE,
+} from '../../../../constants';
 import { getFIAdherenceIndicator, renderClassificationRow } from '../../../../helpers/indicators';
 import '../../../../helpers/tables.css';
 import { FlexObject, percentage, RouteParams } from '../../../../helpers/utils';
@@ -72,7 +78,7 @@ class HistoricalFocusInvestigation extends React.Component<
     let pageTitle: string = FOCUS_INVESTIGATIONS;
     const baseFIPage = {
       label: FOCUS_INVESTIGATIONS,
-      url: `${FI_URL}`,
+      url: `${FI_HISTORICAL_URL}`,
     };
     const breadcrumbProps = {
       currentPage: baseFIPage,
@@ -101,7 +107,7 @@ class HistoricalFocusInvestigation extends React.Component<
         const pages = theTree.map(el => {
           return {
             label: el.name,
-            url: `${FI_URL}/historical/${el.name}`,
+            url: `${FI_HISTORICAL_URL}/${el.name}`,
           };
         });
         const newPages = breadcrumbProps.pages.concat(pages);
@@ -110,7 +116,7 @@ class HistoricalFocusInvestigation extends React.Component<
 
       const currentPage = {
         label: theObject[0].name,
-        url: `${FI_URL}/historical/${theObject[0].name}`,
+        url: `${FI_HISTORICAL_URL}/${theObject[0].name}`,
       };
       breadcrumbProps.currentPage = currentPage;
     }
