@@ -12,7 +12,7 @@ import NotFound from '../../../../components/NotFound';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import { ThailandClassifications } from '../../../../configs/fi';
 import { FI_URL, FOCUS_INVESTIGATIONS, HOME, HOME_URL, PROVINCE } from '../../../../constants';
-import { getTableCellIndicator } from '../../../../helpers/indicators';
+import { getFIAdherencendicator } from '../../../../helpers/indicators';
 import '../../../../helpers/tables.css';
 import { FlexObject, percentage, RouteParams } from '../../../../helpers/utils';
 import { data } from './tests/fixtures';
@@ -196,7 +196,7 @@ class HistoricalFocusInvestigation extends React.Component<
           className: 'centered',
           columns: [
             {
-              Cell: (cell: CellInfo) => getTableCellIndicator(cell),
+              Cell: (cell: CellInfo) => getFIAdherencendicator(cell),
               Header: 'adherence',
               accessor: 'Adherence',
               className: 'centered indicator',

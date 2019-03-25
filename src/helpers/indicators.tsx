@@ -4,8 +4,10 @@ import { GREEN, ORANGE, RED, YELLOW } from '../colors';
 import { GREEN_THRESHOLD, ORANGE_THRESHOLD, YELLOW_THRESHOLD } from '../constants';
 import { percentage } from '../helpers/utils';
 
-/** Returns a table cell rendered with different colors based on row value */
-export function getTableCellIndicator(row: CellInfo) {
+/** Returns a table cell rendered with different colors based on focus
+ * investigation response adherence conditional formatting
+ */
+export function getFIAdherencendicator(row: CellInfo) {
   return (
     <div
       className="indicator-container"
