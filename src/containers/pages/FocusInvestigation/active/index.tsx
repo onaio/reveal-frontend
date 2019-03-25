@@ -10,8 +10,8 @@ import DrillDownTableLinkedCell from '../../../../components/DrillDownTableLinke
 import OneThreeSevenAdherence from '../../../../components/formatting/OneThreeSevenAdherence';
 import { FIClassifications } from '../../../../configs/fi';
 import {
+  get137AdherenceIndicator,
   get137Value,
-  getFIAdherenceIndicator,
   renderClassificationRow,
 } from '../../../../helpers/indicators';
 import '../../../../helpers/tables.css';
@@ -137,7 +137,7 @@ class ActiveFocusInvestigation extends React.Component<RouteComponentProps<Route
               maxWidth: 40,
             },
             {
-              Cell: (cell: CellInfo) => getFIAdherenceIndicator(cell),
+              Cell: (cell: CellInfo) => get137AdherenceIndicator(cell),
               Header: '7',
               accessor: 'adherence7',
               maxWidth: 105,

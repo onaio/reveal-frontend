@@ -8,7 +8,7 @@ import { FlexObject, percentage } from '../helpers/utils';
 /** Returns a table cell rendered with different colors based on focus
  * investigation response adherence conditional formatting
  */
-export function getFIAdherencendicator(cell: CellInfo) {
+export function getFIAdherenceIndicator(cell: CellInfo) {
   return (
     <div
       className="indicator-container"
@@ -40,7 +40,7 @@ export function get137Value(value: number): string {
 /** Returns a table cell rendered with different colors based on focus
  * investigation 1-3-7 adherence conditional formatting
  */
-export function getFIAdherenceIndicator(cell: CellInfo) {
+export function get137AdherenceIndicator(cell: CellInfo) {
   return (
     <div
       className="137-container"

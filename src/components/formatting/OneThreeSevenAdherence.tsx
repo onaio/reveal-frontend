@@ -3,7 +3,7 @@ import { Table } from 'reactstrap';
 import * as colors from '../../colors';
 import { GREEN, ORANGE, RED, THRESHOLD_137 } from '../../constants';
 
-/** Displays conditional formatting guide for Focus Investigation Response Adherence */
+/** Displays conditional formatting guide for Focus Investigation 1-3-7 Adherence */
 const OneThreeSevenAdherence: React.ElementType = props => {
   return (
     <div>

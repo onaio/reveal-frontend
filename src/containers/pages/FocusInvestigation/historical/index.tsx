@@ -11,7 +11,7 @@ import NotFound from '../../../../components/NotFound';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import { FIClassifications } from '../../../../configs/fi';
 import { FI_URL, FOCUS_INVESTIGATIONS, HOME, HOME_URL, PROVINCE } from '../../../../constants';
-import { getFIAdherencendicator, renderClassificationRow } from '../../../../helpers/indicators';
+import { getFIAdherenceIndicator, renderClassificationRow } from '../../../../helpers/indicators';
 import '../../../../helpers/tables.css';
 import { FlexObject, percentage, RouteParams } from '../../../../helpers/utils';
 import { data } from './tests/fixtures';
@@ -187,7 +187,7 @@ class HistoricalFocusInvestigation extends React.Component<
           className: 'centered',
           columns: [
             {
-              Cell: (cell: CellInfo) => getFIAdherencendicator(cell),
+              Cell: (cell: CellInfo) => getFIAdherenceIndicator(cell),
               Header: 'adherence',
               accessor: 'Adherence',
               className: 'centered indicator',
