@@ -27,10 +27,19 @@ export function getFIAdherencendicator(cell: CellInfo) {
   );
 }
 
+/** Returns a value formatted for Focus Investigation 1-3-7 adherence
+ */
+export function get137Value(value: number): string {
+  if (value < 0) {
+    return '<1';
+  }
+  return `${value}`;
+}
+
 /** Returns a table cell rendered with different colors based on focus
  * investigation 1-3-7 adherence conditional formatting
  */
-export function get137Adherencendicator(cell: CellInfo) {
+export function getFIAdherenceIndicator(cell: CellInfo) {
   return (
     <div
       className="137-container"

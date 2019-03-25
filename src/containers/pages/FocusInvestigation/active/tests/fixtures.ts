@@ -63,7 +63,7 @@ export const data = [
   {
     adherence1: 999,
     adherence3: 999,
-    adherence7: 999,
+    adherence7: -999,
     canton: 'Canton 5 - this is a longer name than usual',
     caseClassification: 'Imported',
     caseNotificationDate: '29/01/19',

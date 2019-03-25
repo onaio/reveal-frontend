@@ -10,7 +10,7 @@ import { Table } from 'reactstrap';
 import DrillDownTableLinkedCell from '../../../../components/DrillDownTableLinkedCell';
 import OneThreeSevenAdherence from '../../../../components/formatting/OneThreeSevenAdherence';
 import { ThailandClassifications } from '../../../../configs/fi';
-import { get137Adherencendicator } from '../../../../helpers/indicators';
+import { get137Value, getFIAdherenceIndicator } from '../../../../helpers/indicators';
 import '../../../../helpers/tables.css';
 import { FlexObject, RouteParams } from '../../../../helpers/utils';
 import { data } from './tests/fixtures';
@@ -130,17 +130,19 @@ class ActiveFocusInvestigation extends React.Component<RouteComponentProps<Route
           Header: '1-3-7 adherence',
           columns: [
             {
+              Cell: (cell: CellInfo) => get137Value(cell.value),
               Header: '1',
               accessor: 'adherence1',
               maxWidth: 40,
             },
             {
+              Cell: (cell: CellInfo) => get137Value(cell.value),
               Header: '3',
               accessor: 'adherence3',
               maxWidth: 40,
             },
             {
-              Cell: (cell: CellInfo) => get137Adherencendicator(cell),
+              Cell: (cell: CellInfo) => getFIAdherenceIndicator(cell),
               Header: '7',
               accessor: 'adherence7',
               maxWidth: 105,
