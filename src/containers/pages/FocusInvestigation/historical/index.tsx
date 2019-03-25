@@ -9,7 +9,7 @@ import DrillDownTableLinkedCell from '../../../../components/DrillDownTableLinke
 import ResponseAdherence from '../../../../components/formatting/ResponseAdherence';
 import NotFound from '../../../../components/NotFound';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
-import { ThailandClassifications } from '../../../../configs/fi';
+import { FIClassifications } from '../../../../configs/fi';
 import { FI_URL, FOCUS_INVESTIGATIONS, HOME, HOME_URL, PROVINCE } from '../../../../constants';
 import { getFIAdherencendicator, renderClassificationRow } from '../../../../helpers/indicators';
 import '../../../../helpers/tables.css';
@@ -263,7 +263,7 @@ class HistoricalFocusInvestigation extends React.Component<
           <DrillDownTable {...tableProps} />
           <h5 className="mt-5">Definitions</h5>
           <Table className="definitions">
-            <tbody>{ThailandClassifications.map(el => renderClassificationRow(el))}</tbody>
+            <tbody>{FIClassifications.map(el => renderClassificationRow(el))}</tbody>
           </Table>
           {currLevelData.length > 0 && currLevelData[0].type === 'Foci Area' ? (
             ''

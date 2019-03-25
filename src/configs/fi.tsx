@@ -7,8 +7,8 @@ export interface Classification {
   description: string;
 }
 
-/** Focus Investigation classifications for Thailand */
-export const ThailandClassifications: Classification[] = [
+/** Focus Investigation case classifications */
+export const FIClassifications: Classification[] = [
   {
     code: 'A1',
     description: 'Indigenous case recorded within the last year.',

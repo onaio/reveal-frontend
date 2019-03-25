@@ -8,7 +8,7 @@ import 'react-table/react-table.css';
 import { Table } from 'reactstrap';
 import DrillDownTableLinkedCell from '../../../../components/DrillDownTableLinkedCell';
 import OneThreeSevenAdherence from '../../../../components/formatting/OneThreeSevenAdherence';
-import { ThailandClassifications } from '../../../../configs/fi';
+import { FIClassifications } from '../../../../configs/fi';
 import {
   get137Value,
   getFIAdherenceIndicator,
@@ -162,7 +162,7 @@ class ActiveFocusInvestigation extends React.Component<RouteComponentProps<Route
         <DrillDownTable {...tableProps} />
         <h5 className="mt-5">Definitions</h5>
         <Table className="definitions">
-          <tbody>{ThailandClassifications.map(el => renderClassificationRow(el))}</tbody>
+          <tbody>{FIClassifications.map(el => renderClassificationRow(el))}</tbody>
         </Table>
         <OneThreeSevenAdherence />
       </div>
