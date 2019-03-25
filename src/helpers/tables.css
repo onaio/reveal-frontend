@@ -4,12 +4,16 @@
 }
 
 .ReactTable .rt-td.centered,
-.ReactTable .rt-tr.centered {
+.ReactTable .rt-th.centered {
   text-align: center;
 }
 
 .ReactTable .rt-td.indicator {
   padding: 0;
+}
+
+.ReactTable .rt-td {
+  white-space: unset;
 }
 
 .ReactTable .rt-td .indicator-container {
