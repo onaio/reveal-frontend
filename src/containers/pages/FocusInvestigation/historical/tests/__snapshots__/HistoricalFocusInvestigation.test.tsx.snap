@@ -5,7 +5,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
   currentPage={
     Object {
       "label": "Focus Investigations",
-      "url": "/focus-investigation",
+      "url": "/focus-investigation/historical",
     }
   }
   pages={
@@ -139,6 +139,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
     Array [
       Object {
         "Header": "Province",
+        "className": "centered",
         "columns": Array [
           Object {
             "Cell": [Function],
@@ -149,6 +150,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
       },
       Object {
         "Header": "Mapped Foci Areas",
+        "className": "centered",
         "columns": Array [
           Object {
             "Header": "Total",
@@ -179,6 +181,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
       },
       Object {
         "Header": "A1 screened twice in last year",
+        "className": "centered",
         "columns": Array [
           Object {
             "Header": "Number",
@@ -195,6 +198,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
       },
       Object {
         "Header": "FI response",
+        "className": "centered",
         "columns": Array [
           Object {
             "Cell": [Function],
@@ -985,6 +989,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                               "minWidth": 100,
                               "parentColumn": Object {
                                 "Header": "Province",
+                                "className": "centered",
                                 "columns": Array [
                                   Object {
                                     "Cell": [Function],
@@ -1078,14 +1083,15 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                           <DrillDownTableLinkedCell
                             cellValue="Province 1"
                             hasChildren={true}
+                            urlPath="/focus-investigation/historical"
                           >
                             <div>
                               <Link
                                 replace={false}
-                                to="/focus-investigation/Province 1"
+                                to="/focus-investigation/historical/Province 1"
                               >
                                 <a
-                                  href="/focus-investigation/Province 1"
+                                  href="/focus-investigation/historical/Province 1"
                                   onClick={[Function]}
                                 >
                                   Province 1
@@ -1319,6 +1325,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                               "minWidth": 100,
                               "parentColumn": Object {
                                 "Header": "A1 screened twice in last year",
+                                "className": "centered",
                                 "columns": Array [
                                   Object {
                                     "Header": "Number",
@@ -1480,6 +1487,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                               "minWidth": 100,
                               "parentColumn": Object {
                                 "Header": "FI response",
+                                "className": "centered",
                                 "columns": Array [
                                   Object {
                                     "Cell": [Function],
@@ -1663,6 +1671,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                               "minWidth": 100,
                               "parentColumn": Object {
                                 "Header": "Province",
+                                "className": "centered",
                                 "columns": Array [
                                   Object {
                                     "Cell": [Function],
@@ -1756,6 +1765,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                           <DrillDownTableLinkedCell
                             cellValue="Province 2"
                             hasChildren={false}
+                            urlPath="/focus-investigation/historical"
                           >
                             <div>
                               Province 2
@@ -1987,6 +1997,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                               "minWidth": 100,
                               "parentColumn": Object {
                                 "Header": "A1 screened twice in last year",
+                                "className": "centered",
                                 "columns": Array [
                                   Object {
                                     "Header": "Number",
@@ -2148,6 +2159,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                               "minWidth": 100,
                               "parentColumn": Object {
                                 "Header": "FI response",
+                                "className": "centered",
                                 "columns": Array [
                                   Object {
                                     "Cell": [Function],
@@ -2331,6 +2343,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                               "minWidth": 100,
                               "parentColumn": Object {
                                 "Header": "Province",
+                                "className": "centered",
                                 "columns": Array [
                                   Object {
                                     "Cell": [Function],
@@ -2424,6 +2437,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                           <DrillDownTableLinkedCell
                             cellValue="Province 3"
                             hasChildren={false}
+                            urlPath="/focus-investigation/historical"
                           >
                             <div>
                               Province 3
@@ -2655,6 +2669,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                               "minWidth": 100,
                               "parentColumn": Object {
                                 "Header": "A1 screened twice in last year",
+                                "className": "centered",
                                 "columns": Array [
                                   Object {
                                     "Header": "Number",
@@ -2816,6 +2831,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                               "minWidth": 100,
                               "parentColumn": Object {
                                 "Header": "FI response",
+                                "className": "centered",
                                 "columns": Array [
                                   Object {
                                     "Cell": [Function],
@@ -2999,6 +3015,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                               "minWidth": 100,
                               "parentColumn": Object {
                                 "Header": "Province",
+                                "className": "centered",
                                 "columns": Array [
                                   Object {
                                     "Cell": [Function],
@@ -3092,6 +3109,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                           <DrillDownTableLinkedCell
                             cellValue="Province 4"
                             hasChildren={false}
+                            urlPath="/focus-investigation/historical"
                           >
                             <div>
                               Province 4
@@ -3323,6 +3341,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                               "minWidth": 100,
                               "parentColumn": Object {
                                 "Header": "A1 screened twice in last year",
+                                "className": "centered",
                                 "columns": Array [
                                   Object {
                                     "Header": "Number",
@@ -3484,6 +3503,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                               "minWidth": 100,
                               "parentColumn": Object {
                                 "Header": "FI response",
+                                "className": "centered",
                                 "columns": Array [
                                   Object {
                                     "Cell": [Function],
@@ -3620,6 +3640,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
 >
   <tbody>
     <tr
+      className="definitions"
       key="A1"
     >
       <ElementMap
@@ -3654,6 +3675,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
       </ElementMap>
     </tr>
     <tr
+      className="definitions"
       key="A2"
     >
       <ElementMap
@@ -3688,6 +3710,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
       </ElementMap>
     </tr>
     <tr
+      className="definitions"
       key="B1"
     >
       <ElementMap
@@ -3722,6 +3745,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
       </ElementMap>
     </tr>
     <tr
+      className="definitions"
       key="B2"
     >
       <ElementMap
@@ -3869,7 +3893,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
   currentPage={
     Object {
       "label": "Province 1",
-      "url": "/focus-investigation/Province 1",
+      "url": "/focus-investigation/historical/Province 1",
     }
   }
   pages={
@@ -3880,7 +3904,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
       },
       Object {
         "label": "Focus Investigations",
-        "url": "/focus-investigation",
+        "url": "/focus-investigation/historical",
       },
     ]
   }
@@ -3930,10 +3954,10 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
               <Link
                 key="1"
                 replace={false}
-                to="/focus-investigation"
+                to="/focus-investigation/historical"
               >
                 <a
-                  href="/focus-investigation"
+                  href="/focus-investigation/historical"
                   onClick={[Function]}
                 >
                   Focus Investigations
@@ -4028,6 +4052,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
     Array [
       Object {
         "Header": "District",
+        "className": "centered",
         "columns": Array [
           Object {
             "Cell": [Function],
@@ -4038,6 +4063,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
       },
       Object {
         "Header": "Mapped Foci Areas",
+        "className": "centered",
         "columns": Array [
           Object {
             "Header": "Total",
@@ -4068,6 +4094,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
       },
       Object {
         "Header": "A1 screened twice in last year",
+        "className": "centered",
         "columns": Array [
           Object {
             "Header": "Number",
@@ -4084,6 +4111,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
       },
       Object {
         "Header": "FI response",
+        "className": "centered",
         "columns": Array [
           Object {
             "Cell": [Function],
@@ -4887,6 +4915,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                               "minWidth": 100,
                               "parentColumn": Object {
                                 "Header": "District",
+                                "className": "centered",
                                 "columns": Array [
                                   Object {
                                     "Cell": [Function],
@@ -4980,14 +5009,15 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                           <DrillDownTableLinkedCell
                             cellValue="District 1"
                             hasChildren={true}
+                            urlPath="/focus-investigation/historical"
                           >
                             <div>
                               <Link
                                 replace={false}
-                                to="/focus-investigation/District 1"
+                                to="/focus-investigation/historical/District 1"
                               >
                                 <a
-                                  href="/focus-investigation/District 1"
+                                  href="/focus-investigation/historical/District 1"
                                   onClick={[Function]}
                                 >
                                   District 1
@@ -5221,6 +5251,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                               "minWidth": 100,
                               "parentColumn": Object {
                                 "Header": "A1 screened twice in last year",
+                                "className": "centered",
                                 "columns": Array [
                                   Object {
                                     "Header": "Number",
@@ -5382,6 +5413,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                               "minWidth": 100,
                               "parentColumn": Object {
                                 "Header": "FI response",
+                                "className": "centered",
                                 "columns": Array [
                                   Object {
                                     "Cell": [Function],
@@ -5565,6 +5597,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                               "minWidth": 100,
                               "parentColumn": Object {
                                 "Header": "District",
+                                "className": "centered",
                                 "columns": Array [
                                   Object {
                                     "Cell": [Function],
@@ -5658,6 +5691,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                           <DrillDownTableLinkedCell
                             cellValue="District 2"
                             hasChildren={false}
+                            urlPath="/focus-investigation/historical"
                           >
                             <div>
                               District 2
@@ -5889,6 +5923,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                               "minWidth": 100,
                               "parentColumn": Object {
                                 "Header": "A1 screened twice in last year",
+                                "className": "centered",
                                 "columns": Array [
                                   Object {
                                     "Header": "Number",
@@ -6050,6 +6085,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                               "minWidth": 100,
                               "parentColumn": Object {
                                 "Header": "FI response",
+                                "className": "centered",
                                 "columns": Array [
                                   Object {
                                     "Cell": [Function],
@@ -6233,6 +6269,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                               "minWidth": 100,
                               "parentColumn": Object {
                                 "Header": "District",
+                                "className": "centered",
                                 "columns": Array [
                                   Object {
                                     "Cell": [Function],
@@ -6326,6 +6363,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                           <DrillDownTableLinkedCell
                             cellValue="District 3"
                             hasChildren={false}
+                            urlPath="/focus-investigation/historical"
                           >
                             <div>
                               District 3
@@ -6557,6 +6595,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                               "minWidth": 100,
                               "parentColumn": Object {
                                 "Header": "A1 screened twice in last year",
+                                "className": "centered",
                                 "columns": Array [
                                   Object {
                                     "Header": "Number",
@@ -6718,6 +6757,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                               "minWidth": 100,
                               "parentColumn": Object {
                                 "Header": "FI response",
+                                "className": "centered",
                                 "columns": Array [
                                   Object {
                                     "Cell": [Function],
@@ -6901,6 +6941,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                               "minWidth": 100,
                               "parentColumn": Object {
                                 "Header": "District",
+                                "className": "centered",
                                 "columns": Array [
                                   Object {
                                     "Cell": [Function],
@@ -6994,6 +7035,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                           <DrillDownTableLinkedCell
                             cellValue="District 4"
                             hasChildren={false}
+                            urlPath="/focus-investigation/historical"
                           >
                             <div>
                               District 4
@@ -7225,6 +7267,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                               "minWidth": 100,
                               "parentColumn": Object {
                                 "Header": "A1 screened twice in last year",
+                                "className": "centered",
                                 "columns": Array [
                                   Object {
                                     "Header": "Number",
@@ -7386,6 +7429,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                               "minWidth": 100,
                               "parentColumn": Object {
                                 "Header": "FI response",
+                                "className": "centered",
                                 "columns": Array [
                                   Object {
                                     "Cell": [Function],
@@ -7569,6 +7613,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                               "minWidth": 100,
                               "parentColumn": Object {
                                 "Header": "District",
+                                "className": "centered",
                                 "columns": Array [
                                   Object {
                                     "Cell": [Function],
@@ -7662,6 +7707,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                           <DrillDownTableLinkedCell
                             cellValue="District 5"
                             hasChildren={false}
+                            urlPath="/focus-investigation/historical"
                           >
                             <div>
                               District 5
@@ -7893,6 +7939,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                               "minWidth": 100,
                               "parentColumn": Object {
                                 "Header": "A1 screened twice in last year",
+                                "className": "centered",
                                 "columns": Array [
                                   Object {
                                     "Header": "Number",
@@ -8054,6 +8101,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                               "minWidth": 100,
                               "parentColumn": Object {
                                 "Header": "FI response",
+                                "className": "centered",
                                 "columns": Array [
                                   Object {
                                     "Cell": [Function],
@@ -8189,7 +8237,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
   currentPage={
     Object {
       "label": "District 1",
-      "url": "/focus-investigation/District 1",
+      "url": "/focus-investigation/historical/District 1",
     }
   }
   pages={
@@ -8200,11 +8248,11 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
       },
       Object {
         "label": "Focus Investigations",
-        "url": "/focus-investigation",
+        "url": "/focus-investigation/historical",
       },
       Object {
         "label": "Province 1",
-        "url": "/focus-investigation/Province 1",
+        "url": "/focus-investigation/historical/Province 1",
       },
     ]
   }
@@ -8254,10 +8302,10 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
               <Link
                 key="1"
                 replace={false}
-                to="/focus-investigation"
+                to="/focus-investigation/historical"
               >
                 <a
-                  href="/focus-investigation"
+                  href="/focus-investigation/historical"
                   onClick={[Function]}
                 >
                   Focus Investigations
@@ -8275,10 +8323,10 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
               <Link
                 key="2"
                 replace={false}
-                to="/focus-investigation/Province 1"
+                to="/focus-investigation/historical/Province 1"
               >
                 <a
-                  href="/focus-investigation/Province 1"
+                  href="/focus-investigation/historical/Province 1"
                   onClick={[Function]}
                 >
                   Province 1
@@ -8373,6 +8421,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
     Array [
       Object {
         "Header": "Canton",
+        "className": "centered",
         "columns": Array [
           Object {
             "Cell": [Function],
@@ -8383,6 +8432,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
       },
       Object {
         "Header": "Mapped Foci Areas",
+        "className": "centered",
         "columns": Array [
           Object {
             "Header": "Total",
@@ -8413,6 +8463,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
       },
       Object {
         "Header": "A1 screened twice in last year",
+        "className": "centered",
         "columns": Array [
           Object {
             "Header": "Number",
@@ -8429,6 +8480,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
       },
       Object {
         "Header": "FI response",
+        "className": "centered",
         "columns": Array [
           Object {
             "Cell": [Function],
@@ -9206,6 +9258,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                               "minWidth": 100,
                               "parentColumn": Object {
                                 "Header": "Canton",
+                                "className": "centered",
                                 "columns": Array [
                                   Object {
                                     "Cell": [Function],
@@ -9299,14 +9352,15 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                           <DrillDownTableLinkedCell
                             cellValue="Canton 1"
                             hasChildren={true}
+                            urlPath="/focus-investigation/historical"
                           >
                             <div>
                               <Link
                                 replace={false}
-                                to="/focus-investigation/Canton 1"
+                                to="/focus-investigation/historical/Canton 1"
                               >
                                 <a
-                                  href="/focus-investigation/Canton 1"
+                                  href="/focus-investigation/historical/Canton 1"
                                   onClick={[Function]}
                                 >
                                   Canton 1
@@ -9540,6 +9594,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                               "minWidth": 100,
                               "parentColumn": Object {
                                 "Header": "A1 screened twice in last year",
+                                "className": "centered",
                                 "columns": Array [
                                   Object {
                                     "Header": "Number",
@@ -9701,6 +9756,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                               "minWidth": 100,
                               "parentColumn": Object {
                                 "Header": "FI response",
+                                "className": "centered",
                                 "columns": Array [
                                   Object {
                                     "Cell": [Function],
@@ -9884,6 +9940,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                               "minWidth": 100,
                               "parentColumn": Object {
                                 "Header": "Canton",
+                                "className": "centered",
                                 "columns": Array [
                                   Object {
                                     "Cell": [Function],
@@ -9977,6 +10034,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                           <DrillDownTableLinkedCell
                             cellValue="Canton 2"
                             hasChildren={false}
+                            urlPath="/focus-investigation/historical"
                           >
                             <div>
                               Canton 2
@@ -10208,6 +10266,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                               "minWidth": 100,
                               "parentColumn": Object {
                                 "Header": "A1 screened twice in last year",
+                                "className": "centered",
                                 "columns": Array [
                                   Object {
                                     "Header": "Number",
@@ -10369,6 +10428,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                               "minWidth": 100,
                               "parentColumn": Object {
                                 "Header": "FI response",
+                                "className": "centered",
                                 "columns": Array [
                                   Object {
                                     "Cell": [Function],
@@ -10552,6 +10612,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                               "minWidth": 100,
                               "parentColumn": Object {
                                 "Header": "Canton",
+                                "className": "centered",
                                 "columns": Array [
                                   Object {
                                     "Cell": [Function],
@@ -10645,6 +10706,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                           <DrillDownTableLinkedCell
                             cellValue="Canton 3"
                             hasChildren={false}
+                            urlPath="/focus-investigation/historical"
                           >
                             <div>
                               Canton 3
@@ -10876,6 +10938,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                               "minWidth": 100,
                               "parentColumn": Object {
                                 "Header": "A1 screened twice in last year",
+                                "className": "centered",
                                 "columns": Array [
                                   Object {
                                     "Header": "Number",
@@ -11037,6 +11100,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                               "minWidth": 100,
                               "parentColumn": Object {
                                 "Header": "FI response",
+                                "className": "centered",
                                 "columns": Array [
                                   Object {
                                     "Cell": [Function],
@@ -11172,7 +11236,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
   currentPage={
     Object {
       "label": "Canton 1",
-      "url": "/focus-investigation/Canton 1",
+      "url": "/focus-investigation/historical/Canton 1",
     }
   }
   pages={
@@ -11183,15 +11247,15 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
       },
       Object {
         "label": "Focus Investigations",
-        "url": "/focus-investigation",
+        "url": "/focus-investigation/historical",
       },
       Object {
         "label": "Province 1",
-        "url": "/focus-investigation/Province 1",
+        "url": "/focus-investigation/historical/Province 1",
       },
       Object {
         "label": "District 1",
-        "url": "/focus-investigation/District 1",
+        "url": "/focus-investigation/historical/District 1",
       },
     ]
   }
@@ -11241,10 +11305,10 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
               <Link
                 key="1"
                 replace={false}
-                to="/focus-investigation"
+                to="/focus-investigation/historical"
               >
                 <a
-                  href="/focus-investigation"
+                  href="/focus-investigation/historical"
                   onClick={[Function]}
                 >
                   Focus Investigations
@@ -11262,10 +11326,10 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
               <Link
                 key="2"
                 replace={false}
-                to="/focus-investigation/Province 1"
+                to="/focus-investigation/historical/Province 1"
               >
                 <a
-                  href="/focus-investigation/Province 1"
+                  href="/focus-investigation/historical/Province 1"
                   onClick={[Function]}
                 >
                   Province 1
@@ -11283,10 +11347,10 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
               <Link
                 key="3"
                 replace={false}
-                to="/focus-investigation/District 1"
+                to="/focus-investigation/historical/District 1"
               >
                 <a
-                  href="/focus-investigation/District 1"
+                  href="/focus-investigation/historical/District 1"
                   onClick={[Function]}
                 >
                   District 1
@@ -11381,6 +11445,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
     Array [
       Object {
         "Header": "Village",
+        "className": "centered",
         "columns": Array [
           Object {
             "Cell": [Function],
@@ -11391,6 +11456,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
       },
       Object {
         "Header": "Mapped Foci Areas",
+        "className": "centered",
         "columns": Array [
           Object {
             "Header": "Total",
@@ -11421,6 +11487,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
       },
       Object {
         "Header": "A1 screened twice in last year",
+        "className": "centered",
         "columns": Array [
           Object {
             "Header": "Number",
@@ -11437,6 +11504,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
       },
       Object {
         "Header": "FI response",
+        "className": "centered",
         "columns": Array [
           Object {
             "Cell": [Function],
@@ -12214,6 +12282,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                               "minWidth": 100,
                               "parentColumn": Object {
                                 "Header": "Village",
+                                "className": "centered",
                                 "columns": Array [
                                   Object {
                                     "Cell": [Function],
@@ -12307,14 +12376,15 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                           <DrillDownTableLinkedCell
                             cellValue="Village 1"
                             hasChildren={true}
+                            urlPath="/focus-investigation/historical"
                           >
                             <div>
                               <Link
                                 replace={false}
-                                to="/focus-investigation/Village 1"
+                                to="/focus-investigation/historical/Village 1"
                               >
                                 <a
-                                  href="/focus-investigation/Village 1"
+                                  href="/focus-investigation/historical/Village 1"
                                   onClick={[Function]}
                                 >
                                   Village 1
@@ -12548,6 +12618,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                               "minWidth": 100,
                               "parentColumn": Object {
                                 "Header": "A1 screened twice in last year",
+                                "className": "centered",
                                 "columns": Array [
                                   Object {
                                     "Header": "Number",
@@ -12709,6 +12780,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                               "minWidth": 100,
                               "parentColumn": Object {
                                 "Header": "FI response",
+                                "className": "centered",
                                 "columns": Array [
                                   Object {
                                     "Cell": [Function],
@@ -12892,6 +12964,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                               "minWidth": 100,
                               "parentColumn": Object {
                                 "Header": "Village",
+                                "className": "centered",
                                 "columns": Array [
                                   Object {
                                     "Cell": [Function],
@@ -12985,6 +13058,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                           <DrillDownTableLinkedCell
                             cellValue="Village 2"
                             hasChildren={false}
+                            urlPath="/focus-investigation/historical"
                           >
                             <div>
                               Village 2
@@ -13216,6 +13290,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                               "minWidth": 100,
                               "parentColumn": Object {
                                 "Header": "A1 screened twice in last year",
+                                "className": "centered",
                                 "columns": Array [
                                   Object {
                                     "Header": "Number",
@@ -13377,6 +13452,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                               "minWidth": 100,
                               "parentColumn": Object {
                                 "Header": "FI response",
+                                "className": "centered",
                                 "columns": Array [
                                   Object {
                                     "Cell": [Function],
@@ -13560,6 +13636,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                               "minWidth": 100,
                               "parentColumn": Object {
                                 "Header": "Village",
+                                "className": "centered",
                                 "columns": Array [
                                   Object {
                                     "Cell": [Function],
@@ -13653,6 +13730,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                           <DrillDownTableLinkedCell
                             cellValue="Village 3"
                             hasChildren={false}
+                            urlPath="/focus-investigation/historical"
                           >
                             <div>
                               Village 3
@@ -13884,6 +13962,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                               "minWidth": 100,
                               "parentColumn": Object {
                                 "Header": "A1 screened twice in last year",
+                                "className": "centered",
                                 "columns": Array [
                                   Object {
                                     "Header": "Number",
@@ -14045,6 +14124,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                               "minWidth": 100,
                               "parentColumn": Object {
                                 "Header": "FI response",
+                                "className": "centered",
                                 "columns": Array [
                                   Object {
                                     "Cell": [Function],
@@ -14180,7 +14260,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
   currentPage={
     Object {
       "label": "Village 1",
-      "url": "/focus-investigation/Village 1",
+      "url": "/focus-investigation/historical/Village 1",
     }
   }
   pages={
@@ -14191,19 +14271,19 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
       },
       Object {
         "label": "Focus Investigations",
-        "url": "/focus-investigation",
+        "url": "/focus-investigation/historical",
       },
       Object {
         "label": "Province 1",
-        "url": "/focus-investigation/Province 1",
+        "url": "/focus-investigation/historical/Province 1",
       },
       Object {
         "label": "District 1",
-        "url": "/focus-investigation/District 1",
+        "url": "/focus-investigation/historical/District 1",
       },
       Object {
         "label": "Canton 1",
-        "url": "/focus-investigation/Canton 1",
+        "url": "/focus-investigation/historical/Canton 1",
       },
     ]
   }
@@ -14253,10 +14333,10 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
               <Link
                 key="1"
                 replace={false}
-                to="/focus-investigation"
+                to="/focus-investigation/historical"
               >
                 <a
-                  href="/focus-investigation"
+                  href="/focus-investigation/historical"
                   onClick={[Function]}
                 >
                   Focus Investigations
@@ -14274,10 +14354,10 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
               <Link
                 key="2"
                 replace={false}
-                to="/focus-investigation/Province 1"
+                to="/focus-investigation/historical/Province 1"
               >
                 <a
-                  href="/focus-investigation/Province 1"
+                  href="/focus-investigation/historical/Province 1"
                   onClick={[Function]}
                 >
                   Province 1
@@ -14295,10 +14375,10 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
               <Link
                 key="3"
                 replace={false}
-                to="/focus-investigation/District 1"
+                to="/focus-investigation/historical/District 1"
               >
                 <a
-                  href="/focus-investigation/District 1"
+                  href="/focus-investigation/historical/District 1"
                   onClick={[Function]}
                 >
                   District 1
@@ -14316,10 +14396,10 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
               <Link
                 key="4"
                 replace={false}
-                to="/focus-investigation/Canton 1"
+                to="/focus-investigation/historical/Canton 1"
               >
                 <a
-                  href="/focus-investigation/Canton 1"
+                  href="/focus-investigation/historical/Canton 1"
                   onClick={[Function]}
                 >
                   Canton 1
@@ -14414,6 +14494,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
     Array [
       Object {
         "Header": "Foci Area",
+        "className": "centered",
         "columns": Array [
           Object {
             "Cell": [Function],
@@ -14425,6 +14506,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
       },
       Object {
         "Header": "Status",
+        "className": "centered",
         "columns": Array [
           Object {
             "Header": "",
@@ -14435,6 +14517,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
       },
       Object {
         "Header": "Last Visit",
+        "className": "centered",
         "columns": Array [
           Object {
             "Header": "",
@@ -14445,6 +14528,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
       },
       Object {
         "Header": "FI response",
+        "className": "centered",
         "columns": Array [
           Object {
             "Header": "adherence",
@@ -15008,6 +15092,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                               "minWidth": 100,
                               "parentColumn": Object {
                                 "Header": "Foci Area",
+                                "className": "centered",
                                 "columns": Array [
                                   Object {
                                     "Cell": [Function],
@@ -15087,6 +15172,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                           <DrillDownTableLinkedCell
                             cellValue="Foci Area 1"
                             hasChildren={false}
+                            urlPath="/focus-investigation/historical"
                           >
                             <div>
                               Foci Area 1
@@ -15255,6 +15341,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                               "minWidth": 100,
                               "parentColumn": Object {
                                 "Header": "Foci Area",
+                                "className": "centered",
                                 "columns": Array [
                                   Object {
                                     "Cell": [Function],
@@ -15334,6 +15421,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                           <DrillDownTableLinkedCell
                             cellValue="Foci Area 2"
                             hasChildren={false}
+                            urlPath="/focus-investigation/historical"
                           >
                             <div>
                               Foci Area 2
@@ -15502,6 +15590,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                               "minWidth": 100,
                               "parentColumn": Object {
                                 "Header": "Foci Area",
+                                "className": "centered",
                                 "columns": Array [
                                   Object {
                                     "Cell": [Function],
@@ -15581,6 +15670,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                           <DrillDownTableLinkedCell
                             cellValue="Foci Area 3"
                             hasChildren={false}
+                            urlPath="/focus-investigation/historical"
                           >
                             <div>
                               Foci Area 3
@@ -15749,6 +15839,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                               "minWidth": 100,
                               "parentColumn": Object {
                                 "Header": "Foci Area",
+                                "className": "centered",
                                 "columns": Array [
                                   Object {
                                     "Cell": [Function],
@@ -15828,6 +15919,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                           <DrillDownTableLinkedCell
                             cellValue="Foci Area 4"
                             hasChildren={false}
+                            urlPath="/focus-investigation/historical"
                           >
                             <div>
                               Foci Area 4
@@ -15996,6 +16088,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                               "minWidth": 100,
                               "parentColumn": Object {
                                 "Header": "Foci Area",
+                                "className": "centered",
                                 "columns": Array [
                                   Object {
                                     "Cell": [Function],
@@ -16075,6 +16168,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
                           <DrillDownTableLinkedCell
                             cellValue="Foci Area 5"
                             hasChildren={false}
+                            urlPath="/focus-investigation/historical"
                           >
                             <div>
                               Foci Area 5
@@ -16239,8 +16333,8 @@ exports[`containers/pages/HistoricalFocusInvestigation renders HistoricalFocusIn
       Object {
         "isExact": true,
         "params": Object {},
-        "path": "/focus-investigation/:id",
-        "url": "/focus-investigation/Province 1",
+        "path": "/focus-investigation/historical/:id",
+        "url": "/focus-investigation/historical/Province 1",
       }
     }
   >
@@ -16249,7 +16343,7 @@ exports[`containers/pages/HistoricalFocusInvestigation renders HistoricalFocusIn
         currentPage={
           Object {
             "label": "Focus Investigations",
-            "url": "/focus-investigation",
+            "url": "/focus-investigation/historical",
           }
         }
         pages={
@@ -16324,6 +16418,7 @@ exports[`containers/pages/HistoricalFocusInvestigation renders HistoricalFocusIn
             Array [
               Object {
                 "Header": "Province",
+                "className": "centered",
                 "columns": Array [
                   Object {
                     "Cell": [Function],
@@ -16334,6 +16429,7 @@ exports[`containers/pages/HistoricalFocusInvestigation renders HistoricalFocusIn
               },
               Object {
                 "Header": "Mapped Foci Areas",
+                "className": "centered",
                 "columns": Array [
                   Object {
                     "Header": "Total",
@@ -16364,6 +16460,7 @@ exports[`containers/pages/HistoricalFocusInvestigation renders HistoricalFocusIn
               },
               Object {
                 "Header": "A1 screened twice in last year",
+                "className": "centered",
                 "columns": Array [
                   Object {
                     "Header": "Number",
@@ -16380,6 +16477,7 @@ exports[`containers/pages/HistoricalFocusInvestigation renders HistoricalFocusIn
               },
               Object {
                 "Header": "FI response",
+                "className": "centered",
                 "columns": Array [
                   Object {
                     "Cell": [Function],
@@ -16699,6 +16797,7 @@ exports[`containers/pages/HistoricalFocusInvestigation renders HistoricalFocusIn
               Array [
                 Object {
                   "Header": "Province",
+                  "className": "centered",
                   "columns": Array [
                     Object {
                       "Cell": [Function],
@@ -16709,6 +16808,7 @@ exports[`containers/pages/HistoricalFocusInvestigation renders HistoricalFocusIn
                 },
                 Object {
                   "Header": "Mapped Foci Areas",
+                  "className": "centered",
                   "columns": Array [
                     Object {
                       "Header": "Total",
@@ -16739,6 +16839,7 @@ exports[`containers/pages/HistoricalFocusInvestigation renders HistoricalFocusIn
                 },
                 Object {
                   "Header": "A1 screened twice in last year",
+                  "className": "centered",
                   "columns": Array [
                     Object {
                       "Header": "Number",
@@ -16755,6 +16856,7 @@ exports[`containers/pages/HistoricalFocusInvestigation renders HistoricalFocusIn
                 },
                 Object {
                   "Header": "FI response",
+                  "className": "centered",
                   "columns": Array [
                     Object {
                       "Cell": [Function],
@@ -17545,6 +17647,7 @@ exports[`containers/pages/HistoricalFocusInvestigation renders HistoricalFocusIn
                                         "minWidth": 100,
                                         "parentColumn": Object {
                                           "Header": "Province",
+                                          "className": "centered",
                                           "columns": Array [
                                             Object {
                                               "Cell": [Function],
@@ -17638,14 +17741,15 @@ exports[`containers/pages/HistoricalFocusInvestigation renders HistoricalFocusIn
                                     <DrillDownTableLinkedCell
                                       cellValue="Province 1"
                                       hasChildren={true}
+                                      urlPath="/focus-investigation/historical"
                                     >
                                       <div>
                                         <Link
                                           replace={false}
-                                          to="/focus-investigation/Province 1"
+                                          to="/focus-investigation/historical/Province 1"
                                         >
                                           <a
-                                            href="/focus-investigation/Province 1"
+                                            href="/focus-investigation/historical/Province 1"
                                             onClick={[Function]}
                                           >
                                             Province 1
@@ -17879,6 +17983,7 @@ exports[`containers/pages/HistoricalFocusInvestigation renders HistoricalFocusIn
                                         "minWidth": 100,
                                         "parentColumn": Object {
                                           "Header": "A1 screened twice in last year",
+                                          "className": "centered",
                                           "columns": Array [
                                             Object {
                                               "Header": "Number",
@@ -18040,6 +18145,7 @@ exports[`containers/pages/HistoricalFocusInvestigation renders HistoricalFocusIn
                                         "minWidth": 100,
                                         "parentColumn": Object {
                                           "Header": "FI response",
+                                          "className": "centered",
                                           "columns": Array [
                                             Object {
                                               "Cell": [Function],
@@ -18223,6 +18329,7 @@ exports[`containers/pages/HistoricalFocusInvestigation renders HistoricalFocusIn
                                         "minWidth": 100,
                                         "parentColumn": Object {
                                           "Header": "Province",
+                                          "className": "centered",
                                           "columns": Array [
                                             Object {
                                               "Cell": [Function],
@@ -18316,6 +18423,7 @@ exports[`containers/pages/HistoricalFocusInvestigation renders HistoricalFocusIn
                                     <DrillDownTableLinkedCell
                                       cellValue="Province 2"
                                       hasChildren={false}
+                                      urlPath="/focus-investigation/historical"
                                     >
                                       <div>
                                         Province 2
@@ -18547,6 +18655,7 @@ exports[`containers/pages/HistoricalFocusInvestigation renders HistoricalFocusIn
                                         "minWidth": 100,
                                         "parentColumn": Object {
                                           "Header": "A1 screened twice in last year",
+                                          "className": "centered",
                                           "columns": Array [
                                             Object {
                                               "Header": "Number",
@@ -18708,6 +18817,7 @@ exports[`containers/pages/HistoricalFocusInvestigation renders HistoricalFocusIn
                                         "minWidth": 100,
                                         "parentColumn": Object {
                                           "Header": "FI response",
+                                          "className": "centered",
                                           "columns": Array [
                                             Object {
                                               "Cell": [Function],
@@ -18891,6 +19001,7 @@ exports[`containers/pages/HistoricalFocusInvestigation renders HistoricalFocusIn
                                         "minWidth": 100,
                                         "parentColumn": Object {
                                           "Header": "Province",
+                                          "className": "centered",
                                           "columns": Array [
                                             Object {
                                               "Cell": [Function],
@@ -18984,6 +19095,7 @@ exports[`containers/pages/HistoricalFocusInvestigation renders HistoricalFocusIn
                                     <DrillDownTableLinkedCell
                                       cellValue="Province 3"
                                       hasChildren={false}
+                                      urlPath="/focus-investigation/historical"
                                     >
                                       <div>
                                         Province 3
@@ -19215,6 +19327,7 @@ exports[`containers/pages/HistoricalFocusInvestigation renders HistoricalFocusIn
                                         "minWidth": 100,
                                         "parentColumn": Object {
                                           "Header": "A1 screened twice in last year",
+                                          "className": "centered",
                                           "columns": Array [
                                             Object {
                                               "Header": "Number",
@@ -19376,6 +19489,7 @@ exports[`containers/pages/HistoricalFocusInvestigation renders HistoricalFocusIn
                                         "minWidth": 100,
                                         "parentColumn": Object {
                                           "Header": "FI response",
+                                          "className": "centered",
                                           "columns": Array [
                                             Object {
                                               "Cell": [Function],
@@ -19559,6 +19673,7 @@ exports[`containers/pages/HistoricalFocusInvestigation renders HistoricalFocusIn
                                         "minWidth": 100,
                                         "parentColumn": Object {
                                           "Header": "Province",
+                                          "className": "centered",
                                           "columns": Array [
                                             Object {
                                               "Cell": [Function],
@@ -19652,6 +19767,7 @@ exports[`containers/pages/HistoricalFocusInvestigation renders HistoricalFocusIn
                                     <DrillDownTableLinkedCell
                                       cellValue="Province 4"
                                       hasChildren={false}
+                                      urlPath="/focus-investigation/historical"
                                     >
                                       <div>
                                         Province 4
@@ -19883,6 +19999,7 @@ exports[`containers/pages/HistoricalFocusInvestigation renders HistoricalFocusIn
                                         "minWidth": 100,
                                         "parentColumn": Object {
                                           "Header": "A1 screened twice in last year",
+                                          "className": "centered",
                                           "columns": Array [
                                             Object {
                                               "Header": "Number",
@@ -20044,6 +20161,7 @@ exports[`containers/pages/HistoricalFocusInvestigation renders HistoricalFocusIn
                                         "minWidth": 100,
                                         "parentColumn": Object {
                                           "Header": "FI response",
+                                          "className": "centered",
                                           "columns": Array [
                                             Object {
                                               "Cell": [Function],
@@ -20188,6 +20306,7 @@ exports[`containers/pages/HistoricalFocusInvestigation renders HistoricalFocusIn
           >
             <tbody>
               <tr
+                className="definitions"
                 key="A1"
               >
                 <ElementMap
@@ -20222,6 +20341,7 @@ exports[`containers/pages/HistoricalFocusInvestigation renders HistoricalFocusIn
                 </ElementMap>
               </tr>
               <tr
+                className="definitions"
                 key="A2"
               >
                 <ElementMap
@@ -20256,6 +20376,7 @@ exports[`containers/pages/HistoricalFocusInvestigation renders HistoricalFocusIn
                 </ElementMap>
               </tr>
               <tr
+                className="definitions"
                 key="B1"
               >
                 <ElementMap
@@ -20290,6 +20411,7 @@ exports[`containers/pages/HistoricalFocusInvestigation renders HistoricalFocusIn
                 </ElementMap>
               </tr>
               <tr
+                className="definitions"
                 key="B2"
               >
                 <ElementMap
