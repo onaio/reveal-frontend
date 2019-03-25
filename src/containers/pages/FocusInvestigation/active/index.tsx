@@ -8,6 +8,7 @@ import { CellInfo } from 'react-table';
 import 'react-table/react-table.css';
 import { Table } from 'reactstrap';
 import DrillDownTableLinkedCell from '../../../../components/DrillDownTableLinkedCell';
+import OneThreeSevenAdherence from '../../../../components/formatting/OneThreeSevenAdherence';
 import { ThailandClassifications } from '../../../../configs/fi';
 import '../../../../helpers/tables.css';
 import { FlexObject, RouteParams } from '../../../../helpers/utils';
@@ -164,6 +165,7 @@ class ActiveFocusInvestigation extends React.Component<RouteComponentProps<Route
         <Table className="definitions">
           <tbody>{ThailandClassifications.map(el => this.renderRow(el))}</tbody>
         </Table>
+        <OneThreeSevenAdherence />
       </div>
     );
   }
