@@ -101,7 +101,7 @@ class HistoricalFocusInvestigation extends React.Component<
         const pages = theTree.map(el => {
           return {
             label: el.name,
-            url: `${FI_URL}/${el.name}`,
+            url: `${FI_URL}/historical/${el.name}`,
           };
         });
         const newPages = breadcrumbProps.pages.concat(pages);
@@ -110,7 +110,7 @@ class HistoricalFocusInvestigation extends React.Component<
 
       const currentPage = {
         label: theObject[0].name,
-        url: `${FI_URL}/${theObject[0].name}`,
+        url: `${FI_URL}/historical/${theObject[0].name}`,
       };
       breadcrumbProps.currentPage = currentPage;
     }
