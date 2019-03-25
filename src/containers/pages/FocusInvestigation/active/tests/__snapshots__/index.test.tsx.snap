@@ -7053,7 +7053,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                     >
                       <td>
                         Green
-                         &gt; 
+                         &gt;= 
                         0
                          days to go
                       </td>

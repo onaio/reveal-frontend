@@ -1,7 +1,7 @@
 import React from 'react';
 import { Table } from 'reactstrap';
 import * as colors from '../../colors';
-import { GREEN, ORANGE, RED, THRESHOLD_137 } from '../../constants';
+import { GREEN, ONE, ORANGE, RED, ZERO } from '../../constants';
 
 /** Displays conditional formatting guide for Focus Investigation 1-3-7 Adherence */
 const OneThreeSevenAdherence: React.ElementType = props => {
@@ -15,17 +15,17 @@ const OneThreeSevenAdherence: React.ElementType = props => {
             <tbody>
               <tr style={{ background: colors.GREEN }}>
                 <td>
-                  {GREEN} > {THRESHOLD_137} days to go
+                  {GREEN} >= {ONE} days to go
                 </td>
               </tr>
               <tr style={{ background: colors.ORANGE }}>
                 <td>
-                  {ORANGE} {THRESHOLD_137} days to go
+                  {ORANGE} {ZERO} days to go
                 </td>
               </tr>
               <tr style={{ background: colors.RED }}>
                 <td>
-                  {RED} {'<'} {THRESHOLD_137} days to go
+                  {RED} {'<'} {ZERO} days to go
                 </td>
               </tr>
             </tbody>

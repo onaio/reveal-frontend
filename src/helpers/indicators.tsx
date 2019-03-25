@@ -2,7 +2,7 @@ import ElementMap from '@onaio/element-map';
 import * as React from 'react';
 import { CellInfo } from 'react-table';
 import { GREEN, ORANGE, RED, YELLOW } from '../colors';
-import { GREEN_THRESHOLD, ORANGE_THRESHOLD, THRESHOLD_137, YELLOW_THRESHOLD } from '../constants';
+import { GREEN_THRESHOLD, ORANGE_THRESHOLD, YELLOW_THRESHOLD, ZERO } from '../constants';
 import { FlexObject, percentage } from '../helpers/utils';
 
 /** Returns a table cell rendered with different colors based on focus
@@ -45,7 +45,7 @@ export function get137AdherenceIndicator(cell: CellInfo) {
     <div
       className="137-container"
       style={{
-        color: cell.value > THRESHOLD_137 ? GREEN : cell.value < THRESHOLD_137 ? RED : ORANGE,
+        color: cell.value > ZERO ? GREEN : cell.value < ZERO ? RED : ORANGE,
       }}
     >
       {cell.value}d to go
