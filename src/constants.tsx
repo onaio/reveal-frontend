@@ -39,3 +39,6 @@ export const YELLOW_THRESHOLD = 0.2;
 export type YELLOW_THRESHOLD = typeof YELLOW_THRESHOLD;
 export const ORANGE_THRESHOLD = 0.8;
 export type ORANGE_THRESHOLD = typeof ORANGE_THRESHOLD;
+
+// 1-3-7 thresholds
+export const THRESHOLD_137 = 0;
