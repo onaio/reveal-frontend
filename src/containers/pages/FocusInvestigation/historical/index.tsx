@@ -1,4 +1,4 @@
-// this is the FocusInvestigation page component
+// this is the FocusInvestigation "historical" page component
 import DrillDownTable from '@onaio/drill-down-table';
 import ElementMap from '@onaio/element-map';
 import * as React from 'react';
@@ -14,20 +14,15 @@ import { ThailandClassifications } from '../../../../configs/fi';
 import { FI_URL, FOCUS_INVESTIGATIONS, HOME, HOME_URL, PROVINCE } from '../../../../constants';
 import { getTableCellIndicator } from '../../../../helpers/indicators';
 import '../../../../helpers/tables.css';
-import { FlexObject, percentage } from '../../../../helpers/utils';
+import { FlexObject, percentage, RouteParams } from '../../../../helpers/utils';
 import { data } from './tests/fixtures';
-
-/** Route params interface */
-interface RouteParams {
-  id?: string;
-}
 
 /** State interface */
 interface State {
   id?: string;
 }
 
-/** Historical data reporting for Focus Investigation */
+/** Historical data reporting for Focus Investigations */
 class HistoricalFocusInvestigation extends React.Component<
   RouteComponentProps<RouteParams>,
   State
@@ -140,6 +135,7 @@ class HistoricalFocusInvestigation extends React.Component<
       columns: [
         {
           Header: locationLabel,
+          className: 'centered',
           columns: [
             {
               Header: '',
@@ -149,6 +145,7 @@ class HistoricalFocusInvestigation extends React.Component<
         },
         {
           Header: 'Mapped Foci Areas',
+          className: 'centered',
           columns: [
             {
               Header: 'Total',
@@ -179,6 +176,7 @@ class HistoricalFocusInvestigation extends React.Component<
         },
         {
           Header: 'A1 screened twice in last year',
+          className: 'centered',
           columns: [
             {
               Header: 'Number',
@@ -195,6 +193,7 @@ class HistoricalFocusInvestigation extends React.Component<
         },
         {
           Header: 'FI response',
+          className: 'centered',
           columns: [
             {
               Cell: (cell: CellInfo) => getTableCellIndicator(cell),
@@ -220,6 +219,7 @@ class HistoricalFocusInvestigation extends React.Component<
       tableProps.columns = [
         {
           Header: locationLabel,
+          className: 'centered',
           columns: [
             {
               Header: '',
@@ -230,6 +230,7 @@ class HistoricalFocusInvestigation extends React.Component<
         },
         {
           Header: 'Status',
+          className: 'centered',
           columns: [
             {
               Header: '',
@@ -240,6 +241,7 @@ class HistoricalFocusInvestigation extends React.Component<
         },
         {
           Header: 'Last Visit',
+          className: 'centered',
           columns: [
             {
               Header: '',
@@ -250,6 +252,7 @@ class HistoricalFocusInvestigation extends React.Component<
         },
         {
           Header: 'FI response',
+          className: 'centered',
           columns: [
             {
               Header: 'adherence',

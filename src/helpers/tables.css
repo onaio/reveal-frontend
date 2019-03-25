@@ -1,5 +1,10 @@
 /** Holds styling for tables */
-.ReactTable .rt-td.centered {
+.ReactTable .rt-thead .rt-tr {
+  text-align: left;
+}
+
+.ReactTable .rt-td.centered,
+.ReactTable .rt-tr.centered {
   text-align: center;
 }
 
