@@ -158,6 +158,7 @@ class ActiveFocusInvestigation extends React.Component<RouteComponentProps<Route
 
     return (
       <div>
+        <h3 className="mb-3 mt-5 page-title">Active Focus Investigations</h3>
         <DrillDownTable {...tableProps} />
         <h5 className="mt-5">Definitions</h5>
         <Table className="definitions">
