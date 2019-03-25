@@ -33,7 +33,7 @@ export function getFIAdherencendicator(cell: CellInfo) {
 export function get137Adherencendicator(cell: CellInfo) {
   return (
     <div
-      className="indicator-container"
+      className="137-container"
       style={{
         color: cell.value > THRESHOLD_137 ? GREEN : cell.value < THRESHOLD_137 ? RED : ORANGE,
       }}
