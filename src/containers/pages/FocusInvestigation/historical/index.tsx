@@ -1,6 +1,5 @@
 // this is the FocusInvestigation "historical" page component
 import DrillDownTable from '@onaio/drill-down-table';
-import ElementMap from '@onaio/element-map';
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import { CellInfo } from 'react-table';
@@ -12,7 +11,7 @@ import NotFound from '../../../../components/NotFound';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import { ThailandClassifications } from '../../../../configs/fi';
 import { FI_URL, FOCUS_INVESTIGATIONS, HOME, HOME_URL, PROVINCE } from '../../../../constants';
-import { getFIAdherencendicator } from '../../../../helpers/indicators';
+import { getFIAdherencendicator, renderClassificationRow } from '../../../../helpers/indicators';
 import '../../../../helpers/tables.css';
 import { FlexObject, percentage, RouteParams } from '../../../../helpers/utils';
 import { data } from './tests/fixtures';
@@ -66,14 +65,6 @@ class HistoricalFocusInvestigation extends React.Component<
       }
     }
     return result;
-  }
-
-  public renderRow(rowObject: FlexObject) {
-    return (
-      <tr key={rowObject.code}>
-        <ElementMap items={[rowObject.code, rowObject.name, rowObject.description]} HTMLTag="td" />
-      </tr>
-    );
   }
 
   public render() {
@@ -272,7 +263,7 @@ class HistoricalFocusInvestigation extends React.Component<
           <DrillDownTable {...tableProps} />
           <h5 className="mt-5">Definitions</h5>
           <Table className="definitions">
-            <tbody>{ThailandClassifications.map(el => this.renderRow(el))}</tbody>
+            <tbody>{ThailandClassifications.map(el => renderClassificationRow(el))}</tbody>
           </Table>
           {currLevelData.length > 0 && currLevelData[0].type === 'Foci Area' ? (
             ''

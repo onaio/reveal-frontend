@@ -1,8 +1,9 @@
+import ElementMap from '@onaio/element-map';
 import * as React from 'react';
 import { CellInfo } from 'react-table';
 import { GREEN, ORANGE, RED, YELLOW } from '../colors';
 import { GREEN_THRESHOLD, ORANGE_THRESHOLD, THRESHOLD_137, YELLOW_THRESHOLD } from '../constants';
-import { percentage } from '../helpers/utils';
+import { FlexObject, percentage } from '../helpers/utils';
 
 /** Returns a table cell rendered with different colors based on focus
  * investigation response adherence conditional formatting
@@ -49,5 +50,14 @@ export function getFIAdherenceIndicator(cell: CellInfo) {
     >
       {cell.value}d to go
     </div>
+  );
+}
+
+/** Renders a row of Focus Investigation classifications */
+export function renderClassificationRow(rowObject: FlexObject) {
+  return (
+    <tr key={rowObject.code} className="definitions">
+      <ElementMap items={[rowObject.code, rowObject.name, rowObject.description]} HTMLTag="td" />
+    </tr>
   );
 }

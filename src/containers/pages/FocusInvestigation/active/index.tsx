@@ -1,7 +1,6 @@
 // this is the FocusInvestigation "active" page component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import DrillDownTable from '@onaio/drill-down-table';
-import ElementMap from '@onaio/element-map';
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import { CellInfo } from 'react-table';
@@ -10,23 +9,19 @@ import { Table } from 'reactstrap';
 import DrillDownTableLinkedCell from '../../../../components/DrillDownTableLinkedCell';
 import OneThreeSevenAdherence from '../../../../components/formatting/OneThreeSevenAdherence';
 import { ThailandClassifications } from '../../../../configs/fi';
-import { get137Value, getFIAdherenceIndicator } from '../../../../helpers/indicators';
+import {
+  get137Value,
+  getFIAdherenceIndicator,
+  renderClassificationRow,
+} from '../../../../helpers/indicators';
 import '../../../../helpers/tables.css';
-import { FlexObject, RouteParams } from '../../../../helpers/utils';
+import { RouteParams } from '../../../../helpers/utils';
 import { data } from './tests/fixtures';
 
 /** Reporting for Active Focus Investigations */
 class ActiveFocusInvestigation extends React.Component<RouteComponentProps<RouteParams>, {}> {
   constructor(props: RouteComponentProps<RouteParams>) {
     super(props);
-  }
-
-  public renderRow(rowObject: FlexObject) {
-    return (
-      <tr key={rowObject.code}>
-        <ElementMap items={[rowObject.code, rowObject.name, rowObject.description]} HTMLTag="td" />
-      </tr>
-    );
   }
 
   public render() {
@@ -167,7 +162,7 @@ class ActiveFocusInvestigation extends React.Component<RouteComponentProps<Route
         <DrillDownTable {...tableProps} />
         <h5 className="mt-5">Definitions</h5>
         <Table className="definitions">
-          <tbody>{ThailandClassifications.map(el => this.renderRow(el))}</tbody>
+          <tbody>{ThailandClassifications.map(el => renderClassificationRow(el))}</tbody>
         </Table>
         <OneThreeSevenAdherence />
       </div>
