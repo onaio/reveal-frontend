@@ -7,22 +7,22 @@ import { percentage } from '../helpers/utils';
 /** Returns a table cell rendered with different colors based on focus
  * investigation response adherence conditional formatting
  */
-export function getFIAdherencendicator(row: CellInfo) {
+export function getFIAdherencendicator(cell: CellInfo) {
   return (
     <div
       className="indicator-container"
       style={{
         backgroundColor:
-          row.value >= GREEN_THRESHOLD
+          cell.value >= GREEN_THRESHOLD
             ? GREEN
-            : row.value >= ORANGE_THRESHOLD
+            : cell.value >= ORANGE_THRESHOLD
             ? ORANGE
-            : row.value >= YELLOW_THRESHOLD
+            : cell.value >= YELLOW_THRESHOLD
             ? RED
             : YELLOW,
       }}
     >
-      {percentage(row.value)}
+      {percentage(cell.value)}
     </div>
   );
 }
@@ -30,15 +30,15 @@ export function getFIAdherencendicator(row: CellInfo) {
 /** Returns a table cell rendered with different colors based on focus
  * investigation 1-3-7 adherence conditional formatting
  */
-export function get137Adherencendicator(row: CellInfo) {
+export function get137Adherencendicator(cell: CellInfo) {
   return (
     <div
       className="indicator-container"
       style={{
-        color: row.value > THRESHOLD_137 ? GREEN : row.value < THRESHOLD_137 ? RED : ORANGE,
+        color: cell.value > THRESHOLD_137 ? GREEN : cell.value < THRESHOLD_137 ? RED : ORANGE,
       }}
     >
-      {row.value}d to go
+      {cell.value}d to go
     </div>
   );
 }
