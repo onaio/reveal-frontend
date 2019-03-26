@@ -1,26 +1,63 @@
+import ElementMap from '@onaio/element-map';
 import * as React from 'react';
 import { CellInfo } from 'react-table';
 import { GREEN, ORANGE, RED, YELLOW } from '../colors';
-import { GREEN_THRESHOLD, ORANGE_THRESHOLD, YELLOW_THRESHOLD } from '../constants';
-import { percentage } from '../helpers/utils';
+import { GREEN_THRESHOLD, ORANGE_THRESHOLD, YELLOW_THRESHOLD, ZERO } from '../constants';
+import { FlexObject, percentage } from '../helpers/utils';
 
-/** Returns a table cell rendered with different colors based on row value */
-export function getTableCellIndicator(row: CellInfo) {
+/** Returns a table cell rendered with different colors based on focus
+ * investigation response adherence conditional formatting
+ */
+export function getFIAdherenceIndicator(cell: CellInfo) {
   return (
     <div
       className="indicator-container"
       style={{
         backgroundColor:
-          row.value >= GREEN_THRESHOLD
+          cell.value >= GREEN_THRESHOLD
             ? GREEN
-            : row.value >= ORANGE_THRESHOLD
+            : cell.value >= ORANGE_THRESHOLD
             ? ORANGE
-            : row.value >= YELLOW_THRESHOLD
+            : cell.value >= YELLOW_THRESHOLD
             ? RED
             : YELLOW,
       }}
     >
-      {percentage(row.value)}
+      {percentage(cell.value)}
     </div>
+  );
+}
+
+/** Returns a value formatted for Focus Investigation 1-3-7 adherence
+ */
+export function get137Value(value: number): string {
+  if (value < 0) {
+    return '<1';
+  }
+  return `${value}`;
+}
+
+/** Returns a table cell rendered with different colors based on focus
+ * investigation 1-3-7 adherence conditional formatting
+ */
+export function get137AdherenceIndicator(cell: CellInfo) {
+  return (
+    <div
+      className="137-container"
+      style={{
+        color: cell.value > ZERO ? GREEN : cell.value < ZERO ? RED : ORANGE,
+      }}
+    >
+      {cell.value}d to go
+    </div>
+  );
+}
+
+/** Renders a row of Focus Investigation classifications */
+export function renderClassificationRow(rowObject: FlexObject) {
+  return (
+    <tr key={rowObject.code} className="definitions">
+      <ElementMap items={[rowObject.code, rowObject.name, rowObject.description]} HTMLTag="td" />
+    </tr>
   );
 }

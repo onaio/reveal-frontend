@@ -21,6 +21,8 @@ export const IRS_URL = '/irs';
 export type IRS_URL = typeof IRS_URL;
 export const FI_URL = '/focus-investigation';
 export type FI_URL = typeof FI_URL;
+export const FI_HISTORICAL_URL = '/focus-investigation/historical';
+export type FI_HISTORICAL_URL = typeof FI_HISTORICAL_URL;
 
 // colors
 export const GREEN = 'Green';
@@ -39,3 +41,7 @@ export const YELLOW_THRESHOLD = 0.2;
 export type YELLOW_THRESHOLD = typeof YELLOW_THRESHOLD;
 export const ORANGE_THRESHOLD = 0.8;
 export type ORANGE_THRESHOLD = typeof ORANGE_THRESHOLD;
+
+// 1-3-7 thresholds
+export const ONE = 0;
+export const ZERO = 0;

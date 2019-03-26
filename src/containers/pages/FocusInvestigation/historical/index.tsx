@@ -1,6 +1,5 @@
-// this is the FocusInvestigation page component
+// this is the FocusInvestigation "historical" page component
 import DrillDownTable from '@onaio/drill-down-table';
-import ElementMap from '@onaio/element-map';
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import { CellInfo } from 'react-table';
@@ -10,24 +9,25 @@ import DrillDownTableLinkedCell from '../../../../components/DrillDownTableLinke
 import ResponseAdherence from '../../../../components/formatting/ResponseAdherence';
 import NotFound from '../../../../components/NotFound';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
-import { ThailandClassifications } from '../../../../configs/fi';
-import { FI_URL, FOCUS_INVESTIGATIONS, HOME, HOME_URL, PROVINCE } from '../../../../constants';
-import { getTableCellIndicator } from '../../../../helpers/indicators';
+import { FIClassifications } from '../../../../configs/fi';
+import {
+  FI_HISTORICAL_URL,
+  FOCUS_INVESTIGATIONS,
+  HOME,
+  HOME_URL,
+  PROVINCE,
+} from '../../../../constants';
+import { getFIAdherenceIndicator, renderClassificationRow } from '../../../../helpers/indicators';
 import '../../../../helpers/tables.css';
-import { FlexObject, percentage } from '../../../../helpers/utils';
+import { FlexObject, percentage, RouteParams } from '../../../../helpers/utils';
 import { data } from './tests/fixtures';
-
-/** Route params interface */
-interface RouteParams {
-  id?: string;
-}
 
 /** State interface */
 interface State {
   id?: string;
 }
 
-/** Historical data reporting for Focus Investigation */
+/** Historical data reporting for Focus Investigations */
 class HistoricalFocusInvestigation extends React.Component<
   RouteComponentProps<RouteParams>,
   State
@@ -73,20 +73,12 @@ class HistoricalFocusInvestigation extends React.Component<
     return result;
   }
 
-  public renderRow(rowObject: FlexObject) {
-    return (
-      <tr key={rowObject.code}>
-        <ElementMap items={[rowObject.code, rowObject.name, rowObject.description]} HTMLTag="td" />
-      </tr>
-    );
-  }
-
   public render() {
     let locationLabel: string = PROVINCE;
     let pageTitle: string = FOCUS_INVESTIGATIONS;
     const baseFIPage = {
       label: FOCUS_INVESTIGATIONS,
-      url: `${FI_URL}`,
+      url: `${FI_HISTORICAL_URL}`,
     };
     const breadcrumbProps = {
       currentPage: baseFIPage,
@@ -115,7 +107,7 @@ class HistoricalFocusInvestigation extends React.Component<
         const pages = theTree.map(el => {
           return {
             label: el.name,
-            url: `${FI_URL}/${el.name}`,
+            url: `${FI_HISTORICAL_URL}/${el.name}`,
           };
         });
         const newPages = breadcrumbProps.pages.concat(pages);
@@ -124,7 +116,7 @@ class HistoricalFocusInvestigation extends React.Component<
 
       const currentPage = {
         label: theObject[0].name,
-        url: `${FI_URL}/${theObject[0].name}`,
+        url: `${FI_HISTORICAL_URL}/${theObject[0].name}`,
       };
       breadcrumbProps.currentPage = currentPage;
     }
@@ -140,6 +132,7 @@ class HistoricalFocusInvestigation extends React.Component<
       columns: [
         {
           Header: locationLabel,
+          className: 'centered',
           columns: [
             {
               Header: '',
@@ -149,6 +142,7 @@ class HistoricalFocusInvestigation extends React.Component<
         },
         {
           Header: 'Mapped Foci Areas',
+          className: 'centered',
           columns: [
             {
               Header: 'Total',
@@ -179,6 +173,7 @@ class HistoricalFocusInvestigation extends React.Component<
         },
         {
           Header: 'A1 screened twice in last year',
+          className: 'centered',
           columns: [
             {
               Header: 'Number',
@@ -195,9 +190,10 @@ class HistoricalFocusInvestigation extends React.Component<
         },
         {
           Header: 'FI response',
+          className: 'centered',
           columns: [
             {
-              Cell: (cell: CellInfo) => getTableCellIndicator(cell),
+              Cell: (cell: CellInfo) => getFIAdherenceIndicator(cell),
               Header: 'adherence',
               accessor: 'Adherence',
               className: 'centered indicator',
@@ -220,6 +216,7 @@ class HistoricalFocusInvestigation extends React.Component<
       tableProps.columns = [
         {
           Header: locationLabel,
+          className: 'centered',
           columns: [
             {
               Header: '',
@@ -230,6 +227,7 @@ class HistoricalFocusInvestigation extends React.Component<
         },
         {
           Header: 'Status',
+          className: 'centered',
           columns: [
             {
               Header: '',
@@ -240,6 +238,7 @@ class HistoricalFocusInvestigation extends React.Component<
         },
         {
           Header: 'Last Visit',
+          className: 'centered',
           columns: [
             {
               Header: '',
@@ -250,6 +249,7 @@ class HistoricalFocusInvestigation extends React.Component<
         },
         {
           Header: 'FI response',
+          className: 'centered',
           columns: [
             {
               Header: 'adherence',
@@ -269,7 +269,7 @@ class HistoricalFocusInvestigation extends React.Component<
           <DrillDownTable {...tableProps} />
           <h5 className="mt-5">Definitions</h5>
           <Table className="definitions">
-            <tbody>{ThailandClassifications.map(el => this.renderRow(el))}</tbody>
+            <tbody>{FIClassifications.map(el => renderClassificationRow(el))}</tbody>
           </Table>
           {currLevelData.length > 0 && currLevelData[0].type === 'Foci Area' ? (
             ''

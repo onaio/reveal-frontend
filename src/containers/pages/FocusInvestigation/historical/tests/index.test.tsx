@@ -4,6 +4,7 @@ import { createBrowserHistory } from 'history';
 import React from 'react';
 import { Route, Router, Switch } from 'react-router';
 import { Link } from 'react-router-dom';
+import { FI_HISTORICAL_URL } from '../../../../../constants';
 import HistoricalFocusInvestigation from '../../historical';
 
 const history = createBrowserHistory();
@@ -21,8 +22,8 @@ describe('containers/pages/HistoricalFocusInvestigation', () => {
       match: {
         isExact: true,
         params: { id: 'Province 1' },
-        path: '/focus-investigation/:id',
-        url: '/focus-investigation/Province 1',
+        path: `${FI_HISTORICAL_URL}/:id`,
+        url: `${FI_HISTORICAL_URL}/Province 1`,
       },
     };
     shallow(
@@ -40,8 +41,8 @@ describe('containers/pages/HistoricalFocusInvestigation', () => {
       match: {
         isExact: true,
         params: {},
-        path: '/focus-investigation/:id',
-        url: '/focus-investigation/Province 1',
+        path: `${FI_HISTORICAL_URL}/:id`,
+        url: `${FI_HISTORICAL_URL}/Province 1`,
       },
     };
     const wrapper = mount(
@@ -57,25 +58,25 @@ describe('containers/pages/HistoricalFocusInvestigation', () => {
     const wrapper = mount(
       <Router history={history}>
         <div>
-          <Link to="/focus-investigation">Start</Link>
+          <Link to={FI_HISTORICAL_URL}>Start</Link>
           <Switch>
             <Route
               exact={true}
-              path="/focus-investigation"
+              path={`${FI_HISTORICAL_URL}`}
               component={HistoricalFocusInvestigation}
             />
             <Route
               exact={true}
-              path="/focus-investigation/:id"
+              path={`${FI_HISTORICAL_URL}/:id`}
               component={HistoricalFocusInvestigation}
             />
           </Switch>
         </div>
       </Router>
     );
-    expect(wrapper.find('a[href$="focus-investigation"]').length).toEqual(1);
+    expect(wrapper.find(`a[href$="${FI_HISTORICAL_URL}"]`).length).toEqual(1);
     wrapper
-      .find('a[href$="focus-investigation"]')
+      .find(`a[href$="${FI_HISTORICAL_URL}"]`)
       .first()
       .simulate('click', { button: 0 });
     expect(toJson(wrapper.find('HeaderBreadcrumb'))).toMatchSnapshot();
@@ -87,16 +88,16 @@ describe('containers/pages/HistoricalFocusInvestigation', () => {
     expect(toJson(wrapper.find('table.definitions'))).toMatchSnapshot();
     expect(wrapper.find('ResponseAdherence').length).toEqual(1);
     expect(toJson(wrapper.find('ResponseAdherence'))).toMatchSnapshot();
-    expect(wrapper.find('.rt-td a[href$="focus-investigation/Province 1"]').length).toEqual(1);
+    expect(wrapper.find(`.rt-td a[href$="${FI_HISTORICAL_URL}/Province 1"]`).length).toEqual(1);
     // in the following, you'll notice that we are clicking twice
     // for some reason we had to do this to get it to move to the next component
     // SHOULD PROBABLY FIND A FIX FOR THIS
     wrapper
-      .find('a[href$="focus-investigation/Province 1"]')
+      .find(`a[href$="${FI_HISTORICAL_URL}/Province 1"]`)
       .first()
       .simulate('click', { button: 0 });
     wrapper
-      .find('a[href$="focus-investigation/Province 1"]')
+      .find(`a[href$="${FI_HISTORICAL_URL}/Province 1"]`)
       .first()
       .simulate('click', { button: 0 });
     expect(toJson(wrapper.find('HeaderBreadcrumb'))).toMatchSnapshot();
@@ -106,13 +107,13 @@ describe('containers/pages/HistoricalFocusInvestigation', () => {
     expect(wrapper.find('ResponseAdherence').length).toEqual(1);
     expect(toJson(wrapper.find('h3.page-title'))).toMatchSnapshot();
     expect(toJson(wrapper.find('ReactTable'))).toMatchSnapshot();
-    expect(wrapper.find('a[href$="focus-investigation/District 1"]').length).toEqual(1);
+    expect(wrapper.find(`a[href$="${FI_HISTORICAL_URL}/District 1"]`).length).toEqual(1);
     wrapper
-      .find('a[href$="focus-investigation/District 1"]')
+      .find(`a[href$="${FI_HISTORICAL_URL}/District 1"]`)
       .first()
       .simulate('click', { button: 0 });
     wrapper
-      .find('a[href$="focus-investigation/District 1"]')
+      .find(`a[href$="${FI_HISTORICAL_URL}/District 1"]`)
       .first()
       .simulate('click', { button: 0 });
     expect(toJson(wrapper.find('HeaderBreadcrumb'))).toMatchSnapshot();
@@ -122,13 +123,13 @@ describe('containers/pages/HistoricalFocusInvestigation', () => {
     expect(wrapper.find('ResponseAdherence').length).toEqual(1);
     expect(toJson(wrapper.find('h3.page-title'))).toMatchSnapshot();
     expect(toJson(wrapper.find('ReactTable'))).toMatchSnapshot();
-    expect(wrapper.find('a[href$="focus-investigation/Canton 1"]').length).toEqual(1);
+    expect(wrapper.find(`a[href$="${FI_HISTORICAL_URL}/Canton 1"]`).length).toEqual(1);
     wrapper
-      .find('a[href$="focus-investigation/Canton 1"]')
+      .find(`a[href$="${FI_HISTORICAL_URL}/Canton 1"]`)
       .first()
       .simulate('click', { button: 0 });
     wrapper
-      .find('a[href$="focus-investigation/Canton 1"]')
+      .find(`a[href$="${FI_HISTORICAL_URL}/Canton 1"]`)
       .first()
       .simulate('click', { button: 0 });
     expect(toJson(wrapper.find('HeaderBreadcrumb'))).toMatchSnapshot();
@@ -138,13 +139,13 @@ describe('containers/pages/HistoricalFocusInvestigation', () => {
     expect(wrapper.find('ResponseAdherence').length).toEqual(1);
     expect(toJson(wrapper.find('h3.page-title'))).toMatchSnapshot();
     expect(toJson(wrapper.find('ReactTable'))).toMatchSnapshot();
-    expect(wrapper.find('a[href$="focus-investigation/Village 1"]').length).toEqual(1);
+    expect(wrapper.find(`a[href$="${FI_HISTORICAL_URL}/Village 1"]`).length).toEqual(1);
     wrapper
-      .find('a[href$="focus-investigation/Village 1"]')
+      .find(`a[href$="${FI_HISTORICAL_URL}/Village 1"]`)
       .first()
       .simulate('click', { button: 0 });
     wrapper
-      .find('a[href$="focus-investigation/Village 1"]')
+      .find(`a[href$="${FI_HISTORICAL_URL}/Village 1"]`)
       .first()
       .simulate('click', { button: 0 });
     expect(toJson(wrapper.find('HeaderBreadcrumb'))).toMatchSnapshot();

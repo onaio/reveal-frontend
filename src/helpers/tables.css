@@ -1,10 +1,19 @@
 /** Holds styling for tables */
-.ReactTable .rt-td.centered {
+.ReactTable .rt-thead .rt-tr {
+  text-align: left;
+}
+
+.ReactTable .rt-td.centered,
+.ReactTable .rt-th.centered {
   text-align: center;
 }
 
 .ReactTable .rt-td.indicator {
   padding: 0;
+}
+
+.ReactTable .rt-td {
+  white-space: unset;
 }
 
 .ReactTable .rt-td .indicator-container {
