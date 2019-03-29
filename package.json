@@ -8,7 +8,7 @@
     "@fortawesome/free-regular-svg-icons": "^5.7.1",
     "@fortawesome/free-solid-svg-icons": "^5.7.1",
     "@fortawesome/react-fontawesome": "^0.1.4",
-    "@onaio/drill-down-table": "^0.0.11",
+    "@onaio/drill-down-table": "^0.0.16",
     "@onaio/element-map": "^0.0.2",
     "@onaio/redux-reducer-registry": "^0.0.7",
     "@types/bootstrap": "^4.2.1",
