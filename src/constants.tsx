@@ -11,6 +11,8 @@ export const HOME = 'Home';
 export type HOME = typeof HOME;
 export const FOCUS_INVESTIGATION = 'Focus Investigation';
 export type FOCUS_INVESTIGATION = typeof FOCUS_INVESTIGATION;
+export const FOCUS_AREA_INFO = 'Focus Area Information';
+export type FOCUS_AREA_INFO = typeof FOCUS_AREA_INFO;
 export const FOCUS_INVESTIGATIONS = 'Focus Investigations';
 export type FOCUS_INVESTIGATIONS = typeof FOCUS_INVESTIGATIONS;
 
