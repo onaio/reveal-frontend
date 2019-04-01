@@ -25,6 +25,8 @@ export const FI_URL = '/focus-investigation';
 export type FI_URL = typeof FI_URL;
 export const FI_HISTORICAL_URL = '/focus-investigation/historical';
 export type FI_HISTORICAL_URL = typeof FI_HISTORICAL_URL;
+export const FI_SINGLE_URL = '/focus-investigation/view';
+export type FI_SINGLE_URL = typeof FI_SINGLE_URL;
 
 // colors
 export const GREEN = 'Green';

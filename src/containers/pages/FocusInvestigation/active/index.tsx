@@ -9,6 +9,7 @@ import { Table } from 'reactstrap';
 import DrillDownTableLinkedCell from '../../../../components/DrillDownTableLinkedCell';
 import OneThreeSevenAdherence from '../../../../components/formatting/OneThreeSevenAdherence';
 import { FIClassifications } from '../../../../configs/fi';
+import { FI_SINGLE_URL } from '../../../../constants';
 import {
   get137AdherenceIndicator,
   get137Value,
@@ -75,7 +76,7 @@ class ActiveFocusInvestigation extends React.Component<RouteComponentProps<Route
                       <FontAwesomeIcon icon={['fas', 'map']} />
                     </a>
                     &nbsp;&nbsp;
-                    <a href="#focusarea">{cell.value}</a>
+                    <a href={`${FI_SINGLE_URL}/13`}>{cell.value}</a>
                   </div>
                 );
               },
