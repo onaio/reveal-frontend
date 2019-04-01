@@ -1,7 +1,6 @@
 import { DropDownCellProps } from '@onaio/drill-down-table';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FI_HISTORICAL_URL } from '../../constants';
 
 /** Interface for linked cell props */
 export interface LinkedCellProps extends DropDownCellProps {
@@ -16,10 +15,6 @@ const DrillDownTableLinkedCell: React.ElementType<LinkedCellProps> = (props: Lin
   return (
     <div>{hasChildren ? <Link to={`${urlPath}/${cellValue}`}>{cellValue}</Link> : cellValue}</div>
   );
-};
-
-DrillDownTableLinkedCell.defaultProps = {
-  urlPath: `${FI_HISTORICAL_URL}`,
 };
 
 export default DrillDownTableLinkedCell;
