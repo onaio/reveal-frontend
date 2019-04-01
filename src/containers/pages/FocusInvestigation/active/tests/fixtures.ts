@@ -1,4 +1,6 @@
 /** Fixtures for tests */
+import { keyBy } from 'lodash';
+
 export const data = [
   {
     adherence1: -1,
@@ -76,3 +78,9 @@ export const data = [
     village: 'Village 5 - this is a longer name than usual',
   },
 ];
+
+export const dataIds = data.map(el => el.id);
+
+export const dataByID = keyBy(data, 'id');
+
+export const singleFI = dataByID[13];
