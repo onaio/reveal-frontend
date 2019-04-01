@@ -202,6 +202,7 @@ class HistoricalFocusInvestigation extends React.Component<
         },
       ],
       data,
+      extraCellProps: { urlPath: FI_HISTORICAL_URL },
       identifierField: 'name',
       linkerField: 'name',
       minRows: 0,
