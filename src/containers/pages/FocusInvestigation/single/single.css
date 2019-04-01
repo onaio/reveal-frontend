@@ -1,0 +1,9 @@
+.fi-active {
+  border: 1px solid;
+  border-radius: 15px;
+  padding: 5%;
+}
+
+.responseItem {
+  margin-bottom: 45px;
+}

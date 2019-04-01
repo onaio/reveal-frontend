@@ -1667,7 +1667,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                     </a>
                                       
                                     <a
-                                      href="#focusarea"
+                                      href="/focus-investigation/view/13"
                                     >
                                       Focus Area 1
                                     </a>
@@ -2767,7 +2767,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                     </a>
                                       
                                     <a
-                                      href="#focusarea"
+                                      href="/focus-investigation/view/13"
                                     >
                                       Focus Area 2
                                     </a>
@@ -3867,7 +3867,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                     </a>
                                       
                                     <a
-                                      href="#focusarea"
+                                      href="/focus-investigation/view/13"
                                     >
                                       Focus Area 3
                                     </a>
@@ -4967,7 +4967,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                     </a>
                                       
                                     <a
-                                      href="#focusarea"
+                                      href="/focus-investigation/view/13"
                                     >
                                       Focus Area 4
                                     </a>
@@ -6067,7 +6067,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                     </a>
                                       
                                     <a
-                                      href="#focusarea"
+                                      href="/focus-investigation/view/13"
                                     >
                                       Focus Area 5 - this is a longer name than usual
                                     </a>

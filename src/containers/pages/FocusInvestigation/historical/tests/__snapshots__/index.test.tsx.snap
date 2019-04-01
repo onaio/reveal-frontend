@@ -283,6 +283,11 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
       "width": 35,
     }
   }
+  extraCellProps={
+    Object {
+      "urlPath": "/focus-investigation/historical",
+    }
+  }
   filterable={false}
   freezeWhenExpanded={false}
   getLoadingProps={[Function]}
@@ -4207,6 +4212,11 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
       "resizable": false,
       "sortable": false,
       "width": 35,
+    }
+  }
+  extraCellProps={
+    Object {
+      "urlPath": "/focus-investigation/historical",
     }
   }
   filterable={false}
@@ -8552,6 +8562,11 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
       "width": 35,
     }
   }
+  extraCellProps={
+    Object {
+      "urlPath": "/focus-investigation/historical",
+    }
+  }
   filterable={false}
   freezeWhenExpanded={false}
   getLoadingProps={[Function]}
@@ -11574,6 +11589,11 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
       "resizable": false,
       "sortable": false,
       "width": 35,
+    }
+  }
+  extraCellProps={
+    Object {
+      "urlPath": "/focus-investigation/historical",
     }
   }
   filterable={false}
@@ -14600,6 +14620,11 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
       "width": 35,
     }
   }
+  extraCellProps={
+    Object {
+      "urlPath": "/focus-investigation/historical",
+    }
+  }
   filterable={false}
   freezeWhenExpanded={false}
   getLoadingProps={[Function]}
@@ -16728,6 +16753,11 @@ exports[`containers/pages/HistoricalFocusInvestigation renders HistoricalFocusIn
               },
             ]
           }
+          extraCellProps={
+            Object {
+              "urlPath": "/focus-investigation/historical",
+            }
+          }
           identifierField="name"
           linkerField="name"
           minRows={0}
@@ -16939,6 +16969,11 @@ exports[`containers/pages/HistoricalFocusInvestigation renders HistoricalFocusIn
                 "resizable": false,
                 "sortable": false,
                 "width": 35,
+              }
+            }
+            extraCellProps={
+              Object {
+                "urlPath": "/focus-investigation/historical",
               }
             }
             filterable={false}

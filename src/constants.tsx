@@ -11,6 +11,8 @@ export const HOME = 'Home';
 export type HOME = typeof HOME;
 export const FOCUS_INVESTIGATION = 'Focus Investigation';
 export type FOCUS_INVESTIGATION = typeof FOCUS_INVESTIGATION;
+export const FOCUS_AREA_INFO = 'Focus Area Information';
+export type FOCUS_AREA_INFO = typeof FOCUS_AREA_INFO;
 export const FOCUS_INVESTIGATIONS = 'Focus Investigations';
 export type FOCUS_INVESTIGATIONS = typeof FOCUS_INVESTIGATIONS;
 
@@ -23,6 +25,8 @@ export const FI_URL = '/focus-investigation';
 export type FI_URL = typeof FI_URL;
 export const FI_HISTORICAL_URL = '/focus-investigation/historical';
 export type FI_HISTORICAL_URL = typeof FI_HISTORICAL_URL;
+export const FI_SINGLE_URL = '/focus-investigation/view';
+export type FI_SINGLE_URL = typeof FI_SINGLE_URL;
 
 // colors
 export const GREEN = 'Green';

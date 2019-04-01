@@ -1,3 +1,7 @@
 tr.definitions td:first-child {
   padding-left: 0px;
 }
+
+h2.page-title {
+  font-weight: 200;
+}
