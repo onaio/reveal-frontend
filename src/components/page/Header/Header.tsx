@@ -1,6 +1,7 @@
 // This component represents the header part of the web app
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as React from 'react';
+import { RouteComponentProps, withRouter } from 'react-router';
 import { Link, NavLink } from 'react-router-dom';
 import {
   Collapse,
@@ -21,8 +22,8 @@ interface State {
   isOpen: boolean;
 }
 
-class Header extends React.Component<{}, State> {
-  constructor(props: {}) {
+class HeaderComponent extends React.Component<RouteComponentProps, State> {
+  constructor(props: RouteComponentProps) {
     super(props);
 
     this.toggle = this.toggle.bind(this);
@@ -32,6 +33,7 @@ class Header extends React.Component<{}, State> {
   }
 
   public render() {
+    const path = this.props.location.pathname;
     return (
       <div>
         <Navbar color="light" light={true} expand="md">
@@ -53,23 +55,29 @@ class Header extends React.Component<{}, State> {
                   IRS
                 </NavLink>
               </NavItem>
-              <NavItem>
-                <UncontrolledDropdown nav={true} inNavbar={true}>
-                  <DropdownToggle nav={true} caret={true}>
-                    Focus Investigation
-                  </DropdownToggle>
-                  <DropdownMenu right={true}>
-                    <DropdownItem>
-                      <NavLink to={FI_URL} className="nav-link" activeClassName="active">
-                        Active
-                      </NavLink>
-                      <NavLink to={FI_HISTORICAL_URL} className="nav-link" activeClassName="active">
-                        Historical
-                      </NavLink>
-                    </DropdownItem>
-                  </DropdownMenu>
-                </UncontrolledDropdown>
-              </NavItem>
+              <UncontrolledDropdown nav={true} inNavbar={true}>
+                <DropdownToggle
+                  nav={true}
+                  caret={true}
+                  className={
+                    path === FI_URL || path === FI_HISTORICAL_URL ? 'nav-link active' : 'nav-link'
+                  }
+                >
+                  Focus Investigation
+                </DropdownToggle>
+                <DropdownMenu right={true}>
+                  <DropdownItem>
+                    <NavLink to={FI_URL} className="nav-link" activeClassName="active">
+                      Active
+                    </NavLink>
+                  </DropdownItem>
+                  <DropdownItem>
+                    <NavLink to={FI_HISTORICAL_URL} className="nav-link" activeClassName="active">
+                      Historical
+                    </NavLink>
+                  </DropdownItem>
+                </DropdownMenu>
+              </UncontrolledDropdown>
               <NavItem>
                 <NavLink to="/404" className="nav-link" activeClassName="active">
                   Users
@@ -101,5 +109,7 @@ class Header extends React.Component<{}, State> {
     this.setState({ isOpen: !this.state.isOpen });
   }
 }
+
+const Header = withRouter(HeaderComponent);
 
 export default Header;
