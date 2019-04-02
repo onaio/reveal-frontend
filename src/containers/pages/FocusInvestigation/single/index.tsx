@@ -11,7 +11,7 @@ import { RouteParams } from '../../../../helpers/utils';
 import { dataByID, dataIds } from '../active/tests/fixtures';
 import './single.css';
 
-/** Reporting for Active Focus Investigations */
+/** Reporting for Single Active Focus Investigation */
 class SingleFI extends React.Component<RouteComponentProps<RouteParams>, {}> {
   constructor(props: RouteComponentProps<RouteParams>) {
     super(props);
