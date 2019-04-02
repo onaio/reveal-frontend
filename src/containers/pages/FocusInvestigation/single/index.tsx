@@ -4,7 +4,12 @@ import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import { Col, Row, Table } from 'reactstrap';
 import NotFound from '../../../../components/NotFound';
-import { FI_SINGLE_URL, FOCUS_AREA_INFO, FOCUS_INVESTIGATION } from '../../../../constants';
+import {
+  FI_SINGLE_MAP_URL,
+  FI_SINGLE_URL,
+  FOCUS_AREA_INFO,
+  FOCUS_INVESTIGATION,
+} from '../../../../constants';
 import { get137Value } from '../../../../helpers/indicators';
 import ProgressBar from '../../../../helpers/ProgressBar';
 import { RouteParams } from '../../../../helpers/utils';
@@ -60,7 +65,7 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams>, {}> {
               <tbody>
                 <tr>
                   <td>
-                    <a href="#map">
+                    <a href={`${FI_SINGLE_MAP_URL}/13`}>
                       <FontAwesomeIcon icon={['fas', 'map']} />
                     </a>
                     &nbsp;&nbsp;
@@ -73,7 +78,7 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams>, {}> {
           <Col className="col-6">
             <div className="fi-active">
               <h5 className="mb-4 mt-1">
-                <a href="#map">
+                <a href={`${FI_SINGLE_MAP_URL}/13`}>
                   <FontAwesomeIcon icon={['fas', 'map']} />
                 </a>
                 &nbsp;&nbsp;

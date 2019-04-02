@@ -10,7 +10,7 @@ import DrillDownTableLinkedCell from '../../../../components/DrillDownTableLinke
 import OneThreeSevenAdherence from '../../../../components/formatting/OneThreeSevenAdherence';
 import { FIClassifications } from '../../../../configs/fi';
 import { locationHierarchy } from '../../../../configs/locations';
-import { FI_SINGLE_URL } from '../../../../constants';
+import { FI_SINGLE_MAP_URL, FI_SINGLE_URL } from '../../../../constants';
 import {
   get137AdherenceIndicator,
   get137Value,
@@ -36,7 +36,7 @@ class ActiveFocusInvestigation extends React.Component<RouteComponentProps<Route
             Cell: (cell: CellInfo) => {
               return (
                 <div>
-                  <a href="#map">
+                  <a href={`${FI_SINGLE_MAP_URL}/13`}>
                     <FontAwesomeIcon icon={['fas', 'map']} />
                   </a>
                   &nbsp;&nbsp;

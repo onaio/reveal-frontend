@@ -1621,7 +1621,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                 >
                                   <div>
                                     <a
-                                      href="#map"
+                                      href="/focus-investigation/map/13"
                                     >
                                       <FontAwesomeIcon
                                         border={false}
@@ -2721,7 +2721,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                 >
                                   <div>
                                     <a
-                                      href="#map"
+                                      href="/focus-investigation/map/13"
                                     >
                                       <FontAwesomeIcon
                                         border={false}
@@ -3821,7 +3821,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                 >
                                   <div>
                                     <a
-                                      href="#map"
+                                      href="/focus-investigation/map/13"
                                     >
                                       <FontAwesomeIcon
                                         border={false}
@@ -4921,7 +4921,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                 >
                                   <div>
                                     <a
-                                      href="#map"
+                                      href="/focus-investigation/map/13"
                                     >
                                       <FontAwesomeIcon
                                         border={false}
@@ -6021,7 +6021,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                 >
                                   <div>
                                     <a
-                                      href="#map"
+                                      href="/focus-investigation/map/13"
                                     >
                                       <FontAwesomeIcon
                                         border={false}
