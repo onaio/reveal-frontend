@@ -2,10 +2,18 @@ import { combine } from '@onaio/redux-reducer-registry';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import { connectRouter, routerMiddleware } from 'connected-react-router';
 import { createBrowserHistory } from 'history';
-import { applyMiddleware, createStore, Reducer } from 'redux';
+import { applyMiddleware, compose, createStore, Reducer } from 'redux';
 import thunk from 'redux-thunk';
 import users, { reducerName as usersReducer } from './ducks/users';
 
+/** Add redux devtools to Window */
+declare global {
+  interface Window {
+    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
+  }
+}
+
+/** Declare history variable */
 export const history = createBrowserHistory();
 
 /** Declare type for reducer Registry */
@@ -23,12 +31,11 @@ export function getStore(reducers: Registry) {
   /** Combine reducers */
   const reducer = combine(reducerRegistry.getReducers());
 
+  /** Add redux devtools to enhancers */
+  const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
   /** Create the store */
-  return createStore(
-    reducer,
-    (window as any).__REDUX_DEVTOOLS_EXTENSION__ && (window as any).__REDUX_DEVTOOLS_EXTENSION__(),
-    applyMiddleware(thunk, routerMiddleware(history))
-  );
+  return createStore(reducer, composeEnhancers(applyMiddleware(thunk, routerMiddleware(history))));
 }
 
 /** Router reducer */
