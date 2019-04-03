@@ -19,8 +19,10 @@ export function getStore(reducers: Registry) {
   Object.keys(reducers).forEach(reducerName => {
     reducerRegistry.register(reducerName, reducers[reducerName]);
   });
+
   /** Combine reducers */
   const reducer = combine(reducerRegistry.getReducers());
+
   /** Create the store */
   return createStore(
     reducer,
@@ -31,11 +33,13 @@ export function getStore(reducers: Registry) {
 
 /** Router reducer */
 const connectReducer = connectRouter(history);
+
 /** Initial reducers in the reducer registry */
 const defaultReducers: Registry = {
   router: connectReducer as any /** Dirty hack because connectRouter LocationChangeAction does not extend Redux.AnyAction */,
 };
-// /** Add users reducer to registry */
+
+/** Add users reducer to registry */
 defaultReducers[usersReducer] = users;
 
 /** The initial store for the reveal web app */
