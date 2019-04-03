@@ -1,16 +1,19 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { ConnectedRouter } from 'connected-react-router';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
-
+import { Provider } from 'react-redux';
 import App from './App/App';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
+import store, { history } from './store/store';
 
 ReactDOM.render(
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>,
+  <Provider store={store}>
+    <ConnectedRouter history={history}>
+      <App />
+    </ConnectedRouter>
+  </Provider>,
   document.getElementById('reveal-root')
 );
 
