@@ -12,6 +12,11 @@ export interface RouteParams {
   id?: string;
 }
 
+/** Map props */
+export interface MapProps {
+  MAP: any;
+}
+
 /** Returns a number as a decimal e.g. 0.18 becomes 18% */
 export function percentage(num: number, decimalPoints: number = 0) {
   return `${(num * 100).toFixed(decimalPoints)}%`;
