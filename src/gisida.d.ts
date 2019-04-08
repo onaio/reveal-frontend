@@ -8,7 +8,10 @@ declare module 'gisida' {
   }
 
   /** Method that returns state */
-  type returnState = () => FlexObject;
+  declare function returnState(): FlexObject;
+
+  /** Layer object */
+  const layerObj: FlexObject;
 
   /** interface for gisida actions */
   export interface ActionsInterface {
@@ -17,7 +20,7 @@ declare module 'gisida' {
     initRegions: AnyAction;
     mapRendered: AnyAction;
     mapLoaded: AnyAction;
-    addLayer: AnyAction;
+    addLayer: (id: string, layerObj: layerObj) => AnyAction;
     addLayerGroup: AnyAction;
     reloadLayer: AnyAction;
     layerReloaded: AnyAction;
@@ -42,29 +45,29 @@ declare module 'gisida' {
   }
 
   /** Gisida actions */
-  export type Actions = ActionsInterface;
+  export const Actions: ActionsInterface;
 
-  /** Type def. for callback called within loadJSON */
-  export type loadJSONCallback = (jsonResponse: FlexObject) => void;
+  /** Callback function called within loadJSON */
+  export declare function loadJSONCallback(jsonResponse: FlexObject, id: string): void;
 
-  /** Type def. for callback called within loadCSV */
-  export type loadCVSCallback = (parsedResponse: ParseResult) => void;
+  /** Callback function called within loadCSV */
+  export declare function loadCSVCallback(parsedResponse: ParseResult): void;
 
   /** interface for files object */
-  export interface Files {
+  interface Files {
     loadJSON: (path: string, callback: loadJSONCallback) => void;
-    loadCSV: (path: string, callback: loadCVSCallback) => void;
+    loadCSV: (path: string, callback: loadCSVCallback) => void;
   }
 
-  /** Object to load files, currently handles JSON and CSV files */
-  export type files = Files;
+  /** files object */
+  export const files: Files;
 
   /** Dispatches actions indicating layer is ready to render */
-  export type prepareLayer = (
+  export declare function prepareLayer(
     mapId: string,
     layer: FlexObject,
-    dispatch: () => void,
-    filterOptions: boolean,
-    doUpdateTsLayer: boolean
-  ) => void;
+    dispatch: (action: AnyAction) => void,
+    filterOptions: boolean = false,
+    doUpdateTsLayer: boolean = false
+  ): void;
 }
