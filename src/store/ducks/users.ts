@@ -22,6 +22,7 @@ const initialState: ImmutableUserState = SeamlessImmutable({
   authenticated: false,
 });
 
+/** users reducer function */
 export default function reducer(state = initialState, action: AnyAction): ImmutableUserState {
   switch (action.type) {
     case AUTHENTICATE:
@@ -34,15 +35,18 @@ export default function reducer(state = initialState, action: AnyAction): Immuta
 }
 
 // actions
-export const AUTHENTICATE = 'reveal/reducer/AUTHENTICATE';
+/** authenticate user action type */
+export const AUTHENTICATE = 'reveal/reducer/users/AUTHENTICATE';
 
 // action creators
+/** authenticate user action creator */
 export const authenticateUser: ActionCreator<AuthenticateAction> = (authenticated: boolean) => ({
   authenticated,
   type: AUTHENTICATE,
 });
 
 // selectors
+/** check if authenticated */
 export function isAuthenticated(state: Partial<Store>) {
   return (state as any)[reducerName].authenticated;
 }
