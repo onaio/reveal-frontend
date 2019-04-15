@@ -22,7 +22,8 @@ export function getLocationColumns(
   locations: LocationItem[] = locationHierarchy,
   padHeader: boolean = false
 ): Column[] {
-  const locationSet = uniq(locations);
+  // sort locations using the level field and then remove duplicates
+  const locationSet = uniq(locations.sort((a, b) => (a.level > b.level ? 1 : -1)));
 
   if (padHeader === true) {
     return locationSet.map(el => {

@@ -9,10 +9,12 @@ describe('helpers/utils', () => {
     const items = [
       {
         identifier: 'province',
+        level: 23,
         name: 'Province',
       },
       {
         identifier: 'district',
+        level: 24,
         name: 'District',
       },
     ];
