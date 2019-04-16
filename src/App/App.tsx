@@ -5,9 +5,10 @@ import React, { Component } from 'react';
 import { Route, Switch } from 'react-router';
 import { Col, Container, Row } from 'reactstrap';
 import Header from '../components/page/Header/Header';
-import { FI_HISTORICAL_URL, FI_SINGLE_URL, FI_URL, IRS_URL } from '../constants';
+import { FI_HISTORICAL_URL, FI_SINGLE_MAP_URL, FI_SINGLE_URL, FI_URL, IRS_URL } from '../constants';
 import ActiveFocusInvestigation from '../containers/pages/FocusInvestigation/active';
 import HistoricalFocusInvestigation from '../containers/pages/FocusInvestigation/historical';
+import SingleActiveFIMap from '../containers/pages/FocusInvestigation/map/active';
 import SingleFI from '../containers/pages/FocusInvestigation/single';
 import Home from '../containers/pages/Home/Home';
 import IRS from '../containers/pages/IRS/IRS';
@@ -17,6 +18,7 @@ library.add(faUser);
 
 import './App.css';
 
+/** Main App component */
 class App extends Component {
   public render() {
     return (
@@ -29,6 +31,7 @@ class App extends Component {
               <Route exact={true} path={IRS_URL} component={IRS} />
               <Route exact={true} path={FI_URL} component={ActiveFocusInvestigation} />
               <Route exact={true} path={`${FI_SINGLE_URL}/:id`} component={SingleFI} />
+              <Route exact={true} path={`${FI_SINGLE_MAP_URL}/:id`} component={SingleActiveFIMap} />
               <Route
                 exact={true}
                 path={FI_HISTORICAL_URL}

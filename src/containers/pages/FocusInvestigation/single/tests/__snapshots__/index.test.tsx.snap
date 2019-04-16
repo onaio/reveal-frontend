@@ -190,7 +190,7 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
                     <tr>
                       <td>
                         <a
-                          href="#map"
+                          href="/focus-investigation/map/13"
                         >
                           <FontAwesomeIcon
                             border={false}
@@ -270,7 +270,7 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
                   className="mb-4 mt-1"
                 >
                   <a
-                    href="#map"
+                    href="/focus-investigation/map/13"
                   >
                     <FontAwesomeIcon
                       border={false}
