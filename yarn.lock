@@ -973,13 +973,6 @@
   resolved "https://registry.yarnpkg.com/@onaio/element-map/-/element-map-0.0.2.tgz#969a19bdf870a41820b10cbba9edffa2af30201c"
   integrity sha512-p4Cq0gnmTUdyqb7X2KCgLzsqqVzvPoRLy1YUwCTnCVyaLYVHhW5x3EppjUxpFbXrqGEcZy5UmfDQ/xB/SXDBbA==
 
-"@onaio/redux-reducer-registry@^0.0.7":
-  version "0.0.7"
-  resolved "https://registry.yarnpkg.com/@onaio/redux-reducer-registry/-/redux-reducer-registry-0.0.7.tgz#d8a8fb3fb9ceda76563dd4038e70bed85e55df01"
-  integrity sha512-R0Wq0ExLkf0PfRxK34QWTaPNmm6V5M9to6ngLolmGjQXHy2jZGdWCnv0nzNf8ft6bJBdF246LiEElouDXqfpJA==
-  dependencies:
-    redux "^4.0.1"
-
 "@onaio/redux-reducer-registry@^0.0.8":
   version "0.0.8"
   resolved "https://registry.yarnpkg.com/@onaio/redux-reducer-registry/-/redux-reducer-registry-0.0.8.tgz#53433bc95c271fe1f77e5632ec324af6825f56e7"

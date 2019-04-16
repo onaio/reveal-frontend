@@ -11,7 +11,7 @@
     "@onaio/connected-reducer-registry": "^0.0.1",
     "@onaio/drill-down-table": "^0.0.16",
     "@onaio/element-map": "^0.0.2",
-    "@onaio/redux-reducer-registry": "^0.0.7",
+    "@onaio/redux-reducer-registry": "^0.0.8",
     "@types/bootstrap": "^4.2.1",
     "@types/history": "^4.7.2",
     "@types/jest": "^24.0.0",
