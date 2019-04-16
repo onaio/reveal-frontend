@@ -1,3 +1,4 @@
+import { history } from '@onaio/connected-reducer-registry';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { ConnectedRouter } from 'connected-react-router';
 import React from 'react';
@@ -6,7 +7,7 @@ import { Provider } from 'react-redux';
 import App from './App/App';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
-import store, { history } from './store';
+import store from './store';
 
 ReactDOM.render(
   <Provider store={store}>
