@@ -952,6 +952,13 @@
   resolved "https://registry.yarnpkg.com/@nodelib/fs.stat/-/fs.stat-1.1.3.tgz#2b5a3ab3f918cca48a8c754c08168e3f03eba61b"
   integrity sha512-shAmDyaQC4H92APFoIaVDHCx5bStIocgvbwQyxPRrbUY20V1EYTbSDchWbuwlMG3V17cprZhA6+78JfB+3DTPw==
 
+"@onaio/connected-reducer-registry@^0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@onaio/connected-reducer-registry/-/connected-reducer-registry-0.0.1.tgz#e4cef471ef6a2da8ed22520c787bcaa9aa053180"
+  integrity sha512-euTobnOCUd9XR4Hvm1i6rIy1RuDmUL+TeLZhoeMxPafkCSgoDuqVkRtLEmWz1fou8HcVfZBKqXugAXv3CuF9gw==
+  dependencies:
+    "@onaio/redux-reducer-registry" "^0.0.8"
+
 "@onaio/drill-down-table@^0.0.16":
   version "0.0.16"
   resolved "https://registry.yarnpkg.com/@onaio/drill-down-table/-/drill-down-table-0.0.16.tgz#6edd4a1f607c6e6cd0e63e1f039780d4655ae64d"
@@ -970,6 +977,13 @@
   version "0.0.7"
   resolved "https://registry.yarnpkg.com/@onaio/redux-reducer-registry/-/redux-reducer-registry-0.0.7.tgz#d8a8fb3fb9ceda76563dd4038e70bed85e55df01"
   integrity sha512-R0Wq0ExLkf0PfRxK34QWTaPNmm6V5M9to6ngLolmGjQXHy2jZGdWCnv0nzNf8ft6bJBdF246LiEElouDXqfpJA==
+  dependencies:
+    redux "^4.0.1"
+
+"@onaio/redux-reducer-registry@^0.0.8":
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/@onaio/redux-reducer-registry/-/redux-reducer-registry-0.0.8.tgz#53433bc95c271fe1f77e5632ec324af6825f56e7"
+  integrity sha512-GyM9D5mZHAtTv2HL8MB3zZyO1y2gJH+iIbctxP6Z+5NWKowxjr/VLbv6O7fEECwRZgQKzSeE/eqKNYaPGSrWEQ==
   dependencies:
     redux "^4.0.1"
 
@@ -1040,7 +1054,7 @@
     "@types/cheerio" "*"
     "@types/react" "*"
 
-"@types/history@*":
+"@types/history@*", "@types/history@^4.7.2":
   version "4.7.2"
   resolved "https://registry.yarnpkg.com/@types/history/-/history-4.7.2.tgz#0e670ea254d559241b6eeb3894f8754991e73220"
   integrity sha512-ui3WwXmjTaY73fOQ3/m3nnajU/Orhi6cEu5rzX+BrAAJxa3eITXZ5ch9suPqtM03OWhAHhPSyBGCN4UKoxO20Q==
@@ -2746,12 +2760,13 @@ connect-history-api-fallback@^1.3.0:
   resolved "https://registry.yarnpkg.com/connect-history-api-fallback/-/connect-history-api-fallback-1.5.0.tgz#b06873934bc5e344fef611a196a6faae0aee015a"
   integrity sha1-sGhzk0vF40T+9hGhlqb6rgruAVo=
 
-connected-react-router@^6.3.2:
-  version "6.3.2"
-  resolved "https://registry.yarnpkg.com/connected-react-router/-/connected-react-router-6.3.2.tgz#8c90b77f1d7b783608cd50e4f69bf60e47265425"
-  integrity sha512-YxrAfMExl/OBsi+ojA4ywZeC7cmQ52MnZ4bhzqLhhjuOiXcQogC4kW0kodouXAXrXDovb2l3yEhDfpH99/wYcw==
+connected-react-router@^6.4.0:
+  version "6.4.0"
+  resolved "https://registry.yarnpkg.com/connected-react-router/-/connected-react-router-6.4.0.tgz#c382a9e70fdd1247c09c7ece7854622db4d46234"
+  integrity sha512-RZRLD7qUz9OdmCn0JkW7pOiUsR7v9NtqnYKfqrxXsfO2ozMLR2/MjHaSPpdbMr4VE5TY6MwzAXUSkheN2ldqug==
   dependencies:
     immutable "^3.8.1"
+    prop-types "^15.7.2"
     seamless-immutable "^7.1.3"
 
 console-browserify@^1.1.0:
@@ -5023,6 +5038,18 @@ history@^4.7.2:
     resolve-pathname "^2.2.0"
     value-equal "^0.4.0"
     warning "^3.0.0"
+
+history@^4.9.0:
+  version "4.9.0"
+  resolved "https://registry.yarnpkg.com/history/-/history-4.9.0.tgz#84587c2068039ead8af769e9d6a6860a14fa1bca"
+  integrity sha512-H2DkjCjXf0Op9OAr6nJ56fcRkTSNrUiv41vNJ6IswJjif6wlpZK0BTfFbi7qK9dXLSYZxkq5lBsj3vUjlYBYZA==
+  dependencies:
+    "@babel/runtime" "^7.1.2"
+    loose-envify "^1.2.0"
+    resolve-pathname "^2.2.0"
+    tiny-invariant "^1.0.2"
+    tiny-warning "^1.0.0"
+    value-equal "^0.4.0"
 
 hmac-drbg@^1.0.0:
   version "1.0.1"
@@ -10506,6 +10533,16 @@ timsort@^0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/timsort/-/timsort-0.3.0.tgz#405411a8e7e6339fe64db9a234de11dc31e02bd4"
   integrity sha1-QFQRqOfmM5/mTbmiNN4R3DHgK9Q=
+
+tiny-invariant@^1.0.2:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/tiny-invariant/-/tiny-invariant-1.0.4.tgz#346b5415fd93cb696b0c4e8a96697ff590f92463"
+  integrity sha512-lMhRd/djQJ3MoaHEBrw8e2/uM4rs9YMNk0iOr8rHQ0QdbM7D4l0gFl3szKdeixrlyfm9Zqi4dxHCM2qVG8ND5g==
+
+tiny-warning@^1.0.0:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/tiny-warning/-/tiny-warning-1.0.2.tgz#1dfae771ee1a04396bdfde27a3adcebc6b648b28"
+  integrity sha512-rru86D9CpQRLvsFG5XFdy0KdLAvjdQDyZCsRcuu60WtzFylDM3eAWSxEVz5kzL2Gp544XiUvPbVKtOA/txLi9Q==
 
 tmp@^0.0.33:
   version "0.0.33"
