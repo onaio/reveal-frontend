@@ -15,7 +15,7 @@ declare module 'gisida' {
 
   /** interface for gisida actions */
   export interface ActionsInterface {
-    initApp: AnyAction;
+    initApp: (config: FlexObject) => AnyAction;
     initStyles: AnyAction;
     initRegions: AnyAction;
     mapRendered: AnyAction;
@@ -70,4 +70,18 @@ declare module 'gisida' {
     filterOptions: boolean = false,
     doUpdateTsLayer: boolean = false
   ): void;
+
+  /** interface for reducers object */
+  interface Reducers {
+    [key: string]: any;
+  }
+  /** reducers object */
+  export const reducers: Reducers;
+
+  /** interface for ducks object */
+  interface Ducks {
+    [key: string]: any;
+  }
+  /** ducks object */
+  export const ducks: Ducks;
 }

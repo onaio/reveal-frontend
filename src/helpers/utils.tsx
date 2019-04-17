@@ -21,6 +21,10 @@ export function percentage(num: number, decimalPoints: number = 0) {
   return `${(num * 100).toFixed(decimalPoints)}%`;
 }
 
+export interface MapProps {
+  [key: string]: any;
+}
+
 /** Gets react table columns from the location hierarchy in configs */
 export function getLocationColumns(
   locations: LocationItem[] = locationHierarchy,

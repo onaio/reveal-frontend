@@ -6152,9 +6152,9 @@ gisida-react@^1.2.1:
     redux "^4.0.0"
 
 gisida@^1.2.2:
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/gisida/-/gisida-1.2.2.tgz#fe543c84c332159f3e69476f34d1a37c7ba0c08f"
-  integrity sha512-bBNNLmVKGeoBBEcjRVG9QlKVI+XhY4PdTryaSpZ018EbMpfQbZYJmcSMl/TfRWrzrWehqYULi3K7pi4zWRoxmw==
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/gisida/-/gisida-1.2.3.tgz#28b83e19b6ee376354bc60f8246937c59021ebc0"
+  integrity sha512-psYdS0/9Pb0t+ViAiAGNUS7VVf0pLqU0tmOnFh9Qbqb/FfhQglCnEJnILpuUnQ8QXuSv0wDqgN/zkQclwxqCGA==
   dependencies:
     babel-core v6.25.0
     babel-loader "^7.1.2"
