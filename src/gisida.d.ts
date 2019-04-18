@@ -84,4 +84,6 @@ declare module 'gisida' {
   }
   /** ducks object */
   export const ducks: Ducks;
+  export declare function loadLayers(mapId: string, dispatch: any, layers: any): any;
+  export declare function addConfigToStore(store: any, config: FlexObject): any;
 }
