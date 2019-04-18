@@ -8,6 +8,7 @@ declare module 'gisida-react' {
   export interface MapProps {
     mapId: string;
     handlers: Handler[];
+    store: any;
   }
   /** Gisida Map component */
   export declare class Map extends React.Component<MapProps, {}> {
