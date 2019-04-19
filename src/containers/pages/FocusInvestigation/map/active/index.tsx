@@ -1,7 +1,4 @@
-import { connectReducer, getConnectedStore } from '@onaio/connected-reducer-registry';
-import reducerRegistry, { combine, getStore, Registry } from '@onaio/redux-reducer-registry';
-
-// import { getStore } from '@onaio/redux-reducer-registry';
+import reducerRegistry from '@onaio/redux-reducer-registry';
 import { Actions, ducks, loadLayers, prepareLayer } from 'gisida';
 import { Map } from 'gisida-react';
 import * as React from 'react';
@@ -10,6 +7,7 @@ import { AnyAction } from 'redux';
 
 import { FlexObject, MapProps, RouteParams } from '../../../../../helpers/utils';
 import store from '../../../../../store';
+import './gisida.css';
 
 /** Map View for Single Active Focus Investigation */
 class SingleActiveFIMap extends React.Component<RouteComponentProps<RouteParams> & MapProps, {}> {
@@ -21,7 +19,7 @@ class SingleActiveFIMap extends React.Component<RouteComponentProps<RouteParams>
     if (!initialState.APP && ducks.APP) {
       reducerRegistry.register('APP', ducks.APP.default);
     }
-    if (!initialState['map-1'] && ducks['map-1']) {
+    if (!initialState['map-1'] && ducks.MAP) {
       reducerRegistry.register('map-1', ducks.MAP.default);
     }
 
@@ -31,8 +29,8 @@ class SingleActiveFIMap extends React.Component<RouteComponentProps<RouteParams>
       APP: {
         accessToken: 'pk.eyJ1Ijoib25hIiwiYSI6IlVYbkdyclkifQ.0Bz-QOOXZZK01dq4MuMImQ',
         apiAccessToken: '138a7ff6dfdcb5b4e41eb2d39bcc76ce5d296e89',
+        appName: 'Test Map',
         mapConfig: {
-          appName: 'Test Map',
           center: [33.852072, -18.850944],
           container: 'map',
           style: 'mapbox://styles/ona/cjestgt7ldbet2sqnqth4xx8c',
@@ -43,21 +41,20 @@ class SingleActiveFIMap extends React.Component<RouteComponentProps<RouteParams>
         'https://raw.githubusercontent.com/onaio/cycloneidai-2019-data/master/moz/province-admin/province-admin.json',
       ],
     };
+
+    // 3. Initialize Gisida stores
     store.dispatch(Actions.initApp(config.APP));
-    // loadLayers('map-1',store.dispatch, config.LAYERS);
+    loadLayers('map-1', store.dispatch, config.LAYERS);
   }
 
   public render() {
     const currentState = store.getState();
-    // console.log('3. render - ', window.performance.now());
-    // console.log('render', currentState);
     const mapName = (currentState.APP && currentState.APP.appName) || '__';
     const doRenderMap = typeof currentState['map-1'] !== 'undefined';
 
     return (
       <div>
         <h2 className="page-title mt-4 mb-5">Map View: {mapName}</h2>
-        {/* todo - update condition to render map */}
         <div className="map">
           {doRenderMap ? (
             <Map mapId={'map-1'} store={store} handlers={this.buildHandlers()} />
