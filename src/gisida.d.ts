@@ -16,7 +16,7 @@ declare module 'gisida' {
   /** interface for gisida actions */
   export interface ActionsInterface {
     initApp: (config: FlexObject) => AnyAction;
-    initStyles: AnyAction;
+    initStyles: (styles: any, mapConfig: FlexObject) => AnyAction;
     initRegions: AnyAction;
     mapRendered: AnyAction;
     mapLoaded: AnyAction;

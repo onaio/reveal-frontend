@@ -846,6 +846,13 @@
   dependencies:
     regenerator-runtime "^0.13.2"
 
+"@babel/runtime@^7.4.3":
+  version "7.4.4"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.4.4.tgz#dc2e34982eb236803aa27a07fea6857af1b9171d"
+  integrity sha512-w0+uT71b6Yi7i5SE0co4NioIpSYS6lLiXvCzWzGSKvpK5vdQtCbICHMj+gbAKAOtxiV6HsVh/MBdaF9EQ6faSg==
+  dependencies:
+    regenerator-runtime "^0.13.2"
+
 "@babel/template@^7.1.0", "@babel/template@^7.1.2", "@babel/template@^7.2.2":
   version "7.2.2"
   resolved "https://registry.yarnpkg.com/@babel/template/-/template-7.2.2.tgz#005b3fdf0ed96e88041330379e0da9a708eb2907"
@@ -1000,6 +1007,14 @@
   version "0.0.10"
   resolved "https://registry.yarnpkg.com/@onaio/session-reducer/-/session-reducer-0.0.10.tgz#ba245827b0d52355bf0b921ff139fc56f9e80e7f"
   integrity sha512-xEwtJW9ouFBcQbaT49ihg+fApC8wFZ9KIycATMsTIXUWaMe4Dbp38Dc0w0hPwlSr+cTgCXBQMCP658GXyskDcg==
+
+"@onaio/superset-connector@^0.0.7":
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/@onaio/superset-connector/-/superset-connector-0.0.7.tgz#ffe136ec26e0d55b78bfc4ee00b65a4e91767580"
+  integrity sha512-wzUDA4xk5U47BEAT9Q7cQoam1ukTht6tdaacndOJXNl5e6pbEWLeC+G0xseWXH/0MpPJmVo6ia5rCC3jaXW/Aw==
+  dependencies:
+    jest-fetch-mock "^2.1.1"
+    papaparse "^4.6.3"
 
 "@onaio/superset-connector@^0.0.9":
   version "0.0.9"
@@ -6133,10 +6148,9 @@ getpass@^0.1.1:
   dependencies:
     assert-plus "^1.0.0"
 
-gisida-react@^1.2.1:
+"gisida-react@https://github.com/onaio/gisida-react.git#filters-phase-2":
   version "1.2.1"
-  resolved "https://registry.yarnpkg.com/gisida-react/-/gisida-react-1.2.1.tgz#f823a00a104db846652603a3bd62153b2d73cfd0"
-  integrity sha512-O6TrvHnCE+/3QtmEWhDDfW9itWI0SFl3ogvetJUH0sv7LTC1umMZaVsx2YCLVLbnS5ebAS63u78/uY7Al23f+w==
+  resolved "https://github.com/onaio/gisida-react.git#3542a79ea492935052134c3601d627c939e2d989"
   dependencies:
     ansi-regex "^3.0.0"
     camelcase "^4.1.0"
@@ -6151,13 +6165,15 @@ gisida-react@^1.2.1:
     react-redux "^5.0.6"
     redux "^4.0.0"
 
-gisida@^1.2.2:
+"gisida@https://github.com/onaio/gisida.git#add-reducer-ducks":
   version "1.2.3"
-  resolved "https://registry.yarnpkg.com/gisida/-/gisida-1.2.3.tgz#28b83e19b6ee376354bc60f8246937c59021ebc0"
-  integrity sha512-psYdS0/9Pb0t+ViAiAGNUS7VVf0pLqU0tmOnFh9Qbqb/FfhQglCnEJnILpuUnQ8QXuSv0wDqgN/zkQclwxqCGA==
+  resolved "https://github.com/onaio/gisida.git#e1d112c7ad6b49d26dc336619258fb0fd81ebfbb"
   dependencies:
+    "@babel/runtime" "^7.4.3"
+    "@onaio/superset-connector" "^0.0.7"
     babel-core v6.25.0
     babel-loader "^7.1.2"
+    babel-polyfill "^6.26.0"
     babel-preset-es2015 "^6.24.0"
     babel-preset-es2016 "^6.24.1"
     babel-preset-stage-0 "^6.24.1"
