@@ -5,16 +5,54 @@ import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import { AnyAction } from 'redux';
 
-import { FlexObject, MapProps, RouteParams } from '../../../../../helpers/utils';
+import { FlexObject, MapConfigs, MapProps, RouteParams } from '../../../../../helpers/utils';
 import store from '../../../../../store';
 import './gisida.css';
+
+// Temporary Object containing different map configs
+// todo - dynamically generate these from somewhere
+const configs: MapConfigs = {
+  '13': {
+    APP: {
+      accessToken: 'pk.eyJ1Ijoib25hIiwiYSI6IlVYbkdyclkifQ.0Bz-QOOXZZK01dq4MuMImQ',
+      apiAccessToken: '138a7ff6dfdcb5b4e41eb2d39bcc76ce5d296e89',
+      appName: 'Test Map',
+      mapConfig: {
+        center: [33.852072, -18.850944],
+        container: 'map',
+        style: 'mapbox://styles/ona/cjestgt7ldbet2sqnqth4xx8c',
+        zoom: 6.5,
+      },
+    },
+    LAYERS: [
+      'https://raw.githubusercontent.com/onaio/cycloneidai-2019-data/master/moz/province-admin/province-admin.json',
+    ],
+  },
+  '14': {
+    APP: {
+      accessToken: 'pk.eyJ1Ijoib25hIiwiYSI6IlVYbkdyclkifQ.0Bz-QOOXZZK01dq4MuMImQ',
+      apiAccessToken: '138a7ff6dfdcb5b4e41eb2d39bcc76ce5d296e89',
+      appName: 'Test Map 2',
+      mapConfig: {
+        center: [27.199728142287427, -18.94022942134295],
+        container: 'map',
+        style: 'mapbox://styles/ona/cjestgt7ldbet2sqnqth4xx8c',
+        zoom: 5.76,
+      },
+    },
+    LAYERS: [
+      'https://raw.githubusercontent.com/onaio/zim-data/master/boundaries-labels/province/province-admin.json',
+      'https://raw.githubusercontent.com/onaio/zim-data/master/boundaries-labels/district/district-admin.json',
+    ],
+  },
+};
 
 /** Map View for Single Active Focus Investigation */
 class SingleActiveFIMap extends React.Component<RouteComponentProps<RouteParams> & MapProps, {}> {
   constructor(props: RouteComponentProps<RouteParams> & MapProps) {
     super(props);
     const initialState = store.getState();
-
+    const { id } = props.match.params;
     // // 1. Register mapReducers in reducer registery;
     if (!initialState.APP && ducks.APP) {
       reducerRegistry.register('APP', ducks.APP.default);
@@ -25,26 +63,12 @@ class SingleActiveFIMap extends React.Component<RouteComponentProps<RouteParams>
 
     // 2. Build/Load site-config js
     // todo - make this dynamically populated
-    const config = {
-      APP: {
-        accessToken: 'pk.eyJ1Ijoib25hIiwiYSI6IlVYbkdyclkifQ.0Bz-QOOXZZK01dq4MuMImQ',
-        apiAccessToken: '138a7ff6dfdcb5b4e41eb2d39bcc76ce5d296e89',
-        appName: 'Test Map',
-        mapConfig: {
-          center: [33.852072, -18.850944],
-          container: 'map',
-          style: 'mapbox://styles/ona/cjestgt7ldbet2sqnqth4xx8c',
-          zoom: 6.5,
-        },
-      },
-      LAYERS: [
-        'https://raw.githubusercontent.com/onaio/cycloneidai-2019-data/master/moz/province-admin/province-admin.json',
-      ],
-    };
-
-    // 3. Initialize Gisida stores
-    store.dispatch(Actions.initApp(config.APP));
-    loadLayers('map-1', store.dispatch, config.LAYERS);
+    if (typeof id !== 'undefined' && typeof configs[id] !== 'undefined') {
+      const config = configs[id];
+      // 3. Initialize Gisida stores
+      store.dispatch(Actions.initApp(config.APP));
+      loadLayers('map-1', store.dispatch, config.LAYERS);
+    }
   }
 
   public render() {

@@ -70,6 +70,14 @@ export function oAuthUserInfoGetter(apiResponse: { [key: string]: any }): Sessio
         return getOnadataUserInfo(apiResponse);
     }
   }
+
+export interface MapConfig {
+  [key: string]: FlexObject;
+}
+
+export interface MapConfigs {
+  [key: string]: MapConfig;
+  [key: number]: MapConfig;
 }
 
 /** utility method to extract plan from superset response object */
