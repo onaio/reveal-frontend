@@ -80,10 +80,26 @@ export function oAuthUserInfoGetter(apiResponse: { [key: string]: any }): Sessio
 export interface MapConfig {
   [key: string]: FlexObject;
 }
+export interface SiteConfigAppMapconfig {
+  center: number[];
+  container: string;
+  style: string;
+  zoom: number;
+}
+export interface SiteConfigApp {
+  accessToken: string;
+  apiAccessToken: string;
+  appName: string;
+  mapConfig: SiteConfigAppMapconfig;
+}
+export interface SiteConfig {
+  APP: SiteConfigApp;
+  LAYERS: any[];
+}
 
 export interface MapConfigs {
-  [key: string]: MapConfig;
-  [key: number]: MapConfig;
+  [key: string]: FlexObject;
+  [key: number]: FlexObject;
 }
 
 /** utility method to extract plan from superset response object */
