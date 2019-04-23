@@ -1,0 +1,16 @@
+{
+  "label": "Province Boundaries",
+  "source": {
+    "type": "vector",
+    "layer": "afg_admbnda_adm1_agcho_201805-367pni",
+    "url": "mapbox://ona.9m1lfrr5"
+  },
+  "type": "line",
+  "paint": {
+    "line-width": 2,
+    "line-color": "#888",
+    "line-opacity": 0.5
+  },
+  "visible": true,
+  "category": "Boundaries & Labels"
+}
