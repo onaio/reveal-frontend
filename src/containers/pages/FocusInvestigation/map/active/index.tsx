@@ -52,10 +52,7 @@ const configs: MapConfigs = {
     apiAccessToken: '138a7ff6dfdcb5b4e41eb2d39bcc76ce5d296e89',
     appName: 'Test Map 3',
     center: [69.13155473084771, 34.50960383103761],
-    // todo - make local layer files work
-    // a) make gisida point to an absolute path
-    // b) tell react-router to serve the <layer>.json files
-    layers: ['province-admin'],
+    layers: ['/config/layers/province-admin.json'],
     style: 'mapbox://styles/ona/cjestgt7ldbet2sqnqth4xx8c',
     zoom: 10.695873279884117,
   },
