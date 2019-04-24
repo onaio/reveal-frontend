@@ -5,6 +5,10 @@ export const DOMAIN_NAME = process.env.REACT_APP_DOMAIN_NAME;
 export type DOMAIN_NAME = typeof DOMAIN_NAME;
 export const ONADATA_CLIENT_ID = process.env.REACT_APP_ONADATA_CLIENT_ID;
 export type ONADATA_CLIENT_ID = typeof ONADATA_CLIENT_ID;
+export const ENABLE_IRS = process.env.REACT_APP_ENABLE_IRS === 'true';
+export type ENABLE_IRS = typeof ENABLE_IRS;
+export const ENABLE_FI = process.env.REACT_APP_ENABLE_FI === 'true';
+export type ENABLE_FI = typeof ENABLE_FI;
 
 // strings
 export const LOCATION = 'Location';

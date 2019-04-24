@@ -15,7 +15,14 @@ import {
   UncontrolledDropdown,
 } from 'reactstrap';
 import logo from '../../../assets/images/logo.png';
-import { FI_HISTORICAL_URL, FI_URL, IRS_URL, WEBSITE_NAME } from '../../../constants';
+import {
+  ENABLE_FI,
+  ENABLE_IRS,
+  FI_HISTORICAL_URL,
+  FI_URL,
+  IRS_URL,
+  WEBSITE_NAME,
+} from '../../../constants';
 import './Header.css';
 
 interface State {
@@ -50,34 +57,38 @@ class HeaderComponent extends React.Component<RouteComponentProps, State> {
                   Home
                 </NavLink>
               </NavItem>
-              <NavItem>
-                <NavLink to={IRS_URL} className="nav-link" activeClassName="active">
-                  IRS
-                </NavLink>
-              </NavItem>
-              <UncontrolledDropdown nav={true} inNavbar={true}>
-                <DropdownToggle
-                  nav={true}
-                  caret={true}
-                  className={
-                    path === FI_URL || path === FI_HISTORICAL_URL ? 'nav-link active' : 'nav-link'
-                  }
-                >
-                  Focus Investigation
-                </DropdownToggle>
-                <DropdownMenu right={true}>
-                  <DropdownItem>
-                    <NavLink to={FI_URL} className="nav-link" activeClassName="active">
-                      Active
-                    </NavLink>
-                  </DropdownItem>
-                  <DropdownItem>
-                    <NavLink to={FI_HISTORICAL_URL} className="nav-link" activeClassName="active">
-                      Historical
-                    </NavLink>
-                  </DropdownItem>
-                </DropdownMenu>
-              </UncontrolledDropdown>
+              {ENABLE_IRS && (
+                <NavItem>
+                  <NavLink to={IRS_URL} className="nav-link" activeClassName="active">
+                    IRS
+                  </NavLink>
+                </NavItem>
+              )}
+              {ENABLE_FI && (
+                <UncontrolledDropdown nav={true} inNavbar={true}>
+                  <DropdownToggle
+                    nav={true}
+                    caret={true}
+                    className={
+                      path === FI_URL || path === FI_HISTORICAL_URL ? 'nav-link active' : 'nav-link'
+                    }
+                  >
+                    Focus Investigation
+                  </DropdownToggle>
+                  <DropdownMenu right={true}>
+                    <DropdownItem>
+                      <NavLink to={FI_URL} className="nav-link" activeClassName="active">
+                        Active
+                      </NavLink>
+                    </DropdownItem>
+                    <DropdownItem>
+                      <NavLink to={FI_HISTORICAL_URL} className="nav-link" activeClassName="active">
+                        Historical
+                      </NavLink>
+                    </DropdownItem>
+                  </DropdownMenu>
+                </UncontrolledDropdown>
+              )}
               <NavItem>
                 <NavLink to="/404" className="nav-link" activeClassName="active">
                   Users
