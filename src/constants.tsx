@@ -1,6 +1,10 @@
 // env vars
 export const WEBSITE_NAME = process.env.REACT_APP_WEBSITE_NAME;
 export type WEBSITE_NAME = typeof WEBSITE_NAME;
+export const DOMAIN_NAME = process.env.REACT_APP_DOMAIN_NAME;
+export type DOMAIN_NAME = typeof DOMAIN_NAME;
+export const ONADATA_CLIENT_ID = process.env.REACT_APP_ONADATA_CLIENT_ID;
+export type ONADATA_CLIENT_ID = typeof ONADATA_CLIENT_ID;
 
 // strings
 export const LOCATION = 'Location';
