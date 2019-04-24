@@ -21,6 +21,8 @@ export const FOCUS_INVESTIGATIONS = 'Focus Investigations';
 export type FOCUS_INVESTIGATIONS = typeof FOCUS_INVESTIGATIONS;
 
 // internal urls
+export const LOGIN_URL = '/login';
+export type LOGIN_URL = typeof LOGIN_URL;
 export const HOME_URL = '/';
 export type HOME_URL = typeof HOME_URL;
 export const IRS_URL = '/irs';
