@@ -14,6 +14,7 @@ import SingleActiveFIMap from '../containers/pages/FocusInvestigation/map/active
 import SingleFI from '../containers/pages/FocusInvestigation/single';
 import Home from '../containers/pages/Home/Home';
 import IRS from '../containers/pages/IRS/IRS';
+import ConnectedPrivateRoute from '../helpers/ConnectedPrivateRoute';
 
 library.add(faMap);
 library.add(faUser);
@@ -29,17 +30,29 @@ class App extends Component {
         <Row id="main-page-row">
           <Col>
             <Switch>
-              <Route exact={true} path="/" component={Home} />
-              <Route exact={true} path={IRS_URL} component={IRS} />
-              <Route exact={true} path={FI_URL} component={ActiveFocusInvestigation} />
-              <Route exact={true} path={`${FI_SINGLE_URL}/:id`} component={SingleFI} />
-              <Route exact={true} path={`${FI_SINGLE_MAP_URL}/:id`} component={SingleActiveFIMap} />
-              <Route
+              <ConnectedPrivateRoute exact={true} path="/" component={Home} />
+              <ConnectedPrivateRoute exact={true} path={IRS_URL} component={IRS} />
+              <ConnectedPrivateRoute
+                exact={true}
+                path={FI_URL}
+                component={ActiveFocusInvestigation}
+              />
+              <ConnectedPrivateRoute
+                exact={true}
+                path={`${FI_SINGLE_URL}/:id`}
+                component={SingleFI}
+              />
+              <ConnectedPrivateRoute
+                exact={true}
+                path={`${FI_SINGLE_MAP_URL}/:id`}
+                component={SingleActiveFIMap}
+              />
+              <ConnectedPrivateRoute
                 exact={true}
                 path={FI_HISTORICAL_URL}
                 component={HistoricalFocusInvestigation}
               />
-              <Route
+              <ConnectedPrivateRoute
                 exact={true}
                 path={`${FI_HISTORICAL_URL}/:id`}
                 component={HistoricalFocusInvestigation}
