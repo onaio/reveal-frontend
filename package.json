@@ -11,7 +11,9 @@
     "@onaio/connected-reducer-registry": "^0.0.1",
     "@onaio/drill-down-table": "^0.0.16",
     "@onaio/element-map": "^0.0.2",
+    "@onaio/gatekeeper": "^0.0.1",
     "@onaio/redux-reducer-registry": "^0.0.8",
+    "@onaio/session-reducer": "^0.0.1",
     "@types/bootstrap": "^4.2.1",
     "@types/history": "^4.7.2",
     "@types/jest": "^24.0.0",
@@ -39,6 +41,7 @@
     "reactstrap": "^7.1.0",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
+    "seamless-immutable": "^7.1.4",
     "typescript": "^3.3.1"
   },
   "scripts": {
