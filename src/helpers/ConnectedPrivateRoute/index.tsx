@@ -42,7 +42,7 @@ const PrivateRoute = (props: PrivateRouteProps) => {
       {...theOtherProps}
       render={routeProps =>
         (authenticated === true || disableLoginProtection === true) && Component ? (
-          <Component {...routeProps} />
+          <Component {...routeProps} {...theOtherProps} />
         ) : (
           <Redirect to={redirectPath} />
         )
