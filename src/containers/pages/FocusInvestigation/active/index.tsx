@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import DrillDownTable from '@onaio/drill-down-table';
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
+import { Link } from 'react-router-dom';
 import { CellInfo, Column } from 'react-table';
 import 'react-table/react-table.css';
 import { Table } from 'reactstrap';
@@ -36,11 +37,11 @@ class ActiveFocusInvestigation extends React.Component<RouteComponentProps<Route
             Cell: (cell: CellInfo) => {
               return (
                 <div>
-                  <a href={`${FI_SINGLE_MAP_URL}/13`}>
+                  <Link to={`${FI_SINGLE_MAP_URL}/13`}>
                     <FontAwesomeIcon icon={['fas', 'map']} />
-                  </a>
+                  </Link>
                   &nbsp;&nbsp;
-                  <a href={`${FI_SINGLE_URL}/13`}>{cell.value}</a>
+                  <Link to={`${FI_SINGLE_URL}/13`}>{cell.value}</Link>
                 </div>
               );
             },
