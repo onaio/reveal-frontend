@@ -3,17 +3,19 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect, Route, RouteProps } from 'react-router-dom';
 import { Store } from 'redux';
-import { LOGIN_URL } from '../../constants';
+import { DISABLE_LOGIN_RPOTECTION, LOGIN_URL } from '../../constants';
 
 /** interface for PrivateRoute props */
 interface PrivateRouteProps extends RouteProps {
-  authenticated: boolean;
-  redirectPath: string;
+  authenticated: boolean /** is the current user authenticated */;
+  disableLoginProtection: boolean /** should we disable login protection */;
+  redirectPath: string /** redurect to this path is use if not authenticated */;
 }
 
 /** declare default props for PrivateRoute */
 const defaultPrivateRouteProps: Partial<PrivateRouteProps> = {
   authenticated: false,
+  disableLoginProtection: DISABLE_LOGIN_RPOTECTION,
   redirectPath: LOGIN_URL,
 };
 
@@ -27,13 +29,19 @@ const defaultPrivateRouteProps: Partial<PrivateRouteProps> = {
  * Otherwise redirect to the redirectPath
  */
 const PrivateRoute = (props: PrivateRouteProps) => {
-  const { component: Component, authenticated, redirectPath, ...rest } = props;
+  const {
+    component: Component,
+    authenticated,
+    disableLoginProtection,
+    redirectPath,
+    ...theOtherProps
+  } = props;
   return (
     /* tslint:disable jsx-no-lambda */
     <Route
-      {...rest}
+      {...theOtherProps}
       render={routeProps =>
-        authenticated === true && Component ? (
+        (authenticated === true || disableLoginProtection === true) && Component ? (
           <Component {...routeProps} />
         ) : (
           <Redirect to={redirectPath} />

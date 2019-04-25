@@ -9,6 +9,8 @@ export const ENABLE_IRS = process.env.REACT_APP_ENABLE_IRS === 'true';
 export type ENABLE_IRS = typeof ENABLE_IRS;
 export const ENABLE_FI = process.env.REACT_APP_ENABLE_FI === 'true';
 export type ENABLE_FI = typeof ENABLE_FI;
+export const DISABLE_LOGIN_RPOTECTION = process.env.REACT_APP_DISABLE_LOGIN_RPOTECTION === 'false';
+export type DISABLE_LOGIN_RPOTECTION = typeof DISABLE_LOGIN_RPOTECTION;
 
 // strings
 export const LOCATION = 'Location';
