@@ -1,5 +1,5 @@
-// This component represents the header part of the web app
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { User } from '@onaio/session-reducer';
 import * as React from 'react';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { Link, NavLink } from 'react-router-dom';
@@ -21,16 +21,38 @@ import {
   FI_HISTORICAL_URL,
   FI_URL,
   IRS_URL,
+  LOGIN_URL,
+  LOGOUT_URL,
   WEBSITE_NAME,
 } from '../../../constants';
 import './Header.css';
 
+/** interface for Header state */
 interface State {
   isOpen: boolean;
 }
 
-class HeaderComponent extends React.Component<RouteComponentProps, State> {
-  constructor(props: RouteComponentProps) {
+/** interface for HeaderProps */
+export interface HeaderProps extends RouteComponentProps {
+  authenticated: boolean;
+  user: User;
+}
+
+/** default props for Header */
+const defaultHeaderProps: Partial<HeaderProps> = {
+  authenticated: false,
+  user: {
+    email: '',
+    name: '',
+    username: '',
+  },
+};
+
+/** The Header component */
+export class HeaderComponent extends React.Component<HeaderProps, State> {
+  public static defaultProps = defaultHeaderProps;
+
+  constructor(props: HeaderProps) {
     super(props);
 
     this.toggle = this.toggle.bind(this);
@@ -40,6 +62,7 @@ class HeaderComponent extends React.Component<RouteComponentProps, State> {
   }
 
   public render() {
+    const { authenticated, user } = this.props;
     const path = this.props.location.pathname;
     return (
       <div>
@@ -101,14 +124,24 @@ class HeaderComponent extends React.Component<RouteComponentProps, State> {
               </NavItem>
             </Nav>
             <Nav className="ml-0" navbar={true}>
-              <UncontrolledDropdown nav={true} inNavbar={true}>
-                <DropdownToggle nav={true} caret={true}>
-                  <FontAwesomeIcon icon={['far', 'user']} /> Roger
-                </DropdownToggle>
-                <DropdownMenu right={true}>
-                  <DropdownItem>Sign Out</DropdownItem>
-                </DropdownMenu>
-              </UncontrolledDropdown>
+              {authenticated ? (
+                <UncontrolledDropdown nav={true} inNavbar={true}>
+                  <DropdownToggle nav={true} caret={true}>
+                    <FontAwesomeIcon icon={['far', 'user']} /> {user.name}
+                  </DropdownToggle>
+                  <DropdownMenu right={true}>
+                    <DropdownItem>
+                      <NavLink to={LOGOUT_URL} className="nav-link" activeClassName="active">
+                        Sign Out
+                      </NavLink>
+                    </DropdownItem>
+                  </DropdownMenu>
+                </UncontrolledDropdown>
+              ) : (
+                <NavLink to={LOGIN_URL} className="nav-link" activeClassName="active">
+                  Login
+                </NavLink>
+              )}
             </Nav>
           </Collapse>
         </Navbar>
