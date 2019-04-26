@@ -6,6 +6,7 @@ import React, { Component } from 'react';
 import { Route, Switch } from 'react-router';
 import { Col, Container, Row } from 'reactstrap';
 import Header from '../components/page/Header/Header';
+import Loading from '../components/page/Loading';
 import { providers } from '../configs/auth';
 import { FI_HISTORICAL_URL, FI_SINGLE_MAP_URL, FI_SINGLE_URL, FI_URL, IRS_URL } from '../constants';
 import ActiveFocusInvestigation from '../containers/pages/FocusInvestigation/active';
@@ -67,7 +68,11 @@ class App extends Component {
                 exact={true}
                 path="/oauth/callback/:id"
                 render={routeProps => (
-                  <ConnectedOauthCallback providers={providers} {...routeProps} />
+                  <ConnectedOauthCallback
+                    LoadingComponent={Loading}
+                    providers={providers}
+                    {...routeProps}
+                  />
                 )}
               />
               {/* tslint:enable jsx-no-lambda */}
