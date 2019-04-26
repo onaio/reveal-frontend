@@ -165,7 +165,7 @@ Object {
 }
 `;
 
-exports[`components/ConnectedHeader renders the ConnectedHeader logged in 1`] = `
+exports[`components/ConnectedHeader renders the ConnectedHeader when logged in 1`] = `
 Object {
   "children": Array [
     <nav

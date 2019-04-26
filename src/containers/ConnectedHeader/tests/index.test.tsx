@@ -20,7 +20,7 @@ describe('components/ConnectedHeader', () => {
     wrapper.unmount();
   });
 
-  it('renders the ConnectedHeader logged in', () => {
+  it('renders the ConnectedHeader when logged in', () => {
     store.dispatch(
       authenticateUser(true, {
         email: 'bob@example.com',
