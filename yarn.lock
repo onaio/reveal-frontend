@@ -973,12 +973,12 @@
   resolved "https://registry.yarnpkg.com/@onaio/element-map/-/element-map-0.0.2.tgz#969a19bdf870a41820b10cbba9edffa2af30201c"
   integrity sha512-p4Cq0gnmTUdyqb7X2KCgLzsqqVzvPoRLy1YUwCTnCVyaLYVHhW5x3EppjUxpFbXrqGEcZy5UmfDQ/xB/SXDBbA==
 
-"@onaio/gatekeeper@^0.0.2":
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/@onaio/gatekeeper/-/gatekeeper-0.0.2.tgz#a7930ff479b80ea28cf68038657d9b3fdba10b23"
-  integrity sha512-PBCeMgK1fHs7kU24cK2QTz9FocAhj+lW7dUkmsARz1002dsZ53uMBru98pYsxGoQCOf8DP0IGyDJnRDqY8zYeA==
+"@onaio/gatekeeper@^0.0.6":
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/@onaio/gatekeeper/-/gatekeeper-0.0.6.tgz#933cb3b6bc180780314baac39e57a16150b22807"
+  integrity sha512-6JTsp1p4S0AoWHBoaBn2N9F8nzRQzhBCHlpdDNAN/s6FMQNVcaqQxamUrgaTmKzdQpgLszWvFNwbf9Ed2XJ9sw==
   dependencies:
-    "@onaio/session-reducer" "^0.0.1"
+    "@onaio/session-reducer" "^0.0.4"
     client-oauth2 "^4.2.3"
     query-string "^6.4.2"
 
@@ -989,10 +989,10 @@
   dependencies:
     redux "^4.0.1"
 
-"@onaio/session-reducer@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@onaio/session-reducer/-/session-reducer-0.0.1.tgz#280c39e0827f3880565df6d4c85f18757447b217"
-  integrity sha512-ARmDQE0zNM05VW6CD3I49bJyE+K9pi5K/9SZmq6jT9C1XVzhXH7+M9DHdoLRJ4Pupf7eXPWAa0wZOvwlQ2yDzA==
+"@onaio/session-reducer@^0.0.4":
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/@onaio/session-reducer/-/session-reducer-0.0.4.tgz#f8cdbe42ecfc76e580e87b0b4960597fe06a0d75"
+  integrity sha512-aWo8Kzp1GFoxtD2gU8sqQk7FfoaH07qq2QcGFX65YOrgZs3Og+CPxxRC0tRFUTQbpfzTp9SHvag3qeii2h+6kA==
 
 "@samverschueren/stream-to-observable@^0.3.0":
   version "0.3.0"
