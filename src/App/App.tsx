@@ -5,10 +5,19 @@ import { ConnectedOauthCallback, OauthLogin } from '@onaio/gatekeeper';
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router';
 import { Col, Container, Row } from 'reactstrap';
-import Header from '../components/page/Header/Header';
 import Loading from '../components/page/Loading';
 import { providers } from '../configs/auth';
-import { FI_HISTORICAL_URL, FI_SINGLE_MAP_URL, FI_SINGLE_URL, FI_URL, IRS_URL } from '../constants';
+import {
+  FI_HISTORICAL_URL,
+  FI_SINGLE_MAP_URL,
+  FI_SINGLE_URL,
+  FI_URL,
+  IRS_URL,
+  LOGIN_URL,
+  LOGOUT_URL,
+} from '../constants';
+import ConnectedHeader from '../containers/ConnectedHeader';
+import ConnectedLogout from '../containers/Logout';
 import ActiveFocusInvestigation from '../containers/pages/FocusInvestigation/active';
 import HistoricalFocusInvestigation from '../containers/pages/FocusInvestigation/historical';
 import SingleActiveFIMap from '../containers/pages/FocusInvestigation/map/active';
@@ -27,7 +36,7 @@ class App extends Component {
   public render() {
     return (
       <Container>
-        <Header />
+        <ConnectedHeader />
         <Row id="main-page-row">
           <Col>
             <Switch>
@@ -61,7 +70,7 @@ class App extends Component {
               {/* tslint:disable jsx-no-lambda */}
               <Route
                 exact={true}
-                path="/login"
+                path={LOGIN_URL}
                 render={routeProps => <OauthLogin providers={providers} {...routeProps} />}
               />
               <Route
@@ -76,6 +85,7 @@ class App extends Component {
                 )}
               />
               {/* tslint:enable jsx-no-lambda */}
+              <ConnectedPrivateRoute exact={true} path={LOGOUT_URL} component={ConnectedLogout} />
             </Switch>
           </Col>
         </Row>
