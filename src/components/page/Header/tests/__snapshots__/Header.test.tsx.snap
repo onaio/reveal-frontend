@@ -23,9 +23,19 @@ exports[`components/page/Header renders header correctly 1`] = `
     }
   }
 >
-  <withRouter(HeaderComponent)>
+  <withRouter(HeaderComponent)
+    authenticated={false}
+    user={
+      Object {
+        "email": "",
+        "name": "",
+        "username": "",
+      }
+    }
+  >
     <Route>
       <HeaderComponent
+        authenticated={false}
         history={
           Object {
             "action": "POP",
@@ -60,6 +70,508 @@ exports[`components/page/Header renders header correctly 1`] = `
             "params": Object {},
             "path": "/",
             "url": "/",
+          }
+        }
+        user={
+          Object {
+            "email": "",
+            "name": "",
+            "username": "",
+          }
+        }
+      >
+        <div>
+          <Navbar
+            color="light"
+            expand="md"
+            light={true}
+            tag="nav"
+          >
+            <nav
+              className="navbar navbar-expand-md navbar-light bg-light"
+            >
+              <nav
+                className="navbar navbar-expand-md navbar-light bg-light"
+              >
+                <Link
+                  className="navbar-brand"
+                  replace={false}
+                  to="/"
+                >
+                  <a
+                    className="navbar-brand"
+                    href="/"
+                    onClick={[Function]}
+                  >
+                    <img
+                      alt="Reveal"
+                      src="logo.png"
+                    />
+                  </a>
+                </Link>
+              </nav>
+              <NavbarToggler
+                onClick={[Function]}
+                tag="button"
+                type="button"
+              >
+                <button
+                  className="navbar-toggler"
+                  onClick={[Function]}
+                  type="button"
+                >
+                  <span
+                    className="navbar-toggler-icon"
+                  />
+                </button>
+              </NavbarToggler>
+              <Collapse
+                appear={false}
+                enter={true}
+                exit={true}
+                in={false}
+                isOpen={false}
+                mountOnEnter={false}
+                navbar={true}
+                onEnter={[Function]}
+                onEntered={[Function]}
+                onEntering={[Function]}
+                onExit={[Function]}
+                onExited={[Function]}
+                onExiting={[Function]}
+                tag="div"
+                timeout={350}
+                unmountOnExit={false}
+              >
+                <Transition
+                  appear={false}
+                  enter={true}
+                  exit={true}
+                  in={false}
+                  mountOnEnter={false}
+                  onEnter={[Function]}
+                  onEntered={[Function]}
+                  onEntering={[Function]}
+                  onExit={[Function]}
+                  onExited={[Function]}
+                  onExiting={[Function]}
+                  timeout={350}
+                  unmountOnExit={false}
+                >
+                  <div
+                    className="collapse navbar-collapse"
+                    style={Object {}}
+                  >
+                    <Nav
+                      className="mr-auto"
+                      navbar={true}
+                      tag="ul"
+                      vertical={false}
+                    >
+                      <ul
+                        className="mr-auto navbar-nav"
+                      >
+                        <NavItem
+                          tag="li"
+                        >
+                          <li
+                            className="nav-item"
+                          >
+                            <NavLink
+                              activeClassName="active"
+                              aria-current="page"
+                              className="nav-link"
+                              to="/"
+                            >
+                              <Route
+                                path="\\\\/"
+                              >
+                                <Link
+                                  aria-current="page"
+                                  className="nav-link active"
+                                  replace={false}
+                                  style={Object {}}
+                                  to="/"
+                                >
+                                  <a
+                                    aria-current="page"
+                                    className="nav-link active"
+                                    href="/"
+                                    onClick={[Function]}
+                                    style={Object {}}
+                                  >
+                                    Home
+                                  </a>
+                                </Link>
+                              </Route>
+                            </NavLink>
+                          </li>
+                        </NavItem>
+                        <NavItem
+                          tag="li"
+                        >
+                          <li
+                            className="nav-item"
+                          >
+                            <NavLink
+                              activeClassName="active"
+                              aria-current="page"
+                              className="nav-link"
+                              to="/irs"
+                            >
+                              <Route
+                                path="\\\\/irs"
+                              >
+                                <Link
+                                  aria-current={null}
+                                  className="nav-link"
+                                  replace={false}
+                                  to="/irs"
+                                >
+                                  <a
+                                    aria-current={null}
+                                    className="nav-link"
+                                    href="/irs"
+                                    onClick={[Function]}
+                                  >
+                                    IRS
+                                  </a>
+                                </Link>
+                              </Route>
+                            </NavLink>
+                          </li>
+                        </NavItem>
+                        <UncontrolledDropdown
+                          inNavbar={true}
+                          nav={true}
+                        >
+                          <Dropdown
+                            active={false}
+                            addonType={false}
+                            direction="down"
+                            inNavbar={true}
+                            isOpen={false}
+                            nav={true}
+                            setActiveFromChild={false}
+                            toggle={[Function]}
+                          >
+                            <Manager
+                              className="dropdown nav-item"
+                              onKeyDown={[Function]}
+                              tag="li"
+                            >
+                              <li
+                                className="dropdown nav-item"
+                                onKeyDown={[Function]}
+                              >
+                                <DropdownToggle
+                                  aria-haspopup={true}
+                                  caret={true}
+                                  className="nav-link"
+                                  color="secondary"
+                                  nav={true}
+                                >
+                                  <a
+                                    aria-expanded={false}
+                                    aria-haspopup={true}
+                                    className="nav-link dropdown-toggle nav-link"
+                                    href="#"
+                                    onClick={[Function]}
+                                  >
+                                    Focus Investigation
+                                  </a>
+                                </DropdownToggle>
+                                <DropdownMenu
+                                  flip={true}
+                                  right={true}
+                                  tag="div"
+                                >
+                                  <div
+                                    aria-hidden={true}
+                                    className="dropdown-menu dropdown-menu-right"
+                                    role="menu"
+                                    tabIndex="-1"
+                                  >
+                                    <DropdownItem
+                                      tag="button"
+                                      toggle={true}
+                                    >
+                                      <button
+                                        className="dropdown-item"
+                                        onClick={[Function]}
+                                        role="menuitem"
+                                        tabIndex="0"
+                                        type="button"
+                                      >
+                                        <NavLink
+                                          activeClassName="active"
+                                          aria-current="page"
+                                          className="nav-link"
+                                          to="/focus-investigation"
+                                        >
+                                          <Route
+                                            path="\\\\/focus-investigation"
+                                          >
+                                            <Link
+                                              aria-current={null}
+                                              className="nav-link"
+                                              replace={false}
+                                              to="/focus-investigation"
+                                            >
+                                              <a
+                                                aria-current={null}
+                                                className="nav-link"
+                                                href="/focus-investigation"
+                                                onClick={[Function]}
+                                              >
+                                                Active
+                                              </a>
+                                            </Link>
+                                          </Route>
+                                        </NavLink>
+                                      </button>
+                                    </DropdownItem>
+                                    <DropdownItem
+                                      tag="button"
+                                      toggle={true}
+                                    >
+                                      <button
+                                        className="dropdown-item"
+                                        onClick={[Function]}
+                                        role="menuitem"
+                                        tabIndex="0"
+                                        type="button"
+                                      >
+                                        <NavLink
+                                          activeClassName="active"
+                                          aria-current="page"
+                                          className="nav-link"
+                                          to="/focus-investigation/historical"
+                                        >
+                                          <Route
+                                            path="\\\\/focus-investigation\\\\/historical"
+                                          >
+                                            <Link
+                                              aria-current={null}
+                                              className="nav-link"
+                                              replace={false}
+                                              to="/focus-investigation/historical"
+                                            >
+                                              <a
+                                                aria-current={null}
+                                                className="nav-link"
+                                                href="/focus-investigation/historical"
+                                                onClick={[Function]}
+                                              >
+                                                Historical
+                                              </a>
+                                            </Link>
+                                          </Route>
+                                        </NavLink>
+                                      </button>
+                                    </DropdownItem>
+                                  </div>
+                                </DropdownMenu>
+                              </li>
+                            </Manager>
+                          </Dropdown>
+                        </UncontrolledDropdown>
+                        <NavItem
+                          tag="li"
+                        >
+                          <li
+                            className="nav-item"
+                          >
+                            <NavLink
+                              activeClassName="active"
+                              aria-current="page"
+                              className="nav-link"
+                              to="/404"
+                            >
+                              <Route
+                                path="\\\\/404"
+                              >
+                                <Link
+                                  aria-current={null}
+                                  className="nav-link"
+                                  replace={false}
+                                  to="/404"
+                                >
+                                  <a
+                                    aria-current={null}
+                                    className="nav-link"
+                                    href="/404"
+                                    onClick={[Function]}
+                                  >
+                                    Users
+                                  </a>
+                                </Link>
+                              </Route>
+                            </NavLink>
+                          </li>
+                        </NavItem>
+                        <NavItem
+                          tag="li"
+                        >
+                          <li
+                            className="nav-item"
+                          >
+                            <NavLink
+                              activeClassName="active"
+                              aria-current="page"
+                              className="nav-link"
+                              to="/404"
+                            >
+                              <Route
+                                path="\\\\/404"
+                              >
+                                <Link
+                                  aria-current={null}
+                                  className="nav-link"
+                                  replace={false}
+                                  to="/404"
+                                >
+                                  <a
+                                    aria-current={null}
+                                    className="nav-link"
+                                    href="/404"
+                                    onClick={[Function]}
+                                  >
+                                    About
+                                  </a>
+                                </Link>
+                              </Route>
+                            </NavLink>
+                          </li>
+                        </NavItem>
+                      </ul>
+                    </Nav>
+                    <Nav
+                      className="ml-0"
+                      navbar={true}
+                      tag="ul"
+                      vertical={false}
+                    >
+                      <ul
+                        className="ml-0 navbar-nav"
+                      >
+                        <NavLink
+                          activeClassName="active"
+                          aria-current="page"
+                          className="nav-link"
+                          to="/login"
+                        >
+                          <Route
+                            path="\\\\/login"
+                          >
+                            <Link
+                              aria-current={null}
+                              className="nav-link"
+                              replace={false}
+                              to="/login"
+                            >
+                              <a
+                                aria-current={null}
+                                className="nav-link"
+                                href="/login"
+                                onClick={[Function]}
+                              >
+                                Login
+                              </a>
+                            </Link>
+                          </Route>
+                        </NavLink>
+                      </ul>
+                    </Nav>
+                  </div>
+                </Transition>
+              </Collapse>
+            </nav>
+          </Navbar>
+        </div>
+      </HeaderComponent>
+    </Route>
+  </withRouter(HeaderComponent)>
+</Router>
+`;
+
+exports[`components/page/Header renders header correctly when authenticated 1`] = `
+<Router
+  history={
+    Object {
+      "action": "POP",
+      "block": [Function],
+      "createHref": [Function],
+      "go": [Function],
+      "goBack": [Function],
+      "goForward": [Function],
+      "length": 1,
+      "listen": [Function],
+      "location": Object {
+        "hash": "",
+        "pathname": "/",
+        "search": "",
+        "state": undefined,
+      },
+      "push": [Function],
+      "replace": [Function],
+    }
+  }
+>
+  <withRouter(HeaderComponent)
+    authenticated={true}
+    user={
+      Object {
+        "email": "bob@example.com",
+        "name": "Bobbie",
+        "username": "RobertBaratheon",
+      }
+    }
+  >
+    <Route>
+      <HeaderComponent
+        authenticated={true}
+        history={
+          Object {
+            "action": "POP",
+            "block": [Function],
+            "createHref": [Function],
+            "go": [Function],
+            "goBack": [Function],
+            "goForward": [Function],
+            "length": 1,
+            "listen": [Function],
+            "location": Object {
+              "hash": "",
+              "pathname": "/",
+              "search": "",
+              "state": undefined,
+            },
+            "push": [Function],
+            "replace": [Function],
+          }
+        }
+        location={
+          Object {
+            "hash": "",
+            "pathname": "/",
+            "search": "",
+            "state": undefined,
+          }
+        }
+        match={
+          Object {
+            "isExact": true,
+            "params": Object {},
+            "path": "/",
+            "url": "/",
+          }
+        }
+        user={
+          Object {
+            "email": "bob@example.com",
+            "name": "Bobbie",
+            "username": "RobertBaratheon",
           }
         }
       >
@@ -515,7 +1027,8 @@ exports[`components/page/Header renders header correctly 1`] = `
                                         />
                                       </svg>
                                     </FontAwesomeIcon>
-                                     Roger
+                                     
+                                    Bobbie
                                   </a>
                                 </DropdownToggle>
                                 <DropdownMenu
@@ -540,7 +1053,32 @@ exports[`components/page/Header renders header correctly 1`] = `
                                         tabIndex="0"
                                         type="button"
                                       >
-                                        Sign Out
+                                        <NavLink
+                                          activeClassName="active"
+                                          aria-current="page"
+                                          className="nav-link"
+                                          to="/logout"
+                                        >
+                                          <Route
+                                            path="\\\\/logout"
+                                          >
+                                            <Link
+                                              aria-current={null}
+                                              className="nav-link"
+                                              replace={false}
+                                              to="/logout"
+                                            >
+                                              <a
+                                                aria-current={null}
+                                                className="nav-link"
+                                                href="/logout"
+                                                onClick={[Function]}
+                                              >
+                                                Sign Out
+                                              </a>
+                                            </Link>
+                                          </Route>
+                                        </NavLink>
                                       </button>
                                     </DropdownItem>
                                   </div>
