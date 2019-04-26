@@ -1,4 +1,5 @@
 import { connectReducer, getConnectedStore } from '@onaio/connected-reducer-registry';
+import { gateKeeperReducer, gateKeeperReducerName } from '@onaio/gatekeeper';
 import reducerRegistry, { combine, Registry } from '@onaio/redux-reducer-registry';
 import session, { reducerName as sessionReducer } from '@onaio/session-reducer';
 
@@ -9,6 +10,7 @@ const defaultReducers: Registry = {
 
 /** Add users reducer to registry */
 defaultReducers[sessionReducer] = session;
+defaultReducers[gateKeeperReducerName] = gateKeeperReducer;
 
 /** The initial store for the reveal web app */
 const store = getConnectedStore(defaultReducers);
