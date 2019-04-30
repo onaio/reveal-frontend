@@ -17,7 +17,7 @@ jobs:
           REACT_APP_ONADATA_CLIENT_ID: "hunter2"
           REACT_APP_ENABLE_IRS: "true"
           REACT_APP_ENABLE_FI: "true"
-          REACT_APP_DISABLE_LOGIN_RPOTECTION: "false"
+          REACT_APP_DISABLE_LOGIN_RPOTECTION: "true"
 
     working_directory: ~/repo
 
