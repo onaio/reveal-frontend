@@ -952,12 +952,12 @@
   resolved "https://registry.yarnpkg.com/@nodelib/fs.stat/-/fs.stat-1.1.3.tgz#2b5a3ab3f918cca48a8c754c08168e3f03eba61b"
   integrity sha512-shAmDyaQC4H92APFoIaVDHCx5bStIocgvbwQyxPRrbUY20V1EYTbSDchWbuwlMG3V17cprZhA6+78JfB+3DTPw==
 
-"@onaio/connected-private-route@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@onaio/connected-private-route/-/connected-private-route-0.0.1.tgz#0f9df2ef64bcc6f787d4109db31a1b55f3914130"
-  integrity sha512-QVKbSxFydoTeWEaH3aMWjLVXZMTrcXfLMFzlQA7H8PYnecTjzWbxW+LtmOFdU0DNK9cC/R8dPi7gngEIS+EzAg==
+"@onaio/connected-private-route@^0.0.3":
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/@onaio/connected-private-route/-/connected-private-route-0.0.3.tgz#2a4a938e24855127bc457027b5ed3d23009d7de7"
+  integrity sha512-uiNfx7deFRHlQyq+w521AoTpDEh9/NwN1xyou7mILPDDIUKRrsdaT7EbdiefMnFcvjSE0XZJhvlqY4h1HWIKMw==
   dependencies:
-    "@onaio/session-reducer" "^0.0.4"
+    "@onaio/session-reducer" "^0.0.5"
 
 "@onaio/connected-reducer-registry@^0.0.1":
   version "0.0.1"
@@ -980,12 +980,12 @@
   resolved "https://registry.yarnpkg.com/@onaio/element-map/-/element-map-0.0.2.tgz#969a19bdf870a41820b10cbba9edffa2af30201c"
   integrity sha512-p4Cq0gnmTUdyqb7X2KCgLzsqqVzvPoRLy1YUwCTnCVyaLYVHhW5x3EppjUxpFbXrqGEcZy5UmfDQ/xB/SXDBbA==
 
-"@onaio/gatekeeper@^0.0.7":
-  version "0.0.7"
-  resolved "https://registry.yarnpkg.com/@onaio/gatekeeper/-/gatekeeper-0.0.7.tgz#55d0af98a214b08c6af9ad2959477feae0cbdcaa"
-  integrity sha512-DcC77JFIZONg04KZh/tN2s1M/kHblZaqMwR35w8MlQaBsDIWeO9IINq77lXNCb0plPWLWeTpvfL83IWSKq1m1Q==
+"@onaio/gatekeeper@^0.0.9":
+  version "0.0.9"
+  resolved "https://registry.yarnpkg.com/@onaio/gatekeeper/-/gatekeeper-0.0.9.tgz#15a4a580313f507e283ebcaa3ed56f4076cd0713"
+  integrity sha512-fdjrA6+N+8vyuvJW/vZGYqMGR7cYo0KSApyITm77L1NKMjPW1YBdL4a37FXgxBP1NfWihDDcN9CKW6mWDbrf5Q==
   dependencies:
-    "@onaio/session-reducer" "^0.0.4"
+    "@onaio/session-reducer" "^0.0.5"
     client-oauth2 "^4.2.3"
     query-string "^6.4.2"
 
@@ -996,10 +996,10 @@
   dependencies:
     redux "^4.0.1"
 
-"@onaio/session-reducer@^0.0.4":
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/@onaio/session-reducer/-/session-reducer-0.0.4.tgz#f8cdbe42ecfc76e580e87b0b4960597fe06a0d75"
-  integrity sha512-aWo8Kzp1GFoxtD2gU8sqQk7FfoaH07qq2QcGFX65YOrgZs3Og+CPxxRC0tRFUTQbpfzTp9SHvag3qeii2h+6kA==
+"@onaio/session-reducer@^0.0.5":
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/@onaio/session-reducer/-/session-reducer-0.0.5.tgz#ef2b0517710297aae96111a9cbf3a01f31b18906"
+  integrity sha512-q9NjQyFmTc0tRnonP6yAdDxcO7SCkBnhk9SdWGrjOo5kpqr2AblQiKzZKjASfRMnfSREFg9lTNjucqoxkwY/+Q==
 
 "@samverschueren/stream-to-observable@^0.3.0":
   version "0.3.0"
