@@ -1,7 +1,8 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faUser } from '@fortawesome/free-regular-svg-icons';
 import { faMap } from '@fortawesome/free-solid-svg-icons';
-import { ConnectedOauthCallback, OauthLogin } from '@onaio/gatekeeper';
+import ConnectedPrivateRoute from '@onaio/connected-private-route';
+import { ConnectedLogout, ConnectedOauthCallback, OauthLogin } from '@onaio/gatekeeper';
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router';
 import { Col, Container, Row } from 'reactstrap';
@@ -17,14 +18,12 @@ import {
   LOGOUT_URL,
 } from '../constants';
 import ConnectedHeader from '../containers/ConnectedHeader';
-import ConnectedLogout from '../containers/Logout';
 import ActiveFocusInvestigation from '../containers/pages/FocusInvestigation/active';
 import HistoricalFocusInvestigation from '../containers/pages/FocusInvestigation/historical';
 import SingleActiveFIMap from '../containers/pages/FocusInvestigation/map/active';
 import SingleFI from '../containers/pages/FocusInvestigation/single';
 import Home from '../containers/pages/Home/Home';
 import IRS from '../containers/pages/IRS/IRS';
-import ConnectedPrivateRoute from '../helpers/ConnectedPrivateRoute';
 
 library.add(faMap);
 library.add(faUser);
