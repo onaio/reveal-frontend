@@ -952,6 +952,13 @@
   resolved "https://registry.yarnpkg.com/@nodelib/fs.stat/-/fs.stat-1.1.3.tgz#2b5a3ab3f918cca48a8c754c08168e3f03eba61b"
   integrity sha512-shAmDyaQC4H92APFoIaVDHCx5bStIocgvbwQyxPRrbUY20V1EYTbSDchWbuwlMG3V17cprZhA6+78JfB+3DTPw==
 
+"@onaio/connected-private-route@^0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@onaio/connected-private-route/-/connected-private-route-0.0.1.tgz#0f9df2ef64bcc6f787d4109db31a1b55f3914130"
+  integrity sha512-QVKbSxFydoTeWEaH3aMWjLVXZMTrcXfLMFzlQA7H8PYnecTjzWbxW+LtmOFdU0DNK9cC/R8dPi7gngEIS+EzAg==
+  dependencies:
+    "@onaio/session-reducer" "^0.0.4"
+
 "@onaio/connected-reducer-registry@^0.0.1":
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/@onaio/connected-reducer-registry/-/connected-reducer-registry-0.0.1.tgz#e4cef471ef6a2da8ed22520c787bcaa9aa053180"
@@ -973,10 +980,10 @@
   resolved "https://registry.yarnpkg.com/@onaio/element-map/-/element-map-0.0.2.tgz#969a19bdf870a41820b10cbba9edffa2af30201c"
   integrity sha512-p4Cq0gnmTUdyqb7X2KCgLzsqqVzvPoRLy1YUwCTnCVyaLYVHhW5x3EppjUxpFbXrqGEcZy5UmfDQ/xB/SXDBbA==
 
-"@onaio/gatekeeper@^0.0.6":
-  version "0.0.6"
-  resolved "https://registry.yarnpkg.com/@onaio/gatekeeper/-/gatekeeper-0.0.6.tgz#933cb3b6bc180780314baac39e57a16150b22807"
-  integrity sha512-6JTsp1p4S0AoWHBoaBn2N9F8nzRQzhBCHlpdDNAN/s6FMQNVcaqQxamUrgaTmKzdQpgLszWvFNwbf9Ed2XJ9sw==
+"@onaio/gatekeeper@^0.0.7":
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/@onaio/gatekeeper/-/gatekeeper-0.0.7.tgz#55d0af98a214b08c6af9ad2959477feae0cbdcaa"
+  integrity sha512-DcC77JFIZONg04KZh/tN2s1M/kHblZaqMwR35w8MlQaBsDIWeO9IINq77lXNCb0plPWLWeTpvfL83IWSKq1m1Q==
   dependencies:
     "@onaio/session-reducer" "^0.0.4"
     client-oauth2 "^4.2.3"
