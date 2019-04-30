@@ -9,6 +9,7 @@ import { Col, Container, Row } from 'reactstrap';
 import Loading from '../components/page/Loading';
 import { providers } from '../configs/auth';
 import {
+  DISABLE_LOGIN_RPOTECTION,
   FI_HISTORICAL_URL,
   FI_SINGLE_MAP_URL,
   FI_SINGLE_URL,
@@ -39,29 +40,44 @@ class App extends Component {
         <Row id="main-page-row">
           <Col>
             <Switch>
-              <ConnectedPrivateRoute exact={true} path="/" component={Home} />
-              <ConnectedPrivateRoute exact={true} path={IRS_URL} component={IRS} />
               <ConnectedPrivateRoute
+                disableLoginProtection={DISABLE_LOGIN_RPOTECTION}
+                exact={true}
+                path="/"
+                component={Home}
+              />
+              <ConnectedPrivateRoute
+                disableLoginProtection={DISABLE_LOGIN_RPOTECTION}
+                exact={true}
+                path={IRS_URL}
+                component={IRS}
+              />
+              <ConnectedPrivateRoute
+                disableLoginProtection={DISABLE_LOGIN_RPOTECTION}
                 exact={true}
                 path={FI_URL}
                 component={ActiveFocusInvestigation}
               />
               <ConnectedPrivateRoute
+                disableLoginProtection={DISABLE_LOGIN_RPOTECTION}
                 exact={true}
                 path={`${FI_SINGLE_URL}/:id`}
                 component={SingleFI}
               />
               <ConnectedPrivateRoute
+                disableLoginProtection={DISABLE_LOGIN_RPOTECTION}
                 exact={true}
                 path={`${FI_SINGLE_MAP_URL}/:id`}
                 component={SingleActiveFIMap}
               />
               <ConnectedPrivateRoute
+                disableLoginProtection={DISABLE_LOGIN_RPOTECTION}
                 exact={true}
                 path={FI_HISTORICAL_URL}
                 component={HistoricalFocusInvestigation}
               />
               <ConnectedPrivateRoute
+                disableLoginProtection={DISABLE_LOGIN_RPOTECTION}
                 exact={true}
                 path={`${FI_HISTORICAL_URL}/:id`}
                 component={HistoricalFocusInvestigation}
@@ -84,7 +100,12 @@ class App extends Component {
                 )}
               />
               {/* tslint:enable jsx-no-lambda */}
-              <ConnectedPrivateRoute exact={true} path={LOGOUT_URL} component={ConnectedLogout} />
+              <ConnectedPrivateRoute
+                disableLoginProtection={DISABLE_LOGIN_RPOTECTION}
+                exact={true}
+                path={LOGOUT_URL}
+                component={ConnectedLogout}
+              />
             </Switch>
           </Col>
         </Row>
