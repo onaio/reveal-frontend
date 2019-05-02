@@ -1,7 +1,7 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
+import { authenticateUser, isAuthenticated } from '@onaio/session-reducer';
 import { FlushThunks } from 'redux-testkit';
 import store from '..';
-import { authenticateUser, isAuthenticated } from '../ducks/users';
 import messages, { selectAllMessages, sendMessage } from './ducks/messages';
 
 describe('store', () => {

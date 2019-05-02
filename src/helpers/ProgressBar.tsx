@@ -4,15 +4,23 @@ import { GREEN_THRESHOLD, ORANGE_THRESHOLD, YELLOW_THRESHOLD } from '../constant
 
 /** Props for ProgressBar */
 interface ProgressBarProps {
-  decimalPoints?: number;
-  height?: string;
-  min?: number;
-  max?: number;
+  decimalPoints: number;
+  height: string;
+  min: number;
+  max: number;
   value: number;
 }
 
+/** default props for ProgressBar */
+const defaultProgressBarProps: Partial<ProgressBarProps> = {
+  decimalPoints: 0,
+  height: '10px',
+  max: 100,
+  min: 0,
+};
+
 /** Displays configurable progress bar */
-const ProgressBar: React.ElementType = (props: ProgressBarProps) => {
+const ProgressBar = (props: ProgressBarProps) => {
   const { decimalPoints, height, value } = props;
   const max = props.max || 100;
   const min = props.min || 0;
@@ -47,11 +55,6 @@ const ProgressBar: React.ElementType = (props: ProgressBarProps) => {
   );
 };
 
-ProgressBar.defaultProps = {
-  decimalPoints: 0,
-  height: '10px',
-  max: 100,
-  min: 0,
-};
+ProgressBar.defaultProps = defaultProgressBarProps;
 
 export default ProgressBar;

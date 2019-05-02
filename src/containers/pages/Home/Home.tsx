@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Col, Row } from 'reactstrap';
-import { FI_URL, IRS_URL } from '../../../constants';
+import { ENABLE_FI, ENABLE_IRS, FI_URL, IRS_URL } from '../../../constants';
 import './Home.css';
 
 class Home extends React.Component<{}, {}> {
@@ -20,26 +20,30 @@ class Home extends React.Component<{}, {}> {
           </Col>
         </Row>
         <Row className="intervention-box">
-          <Col md="6">
-            <Link to={IRS_URL} className="intervention-link">
-              <Button
-                color="outline"
-                className="btn-intervention btn-lg btn-block btn-outline-dark"
-              >
-                IRS
-              </Button>
-            </Link>
-          </Col>
-          <Col md="6">
-            <Link to={FI_URL} className="intervention-link">
-              <Button
-                color="outline"
-                className="btn-intervention btn-lg btn-block btn-outline-dark"
-              >
-                Focus Investigation
-              </Button>
-            </Link>
-          </Col>
+          {ENABLE_IRS && (
+            <Col md="6">
+              <Link to={IRS_URL} className="intervention-link">
+                <Button
+                  color="outline"
+                  className="btn-intervention btn-lg btn-block btn-outline-dark"
+                >
+                  IRS
+                </Button>
+              </Link>
+            </Col>
+          )}
+          {ENABLE_FI && (
+            <Col md="6">
+              <Link to={FI_URL} className="intervention-link">
+                <Button
+                  color="outline"
+                  className="btn-intervention btn-lg btn-block btn-outline-dark"
+                >
+                  Focus Investigation
+                </Button>
+              </Link>
+            </Col>
+          )}
         </Row>
       </div>
     );

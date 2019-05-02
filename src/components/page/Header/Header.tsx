@@ -1,5 +1,5 @@
-// This component represents the header part of the web app
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { User } from '@onaio/session-reducer';
 import * as React from 'react';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { Link, NavLink } from 'react-router-dom';
@@ -15,15 +15,44 @@ import {
   UncontrolledDropdown,
 } from 'reactstrap';
 import logo from '../../../assets/images/logo.png';
-import { FI_HISTORICAL_URL, FI_URL, IRS_URL, WEBSITE_NAME } from '../../../constants';
+import {
+  ENABLE_FI,
+  ENABLE_IRS,
+  FI_HISTORICAL_URL,
+  FI_URL,
+  IRS_URL,
+  LOGIN_URL,
+  LOGOUT_URL,
+  WEBSITE_NAME,
+} from '../../../constants';
 import './Header.css';
 
+/** interface for Header state */
 interface State {
   isOpen: boolean;
 }
 
-class HeaderComponent extends React.Component<RouteComponentProps, State> {
-  constructor(props: RouteComponentProps) {
+/** interface for HeaderProps */
+export interface HeaderProps extends RouteComponentProps {
+  authenticated: boolean;
+  user: User;
+}
+
+/** default props for Header */
+const defaultHeaderProps: Partial<HeaderProps> = {
+  authenticated: false,
+  user: {
+    email: '',
+    name: '',
+    username: '',
+  },
+};
+
+/** The Header component */
+export class HeaderComponent extends React.Component<HeaderProps, State> {
+  public static defaultProps = defaultHeaderProps;
+
+  constructor(props: HeaderProps) {
     super(props);
 
     this.toggle = this.toggle.bind(this);
@@ -33,6 +62,7 @@ class HeaderComponent extends React.Component<RouteComponentProps, State> {
   }
 
   public render() {
+    const { authenticated, user } = this.props;
     const path = this.props.location.pathname;
     return (
       <div>
@@ -50,34 +80,38 @@ class HeaderComponent extends React.Component<RouteComponentProps, State> {
                   Home
                 </NavLink>
               </NavItem>
-              <NavItem>
-                <NavLink to={IRS_URL} className="nav-link" activeClassName="active">
-                  IRS
-                </NavLink>
-              </NavItem>
-              <UncontrolledDropdown nav={true} inNavbar={true}>
-                <DropdownToggle
-                  nav={true}
-                  caret={true}
-                  className={
-                    path === FI_URL || path === FI_HISTORICAL_URL ? 'nav-link active' : 'nav-link'
-                  }
-                >
-                  Focus Investigation
-                </DropdownToggle>
-                <DropdownMenu right={true}>
-                  <DropdownItem>
-                    <NavLink to={FI_URL} className="nav-link" activeClassName="active">
-                      Active
-                    </NavLink>
-                  </DropdownItem>
-                  <DropdownItem>
-                    <NavLink to={FI_HISTORICAL_URL} className="nav-link" activeClassName="active">
-                      Historical
-                    </NavLink>
-                  </DropdownItem>
-                </DropdownMenu>
-              </UncontrolledDropdown>
+              {ENABLE_IRS && (
+                <NavItem>
+                  <NavLink to={IRS_URL} className="nav-link" activeClassName="active">
+                    IRS
+                  </NavLink>
+                </NavItem>
+              )}
+              {ENABLE_FI && (
+                <UncontrolledDropdown nav={true} inNavbar={true}>
+                  <DropdownToggle
+                    nav={true}
+                    caret={true}
+                    className={
+                      path === FI_URL || path === FI_HISTORICAL_URL ? 'nav-link active' : 'nav-link'
+                    }
+                  >
+                    Focus Investigation
+                  </DropdownToggle>
+                  <DropdownMenu right={true}>
+                    <DropdownItem>
+                      <NavLink to={FI_URL} className="nav-link" activeClassName="active">
+                        Active
+                      </NavLink>
+                    </DropdownItem>
+                    <DropdownItem>
+                      <NavLink to={FI_HISTORICAL_URL} className="nav-link" activeClassName="active">
+                        Historical
+                      </NavLink>
+                    </DropdownItem>
+                  </DropdownMenu>
+                </UncontrolledDropdown>
+              )}
               <NavItem>
                 <NavLink to="/404" className="nav-link" activeClassName="active">
                   Users
@@ -90,14 +124,24 @@ class HeaderComponent extends React.Component<RouteComponentProps, State> {
               </NavItem>
             </Nav>
             <Nav className="ml-0" navbar={true}>
-              <UncontrolledDropdown nav={true} inNavbar={true}>
-                <DropdownToggle nav={true} caret={true}>
-                  <FontAwesomeIcon icon={['far', 'user']} /> Roger
-                </DropdownToggle>
-                <DropdownMenu right={true}>
-                  <DropdownItem>Sign Out</DropdownItem>
-                </DropdownMenu>
-              </UncontrolledDropdown>
+              {authenticated ? (
+                <UncontrolledDropdown nav={true} inNavbar={true}>
+                  <DropdownToggle nav={true} caret={true}>
+                    <FontAwesomeIcon icon={['far', 'user']} /> {user.name}
+                  </DropdownToggle>
+                  <DropdownMenu right={true}>
+                    <DropdownItem>
+                      <NavLink to={LOGOUT_URL} className="nav-link" activeClassName="active">
+                        Sign Out
+                      </NavLink>
+                    </DropdownItem>
+                  </DropdownMenu>
+                </UncontrolledDropdown>
+              ) : (
+                <NavLink to={LOGIN_URL} className="nav-link" activeClassName="active">
+                  Login
+                </NavLink>
+              )}
             </Nav>
           </Collapse>
         </Navbar>

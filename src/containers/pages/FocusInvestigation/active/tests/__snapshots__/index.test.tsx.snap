@@ -1620,57 +1620,69 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                   width={130}
                                 >
                                   <div>
-                                    <a
-                                      href="/focus-investigation/map/13"
+                                    <Link
+                                      replace={false}
+                                      to="/focus-investigation/map/13"
                                     >
-                                      <FontAwesomeIcon
-                                        border={false}
-                                        className=""
-                                        fixedWidth={false}
-                                        flip={null}
-                                        icon={
-                                          Array [
-                                            "fas",
-                                            "map",
-                                          ]
-                                        }
-                                        inverse={false}
-                                        listItem={false}
-                                        mask={null}
-                                        pull={null}
-                                        pulse={false}
-                                        rotation={null}
-                                        size={null}
-                                        spin={false}
-                                        symbol={false}
-                                        title=""
-                                        transform={null}
+                                      <a
+                                        href="/focus-investigation/map/13"
+                                        onClick={[Function]}
                                       >
-                                        <svg
-                                          aria-hidden="true"
-                                          className="svg-inline--fa fa-map fa-w-18 "
-                                          data-icon="map"
-                                          data-prefix="fas"
-                                          focusable="false"
-                                          role="img"
-                                          style={Object {}}
-                                          viewBox="0 0 576 512"
-                                          xmlns="http://www.w3.org/2000/svg"
+                                        <FontAwesomeIcon
+                                          border={false}
+                                          className=""
+                                          fixedWidth={false}
+                                          flip={null}
+                                          icon={
+                                            Array [
+                                              "fas",
+                                              "map",
+                                            ]
+                                          }
+                                          inverse={false}
+                                          listItem={false}
+                                          mask={null}
+                                          pull={null}
+                                          pulse={false}
+                                          rotation={null}
+                                          size={null}
+                                          spin={false}
+                                          symbol={false}
+                                          title=""
+                                          transform={null}
                                         >
-                                          <path
-                                            d="M0 117.66v346.32c0 11.32 11.43 19.06 21.94 14.86L160 416V32L20.12 87.95A32.006 32.006 0 0 0 0 117.66zM192 416l192 64V96L192 32v384zM554.06 33.16L416 96v384l139.88-55.95A31.996 31.996 0 0 0 576 394.34V48.02c0-11.32-11.43-19.06-21.94-14.86z"
-                                            fill="currentColor"
+                                          <svg
+                                            aria-hidden="true"
+                                            className="svg-inline--fa fa-map fa-w-18 "
+                                            data-icon="map"
+                                            data-prefix="fas"
+                                            focusable="false"
+                                            role="img"
                                             style={Object {}}
-                                          />
-                                        </svg>
-                                      </FontAwesomeIcon>
-                                    </a>
+                                            viewBox="0 0 576 512"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                          >
+                                            <path
+                                              d="M0 117.66v346.32c0 11.32 11.43 19.06 21.94 14.86L160 416V32L20.12 87.95A32.006 32.006 0 0 0 0 117.66zM192 416l192 64V96L192 32v384zM554.06 33.16L416 96v384l139.88-55.95A31.996 31.996 0 0 0 576 394.34V48.02c0-11.32-11.43-19.06-21.94-14.86z"
+                                              fill="currentColor"
+                                              style={Object {}}
+                                            />
+                                          </svg>
+                                        </FontAwesomeIcon>
+                                      </a>
+                                    </Link>
                                       
-                                    <a
-                                      href="/focus-investigation/view/13"
+                                    <Link
+                                      replace={false}
+                                      to="/focus-investigation/view/13"
                                     >
-                                      Focus Area 1
-                                    </a>
+                                      <a
+                                        href="/focus-investigation/view/13"
+                                        onClick={[Function]}
+                                      >
+                                        Focus Area 1
+                                      </a>
+                                    </Link>
                                   </div>
                                 </Cell>
                               </div>
@@ -2720,57 +2732,69 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                   width={130}
                                 >
                                   <div>
-                                    <a
-                                      href="/focus-investigation/map/13"
+                                    <Link
+                                      replace={false}
+                                      to="/focus-investigation/map/13"
                                     >
-                                      <FontAwesomeIcon
-                                        border={false}
-                                        className=""
-                                        fixedWidth={false}
-                                        flip={null}
-                                        icon={
-                                          Array [
-                                            "fas",
-                                            "map",
-                                          ]
-                                        }
-                                        inverse={false}
-                                        listItem={false}
-                                        mask={null}
-                                        pull={null}
-                                        pulse={false}
-                                        rotation={null}
-                                        size={null}
-                                        spin={false}
-                                        symbol={false}
-                                        title=""
-                                        transform={null}
+                                      <a
+                                        href="/focus-investigation/map/13"
+                                        onClick={[Function]}
                                       >
-                                        <svg
-                                          aria-hidden="true"
-                                          className="svg-inline--fa fa-map fa-w-18 "
-                                          data-icon="map"
-                                          data-prefix="fas"
-                                          focusable="false"
-                                          role="img"
-                                          style={Object {}}
-                                          viewBox="0 0 576 512"
-                                          xmlns="http://www.w3.org/2000/svg"
+                                        <FontAwesomeIcon
+                                          border={false}
+                                          className=""
+                                          fixedWidth={false}
+                                          flip={null}
+                                          icon={
+                                            Array [
+                                              "fas",
+                                              "map",
+                                            ]
+                                          }
+                                          inverse={false}
+                                          listItem={false}
+                                          mask={null}
+                                          pull={null}
+                                          pulse={false}
+                                          rotation={null}
+                                          size={null}
+                                          spin={false}
+                                          symbol={false}
+                                          title=""
+                                          transform={null}
                                         >
-                                          <path
-                                            d="M0 117.66v346.32c0 11.32 11.43 19.06 21.94 14.86L160 416V32L20.12 87.95A32.006 32.006 0 0 0 0 117.66zM192 416l192 64V96L192 32v384zM554.06 33.16L416 96v384l139.88-55.95A31.996 31.996 0 0 0 576 394.34V48.02c0-11.32-11.43-19.06-21.94-14.86z"
-                                            fill="currentColor"
+                                          <svg
+                                            aria-hidden="true"
+                                            className="svg-inline--fa fa-map fa-w-18 "
+                                            data-icon="map"
+                                            data-prefix="fas"
+                                            focusable="false"
+                                            role="img"
                                             style={Object {}}
-                                          />
-                                        </svg>
-                                      </FontAwesomeIcon>
-                                    </a>
+                                            viewBox="0 0 576 512"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                          >
+                                            <path
+                                              d="M0 117.66v346.32c0 11.32 11.43 19.06 21.94 14.86L160 416V32L20.12 87.95A32.006 32.006 0 0 0 0 117.66zM192 416l192 64V96L192 32v384zM554.06 33.16L416 96v384l139.88-55.95A31.996 31.996 0 0 0 576 394.34V48.02c0-11.32-11.43-19.06-21.94-14.86z"
+                                              fill="currentColor"
+                                              style={Object {}}
+                                            />
+                                          </svg>
+                                        </FontAwesomeIcon>
+                                      </a>
+                                    </Link>
                                       
-                                    <a
-                                      href="/focus-investigation/view/13"
+                                    <Link
+                                      replace={false}
+                                      to="/focus-investigation/view/13"
                                     >
-                                      Focus Area 2
-                                    </a>
+                                      <a
+                                        href="/focus-investigation/view/13"
+                                        onClick={[Function]}
+                                      >
+                                        Focus Area 2
+                                      </a>
+                                    </Link>
                                   </div>
                                 </Cell>
                               </div>
@@ -3820,57 +3844,69 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                   width={130}
                                 >
                                   <div>
-                                    <a
-                                      href="/focus-investigation/map/13"
+                                    <Link
+                                      replace={false}
+                                      to="/focus-investigation/map/13"
                                     >
-                                      <FontAwesomeIcon
-                                        border={false}
-                                        className=""
-                                        fixedWidth={false}
-                                        flip={null}
-                                        icon={
-                                          Array [
-                                            "fas",
-                                            "map",
-                                          ]
-                                        }
-                                        inverse={false}
-                                        listItem={false}
-                                        mask={null}
-                                        pull={null}
-                                        pulse={false}
-                                        rotation={null}
-                                        size={null}
-                                        spin={false}
-                                        symbol={false}
-                                        title=""
-                                        transform={null}
+                                      <a
+                                        href="/focus-investigation/map/13"
+                                        onClick={[Function]}
                                       >
-                                        <svg
-                                          aria-hidden="true"
-                                          className="svg-inline--fa fa-map fa-w-18 "
-                                          data-icon="map"
-                                          data-prefix="fas"
-                                          focusable="false"
-                                          role="img"
-                                          style={Object {}}
-                                          viewBox="0 0 576 512"
-                                          xmlns="http://www.w3.org/2000/svg"
+                                        <FontAwesomeIcon
+                                          border={false}
+                                          className=""
+                                          fixedWidth={false}
+                                          flip={null}
+                                          icon={
+                                            Array [
+                                              "fas",
+                                              "map",
+                                            ]
+                                          }
+                                          inverse={false}
+                                          listItem={false}
+                                          mask={null}
+                                          pull={null}
+                                          pulse={false}
+                                          rotation={null}
+                                          size={null}
+                                          spin={false}
+                                          symbol={false}
+                                          title=""
+                                          transform={null}
                                         >
-                                          <path
-                                            d="M0 117.66v346.32c0 11.32 11.43 19.06 21.94 14.86L160 416V32L20.12 87.95A32.006 32.006 0 0 0 0 117.66zM192 416l192 64V96L192 32v384zM554.06 33.16L416 96v384l139.88-55.95A31.996 31.996 0 0 0 576 394.34V48.02c0-11.32-11.43-19.06-21.94-14.86z"
-                                            fill="currentColor"
+                                          <svg
+                                            aria-hidden="true"
+                                            className="svg-inline--fa fa-map fa-w-18 "
+                                            data-icon="map"
+                                            data-prefix="fas"
+                                            focusable="false"
+                                            role="img"
                                             style={Object {}}
-                                          />
-                                        </svg>
-                                      </FontAwesomeIcon>
-                                    </a>
+                                            viewBox="0 0 576 512"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                          >
+                                            <path
+                                              d="M0 117.66v346.32c0 11.32 11.43 19.06 21.94 14.86L160 416V32L20.12 87.95A32.006 32.006 0 0 0 0 117.66zM192 416l192 64V96L192 32v384zM554.06 33.16L416 96v384l139.88-55.95A31.996 31.996 0 0 0 576 394.34V48.02c0-11.32-11.43-19.06-21.94-14.86z"
+                                              fill="currentColor"
+                                              style={Object {}}
+                                            />
+                                          </svg>
+                                        </FontAwesomeIcon>
+                                      </a>
+                                    </Link>
                                       
-                                    <a
-                                      href="/focus-investigation/view/13"
+                                    <Link
+                                      replace={false}
+                                      to="/focus-investigation/view/13"
                                     >
-                                      Focus Area 3
-                                    </a>
+                                      <a
+                                        href="/focus-investigation/view/13"
+                                        onClick={[Function]}
+                                      >
+                                        Focus Area 3
+                                      </a>
+                                    </Link>
                                   </div>
                                 </Cell>
                               </div>
@@ -4920,57 +4956,69 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                   width={130}
                                 >
                                   <div>
-                                    <a
-                                      href="/focus-investigation/map/13"
+                                    <Link
+                                      replace={false}
+                                      to="/focus-investigation/map/13"
                                     >
-                                      <FontAwesomeIcon
-                                        border={false}
-                                        className=""
-                                        fixedWidth={false}
-                                        flip={null}
-                                        icon={
-                                          Array [
-                                            "fas",
-                                            "map",
-                                          ]
-                                        }
-                                        inverse={false}
-                                        listItem={false}
-                                        mask={null}
-                                        pull={null}
-                                        pulse={false}
-                                        rotation={null}
-                                        size={null}
-                                        spin={false}
-                                        symbol={false}
-                                        title=""
-                                        transform={null}
+                                      <a
+                                        href="/focus-investigation/map/13"
+                                        onClick={[Function]}
                                       >
-                                        <svg
-                                          aria-hidden="true"
-                                          className="svg-inline--fa fa-map fa-w-18 "
-                                          data-icon="map"
-                                          data-prefix="fas"
-                                          focusable="false"
-                                          role="img"
-                                          style={Object {}}
-                                          viewBox="0 0 576 512"
-                                          xmlns="http://www.w3.org/2000/svg"
+                                        <FontAwesomeIcon
+                                          border={false}
+                                          className=""
+                                          fixedWidth={false}
+                                          flip={null}
+                                          icon={
+                                            Array [
+                                              "fas",
+                                              "map",
+                                            ]
+                                          }
+                                          inverse={false}
+                                          listItem={false}
+                                          mask={null}
+                                          pull={null}
+                                          pulse={false}
+                                          rotation={null}
+                                          size={null}
+                                          spin={false}
+                                          symbol={false}
+                                          title=""
+                                          transform={null}
                                         >
-                                          <path
-                                            d="M0 117.66v346.32c0 11.32 11.43 19.06 21.94 14.86L160 416V32L20.12 87.95A32.006 32.006 0 0 0 0 117.66zM192 416l192 64V96L192 32v384zM554.06 33.16L416 96v384l139.88-55.95A31.996 31.996 0 0 0 576 394.34V48.02c0-11.32-11.43-19.06-21.94-14.86z"
-                                            fill="currentColor"
+                                          <svg
+                                            aria-hidden="true"
+                                            className="svg-inline--fa fa-map fa-w-18 "
+                                            data-icon="map"
+                                            data-prefix="fas"
+                                            focusable="false"
+                                            role="img"
                                             style={Object {}}
-                                          />
-                                        </svg>
-                                      </FontAwesomeIcon>
-                                    </a>
+                                            viewBox="0 0 576 512"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                          >
+                                            <path
+                                              d="M0 117.66v346.32c0 11.32 11.43 19.06 21.94 14.86L160 416V32L20.12 87.95A32.006 32.006 0 0 0 0 117.66zM192 416l192 64V96L192 32v384zM554.06 33.16L416 96v384l139.88-55.95A31.996 31.996 0 0 0 576 394.34V48.02c0-11.32-11.43-19.06-21.94-14.86z"
+                                              fill="currentColor"
+                                              style={Object {}}
+                                            />
+                                          </svg>
+                                        </FontAwesomeIcon>
+                                      </a>
+                                    </Link>
                                       
-                                    <a
-                                      href="/focus-investigation/view/13"
+                                    <Link
+                                      replace={false}
+                                      to="/focus-investigation/view/13"
                                     >
-                                      Focus Area 4
-                                    </a>
+                                      <a
+                                        href="/focus-investigation/view/13"
+                                        onClick={[Function]}
+                                      >
+                                        Focus Area 4
+                                      </a>
+                                    </Link>
                                   </div>
                                 </Cell>
                               </div>
@@ -6020,57 +6068,69 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                   width={130}
                                 >
                                   <div>
-                                    <a
-                                      href="/focus-investigation/map/13"
+                                    <Link
+                                      replace={false}
+                                      to="/focus-investigation/map/13"
                                     >
-                                      <FontAwesomeIcon
-                                        border={false}
-                                        className=""
-                                        fixedWidth={false}
-                                        flip={null}
-                                        icon={
-                                          Array [
-                                            "fas",
-                                            "map",
-                                          ]
-                                        }
-                                        inverse={false}
-                                        listItem={false}
-                                        mask={null}
-                                        pull={null}
-                                        pulse={false}
-                                        rotation={null}
-                                        size={null}
-                                        spin={false}
-                                        symbol={false}
-                                        title=""
-                                        transform={null}
+                                      <a
+                                        href="/focus-investigation/map/13"
+                                        onClick={[Function]}
                                       >
-                                        <svg
-                                          aria-hidden="true"
-                                          className="svg-inline--fa fa-map fa-w-18 "
-                                          data-icon="map"
-                                          data-prefix="fas"
-                                          focusable="false"
-                                          role="img"
-                                          style={Object {}}
-                                          viewBox="0 0 576 512"
-                                          xmlns="http://www.w3.org/2000/svg"
+                                        <FontAwesomeIcon
+                                          border={false}
+                                          className=""
+                                          fixedWidth={false}
+                                          flip={null}
+                                          icon={
+                                            Array [
+                                              "fas",
+                                              "map",
+                                            ]
+                                          }
+                                          inverse={false}
+                                          listItem={false}
+                                          mask={null}
+                                          pull={null}
+                                          pulse={false}
+                                          rotation={null}
+                                          size={null}
+                                          spin={false}
+                                          symbol={false}
+                                          title=""
+                                          transform={null}
                                         >
-                                          <path
-                                            d="M0 117.66v346.32c0 11.32 11.43 19.06 21.94 14.86L160 416V32L20.12 87.95A32.006 32.006 0 0 0 0 117.66zM192 416l192 64V96L192 32v384zM554.06 33.16L416 96v384l139.88-55.95A31.996 31.996 0 0 0 576 394.34V48.02c0-11.32-11.43-19.06-21.94-14.86z"
-                                            fill="currentColor"
+                                          <svg
+                                            aria-hidden="true"
+                                            className="svg-inline--fa fa-map fa-w-18 "
+                                            data-icon="map"
+                                            data-prefix="fas"
+                                            focusable="false"
+                                            role="img"
                                             style={Object {}}
-                                          />
-                                        </svg>
-                                      </FontAwesomeIcon>
-                                    </a>
+                                            viewBox="0 0 576 512"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                          >
+                                            <path
+                                              d="M0 117.66v346.32c0 11.32 11.43 19.06 21.94 14.86L160 416V32L20.12 87.95A32.006 32.006 0 0 0 0 117.66zM192 416l192 64V96L192 32v384zM554.06 33.16L416 96v384l139.88-55.95A31.996 31.996 0 0 0 576 394.34V48.02c0-11.32-11.43-19.06-21.94-14.86z"
+                                              fill="currentColor"
+                                              style={Object {}}
+                                            />
+                                          </svg>
+                                        </FontAwesomeIcon>
+                                      </a>
+                                    </Link>
                                       
-                                    <a
-                                      href="/focus-investigation/view/13"
+                                    <Link
+                                      replace={false}
+                                      to="/focus-investigation/view/13"
                                     >
-                                      Focus Area 5 - this is a longer name than usual
-                                    </a>
+                                      <a
+                                        href="/focus-investigation/view/13"
+                                        onClick={[Function]}
+                                      >
+                                        Focus Area 5 - this is a longer name than usual
+                                      </a>
+                                    </Link>
                                   </div>
                                 </Cell>
                               </div>
