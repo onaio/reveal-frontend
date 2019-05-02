@@ -1,4 +1,4 @@
-import { ActionCreator, AnyAction, Store } from 'redux';
+import { AnyAction, Store } from 'redux';
 import SeamlessImmutable from 'seamless-immutable';
 
 /** the reducer name */
@@ -58,6 +58,6 @@ export const authorizeSuperset = (authorized: boolean): AuthorizeSupersetAction 
 /** check if superset is authorized
  * @param {Partial<Store>} state - the redux store
  */
-export function isAuthorized(state: Partial<Store>): boolean {
+export function isAuthorized(state: Partial<Store>): boolean | null {
   return (state as any)[reducerName].authorized;
 }
