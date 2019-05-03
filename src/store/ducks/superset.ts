@@ -18,21 +18,21 @@ interface ResetSupersetAction extends AnyAction {
 /** Create type for Superset reducer actions */
 export type SupersetActionTypes = AuthorizeSupersetAction | ResetSupersetAction | AnyAction;
 
-/** interface for superset state */
+/** interface for Superset state */
 interface SupersetState {
   authorized: boolean | null;
 }
 
-/** immutable session state */
+/** immutable Superset state */
 export type ImmutableSupersetState = SupersetState &
   SeamlessImmutable.ImmutableObject<SupersetState>;
 
-/** initial state */
+/** initial Superset state */
 const initialState: ImmutableSupersetState = SeamlessImmutable({
   authorized: null,
 });
 
-/** the superset reducer function */
+/** the Superset reducer function */
 export default function reducer(state = initialState, action: SupersetActionTypes): SupersetState {
   switch (action.type) {
     case AUTHORIZE:
@@ -65,8 +65,7 @@ export const authorizeSuperset = (authorized: boolean): AuthorizeSupersetAction 
   type: AUTHORIZE,
 });
 
-/** reset action creator
- */
+/** reset action creator */
 export const resetSuperset = (): ResetSupersetAction => ({
   type: RESET,
 });
