@@ -1,7 +1,6 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
-import superset from '@onaio/superset-connector';
-import { clone } from 'lodash';
-import { CONFIG } from '../../configs/superset';
+import superset, { SupersetConfig } from '@onaio/superset-connector';
+import { SUPERSET_API_BASE, SUPERSET_API_ENDPOINT } from '../../configs/superset';
 import store from '../../store';
 import supersetReducer, {
   authorizeSuperset,
@@ -24,13 +23,12 @@ export const fetchCallback = (parsedResponse: Array<{ [key: string]: any }>) => 
   return sliceData;
 };
 
-export const supersetAuthZ = async (result: { [key: string]: any }, callback: any) => {
+/** this function completes the authZ process */
+export const completeAuthZ = async (result: { [key: string]: any }) => {
   if (result.status === 200) {
     store.dispatch(authorizeSuperset(true));
-    return callback;
   } else {
     store.dispatch(authorizeSuperset(false));
-    return false;
   }
 };
 
@@ -40,8 +38,12 @@ const supersetFetch = async (
   callback: typeof fetchCallback = fetchCallback,
   middleware: typeof fetchMiddleware = fetchMiddleware
 ) => {
-  const config = clone(CONFIG);
-  config.extraPath = sliceId;
+  const config: SupersetConfig = {
+    base: SUPERSET_API_BASE,
+    endpoint: SUPERSET_API_ENDPOINT,
+    extraPath: sliceId,
+  };
+
   const accessToken = getAccessToken(store.getState());
   if (accessToken) {
     config.token = accessToken;
@@ -52,9 +54,18 @@ const supersetFetch = async (
   if (isSupersetAuthorized === true) {
     return superset.api.doFetch(config, middleware).then(callback);
   } else {
-    return superset.authZ(config, (result: { [key: string]: any }) =>
-      supersetAuthZ(result, superset.api.doFetch(config, middleware).then(callback))
-    );
+    return superset.authZ(config, (result: { [key: string]: any }) => {
+      return completeAuthZ(result)
+        .then(() => {
+          const isSupersetAuthorizedYet = isAuthorized(store.getState());
+          if (isSupersetAuthorizedYet === true) {
+            return superset.api.doFetch(config, middleware).then(callback);
+          }
+        })
+        .catch(() => {
+          return false;
+        });
+    });
   }
 };
 
