@@ -3,11 +3,6 @@ export const sliceResponse = {
   cache_timeout: 86400,
   cached_dttm: null,
   columns: ['ad_number', 'general_info_info_data_giq3'],
-  error: null,
-  is_cached: false,
-  status: 'success',
-  stacktrace: null,
-  rowcount: 6,
   data: {
     records: [
       {
@@ -36,6 +31,11 @@ export const sliceResponse = {
       },
     ],
   },
+  error: null,
+  is_cached: false,
+  rowcount: 6,
+  stacktrace: null,
+  status: 'success',
 };
 
 export const parsedSliceResponse = [
