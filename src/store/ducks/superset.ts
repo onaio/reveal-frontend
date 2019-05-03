@@ -10,8 +10,13 @@ interface AuthorizeSupersetAction extends AnyAction {
   type: typeof AUTHORIZE;
 }
 
+/** interface for reset action */
+interface ResetSupersetAction extends AnyAction {
+  type: typeof RESET;
+}
+
 /** Create type for Superset reducer actions */
-export type SupersetActionTypes = AuthorizeSupersetAction | AnyAction;
+export type SupersetActionTypes = AuthorizeSupersetAction | ResetSupersetAction | AnyAction;
 
 /** interface for superset state */
 interface SupersetState {
@@ -34,6 +39,10 @@ export default function reducer(state = initialState, action: SupersetActionType
       return state.merge({
         authorized: action.authorized,
       });
+    case RESET:
+      return state.merge({
+        authorized: null,
+      });
     default:
       return state;
   }
@@ -43,6 +52,9 @@ export default function reducer(state = initialState, action: SupersetActionType
 /** authorize action type */
 export const AUTHORIZE = 'reveal/reducer/superset/AUTHORIZE';
 
+/** reset action type */
+export const RESET = 'reveal/reducer/superset/RESET';
+
 // action creators
 
 /** authorize action creator
@@ -51,6 +63,12 @@ export const AUTHORIZE = 'reveal/reducer/superset/AUTHORIZE';
 export const authorizeSuperset = (authorized: boolean): AuthorizeSupersetAction => ({
   authorized,
   type: AUTHORIZE,
+});
+
+/** reset action creator
+ */
+export const resetSuperset = (): ResetSupersetAction => ({
+  type: RESET,
 });
 
 // selectors
