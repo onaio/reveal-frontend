@@ -10,9 +10,15 @@ declare module '@onaio/superset-connector' {
     token?: string;
   }
 
+  declare class API {
+    public doFetch(config: SupersetConfig, middleware: (e: any) => e) {
+      return any;
+    }
+  }
+
   /** interface to describe superset object */
   export interface Superset {
-    api: any;
+    api: API;
     authZ: any;
     deAuthZ: any;
     processData: any;
