@@ -1,7 +1,5 @@
-import { SupersetConfig } from '@onaio/superset-connector';
+export const SUPERSET_API_BASE = 'https://discover.ona.io/';
+export type SUPERSET_API_BASE = typeof SUPERSET_API_BASE;
 
-/** superset configs */
-export const CONFIG: Partial<SupersetConfig> = {
-  base: 'https://discover.ona.io/',
-  endpoint: 'slice',
-};
+export const SUPERSET_API_ENDPOINT = 'slice';
+export type SUPERSET_API_ENDPOINT = typeof SUPERSET_API_ENDPOINT;
