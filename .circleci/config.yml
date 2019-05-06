@@ -19,7 +19,7 @@ jobs:
           REACT_APP_ENABLE_IRS: "true"
           REACT_APP_ENABLE_FI: "true"
           REACT_APP_DISABLE_LOGIN_PROTECTION: "true"
-          REACT_APP_SUPERSET_API_BASE: "https://discover.ona.io"
+          REACT_APP_SUPERSET_API_BASE: "https://discover.ona.io/"
           REACT_APP_SUPERSET_API_ENDPOINT: "slice"
 
     working_directory: ~/repo
