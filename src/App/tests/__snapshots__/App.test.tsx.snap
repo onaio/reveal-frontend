@@ -15,7 +15,7 @@ exports[`App renders App correctly 1`] = `
   <Router
     history={
       Object {
-        "action": "POP",
+        "action": "REPLACE",
         "block": [Function],
         "createHref": [Function],
         "go": [Function],
@@ -25,7 +25,8 @@ exports[`App renders App correctly 1`] = `
         "listen": [Function],
         "location": Object {
           "hash": "",
-          "pathname": "/",
+          "key": "dymi39",
+          "pathname": "/login",
           "search": "",
           "state": undefined,
         },
@@ -59,7 +60,7 @@ exports[`App renders App correctly 1`] = `
                   authenticated={false}
                   history={
                     Object {
-                      "action": "POP",
+                      "action": "REPLACE",
                       "block": [Function],
                       "createHref": [Function],
                       "go": [Function],
@@ -69,7 +70,8 @@ exports[`App renders App correctly 1`] = `
                       "listen": [Function],
                       "location": Object {
                         "hash": "",
-                        "pathname": "/",
+                        "key": "dymi39",
+                        "pathname": "/login",
                         "search": "",
                         "state": undefined,
                       },
@@ -80,7 +82,8 @@ exports[`App renders App correctly 1`] = `
                   location={
                     Object {
                       "hash": "",
-                      "pathname": "/",
+                      "key": "dymi39",
+                      "pathname": "/login",
                       "search": "",
                       "state": undefined,
                     }
@@ -88,7 +91,7 @@ exports[`App renders App correctly 1`] = `
                   logOutUser={[Function]}
                   match={
                     Object {
-                      "isExact": true,
+                      "isExact": false,
                       "params": Object {},
                       "path": "/",
                       "url": "/",
@@ -488,16 +491,18 @@ exports[`App renders App correctly 1`] = `
                                       path="\\\\/login"
                                     >
                                       <Link
-                                        aria-current={null}
-                                        className="nav-link"
+                                        aria-current="page"
+                                        className="nav-link active"
                                         replace={false}
+                                        style={Object {}}
                                         to="/login"
                                       >
                                         <a
-                                          aria-current={null}
-                                          className="nav-link"
+                                          aria-current="page"
+                                          className="nav-link active"
                                           href="/login"
                                           onClick={[Function]}
+                                          style={Object {}}
                                         >
                                           Login
                                         </a>
@@ -540,259 +545,126 @@ exports[`App renders App correctly 1`] = `
                   className="col"
                 >
                   <Switch>
-                    <Connect(PrivateRoute)
-                      component={[Function]}
+                    <Route
                       computedMatch={
                         Object {
                           "isExact": true,
                           "params": Object {},
-                          "path": "/",
-                          "url": "/",
+                          "path": "/login",
+                          "url": "/login",
                         }
                       }
-                      disableLoginProtection={true}
                       exact={true}
                       location={
                         Object {
                           "hash": "",
-                          "pathname": "/",
+                          "key": "dymi39",
+                          "pathname": "/login",
                           "search": "",
                           "state": undefined,
                         }
                       }
-                      path="/"
+                      path="/login"
+                      render={[Function]}
                     >
-                      <PrivateRoute
-                        authenticated={false}
-                        component={[Function]}
-                        computedMatch={
+                      <OauthLogin
+                        ProviderLinksComponent={[Function]}
+                        history={
                           Object {
-                            "isExact": true,
-                            "params": Object {},
-                            "path": "/",
-                            "url": "/",
+                            "action": "REPLACE",
+                            "block": [Function],
+                            "createHref": [Function],
+                            "go": [Function],
+                            "goBack": [Function],
+                            "goForward": [Function],
+                            "length": 1,
+                            "listen": [Function],
+                            "location": Object {
+                              "hash": "",
+                              "key": "dymi39",
+                              "pathname": "/login",
+                              "search": "",
+                              "state": undefined,
+                            },
+                            "push": [Function],
+                            "replace": [Function],
                           }
                         }
-                        disableLoginProtection={true}
-                        dispatch={[Function]}
-                        exact={true}
                         location={
                           Object {
                             "hash": "",
-                            "pathname": "/",
+                            "key": "dymi39",
+                            "pathname": "/login",
                             "search": "",
                             "state": undefined,
                           }
                         }
-                        path="/"
-                        redirectPath="/login"
+                        match={
+                          Object {
+                            "isExact": true,
+                            "params": Object {},
+                            "path": "/login",
+                            "url": "/login",
+                          }
+                        }
+                        providers={
+                          Object {
+                            "Ona": Object {
+                              "accessTokenUri": "https://stage-api.ona.io/o/token/",
+                              "authorizationUri": "https://stage-api.ona.io/o/authorize/",
+                              "clientId": "iDWxqlTdUNUtGd3MIjxsI8HcICSjsRwHfy1LKvzF",
+                              "redirectUri": "http://localhost:3000/oauth/callback/Ona/",
+                              "scopes": Array [
+                                "read",
+                                "write",
+                              ],
+                              "state": "onadata",
+                              "userUri": "https://stage-api.ona.io/api/v1/user.json",
+                            },
+                          }
+                        }
                       >
-                        <Route
-                          computedMatch={
+                        <ProviderLinks
+                          providers={
                             Object {
-                              "isExact": true,
-                              "params": Object {},
-                              "path": "/",
-                              "url": "/",
+                              "Ona": Object {
+                                "accessTokenUri": "https://stage-api.ona.io/o/token/",
+                                "authorizationUri": "https://stage-api.ona.io/o/authorize/",
+                                "clientId": "iDWxqlTdUNUtGd3MIjxsI8HcICSjsRwHfy1LKvzF",
+                                "redirectUri": "http://localhost:3000/oauth/callback/Ona/",
+                                "scopes": Array [
+                                  "read",
+                                  "write",
+                                ],
+                                "state": "onadata",
+                                "userUri": "https://stage-api.ona.io/api/v1/user.json",
+                              },
                             }
                           }
-                          dispatch={[Function]}
-                          exact={true}
-                          location={
-                            Object {
-                              "hash": "",
-                              "pathname": "/",
-                              "search": "",
-                              "state": undefined,
-                            }
-                          }
-                          path="/"
-                          render={[Function]}
                         >
-                          <Home
-                            computedMatch={
-                              Object {
-                                "isExact": true,
-                                "params": Object {},
-                                "path": "/",
-                                "url": "/",
-                              }
-                            }
-                            dispatch={[Function]}
-                            exact={true}
-                            history={
-                              Object {
-                                "action": "POP",
-                                "block": [Function],
-                                "createHref": [Function],
-                                "go": [Function],
-                                "goBack": [Function],
-                                "goForward": [Function],
-                                "length": 1,
-                                "listen": [Function],
-                                "location": Object {
-                                  "hash": "",
-                                  "pathname": "/",
-                                  "search": "",
-                                  "state": undefined,
-                                },
-                                "push": [Function],
-                                "replace": [Function],
-                              }
-                            }
-                            location={
-                              Object {
-                                "hash": "",
-                                "pathname": "/",
-                                "search": "",
-                                "state": undefined,
-                              }
-                            }
-                            match={
-                              Object {
-                                "isExact": true,
-                                "params": Object {},
-                                "path": "/",
-                                "url": "/",
-                              }
-                            }
-                            path="/"
+                          <div
+                            className="gatekeeper-login"
                           >
-                            <div
-                              className="text-center"
+                            <p
+                              className="gatekeeper-p"
                             >
-                              <Row
-                                className="welcome-box"
-                                tag="div"
+                              Please log in with one of the following providers
+                            </p>
+                            <p
+                              className="gatekeeper-p item"
+                              key="Ona"
+                            >
+                              <a
+                                className="gatekeeper-btn"
+                                href="https://stage-api.ona.io/o/authorize/?client_id=iDWxqlTdUNUtGd3MIjxsI8HcICSjsRwHfy1LKvzF&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Foauth%2Fcallback%2FOna%2F&scope=read%20write&response_type=token&state=onadata"
                               >
-                                <div
-                                  className="welcome-box row"
-                                >
-                                  <Col
-                                    tag="div"
-                                    widths={
-                                      Array [
-                                        "xs",
-                                        "sm",
-                                        "md",
-                                        "lg",
-                                        "xl",
-                                      ]
-                                    }
-                                  >
-                                    <div
-                                      className="col"
-                                    >
-                                      <h3>
-                                        Welcome to Reveal
-                                      </h3>
-                                      <p>
-                                        Get started by selecting an intervention below
-                                      </p>
-                                    </div>
-                                  </Col>
-                                </div>
-                              </Row>
-                              <Row
-                                className="intervention-box"
-                                tag="div"
-                              >
-                                <div
-                                  className="intervention-box row"
-                                >
-                                  <Col
-                                    md="6"
-                                    tag="div"
-                                    widths={
-                                      Array [
-                                        "xs",
-                                        "sm",
-                                        "md",
-                                        "lg",
-                                        "xl",
-                                      ]
-                                    }
-                                  >
-                                    <div
-                                      className="col-md-6"
-                                    >
-                                      <Link
-                                        className="intervention-link"
-                                        replace={false}
-                                        to="/irs"
-                                      >
-                                        <a
-                                          className="intervention-link"
-                                          href="/irs"
-                                          onClick={[Function]}
-                                        >
-                                          <Button
-                                            className="btn-intervention btn-lg btn-block btn-outline-dark"
-                                            color="outline"
-                                            tag="button"
-                                          >
-                                            <button
-                                              aria-label={null}
-                                              className="btn-intervention btn-lg btn-block btn-outline-dark btn btn-outline"
-                                              onClick={[Function]}
-                                            >
-                                              IRS
-                                            </button>
-                                          </Button>
-                                        </a>
-                                      </Link>
-                                    </div>
-                                  </Col>
-                                  <Col
-                                    md="6"
-                                    tag="div"
-                                    widths={
-                                      Array [
-                                        "xs",
-                                        "sm",
-                                        "md",
-                                        "lg",
-                                        "xl",
-                                      ]
-                                    }
-                                  >
-                                    <div
-                                      className="col-md-6"
-                                    >
-                                      <Link
-                                        className="intervention-link"
-                                        replace={false}
-                                        to="/focus-investigation"
-                                      >
-                                        <a
-                                          className="intervention-link"
-                                          href="/focus-investigation"
-                                          onClick={[Function]}
-                                        >
-                                          <Button
-                                            className="btn-intervention btn-lg btn-block btn-outline-dark"
-                                            color="outline"
-                                            tag="button"
-                                          >
-                                            <button
-                                              aria-label={null}
-                                              className="btn-intervention btn-lg btn-block btn-outline-dark btn btn-outline"
-                                              onClick={[Function]}
-                                            >
-                                              Focus Investigation
-                                            </button>
-                                          </Button>
-                                        </a>
-                                      </Link>
-                                    </div>
-                                  </Col>
-                                </div>
-                              </Row>
-                            </div>
-                          </Home>
-                        </Route>
-                      </PrivateRoute>
-                    </Connect(PrivateRoute)>
+                                Ona
+                              </a>
+                            </p>
+                          </div>
+                        </ProviderLinks>
+                      </OauthLogin>
+                    </Route>
                   </Switch>
                 </div>
               </Col>
