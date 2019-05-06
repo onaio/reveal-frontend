@@ -1,5 +1,5 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
-import { authenticateUser, isAuthenticated } from '@onaio/session-reducer';
+import { authenticateUser, getUser, isAuthenticated, logOutUser } from '@onaio/session-reducer';
 import { FlushThunks } from 'redux-testkit';
 import store from '..';
 import messages, { selectAllMessages, sendMessage } from './ducks/messages';
@@ -26,14 +26,22 @@ describe('store', () => {
 
   it('should work with default reducers', () => {
     /** Users reducer */
+    const moshUser = {
+      email: 'mosh@example.com',
+      gravatar:
+        'https://secure.gravatar.com/avatar/ae22ab897231db07205bd5d00e64cbbf?d=https%3A%2F%2Fona.io%2Fstatic%2Fimages%2Fdefault_avatar.png&s=60',
+      name: 'mosh',
+      username: 'moshthepitt',
+    };
     // initially logged out
     expect(isAuthenticated(store.getState())).toBe(false);
     // call action to log in
-    store.dispatch(authenticateUser(true));
+    store.dispatch(authenticateUser(true, moshUser));
     // now should BE authenticated
     expect(isAuthenticated(store.getState())).toBe(true);
+    expect(getUser(store.getState())).toEqual(moshUser);
     // call action to log out
-    store.dispatch(authenticateUser(false));
+    store.dispatch(logOutUser());
     // now should NOT be authenticated
     expect(isAuthenticated(store.getState())).toBe(false);
   });
