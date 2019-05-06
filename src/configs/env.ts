@@ -32,6 +32,23 @@ export type SUPERSET_API_ENDPOINT = typeof SUPERSET_API_ENDPOINT;
 export const OPENSRP_CLIENT_ID = process.env.REACT_APP_OPENSRP_CLIENT_ID;
 export type OPENSRP_CLIENT_ID = typeof OPENSRP_CLIENT_ID;
 
-/** Onadata Client ID, for oAuth2 */
+/** Onadata oAuth2 settings */
 export const ONADATA_CLIENT_ID = process.env.REACT_APP_ONADATA_CLIENT_ID;
 export type ONADATA_CLIENT_ID = typeof ONADATA_CLIENT_ID;
+
+// notice the ending / here
+export const ONADATA_ACCESS_TOKEN_URL =
+  process.env.REACT_APP_ONADATA_ACCESS_TOKEN_URL || 'https://stage-api.ona.io/o/token/';
+export type ONADATA_ACCESS_TOKEN_URL = typeof ONADATA_ACCESS_TOKEN_URL;
+
+// notice the ending / here
+export const ONADATA_AUTHORIZATION_URL =
+  process.env.REACT_APP_ONADATA_AUTHORIZATION_URL || 'https://stage-api.ona.io/o/authorize/';
+export type ONADATA_AUTHORIZATION_URL = typeof ONADATA_AUTHORIZATION_URL;
+
+export const ONADATA_USER_URL =
+  process.env.REACT_APP_ONADATA_USER_URL || 'https://stage-api.ona.io/api/v1/user.json';
+export type ONADATA_USER_URL = typeof ONADATA_USER_URL;
+
+export const ONADATA_OAUTH_STATE = process.env.REACT_APP_ONADATA_OAUTH_STATE || 'onadata';
+export type ONADATA_OAUTH_STATE = typeof ONADATA_OAUTH_STATE;

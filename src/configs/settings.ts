@@ -1,6 +1,13 @@
 /** This is the main configuration module */
 import { Providers } from '@onaio/gatekeeper';
-import { DOMAIN_NAME, ONADATA_CLIENT_ID } from './env';
+import {
+  DOMAIN_NAME,
+  ONADATA_ACCESS_TOKEN_URL,
+  ONADATA_AUTHORIZATION_URL,
+  ONADATA_CLIENT_ID,
+  ONADATA_OAUTH_STATE,
+  ONADATA_USER_URL,
+} from './env';
 
 /** Interfaces and Types */
 
@@ -21,13 +28,13 @@ export interface LocationItem {
 /** Authentication Configs */
 export const providers: Providers = {
   Ona: {
-    accessTokenUri: 'https://stage-api.ona.io/o/token/',
-    authorizationUri: 'https://stage-api.ona.io/o/authorize/',
+    accessTokenUri: ONADATA_ACCESS_TOKEN_URL,
+    authorizationUri: ONADATA_AUTHORIZATION_URL,
     clientId: ONADATA_CLIENT_ID,
     redirectUri: `${DOMAIN_NAME}/oauth/callback/Ona/`,
     scopes: ['read', 'write'],
-    state: 'abc',
-    userUri: 'https://stage-api.ona.io/api/v1/user.json',
+    state: ONADATA_OAUTH_STATE,
+    userUri: ONADATA_USER_URL,
   },
 };
 
