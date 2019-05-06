@@ -21,11 +21,11 @@ export const DISABLE_LOGIN_PROTECTION = process.env.REACT_APP_DISABLE_LOGIN_PROT
 export type DISABLE_LOGIN_PROTECTION = typeof DISABLE_LOGIN_PROTECTION;
 
 /** The Superset API base */
-export const SUPERSET_API_BASE = process.env.REACT_APP_SUPERSET_API_BASE;
+export const SUPERSET_API_BASE = process.env.REACT_APP_SUPERSET_API_BASE || 'http://localhost';
 export type SUPERSET_API_BASE = typeof SUPERSET_API_BASE;
 
 /** The Superset API endpoint */
-export const SUPERSET_API_ENDPOINT = process.env.REACT_APP_SUPERSET_API_ENDPOINT;
+export const SUPERSET_API_ENDPOINT = process.env.REACT_APP_SUPERSET_API_ENDPOINT || 'slice';
 export type SUPERSET_API_ENDPOINT = typeof SUPERSET_API_ENDPOINT;
 
 /** OPENSRP Client ID, for oAuth2 */
