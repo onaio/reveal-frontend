@@ -2,7 +2,7 @@ import ElementMap from '@onaio/element-map';
 import * as React from 'react';
 import { CellInfo } from 'react-table';
 import { GREEN, ORANGE, RED, YELLOW } from '../colors';
-import { GREEN_THRESHOLD, ORANGE_THRESHOLD, YELLOW_THRESHOLD, ZERO } from '../constants';
+import { GREEN_THRESHOLD, ORANGE_THRESHOLD, YELLOW_THRESHOLD, ZERO } from '../configs/settings';
 import { FlexObject, percentage } from '../helpers/utils';
 
 /** Returns a table cell rendered with different colors based on focus

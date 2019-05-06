@@ -7,9 +7,9 @@ import React, { Component } from 'react';
 import { Route, Switch } from 'react-router';
 import { Col, Container, Row } from 'reactstrap';
 import Loading from '../components/page/Loading';
-import { providers } from '../configs/auth';
+import { DISABLE_LOGIN_PROTECTION } from '../configs/env';
+import { providers } from '../configs/settings';
 import {
-  DISABLE_LOGIN_PROTECTION,
   FI_HISTORICAL_URL,
   FI_SINGLE_MAP_URL,
   FI_SINGLE_URL,

@@ -1,15 +1,8 @@
 import React from 'react';
 import { Table } from 'reactstrap';
 import * as colors from '../../colors';
-import {
-  GREEN,
-  GREEN_THRESHOLD,
-  ORANGE,
-  ORANGE_THRESHOLD,
-  RED,
-  YELLOW,
-  YELLOW_THRESHOLD,
-} from '../../constants';
+import { GREEN_THRESHOLD, ORANGE_THRESHOLD, YELLOW_THRESHOLD } from '../../configs/settings';
+import { GREEN, ORANGE, RED, YELLOW } from '../../constants';
 import { percentage } from '../../helpers/utils';
 
 /** Displays conditional formatting guide for Focus Investigation Response Adherence */
