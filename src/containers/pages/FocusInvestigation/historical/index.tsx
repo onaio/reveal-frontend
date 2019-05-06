@@ -9,7 +9,7 @@ import DrillDownTableLinkedCell from '../../../../components/DrillDownTableLinke
 import ResponseAdherence from '../../../../components/formatting/ResponseAdherence';
 import NotFound from '../../../../components/NotFound';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
-import { FIClassifications } from '../../../../configs/fi';
+import { FIClassifications } from '../../../../configs/settings';
 import {
   FI_HISTORICAL_URL,
   FOCUS_INVESTIGATIONS,

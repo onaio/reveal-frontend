@@ -9,8 +9,7 @@ import 'react-table/react-table.css';
 import { Table } from 'reactstrap';
 import DrillDownTableLinkedCell from '../../../../components/DrillDownTableLinkedCell';
 import OneThreeSevenAdherence from '../../../../components/formatting/OneThreeSevenAdherence';
-import { FIClassifications } from '../../../../configs/fi';
-import { locationHierarchy } from '../../../../configs/locations';
+import { FIClassifications, locationHierarchy } from '../../../../configs/settings';
 import { FI_SINGLE_MAP_URL, FI_SINGLE_URL } from '../../../../constants';
 import {
   get137AdherenceIndicator,

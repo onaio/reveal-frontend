@@ -25,6 +25,13 @@ yarn
 yarn start
 ```
 
+## Configuration
+
+The configurations are located in the `configs` directory and are split into two modules:
+
+- **env.ts**: this module reads configurations from environemt variables
+- **settings.ts**: this module holds more complicated configurations
+
 ## Testing
 
 ```sh

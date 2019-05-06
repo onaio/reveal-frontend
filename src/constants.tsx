@@ -1,17 +1,3 @@
-// env vars
-export const WEBSITE_NAME = process.env.REACT_APP_WEBSITE_NAME;
-export type WEBSITE_NAME = typeof WEBSITE_NAME;
-export const DOMAIN_NAME = process.env.REACT_APP_DOMAIN_NAME;
-export type DOMAIN_NAME = typeof DOMAIN_NAME;
-export const ONADATA_CLIENT_ID = process.env.REACT_APP_ONADATA_CLIENT_ID;
-export type ONADATA_CLIENT_ID = typeof ONADATA_CLIENT_ID;
-export const ENABLE_IRS = process.env.REACT_APP_ENABLE_IRS === 'true';
-export type ENABLE_IRS = typeof ENABLE_IRS;
-export const ENABLE_FI = process.env.REACT_APP_ENABLE_FI === 'true';
-export type ENABLE_FI = typeof ENABLE_FI;
-export const DISABLE_LOGIN_RPOTECTION = process.env.REACT_APP_DISABLE_LOGIN_RPOTECTION === 'true';
-export type DISABLE_LOGIN_RPOTECTION = typeof DISABLE_LOGIN_RPOTECTION;
-
 // strings
 export const LOCATION = 'Location';
 export type LOCATION = typeof LOCATION;
@@ -53,15 +39,3 @@ export const ORANGE = 'Orange';
 export type ORANGE = typeof ORANGE;
 export const RED = 'Red';
 export type RED = typeof RED;
-
-// thresholds
-export const GREEN_THRESHOLD = 0.9;
-export type GREEN_THRESHOLD = typeof GREEN_THRESHOLD;
-export const YELLOW_THRESHOLD = 0.2;
-export type YELLOW_THRESHOLD = typeof YELLOW_THRESHOLD;
-export const ORANGE_THRESHOLD = 0.8;
-export type ORANGE_THRESHOLD = typeof ORANGE_THRESHOLD;
-
-// 1-3-7 thresholds
-export const ONE = 0;
-export const ZERO = 0;

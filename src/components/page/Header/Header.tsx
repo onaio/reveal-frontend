@@ -15,16 +15,8 @@ import {
   UncontrolledDropdown,
 } from 'reactstrap';
 import logo from '../../../assets/images/logo.png';
-import {
-  ENABLE_FI,
-  ENABLE_IRS,
-  FI_HISTORICAL_URL,
-  FI_URL,
-  IRS_URL,
-  LOGIN_URL,
-  LOGOUT_URL,
-  WEBSITE_NAME,
-} from '../../../constants';
+import { ENABLE_FI, ENABLE_IRS, WEBSITE_NAME } from '../../../configs/env';
+import { FI_HISTORICAL_URL, FI_URL, IRS_URL, LOGIN_URL, LOGOUT_URL } from '../../../constants';
 import './Header.css';
 
 /** interface for Header state */

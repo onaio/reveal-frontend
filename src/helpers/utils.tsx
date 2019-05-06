@@ -1,6 +1,6 @@
 import { uniq } from 'lodash';
 import { Column } from 'react-table';
-import { locationHierarchy, LocationItem } from '../configs/locations';
+import { locationHierarchy, LocationItem } from '../configs/settings';
 
 /** Interface for an object that is allowed to have any property */
 export interface FlexObject {

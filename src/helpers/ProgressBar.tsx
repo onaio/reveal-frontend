@@ -1,6 +1,6 @@
 import React from 'react';
 import * as colors from '../colors';
-import { GREEN_THRESHOLD, ORANGE_THRESHOLD, YELLOW_THRESHOLD } from '../constants';
+import { GREEN_THRESHOLD, ORANGE_THRESHOLD, YELLOW_THRESHOLD, ZERO } from '../configs/settings';
 
 /** Props for ProgressBar */
 interface ProgressBarProps {

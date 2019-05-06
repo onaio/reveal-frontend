@@ -1,6 +1,6 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset, { SupersetConfig } from '@onaio/superset-connector';
-import { SUPERSET_API_BASE, SUPERSET_API_ENDPOINT } from '../../configs/superset';
+import { SUPERSET_API_BASE, SUPERSET_API_ENDPOINT } from '../../configs/env';
 import store from '../../store';
 import supersetReducer, {
   authorizeSuperset,

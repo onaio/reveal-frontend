@@ -2,7 +2,8 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Col, Row } from 'reactstrap';
-import { ENABLE_FI, ENABLE_IRS, FI_URL, IRS_URL } from '../../../constants';
+import { ENABLE_FI, ENABLE_IRS } from '../../../configs/env';
+import { FI_URL, IRS_URL } from '../../../constants';
 import './Home.css';
 
 class Home extends React.Component<{}, {}> {

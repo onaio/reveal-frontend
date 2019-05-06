@@ -1,7 +1,8 @@
 import React from 'react';
 import { Table } from 'reactstrap';
 import * as colors from '../../colors';
-import { GREEN, ONE, ORANGE, RED, ZERO } from '../../constants';
+import { ONE, ZERO } from '../../configs/settings';
+import { GREEN, ORANGE, RED } from '../../constants';
 
 /** Displays conditional formatting guide for Focus Investigation 1-3-7 Adherence */
 const OneThreeSevenAdherence: React.ElementType = props => {
