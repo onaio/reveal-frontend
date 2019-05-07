@@ -66,7 +66,7 @@ class App extends Component {
                 component={SingleFI}
               />
               <ConnectedPrivateRoute
-                disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                disableLoginProtection={true}
                 exact={true}
                 path={`${FI_SINGLE_MAP_URL}/:id`}
                 component={SingleActiveFIMap}
