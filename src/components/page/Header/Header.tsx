@@ -119,7 +119,7 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
               {authenticated ? (
                 <UncontrolledDropdown nav={true} inNavbar={true}>
                   <DropdownToggle nav={true} caret={true}>
-                    <FontAwesomeIcon icon={['far', 'user']} /> {user.name}
+                    <FontAwesomeIcon icon={['far', 'user']} /> {user.username}
                   </DropdownToggle>
                   <DropdownMenu right={true}>
                     <DropdownItem>
