@@ -1028,7 +1028,7 @@ exports[`components/page/Header renders header correctly when authenticated 1`] 
                                       </svg>
                                     </FontAwesomeIcon>
                                      
-                                    Bobbie
+                                    RobertBaratheon
                                   </a>
                                 </DropdownToggle>
                                 <DropdownMenu
