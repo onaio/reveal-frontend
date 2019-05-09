@@ -76,23 +76,32 @@ export function oAuthUserInfoGetter(apiResponse: { [key: string]: any }): Sessio
         return getOnadataUserInfo(apiResponse);
     }
   }
+}
 
 export interface MapConfig {
   [key: string]: FlexObject;
 }
+
+export interface FitBoundsOptions {
+  padding?: number;
+}
+
 export interface SiteConfigAppMapconfig {
   bounds?: number[];
   center?: number[];
   container: string;
+  fitBoundsOptions?: FitBoundsOptions;
   style: string;
   zoom?: number;
 }
+
 export interface SiteConfigApp {
   accessToken: string;
   apiAccessToken: string;
   appName: string;
   mapConfig: SiteConfigAppMapconfig;
 }
+
 export interface SiteConfig {
   APP: SiteConfigApp;
   LAYERS: any[];
