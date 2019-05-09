@@ -13,6 +13,8 @@ interface GisidaState {
   bounds: number[];
   locations: FlexObject | false;
   doInitMap: boolean;
+  doRenderMap: boolean;
+  id: number;
 }
 
 // stand-in Async func to return geojson for feature + children
@@ -125,6 +127,8 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
     this.state = {
       bounds: [],
       doInitMap: false,
+      doRenderMap: false,
+      id: 0,
       locations: this.props.locations || false,
     };
 
@@ -139,7 +143,24 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
 
   public componentDidMount() {
     if (!this.state.locations) {
-      this.getLocations(this.props.id);
+      this.setState({ id: this.props.id }, () => {
+        this.getLocations(this.props.id);
+      });
+    }
+  }
+
+  public componentWillReceiveProps(nextProps: any) {
+    if (this.state.id !== nextProps.id) {
+      this.setState(
+        {
+          doRenderMap: false,
+          id: nextProps.id,
+          locations: false,
+        },
+        () => {
+          this.getLocations(nextProps.id);
+        }
+      );
     }
   }
 
@@ -154,7 +175,8 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
   public render() {
     const currentState = store.getState();
     const mapId = this.props.mapId || 'map-1';
-    const doRenderMap = typeof currentState[mapId] !== 'undefined';
+    const doRenderMap = this.state.doRenderMap && typeof currentState[mapId] !== 'undefined';
+
     if (!doRenderMap) {
       return null;
     }
@@ -187,9 +209,11 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
       {
         id: 'default-geoms',
         paint: {
-          'line-color': 'white',
-          'line-opacity': 1,
-          'line-width': 1,
+          // 'line-color': 'white',
+          // 'line-opacity': 1,
+          // 'line-width': 1,
+          'fill-color': 'rgba(0,116,217,0.5)',
+          'fill-outline-color': 'white',
         },
         source: {
           data: {
@@ -198,7 +222,7 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
           },
           type: 'geojson',
         },
-        type: 'line',
+        type: 'fill',
         visible: true,
       },
     ];
@@ -209,9 +233,16 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
       layers,
     });
 
-    // 4. Initialize Gisida stores
-    store.dispatch(Actions.initApp(config.APP));
-    loadLayers('map-1', store.dispatch, config.LAYERS);
+    this.setState({ doRenderMap: true }, () => {
+      // 4. Initialize Gisida stores
+      store.dispatch(Actions.initApp(config.APP));
+      loadLayers('map-1', store.dispatch, config.LAYERS);
+
+      // optional onInit handler function - higher order state management, etc
+      if (this.props.onInit) {
+        this.props.onInit();
+      }
+    });
   }
 }
 

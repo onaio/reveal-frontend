@@ -5,7 +5,7 @@ import { AnyAction } from 'redux';
 
 import GisidaWrapper from '../../../../../components/GisidaWrapper';
 import { FlexObject, MapProps, RouteParams } from '../../../../../helpers/utils';
-import store from '../../../../../store';
+// import store from '../../../../../store';
 
 /** Map View for Single Active Focus Investigation */
 class SingleActiveFIMap extends React.Component<RouteComponentProps<RouteParams> & MapProps, {}> {
@@ -14,14 +14,18 @@ class SingleActiveFIMap extends React.Component<RouteComponentProps<RouteParams>
   }
 
   public render() {
-    const currentState = store.getState();
-    const mapName = (currentState.APP && currentState.APP.appName) || '';
+    // const currentState = store.getState();
+    const { id } = this.props.match.params;
 
     return (
       <div>
-        <h2 className="page-title mt-4 mb-5">Map View: {mapName}</h2>
+        <h2 className="page-title mt-4 mb-5">Map View: {id}</h2>
         <div className="map">
-          <GisidaWrapper id={this.props.match.params.id} handlers={this.buildHandlers()} />
+          <GisidaWrapper
+            id={id}
+            handlers={this.buildHandlers()}
+            // onInit={() => {console.log('map init')}}
+          />
         </div>
       </div>
     );
@@ -53,34 +57,30 @@ class SingleActiveFIMap extends React.Component<RouteComponentProps<RouteParams>
   }
 
   private buildHandlers() {
-    const { MAP } = this.props;
+    const self = this;
     const handlers = [
       {
         method: function drillDownClick(e: any) {
-          if (e.originalEvent.shiftKey) {
-            return false;
-          }
+          // if (e.originalEvent.shiftKey) {
+          //   return false;
+          // }
           const features = e.target.queryRenderedFeatures(e.point);
-          const feature = features.find((d: any) => d.layer.id === MAP.activeLayerId);
-          if (e.target.getLayer('region-line') && e.target.getLayer(feature.layer.id)) {
-            e.target.setFilter('region-line', [
-              'any',
-              ['==', 'ADM1_PCODE', feature.properties.ADM1_PCODE],
-            ]);
+          if (features[0] && Number(features[0].id) !== Number(self.props.match.params.id)) {
+            self.props.history.push(`/focus-investigation/map/${features[0].id}`);
           }
         },
         name: 'drillDownClick',
         type: 'click',
       },
-      {
-        method: function selectionClick(e: any) {
-          if (!e.originalEvent.shiftKey) {
-            return false;
-          }
-        },
-        name: 'selectionClick',
-        type: 'click',
-      },
+      // {
+      //   method: function selectionClick(e: any) {
+      //     if (!e.originalEvent.shiftKey) {
+      //       return false;
+      //     }
+      //   },
+      //   name: 'selectionClick',
+      //   type: 'click',
+      // },
     ];
     return handlers;
   }
