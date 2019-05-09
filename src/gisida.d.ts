@@ -25,7 +25,7 @@ declare module 'gisida' {
     reloadLayer: AnyAction;
     layerReloaded: AnyAction;
     reloadLayers: AnyAction;
-    toggleLayer: AnyAction;
+    toggleLayer: (mapId: string, layerId: string, isInit?: boolean) => AnyAction;
     toggleFilter: AnyAction;
     toggleMenu: AnyAction;
     requestData: AnyAction;
