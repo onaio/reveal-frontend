@@ -1,3 +1,4 @@
+import * as GeojsonExtent from '@mapbox/geojson-extent';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import { Actions, ducks, loadLayers } from 'gisida';
 import { Map } from 'gisida-react';
@@ -6,7 +7,7 @@ import * as React from 'react';
 import { GISIDA_MAPBOX_TOKEN, GISIDA_ONADATA_API_TOKEN } from '../../configs/env'; // this isn't working T_T
 import {
   FlexObject,
-  MapConfigs,
+  // MapConfigs,
   SiteConfig,
   SiteConfigApp,
   SiteConfigAppMapconfig,
@@ -15,6 +16,7 @@ import store from '../../store';
 import './gisida.css';
 
 interface GisidaState {
+  bounds: number[];
   locations: FlexObject | false;
   doInitMap: boolean;
 }
@@ -68,17 +70,33 @@ const ConfigStore = (options: FlexObject) => {
   // Define basic config properties
   const { accessToken, apiAccessToken, appName, mapConfig: mbConfig, layers } = options;
   // Define flattened APP.mapConfig properties
-  const { mapConfigCenter, mapConfigContainer, mapConfigStyle, mapConfigZoom } = options;
+  const {
+    mapConfigCenter,
+    mapConfigContainer,
+    mapConfigStyle,
+    mapConfigZoom,
+    mapConfigBounds,
+  } = options;
   // Define non-flattened APP.Config properties
-  const { center, container, style, zoom } = mbConfig || options;
+  const { center, container, style, zoom, bounds } = mbConfig || options;
 
   // Build options for mapbox-gl-js initialization
-  const mapConfig: SiteConfigAppMapconfig = {
-    center: center || mapConfigCenter || [0, 0],
+  let mapConfig: SiteConfigAppMapconfig = {
     container: container || mapConfigContainer || 'map',
     style: style || mapConfigStyle || 'mapbox://styles/ona/cjestgt7ldbet2sqnqth4xx8c',
-    zoom: zoom || mapConfigZoom || 0,
   };
+  if (bounds || mapConfigBounds) {
+    mapConfig = {
+      ...mapConfig,
+      bounds: bounds || mapConfigBounds,
+    };
+  } else {
+    mapConfig = {
+      ...mapConfig,
+      center: center || mapConfigCenter || [0, 0],
+      zoom: zoom || mapConfigZoom || 0,
+    };
+  }
   // Build APP options for Gisida
   const APP: SiteConfigApp = {
     accessToken:
@@ -104,6 +122,7 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
     super(props);
     const initialState = store.getState();
     this.state = {
+      bounds: [],
       doInitMap: false,
       locations: this.props.locations || false,
     };
@@ -126,7 +145,7 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
   public componentDidUpdate() {
     if (this.state.locations && this.state.doInitMap) {
       this.setState({ doInitMap: false }, () => {
-        this.initMap(this.state.locations);
+        this.initMap();
       });
     }
   }
@@ -148,12 +167,18 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
       this.setState({ locations: false });
     } else {
       const locations = await LocationsFetcher(Number(id));
-      this.setState({ locations, doInitMap: true });
+      const bounds = GeojsonExtent(locations);
+
+      // const bbountds = GetBounds(locations);
+      // console.log(bounds);
+      // debugger;
+      this.setState({ locations, doInitMap: true, bounds });
     }
   }
 
   // 3. Define options for map config
-  private initMap(locations: FlexObject | false) {
+  private initMap() {
+    const { locations, bounds } = this.state;
     if (!locations) {
       return false;
     }
@@ -181,8 +206,8 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
 
     const config = ConfigStore({
       appName: locations.features[0].properties.name,
+      bounds,
       layers,
-      zoom: 1,
     });
 
     // 4. Initialize Gisida stores
