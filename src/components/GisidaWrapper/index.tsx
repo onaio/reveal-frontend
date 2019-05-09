@@ -33,13 +33,18 @@ const LocationsFetcher = (id: number) =>
 
       // if primary feature isn't found
       if (!features.length) {
-        return false;
-      } // throw an error
-
-      // find direct children of primary feature
-      for (l = 0; l < Locations.length; l += 1) {
-        if (Number(Locations[l].properties.parentId) === id) {
-          features.push(Locations[l]);
+        // return all top level geoms
+        for (l = 0; l < Locations.length; l += 1) {
+          if (typeof Locations[l].properties.parentId === 'undefined') {
+            features.push(Locations[l]);
+          }
+        }
+      } else {
+        // find direct children of primary feature
+        for (l = 0; l < Locations.length; l += 1) {
+          if (Number(Locations[l].properties.parentId) === id) {
+            features.push(Locations[l]);
+          }
         }
       }
 
@@ -157,7 +162,7 @@ class GisidaWrapper extends React.Component<FlexObject> {
       // 2a. Asynchronously obtain geometries as geojson object
       const locations = await LocationsFetcher(Number(id));
       // 2b. Determine map bounds from locations geoms
-      const bounds = locations ? GeojsonExtent(locations.features[0]) : null;
+      const bounds = locations ? GeojsonExtent(locations) : null;
       this.setState({ locations, doInitMap: true, bounds });
     }
   }
