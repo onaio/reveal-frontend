@@ -9,6 +9,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.7.1",
     "@fortawesome/react-fontawesome": "^0.1.4",
     "@onaio/connected-private-route": "^0.0.8",
+    "@mapbox/geojson-extent": "^0.3.2",
     "@onaio/connected-reducer-registry": "^0.0.1",
     "@onaio/drill-down-table": "^0.0.16",
     "@onaio/element-map": "^0.0.2",

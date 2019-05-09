@@ -81,10 +81,11 @@ export interface MapConfig {
   [key: string]: FlexObject;
 }
 export interface SiteConfigAppMapconfig {
-  center: number[];
+  bounds?: number[];
+  center?: number[];
   container: string;
   style: string;
-  zoom: number;
+  zoom?: number;
 }
 export interface SiteConfigApp {
   accessToken: string;

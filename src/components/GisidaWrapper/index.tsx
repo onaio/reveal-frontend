@@ -1,3 +1,4 @@
+import * as GeojsonExtent from '@mapbox/geojson-extent';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import { Actions, ducks, loadLayers } from 'gisida';
 import { Map } from 'gisida-react';
@@ -5,7 +6,7 @@ import * as React from 'react';
 
 import {
   FlexObject,
-  MapConfigs,
+  // MapConfigs,
   SiteConfig,
   SiteConfigApp,
   SiteConfigAppMapconfig,
@@ -13,46 +14,46 @@ import {
 import store from '../../store';
 import './gisida.css';
 
-// Temporary Object containing different map config params
-// todo - dynamically generate these from somewhere
-const configs: MapConfigs = {
-  '13': {
-    accessToken: 'pk.eyJ1Ijoib25hIiwiYSI6IlVYbkdyclkifQ.0Bz-QOOXZZK01dq4MuMImQ',
-    apiAccessToken: '138a7ff6dfdcb5b4e41eb2d39bcc76ce5d296e89',
-    appName: 'Test Map',
-    layers: [
-      'https://raw.githubusercontent.com/onaio/cycloneidai-2019-data/master/moz/province-admin/province-admin.json',
-    ],
-    mapConfig: {
-      center: [33.852072, -18.850944],
-      container: 'map',
-      style: 'mapbox://styles/ona/cjestgt7ldbet2sqnqth4xx8c',
-      zoom: 6.5,
-    },
-  },
-  '14': {
-    accessToken: 'pk.eyJ1Ijoib25hIiwiYSI6IlVYbkdyclkifQ.0Bz-QOOXZZK01dq4MuMImQ',
-    apiAccessToken: '138a7ff6dfdcb5b4e41eb2d39bcc76ce5d296e89',
-    appName: 'Test Map 2',
-    layers: [
-      'https://raw.githubusercontent.com/onaio/zim-data/master/boundaries-labels/province/province-admin.json',
-      'https://raw.githubusercontent.com/onaio/zim-data/master/boundaries-labels/district/district-admin.json',
-    ],
-    mapConfigCenter: [27.199728142287427, -18.94022942134295],
-    mapConfigContainer: 'map',
-    mapConfigStyle: 'mapbox://styles/ona/cjestgt7ldbet2sqnqth4xx8c',
-    mapConfigZoom: 5.76,
-  },
-  '15': {
-    accessToken: 'pk.eyJ1Ijoib25hIiwiYSI6IlVYbkdyclkifQ.0Bz-QOOXZZK01dq4MuMImQ',
-    apiAccessToken: '138a7ff6dfdcb5b4e41eb2d39bcc76ce5d296e89',
-    appName: 'Test Map 3',
-    center: [69.13155473084771, 34.50960383103761],
-    layers: ['/config/layers/province-admin.json'],
-    style: 'mapbox://styles/ona/cjestgt7ldbet2sqnqth4xx8c',
-    zoom: 10.695873279884117,
-  },
-};
+interface GisidaState {
+  bounds: number[];
+  locations: FlexObject | false;
+  doInitMap: boolean;
+}
+
+// stand-in Async func to return geojson for feature + children
+const LocationsFetcher = (id: number) =>
+  fetch('/config/data/opensrplocations.json')
+    .then(res => res.json())
+    .then(Locations => {
+      let l;
+      const features = [];
+
+      // find primary feature from id
+      for (l = 0; l < Locations.length; l += 1) {
+        if (Number(Locations[l].id) === id) {
+          features.push(Locations[l]);
+          break;
+        }
+      }
+
+      // if primary feature isn' found
+      if (!features.length) {
+        return false;
+      } // throw an error
+
+      // find direct children of primary feature
+      for (l = 0; l < Locations.length; l += 1) {
+        if (Number(Locations[l].properties.parentId) === id) {
+          features.push(Locations[l]);
+        }
+      }
+
+      // return geojson shapped data
+      return {
+        features,
+        type: 'FeatureCollection',
+      };
+    });
 
 /** Returns a single layer configuration */
 const LayerStore = (layer: any) => {
@@ -67,17 +68,33 @@ const ConfigStore = (options: FlexObject) => {
   // Define basic config properties
   const { accessToken, apiAccessToken, appName, mapConfig: mbConfig, layers } = options;
   // Define flattened APP.mapConfig properties
-  const { mapConfigCenter, mapConfigContainer, mapConfigStyle, mapConfigZoom } = options;
+  const {
+    mapConfigCenter,
+    mapConfigContainer,
+    mapConfigStyle,
+    mapConfigZoom,
+    mapConfigBounds,
+  } = options;
   // Define non-flattened APP.Config properties
-  const { center, container, style, zoom } = mbConfig || options;
+  const { center, container, style, zoom, bounds } = mbConfig || options;
 
   // Build options for mapbox-gl-js initialization
-  const mapConfig: SiteConfigAppMapconfig = {
-    center: center || mapConfigCenter || [0, 0],
+  let mapConfig: SiteConfigAppMapconfig = {
     container: container || mapConfigContainer || 'map',
     style: style || mapConfigStyle || 'mapbox://styles/ona/cjestgt7ldbet2sqnqth4xx8c',
-    zoom: zoom || mapConfigZoom || 0,
   };
+  if (bounds || mapConfigBounds) {
+    mapConfig = {
+      ...mapConfig,
+      bounds: bounds || mapConfigBounds,
+    };
+  } else {
+    mapConfig = {
+      ...mapConfig,
+      center: center || mapConfigCenter || [0, 0],
+      zoom: zoom || mapConfigZoom || 0,
+    };
+  }
   // Build APP options for Gisida
   const APP: SiteConfigApp = {
     accessToken,
@@ -97,7 +114,12 @@ class GisidaWrapper extends React.Component<FlexObject> {
   constructor(props: FlexObject) {
     super(props);
     const initialState = store.getState();
-    const { id } = props;
+    this.state = {
+      bounds: [],
+      doInitMap: false,
+      locations: this.props.locations || false,
+    };
+
     // 1. Register mapReducers in reducer registery;
     if (!initialState.APP && ducks.APP) {
       reducerRegistry.register('APP', ducks.APP.default);
@@ -110,9 +132,11 @@ class GisidaWrapper extends React.Component<FlexObject> {
     if (typeof id !== 'undefined' && typeof configs[id] !== 'undefined') {
       const config = ConfigStore(configs[id]);
 
-      // 3. Initialize Gisida stores
-      store.dispatch(Actions.initApp(config.APP));
-      loadLayers('map-1', store.dispatch, config.LAYERS);
+  public componentDidUpdate() {
+    if (this.state.locations && this.state.doInitMap) {
+      this.setState({ doInitMap: false }, () => {
+        this.initMap();
+      });
     }
   }
 
@@ -120,6 +144,62 @@ class GisidaWrapper extends React.Component<FlexObject> {
     const currentState = store.getState();
     const doRenderMap = typeof currentState['map-1'] !== 'undefined';
     const mapId = this.props.mapId || 'map-1';
+    const doRenderMap = typeof currentState[mapId] !== 'undefined';
+    if (!doRenderMap) {
+      return null;
+    }
+
+    return <Map mapId={mapId} store={store} handlers={this.props.handlers} />;
+  }
+
+  // 2. Get relevant goejson locations
+  private async getLocations(id: number | undefined) {
+    if (Number.isNaN(Number(id))) {
+      this.setState({ locations: false });
+    } else {
+      const locations = await LocationsFetcher(Number(id));
+      const bounds = GeojsonExtent(locations);
+
+      // const bbountds = GetBounds(locations);
+      // console.log(bounds);
+      // debugger;
+      this.setState({ locations, doInitMap: true, bounds });
+    }
+  }
+
+  // 3. Define options for map config
+  private initMap() {
+    const { locations, bounds } = this.state;
+    if (!locations) {
+      return false;
+    }
+    // 3a. Determine map bounds from locations geoms
+    // 3b. Define layers
+    const layers = [
+      {
+        id: 'default-geoms',
+        paint: {
+          'line-color': '#888',
+          'line-opacity': 1,
+          'line-width': 1,
+        },
+        source: {
+          data: {
+            data: JSON.stringify(locations),
+            type: 'stringified-geojson',
+          },
+          type: 'geojson',
+        },
+        type: 'line',
+        visible: true,
+      },
+    ];
+
+    const config = ConfigStore({
+      appName: locations.features[0].properties.name,
+      bounds,
+      layers,
+    });
 
     return doRenderMap ? <Map mapId={mapId} store={store} handlers={this.props.handlers} /> : null;
   }
