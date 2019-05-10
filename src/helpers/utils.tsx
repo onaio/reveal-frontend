@@ -4,6 +4,7 @@ import { uniq } from 'lodash';
 import { Column } from 'react-table';
 import { ONADATA_OAUTH_STATE, OPENSRP_OAUTH_STATE } from '../configs/env';
 import { locationHierarchy, LocationItem } from '../configs/settings';
+import { Plan } from '../store/ducks/plans';
 
 /** Interface for an object that is allowed to have any property */
 export interface FlexObject {
@@ -65,4 +66,51 @@ export function oAuthUserInfoGetter(apiResponse: { [key: string]: any }): Sessio
         return getOnadataUserInfo(apiResponse);
     }
   }
+}
+
+/** utility method to extract plan from superset response object */
+export function extractPlan(plan: Plan) {
+  const result: { [key: string]: any } = {
+    canton: null,
+    caseClassification: null,
+    caseNotificationDate: null,
+    district: null,
+    focusArea: plan.jurisdiction_name,
+    id: plan.plan_id,
+    parent: plan.jurisdiction_parent_id,
+    province: null,
+    reason: plan.plan_fi_reason,
+    status: plan.plan_fi_status,
+    village: null,
+  };
+
+  let locationNames: string[];
+
+  if (typeof plan.jurisdiction_name_path === 'string') {
+    locationNames = JSON.parse(plan.jurisdiction_name_path);
+  } else {
+    locationNames = plan.jurisdiction_name_path;
+  }
+
+  locationNames.reverse();
+
+  for (let i = 0; i < 4; i++) {
+    const locationName = locationNames[i];
+    if (locationName) {
+      if (i === 99) {
+        result.village = locationNames[i];
+      }
+      if (i === 0) {
+        result.canton = locationNames[i];
+      }
+      if (i === 1) {
+        result.district = locationNames[i];
+      }
+      if (i === 3) {
+        result.province = locationNames[i];
+      }
+    }
+  }
+
+  return result;
 }
