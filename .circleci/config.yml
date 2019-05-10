@@ -20,6 +20,10 @@ jobs:
           REACT_APP_SUPERSET_API_BASE: "https://discover.ona.io/"
           REACT_APP_SUPERSET_API_ENDPOINT: "slice"
           REACT_APP_OPENSRP_CLIENT_ID: "hunter2"
+          REACT_APP_OPENSRP_ACCESS_TOKEN_URL: https://reveal-stage.smartregister.org/opensrp/oauth/token
+          REACT_APP_OPENSRP_AUTHORIZATION_URL: https://reveal-stage.smartregister.org/opensrp/oauth/authorize
+          REACT_APP_OPENSRP_USER_URL: https://reveal-stage.smartregister.org/opensrp/user-details
+          REACT_APP_REACT_APP_OPENSRP_OAUTH_STATE: opensrp
           REACT_APP_ONADATA_ACCESS_TOKEN_URL: "https://stage-api.ona.io/o/token/"
           REACT_APP_ONADATA_AUTHORIZATION_URL: "https://stage-api.ona.io/o/authorize/"
           REACT_APP_ONADATA_USER_URL: "https://stage-api.ona.io/api/v1/user.json"

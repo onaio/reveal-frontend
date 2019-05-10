@@ -346,7 +346,7 @@ Object {
               transform={null}
             />
              
-            Bobbie
+            RobertBaratheon
           </DropdownToggle>
           <DropdownMenu
             flip={true}

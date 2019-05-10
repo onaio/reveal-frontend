@@ -2,11 +2,18 @@
 import { Providers } from '@onaio/gatekeeper';
 import {
   DOMAIN_NAME,
+  ENABLE_ONADATA_OAUTH,
+  ENABLE_OPENSRP_OAUTH,
   ONADATA_ACCESS_TOKEN_URL,
   ONADATA_AUTHORIZATION_URL,
   ONADATA_CLIENT_ID,
   ONADATA_OAUTH_STATE,
   ONADATA_USER_URL,
+  OPENSRP_ACCESS_TOKEN_URL,
+  OPENSRP_AUTHORIZATION_URL,
+  OPENSRP_CLIENT_ID,
+  OPENSRP_OAUTH_STATE,
+  OPENSRP_USER_URL,
 } from './env';
 
 /** Interfaces and Types */
@@ -26,8 +33,22 @@ export interface LocationItem {
 }
 
 /** Authentication Configs */
-export const providers: Providers = {
-  Ona: {
+const providers: Providers = {};
+
+if (ENABLE_OPENSRP_OAUTH) {
+  providers.OpenSRP = {
+    accessTokenUri: OPENSRP_ACCESS_TOKEN_URL,
+    authorizationUri: OPENSRP_AUTHORIZATION_URL,
+    clientId: OPENSRP_CLIENT_ID,
+    redirectUri: `${DOMAIN_NAME}/oauth/callback/OpenSRP/`,
+    scopes: ['read', 'write'],
+    state: OPENSRP_OAUTH_STATE,
+    userUri: OPENSRP_USER_URL,
+  };
+}
+
+if (ENABLE_ONADATA_OAUTH) {
+  providers.Ona = {
     accessTokenUri: ONADATA_ACCESS_TOKEN_URL,
     authorizationUri: ONADATA_AUTHORIZATION_URL,
     clientId: ONADATA_CLIENT_ID,
@@ -35,8 +56,10 @@ export const providers: Providers = {
     scopes: ['read', 'write'],
     state: ONADATA_OAUTH_STATE,
     userUri: ONADATA_USER_URL,
-  },
-};
+  };
+}
+
+export { providers };
 
 /** Location configs */
 
