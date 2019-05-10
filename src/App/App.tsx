@@ -25,6 +25,7 @@ import SingleActiveFIMap from '../containers/pages/FocusInvestigation/map/active
 import SingleFI from '../containers/pages/FocusInvestigation/single';
 import Home from '../containers/pages/Home/Home';
 import IRS from '../containers/pages/IRS/IRS';
+import { oAuthUserInfoGetter } from '../helpers/utils';
 
 library.add(faMap);
 library.add(faUser);
@@ -95,6 +96,7 @@ class App extends Component {
                   <ConnectedOauthCallback
                     LoadingComponent={Loading}
                     providers={providers}
+                    oAuthUserInfoGetter={oAuthUserInfoGetter}
                     {...routeProps}
                   />
                 )}
