@@ -15,7 +15,13 @@ import {
   UncontrolledDropdown,
 } from 'reactstrap';
 import logo from '../../../assets/images/logo.png';
-import { ENABLE_FI, ENABLE_IRS, WEBSITE_NAME } from '../../../configs/env';
+import {
+  ENABLE_ABOUT,
+  ENABLE_FI,
+  ENABLE_IRS,
+  ENABLE_USERS,
+  WEBSITE_NAME,
+} from '../../../configs/env';
 import { FI_HISTORICAL_URL, FI_URL, IRS_URL, LOGIN_URL, LOGOUT_URL } from '../../../constants';
 import './Header.css';
 
@@ -104,16 +110,20 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
                   </DropdownMenu>
                 </UncontrolledDropdown>
               )}
-              <NavItem>
-                <NavLink to="/404" className="nav-link" activeClassName="active">
-                  Users
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink to="/404" className="nav-link" activeClassName="active">
-                  About
-                </NavLink>
-              </NavItem>
+              {ENABLE_USERS && (
+                <NavItem>
+                  <NavLink to="/404" className="nav-link" activeClassName="active">
+                    Users
+                  </NavLink>
+                </NavItem>
+              )}
+              {ENABLE_ABOUT && (
+                <NavItem>
+                  <NavLink to="/404" className="nav-link" activeClassName="active">
+                    About
+                  </NavLink>
+                </NavItem>
+              )}
             </Nav>
             <Nav className="ml-0" navbar={true}>
               {authenticated ? (

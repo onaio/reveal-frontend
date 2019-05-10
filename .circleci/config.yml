@@ -16,6 +16,8 @@ jobs:
           REACT_APP_THEME_COLOR: "000000"          
           REACT_APP_ENABLE_IRS: "true"
           REACT_APP_ENABLE_FI: "true"
+          REACT_APP_ENABLE_USERS: "true"
+          REACT_APP_ENABLE_ABOUT: "true"
           REACT_APP_DISABLE_LOGIN_PROTECTION: "true"
           REACT_APP_SUPERSET_API_BASE: "https://superset.reveal-stage.smartregister.org/"
           REACT_APP_SUPERSET_API_ENDPOINT: "slice"

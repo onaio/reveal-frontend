@@ -16,6 +16,14 @@ export type ENABLE_IRS = typeof ENABLE_IRS;
 export const ENABLE_FI = process.env.REACT_APP_ENABLE_FI === 'true';
 export type ENABLE_FI = typeof ENABLE_FI;
 
+/** Do you want to enable the users page? */
+export const ENABLE_USERS = process.env.REACT_APP_ENABLE_USERS === 'true';
+export type ENABLE_USERS = typeof ENABLE_USERS;
+
+/** Do you want to enable the about page? */
+export const ENABLE_ABOUT = process.env.REACT_APP_ENABLE_ABOUT === 'true';
+export type ENABLE_ABOUT = typeof ENABLE_ABOUT;
+
 /** Do you want to disable login protection? */
 export const DISABLE_LOGIN_PROTECTION = process.env.REACT_APP_DISABLE_LOGIN_PROTECTION === 'true';
 export type DISABLE_LOGIN_PROTECTION = typeof DISABLE_LOGIN_PROTECTION;
