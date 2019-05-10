@@ -1,4 +1,3 @@
-import { get, keyBy, keys, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
 import SeamlessImmutable from 'seamless-immutable';
 
@@ -48,8 +47,8 @@ const initialState: ImmutableGoalState = SeamlessImmutable({
 export default function reducer(state = initialState, action: GoalActionTypes): ImmutableGoalState {
   switch (action.type) {
     case GOALS_FETCHED:
+      /** DIRTY HACK TO BE FIXED */
       return (state as any).merge({
-        /** DIRTY HACK TO BE FIXED */
         goalsByPlanId: action.goalsByPlanId,
       });
     default:
@@ -102,5 +101,5 @@ export function getGoalsArrayByPlanId(state: Partial<Store>, planId: string): Go
   if (!thisPlansGoals) {
     return null;
   }
-  return values(thisPlansGoals);
+  return thisPlansGoals;
 }
