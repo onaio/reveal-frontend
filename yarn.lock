@@ -952,12 +952,12 @@
   resolved "https://registry.yarnpkg.com/@nodelib/fs.stat/-/fs.stat-1.1.3.tgz#2b5a3ab3f918cca48a8c754c08168e3f03eba61b"
   integrity sha512-shAmDyaQC4H92APFoIaVDHCx5bStIocgvbwQyxPRrbUY20V1EYTbSDchWbuwlMG3V17cprZhA6+78JfB+3DTPw==
 
-"@onaio/connected-private-route@^0.0.7":
-  version "0.0.7"
-  resolved "https://registry.yarnpkg.com/@onaio/connected-private-route/-/connected-private-route-0.0.7.tgz#791de50de3f43ea2854a464d4a6d74c9056afa43"
-  integrity sha512-JduDA9Djrb835XN0FfL6cjTE0XhkwiLMQi/YJSdFndllrW2SciqXh0QMbp+R2T1o7c6dqW1mVNqxfnEkUjLiOA==
+"@onaio/connected-private-route@^0.0.8":
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/@onaio/connected-private-route/-/connected-private-route-0.0.8.tgz#a30f6cdc8ed4cc376ac8a300223cf4b21b278a47"
+  integrity sha512-RkSCeaJS8Z1M5JyJvQhz3tXmoVodbhXbiMK4FWDvvB9cyid13tnXhXXyfQceK3GCg/i7oDCGAIfRg50sw9LLag==
   dependencies:
-    "@onaio/session-reducer" "^0.0.9"
+    "@onaio/session-reducer" "^0.0.10"
 
 "@onaio/connected-reducer-registry@^0.0.1":
   version "0.0.1"
@@ -980,12 +980,12 @@
   resolved "https://registry.yarnpkg.com/@onaio/element-map/-/element-map-0.0.2.tgz#969a19bdf870a41820b10cbba9edffa2af30201c"
   integrity sha512-p4Cq0gnmTUdyqb7X2KCgLzsqqVzvPoRLy1YUwCTnCVyaLYVHhW5x3EppjUxpFbXrqGEcZy5UmfDQ/xB/SXDBbA==
 
-"@onaio/gatekeeper@^0.0.13":
-  version "0.0.13"
-  resolved "https://registry.yarnpkg.com/@onaio/gatekeeper/-/gatekeeper-0.0.13.tgz#1a8424bb44f9002f65d8e2bed310c64d30bec6af"
-  integrity sha512-Q7UybJA01LcgzN0f8MeJjjvjQTC8Flsw0FS1Z4+QMQ/zzubXd3hvHksWAfeQp2DzimaZTUk1XwKhTr9gLe1USg==
+"@onaio/gatekeeper@^0.0.14":
+  version "0.0.14"
+  resolved "https://registry.yarnpkg.com/@onaio/gatekeeper/-/gatekeeper-0.0.14.tgz#bdffeb5056cbb6ecc322178792fb40d3c87bbd6e"
+  integrity sha512-znVkg3ss+pIEsbHtdg1inwN6rQcANtpwgfayswL2635jHg0nrmKYwMaOar47rqu5BZH8L8C93W4U2zszreu74w==
   dependencies:
-    "@onaio/session-reducer" "^0.0.9"
+    "@onaio/session-reducer" "^0.0.10"
     client-oauth2 "^4.2.3"
     query-string "^6.4.2"
 
@@ -996,10 +996,10 @@
   dependencies:
     redux "^4.0.1"
 
-"@onaio/session-reducer@^0.0.9":
-  version "0.0.9"
-  resolved "https://registry.yarnpkg.com/@onaio/session-reducer/-/session-reducer-0.0.9.tgz#48a2724898125f56c8a374a4ba28056eb669ffdf"
-  integrity sha512-MlmnsGAYddwfig2uBpgaeoRjXKMam+4BwGliQvMT9YoYT1UFpJpaHnr+6CxfrHL5WGeX/daATSgKWPi74ueqaA==
+"@onaio/session-reducer@^0.0.10":
+  version "0.0.10"
+  resolved "https://registry.yarnpkg.com/@onaio/session-reducer/-/session-reducer-0.0.10.tgz#ba245827b0d52355bf0b921ff139fc56f9e80e7f"
+  integrity sha512-xEwtJW9ouFBcQbaT49ihg+fApC8wFZ9KIycATMsTIXUWaMe4Dbp38Dc0w0hPwlSr+cTgCXBQMCP658GXyskDcg==
 
 "@onaio/superset-connector@^0.0.8":
   version "0.0.8"
