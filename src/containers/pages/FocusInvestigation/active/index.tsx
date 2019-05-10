@@ -13,6 +13,8 @@ import { Table } from 'reactstrap';
 import { Store } from 'redux';
 import DrillDownTableLinkedCell from '../../../../components/DrillDownTableLinkedCell';
 import OneThreeSevenAdherence from '../../../../components/formatting/OneThreeSevenAdherence';
+import Loading from '../../../../components/page/Loading';
+import { SUPERSET_PLANS_SLICE } from '../../../../configs/env';
 import { FIClassifications, locationHierarchy } from '../../../../configs/settings';
 import { FI_SINGLE_MAP_URL, FI_SINGLE_URL } from '../../../../constants';
 import {
@@ -57,14 +59,17 @@ class ActiveFocusInvestigation extends React.Component<
     super(props);
   }
 
-  // componentDidMount() {
-  //   const { fetchPlansActionCreator } = this.props;
-  //   supersetFetch('223').then((result: Plan[]) => fetchPlansActionCreator(result));
-  // }
+  public componentDidMount() {
+    const { fetchPlansActionCreator } = this.props;
+    supersetFetch(SUPERSET_PLANS_SLICE).then((result: Plan[]) => fetchPlansActionCreator(result));
+  }
 
   public render() {
-    // const { plansArray } = this.props;
-    const plansArray = plans;
+    const { plansArray } = this.props;
+    if (plansArray.length === 0) {
+      return <Loading />;
+    }
+    // const plansArray = plans;
     const thePlans = plansArray.map((item: Plan) => extractPlan(item));
     const locationColumns: Column[] = getLocationColumns(locationHierarchy, true);
     const otherColumns: Column[] = [

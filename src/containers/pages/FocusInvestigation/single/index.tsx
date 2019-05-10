@@ -8,6 +8,7 @@ import { Col, Row, Table } from 'reactstrap';
 import { Store } from 'redux';
 import NotFound from '../../../../components/NotFound';
 import Loading from '../../../../components/page/Loading';
+import { SUPERSET_GOALS_SLICE, SUPERSET_PLANS_SLICE } from '../../../../configs/env';
 import {
   FI_SINGLE_MAP_URL,
   FI_SINGLE_URL,
@@ -70,8 +71,12 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
 
   public async componentDidMount() {
     const { fetchGoalsActionCreator, fetchPlansActionCreator } = this.props;
-    await supersetFetch('223').then((result: Plan[]) => fetchPlansActionCreator(result));
-    await supersetFetch('375').then((result2: Goal[]) => fetchGoalsActionCreator(result2));
+    await supersetFetch(SUPERSET_PLANS_SLICE).then((result: Plan[]) =>
+      fetchPlansActionCreator(result)
+    );
+    await supersetFetch(SUPERSET_GOALS_SLICE).then((result2: Goal[]) =>
+      fetchGoalsActionCreator(result2)
+    );
   }
 
   public render() {

@@ -28,6 +28,12 @@ export type SUPERSET_API_BASE = typeof SUPERSET_API_BASE;
 export const SUPERSET_API_ENDPOINT = process.env.REACT_APP_SUPERSET_API_ENDPOINT || 'slice';
 export type SUPERSET_API_ENDPOINT = typeof SUPERSET_API_ENDPOINT;
 
+export const SUPERSET_PLANS_SLICE = process.env.REACT_APP_SUPERSET_PLANS_SLICE || '0';
+export type SUPERSET_PLANS_SLICE = typeof SUPERSET_PLANS_SLICE;
+
+export const SUPERSET_GOALS_SLICE = process.env.REACT_APP_SUPERSET_GOALS_SLICE || '0';
+export type SUPERSET_GOALS_SLICE = typeof SUPERSET_GOALS_SLICE;
+
 /** OpenSRP oAuth2 settings */
 export const ENABLE_OPENSRP_OAUTH = process.env.REACT_APP_ENABLE_OPENSRP_OAUTH === 'true';
 export type ENABLE_OPENSRP_OAUTH = typeof ENABLE_OPENSRP_OAUTH;
