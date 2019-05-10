@@ -1,18 +1,18 @@
-export const plans = [
-  {
-    jurisdiction_depth: 2,
-    jurisdiction_id: '3377',
-    jurisdiction_name: 'NVI_439',
-    jurisdiction_name_path: ['Chadiza', 'Naviluli'],
-    jurisdiction_parent_id: '2944',
-    jurisdiction_path: ['2939', '2944'],
-    plan_fi_reason: 'Routine',
-    plan_fi_status: 'A1',
-    plan_id: '10f9e9fa-ce34-4b27-a961-72fab5206ab6',
-    plan_status: 'active',
-    plan_title: 'A1-Tha Luang Village 1 Focus 01',
-  },
-];
+export const plan1 = {
+  jurisdiction_depth: 2,
+  jurisdiction_id: '3377',
+  jurisdiction_name: 'NVI_439',
+  jurisdiction_name_path: ['Chadiza', 'Naviluli'],
+  jurisdiction_parent_id: '2944',
+  jurisdiction_path: ['2939', '2944'],
+  plan_fi_reason: 'Routine',
+  plan_fi_status: 'A1',
+  plan_id: '10f9e9fa-ce34-4b27-a961-72fab5206ab6',
+  plan_status: 'active',
+  plan_title: 'A1-Tha Luang Village 1 Focus 01',
+};
+
+export const plans = [plan1];
 
 export const goal1 = {
   action_code: 'Case Confirmation',
