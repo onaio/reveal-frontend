@@ -4,7 +4,8 @@ import { createBrowserHistory } from 'history';
 import React from 'react';
 import { Router } from 'react-router';
 import { FI_SINGLE_URL } from '../../../../../constants';
-import SingleFI from '../../single';
+import * as fixtures from '../../../../../store/ducks/tests/fixtures';
+import { SingleFI } from '../../single';
 
 const history = createBrowserHistory();
 
@@ -16,14 +17,18 @@ describe('containers/pages/SingleFI', () => {
   it('renders without crashing', () => {
     const mock: any = jest.fn();
     const props = {
+      goalsArray: fixtures.plan1Goals,
       history,
       location: mock,
       match: {
         isExact: true,
-        params: { id: '13' },
+        params: { id: fixtures.plan1.plan_id },
         path: `${FI_SINGLE_URL}/:id`,
         url: `${FI_SINGLE_URL}/13`,
       },
+      planById: fixtures.plan1,
+      plansArray: fixtures.plans,
+      plansIdArray: fixtures.plansIdArray,
     };
     shallow(
       <Router history={history}>
@@ -35,14 +40,18 @@ describe('containers/pages/SingleFI', () => {
   it('renders SingleFI correctly', () => {
     const mock: any = jest.fn();
     const props = {
+      goalsArray: fixtures.plan1Goals,
       history,
       location: mock,
       match: {
         isExact: true,
-        params: { id: '16' },
+        params: { id: fixtures.plan1.plan_id },
         path: `${FI_SINGLE_URL}/:id`,
         url: `${FI_SINGLE_URL}/16`,
       },
+      planById: fixtures.plan1,
+      plansArray: fixtures.plans,
+      plansIdArray: fixtures.plansIdArray,
     };
     const wrapper = mount(
       <Router history={history}>
