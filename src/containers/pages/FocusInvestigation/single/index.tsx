@@ -80,7 +80,7 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
   }
 
   public render() {
-    let id: number | string | null = null;
+    // let id: number | string | null = null;
 
     const { goalsArray, planById, plansIdArray } = this.props;
 
@@ -88,9 +88,9 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
     const planObjectIds = plansIdArray;
     const theGoals = goalsArray;
 
-    if (this.props.match && this.props.match.params && this.props.match.params.id) {
-      id = String(this.props.match.params.id);
-    }
+    // if (this.props.match && this.props.match.params && this.props.match.params.id) {
+    //   id = String(this.props.match.params.id);
+    // }
 
     // if (id === null || !planObjectIds.includes(id)) {
     //   return <NotFound />;
