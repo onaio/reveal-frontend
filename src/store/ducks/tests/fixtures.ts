@@ -14,6 +14,8 @@ export const plan1 = {
 
 export const plans = [plan1];
 
+export const plansIdArray = [plan1.plan_id];
+
 export const goal1 = {
   action_code: 'Case Confirmation',
   completed_task_count: 0,
@@ -51,6 +53,8 @@ export const goal3 = {
 };
 
 export const goals = [goal1, goal2, goal3];
+
+export const plan1Goals = [goal1, goal2];
 
 export const goalsByPlanId = {
   '10f9e9fa-ce34-4b27-a961-72fab5206ab6': [goal1, goal2],
