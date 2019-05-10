@@ -63,15 +63,17 @@ export default function reducer(state = initialState, action: GoalActionTypes): 
  */
 export const fetchGoals = (goalsList: Goal[]): FetchGoalsAction => {
   const result: { [key: string]: Goal[] } = {};
-  goalsList.forEach(goal => {
-    if (Object.keys(result).includes(goal.plan_id)) {
-      if (!result[goal.plan_id].includes(goal)) {
-        result[goal.plan_id].push(goal);
+  if (goalsList) {
+    goalsList.forEach(goal => {
+      if (Object.keys(result).includes(goal.plan_id)) {
+        if (!result[goal.plan_id].includes(goal)) {
+          result[goal.plan_id].push(goal);
+        }
+      } else {
+        result[goal.plan_id] = [goal];
       }
-    } else {
-      result[goal.plan_id] = [goal];
-    }
-  });
+    });
+  }
 
   return {
     goalsByPlanId: result,
