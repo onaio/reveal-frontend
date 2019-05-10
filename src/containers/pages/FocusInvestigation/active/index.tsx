@@ -32,12 +32,6 @@ import plansReducer, {
 import { plan1, plans } from '../../../../store/ducks/tests/fixtures';
 import { data } from './tests/fixtures';
 
-// /** callback for fetching from Superset */
-// export const fetchPlanback = (parsedResponse: Array<{ [key: string]: any }>) => {
-//   const sliceData = superset.processData(parsedResponse);
-//   return sliceData.map((element));
-// };
-
 /** register the plans reducer */
 reducerRegistry.register(plansReducerName, plansReducer);
 
