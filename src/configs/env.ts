@@ -16,6 +16,14 @@ export type ENABLE_IRS = typeof ENABLE_IRS;
 export const ENABLE_FI = process.env.REACT_APP_ENABLE_FI === 'true';
 export type ENABLE_FI = typeof ENABLE_FI;
 
+/** Do you want to enable the users page? */
+export const ENABLE_USERS = process.env.REACT_APP_ENABLE_USERS === 'true';
+export type ENABLE_USERS = typeof ENABLE_USERS;
+
+/** Do you want to enable the about page? */
+export const ENABLE_ABOUT = process.env.REACT_APP_ENABLE_ABOUT === 'true';
+export type ENABLE_ABOUT = typeof ENABLE_ABOUT;
+
 /** Do you want to disable login protection? */
 export const DISABLE_LOGIN_PROTECTION = process.env.REACT_APP_DISABLE_LOGIN_PROTECTION === 'true';
 export type DISABLE_LOGIN_PROTECTION = typeof DISABLE_LOGIN_PROTECTION;
@@ -27,6 +35,12 @@ export type SUPERSET_API_BASE = typeof SUPERSET_API_BASE;
 /** The Superset API endpoint */
 export const SUPERSET_API_ENDPOINT = process.env.REACT_APP_SUPERSET_API_ENDPOINT || 'slice';
 export type SUPERSET_API_ENDPOINT = typeof SUPERSET_API_ENDPOINT;
+
+export const SUPERSET_PLANS_SLICE = process.env.REACT_APP_SUPERSET_PLANS_SLICE || '0';
+export type SUPERSET_PLANS_SLICE = typeof SUPERSET_PLANS_SLICE;
+
+export const SUPERSET_GOALS_SLICE = process.env.REACT_APP_SUPERSET_GOALS_SLICE || '0';
+export type SUPERSET_GOALS_SLICE = typeof SUPERSET_GOALS_SLICE;
 
 /** OpenSRP oAuth2 settings */
 export const ENABLE_OPENSRP_OAUTH = process.env.REACT_APP_ENABLE_OPENSRP_OAUTH === 'true';

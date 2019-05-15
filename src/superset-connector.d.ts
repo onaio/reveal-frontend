@@ -7,6 +7,7 @@ declare module '@onaio/superset-connector' {
     extraPath: string;
     method?: string;
     mimeType?: string;
+    provider?: string;
     token?: string;
   }
 

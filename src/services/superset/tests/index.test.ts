@@ -1,6 +1,6 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import fetchMock from 'fetch-mock';
-import { SUPERSET_API_BASE } from '../../../configs/env';
+import { OPENSRP_OAUTH_STATE, SUPERSET_API_BASE } from '../../../configs/env';
 import supersetFetch from '../../../services/superset';
 import store from '../../../store';
 import supersetReducer, {
@@ -22,7 +22,7 @@ describe('services/superset', () => {
   it('authZ should not authorize superset when it fails', async () => {
     store.dispatch(resetSuperset()); /** reset to null */
 
-    fetchMock.get(`${SUPERSET_API_BASE}oauth-authorized/onadata`, 500);
+    fetchMock.get(`${SUPERSET_API_BASE}oauth-authorized/${OPENSRP_OAUTH_STATE}`, 500);
     await supersetFetch('1337');
     expect(isAuthorized(store.getState())).toEqual(false);
 
@@ -33,7 +33,10 @@ describe('services/superset', () => {
   });
 
   it('authZ should authorize superset when it works', async () => {
-    fetchMock.get(`${SUPERSET_API_BASE}oauth-authorized/onadata`, JSON.stringify({}));
+    fetchMock.get(
+      `${SUPERSET_API_BASE}oauth-authorized/${OPENSRP_OAUTH_STATE}`,
+      JSON.stringify({})
+    );
     fetchMock.get(
       `${SUPERSET_API_BASE}superset/slice_json/1337`,
       JSON.stringify(fixtures.sliceResponse)

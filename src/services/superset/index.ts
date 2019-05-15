@@ -1,6 +1,6 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset, { SupersetConfig } from '@onaio/superset-connector';
-import { SUPERSET_API_BASE, SUPERSET_API_ENDPOINT } from '../../configs/env';
+import { OPENSRP_OAUTH_STATE, SUPERSET_API_BASE, SUPERSET_API_ENDPOINT } from '../../configs/env';
 import store from '../../store';
 import supersetReducer, {
   authorizeSuperset,
@@ -42,6 +42,7 @@ const supersetFetch = async (
     base: SUPERSET_API_BASE,
     endpoint: SUPERSET_API_ENDPOINT,
     extraPath: sliceId,
+    provider: OPENSRP_OAUTH_STATE,
   };
 
   const accessToken = getAccessToken(store.getState());

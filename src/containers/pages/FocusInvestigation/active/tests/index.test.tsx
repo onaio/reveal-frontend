@@ -3,7 +3,8 @@ import toJson from 'enzyme-to-json';
 import { createBrowserHistory } from 'history';
 import React from 'react';
 import { Router } from 'react-router';
-import ActiveFocusInvestigation from '../../active';
+import * as supersetServices from '../../../../../services/superset';
+import { ActiveFocusInvestigation } from '../../active';
 
 const history = createBrowserHistory();
 
@@ -28,10 +29,12 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
 
   it('renders ActiveFocusInvestigation correctly', () => {
     const mock: any = jest.fn();
+    mock.mockImplementation(() => Promise.resolve('supersetServices'));
     const props = {
       history,
       location: mock,
       match: mock,
+      supersetService: mock,
     };
     const wrapper = mount(
       <Router history={history}>

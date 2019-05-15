@@ -15,7 +15,7 @@
     "@onaio/gatekeeper": "^0.0.14",
     "@onaio/redux-reducer-registry": "^0.0.8",
     "@onaio/session-reducer": "^0.0.10",
-    "@onaio/superset-connector": "^0.0.8",
+    "@onaio/superset-connector": "^0.0.9",
     "@types/bootstrap": "^4.2.1",
     "@types/fetch-mock": "^7.2.3",
     "@types/history": "^4.7.2",

@@ -1001,10 +1001,10 @@
   resolved "https://registry.yarnpkg.com/@onaio/session-reducer/-/session-reducer-0.0.10.tgz#ba245827b0d52355bf0b921ff139fc56f9e80e7f"
   integrity sha512-xEwtJW9ouFBcQbaT49ihg+fApC8wFZ9KIycATMsTIXUWaMe4Dbp38Dc0w0hPwlSr+cTgCXBQMCP658GXyskDcg==
 
-"@onaio/superset-connector@^0.0.8":
-  version "0.0.8"
-  resolved "https://registry.yarnpkg.com/@onaio/superset-connector/-/superset-connector-0.0.8.tgz#cc80a54a1386d95149150b06c9d8f8e9161b215f"
-  integrity sha512-HsPUa2EHS0OONpzykWEbhAyOrptfquQssApY9ID/VLSXEVGds0AfoQTTOXrQRU5mqCn/6rC4rH6QSf5wkjFcUQ==
+"@onaio/superset-connector@^0.0.9":
+  version "0.0.9"
+  resolved "https://registry.yarnpkg.com/@onaio/superset-connector/-/superset-connector-0.0.9.tgz#d0fd811aaec3f39bb01ba9898a8c79c1f4c55610"
+  integrity sha512-EZMFAlIYvx7yvyyezwtpcp6k+Lm106Tk40hpMyBEDm3kF2COhaBxEklSEsoLXbqcfOTnraFbl1qz7O7z0Ny04w==
   dependencies:
     jest-fetch-mock "^2.1.1"
     papaparse "^4.6.3"
