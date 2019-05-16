@@ -1518,10 +1518,10 @@ address@1.0.3, address@^1.0.1:
   resolved "https://registry.yarnpkg.com/address/-/address-1.0.3.tgz#b5f50631f8d6cec8bd20c963963afb55e06cbce9"
   integrity sha512-z55ocwKBRLryBs394Sm3ushTtBeg6VAeuku7utSoSnsJKvKcnXFIyC6vh27n3rXyxSgkJBBCAvyOn7gSUcTYjg==
 
-airbnb-prop-types@^2.12.0:
-  version "2.13.1"
-  resolved "https://registry.yarnpkg.com/airbnb-prop-types/-/airbnb-prop-types-2.13.1.tgz#abcae3f683c0c918aae5e0a1df6232e39e0abfa5"
-  integrity sha512-imXx6ssLTp1IJ6TgOH+8X04VgNXLjjHDz72PfhrovwFYwVHOmoklMpPAeB45VxxP5+wi1Ztxwl+xHBIZLEEmRQ==
+airbnb-prop-types@^2.13.2:
+  version "2.13.2"
+  resolved "https://registry.yarnpkg.com/airbnb-prop-types/-/airbnb-prop-types-2.13.2.tgz#43147a5062dd2a4a5600e748a47b64004cc5f7fc"
+  integrity sha512-2FN6DlHr6JCSxPPi25EnqGaXC4OC3/B3k1lCd6MMYrZ51/Gf/1qDfaR+JElzWa+Tl7cY2aYOlsYJGFeQyVHIeQ==
   dependencies:
     array.prototype.find "^2.0.4"
     function.prototype.name "^1.1.0"
@@ -4883,11 +4883,11 @@ entities@^1.1.1, entities@~1.1.1:
   integrity sha512-f2LZMYl1Fzu7YSBKg+RoROelpOaNrcGmE9AZubeDfrCEia483oW4MI4VyFd5VNHIgQ/7qm1I0wUHK1eJnn2y2w==
 
 enzyme-adapter-react-16@^1.1.1:
-  version "1.12.1"
-  resolved "https://registry.yarnpkg.com/enzyme-adapter-react-16/-/enzyme-adapter-react-16-1.12.1.tgz#6a2d74c80559d35ac0a91ca162fa45f4186290cf"
-  integrity sha512-GB61gvY97XvrA6qljExGY+lgI6BBwz+ASLaRKct9VQ3ozu0EraqcNn3CcrUckSGIqFGa1+CxO5gj5is5t3lwrw==
+  version "1.13.0"
+  resolved "https://registry.yarnpkg.com/enzyme-adapter-react-16/-/enzyme-adapter-react-16-1.13.0.tgz#530e4aed3c127d7a7c5c7f4f634ad9ba65f719f6"
+  integrity sha512-ZUVo9XATKrKavfe9v61EiYDu6V1NJCKtJyp1X2ILPgtuGQ58bItUR9uWwH6gzKJNww3sUiXM826jIiwPgO9iVQ==
   dependencies:
-    enzyme-adapter-utils "^1.11.0"
+    enzyme-adapter-utils "^1.12.0"
     object.assign "^4.1.0"
     object.values "^1.1.0"
     prop-types "^15.7.2"
@@ -4919,12 +4919,12 @@ enzyme-adapter-utils@^1.10.0:
     prop-types "^15.6.2"
     semver "^5.6.0"
 
-enzyme-adapter-utils@^1.11.0:
-  version "1.11.0"
-  resolved "https://registry.yarnpkg.com/enzyme-adapter-utils/-/enzyme-adapter-utils-1.11.0.tgz#6ffff782b1b57dd46c72a845a91fc4103956a117"
-  integrity sha512-0VZeoE9MNx+QjTfsjmO1Mo+lMfunucYB4wt5ficU85WB/LoetTJrbuujmHP3PJx6pSoaAuLA+Mq877x4LoxdNg==
+enzyme-adapter-utils@^1.12.0:
+  version "1.12.0"
+  resolved "https://registry.yarnpkg.com/enzyme-adapter-utils/-/enzyme-adapter-utils-1.12.0.tgz#96e3730d76b872f593e54ce1c51fa3a451422d93"
+  integrity sha512-wkZvE0VxcFx/8ZsBw0iAbk3gR1d9hK447ebnSYBf95+r32ezBq+XDSAvRErkc4LZosgH8J7et7H7/7CtUuQfBA==
   dependencies:
-    airbnb-prop-types "^2.12.0"
+    airbnb-prop-types "^2.13.2"
     function.prototype.name "^1.1.0"
     object.assign "^4.1.0"
     object.fromentries "^2.0.0"
@@ -4999,9 +4999,9 @@ es-to-primitive@^1.2.0:
     is-symbol "^1.0.2"
 
 es5-ext@^0.10.14, es5-ext@^0.10.35, es5-ext@^0.10.9, es5-ext@~0.10.14:
-  version "0.10.49"
-  resolved "https://registry.yarnpkg.com/es5-ext/-/es5-ext-0.10.49.tgz#059a239de862c94494fec28f8150c977028c6c5e"
-  integrity sha512-3NMEhi57E31qdzmYp2jwRArIUsj1HI/RxbQ4bgnSB+AIKIxsAmTiK83bYMifIcpWvEc3P1X30DhUKOqEtF/kvg==
+  version "0.10.50"
+  resolved "https://registry.yarnpkg.com/es5-ext/-/es5-ext-0.10.50.tgz#6d0e23a0abdb27018e5ac4fd09b412bc5517a778"
+  integrity sha512-KMzZTPBkeQV/JcSQhI5/z6d9VWJ3EnQ194USTUwIYZ2ZbpN8+SGXQKt1h68EX44+qt+Fzr8DO17vnxrw7c3agw==
   dependencies:
     es6-iterator "~2.0.3"
     es6-symbol "~3.1.1"
@@ -6184,9 +6184,10 @@ getpass@^0.1.1:
   dependencies:
     assert-plus "^1.0.0"
 
-"gisida-react@https://github.com/onaio/gisida-react.git#filters-phase-2":
-  version "1.2.1"
-  resolved "https://github.com/onaio/gisida-react.git#3542a79ea492935052134c3601d627c939e2d989"
+gisida-react@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/gisida-react/-/gisida-react-1.2.2.tgz#3b5186a4ccf062f0bd572d77bb4a699708e3d5b4"
+  integrity sha512-AIhHrBCz961wa0NUWrU2kM7uEfCXvhISJj3uEVeSseGVRDFBmrcpBvxCbI3cOuB7iP1REXGNpfK8isQGJ8UkEQ==
   dependencies:
     ansi-regex "^3.0.0"
     camelcase "^4.1.0"
@@ -6201,9 +6202,10 @@ getpass@^0.1.1:
     react-redux "^5.0.6"
     redux "^4.0.0"
 
-"gisida@https://github.com/onaio/gisida.git#add-reducer-ducks":
-  version "1.2.3"
-  resolved "https://github.com/onaio/gisida.git#e1d112c7ad6b49d26dc336619258fb0fd81ebfbb"
+gisida@^1.2.4:
+  version "1.2.4"
+  resolved "https://registry.yarnpkg.com/gisida/-/gisida-1.2.4.tgz#cba2e35f69a6671c42d25517c60a4c7ed5b92081"
+  integrity sha512-3OzeN6KMJqbw5REj7ZMch86p1bE0E3Uar+obcn/xYaPnrVFSJ+CV6noGTctxEHiLBBoZGQFX8j+hzr61uTOuyQ==
   dependencies:
     "@babel/runtime" "^7.4.3"
     "@onaio/superset-connector" "^0.0.7"
@@ -6230,9 +6232,9 @@ getpass@^0.1.1:
     uglifyjs-webpack-plugin "1.1.5"
     webpack "^3.8.1"
 
-"gisida@https://github.com/onaio/gisida.git#master":
+"gisida@git+https://github.com/onaio/gisida.git#master":
   version "1.1.0"
-  resolved "https://github.com/onaio/gisida.git#d091ce673823205feb1bab09639c36c95c746e8b"
+  resolved "git+https://github.com/onaio/gisida.git#d091ce673823205feb1bab09639c36c95c746e8b"
   dependencies:
     babel-core v6.25.0
     babel-loader "^7.1.2"
@@ -7886,9 +7888,9 @@ joi@^11.1.1:
     topo "2.x.x"
 
 jquery@^3.3.1:
-  version "3.3.1"
-  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.3.1.tgz#958ce29e81c9790f31be7792df5d4d95fc57fbca"
-  integrity sha512-Ubldcmxp5np52/ENotGxlLe6aGMvmF4R8S6tZjsP6Knsaxd/xp3Zrh50cG93lR6nPXyUFwzN3ZSOQI0wRJNdGg==
+  version "3.4.1"
+  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.4.1.tgz#714f1f8d9dde4bdfa55764ba37ef214630d80ef2"
+  integrity sha512-36+AdBzCL+y6qjw5Tx7HgzeGCzC81MDDgaUP8ld2zhx58HdqXGoBd+tHdrBMiyjGQs0Hxs/MLZTu/eHNJJuWPw==
 
 js-cookie@^2.2.0:
   version "2.2.0"
@@ -8981,10 +8983,15 @@ negotiator@0.6.1:
   resolved "https://registry.yarnpkg.com/negotiator/-/negotiator-0.6.1.tgz#2b327184e8992101177b28563fb5e7102acd0ca9"
   integrity sha1-KzJxhOiZIQEXeyhWP7XnECrNDKk=
 
-neo-async@^2.5.0, neo-async@^2.5.1:
+neo-async@^2.5.0:
   version "2.6.0"
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.6.0.tgz#b9d15e4d71c6762908654b5183ed38b753340835"
   integrity sha512-MFh0d/Wa7vkKO3Y3LlacqAEeHK0mckVqzDieUKTT+KGxi+zIpeVsFxymkIiRpbpDziHc290Xr9A1O4Om7otoRA==
+
+neo-async@^2.5.1:
+  version "2.6.1"
+  resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.6.1.tgz#ac27ada66167fa8849a6addd837f6b189ad2081c"
+  integrity sha512-iyam8fBuCUpWeKPGpaNMetEocMt364qkCsfL9JuhjXX6dRnguRVOfk2GZaDpPjcOKiiXCPINZC1GczQ7iTq3Zw==
 
 next-tick@^1.0.0:
   version "1.0.0"
@@ -10736,9 +10743,9 @@ rc-align@^2.4.0:
     rc-util "^4.0.4"
 
 rc-animate@2.x:
-  version "2.6.0"
-  resolved "https://registry.yarnpkg.com/rc-animate/-/rc-animate-2.6.0.tgz#ca8440d042781af7a1329d84f97ea94794c5ec15"
-  integrity sha512-JXDycchgbOI+7T/VKmFWnAIn042LLScK1fNkmNunb0jz5q5aPGCAybx2bTo7X5t31Jkj9OsxKNb/vZPDPWufCg==
+  version "2.8.2"
+  resolved "https://registry.yarnpkg.com/rc-animate/-/rc-animate-2.8.2.tgz#1c517728e361745efead6dd8c3c74ecfa8e54cda"
+  integrity sha512-JUKpst+OSDFQjqhhZliBcmO3Fie1SeiIxsEhS7PbZVz/UjCC8uDtp31+NRxidxy3BnfXbbfZdtG9mNWIDqIfTw==
   dependencies:
     babel-runtime "6.x"
     classnames "^2.2.6"
@@ -10748,9 +10755,9 @@ rc-animate@2.x:
     react-lifecycles-compat "^3.0.4"
 
 rc-slider@^8.6.1:
-  version "8.6.9"
-  resolved "https://registry.yarnpkg.com/rc-slider/-/rc-slider-8.6.9.tgz#b32148a498c927c93f20dc1f95e8682c4924bf8e"
-  integrity sha512-v5XwSARCyKGkalV7c54jwiuPNh8pGUg0i1opVD8YJVd8zQqbxepRoGmEE4xwRTxjR7Goao6/ARc7l2dGoPwZsg==
+  version "8.6.11"
+  resolved "https://registry.yarnpkg.com/rc-slider/-/rc-slider-8.6.11.tgz#f85620dedd97035e3670ed9a9fc6950683877ec5"
+  integrity sha512-k6dPXA7NkjSp5NCyjAJbRxnttj/U7qEMydT2Y/VY64INyoznMx968xz8s4KX1iTiTA69X7EBMD5TWM3cdsfzRg==
   dependencies:
     babel-runtime "6.x"
     classnames "^2.2.5"
@@ -13448,7 +13455,14 @@ workbox-webpack-plugin@3.6.3:
     json-stable-stringify "^1.0.1"
     workbox-build "^3.6.3"
 
-worker-farm@^1.4.1, worker-farm@^1.5.2:
+worker-farm@^1.4.1:
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/worker-farm/-/worker-farm-1.7.0.tgz#26a94c5391bbca926152002f69b84a4bf772e5a8"
+  integrity sha512-rvw3QTZc8lAxyVrqcSGVm5yP/IJ2UcB3U0graE3LCFoZ0Yn2x4EoVSqJKdB/T5M+FLcRPjz4TDacRf3OCfNUzw==
+  dependencies:
+    errno "~0.1.7"
+
+worker-farm@^1.5.2:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/worker-farm/-/worker-farm-1.6.0.tgz#aecc405976fab5a95526180846f0dba288f3a4a0"
   integrity sha512-6w+3tHbM87WnSWnENBUvA2pxJPLhQUg5LKwUQHq3r+XPhIM+Gh2R5ycbwPCyuGbNg+lPgdcnQUhuC02kJCvffQ==
