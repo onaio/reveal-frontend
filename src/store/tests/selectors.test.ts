@@ -1,7 +1,7 @@
 import { authenticateUser, logOutUser } from '@onaio/session-reducer';
 import { FlushThunks } from 'redux-testkit';
 import store from '..';
-import { getAccessToken, getApiToken } from '../selectors';
+import { getAccessToken, getApiToken, getOauthProviderState } from '../selectors';
 
 describe('store/selectors', () => {
   let flushThunks;
@@ -28,7 +28,7 @@ describe('store/selectors', () => {
     expect(getAccessToken(store.getState())).toEqual('iLoveOov');
   });
 
-  it('should be able to get the access token', () => {
+  it('should be able to get the API token', () => {
     expect(getApiToken(store.getState())).toEqual(null);
     store.dispatch(
       authenticateUser(
