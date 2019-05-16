@@ -7,7 +7,7 @@ import supersetReducer, {
   isAuthorized,
   reducerName as supersetReducerName,
 } from '../../store/ducks/superset';
-import { getAccessToken } from '../../store/selectors';
+import { getAccessToken, getOauthProviderState } from '../../store/selectors';
 
 // /** register the superset reducer */
 reducerRegistry.register(supersetReducerName, supersetReducer);
@@ -42,7 +42,7 @@ const supersetFetch = async (
     base: SUPERSET_API_BASE,
     endpoint: SUPERSET_API_ENDPOINT,
     extraPath: sliceId,
-    provider: OPENSRP_OAUTH_STATE,
+    provider: getOauthProviderState(store.getState()) || OPENSRP_OAUTH_STATE,
   };
 
   const accessToken = getAccessToken(store.getState());
