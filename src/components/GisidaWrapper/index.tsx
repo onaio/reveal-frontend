@@ -15,47 +15,45 @@ interface GisidaState {
   doInitMap: boolean;
   doRenderMap: boolean;
   id: number;
+  geoData: any[];
 }
 
 // stand-in Async func to return geojson for feature + children
-const LocationsFetcher = (id: number) =>
-  fetch('/config/data/opensrplocations.json') // todo - replace this with endpoint or connector
-    .then(res => res.json())
-    .then(Locations => {
-      let l;
-      const features = [];
 
-      // find primary feature from id
-      for (l = 0; l < Locations.length; l += 1) {
-        if (Number(Locations[l].id) === id) {
-          features.push(Locations[l]);
-          break;
-        }
+const LocationsFetcher = (id: number, geoData: any[]) => {
+  let l;
+  const features: any[] = [];
+  // find primary feature from id
+  for (l = 0; l < geoData.length; l += 1) {
+    if (Number(geoData[l].id) === id) {
+      features.push(geoData[l]);
+      break;
+    }
+  }
+
+  // if primary feature isn't found
+  if (!features.length) {
+    // return all top level geoms
+    for (l = 0; l < geoData.length; l += 1) {
+      if (typeof geoData[l].properties.parentId === 'undefined') {
+        features.push(geoData[l]);
       }
-
-      // if primary feature isn't found
-      if (!features.length) {
-        // return all top level geoms
-        for (l = 0; l < Locations.length; l += 1) {
-          if (typeof Locations[l].properties.parentId === 'undefined') {
-            features.push(Locations[l]);
-          }
-        }
-      } else {
-        // find direct children of primary feature
-        for (l = 0; l < Locations.length; l += 1) {
-          if (Number(Locations[l].properties.parentId) === id) {
-            features.push(Locations[l]);
-          }
-        }
+    }
+  } else {
+    // find direct children of primary feature
+    for (l = 0; l < geoData.length; l += 1) {
+      if (Number(geoData[l].properties.parentId) === id) {
+        features.push(geoData[l]);
       }
+    }
+  }
 
-      // return geojson shapped data
-      return {
-        features,
-        type: 'FeatureCollection',
-      };
-    });
+  // return geojson shapped data
+  return {
+    features,
+    type: 'FeatureCollection',
+  };
+};
 
 /** Returns a single layer configuration */
 const LayerStore = (layer: any) => {
@@ -122,6 +120,7 @@ class GisidaWrapper extends React.Component<FlexObject> {
       bounds: [],
       doInitMap: false,
       doRenderMap: false,
+      geoData: this.props.geoData || false,
       id: 0,
       locations: this.props.locations || false,
     };
@@ -143,10 +142,11 @@ class GisidaWrapper extends React.Component<FlexObject> {
   }
 
   public componentWillReceiveProps(nextProps: any) {
-    if (this.state.id !== nextProps.id) {
+    if (this.state.id !== nextProps.id || this.props.geoData !== nextProps.geoData) {
       this.setState(
         {
           doRenderMap: false,
+          geoData: nextProps.geoData,
           id: nextProps.id,
           locations: false,
         },
@@ -184,7 +184,9 @@ class GisidaWrapper extends React.Component<FlexObject> {
       this.setState({ locations: false });
     } else {
       // 2a. Asynchronously obtain geometries as geojson object
-      const locations = await LocationsFetcher(Number(id));
+      const { geoData } = this.props;
+      /**  DIRTY HACK store takes longer than expected */
+      const locations = geoData.length ? LocationsFetcher(Number(id), geoData) : false;
       // 2b. Determine map bounds from locations geoms
       const bounds = locations ? GeojsonExtent(locations) : null;
       this.setState({ locations, doInitMap: true, bounds });
