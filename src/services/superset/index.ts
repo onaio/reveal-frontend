@@ -42,6 +42,10 @@ const supersetFetch = async (
     base: SUPERSET_API_BASE,
     endpoint: SUPERSET_API_ENDPOINT,
     extraPath: sliceId,
+    /** the provider should be the name of the provider
+     * to enable the use of multiple providers, we store the provider name in the
+     * `state` parameter so that we can use it here
+     */
     provider: getOauthProviderState(store.getState()) || OPENSRP_OAUTH_STATE,
   };
 
