@@ -6,7 +6,9 @@ import { RouteComponentProps } from 'react-router';
 import { AnyAction } from 'redux';
 import { Store } from 'redux';
 import GisidaWrapper from '../../../../../components/GisidaWrapper';
+import { SUPERSET_GOALS_SLICE, SUPERSET_PLANS_SLICE } from '../../../../../configs/env';
 import { FlexObject, MapProps, RouteParams } from '../../../../../helpers/utils';
+import supersetFetch from '../../../../../services/superset';
 import geojsonReducer, {
   fetchGeoJSON,
   getGeoJSONs,
