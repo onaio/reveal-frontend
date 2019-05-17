@@ -13,7 +13,7 @@ jobs:
           SKIP_PREFLIGHT_CHECK: "true"
           REACT_APP_WEBSITE_NAME: "Reveal"
           REACT_APP_DOMAIN_NAME: "http://localhost:3000"
-          REACT_APP_THEME_COLOR: "000000"          
+          REACT_APP_THEME_COLOR: "000000"
           REACT_APP_ENABLE_IRS: "true"
           REACT_APP_ENABLE_FI: "true"
           REACT_APP_ENABLE_USERS: "true"
