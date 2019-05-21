@@ -169,11 +169,29 @@ class GisidaWrapper extends React.Component<FlexObject> {
     // todo - dynamically create the layers we need
 
     // 3c. Start with the default/first layer
-    const jurisdictionLayer = singleJurisdictionLayerConfig;
-    jurisdictionLayer.id = `single-jurisdiction-${geoData.jurisdiction_id}`;
-    jurisdictionLayer.source.data.data = JSON.stringify(locations);
+    // const jurisdictionLayer = singleJurisdictionLayerConfig;
+    // jurisdictionLayer.id = `single-jurisdiction-${geoData.jurisdiction_id}`;
+    // jurisdictionLayer.source.data.data = JSON.stringify(locations);
 
-    const layers = [jurisdictionLayer];
+    const layers = [
+      {
+        id: `single-jurisdiction-${geoData.jurisdiction_id}`,
+        paint: {
+          'line-color': '#FFDC00',
+          'line-opacity': 1,
+          'line-width': 3,
+        },
+        source: {
+          data: {
+            data: JSON.stringify(locations),
+            type: 'stringified-geojson',
+          },
+          type: 'geojson',
+        },
+        type: 'line',
+        visible: true,
+      },
+    ];
     // 3d. Build the site-config object for Gisida
     const config = ConfigStore({
       appName: locations,
