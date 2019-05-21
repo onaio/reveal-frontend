@@ -15,45 +15,8 @@ interface GisidaState {
   locations: FlexObject | false;
   doInitMap: boolean;
   doRenderMap: boolean;
-  // id: number;
   geoData: GeoJSON[];
 }
-
-// stand-in Async func to return geojson for feature + children
-
-// const LocationsFetcher = (id: string, geoData: GeoJSON[]) => {
-//   let l;
-//   const features: any[] = [];
-//   // find primary feature from id
-//   for (l = 0; l < geoData.length; l += 1) {
-//     if (geoData[l].jurisdiction_id === id) {
-//       features.push(geoData[l]);
-//       break;
-//     }
-//   }
-
-//   // if primary feature isn't found
-//   if (!features.length) {
-//     // return all top level geoms
-//     for (l = 0; l < geoData.length; l += 1) {
-//       if (geoData[l].jurisdiction_parent_id) {
-//         features.push(geoData[l]);
-//       }
-//     }
-//   } else {
-//     // find direct children of primary feature
-//     for (l = 0; l < geoData.length; l += 1) {
-//       if (geoData[l].jurisdiction_parent_id === id) {
-//         features.push(geoData[l]);
-//       }
-//     }
-//   }
-//   // return geojson shapped data
-//   return {
-//     features,
-//     type: 'FeatureCollection',
-//   };
-// };
 
 /** Returns a single layer configuration */
 const LayerStore = (layer: any) => {
@@ -100,12 +63,8 @@ const ConfigStore = (options: FlexObject) => {
   }
   // Build APP options for Gisida
   const APP: SiteConfigApp = {
-    accessToken:
-      accessToken ||
-      GISIDA_MAPBOX_TOKEN ||
-      'pk.eyJ1Ijoib25hIiwiYSI6IlVYbkdyclkifQ.0Bz-QOOXZZK01dq4MuMImQ',
-    apiAccessToken:
-      apiAccessToken || GISIDA_ONADATA_API_TOKEN || '138a7ff6dfdcb5b4e41eb2d39bcc76ce5d296e89',
+    accessToken: accessToken || GISIDA_MAPBOX_TOKEN,
+    apiAccessToken: apiAccessToken || GISIDA_ONADATA_API_TOKEN,
     appName,
     mapConfig,
   };
@@ -186,17 +145,6 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
   // 2. Get relevant goejson locations
   private async getLocations(geoData: any | null) {
     // 2a. Asynchronously obtain geometries as geojson object
-    /* DIRTY HACKY checks */
-    // if (geoData && geoData.length && typeof geoData[0].geometry !== 'object') {
-    //   geoData.map((item: any) => {
-    //     item.geometry = JSON.parse(item.geometry);
-    //   });
-    // }
-    // /**  DIRTY HACK store takes longer than expected */
-    // const locations =
-    //   geoData && geoData.length && typeof geoData[0].geometry !== 'string'
-    //     ? LocationsFetcher(id, geoData)
-    //     : false;
     // // 2b. Determine map bounds from locations geoms
     let locations;
     if (geoData && geoData.geometry) {
@@ -226,7 +174,8 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
           // 'line-color': 'white',
           // 'line-opacity': 1,
           // 'line-width': 1,
-          'fill-color': 'rgba(0,116,217,0.5)',
+          'fill-color': 'rgba(255,116,217,0)',
+          'fill-opacity': 1,
           'fill-outline-color': 'white',
         },
         source: {
