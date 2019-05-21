@@ -6,7 +6,7 @@ import { RouteComponentProps } from 'react-router';
 import { AnyAction } from 'redux';
 import { Store } from 'redux';
 import GisidaWrapper from '../../../../../components/GisidaWrapper';
-import { SUPERSET_GOALS_SLICE, SUPERSET_PLANS_SLICE } from '../../../../../configs/env';
+import { SUPERSET_JURISDICTIONS_SLICE } from '../../../../../configs/env';
 import { FlexObject, MapProps, RouteParams } from '../../../../../helpers/utils';
 import supersetFetch from '../../../../../services/superset';
 import geojsonReducer, {
@@ -15,7 +15,13 @@ import geojsonReducer, {
   reducerName as geojsonReducerName,
 } from '../../../../../store/ducks/geojson';
 
+import plansReducer, {
+  getPlanById,
+  reducerName as plansReducerName,
+} from '../../../../../store/ducks/plans';
+
 reducerRegistry.register(geojsonReducerName, geojsonReducer);
+reducerRegistry.register(plansReducerName, plansReducer);
 // import store from '../../../../../store';
 
 /** interface to describe props for ActiveFI component */
@@ -33,26 +39,24 @@ class SingleActiveFIMap extends React.Component<RouteComponentProps<RouteParams>
     super(props);
   }
 
-  public componentDidMount() {
-    fetch('/config/data/opensrplocations.json') // todo - replace this with endpoint or connector
-      .then(res => res.json())
-      .then(data => {
-        this.props.fetchGeoJSONActionCreator(data);
-        // dispatch(Actions.);
-      });
+  public async componentDidMount() {
+    const { fetchGeoJSONActionCreator } = this.props;
+    await supersetFetch(SUPERSET_JURISDICTIONS_SLICE).then((result: []) =>
+      fetchGeoJSONActionCreator(result)
+    );
   }
-
   public render() {
     // const currentState = store.getState();
-    const { id } = this.props.match.params;
-    const { geoJSONData } = this.props;
+    // id represents planid
+    const { geoJSONData, plan } = this.props;
 
     return (
       <div>
-        <h2 className="page-title mt-4 mb-5">Map View: {id}</h2>
+        <h2 className="page-title mt-4 mb-5">
+          Map View: {plan && plan.jurisdiction_name ? plan.jurisdiction_name : null}
+        </h2>
         <div className="map">
           <GisidaWrapper
-            id={id}
             handlers={this.buildHandlers()}
             geoData={geoJSONData}
             // Location= {this.props.result.geoJSONData}
@@ -109,10 +113,16 @@ class SingleActiveFIMap extends React.Component<RouteComponentProps<RouteParams>
 }
 /** map state to props */
 const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
-  const result = {
-    geoJSONData: getGeoJSONs(state),
+  // pass in the plan id to get plan the get the jurisdicytion_id from the plan
+  const plan = getPlanById(state, ownProps.match.params.id);
+  let geoJSONData = null;
+  if (plan) {
+    geoJSONData = getGeoJSONs(state, plan.jurisdiction_id);
+  }
+  return {
+    geoJSONData,
+    plan,
   };
-  return result;
 };
 
 const mapDispatchToProps = {

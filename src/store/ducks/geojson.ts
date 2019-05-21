@@ -1,37 +1,42 @@
+import { get, keyBy, keys, values } from 'lodash';
 import { ActionCreator, AnyAction, Store } from 'redux';
+import { FlexObject } from '../../helpers/utils';
 
 export const reducerName = 'geojson';
 
-// interface GeoJSON {
-//   user: string;
-//   message: string;
-// }
+export interface GeoJSON {
+  jurisdiction_id: string;
+  jurisdiction_name: string;
+  jurisdiction_parent_id: string;
+  geometry: FlexObject;
+}
 
 // actions
 export const FETCH_GEOJSON = 'reveal/reducer/geojson/FETCH_GEOJSON';
 
 interface FetchGeoJSONAction extends AnyAction {
-  data: any;
+  geoJSONById: { [key: string]: GeoJSON };
+  // geoJSONByPlanId: { [key: string]: GeoJSON };
   type: typeof FETCH_GEOJSON;
 }
 
 export type GeoJSONActionTypes = FetchGeoJSONAction | AnyAction;
 
 interface GeoJSONState {
-  data: any;
+  geoJSONById: { [key: string]: GeoJSON };
 }
 
 const initialState: GeoJSONState = {
-  data: [],
+  geoJSONById: {},
 };
-
+// reducer
 export default function reducer(state = initialState, action: GeoJSONActionTypes): GeoJSONState {
   switch (action.type) {
     case FETCH_GEOJSON:
-      if (action.data) {
+      if (action.geoJSONById) {
         return {
           ...state,
-          data: action.data,
+          geoJSONById: action.geoJSONById,
         };
       }
       return state;
@@ -41,29 +46,13 @@ export default function reducer(state = initialState, action: GeoJSONActionTypes
 }
 
 // action creators
-export const fetchGeoJSON = (newGeoJSON: any) => ({
-  data: newGeoJSON,
-  type: FETCH_GEOJSON,
-});
-
-// actions
-
-// export const fetchGeoJSON = (data: []): FetchGeoJSONAction => {
-//     return {
-//     data,
-//     type: FETCH_GEOJSON,
-//     };
-//     };
-
+export const fetchGeoJSON = (newGeoJSON: GeoJSON[]) => {
+  return {
+    geoJSONById: keyBy(newGeoJSON, geojson => geojson.jurisdiction_id),
+    type: FETCH_GEOJSON,
+  };
+};
 // selectors
-export function getGeoJSONs(state: Partial<Store>) {
-  return (state as any)[reducerName].data;
+export function getGeoJSONs(state: Partial<Store>, id: string) {
+  return get((state as any)[reducerName].geoJSONById, id) || null;
 }
-
-// export function fetchGeoJSONData() {
-//   fetch('/config/data/opensrplocations.json') // todo - replace this with endpoint or connector
-//     .then(res => res.json())
-//     .then((data: any) => {
-//       return data;
-//     });
-// }
