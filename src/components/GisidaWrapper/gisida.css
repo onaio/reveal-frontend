@@ -1,5 +1,5 @@
 #map-1 {
-  position: relative;
+  position: relative !important;
   display: block !important;
-  height: 500px;
+  min-height: 500px;
 }
