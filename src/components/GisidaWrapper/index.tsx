@@ -4,7 +4,8 @@ import { Actions, ducks, loadLayers } from 'gisida';
 import { Map } from 'gisida-react';
 import * as React from 'react';
 
-import { GISIDA_MAPBOX_TOKEN, GISIDA_ONADATA_API_TOKEN } from '../../configs/env'; // this isn't working T_T
+import { GISIDA_MAPBOX_TOKEN, GISIDA_ONADATA_API_TOKEN } from '../../configs/env';
+import { singleJurisdictionLayerConfig } from '../../configs/settings';
 import { FlexObject, SiteConfig, SiteConfigApp, SiteConfigAppMapconfig } from '../../helpers/utils';
 import store from '../../store';
 import { GeoJSON } from '../../store/ducks/geojson';
@@ -159,35 +160,21 @@ class GisidaWrapper extends React.Component<FlexObject> {
 
   // 3. Define map site-config object to init the store
   private initMap() {
+    const { geoData } = this.props;
     const { locations, bounds } = this.state;
     if (!locations) {
       return false;
     }
     // 3b. Define layers for config
     // todo - dynamically create the layers we need
-    const layers = [
-      {
-        id: 'default-geoms',
-        paint: {
-          // 'line-color': 'white',
-          // 'line-opacity': 1,
-          // 'line-width': 1,
-          'fill-color': 'rgba(255,116,217,0)',
-          'fill-opacity': 1,
-          'fill-outline-color': 'white',
-        },
-        source: {
-          data: {
-            data: JSON.stringify(locations),
-            type: 'stringified-geojson',
-          },
-          type: 'geojson',
-        },
-        type: 'fill',
-        visible: true,
-      },
-    ];
-    // 3b. Build the site-config object for Gisida
+
+    // 3c. Start with the default/first layer
+    const jurisdictionLayer = singleJurisdictionLayerConfig;
+    jurisdictionLayer.id = `single-jurisdiction-${geoData.jurisdiction_id}`;
+    jurisdictionLayer.source.data.data = JSON.stringify(locations);
+
+    const layers = [jurisdictionLayer];
+    // 3d. Build the site-config object for Gisida
     const config = ConfigStore({
       appName: locations,
       bounds,
