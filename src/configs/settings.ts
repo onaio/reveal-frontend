@@ -129,3 +129,22 @@ export type ORANGE_THRESHOLD = typeof ORANGE_THRESHOLD;
 // 1-3-7 thresholds
 export const ONE = 0;
 export const ZERO = 0;
+
+// Gisida Layers
+export const singleJurisdictionLayerConfig = {
+  id: 'single-jurisdiction',
+  paint: {
+    'line-color': '#FFDC00',
+    'line-opacity': 1,
+    'line-width': 3,
+  },
+  source: {
+    data: {
+      data: '',
+      type: 'stringified-geojson',
+    },
+    type: 'geojson',
+  },
+  type: 'line',
+  visible: true,
+};
