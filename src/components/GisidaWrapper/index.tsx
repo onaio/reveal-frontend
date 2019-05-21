@@ -7,6 +7,7 @@ import * as React from 'react';
 import { GISIDA_MAPBOX_TOKEN, GISIDA_ONADATA_API_TOKEN } from '../../configs/env'; // this isn't working T_T
 import { FlexObject, SiteConfig, SiteConfigApp, SiteConfigAppMapconfig } from '../../helpers/utils';
 import store from '../../store';
+import { GeoJSON } from '../../store/ducks/geojson';
 import './gisida.css';
 
 interface GisidaState {
@@ -14,46 +15,45 @@ interface GisidaState {
   locations: FlexObject | false;
   doInitMap: boolean;
   doRenderMap: boolean;
-  id: number;
-  geoData: any[];
+  // id: number;
+  geoData: GeoJSON[];
 }
 
 // stand-in Async func to return geojson for feature + children
 
-const LocationsFetcher = (id: number, geoData: any[]) => {
-  let l;
-  const features: any[] = [];
-  // find primary feature from id
-  for (l = 0; l < geoData.length; l += 1) {
-    if (Number(geoData[l].id) === id) {
-      features.push(geoData[l]);
-      break;
-    }
-  }
+// const LocationsFetcher = (id: string, geoData: GeoJSON[]) => {
+//   let l;
+//   const features: any[] = [];
+//   // find primary feature from id
+//   for (l = 0; l < geoData.length; l += 1) {
+//     if (geoData[l].jurisdiction_id === id) {
+//       features.push(geoData[l]);
+//       break;
+//     }
+//   }
 
-  // if primary feature isn't found
-  if (!features.length) {
-    // return all top level geoms
-    for (l = 0; l < geoData.length; l += 1) {
-      if (typeof geoData[l].properties.parentId === 'undefined') {
-        features.push(geoData[l]);
-      }
-    }
-  } else {
-    // find direct children of primary feature
-    for (l = 0; l < geoData.length; l += 1) {
-      if (Number(geoData[l].properties.parentId) === id) {
-        features.push(geoData[l]);
-      }
-    }
-  }
-
-  // return geojson shapped data
-  return {
-    features,
-    type: 'FeatureCollection',
-  };
-};
+//   // if primary feature isn't found
+//   if (!features.length) {
+//     // return all top level geoms
+//     for (l = 0; l < geoData.length; l += 1) {
+//       if (geoData[l].jurisdiction_parent_id) {
+//         features.push(geoData[l]);
+//       }
+//     }
+//   } else {
+//     // find direct children of primary feature
+//     for (l = 0; l < geoData.length; l += 1) {
+//       if (geoData[l].jurisdiction_parent_id === id) {
+//         features.push(geoData[l]);
+//       }
+//     }
+//   }
+//   // return geojson shapped data
+//   return {
+//     features,
+//     type: 'FeatureCollection',
+//   };
+// };
 
 /** Returns a single layer configuration */
 const LayerStore = (layer: any) => {
@@ -121,7 +121,6 @@ class GisidaWrapper extends React.Component<FlexObject> {
       doInitMap: false,
       doRenderMap: false,
       geoData: this.props.geoData || false,
-      id: 0,
       locations: this.props.locations || false,
     };
 
@@ -129,29 +128,30 @@ class GisidaWrapper extends React.Component<FlexObject> {
     if (!initialState.APP && ducks.APP) {
       reducerRegistry.register('APP', ducks.APP.default);
     }
+    // Make map-1 more dynamic
     if (!initialState['map-1'] && ducks.MAP) {
       reducerRegistry.register('map-1', ducks.MAP.default);
     }
 
   public componentDidMount() {
     if (!this.state.locations) {
-      this.setState({ id: this.props.id }, () => {
-        this.getLocations(this.props.id);
+      this.setState(() => {
+        this.getLocations(this.props.geoData);
       });
     }
   }
 
   public componentWillReceiveProps(nextProps: any) {
-    if (this.state.id !== nextProps.id || this.props.geoData !== nextProps.geoData) {
+    /** check for types */
+    if (this.props.geoData !== nextProps.geoData) {
       this.setState(
         {
           doRenderMap: false,
           geoData: nextProps.geoData,
-          id: nextProps.id,
           locations: false,
         },
         () => {
-          this.getLocations(nextProps.id);
+          this.getLocations(nextProps.geoData);
         }
       );
     }
@@ -170,7 +170,6 @@ class GisidaWrapper extends React.Component<FlexObject> {
     const doRenderMap = typeof currentState['map-1'] !== 'undefined';
     const mapId = this.props.mapId || 'map-1';
     const doRenderMap = this.state.doRenderMap && typeof currentState[mapId] !== 'undefined';
-
     if (!doRenderMap) {
       return null;
     }
@@ -179,16 +178,29 @@ class GisidaWrapper extends React.Component<FlexObject> {
   }
 
   // 2. Get relevant goejson locations
-  private async getLocations(id: number | undefined) {
-    if (Number.isNaN(Number(id))) {
-      this.setState({ locations: false });
+  private async getLocations(geoData: any | null) {
+    // 2a. Asynchronously obtain geometries as geojson object
+    /* DIRTY HACKY checks */
+    // if (geoData && geoData.length && typeof geoData[0].geometry !== 'object') {
+    //   geoData.map((item: any) => {
+    //     item.geometry = JSON.parse(item.geometry);
+    //   });
+    // }
+    // /**  DIRTY HACK store takes longer than expected */
+    // const locations =
+    //   geoData && geoData.length && typeof geoData[0].geometry !== 'string'
+    //     ? LocationsFetcher(id, geoData)
+    //     : false;
+    // // 2b. Determine map bounds from locations geoms
+    let locations;
+    if (geoData && geoData.geometry) {
+      locations =
+        typeof geoData.geometry !== 'string' ? geoData.geometry : JSON.parse(geoData.geometry);
     } else {
-      // 2a. Asynchronously obtain geometries as geojson object
-      const { geoData } = this.props;
-      /**  DIRTY HACK store takes longer than expected */
-      const locations = geoData.length ? LocationsFetcher(Number(id), geoData) : false;
-      // 2b. Determine map bounds from locations geoms
-      const bounds = locations ? GeojsonExtent(locations) : null;
+      locations = false;
+    }
+    const bounds = locations ? GeojsonExtent(locations) : null;
+    if (locations) {
       this.setState({ locations, doInitMap: true, bounds });
     }
   }
@@ -224,7 +236,7 @@ class GisidaWrapper extends React.Component<FlexObject> {
     ];
     // 3b. Build the site-config object for Gisida
     const config = ConfigStore({
-      appName: locations.features[0].properties.name,
+      appName: locations,
       bounds,
       layers,
     });

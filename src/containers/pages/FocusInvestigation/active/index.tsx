@@ -80,7 +80,7 @@ class ActiveFocusInvestigation extends React.Component<
             Cell: (cell: CellInfo) => {
               return (
                 <div>
-                  {/* <Link to={`${FI_SINGLE_MAP_URL}/13`}>
+                  <Link to={`${FI_SINGLE_MAP_URL}/${cell.original.id}`}>
                     <FontAwesomeIcon icon={['fas', 'map']} />
                   </Link>
                   &nbsp;&nbsp; */}
