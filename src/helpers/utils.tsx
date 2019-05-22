@@ -16,6 +16,12 @@ export interface RouteParams {
   id?: string;
 }
 
+/** Geometry object interface */
+export interface Geometry {
+  coordinates: number[][][] | number[];
+  type: string;
+}
+
 /** Returns a number as a decimal e.g. 0.18 becomes 18% */
 export function percentage(num: number, decimalPoints: number = 0) {
   return `${(num * 100).toFixed(decimalPoints)}%`;
