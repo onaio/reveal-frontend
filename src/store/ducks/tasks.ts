@@ -91,6 +91,7 @@ export function getTasksById(state: Partial<Store>): { [key: string]: Task } {
 
 /** get an array of task objects
  * @param {Partial<Store>} state - the redux store
+ * @returns {Task[]} an array of tasks
  */
 export function getTasksArray(state: Partial<Store>): Task[] {
   return values((state as any)[reducerName].tasksById);
@@ -98,6 +99,7 @@ export function getTasksArray(state: Partial<Store>): Task[] {
 
 /** get an array of task ids
  * @param {Partial<Store>} state - the redux store
+ * @returns {string[]} an array of tasks ids
  */
 export function getTasksIdArray(state: Partial<Store>): string[] {
   return keys((state as any)[reducerName].tasksById);
@@ -106,7 +108,44 @@ export function getTasksIdArray(state: Partial<Store>): string[] {
 /** get one task using its id
  * @param {Partial<Store>} state - the redux store
  * @param {string} id - the task id
+ * @returns {Task|null} a task or null
  */
 export function getTaskById(state: Partial<Store>, id: string): Task | null {
   return get((state as any)[reducerName].tasksById, id) || null;
+}
+
+/** get tasks by plan id
+ * @param {Partial<Store>} state - the redux store
+ * @returns {Task[]} an array of tasks
+ */
+export function getTasksByPlanId(state: Partial<Store>, planId: string): Task[] {
+  return values((state as any)[reducerName].tasksById).filter((e: Task) => e.plan_id === planId);
+}
+
+/** get tasks by goal id
+ * @param {Partial<Store>} state - the redux store
+ * @returns {Task[]} an array of tasks
+ */
+export function getTasksByGoalId(state: Partial<Store>, goalId: string): Task[] {
+  return values((state as any)[reducerName].tasksById).filter((e: Task) => e.goal_id === goalId);
+}
+
+/** get tasks by jurisdiction id
+ * @param {Partial<Store>} state - the redux store
+ * @returns {Task[]} an array of tasks
+ */
+export function getTasksByJurisdictionId(state: Partial<Store>, jurisdictionId: string): Task[] {
+  return values((state as any)[reducerName].tasksById).filter(
+    (e: Task) => e.jurisdiction_id === jurisdictionId
+  );
+}
+
+/** get tasks by structure id
+ * @param {Partial<Store>} state - the redux store
+ * @returns {Task[]} an array of tasks
+ */
+export function getTasksByStructureId(state: Partial<Store>, structureId: string): Task[] {
+  return values((state as any)[reducerName].tasksById).filter(
+    (e: Task) => e.structure_id === structureId
+  );
 }
