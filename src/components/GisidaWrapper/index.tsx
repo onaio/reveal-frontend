@@ -6,7 +6,7 @@ import * as React from 'react';
 
 import { GISIDA_MAPBOX_TOKEN, GISIDA_ONADATA_API_TOKEN } from '../../configs/env';
 import { singleJurisdictionLayerConfig } from '../../configs/settings';
-import { FlexObject, SiteConfig, SiteConfigApp, SiteConfigAppMapconfig } from '../../helpers/utils';
+import { ConfigStore, FlexObject } from '../../helpers/utils';
 import store from '../../store';
 import { GeoJSON } from '../../store/ducks/geojson';
 import './gisida.css';
@@ -16,7 +16,7 @@ interface GisidaState {
   locations: FlexObject | false;
   doInitMap: boolean;
   doRenderMap: boolean;
-  geoData: GeoJSON[];
+  geoData: GeoJSON;
 }
 
 /** Returns a single layer configuration */
@@ -27,56 +27,7 @@ const LayerStore = (layer: any) => {
   // todo - dynamically build layer configs based on layerObj params and layer type defaults
 };
 
-/** Returns a single `site-config` object for a Gisida Map  */
-const ConfigStore = (options: FlexObject) => {
-  // Define basic config properties
-  const { accessToken, apiAccessToken, appName, mapConfig: mbConfig, layers } = options;
-  // Define flattened APP.mapConfig properties
-  const {
-    mapConfigCenter,
-    mapConfigContainer,
-    mapConfigStyle,
-    mapConfigZoom,
-    mapConfigBounds,
-    mapConfigFitBoundsOptions,
-  } = options;
-  // Define non-flattened APP.Config properties
-  const { center, container, style, zoom, bounds, fitBoundsOptions } = mbConfig || options;
-
-  // Build options for mapbox-gl-js initialization
-  let mapConfig: SiteConfigAppMapconfig = {
-    container: container || mapConfigContainer || 'map',
-    style: style || mapConfigStyle || 'mapbox://styles/mapbox/satellite-v9',
-  };
-  if (bounds || mapConfigBounds) {
-    mapConfig = {
-      ...mapConfig,
-      bounds: bounds || mapConfigBounds,
-      fitBoundsOptions: fitBoundsOptions || mapConfigFitBoundsOptions || { padding: 20 },
-    };
-  } else {
-    mapConfig = {
-      ...mapConfig,
-      center: center || mapConfigCenter || [0, 0],
-      zoom: zoom || mapConfigZoom || 0,
-    };
-  }
-  // Build APP options for Gisida
-  const APP: SiteConfigApp = {
-    accessToken: accessToken || GISIDA_MAPBOX_TOKEN,
-    apiAccessToken: apiAccessToken || GISIDA_ONADATA_API_TOKEN,
-    appName,
-    mapConfig,
-  };
-  // Build SiteConfig
-  const config: SiteConfig = {
-    APP,
-    LAYERS: layers.map(LayerStore),
-  };
-  return config;
-};
-
-class GisidaWrapper extends React.Component<FlexObject> {
+class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
   constructor(props: FlexObject) {
     super(props);
     const initialState = store.getState();
@@ -105,7 +56,7 @@ class GisidaWrapper extends React.Component<FlexObject> {
     }
   }
 
-  public componentWillReceiveProps(nextProps: any) {
+  public componentWillReceiveProps(nextProps: FlexObject) {
     /** check for types */
     if (this.props.geoData !== nextProps.geoData) {
       this.setState(
@@ -192,12 +143,17 @@ class GisidaWrapper extends React.Component<FlexObject> {
         visible: true,
       },
     ];
-    // 3d. Build the site-config object for Gisida
-    const config = ConfigStore({
-      appName: locations,
-      bounds,
-      layers,
-    });
+    // 3b. Build the site-config object for Gisida
+    const config = ConfigStore(
+      {
+        appName: locations,
+        bounds,
+        layers,
+      },
+      GISIDA_MAPBOX_TOKEN,
+      GISIDA_ONADATA_API_TOKEN,
+      LayerStore
+    );
 
     this.setState({ doRenderMap: true }, () => {
       // 4. Initialize Gisida stores

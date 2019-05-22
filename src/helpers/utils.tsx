@@ -159,3 +159,57 @@ export function extractPlan(plan: Plan) {
 
   return result;
 }
+
+export const ConfigStore = (
+  options: FlexObject,
+  GISIDA_MAPBOX_TOKEN: string,
+  GISIDA_ONADATA_API_TOKEN: string,
+  LayerStore: FlexObject
+) => {
+  // Define basic config properties
+  const { accessToken, apiAccessToken, appName, mapConfig: mbConfig, layers } = options;
+  // Define flattened APP.mapConfig properties
+  const {
+    mapConfigCenter,
+    mapConfigContainer,
+    mapConfigStyle,
+    mapConfigZoom,
+    mapConfigBounds,
+    mapConfigFitBoundsOptions,
+  } = options;
+  // Define non-flattened APP.Config properties
+  const { center, container, style, zoom, bounds, fitBoundsOptions } = mbConfig || options;
+
+  // Build options for mapbox-gl-js initialization
+  let mapConfig: SiteConfigAppMapconfig = {
+    container: container || mapConfigContainer || 'map',
+    style: style || mapConfigStyle || 'mapbox://styles/mapbox/satellite-v9',
+  };
+  if (bounds || mapConfigBounds) {
+    mapConfig = {
+      ...mapConfig,
+      bounds: bounds || mapConfigBounds,
+      fitBoundsOptions: fitBoundsOptions || mapConfigFitBoundsOptions || { padding: 20 },
+    };
+  } else {
+    mapConfig = {
+      ...mapConfig,
+      center: center || mapConfigCenter || [0, 0],
+      zoom: zoom || mapConfigZoom || 0,
+    };
+  }
+  // Build APP options for Gisida
+  const APP: SiteConfigApp = {
+    accessToken: accessToken || GISIDA_MAPBOX_TOKEN,
+    apiAccessToken: apiAccessToken || GISIDA_ONADATA_API_TOKEN,
+    appName,
+    mapConfig,
+  };
+
+  // Build SiteConfig
+  const config: SiteConfig = {
+    APP,
+    LAYERS: layers.map(LayerStore),
+  };
+  return config;
+};
