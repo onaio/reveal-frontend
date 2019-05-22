@@ -6,9 +6,10 @@ import * as React from 'react';
 
 import { GISIDA_MAPBOX_TOKEN, GISIDA_ONADATA_API_TOKEN } from '../../configs/env';
 import { singleJurisdictionLayerConfig } from '../../configs/settings';
+import { MAP_ID, STRINGIFIED_GEOJSON } from '../../constants';
 import { ConfigStore, FlexObject } from '../../helpers/utils';
 import store from '../../store';
-import { GeoJSON } from '../../store/ducks/geojson';
+import { GeoJSON } from '../../store/ducks/jurisdictions';
 import './gisida.css';
 
 interface GisidaState {
@@ -20,7 +21,7 @@ interface GisidaState {
 }
 
 /** Returns a single layer configuration */
-const LayerStore = (layer: any) => {
+const LayerStore = (layer: FlexObject) => {
   if (typeof layer === 'string') {
     return layer;
   }
@@ -44,8 +45,8 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
       reducerRegistry.register('APP', ducks.APP.default);
     }
     // Make map-1 more dynamic
-    if (!initialState['map-1'] && ducks.MAP) {
-      reducerRegistry.register('map-1', ducks.MAP.default);
+    if (!initialState[MAP_ID] && ducks.MAP) {
+      reducerRegistry.register(MAP_ID, ducks.MAP.default);
     }
 
   public componentDidMount() {
@@ -82,8 +83,7 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
 
   public render() {
     const currentState = store.getState();
-    const doRenderMap = typeof currentState['map-1'] !== 'undefined';
-    const mapId = this.props.mapId || 'map-1';
+    const mapId = this.props.mapId || MAP_ID;
     const doRenderMap = this.state.doRenderMap && typeof currentState[mapId] !== 'undefined';
     if (!doRenderMap) {
       return null;
@@ -93,7 +93,7 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
   }
 
   // 2. Get relevant goejson locations
-  private async getLocations(geoData: any | null) {
+  private async getLocations(geoData: GeoJSON | null) {
     // 2a. Asynchronously obtain geometries as geojson object
     // // 2b. Determine map bounds from locations geoms
     let locations;
@@ -116,14 +116,27 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
     if (!locations) {
       return false;
     }
+    /* commented below dynamic layer building */
     // 3b. Define layers for config
     // todo - dynamically create the layers we need
 
     // 3c. Start with the default/first layer
     // const jurisdictionLayer = singleJurisdictionLayerConfig;
-    // jurisdictionLayer.id = `single-jurisdiction-${geoData.jurisdiction_id}`;
-    // jurisdictionLayer.source.data.data = JSON.stringify(locations);
+    // const jurisdictionLayerId = `single-jurisdiction-${geoData.jurisdiction_id}`;
+    // const jurisdictionLayer_source_data = locations && JSON.stringify(locations);
+    // console.log(geoData && geoData.jurisdiction_id);
+    // export const layerBuilder = (
+    //   jurisdictionLayer: FlexObject,
+    //   paint: FlexObject | null,
+    //   jurisdictionLayerId: string | null,
+    //   jurisdictionLayer_source_data: FlexObject | null,
+    // ) => {
+    //   let allLayers = [];
+    //   jurisdictionLayer.id = jurisdictionLayerId ? `single-jurisdiction-${jurisdictionLayerId}` : jurisdictionLayer.id;
+    //   jurisdictionLayer.paint = paint ? jurisdictionLayer.paint = paint : jurisdictionLayer.paint;
+    //   jurisdictionLayer.source.data
 
+    // };
     const layers = [
       {
         id: `single-jurisdiction-${geoData.jurisdiction_id}`,
@@ -135,7 +148,7 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
         source: {
           data: {
             data: JSON.stringify(locations),
-            type: 'stringified-geojson',
+            type: STRINGIFIED_GEOJSON,
           },
           type: 'geojson',
         },
@@ -158,7 +171,7 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
     this.setState({ doRenderMap: true }, () => {
       // 4. Initialize Gisida stores
       store.dispatch(Actions.initApp(config.APP));
-      loadLayers('map-1', store.dispatch, config.LAYERS);
+      loadLayers(MAP_ID, store.dispatch, config.LAYERS);
 
       // optional onInit handler function - higher order state management, etc
       if (this.props.onInit) {

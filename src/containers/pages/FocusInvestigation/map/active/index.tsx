@@ -11,12 +11,15 @@ import { FlexObject, MapProps, RouteParams } from '../../../../../helpers/utils'
 import supersetFetch from '../../../../../services/superset';
 import geojsonReducer, {
   fetchGeoJSON,
+  GeoJSON,
   getGeoJSONs,
   reducerName as geojsonReducerName,
-} from '../../../../../store/ducks/geojson';
+} from '../../../../../store/ducks/jurisdictions';
+import { plan1, singleGeoJSON } from '../../../../../store/ducks/tests/fixtures';
 
 import plansReducer, {
   getPlanById,
+  Plan,
   reducerName as plansReducerName,
 } from '../../../../../store/ducks/plans';
 
@@ -26,22 +29,30 @@ reducerRegistry.register(plansReducerName, plansReducer);
 
 /** interface to describe props for ActiveFI component */
 export interface MapSingleFIProps {
-  fetchGoalsActionCreator: typeof fetchGeoJSON;
+  fetchGeoJSONActionCreator: typeof fetchGeoJSON;
+  geoJSONData: GeoJSON | null;
+  plan: Plan | null;
 }
 
 /** default props for ActiveFI component */
-export const defaultSingleFIProps: MapSingleFIProps = {
-  fetchGoalsActionCreator: fetchGeoJSON,
+export const defaultMapSingleFIProps: MapSingleFIProps = {
+  fetchGeoJSONActionCreator: fetchGeoJSON,
+  geoJSONData: singleGeoJSON,
+  plan: plan1,
 };
 /** Map View for Single Active Focus Investigation */
-class SingleActiveFIMap extends React.Component<RouteComponentProps<RouteParams> & MapProps, {}> {
-  constructor(props: RouteComponentProps<RouteParams> & MapProps) {
+class SingleActiveFIMap extends React.Component<
+  RouteComponentProps<RouteParams> & MapSingleFIProps,
+  FlexObject
+> {
+  public static defaultProps = defaultMapSingleFIProps;
+  constructor(props: RouteComponentProps<RouteParams> & MapSingleFIProps) {
     super(props);
   }
 
   public async componentDidMount() {
     const { fetchGeoJSONActionCreator } = this.props;
-    await supersetFetch(SUPERSET_JURISDICTIONS_SLICE).then((result: []) =>
+    await supersetFetch(SUPERSET_JURISDICTIONS_SLICE).then((result: GeoJSON[]) =>
       fetchGeoJSONActionCreator(result)
     );
   }
@@ -66,7 +77,7 @@ class SingleActiveFIMap extends React.Component<RouteComponentProps<RouteParams>
       </div>
     );
   }
-
+  // not sure where this should be called
   private loadLayerFunc(
     resObj: FlexObject,
     layerId: number,
