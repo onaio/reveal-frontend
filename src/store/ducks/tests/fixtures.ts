@@ -60,3 +60,121 @@ export const goalsByPlanId = {
   '10f9e9fa-ce34-4b27-a961-72fab5206ab6': [goal1, goal2],
   '1337': [goal3],
 };
+
+export const task1 = {
+  action_code: 'RACD Register Family',
+  geometry: {
+    coordinates: [
+      [
+        [101.188427209854, 15.0909179029537],
+        [101.18852108717, 15.0909179029537],
+        [101.18852108717, 15.0910085427885],
+        [101.188427209854, 15.0910085427885],
+        [101.188427209854, 15.0909179029537],
+      ],
+    ],
+    type: 'Polygon',
+  },
+  goal_id: 'RACD_register_family_1km_radius',
+  jurisdiction_id: '450fc15b-5bd2-468a-927a-49cb10d3bcac',
+  jurisdiction_name: 'TLv1_01',
+  jurisdiction_parent_id: 'dad42fa6-b9b8-4658-bf25-bfa7ab5b16ae',
+  plan_id: '10f9e9fa-ce34-4b27-a961-72fab5206ab6',
+  structure_code: 'a19eeb63-45d0-4744-9a9d-76d0694103f6',
+  structure_id: 'a19eeb63-45d0-4744-9a9d-76d0694103f6',
+  structure_name: 'a19eeb63-45d0-4744-9a9d-76d0694103f6',
+  structure_type: 'a19eeb63-45d0-4744-9a9d-76d0694103f6',
+  task_business_status: 'Not Visited',
+  task_execution_end_date: '2019-04-01',
+  task_execution_start_date: '2019-04-08',
+  task_focus: '95515b0d-b9c0-496e-83c7-7af8b4924d1f',
+  task_identifier: 'e652f8b2-b884-42d5-832a-86009c10a812',
+  task_status: 'Ready',
+  task_task_for: 'a19eeb63-45d0-4744-9a9d-76d0694103f6',
+};
+
+export const task2 = {
+  action_code: 'Bednet Distribution',
+  geometry: {
+    coordinates: [
+      [
+        [101.177725195885, 15.0658221308165],
+        [101.177684962749, 15.0657263002127],
+        [101.177778840065, 15.0656848599382],
+        [101.177832484245, 15.0657781005444],
+        [101.177725195885, 15.0658221308165],
+      ],
+    ],
+    type: 'Polygon',
+  },
+  goal_id: 'RACD_bednet_dist_1km_radius',
+  jurisdiction_id: '450fc15b-5bd2-468a-927a-49cb10d3bcac',
+  jurisdiction_name: 'TLv1_01',
+  jurisdiction_parent_id: 'dad42fa6-b9b8-4658-bf25-bfa7ab5b16ae',
+  plan_id: '10f9e9fa-ce34-4b27-a961-72fab5206ab6',
+  structure_code: 'da765947-5e4d-49f7-9eb8-2d2d00681f65',
+  structure_id: 'da765947-5e4d-49f7-9eb8-2d2d00681f65',
+  structure_name: 'da765947-5e4d-49f7-9eb8-2d2d00681f65',
+  structure_type: 'da765947-5e4d-49f7-9eb8-2d2d00681f65',
+  task_business_status: 'Not Visited',
+  task_execution_end_date: '2019-04-01',
+  task_execution_start_date: '2019-04-08',
+  task_focus: 'Bednet Distribution',
+  task_identifier: '03458d28-af61-4f70-b110-73a3429ada2d',
+  task_status: 'Ready',
+  task_task_for: 'da765947-5e4d-49f7-9eb8-2d2d00681f65',
+};
+
+export const task3 = {
+  action_code: 'Mosquito Collection',
+  geometry: {
+    coordinates: [28.3524419816308, -15.4178320108929],
+    type: 'Point',
+  },
+  goal_id: 'Mosquito_Collection_Min_3_Traps',
+  jurisdiction_id: '3952',
+  jurisdiction_name: 'Akros_2',
+  jurisdiction_parent_id: '3019',
+  plan_id: '356b6b84-fc36-4389-a44a-2b038ed2f38d',
+  structure_code: '5f7a0d7c-1412-4af6-83ed-f94787b205e8',
+  structure_id: '5f7a0d7c-1412-4af6-83ed-f94787b205e8',
+  structure_name: '5f7a0d7c-1412-4af6-83ed-f94787b205e8',
+  structure_type: '5f7a0d7c-1412-4af6-83ed-f94787b205e8',
+  task_business_status: 'Complete',
+  task_execution_end_date: '2019-04-01',
+  task_execution_start_date: '2019-04-08',
+  task_focus: 'Mosquito Collection',
+  task_identifier: 'e3e1f2a7-4c53-4059-ab81-0811539e0c5e',
+  task_status: 'Completed',
+  task_task_for: '5f7a0d7c-1412-4af6-83ed-f94787b205e8',
+};
+
+export const task4 = {
+  action_code: 'Blood Screening',
+  geometry: null,
+  goal_id: 'RACD_blood_screening_1km_radius',
+  jurisdiction_id: '450fc15b-5bd2-468a-927a-49cb10d3bcac',
+  jurisdiction_name: 'TLv1_01',
+  jurisdiction_parent_id: 'dad42fa6-b9b8-4658-bf25-bfa7ab5b16ae',
+  plan_id: '10f9e9fa-ce34-4b27-a961-72fab5206ab6',
+  structure_code: null,
+  structure_id: null,
+  structure_name: null,
+  structure_type: null,
+  task_business_status: 'Not Visited',
+  task_execution_end_date: '2019-04-01',
+  task_execution_start_date: '2019-04-08',
+  task_focus: 'Blood Screening',
+  task_identifier: '01d0b84c-df06-426c-a272-6858e84fea31',
+  task_status: 'Ready',
+  task_task_for: 'c222d4ba-b3c4-4cc8-abae-bdea06511b27',
+};
+
+export const tasks = [task1, task2, task3, task4];
+
+export const taskIdsArray = [
+  task1.task_identifier,
+  task2.task_identifier,
+  task3.task_identifier,
+  task4.task_identifier,
+];
