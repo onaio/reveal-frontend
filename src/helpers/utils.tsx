@@ -27,6 +27,10 @@ export function percentage(num: number, decimalPoints: number = 0) {
   return `${(num * 100).toFixed(decimalPoints)}%`;
 }
 
+export interface MapProps {
+  [key: string]: any;
+}
+
 /** Gets react table columns from the location hierarchy in configs */
 export function getLocationColumns(
   locations: LocationItem[] = locationHierarchy,
@@ -74,6 +78,40 @@ export function oAuthUserInfoGetter(apiResponse: { [key: string]: any }): Sessio
   }
 }
 
+export interface MapConfig {
+  [key: string]: FlexObject;
+}
+
+export interface FitBoundsOptions {
+  padding?: number;
+}
+
+export interface SiteConfigAppMapconfig {
+  bounds?: number[];
+  center?: number[];
+  container: string;
+  fitBoundsOptions?: FitBoundsOptions;
+  style: string;
+  zoom?: number;
+}
+
+export interface SiteConfigApp {
+  accessToken: string;
+  apiAccessToken: string;
+  appName: string;
+  mapConfig: SiteConfigAppMapconfig;
+}
+
+export interface SiteConfig {
+  APP: SiteConfigApp;
+  LAYERS: any[];
+}
+
+export interface MapConfigs {
+  [key: string]: FlexObject;
+  [key: number]: FlexObject;
+}
+
 /** utility method to extract plan from superset response object */
 export function extractPlan(plan: Plan) {
   const result: { [key: string]: any } = {
@@ -83,7 +121,8 @@ export function extractPlan(plan: Plan) {
     district: null,
     focusArea: plan.jurisdiction_name,
     id: plan.plan_id,
-    parent: plan.jurisdiction_parent_id,
+    jurisdiction_id: plan.jurisdiction_parent_id,
+    jurisdiction_parent_id: plan.jurisdiction_parent_id,
     province: null,
     reason: plan.plan_fi_reason,
     status: plan.plan_fi_status,
@@ -120,3 +159,57 @@ export function extractPlan(plan: Plan) {
 
   return result;
 }
+
+export const ConfigStore = (
+  options: FlexObject,
+  GISIDA_MAPBOX_TOKEN: string,
+  GISIDA_ONADATA_API_TOKEN: string,
+  LayerStore: FlexObject
+) => {
+  // Define basic config properties
+  const { accessToken, apiAccessToken, appName, mapConfig: mbConfig, layers } = options;
+  // Define flattened APP.mapConfig properties
+  const {
+    mapConfigCenter,
+    mapConfigContainer,
+    mapConfigStyle,
+    mapConfigZoom,
+    mapConfigBounds,
+    mapConfigFitBoundsOptions,
+  } = options;
+  // Define non-flattened APP.Config properties
+  const { center, container, style, zoom, bounds, fitBoundsOptions } = mbConfig || options;
+
+  // Build options for mapbox-gl-js initialization
+  let mapConfig: SiteConfigAppMapconfig = {
+    container: container || mapConfigContainer || 'map',
+    style: style || mapConfigStyle || 'mapbox://styles/mapbox/satellite-v9',
+  };
+  if (bounds || mapConfigBounds) {
+    mapConfig = {
+      ...mapConfig,
+      bounds: bounds || mapConfigBounds,
+      fitBoundsOptions: fitBoundsOptions || mapConfigFitBoundsOptions || { padding: 20 },
+    };
+  } else {
+    mapConfig = {
+      ...mapConfig,
+      center: center || mapConfigCenter || [0, 0],
+      zoom: zoom || mapConfigZoom || 0,
+    };
+  }
+  // Build APP options for Gisida
+  const APP: SiteConfigApp = {
+    accessToken: accessToken || GISIDA_MAPBOX_TOKEN,
+    apiAccessToken: apiAccessToken || GISIDA_ONADATA_API_TOKEN,
+    appName,
+    mapConfig,
+  };
+
+  // Build SiteConfig
+  const config: SiteConfig = {
+    APP,
+    LAYERS: layers.map(LayerStore),
+  };
+  return config;
+};

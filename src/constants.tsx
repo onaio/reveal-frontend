@@ -11,6 +11,8 @@ export const FOCUS_AREA_INFO = 'Focus Area Information';
 export type FOCUS_AREA_INFO = typeof FOCUS_AREA_INFO;
 export const FOCUS_INVESTIGATIONS = 'Focus Investigations';
 export type FOCUS_INVESTIGATIONS = typeof FOCUS_INVESTIGATIONS;
+export const MAP_ID = 'map-1';
+export const STRINGIFIED_GEOJSON = 'stringified-geojson';
 
 // internal urls
 export const LOGIN_URL = '/login';
