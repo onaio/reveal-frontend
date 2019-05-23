@@ -23,6 +23,7 @@ const LayerStore = (layer: FlexObject) => {
   if (typeof layer === 'string') {
     return layer;
   }
+  return layer;
   // todo - dynamically build layer configs based on layerObj params and layer type defaults
 };
 
@@ -46,6 +47,7 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
     if (!initialState[MAP_ID] && ducks.MAP) {
       reducerRegistry.register(MAP_ID, ducks.MAP.default);
     }
+  }
 
   public componentDidMount() {
     if (!this.state.locations) {
