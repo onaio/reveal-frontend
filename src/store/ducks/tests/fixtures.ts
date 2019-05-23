@@ -178,7 +178,8 @@ export const taskIdsArray = [
   task3.task_identifier,
   task4.task_identifier,
 ];
-export const geojson = [
+
+export const jurisdictions = [
   {
     geometry: {
       coordinates: [
@@ -248,4 +249,5 @@ export const geojson = [
     jurisdiction_parent_id: 'dad42fa6-b9b8-4658-bf25-bfa7ab5b16ae',
   },
 ];
-export const singleGeoJSON = geojson[1];
+
+export const jurisdictionsIdsArray = jurisdictions.map((e: any) => e.jurisdiction_id);
