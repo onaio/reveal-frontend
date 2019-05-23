@@ -1,10 +1,11 @@
 import { get, keyBy, keys, values } from 'lodash';
-import { ActionCreator, AnyAction, Store } from 'redux';
+import { AnyAction, Store } from 'redux';
 import { FlexObject } from '../../helpers/utils';
 
-export const reducerName = 'geojson';
+export const reducerName = 'jurisdictions';
 
-export interface GeoJSON {
+/** interface to describe Jurisdiction */
+export interface Jurisdiction {
   jurisdiction_id: string;
   jurisdiction_name: string;
   jurisdiction_parent_id: string;
@@ -12,34 +13,39 @@ export interface GeoJSON {
 }
 
 // actions
-export const FETCH_GEOJSON = 'reveal/reducer/geojson/FETCH_GEOJSON';
+export const FETCH_JURISDICTION = 'reveal/reducer/jurisdiction/FETCH_JURISDICTION';
 
-interface FetchGeoJSONAction extends AnyAction {
-  geoJSONById: { [key: string]: GeoJSON };
-  // geoJSONByPlanId: { [key: string]: GeoJSON };
-  type: typeof FETCH_GEOJSON;
+/** fetch jurisdiction action */
+interface FetchJurisdictionAction extends AnyAction {
+  jurisdictionsById: { [key: string]: Jurisdiction };
+  type: typeof FETCH_JURISDICTION;
 }
 
-export type GeoJSONActionTypes = FetchGeoJSONAction | AnyAction;
+/** jurisdiction action types */
+export type JurisdictionActionTypes = FetchJurisdictionAction | AnyAction;
 
+/** interface to describe jurisdiction state */
 interface JurisdictionState {
-  geoJSONById: { [key: string]: GeoJSON };
+  jurisdictionsById: { [key: string]: Jurisdiction };
 }
 
+/** initial state */
 const initialState: JurisdictionState = {
-  geoJSONById: {},
+  jurisdictionsById: {},
 };
+
 // reducer
+/** jurisdiction reducer function */
 export default function reducer(
   state = initialState,
-  action: GeoJSONActionTypes
+  action: JurisdictionActionTypes
 ): JurisdictionState {
   switch (action.type) {
-    case FETCH_GEOJSON:
-      if (action.geoJSONById) {
+    case FETCH_JURISDICTION:
+      if (action.jurisdictionsById) {
         return {
           ...state,
-          geoJSONById: action.geoJSONById,
+          jurisdictionsById: action.jurisdictionsById,
         };
       }
       return state;
@@ -49,13 +55,55 @@ export default function reducer(
 }
 
 // action creators
-export const fetchGeoJSON = (newGeoJSON: GeoJSON[]) => {
+/** fetch Jurisdiction creator
+ * @param {Jurisdiction[]} jurisdictionList - array of jurisdiction objects
+ * @returns {FetchJurisdictionAction} FetchJurisdictionAction
+ */
+export const fetchJurisdictions = (jurisdictionList: Jurisdiction[]) => {
   return {
-    geoJSONById: keyBy(newGeoJSON, geojson => geojson.jurisdiction_id),
-    type: FETCH_GEOJSON,
+    jurisdictionsById: keyBy(jurisdictionList, jurisdiction => jurisdiction.jurisdiction_id),
+    type: FETCH_JURISDICTION,
   };
 };
+
 // selectors
-export function getGeoJSONs(state: Partial<Store>, id: string) {
-  return get((state as any)[reducerName].geoJSONById, id) || null;
+/** get jurisdictions by id
+ * @param {Partial<Store>} state - the redux store
+ */
+export function getJurisdictionsById(state: Partial<Store>): { [key: string]: Jurisdiction } {
+  return (state as any)[reducerName].jurisdictionsById;
+}
+
+/** get one jurisdiction using its id
+ * @param {Partial<Store>} state - the redux store
+ * @param {string} id - the jurisdiction id
+ * @returns {Jurisdiction|null} a jurisdiction or null
+ */
+export function getJurisdictionById(state: Partial<Store>, id: string): Jurisdiction | null {
+  return get((state as any)[reducerName].jurisdictionsById, id) || null;
+}
+
+/** get an array of jurisdiction objects
+ * @param {Partial<Store>} state - the redux store
+ * @returns {Jurisdiction[]} an array of jurisdictions
+ */
+export function getJurisdictionsArray(state: Partial<Store>): Jurisdiction[] {
+  return values((state as any)[reducerName].jurisdictionsById);
+}
+
+/** get an array of jurisdiction ids
+ * @param {Partial<Store>} state - the redux store
+ * @returns {string[]} an array of jurisdictions ids
+ */
+export function getJurisdictionsIdArray(state: Partial<Store>): string[] {
+  return keys((state as any)[reducerName].jurisdictionsById);
+}
+
+/** get Jurisdictions by id
+ * @param {Partial<Store>} state - the redux store
+ * @param {string} id - the jurisdiction id
+ * @returns {Jurisdiction|null} a Jurisdiction or null
+ */
+export function getJurisdictions(state: Partial<Store>, id: string): Jurisdiction | null {
+  return get((state as any)[reducerName].jurisdictionsById, id) || null;
 }
