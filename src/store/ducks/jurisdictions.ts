@@ -98,12 +98,3 @@ export function getJurisdictionsArray(state: Partial<Store>): Jurisdiction[] {
 export function getJurisdictionsIdArray(state: Partial<Store>): string[] {
   return keys((state as any)[reducerName].jurisdictionsById);
 }
-
-/** get Jurisdictions by id
- * @param {Partial<Store>} state - the redux store
- * @param {string} id - the jurisdiction id
- * @returns {Jurisdiction|null} a Jurisdiction or null
- */
-export function getJurisdictions(state: Partial<Store>, id: string): Jurisdiction | null {
-  return get((state as any)[reducerName].jurisdictionsById, id) || null;
-}
