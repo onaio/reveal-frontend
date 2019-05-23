@@ -1,0 +1,21 @@
+.mapSidebar {
+  background: #000000;
+  color: #ffffff;
+  padding: 15px;
+  height: 800px;
+  overflow-y: auto;
+}
+
+.mapSidebar hr {
+  border-top: 1px solid #ffffff;
+}
+
+.mapSidebar .responseItem {
+  border-bottom: 1px dotted #efefef;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+}
+
+.mapSidebar .responseItem p {
+  margin-bottom: 0px;
+}
