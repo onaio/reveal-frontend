@@ -59,10 +59,10 @@ export default function reducer(state = initialState, action: TaskActionTypes): 
   switch (action.type) {
     case TASKS_FETCHED:
       if (action.tasksById) {
-        return {
+        return SeamlessImmutable({
           ...state,
           tasksById: action.tasksById,
-        };
+        });
       }
       return state;
     default:
