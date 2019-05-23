@@ -3,13 +3,11 @@ import reducerRegistry from '@onaio/redux-reducer-registry';
 import { Actions, ducks, loadLayers } from 'gisida';
 import { Map } from 'gisida-react';
 import * as React from 'react';
-
 import { GISIDA_MAPBOX_TOKEN, GISIDA_ONADATA_API_TOKEN } from '../../configs/env';
-import { singleJurisdictionLayerConfig } from '../../configs/settings';
 import { MAP_ID, STRINGIFIED_GEOJSON } from '../../constants';
 import { ConfigStore, FlexObject } from '../../helpers/utils';
 import store from '../../store';
-import { GeoJSON } from '../../store/ducks/jurisdictions';
+import { Jurisdiction } from '../../store/ducks/jurisdictions';
 import './gisida.css';
 
 interface GisidaState {
@@ -17,7 +15,7 @@ interface GisidaState {
   locations: FlexObject | false;
   doInitMap: boolean;
   doRenderMap: boolean;
-  geoData: GeoJSON;
+  geoData: Jurisdiction;
 }
 
 /** Returns a single layer configuration */
@@ -93,7 +91,7 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
   }
 
   // 2. Get relevant goejson locations
-  private async getLocations(geoData: GeoJSON | null) {
+  private async getLocations(geoData: Jurisdiction | null) {
     // 2a. Asynchronously obtain geometries as geojson object
     // // 2b. Determine map bounds from locations geoms
     let locations;

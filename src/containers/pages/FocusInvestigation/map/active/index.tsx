@@ -7,37 +7,36 @@ import { AnyAction } from 'redux';
 import { Store } from 'redux';
 import GisidaWrapper from '../../../../../components/GisidaWrapper';
 import { SUPERSET_JURISDICTIONS_SLICE } from '../../../../../configs/env';
-import { FlexObject, MapProps, RouteParams } from '../../../../../helpers/utils';
+import { FlexObject, RouteParams } from '../../../../../helpers/utils';
 import supersetFetch from '../../../../../services/superset';
 import geojsonReducer, {
-  fetchGeoJSON,
-  GeoJSON,
-  getGeoJSONs,
-  reducerName as geojsonReducerName,
+  fetchJurisdictions,
+  getJurisdictionById,
+  Jurisdiction,
+  reducerName as jurisdictionReducerName,
 } from '../../../../../store/ducks/jurisdictions';
-import { plan1, singleGeoJSON } from '../../../../../store/ducks/tests/fixtures';
-
 import plansReducer, {
   getPlanById,
   Plan,
   reducerName as plansReducerName,
 } from '../../../../../store/ducks/plans';
+import { jurisdictions, plan1 } from '../../../../../store/ducks/tests/fixtures';
 
-reducerRegistry.register(geojsonReducerName, geojsonReducer);
+reducerRegistry.register(jurisdictionReducerName, geojsonReducer);
 reducerRegistry.register(plansReducerName, plansReducer);
 // import store from '../../../../../store';
 
 /** interface to describe props for ActiveFI component */
 export interface MapSingleFIProps {
-  fetchGeoJSONActionCreator: typeof fetchGeoJSON;
-  geoJSONData: GeoJSON | null;
+  fetchJurisdictionsActionCreator: typeof fetchJurisdictions;
+  geoJSONData: Jurisdiction | null;
   plan: Plan | null;
 }
 
 /** default props for ActiveFI component */
 export const defaultMapSingleFIProps: MapSingleFIProps = {
-  fetchGeoJSONActionCreator: fetchGeoJSON,
-  geoJSONData: singleGeoJSON,
+  fetchJurisdictionsActionCreator: fetchJurisdictions,
+  geoJSONData: jurisdictions[0],
   plan: plan1,
 };
 /** Map View for Single Active Focus Investigation */
@@ -51,9 +50,9 @@ class SingleActiveFIMap extends React.Component<
   }
 
   public async componentDidMount() {
-    const { fetchGeoJSONActionCreator } = this.props;
-    await supersetFetch(SUPERSET_JURISDICTIONS_SLICE).then((result: GeoJSON[]) =>
-      fetchGeoJSONActionCreator(result)
+    const { fetchJurisdictionsActionCreator } = this.props;
+    await supersetFetch(SUPERSET_JURISDICTIONS_SLICE).then((result: Jurisdiction[]) =>
+      fetchJurisdictionsActionCreator(result)
     );
   }
   public render() {
@@ -128,7 +127,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
   const plan = getPlanById(state, ownProps.match.params.id);
   let geoJSONData = null;
   if (plan) {
-    geoJSONData = getGeoJSONs(state, plan.jurisdiction_id);
+    geoJSONData = getJurisdictionById(state, plan.jurisdiction_id);
   }
   return {
     geoJSONData,
@@ -137,7 +136,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
 };
 
 const mapDispatchToProps = {
-  fetchGeoJSONActionCreator: fetchGeoJSON,
+  fetchJurisdictionsActionCreator: fetchJurisdictions,
 };
 const ConnectedMapSingleFI = connect(
   mapStateToProps,
