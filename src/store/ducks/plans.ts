@@ -50,8 +50,8 @@ const initialState: ImmutablePlanState = SeamlessImmutable({
 export default function reducer(state = initialState, action: PlanActionTypes): ImmutablePlanState {
   switch (action.type) {
     case PLANS_FETCHED:
-      /** DIRTY HACK TO BE FIXED */
-      return (state as any).merge({
+      return SeamlessImmutable({
+        ...state,
         plansById: action.plansById,
       });
     default:

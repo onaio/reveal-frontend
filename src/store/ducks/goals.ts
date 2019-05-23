@@ -47,8 +47,8 @@ const initialState: ImmutableGoalState = SeamlessImmutable({
 export default function reducer(state = initialState, action: GoalActionTypes): ImmutableGoalState {
   switch (action.type) {
     case GOALS_FETCHED:
-      /** DIRTY HACK TO BE FIXED */
-      return (state as any).merge({
+      return SeamlessImmutable({
+        ...state,
         goalsByPlanId: action.goalsByPlanId,
       });
     default:
