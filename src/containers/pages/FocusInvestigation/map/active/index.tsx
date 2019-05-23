@@ -41,7 +41,7 @@ reducerRegistry.register(jurisdictionReducerName, jurisdictionReducer);
 reducerRegistry.register(goalsReducerName, goalsReducer);
 reducerRegistry.register(plansReducerName, plansReducer);
 
-/** interface to describe props for ActiveFI component */
+/** interface to describe props for ActiveFI Map component */
 export interface MapSingleFIProps {
   fetchGoalsActionCreator: typeof fetchGoals;
   fetchJurisdictionsActionCreator: typeof fetchJurisdictions;
@@ -51,7 +51,7 @@ export interface MapSingleFIProps {
   plan: Plan | null;
 }
 
-/** default props for ActiveFI component */
+/** default props for ActiveFI Map component */
 export const defaultMapSingleFIProps: MapSingleFIProps = {
   fetchGoalsActionCreator: fetchGoals,
   fetchJurisdictionsActionCreator: fetchJurisdictions,
