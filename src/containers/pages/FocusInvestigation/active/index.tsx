@@ -2,7 +2,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import DrillDownTable from '@onaio/drill-down-table';
 import reducerRegistry from '@onaio/redux-reducer-registry';
-import superset from '@onaio/superset-connector';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
@@ -12,16 +11,11 @@ import 'react-table/react-table.css';
 import { Table } from 'reactstrap';
 import { Store } from 'redux';
 import DrillDownTableLinkedCell from '../../../../components/DrillDownTableLinkedCell';
-import OneThreeSevenAdherence from '../../../../components/formatting/OneThreeSevenAdherence';
 import Loading from '../../../../components/page/Loading';
 import { SUPERSET_PLANS_SLICE } from '../../../../configs/env';
 import { FIClassifications, locationHierarchy } from '../../../../configs/settings';
 import { FI_SINGLE_MAP_URL, FI_SINGLE_URL } from '../../../../constants';
-import {
-  get137AdherenceIndicator,
-  get137Value,
-  renderClassificationRow,
-} from '../../../../helpers/indicators';
+import { renderClassificationRow } from '../../../../helpers/indicators';
 import '../../../../helpers/tables.css';
 import { extractPlan, getLocationColumns, RouteParams } from '../../../../helpers/utils';
 import supersetFetch from '../../../../services/superset';
@@ -31,8 +25,8 @@ import plansReducer, {
   Plan,
   reducerName as plansReducerName,
 } from '../../../../store/ducks/plans';
-import { plan1, plans } from '../../../../store/ducks/tests/fixtures';
-import { data } from './tests/fixtures';
+// import { plan1, plans } from '../../../../store/ducks/tests/fixtures';
+// import { data } from './tests/fixtures';
 
 /** register the plans reducer */
 reducerRegistry.register(plansReducerName, plansReducer);
@@ -46,7 +40,7 @@ export interface ActiveFIProps {
 /** default props for ActiveFI component */
 export const defaultActiveFIProps: ActiveFIProps = {
   fetchPlansActionCreator: fetchPlans,
-  plansArray: [plan1],
+  plansArray: [],
 };
 
 /** Reporting for Active Focus Investigations */
@@ -69,7 +63,6 @@ class ActiveFocusInvestigation extends React.Component<
     if (plansArray.length === 0) {
       return <Loading />;
     }
-    // const plansArray = plans;
     const thePlans = plansArray.map((item: Plan) => extractPlan(item));
     const locationColumns: Column[] = getLocationColumns(locationHierarchy, true);
     const otherColumns: Column[] = [
@@ -94,23 +87,6 @@ class ActiveFocusInvestigation extends React.Component<
           },
         ],
       },
-      // {
-      //   Header: 'Case Notif. Date',
-      //   columns: [
-      //     {
-      //       Cell: (cell: CellInfo) => {
-      //         return (
-      //           <div>
-      //             <a href="#date">{cell.value}</a>
-      //           </div>
-      //         );
-      //       },
-      //       Header: '',
-      //       accessor: 'caseNotificationDate',
-      //       minWidth: 120,
-      //     },
-      //   ],
-      // },
       {
         Header: 'Reason',
         columns: [
@@ -131,38 +107,28 @@ class ActiveFocusInvestigation extends React.Component<
           },
         ],
       },
-      // {
-      //   Header: 'Case Class.',
-      //   columns: [
-      //     {
-      //       Header: '',
-      //       accessor: 'caseClassification',
-      //     },
-      //   ],
-      // },
-      // {
-      //   Header: '1-3-7 adherence',
-      //   columns: [
-      //     {
-      //       Cell: (cell: CellInfo) => get137Value(cell.value),
-      //       Header: '1',
-      //       accessor: 'adherence1',
-      //       maxWidth: 40,
-      //     },
-      //     {
-      //       Cell: (cell: CellInfo) => get137Value(cell.value),
-      //       Header: '3',
-      //       accessor: 'adherence3',
-      //       maxWidth: 40,
-      //     },
-      //     {
-      //       Cell: (cell: CellInfo) => get137AdherenceIndicator(cell),
-      //       Header: '7',
-      //       accessor: 'adherence7',
-      //       maxWidth: 105,
-      //     },
-      //   ],
-      // },
+      {
+        Header: 'Case Notif. Date',
+        columns: [
+          {
+            Cell: (cell: CellInfo) => {
+              return <div>{cell.value}</div>;
+            },
+            Header: '',
+            accessor: 'caseNotificationDate',
+            minWidth: 120,
+          },
+        ],
+      },
+      {
+        Header: 'Case Class.',
+        columns: [
+          {
+            Header: '',
+            accessor: 'caseClassification',
+          },
+        ],
+      },
     ];
     const allColumns: Column[] = locationColumns.concat(otherColumns);
 
@@ -188,7 +154,6 @@ class ActiveFocusInvestigation extends React.Component<
         <Table className="definitions">
           <tbody>{FIClassifications.map(el => renderClassificationRow(el))}</tbody>
         </Table>
-        {/* <OneThreeSevenAdherence /> */}
       </div>
     );
   }
@@ -211,7 +176,7 @@ const mapStateToProps = (state: Partial<Store>): DispatchedStateProps => {
   return result;
 };
 
-const mapDispatchToProps = { fetchPlansActionCreator: fetchPlans, getPlans: getPlansArray };
+const mapDispatchToProps = { fetchPlansActionCreator: fetchPlans };
 
 /** create connected component */
 
