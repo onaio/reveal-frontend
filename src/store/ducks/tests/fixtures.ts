@@ -22,7 +22,7 @@ export const plan2 = {
   jurisdiction_path: ['2989', '2977'],
   plan_fi_reason: 'Case-triggered',
   plan_fi_status: 'A1',
-  plan_id: '10f9e9fa-ce34-4b27-a961-72fab5206ab6',
+  plan_id: 'plan-id-2',
   plan_status: 'active',
   plan_title: 'A1-Tha Luang Village 1 Focus 01',
 };
