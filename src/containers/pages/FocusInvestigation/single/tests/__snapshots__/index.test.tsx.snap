@@ -85,6 +85,7 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
     }
     planById={
       Object {
+        "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
         "jurisdiction_depth": 2,
         "jurisdiction_id": "3377",
         "jurisdiction_name": "NVI_439",
@@ -107,6 +108,7 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
     plansArray={
       Array [
         Object {
+          "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
           "jurisdiction_depth": 2,
           "jurisdiction_id": "3377",
           "jurisdiction_name": "NVI_439",
