@@ -1,5 +1,4 @@
 // this is the FocusInvestigation "active" page component
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import * as React from 'react';
 import { connect } from 'react-redux';
@@ -9,13 +8,7 @@ import { Store } from 'redux';
 import NotFound from '../../../../components/NotFound';
 import Loading from '../../../../components/page/Loading';
 import { SUPERSET_GOALS_SLICE, SUPERSET_PLANS_SLICE } from '../../../../configs/env';
-import {
-  FI_SINGLE_MAP_URL,
-  FI_SINGLE_URL,
-  FOCUS_AREA_INFO,
-  FOCUS_INVESTIGATION,
-} from '../../../../constants';
-import { get137Value } from '../../../../helpers/indicators';
+import { FOCUS_AREA_INFO, FOCUS_INVESTIGATION } from '../../../../constants';
 import ProgressBar from '../../../../helpers/ProgressBar';
 import { extractPlan, RouteParams } from '../../../../helpers/utils';
 import supersetFetch from '../../../../services/superset';
@@ -34,7 +27,6 @@ import plansReducer, {
   reducerName as plansReducerName,
 } from '../../../../store/ducks/plans';
 import * as fixtures from '../../../../store/ducks/tests/fixtures';
-import { dataByID, dataIds } from '../active/tests/fixtures';
 import './single.css';
 
 /** register the goals reducer */
@@ -80,24 +72,10 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
   }
 
   public render() {
-    // let id: number | string | null = null;
-
     const { goalsArray, planById, plansIdArray } = this.props;
 
-    // const planObjectIds = fixtures.plansIdArray;
     const planObjectIds = plansIdArray;
     const theGoals = goalsArray;
-
-    // if (this.props.match && this.props.match.params && this.props.match.params.id) {
-    //   id = String(this.props.match.params.id);
-    // }
-
-    // if (id === null || !planObjectIds.includes(id)) {
-    //   return <NotFound />;
-    // }
-
-    // const theObject = extractPlan(fixtures.plan1);
-    // const theGoals = fixtures.plan1Goals;
 
     if (!planById || !theGoals) {
       return <Loading />;
@@ -115,64 +93,21 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
             <h4 className="mb-4">{FOCUS_AREA_INFO}</h4>
             <div style={{ background: 'lightgrey', height: '200px' }} />
             <dl className="row mt-3">
-              {/* <dt className="col-5">Province</dt>
-              <dd className="col-7">{theObject.province}</dd> */}
               <dt className="col-5">District</dt>
               <dd className="col-7">{theObject.district}</dd>
               <dt className="col-5">Canton</dt>
               <dd className="col-7">{theObject.canton}</dd>
-              {/* <dt className="col-5">Village</dt>
-              <dd className="col-7">{theObject.village}</dd> */}
               <dt className="col-5">FI Reason</dt>
               <dd className="col-7">{theObject.reason}</dd>
               <dt className="col-5">FI Status</dt>
               <dd className="col-7">{theObject.status}</dd>
-              {/* <dt className="col-5">Last Visit</dt>
-              <dd className="col-7">{theObject.caseNotificationDate}</dd> */}
-              {/* <dt className="col-5">FI Response Adherence</dt>
-              <dd className="col-7">Yes</dd> */}
             </dl>
             <hr />
-            {/* <h5 className="mb-4 mt-4">Past Investigations</h5>
-            <Table>
-              <tbody>
-                <tr>
-                  <td>
-                    <a href={`${FI_SINGLE_MAP_URL}/13`}>
-                      <FontAwesomeIcon icon={['fas', 'map']} />
-                    </a>
-                    &nbsp;&nbsp;
-                    <a href={`${FI_SINGLE_URL}/13`}>{theObject.caseNotificationDate}</a>
-                  </td>
-                </tr>
-              </tbody>
-            </Table> */}
           </Col>
           <Col className="col-6">
             <div className="fi-active">
-              <h5 className="mb-4 mt-1">
-                {/* <a href={`${FI_SINGLE_MAP_URL}/13`}>
-                  <FontAwesomeIcon icon={['fas', 'map']} />
-                </a>
-                &nbsp;&nbsp;
-                <a href={`${FI_SINGLE_URL}/13`}>
-                  Active Investigation: {theObject.caseNotificationDate}
-                </a> */}
-                Active Investigation
-              </h5>
+              <h5 className="mb-4 mt-1">Active Investigation</h5>
               <dl className="row mt-3">
-                {/* <dt className="col-5">Reveal User</dt>
-                <dd className="col-7">username</dd>
-                <dt className="col-5">Case Notification Date</dt>
-                <dd className="col-7">{theObject.caseNotificationDate}</dd>
-                <dt className="col-5">Case Classification</dt>
-                <dd className="col-7">{theObject.caseClassification}</dd>
-                <dt className="col-5">1-3-7 Adherence</dt>
-                <dd className="col-7">
-                  {get137Value(theObject.adherence1)},&nbsp;
-                  {get137Value(theObject.adherence3)},&nbsp;
-                  {get137Value(theObject.adherence7)} days to go
-                </dd> */}
                 <dt className="col-5">Complete</dt>
                 <dd className="col-7">No</dd>
               </dl>
