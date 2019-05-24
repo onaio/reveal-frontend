@@ -13,7 +13,21 @@ export const plan1 = {
   plan_title: 'A1-Tha Luang Village 1 Focus 01',
 };
 
-export const plans = [plan1];
+export const plan2 = {
+  jurisdiction_depth: 2,
+  jurisdiction_id: '3378',
+  jurisdiction_name: 'TLv1_02',
+  jurisdiction_name_path: ['Canton Tha Luang', 'Tha Luang Village'],
+  jurisdiction_parent_id: '2977',
+  jurisdiction_path: ['2989', '2977'],
+  plan_fi_reason: 'Case-triggered',
+  plan_fi_status: 'A1',
+  plan_id: '10f9e9fa-ce34-4b27-a961-72fab5206ab6',
+  plan_status: 'active',
+  plan_title: 'A1-Tha Luang Village 1 Focus 01',
+};
+
+export const plans = [plan1, plan2];
 
 export const plansIdArray = [plan1.plan_id];
 
