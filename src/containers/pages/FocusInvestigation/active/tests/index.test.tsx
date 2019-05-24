@@ -1,11 +1,16 @@
+import reducerRegistry from '@onaio/redux-reducer-registry';
 import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import { createBrowserHistory } from 'history';
 import React from 'react';
+import { Provider } from 'react-redux';
 import { Router } from 'react-router';
-import * as supersetServices from '../../../../../services/superset';
+import store from '../../../../../store';
+import reducer, { fetchPlans, reducerName } from '../../../../../store/ducks/plans';
 import * as fixtures from '../../../../../store/ducks/tests/fixtures';
-import { ActiveFocusInvestigation } from '../../active';
+import ConnectedActiveFocusInvestigation, { ActiveFocusInvestigation } from '../../active';
+
+reducerRegistry.register(reducerName, reducer);
 
 const history = createBrowserHistory();
 
@@ -47,6 +52,28 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
       </Router>
     );
     expect(toJson(wrapper)).toMatchSnapshot();
+    wrapper.unmount();
+  });
+
+  it('works with the Redux store', () => {
+    store.dispatch(fetchPlans(fixtures.plans));
+    const mock: any = jest.fn();
+    mock.mockImplementation(() => Promise.resolve('supersetServices'));
+    const props = {
+      history,
+      location: mock,
+      match: mock,
+      supersetService: mock,
+    };
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedActiveFocusInvestigation {...props} />
+        </Router>
+      </Provider>
+    );
+    wrapper.update();
+    expect(toJson(wrapper.find('.ReactTable'))).toMatchSnapshot();
     wrapper.unmount();
   });
 });
