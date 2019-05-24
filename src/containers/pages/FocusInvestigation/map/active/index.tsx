@@ -107,9 +107,11 @@ class SingleActiveFIMap extends React.Component<
   public render() {
     const { jurisdiction, plan, goals, tasks } = this.props;
 
-    if (!jurisdiction || !plan) {
+    if (!goals || !jurisdiction || !plan || !tasks) {
       return <Loading />;
     }
+    // console.log(tasks);
+
     return (
       <div>
         <h2 className="page-title mt-4 mb-4">
@@ -118,7 +120,7 @@ class SingleActiveFIMap extends React.Component<
         <div className="row no-gutters">
           <div className="col-9">
             <div className="map">
-              <GisidaWrapper handlers={this.buildHandlers()} geoData={jurisdiction} tasks={tasks} />
+              <GisidaWrapper handlers={this.buildHandlers()} geoData={jurisdiction} task={tasks} />
             </div>
           </div>
           <div className="col-3">
@@ -176,9 +178,8 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
     jurisdiction = getJurisdictionById(state, plan.jurisdiction_id);
     goals = getGoalsArrayByPlanId(state, plan.plan_id);
   }
-  if (goals && goals.length > 1) {
-    /** DIRTY MANGY hack  to be improved by getting the goal_id from  the sidebar selection */
-    tasks = getTasksByGoalId(state, ownProps.selectedGoal);
+  if (goals) {
+    tasks = getTasksByGoalId(state, goals[1].goal_id);
   }
   return {
     goals,
