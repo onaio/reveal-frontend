@@ -129,3 +129,52 @@ export type ORANGE_THRESHOLD = typeof ORANGE_THRESHOLD;
 // 1-3-7 thresholds
 export const ONE = 0;
 export const ZERO = 0;
+
+export const pointLayerConfig = {
+  id: 'single-jurisdiction-20191910',
+  layout: {
+    'icon-image': 'circle-15',
+    'icon-size': 2,
+  },
+  minzoom: 1,
+  paint: {
+    'text-color': '#000',
+    'text-halo-blur': 1,
+    'text-halo-color': '#fff',
+    'text-halo-width': 1.3,
+  },
+  source: {
+    data: {
+      data: {
+        coordinates: [101.177725195885, 15.0658221308165],
+        type: 'Point',
+      },
+      type: 'stringified-geojson',
+    },
+    minzoom: 1,
+    type: 'geojson',
+  },
+  type: 'symbol',
+  visible: true,
+};
+
+export const lineLayerConfig = {
+  id: 'single-jurisdiction',
+  paint: {
+    'line-color': '#FFDC00',
+    'line-opacity': 1,
+    'line-width': 3,
+  },
+  source: {
+    data: {
+      data: {
+        coordinates: [101.177725195885, 15.0658221308165],
+        type: 'Point',
+      },
+      type: 'stringified-geojson',
+    },
+    type: 'geojson',
+  },
+  type: 'line',
+  visible: true,
+};
