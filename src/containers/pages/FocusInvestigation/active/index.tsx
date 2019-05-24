@@ -48,7 +48,7 @@ class ActiveFocusInvestigation extends React.Component<
   ActiveFIProps & RouteComponentProps<RouteParams>,
   {}
 > {
-  public static defaultProps = defaultActiveFIProps;
+  public static defaultProps: ActiveFIProps = defaultActiveFIProps;
   constructor(props: ActiveFIProps & RouteComponentProps<RouteParams>) {
     super(props);
   }
