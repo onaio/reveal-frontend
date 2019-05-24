@@ -120,9 +120,10 @@ export function extractPlan(plan: Plan) {
     caseNotificationDate: null,
     district: null,
     focusArea: plan.jurisdiction_name,
-    id: plan.plan_id,
+    id: plan.id,
     jurisdiction_id: plan.jurisdiction_parent_id,
     jurisdiction_parent_id: plan.jurisdiction_parent_id,
+    plan_id: plan.plan_id,
     province: null,
     reason: plan.plan_fi_reason,
     status: plan.plan_fi_status,
@@ -137,22 +138,24 @@ export function extractPlan(plan: Plan) {
     locationNames = plan.jurisdiction_name_path;
   }
 
-  locationNames.reverse();
+  if (locationNames) {
+    locationNames.reverse();
 
-  for (let i = 0; i < 4; i++) {
-    const locationName = locationNames[i];
-    if (locationName) {
-      if (i === 99) {
-        result.village = locationNames[i];
-      }
-      if (i === 0) {
-        result.canton = locationNames[i];
-      }
-      if (i === 1) {
-        result.district = locationNames[i];
-      }
-      if (i === 3) {
-        result.province = locationNames[i];
+    for (let i = 0; i < 4; i++) {
+      const locationName = locationNames[i];
+      if (locationName) {
+        if (i === 99) {
+          result.village = locationNames[i];
+        }
+        if (i === 0) {
+          result.canton = locationNames[i];
+        }
+        if (i === 1) {
+          result.district = locationNames[i];
+        }
+        if (i === 3) {
+          result.province = locationNames[i];
+        }
       }
     }
   }

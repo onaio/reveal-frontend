@@ -15,7 +15,7 @@ import * as fixtures from './fixtures';
 
 reducerRegistry.register(reducerName, reducer);
 
-describe('reducers/superset', () => {
+describe('reducers/plans', () => {
   let flushThunks;
 
   beforeEach(() => {
@@ -32,12 +32,12 @@ describe('reducers/superset', () => {
 
   it('should fetch plans', () => {
     store.dispatch(fetchPlans(fixtures.plans));
-    const expected = keyBy(fixtures.plans, (plan: Plan) => plan.plan_id);
+    const expected = keyBy(fixtures.plans, (plan: Plan) => plan.id);
     expect(getPlansById(store.getState())).toEqual(expected);
-    expect(getPlansIdArray(store.getState())).toEqual(['10f9e9fa-ce34-4b27-a961-72fab5206ab6']);
+    expect(getPlansIdArray(store.getState())).toEqual(['ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f']);
     expect(getPlansArray(store.getState())).toEqual(values(expected));
-    expect(getPlanById(store.getState(), '10f9e9fa-ce34-4b27-a961-72fab5206ab6')).toEqual(
-      expected['10f9e9fa-ce34-4b27-a961-72fab5206ab6']
+    expect(getPlanById(store.getState(), 'ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f')).toEqual(
+      expected['ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f']
     );
   });
 });

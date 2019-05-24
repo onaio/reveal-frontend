@@ -7,6 +7,7 @@ export const reducerName = 'plans';
 
 /** interface for plan Object */
 export interface Plan {
+  id: string;
   jurisdiction_depth: number;
   jurisdiction_id: string;
   jurisdiction_name: string;
@@ -65,7 +66,7 @@ export default function reducer(state = initialState, action: PlanActionTypes): 
  * @param {Plan[]} plansList - array of plan objects
  */
 export const fetchPlans = (plansList: Plan[]): FetchPlansAction => ({
-  plansById: keyBy(plansList, plan => plan.plan_id),
+  plansById: keyBy(plansList, plan => plan.id),
   type: PLANS_FETCHED,
 });
 

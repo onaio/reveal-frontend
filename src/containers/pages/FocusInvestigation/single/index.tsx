@@ -220,9 +220,14 @@ interface DispatchedStateProps {
 
 /** map state to props */
 const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateProps => {
+  const plan = getPlanById(state, ownProps.match.params.id);
+  let goalsArray = null;
+  if (plan) {
+    goalsArray = getGoalsArrayByPlanId(state, plan.plan_id);
+  }
   const result = {
-    goalsArray: getGoalsArrayByPlanId(state, ownProps.match.params.id),
-    planById: getPlanById(state, ownProps.match.params.id),
+    goalsArray,
+    planById: plan,
     plansArray: getPlansArray(state),
     plansIdArray: getPlansIdArray(state),
   };
