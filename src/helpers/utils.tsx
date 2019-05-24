@@ -2,6 +2,7 @@ import { getOnadataUserInfo, getOpenSRPUserInfo } from '@onaio/gatekeeper';
 import { SessionState } from '@onaio/session-reducer';
 import { uniq } from 'lodash';
 import { Column } from 'react-table';
+import SeamlessImmutable from 'seamless-immutable';
 import { ONADATA_OAUTH_STATE, OPENSRP_OAUTH_STATE } from '../configs/env';
 import { locationHierarchy, LocationItem } from '../configs/settings';
 import { Plan } from '../store/ducks/plans';
@@ -130,32 +131,31 @@ export function extractPlan(plan: Plan) {
     village: null,
   };
 
-  let locationNames: string[];
+  let locationNames: SeamlessImmutable.ImmutableArray<string>;
 
   if (typeof plan.jurisdiction_name_path === 'string') {
     locationNames = JSON.parse(plan.jurisdiction_name_path);
   } else {
-    locationNames = plan.jurisdiction_name_path;
+    locationNames = SeamlessImmutable(plan.jurisdiction_name_path);
   }
 
-  if (locationNames) {
-    locationNames.reverse();
+  const mutableLocationNames = locationNames.asMutable();
+  mutableLocationNames.reverse();
 
-    for (let i = 0; i < 4; i++) {
-      const locationName = locationNames[i];
-      if (locationName) {
-        if (i === 99) {
-          result.village = locationNames[i];
-        }
-        if (i === 0) {
-          result.canton = locationNames[i];
-        }
-        if (i === 1) {
-          result.district = locationNames[i];
-        }
-        if (i === 3) {
-          result.province = locationNames[i];
-        }
+  for (let i = 0; i < 4; i++) {
+    const locationName = mutableLocationNames[i];
+    if (locationName) {
+      if (i === 99) {
+        result.village = mutableLocationNames[i];
+      }
+      if (i === 0) {
+        result.canton = mutableLocationNames[i];
+      }
+      if (i === 1) {
+        result.district = mutableLocationNames[i];
+      }
+      if (i === 3) {
+        result.province = mutableLocationNames[i];
       }
     }
   }
