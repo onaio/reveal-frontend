@@ -20,10 +20,7 @@ interface GisidaState {
   doRenderMap: boolean;
   geoData: Jurisdiction;
   tasks: Task;
-<<<<<<< 927c0e93af8ec6a73f78fed66978a36e4ca71f17
   initMapWithoutTasks: boolean | false;
-=======
->>>>>>> fetch tasks/structures by goal_id
 }
 
 /** Returns a single layer configuration */
@@ -229,14 +226,6 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
     //   jurisdictionLayer.source.data
 
     // };
-
-    if (tasks) {
-      tasks = tasks.filter((d: FlexObject) => d.geometry !== null);
-    }
-    // if (tasks.length) {
-    //   tasks.forEach((element: FlexObject) => {});
-    // }
-
     const layers = [
       {
         id: `single-jurisdiction-${geoData.jurisdiction_id}`,
