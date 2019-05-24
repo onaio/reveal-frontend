@@ -108,8 +108,6 @@ class SingleActiveFIMap extends React.Component<
     if (!goals || !jurisdiction || !plan || !tasks) {
       return <Loading />;
     }
-    // console.log(tasks);
-
     return (
       <div>
         <h2 className="page-title mt-4 mb-4">
@@ -118,7 +116,7 @@ class SingleActiveFIMap extends React.Component<
         <div className="row no-gutters">
           <div className="col-9">
             <div className="map">
-              <GisidaWrapper handlers={this.buildHandlers()} geoData={jurisdiction} task={tasks} />
+              <GisidaWrapper handlers={this.buildHandlers()} geoData={jurisdiction} tasks={tasks} />
             </div>
           </div>
           <div className="col-3">
