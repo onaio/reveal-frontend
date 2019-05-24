@@ -1,5 +1,243 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
+<Provider
+  store={
+    Object {
+      "dispatch": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+      Symbol(observable): [Function],
+    }
+  }
+>
+  <Router
+    history={
+      Object {
+        "action": "POP",
+        "block": [Function],
+        "createHref": [Function],
+        "go": [Function],
+        "goBack": [Function],
+        "goForward": [Function],
+        "length": 1,
+        "listen": [Function],
+        "location": Object {
+          "hash": "",
+          "pathname": "/",
+          "search": "",
+          "state": undefined,
+        },
+        "push": [Function],
+        "replace": [Function],
+      }
+    }
+  >
+    <SingleFI
+      fetchGoalsActionCreator={[Function]}
+      fetchPlansActionCreator={[Function]}
+      goalsArray={Array []}
+      history={
+        Object {
+          "action": "POP",
+          "block": [Function],
+          "createHref": [Function],
+          "go": [Function],
+          "goBack": [Function],
+          "goForward": [Function],
+          "length": 1,
+          "listen": [Function],
+          "location": Object {
+            "hash": "",
+            "pathname": "/",
+            "search": "",
+            "state": undefined,
+          },
+          "push": [Function],
+          "replace": [Function],
+        }
+      }
+      location={[MockFunction]}
+      match={
+        Object {
+          "isExact": true,
+          "params": Object {
+            "id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+          },
+          "path": "/focus-investigation/view/:id",
+          "url": "/focus-investigation/view/16",
+        }
+      }
+      planById={
+        Object {
+          "jurisdiction_depth": 2,
+          "jurisdiction_id": "3377",
+          "jurisdiction_name": "NVI_439",
+          "jurisdiction_name_path": Array [
+            "Chadiza",
+            "Naviluli",
+          ],
+          "jurisdiction_parent_id": "2944",
+          "jurisdiction_path": Array [
+            "2939",
+            "2944",
+          ],
+          "plan_fi_reason": "Routine",
+          "plan_fi_status": "A1",
+          "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+          "plan_status": "active",
+          "plan_title": "A1-Tha Luang Village 1 Focus 01",
+        }
+      }
+      plansArray={Array []}
+      plansIdArray={Array []}
+    >
+      <div>
+        <h2
+          className="page-title mt-4 mb-5"
+        >
+          Focus Investigation
+           in 
+          NVI_439
+        </h2>
+        <Row
+          tag="div"
+        >
+          <div
+            className="row"
+          >
+            <Col
+              className="col-6"
+              tag="div"
+              widths={
+                Array [
+                  "xs",
+                  "sm",
+                  "md",
+                  "lg",
+                  "xl",
+                ]
+              }
+            >
+              <div
+                className="col-6 col"
+              >
+                <h4
+                  className="mb-4"
+                >
+                  Focus Area Information
+                </h4>
+                <div
+                  style={
+                    Object {
+                      "background": "lightgrey",
+                      "height": "200px",
+                    }
+                  }
+                />
+                <dl
+                  className="row mt-3"
+                >
+                  <dt
+                    className="col-5"
+                  >
+                    District
+                  </dt>
+                  <dd
+                    className="col-7"
+                  >
+                    Naviluli
+                  </dd>
+                  <dt
+                    className="col-5"
+                  >
+                    Canton
+                  </dt>
+                  <dd
+                    className="col-7"
+                  >
+                    Chadiza
+                  </dd>
+                  <dt
+                    className="col-5"
+                  >
+                    FI Reason
+                  </dt>
+                  <dd
+                    className="col-7"
+                  >
+                    Routine
+                  </dd>
+                  <dt
+                    className="col-5"
+                  >
+                    FI Status
+                  </dt>
+                  <dd
+                    className="col-7"
+                  >
+                    A1
+                  </dd>
+                </dl>
+                <hr />
+              </div>
+            </Col>
+            <Col
+              className="col-6"
+              tag="div"
+              widths={
+                Array [
+                  "xs",
+                  "sm",
+                  "md",
+                  "lg",
+                  "xl",
+                ]
+              }
+            >
+              <div
+                className="col-6 col"
+              >
+                <div
+                  className="fi-active"
+                >
+                  <h5
+                    className="mb-4 mt-1"
+                  >
+                    Active Investigation
+                  </h5>
+                  <dl
+                    className="row mt-3"
+                  >
+                    <dt
+                      className="col-5"
+                    >
+                      Complete
+                    </dt>
+                    <dd
+                      className="col-7"
+                    >
+                      No
+                    </dd>
+                  </dl>
+                  <hr />
+                  <h5
+                    className="mb-4 mt-4"
+                  >
+                    Response
+                  </h5>
+                </div>
+              </div>
+            </Col>
+          </div>
+        </Row>
+      </div>
+    </SingleFI>
+  </Router>
+</Provider>
+`;
+
 exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
 <Router
   history={
