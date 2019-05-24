@@ -8,6 +8,7 @@ import { MAP_ID, STRINGIFIED_GEOJSON } from '../../constants';
 import { ConfigStore, FlexObject } from '../../helpers/utils';
 import store from '../../store';
 import { Jurisdiction, JurisdictionGeoJSON } from '../../store/ducks/jurisdictions';
+import { Task } from '../../store/ducks/tasks';
 import './gisida.css';
 
 /** GisidaWrapper state interface */
@@ -17,6 +18,7 @@ interface GisidaState {
   doInitMap: boolean;
   doRenderMap: boolean;
   geoData: Jurisdiction;
+  tasks: Task;
 }
 
 /** Returns a single layer configuration */
@@ -38,6 +40,7 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
       doRenderMap: false,
       geoData: this.props.geoData || false,
       locations: this.props.locations || false,
+      tasks: this.props.tasks || false,
     };
 
     // 1. Register mapReducers in reducer registery;
@@ -109,6 +112,7 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
 
   // 3. Define map site-config object to init the store
   private initMap() {
+    let { tasks } = this.props;
     const { geoData } = this.props;
     const { locations, bounds } = this.state;
     if (!locations) {
@@ -135,6 +139,14 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
     //   jurisdictionLayer.source.data
 
     // };
+
+    if (tasks) {
+      tasks = tasks.filter((d: FlexObject) => d.geometry !== null);
+    }
+    // if (tasks.length) {
+    //   tasks.forEach((element: FlexObject) => {});
+    // }
+
     const layers = [
       {
         id: `single-jurisdiction-${geoData.jurisdiction_id}`,

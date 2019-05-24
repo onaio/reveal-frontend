@@ -9,6 +9,7 @@ import {
   SUPERSET_GOALS_SLICE,
   SUPERSET_JURISDICTIONS_SLICE,
   SUPERSET_PLANS_SLICE,
+  SUPERSET_STRUCTURES_SLICE,
 } from '../../../../../configs/env';
 import { FOCUS_INVESTIGATION } from '../../../../../constants';
 import { FlexObject, RouteParams } from '../../../../../helpers/utils';
@@ -33,6 +34,12 @@ import plansReducer, {
   Plan,
   reducerName as plansReducerName,
 } from '../../../../../store/ducks/plans';
+import tasksReducer, {
+  fetchTasks,
+  getTasksByGoalId,
+  reducerName as tasksReducerName,
+  Task,
+} from '../../../../../store/ducks/tasks';
 import * as fixtures from '../../../../../store/ducks/tests/fixtures';
 import './style.css';
 
@@ -40,16 +47,18 @@ import './style.css';
 reducerRegistry.register(jurisdictionReducerName, jurisdictionReducer);
 reducerRegistry.register(goalsReducerName, goalsReducer);
 reducerRegistry.register(plansReducerName, plansReducer);
+reducerRegistry.register(tasksReducerName, tasksReducer);
 
 /** interface to describe props for ActiveFI Map component */
 export interface MapSingleFIProps {
   fetchGoalsActionCreator: typeof fetchGoals;
   fetchJurisdictionsActionCreator: typeof fetchJurisdictions;
   fetchPlansActionCreator: typeof fetchPlans;
+  fetchTasksActionCreator: typeof fetchTasks;
   goals: Goal[] | null;
   jurisdiction: Jurisdiction | null;
   plan: Plan | null;
-  supersetService: typeof supersetFetch;
+  tasks: Task[] | null;
 }
 
 /** default props for ActiveFI Map component */
@@ -57,9 +66,11 @@ export const defaultMapSingleFIProps: MapSingleFIProps = {
   fetchGoalsActionCreator: fetchGoals,
   fetchJurisdictionsActionCreator: fetchJurisdictions,
   fetchPlansActionCreator: fetchPlans,
+  fetchTasksActionCreator: fetchTasks,
   goals: fixtures.plan1Goals,
   jurisdiction: fixtures.jurisdictions[0],
   plan: fixtures.plan1,
+  tasks: fixtures.tasks,
 };
 /** Map View for Single Active Focus Investigation */
 class SingleActiveFIMap extends React.Component<
@@ -76,6 +87,7 @@ class SingleActiveFIMap extends React.Component<
       fetchGoalsActionCreator,
       fetchJurisdictionsActionCreator,
       fetchPlansActionCreator,
+      fetchTasksActionCreator,
     } = this.props;
     await supersetFetch(SUPERSET_JURISDICTIONS_SLICE).then((result: Jurisdiction[]) =>
       fetchJurisdictionsActionCreator(result)
@@ -86,13 +98,17 @@ class SingleActiveFIMap extends React.Component<
     await supersetFetch(SUPERSET_GOALS_SLICE).then((result3: Goal[]) =>
       fetchGoalsActionCreator(result3)
     );
+    await supersetFetch(SUPERSET_STRUCTURES_SLICE).then((result4: Task[]) =>
+      fetchTasksActionCreator(result4)
+    );
   }
   public render() {
-    const { jurisdiction, plan, goals } = this.props;
+    const { jurisdiction, plan, goals, tasks } = this.props;
 
-    if (!goals || !jurisdiction || !plan) {
+    if (!goals || !jurisdiction || !plan || !tasks) {
       return <Loading />;
     }
+    // console.log(tasks);
 
     return (
       <div>
@@ -102,7 +118,7 @@ class SingleActiveFIMap extends React.Component<
         <div className="row no-gutters">
           <div className="col-9">
             <div className="map">
-              <GisidaWrapper handlers={this.buildHandlers()} geoData={jurisdiction} />
+              <GisidaWrapper handlers={this.buildHandlers()} geoData={jurisdiction} task={tasks} />
             </div>
           </div>
           <div className="col-3">
@@ -153,9 +169,13 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
   const plan = getPlanById(state, ownProps.match.params.id);
   let goals = null;
   let jurisdiction = null;
+  let tasks = null;
   if (plan) {
     jurisdiction = getJurisdictionById(state, plan.jurisdiction_id);
     goals = getGoalsArrayByPlanId(state, plan.plan_id);
+  }
+  if (goals) {
+    tasks = getTasksByGoalId(state, goals[1].goal_id);
   }
   return {
     goals,
@@ -163,6 +183,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
     plan,
     plansArray: getPlansArray(state),
     plansIdArray: getPlansIdArray(state),
+    tasks,
   };
 };
 
@@ -170,6 +191,7 @@ const mapDispatchToProps = {
   fetchGoalsActionCreator: fetchGoals,
   fetchJurisdictionsActionCreator: fetchJurisdictions,
   fetchPlansActionCreator: fetchPlans,
+  fetchTasksActionCreator: fetchTasks,
 };
 const ConnectedMapSingleFI = connect(
   mapStateToProps,
