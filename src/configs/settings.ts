@@ -68,11 +68,11 @@ export { providers };
  * locations hierarchically, from lowest to highest.
  */
 export const locationHierarchy: LocationItem[] = [
-  // {
-  //   identifier: 'province',
-  //   level: 1,
-  //   name: 'Province',
-  // },
+  {
+    identifier: 'province',
+    level: 1,
+    name: 'Province',
+  },
   {
     identifier: 'district',
     level: 2,
@@ -83,11 +83,11 @@ export const locationHierarchy: LocationItem[] = [
     level: 3,
     name: 'Canton',
   },
-  // {
-  //   identifier: 'village',
-  //   level: 4,
-  //   name: 'Village',
-  // },
+  {
+    identifier: 'village',
+    level: 4,
+    name: 'Village',
+  },
 ];
 
 /** Focus investigation configs */
