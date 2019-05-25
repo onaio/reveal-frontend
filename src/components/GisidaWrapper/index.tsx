@@ -81,7 +81,7 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
   public componentWillUpdate(nextProps: any, nextState: any) {
     if (this.state.locations && this.state.doInitMap) {
       this.setState({ doInitMap: false }, () => {
-        if (nextProps.tasks.length) {
+        if (nextProps.tasks && nextProps.tasks.length) {
           this.initMap(nextProps.tasks);
         }
       });
