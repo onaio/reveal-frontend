@@ -144,13 +144,13 @@ export function extractPlan(plan: Plan) {
     for (let i = 0; i < 4; i++) {
       const locationName = locationNames[i];
       if (locationName) {
-        if (i === 99) {
+        if (i === 0) {
           result.village = locationNames[i];
         }
-        if (i === 0) {
+        if (i === 1) {
           result.canton = locationNames[i];
         }
-        if (i === 1) {
+        if (i === 2) {
           result.district = locationNames[i];
         }
         if (i === 3) {
