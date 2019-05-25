@@ -680,9 +680,7 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
                 </dt>
                 <dd
                   className="col-7"
-                >
-                  Chadiza
-                </dd>
+                />
                 <dt
                   className="col-5"
                 >
@@ -691,7 +689,7 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
                 <dd
                   className="col-7"
                 >
-                  Naviluli
+                  Chadiza
                 </dd>
                 <dt
                   className="col-5"
