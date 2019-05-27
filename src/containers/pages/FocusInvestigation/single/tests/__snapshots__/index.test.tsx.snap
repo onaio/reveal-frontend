@@ -366,7 +366,9 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
         className="page-title mt-4 mb-5"
       >
         Focus Investigation
-         in 
+         
+        in
+         
         NVI_439
       </h2>
       <Row
@@ -506,13 +508,17 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
                     className="targetItem"
                   >
                     <p>
-                      Measure: 
+                      Measure
+                      : 
                       Case confirmation complete
                     </p>
                     <p>
-                      Target: 
+                      Target
+                      : 
                       0
-                       of 
+                       
+                      of
+                       
                       1
                     </p>
                     <ProgressBar
@@ -559,13 +565,17 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
                     className="targetItem"
                   >
                     <p>
-                      Measure: 
+                      Measure
+                      : 
                       Number of larval dipping activities
                     </p>
                     <p>
-                      Target: 
+                      Target
+                      : 
                       2
-                       of 
+                       
+                      of
+                       
                       3
                     </p>
                     <ProgressBar
