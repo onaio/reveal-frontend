@@ -25,7 +25,7 @@ export interface Geometry {
 
 /** GeoJSON object interface */
 export interface GeoJSON {
-  geometry: Geometry;
+  geometry: Geometry | null;
   id: string;
   properties: FlexObject;
   type: string;
