@@ -178,3 +178,24 @@ export const lineLayerConfig = {
   type: 'line',
   visible: true,
 };
+
+export const fillLayerConfig = {
+  id: 'single-jurisdiction',
+  paint: {
+    'fill-color': '#FFDC00',
+    'fill-opacity': 1,
+    'fill-outline-color': '#FFDC00',
+  },
+  source: {
+    data: {
+      data: {
+        coordinates: [101.177725195885, 15.0658221308165],
+        type: 'Point',
+      },
+      type: 'stringified-geojson',
+    },
+    type: 'geojson',
+  },
+  type: 'fill',
+  visible: true,
+};
