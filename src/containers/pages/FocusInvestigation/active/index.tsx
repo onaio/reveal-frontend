@@ -14,7 +14,17 @@ import DrillDownTableLinkedCell from '../../../../components/DrillDownTableLinke
 import Loading from '../../../../components/page/Loading';
 import { SUPERSET_PLANS_SLICE } from '../../../../configs/env';
 import { FIClassifications, locationHierarchy } from '../../../../configs/settings';
-import { FI_SINGLE_MAP_URL, FI_SINGLE_URL } from '../../../../constants';
+import {
+  ACTIVE_FOCUS_INVESTIGATION,
+  CASE_CLASSIFICATION_HEADER,
+  CASE_NOTIF_DATE_HEADER,
+  DEFINITIONS,
+  FI_SINGLE_MAP_URL,
+  FI_SINGLE_URL,
+  FOCUS_AREA_HEADER,
+  REASON_HEADER,
+  STATUS_HEADER,
+} from '../../../../constants';
 import { renderClassificationRow } from '../../../../helpers/indicators';
 import '../../../../helpers/tables.css';
 import { extractPlan, getLocationColumns, RouteParams } from '../../../../helpers/utils';
@@ -65,7 +75,7 @@ class ActiveFocusInvestigation extends React.Component<
     const locationColumns: Column[] = getLocationColumns(locationHierarchy, true);
     const otherColumns: Column[] = [
       {
-        Header: 'Focus Area',
+        Header: FOCUS_AREA_HEADER,
         columns: [
           {
             Cell: (cell: CellInfo) => {
@@ -86,7 +96,7 @@ class ActiveFocusInvestigation extends React.Component<
         ],
       },
       {
-        Header: 'Reason',
+        Header: REASON_HEADER,
         columns: [
           {
             Header: '',
@@ -96,7 +106,7 @@ class ActiveFocusInvestigation extends React.Component<
         ],
       },
       {
-        Header: 'Status',
+        Header: STATUS_HEADER,
         columns: [
           {
             Header: '',
@@ -106,7 +116,7 @@ class ActiveFocusInvestigation extends React.Component<
         ],
       },
       {
-        Header: 'Case Notif. Date',
+        Header: CASE_NOTIF_DATE_HEADER,
         columns: [
           {
             Cell: (cell: CellInfo) => {
@@ -119,7 +129,7 @@ class ActiveFocusInvestigation extends React.Component<
         ],
       },
       {
-        Header: 'Case Class.',
+        Header: CASE_CLASSIFICATION_HEADER,
         columns: [
           {
             Header: '',
@@ -146,9 +156,9 @@ class ActiveFocusInvestigation extends React.Component<
 
     return (
       <div>
-        <h3 className="mb-3 mt-5 page-title">Active Focus Investigations</h3>
+        <h3 className="mb-3 mt-5 page-title">{ACTIVE_FOCUS_INVESTIGATION}</h3>
         <DrillDownTable {...tableProps} />
-        <h5 className="mt-5">Definitions</h5>
+        <h5 className="mt-5">{DEFINITIONS}</h5>
         <Table className="definitions">
           <tbody>{FIClassifications.map(el => renderClassificationRow(el))}</tbody>
         </Table>
