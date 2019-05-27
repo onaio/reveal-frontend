@@ -105,7 +105,7 @@ class SingleActiveFIMap extends React.Component<
   public render() {
     const { jurisdiction, plan, goals, tasks } = this.props;
 
-    if (!goals || !jurisdiction || !plan || !tasks) {
+    if (!jurisdiction || !plan) {
       return <Loading />;
     }
     return (
