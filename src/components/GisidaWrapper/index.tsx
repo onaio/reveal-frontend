@@ -20,6 +20,7 @@ interface GisidaState {
   doRenderMap: boolean;
   geoData: Jurisdiction;
   tasks: Task;
+  initMapWithoutTasks: boolean | false;
 }
 
 /** Returns a single layer configuration */
@@ -40,6 +41,7 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
       doInitMap: false,
       doRenderMap: false,
       geoData: this.props.geoData || false,
+      initMapWithoutTasks: false,
       locations: this.props.locations || false,
       tasks: this.props.tasks || false,
     };
@@ -54,17 +56,31 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
     }
   }
 
+  public componentWillMount() {
+    if (!this.props.tasks) {
+      this.setState({
+        initMapWithoutTasks: true,
+      });
+    }
+  }
+
   public componentDidMount() {
     if (!this.state.locations) {
-      this.setState(() => {
-        this.getLocations(this.props.geoData);
-      });
+      this.setState(
+        {
+          doInitMap: true,
+          initMapWithoutTasks: false,
+        },
+        () => {
+          this.getLocations(this.props.geoData);
+        }
+      );
     }
   }
 
   public componentWillReceiveProps(nextProps: FlexObject) {
     /** check for types */
-    if (this.props.geoData !== nextProps.geoData) {
+    if (this.props.geoData !== nextProps.geoData && this.state.doRenderMap) {
       this.setState(
         {
           doRenderMap: false,
@@ -76,14 +92,21 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
         }
       );
     }
+    if (!nextProps.tasks && !this.state.initMapWithoutTasks) {
+      this.setState({ doInitMap: true, initMapWithoutTasks: true }, () => {
+        this.initMap(null);
+      });
+    }
   }
 
   public componentWillUpdate(nextProps: any, nextState: any) {
-    if (this.state.locations && this.state.doInitMap) {
-      this.setState({ doInitMap: false }, () => {
-        if (nextProps.tasks && nextProps.tasks.length) {
-          this.initMap(nextProps.tasks);
-        }
+    if (
+      this.state.locations &&
+      this.state.doInitMap &&
+      (nextProps.tasks && nextProps.tasks.length)
+    ) {
+      this.setState({ doInitMap: false, initMapWithoutTasks: false }, () => {
+        this.initMap(nextProps.tasks);
       });
     }
   }
@@ -116,64 +139,65 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
   // 3. Define map site-config object to init the store
   private initMap(tasks: any) {
     const symbolLayers: any[] = [];
-    let uniqueId = 0;
-    // Dirty Hack filter out null geoms
-    tasks = tasks.filter((d: any) => d.geometry);
-    tasks = tasks.filter((d: any) => d.geometry !== ' NULL');
-    tasks = tasks.filter((d: any) => d.geometry !== 'NULL');
-    if (tasks.length) {
-      // pop off null geoms
-      let polygons: any[] = [];
-      let points: any[] = [];
-      tasks = tasks.filter((d: FlexObject) => d.geometry !== null);
+    if (tasks) {
+      let uniqueId = 0;
+      // Dirty Hack filter out null geoms
+      tasks = tasks.filter((d: any) => d.geometry);
+      tasks = tasks.filter((d: any) => d.geometry !== ' NULL');
+      tasks = tasks.filter((d: any) => d.geometry !== 'NULL');
+      if (tasks.length) {
+        // pop off null geoms
+        let polygons: any[] = [];
+        let points: any[] = [];
+        tasks = tasks.filter((d: FlexObject) => d.geometry !== null);
 
-      // parse geometries
-      tasks = tasks.map((d: any) => JSON.parse(d.geometry));
-      // handle layers types
-      polygons = tasks.filter((d: any) => d.type === 'Polygon');
-      points = tasks.filter((d: any) => d.type === 'Point');
+        // parse geometries
+        tasks = tasks.map((d: any) => JSON.parse(d.geometry));
+        // handle layers types
+        polygons = tasks.filter((d: any) => d.type === 'Polygon');
+        points = tasks.filter((d: any) => d.type === 'Point');
 
-      if (points.length) {
-        points.forEach((element: FlexObject) => {
-          let geoJSONLayer = null;
-          uniqueId++;
-          geoJSONLayer = {
-            ...pointLayerConfig,
-            id: `single-jurisdiction-${uniqueId}`,
-            source: {
-              ...pointLayerConfig.source,
-              data: {
-                ...pointLayerConfig.source.data,
-                data: JSON.stringify({
-                  coordinates: element.coordinates,
-                  type: 'Point',
-                }),
+        if (points.length) {
+          points.forEach((element: FlexObject) => {
+            let geoJSONLayer = null;
+            uniqueId++;
+            geoJSONLayer = {
+              ...pointLayerConfig,
+              id: `single-jurisdiction-${uniqueId}`,
+              source: {
+                ...pointLayerConfig.source,
+                data: {
+                  ...pointLayerConfig.source.data,
+                  data: JSON.stringify({
+                    coordinates: element.coordinates,
+                    type: 'Point',
+                  }),
+                },
               },
-            },
-          };
-          symbolLayers.push(geoJSONLayer);
-        });
-      }
-      if (polygons.length) {
-        polygons.forEach((p: FlexObject) => {
-          let lineLayer = null;
-          uniqueId++;
-          lineLayer = {
-            ...lineLayerConfig,
-            id: `single-jurisdiction-${uniqueId}`,
-            source: {
-              ...lineLayerConfig.source,
-              data: {
-                ...lineLayerConfig.source.data,
-                data: JSON.stringify(p),
+            };
+            symbolLayers.push(geoJSONLayer);
+          });
+        }
+        if (polygons.length) {
+          polygons.forEach((p: FlexObject) => {
+            let lineLayer = null;
+            uniqueId++;
+            lineLayer = {
+              ...lineLayerConfig,
+              id: `single-jurisdiction-${uniqueId}`,
+              source: {
+                ...lineLayerConfig.source,
+                data: {
+                  ...lineLayerConfig.source.data,
+                  data: JSON.stringify(p),
+                },
               },
-            },
-          };
-          symbolLayers.push(lineLayer);
-        });
+            };
+            symbolLayers.push(lineLayer);
+          });
+        }
       }
     }
-
     const { geoData } = this.props;
     const { locations, bounds } = this.state;
     if (!locations) {
