@@ -90,8 +90,8 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
         "jurisdiction_id": "3377",
         "jurisdiction_name": "NVI_439",
         "jurisdiction_name_path": Array [
-          "Naviluli",
           "Chadiza",
+          "Naviluli",
         ],
         "jurisdiction_parent_id": "2944",
         "jurisdiction_path": Array [
@@ -113,8 +113,8 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
           "jurisdiction_id": "3377",
           "jurisdiction_name": "NVI_439",
           "jurisdiction_name_path": Array [
-            "Naviluli",
             "Chadiza",
+            "Naviluli",
           ],
           "jurisdiction_parent_id": "2944",
           "jurisdiction_path": Array [
@@ -124,6 +124,25 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
           "plan_fi_reason": "Routine",
           "plan_fi_status": "A1",
           "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+          "plan_status": "active",
+          "plan_title": "A1-Tha Luang Village 1 Focus 01",
+        },
+        Object {
+          "jurisdiction_depth": 2,
+          "jurisdiction_id": "3378",
+          "jurisdiction_name": "TLv1_02",
+          "jurisdiction_name_path": Array [
+            "Canton Tha Luang",
+            "Tha Luang Village",
+          ],
+          "jurisdiction_parent_id": "2977",
+          "jurisdiction_path": Array [
+            "2989",
+            "2977",
+          ],
+          "plan_fi_reason": "Case-triggered",
+          "plan_fi_status": "A1",
+          "plan_id": "plan-id-2",
           "plan_status": "active",
           "plan_title": "A1-Tha Luang Village 1 Focus 01",
         },
