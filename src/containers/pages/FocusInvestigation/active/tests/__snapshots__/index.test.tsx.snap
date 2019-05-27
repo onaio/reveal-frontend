@@ -55,8 +55,8 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
           "jurisdiction_id": "3377",
           "jurisdiction_name": "NVI_439",
           "jurisdiction_name_path": Array [
-            "Naviluli",
             "Chadiza",
+            "Naviluli",
           ],
           "jurisdiction_parent_id": "2944",
           "jurisdiction_path": Array [
@@ -74,8 +74,8 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
           "jurisdiction_id": "3378",
           "jurisdiction_name": "TLv1_02",
           "jurisdiction_name_path": Array [
-            "Tha Luang Village",
             "Canton Tha Luang",
+            "Tha Luang Village",
           ],
           "jurisdiction_parent_id": "2977",
           "jurisdiction_path": Array [
