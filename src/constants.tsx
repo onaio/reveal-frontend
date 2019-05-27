@@ -7,12 +7,26 @@ export const HOME = 'Home';
 export type HOME = typeof HOME;
 export const FOCUS_INVESTIGATION = 'Focus Investigation';
 export type FOCUS_INVESTIGATION = typeof FOCUS_INVESTIGATION;
+export const ACTIVE_FOCUS_INVESTIGATION = 'Active Focus Investigations';
+export type ACTIVE_FOCUS_INVESTIGATION = typeof ACTIVE_FOCUS_INVESTIGATION;
 export const FOCUS_AREA_INFO = 'Focus Area Information';
 export type FOCUS_AREA_INFO = typeof FOCUS_AREA_INFO;
 export const FOCUS_INVESTIGATIONS = 'Focus Investigations';
 export type FOCUS_INVESTIGATIONS = typeof FOCUS_INVESTIGATIONS;
 export const MAP_ID = 'map-1';
 export const STRINGIFIED_GEOJSON = 'stringified-geojson';
+export const FOCUS_AREA_HEADER = 'Focus Area';
+export type FOCUS_AREA_HEADER = typeof FOCUS_AREA_HEADER;
+export const REASON_HEADER = 'Reason';
+export type REASON_HEADER = typeof REASON_HEADER;
+export const STATUS_HEADER = 'Status';
+export type STATUS_HEADER = typeof STATUS_HEADER;
+export const CASE_NOTIF_DATE_HEADER = 'Case Notif. Date';
+export type CASE_NOTIF_DATE_HEADER = typeof CASE_NOTIF_DATE_HEADER;
+export const CASE_CLASSIFICATION_HEADER = 'Case Class.';
+export type CASE_CLASSIFICATION_HEADER = typeof CASE_CLASSIFICATION_HEADER;
+export const DEFINITIONS = 'Definitions';
+export type DEFINITIONS = typeof DEFINITIONS;
 
 // internal urls
 export const LOGIN_URL = '/login';
