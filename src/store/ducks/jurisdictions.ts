@@ -1,12 +1,13 @@
 import { get, keyBy, keys, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
 import SeamlessImmutable from 'seamless-immutable';
-import { GeoJSON } from '../../helpers/utils';
+import { GeoJSON, Geometry } from '../../helpers/utils';
 
 export const reducerName = 'jurisdictions';
 
 /** interface for jurisdiction GeoJSON */
 export interface JurisdictionGeoJSON extends GeoJSON {
+  geometry: Geometry;
   properties: {
     jurisdiction_name: string;
     jurisdiction_parent_id: string;
