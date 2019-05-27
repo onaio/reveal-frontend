@@ -28,6 +28,31 @@ export const plan2 = {
   plan_title: 'A1-Tha Luang Village 1 Focus 01',
 };
 
+export const plan3 = {
+  id: '1502e539',
+  jurisdiction_depth: 4,
+  jurisdiction_id: '450fc15b-5bd2-468a-927a-49cb10d3bcac',
+  jurisdiction_name: 'TLv1_01',
+  jurisdiction_name_path: JSON.stringify([
+    'Lop Buri',
+    'District Tha Luang',
+    'Canton Tha Luang',
+    'Tha Luang Village 1',
+  ]),
+  jurisdiction_parent_id: 'dad42fa6-b9b8-4658-bf25-bfa7ab5b16ae',
+  jurisdiction_path: JSON.stringify([
+    '9c3c2db4-bddd-44c5-870a-a0eef539e4da',
+    '1d16510a-4ae1-453d-9c55-60d966818f47',
+    '872cc59e-0bce-427a-bd1f-6ef674dba8e2',
+    'dad42fa6-b9b8-4658-bf25-bfa7ab5b16ae',
+  ]),
+  plan_fi_reason: 'Routine',
+  plan_fi_status: 'A1',
+  plan_id: '10f9e9fa-ce34-4b27-a961-72fab5206ab6',
+  plan_status: 'active',
+  plan_title: 'A1-Tha Luang Village 1 Focus 01',
+};
+
 export const plans = [plan1, plan2];
 
 export const plansIdArray = [plan1.plan_id];
