@@ -1,15 +1,21 @@
 import { get, keyBy, keys, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
-import { FlexObject } from '../../helpers/utils';
+import { GeoJSON } from '../../helpers/utils';
 
 export const reducerName = 'jurisdictions';
 
+/** interface for jurisdiction GeoJSON */
+export interface JurisdictionGeoJSON extends GeoJSON {
+  properties: {
+    jurisdiction_name: string;
+    jurisdiction_parent_id: string;
+  };
+}
+
 /** interface to describe Jurisdiction */
 export interface Jurisdiction {
+  geojson: JurisdictionGeoJSON;
   jurisdiction_id: string;
-  jurisdiction_name: string;
-  jurisdiction_parent_id: string;
-  geometry: FlexObject;
 }
 
 // actions
