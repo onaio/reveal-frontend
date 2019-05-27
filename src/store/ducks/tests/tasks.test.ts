@@ -60,4 +60,52 @@ describe('reducers/tasks', () => {
       [fixtures.task1]
     );
   });
+
+  it('should save tasks correctly', () => {
+    store.dispatch(fetchTasks([fixtures.task76] as any));
+    const task76FromStore = getTaskById(store.getState(), 'moshT');
+    expect(task76FromStore).not.toBeNull();
+    if (task76FromStore) {
+      expect(task76FromStore).toEqual({
+        geojson: {
+          geometry: {
+            coordinates: [
+              [
+                [101.177725195885, 15.0658221308165],
+                [101.177684962749, 15.0657263002127],
+                [101.177778840065, 15.0656848599382],
+                [101.177832484245, 15.0657781005444],
+                [101.177725195885, 15.0658221308165],
+              ],
+            ],
+            type: 'Polygon',
+          },
+          id: 'moshT',
+          properties: {
+            action_code: 'Bednet Distribution',
+            goal_id: 'RACD_bednet_dist_1km_radius',
+            jurisdiction_id: '450fc15b-5bd2-468a-927a-49cb10d3bcac',
+            jurisdiction_name: 'TLv1_01',
+            jurisdiction_parent_id: 'dad42fa6-b9b8-4658-bf25-bfa7ab5b16ae',
+            plan_id: '10f9e9fa-ce34-4b27-a961-72fab5206ab6',
+            structure_code: 'da765947-5e4d-49f7-9eb8-2d2d00681f65',
+            structure_id: 'da765947-5e4d-49f7-9eb8-2d2d00681f65',
+            structure_name: 'da765947-5e4d-49f7-9eb8-2d2d00681f65',
+            structure_type: 'da765947-5e4d-49f7-9eb8-2d2d00681f65',
+            task_business_status: 'Not Visited',
+            task_execution_end_date: '2019-04-01',
+            task_execution_start_date: '2019-04-08',
+            task_focus: 'Bednet Distribution',
+            task_status: 'Ready',
+            task_task_for: 'da765947-5e4d-49f7-9eb8-2d2d00681f65',
+          },
+          type: 'Feature',
+        },
+        goal_id: 'RACD_bednet_dist_1km_radius',
+        jurisdiction_id: '450fc15b-5bd2-468a-927a-49cb10d3bcac',
+        plan_id: '10f9e9fa-ce34-4b27-a961-72fab5206ab6',
+        task_identifier: 'moshT',
+      });
+    }
+  });
 });
