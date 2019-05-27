@@ -14,6 +14,7 @@ export const plan1 = {
 };
 
 export const plan2 = {
+  id: 'plan-id-2',
   jurisdiction_depth: 2,
   jurisdiction_id: '3378',
   jurisdiction_name: 'TLv1_02',
