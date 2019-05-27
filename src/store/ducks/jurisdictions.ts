@@ -65,9 +65,22 @@ export default function reducer(
  * @param {Jurisdiction[]} jurisdictionList - array of jurisdiction objects
  * @returns {FetchJurisdictionAction} FetchJurisdictionAction
  */
-export const fetchJurisdictions = (jurisdictionList: Jurisdiction[]) => {
+export const fetchJurisdictions = (jurisdictionList: Jurisdiction[] = []) => {
   return {
-    jurisdictionsById: keyBy(jurisdictionList, jurisdiction => jurisdiction.jurisdiction_id),
+    jurisdictionsById: keyBy(
+      jurisdictionList.map((item: Jurisdiction) => {
+        /** ensure geojson is parsed */
+        if (typeof item.geojson === 'string') {
+          item.geojson = JSON.parse(item.geojson);
+        }
+        /** ensure geometry is parsed */
+        if (typeof item.geojson.geometry === 'string') {
+          item.geojson.geometry = JSON.parse(item.geojson.geometry);
+        }
+        return item;
+      }),
+      jurisdiction => jurisdiction.jurisdiction_id
+    ),
     type: FETCH_JURISDICTION,
   };
 };
