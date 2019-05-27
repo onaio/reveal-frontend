@@ -34,10 +34,7 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
       }
     }
   >
-    <SingleFI
-      fetchGoalsActionCreator={[Function]}
-      fetchPlansActionCreator={[Function]}
-      goalsArray={Array []}
+    <Connect(SingleFI)
       history={
         Object {
           "action": "POP",
@@ -69,171 +66,142 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
           "url": "/focus-investigation/view/16",
         }
       }
-      planById={
-        Object {
-          "jurisdiction_depth": 2,
-          "jurisdiction_id": "3377",
-          "jurisdiction_name": "NVI_439",
-          "jurisdiction_name_path": Array [
-            "Chadiza",
-            "Naviluli",
-          ],
-          "jurisdiction_parent_id": "2944",
-          "jurisdiction_path": Array [
-            "2939",
-            "2944",
-          ],
-          "plan_fi_reason": "Routine",
-          "plan_fi_status": "A1",
-          "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
-          "plan_status": "active",
-          "plan_title": "A1-Tha Luang Village 1 Focus 01",
-        }
-      }
-      plansArray={Array []}
-      plansIdArray={Array []}
     >
-      <div>
-        <h2
-          className="page-title mt-4 mb-5"
-        >
-          Focus Investigation
-           in 
-          NVI_439
-        </h2>
-        <Row
-          tag="div"
+      <SingleFI
+        fetchGoalsActionCreator={[Function]}
+        fetchPlansActionCreator={[Function]}
+        goalsArray={null}
+        history={
+          Object {
+            "action": "POP",
+            "block": [Function],
+            "createHref": [Function],
+            "go": [Function],
+            "goBack": [Function],
+            "goForward": [Function],
+            "length": 1,
+            "listen": [Function],
+            "location": Object {
+              "hash": "",
+              "pathname": "/",
+              "search": "",
+              "state": undefined,
+            },
+            "push": [Function],
+            "replace": [Function],
+          }
+        }
+        location={[MockFunction]}
+        match={
+          Object {
+            "isExact": true,
+            "params": Object {
+              "id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+            },
+            "path": "/focus-investigation/view/:id",
+            "url": "/focus-investigation/view/16",
+          }
+        }
+        planById={null}
+        plansArray={
+          Array [
+            Object {
+              "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
+              "jurisdiction_depth": 2,
+              "jurisdiction_id": "3377",
+              "jurisdiction_name": "NVI_439",
+              "jurisdiction_name_path": Array [
+                "Chadiza",
+                "Naviluli",
+              ],
+              "jurisdiction_parent_id": "2944",
+              "jurisdiction_path": Array [
+                "2939",
+                "2944",
+              ],
+              "plan_fi_reason": "Routine",
+              "plan_fi_status": "A1",
+              "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+              "plan_status": "active",
+              "plan_title": "A1-Tha Luang Village 1 Focus 01",
+            },
+            Object {
+              "id": "plan-id-2",
+              "jurisdiction_depth": 2,
+              "jurisdiction_id": "3378",
+              "jurisdiction_name": "TLv1_02",
+              "jurisdiction_name_path": Array [
+                "Canton Tha Luang",
+                "Tha Luang Village",
+              ],
+              "jurisdiction_parent_id": "2977",
+              "jurisdiction_path": Array [
+                "2989",
+                "2977",
+              ],
+              "plan_fi_reason": "Case-triggered",
+              "plan_fi_status": "A1",
+              "plan_id": "plan-id-2",
+              "plan_status": "active",
+              "plan_title": "A1-Tha Luang Village 1 Focus 01",
+            },
+          ]
+        }
+        plansIdArray={
+          Array [
+            "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
+            "plan-id-2",
+          ]
+        }
+      >
+        <Ripple
+          borderColor="#ff5d00"
+          borderStyle="solid"
+          borderWidth="4px"
+          height="64px"
+          minHeight="80vh"
+          width="64px"
         >
           <div
-            className="row"
+            className="lds-ripple-parent"
+            style={
+              Object {
+                "minHeight": "80vh",
+              }
+            }
           >
-            <Col
-              className="col-6"
-              tag="div"
-              widths={
-                Array [
-                  "xs",
-                  "sm",
-                  "md",
-                  "lg",
-                  "xl",
-                ]
+            <div
+              className="lds-ripple"
+              style={
+                Object {
+                  "height": "64px",
+                  "width": "64px",
+                }
               }
             >
               <div
-                className="col-6 col"
-              >
-                <h4
-                  className="mb-4"
-                >
-                  Focus Area Information
-                </h4>
-                <div
-                  style={
-                    Object {
-                      "background": "lightgrey",
-                      "height": "200px",
-                    }
+                style={
+                  Object {
+                    "borderColor": "#ff5d00",
+                    "borderStyle": "solid",
+                    "borderWidth": "4px",
                   }
-                />
-                <dl
-                  className="row mt-3"
-                >
-                  <dt
-                    className="col-5"
-                  >
-                    District
-                  </dt>
-                  <dd
-                    className="col-7"
-                  >
-                    Naviluli
-                  </dd>
-                  <dt
-                    className="col-5"
-                  >
-                    Canton
-                  </dt>
-                  <dd
-                    className="col-7"
-                  >
-                    Chadiza
-                  </dd>
-                  <dt
-                    className="col-5"
-                  >
-                    FI Reason
-                  </dt>
-                  <dd
-                    className="col-7"
-                  >
-                    Routine
-                  </dd>
-                  <dt
-                    className="col-5"
-                  >
-                    FI Status
-                  </dt>
-                  <dd
-                    className="col-7"
-                  >
-                    A1
-                  </dd>
-                </dl>
-                <hr />
-              </div>
-            </Col>
-            <Col
-              className="col-6"
-              tag="div"
-              widths={
-                Array [
-                  "xs",
-                  "sm",
-                  "md",
-                  "lg",
-                  "xl",
-                ]
-              }
-            >
+                }
+              />
               <div
-                className="col-6 col"
-              >
-                <div
-                  className="fi-active"
-                >
-                  <h5
-                    className="mb-4 mt-1"
-                  >
-                    Active Investigation
-                  </h5>
-                  <dl
-                    className="row mt-3"
-                  >
-                    <dt
-                      className="col-5"
-                    >
-                      Complete
-                    </dt>
-                    <dd
-                      className="col-7"
-                    >
-                      No
-                    </dd>
-                  </dl>
-                  <hr />
-                  <h5
-                    className="mb-4 mt-4"
-                  >
-                    Response
-                  </h5>
-                </div>
-              </div>
-            </Col>
+                style={
+                  Object {
+                    "borderColor": "#ff5d00",
+                    "borderStyle": "solid",
+                    "borderWidth": "4px",
+                  }
+                }
+              />
+            </div>
           </div>
-        </Row>
-      </div>
-    </SingleFI>
+        </Ripple>
+      </SingleFI>
+    </Connect(SingleFI)>
   </Router>
 </Provider>
 `;
