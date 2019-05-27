@@ -137,49 +137,50 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
   }
 
   // 3. Define map site-config object to init the store
-  private initMap(tasks: any) {
+  private initMap(tasks: Task[] | null) {
     const symbolLayers: any[] = [];
     if (tasks) {
       let uniqueId = 0;
       // Dirty Hack filter out null geoms
-      tasks = tasks.filter((d: any) => d.geometry);
-      tasks = tasks.filter((d: any) => d.geometry !== ' NULL');
-      tasks = tasks.filter((d: any) => d.geometry !== 'NULL');
-      if (tasks.length) {
+      tasks = tasks.filter((d: Task) => {
+        return d.geojson.geometry !== null;
+      });
+      if (tasks.length > 0) {
         // pop off null geoms
-        let polygons: any[] = [];
-        let points: any[] = [];
-        tasks = tasks.filter((d: FlexObject) => d.geometry !== null);
+        let polygons: Task[] = [];
+        let points: Task[] = [];
+        tasks = tasks.filter((d: Task) => d.geojson.geometry !== null);
 
-        // parse geometries
-        tasks = tasks.map((d: any) => JSON.parse(d.geometry));
         // handle layers types
-        polygons = tasks.filter((d: any) => d.type === 'Polygon');
-        points = tasks.filter((d: any) => d.type === 'Point');
+        polygons = tasks.filter(
+          (d: Task) => d.geojson.geometry && d.geojson.geometry.type === 'Polygon'
+        );
+        points = tasks.filter(
+          (d: Task) => d.geojson.geometry && d.geojson.geometry.type === 'Point'
+        );
 
         if (points.length) {
-          points.forEach((element: FlexObject) => {
+          points.forEach((element: Task) => {
             let geoJSONLayer = null;
-            uniqueId++;
-            geoJSONLayer = {
-              ...pointLayerConfig,
-              id: `single-jurisdiction-${uniqueId}`,
-              source: {
-                ...pointLayerConfig.source,
-                data: {
-                  ...pointLayerConfig.source.data,
-                  data: JSON.stringify({
-                    coordinates: element.coordinates,
-                    type: 'Point',
-                  }),
+            if (element.geojson.geometry) {
+              uniqueId++;
+              geoJSONLayer = {
+                ...pointLayerConfig,
+                id: `single-jurisdiction-${uniqueId}`,
+                source: {
+                  ...pointLayerConfig.source,
+                  data: {
+                    ...pointLayerConfig.source.data,
+                    data: JSON.stringify(element.geojson.geometry),
+                  },
                 },
-              },
-            };
+              };
+            }
             symbolLayers.push(geoJSONLayer);
           });
         }
         if (polygons.length) {
-          polygons.forEach((p: FlexObject) => {
+          polygons.forEach((p: Task) => {
             let lineLayer = null;
             uniqueId++;
             lineLayer = {
@@ -189,7 +190,7 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
                 ...lineLayerConfig.source,
                 data: {
                   ...lineLayerConfig.source.data,
-                  data: JSON.stringify(p),
+                  data: JSON.stringify(p.geojson),
                 },
               },
             };
