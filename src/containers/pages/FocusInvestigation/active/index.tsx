@@ -25,8 +25,6 @@ import plansReducer, {
   Plan,
   reducerName as plansReducerName,
 } from '../../../../store/ducks/plans';
-// import { plan1, plans } from '../../../../store/ducks/tests/fixtures';
-// import { data } from './tests/fixtures';
 
 /** register the plans reducer */
 reducerRegistry.register(plansReducerName, plansReducer);
