@@ -23,6 +23,14 @@ export interface Geometry {
   type: string;
 }
 
+/** GeoJSON object interface */
+export interface GeoJSON {
+  geometry: Geometry;
+  id: string;
+  properties: FlexObject;
+  type: string;
+}
+
 /** Returns a number as a decimal e.g. 0.18 becomes 18% */
 export function percentage(num: number, decimalPoints: number = 0) {
   return `${(num * 100).toFixed(decimalPoints)}%`;
