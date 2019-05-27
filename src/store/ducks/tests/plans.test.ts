@@ -34,7 +34,10 @@ describe('reducers/plans', () => {
     store.dispatch(fetchPlans(fixtures.plans));
     const expected = keyBy(fixtures.plans, (plan: Plan) => plan.id);
     expect(getPlansById(store.getState())).toEqual(expected);
-    expect(getPlansIdArray(store.getState())).toEqual(['ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f']);
+    expect(getPlansIdArray(store.getState())).toEqual([
+      'ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f',
+      'plan-id-2',
+    ]);
     expect(getPlansArray(store.getState())).toEqual(values(expected));
     expect(getPlanById(store.getState(), 'ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f')).toEqual(
       expected['ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f']
