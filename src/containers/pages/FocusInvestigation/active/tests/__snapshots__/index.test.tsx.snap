@@ -70,6 +70,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
           "plan_title": "A1-Tha Luang Village 1 Focus 01",
         },
         Object {
+          "id": "plan-id-2",
           "jurisdiction_depth": 2,
           "jurisdiction_id": "3378",
           "jurisdiction_name": "TLv1_02",
@@ -199,6 +200,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
               "id": "plan-id-2",
               "jurisdiction_id": "2977",
               "jurisdiction_parent_id": "2977",
+              "plan_id": "plan-id-2",
               "province": null,
               "reason": "Case-triggered",
               "status": "A1",
@@ -370,6 +372,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                 "id": "plan-id-2",
                 "jurisdiction_id": "2977",
                 "jurisdiction_parent_id": "2977",
+                "plan_id": "plan-id-2",
                 "province": null,
                 "reason": "Case-triggered",
                 "status": "A1",
@@ -1452,9 +1455,10 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                       "caseNotificationDate": null,
                                       "district": "Chadiza",
                                       "focusArea": "NVI_439",
-                                      "id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+                                      "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
                                       "jurisdiction_id": "2944",
                                       "jurisdiction_parent_id": "2944",
+                                      "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
                                       "province": null,
                                       "reason": "Routine",
                                       "status": "A1",
@@ -1474,9 +1478,10 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                         "caseNotificationDate": null,
                                         "district": "Chadiza",
                                         "focusArea": "NVI_439",
-                                        "id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+                                        "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
                                         "jurisdiction_id": "2944",
                                         "jurisdiction_parent_id": "2944",
+                                        "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
                                         "province": null,
                                         "reason": "Routine",
                                         "status": "A1",
@@ -1708,6 +1713,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                       "id": "plan-id-2",
                                       "jurisdiction_id": "2977",
                                       "jurisdiction_parent_id": "2977",
+                                      "plan_id": "plan-id-2",
                                       "province": null,
                                       "reason": "Case-triggered",
                                       "status": "A1",
@@ -1730,6 +1736,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                         "id": "plan-id-2",
                                         "jurisdiction_id": "2977",
                                         "jurisdiction_parent_id": "2977",
+                                        "plan_id": "plan-id-2",
                                         "province": null,
                                         "reason": "Case-triggered",
                                         "status": "A1",
@@ -1982,6 +1989,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                       "id": "plan-id-2",
                                       "jurisdiction_id": "2977",
                                       "jurisdiction_parent_id": "2977",
+                                      "plan_id": "plan-id-2",
                                       "province": null,
                                       "reason": "Case-triggered",
                                       "status": "A1",
@@ -2004,6 +2012,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                         "id": "plan-id-2",
                                         "jurisdiction_id": "2977",
                                         "jurisdiction_parent_id": "2977",
+                                        "plan_id": "plan-id-2",
                                         "province": null,
                                         "reason": "Case-triggered",
                                         "status": "A1",
@@ -2962,9 +2971,10 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
                             "caseNotificationDate": null,
                             "district": "Chadiza",
                             "focusArea": "NVI_439",
-                            "id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+                            "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
                             "jurisdiction_id": "2944",
                             "jurisdiction_parent_id": "2944",
+                            "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
                             "province": null,
                             "reason": "Routine",
                             "status": "A1",
@@ -2984,9 +2994,10 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
                               "caseNotificationDate": null,
                               "district": "Chadiza",
                               "focusArea": "NVI_439",
-                              "id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+                              "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
                               "jurisdiction_id": "2944",
                               "jurisdiction_parent_id": "2944",
+                              "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
                               "province": null,
                               "reason": "Routine",
                               "status": "A1",
@@ -3019,10 +3030,10 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
                         <div>
                           <Link
                             replace={false}
-                            to="/focus-investigation/map/10f9e9fa-ce34-4b27-a961-72fab5206ab6"
+                            to="/focus-investigation/map/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
                           >
                             <a
-                              href="/focus-investigation/map/10f9e9fa-ce34-4b27-a961-72fab5206ab6"
+                              href="/focus-investigation/map/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
                               onClick={[Function]}
                             >
                               <FontAwesomeIcon
@@ -3071,10 +3082,10 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
                             
                           <Link
                             replace={false}
-                            to="/focus-investigation/view/10f9e9fa-ce34-4b27-a961-72fab5206ab6"
+                            to="/focus-investigation/view/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
                           >
                             <a
-                              href="/focus-investigation/view/10f9e9fa-ce34-4b27-a961-72fab5206ab6"
+                              href="/focus-investigation/view/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
                               onClick={[Function]}
                             >
                               NVI_439
@@ -3236,9 +3247,10 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
                             "caseNotificationDate": null,
                             "district": "Chadiza",
                             "focusArea": "NVI_439",
-                            "id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+                            "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
                             "jurisdiction_id": "2944",
                             "jurisdiction_parent_id": "2944",
+                            "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
                             "province": null,
                             "reason": "Routine",
                             "status": "A1",
@@ -3258,9 +3270,10 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
                               "caseNotificationDate": null,
                               "district": "Chadiza",
                               "focusArea": "NVI_439",
-                              "id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+                              "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
                               "jurisdiction_id": "2944",
                               "jurisdiction_parent_id": "2944",
+                              "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
                               "province": null,
                               "reason": "Routine",
                               "status": "A1",
@@ -3492,6 +3505,7 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
                             "id": "plan-id-2",
                             "jurisdiction_id": "2977",
                             "jurisdiction_parent_id": "2977",
+                            "plan_id": "plan-id-2",
                             "province": null,
                             "reason": "Case-triggered",
                             "status": "A1",
@@ -3514,6 +3528,7 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
                               "id": "plan-id-2",
                               "jurisdiction_id": "2977",
                               "jurisdiction_parent_id": "2977",
+                              "plan_id": "plan-id-2",
                               "province": null,
                               "reason": "Case-triggered",
                               "status": "A1",
@@ -3766,6 +3781,7 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
                             "id": "plan-id-2",
                             "jurisdiction_id": "2977",
                             "jurisdiction_parent_id": "2977",
+                            "plan_id": "plan-id-2",
                             "province": null,
                             "reason": "Case-triggered",
                             "status": "A1",
@@ -3788,6 +3804,7 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
                               "id": "plan-id-2",
                               "jurisdiction_id": "2977",
                               "jurisdiction_parent_id": "2977",
+                              "plan_id": "plan-id-2",
                               "province": null,
                               "reason": "Case-triggered",
                               "status": "A1",

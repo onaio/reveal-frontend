@@ -128,6 +128,7 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
           "plan_title": "A1-Tha Luang Village 1 Focus 01",
         },
         Object {
+          "id": "plan-id-2",
           "jurisdiction_depth": 2,
           "jurisdiction_id": "3378",
           "jurisdiction_name": "TLv1_02",
