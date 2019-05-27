@@ -1,15 +1,22 @@
 import { get, keyBy, keys, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
-import { FlexObject } from '../../helpers/utils';
+import SeamlessImmutable from 'seamless-immutable';
+import { GeoJSON } from '../../helpers/utils';
 
 export const reducerName = 'jurisdictions';
 
+/** interface for jurisdiction GeoJSON */
+export interface JurisdictionGeoJSON extends GeoJSON {
+  properties: {
+    jurisdiction_name: string;
+    jurisdiction_parent_id: string;
+  };
+}
+
 /** interface to describe Jurisdiction */
 export interface Jurisdiction {
+  geojson: JurisdictionGeoJSON;
   jurisdiction_id: string;
-  jurisdiction_name: string;
-  jurisdiction_parent_id: string;
-  geometry: FlexObject;
 }
 
 // actions
@@ -29,24 +36,28 @@ interface JurisdictionState {
   jurisdictionsById: { [key: string]: Jurisdiction };
 }
 
+/** immutable Jurisdiction state */
+export type ImmutableJurisdictionState = JurisdictionState &
+  SeamlessImmutable.ImmutableObject<JurisdictionState>;
+
 /** initial state */
-const initialState: JurisdictionState = {
+const initialState: ImmutableJurisdictionState = SeamlessImmutable({
   jurisdictionsById: {},
-};
+});
 
 // reducer
 /** jurisdiction reducer function */
 export default function reducer(
   state = initialState,
   action: JurisdictionActionTypes
-): JurisdictionState {
+): ImmutableJurisdictionState {
   switch (action.type) {
     case FETCH_JURISDICTION:
       if (action.jurisdictionsById) {
-        return {
+        return SeamlessImmutable({
           ...state,
           jurisdictionsById: action.jurisdictionsById,
-        };
+        });
       }
       return state;
     default:
@@ -59,9 +70,22 @@ export default function reducer(
  * @param {Jurisdiction[]} jurisdictionList - array of jurisdiction objects
  * @returns {FetchJurisdictionAction} FetchJurisdictionAction
  */
-export const fetchJurisdictions = (jurisdictionList: Jurisdiction[]) => {
+export const fetchJurisdictions = (jurisdictionList: Jurisdiction[] = []) => {
   return {
-    jurisdictionsById: keyBy(jurisdictionList, jurisdiction => jurisdiction.jurisdiction_id),
+    jurisdictionsById: keyBy(
+      jurisdictionList.map((item: Jurisdiction) => {
+        /** ensure geojson is parsed */
+        if (typeof item.geojson === 'string') {
+          item.geojson = JSON.parse(item.geojson);
+        }
+        /** ensure geometry is parsed */
+        if (typeof item.geojson.geometry === 'string') {
+          item.geojson.geometry = JSON.parse(item.geojson.geometry);
+        }
+        return item;
+      }),
+      jurisdiction => jurisdiction.jurisdiction_id
+    ),
     type: FETCH_JURISDICTION,
   };
 };
