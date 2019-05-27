@@ -1,31 +1,40 @@
 import { get, keyBy, keys, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
 import SeamlessImmutable from 'seamless-immutable';
-import { Geometry } from '../../helpers/utils';
+import { GeoJSON } from '../../helpers/utils';
 
 /** the reducer name */
 export const reducerName = 'tasks';
 
+/** interface for task GeoJSON */
+export interface TaskGeoJSON extends GeoJSON {
+  properties: {
+    action_code: string;
+    goal_id: string;
+    jurisdiction_id: string;
+    jurisdiction_name: string;
+    jurisdiction_parent_id: string;
+    plan_id: string;
+    structure_code: string | null;
+    structure_id: string | null;
+    structure_name: string | null;
+    structure_type: string | null;
+    task_business_status: string;
+    task_execution_end_date: string;
+    task_execution_start_date: string;
+    task_focus: string;
+    task_status: string;
+    task_task_for: string;
+  };
+}
+
 /** interface for task Object */
 export interface Task {
-  action_code: string;
-  geometry: Geometry | null;
+  geojson: TaskGeoJSON;
   goal_id: string;
   jurisdiction_id: string;
-  jurisdiction_name: string;
-  jurisdiction_parent_id: string;
   plan_id: string;
-  structure_code: string | null;
-  structure_id: string | null;
-  structure_name: string | null;
-  structure_type: string | null;
-  task_business_status: string;
-  task_execution_end_date: string;
-  task_execution_start_date: string;
-  task_focus: string;
   task_identifier: string;
-  task_status: string;
-  task_task_for: string;
 }
 
 // actions
@@ -75,8 +84,21 @@ export default function reducer(state = initialState, action: TaskActionTypes): 
 /** fetch Tasks creator
  * @param {Task[]} tasksList - array of task objects
  */
-export const fetchTasks = (tasksList: Task[]): FetchTasksAction => ({
-  tasksById: keyBy(tasksList, task => task.task_identifier),
+export const fetchTasks = (tasksList: Task[] = []): FetchTasksAction => ({
+  tasksById: keyBy(
+    tasksList.map((task: Task) => {
+      /** ensure geojson is parsed */
+      if (typeof task.geojson === 'string') {
+        task.geojson = JSON.parse(task.geojson);
+      }
+      /** ensure geometry is parsed */
+      if (typeof task.geojson.geometry === 'string') {
+        task.geojson.geometry = JSON.parse(task.geojson.geometry);
+      }
+      return task;
+    }),
+    task => task.task_identifier
+  ),
   type: TASKS_FETCHED,
 });
 
@@ -145,7 +167,10 @@ export function getTasksByJurisdictionId(state: Partial<Store>, jurisdictionId: 
  * @returns {Task[]} an array of tasks
  */
 export function getTasksByStructureId(state: Partial<Store>, structureId: string): Task[] {
-  return values((state as any)[reducerName].tasksById).filter(
-    (e: Task) => e.structure_id === structureId
-  );
+  return values((state as any)[reducerName].tasksById).filter((e: Task) => {
+    if (e.geojson && e.geojson.properties) {
+      return e.geojson.properties.structure_id === structureId;
+    }
+    return false;
+  });
 }
