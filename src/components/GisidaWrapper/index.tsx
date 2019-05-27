@@ -4,7 +4,7 @@ import { Actions, ducks, loadLayers } from 'gisida';
 import { Map } from 'gisida-react';
 import * as React from 'react';
 import { GISIDA_MAPBOX_TOKEN, GISIDA_ONADATA_API_TOKEN } from '../../configs/env';
-import { lineLayerConfig, pointLayerConfig } from '../../configs/settings';
+import { fillLayerConfig, lineLayerConfig, pointLayerConfig } from '../../configs/settings';
 import { MAP_ID, STRINGIFIED_GEOJSON } from '../../constants';
 import { ConfigStore, FlexObject } from '../../helpers/utils';
 import store from '../../store';
@@ -181,20 +181,20 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
         }
         if (polygons.length) {
           polygons.forEach((p: Task) => {
-            let lineLayer = null;
+            let fillLayer = null;
             uniqueId++;
-            lineLayer = {
-              ...lineLayerConfig,
+            fillLayer = {
+              ...fillLayerConfig,
               id: `single-jurisdiction-${uniqueId}`,
               source: {
-                ...lineLayerConfig.source,
+                ...fillLayerConfig.source,
                 data: {
-                  ...lineLayerConfig.source.data,
+                  ...fillLayerConfig.source.data,
                   data: JSON.stringify(p.geojson),
                 },
               },
             };
-            symbolLayers.push(lineLayer);
+            symbolLayers.push(fillLayer);
           });
         }
       }
