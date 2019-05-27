@@ -65,8 +65,21 @@ export default function reducer(state = initialState, action: PlanActionTypes): 
 /** fetch Plans creator
  * @param {Plan[]} plansList - array of plan objects
  */
-export const fetchPlans = (plansList: Plan[]): FetchPlansAction => ({
-  plansById: keyBy(plansList, plan => plan.id),
+export const fetchPlans = (plansList: Plan[] = []): FetchPlansAction => ({
+  plansById: keyBy(
+    plansList.map((plan: Plan) => {
+      /** ensure jurisdiction_name_path is parsed */
+      if (typeof plan.jurisdiction_name_path === 'string') {
+        plan.jurisdiction_name_path = JSON.parse(plan.jurisdiction_name_path);
+      }
+      /** ensure jurisdiction_path is parsed */
+      if (typeof plan.jurisdiction_path === 'string') {
+        plan.jurisdiction_path = JSON.parse(plan.jurisdiction_path);
+      }
+      return plan;
+    }),
+    plan => plan.id
+  ),
   type: PLANS_FETCHED,
 });
 
