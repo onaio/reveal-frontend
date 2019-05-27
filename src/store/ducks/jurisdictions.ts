@@ -1,5 +1,6 @@
 import { get, keyBy, keys, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
+import SeamlessImmutable from 'seamless-immutable';
 import { GeoJSON } from '../../helpers/utils';
 
 export const reducerName = 'jurisdictions';
@@ -35,24 +36,28 @@ interface JurisdictionState {
   jurisdictionsById: { [key: string]: Jurisdiction };
 }
 
+/** immutable Jurisdiction state */
+export type ImmutableJurisdictionState = JurisdictionState &
+  SeamlessImmutable.ImmutableObject<JurisdictionState>;
+
 /** initial state */
-const initialState: JurisdictionState = {
+const initialState: ImmutableJurisdictionState = SeamlessImmutable({
   jurisdictionsById: {},
-};
+});
 
 // reducer
 /** jurisdiction reducer function */
 export default function reducer(
   state = initialState,
   action: JurisdictionActionTypes
-): JurisdictionState {
+): ImmutableJurisdictionState {
   switch (action.type) {
     case FETCH_JURISDICTION:
       if (action.jurisdictionsById) {
-        return {
+        return SeamlessImmutable({
           ...state,
           jurisdictionsById: action.jurisdictionsById,
-        };
+        });
       }
       return state;
     default:
