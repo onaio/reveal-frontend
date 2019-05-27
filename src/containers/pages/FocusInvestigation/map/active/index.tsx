@@ -177,8 +177,8 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
     goals = getGoalsArrayByPlanId(state, plan.plan_id);
   }
   if (goals && goals.length > 1) {
-    /** DIRTY MANGY hack */
-    tasks = getTasksByGoalId(state, goals[1].goal_id);
+    /** DIRTY MANGY hack  to be improved by getting the goal_id from  the sidebar selection */
+    tasks = getTasksByGoalId(state, ownProps.selectedGoal);
   }
   return {
     goals,
