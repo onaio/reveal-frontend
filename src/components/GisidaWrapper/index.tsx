@@ -7,12 +7,13 @@ import { GISIDA_MAPBOX_TOKEN, GISIDA_ONADATA_API_TOKEN } from '../../configs/env
 import { MAP_ID, STRINGIFIED_GEOJSON } from '../../constants';
 import { ConfigStore, FlexObject } from '../../helpers/utils';
 import store from '../../store';
-import { Jurisdiction } from '../../store/ducks/jurisdictions';
+import { Jurisdiction, JurisdictionGeoJSON } from '../../store/ducks/jurisdictions';
 import './gisida.css';
 
+/** GisidaWrapper state interface */
 interface GisidaState {
   bounds: number[];
-  locations: FlexObject | false;
+  locations: JurisdictionGeoJSON | false;
   doInitMap: boolean;
   doRenderMap: boolean;
   geoData: Jurisdiction;
@@ -96,15 +97,12 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
   private async getLocations(geoData: Jurisdiction | null) {
     // 2a. Asynchronously obtain geometries as geojson object
     // // 2b. Determine map bounds from locations geoms
-    let locations;
-    if (geoData && geoData.geometry) {
-      locations =
-        typeof geoData.geometry !== 'string' ? geoData.geometry : JSON.parse(geoData.geometry);
-    } else {
-      locations = false;
+    let locations: JurisdictionGeoJSON | false = false;
+    if (geoData && geoData.geojson && geoData.geojson.geometry) {
+      locations = geoData.geojson;
     }
-    const bounds = locations ? GeojsonExtent(locations) : null;
     if (locations) {
+      const bounds = GeojsonExtent(locations);
       this.setState({ locations, doInitMap: true, bounds });
     }
   }
