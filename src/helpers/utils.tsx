@@ -139,14 +139,9 @@ export function extractPlan(plan: Plan) {
     village: null,
   };
 
-  let locationNames: SeamlessImmutable.ImmutableArray<string>;
-
-  if (typeof plan.jurisdiction_name_path === 'string') {
-    locationNames = JSON.parse(plan.jurisdiction_name_path);
-  } else {
-    locationNames = SeamlessImmutable(plan.jurisdiction_name_path);
-  }
-
+  const locationNames: SeamlessImmutable.ImmutableArray<string> = SeamlessImmutable(
+    plan.jurisdiction_name_path
+  );
   const mutableLocationNames = locationNames.asMutable();
   mutableLocationNames.reverse();
 
