@@ -1,3 +1,5 @@
+import { clone } from 'lodash';
+
 export const plan1 = {
   id: 'ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f',
   jurisdiction_depth: 2,
@@ -302,5 +304,11 @@ export const jurisdictions = [
     jurisdiction_id: '10f9e9fa-ce34-4b27-a961-72fab5206ab6',
   },
 ];
+
+const jurisdiction3 = clone(jurisdictions[1]);
+jurisdiction3.jurisdiction_id = 'abcde';
+jurisdiction3.geojson.id = 'abcde';
+(jurisdiction3.geojson as any) = JSON.stringify(jurisdiction3.geojson);
+export { jurisdiction3 };
 
 export const jurisdictionsIdsArray = jurisdictions.map((e: any) => e.jurisdiction_id);
