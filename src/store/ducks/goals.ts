@@ -91,6 +91,7 @@ export function getGoalById(state: Partial<Store>, id: string): Goal | null {
 
 /** get goals by plan id
  * @param {Partial<Store>} state - the redux store
+ * @param {string} planId - the plan id
  * @returns {Goal[]} an array of goals
  */
 export function getGoalsByPlanId(state: Partial<Store>, planId: string): Goal[] {
@@ -99,6 +100,7 @@ export function getGoalsByPlanId(state: Partial<Store>, planId: string): Goal[] 
 
 /** get goals by goal id
  * @param {Partial<Store>} state - the redux store
+ * @param {string} goalId - the goal id
  * @returns {Goal[]} an array of goals
  */
 export function getGoalsByGoalId(state: Partial<Store>, goalId: string): Goal[] {
@@ -107,10 +109,27 @@ export function getGoalsByGoalId(state: Partial<Store>, goalId: string): Goal[] 
 
 /** get goals by jurisdiction id
  * @param {Partial<Store>} state - the redux store
+ * @param {string} jurisdictionId - the jurisdiction id
  * @returns {Goal[]} an array of goals
  */
 export function getGoalsByJurisdictionId(state: Partial<Store>, jurisdictionId: string): Goal[] {
   return values((state as any)[reducerName].goalsById).filter(
     (e: Goal) => e.jurisdiction_id === jurisdictionId
+  );
+}
+
+/** get goals by plan id and jurisdiction id
+ * @param {Partial<Store>} state - the redux store
+ * @param {string} planId - the plan id
+ * @param {string} jurisdictionId - the jurisdiction id
+ * @returns {Goal[]} an array of goals
+ */
+export function getGoalsByPlanAndJurisdiction(
+  state: Partial<Store>,
+  planId: string,
+  jurisdictionId: string
+): Goal[] {
+  return values((state as any)[reducerName].goalsById).filter(
+    (e: Goal) => e.plan_id === planId && e.jurisdiction_id === jurisdictionId
   );
 }
