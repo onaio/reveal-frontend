@@ -3,9 +3,8 @@ import reducerRegistry from '@onaio/redux-reducer-registry';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
-import { Col, Row, Table } from 'reactstrap';
+import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
-import NotFound from '../../../../components/NotFound';
 import Loading from '../../../../components/page/Loading';
 import { SUPERSET_GOALS_SLICE, SUPERSET_PLANS_SLICE } from '../../../../configs/env';
 import {
@@ -42,7 +41,6 @@ import plansReducer, {
   Plan,
   reducerName as plansReducerName,
 } from '../../../../store/ducks/plans';
-import * as fixtures from '../../../../store/ducks/tests/fixtures';
 import './single.css';
 
 /** register the goals reducer */
@@ -55,7 +53,7 @@ export interface SingleFIProps {
   fetchGoalsActionCreator: typeof fetchGoals;
   fetchPlansActionCreator: typeof fetchPlans;
   goalsArray: Goal[];
-  planById: Plan;
+  planById: Plan | null;
   plansArray: Plan[];
   plansIdArray: string[];
 }
@@ -65,7 +63,7 @@ export const defaultSingleFIProps: SingleFIProps = {
   fetchGoalsActionCreator: fetchGoals,
   fetchPlansActionCreator: fetchPlans,
   goalsArray: [],
-  planById: fixtures.plan1,
+  planById: null,
   plansArray: [],
   plansIdArray: [],
 };
@@ -88,9 +86,7 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
   }
 
   public render() {
-    const { goalsArray, planById, plansIdArray } = this.props;
-
-    const planObjectIds = plansIdArray;
+    const { goalsArray, planById } = this.props;
     const theGoals = goalsArray;
 
     if (!planById || !theGoals) {

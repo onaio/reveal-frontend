@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import { FI_SINGLE_URL } from '../../../../../constants';
 import store from '../../../../../store';
-import { fetchGoals, getGoalsByPlanId } from '../../../../../store/ducks/goals';
+import { fetchGoals } from '../../../../../store/ducks/goals';
 import { fetchPlans } from '../../../../../store/ducks/plans';
 import * as fixtures from '../../../../../store/ducks/tests/fixtures';
 import ConnectedSingleFI, { SingleFI } from '../../single';
