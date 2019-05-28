@@ -2,17 +2,12 @@ import reducerRegistry from '@onaio/redux-reducer-registry';
 import { keyBy, keys, values } from 'lodash';
 import { FlushThunks } from 'redux-testkit';
 import store from '../../index';
-import reducer, {
-  fetchGoals,
-  getGoalsArrayByPlanId,
-  getGoalsByPlanId,
-  reducerName,
-} from '../goals';
+import reducer, { fetchGoals, getGoalById, getGoalsById, Goal, reducerName } from '../goals';
 import * as fixtures from './fixtures';
 
 reducerRegistry.register(reducerName, reducer);
 
-describe('reducers/superset', () => {
+describe('reducers/goals', () => {
   let flushThunks;
 
   beforeEach(() => {
@@ -21,16 +16,16 @@ describe('reducers/superset', () => {
   });
 
   it('should have initial state', () => {
-    expect(getGoalsByPlanId(store.getState())).toEqual({});
-    expect(getGoalsArrayByPlanId(store.getState(), 'abc')).toEqual(null);
+    expect(getGoalsById(store.getState())).toEqual({});
+    expect(getGoalById(store.getState(), 'someId')).toEqual(null);
   });
 
   it('should fetch goals', () => {
     store.dispatch(fetchGoals(fixtures.goals));
-    expect(getGoalsByPlanId(store.getState())).toEqual(fixtures.goalsByPlanId);
-    expect(getGoalsArrayByPlanId(store.getState(), '10f9e9fa-ce34-4b27-a961-72fab5206ab6')).toEqual(
-      [fixtures.goal1, fixtures.goal2]
+    const expected = keyBy(fixtures.goals, (goal: Goal) => goal.id);
+    expect(getGoalsById(store.getState())).toEqual(expected);
+    expect(getGoalById(store.getState(), '5a27ec10-7a5f-563c-ba11-4de150b336af')).toEqual(
+      fixtures.goal1
     );
-    expect(getGoalsArrayByPlanId(store.getState(), '1337')).toEqual([fixtures.goal3]);
   });
 });
