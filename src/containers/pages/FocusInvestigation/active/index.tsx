@@ -43,12 +43,14 @@ reducerRegistry.register(plansReducerName, plansReducer);
 export interface ActiveFIProps {
   fetchPlansActionCreator: typeof fetchPlans;
   plansArray: Plan[];
+  supersetService: typeof supersetFetch;
 }
 
 /** default props for ActiveFI component */
 export const defaultActiveFIProps: ActiveFIProps = {
   fetchPlansActionCreator: fetchPlans,
   plansArray: [],
+  supersetService: supersetFetch,
 };
 
 /** Reporting for Active Focus Investigations */
@@ -62,8 +64,8 @@ class ActiveFocusInvestigation extends React.Component<
   }
 
   public componentDidMount() {
-    const { fetchPlansActionCreator } = this.props;
-    supersetFetch(SUPERSET_PLANS_SLICE).then((result: Plan[]) => fetchPlansActionCreator(result));
+    const { fetchPlansActionCreator, supersetService } = this.props;
+    supersetService(SUPERSET_PLANS_SLICE).then((result: Plan[]) => fetchPlansActionCreator(result));
   }
 
   public render() {

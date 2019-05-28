@@ -21,7 +21,6 @@ import plansReducer, {
   reducerName as plansReducerName,
 } from '../../../../../store/ducks/plans';
 import { jurisdictions, plan1 } from '../../../../../store/ducks/tests/fixtures';
-
 reducerRegistry.register(jurisdictionReducerName, geojsonReducer);
 reducerRegistry.register(plansReducerName, plansReducer);
 // import store from '../../../../../store';
@@ -31,6 +30,7 @@ export interface MapSingleFIProps {
   fetchJurisdictionsActionCreator: typeof fetchJurisdictions;
   geoJSONData: Jurisdiction | null;
   plan: Plan | null;
+  supersetService: typeof supersetFetch;
 }
 
 /** default props for ActiveFI component */
@@ -38,6 +38,7 @@ export const defaultMapSingleFIProps: MapSingleFIProps = {
   fetchJurisdictionsActionCreator: fetchJurisdictions,
   geoJSONData: jurisdictions[0],
   plan: plan1,
+  supersetService: supersetFetch,
 };
 /** Map View for Single Active Focus Investigation */
 class SingleActiveFIMap extends React.Component<
@@ -50,8 +51,8 @@ class SingleActiveFIMap extends React.Component<
   }
 
   public async componentDidMount() {
-    const { fetchJurisdictionsActionCreator } = this.props;
-    await supersetFetch(SUPERSET_JURISDICTIONS_SLICE).then((result: Jurisdiction[]) =>
+    const { fetchJurisdictionsActionCreator, supersetService } = this.props;
+    await supersetService(SUPERSET_JURISDICTIONS_SLICE).then((result: Jurisdiction[]) =>
       fetchJurisdictionsActionCreator(result)
     );
   }
