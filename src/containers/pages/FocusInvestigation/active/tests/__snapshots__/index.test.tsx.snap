@@ -45,8 +45,36 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
         "replace": [Function],
       }
     }
-    location={[MockFunction]}
-    match={[MockFunction]}
+    location={
+      [MockFunction] {
+        "calls": Array [
+          Array [
+            "457",
+          ],
+        ],
+        "results": Array [
+          Object {
+            "isThrow": false,
+            "value": Promise {},
+          },
+        ],
+      }
+    }
+    match={
+      [MockFunction] {
+        "calls": Array [
+          Array [
+            "457",
+          ],
+        ],
+        "results": Array [
+          Object {
+            "isThrow": false,
+            "value": Promise {},
+          },
+        ],
+      }
+    }
     plansArray={
       Array [
         Object {
@@ -91,7 +119,21 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
         },
       ]
     }
-    supersetService={[MockFunction]}
+    supersetService={
+      [MockFunction] {
+        "calls": Array [
+          Array [
+            "457",
+          ],
+        ],
+        "results": Array [
+          Object {
+            "isThrow": false,
+            "value": Promise {},
+          },
+        ],
+      }
+    }
   >
     <div>
       <h3
