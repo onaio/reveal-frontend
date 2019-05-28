@@ -183,7 +183,7 @@ export function getTasksByStructureId(state: Partial<Store>, structureId: string
  * @param {Partial<Store>} state - the redux store
  * @param {string} planId - the plan id
  * @param {string} jurisdictionId - the jurisdiction id
- * @returns {Task[]} an array of goals
+ * @returns {Task[]} an array of tasks
  */
 export function getTasksByPlanAndJurisdiction(
   state: Partial<Store>,
@@ -200,7 +200,7 @@ export function getTasksByPlanAndJurisdiction(
  * @param {string} planId - the plan id
  * @param {string} goalId - the goal id
  * @param {string} jurisdictionId - the jurisdiction id
- * @returns {Task[]} an array of goals
+ * @returns {Task[]} an array of tasks
  */
 export function getTasksByPlanAndGoalAndJurisdiction(
   state: Partial<Store>,
