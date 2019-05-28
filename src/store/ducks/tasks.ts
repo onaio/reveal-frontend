@@ -138,6 +138,7 @@ export function getTaskById(state: Partial<Store>, id: string): Task | null {
 
 /** get tasks by plan id
  * @param {Partial<Store>} state - the redux store
+ * @param {string} planId - the plan id
  * @returns {Task[]} an array of tasks
  */
 export function getTasksByPlanId(state: Partial<Store>, planId: string): Task[] {
@@ -146,6 +147,7 @@ export function getTasksByPlanId(state: Partial<Store>, planId: string): Task[] 
 
 /** get tasks by goal id
  * @param {Partial<Store>} state - the redux store
+ * @param {string} goalId - the goal id
  * @returns {Task[]} an array of tasks
  */
 export function getTasksByGoalId(state: Partial<Store>, goalId: string): Task[] {
@@ -154,6 +156,7 @@ export function getTasksByGoalId(state: Partial<Store>, goalId: string): Task[] 
 
 /** get tasks by jurisdiction id
  * @param {Partial<Store>} state - the redux store
+ * @param {string} jurisdictionId - the jurisdiction id
  * @returns {Task[]} an array of tasks
  */
 export function getTasksByJurisdictionId(state: Partial<Store>, jurisdictionId: string): Task[] {
@@ -164,6 +167,7 @@ export function getTasksByJurisdictionId(state: Partial<Store>, jurisdictionId: 
 
 /** get tasks by structure id
  * @param {Partial<Store>} state - the redux store
+ * @param {string} structureId - the structure id
  * @returns {Task[]} an array of tasks
  */
 export function getTasksByStructureId(state: Partial<Store>, structureId: string): Task[] {
