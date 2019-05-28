@@ -2,6 +2,7 @@ import reducerRegistry from '@onaio/redux-reducer-registry';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
+import { Link } from 'react-router-dom';
 import { Store } from 'redux';
 import GisidaWrapper from '../../../../../components/GisidaWrapper';
 import Loading from '../../../../../components/page/Loading';
@@ -11,7 +12,7 @@ import {
   SUPERSET_PLANS_SLICE,
   SUPERSET_STRUCTURES_SLICE,
 } from '../../../../../configs/env';
-import { FOCUS_INVESTIGATION } from '../../../../../constants';
+import { FI_SINGLE_MAP_URL, FOCUS_INVESTIGATION } from '../../../../../constants';
 import { FlexObject, RouteParams } from '../../../../../helpers/utils';
 import supersetFetch from '../../../../../services/superset';
 import goalsReducer, {
@@ -89,6 +90,7 @@ class SingleActiveFIMap extends React.Component<
       fetchPlansActionCreator,
       fetchTasksActionCreator,
     } = this.props;
+
     await supersetFetch(SUPERSET_JURISDICTIONS_SLICE).then((result: Jurisdiction[]) =>
       fetchJurisdictionsActionCreator(result)
     );
@@ -127,7 +129,9 @@ class SingleActiveFIMap extends React.Component<
                 goals.map((item: Goal) => {
                   return (
                     <div className="responseItem" key={item.goal_id}>
-                      <h6>{item.action_code}</h6>
+                      <Link to={`${FI_SINGLE_MAP_URL}/${plan.plan_id}/${item.goal_id}`}>
+                        <h6>{item.action_code}</h6>
+                      </Link>
                       <div className="targetItem">
                         <p>Measure: {item.measure}</p>
                         <p>
