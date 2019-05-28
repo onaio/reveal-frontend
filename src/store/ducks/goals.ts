@@ -88,3 +88,29 @@ export function getGoalsById(state: Partial<Store>): { [key: string]: Goal } {
 export function getGoalById(state: Partial<Store>, id: string): Goal | null {
   return get((state as any)[reducerName].goalsById, id) || null;
 }
+
+/** get goals by plan id
+ * @param {Partial<Store>} state - the redux store
+ * @returns {Goal[]} an array of goals
+ */
+export function getGoalsByPlanId(state: Partial<Store>, planId: string): Goal[] {
+  return values((state as any)[reducerName].goalsById).filter((e: Goal) => e.plan_id === planId);
+}
+
+/** get goals by goal id
+ * @param {Partial<Store>} state - the redux store
+ * @returns {Goal[]} an array of goals
+ */
+export function getGoalsByGoalId(state: Partial<Store>, goalId: string): Goal[] {
+  return values((state as any)[reducerName].goalsById).filter((e: Goal) => e.goal_id === goalId);
+}
+
+/** get goals by jurisdiction id
+ * @param {Partial<Store>} state - the redux store
+ * @returns {Goal[]} an array of goals
+ */
+export function getGoalsByJurisdictionId(state: Partial<Store>, jurisdictionId: string): Goal[] {
+  return values((state as any)[reducerName].goalsById).filter(
+    (e: Goal) => e.jurisdiction_id === jurisdictionId
+  );
+}
