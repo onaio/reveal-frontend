@@ -9,6 +9,7 @@ import reducer, {
   getTasksByGoalId,
   getTasksById,
   getTasksByJurisdictionId,
+  getTasksByPlanAndGoalAndJurisdiction,
   getTasksByPlanAndJurisdiction,
   getTasksByPlanId,
   getTasksByStructureId,
@@ -38,6 +39,7 @@ describe('reducers/tasks', () => {
     expect(getTasksByJurisdictionId(store.getState(), 'someId')).toEqual([]);
     expect(getTasksByStructureId(store.getState(), 'someId')).toEqual([]);
     expect(getTasksByPlanAndJurisdiction(store.getState(), 'a', 'b')).toEqual([]);
+    expect(getTasksByPlanAndGoalAndJurisdiction(store.getState(), 'a', 'b', 'c')).toEqual([]);
   });
 
   it('should fetch tasks', () => {
@@ -68,6 +70,14 @@ describe('reducers/tasks', () => {
         '3952'
       )
     ).toEqual([fixtures.task3]);
+    expect(
+      getTasksByPlanAndGoalAndJurisdiction(
+        store.getState(),
+        '10f9e9fa-ce34-4b27-a961-72fab5206ab6',
+        'RACD_blood_screening_1km_radius',
+        '450fc15b-5bd2-468a-927a-49cb10d3bcac'
+      )
+    ).toEqual([fixtures.task4]);
   });
 
   it('should save tasks correctly', () => {
