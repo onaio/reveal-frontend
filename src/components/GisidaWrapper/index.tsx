@@ -92,7 +92,7 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
         }
       );
     }
-    if (!nextProps.tasks && !this.state.initMapWithoutTasks) {
+    if (!(nextProps.tasks && nextProps.tasks.length) && !this.state.initMapWithoutTasks) {
       this.setState({ doInitMap: true, initMapWithoutTasks: true }, () => {
         this.initMap(null);
       });
@@ -115,6 +115,7 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
     const currentState = store.getState();
     const mapId = this.props.mapId || MAP_ID;
     const doRenderMap = this.state.doRenderMap && typeof currentState[mapId] !== 'undefined';
+
     if (!doRenderMap) {
       return null;
     }
