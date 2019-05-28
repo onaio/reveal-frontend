@@ -68,11 +68,14 @@ class App extends Component {
               <ConnectedPrivateRoute
                 disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                 exact={true}
-                path={`${FI_SINGLE_MAP_URL}/:id`}
-                // tslint:disable-next-line:jsx-no-lambda
-                component={(props: any) => (
-                  <SingleActiveFIMap {...props} selectedGoal="RACD_bednet_dist_1km_radius" />
-                )}
+                path={`${FI_SINGLE_MAP_URL}/:id/`}
+                component={SingleActiveFIMap}
+              />
+              <ConnectedPrivateRoute
+                disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                exact={true}
+                path={`${FI_SINGLE_MAP_URL}/:id/:goalId`}
+                component={SingleActiveFIMap}
               />
               <ConnectedPrivateRoute
                 disableLoginProtection={DISABLE_LOGIN_PROTECTION}
