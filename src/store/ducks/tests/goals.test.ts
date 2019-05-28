@@ -8,6 +8,7 @@ import reducer, {
   getGoalsByGoalId,
   getGoalsById,
   getGoalsByJurisdictionId,
+  getGoalsByPlanAndJurisdiction,
   getGoalsByPlanId,
   Goal,
   reducerName,
@@ -30,6 +31,7 @@ describe('reducers/goals', () => {
     expect(getGoalsByPlanId(store.getState(), 'someId')).toEqual([]);
     expect(getGoalsByGoalId(store.getState(), 'someId')).toEqual([]);
     expect(getGoalsByJurisdictionId(store.getState(), 'someId')).toEqual([]);
+    expect(getGoalsByPlanAndJurisdiction(store.getState(), 'a', 'b')).toEqual([]);
   });
 
   it('should fetch goals', () => {
@@ -46,6 +48,13 @@ describe('reducers/goals', () => {
     expect(getGoalsByGoalId(store.getState(), 'Case_Confirmation')).toEqual([fixtures.goal1]);
     expect(
       getGoalsByJurisdictionId(store.getState(), '450fc15b-5bd2-468a-927a-49cb10d3bcac')
+    ).toEqual([fixtures.goal1, fixtures.goal2]);
+    expect(
+      getGoalsByPlanAndJurisdiction(
+        store.getState(),
+        '10f9e9fa-ce34-4b27-a961-72fab5206ab6',
+        '450fc15b-5bd2-468a-927a-49cb10d3bcac'
+      )
     ).toEqual([fixtures.goal1, fixtures.goal2]);
   });
 });
