@@ -21,7 +21,7 @@ import { extractPlan, RouteParams } from '../../../../helpers/utils';
 import supersetFetch from '../../../../services/superset';
 import goalsReducer, {
   fetchGoals,
-  getGoalsArrayByPlanId,
+  getGoalsByPlanAndJurisdiction,
   Goal,
   reducerName as goalsReducerName,
 } from '../../../../store/ducks/goals';
@@ -223,7 +223,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
   const plan = getPlanById(state, ownProps.match.params.id);
   let goalsArray = null;
   if (plan) {
-    goalsArray = getGoalsArrayByPlanId(state, plan.plan_id);
+    goalsArray = getGoalsByPlanAndJurisdiction(state, plan.plan_id, plan.jurisdiction_id);
   }
   const result = {
     goalsArray,

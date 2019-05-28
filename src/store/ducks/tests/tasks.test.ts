@@ -9,6 +9,8 @@ import reducer, {
   getTasksByGoalId,
   getTasksById,
   getTasksByJurisdictionId,
+  getTasksByPlanAndGoalAndJurisdiction,
+  getTasksByPlanAndJurisdiction,
   getTasksByPlanId,
   getTasksByStructureId,
   getTasksIdArray,
@@ -36,6 +38,8 @@ describe('reducers/tasks', () => {
     expect(getTasksByGoalId(store.getState(), 'someId')).toEqual([]);
     expect(getTasksByJurisdictionId(store.getState(), 'someId')).toEqual([]);
     expect(getTasksByStructureId(store.getState(), 'someId')).toEqual([]);
+    expect(getTasksByPlanAndJurisdiction(store.getState(), 'a', 'b')).toEqual([]);
+    expect(getTasksByPlanAndGoalAndJurisdiction(store.getState(), 'a', 'b', 'c')).toEqual([]);
   });
 
   it('should fetch tasks', () => {
@@ -59,6 +63,21 @@ describe('reducers/tasks', () => {
     expect(getTasksByStructureId(store.getState(), 'a19eeb63-45d0-4744-9a9d-76d0694103f6')).toEqual(
       [fixtures.task1]
     );
+    expect(
+      getTasksByPlanAndJurisdiction(
+        store.getState(),
+        '356b6b84-fc36-4389-a44a-2b038ed2f38d',
+        '3952'
+      )
+    ).toEqual([fixtures.task3]);
+    expect(
+      getTasksByPlanAndGoalAndJurisdiction(
+        store.getState(),
+        '10f9e9fa-ce34-4b27-a961-72fab5206ab6',
+        'RACD_blood_screening_1km_radius',
+        '450fc15b-5bd2-468a-927a-49cb10d3bcac'
+      )
+    ).toEqual([fixtures.task4]);
   });
 
   it('should save tasks correctly', () => {

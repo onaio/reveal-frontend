@@ -138,6 +138,7 @@ export function getTaskById(state: Partial<Store>, id: string): Task | null {
 
 /** get tasks by plan id
  * @param {Partial<Store>} state - the redux store
+ * @param {string} planId - the plan id
  * @returns {Task[]} an array of tasks
  */
 export function getTasksByPlanId(state: Partial<Store>, planId: string): Task[] {
@@ -146,6 +147,7 @@ export function getTasksByPlanId(state: Partial<Store>, planId: string): Task[] 
 
 /** get tasks by goal id
  * @param {Partial<Store>} state - the redux store
+ * @param {string} goalId - the goal id
  * @returns {Task[]} an array of tasks
  */
 export function getTasksByGoalId(state: Partial<Store>, goalId: string): Task[] {
@@ -154,6 +156,7 @@ export function getTasksByGoalId(state: Partial<Store>, goalId: string): Task[] 
 
 /** get tasks by jurisdiction id
  * @param {Partial<Store>} state - the redux store
+ * @param {string} jurisdictionId - the jurisdiction id
  * @returns {Task[]} an array of tasks
  */
 export function getTasksByJurisdictionId(state: Partial<Store>, jurisdictionId: string): Task[] {
@@ -164,6 +167,7 @@ export function getTasksByJurisdictionId(state: Partial<Store>, jurisdictionId: 
 
 /** get tasks by structure id
  * @param {Partial<Store>} state - the redux store
+ * @param {string} structureId - the structure id
  * @returns {Task[]} an array of tasks
  */
 export function getTasksByStructureId(state: Partial<Store>, structureId: string): Task[] {
@@ -173,4 +177,39 @@ export function getTasksByStructureId(state: Partial<Store>, structureId: string
     }
     return false;
   });
+}
+
+/** get goals by plan id and jurisdiction id
+ * @param {Partial<Store>} state - the redux store
+ * @param {string} planId - the plan id
+ * @param {string} jurisdictionId - the jurisdiction id
+ * @returns {Task[]} an array of tasks
+ */
+export function getTasksByPlanAndJurisdiction(
+  state: Partial<Store>,
+  planId: string,
+  jurisdictionId: string
+): Task[] {
+  return values((state as any)[reducerName].tasksById).filter(
+    (e: Task) => e.plan_id === planId && e.jurisdiction_id === jurisdictionId
+  );
+}
+
+/** get goals by plan id and goal id and jurisdiction id
+ * @param {Partial<Store>} state - the redux store
+ * @param {string} planId - the plan id
+ * @param {string} goalId - the goal id
+ * @param {string} jurisdictionId - the jurisdiction id
+ * @returns {Task[]} an array of tasks
+ */
+export function getTasksByPlanAndGoalAndJurisdiction(
+  state: Partial<Store>,
+  planId: string,
+  goalId: string,
+  jurisdictionId: string
+): Task[] {
+  return values((state as any)[reducerName].tasksById).filter(
+    (e: Task) =>
+      e.plan_id === planId && e.goal_id === goalId && e.jurisdiction_id === jurisdictionId
+  );
 }
