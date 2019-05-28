@@ -9,6 +9,7 @@ import reducer, {
   getTasksByGoalId,
   getTasksById,
   getTasksByJurisdictionId,
+  getTasksByPlanAndJurisdiction,
   getTasksByPlanId,
   getTasksByStructureId,
   getTasksIdArray,
@@ -36,6 +37,7 @@ describe('reducers/tasks', () => {
     expect(getTasksByGoalId(store.getState(), 'someId')).toEqual([]);
     expect(getTasksByJurisdictionId(store.getState(), 'someId')).toEqual([]);
     expect(getTasksByStructureId(store.getState(), 'someId')).toEqual([]);
+    expect(getTasksByPlanAndJurisdiction(store.getState(), 'a', 'b')).toEqual([]);
   });
 
   it('should fetch tasks', () => {
@@ -59,6 +61,13 @@ describe('reducers/tasks', () => {
     expect(getTasksByStructureId(store.getState(), 'a19eeb63-45d0-4744-9a9d-76d0694103f6')).toEqual(
       [fixtures.task1]
     );
+    expect(
+      getTasksByPlanAndJurisdiction(
+        store.getState(),
+        '356b6b84-fc36-4389-a44a-2b038ed2f38d',
+        '3952'
+      )
+    ).toEqual([fixtures.task3]);
   });
 
   it('should save tasks correctly', () => {
