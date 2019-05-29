@@ -13,6 +13,7 @@ import ConnectedActiveFocusInvestigation, { ActiveFocusInvestigation } from '../
 reducerRegistry.register(reducerName, reducer);
 
 const history = createBrowserHistory();
+jest.mock('../../../../../configs/env');
 
 describe('containers/pages/ActiveFocusInvestigation', () => {
   beforeEach(() => {

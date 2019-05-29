@@ -12,6 +12,7 @@ import * as fixtures from '../../../../../store/ducks/tests/fixtures';
 import ConnectedSingleFI, { SingleFI } from '../../single';
 
 const history = createBrowserHistory();
+jest.mock('../../../../../configs/env');
 
 describe('containers/pages/SingleFI', () => {
   beforeEach(() => {
