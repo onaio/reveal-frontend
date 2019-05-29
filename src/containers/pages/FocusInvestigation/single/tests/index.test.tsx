@@ -2,10 +2,14 @@ import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import { createBrowserHistory } from 'history';
 import React from 'react';
+import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import { FI_SINGLE_URL } from '../../../../../constants';
+import store from '../../../../../store';
+import { fetchGoals } from '../../../../../store/ducks/goals';
+import { fetchPlans } from '../../../../../store/ducks/plans';
 import * as fixtures from '../../../../../store/ducks/tests/fixtures';
-import { SingleFI } from '../../single';
+import ConnectedSingleFI, { SingleFI } from '../../single';
 
 const history = createBrowserHistory();
 
@@ -22,7 +26,7 @@ describe('containers/pages/SingleFI', () => {
       location: mock,
       match: {
         isExact: true,
-        params: { id: fixtures.plan1.plan_id },
+        params: { id: fixtures.plan1.id },
         path: `${FI_SINGLE_URL}/:id`,
         url: `${FI_SINGLE_URL}/13`,
       },
@@ -45,7 +49,7 @@ describe('containers/pages/SingleFI', () => {
       location: mock,
       match: {
         isExact: true,
-        params: { id: fixtures.plan1.plan_id },
+        params: { id: fixtures.plan1.id },
         path: `${FI_SINGLE_URL}/:id`,
         url: `${FI_SINGLE_URL}/16`,
       },
@@ -57,6 +61,31 @@ describe('containers/pages/SingleFI', () => {
       <Router history={history}>
         <SingleFI {...props} />
       </Router>
+    );
+    expect(toJson(wrapper)).toMatchSnapshot();
+    wrapper.unmount();
+  });
+
+  it('It works with the Redux store', () => {
+    const mock: any = jest.fn();
+    store.dispatch(fetchPlans(fixtures.plans));
+    store.dispatch(fetchGoals(fixtures.goals));
+    const props = {
+      history,
+      location: mock,
+      match: {
+        isExact: true,
+        params: { id: fixtures.plan1.id },
+        path: `${FI_SINGLE_URL}/:id`,
+        url: `${FI_SINGLE_URL}/16`,
+      },
+    };
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedSingleFI {...props} />
+        </Router>
+      </Provider>
     );
     expect(toJson(wrapper)).toMatchSnapshot();
     wrapper.unmount();
