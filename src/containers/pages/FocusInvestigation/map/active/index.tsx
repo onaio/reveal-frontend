@@ -17,7 +17,7 @@ import { FlexObject, RouteParams } from '../../../../../helpers/utils';
 import supersetFetch from '../../../../../services/superset';
 import goalsReducer, {
   fetchGoals,
-  getGoalsArrayByPlanId,
+  getGoalsByPlanAndJurisdiction,
   Goal,
   reducerName as goalsReducerName,
 } from '../../../../../store/ducks/goals';
@@ -37,7 +37,7 @@ import plansReducer, {
 } from '../../../../../store/ducks/plans';
 import tasksReducer, {
   fetchTasks,
-  getTasksByGoalId,
+  getTasksByPlanAndGoalAndJurisdiction,
   reducerName as tasksReducerName,
   Task,
 } from '../../../../../store/ducks/tasks';
@@ -52,6 +52,7 @@ reducerRegistry.register(tasksReducerName, tasksReducer);
 
 /** interface to describe props for ActiveFI Map component */
 export interface MapSingleFIProps {
+  currentGoal: string | null;
   fetchGoalsActionCreator: typeof fetchGoals;
   fetchJurisdictionsActionCreator: typeof fetchJurisdictions;
   fetchPlansActionCreator: typeof fetchPlans;
@@ -64,6 +65,7 @@ export interface MapSingleFIProps {
 
 /** default props for ActiveFI Map component */
 export const defaultMapSingleFIProps: MapSingleFIProps = {
+  currentGoal: fixtures.goal1.goal_id,
   fetchGoalsActionCreator: fetchGoals,
   fetchJurisdictionsActionCreator: fetchJurisdictions,
   fetchPlansActionCreator: fetchPlans,
@@ -104,8 +106,9 @@ class SingleActiveFIMap extends React.Component<
       fetchTasksActionCreator(result4)
     );
   }
+
   public render() {
-    const { jurisdiction, plan, goals, tasks } = this.props;
+    const { jurisdiction, plan, goals, tasks, currentGoal } = this.props;
 
     if (!jurisdiction || !plan) {
       return <Loading />;
@@ -118,7 +121,13 @@ class SingleActiveFIMap extends React.Component<
         <div className="row no-gutters">
           <div className="col-9">
             <div className="map">
-              <GisidaWrapper handlers={this.buildHandlers()} geoData={jurisdiction} tasks={tasks} />
+              <GisidaWrapper
+                handlers={this.buildHandlers()}
+                geoData={jurisdiction}
+                goal={goals}
+                tasks={tasks}
+                currentGoal={currentGoal}
+              />
             </div>
           </div>
           <div className="col-3">
@@ -129,7 +138,7 @@ class SingleActiveFIMap extends React.Component<
                 goals.map((item: Goal) => {
                   return (
                     <div className="responseItem" key={item.goal_id}>
-                      <Link to={`${FI_SINGLE_MAP_URL}/${plan.plan_id}/${item.goal_id}`}>
+                      <Link to={`${FI_SINGLE_MAP_URL}/${plan.id}/${item.goal_id}`}>
                         <h6>{item.action_code}</h6>
                       </Link>
                       <div className="targetItem">
@@ -172,15 +181,23 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
   let goals = null;
   let jurisdiction = null;
   let tasks = null;
+  let currentGoal = null;
   if (plan) {
     jurisdiction = getJurisdictionById(state, plan.jurisdiction_id);
-    goals = getGoalsArrayByPlanId(state, plan.plan_id);
+    goals = getGoalsByPlanAndJurisdiction(state, plan.plan_id, plan.jurisdiction_id);
   }
-  if (goals && goals.length > 1) {
+  if (plan && jurisdiction && (goals && goals.length > 1)) {
     /** DIRTY MANGY hack  to be improved by getting the goal_id from  the sidebar selection */
-    tasks = getTasksByGoalId(state, ownProps.selectedGoal);
+    tasks = getTasksByPlanAndGoalAndJurisdiction(
+      state,
+      plan.plan_id,
+      ownProps.match.params.goalId,
+      plan.jurisdiction_id
+    );
+    currentGoal = ownProps.match.params.goalId;
   }
   return {
+    currentGoal,
     goals,
     jurisdiction,
     plan,

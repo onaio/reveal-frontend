@@ -21,6 +21,7 @@ interface GisidaState {
   geoData: Jurisdiction;
   tasks: Task;
   initMapWithoutTasks: boolean | false;
+  renderTasks: boolean | false;
 }
 
 /** Returns a single layer configuration */
@@ -43,6 +44,7 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
       geoData: this.props.geoData || false,
       initMapWithoutTasks: false,
       locations: this.props.locations || false,
+      renderTasks: false,
       tasks: this.props.tasks || false,
     };
 
@@ -92,6 +94,7 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
         }
       );
     }
+
     if (!(nextProps.tasks && nextProps.tasks.length) && !this.state.initMapWithoutTasks) {
       this.setState({ doInitMap: true, initMapWithoutTasks: true }, () => {
         this.initMap(null);
@@ -109,6 +112,14 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
         this.initMap(nextProps.tasks);
       });
     }
+    if (
+      nextProps.currentGoal !== this.props.currentGoal &&
+      (nextProps.tasks && nextProps.tasks.length)
+    ) {
+      // this.setState({ renderTasks: true, doInitMap: true }, () => {
+      this.initMap(nextProps.tasks);
+      // });
+    }
   }
 
   public render() {
@@ -119,7 +130,6 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
     if (!doRenderMap) {
       return null;
     }
-
     return <Map mapId={mapId} store={store} handlers={this.props.handlers} />;
   }
 
