@@ -94,7 +94,6 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
         }
       );
     }
-
     if (!(nextProps.tasks && nextProps.tasks.length) && !this.state.initMapWithoutTasks) {
       this.setState({ doInitMap: true, initMapWithoutTasks: true }, () => {
         this.initMap(null);
