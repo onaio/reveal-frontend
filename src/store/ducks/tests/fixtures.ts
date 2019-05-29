@@ -3,7 +3,7 @@ import { clone } from 'lodash';
 export const plan1 = {
   id: 'ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f',
   jurisdiction_depth: 2,
-  jurisdiction_id: '3377',
+  jurisdiction_id: '450fc15b-5bd2-468a-927a-49cb10d3bcac',
   jurisdiction_name: 'NVI_439',
   jurisdiction_name_path: ['Chadiza', 'Naviluli'],
   jurisdiction_parent_id: '2944',
