@@ -60,7 +60,7 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
         Object {
           "isExact": true,
           "params": Object {
-            "id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+            "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
           },
           "path": "/focus-investigation/view/:id",
           "url": "/focus-investigation/view/16",
@@ -70,7 +70,32 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
       <SingleFI
         fetchGoalsActionCreator={[Function]}
         fetchPlansActionCreator={[Function]}
-        goalsArray={null}
+        goalsArray={
+          Array [
+            Object {
+              "action_code": "Case Confirmation",
+              "completed_task_count": 0,
+              "goal_comparator": "=",
+              "goal_id": "Case_Confirmation",
+              "goal_unit": "each",
+              "goal_value": 1,
+              "measure": "Case confirmation complete",
+              "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+              "task_count": 0,
+            },
+            Object {
+              "action_code": "Larval Dipping",
+              "completed_task_count": 0,
+              "goal_comparator": ">=",
+              "goal_id": "Larval_Dipping_Min_3_Sites",
+              "goal_unit": "each",
+              "goal_value": 3,
+              "measure": "Number of larval dipping activities",
+              "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+              "task_count": 2,
+            },
+          ]
+        }
         history={
           Object {
             "action": "POP",
@@ -96,13 +121,34 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
           Object {
             "isExact": true,
             "params": Object {
-              "id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+              "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
             },
             "path": "/focus-investigation/view/:id",
             "url": "/focus-investigation/view/16",
           }
         }
-        planById={null}
+        planById={
+          Object {
+            "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
+            "jurisdiction_depth": 2,
+            "jurisdiction_id": "3377",
+            "jurisdiction_name": "NVI_439",
+            "jurisdiction_name_path": Array [
+              "Chadiza",
+              "Naviluli",
+            ],
+            "jurisdiction_parent_id": "2944",
+            "jurisdiction_path": Array [
+              "2939",
+              "2944",
+            ],
+            "plan_fi_reason": "Routine",
+            "plan_fi_status": "A1",
+            "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+            "plan_status": "active",
+            "plan_title": "A1-Tha Luang Village 1 Focus 01",
+          }
+        }
         plansArray={
           Array [
             Object {
@@ -154,52 +200,262 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
           ]
         }
       >
-        <Ripple
-          borderColor="#ff5d00"
-          borderStyle="solid"
-          borderWidth="4px"
-          height="64px"
-          minHeight="80vh"
-          width="64px"
-        >
-          <div
-            className="lds-ripple-parent"
-            style={
-              Object {
-                "minHeight": "80vh",
-              }
-            }
+        <div>
+          <h2
+            className="page-title mt-4 mb-5"
+          >
+            Focus Investigation
+             
+            in
+             
+            NVI_439
+          </h2>
+          <Row
+            tag="div"
           >
             <div
-              className="lds-ripple"
-              style={
-                Object {
-                  "height": "64px",
-                  "width": "64px",
-                }
-              }
+              className="row"
             >
-              <div
-                style={
-                  Object {
-                    "borderColor": "#ff5d00",
-                    "borderStyle": "solid",
-                    "borderWidth": "4px",
-                  }
+              <Col
+                className="col-6"
+                tag="div"
+                widths={
+                  Array [
+                    "xs",
+                    "sm",
+                    "md",
+                    "lg",
+                    "xl",
+                  ]
                 }
-              />
-              <div
-                style={
-                  Object {
-                    "borderColor": "#ff5d00",
-                    "borderStyle": "solid",
-                    "borderWidth": "4px",
-                  }
+              >
+                <div
+                  className="col-6 col"
+                >
+                  <h4
+                    className="mb-4"
+                  >
+                    Focus Area Information
+                  </h4>
+                  <div
+                    style={
+                      Object {
+                        "background": "lightgrey",
+                        "height": "200px",
+                      }
+                    }
+                  />
+                  <dl
+                    className="row mt-3"
+                  >
+                    <dt
+                      className="col-5"
+                    >
+                      District
+                    </dt>
+                    <dd
+                      className="col-7"
+                    >
+                      Chadiza
+                    </dd>
+                    <dt
+                      className="col-5"
+                    >
+                      Canton
+                    </dt>
+                    <dd
+                      className="col-7"
+                    >
+                      Naviluli
+                    </dd>
+                    <dt
+                      className="col-5"
+                    >
+                      FI Reason
+                    </dt>
+                    <dd
+                      className="col-7"
+                    >
+                      Routine
+                    </dd>
+                    <dt
+                      className="col-5"
+                    >
+                      FI Status
+                    </dt>
+                    <dd
+                      className="col-7"
+                    >
+                      A1
+                    </dd>
+                  </dl>
+                  <hr />
+                </div>
+              </Col>
+              <Col
+                className="col-6"
+                tag="div"
+                widths={
+                  Array [
+                    "xs",
+                    "sm",
+                    "md",
+                    "lg",
+                    "xl",
+                  ]
                 }
-              />
+              >
+                <div
+                  className="col-6 col"
+                >
+                  <div
+                    className="fi-active"
+                  >
+                    <h5
+                      className="mb-4 mt-1"
+                    >
+                      Active Investigation
+                    </h5>
+                    <dl
+                      className="row mt-3"
+                    >
+                      <dt
+                        className="col-5"
+                      >
+                        Complete
+                      </dt>
+                      <dd
+                        className="col-7"
+                      >
+                        No
+                      </dd>
+                    </dl>
+                    <hr />
+                    <h5
+                      className="mb-4 mt-4"
+                    >
+                      Response
+                    </h5>
+                    <div
+                      className="responseItem"
+                      key="Case_Confirmation"
+                    >
+                      <h6>
+                        Case Confirmation
+                      </h6>
+                      <div
+                        className="targetItem"
+                      >
+                        <p>
+                          Measure
+                          : 
+                          Case confirmation complete
+                        </p>
+                        <p>
+                          Target
+                          : 
+                          0
+                           
+                          of
+                           
+                          1
+                        </p>
+                        <ProgressBar
+                          decimalPoints={0}
+                          height="10px"
+                          max={1}
+                          min={0}
+                          value={0}
+                        >
+                          <div
+                            className="progress"
+                            style={
+                              Object {
+                                "height": "10px",
+                                "marginBottom": "15px",
+                              }
+                            }
+                          >
+                            <div
+                              aria-valuemax={1}
+                              aria-valuemin={0}
+                              aria-valuenow={0}
+                              className="progress-bar"
+                              role="progressbar"
+                              style={
+                                Object {
+                                  "backgroundColor": "#ff3",
+                                  "width": "0%",
+                                }
+                              }
+                            />
+                          </div>
+                        </ProgressBar>
+                      </div>
+                    </div>
+                    <div
+                      className="responseItem"
+                      key="Larval_Dipping_Min_3_Sites"
+                    >
+                      <h6>
+                        Larval Dipping
+                      </h6>
+                      <div
+                        className="targetItem"
+                      >
+                        <p>
+                          Measure
+                          : 
+                          Number of larval dipping activities
+                        </p>
+                        <p>
+                          Target
+                          : 
+                          2
+                           
+                          of
+                           
+                          3
+                        </p>
+                        <ProgressBar
+                          decimalPoints={0}
+                          height="10px"
+                          max={3}
+                          min={0}
+                          value={2}
+                        >
+                          <div
+                            className="progress"
+                            style={
+                              Object {
+                                "height": "10px",
+                                "marginBottom": "15px",
+                              }
+                            }
+                          >
+                            <div
+                              aria-valuemax={3}
+                              aria-valuemin={0}
+                              aria-valuenow={66.66666666666666}
+                              className="progress-bar"
+                              role="progressbar"
+                              style={
+                                Object {
+                                  "backgroundColor": "#ff5c33",
+                                  "width": "67%",
+                                }
+                              }
+                            />
+                          </div>
+                        </ProgressBar>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </Col>
             </div>
-          </div>
-        </Ripple>
+          </Row>
+        </div>
       </SingleFI>
     </Connect(SingleFI)>
   </Router>
@@ -283,7 +539,7 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
       Object {
         "isExact": true,
         "params": Object {
-          "id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+          "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
         },
         "path": "/focus-investigation/view/:id",
         "url": "/focus-investigation/view/16",
