@@ -26,7 +26,7 @@ describe('containers/pages/SingleFI', () => {
       location: mock,
       match: {
         isExact: true,
-        params: { id: fixtures.plan1.plan_id },
+        params: { id: fixtures.plan1.id },
         path: `${FI_SINGLE_URL}/:id`,
         url: `${FI_SINGLE_URL}/13`,
       },
@@ -49,7 +49,7 @@ describe('containers/pages/SingleFI', () => {
       location: mock,
       match: {
         isExact: true,
-        params: { id: fixtures.plan1.plan_id },
+        params: { id: fixtures.plan1.id },
         path: `${FI_SINGLE_URL}/:id`,
         url: `${FI_SINGLE_URL}/16`,
       },
@@ -75,7 +75,7 @@ describe('containers/pages/SingleFI', () => {
       location: mock,
       match: {
         isExact: true,
-        params: { id: fixtures.plan1.plan_id },
+        params: { id: fixtures.plan1.id },
         path: `${FI_SINGLE_URL}/:id`,
         url: `${FI_SINGLE_URL}/16`,
       },
