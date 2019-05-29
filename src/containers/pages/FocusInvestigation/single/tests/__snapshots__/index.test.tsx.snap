@@ -79,6 +79,8 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
               "goal_id": "Case_Confirmation",
               "goal_unit": "each",
               "goal_value": 1,
+              "id": "5a27ec10-7a5f-563c-ba11-4de150b336af",
+              "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
               "measure": "Case confirmation complete",
               "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
               "task_count": 0,
@@ -90,6 +92,8 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
               "goal_id": "Larval_Dipping_Min_3_Sites",
               "goal_unit": "each",
               "goal_value": 3,
+              "id": "f8d4e0a9-5867-5c78-9e26-de45d72556c4",
+              "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
               "measure": "Number of larval dipping activities",
               "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
               "task_count": 2,
@@ -131,7 +135,7 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
           Object {
             "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
             "jurisdiction_depth": 2,
-            "jurisdiction_id": "3377",
+            "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
             "jurisdiction_name": "NVI_439",
             "jurisdiction_name_path": Array [
               "Chadiza",
@@ -154,7 +158,7 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
             Object {
               "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
               "jurisdiction_depth": 2,
-              "jurisdiction_id": "3377",
+              "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
               "jurisdiction_name": "NVI_439",
               "jurisdiction_name_path": Array [
                 "Chadiza",
@@ -553,7 +557,7 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
       Object {
         "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
         "jurisdiction_depth": 2,
-        "jurisdiction_id": "3377",
+        "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
         "jurisdiction_name": "NVI_439",
         "jurisdiction_name_path": Array [
           "Chadiza",
@@ -576,7 +580,7 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
         Object {
           "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
           "jurisdiction_depth": 2,
-          "jurisdiction_id": "3377",
+          "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
           "jurisdiction_name": "NVI_439",
           "jurisdiction_name_path": Array [
             "Chadiza",
