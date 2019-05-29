@@ -203,6 +203,7 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
             "plan-id-2",
           ]
         }
+        supersetService={[Function]}
       >
         <div>
           <h2
