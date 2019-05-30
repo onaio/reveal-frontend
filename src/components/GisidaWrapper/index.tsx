@@ -208,6 +208,8 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
             symbolLayers.push(fillLayer);
           });
         }
+      } else {
+        alert('no tasks to show');
       }
     }
     const { geoData } = this.props;
@@ -272,7 +274,6 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
       GISIDA_ONADATA_API_TOKEN,
       LayerStore
     );
-
     this.setState({ doRenderMap: true }, () => {
       // 4. Initialize Gisida stores
       store.dispatch(Actions.initApp(config.APP));
