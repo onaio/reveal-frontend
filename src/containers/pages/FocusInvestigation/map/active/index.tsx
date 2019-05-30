@@ -65,7 +65,7 @@ export interface MapSingleFIProps {
 
 /** default props for ActiveFI Map component */
 export const defaultMapSingleFIProps: MapSingleFIProps = {
-  currentGoal: fixtures.goal1.goal_id,
+  currentGoal: null,
   fetchGoalsActionCreator: fetchGoals,
   fetchJurisdictionsActionCreator: fetchJurisdictions,
   fetchPlansActionCreator: fetchPlans,
@@ -106,6 +106,20 @@ class SingleActiveFIMap extends React.Component<
       fetchTasksActionCreator(result4)
     );
   }
+
+  // public componentWillReceiveProps(nextProps: any) {
+  //   this.setState({
+  //     tasks: null,
+  //   });
+  // }
+
+  // public componentWillUpdate(nextProps: any, nextState: any) {
+  //   if (nextProps.currentGoal !== this.props.currentGoal) {
+  //     this.setState({
+  //       tasks: nextProps.tasks,
+  //     });
+  //   }
+  // }
 
   public render() {
     const { jurisdiction, plan, goals, tasks, currentGoal } = this.props;
