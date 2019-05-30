@@ -19,3 +19,7 @@
 .mapSidebar .responseItem p {
   margin-bottom: 0px;
 }
+
+html .mapSidebar .responseItem a.task-link.active h6 {
+  color: #57b446;
+}

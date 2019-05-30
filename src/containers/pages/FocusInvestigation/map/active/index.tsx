@@ -2,7 +2,7 @@ import reducerRegistry from '@onaio/redux-reducer-registry';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { Store } from 'redux';
 import GisidaWrapper from '../../../../../components/GisidaWrapper';
 import Loading from '../../../../../components/page/Loading';
@@ -138,9 +138,13 @@ class SingleActiveFIMap extends React.Component<
                 goals.map((item: Goal) => {
                   return (
                     <div className="responseItem" key={item.goal_id}>
-                      <Link to={`${FI_SINGLE_MAP_URL}/${plan.id}/${item.goal_id}`}>
+                      <NavLink
+                        to={`${FI_SINGLE_MAP_URL}/${plan.id}/${item.goal_id}`}
+                        className="task-link"
+                        style={{ textDecoration: 'none' }}
+                      >
                         <h6>{item.action_code}</h6>
-                      </Link>
+                      </NavLink>
                       <div className="targetItem">
                         <p>Measure: {item.measure}</p>
                         <p>
