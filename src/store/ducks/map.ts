@@ -28,10 +28,10 @@ const initialState: ImmutableMapState = SeamlessImmutable({
 export function reducer(state = initialState, action: AnyAction): ImmutableMapState {
   switch (action.type) {
     case UPDATE_ADMIN_LEVEL_INDEX:
-      return {
+      return SeamlessImmutable({
         ...state,
         adminLevelIndex: action.index,
-      };
+      });
     default:
       return state;
   }
@@ -50,6 +50,6 @@ export const updateAdminLevelIndex: ActionCreator<UpdateAdminLevelAction> = (ind
 
 // selectors
 /** get admin level index from map state */
-export function getAdminLevelIndex(state: Partial<Store>) {
+export function getAdminLevelIndex(state: Partial<Store>): number {
   return (state as any)[reducerName].adminLevelIndex;
 }
