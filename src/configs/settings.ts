@@ -155,7 +155,7 @@ export const pointLayerConfig = {
     type: 'geojson',
   },
   type: 'symbol',
-  visible: true,
+  visible: false,
 };
 
 export const lineLayerConfig = {
@@ -176,7 +176,7 @@ export const lineLayerConfig = {
     type: 'geojson',
   },
   type: 'line',
-  visible: true,
+  visible: false,
 };
 
 export const fillLayerConfig = {
@@ -197,5 +197,5 @@ export const fillLayerConfig = {
     type: 'geojson',
   },
   type: 'fill',
-  visible: true,
+  visible: false,
 };

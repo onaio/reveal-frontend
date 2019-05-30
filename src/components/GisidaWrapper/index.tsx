@@ -75,6 +75,7 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
         },
         () => {
           this.getLocations(this.props.geoData);
+          this.initMap(null);
         }
       );
     }
@@ -103,15 +104,6 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
   }
 
   public componentWillUpdate(nextProps: any, nextState: any) {
-    if (
-      this.state.locations &&
-      this.state.doInitMap &&
-      (nextProps.tasks && nextProps.tasks.length)
-    ) {
-      this.setState({ doInitMap: false, initMapWithoutTasks: false }, () => {
-        this.initMap(nextProps.tasks);
-      });
-    }
     if (
       nextProps.currentGoal !== this.props.currentGoal &&
       (nextProps.tasks && nextProps.tasks.length)
@@ -177,7 +169,7 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
               uniqueId++;
               geoJSONLayer = {
                 ...pointLayerConfig,
-                id: `single-jurisdiction-${uniqueId}`,
+                id: `single-jurisdiction-${element.goal_id}-${element.task_identifier}`,
                 source: {
                   ...pointLayerConfig.source,
                   data: {
@@ -193,10 +185,9 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
         if (polygons.length) {
           polygons.forEach((p: Task) => {
             let fillLayer = null;
-            uniqueId++;
             fillLayer = {
               ...fillLayerConfig,
-              id: `single-jurisdiction-${uniqueId}`,
+              id: `single-jurisdiction-${p.goal_id}-${p.task_identifier}`,
               source: {
                 ...fillLayerConfig.source,
                 data: {
@@ -274,10 +265,29 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
       GISIDA_ONADATA_API_TOKEN,
       LayerStore
     );
+
     this.setState({ doRenderMap: true }, () => {
       // 4. Initialize Gisida stores
+      let layer;
       store.dispatch(Actions.initApp(config.APP));
+      const visibleLayers = config.LAYERS.map((l: FlexObject) => {
+        layer = {
+          ...l,
+          visible: true
+        };
+        return layer;
+      });
+      debugger;
       loadLayers(MAP_ID, store.dispatch, config.LAYERS);
+      const currentState = store.getState();
+      if (Object.keys(currentState[MAP_ID].layers).length > 1) {
+        const layerIds = Object.keys(currentState[MAP_ID].layers);
+        const currentGoalLayerIds = layerIds.filter((l: any) => l.includes(this.props.currentGoal));
+        // currentGoalLayerIds.forEach((id: string) => {
+        //   store.dispatch(Actions.toggleLayer(MAP_ID, id, false))
+        // });
+      }
+      console.log("tasks", this.props.tasks, "plan id", this.props.goal && this.props.goal.plan_id, "layers??", currentState[MAP_ID].layers);
 
       // optional onInit handler function - higher order state management, etc
       if (this.props.onInit) {
