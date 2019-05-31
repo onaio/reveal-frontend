@@ -13,6 +13,14 @@ export const FOCUS_INVESTIGATIONS = 'Focus Investigations';
 export type FOCUS_INVESTIGATIONS = typeof FOCUS_INVESTIGATIONS;
 export const MAP_ID = 'map-1';
 export const STRINGIFIED_GEOJSON = 'stringified-geojson';
+export const RESPONSES = 'Responses';
+export type RESPONSES = typeof RESPONSES;
+export const MEASURE = 'measure';
+export type MEASURE = typeof MEASURE;
+export const TARGET = 'Target';
+export type TARGET = typeof TARGET;
+export const OF = 'of';
+export type OF = typeof OF;
 
 // internal urls
 export const LOGIN_URL = '/login';
