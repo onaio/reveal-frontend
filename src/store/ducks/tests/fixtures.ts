@@ -125,6 +125,11 @@ export const goal4 = {
   task_count: 18,
 };
 
+const goal37 = clone(goal4);
+goal37.id = '1337';
+(goal37.task_business_status_map as any) = JSON.stringify(goal37.task_business_status_map);
+export { goal37 };
+
 export const goals = [goal1, goal2, goal3, goal4];
 
 export const plan1Goals = [goal1, goal2];
