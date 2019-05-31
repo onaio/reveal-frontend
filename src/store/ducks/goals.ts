@@ -68,7 +68,15 @@ export default function reducer(state = initialState, action: GoalActionTypes): 
  */
 export const fetchGoals = (goalsList: Goal[] = []): FetchGoalsAction => {
   return {
-    goalsById: keyBy(goalsList, goal => goal.id),
+    goalsById: keyBy(
+      goalsList.map((item: Goal) => {
+        if (typeof item.task_business_status_map === 'string') {
+          item.task_business_status_map = JSON.parse(item.task_business_status_map);
+        }
+        return item;
+      }),
+      goal => goal.id
+    ),
     type: GOALS_FETCHED,
   };
 };
