@@ -104,7 +104,28 @@ export const goal3 = {
   task_count: 0,
 };
 
-export const goals = [goal1, goal2, goal3];
+export const goal4 = {
+  action_code: 'Mosquito Collection',
+  completed_task_count: 3,
+  goal_comparator: '>=',
+  goal_id: 'Mosquito_Collection_Min_3_Traps',
+  goal_unit: 'traps',
+  goal_value: 3,
+  id: '0f03cef6-1654-5bba-8898-1d2a8000e5b1',
+  jurisdiction_id: '450fc15b-5bd2-468a-927a-49cb10d3bcac',
+  measure: 'Number of mosquito collection traps',
+  plan_id: '10f9e9fa-ce34-4b27-a961-72fab5206ab6',
+  task_business_status_map: {
+    Complete: 3,
+    'In Progress': 3,
+    Incomplete: 1,
+    'Not Eligible': 6,
+    'Not Visited': 5,
+  },
+  task_count: 18,
+};
+
+export const goals = [goal1, goal2, goal3, goal4];
 
 export const plan1Goals = [goal1, goal2];
 
