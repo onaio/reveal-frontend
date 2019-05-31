@@ -37,6 +37,7 @@ import plansReducer, {
 } from '../../../../../store/ducks/plans';
 import tasksReducer, {
   fetchTasks,
+  getTasksById,
   getTasksByPlanAndGoalAndJurisdiction,
   reducerName as tasksReducerName,
   Task,
@@ -52,6 +53,7 @@ reducerRegistry.register(tasksReducerName, tasksReducer);
 
 /** interface to describe props for ActiveFI Map component */
 export interface MapSingleFIProps {
+  allTasks: FlexObject;
   currentGoal: string | null;
   fetchGoalsActionCreator: typeof fetchGoals;
   fetchJurisdictionsActionCreator: typeof fetchJurisdictions;
@@ -65,6 +67,7 @@ export interface MapSingleFIProps {
 
 /** default props for ActiveFI Map component */
 export const defaultMapSingleFIProps: MapSingleFIProps = {
+  allTasks: {},
   currentGoal: null,
   fetchGoalsActionCreator: fetchGoals,
   fetchJurisdictionsActionCreator: fetchJurisdictions,
@@ -122,8 +125,7 @@ class SingleActiveFIMap extends React.Component<
   // }
 
   public render() {
-    const { jurisdiction, plan, goals, tasks, currentGoal } = this.props;
-
+    const { jurisdiction, plan, goals, tasks, currentGoal, allTasks } = this.props;
     if (!jurisdiction || !plan) {
       return <Loading />;
     }
@@ -141,6 +143,7 @@ class SingleActiveFIMap extends React.Component<
                 goal={goals}
                 tasks={tasks}
                 currentGoal={currentGoal}
+                allTasks={allTasks}
               />
             </div>
           </div>
@@ -200,6 +203,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
   let jurisdiction = null;
   let tasks = null;
   let currentGoal = null;
+  let allTasks = null;
   if (plan) {
     jurisdiction = getJurisdictionById(state, plan.jurisdiction_id);
     goals = getGoalsByPlanAndJurisdiction(state, plan.plan_id, plan.jurisdiction_id);
@@ -213,8 +217,10 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
       plan.jurisdiction_id
     );
     currentGoal = ownProps.match.params.goalId;
+    allTasks = getTasksById(state);
   }
   return {
+    allTasks,
     currentGoal,
     goals,
     jurisdiction,
