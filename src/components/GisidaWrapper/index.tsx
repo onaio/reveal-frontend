@@ -156,7 +156,9 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
 
         // handle layers types
         polygons = tasks.filter(
-          (d: Task) => d.geojson.geometry && d.geojson.geometry.type === 'Polygon'
+          (d: FlexObject) =>
+            (d.geojson.geometry && d.geojson.geometry.type === 'Polygon') ||
+            d.geojson.geometry.type === 'MultiPolygon'
         );
         points = tasks.filter(
           (d: Task) => d.geojson.geometry && d.geojson.geometry.type === 'Point'
@@ -231,7 +233,7 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
     // };
     const layers = [
       {
-        id: `single-jurisdiction-${geoData.jurisdiction_id}`,
+        id: `main-plan-layer-${geoData.jurisdiction_id}`,
         paint: {
           'line-color': '#FFDC00',
           'line-opacity': 1,
@@ -273,21 +275,29 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
       const visibleLayers = config.LAYERS.map((l: FlexObject) => {
         layer = {
           ...l,
-          visible: true
+          visible: true,
         };
         return layer;
       });
-      debugger;
-      loadLayers(MAP_ID, store.dispatch, config.LAYERS);
+      loadLayers(MAP_ID, store.dispatch, visibleLayers);
       const currentState = store.getState();
       if (Object.keys(currentState[MAP_ID].layers).length > 1) {
         const layerIds = Object.keys(currentState[MAP_ID].layers);
-        const currentGoalLayerIds = layerIds.filter((l: any) => l.includes(this.props.currentGoal));
-        // currentGoalLayerIds.forEach((id: string) => {
-        //   store.dispatch(Actions.toggleLayer(MAP_ID, id, false))
-        // });
+        const currentGoalLayerIds = layerIds
+          .filter(d => !d.includes(this.props.currentGoal))
+          .filter(d => !d.includes('main-plan-layer'));
+        currentGoalLayerIds.forEach((id: string) => {
+          store.dispatch(Actions.toggleLayer(MAP_ID, id, false));
+        });
       }
-      console.log("tasks", this.props.tasks, "plan id", this.props.goal && this.props.goal.plan_id, "layers??", currentState[MAP_ID].layers);
+      // console.log(
+      //   'tasks',
+      //   this.props.tasks,
+      //   'plan id',
+      //   this.props.goal && this.props.goal.plan_id,
+      //   'layers??',
+      //   currentState[MAP_ID].layers
+      // );
 
       // optional onInit handler function - higher order state management, etc
       if (this.props.onInit) {
