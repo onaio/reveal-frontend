@@ -70,6 +70,7 @@ export const goal1 = {
   jurisdiction_id: '450fc15b-5bd2-468a-927a-49cb10d3bcac',
   measure: 'Case confirmation complete',
   plan_id: '10f9e9fa-ce34-4b27-a961-72fab5206ab6',
+  task_business_status_map: {},
   task_count: 0,
 };
 
@@ -84,6 +85,7 @@ export const goal2 = {
   jurisdiction_id: '450fc15b-5bd2-468a-927a-49cb10d3bcac',
   measure: 'Number of larval dipping activities',
   plan_id: '10f9e9fa-ce34-4b27-a961-72fab5206ab6',
+  task_business_status_map: { 'Not Visited': 2 },
   task_count: 2,
 };
 
@@ -98,6 +100,7 @@ export const goal3 = {
   jurisdiction_id: '1337',
   measure: 'Percent of registered people tested',
   plan_id: '1337',
+  task_business_status_map: {},
   task_count: 0,
 };
 
