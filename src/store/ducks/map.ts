@@ -10,6 +10,9 @@ interface UpdateAdminLevelAction extends AnyAction {
   type: typeof UPDATE_ADMIN_LEVEL_INDEX;
 }
 
+/** create type for map reducer actions */
+export type MapActionTypes = UpdateAdminLevelAction | AnyAction;
+
 /** interface to describe user state */
 interface MapState {
   Admins: FlexObject;
@@ -25,13 +28,14 @@ const initialState: ImmutableMapState = SeamlessImmutable({
   adminLevelIndex: 0,
 });
 
-export function reducer(state = initialState, action: AnyAction): ImmutableMapState {
+/** the map reducer function */
+export function reducer(state = initialState, action: MapActionTypes): ImmutableMapState {
   switch (action.type) {
     case UPDATE_ADMIN_LEVEL_INDEX:
-      return {
+      return SeamlessImmutable({
         ...state,
         adminLevelIndex: action.index,
-      };
+      });
     default:
       return state;
   }
@@ -42,14 +46,24 @@ export function reducer(state = initialState, action: AnyAction): ImmutableMapSt
 export const UPDATE_ADMIN_LEVEL_INDEX = 'reveal/reducer/map/UPDATE_ADMIN_LEVEL_INDEX';
 
 // action creators
-/** update admin level index action creator */
-export const updateAdminLevelIndex: ActionCreator<UpdateAdminLevelAction> = (index: number) => ({
+/** update admin level index action creator
+ * @param {number} index - Admin level index
+ *
+ * @return {UpdateAdminLevelAction} action object
+ */
+export const updateAdminLevelIndex: ActionCreator<UpdateAdminLevelAction> = (
+  index: number
+): UpdateAdminLevelAction => ({
   index,
   type: UPDATE_ADMIN_LEVEL_INDEX,
 });
 
 // selectors
-/** get admin level index from map state */
-export function getAdminLevelIndex(state: Partial<Store>) {
+/** get admin level index from map state
+ * @param {Partial<Store>} state - the redux store
+ *
+ * @return {number}
+ */
+export function getAdminLevelIndex(state: Partial<Store>): number {
   return (state as any)[reducerName].adminLevelIndex;
 }
