@@ -38,7 +38,7 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
 
   it('renders ActiveFocusInvestigation correctly', () => {
     const mock: any = jest.fn();
-    mock.mockImplementation(() => Promise.resolve('supersetServices'));
+    mock.mockImplementation(() => Promise.resolve(fixtures.plans));
     const props = {
       fetchPlansActionCreator: jest.fn(),
       history,
@@ -59,7 +59,7 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
   it('works with the Redux store', () => {
     store.dispatch(fetchPlans(fixtures.plans));
     const mock: any = jest.fn();
-    mock.mockImplementation(() => Promise.resolve('supersetServices'));
+    mock.mockImplementation(() => Promise.resolve(fixtures.plans));
     const props = {
       history,
       location: mock,

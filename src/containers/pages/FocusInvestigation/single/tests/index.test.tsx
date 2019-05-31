@@ -45,7 +45,7 @@ describe('containers/pages/SingleFI', () => {
   it('renders SingleFI correctly', () => {
     const mock: any = jest.fn();
     const supersetMock: any = jest.fn();
-    supersetMock.mockImplementation(() => Promise.resolve('supersetServices'));
+    supersetMock.mockImplementation(() => Promise.resolve(fixtures.plans));
     const props = {
       goalsArray: fixtures.plan1Goals,
       history,
