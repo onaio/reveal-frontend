@@ -65,6 +65,7 @@ export default function reducer(state = initialState, action: GoalActionTypes): 
 
 /** fetch Goals creator
  * @param {Goal[]} goalsList - array of goal objects
+ * @returns {FetchGoalsAction} FetchGoalsAction
  */
 export const fetchGoals = (goalsList: Goal[] = []): FetchGoalsAction => {
   return {
