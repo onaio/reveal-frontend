@@ -56,6 +56,7 @@ export interface SingleFIProps {
   planById: Plan | null;
   plansArray: Plan[];
   plansIdArray: string[];
+  supersetService: typeof supersetFetch;
 }
 
 /** default props for ActiveFI component */
@@ -66,6 +67,7 @@ export const defaultSingleFIProps: SingleFIProps = {
   planById: null,
   plansArray: [],
   plansIdArray: [],
+  supersetService: supersetFetch,
 };
 
 /** Reporting for Single Active Focus Investigation */
@@ -76,11 +78,11 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
   }
 
   public async componentDidMount() {
-    const { fetchGoalsActionCreator, fetchPlansActionCreator } = this.props;
-    await supersetFetch(SUPERSET_PLANS_SLICE).then((result: Plan[]) =>
+    const { fetchGoalsActionCreator, fetchPlansActionCreator, supersetService } = this.props;
+    await supersetService(SUPERSET_PLANS_SLICE).then((result: Plan[]) =>
       fetchPlansActionCreator(result)
     );
-    await supersetFetch(SUPERSET_GOALS_SLICE).then((result2: Goal[]) =>
+    await supersetService(SUPERSET_GOALS_SLICE).then((result2: Goal[]) =>
       fetchGoalsActionCreator(result2)
     );
   }

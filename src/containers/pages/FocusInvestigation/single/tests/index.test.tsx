@@ -12,6 +12,7 @@ import * as fixtures from '../../../../../store/ducks/tests/fixtures';
 import ConnectedSingleFI, { SingleFI } from '../../single';
 
 const history = createBrowserHistory();
+jest.mock('../../../../../configs/env');
 
 describe('containers/pages/SingleFI', () => {
   beforeEach(() => {
@@ -43,6 +44,8 @@ describe('containers/pages/SingleFI', () => {
 
   it('renders SingleFI correctly', () => {
     const mock: any = jest.fn();
+    const supersetMock: any = jest.fn();
+    supersetMock.mockImplementation(() => Promise.resolve(fixtures.plans));
     const props = {
       goalsArray: fixtures.plan1Goals,
       history,
@@ -56,6 +59,7 @@ describe('containers/pages/SingleFI', () => {
       planById: fixtures.plan1,
       plansArray: fixtures.plans,
       plansIdArray: fixtures.plansIdArray,
+      supersetService: supersetMock,
     };
     const wrapper = mount(
       <Router history={history}>

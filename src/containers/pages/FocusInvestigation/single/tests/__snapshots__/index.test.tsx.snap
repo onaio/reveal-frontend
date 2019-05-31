@@ -203,6 +203,7 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
             "plan-id-2",
           ]
         }
+        supersetService={[Function]}
       >
         <div>
           <h2
@@ -623,6 +624,21 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
       Array [
         "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
       ]
+    }
+    supersetService={
+      [MockFunction] {
+        "calls": Array [
+          Array [
+            0,
+          ],
+        ],
+        "results": Array [
+          Object {
+            "isThrow": false,
+            "value": Promise {},
+          },
+        ],
+      }
     }
   >
     <div>
