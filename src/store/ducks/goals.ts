@@ -1,6 +1,7 @@
 import { get, keyBy, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
 import SeamlessImmutable from 'seamless-immutable';
+import { FlexObject } from '../../helpers/utils';
 
 /** the reducer name */
 export const reducerName = 'goals';
@@ -17,6 +18,7 @@ export interface Goal {
   jurisdiction_id: string;
   measure: string;
   plan_id: string;
+  task_business_status_map: FlexObject;
   task_count: number;
 }
 
@@ -63,10 +65,19 @@ export default function reducer(state = initialState, action: GoalActionTypes): 
 
 /** fetch Goals creator
  * @param {Goal[]} goalsList - array of goal objects
+ * @returns {FetchGoalsAction} FetchGoalsAction
  */
 export const fetchGoals = (goalsList: Goal[] = []): FetchGoalsAction => {
   return {
-    goalsById: keyBy(goalsList, goal => goal.id),
+    goalsById: keyBy(
+      goalsList.map((item: Goal) => {
+        if (typeof item.task_business_status_map === 'string') {
+          item.task_business_status_map = JSON.parse(item.task_business_status_map);
+        }
+        return item;
+      }),
+      goal => goal.id
+    ),
     type: GOALS_FETCHED,
   };
 };

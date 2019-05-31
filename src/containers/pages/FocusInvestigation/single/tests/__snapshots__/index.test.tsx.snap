@@ -83,6 +83,7 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
               "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
               "measure": "Case confirmation complete",
               "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+              "task_business_status_map": Object {},
               "task_count": 0,
             },
             Object {
@@ -96,7 +97,30 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
               "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
               "measure": "Number of larval dipping activities",
               "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+              "task_business_status_map": Object {
+                "Not Visited": 2,
+              },
               "task_count": 2,
+            },
+            Object {
+              "action_code": "Mosquito Collection",
+              "completed_task_count": 3,
+              "goal_comparator": ">=",
+              "goal_id": "Mosquito_Collection_Min_3_Traps",
+              "goal_unit": "traps",
+              "goal_value": 3,
+              "id": "0f03cef6-1654-5bba-8898-1d2a8000e5b1",
+              "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
+              "measure": "Number of mosquito collection traps",
+              "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+              "task_business_status_map": Object {
+                "Complete": 3,
+                "In Progress": 3,
+                "Incomplete": 1,
+                "Not Eligible": 6,
+                "Not Visited": 5,
+              },
+              "task_count": 18,
             },
           ]
         }
@@ -455,6 +479,63 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
                         </ProgressBar>
                       </div>
                     </div>
+                    <div
+                      className="responseItem"
+                      key="Mosquito_Collection_Min_3_Traps"
+                    >
+                      <h6>
+                        Mosquito Collection
+                      </h6>
+                      <div
+                        className="targetItem"
+                      >
+                        <p>
+                          Measure
+                          : 
+                          Number of mosquito collection traps
+                        </p>
+                        <p>
+                          Target
+                          : 
+                          18
+                           
+                          of
+                           
+                          3
+                        </p>
+                        <ProgressBar
+                          decimalPoints={0}
+                          height="10px"
+                          max={3}
+                          min={0}
+                          value={18}
+                        >
+                          <div
+                            className="progress"
+                            style={
+                              Object {
+                                "height": "10px",
+                                "marginBottom": "15px",
+                              }
+                            }
+                          >
+                            <div
+                              aria-valuemax={3}
+                              aria-valuemin={0}
+                              aria-valuenow={600}
+                              className="progress-bar"
+                              role="progressbar"
+                              style={
+                                Object {
+                                  "backgroundColor": "#33ad33",
+                                  "width": "600%",
+                                }
+                              }
+                            />
+                          </div>
+                        </ProgressBar>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </Col>
@@ -506,6 +587,7 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
           "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
           "measure": "Case confirmation complete",
           "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+          "task_business_status_map": Object {},
           "task_count": 0,
         },
         Object {
@@ -519,6 +601,9 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
           "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
           "measure": "Number of larval dipping activities",
           "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+          "task_business_status_map": Object {
+            "Not Visited": 2,
+          },
           "task_count": 2,
         },
       ]
