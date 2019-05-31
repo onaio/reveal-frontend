@@ -58,4 +58,32 @@ describe('reducers/goals', () => {
       )
     ).toEqual([fixtures.goal1, fixtures.goal2, fixtures.goal4]);
   });
+
+  it('should save goals correctly', () => {
+    store.dispatch(fetchGoals([fixtures.goal37] as any));
+    const goal37FromStore = getGoalById(store.getState(), '1337');
+    expect(goal37FromStore).not.toBeNull();
+    if (goal37FromStore) {
+      expect(goal37FromStore).toEqual({
+        action_code: 'Mosquito Collection',
+        completed_task_count: 3,
+        goal_comparator: '>=',
+        goal_id: 'Mosquito_Collection_Min_3_Traps',
+        goal_unit: 'traps',
+        goal_value: 3,
+        id: '1337',
+        jurisdiction_id: '450fc15b-5bd2-468a-927a-49cb10d3bcac',
+        measure: 'Number of mosquito collection traps',
+        plan_id: '10f9e9fa-ce34-4b27-a961-72fab5206ab6',
+        task_business_status_map: {
+          Complete: 3,
+          'In Progress': 3,
+          Incomplete: 1,
+          'Not Eligible': 6,
+          'Not Visited': 5,
+        },
+        task_count: 18,
+      });
+    }
+  });
 });
