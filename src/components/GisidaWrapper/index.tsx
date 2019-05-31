@@ -2,6 +2,7 @@ import GeojsonExtent from '@mapbox/geojson-extent';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import { Actions, ducks, loadLayers } from 'gisida';
 import { Map } from 'gisida-react';
+import { any } from 'prop-types';
 import * as React from 'react';
 import { GISIDA_MAPBOX_TOKEN, GISIDA_ONADATA_API_TOKEN } from '../../configs/env';
 import { fillLayerConfig, lineLayerConfig, pointLayerConfig } from '../../configs/settings';
@@ -19,6 +20,7 @@ interface GisidaState {
   doInitMap: boolean;
   doRenderMap: boolean;
   geoData: Jurisdiction;
+  hasGeometries: boolean | false;
   tasks: Task;
   initMapWithoutTasks: boolean | false;
   renderTasks: boolean | false;
@@ -42,6 +44,7 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
       doInitMap: false,
       doRenderMap: false,
       geoData: this.props.geoData || false,
+      hasGeometries: false,
       initMapWithoutTasks: false,
       locations: this.props.locations || false,
       renderTasks: false,
@@ -75,7 +78,6 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
         },
         () => {
           this.getLocations(this.props.geoData);
-          this.initMap(null);
         }
       );
     }
@@ -104,13 +106,10 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
   }
 
   public componentWillUpdate(nextProps: any, nextState: any) {
-    if (
-      nextProps.currentGoal !== this.props.currentGoal &&
-      (nextProps.tasks && nextProps.tasks.length)
-    ) {
-      // this.setState({ renderTasks: true, doInitMap: true }, () => {
-      this.initMap(nextProps.tasks);
-      // });
+    if (nextProps.currentGoal !== this.props.currentGoal) {
+      this.setState({ doInitMap: false, initMapWithoutTasks: false }, () => {
+        this.initMap(nextProps.tasks);
+      });
     }
   }
 
@@ -142,6 +141,7 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
   // 3. Define map site-config object to init the store
   private initMap(tasks: Task[] | null) {
     const symbolLayers: any[] = [];
+    const self = this;
     if (tasks) {
       let uniqueId = 0;
       // Dirty Hack filter out null geoms
@@ -201,7 +201,13 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
             symbolLayers.push(fillLayer);
           });
         }
+        this.setState({
+          hasGeometries: true,
+        });
       } else {
+        this.setState({
+          hasGeometries: false,
+        });
         alert('no tasks to show');
       }
     }
@@ -270,7 +276,10 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
 
     this.setState({ doRenderMap: true }, () => {
       // 4. Initialize Gisida stores
+
       let layer;
+      const currentState = store.getState();
+      const activeIds: any[] = [];
       store.dispatch(Actions.initApp(config.APP));
       const visibleLayers = config.LAYERS.map((l: FlexObject) => {
         layer = {
@@ -279,9 +288,10 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
         };
         return layer;
       });
+
+      // const activeLayer = (Object.keys(currentState[MAP_ID].layers).length > 1) ? config.LAYERS : visibleLayers;
       loadLayers(MAP_ID, store.dispatch, visibleLayers);
-      const currentState = store.getState();
-      if (Object.keys(currentState[MAP_ID].layers).length > 1) {
+      if (this.state.hasGeometries && Object.keys(currentState[MAP_ID].layers).length > 1) {
         const layerIds = Object.keys(currentState[MAP_ID].layers);
         const currentGoalLayerIds = layerIds
           .filter(d => !d.includes(this.props.currentGoal))
@@ -289,6 +299,18 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
         currentGoalLayerIds.forEach((id: string) => {
           store.dispatch(Actions.toggleLayer(MAP_ID, id, false));
         });
+      } else if (!this.state.hasGeometries && Object.keys(currentState[MAP_ID].layers).length > 1) {
+        Object.keys(currentState[MAP_ID].layers).forEach((l: string) => {
+          layer = currentState[MAP_ID].layers[l];
+          if (layer.visible && !layer.id.includes('main-plan-layer')) {
+            activeIds.push(layer.id);
+          }
+        });
+        if (activeIds.length) {
+          activeIds.forEach((i: string) => {
+            store.dispatch(Actions.toggleLayer(MAP_ID, i, false));
+          });
+        }
       }
       // console.log(
       //   'tasks',
