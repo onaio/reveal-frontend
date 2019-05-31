@@ -44,17 +44,18 @@ describe('reducers/goals', () => {
     expect(getGoalsByPlanId(store.getState(), '10f9e9fa-ce34-4b27-a961-72fab5206ab6')).toEqual([
       fixtures.goal1,
       fixtures.goal2,
+      fixtures.goal4,
     ]);
     expect(getGoalsByGoalId(store.getState(), 'Case_Confirmation')).toEqual([fixtures.goal1]);
     expect(
       getGoalsByJurisdictionId(store.getState(), '450fc15b-5bd2-468a-927a-49cb10d3bcac')
-    ).toEqual([fixtures.goal1, fixtures.goal2]);
+    ).toEqual([fixtures.goal1, fixtures.goal2, fixtures.goal4]);
     expect(
       getGoalsByPlanAndJurisdiction(
         store.getState(),
         '10f9e9fa-ce34-4b27-a961-72fab5206ab6',
         '450fc15b-5bd2-468a-927a-49cb10d3bcac'
       )
-    ).toEqual([fixtures.goal1, fixtures.goal2]);
+    ).toEqual([fixtures.goal1, fixtures.goal2, fixtures.goal4]);
   });
 });
