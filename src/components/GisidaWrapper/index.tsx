@@ -2,10 +2,9 @@ import GeojsonExtent from '@mapbox/geojson-extent';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import { Actions, ducks, loadLayers } from 'gisida';
 import { Map } from 'gisida-react';
-import { any } from 'prop-types';
 import * as React from 'react';
 import { GISIDA_MAPBOX_TOKEN, GISIDA_ONADATA_API_TOKEN } from '../../configs/env';
-import { fillLayerConfig, lineLayerConfig, pointLayerConfig } from '../../configs/settings';
+import { fillLayerConfig, pointLayerConfig } from '../../configs/settings';
 import { MAP_ID, STRINGIFIED_GEOJSON } from '../../constants';
 import { ConfigStore, FlexObject } from '../../helpers/utils';
 import store from '../../store';
@@ -25,6 +24,24 @@ interface GisidaState {
   initMapWithoutTasks: boolean | false;
   renderTasks: boolean | false;
 }
+/* sample interface for layerObjs currently not working 
+// interface LayerObj {
+//   id: string;
+//   paint: {
+//     'line-color': string;
+//     'line-opacity': number;
+//     'line-width': number;
+//   };
+//   source: {
+//     data: {
+//       data: string;
+//       type: string;
+//     };
+//     type: string;
+//   };
+//   type: string;
+//   visible: boolean;
+// }
 
 /** Returns a single layer configuration */
 const LayerStore = (layer: FlexObject) => {
@@ -105,10 +122,13 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
     }
   }
 
-  public componentWillUpdate(nextProps: any, nextState: any) {
-    if ((nextProps.tasks && nextProps.tasks.length)
-      && ((nextProps.currentGoal !== this.props.currentGoal)
-      || (this.state.locations && this.state.doInitMap))) {
+  public componentWillUpdate(nextProps: FlexObject) {
+    if (
+      nextProps.tasks &&
+      nextProps.tasks.length &&
+      (nextProps.currentGoal !== this.props.currentGoal ||
+        (this.state.locations && this.state.doInitMap))
+    ) {
       this.setState({ doInitMap: false, initMapWithoutTasks: false }, () => {
         this.initMap(nextProps.tasks);
       });
@@ -142,7 +162,7 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
 
   // 3. Define map site-config object to init the store
   private initMap(tasks: Task[] | null) {
-    const symbolLayers: any[] = [];
+    const symbolLayers: FlexObject[] = [];
     const self = this;
     if (tasks) {
       let uniqueId = 0;
@@ -168,7 +188,7 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
 
         if (points.length) {
           points.forEach((element: Task) => {
-            let geoJSONLayer = null;
+            let geoJSONLayer: FlexObject | null = {};
             if (element.geojson.geometry) {
               uniqueId++;
               geoJSONLayer = {
@@ -210,7 +230,7 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
         this.setState({
           hasGeometries: false,
         });
-        alert('no tasks to show');
+        alert('Tasks have no Geometries');
       }
     }
     const { geoData } = this.props;
@@ -260,7 +280,7 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
     ];
 
     if (symbolLayers.length) {
-      symbolLayers.forEach(value => {
+      symbolLayers.forEach((value: any) => {
         layers.push(value);
       });
     }
@@ -281,8 +301,9 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
 
       let layer;
       const currentState = store.getState();
-      const activeIds: any[] = [];
+      const activeIds: string[] = [];
       store.dispatch(Actions.initApp(config.APP));
+      /** Make all selected tasks visible by changing the visible flag to true */
       const visibleLayers = config.LAYERS.map((l: FlexObject) => {
         layer = {
           ...l,
@@ -293,12 +314,23 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
       });
 
       // const activeLayer = (Object.keys(currentState[MAP_ID].layers).length > 1) ? config.LAYERS : visibleLayers;
+      // load visible layers to store
       loadLayers(MAP_ID, store.dispatch, visibleLayers);
+
+      // handles layers with geometries
       if (this.state.hasGeometries && Object.keys(currentState[MAP_ID].layers).length > 1) {
         const allLayers = Object.keys(currentState[MAP_ID].layers);
-        for (let x = 0; x < allLayers.length; x += 1) {
-          layer = currentState[MAP_ID].layers[allLayers[x]];
-          if (layer.visible && !layer.id.includes(this.props.currentGoal) && !layer.id.includes('main-plan-layer')) {
+        let eachLayer: string;
+        for (eachLayer of allLayers) {
+          layer = currentState[MAP_ID].layers[eachLayer];
+          /** Filter out the main plan layer and the current selected goal tasks
+           *  so we toggle off previously selected layers in the store
+           */
+          if (
+            layer.visible &&
+            !layer.id.includes(this.props.currentGoal) &&
+            !layer.id.includes('main-plan-layer')
+          ) {
             store.dispatch(Actions.toggleLayer(MAP_ID, layer.id, false));
           }
         }
@@ -310,8 +342,8 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
           }
         });
         if (activeIds.length) {
-          activeIds.forEach((i: string) => {
-            store.dispatch(Actions.toggleLayer(MAP_ID, i, false));
+          activeIds.forEach((a: string) => {
+            store.dispatch(Actions.toggleLayer(MAP_ID, a, false));
           });
         }
       }
@@ -323,7 +355,6 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
       //   'layers??',
       //   currentState[MAP_ID].layers
       // );
-
       // optional onInit handler function - higher order state management, etc
       if (this.props.onInit) {
         this.props.onInit();
