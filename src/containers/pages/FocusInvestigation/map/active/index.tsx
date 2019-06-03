@@ -53,7 +53,7 @@ reducerRegistry.register(tasksReducerName, tasksReducer);
 
 /** interface to describe props for ActiveFI Map component */
 export interface MapSingleFIProps {
-  allTasks: FlexObject;
+  allTasks: any;
   currentGoal: string | null;
   fetchGoalsActionCreator: typeof fetchGoals;
   fetchJurisdictionsActionCreator: typeof fetchJurisdictions;
