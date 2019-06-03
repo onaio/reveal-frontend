@@ -83,3 +83,21 @@ export const ORANGE = 'Orange';
 export type ORANGE = typeof ORANGE;
 export const RED = 'Red';
 export type RED = typeof RED;
+
+// task action codes
+export const RACD_REGISTER_FAMILY_CODE = 'RACD Register Family';
+export type RACD_REGISTER_FAMILY_CODE = typeof RACD_REGISTER_FAMILY_CODE;
+export const CASE_CONFIRMATION_CODE = 'IndexCase_Location';
+export type CASE_CONFIRMATION_CODE = typeof CASE_CONFIRMATION_CODE;
+export const MOSQUITO_COLLECTION_CODE = 'Mosquito Collection';
+export type MOSQUITO_COLLECTION_CODE = typeof MOSQUITO_COLLECTION_CODE;
+export const BEDNET_DISTRIBUTION_CODE = 'Bednet_Distribution';
+export type BEDNET_DISTRIBUTION_CODE = typeof BEDNET_DISTRIBUTION_CODE;
+export const LARVAL_DIPPING_CODE = 'Larval Dipping';
+export type LARVAL_DIPPING_CODE = typeof LARVAL_DIPPING_CODE;
+export const BLOOD_SCREENING_CODE1 = 'RACD_MBS';
+export type BLOOD_SCREENING_CODE1 = typeof BLOOD_SCREENING_CODE1;
+export const BLOOD_SCREENING_CODE2 = 'RACD_Test_and_Treat';
+export type BLOOD_SCREENING_CODE2 = typeof BLOOD_SCREENING_CODE2;
+export const IRS_CODE = 'IRS';
+export type IRS = typeof IRS_CODE;
