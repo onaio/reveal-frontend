@@ -70,32 +70,7 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
       <SingleFI
         fetchGoalsActionCreator={[Function]}
         fetchPlansActionCreator={[Function]}
-        goalsArray={
-          Array [
-            Object {
-              "action_code": "Case Confirmation",
-              "completed_task_count": 0,
-              "goal_comparator": "=",
-              "goal_id": "Case_Confirmation",
-              "goal_unit": "each",
-              "goal_value": 1,
-              "measure": "Case confirmation complete",
-              "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
-              "task_count": 0,
-            },
-            Object {
-              "action_code": "Larval Dipping",
-              "completed_task_count": 0,
-              "goal_comparator": ">=",
-              "goal_id": "Larval_Dipping_Min_3_Sites",
-              "goal_unit": "each",
-              "goal_value": 3,
-              "measure": "Number of larval dipping activities",
-              "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
-              "task_count": 2,
-            },
-          ]
-        }
+        goalsArray={Array []}
         history={
           Object {
             "action": "POP",
@@ -255,9 +230,7 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
                     </dt>
                     <dd
                       className="col-7"
-                    >
-                      Chadiza
-                    </dd>
+                    />
                     <dt
                       className="col-5"
                     >
@@ -266,7 +239,7 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
                     <dd
                       className="col-7"
                     >
-                      Naviluli
+                      Chadiza
                     </dd>
                     <dt
                       className="col-5"
@@ -336,120 +309,6 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
                     >
                       Response
                     </h5>
-                    <div
-                      className="responseItem"
-                      key="Case_Confirmation"
-                    >
-                      <h6>
-                        Case Confirmation
-                      </h6>
-                      <div
-                        className="targetItem"
-                      >
-                        <p>
-                          Measure
-                          : 
-                          Case confirmation complete
-                        </p>
-                        <p>
-                          Target
-                          : 
-                          0
-                           
-                          of
-                           
-                          1
-                        </p>
-                        <ProgressBar
-                          decimalPoints={0}
-                          height="10px"
-                          max={1}
-                          min={0}
-                          value={0}
-                        >
-                          <div
-                            className="progress"
-                            style={
-                              Object {
-                                "height": "10px",
-                                "marginBottom": "15px",
-                              }
-                            }
-                          >
-                            <div
-                              aria-valuemax={1}
-                              aria-valuemin={0}
-                              aria-valuenow={0}
-                              className="progress-bar"
-                              role="progressbar"
-                              style={
-                                Object {
-                                  "backgroundColor": "#ff3",
-                                  "width": "0%",
-                                }
-                              }
-                            />
-                          </div>
-                        </ProgressBar>
-                      </div>
-                    </div>
-                    <div
-                      className="responseItem"
-                      key="Larval_Dipping_Min_3_Sites"
-                    >
-                      <h6>
-                        Larval Dipping
-                      </h6>
-                      <div
-                        className="targetItem"
-                      >
-                        <p>
-                          Measure
-                          : 
-                          Number of larval dipping activities
-                        </p>
-                        <p>
-                          Target
-                          : 
-                          2
-                           
-                          of
-                           
-                          3
-                        </p>
-                        <ProgressBar
-                          decimalPoints={0}
-                          height="10px"
-                          max={3}
-                          min={0}
-                          value={2}
-                        >
-                          <div
-                            className="progress"
-                            style={
-                              Object {
-                                "height": "10px",
-                                "marginBottom": "15px",
-                              }
-                            }
-                          >
-                            <div
-                              aria-valuemax={3}
-                              aria-valuemin={0}
-                              aria-valuenow={66.66666666666666}
-                              className="progress-bar"
-                              role="progressbar"
-                              style={
-                                Object {
-                                  "backgroundColor": "#ff5c33",
-                                  "width": "67%",
-                                }
-                              }
-                            />
-                          </div>
-                        </ProgressBar>
-                      </div>
-                    </div>
                   </div>
                 </div>
               </Col>
