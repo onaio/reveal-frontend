@@ -106,7 +106,9 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
   }
 
   public componentWillUpdate(nextProps: any, nextState: any) {
-    if (nextProps.currentGoal !== this.props.currentGoal) {
+    if ((nextProps.tasks && nextProps.tasks.length)
+      && ((nextProps.currentGoal !== this.props.currentGoal)
+      || (this.state.locations && this.state.doInitMap))) {
       this.setState({ doInitMap: false, initMapWithoutTasks: false }, () => {
         this.initMap(nextProps.tasks);
       });
@@ -284,6 +286,7 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
       const visibleLayers = config.LAYERS.map((l: FlexObject) => {
         layer = {
           ...l,
+          id: l.id,
           visible: true,
         };
         return layer;
@@ -292,13 +295,13 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
       // const activeLayer = (Object.keys(currentState[MAP_ID].layers).length > 1) ? config.LAYERS : visibleLayers;
       loadLayers(MAP_ID, store.dispatch, visibleLayers);
       if (this.state.hasGeometries && Object.keys(currentState[MAP_ID].layers).length > 1) {
-        const layerIds = Object.keys(currentState[MAP_ID].layers);
-        const currentGoalLayerIds = layerIds
-          .filter(d => !d.includes(this.props.currentGoal))
-          .filter(d => !d.includes('main-plan-layer'));
-        currentGoalLayerIds.forEach((id: string) => {
-          store.dispatch(Actions.toggleLayer(MAP_ID, id, false));
-        });
+        const allLayers = Object.keys(currentState[MAP_ID].layers);
+        for (let x = 0; x < allLayers.length; x += 1) {
+          layer = currentState[MAP_ID].layers[allLayers[x]];
+          if (layer.visible && !layer.id.includes(this.props.currentGoal) && !layer.id.includes('main-plan-layer')) {
+            store.dispatch(Actions.toggleLayer(MAP_ID, layer.id, false));
+          }
+        }
       } else if (!this.state.hasGeometries && Object.keys(currentState[MAP_ID].layers).length > 1) {
         Object.keys(currentState[MAP_ID].layers).forEach((l: string) => {
           layer = currentState[MAP_ID].layers[l];
