@@ -37,8 +37,8 @@ import plansReducer, {
 } from '../../../../../store/ducks/plans';
 import tasksReducer, {
   fetchTasks,
-  getTasksById,
   getTasksByPlanAndGoalAndJurisdiction,
+  getTasksByPlanAndJurisdiction,
   reducerName as tasksReducerName,
   Task,
 } from '../../../../../store/ducks/tasks';
@@ -53,7 +53,7 @@ reducerRegistry.register(tasksReducerName, tasksReducer);
 
 /** interface to describe props for ActiveFI Map component */
 export interface MapSingleFIProps {
-  allTasks: any;
+  allTasks: Task[] | null;
   currentGoal: string | null;
   fetchGoalsActionCreator: typeof fetchGoals;
   fetchJurisdictionsActionCreator: typeof fetchJurisdictions;
@@ -67,7 +67,7 @@ export interface MapSingleFIProps {
 
 /** default props for ActiveFI Map component */
 export const defaultMapSingleFIProps: MapSingleFIProps = {
-  allTasks: {},
+  allTasks: [],
   currentGoal: null,
   fetchGoalsActionCreator: fetchGoals,
   fetchJurisdictionsActionCreator: fetchJurisdictions,
@@ -217,7 +217,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
       plan.jurisdiction_id
     );
     currentGoal = ownProps.match.params.goalId;
-    allTasks = getTasksById(state);
+    allTasks = getTasksByPlanAndJurisdiction(state, plan.plan_id, plan.jurisdiction_id);
   }
   return {
     allTasks,
