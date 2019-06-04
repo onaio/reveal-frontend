@@ -4,48 +4,62 @@
 import { BLACK, GREEN, RED, YELLOW } from '../colors';
 
 export interface ColorMapsTypes {
-  BLACK: string | string[];
-  GREEN: string | string[];
-  RED: string | string[];
-  YELLOW: string | string[];
+  [key: string]: string | string[];
 }
 
-const defaultColorMaps: ColorMapsTypes = {
-  BLACK: 'Not Eligible',
-  GREEN: 'Complete',
-  RED: ['Incomplete', 'In Progress'],
-  YELLOW: 'Not Visited',
-};
+/** the common color codes */
+const defaultColorMaps: ColorMapsTypes = {};
+defaultColorMaps[BLACK] = 'Not Eligible';
+defaultColorMaps[GREEN] = 'Complete';
+defaultColorMaps[RED] = ['Incomplete', 'In Progress'];
+defaultColorMaps[YELLOW] = 'Not Visited';
 
-export const CASE_CONFIRMATION: ColorMapsTypes = {
-  ...defaultColorMaps,
-  RED: ['Incomplete', 'Refused'],
-};
-
-export const RACD_REGISTER_FAMILY: ColorMapsTypes = {
-  ...defaultColorMaps,
-  RED: ['Incomplete', 'Refused'],
-};
-
-export const MOSQUITO_COLLECTION: ColorMapsTypes = {
+/** color codes for the case confirmation action code */
+const CASE_CONFIRMATION: ColorMapsTypes = {
   ...defaultColorMaps,
 };
+CASE_CONFIRMATION[RED] = ['Incomplete', 'Refused'];
 
-export const LARVAL_DIPPING: ColorMapsTypes = {
+/** color codes for the RACD Register Family action code */
+const RACD_REGISTER_FAMILY: ColorMapsTypes = {
   ...defaultColorMaps,
 };
+RACD_REGISTER_FAMILY[RED] = ['Incomplete', 'Refused'];
 
-export const IRS: ColorMapsTypes = {
-  ...defaultColorMaps,
-  BLACK: 'Not Sprayable',
-  RED: ['Not Sprayed', 'Refused'],
-};
-
-export const BEDNET_DISTRIBUTION: ColorMapsTypes = {
+/** color codes for Mosquito Collection action code */
+const MOSQUITO_COLLECTION: ColorMapsTypes = {
   ...defaultColorMaps,
 };
 
-export const BLOOD_SCREENING = {
+/** color codes for Larval Dipping action code */
+const LARVAL_DIPPING: ColorMapsTypes = {
   ...defaultColorMaps,
-  RED: ['Refused'],
+};
+
+/** color codes for IRS action code */
+const IRS: ColorMapsTypes = {
+  ...defaultColorMaps,
+};
+IRS[BLACK] = 'Not Sprayable';
+IRS[RED] = ['Not Sprayed', 'Refused'];
+
+/** color code for Bednet Distribution action code */
+const BEDNET_DISTRIBUTION: ColorMapsTypes = {
+  ...defaultColorMaps,
+};
+
+/** color codes for Blood Screening action code */
+const BLOOD_SCREENING = {
+  ...defaultColorMaps,
+};
+BLOOD_SCREENING[RED] = 'Refused';
+
+export default {
+  BEDNET_DISTRIBUTION,
+  BLOOD_SCREENING,
+  CASE_CONFIRMATION,
+  IRS,
+  LARVAL_DIPPING,
+  MOSQUITO_COLLECTION,
+  RACD_REGISTER_FAMILY,
 };
