@@ -5,7 +5,7 @@ import { Map } from 'gisida-react';
 import * as React from 'react';
 import Loading from '../../components/page/Loading/index';
 import { GISIDA_MAPBOX_TOKEN, GISIDA_ONADATA_API_TOKEN } from '../../configs/env';
-import { fillLayerConfig, pointLayerConfig } from '../../configs/settings';
+import { circleLayerConfig, fillLayerConfig, pointLayerConfig } from '../../configs/settings';
 import { MAP_ID, STRINGIFIED_GEOJSON } from '../../constants';
 import { ConfigStore, FlexObject } from '../../helpers/utils';
 import store from '../../store';
@@ -234,16 +234,16 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
 
         if (points.length) {
           points.forEach((element: Task) => {
-            let geoJSONLayer: PointLayerObj | null = null;
+            let geoJSONLayer: FlexObject | null = null;
             if (element.geojson.geometry) {
               geoJSONLayer = {
-                ...pointLayerConfig,
+                ...circleLayerConfig,
                 id: `single-jurisdiction-${element.goal_id}-${element.task_identifier}`,
                 source: {
-                  ...pointLayerConfig.source,
+                  ...circleLayerConfig.source,
                   data: {
-                    ...pointLayerConfig.source.data,
-                    data: JSON.stringify(element.geojson.geometry),
+                    ...circleLayerConfig.source.data,
+                    data: JSON.stringify(element.geojson),
                   },
                 },
               };
