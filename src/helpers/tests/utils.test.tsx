@@ -2,9 +2,24 @@ import * as gatekeeper from '@onaio/gatekeeper';
 import { cloneDeep } from 'lodash';
 import { BLACK, GREEN, RED, YELLOW } from '../../colors';
 import { ONADATA_OAUTH_STATE, OPENSRP_OAUTH_STATE } from '../../configs/env';
+import { Task } from '../../store/ducks/tasks';
 import * as fixtures from '../../store/ducks/tests/fixtures';
-import colorMaps from '../structureColorMaps';
+import { colorMaps } from '../structureColorMaps';
 import { getColor, getColorByValue, getLocationColumns, oAuthUserInfoGetter } from '../utils';
+
+interface SampleColorMap {
+  [key: string]: string;
+}
+/** common test functionality for contextual coloring
+ * @param {Task} task - a sample task object
+ * @param {SampleColorMap} obj - minimum unique differences for colorMaps
+ */
+const getColorSharedTest = (task: Task, obj: SampleColorMap) => {
+  for (const [status, color] of Object.entries(obj)) {
+    task.geojson.properties.task_business_status = status;
+    expect(getColor(task)).toEqual(color);
+  }
+};
 
 jest.mock('@onaio/gatekeeper', () => ({
   getOnadataUserInfo: jest.fn(),
@@ -79,27 +94,94 @@ describe('helpers/utils', () => {
     mock.mockRestore();
   });
 
-  it('getColorbyValue gets correct color', () => {
-    let color = getColor(fixtures.task1);
-    expect(color).toEqual(YELLOW);
+  it('gets correct color for RACD Register Family', () => {
+    const task = cloneDeep(fixtures.task1);
+    const sampleColorMap: SampleColorMap = {
+      Complete: GREEN,
+      Incomplete: RED,
+      'Not Eligible': BLACK,
+      'Not Visited': YELLOW,
+      Refused: RED,
+    };
+    getColorSharedTest(task, sampleColorMap);
+  });
 
-    color = getColor(fixtures.task2);
-    expect(color).toEqual(YELLOW);
-    color = getColor(fixtures.task3);
-    expect(color).toEqual(GREEN);
-    color = getColor(fixtures.task1);
-    expect(color).toEqual(YELLOW);
-    // custom tasks for sampling other action codes and statuses
-    const task5 = cloneDeep(fixtures.task1);
-    task5.geojson.properties.action_code = 'Case Confirmation';
-    task5.geojson.properties.task_business_status = 'Refused';
-    color = getColor(task5);
-    expect(color).toEqual(RED);
-    const task6 = cloneDeep(fixtures.task1);
-    task6.geojson.properties.action_code = 'Larval Dipping';
-    task6.geojson.properties.task_business_status = 'Not Eligible';
-    color = getColor(task6);
-    expect(color).toEqual(BLACK);
+  it('gets correct color for Mosquito collection action code', () => {
+    const task = cloneDeep(fixtures.task1);
+    task.geojson.properties.action_code = 'Mosquito Collection';
+    const sampleColorMap: SampleColorMap = {
+      Complete: GREEN,
+      'In Progress': RED,
+      Incomplete: RED,
+      'Not Eligible': BLACK,
+      'Not Visited': YELLOW,
+    };
+    getColorSharedTest(task, sampleColorMap);
+  });
+
+  it('gets correct color for Larval Dipping', () => {
+    const task = cloneDeep(fixtures.task1);
+    task.geojson.properties.action_code = 'Larval Dipping';
+    const sampleColorMap: SampleColorMap = {
+      Complete: GREEN,
+      'In Progress': RED,
+      Incomplete: RED,
+      'Not Eligible': BLACK,
+      'Not Visited': YELLOW,
+    };
+    getColorSharedTest(task, sampleColorMap);
+  });
+
+  it('gets correct color for IRS action code', () => {
+    const task = cloneDeep(fixtures.task1);
+    task.geojson.properties.action_code = 'IRS';
+    const sampleColorMap: SampleColorMap = {
+      'Not Sprayable': BLACK,
+      'Not Sprayed': RED,
+      'Not Visited': YELLOW,
+      Refused: RED,
+      Sprayed: GREEN,
+    };
+    getColorSharedTest(task, sampleColorMap);
+  });
+
+  it('gets correct color for Bednet action code', () => {
+    const task = cloneDeep(fixtures.task1);
+    task.geojson.properties.action_code = 'Bednet Distribution';
+    const sampleColorMap: SampleColorMap = {
+      Complete: GREEN,
+      Incomplete: RED,
+      'Not Eligible': BLACK,
+      'Not Visited': YELLOW,
+      Refused: RED,
+    };
+    getColorSharedTest(task, sampleColorMap);
+  });
+
+  it('gets correct color for Case Confirmation action code', () => {
+    const task = cloneDeep(fixtures.task1);
+    task.geojson.properties.action_code = 'Case Confirmation';
+    const sampleColorMap: SampleColorMap = {
+      Complete: GREEN,
+      Incomplete: RED,
+      'Not Eligible': BLACK,
+      'Not Visited': YELLOW,
+      Refused: RED,
+    };
+    getColorSharedTest(task, sampleColorMap);
+  });
+
+  it('gets correct color for Blood Screening action code', () => {
+    const task = cloneDeep(fixtures.task1);
+    task.geojson.properties.action_code = 'Blood Screening';
+    const sampleColorMap: SampleColorMap = {
+      Complete: GREEN,
+      Incomplete: RED,
+      'Not Eligible': BLACK,
+      'Not Visited': YELLOW,
+      Refused: RED,
+    };
+    getColorSharedTest(task, sampleColorMap);
   });
 
   it('returns correct default color where necessary', () => {
@@ -114,20 +196,20 @@ describe('helpers/utils', () => {
     expect(color).toEqual(YELLOW);
   });
 
-  it('returns null for invalid business Status', () => {
+  it('returns Yellow for invalid business Status', () => {
     /** getting null probably means business status received
      * from api did not match any of those recognized by this app
      */
     const invalidTask = cloneDeep(fixtures.task1);
     invalidTask.geojson.properties.task_business_status = 'Invalid Business Status';
     const color3 = getColor(invalidTask);
-    expect(color3).toBeNull();
+    expect(color3).toEqual(YELLOW);
   });
 
   it('gets correct color by value from colorMaps', () => {
     let color = getColorByValue(colorMaps.CASE_CONFIRMATION, 'Refused');
     expect(color).toEqual(RED);
     color = getColorByValue(colorMaps.CASE_CONFIRMATION, 'Sth Extraordinary');
-    expect(color).toBeNull();
+    expect(color).toEqual(YELLOW);
   });
 });
