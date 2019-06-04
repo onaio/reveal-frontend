@@ -1,7 +1,7 @@
 import { getOnadataUserInfo, getOpenSRPUserInfo } from '@onaio/gatekeeper';
 import { SessionState } from '@onaio/session-reducer';
-import { uniq } from 'lodash';
-import { findKey } from 'lodash';
+import { Color } from 'csstype';
+import { findKey, uniq } from 'lodash';
 import { Column } from 'react-table';
 import SeamlessImmutable from 'seamless-immutable';
 import * as colors from '../colors';
@@ -18,7 +18,7 @@ import {
 } from '../constants';
 import { Plan } from '../store/ducks/plans';
 import { Task } from '../store/ducks/tasks';
-import colorMaps, { ColorMapsTypes } from './structureColorMaps';
+import { colorMaps, ColorMapsTypes } from './structureColorMaps';
 
 /** Interface for an object that is allowed to have any property */
 export interface FlexObject {
@@ -235,13 +235,13 @@ export const ConfigStore = (
 
 /**gets the key whose value contains the string in code
  * @param {ColorMapsTypes} obj - the object to search the key in
- * @param {string} code - task business status to filter, used as predicate filter
- * @return {string} - a hexadecimal color string or null if not found
+ * @param {string} status - task business status to filter, used as predicate filter
+ * @return {string} - a hexadecimal color code
  */
-export function getColorByValue(obj: ColorMapsTypes, code: string): string | null {
+export function getColorByValue(obj: ColorMapsTypes, status: string): Color {
   // @param o - obj[key] for key in iterate
-  const key = findKey(obj, o => o.indexOf(code) >= 0);
-  return key ? key : null;
+  const key = findKey(obj, o => o.indexOf(status) >= 0);
+  return key ? key : colors.YELLOW;
 }
 
 /** Given a task object , retrieves the contextual coloring
@@ -249,9 +249,8 @@ export function getColorByValue(obj: ColorMapsTypes, code: string): string | nul
  * the action code and the task_business_status_code
  * @param {Task}  taskObject - the task
  * @return {string} - a hexadecimal color string
- * @return {null} - null represents a silent error
  */
-export function getColor(taskObject: Task): string | null {
+export function getColor(taskObject: Task): Color {
   const properties = taskObject.geojson.properties;
   switch (properties.action_code) {
     case RACD_REGISTER_FAMILY_CODE: {
