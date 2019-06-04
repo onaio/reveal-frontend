@@ -24,24 +24,6 @@ interface GisidaState {
   initMapWithoutTasks: boolean | false;
   renderTasks: boolean | false;
 }
-/* sample interface for layerObjs currently not working 
-// interface LayerObj {
-//   id: string;
-//   paint: {
-//     'line-color': string;
-//     'line-opacity': number;
-//     'line-width': number;
-//   };
-//   source: {
-//     data: {
-//       data: string;
-//       type: string;
-//     };
-//     type: string;
-//   };
-//   type: string;
-//   visible: boolean;
-// }
 
 /** Returns a single layer configuration */
 const LayerStore = (layer: FlexObject) => {
@@ -126,8 +108,8 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
     if (
       nextProps.tasks &&
       nextProps.tasks.length &&
-      (nextProps.currentGoal !== this.props.currentGoal ||
-        (this.state.locations && this.state.doInitMap))
+      (nextProps.currentGoal !== this.props.currentGoal &&
+        (this.state.locations || this.state.doInitMap))
     ) {
       this.setState({ doInitMap: false, initMapWithoutTasks: false }, () => {
         this.initMap(nextProps.tasks);
@@ -162,10 +144,70 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
 
   // 3. Define map site-config object to init the store
   private initMap(tasks: Task[] | null) {
-    const symbolLayers: FlexObject[] = [];
-    const self = this;
+    /*sample interface for layerObjs currently not working */
+
+    interface LineLayerObj {
+      id: string;
+      paint: {
+        'line-color': string;
+        'line-opacity': number;
+        'line-width': number;
+      };
+      source: {
+        data: {
+          data: string;
+          type: string;
+        };
+        type: string;
+      };
+      type: string;
+      visible: boolean;
+    }
+
+    interface PointLayerObj {
+      id: string;
+      layout: {
+        'icon-image': string;
+        'icon-size': number;
+      };
+      minzoom: number;
+      paint: {
+        'text-color': string;
+        'text-halo-blur': number;
+        'text-halo-color': string;
+        'text-halo-width': number;
+      };
+      source: {
+        data: {
+          data: string;
+          type: string;
+        };
+        minzoom: number;
+        type: string;
+      };
+      type: string;
+      visible: boolean;
+    }
+
+    interface FillLayerObj {
+      id: string;
+      paint: {
+        'fill-color': string;
+        'fill-opacity': number;
+        'fill-outline-color': string;
+      };
+      source: {
+        data: {
+          data: string;
+          type: string;
+        };
+        type: string;
+      };
+      type: string;
+      visible: boolean;
+    }
+    const symbolLayers: PointLayerObj[] | LineLayerObj[] | FillLayerObj[] | FlexObject = [];
     if (tasks) {
-      let uniqueId = 0;
       // Dirty Hack filter out null geoms
       tasks = tasks.filter((d: Task) => {
         return d.geojson.geometry !== null;
@@ -188,9 +230,8 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
 
         if (points.length) {
           points.forEach((element: Task) => {
-            let geoJSONLayer: FlexObject | null = {};
+            let geoJSONLayer: PointLayerObj | null = null;
             if (element.geojson.geometry) {
-              uniqueId++;
               geoJSONLayer = {
                 ...pointLayerConfig,
                 id: `single-jurisdiction-${element.goal_id}-${element.task_identifier}`,
@@ -208,7 +249,7 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
         }
         if (polygons.length) {
           polygons.forEach((p: Task) => {
-            let fillLayer = null;
+            let fillLayer: FillLayerObj | null = null;
             fillLayer = {
               ...fillLayerConfig,
               id: `single-jurisdiction-${p.goal_id}-${p.task_identifier}`,
@@ -259,7 +300,7 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
     //   jurisdictionLayer.source.data
 
     // };
-    const layers = [
+    const layers: LineLayerObj[] | FillLayerObj[] | PointLayerObj[] | FlexObject = [
       {
         id: `main-plan-layer-${geoData.jurisdiction_id}`,
         paint: {
@@ -280,7 +321,7 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
     ];
 
     if (symbolLayers.length) {
-      symbolLayers.forEach((value: any) => {
+      symbolLayers.forEach((value: LineLayerObj | FillLayerObj | PointLayerObj) => {
         layers.push(value);
       });
     }
