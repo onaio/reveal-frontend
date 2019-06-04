@@ -4,7 +4,7 @@ import { uniq } from 'lodash';
 import { findKey } from 'lodash';
 import { Column } from 'react-table';
 import SeamlessImmutable from 'seamless-immutable';
-import { YELLOW } from '../colors';
+import * as colors from '../colors';
 import { ONADATA_OAUTH_STATE, OPENSRP_OAUTH_STATE } from '../configs/env';
 import { locationHierarchy, LocationItem } from '../configs/settings';
 import {
@@ -18,16 +18,7 @@ import {
 } from '../constants';
 import { Plan } from '../store/ducks/plans';
 import { Task } from '../store/ducks/tasks';
-import {
-  BEDNET_DISTRIBUTION,
-  BLOOD_SCREENING,
-  CASE_CONFIRMATION,
-  ColorMapsTypes,
-  IRS,
-  LARVAL_DIPPING,
-  MOSQUITO_COLLECTION,
-  RACD_REGISTER_FAMILY,
-} from './structureColorMaps';
+import colorMaps, { ColorMapsTypes } from './structureColorMaps';
 
 /** Interface for an object that is allowed to have any property */
 export interface FlexObject {
@@ -244,10 +235,10 @@ export const ConfigStore = (
 
 /**gets the key whose value contains the string in code
  * @param {ColorMapsTypes} obj - the object to search the key in
- * @param {string} code - The code to filter, used as predicate filter
- * @return {string} - a hexadecimal color string
+ * @param {string} code - task business status to filter, used as predicate filter
+ * @return {string} - a hexadecimal color string or null if not found
  */
-function getColorByValue(obj: ColorMapsTypes, code: string): string | null {
+export function getColorByValue(obj: ColorMapsTypes, code: string): string | null {
   // @param o - obj[key] for key in iterate
   const key = findKey(obj, o => o.indexOf(code) >= 0);
   return key ? key : null;
@@ -260,32 +251,32 @@ function getColorByValue(obj: ColorMapsTypes, code: string): string | null {
  * @return {string} - a hexadecimal color string
  * @return {null} - null represents a silent error
  */
-function getColor(taskObject: Task): string | null {
+export function getColor(taskObject: Task): string | null {
   const properties = taskObject.geojson.properties;
   switch (properties.action_code) {
     case RACD_REGISTER_FAMILY_CODE: {
-      return getColorByValue(RACD_REGISTER_FAMILY, properties.action_code);
+      return getColorByValue(colorMaps.RACD_REGISTER_FAMILY, properties.task_business_status);
     }
     case MOSQUITO_COLLECTION_CODE: {
-      return getColorByValue(MOSQUITO_COLLECTION, properties.action_code);
+      return getColorByValue(colorMaps.MOSQUITO_COLLECTION, properties.task_business_status);
     }
     case LARVAL_DIPPING_CODE: {
-      return getColorByValue(LARVAL_DIPPING, properties.action_code);
+      return getColorByValue(colorMaps.LARVAL_DIPPING, properties.task_business_status);
     }
     case IRS_CODE: {
-      return getColorByValue(IRS, properties.action_code);
+      return getColorByValue(colorMaps.IRS, properties.task_business_status);
     }
     case BEDNET_DISTRIBUTION_CODE: {
-      return getColorByValue(BEDNET_DISTRIBUTION, properties.action_code);
+      return getColorByValue(colorMaps.BEDNET_DISTRIBUTION, properties.task_business_status);
     }
     case BLOOD_SCREENING_CODE: {
-      return getColorByValue(BLOOD_SCREENING, properties.action_code);
+      return getColorByValue(colorMaps.BLOOD_SCREENING, properties.task_business_status);
     }
     case CASE_CONFIRMATION_CODE: {
-      return getColorByValue(CASE_CONFIRMATION, properties.action_code);
+      return getColorByValue(colorMaps.CASE_CONFIRMATION, properties.task_business_status);
     }
     default: {
-      return YELLOW;
+      return colors.YELLOW;
     }
   }
 }
