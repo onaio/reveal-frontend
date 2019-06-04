@@ -3,16 +3,17 @@
  */
 import { BLACK, GREEN, RED, YELLOW } from '../colors';
 
+/** Interface for color maps for all task action_codes */
 export interface ColorMapsTypes {
-  [key: string]: string | string[];
+  [key: string]: string[];
 }
 
 /** the common color codes */
 const defaultColorMaps: ColorMapsTypes = {};
-defaultColorMaps[BLACK] = 'Not Eligible';
-defaultColorMaps[GREEN] = 'Complete';
+defaultColorMaps[BLACK] = ['Not Eligible'];
+defaultColorMaps[GREEN] = ['Complete'];
 defaultColorMaps[RED] = ['Incomplete', 'In Progress'];
-defaultColorMaps[YELLOW] = 'Not Visited';
+defaultColorMaps[YELLOW] = ['Not Visited'];
 
 /** color codes for the case confirmation action code */
 const CASE_CONFIRMATION: ColorMapsTypes = {
@@ -40,8 +41,8 @@ const LARVAL_DIPPING: ColorMapsTypes = {
 const IRS: ColorMapsTypes = {
   ...defaultColorMaps,
 };
-IRS[GREEN] = 'Sprayed';
-IRS[BLACK] = 'Not Sprayable';
+IRS[GREEN] = ['Sprayed'];
+IRS[BLACK] = ['Not Sprayable'];
 IRS[RED] = ['Not Sprayed', 'Refused'];
 
 /** color code for Bednet Distribution action code */
@@ -51,12 +52,12 @@ const BEDNET_DISTRIBUTION: ColorMapsTypes = {
 BEDNET_DISTRIBUTION[RED] = ['Incomplete', 'Refused'];
 
 /** color codes for Blood Screening action code */
-const BLOOD_SCREENING = {
+const BLOOD_SCREENING: ColorMapsTypes = {
   ...defaultColorMaps,
 };
 BLOOD_SCREENING[RED] = ['Incomplete', 'Refused'];
 
-export default {
+export const colorMaps = {
   BEDNET_DISTRIBUTION,
   BLOOD_SCREENING,
   CASE_CONFIRMATION,
