@@ -40,6 +40,7 @@ const LARVAL_DIPPING: ColorMapsTypes = {
 const IRS: ColorMapsTypes = {
   ...defaultColorMaps,
 };
+IRS[GREEN] = 'Sprayed';
 IRS[BLACK] = 'Not Sprayable';
 IRS[RED] = ['Not Sprayed', 'Refused'];
 
@@ -47,12 +48,13 @@ IRS[RED] = ['Not Sprayed', 'Refused'];
 const BEDNET_DISTRIBUTION: ColorMapsTypes = {
   ...defaultColorMaps,
 };
+BEDNET_DISTRIBUTION[RED] = ['Incomplete', 'Refused'];
 
 /** color codes for Blood Screening action code */
 const BLOOD_SCREENING = {
   ...defaultColorMaps,
 };
-BLOOD_SCREENING[RED] = 'Refused';
+BLOOD_SCREENING[RED] = ['Incomplete', 'Refused'];
 
 export default {
   BEDNET_DISTRIBUTION,
