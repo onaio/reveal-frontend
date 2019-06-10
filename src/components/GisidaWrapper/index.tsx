@@ -3,6 +3,7 @@ import reducerRegistry from '@onaio/redux-reducer-registry';
 import { Actions, ducks, loadLayers } from 'gisida';
 import { Map } from 'gisida-react';
 import * as React from 'react';
+import Loading from '../../components/page/Loading/index';
 import { GISIDA_MAPBOX_TOKEN, GISIDA_ONADATA_API_TOKEN } from '../../configs/env';
 import { fillLayerConfig, pointLayerConfig } from '../../configs/settings';
 import { MAP_ID, STRINGIFIED_GEOJSON } from '../../constants';
@@ -99,7 +100,10 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
 
     if (!(nextProps.tasks && nextProps.tasks.length) && !this.state.initMapWithoutTasks) {
       this.setState({ doInitMap: true, initMapWithoutTasks: true }, () => {
-        this.initMap(null);
+        // Dirty work around! Arbitrary delay to allow style load before adding layers
+        setTimeout(() => {
+          this.initMap(null);
+        }, 3000);
       });
     }
   }
@@ -123,7 +127,7 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
     const doRenderMap = this.state.doRenderMap && typeof currentState[mapId] !== 'undefined';
 
     if (!doRenderMap) {
-      return null;
+      return <Loading />;
     }
     return <Map mapId={mapId} store={store} handlers={this.props.handlers} />;
   }
@@ -328,7 +332,7 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
     // 3b. Build the site-config object for Gisida
     const config = ConfigStore(
       {
-        appName: locations,
+        appName: locations && locations.properties && locations.properties.jurisdiction_name,
         bounds,
         layers,
       },
@@ -356,6 +360,7 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
 
       // const activeLayer = (Object.keys(currentState[MAP_ID].layers).length > 1) ? config.LAYERS : visibleLayers;
       // load visible layers to store
+      // if (global.maps[0].is)
       loadLayers(MAP_ID, store.dispatch, visibleLayers);
 
       // handles layers with geometries
@@ -397,6 +402,9 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
       //   currentState[MAP_ID].layers
       // );
       // optional onInit handler function - higher order state management, etc
+      // if (store.getState()['map-1']) {
+      //   debugger;
+      // }
       if (this.props.onInit) {
         this.props.onInit();
       }
@@ -404,4 +412,16 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
   }
 }
 
+// const mapStateToProps = (state: FlexObject) => {
+//   // pass in the plan id to get plan the get the jurisdicytion_id from the plan
+//   let checkRender = null;
+//   if (state && state['map-1'] && state['map-1']) {
+//     checkRender = state['map-1'].isRendered;
+//   }
+//   console.log('check if map Render===============>', checkRender);
+//   return {
+//     checkRender,
+//   };
+// };
+// const ConnectedGisidaWrapper = connect(mapStateToProps)(GisidaWrapper);
 export default GisidaWrapper;
