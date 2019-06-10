@@ -217,6 +217,7 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
         return d.geojson.geometry !== null;
       });
       if (tasks.length > 0) {
+        let featureColl = {};
         // pop off null geoms
         let polygons: Task[] = [];
         let points: Task[] = [];
@@ -233,22 +234,31 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
         );
 
         if (points.length) {
-          points.forEach((element: Task) => {
-            let geoJSONLayer: FlexObject | null = null;
-            if (element.geojson.geometry) {
-              geoJSONLayer = {
-                ...circleLayerConfig,
-                id: `single-jurisdiction-${element.goal_id}-${element.task_identifier}`,
-                source: {
-                  ...circleLayerConfig.source,
-                  data: {
-                    ...circleLayerConfig.source.data,
-                    data: JSON.stringify(element.geojson),
-                  },
-                },
+          featureColl = {
+            features: points.map((d: FlexObject) => {
+              const propsObj = {
+                ...(d.geojson && d.geojson.properties),
               };
-            }
-            symbolLayers.push(geoJSONLayer);
+              return {
+                geometry: {
+                  ...d.geojson.geometry,
+                },
+                properties: propsObj,
+                type: 'Feature',
+              };
+            }),
+            type: 'FeatureCollection',
+          };
+          symbolLayers.push({
+            ...circleLayerConfig,
+            id: `single-jurisdiction-${this.props.currentGoal}`,
+            source: {
+              ...circleLayerConfig.source,
+              data: {
+                ...circleLayerConfig.source.data,
+                data: JSON.stringify(featureColl),
+              },
+            },
           });
         }
         if (polygons.length) {
