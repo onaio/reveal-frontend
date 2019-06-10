@@ -5,7 +5,7 @@ import { Map } from 'gisida-react';
 import * as React from 'react';
 import Loading from '../../components/page/Loading/index';
 import { GISIDA_MAPBOX_TOKEN, GISIDA_ONADATA_API_TOKEN } from '../../configs/env';
-import { fillLayerConfig, pointLayerConfig } from '../../configs/settings';
+import { circleLayerConfig, fillLayerConfig } from '../../configs/settings';
 import { MAP_ID, STRINGIFIED_GEOJSON } from '../../constants';
 import { ConfigStore, FlexObject } from '../../helpers/utils';
 import store from '../../store';
@@ -217,6 +217,7 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
         return d.geojson.geometry !== null;
       });
       if (tasks.length > 0) {
+        let featureColl = {};
         // pop off null geoms
         let polygons: Task[] = [];
         let points: Task[] = [];
@@ -233,22 +234,31 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
         );
 
         if (points.length) {
-          points.forEach((element: Task) => {
-            let geoJSONLayer: PointLayerObj | null = null;
-            if (element.geojson.geometry) {
-              geoJSONLayer = {
-                ...pointLayerConfig,
-                id: `single-jurisdiction-${element.goal_id}-${element.task_identifier}`,
-                source: {
-                  ...pointLayerConfig.source,
-                  data: {
-                    ...pointLayerConfig.source.data,
-                    data: JSON.stringify(element.geojson.geometry),
-                  },
-                },
+          featureColl = {
+            features: points.map((d: FlexObject) => {
+              const propsObj = {
+                ...(d.geojson && d.geojson.properties),
               };
-            }
-            symbolLayers.push(geoJSONLayer);
+              return {
+                geometry: {
+                  ...d.geojson.geometry,
+                },
+                properties: propsObj,
+                type: 'Feature',
+              };
+            }),
+            type: 'FeatureCollection',
+          };
+          symbolLayers.push({
+            ...circleLayerConfig,
+            id: `single-jurisdiction-${this.props.currentGoal}`,
+            source: {
+              ...circleLayerConfig.source,
+              data: {
+                ...circleLayerConfig.source.data,
+                data: JSON.stringify(featureColl),
+              },
+            },
           });
         }
         if (polygons.length) {

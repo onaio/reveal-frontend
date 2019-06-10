@@ -199,3 +199,27 @@ export const fillLayerConfig = {
   type: 'fill',
   visible: false,
 };
+
+export const circleLayerConfig = {
+  categories: {
+    color: '#ff0000',
+  },
+  id: 'single-jurisdiction',
+  paint: {
+    'circle-color': '#FFDC00',
+    'circle-opacity': 1,
+    'circle-radius': 5,
+  },
+  source: {
+    data: {
+      data: {
+        coordinates: [101.177725195885, 15.0658221308165],
+        type: 'Point',
+      },
+      type: 'stringified-geojson',
+    },
+    type: 'geojson',
+  },
+  type: 'circle',
+  visible: false,
+};
