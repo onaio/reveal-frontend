@@ -179,13 +179,19 @@ class SingleActiveFIMap extends React.Component<
   }
 
   private buildHandlers() {
+    const id = this.props && this.props.plan && this.props.plan.id;
     const self = this;
     const handlers = [
       {
         method: function drillDownClick(e: any) {
           const features = e.target.queryRenderedFeatures(e.point);
+
           if (features[0] && Number(features[0].id) !== Number(self.props.match.params.id)) {
-            self.props.history.push(`/focus-investigation/map/${features[0].id}`);
+            const url =
+              features && features[0] && features[0].id
+                ? features[0].id
+                : self.props.match.params.id;
+            self.props.history.push(`/focus-investigation/map/${url}`);
           }
         },
         name: 'drillDownClick',
