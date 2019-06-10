@@ -5,7 +5,7 @@ import { Map } from 'gisida-react';
 import * as React from 'react';
 import Loading from '../../components/page/Loading/index';
 import { GISIDA_MAPBOX_TOKEN, GISIDA_ONADATA_API_TOKEN } from '../../configs/env';
-import { circleLayerConfig, fillLayerConfig, pointLayerConfig } from '../../configs/settings';
+import { circleLayerConfig, fillLayerConfig } from '../../configs/settings';
 import { MAP_ID, STRINGIFIED_GEOJSON } from '../../constants';
 import { ConfigStore, FlexObject } from '../../helpers/utils';
 import store from '../../store';
