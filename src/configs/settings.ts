@@ -202,7 +202,7 @@ export const fillLayerConfig = {
 
 export const circleLayerConfig = {
   categories: {
-    color: 'ff0000',
+    color: '#ff0000',
   },
   id: 'single-jurisdiction',
   paint: {
