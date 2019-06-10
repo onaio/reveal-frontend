@@ -235,19 +235,19 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
 
         if (points.length) {
           featureColl = {
-            'type': 'FeatureCollection',
-            'features': points.map((d: FlexObject) => {
+            features: points.map((d: FlexObject) => {
               const propsObj = {
-                ...(d.geojson && d.geojson.properties)
+                ...(d.geojson && d.geojson.properties),
               };
               return {
-                'type': 'Feature',
-                'properties': propsObj,
-                'geometry': {
+                geometry: {
                   ...d.geojson.geometry,
                 },
+                properties: propsObj,
+                type: 'Feature',
               };
             }),
+            type: 'FeatureCollection',
           };
           symbolLayers.push({
             ...circleLayerConfig,
