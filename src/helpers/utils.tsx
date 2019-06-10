@@ -1,11 +1,24 @@
 import { getOnadataUserInfo, getOpenSRPUserInfo } from '@onaio/gatekeeper';
 import { SessionState } from '@onaio/session-reducer';
-import { uniq } from 'lodash';
+import { Color } from 'csstype';
+import { findKey, uniq } from 'lodash';
 import { Column } from 'react-table';
 import SeamlessImmutable from 'seamless-immutable';
+import * as colors from '../colors';
 import { ONADATA_OAUTH_STATE, OPENSRP_OAUTH_STATE } from '../configs/env';
 import { locationHierarchy, LocationItem } from '../configs/settings';
+import {
+  BEDNET_DISTRIBUTION_CODE,
+  BLOOD_SCREENING_CODE,
+  CASE_CONFIRMATION_CODE,
+  IRS_CODE,
+  LARVAL_DIPPING_CODE,
+  MOSQUITO_COLLECTION_CODE,
+  RACD_REGISTER_FAMILY_CODE,
+} from '../constants';
 import { Plan } from '../store/ducks/plans';
+import { Task } from '../store/ducks/tasks';
+import { colorMaps, ColorMapsTypes } from './structureColorMaps';
 
 /** Interface for an object that is allowed to have any property */
 export interface FlexObject {
@@ -219,3 +232,50 @@ export const ConfigStore = (
   };
   return config;
 };
+
+/**gets the key whose value contains the string in code
+ * @param {ColorMapsTypes} obj - the object to search the key in
+ * @param {string} status - task business status to filter, used as predicate filter
+ * @return {string} - a hexadecimal color code
+ */
+export function getColorByValue(obj: ColorMapsTypes, status: string): Color {
+  // @param o - obj[key] for key in iterate
+  const key = findKey(obj, o => o.indexOf(status) >= 0);
+  return key ? key : colors.YELLOW;
+}
+
+/** Given a task object , retrieves the contextual coloring
+ * of structures based on two tasks' geojson properties i.e.
+ * the action code and the task_business_status_code
+ * @param {Task}  taskObject - the task
+ * @return {string} - a hexadecimal color string
+ */
+export function getColor(taskObject: Task): Color {
+  const properties = taskObject.geojson.properties;
+  switch (properties.action_code) {
+    case RACD_REGISTER_FAMILY_CODE: {
+      return getColorByValue(colorMaps.RACD_REGISTER_FAMILY, properties.task_business_status);
+    }
+    case MOSQUITO_COLLECTION_CODE: {
+      return getColorByValue(colorMaps.MOSQUITO_COLLECTION, properties.task_business_status);
+    }
+    case LARVAL_DIPPING_CODE: {
+      return getColorByValue(colorMaps.LARVAL_DIPPING, properties.task_business_status);
+    }
+    case IRS_CODE: {
+      return getColorByValue(colorMaps.IRS, properties.task_business_status);
+    }
+    case BEDNET_DISTRIBUTION_CODE: {
+      return getColorByValue(colorMaps.BEDNET_DISTRIBUTION, properties.task_business_status);
+    }
+    case BLOOD_SCREENING_CODE: {
+      return getColorByValue(colorMaps.BLOOD_SCREENING, properties.task_business_status);
+    }
+    case CASE_CONFIRMATION_CODE: {
+      return getColorByValue(colorMaps.CASE_CONFIRMATION, properties.task_business_status);
+    }
+    default: {
+      return colors.YELLOW;
+    }
+  }
+}
