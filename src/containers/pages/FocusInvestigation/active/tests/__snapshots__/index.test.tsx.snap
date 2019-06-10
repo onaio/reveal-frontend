@@ -252,10 +252,10 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
               "village": "Naviluli",
             },
             Object {
-              "canton": "Tha Luang Village",
+              "canton": "Canton Tha Luang",
               "caseClassification": null,
               "caseNotificationDate": null,
-              "district": "Canton Tha Luang",
+              "district": null,
               "focusArea": "TLv1_02",
               "id": "plan-id-2",
               "jurisdiction_id": "2977",
@@ -264,7 +264,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
               "province": null,
               "reason": "Case-triggered",
               "status": "A1",
-              "village": null,
+              "village": "Tha Luang Village",
             },
           ]
         }
@@ -442,10 +442,10 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                 "village": "Naviluli",
               },
               Object {
-                "canton": "Tha Luang Village",
+                "canton": "Canton Tha Luang",
                 "caseClassification": null,
                 "caseNotificationDate": null,
-                "district": "Canton Tha Luang",
+                "district": null,
                 "focusArea": "TLv1_02",
                 "id": "plan-id-2",
                 "jurisdiction_id": "2977",
@@ -454,7 +454,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                 "province": null,
                 "reason": "Case-triggered",
                 "status": "A1",
-                "village": null,
+                "village": "Tha Luang Village",
               },
             ]
           }
@@ -560,7 +560,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                   className="-headerGroups"
                   style={
                     Object {
-                      "minWidth": "690px",
+                      "minWidth": "910px",
                     }
                   }
                 >
@@ -568,11 +568,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                     className="rt-thead -headerGroups"
                     style={
                       Object {
-<<<<<<< 8d5b99549ca9f795cd876ecd3b0a268a0f4164de
-                        "minWidth": "710px",
-=======
-                        "minWidth": "690px",
->>>>>>> Update snapshots
+                        "minWidth": "910px",
                       }
                     }
                   >
@@ -772,7 +768,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                         </ThComponent>
                         <ThComponent
                           className=""
-                          key="5-undefined"
+                          key="7-undefined"
                           style={
                             Object {
                               "flex": "120 0 auto",
@@ -799,7 +795,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                         </ThComponent>
                         <ThComponent
                           className=""
-                          key="6-undefined"
+                          key="8-undefined"
                           style={
                             Object {
                               "flex": "100 0 auto",
@@ -832,7 +828,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                   className="-header"
                   style={
                     Object {
-                      "minWidth": "690px",
+                      "minWidth": "910px",
                     }
                   }
                 >
@@ -840,7 +836,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                     className="rt-thead -header"
                     style={
                       Object {
-                        "minWidth": "690px",
+                        "minWidth": "910px",
                       }
                     }
                   >
@@ -1131,7 +1127,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                         </ThComponent>
                         <ThComponent
                           className="rt-resizable-header -cursor-pointer"
-                          key="5-caseNotificationDate"
+                          key="7-caseNotificationDate"
                           style={
                             Object {
                               "flex": "120 0 auto",
@@ -1171,7 +1167,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                         </ThComponent>
                         <ThComponent
                           className="rt-resizable-header -cursor-pointer"
-                          key="6-caseClassification"
+                          key="8-caseClassification"
                           style={
                             Object {
                               "flex": "100 0 auto",
@@ -1217,7 +1213,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                   className=""
                   style={
                     Object {
-                      "minWidth": "690px",
+                      "minWidth": "910px",
                     }
                   }
                 >
@@ -1225,7 +1221,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                     className="rt-tbody"
                     style={
                       Object {
-                        "minWidth": "690px",
+                        "minWidth": "910px",
                       }
                     }
                   >
@@ -1480,6 +1476,8 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                       "_subRows": undefined,
                                       "_viewIndex": 0,
                                       "canton": "Chadiza",
+                                      "caseClassification": null,
+                                      "caseNotificationDate": null,
                                       "district": null,
                                       "focusArea": "NVI_439",
                                       "province": null,
@@ -1625,7 +1623,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             </TdComponent>
                             <TdComponent
                               className=""
-                              key="5-caseNotificationDate"
+                              key="7-caseNotificationDate"
                               onClick={[Function]}
                               style={
                                 Object {
@@ -1716,10 +1714,10 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                   }
                                   original={
                                     Object {
-                                      "canton": "Naviluli",
+                                      "canton": "Chadiza",
                                       "caseClassification": null,
                                       "caseNotificationDate": null,
-                                      "district": "Chadiza",
+                                      "district": null,
                                       "focusArea": "NVI_439",
                                       "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
                                       "jurisdiction_id": "2944",
@@ -1728,7 +1726,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                       "province": null,
                                       "reason": "Routine",
                                       "status": "A1",
-                                      "village": null,
+                                      "village": "Naviluli",
                                     }
                                   }
                                   page={0}
@@ -1739,10 +1737,10 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                       "_index": 0,
                                       "_nestingLevel": 0,
                                       "_original": Object {
-                                        "canton": "Naviluli",
+                                        "canton": "Chadiza",
                                         "caseClassification": null,
                                         "caseNotificationDate": null,
-                                        "district": "Chadiza",
+                                        "district": null,
                                         "focusArea": "NVI_439",
                                         "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
                                         "jurisdiction_id": "2944",
@@ -1751,17 +1749,19 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                         "province": null,
                                         "reason": "Routine",
                                         "status": "A1",
-                                        "village": null,
+                                        "village": "Naviluli",
                                       },
                                       "_subRows": undefined,
                                       "_viewIndex": 0,
-                                      "canton": "Naviluli",
+                                      "canton": "Chadiza",
                                       "caseClassification": null,
                                       "caseNotificationDate": null,
-                                      "district": "Chadiza",
+                                      "district": null,
                                       "focusArea": "NVI_439",
+                                      "province": null,
                                       "reason": "Routine",
                                       "status": "A1",
+                                      "village": "Naviluli",
                                     }
                                   }
                                   show={true}
@@ -1783,7 +1783,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             </TdComponent>
                             <TdComponent
                               className=""
-                              key="6-caseClassification"
+                              key="8-caseClassification"
                               onClick={[Function]}
                               style={
                                 Object {
@@ -1826,7 +1826,57 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                           >
                             <TdComponent
                               className=""
-                              key="0-district"
+                              key="0-province"
+                              onClick={[Function]}
+                              style={
+                                Object {
+                                  "flex": "100 0 auto",
+                                  "maxWidth": null,
+                                  "width": "100px",
+                                }
+                              }
+                            >
+                              <div
+                                className="rt-td"
+                                onClick={[Function]}
+                                role="gridcell"
+                                style={
+                                  Object {
+                                    "flex": "100 0 auto",
+                                    "maxWidth": null,
+                                    "width": "100px",
+                                  }
+                                }
+                              />
+                            </TdComponent>
+                            <TdComponent
+                              className=""
+                              key="1-district"
+                              onClick={[Function]}
+                              style={
+                                Object {
+                                  "flex": "100 0 auto",
+                                  "maxWidth": null,
+                                  "width": "100px",
+                                }
+                              }
+                            >
+                              <div
+                                className="rt-td"
+                                onClick={[Function]}
+                                role="gridcell"
+                                style={
+                                  Object {
+                                    "flex": "100 0 auto",
+                                    "maxWidth": null,
+                                    "width": "100px",
+                                  }
+                                }
+                              />
+                            </TdComponent>
+                            <TdComponent
+                              className=""
+                              key="2-canton"
                               onClick={[Function]}
                               style={
                                 Object {
@@ -1853,7 +1903,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             </TdComponent>
                             <TdComponent
                               className=""
-                              key="1-canton"
+                              key="3-village"
                               onClick={[Function]}
                               style={
                                 Object {
@@ -1880,7 +1930,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             </TdComponent>
                             <TdComponent
                               className=""
-                              key="2-focusArea"
+                              key="4-focusArea"
                               onClick={[Function]}
                               style={
                                 Object {
@@ -1971,10 +2021,10 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                   }
                                   original={
                                     Object {
-                                      "canton": "Tha Luang Village",
+                                      "canton": "Canton Tha Luang",
                                       "caseClassification": null,
                                       "caseNotificationDate": null,
-                                      "district": "Canton Tha Luang",
+                                      "district": null,
                                       "focusArea": "TLv1_02",
                                       "id": "plan-id-2",
                                       "jurisdiction_id": "2977",
@@ -1983,7 +2033,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                       "province": null,
                                       "reason": "Case-triggered",
                                       "status": "A1",
-                                      "village": null,
+                                      "village": "Tha Luang Village",
                                     }
                                   }
                                   page={0}
@@ -1994,10 +2044,10 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                       "_index": 1,
                                       "_nestingLevel": 0,
                                       "_original": Object {
-                                        "canton": "Tha Luang Village",
+                                        "canton": "Canton Tha Luang",
                                         "caseClassification": null,
                                         "caseNotificationDate": null,
-                                        "district": "Canton Tha Luang",
+                                        "district": null,
                                         "focusArea": "TLv1_02",
                                         "id": "plan-id-2",
                                         "jurisdiction_id": "2977",
@@ -2006,17 +2056,19 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                         "province": null,
                                         "reason": "Case-triggered",
                                         "status": "A1",
-                                        "village": null,
+                                        "village": "Tha Luang Village",
                                       },
                                       "_subRows": undefined,
                                       "_viewIndex": 1,
-                                      "canton": "Tha Luang Village",
+                                      "canton": "Canton Tha Luang",
                                       "caseClassification": null,
                                       "caseNotificationDate": null,
-                                      "district": "Canton Tha Luang",
+                                      "district": null,
                                       "focusArea": "TLv1_02",
+                                      "province": null,
                                       "reason": "Case-triggered",
                                       "status": "A1",
+                                      "village": "Tha Luang Village",
                                     }
                                   }
                                   show={true}
@@ -2102,7 +2154,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             </TdComponent>
                             <TdComponent
                               className=""
-                              key="3-reason"
+                              key="5-reason"
                               onClick={[Function]}
                               style={
                                 Object {
@@ -2129,7 +2181,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             </TdComponent>
                             <TdComponent
                               className=""
-                              key="4-status"
+                              key="6-status"
                               onClick={[Function]}
                               style={
                                 Object {
@@ -2156,7 +2208,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             </TdComponent>
                             <TdComponent
                               className=""
-                              key="5-caseNotificationDate"
+                              key="7-caseNotificationDate"
                               onClick={[Function]}
                               style={
                                 Object {
@@ -2247,10 +2299,10 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                   }
                                   original={
                                     Object {
-                                      "canton": "Tha Luang Village",
+                                      "canton": "Canton Tha Luang",
                                       "caseClassification": null,
                                       "caseNotificationDate": null,
-                                      "district": "Canton Tha Luang",
+                                      "district": null,
                                       "focusArea": "TLv1_02",
                                       "id": "plan-id-2",
                                       "jurisdiction_id": "2977",
@@ -2259,7 +2311,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                       "province": null,
                                       "reason": "Case-triggered",
                                       "status": "A1",
-                                      "village": null,
+                                      "village": "Tha Luang Village",
                                     }
                                   }
                                   page={0}
@@ -2270,10 +2322,10 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                       "_index": 1,
                                       "_nestingLevel": 0,
                                       "_original": Object {
-                                        "canton": "Tha Luang Village",
+                                        "canton": "Canton Tha Luang",
                                         "caseClassification": null,
                                         "caseNotificationDate": null,
-                                        "district": "Canton Tha Luang",
+                                        "district": null,
                                         "focusArea": "TLv1_02",
                                         "id": "plan-id-2",
                                         "jurisdiction_id": "2977",
@@ -2282,17 +2334,19 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                         "province": null,
                                         "reason": "Case-triggered",
                                         "status": "A1",
-                                        "village": null,
+                                        "village": "Tha Luang Village",
                                       },
                                       "_subRows": undefined,
                                       "_viewIndex": 1,
-                                      "canton": "Tha Luang Village",
+                                      "canton": "Canton Tha Luang",
                                       "caseClassification": null,
                                       "caseNotificationDate": null,
-                                      "district": "Canton Tha Luang",
+                                      "district": null,
                                       "focusArea": "TLv1_02",
+                                      "province": null,
                                       "reason": "Case-triggered",
                                       "status": "A1",
+                                      "village": "Tha Luang Village",
                                     }
                                   }
                                   show={true}
@@ -2314,7 +2368,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             </TdComponent>
                             <TdComponent
                               className=""
-                              key="6-caseClassification"
+                              key="8-caseClassification"
                               onClick={[Function]}
                               style={
                                 Object {
@@ -2540,7 +2594,7 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
         className="-headerGroups"
         style={
           Object {
-            "minWidth": "710px",
+            "minWidth": "910px",
           }
         }
       >
@@ -2548,7 +2602,7 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
           className="rt-thead -headerGroups"
           style={
             Object {
-              "minWidth": "710px",
+              "minWidth": "910px",
             }
           }
         >
@@ -2581,7 +2635,7 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
                   }
                   tabIndex="-1"
                 >
-                  District
+                  Province
                 </div>
               </ThComponent>
               <ThComponent
@@ -2608,7 +2662,7 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
                   }
                   tabIndex="-1"
                 >
-                  Canton
+                  District
                 </div>
               </ThComponent>
               <ThComponent
@@ -2616,9 +2670,9 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
                 key="2-undefined"
                 style={
                   Object {
-                    "flex": "130 0 auto",
+                    "flex": "100 0 auto",
                     "maxWidth": null,
-                    "width": "130px",
+                    "width": "100px",
                   }
                 }
               >
@@ -2628,14 +2682,14 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
                   role="columnheader"
                   style={
                     Object {
-                      "flex": "130 0 auto",
+                      "flex": "100 0 auto",
                       "maxWidth": null,
-                      "width": "130px",
+                      "width": "100px",
                     }
                   }
                   tabIndex="-1"
                 >
-                  Focus Area
+                  Canton
                 </div>
               </ThComponent>
               <ThComponent
@@ -2662,12 +2716,66 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
                   }
                   tabIndex="-1"
                 >
-                  Reason
+                  Village
                 </div>
               </ThComponent>
               <ThComponent
                 className=""
                 key="4-undefined"
+                style={
+                  Object {
+                    "flex": "130 0 auto",
+                    "maxWidth": null,
+                    "width": "130px",
+                  }
+                }
+              >
+                <div
+                  className="rt-th"
+                  onClick={[Function]}
+                  role="columnheader"
+                  style={
+                    Object {
+                      "flex": "130 0 auto",
+                      "maxWidth": null,
+                      "width": "130px",
+                    }
+                  }
+                  tabIndex="-1"
+                >
+                  Focus Area
+                </div>
+              </ThComponent>
+              <ThComponent
+                className=""
+                key="5-undefined"
+                style={
+                  Object {
+                    "flex": "100 0 auto",
+                    "maxWidth": null,
+                    "width": "100px",
+                  }
+                }
+              >
+                <div
+                  className="rt-th"
+                  onClick={[Function]}
+                  role="columnheader"
+                  style={
+                    Object {
+                      "flex": "100 0 auto",
+                      "maxWidth": null,
+                      "width": "100px",
+                    }
+                  }
+                  tabIndex="-1"
+                >
+                  Reason
+                </div>
+              </ThComponent>
+              <ThComponent
+                className=""
+                key="6-undefined"
                 style={
                   Object {
                     "flex": "60 0 auto",
@@ -2694,7 +2802,7 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
               </ThComponent>
               <ThComponent
                 className=""
-                key="5-undefined"
+                key="7-undefined"
                 style={
                   Object {
                     "flex": "120 0 auto",
@@ -2721,7 +2829,7 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
               </ThComponent>
               <ThComponent
                 className=""
-                key="6-undefined"
+                key="8-undefined"
                 style={
                   Object {
                     "flex": "100 0 auto",
@@ -2754,7 +2862,7 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
         className="-header"
         style={
           Object {
-            "minWidth": "710px",
+            "minWidth": "910px",
           }
         }
       >
@@ -2762,7 +2870,7 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
           className="rt-thead -header"
           style={
             Object {
-              "minWidth": "710px",
+              "minWidth": "910px",
             }
           }
         >
@@ -2773,7 +2881,7 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
             >
               <ThComponent
                 className="rt-resizable-header -cursor-pointer"
-                key="0-district"
+                key="0-province"
                 style={
                   Object {
                     "flex": "100 0 auto",
@@ -2813,7 +2921,7 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
               </ThComponent>
               <ThComponent
                 className="rt-resizable-header -cursor-pointer"
-                key="1-canton"
+                key="1-district"
                 style={
                   Object {
                     "flex": "100 0 auto",
@@ -2853,7 +2961,87 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
               </ThComponent>
               <ThComponent
                 className="rt-resizable-header -cursor-pointer"
-                key="2-focusArea"
+                key="2-canton"
+                style={
+                  Object {
+                    "flex": "100 0 auto",
+                    "maxWidth": null,
+                    "width": "100px",
+                  }
+                }
+                toggleSort={[Function]}
+              >
+                <div
+                  className="rt-th rt-resizable-header -cursor-pointer"
+                  onClick={[Function]}
+                  role="columnheader"
+                  style={
+                    Object {
+                      "flex": "100 0 auto",
+                      "maxWidth": null,
+                      "width": "100px",
+                    }
+                  }
+                  tabIndex="-1"
+                >
+                  <div
+                    className="rt-resizable-header-content"
+                  />
+                  <Resizer
+                    onMouseDown={[Function]}
+                    onTouchStart={[Function]}
+                  >
+                    <div
+                      className="rt-resizer"
+                      onMouseDown={[Function]}
+                      onTouchStart={[Function]}
+                    />
+                  </Resizer>
+                </div>
+              </ThComponent>
+              <ThComponent
+                className="rt-resizable-header -cursor-pointer"
+                key="3-village"
+                style={
+                  Object {
+                    "flex": "100 0 auto",
+                    "maxWidth": null,
+                    "width": "100px",
+                  }
+                }
+                toggleSort={[Function]}
+              >
+                <div
+                  className="rt-th rt-resizable-header -cursor-pointer"
+                  onClick={[Function]}
+                  role="columnheader"
+                  style={
+                    Object {
+                      "flex": "100 0 auto",
+                      "maxWidth": null,
+                      "width": "100px",
+                    }
+                  }
+                  tabIndex="-1"
+                >
+                  <div
+                    className="rt-resizable-header-content"
+                  />
+                  <Resizer
+                    onMouseDown={[Function]}
+                    onTouchStart={[Function]}
+                  >
+                    <div
+                      className="rt-resizer"
+                      onMouseDown={[Function]}
+                      onTouchStart={[Function]}
+                    />
+                  </Resizer>
+                </div>
+              </ThComponent>
+              <ThComponent
+                className="rt-resizable-header -cursor-pointer"
+                key="4-focusArea"
                 style={
                   Object {
                     "flex": "130 0 auto",
@@ -2893,7 +3081,7 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
               </ThComponent>
               <ThComponent
                 className="rt-resizable-header -cursor-pointer"
-                key="3-reason"
+                key="5-reason"
                 style={
                   Object {
                     "flex": "100 0 auto",
@@ -2933,7 +3121,7 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
               </ThComponent>
               <ThComponent
                 className="rt-resizable-header -cursor-pointer"
-                key="4-status"
+                key="6-status"
                 style={
                   Object {
                     "flex": "60 0 auto",
@@ -2973,7 +3161,7 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
               </ThComponent>
               <ThComponent
                 className="rt-resizable-header -cursor-pointer"
-                key="5-caseNotificationDate"
+                key="7-caseNotificationDate"
                 style={
                   Object {
                     "flex": "120 0 auto",
@@ -3013,7 +3201,7 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
               </ThComponent>
               <ThComponent
                 className="rt-resizable-header -cursor-pointer"
-                key="6-caseClassification"
+                key="8-caseClassification"
                 style={
                   Object {
                     "flex": "100 0 auto",
@@ -3059,7 +3247,7 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
         className=""
         style={
           Object {
-            "minWidth": "710px",
+            "minWidth": "910px",
           }
         }
       >
@@ -3067,7 +3255,7 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
           className="rt-tbody"
           style={
             Object {
-              "minWidth": "710px",
+              "minWidth": "910px",
             }
           }
         >
@@ -3087,7 +3275,57 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
                 >
                   <TdComponent
                     className=""
-                    key="0-district"
+                    key="0-province"
+                    onClick={[Function]}
+                    style={
+                      Object {
+                        "flex": "100 0 auto",
+                        "maxWidth": null,
+                        "width": "100px",
+                      }
+                    }
+                  >
+                    <div
+                      className="rt-td"
+                      onClick={[Function]}
+                      role="gridcell"
+                      style={
+                        Object {
+                          "flex": "100 0 auto",
+                          "maxWidth": null,
+                          "width": "100px",
+                        }
+                      }
+                    />
+                  </TdComponent>
+                  <TdComponent
+                    className=""
+                    key="1-district"
+                    onClick={[Function]}
+                    style={
+                      Object {
+                        "flex": "100 0 auto",
+                        "maxWidth": null,
+                        "width": "100px",
+                      }
+                    }
+                  >
+                    <div
+                      className="rt-td"
+                      onClick={[Function]}
+                      role="gridcell"
+                      style={
+                        Object {
+                          "flex": "100 0 auto",
+                          "maxWidth": null,
+                          "width": "100px",
+                        }
+                      }
+                    />
+                  </TdComponent>
+                  <TdComponent
+                    className=""
+                    key="2-canton"
                     onClick={[Function]}
                     style={
                       Object {
@@ -3114,7 +3352,7 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
                   </TdComponent>
                   <TdComponent
                     className=""
-                    key="1-canton"
+                    key="3-village"
                     onClick={[Function]}
                     style={
                       Object {
@@ -3141,7 +3379,7 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
                   </TdComponent>
                   <TdComponent
                     className=""
-                    key="2-focusArea"
+                    key="4-focusArea"
                     onClick={[Function]}
                     style={
                       Object {
@@ -3232,10 +3470,10 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
                         }
                         original={
                           Object {
-                            "canton": "Naviluli",
+                            "canton": "Chadiza",
                             "caseClassification": null,
                             "caseNotificationDate": null,
-                            "district": "Chadiza",
+                            "district": null,
                             "focusArea": "NVI_439",
                             "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
                             "jurisdiction_id": "2944",
@@ -3244,7 +3482,7 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
                             "province": null,
                             "reason": "Routine",
                             "status": "A1",
-                            "village": null,
+                            "village": "Naviluli",
                           }
                         }
                         page={0}
@@ -3255,10 +3493,10 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
                             "_index": 0,
                             "_nestingLevel": 0,
                             "_original": Object {
-                              "canton": "Naviluli",
+                              "canton": "Chadiza",
                               "caseClassification": null,
                               "caseNotificationDate": null,
-                              "district": "Chadiza",
+                              "district": null,
                               "focusArea": "NVI_439",
                               "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
                               "jurisdiction_id": "2944",
@@ -3267,17 +3505,19 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
                               "province": null,
                               "reason": "Routine",
                               "status": "A1",
-                              "village": null,
+                              "village": "Naviluli",
                             },
                             "_subRows": undefined,
                             "_viewIndex": 0,
-                            "canton": "Naviluli",
+                            "canton": "Chadiza",
                             "caseClassification": null,
                             "caseNotificationDate": null,
-                            "district": "Chadiza",
+                            "district": null,
                             "focusArea": "NVI_439",
+                            "province": null,
                             "reason": "Routine",
                             "status": "A1",
+                            "village": "Naviluli",
                           }
                         }
                         show={true}
@@ -3363,7 +3603,7 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
                   </TdComponent>
                   <TdComponent
                     className=""
-                    key="3-reason"
+                    key="5-reason"
                     onClick={[Function]}
                     style={
                       Object {
@@ -3390,7 +3630,7 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
                   </TdComponent>
                   <TdComponent
                     className=""
-                    key="4-status"
+                    key="6-status"
                     onClick={[Function]}
                     style={
                       Object {
@@ -3417,7 +3657,7 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
                   </TdComponent>
                   <TdComponent
                     className=""
-                    key="5-caseNotificationDate"
+                    key="7-caseNotificationDate"
                     onClick={[Function]}
                     style={
                       Object {
@@ -3508,10 +3748,10 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
                         }
                         original={
                           Object {
-                            "canton": "Naviluli",
+                            "canton": "Chadiza",
                             "caseClassification": null,
                             "caseNotificationDate": null,
-                            "district": "Chadiza",
+                            "district": null,
                             "focusArea": "NVI_439",
                             "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
                             "jurisdiction_id": "2944",
@@ -3520,7 +3760,7 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
                             "province": null,
                             "reason": "Routine",
                             "status": "A1",
-                            "village": null,
+                            "village": "Naviluli",
                           }
                         }
                         page={0}
@@ -3531,10 +3771,10 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
                             "_index": 0,
                             "_nestingLevel": 0,
                             "_original": Object {
-                              "canton": "Naviluli",
+                              "canton": "Chadiza",
                               "caseClassification": null,
                               "caseNotificationDate": null,
-                              "district": "Chadiza",
+                              "district": null,
                               "focusArea": "NVI_439",
                               "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
                               "jurisdiction_id": "2944",
@@ -3543,17 +3783,19 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
                               "province": null,
                               "reason": "Routine",
                               "status": "A1",
-                              "village": null,
+                              "village": "Naviluli",
                             },
                             "_subRows": undefined,
                             "_viewIndex": 0,
-                            "canton": "Naviluli",
+                            "canton": "Chadiza",
                             "caseClassification": null,
                             "caseNotificationDate": null,
-                            "district": "Chadiza",
+                            "district": null,
                             "focusArea": "NVI_439",
+                            "province": null,
                             "reason": "Routine",
                             "status": "A1",
+                            "village": "Naviluli",
                           }
                         }
                         show={true}
@@ -3575,7 +3817,7 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
                   </TdComponent>
                   <TdComponent
                     className=""
-                    key="6-caseClassification"
+                    key="8-caseClassification"
                     onClick={[Function]}
                     style={
                       Object {
@@ -3618,7 +3860,57 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
                 >
                   <TdComponent
                     className=""
-                    key="0-district"
+                    key="0-province"
+                    onClick={[Function]}
+                    style={
+                      Object {
+                        "flex": "100 0 auto",
+                        "maxWidth": null,
+                        "width": "100px",
+                      }
+                    }
+                  >
+                    <div
+                      className="rt-td"
+                      onClick={[Function]}
+                      role="gridcell"
+                      style={
+                        Object {
+                          "flex": "100 0 auto",
+                          "maxWidth": null,
+                          "width": "100px",
+                        }
+                      }
+                    />
+                  </TdComponent>
+                  <TdComponent
+                    className=""
+                    key="1-district"
+                    onClick={[Function]}
+                    style={
+                      Object {
+                        "flex": "100 0 auto",
+                        "maxWidth": null,
+                        "width": "100px",
+                      }
+                    }
+                  >
+                    <div
+                      className="rt-td"
+                      onClick={[Function]}
+                      role="gridcell"
+                      style={
+                        Object {
+                          "flex": "100 0 auto",
+                          "maxWidth": null,
+                          "width": "100px",
+                        }
+                      }
+                    />
+                  </TdComponent>
+                  <TdComponent
+                    className=""
+                    key="2-canton"
                     onClick={[Function]}
                     style={
                       Object {
@@ -3645,7 +3937,7 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
                   </TdComponent>
                   <TdComponent
                     className=""
-                    key="1-canton"
+                    key="3-village"
                     onClick={[Function]}
                     style={
                       Object {
@@ -3672,7 +3964,7 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
                   </TdComponent>
                   <TdComponent
                     className=""
-                    key="2-focusArea"
+                    key="4-focusArea"
                     onClick={[Function]}
                     style={
                       Object {
@@ -3763,10 +4055,10 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
                         }
                         original={
                           Object {
-                            "canton": "Tha Luang Village",
+                            "canton": "Canton Tha Luang",
                             "caseClassification": null,
                             "caseNotificationDate": null,
-                            "district": "Canton Tha Luang",
+                            "district": null,
                             "focusArea": "TLv1_02",
                             "id": "plan-id-2",
                             "jurisdiction_id": "2977",
@@ -3775,7 +4067,7 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
                             "province": null,
                             "reason": "Case-triggered",
                             "status": "A1",
-                            "village": null,
+                            "village": "Tha Luang Village",
                           }
                         }
                         page={0}
@@ -3786,10 +4078,10 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
                             "_index": 1,
                             "_nestingLevel": 0,
                             "_original": Object {
-                              "canton": "Tha Luang Village",
+                              "canton": "Canton Tha Luang",
                               "caseClassification": null,
                               "caseNotificationDate": null,
-                              "district": "Canton Tha Luang",
+                              "district": null,
                               "focusArea": "TLv1_02",
                               "id": "plan-id-2",
                               "jurisdiction_id": "2977",
@@ -3798,17 +4090,19 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
                               "province": null,
                               "reason": "Case-triggered",
                               "status": "A1",
-                              "village": null,
+                              "village": "Tha Luang Village",
                             },
                             "_subRows": undefined,
                             "_viewIndex": 1,
-                            "canton": "Tha Luang Village",
+                            "canton": "Canton Tha Luang",
                             "caseClassification": null,
                             "caseNotificationDate": null,
-                            "district": "Canton Tha Luang",
+                            "district": null,
                             "focusArea": "TLv1_02",
+                            "province": null,
                             "reason": "Case-triggered",
                             "status": "A1",
+                            "village": "Tha Luang Village",
                           }
                         }
                         show={true}
@@ -3894,7 +4188,7 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
                   </TdComponent>
                   <TdComponent
                     className=""
-                    key="3-reason"
+                    key="5-reason"
                     onClick={[Function]}
                     style={
                       Object {
@@ -3921,7 +4215,7 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
                   </TdComponent>
                   <TdComponent
                     className=""
-                    key="4-status"
+                    key="6-status"
                     onClick={[Function]}
                     style={
                       Object {
@@ -3948,7 +4242,7 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
                   </TdComponent>
                   <TdComponent
                     className=""
-                    key="5-caseNotificationDate"
+                    key="7-caseNotificationDate"
                     onClick={[Function]}
                     style={
                       Object {
@@ -4039,10 +4333,10 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
                         }
                         original={
                           Object {
-                            "canton": "Tha Luang Village",
+                            "canton": "Canton Tha Luang",
                             "caseClassification": null,
                             "caseNotificationDate": null,
-                            "district": "Canton Tha Luang",
+                            "district": null,
                             "focusArea": "TLv1_02",
                             "id": "plan-id-2",
                             "jurisdiction_id": "2977",
@@ -4051,7 +4345,7 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
                             "province": null,
                             "reason": "Case-triggered",
                             "status": "A1",
-                            "village": null,
+                            "village": "Tha Luang Village",
                           }
                         }
                         page={0}
@@ -4062,10 +4356,10 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
                             "_index": 1,
                             "_nestingLevel": 0,
                             "_original": Object {
-                              "canton": "Tha Luang Village",
+                              "canton": "Canton Tha Luang",
                               "caseClassification": null,
                               "caseNotificationDate": null,
-                              "district": "Canton Tha Luang",
+                              "district": null,
                               "focusArea": "TLv1_02",
                               "id": "plan-id-2",
                               "jurisdiction_id": "2977",
@@ -4074,17 +4368,19 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
                               "province": null,
                               "reason": "Case-triggered",
                               "status": "A1",
-                              "village": null,
+                              "village": "Tha Luang Village",
                             },
                             "_subRows": undefined,
                             "_viewIndex": 1,
-                            "canton": "Tha Luang Village",
+                            "canton": "Canton Tha Luang",
                             "caseClassification": null,
                             "caseNotificationDate": null,
-                            "district": "Canton Tha Luang",
+                            "district": null,
                             "focusArea": "TLv1_02",
+                            "province": null,
                             "reason": "Case-triggered",
                             "status": "A1",
+                            "village": "Tha Luang Village",
                           }
                         }
                         show={true}
@@ -4106,7 +4402,7 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
                   </TdComponent>
                   <TdComponent
                     className=""
-                    key="6-caseClassification"
+                    key="8-caseClassification"
                     onClick={[Function]}
                     style={
                       Object {
