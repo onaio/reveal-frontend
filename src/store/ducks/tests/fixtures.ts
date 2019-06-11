@@ -1,4 +1,4 @@
-import { clone } from 'lodash';
+import { clone, cloneDeep } from 'lodash';
 
 export const plan1 = {
   id: 'ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f',
@@ -389,3 +389,22 @@ jurisdiction3.geojson.id = 'abcde';
 export { jurisdiction3 };
 
 export const jurisdictionsIdsArray = jurisdictions.map((e: any) => e.jurisdiction_id);
+
+const coloredTask1 = cloneDeep(task1);
+coloredTask1.geojson.properties.color = '#ff3';
+
+const coloredTask2 = cloneDeep(task2);
+coloredTask2.geojson.properties.color = '#ff3';
+
+const coloredTask3 = cloneDeep(task3);
+coloredTask3.geojson.properties.color = '#33ad33';
+
+const coloredTask4 = cloneDeep(task4);
+coloredTask4.geojson.properties.color = '#ff3';
+
+export const coloredTasks = {
+  task1: coloredTask1,
+  task2: coloredTask2,
+  task3: coloredTask3,
+  task4: coloredTask4,
+};
