@@ -1,40 +1,69 @@
+import { Color } from 'csstype';
 import { get, keyBy, keys, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
 import SeamlessImmutable from 'seamless-immutable';
-import { GeoJSON } from '../../helpers/utils';
+import { FlexObject, GeoJSON, getColor } from '../../helpers/utils';
 
 /** the reducer name */
 export const reducerName = 'tasks';
 
-/** interface for task GeoJSON */
-export interface TaskGeoJSON extends GeoJSON {
-  properties: {
-    action_code: string;
-    goal_id: string;
-    jurisdiction_id: string;
-    jurisdiction_name: string;
-    jurisdiction_parent_id: string;
-    plan_id: string;
-    structure_code: string | null;
-    structure_id: string | null;
-    structure_name: string | null;
-    structure_type: string | null;
-    task_business_status: string;
-    task_execution_end_date: string;
-    task_execution_start_date: string;
-    task_focus: string;
-    task_status: string;
-    task_task_for: string;
-  };
+/** Interface for the initial umodified task.geoJSON properties object */
+export interface InitialProperties extends FlexObject {
+  action_code: string;
+  goal_id: string;
+  jurisdiction_id: string;
+  jurisdiction_name: string;
+  jurisdiction_parent_id: string;
+  plan_id: string;
+  structure_code: string | null;
+  structure_id: string | null;
+  structure_name: string | null;
+  structure_type: string | null;
+  task_business_status: string;
+  task_execution_end_date: string;
+  task_execution_start_date: string;
+  task_focus: string;
+  task_status: string;
+  task_task_for: string;
 }
 
-/** interface for task Object */
-export interface Task {
-  geojson: TaskGeoJSON;
+/** Extends InitialProperties to include additional
+ *  geojson.properties object properties
+ */
+export interface AddedProperties extends InitialProperties {
+  color: Color;
+}
+
+/** interface for task GeoJSON before any properties are added
+ * to geojson.properties
+ */
+export interface InitialTaskGeoJSON extends GeoJSON {
+  properties: InitialProperties;
+}
+
+/** interface for task GeoJSON after any properties are added
+ * to geojson.properties e.g. color
+ */
+export interface TaskGeoJSON extends InitialTaskGeoJSON {
+  properties: AddedProperties;
+}
+
+/** interface for task Object before any change to
+ * geojson.properties object
+ */
+export interface InitialTask {
+  geojson: InitialTaskGeoJSON;
   goal_id: string;
   jurisdiction_id: string;
   plan_id: string;
   task_identifier: string;
+}
+
+/** Task interface where geoJson implements Initialproperties
+ * interface with added properties e.g .color
+ */
+export interface Task extends InitialTask {
+  geojson: TaskGeoJSON;
 }
 
 // actions
@@ -84,19 +113,22 @@ export default function reducer(state = initialState, action: TaskActionTypes): 
 /** fetch Tasks creator
  * @param {Task[]} tasksList - array of task objects
  */
-export const fetchTasks = (tasksList: Task[] = []): FetchTasksAction => ({
+export const fetchTasks = (tasksList: InitialTask[] = []): FetchTasksAction => ({
   tasksById: keyBy(
-    tasksList.map((task: Task) => {
-      /** ensure geojson is parsed */
-      if (typeof task.geojson === 'string') {
-        task.geojson = JSON.parse(task.geojson);
+    tasksList.map(
+      (task: InitialTask): Task => {
+        /** ensure geojson is parsed */
+        if (typeof task.geojson === 'string') {
+          task.geojson = JSON.parse(task.geojson);
+        }
+        /** ensure geometry is parsed */
+        if (typeof task.geojson.geometry === 'string') {
+          task.geojson.geometry = JSON.parse(task.geojson.geometry);
+        }
+        task.geojson.properties.color = getColor(task);
+        return task as Task;
       }
-      /** ensure geometry is parsed */
-      if (typeof task.geojson.geometry === 'string') {
-        task.geojson.geometry = JSON.parse(task.geojson.geometry);
-      }
-      return task;
-    }),
+    ),
     task => task.task_identifier
   ),
   type: TASKS_FETCHED,
