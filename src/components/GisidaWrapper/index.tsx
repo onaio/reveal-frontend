@@ -13,6 +13,69 @@ import { Jurisdiction, JurisdictionGeoJSON } from '../../store/ducks/jurisdictio
 import { Task } from '../../store/ducks/tasks';
 import './gisida.css';
 
+interface LineLayerObj {
+  id: string;
+  paint: {
+    'line-color': string;
+    'line-opacity': number;
+    'line-width': number;
+  };
+  source: {
+    data: {
+      data: string;
+      type: string;
+    };
+    type: string;
+  };
+  type: string;
+  visible: boolean;
+}
+
+interface PointLayerObj {
+  id: string;
+  layout: {
+    'icon-image': string;
+    'icon-size': number;
+  };
+  minzoom: number;
+  paint: {
+    'text-color': string;
+    'text-halo-blur': number;
+    'text-halo-color': string;
+    'text-halo-width': number;
+  };
+  source: {
+    data: {
+      data: string;
+      type: string;
+    };
+    minzoom: number;
+    type: string;
+  };
+  type: string;
+  visible: boolean;
+}
+
+interface FillLayerObj {
+  id: string;
+  paint: {
+    'fill-color': string;
+    'fill-opacity': number;
+    'fill-outline-color': string;
+  };
+  source: {
+    data: {
+      data: string;
+      type: string;
+    };
+    type: string;
+  };
+  type: string;
+  visible: boolean;
+}
+
+const symbolLayers: PointLayerObj[] | LineLayerObj[] | FillLayerObj[] | FlexObject = [];
+
 /** GisidaWrapper state interface */
 interface GisidaState {
   bounds: number[];
@@ -148,69 +211,6 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
 
   // 3. Define map site-config object to init the store
   private initMap(tasks: Task[] | null) {
-    /*sample interface for layerObjs currently not working */
-
-    interface LineLayerObj {
-      id: string;
-      paint: {
-        'line-color': string;
-        'line-opacity': number;
-        'line-width': number;
-      };
-      source: {
-        data: {
-          data: string;
-          type: string;
-        };
-        type: string;
-      };
-      type: string;
-      visible: boolean;
-    }
-
-    interface PointLayerObj {
-      id: string;
-      layout: {
-        'icon-image': string;
-        'icon-size': number;
-      };
-      minzoom: number;
-      paint: {
-        'text-color': string;
-        'text-halo-blur': number;
-        'text-halo-color': string;
-        'text-halo-width': number;
-      };
-      source: {
-        data: {
-          data: string;
-          type: string;
-        };
-        minzoom: number;
-        type: string;
-      };
-      type: string;
-      visible: boolean;
-    }
-
-    interface FillLayerObj {
-      id: string;
-      paint: {
-        'fill-color': string;
-        'fill-opacity': number;
-        'fill-outline-color': string;
-      };
-      source: {
-        data: {
-          data: string;
-          type: string;
-        };
-        type: string;
-      };
-      type: string;
-      visible: boolean;
-    }
-    const symbolLayers: PointLayerObj[] | LineLayerObj[] | FillLayerObj[] | FlexObject = [];
     if (tasks) {
       // Dirty Hack filter out null geoms
       tasks = tasks.filter((d: Task) => {
