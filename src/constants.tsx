@@ -1,3 +1,5 @@
+import { type } from 'os';
+
 // strings
 export const LOCATION = 'Location';
 export type LOCATION = typeof LOCATION;
@@ -15,6 +17,10 @@ export const FOCUS_INVESTIGATIONS = 'Focus Investigations';
 export type FOCUS_INVESTIGATIONS = typeof FOCUS_INVESTIGATIONS;
 export const MAP_ID = 'map-1';
 export type MAP_ID = typeof MAP_ID;
+export const GEOJSON = 'geojson';
+export const DEFAULT_LINE_TYPE = 'line';
+export const DEFAULT_LAYER_LINE_OPACITY = 1;
+export const DEFAULT_LAYER_LINE_WIDTH = 3;
 export const STRINGIFIED_GEOJSON = 'stringified-geojson';
 export type STRINGIFIED_GEOJSON = typeof STRINGIFIED_GEOJSON;
 export const FOCUS_AREA_HEADER = 'Focus Area';
@@ -55,6 +61,14 @@ export const MARK_AS_COMPLETE = 'Mark as complete';
 export type MARK_AS_COMPLETE = typeof MARK_AS_COMPLETE;
 export const TARGET = 'Target';
 export type TARGET = typeof TARGET;
+export const POLYGON = 'Polygon';
+export const MULTI_POLYGON = 'MultiPolygon';
+export const POINT = 'Point';
+export const FEATURE = 'Feature';
+export const FEATURE_COLLECTION = 'FeatureCollection';
+export const MAIN_PLAN = 'main-plan-layer';
+export const DEFAULT_LAYER_COLOR = '#FFDC00';
+export const APP = 'APP';
 
 // internal urls
 export const LOGIN_URL = '/login';

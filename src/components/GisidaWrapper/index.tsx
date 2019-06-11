@@ -7,13 +7,28 @@ import * as React from 'react';
 import Loading from '../../components/page/Loading/index';
 import { GISIDA_MAPBOX_TOKEN, GISIDA_ONADATA_API_TOKEN } from '../../configs/env';
 import { circleLayerConfig, fillLayerConfig } from '../../configs/settings';
-import { MAP_ID, STRINGIFIED_GEOJSON } from '../../constants';
+import {
+  APP,
+  DEFAULT_LAYER_COLOR,
+  DEFAULT_LAYER_LINE_OPACITY,
+  DEFAULT_LAYER_LINE_WIDTH,
+  DEFAULT_LINE_TYPE,
+  FEATURE,
+  FEATURE_COLLECTION,
+  GEOJSON,
+  MAIN_PLAN,
+  MAP_ID,
+  MULTI_POLYGON,
+  POINT,
+  POLYGON,
+  STRINGIFIED_GEOJSON,
+} from '../../constants';
 import { ConfigStore, FlexObject } from '../../helpers/utils';
 import store from '../../store';
 import { Jurisdiction, JurisdictionGeoJSON } from '../../store/ducks/jurisdictions';
 import { Task } from '../../store/ducks/tasks';
 import './gisida.css';
-
+// Interfaces for various Layerspecs
 interface LineLayerObj {
   id: string;
   paint: LinePaint;
@@ -83,7 +98,6 @@ const LayerStore = (layer: FlexObject) => {
     return layer;
   }
   return layer;
-  // todo - dynamically build layer configs based on layerObj params and layer type defaults
 };
 
 class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
@@ -104,9 +118,9 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
 
     // 1. Register mapReducers in reducer registery;
     if (!initialState.APP && ducks.APP) {
-      reducerRegistry.register('APP', ducks.APP.default);
+      reducerRegistry.register(APP, ducks.APP.default);
     }
-    // Make map-1 more dynamic
+    // todo: Make map-1 more dynamic
     if (!initialState[MAP_ID] && ducks.MAP) {
       reducerRegistry.register(MAP_ID, ducks.MAP.default);
     }
@@ -135,7 +149,6 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
   }
 
   public componentWillReceiveProps(nextProps: FlexObject) {
-    /** check for types */
     if (this.props.geoData !== nextProps.geoData && this.state.doRenderMap) {
       this.setState(
         {
@@ -187,10 +200,9 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
     return <Map mapId={mapId} store={store} handlers={this.props.handlers} />;
   }
 
-  // 2. Get relevant goejson locations
+  // Get relevant goejson locations
   private async getLocations(geoData: Jurisdiction | null) {
-    // 2a. Asynchronously obtain geometries as geojson object
-    // // 2b. Determine map bounds from locations geoms
+    // Determine map bounds from locations geoms
     let locations: JurisdictionGeoJSON | false = false;
     if (geoData && geoData.geojson && geoData.geojson.geometry) {
       locations = geoData.geojson;
@@ -201,125 +213,115 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
     }
   }
 
-  // 3. Define map site-config object to init the store
+  // Define map site-config object to init the store
   private initMap(tasks: Task[] | null) {
-    if (tasks) {
-      // Dirty Hack filter out null geoms
-      tasks = tasks.filter((d: Task) => {
-        return d.geojson.geometry !== null;
+    // filter out tasks with null geoms
+    tasks = tasks && tasks.filter((task: Task) => task.geojson.geometry !== null);
+    if (tasks && tasks.length > 0) {
+      // pop off null geoms
+      const points: Task[] = [];
+      // handle geometries of type polygon or  multipolygon
+      tasks.forEach((element: Task) => {
+        if (
+          (element.geojson.geometry && element.geojson.geometry.type === POLYGON) ||
+          (element.geojson &&
+            element.geojson.geometry &&
+            element.geojson.geometry.type === MULTI_POLYGON)
+        ) {
+          // polygons.push(element);
+          let fillLayer: FillLayerObj | null = null;
+          fillLayer = {
+            ...fillLayerConfig,
+            id: `${element.goal_id}-${element.task_identifier}`,
+            source: {
+              ...fillLayerConfig.source,
+              data: {
+                ...fillLayerConfig.source.data,
+                data: JSON.stringify(element.geojson),
+              },
+            },
+          };
+          symbolLayers.push(fillLayer);
+        }
+        if (element.geojson.geometry && element.geojson.geometry.type === POINT) {
+          // push type point tasks to points list
+          points.push(element);
+        }
       });
-      if (tasks.length > 0) {
-        // pop off null geoms
-        tasks = tasks.filter((d: Task) => d.geojson.geometry !== null);
-        const points: Task[] = [];
 
-        tasks.forEach((element: Task) => {
-          if (
-            (element.geojson.geometry && element.geojson.geometry.type === 'Polygon') ||
-            (element.geojson &&
-              element.geojson.geometry &&
-              element.geojson.geometry.type === 'MultiPolygon')
-          ) {
-            // polygons.push(element);
-            let fillLayer: FillLayerObj | null = null;
-            fillLayer = {
-              ...fillLayerConfig,
-              id: `single-jurisdiction-${element.goal_id}-${element.task_identifier}`,
-              paint: {
-                ...fillLayerConfig.paint,
-                'fill-color': ['get', 'color'],
-                'fill-outline-color': ['get', 'color'],
-              },
-              source: {
-                ...fillLayerConfig.source,
-                data: {
-                  ...fillLayerConfig.source.data,
-                  data: JSON.stringify(element.geojson),
-                },
-              },
+      if (points.length) {
+        // build a feature collection for points
+        let featureColl = {};
+        featureColl = {
+          features: points.map((d: FlexObject) => {
+            const propsObj = {
+              ...(d.geojson && d.geojson.properties),
             };
-            symbolLayers.push(fillLayer);
-          }
-          if (element.geojson.geometry && element.geojson.geometry.type === 'Point') {
-            points.push(element);
-          }
+            return {
+              geometry: {
+                ...d.geojson.geometry,
+              },
+              properties: propsObj,
+              type: FEATURE,
+            };
+          }),
+          type: FEATURE_COLLECTION,
+        };
+        symbolLayers.push({
+          ...circleLayerConfig,
+          id: this.props.currentGoal,
+          source: {
+            ...circleLayerConfig.source,
+            data: {
+              ...circleLayerConfig.source.data,
+              data: JSON.stringify(featureColl),
+            },
+          },
         });
 
-        if (points.length) {
-          let featureColl = {};
-          featureColl = {
-            features: points.map((d: FlexObject) => {
-              const propsObj = {
-                ...(d.geojson && d.geojson.properties),
-              };
-              return {
-                geometry: {
-                  ...d.geojson.geometry,
-                },
-                properties: propsObj,
-                type: 'Feature',
-              };
-            }),
-            type: 'FeatureCollection',
-          };
-          symbolLayers.push({
-            ...circleLayerConfig,
-            id: `single-jurisdiction-${this.props.currentGoal}`,
-            paint: {
-              ...circleLayerConfig.paint,
-              'circle-color': ['get', 'color'],
-            },
-            source: {
-              ...circleLayerConfig.source,
-              data: {
-                ...circleLayerConfig.source.data,
-                data: JSON.stringify(featureColl),
-              },
-            },
-          });
-        }
         this.setState({
           hasGeometries: true,
         });
-      } else {
-        this.setState({
-          hasGeometries: false,
-        });
-        alert('Tasks have no Geometries');
       }
+    } else if (tasks && !(tasks.length > 0)) {
+      /* implement better alert e.g rect alerts 
+        https://www.npmjs.com/package/react-alert or
+        growl https://www.npmjs.com/package/react-growl */
+      alert('Goals have no Geometries');
+      this.setState({
+        hasGeometries: false,
+      });
     }
     const { geoData } = this.props;
     const { locations, bounds } = this.state;
     if (!locations) {
       return false;
     }
-
     const layers: LineLayerObj[] | FillLayerObj[] | PointLayerObj[] | FlexObject = [
       {
-        id: `main-plan-layer-${geoData.jurisdiction_id}`,
+        id: `${MAIN_PLAN}-${geoData.jurisdiction_id}`,
         paint: {
-          'line-color': '#FFDC00',
-          'line-opacity': 1,
-          'line-width': 3,
+          'line-color': DEFAULT_LAYER_COLOR,
+          'line-opacity': DEFAULT_LAYER_LINE_OPACITY,
+          'line-width': DEFAULT_LAYER_LINE_WIDTH,
         },
         source: {
           data: {
             data: JSON.stringify(locations),
             type: STRINGIFIED_GEOJSON,
           },
-          type: 'geojson',
+          type: GEOJSON,
         },
-        type: 'line',
+        type: DEFAULT_LINE_TYPE,
         visible: true,
       },
     ];
-
     if (symbolLayers.length) {
       symbolLayers.forEach((value: LineLayerObj | FillLayerObj | PointLayerObj) => {
         layers.push(value);
       });
     }
-    // 3b. Build the site-config object for Gisida
+    // Build the site-config object for Gisida
     const config = ConfigStore(
       {
         appName: locations && locations.properties && locations.properties.jurisdiction_name,
@@ -332,8 +334,7 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
     );
 
     this.setState({ doRenderMap: true }, () => {
-      // 4. Initialize Gisida stores
-
+      // Initialize Gisida stores
       let layer;
       const currentState = store.getState();
       const activeIds: string[] = [];
@@ -351,7 +352,7 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
       // load visible layers to store
       loadLayers(MAP_ID, store.dispatch, visibleLayers);
 
-      // handles layers with geometries
+      // handles tasks with geometries
       if (this.state.hasGeometries && Object.keys(currentState[MAP_ID].layers).length > 1) {
         const allLayers = Object.keys(currentState[MAP_ID].layers);
         let eachLayer: string;
@@ -363,15 +364,16 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
           if (
             layer.visible &&
             !layer.id.includes(this.props.currentGoal) &&
-            !layer.id.includes('main-plan-layer')
+            !layer.id.includes(MAIN_PLAN)
           ) {
             store.dispatch(Actions.toggleLayer(MAP_ID, layer.id, false));
           }
         }
+        // handle tasks with no geometries
       } else if (!this.state.hasGeometries && Object.keys(currentState[MAP_ID].layers).length > 1) {
         Object.keys(currentState[MAP_ID].layers).forEach((l: string) => {
           layer = currentState[MAP_ID].layers[l];
-          if (layer.visible && !layer.id.includes('main-plan-layer')) {
+          if (layer.visible && !layer.id.includes(MAIN_PLAN)) {
             activeIds.push(layer.id);
           }
         });
@@ -388,5 +390,4 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
     });
   }
 }
-
 export default GisidaWrapper;
