@@ -2,7 +2,7 @@ import * as gatekeeper from '@onaio/gatekeeper';
 import { cloneDeep } from 'lodash';
 import { BLACK, GREEN, RED, YELLOW } from '../../colors';
 import { ONADATA_OAUTH_STATE, OPENSRP_OAUTH_STATE } from '../../configs/env';
-import { Task } from '../../store/ducks/tasks';
+import { InitialTask } from '../../store/ducks/tasks';
 import * as fixtures from '../../store/ducks/tests/fixtures';
 import { colorMaps } from '../structureColorMaps';
 import { getColor, getColorByValue, getLocationColumns, oAuthUserInfoGetter } from '../utils';
@@ -11,10 +11,10 @@ interface SampleColorMap {
   [key: string]: string;
 }
 /** common test functionality for contextual coloring
- * @param {Task} task - a sample task object
+ * @param {InitialTask} task - a sample task object
  * @param {SampleColorMap} obj - minimum unique differences for colorMaps
  */
-const getColorSharedTest = (task: Task, obj: SampleColorMap) => {
+const getColorSharedTest = (task: InitialTask, obj: SampleColorMap) => {
   for (const [status, color] of Object.entries(obj)) {
     task.geojson.properties.task_business_status = status;
     expect(getColor(task)).toEqual(color);
@@ -197,9 +197,6 @@ describe('helpers/utils', () => {
   });
 
   it('returns Yellow for invalid business Status', () => {
-    /** getting null probably means business status received
-     * from api did not match any of those recognized by this app
-     */
     const invalidTask = cloneDeep(fixtures.task1);
     invalidTask.geojson.properties.task_business_status = 'Invalid Business Status';
     const color3 = getColor(invalidTask);
