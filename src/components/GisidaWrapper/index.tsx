@@ -217,23 +217,27 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
         return d.geojson.geometry !== null;
       });
       if (tasks.length > 0) {
-        let featureColl = {};
         // pop off null geoms
-        let polygons: Task[] = [];
-        let points: Task[] = [];
+        const polygons: Task[] = [];
+        const points: Task[] = [];
         tasks = tasks.filter((d: Task) => d.geojson.geometry !== null);
 
-        // handle layers types
-        polygons = tasks.filter(
-          (d: FlexObject) =>
-            (d.geojson.geometry && d.geojson.geometry.type === 'Polygon') ||
-            d.geojson.geometry.type === 'MultiPolygon'
-        );
-        points = tasks.filter(
-          (d: Task) => d.geojson.geometry && d.geojson.geometry.type === 'Point'
-        );
+        tasks.forEach((element: Task) => {
+          if (
+            (element.geojson.geometry && element.geojson.geometry.type === 'Polygon') ||
+            (element.geojson &&
+              element.geojson.geometry &&
+              element.geojson.geometry.type === 'MultiPolygon')
+          ) {
+            polygons.push(element);
+          }
+          if (element.geojson.geometry && element.geojson.geometry.type === 'Point') {
+            points.push(element);
+          }
+        });
 
         if (points.length) {
+          let featureColl = {};
           featureColl = {
             features: points.map((d: FlexObject) => {
               const propsObj = {
