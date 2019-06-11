@@ -218,9 +218,8 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
       });
       if (tasks.length > 0) {
         // pop off null geoms
-        const polygons: Task[] = [];
-        const points: Task[] = [];
         tasks = tasks.filter((d: Task) => d.geojson.geometry !== null);
+        const points: Task[] = [];
 
         tasks.forEach((element: Task) => {
           if (
@@ -229,7 +228,20 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
               element.geojson.geometry &&
               element.geojson.geometry.type === 'MultiPolygon')
           ) {
-            polygons.push(element);
+            // polygons.push(element);
+            let fillLayer: FillLayerObj | null = null;
+            fillLayer = {
+              ...fillLayerConfig,
+              id: `single-jurisdiction-${element.goal_id}-${element.task_identifier}`,
+              source: {
+                ...fillLayerConfig.source,
+                data: {
+                  ...fillLayerConfig.source.data,
+                  data: JSON.stringify(element.geojson),
+                },
+              },
+            };
+            symbolLayers.push(fillLayer);
           }
           if (element.geojson.geometry && element.geojson.geometry.type === 'Point') {
             points.push(element);
@@ -263,23 +275,6 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
                 data: JSON.stringify(featureColl),
               },
             },
-          });
-        }
-        if (polygons.length) {
-          polygons.forEach((p: Task) => {
-            let fillLayer: FillLayerObj | null = null;
-            fillLayer = {
-              ...fillLayerConfig,
-              id: `single-jurisdiction-${p.goal_id}-${p.task_identifier}`,
-              source: {
-                ...fillLayerConfig.source,
-                data: {
-                  ...fillLayerConfig.source.data,
-                  data: JSON.stringify(p.geojson),
-                },
-              },
-            };
-            symbolLayers.push(fillLayer);
           });
         }
         this.setState({
