@@ -292,27 +292,7 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
     if (!locations) {
       return false;
     }
-    /* commented below dynamic layer building */
-    // 3b. Define layers for config
-    // todo - dynamically create the layers we need
 
-    // 3c. Start with the default/first layer
-    // const jurisdictionLayer = singleJurisdictionLayerConfig;
-    // const jurisdictionLayerId = `single-jurisdiction-${geoData.jurisdiction_id}`;
-    // const jurisdictionLayer_source_data = locations && JSON.stringify(locations);
-    // console.log(geoData && geoData.jurisdiction_id);
-    // export const layerBuilder = (
-    //   jurisdictionLayer: FlexObject,
-    //   paint: FlexObject | null,
-    //   jurisdictionLayerId: string | null,
-    //   jurisdictionLayer_source_data: FlexObject | null,
-    // ) => {
-    //   let allLayers = [];
-    //   jurisdictionLayer.id = jurisdictionLayerId ? `single-jurisdiction-${jurisdictionLayerId}` : jurisdictionLayer.id;
-    //   jurisdictionLayer.paint = paint ? jurisdictionLayer.paint = paint : jurisdictionLayer.paint;
-    //   jurisdictionLayer.source.data
-
-    // };
     const layers: LineLayerObj[] | FillLayerObj[] | PointLayerObj[] | FlexObject = [
       {
         id: `main-plan-layer-${geoData.jurisdiction_id}`,
@@ -367,9 +347,7 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
         return layer;
       });
 
-      // const activeLayer = (Object.keys(currentState[MAP_ID].layers).length > 1) ? config.LAYERS : visibleLayers;
       // load visible layers to store
-      // if (global.maps[0].is)
       loadLayers(MAP_ID, store.dispatch, visibleLayers);
 
       // handles layers with geometries
@@ -402,18 +380,7 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
           });
         }
       }
-      // console.log(
-      //   'tasks',
-      //   this.props.tasks,
-      //   'plan id',
-      //   this.props.goal && this.props.goal.plan_id,
-      //   'layers??',
-      //   currentState[MAP_ID].layers
-      // );
-      // optional onInit handler function - higher order state management, etc
-      // if (store.getState()['map-1']) {
-      //   debugger;
-      // }
+
       if (this.props.onInit) {
         this.props.onInit();
       }
@@ -421,16 +388,4 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
   }
 }
 
-// const mapStateToProps = (state: FlexObject) => {
-//   // pass in the plan id to get plan the get the jurisdicytion_id from the plan
-//   let checkRender = null;
-//   if (state && state['map-1'] && state['map-1']) {
-//     checkRender = state['map-1'].isRendered;
-//   }
-//   console.log('check if map Render===============>', checkRender);
-//   return {
-//     checkRender,
-//   };
-// };
-// const ConnectedGisidaWrapper = connect(mapStateToProps)(GisidaWrapper);
 export default GisidaWrapper;
