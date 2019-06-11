@@ -68,11 +68,11 @@ export { providers };
  * locations hierarchically, from lowest to highest.
  */
 export const locationHierarchy: LocationItem[] = [
-  // {
-  //   identifier: 'province',
-  //   level: 1,
-  //   name: 'Province',
-  // },
+  {
+    identifier: 'province',
+    level: 1,
+    name: 'Province',
+  },
   {
     identifier: 'district',
     level: 2,
@@ -83,11 +83,11 @@ export const locationHierarchy: LocationItem[] = [
     level: 3,
     name: 'Canton',
   },
-  // {
-  //   identifier: 'village',
-  //   level: 4,
-  //   name: 'Village',
-  // },
+  {
+    identifier: 'village',
+    level: 4,
+    name: 'Village',
+  },
 ];
 
 /** Focus investigation configs */
@@ -129,3 +129,97 @@ export type ORANGE_THRESHOLD = typeof ORANGE_THRESHOLD;
 // 1-3-7 thresholds
 export const ONE = 0;
 export const ZERO = 0;
+
+export const pointLayerConfig = {
+  id: 'single-jurisdiction-20191910',
+  layout: {
+    'icon-image': 'circle-15',
+    'icon-size': 2,
+  },
+  minzoom: 1,
+  paint: {
+    'text-color': '#000',
+    'text-halo-blur': 1,
+    'text-halo-color': '#fff',
+    'text-halo-width': 1.3,
+  },
+  source: {
+    data: {
+      data: {
+        coordinates: [101.177725195885, 15.0658221308165],
+        type: 'Point',
+      },
+      type: 'stringified-geojson',
+    },
+    minzoom: 1,
+    type: 'geojson',
+  },
+  type: 'symbol',
+  visible: false,
+};
+
+export const lineLayerConfig = {
+  id: 'single-jurisdiction',
+  paint: {
+    'line-color': '#FFDC00',
+    'line-opacity': 1,
+    'line-width': 3,
+  },
+  source: {
+    data: {
+      data: {
+        coordinates: [101.177725195885, 15.0658221308165],
+        type: 'Point',
+      },
+      type: 'stringified-geojson',
+    },
+    type: 'geojson',
+  },
+  type: 'line',
+  visible: false,
+};
+
+export const fillLayerConfig = {
+  id: 'single-jurisdiction',
+  paint: {
+    'fill-color': '#FFDC00',
+    'fill-opacity': 1,
+    'fill-outline-color': '#FFDC00',
+  },
+  source: {
+    data: {
+      data: {
+        coordinates: [101.177725195885, 15.0658221308165],
+        type: 'Point',
+      },
+      type: 'stringified-geojson',
+    },
+    type: 'geojson',
+  },
+  type: 'fill',
+  visible: false,
+};
+
+export const circleLayerConfig = {
+  categories: {
+    color: '#ff0000',
+  },
+  id: 'single-jurisdiction',
+  paint: {
+    'circle-color': '#FFDC00',
+    'circle-opacity': 1,
+    'circle-radius': 5,
+  },
+  source: {
+    data: {
+      data: {
+        coordinates: [101.177725195885, 15.0658221308165],
+        type: 'Point',
+      },
+      type: 'stringified-geojson',
+    },
+    type: 'geojson',
+  },
+  type: 'circle',
+  visible: false,
+};

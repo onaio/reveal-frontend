@@ -156,22 +156,25 @@ export function extractPlan(plan: Plan) {
     plan.jurisdiction_name_path
   );
   const mutableLocationNames = locationNames.asMutable();
-  mutableLocationNames.reverse();
 
-  for (let i = 0; i < 4; i++) {
-    const locationName = mutableLocationNames[i];
-    if (locationName) {
-      if (i === 99) {
-        result.village = mutableLocationNames[i];
-      }
-      if (i === 0) {
-        result.canton = mutableLocationNames[i];
-      }
-      if (i === 1) {
-        result.district = mutableLocationNames[i];
-      }
-      if (i === 3) {
-        result.province = mutableLocationNames[i];
+  if (mutableLocationNames) {
+    mutableLocationNames.reverse();
+
+    for (let i = 0; i < 4; i++) {
+      const locationName = mutableLocationNames[i];
+      if (locationName) {
+        if (i === 0) {
+          result.village = mutableLocationNames[i];
+        }
+        if (i === 1) {
+          result.canton = mutableLocationNames[i];
+        }
+        if (i === 2) {
+          result.district = mutableLocationNames[i];
+        }
+        if (i === 3) {
+          result.province = mutableLocationNames[i];
+        }
       }
     }
   }

@@ -68,7 +68,13 @@ class App extends Component {
               <ConnectedPrivateRoute
                 disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                 exact={true}
-                path={`${FI_SINGLE_MAP_URL}/:id`}
+                path={`${FI_SINGLE_MAP_URL}/:id/`}
+                component={SingleActiveFIMap}
+              />
+              <ConnectedPrivateRoute
+                disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                exact={true}
+                path={`${FI_SINGLE_MAP_URL}/:id/:goalId`}
                 component={SingleActiveFIMap}
               />
               <ConnectedPrivateRoute

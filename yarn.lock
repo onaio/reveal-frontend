@@ -6183,10 +6183,10 @@ getpass@^0.1.1:
   dependencies:
     assert-plus "^1.0.0"
 
-gisida-react@^1.2.2:
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/gisida-react/-/gisida-react-1.2.2.tgz#3b5186a4ccf062f0bd572d77bb4a699708e3d5b4"
-  integrity sha512-AIhHrBCz961wa0NUWrU2kM7uEfCXvhISJj3uEVeSseGVRDFBmrcpBvxCbI3cOuB7iP1REXGNpfK8isQGJ8UkEQ==
+gisida-react@^1.2.3:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/gisida-react/-/gisida-react-1.2.3.tgz#47673be1d9b1f2a24a77b6a0bfd13b14531d890b"
+  integrity sha512-MjMGVy6xfas56+6Rbnv+5XT2MBO2dZPVI18TjnOA/eO47P3L0+0hy720zXJ9RJUKweUUzShs0FUxXo4Nw5eNYQ==
   dependencies:
     ansi-regex "^3.0.0"
     camelcase "^4.1.0"
@@ -6201,10 +6201,10 @@ gisida-react@^1.2.2:
     react-redux "^5.0.6"
     redux "^4.0.0"
 
-gisida@^1.2.4:
-  version "1.2.4"
-  resolved "https://registry.yarnpkg.com/gisida/-/gisida-1.2.4.tgz#cba2e35f69a6671c42d25517c60a4c7ed5b92081"
-  integrity sha512-3OzeN6KMJqbw5REj7ZMch86p1bE0E3Uar+obcn/xYaPnrVFSJ+CV6noGTctxEHiLBBoZGQFX8j+hzr61uTOuyQ==
+gisida@^1.2.5:
+  version "1.2.5"
+  resolved "https://registry.yarnpkg.com/gisida/-/gisida-1.2.5.tgz#6e4e03d13b97f7340dc91b829979de23621ef461"
+  integrity sha512-++scGzOUEwi71S3H0LZtuQyoM4BGHcsOiGYminqCbkI4AOKYTTeLwPQIRbbW6tIK1pR9fcfe3ThzQsD8wtBwKA==
   dependencies:
     "@babel/runtime" "^7.4.3"
     "@onaio/superset-connector" "^0.0.7"
