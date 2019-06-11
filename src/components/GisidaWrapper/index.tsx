@@ -9,7 +9,6 @@ import { GISIDA_MAPBOX_TOKEN, GISIDA_ONADATA_API_TOKEN } from '../../configs/env
 import { circleLayerConfig, fillLayerConfig } from '../../configs/settings';
 import {
   APP,
-  DEFAULT_LAYER_COLOR,
   DEFAULT_LAYER_LINE_OPACITY,
   DEFAULT_LAYER_LINE_WIDTH,
   DEFAULT_LINE_TYPE,
@@ -19,6 +18,7 @@ import {
   MAIN_PLAN,
   MAP_ID,
   MULTI_POLYGON,
+  NO_GEOMETRIES_RESPONSE,
   POINT,
   POLYGON,
   STRINGIFIED_GEOJSON,
@@ -28,7 +28,7 @@ import store from '../../store';
 import { Jurisdiction, JurisdictionGeoJSON } from '../../store/ducks/jurisdictions';
 import { Task } from '../../store/ducks/tasks';
 import './gisida.css';
-// Interfaces for various Layerspecs
+// LineLayerObj Interface
 interface LineLayerObj {
   id: string;
   paint: LinePaint;
@@ -42,7 +42,7 @@ interface LineLayerObj {
   type: 'line';
   visible: boolean;
 }
-
+// PointLayerObj Interface
 interface PointLayerObj {
   id: string;
   layout: {
@@ -62,7 +62,7 @@ interface PointLayerObj {
   type: 'symbol';
   visible: boolean;
 }
-
+// FillLayerObj Interface
 interface FillLayerObj {
   id: string;
   paint: FillPaint;
@@ -120,7 +120,6 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
     if (!initialState.APP && ducks.APP) {
       reducerRegistry.register(APP, ducks.APP.default);
     }
-    // todo: Make map-1 more dynamic
     if (!initialState[MAP_ID] && ducks.MAP) {
       reducerRegistry.register(MAP_ID, ducks.MAP.default);
     }
@@ -218,9 +217,8 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
     // filter out tasks with null geoms
     tasks = tasks && tasks.filter((task: Task) => task.geojson.geometry !== null);
     if (tasks && tasks.length > 0) {
-      // pop off null geoms
       const points: Task[] = [];
-      // handle geometries of type polygon or  multipolygon
+      // handle geometries of type polygon or multipolygon
       tasks.forEach((element: Task) => {
         if (
           (element.geojson.geometry && element.geojson.geometry.type === POLYGON) ||
@@ -253,13 +251,13 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
         // build a feature collection for points
         let featureColl = {};
         featureColl = {
-          features: points.map((d: FlexObject) => {
+          features: points.map((point: Task) => {
             const propsObj = {
-              ...(d.geojson && d.geojson.properties),
+              ...(point.geojson && point.geojson.properties),
             };
             return {
               geometry: {
-                ...d.geojson.geometry,
+                ...point.geojson.geometry,
               },
               properties: propsObj,
               type: FEATURE,
@@ -284,10 +282,7 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
         });
       }
     } else if (tasks && !(tasks.length > 0)) {
-      /* implement better alert e.g rect alerts 
-        https://www.npmjs.com/package/react-alert or
-        growl https://www.npmjs.com/package/react-growl */
-      alert('Goals have no Geometries');
+      alert(NO_GEOMETRIES_RESPONSE);
       this.setState({
         hasGeometries: false,
       });
@@ -301,7 +296,7 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
       {
         id: `${MAIN_PLAN}-${geoData.jurisdiction_id}`,
         paint: {
-          'line-color': DEFAULT_LAYER_COLOR,
+          'line-color': '#FFDC00',
           'line-opacity': DEFAULT_LAYER_LINE_OPACITY,
           'line-width': DEFAULT_LAYER_LINE_WIDTH,
         },

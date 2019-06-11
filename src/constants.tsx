@@ -1,5 +1,3 @@
-import { type } from 'os';
-
 // strings
 export const LOCATION = 'Location';
 export type LOCATION = typeof LOCATION;
@@ -18,9 +16,13 @@ export type FOCUS_INVESTIGATIONS = typeof FOCUS_INVESTIGATIONS;
 export const MAP_ID = 'map-1';
 export type MAP_ID = typeof MAP_ID;
 export const GEOJSON = 'geojson';
+export type GEOJSON = typeof GEOJSON;
 export const DEFAULT_LINE_TYPE = 'line';
+export type DEFAULT_LINE_TYPE = typeof DEFAULT_LINE_TYPE;
 export const DEFAULT_LAYER_LINE_OPACITY = 1;
+export type DEFAULT_LAYER_LINE_OPACITY = typeof DEFAULT_LAYER_LINE_OPACITY;
 export const DEFAULT_LAYER_LINE_WIDTH = 3;
+export type DEFAULT_LAYER_LINE_WIDTH = typeof DEFAULT_LAYER_LINE_WIDTH;
 export const STRINGIFIED_GEOJSON = 'stringified-geojson';
 export type STRINGIFIED_GEOJSON = typeof STRINGIFIED_GEOJSON;
 export const FOCUS_AREA_HEADER = 'Focus Area';
@@ -62,14 +64,21 @@ export type MARK_AS_COMPLETE = typeof MARK_AS_COMPLETE;
 export const TARGET = 'Target';
 export type TARGET = typeof TARGET;
 export const POLYGON = 'Polygon';
+export type POLYGON = typeof POLYGON;
 export const MULTI_POLYGON = 'MultiPolygon';
+export type MULTI_POLYGON = typeof MULTI_POLYGON;
 export const POINT = 'Point';
+export type POINT = typeof POINT;
 export const FEATURE = 'Feature';
+export type FEATURE = typeof FEATURE;
 export const FEATURE_COLLECTION = 'FeatureCollection';
+export type FEATURE_COLLECTION = typeof FEATURE_COLLECTION;
 export const MAIN_PLAN = 'main-plan-layer';
-export const DEFAULT_LAYER_COLOR = '#FFDC00';
+export type MAIN_PLAN = typeof MAIN_PLAN;
 export const APP = 'APP';
-
+export type APP = typeof APP;
+export const NO_GEOMETRIES_RESPONSE = 'Goals have no Geometries';
+export type NO_GEOMETRIES_RESPONSE = typeof NO_GEOMETRIES_RESPONSE;
 // internal urls
 export const LOGIN_URL = '/login';
 export type LOGIN_URL = typeof LOGIN_URL;
