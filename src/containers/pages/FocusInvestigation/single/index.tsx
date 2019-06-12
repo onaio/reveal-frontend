@@ -122,7 +122,7 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
               <div style={{ background: 'lightgrey', height: '200px' }} />
             )}
             <div className="map-area">
-              <GisidaWrapper geoData={jurisdiction} />
+              <GisidaWrapper geoData={jurisdiction} minHeight="200px" />
             </div>
             <dl className="row mt-3">
               <dt className="col-5">{DISTRICT}</dt>
