@@ -287,7 +287,7 @@ export const task4 = {
   task_identifier: '01d0b84c-df06-426c-a272-6858e84fea31',
 };
 
-const task76 = clone(task2);
+const task76 = cloneDeep(task2);
 task76.task_identifier = 'moshT';
 task76.geojson.id = 'moshT';
 (task76.geojson as any) = JSON.stringify(task76.geojson);
