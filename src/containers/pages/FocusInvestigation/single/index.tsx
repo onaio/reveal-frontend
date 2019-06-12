@@ -41,6 +41,7 @@ import plansReducer, {
   Plan,
   reducerName as plansReducerName,
 } from '../../../../store/ducks/plans';
+import * as fixtures from '../../../../store/ducks/tests/fixtures';
 import './single.css';
 
 /** register the goals reducer */
@@ -181,10 +182,10 @@ interface DispatchedStateProps {
 
 /** map state to props */
 const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateProps => {
-  const plan = getPlanById(state, ownProps.match.params.id);
+  const plan = fixtures.plan1;
   let goalsArray = null;
   if (plan) {
-    goalsArray = getGoalsByPlanAndJurisdiction(state, plan.plan_id, plan.jurisdiction_id);
+    goalsArray = fixtures.plan1Goals;
   }
   const result = {
     goalsArray,
