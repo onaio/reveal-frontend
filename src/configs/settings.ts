@@ -208,7 +208,10 @@ export const circleLayerConfig = {
   paint: {
     'circle-color': '#FFDC00',
     'circle-opacity': 1,
-    'circle-radius': 5,
+    'circle-radius': {
+      base: 1.75,
+      stops: [[12, 2], [22, 180]],
+    },
   },
   source: {
     data: {
