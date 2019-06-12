@@ -268,6 +268,10 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
           symbolLayers.push({
             ...circleLayerConfig,
             id: `single-jurisdiction-${this.props.currentGoal}`,
+            paint: {
+              ...circleLayerConfig.paint,
+              'circle-color': '#FF0000',
+            },
             source: {
               ...circleLayerConfig.source,
               data: {
