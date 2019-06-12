@@ -2,6 +2,7 @@ import GeojsonExtent from '@mapbox/geojson-extent';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import { Actions, ducks, loadLayers } from 'gisida';
 import { Map } from 'gisida-react';
+import { FillPaint, LinePaint, SymbolPaint } from 'mapbox-gl';
 import * as React from 'react';
 import Loading from '../../components/page/Loading/index';
 import { GISIDA_MAPBOX_TOKEN, GISIDA_ONADATA_API_TOKEN } from '../../configs/env';
@@ -15,11 +16,7 @@ import './gisida.css';
 
 interface LineLayerObj {
   id: string;
-  paint: {
-    'line-color': string;
-    'line-opacity': number;
-    'line-width': number;
-  };
+  paint: LinePaint;
   source: {
     data: {
       data: string;
@@ -27,7 +24,7 @@ interface LineLayerObj {
     };
     type: string;
   };
-  type: string;
+  type: 'line';
   visible: boolean;
 }
 
@@ -38,12 +35,7 @@ interface PointLayerObj {
     'icon-size': number;
   };
   minzoom: number;
-  paint: {
-    'text-color': string;
-    'text-halo-blur': number;
-    'text-halo-color': string;
-    'text-halo-width': number;
-  };
+  paint: SymbolPaint;
   source: {
     data: {
       data: string;
@@ -52,17 +44,13 @@ interface PointLayerObj {
     minzoom: number;
     type: string;
   };
-  type: string;
+  type: 'symbol';
   visible: boolean;
 }
 
 interface FillLayerObj {
   id: string;
-  paint: {
-    'fill-color': string;
-    'fill-opacity': number;
-    'fill-outline-color': string;
-  };
+  paint: FillPaint;
   source: {
     data: {
       data: string;
@@ -233,6 +221,11 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
             fillLayer = {
               ...fillLayerConfig,
               id: `single-jurisdiction-${element.goal_id}-${element.task_identifier}`,
+              paint: {
+                ...fillLayerConfig.paint,
+                'fill-color': ['get', 'color'],
+                'fill-outline-color': ['get', 'color'],
+              },
               source: {
                 ...fillLayerConfig.source,
                 data: {
@@ -268,6 +261,10 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
           symbolLayers.push({
             ...circleLayerConfig,
             id: `single-jurisdiction-${this.props.currentGoal}`,
+            paint: {
+              ...circleLayerConfig.paint,
+              'circle-color': ['get', 'color'],
+            },
             source: {
               ...circleLayerConfig.source,
               data: {

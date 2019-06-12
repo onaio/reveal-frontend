@@ -76,7 +76,7 @@ export const defaultMapSingleFIProps: MapSingleFIProps = {
   goals: fixtures.plan1Goals,
   jurisdiction: fixtures.jurisdictions[0],
   plan: fixtures.plan1,
-  tasks: fixtures.tasks,
+  tasks: fixtures.coloredTasksArray,
 };
 /** Map View for Single Active Focus Investigation */
 class SingleActiveFIMap extends React.Component<
