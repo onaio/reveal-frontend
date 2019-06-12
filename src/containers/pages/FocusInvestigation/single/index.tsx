@@ -40,6 +40,7 @@ import goalsReducer, {
 } from '../../../../store/ducks/goals';
 import jurisdictionReducer, {
   fetchJurisdictions,
+  getJurisdictionById,
   Jurisdiction,
   reducerName as jurisdictionReducerName,
 } from '../../../../store/ducks/jurisdictions';
@@ -213,7 +214,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
   let jurisdiction = null;
   if (plan) {
     goalsArray = getGoalsByPlanAndJurisdiction(state, plan.plan_id, plan.jurisdiction_id);
-    jurisdiction = fixtures.jurisdictions[0];
+    jurisdiction = getJurisdictionById(state, plan.jurisdiction_id);
   }
   const result = {
     goalsArray,
