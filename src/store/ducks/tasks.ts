@@ -309,7 +309,9 @@ export function getFCByJurisdictionId(
   state: Partial<Store>,
   jurisdictionId: string
 ): FeatureCollection {
-  const geoJsonFeatures: TaskGeoJSON[] = [];
+  const geoJsonFeatures: TaskGeoJSON[] = values((state as any)[reducerName].tasksById)
+    .map(e => e.geojson)
+    .filter(e => e.properties.jurisdiction_id === jurisdictionId);
   return wrapFeatureCollection(geoJsonFeatures);
 }
 
