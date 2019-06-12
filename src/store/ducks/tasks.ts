@@ -2,7 +2,7 @@ import { Color } from 'csstype';
 import { get, keyBy, keys, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
 import SeamlessImmutable from 'seamless-immutable';
-import { GeoJSON, getColor, Geometry } from '../../helpers/utils';
+import { GeoJSON, Geometry, getColor } from '../../helpers/utils';
 
 /** the reducer name */
 export const reducerName = 'tasks';
@@ -51,7 +51,7 @@ export interface TaskGeoJSON extends InitialTaskGeoJSON {
 }
 
 /** Interface for FeatureCollection */
-export interface FeatureCollection{
+export interface FeatureCollection {
   type: string;
   features: TaskGeoJSON[];
 }
