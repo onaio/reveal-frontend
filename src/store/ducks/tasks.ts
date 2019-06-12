@@ -317,7 +317,7 @@ export function getFCByStructureId(state: Partial<Store>, structureId: string): 
  * @param {string} planId - task.geojson.properties.plan_id
  * @param {string} jurisdictionId - task.geojson.properties.jurisdiction_id
  */
-export function getFCByPlanandJurisdiction(
+export function getFCByPlanAndJurisdiction(
   state: Partial<Store>,
   planId: string,
   jurisdictionId: string
@@ -332,7 +332,7 @@ export function getFCByPlanandJurisdiction(
  * @param {string} goalId - task.geojson.properties.goal_id
  * @param {string} jurisdictionId - task.geojson.properties.jurisdiction_id
  */
-export function getFCByPlanandGoalandJurisdiction(
+export function getFCByPlanAndGoalAndJurisdiction(
   state: Partial<Store>,
   planId: string,
   goalId: string,

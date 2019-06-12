@@ -8,10 +8,10 @@ import reducer, {
   getAllFC,
   getFCByGoalId,
   getFCByJurisdictionId,
-  getFCByPlanandGoalandJurisdiction,
-  getFCByPlanandJurisdiction,
+  getFCByPlanAndGoalAndJurisdiction,
+  getFCByPlanAndJurisdiction,
   getFCByPlanId,
-  getFCBystructureId,
+  getFCByStructureId,
   getTaskById,
   getTasksArray,
   getTasksByGoalId,
@@ -157,13 +157,13 @@ describe('reducers/tasks/FeatureCollectionSelectors', () => {
     const placebo = 'randomId';
     expect(getAllFC(store.getState())).toEqual(expected);
     expect(getFCByGoalId(store.getState(), placebo)).toEqual(expected);
-    expect(getFCByPlanandGoalandJurisdiction(store.getState(), placebo, placebo, placebo)).toEqual(
+    expect(getFCByPlanAndGoalAndJurisdiction(store.getState(), placebo, placebo, placebo)).toEqual(
       expected
     );
     expect(getFCByJurisdictionId(store.getState(), placebo)).toEqual(expected);
     expect(getFCByPlanId(store.getState(), placebo)).toEqual(expected);
-    expect(getFCByPlanandJurisdiction(store.getState(), placebo, placebo)).toEqual(expected);
-    expect(getFCBystructureId(store.getState(), placebo)).toEqual(expected);
+    expect(getFCByPlanAndJurisdiction(store.getState(), placebo, placebo)).toEqual(expected);
+    expect(getFCByStructureId(store.getState(), placebo)).toEqual(expected);
   });
 
   it('gets all tasks as Feature Collection', () => {
@@ -213,7 +213,7 @@ describe('reducers/tasks/FeatureCollectionSelectors', () => {
       features: [fixtures.task1.geojson, fixtures.task2.geojson, fixtures.task4.geojson],
       type: 'FeatureCollection',
     };
-    expect(getFCByPlanandJurisdiction(store.getState(), planId, jurisdictionId)).toEqual(expected);
+    expect(getFCByPlanAndJurisdiction(store.getState(), planId, jurisdictionId)).toEqual(expected);
   });
 
   it('filters tasks as FC by plan && jurisdiction && goal', () => {
@@ -227,7 +227,7 @@ describe('reducers/tasks/FeatureCollectionSelectors', () => {
       type: 'FeatureCollection',
     };
     expect(
-      getFCByPlanandGoalandJurisdiction(store.getState(), planId, goalId, jurisdictionId)
+      getFCByPlanAndGoalAndJurisdiction(store.getState(), planId, goalId, jurisdictionId)
     ).toEqual(expected);
   });
 
@@ -238,6 +238,6 @@ describe('reducers/tasks/FeatureCollectionSelectors', () => {
       features: [fixtures.task1.geojson],
       type: 'FeatureCollection',
     };
-    expect(getFCBystructureId(store.getState(), structureId)).toEqual(expected);
+    expect(getFCByStructureId(store.getState(), structureId)).toEqual(expected);
   });
 });
