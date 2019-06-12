@@ -149,7 +149,10 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
       );
     }
 
-    if (!(nextProps.tasks && nextProps.tasks.length) && !this.state.initMapWithoutTasks) {
+    if (
+      (!(nextProps.tasks && nextProps.tasks.length) && !this.state.initMapWithoutTasks) ||
+      typeof nextProps.tasks === 'undefined'
+    ) {
       this.setState({ doInitMap: true, initMapWithoutTasks: true }, () => {
         // Dirty work around! Arbitrary delay to allow style load before adding layers
         setTimeout(() => {
