@@ -357,6 +357,13 @@ export function getFCByPlanAndGoalAndJurisdiction(
   goalId: string,
   jurisdictionId: string
 ): FeatureCollection {
-  const geoJsonFeatures: TaskGeoJSON[] = [];
+  const geoJsonFeatures: TaskGeoJSON[] = values((state as any)[reducerName].tasksById)
+    .map(e => e.geojson)
+    .filter(
+      e =>
+        e.properties.plan_id === planId &&
+        e.properties.goal_id === goalId &&
+        e.properties.jurisdiction_id === jurisdictionId
+    );
   return wrapFeatureCollection(geoJsonFeatures);
 }
