@@ -2,13 +2,15 @@ import { Color } from 'csstype';
 import { get, keyBy, keys, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
 import SeamlessImmutable from 'seamless-immutable';
-import { FlexObject, GeoJSON, getColor } from '../../helpers/utils';
+import { GeoJSON, getColor } from '../../helpers/utils';
 
 /** the reducer name */
 export const reducerName = 'tasks';
 
-/** Interface for the initial umodified task.geoJSON properties object */
-export interface InitialProperties extends FlexObject {
+/** Interface for task.geojson.properties for task
+ *  as received from the fetch request / superset
+ */
+export interface InitialProperties {
   action_code: string;
   goal_id: string;
   jurisdiction_id: string;
@@ -34,8 +36,8 @@ export interface AddedProperties extends InitialProperties {
   color: Color;
 }
 
-/** interface for task GeoJSON before any properties are added
- * to geojson.properties
+/** interface for task.geojson for
+ * task as received from the fetch request / superset
  */
 export interface InitialTaskGeoJSON extends GeoJSON {
   properties: InitialProperties;
@@ -48,8 +50,8 @@ export interface TaskGeoJSON extends InitialTaskGeoJSON {
   properties: AddedProperties;
 }
 
-/** interface for task Object before any change to
- * geojson.properties object
+/** interface for task Object for
+ * task as received from the fetch request / superset
  */
 export interface InitialTask {
   geojson: InitialTaskGeoJSON;
@@ -125,7 +127,7 @@ export const fetchTasks = (tasksList: InitialTask[] = []): FetchTasksAction => (
         if (typeof task.geojson.geometry === 'string') {
           task.geojson.geometry = JSON.parse(task.geojson.geometry);
         }
-        task.geojson.properties.color = getColor(task);
+        (task as Task).geojson.properties.color = getColor(task);
         return task as Task;
       }
     ),

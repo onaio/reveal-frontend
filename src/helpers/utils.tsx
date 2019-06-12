@@ -247,7 +247,7 @@ export function getColorByValue(obj: ColorMapsTypes, status: string): Color {
 /** Given a task object , retrieves the contextual coloring
  * of structures based on two tasks' geojson properties i.e.
  * the action code and the task_business_status_code
- * @param {InitialTask}  taskObject - the task object less structural coloring
+ * @param {InitialTask}  taskObject - Task as received from the fetch request / superset
  * @return {string} - a hexadecimal color string
  */
 export function getColor(taskObject: InitialTask): Color {
