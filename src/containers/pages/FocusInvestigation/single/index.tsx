@@ -34,7 +34,10 @@ import goalsReducer, {
   Goal,
   reducerName as goalsReducerName,
 } from '../../../../store/ducks/goals';
-import { Jurisdiction } from '../../../../store/ducks/jurisdictions';
+import jurisdictionReducer, {
+  Jurisdiction,
+  reducerName as jurisdictionReducerName,
+} from '../../../../store/ducks/jurisdictions';
 import plansReducer, {
   fetchPlans,
   getPlanById,
@@ -50,6 +53,8 @@ import './single.css';
 reducerRegistry.register(goalsReducerName, goalsReducer);
 /** register the plans reducer */
 reducerRegistry.register(plansReducerName, plansReducer);
+/** register the jurisdictions reducer */
+reducerRegistry.register(jurisdictionReducerName, jurisdictionReducer);
 
 /** interface to describe props for ActiveFI component */
 export interface SingleFIProps {
