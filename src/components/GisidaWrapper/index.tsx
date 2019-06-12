@@ -2,6 +2,7 @@ import GeojsonExtent from '@mapbox/geojson-extent';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import { Actions, ducks, loadLayers } from 'gisida';
 import { Map } from 'gisida-react';
+import { Layer } from 'mapbox-gl';
 import * as React from 'react';
 import Loading from '../../components/page/Loading/index';
 import { GISIDA_MAPBOX_TOKEN, GISIDA_ONADATA_API_TOKEN } from '../../configs/env';
@@ -27,7 +28,7 @@ interface LineLayerObj {
     };
     type: string;
   };
-  type: string;
+  type: 'line';
   visible: boolean;
 }
 
@@ -52,16 +53,16 @@ interface PointLayerObj {
     minzoom: number;
     type: string;
   };
-  type: string;
+  type: 'symbol';
   visible: boolean;
 }
 
 interface FillLayerObj {
   id: string;
   paint: {
-    'fill-color': string;
+    'fill-color': string | string[];
     'fill-opacity': number;
-    'fill-outline-color': string;
+    'fill-outline-color': string | string[];
   };
   source: {
     data: {
@@ -233,6 +234,11 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
             fillLayer = {
               ...fillLayerConfig,
               id: `single-jurisdiction-${element.goal_id}-${element.task_identifier}`,
+              paint: {
+                ...fillLayerConfig.paint,
+                'fill-color': ['get', 'color'],
+                'fill-outline-color': ['get', 'color'],
+              },
               source: {
                 ...fillLayerConfig.source,
                 data: {
