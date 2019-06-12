@@ -293,6 +293,32 @@ export { task76 };
 
 export const tasks = [task1, task2, task3, task4];
 
+const coloredTask1: any = cloneDeep(task1);
+coloredTask1.geojson.properties.color = '#ff3';
+
+const coloredTask2: any = cloneDeep(task2);
+coloredTask2.geojson.properties.color = '#ff3';
+
+const coloredTask3: any = cloneDeep(task3);
+coloredTask3.geojson.properties.color = '#33ad33';
+
+const coloredTask4: any = cloneDeep(task4);
+coloredTask4.geojson.properties.color = '#ff3';
+
+export const coloredTasks = {
+  task1: coloredTask1,
+  task2: coloredTask2,
+  task3: coloredTask3,
+  task4: coloredTask4,
+};
+
+export const coloredTasksArray = [
+  coloredTasks.task1,
+  coloredTasks.task2,
+  coloredTasks.task3,
+  coloredTasks.task4,
+];
+
 export const taskIdsArray = [
   task1.task_identifier,
   task2.task_identifier,
@@ -390,22 +416,3 @@ jurisdiction3.geojson.id = 'abcde';
 export { jurisdiction3 };
 
 export const jurisdictionsIdsArray = jurisdictions.map((e: any) => e.jurisdiction_id);
-
-const coloredTask1: any = cloneDeep(task1);
-coloredTask1.geojson.properties.color = '#ff3';
-
-const coloredTask2: any = cloneDeep(task2);
-coloredTask2.geojson.properties.color = '#ff3';
-
-const coloredTask3: any = cloneDeep(task3);
-coloredTask3.geojson.properties.color = '#33ad33';
-
-const coloredTask4: any = cloneDeep(task4);
-coloredTask4.geojson.properties.color = '#ff3';
-
-export const coloredTasks = {
-  task1: coloredTask1,
-  task2: coloredTask2,
-  task3: coloredTask3,
-  task4: coloredTask4,
-};
