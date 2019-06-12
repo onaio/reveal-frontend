@@ -7,7 +7,11 @@ import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
 import GisidaWrapper from '../../../../components/GisidaWrapper';
 import Loading from '../../../../components/page/Loading';
-import { SUPERSET_GOALS_SLICE, SUPERSET_PLANS_SLICE } from '../../../../configs/env';
+import {
+  SUPERSET_GOALS_SLICE,
+  SUPERSET_JURISDICTIONS_SLICE,
+  SUPERSET_PLANS_SLICE,
+} from '../../../../configs/env';
 import {
   ACTIVE_INVESTIGATION,
   CANTON,
@@ -35,6 +39,7 @@ import goalsReducer, {
   reducerName as goalsReducerName,
 } from '../../../../store/ducks/goals';
 import jurisdictionReducer, {
+  fetchJurisdictions,
   Jurisdiction,
   reducerName as jurisdictionReducerName,
 } from '../../../../store/ducks/jurisdictions';
@@ -59,6 +64,7 @@ reducerRegistry.register(jurisdictionReducerName, jurisdictionReducer);
 /** interface to describe props for ActiveFI component */
 export interface SingleFIProps {
   fetchGoalsActionCreator: typeof fetchGoals;
+  fetchJurisdictionsActionCreator: typeof fetchJurisdictions;
   fetchPlansActionCreator: typeof fetchPlans;
   goalsArray: Goal[];
   jurisdiction: Jurisdiction | null;
@@ -71,6 +77,7 @@ export interface SingleFIProps {
 /** default props for ActiveFI component */
 export const defaultSingleFIProps: SingleFIProps = {
   fetchGoalsActionCreator: fetchGoals,
+  fetchJurisdictionsActionCreator: fetchJurisdictions,
   fetchPlansActionCreator: fetchPlans,
   goalsArray: [],
   jurisdiction: null,
@@ -88,12 +95,20 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
   }
 
   public async componentDidMount() {
-    const { fetchGoalsActionCreator, fetchPlansActionCreator, supersetService } = this.props;
+    const {
+      fetchGoalsActionCreator,
+      fetchJurisdictionsActionCreator,
+      fetchPlansActionCreator,
+      supersetService,
+    } = this.props;
     await supersetService(SUPERSET_PLANS_SLICE).then((result: Plan[]) =>
       fetchPlansActionCreator(result)
     );
     await supersetService(SUPERSET_GOALS_SLICE).then((result2: Goal[]) =>
       fetchGoalsActionCreator(result2)
+    );
+    await supersetFetch(SUPERSET_JURISDICTIONS_SLICE).then((result: Jurisdiction[]) =>
+      fetchJurisdictionsActionCreator(result)
     );
   }
 
@@ -212,6 +227,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
 
 const mapDispatchToProps = {
   fetchGoalsActionCreator: fetchGoals,
+  fetchJurisdictionsActionCreator: fetchJurisdictions,
   fetchPlansActionCreator: fetchPlans,
 };
 
