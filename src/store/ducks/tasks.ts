@@ -267,15 +267,19 @@ function wrapFeatureCollection(taskFeatureCollection: TaskGeoJSON[]): FeatureCol
 
 /** get all tasks as a Feature Collection
  * @param {Partial<Store>} state - the redux store
+ * @return {FeatureCollection} - an geoJSON Feature Collection object
  */
 export function getAllFC(state: Partial<Store>): FeatureCollection {
-  const geoJsonFeatures: TaskGeoJSON[] = [];
+  const geoJsonFeatures: TaskGeoJSON[] = values((state as any)[reducerName].tasksById).map(
+    e => e.geojson
+  );
   return wrapFeatureCollection(geoJsonFeatures);
 }
 
 /** get tasks as FeatureCollection filtered by goal_id
  * @param {Partial<Store>} state - the redux store
  * @param {string} goalId - task.geojson.properties.goal_id
+ * @return {FeatureCollection} - an geoJSON Feature Collection object
  */
 export function getFCByGoalId(state: Partial<Store>, goalId: string): FeatureCollection {
   const geoJsonFeatures: TaskGeoJSON[] = [];
@@ -285,6 +289,7 @@ export function getFCByGoalId(state: Partial<Store>, goalId: string): FeatureCol
 /** get tasks as FeatureCollection filtered by plan_id
  * @param {partial<Store>} state - the redux store
  * @param {string} planId - task.geojson.properties.plan_id
+ * @return {FeatureCollection} - an geoJSON Feature Collection object
  */
 export function getFCByPlanId(state: Partial<Store>, planId: string): FeatureCollection {
   const geoJsonFeatures: TaskGeoJSON[] = [];
@@ -294,6 +299,7 @@ export function getFCByPlanId(state: Partial<Store>, planId: string): FeatureCol
 /** get tasks as FeatureCollection filtered by jurisdiction_id
  * @param {partial<Store>} state - the redux store
  * @param {string} jurisdictionId - task.geojson.properties.jurisdiction_id
+ * @return {FeatureCollection} - an geoJSON Feature Collection object
  */
 export function getFCByJurisdictionId(
   state: Partial<Store>,
@@ -306,6 +312,7 @@ export function getFCByJurisdictionId(
 /** get tasks as FeatureCollection filtered by structure_id
  * @param {partial<Store>} state - the redux store
  * @param {string} structureId - task.geojson.properties.structure_id
+ * @return {FeatureCollection} - an geoJSON Feature Collection object
  */
 export function getFCByStructureId(state: Partial<Store>, structureId: string): FeatureCollection {
   const geoJsonFeatures: TaskGeoJSON[] = [];
@@ -316,6 +323,7 @@ export function getFCByStructureId(state: Partial<Store>, structureId: string): 
  * @param {partial<Store>} state - the redux store
  * @param {string} planId - task.geojson.properties.plan_id
  * @param {string} jurisdictionId - task.geojson.properties.jurisdiction_id
+ * @return {FeatureCollection} - an geoJSON Feature Collection object
  */
 export function getFCByPlanAndJurisdiction(
   state: Partial<Store>,
@@ -331,6 +339,7 @@ export function getFCByPlanAndJurisdiction(
  * @param {string} planId - task.geojson.properties.plan_id
  * @param {string} goalId - task.geojson.properties.goal_id
  * @param {string} jurisdictionId - task.geojson.properties.jurisdiction_id
+ * @return {FeatureCollection} - an geoJSON Feature Collection object
  */
 export function getFCByPlanAndGoalAndJurisdiction(
   state: Partial<Store>,
