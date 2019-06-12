@@ -34,6 +34,7 @@ import goalsReducer, {
   Goal,
   reducerName as goalsReducerName,
 } from '../../../../store/ducks/goals';
+import { Jurisdiction } from '../../../../store/ducks/jurisdictions';
 import plansReducer, {
   fetchPlans,
   getPlanById,
@@ -55,6 +56,7 @@ export interface SingleFIProps {
   fetchGoalsActionCreator: typeof fetchGoals;
   fetchPlansActionCreator: typeof fetchPlans;
   goalsArray: Goal[];
+  jurisdiction: Jurisdiction | null;
   planById: Plan | null;
   plansArray: Plan[];
   plansIdArray: string[];
@@ -66,6 +68,7 @@ export const defaultSingleFIProps: SingleFIProps = {
   fetchGoalsActionCreator: fetchGoals,
   fetchPlansActionCreator: fetchPlans,
   goalsArray: [],
+  jurisdiction: null,
   planById: null,
   plansArray: [],
   plansIdArray: [],
@@ -90,10 +93,10 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
   }
 
   public render() {
-    const { goalsArray, planById } = this.props;
+    const { goalsArray, jurisdiction, planById } = this.props;
     const theGoals = goalsArray;
 
-    if (!planById || !theGoals) {
+    if (!planById || !theGoals || !jurisdiction) {
       return <Loading />;
     }
 
@@ -118,6 +121,9 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
             {theObject.jurisdiction_id && (
               <div style={{ background: 'lightgrey', height: '200px' }} />
             )}
+            <div className="map-area">
+              <GisidaWrapper geoData={jurisdiction} />
+            </div>
             <dl className="row mt-3">
               <dt className="col-5">{DISTRICT}</dt>
               <dd className="col-7">{theObject.district}</dd>
