@@ -77,6 +77,7 @@ export interface Task extends InitialTask {
 // actions
 /** TASKS_FETCHED action type */
 export const TASKS_FETCHED = 'reveal/reducer/tasks/TASKS_FETCHED';
+export const RESET_TASKS = 'reveal/reducer/tasks/RESET_TASKS';
 
 /** interface for authorize action */
 interface FetchTasksAction extends AnyAction {
@@ -111,6 +112,10 @@ export default function reducer(state = initialState, action: TaskActionTypes): 
         });
       }
       return state;
+    case RESET_TASKS:
+      return SeamlessImmutable({
+        tasksById: action.tasksById,
+      });
     default:
       return state;
   }
@@ -140,6 +145,12 @@ export const fetchTasks = (tasksList: InitialTask[] = []): FetchTasksAction => (
     task => task.task_identifier
   ),
   type: TASKS_FETCHED,
+});
+
+/** Reset tasks state creator */
+export const resetTasks = (): AnyAction => ({
+  tasksById: {},
+  type: RESET_TASKS,
 });
 
 // selectors
