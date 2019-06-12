@@ -184,11 +184,14 @@ interface DispatchedStateProps {
 const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateProps => {
   const plan = fixtures.plan1;
   let goalsArray = null;
+  let jurisdiction = null;
   if (plan) {
     goalsArray = fixtures.plan1Goals;
+    jurisdiction = fixtures.jurisdictions[0];
   }
   const result = {
     goalsArray,
+    jurisdiction,
     planById: plan,
     plansArray: getPlansArray(state),
     plansIdArray: getPlansIdArray(state),
