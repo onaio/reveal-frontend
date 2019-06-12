@@ -173,12 +173,13 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
   }
 
   public render() {
+    const { minHeight } = this.props || '80vh';
     const currentState = store.getState();
     const mapId = this.props.mapId || MAP_ID;
     const doRenderMap = this.state.doRenderMap && typeof currentState[mapId] !== 'undefined';
 
     if (!doRenderMap) {
-      return <Loading />;
+      return <Loading minHeight={minHeight} />;
     }
     return <Map mapId={mapId} store={store} handlers={this.props.handlers} />;
   }
