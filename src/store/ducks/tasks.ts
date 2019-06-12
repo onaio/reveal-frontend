@@ -321,7 +321,9 @@ export function getFCByJurisdictionId(
  * @return {FeatureCollection} - an geoJSON Feature Collection object
  */
 export function getFCByStructureId(state: Partial<Store>, structureId: string): FeatureCollection {
-  const geoJsonFeatures: TaskGeoJSON[] = [];
+  const geoJsonFeatures: TaskGeoJSON[] = values((state as any)[reducerName].tasksById)
+    .map(e => e.geojson)
+    .filter(e => e.properties.structure_id === structureId);
   return wrapFeatureCollection(geoJsonFeatures);
 }
 
