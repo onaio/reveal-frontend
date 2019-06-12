@@ -2,7 +2,7 @@ import GeojsonExtent from '@mapbox/geojson-extent';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import { Actions, ducks, loadLayers } from 'gisida';
 import { Map } from 'gisida-react';
-import { Layer } from 'mapbox-gl';
+import { FillPaint, LinePaint, SymbolPaint } from 'mapbox-gl';
 import * as React from 'react';
 import Loading from '../../components/page/Loading/index';
 import { GISIDA_MAPBOX_TOKEN, GISIDA_ONADATA_API_TOKEN } from '../../configs/env';
@@ -16,11 +16,7 @@ import './gisida.css';
 
 interface LineLayerObj {
   id: string;
-  paint: {
-    'line-color': string;
-    'line-opacity': number;
-    'line-width': number;
-  };
+  paint: LinePaint;
   source: {
     data: {
       data: string;
@@ -39,12 +35,7 @@ interface PointLayerObj {
     'icon-size': number;
   };
   minzoom: number;
-  paint: {
-    'text-color': string;
-    'text-halo-blur': number;
-    'text-halo-color': string;
-    'text-halo-width': number;
-  };
+  paint: SymbolPaint;
   source: {
     data: {
       data: string;
@@ -59,11 +50,7 @@ interface PointLayerObj {
 
 interface FillLayerObj {
   id: string;
-  paint: {
-    'fill-color': string | string[];
-    'fill-opacity': number;
-    'fill-outline-color': string | string[];
-  };
+  paint: FillPaint;
   source: {
     data: {
       data: string;
