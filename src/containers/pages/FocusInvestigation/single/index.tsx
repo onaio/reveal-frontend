@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
+import GisidaWrapper from '../../../../components/GisidaWrapper';
 import Loading from '../../../../components/page/Loading';
 import { SUPERSET_GOALS_SLICE, SUPERSET_PLANS_SLICE } from '../../../../configs/env';
 import {
