@@ -28,7 +28,7 @@ import store from '../../store';
 import { Jurisdiction, JurisdictionGeoJSON } from '../../store/ducks/jurisdictions';
 import { Task } from '../../store/ducks/tasks';
 import './gisida.css';
-// LineLayerObj Interface
+/** LineLayerObj Interface  */
 interface LineLayerObj {
   id: string;
   paint: LinePaint;
@@ -42,7 +42,7 @@ interface LineLayerObj {
   type: 'line';
   visible: boolean;
 }
-// PointLayerObj Interface
+/** PointLayerObj Interface  */
 interface PointLayerObj {
   id: string;
   layout: {
@@ -62,7 +62,7 @@ interface PointLayerObj {
   type: 'symbol';
   visible: boolean;
 }
-// FillLayerObj Interface
+/** FillLayerObj Interface */
 interface FillLayerObj {
   id: string;
   paint: FillPaint;
