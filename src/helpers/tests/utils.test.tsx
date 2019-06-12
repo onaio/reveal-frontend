@@ -10,6 +10,7 @@ import { getColor, getColorByValue, getLocationColumns, oAuthUserInfoGetter } fr
 interface SampleColorMap {
   [key: string]: string;
 }
+
 /** common test functionality for contextual coloring
  * @param {InitialTask} task - a sample task object
  * @param {SampleColorMap} obj - minimum unique differences for colorMaps
