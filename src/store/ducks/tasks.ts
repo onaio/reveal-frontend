@@ -2,7 +2,7 @@ import { Color } from 'csstype';
 import { get, keyBy, keys, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
 import SeamlessImmutable from 'seamless-immutable';
-import { GeoJSON, getColor } from '../../helpers/utils';
+import { GeoJSON, getColor, Geometry } from '../../helpers/utils';
 
 /** the reducer name */
 export const reducerName = 'tasks';
@@ -48,6 +48,12 @@ export interface InitialTaskGeoJSON extends GeoJSON {
  */
 export interface TaskGeoJSON extends InitialTaskGeoJSON {
   properties: AddedProperties;
+}
+
+/** Interface for FeatureCollection */
+export interface FeatureCollection{
+  type: string;
+  features: TaskGeoJSON[];
 }
 
 /** interface for task Object for
@@ -246,4 +252,92 @@ export function getTasksByPlanAndGoalAndJurisdiction(
     (e: Task) =>
       e.plan_id === planId && e.goal_id === goalId && e.jurisdiction_id === jurisdictionId
   );
+}
+/** creates an object that wraps geojson features around
+ * a standard object format and returns it as the FeatureCollection
+ * @param {TaskGeoJSON[]} taskFeatureCollection - a list of preprocessed tasks.geojson objects
+ * @return {FeatureCollection} - an geoJSON Feature Collection object
+ */
+function wrapFeatureCollection(taskFeatureCollection: TaskGeoJSON[]): FeatureCollection {
+  return {
+    features: taskFeatureCollection,
+    type: 'FeatureCollection',
+  };
+}
+
+/** get all tasks as a Feature Collection
+ * @param {Partial<Store>} state - the redux store
+ */
+export function getAllFC(state: Partial<Store>): FeatureCollection {
+  const geoJsonFeatures: TaskGeoJSON[] = [];
+  return wrapFeatureCollection(geoJsonFeatures);
+}
+
+/** get tasks as FeatureCollection filtered by goal_id
+ * @param {Partial<Store>} state - the redux store
+ * @param {string} goalId - task.geojson.properties.goal_id
+ */
+export function getFCByGoalId(state: Partial<Store>, goalId: string): FeatureCollection {
+  const geoJsonFeatures: TaskGeoJSON[] = [];
+  return wrapFeatureCollection(geoJsonFeatures);
+}
+
+/** get tasks as FeatureCollection filtered by plan_id
+ * @param {partial<Store>} state - the redux store
+ * @param {string} planId - task.geojson.properties.plan_id
+ */
+export function getFCByPlanId(state: Partial<Store>, planId: string): FeatureCollection {
+  const geoJsonFeatures: TaskGeoJSON[] = [];
+  return wrapFeatureCollection(geoJsonFeatures);
+}
+
+/** get tasks as FeatureCollection filtered by jurisdiction_id
+ * @param {partial<Store>} state - the redux store
+ * @param {string} jurisdictionId - task.geojson.properties.jurisdiction_id
+ */
+export function getFCByJurisdictionId(
+  state: Partial<Store>,
+  jurisdictionId: string
+): FeatureCollection {
+  const geoJsonFeatures: TaskGeoJSON[] = [];
+  return wrapFeatureCollection(geoJsonFeatures);
+}
+
+/** get tasks as FeatureCollection filtered by structure_id
+ * @param {partial<Store>} state - the redux store
+ * @param {string} structureId - task.geojson.properties.structure_id
+ */
+export function getFCByStructureId(state: Partial<Store>, structureId: string): FeatureCollection {
+  const geoJsonFeatures: TaskGeoJSON[] = [];
+  return wrapFeatureCollection(geoJsonFeatures);
+}
+
+/** get tasks as FeatureCollection filtered by plan and jurisdiction
+ * @param {partial<Store>} state - the redux store
+ * @param {string} planId - task.geojson.properties.plan_id
+ * @param {string} jurisdictionId - task.geojson.properties.jurisdiction_id
+ */
+export function getFCByPlanandJurisdiction(
+  state: Partial<Store>,
+  planId: string,
+  jurisdictionId: string
+): FeatureCollection {
+  const geoJsonFeatures: TaskGeoJSON[] = [];
+  return wrapFeatureCollection(geoJsonFeatures);
+}
+
+/** get tasks as FeatureCollection filtered by structure_id
+ * @param {partial<Store>} state - the redux store
+ * @param {string} planId - task.geojson.properties.plan_id
+ * @param {string} goalId - task.geojson.properties.goal_id
+ * @param {string} jurisdictionId - task.geojson.properties.jurisdiction_id
+ */
+export function getFCByPlanandGoalandJurisdiction(
+  state: Partial<Store>,
+  planId: string,
+  goalId: string,
+  jurisdictionId: string
+): FeatureCollection {
+  const geoJsonFeatures: TaskGeoJSON[] = [];
+  return wrapFeatureCollection(geoJsonFeatures);
 }
