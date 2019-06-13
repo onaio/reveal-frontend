@@ -176,10 +176,11 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
 
   public componentWillUpdate(nextProps: FlexObject) {
     if (
-      nextProps.tasks &&
-      nextProps.tasks.length &&
-      (nextProps.currentGoal !== this.props.currentGoal &&
-        (this.state.locations || this.state.doInitMap))
+      (nextProps.tasks &&
+        nextProps.tasks.length &&
+        (nextProps.currentGoal !== this.props.currentGoal &&
+          (this.state.locations || this.state.doInitMap))) ||
+      typeof nextProps.currentGoal === 'undefined'
     ) {
       this.setState({ doInitMap: false, initMapWithoutTasks: false }, () => {
         this.initMap(nextProps.tasks);
@@ -192,7 +193,6 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
     const currentState = store.getState();
     const mapId = this.props.mapId || MAP_ID;
     const doRenderMap = this.state.doRenderMap && typeof currentState[mapId] !== 'undefined';
-
     if (!doRenderMap) {
       return <Loading minHeight={minHeight} />;
     }
@@ -268,6 +268,10 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
         symbolLayers.push({
           ...circleLayerConfig,
           id: this.props.currentGoal,
+          paint: {
+            ...circleLayerConfig.paint,
+            'circle-color': ['get', 'color'],
+          },
           source: {
             ...circleLayerConfig.source,
             data: {

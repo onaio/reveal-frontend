@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+/** renders as expected the Loading component */
+exports[`renders GisidaWrapper correctly Renders Loading 1`] = `
+<Ripple
+  borderColor="#ff5d00"
+  borderStyle="solid"
+  borderWidth="4px"
+  height="64px"
+  minHeight="80vh"
+  width="64px"
+/>
+`;
+/** Should render Map component not this loading one */
+exports[`renders GisidaWrapper correctly Renders map component with tasks 1`] = `
+<Ripple
+  borderColor="#ff5d00"
+  borderStyle="solid"
+  borderWidth="4px"
+  height="64px"
+  minHeight="80vh"
+  width="64px"
+/>
+`;
+/** renders GisidaWrapper without accessing lifecycle methods this works fine */
+exports[`renders GisidaWrapper correctly Renders map component without tasks 1`] = `
+<Ripple
+  borderColor="#ff5d00"
+  borderStyle="solid"
+  borderWidth="4px"
+  height="64px"
+  minHeight="80vh"
+  width="64px"
+/>
+`;
+/** renders GisidaWrapper accessing lifecycle methods this works fine */
+exports[`renders GisidaWrapper correctly Renders map component without tasks 2`] = `
+<Connect(e)
+  mapId="map-1"
+  store={
+    Object {
+      "dispatch": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+      Symbol(observable): [Function],
+    }
+  }
+/>
+`;
