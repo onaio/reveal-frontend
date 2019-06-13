@@ -85,8 +85,14 @@ interface FetchTasksAction extends AnyAction {
   type: typeof TASKS_FETCHED;
 }
 
+/** Interface for reset tasks action */
+interface ResetTaskAction extends AnyAction {
+  tasksById: {};
+  type: typeof RESET_TASKS;
+}
+
 /** Create type for Task reducer actions */
-export type TaskActionTypes = FetchTasksAction | AnyAction;
+export type TaskActionTypes = FetchTasksAction | ResetTaskAction | AnyAction;
 
 /** interface for Task state */
 interface TaskState {
@@ -147,8 +153,8 @@ export const fetchTasks = (tasksList: InitialTask[] = []): FetchTasksAction => (
   type: TASKS_FETCHED,
 });
 
-/** Reset tasks state creator */
-export const resetTasks = (): AnyAction => ({
+/** Reset-tasks-state action creator */
+export const resetTasks = (): ResetTaskAction => ({
   tasksById: {},
   type: RESET_TASKS,
 });
