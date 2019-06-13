@@ -17,7 +17,7 @@ import {
   RACD_REGISTER_FAMILY_CODE,
 } from '../constants';
 import { Plan } from '../store/ducks/plans';
-import { InitialTask } from '../store/ducks/tasks';
+import { InitialTask, TaskGeoJSON } from '../store/ducks/tasks';
 import { colorMaps, ColorMapsTypes } from './structureColorMaps';
 
 /** Interface for an object that is allowed to have any property */
@@ -307,4 +307,20 @@ export function transformValues<T>(
     }
   });
   return thisObj;
+/** Interface for FeatureCollection */
+export interface FeatureCollection {
+  type: string;
+  features: TaskGeoJSON[];
+}
+
+/** creates an object that wraps geojson features around
+ * a standard object format and returns it as the FeatureCollection
+ * @param {TaskGeoJSON[]} taskFeatureCollection - a list of preprocessed tasks.geojson objects
+ * @return {FeatureCollection} - an geoJSON Feature Collection object
+ */
+export function wrapFeatureCollection(taskFeatureCollection: TaskGeoJSON[]): FeatureCollection {
+  return {
+    features: taskFeatureCollection,
+    type: 'FeatureCollection',
+  };
 }

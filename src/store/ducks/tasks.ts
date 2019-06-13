@@ -2,59 +2,16 @@ import { Color } from 'csstype';
 import { get, keyBy, keys, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
 import SeamlessImmutable from 'seamless-immutable';
-import { GeoJSON, Geometry, getColor } from '../../helpers/utils';
+import {
+  FeatureCollection,
+  getColor,
+  InitialTaskGeoJSON,
+  TaskGeoJSON,
+  wrapFeatureCollection,
+} from '../../helpers/utils';
 
 /** the reducer name */
 export const reducerName = 'tasks';
-
-/** Interface for task.geojson.properties for task
- *  as received from the fetch request / superset
- */
-export interface InitialProperties {
-  action_code: string;
-  goal_id: string;
-  jurisdiction_id: string;
-  jurisdiction_name: string;
-  jurisdiction_parent_id: string;
-  plan_id: string;
-  structure_code: string | null;
-  structure_id: string | null;
-  structure_name: string | null;
-  structure_type: string | null;
-  task_business_status: string;
-  task_execution_end_date: string;
-  task_execution_start_date: string;
-  task_focus: string;
-  task_status: string;
-  task_task_for: string;
-}
-
-/** Extends InitialProperties to include additional
- *  geojson.properties object properties
- */
-export interface AddedProperties extends InitialProperties {
-  color: Color;
-}
-
-/** interface for task.geojson for
- * task as received from the fetch request / superset
- */
-export interface InitialTaskGeoJSON extends GeoJSON {
-  properties: InitialProperties;
-}
-
-/** interface for task GeoJSON after any properties are added
- * to geojson.properties e.g. color
- */
-export interface TaskGeoJSON extends InitialTaskGeoJSON {
-  properties: AddedProperties;
-}
-
-/** Interface for FeatureCollection */
-export interface FeatureCollection {
-  type: string;
-  features: TaskGeoJSON[];
-}
 
 /** interface for task Object for
  * task as received from the fetch request / superset
@@ -269,17 +226,6 @@ export function getTasksByPlanAndGoalAndJurisdiction(
     (e: Task) =>
       e.plan_id === planId && e.goal_id === goalId && e.jurisdiction_id === jurisdictionId
   );
-}
-/** creates an object that wraps geojson features around
- * a standard object format and returns it as the FeatureCollection
- * @param {TaskGeoJSON[]} taskFeatureCollection - a list of preprocessed tasks.geojson objects
- * @return {FeatureCollection} - an geoJSON Feature Collection object
- */
-function wrapFeatureCollection(taskFeatureCollection: TaskGeoJSON[]): FeatureCollection {
-  return {
-    features: taskFeatureCollection,
-    type: 'FeatureCollection',
-  };
 }
 
 /** get all tasks as a Feature Collection
