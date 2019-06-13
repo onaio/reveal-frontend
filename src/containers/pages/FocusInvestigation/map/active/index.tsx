@@ -12,7 +12,14 @@ import {
   SUPERSET_PLANS_SLICE,
   SUPERSET_STRUCTURES_SLICE,
 } from '../../../../../configs/env';
-import { FI_SINGLE_MAP_URL, FOCUS_INVESTIGATION } from '../../../../../constants';
+import {
+  FI_SINGLE_MAP_URL,
+  FOCUS_INVESTIGATION,
+  MEASURE,
+  OF,
+  RESPONSE,
+  TARGET,
+} from '../../../../../constants';
 import { FlexObject, RouteParams } from '../../../../../helpers/utils';
 import supersetFetch from '../../../../../services/superset';
 import goalsReducer, {
@@ -42,7 +49,6 @@ import tasksReducer, {
   reducerName as tasksReducerName,
   Task,
 } from '../../../../../store/ducks/tasks';
-import * as fixtures from '../../../../../store/ducks/tests/fixtures';
 import './style.css';
 
 /** register reducers */
@@ -73,10 +79,10 @@ export const defaultMapSingleFIProps: MapSingleFIProps = {
   fetchJurisdictionsActionCreator: fetchJurisdictions,
   fetchPlansActionCreator: fetchPlans,
   fetchTasksActionCreator: fetchTasks,
-  goals: fixtures.plan1Goals,
-  jurisdiction: fixtures.jurisdictions[0],
-  plan: fixtures.plan1,
-  tasks: fixtures.coloredTasksArray,
+  goals: null,
+  jurisdiction: null,
+  plan: null,
+  tasks: null,
 };
 /** Map View for Single Active Focus Investigation */
 class SingleActiveFIMap extends React.Component<
@@ -135,7 +141,7 @@ class SingleActiveFIMap extends React.Component<
           </div>
           <div className="col-3">
             <div className="mapSidebar">
-              <h5>Responses</h5>
+              <h5>{RESPONSE}</h5>
               <hr />
               {goals &&
                 goals.map((item: Goal) => {
@@ -149,9 +155,11 @@ class SingleActiveFIMap extends React.Component<
                         <h6>{item.action_code}</h6>
                       </NavLink>
                       <div className="targetItem">
-                        <p>Measure: {item.measure}</p>
                         <p>
-                          Target: {item.task_count} of {item.goal_value}
+                          {MEASURE}: {item.measure}
+                        </p>
+                        <p>
+                          {TARGET}: {item.task_count} {OF} {item.goal_value}
                         </p>
                       </div>
                     </div>
@@ -164,11 +172,15 @@ class SingleActiveFIMap extends React.Component<
     );
   }
 
+  /** event handlers */
   private buildHandlers() {
     const id = this.props && this.props.plan && this.props.plan.id;
     const self = this;
     const handlers = [
       {
+        /**
+         * @param {any} synthetic event a wrapper event around native events
+         */
         method: function drillDownClick(e: any) {
           const features = e.target.queryRenderedFeatures(e.point);
 
@@ -187,7 +199,10 @@ class SingleActiveFIMap extends React.Component<
     return handlers;
   }
 }
-/** map state to props */
+/** map state to props
+ * @param {partial<store>} - the redux store
+ * @param {any} ownProps - the props
+ */
 const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
   // pass in the plan id to get plan the get the jurisdicytion_id from the plan
   const plan = getPlanById(state, ownProps.match.params.id);
@@ -223,12 +238,15 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
   };
 };
 
+/** map props to actions that may be dispatched by component */
 const mapDispatchToProps = {
   fetchGoalsActionCreator: fetchGoals,
   fetchJurisdictionsActionCreator: fetchJurisdictions,
   fetchPlansActionCreator: fetchPlans,
   fetchTasksActionCreator: fetchTasks,
 };
+
+/** Create connected SingleActiveFIMAP */
 const ConnectedMapSingleFI = connect(
   mapStateToProps,
   mapDispatchToProps
