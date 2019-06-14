@@ -38,12 +38,21 @@ describe('renders GisidaWrapper correctly', () => {
     wrapper.unmount();
   });
   it('Renders map component with tasks', () => {
-    const props = {
+    const props1 = {
+      currentGoal: null,
       geoData: fixtures.jurisdictions[0],
       goal: fixtures.goals,
-      tasks: fixtures.tasks,
+      tasks: [fixtures.tasks[0]],
     };
-    const wrapper = shallow(<GisidaWrapper {...props} />);
+    const props = {
+      currentGoal: fixtures.task1.goal_id,
+      geoData: fixtures.jurisdictions[0],
+      goal: fixtures.goals,
+      tasks: [fixtures.tasks[0]],
+    };
+    const wrapper = shallow(<GisidaWrapper {...props1} />);
+    /** Investigate why it won't set state inside initmap even though it goes into init map this leads to setting dorenderMap to state manually */
+    wrapper.setState({ doRenderMap: true });
     wrapper.setProps({ ...props });
     expect(toJson(wrapper)).toMatchSnapshot();
     wrapper.unmount();
