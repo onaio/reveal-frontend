@@ -24,6 +24,7 @@ export interface Plan {
   plan_fi_reason: string;
   plan_fi_status: string;
   plan_id: string;
+  plan_intervention_type: InterventionType;
   plan_status: string;
   plan_title: string;
 }
