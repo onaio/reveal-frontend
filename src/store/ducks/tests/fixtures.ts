@@ -1,4 +1,5 @@
 import { clone, cloneDeep } from 'lodash';
+import { Task } from '../tasks';
 
 export const plan1 = {
   id: 'ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f',
