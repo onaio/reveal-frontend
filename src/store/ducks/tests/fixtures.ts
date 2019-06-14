@@ -12,6 +12,7 @@ export const plan1 = {
   plan_fi_reason: 'Routine',
   plan_fi_status: 'A1',
   plan_id: '10f9e9fa-ce34-4b27-a961-72fab5206ab6',
+  plan_intervention_type: 'FI',
   plan_status: 'active',
   plan_title: 'A1-Tha Luang Village 1 Focus 01',
 };
@@ -27,6 +28,7 @@ export const plan2 = {
   plan_fi_reason: 'Case-triggered',
   plan_fi_status: 'A1',
   plan_id: 'plan-id-2',
+  plan_intervention_type: 'IRS',
   plan_status: 'active',
   plan_title: 'A1-Tha Luang Village 1 Focus 01',
 };
@@ -52,6 +54,7 @@ export const plan3 = {
   plan_fi_reason: 'Routine',
   plan_fi_status: 'A1',
   plan_id: '10f9e9fa-ce34-4b27-a961-72fab5206ab6',
+  plan_intervention_type: 'FI',
   plan_status: 'active',
   plan_title: 'A1-Tha Luang Village 1 Focus 01',
 };
