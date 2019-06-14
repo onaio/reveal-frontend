@@ -293,14 +293,16 @@ export function transformValues<T>(
   obj: T,
   propertyNames: string[],
   newValue: string = '',
-  oldValue = [0, '0', null, ' NULL']
+  oldValue = [0, '0', null, 'null']
 ): T {
   const thisObj: T = { ...obj };
   propertyNames.forEach(propertyName => {
-    if (
-      (thisObj as any)[propertyName] !== undefined &&
-      oldValue.indexOf((thisObj as any)[propertyName]) > -1
-    ) {
+    let preOldValue = (thisObj as any)[propertyName];
+    // preprocess received old value: trim and ensure lower case
+    if (typeof preOldValue === 'string') {
+      preOldValue = preOldValue.toLowerCase().trim();
+    }
+    if ((thisObj as any)[propertyName] !== undefined && oldValue.indexOf(preOldValue) > -1) {
       (thisObj as any)[propertyName] = newValue;
     }
   });
