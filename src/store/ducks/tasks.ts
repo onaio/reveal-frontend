@@ -2,7 +2,13 @@ import { Color } from 'csstype';
 import { get, keyBy, keys, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
 import SeamlessImmutable from 'seamless-immutable';
-import { FeatureCollection, GeoJSON, getColor, wrapFeatureCollection } from '../../helpers/utils';
+import {
+  FeatureCollection,
+  GeoJSON,
+  getColor,
+  UpdateType,
+  wrapFeatureCollection,
+} from '../../helpers/utils';
 
 /** the reducer name */
 export const reducerName = 'tasks';
@@ -29,26 +35,29 @@ export interface InitialProperties {
   task_task_for: string;
 }
 
-/** Generic Type for any object to be updated
- *  where T is the base interface and Y is the interface
- * to extend the base
- */
-export type UpdateOf<T extends any, Y> = T & Y;
-
 /** Extends InitialProperties to include additional
  *  geojson.properties object properties
  */
-export type AddedProperties = UpdateOf<InitialProperties, { color: Color }>;
+interface ColorUpdate {
+  color: Color;
+}
+export type UpdatedProperties = UpdateType<InitialProperties, ColorUpdate>;
 
 /** interface for task.geojson for
  * task as received from the fetch request / superset
  */
-export type InitialTaskGeoJSON = UpdateOf<GeoJSON, { properties: InitialProperties }>;
+interface InitialPropertiesUpdate {
+  properties: InitialProperties;
+}
+export type InitialTaskGeoJSON = UpdateType<GeoJSON, InitialPropertiesUpdate>;
 
 /** interface for task GeoJSON after any properties are added
  * to geojson.properties
  */
-export type TaskGeoJSON = UpdateOf<InitialTaskGeoJSON, { properties: AddedProperties }>;
+interface UpdatedPropertiesUpdate {
+  properties: UpdatedProperties;
+}
+export type TaskGeoJSON = UpdateType<InitialTaskGeoJSON, UpdatedPropertiesUpdate>;
 
 /** interface for task Object for
  * task as received from the fetch request / superset
@@ -64,7 +73,10 @@ export interface InitialTask {
 /** Task interface where geoJson implements InitialProperties
  * interface with added properties e.g .color
  */
-export type Task = UpdateOf<InitialTask, { geojson: TaskGeoJSON }>;
+interface GeoJsonUpdate {
+  geojson: TaskGeoJSON;
+}
+export type Task = UpdateType<InitialTask, GeoJsonUpdate>;
 
 // actions
 /** TASKS_FETCHED action type */
