@@ -5,7 +5,13 @@ import { ONADATA_OAUTH_STATE, OPENSRP_OAUTH_STATE } from '../../configs/env';
 import { InitialTask } from '../../store/ducks/tasks';
 import * as fixtures from '../../store/ducks/tests/fixtures';
 import { colorMaps } from '../structureColorMaps';
-import { getColor, getColorByValue, getLocationColumns, oAuthUserInfoGetter } from '../utils';
+import {
+  getColor,
+  getColorByValue,
+  getLocationColumns,
+  oAuthUserInfoGetter,
+  transformValues,
+} from '../utils';
 
 interface SampleColorMap {
   [key: string]: string;
@@ -209,5 +215,28 @@ describe('helpers/utils', () => {
     expect(color).toEqual(RED);
     color = getColorByValue(colorMaps.CASE_CONFIRMATION, 'Sth Extraordinary');
     expect(color).toEqual(YELLOW);
+  });
+
+  it('updates property names correctly', () => {
+    const sample = {
+      height: 0,
+      name: null,
+      weight: '65',
+    };
+    const expected = {
+      height: '',
+      name: '',
+      weight: '65',
+    };
+    expect(transformValues(sample, ['name', 'height'])).toEqual(expected);
+    expect(transformValues(sample, ['name', 'height'], '', [0, '0', null, 'null'])).toEqual(
+      expected
+    );
+    const otherExpected = {
+      height: 0,
+      name: '',
+      weight: '65',
+    };
+    expect(transformValues(sample, ['height', 'name'], '', [null, 'null'])).toEqual(otherExpected);
   });
 });

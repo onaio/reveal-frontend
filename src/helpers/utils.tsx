@@ -282,3 +282,29 @@ export function getColor(taskObject: InitialTask): Color {
     }
   }
 }
+
+/** Transforms values of certain keys to the specified value
+ * {T} obj - object where changes will be made
+ * {string[]} propertyNames - list of property names in obj whose values will change
+ * {any} newValue - the value to be assigned the property names
+ * {any[]} old_value - replace property name if old_value is among specified here
+ */
+export function transformValues<T>(
+  obj: T,
+  propertyNames: string[],
+  newValue: string = '',
+  oldValue = [0, '0', null, 'null']
+): T {
+  const thisObj: T = { ...obj };
+  propertyNames.forEach(propertyName => {
+    let preOldValue = (thisObj as any)[propertyName];
+    // preprocess received old value: trim and ensure lower case
+    if (typeof preOldValue === 'string') {
+      preOldValue = preOldValue.toLowerCase().trim();
+    }
+    if ((thisObj as any)[propertyName] !== undefined && oldValue.indexOf(preOldValue) > -1) {
+      (thisObj as any)[propertyName] = newValue;
+    }
+  });
+  return thisObj;
+}
