@@ -1,10 +1,16 @@
-import { get, keyBy, keys, values } from 'lodash';
+import { get, keyBy, keys, pickBy, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
 import SeamlessImmutable from 'seamless-immutable';
 import { transformValues } from '../../helpers/utils';
 
 /** the reducer name */
 export const reducerName = 'plans';
+
+/** Enum representing the possible intervention types */
+export enum InterventionType {
+  FI = 'FI',
+  IRS = 'IRS',
+}
 
 /** interface for plan Object */
 export interface Plan {
@@ -18,6 +24,7 @@ export interface Plan {
   plan_fi_reason: string;
   plan_fi_status: string;
   plan_id: string;
+  plan_intervention_type: InterventionType;
   plan_status: string;
   plan_title: string;
 }
@@ -89,23 +96,38 @@ export const fetchPlans = (plansList: Plan[] = []): FetchPlansAction => ({
 
 /** get plans by id
  * @param {Partial<Store>} state - the redux store
+ * @param {InterventionType} intervention - the intervention type
  */
-export function getPlansById(state: Partial<Store>): { [key: string]: Plan } {
-  return (state as any)[reducerName].plansById;
+export function getPlansById(
+  state: Partial<Store>,
+  intervention: InterventionType = InterventionType.FI
+): { [key: string]: Plan } {
+  const plansById = (state as any)[reducerName].plansById;
+  return pickBy(plansById, (plan: Plan) => plan.plan_intervention_type === intervention);
 }
 
 /** get an array of plan objects
  * @param {Partial<Store>} state - the redux store
+ * @param {InterventionType} intervention - the intervention type
  */
-export function getPlansArray(state: Partial<Store>): Plan[] {
-  return values((state as any)[reducerName].plansById);
+export function getPlansArray(
+  state: Partial<Store>,
+  intervention: InterventionType = InterventionType.FI
+): Plan[] {
+  return values((state as any)[reducerName].plansById).filter(
+    (plan: Plan) => plan.plan_intervention_type === intervention
+  );
 }
 
 /** get an array of plan ids
  * @param {Partial<Store>} state - the redux store
+ * @param {InterventionType} intervention - the intervention type
  */
-export function getPlansIdArray(state: Partial<Store>): string[] {
-  return keys((state as any)[reducerName].plansById);
+export function getPlansIdArray(
+  state: Partial<Store>,
+  intervention: InterventionType = InterventionType.FI
+): string[] {
+  return keys(getPlansById(state, intervention));
 }
 
 /** get one plan using its id

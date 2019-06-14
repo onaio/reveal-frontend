@@ -1,5 +1,4 @@
 import { clone, cloneDeep } from 'lodash';
-import { Task } from '../tasks';
 
 export const plan1 = {
   id: 'ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f',
@@ -12,6 +11,7 @@ export const plan1 = {
   plan_fi_reason: 'Routine',
   plan_fi_status: 'A1',
   plan_id: '10f9e9fa-ce34-4b27-a961-72fab5206ab6',
+  plan_intervention_type: 'FI',
   plan_status: 'active',
   plan_title: 'A1-Tha Luang Village 1 Focus 01',
 };
@@ -27,6 +27,7 @@ export const plan2 = {
   plan_fi_reason: 'Case-triggered',
   plan_fi_status: 'A1',
   plan_id: 'plan-id-2',
+  plan_intervention_type: 'IRS',
   plan_status: 'active',
   plan_title: 'A1-Tha Luang Village 1 Focus 01',
 };
@@ -52,6 +53,7 @@ export const plan3 = {
   plan_fi_reason: 'Routine',
   plan_fi_status: 'A1',
   plan_id: '10f9e9fa-ce34-4b27-a961-72fab5206ab6',
+  plan_intervention_type: 'FI',
   plan_status: 'active',
   plan_title: 'A1-Tha Luang Village 1 Focus 01',
 };

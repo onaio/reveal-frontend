@@ -173,6 +173,7 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
             "plan_fi_reason": "Routine",
             "plan_fi_status": "A1",
             "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+            "plan_intervention_type": "FI",
             "plan_status": "active",
             "plan_title": "A1-Tha Luang Village 1 Focus 01",
           }
@@ -196,26 +197,7 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
               "plan_fi_reason": "Routine",
               "plan_fi_status": "A1",
               "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
-              "plan_status": "active",
-              "plan_title": "A1-Tha Luang Village 1 Focus 01",
-            },
-            Object {
-              "id": "plan-id-2",
-              "jurisdiction_depth": 2,
-              "jurisdiction_id": "3378",
-              "jurisdiction_name": "TLv1_02",
-              "jurisdiction_name_path": Array [
-                "Canton Tha Luang",
-                "Tha Luang Village",
-              ],
-              "jurisdiction_parent_id": "2977",
-              "jurisdiction_path": Array [
-                "2989",
-                "2977",
-              ],
-              "plan_fi_reason": "Case-triggered",
-              "plan_fi_status": "A1",
-              "plan_id": "plan-id-2",
+              "plan_intervention_type": "FI",
               "plan_status": "active",
               "plan_title": "A1-Tha Luang Village 1 Focus 01",
             },
@@ -224,7 +206,6 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
         plansIdArray={
           Array [
             "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
-            "plan-id-2",
           ]
         }
         supersetService={[Function]}
@@ -655,6 +636,7 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
         "plan_fi_reason": "Routine",
         "plan_fi_status": "A1",
         "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+        "plan_intervention_type": "FI",
         "plan_status": "active",
         "plan_title": "A1-Tha Luang Village 1 Focus 01",
       }
@@ -678,6 +660,7 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
           "plan_fi_reason": "Routine",
           "plan_fi_status": "A1",
           "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+          "plan_intervention_type": "FI",
           "plan_status": "active",
           "plan_title": "A1-Tha Luang Village 1 Focus 01",
         },
@@ -698,6 +681,7 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
           "plan_fi_reason": "Case-triggered",
           "plan_fi_status": "A1",
           "plan_id": "plan-id-2",
+          "plan_intervention_type": "IRS",
           "plan_status": "active",
           "plan_title": "A1-Tha Luang Village 1 Focus 01",
         },
