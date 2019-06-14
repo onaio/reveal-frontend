@@ -2,16 +2,53 @@ import { Color } from 'csstype';
 import { get, keyBy, keys, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
 import SeamlessImmutable from 'seamless-immutable';
-import {
-  FeatureCollection,
-  getColor,
-  InitialTaskGeoJSON,
-  TaskGeoJSON,
-  wrapFeatureCollection,
-} from '../../helpers/utils';
+import { FeatureCollection, GeoJSON, getColor, wrapFeatureCollection } from '../../helpers/utils';
 
 /** the reducer name */
 export const reducerName = 'tasks';
+
+/** Interface for task.geojson.properties for task
+ *  as received from the fetch request / superset
+ */
+export interface InitialProperties {
+  action_code: string;
+  goal_id: string;
+  jurisdiction_id: string;
+  jurisdiction_name: string;
+  jurisdiction_parent_id: string;
+  plan_id: string;
+  structure_code: string | null;
+  structure_id: string | null;
+  structure_name: string | null;
+  structure_type: string | null;
+  task_business_status: string;
+  task_execution_end_date: string;
+  task_execution_start_date: string;
+  task_focus: string;
+  task_status: string;
+  task_task_for: string;
+}
+
+/** Generic Type for any object to be updated
+ *  where T is the base interface and Y is the interface
+ * to extend the base
+ */
+export type UpdateOf<T extends any, Y> = T & Y;
+
+/** Extends InitialProperties to include additional
+ *  geojson.properties object properties
+ */
+export type AddedProperties = UpdateOf<InitialProperties, { color: Color }>;
+
+/** interface for task.geojson for
+ * task as received from the fetch request / superset
+ */
+export type InitialTaskGeoJSON = UpdateOf<GeoJSON, { properties: InitialProperties }>;
+
+/** interface for task GeoJSON after any properties are added
+ * to geojson.properties
+ */
+export type TaskGeoJSON = UpdateOf<InitialTaskGeoJSON, { properties: AddedProperties }>;
 
 /** interface for task Object for
  * task as received from the fetch request / superset
@@ -27,9 +64,7 @@ export interface InitialTask {
 /** Task interface where geoJson implements InitialProperties
  * interface with added properties e.g .color
  */
-export interface Task extends InitialTask {
-  geojson: TaskGeoJSON;
-}
+export type Task = UpdateOf<InitialTask, { geojson: TaskGeoJSON }>;
 
 // actions
 /** TASKS_FETCHED action type */
@@ -230,9 +265,9 @@ export function getTasksByPlanAndGoalAndJurisdiction(
 
 /** get all tasks as a Feature Collection
  * @param {Partial<Store>} state - the redux store
- * @return {FeatureCollection} - an geoJSON Feature Collection object
+ * @return {FeatureCollection<TaskGeoJSON>} - an geoJSON Feature Collection object
  */
-export function getAllFC(state: Partial<Store>): FeatureCollection {
+export function getAllFC(state: Partial<Store>): FeatureCollection<TaskGeoJSON> {
   const geoJsonFeatures: TaskGeoJSON[] = values((state as any)[reducerName].tasksById).map(
     e => e.geojson
   );
@@ -244,7 +279,10 @@ export function getAllFC(state: Partial<Store>): FeatureCollection {
  * @param {string} goalId - task.geojson.properties.goal_id
  * @return {FeatureCollection} - an geoJSON Feature Collection object
  */
-export function getFCByGoalId(state: Partial<Store>, goalId: string): FeatureCollection {
+export function getFCByGoalId(
+  state: Partial<Store>,
+  goalId: string
+): FeatureCollection<TaskGeoJSON> {
   const geoJsonFeatures: TaskGeoJSON[] = values((state as any)[reducerName].tasksById)
     .map(e => e.geojson)
     .filter(e => e.properties.goal_id === goalId);
@@ -256,7 +294,10 @@ export function getFCByGoalId(state: Partial<Store>, goalId: string): FeatureCol
  * @param {string} planId - task.geojson.properties.plan_id
  * @return {FeatureCollection} - an geoJSON Feature Collection object
  */
-export function getFCByPlanId(state: Partial<Store>, planId: string): FeatureCollection {
+export function getFCByPlanId(
+  state: Partial<Store>,
+  planId: string
+): FeatureCollection<TaskGeoJSON> {
   const geoJsonFeatures: TaskGeoJSON[] = values((state as any)[reducerName].tasksById)
     .map(e => e.geojson)
     .filter(e => e.properties.plan_id === planId);
@@ -271,7 +312,7 @@ export function getFCByPlanId(state: Partial<Store>, planId: string): FeatureCol
 export function getFCByJurisdictionId(
   state: Partial<Store>,
   jurisdictionId: string
-): FeatureCollection {
+): FeatureCollection<TaskGeoJSON> {
   const geoJsonFeatures: TaskGeoJSON[] = values((state as any)[reducerName].tasksById)
     .map(e => e.geojson)
     .filter(e => e.properties.jurisdiction_id === jurisdictionId);
@@ -283,7 +324,10 @@ export function getFCByJurisdictionId(
  * @param {string} structureId - task.geojson.properties.structure_id
  * @return {FeatureCollection} - an geoJSON Feature Collection object
  */
-export function getFCByStructureId(state: Partial<Store>, structureId: string): FeatureCollection {
+export function getFCByStructureId(
+  state: Partial<Store>,
+  structureId: string
+): FeatureCollection<TaskGeoJSON> {
   const geoJsonFeatures: TaskGeoJSON[] = values((state as any)[reducerName].tasksById)
     .map(e => e.geojson)
     .filter(e => e.properties.structure_id === structureId);
@@ -300,7 +344,7 @@ export function getFCByPlanAndJurisdiction(
   state: Partial<Store>,
   planId: string,
   jurisdictionId: string
-): FeatureCollection {
+): FeatureCollection<TaskGeoJSON> {
   const geoJsonFeatures: TaskGeoJSON[] = values((state as any)[reducerName].tasksById)
     .map(e => e.geojson)
     .filter(
@@ -321,7 +365,7 @@ export function getFCByPlanAndGoalAndJurisdiction(
   planId: string,
   goalId: string,
   jurisdictionId: string
-): FeatureCollection {
+): FeatureCollection<TaskGeoJSON> {
   const geoJsonFeatures: TaskGeoJSON[] = values((state as any)[reducerName].tasksById)
     .map(e => e.geojson)
     .filter(
