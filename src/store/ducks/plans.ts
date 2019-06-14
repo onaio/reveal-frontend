@@ -1,4 +1,4 @@
-import { get, keyBy, keys, values } from 'lodash';
+import { get, keyBy, keys, pickBy, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
 import SeamlessImmutable from 'seamless-immutable';
 import { transformValues } from '../../helpers/utils';
@@ -7,7 +7,7 @@ import { transformValues } from '../../helpers/utils';
 export const reducerName = 'plans';
 
 /** Enum representing the possible intervention types */
-enum InterventionType {
+export enum InterventionType {
   FI = 'FI',
   IRS = 'IRS',
 }
@@ -97,8 +97,12 @@ export const fetchPlans = (plansList: Plan[] = []): FetchPlansAction => ({
 /** get plans by id
  * @param {Partial<Store>} state - the redux store
  */
-export function getPlansById(state: Partial<Store>): { [key: string]: Plan } {
-  return (state as any)[reducerName].plansById;
+export function getPlansById(
+  state: Partial<Store>,
+  intervention: InterventionType = InterventionType.FI
+): { [key: string]: Plan } {
+  const plansById = (state as any)[reducerName].plansById;
+  return pickBy(plansById, (plan: Plan) => plan.plan_intervention_type === intervention);
 }
 
 /** get an array of plan objects
