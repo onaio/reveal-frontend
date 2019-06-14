@@ -121,9 +121,13 @@ export function getPlansArray(
 
 /** get an array of plan ids
  * @param {Partial<Store>} state - the redux store
+ * @param {InterventionType} intervention - the intervention type
  */
-export function getPlansIdArray(state: Partial<Store>): string[] {
-  return keys((state as any)[reducerName].plansById);
+export function getPlansIdArray(
+  state: Partial<Store>,
+  intervention: InterventionType = InterventionType.FI
+): string[] {
+  return keys(getPlansById(state, intervention));
 }
 
 /** get one plan using its id
