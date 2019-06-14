@@ -6,6 +6,12 @@ import { transformValues } from '../../helpers/utils';
 /** the reducer name */
 export const reducerName = 'plans';
 
+/** Enum representing the possible intervention types */
+enum InterventionType {
+  FI = 'FI',
+  IRS = 'IRS',
+}
+
 /** interface for plan Object */
 export interface Plan {
   id: string;
