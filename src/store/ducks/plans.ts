@@ -1,6 +1,7 @@
 import { get, keyBy, keys, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
 import SeamlessImmutable from 'seamless-immutable';
+import { transformValues } from '../../helpers/utils';
 
 /** the reducer name */
 export const reducerName = 'plans';
@@ -76,6 +77,7 @@ export const fetchPlans = (plansList: Plan[] = []): FetchPlansAction => ({
       if (typeof plan.jurisdiction_path === 'string') {
         plan.jurisdiction_path = JSON.parse(plan.jurisdiction_path);
       }
+      plan = transformValues<Plan>(plan, ['plan_fi_reason', 'plan_fi_status']);
       return plan;
     }),
     plan => plan.id
