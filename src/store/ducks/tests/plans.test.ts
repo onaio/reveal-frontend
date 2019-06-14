@@ -1,5 +1,5 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
-import { keyBy, values } from 'lodash';
+import { keyBy, pickBy, values } from 'lodash';
 import { FlushThunks } from 'redux-testkit';
 import store from '../../index';
 import reducer, {
@@ -8,6 +8,7 @@ import reducer, {
   getPlansArray,
   getPlansById,
   getPlansIdArray,
+  InterventionType,
   Plan,
   reducerName,
 } from '../plans';
@@ -32,15 +33,21 @@ describe('reducers/plans', () => {
 
   it('should fetch plans', () => {
     store.dispatch(fetchPlans(fixtures.plans));
-    const expected = keyBy(fixtures.plans, (plan: Plan) => plan.id);
-    expect(getPlansById(store.getState())).toEqual(expected);
+    const allPlans = keyBy(fixtures.plans, (plan: Plan) => plan.id);
+    const fiPlans = pickBy(allPlans, (e: Plan) => e.plan_intervention_type === InterventionType.FI);
+    const irsPlans = pickBy(
+      allPlans,
+      (e: Plan) => e.plan_intervention_type === InterventionType.IRS
+    );
+    expect(getPlansById(store.getState())).toEqual(fiPlans);
+    expect(getPlansById(store.getState(), InterventionType.IRS)).toEqual(irsPlans);
     expect(getPlansIdArray(store.getState())).toEqual([
       'ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f',
       'plan-id-2',
     ]);
-    expect(getPlansArray(store.getState())).toEqual(values(expected));
+    expect(getPlansArray(store.getState())).toEqual(values(allPlans));
     expect(getPlanById(store.getState(), 'ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f')).toEqual(
-      expected['ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f']
+      allPlans['ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f']
     );
   });
 
