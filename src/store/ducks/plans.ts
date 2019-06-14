@@ -96,6 +96,7 @@ export const fetchPlans = (plansList: Plan[] = []): FetchPlansAction => ({
 
 /** get plans by id
  * @param {Partial<Store>} state - the redux store
+ * @param {InterventionType} intervention - the intervention type
  */
 export function getPlansById(
   state: Partial<Store>,
@@ -107,9 +108,15 @@ export function getPlansById(
 
 /** get an array of plan objects
  * @param {Partial<Store>} state - the redux store
+ * @param {InterventionType} intervention - the intervention type
  */
-export function getPlansArray(state: Partial<Store>): Plan[] {
-  return values((state as any)[reducerName].plansById);
+export function getPlansArray(
+  state: Partial<Store>,
+  intervention: InterventionType = InterventionType.FI
+): Plan[] {
+  return values((state as any)[reducerName].plansById).filter(
+    (plan: Plan) => plan.plan_intervention_type === intervention
+  );
 }
 
 /** get an array of plan ids
