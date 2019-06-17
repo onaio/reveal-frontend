@@ -83,6 +83,7 @@ describe('containers/pages/SingleFI', () => {
     const props = {
       goalsArray: [],
       history,
+      jurisdiction: fixtures.jurisdictions[0],
       location: mock,
       match: {
         isExact: true,
@@ -100,7 +101,7 @@ describe('containers/pages/SingleFI', () => {
         <SingleFI {...props} />
       </Router>
     );
-    expect(toJson(wrapper)).toMatchSnapshot();
+    expect(wrapper.find('GisidaWrapper').length).toEqual(0);
     wrapper.unmount();
   });
 
