@@ -242,7 +242,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
               "canton": "Chadiza",
               "caseClassification": null,
               "caseNotificationDate": null,
-              "district": null,
+              "district": "",
               "focusArea": "NVI_439",
               "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
               "jurisdiction_id": "2944",
@@ -257,7 +257,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
               "canton": "Canton Tha Luang",
               "caseClassification": null,
               "caseNotificationDate": null,
-              "district": null,
+              "district": "",
               "focusArea": "TLv1_02",
               "id": "plan-id-2",
               "jurisdiction_id": "2977",
@@ -432,7 +432,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                 "canton": "Chadiza",
                 "caseClassification": null,
                 "caseNotificationDate": null,
-                "district": null,
+                "district": "",
                 "focusArea": "NVI_439",
                 "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
                 "jurisdiction_id": "2944",
@@ -447,7 +447,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                 "canton": "Canton Tha Luang",
                 "caseClassification": null,
                 "caseNotificationDate": null,
-                "district": null,
+                "district": "",
                 "focusArea": "TLv1_02",
                 "id": "plan-id-2",
                 "jurisdiction_id": "2977",
@@ -1441,7 +1441,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                       "canton": "Chadiza",
                                       "caseClassification": null,
                                       "caseNotificationDate": null,
-                                      "district": null,
+                                      "district": "",
                                       "focusArea": "NVI_439",
                                       "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
                                       "jurisdiction_id": "2944",
@@ -1464,7 +1464,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                         "canton": "Chadiza",
                                         "caseClassification": null,
                                         "caseNotificationDate": null,
-                                        "district": null,
+                                        "district": "",
                                         "focusArea": "NVI_439",
                                         "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
                                         "jurisdiction_id": "2944",
@@ -1480,7 +1480,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                       "canton": "Chadiza",
                                       "caseClassification": null,
                                       "caseNotificationDate": null,
-                                      "district": null,
+                                      "district": "",
                                       "focusArea": "NVI_439",
                                       "province": null,
                                       "reason": "Routine",
@@ -1719,7 +1719,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                       "canton": "Chadiza",
                                       "caseClassification": null,
                                       "caseNotificationDate": null,
-                                      "district": null,
+                                      "district": "",
                                       "focusArea": "NVI_439",
                                       "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
                                       "jurisdiction_id": "2944",
@@ -1742,7 +1742,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                         "canton": "Chadiza",
                                         "caseClassification": null,
                                         "caseNotificationDate": null,
-                                        "district": null,
+                                        "district": "",
                                         "focusArea": "NVI_439",
                                         "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
                                         "jurisdiction_id": "2944",
@@ -1758,7 +1758,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                       "canton": "Chadiza",
                                       "caseClassification": null,
                                       "caseNotificationDate": null,
-                                      "district": null,
+                                      "district": "",
                                       "focusArea": "NVI_439",
                                       "province": null,
                                       "reason": "Routine",
@@ -2026,7 +2026,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                       "canton": "Canton Tha Luang",
                                       "caseClassification": null,
                                       "caseNotificationDate": null,
-                                      "district": null,
+                                      "district": "",
                                       "focusArea": "TLv1_02",
                                       "id": "plan-id-2",
                                       "jurisdiction_id": "2977",
@@ -2049,7 +2049,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                         "canton": "Canton Tha Luang",
                                         "caseClassification": null,
                                         "caseNotificationDate": null,
-                                        "district": null,
+                                        "district": "",
                                         "focusArea": "TLv1_02",
                                         "id": "plan-id-2",
                                         "jurisdiction_id": "2977",
@@ -2065,7 +2065,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                       "canton": "Canton Tha Luang",
                                       "caseClassification": null,
                                       "caseNotificationDate": null,
-                                      "district": null,
+                                      "district": "",
                                       "focusArea": "TLv1_02",
                                       "province": null,
                                       "reason": "Case-triggered",
@@ -2304,7 +2304,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                       "canton": "Canton Tha Luang",
                                       "caseClassification": null,
                                       "caseNotificationDate": null,
-                                      "district": null,
+                                      "district": "",
                                       "focusArea": "TLv1_02",
                                       "id": "plan-id-2",
                                       "jurisdiction_id": "2977",
@@ -2327,7 +2327,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                         "canton": "Canton Tha Luang",
                                         "caseClassification": null,
                                         "caseNotificationDate": null,
-                                        "district": null,
+                                        "district": "",
                                         "focusArea": "TLv1_02",
                                         "id": "plan-id-2",
                                         "jurisdiction_id": "2977",
@@ -2343,12 +2343,2448 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                       "canton": "Canton Tha Luang",
                                       "caseClassification": null,
                                       "caseNotificationDate": null,
-                                      "district": null,
+                                      "district": "",
                                       "focusArea": "TLv1_02",
                                       "province": null,
                                       "reason": "Case-triggered",
                                       "status": "A1",
                                       "village": "Tha Luang Village",
+                                    }
+                                  }
+                                  show={true}
+                                  styles={Object {}}
+                                  tdProps={
+                                    Object {
+                                      "className": undefined,
+                                      "rest": Object {},
+                                      "style": undefined,
+                                    }
+                                  }
+                                  value={null}
+                                  viewIndex={1}
+                                  width={120}
+                                >
+                                  <div />
+                                </Cell>
+                              </div>
+                            </TdComponent>
+                            <TdComponent
+                              className=""
+                              key="8-caseClassification"
+                              onClick={[Function]}
+                              style={
+                                Object {
+                                  "flex": "100 0 auto",
+                                  "maxWidth": null,
+                                  "width": "100px",
+                                }
+                              }
+                            >
+                              <div
+                                className="rt-td"
+                                onClick={[Function]}
+                                role="gridcell"
+                                style={
+                                  Object {
+                                    "flex": "100 0 auto",
+                                    "maxWidth": null,
+                                    "width": "100px",
+                                  }
+                                }
+                              />
+                            </TdComponent>
+                          </div>
+                        </TrComponent>
+                      </div>
+                    </TrGroupComponent>
+                  </div>
+                </Tbody>
+              </div>
+            </TableComponent>
+            <LoadingComponent
+              loading={false}
+              loadingText="Loading..."
+            >
+              <div
+                className="-loading"
+              >
+                <div
+                  className="-loading-inner"
+                >
+                  Loading...
+                </div>
+              </div>
+            </LoadingComponent>
+          </div>
+        </ReactTable>
+      </DrillDownTable>
+      <h5
+        className="mt-5"
+      >
+        Definitions
+      </h5>
+      <Table
+        className="definitions"
+        responsiveTag="div"
+        tag="table"
+      >
+        <table
+          className="definitions table"
+        >
+          <tbody>
+            <tr
+              className="definitions"
+              key="A1"
+            >
+              <ElementMap
+                HTMLTag="td"
+                className="element-map"
+                items={
+                  Array [
+                    "A1",
+                    "Active",
+                    "Indigenous case recorded within the last year.",
+                  ]
+                }
+              >
+                <td
+                  className="element-map"
+                  key="0"
+                >
+                  A1
+                </td>
+                <td
+                  className="element-map"
+                  key="1"
+                >
+                  Active
+                </td>
+                <td
+                  className="element-map"
+                  key="2"
+                >
+                  Indigenous case recorded within the last year.
+                </td>
+              </ElementMap>
+            </tr>
+            <tr
+              className="definitions"
+              key="A2"
+            >
+              <ElementMap
+                HTMLTag="td"
+                className="element-map"
+                items={
+                  Array [
+                    "A2",
+                    "Residual Non-Active",
+                    "No indigenous case during the last year, but withing the last 3 years.",
+                  ]
+                }
+              >
+                <td
+                  className="element-map"
+                  key="0"
+                >
+                  A2
+                </td>
+                <td
+                  className="element-map"
+                  key="1"
+                >
+                  Residual Non-Active
+                </td>
+                <td
+                  className="element-map"
+                  key="2"
+                >
+                  No indigenous case during the last year, but withing the last 3 years.
+                </td>
+              </ElementMap>
+            </tr>
+            <tr
+              className="definitions"
+              key="B1"
+            >
+              <ElementMap
+                HTMLTag="td"
+                className="element-map"
+                items={
+                  Array [
+                    "B1",
+                    "Cleared Receptive",
+                    "Receptive area but no indigenous cases within the last 3 years.",
+                  ]
+                }
+              >
+                <td
+                  className="element-map"
+                  key="0"
+                >
+                  B1
+                </td>
+                <td
+                  className="element-map"
+                  key="1"
+                >
+                  Cleared Receptive
+                </td>
+                <td
+                  className="element-map"
+                  key="2"
+                >
+                  Receptive area but no indigenous cases within the last 3 years.
+                </td>
+              </ElementMap>
+            </tr>
+            <tr
+              className="definitions"
+              key="B2"
+            >
+              <ElementMap
+                HTMLTag="td"
+                className="element-map"
+                items={
+                  Array [
+                    "B2",
+                    "Cleared Non-Receptive",
+                    "Non-receptive area.",
+                  ]
+                }
+              >
+                <td
+                  className="element-map"
+                  key="0"
+                >
+                  B2
+                </td>
+                <td
+                  className="element-map"
+                  key="1"
+                >
+                  Cleared Non-Receptive
+                </td>
+                <td
+                  className="element-map"
+                  key="2"
+                >
+                  Non-receptive area.
+                </td>
+              </ElementMap>
+            </tr>
+          </tbody>
+        </table>
+      </Table>
+    </div>
+  </ActiveFocusInvestigation>
+</Router>
+`;
+
+exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigation correctly for null jurisdictions 1`] = `
+<Router
+  history={
+    Object {
+      "action": "POP",
+      "block": [Function],
+      "createHref": [Function],
+      "go": [Function],
+      "goBack": [Function],
+      "goForward": [Function],
+      "length": 1,
+      "listen": [Function],
+      "location": Object {
+        "hash": "",
+        "pathname": "/",
+        "search": "",
+        "state": undefined,
+      },
+      "push": [Function],
+      "replace": [Function],
+    }
+  }
+>
+  <ActiveFocusInvestigation
+    fetchPlansActionCreator={[MockFunction]}
+    history={
+      Object {
+        "action": "POP",
+        "block": [Function],
+        "createHref": [Function],
+        "go": [Function],
+        "goBack": [Function],
+        "goForward": [Function],
+        "length": 1,
+        "listen": [Function],
+        "location": Object {
+          "hash": "",
+          "pathname": "/",
+          "search": "",
+          "state": undefined,
+        },
+        "push": [Function],
+        "replace": [Function],
+      }
+    }
+    location={
+      [MockFunction] {
+        "calls": Array [
+          Array [
+            0,
+          ],
+        ],
+        "results": Array [
+          Object {
+            "isThrow": false,
+            "value": Promise {},
+          },
+        ],
+      }
+    }
+    match={
+      [MockFunction] {
+        "calls": Array [
+          Array [
+            0,
+          ],
+        ],
+        "results": Array [
+          Object {
+            "isThrow": false,
+            "value": Promise {},
+          },
+        ],
+      }
+    }
+    plansArray={
+      Array [
+        Object {
+          "id": "93d3a80e-714c-51c7-a382-7633f1eb1f1b",
+          "jurisdiction_depth": 0,
+          "jurisdiction_id": " NULL",
+          "jurisdiction_name": " NULL",
+          "jurisdiction_name_path": "null",
+          "jurisdiction_parent_id": " NULL",
+          "jurisdiction_path": "null",
+          "plan_fi_reason": "Case-triggered",
+          "plan_fi_status": "A1",
+          "plan_id": "e9c9a069-7d22-44c0-a59e-9a483948716b",
+          "plan_intervention_type": "FI",
+          "plan_status": "active",
+          "plan_title": "A1 - Ban Chamrak Mu - Focus 02 Rubber Plantation",
+        },
+        Object {
+          "id": "plan-id-2",
+          "jurisdiction_depth": 2,
+          "jurisdiction_id": "null",
+          "jurisdiction_name": "null",
+          "jurisdiction_name_path": "null",
+          "jurisdiction_parent_id": "null",
+          "jurisdiction_path": "null",
+          "plan_fi_reason": "Case-triggered",
+          "plan_fi_status": "A1",
+          "plan_id": "plan-id-2",
+          "plan_intervention_type": "IRS",
+          "plan_status": "active",
+          "plan_title": "A1-Tha Luang Village 1 Focus 01",
+        },
+      ]
+    }
+    supersetService={
+      [MockFunction] {
+        "calls": Array [
+          Array [
+            0,
+          ],
+        ],
+        "results": Array [
+          Object {
+            "isThrow": false,
+            "value": Promise {},
+          },
+        ],
+      }
+    }
+  >
+    <div>
+      <h3
+        className="mb-3 mt-5 page-title"
+      >
+        Active Focus Investigations
+      </h3>
+      <DrillDownTable
+        CellComponent={[Function]}
+        columns={
+          Array [
+            Object {
+              "Header": "Province",
+              "columns": Array [
+                Object {
+                  "Header": "",
+                  "accessor": "province",
+                },
+              ],
+            },
+            Object {
+              "Header": "District",
+              "columns": Array [
+                Object {
+                  "Header": "",
+                  "accessor": "district",
+                },
+              ],
+            },
+            Object {
+              "Header": "Canton",
+              "columns": Array [
+                Object {
+                  "Header": "",
+                  "accessor": "canton",
+                },
+              ],
+            },
+            Object {
+              "Header": "Village",
+              "columns": Array [
+                Object {
+                  "Header": "",
+                  "accessor": "village",
+                },
+              ],
+            },
+            Object {
+              "Header": "Focus Area",
+              "columns": Array [
+                Object {
+                  "Cell": [Function],
+                  "Header": "",
+                  "accessor": "focusArea",
+                  "minWidth": 130,
+                },
+              ],
+            },
+            Object {
+              "Header": "Reason",
+              "columns": Array [
+                Object {
+                  "Header": "",
+                  "accessor": "reason",
+                  "minWidth": 100,
+                },
+              ],
+            },
+            Object {
+              "Header": "Status",
+              "columns": Array [
+                Object {
+                  "Header": "",
+                  "accessor": "status",
+                  "maxWidth": 60,
+                },
+              ],
+            },
+            Object {
+              "Header": "Case Notif. Date",
+              "columns": Array [
+                Object {
+                  "Cell": [Function],
+                  "Header": "",
+                  "accessor": "caseNotificationDate",
+                  "minWidth": 120,
+                },
+              ],
+            },
+            Object {
+              "Header": "Case Class.",
+              "columns": Array [
+                Object {
+                  "Header": "",
+                  "accessor": "caseClassification",
+                },
+              ],
+            },
+          ]
+        }
+        data={
+          Array [
+            Object {
+              "canton": "",
+              "caseClassification": null,
+              "caseNotificationDate": null,
+              "district": "",
+              "focusArea": "",
+              "id": "93d3a80e-714c-51c7-a382-7633f1eb1f1b",
+              "jurisdiction_id": "",
+              "jurisdiction_parent_id": " NULL",
+              "plan_id": "e9c9a069-7d22-44c0-a59e-9a483948716b",
+              "province": null,
+              "reason": "Case-triggered",
+              "status": "A1",
+              "village": "",
+            },
+            Object {
+              "canton": "",
+              "caseClassification": null,
+              "caseNotificationDate": null,
+              "district": "",
+              "focusArea": "",
+              "id": "plan-id-2",
+              "jurisdiction_id": "",
+              "jurisdiction_parent_id": "null",
+              "plan_id": "plan-id-2",
+              "province": null,
+              "reason": "Case-triggered",
+              "status": "A1",
+              "village": "",
+            },
+          ]
+        }
+        identifierField="id"
+        linkerField="id"
+        minRows={0}
+        parentIdentifierField="parent"
+        rootParentId={null}
+        showPageSizeOptions={false}
+        showPagination={false}
+        useDrillDownTrProps={false}
+      >
+        <ReactTable
+          AggregatedComponent={[Function]}
+          CellComponent={[Function]}
+          ExpanderComponent={[Function]}
+          FilterComponent={[Function]}
+          LoadingComponent={[Function]}
+          NoDataComponent={[Function]}
+          PadRowComponent={[Function]}
+          PaginationComponent={[Function]}
+          PivotValueComponent={[Function]}
+          ResizerComponent={[Function]}
+          TableComponent={[Function]}
+          TbodyComponent={[Function]}
+          TdComponent={[Function]}
+          TfootComponent={[Function]}
+          ThComponent={[Function]}
+          TheadComponent={[Function]}
+          TrComponent={[Function]}
+          TrGroupComponent={[Function]}
+          aggregatedKey="_aggregated"
+          className=""
+          collapseOnDataChange={true}
+          collapseOnPageChange={true}
+          collapseOnSortingChange={true}
+          column={
+            Object {
+              "Aggregated": undefined,
+              "Cell": undefined,
+              "Expander": undefined,
+              "Filter": undefined,
+              "Footer": undefined,
+              "Header": undefined,
+              "Pivot": undefined,
+              "PivotValue": undefined,
+              "Placeholder": undefined,
+              "aggregate": undefined,
+              "className": "",
+              "filterAll": false,
+              "filterMethod": undefined,
+              "filterable": undefined,
+              "footerClassName": "",
+              "footerStyle": Object {},
+              "getFooterProps": [Function],
+              "getHeaderProps": [Function],
+              "getProps": [Function],
+              "headerClassName": "",
+              "headerStyle": Object {},
+              "minResizeWidth": 11,
+              "minWidth": 100,
+              "resizable": undefined,
+              "show": true,
+              "sortMethod": undefined,
+              "sortable": undefined,
+              "style": Object {},
+            }
+          }
+          columns={
+            Array [
+              Object {
+                "Header": "Province",
+                "columns": Array [
+                  Object {
+                    "Header": "",
+                    "accessor": "province",
+                  },
+                ],
+              },
+              Object {
+                "Header": "District",
+                "columns": Array [
+                  Object {
+                    "Header": "",
+                    "accessor": "district",
+                  },
+                ],
+              },
+              Object {
+                "Header": "Canton",
+                "columns": Array [
+                  Object {
+                    "Header": "",
+                    "accessor": "canton",
+                  },
+                ],
+              },
+              Object {
+                "Header": "Village",
+                "columns": Array [
+                  Object {
+                    "Header": "",
+                    "accessor": "village",
+                  },
+                ],
+              },
+              Object {
+                "Header": "Focus Area",
+                "columns": Array [
+                  Object {
+                    "Cell": [Function],
+                    "Header": "",
+                    "accessor": "focusArea",
+                    "minWidth": 130,
+                  },
+                ],
+              },
+              Object {
+                "Header": "Reason",
+                "columns": Array [
+                  Object {
+                    "Header": "",
+                    "accessor": "reason",
+                    "minWidth": 100,
+                  },
+                ],
+              },
+              Object {
+                "Header": "Status",
+                "columns": Array [
+                  Object {
+                    "Header": "",
+                    "accessor": "status",
+                    "maxWidth": 60,
+                  },
+                ],
+              },
+              Object {
+                "Header": "Case Notif. Date",
+                "columns": Array [
+                  Object {
+                    "Cell": [Function],
+                    "Header": "",
+                    "accessor": "caseNotificationDate",
+                    "minWidth": 120,
+                  },
+                ],
+              },
+              Object {
+                "Header": "Case Class.",
+                "columns": Array [
+                  Object {
+                    "Header": "",
+                    "accessor": "caseClassification",
+                  },
+                ],
+              },
+            ]
+          }
+          data={
+            Array [
+              Object {
+                "canton": "",
+                "caseClassification": null,
+                "caseNotificationDate": null,
+                "district": "",
+                "focusArea": "",
+                "id": "93d3a80e-714c-51c7-a382-7633f1eb1f1b",
+                "jurisdiction_id": "",
+                "jurisdiction_parent_id": " NULL",
+                "plan_id": "e9c9a069-7d22-44c0-a59e-9a483948716b",
+                "province": null,
+                "reason": "Case-triggered",
+                "status": "A1",
+                "village": "",
+              },
+              Object {
+                "canton": "",
+                "caseClassification": null,
+                "caseNotificationDate": null,
+                "district": "",
+                "focusArea": "",
+                "id": "plan-id-2",
+                "jurisdiction_id": "",
+                "jurisdiction_parent_id": "null",
+                "plan_id": "plan-id-2",
+                "province": null,
+                "reason": "Case-triggered",
+                "status": "A1",
+                "village": "",
+              },
+            ]
+          }
+          defaultExpanded={Object {}}
+          defaultFilterMethod={[Function]}
+          defaultFiltered={Array []}
+          defaultPage={0}
+          defaultPageSize={20}
+          defaultResized={Array []}
+          defaultSortDesc={false}
+          defaultSortMethod={[Function]}
+          defaultSorted={Array []}
+          expanderDefaults={
+            Object {
+              "filterable": false,
+              "resizable": false,
+              "sortable": false,
+              "width": 35,
+            }
+          }
+          filterable={false}
+          freezeWhenExpanded={false}
+          getLoadingProps={[Function]}
+          getNoDataProps={[Function]}
+          getPaginationProps={[Function]}
+          getProps={[Function]}
+          getResizerProps={[Function]}
+          getTableProps={[Function]}
+          getTbodyProps={[Function]}
+          getTdProps={[Function]}
+          getTfootProps={[Function]}
+          getTfootTdProps={[Function]}
+          getTfootTrProps={[Function]}
+          getTheadFilterProps={[Function]}
+          getTheadFilterThProps={[Function]}
+          getTheadFilterTrProps={[Function]}
+          getTheadGroupProps={[Function]}
+          getTheadGroupThProps={[Function]}
+          getTheadGroupTrProps={[Function]}
+          getTheadProps={[Function]}
+          getTheadThProps={[Function]}
+          getTheadTrProps={[Function]}
+          getTrGroupProps={[Function]}
+          getTrProps={[Function]}
+          groupedByPivotKey="_groupedByPivot"
+          identifierField="id"
+          indexKey="_index"
+          linkerField="id"
+          loading={false}
+          loadingText="Loading..."
+          minRows={0}
+          multiSort={true}
+          nestingLevelKey="_nestingLevel"
+          nextText="Next"
+          noDataText="No rows found"
+          ofText="of"
+          onFetchData={[Function]}
+          originalKey="_original"
+          pageJumpText="jump to page"
+          pageSizeOptions={
+            Array [
+              5,
+              10,
+              20,
+              25,
+              50,
+              100,
+            ]
+          }
+          pageText="Page"
+          parentIdentifierField="parent"
+          pivotDefaults={Object {}}
+          pivotIDKey="_pivotID"
+          pivotValKey="_pivotVal"
+          previousText="Previous"
+          resizable={true}
+          resolveData={[Function]}
+          rootParentId={null}
+          rowsSelectorText="rows per page"
+          rowsText="rows"
+          showPageJump={true}
+          showPageSizeOptions={false}
+          showPagination={false}
+          showPaginationBottom={true}
+          showPaginationTop={false}
+          sortable={true}
+          style={Object {}}
+          subRowsKey="_subRows"
+          useDrillDownTrProps={false}
+        >
+          <div
+            className="ReactTable"
+            style={Object {}}
+          >
+            <TableComponent
+              className=""
+            >
+              <div
+                className="rt-table"
+                role="grid"
+              >
+                <Thead
+                  className="-headerGroups"
+                  style={
+                    Object {
+                      "minWidth": "910px",
+                    }
+                  }
+                >
+                  <div
+                    className="rt-thead -headerGroups"
+                    style={
+                      Object {
+                        "minWidth": "910px",
+                      }
+                    }
+                  >
+                    <TrComponent>
+                      <div
+                        className="rt-tr"
+                        role="row"
+                      >
+                        <ThComponent
+                          className=""
+                          key="0-undefined"
+                          style={
+                            Object {
+                              "flex": "100 0 auto",
+                              "maxWidth": null,
+                              "width": "100px",
+                            }
+                          }
+                        >
+                          <div
+                            className="rt-th"
+                            onClick={[Function]}
+                            role="columnheader"
+                            style={
+                              Object {
+                                "flex": "100 0 auto",
+                                "maxWidth": null,
+                                "width": "100px",
+                              }
+                            }
+                            tabIndex="-1"
+                          >
+                            Province
+                          </div>
+                        </ThComponent>
+                        <ThComponent
+                          className=""
+                          key="1-undefined"
+                          style={
+                            Object {
+                              "flex": "100 0 auto",
+                              "maxWidth": null,
+                              "width": "100px",
+                            }
+                          }
+                        >
+                          <div
+                            className="rt-th"
+                            onClick={[Function]}
+                            role="columnheader"
+                            style={
+                              Object {
+                                "flex": "100 0 auto",
+                                "maxWidth": null,
+                                "width": "100px",
+                              }
+                            }
+                            tabIndex="-1"
+                          >
+                            District
+                          </div>
+                        </ThComponent>
+                        <ThComponent
+                          className=""
+                          key="2-undefined"
+                          style={
+                            Object {
+                              "flex": "100 0 auto",
+                              "maxWidth": null,
+                              "width": "100px",
+                            }
+                          }
+                        >
+                          <div
+                            className="rt-th"
+                            onClick={[Function]}
+                            role="columnheader"
+                            style={
+                              Object {
+                                "flex": "100 0 auto",
+                                "maxWidth": null,
+                                "width": "100px",
+                              }
+                            }
+                            tabIndex="-1"
+                          >
+                            Canton
+                          </div>
+                        </ThComponent>
+                        <ThComponent
+                          className=""
+                          key="3-undefined"
+                          style={
+                            Object {
+                              "flex": "100 0 auto",
+                              "maxWidth": null,
+                              "width": "100px",
+                            }
+                          }
+                        >
+                          <div
+                            className="rt-th"
+                            onClick={[Function]}
+                            role="columnheader"
+                            style={
+                              Object {
+                                "flex": "100 0 auto",
+                                "maxWidth": null,
+                                "width": "100px",
+                              }
+                            }
+                            tabIndex="-1"
+                          >
+                            Village
+                          </div>
+                        </ThComponent>
+                        <ThComponent
+                          className=""
+                          key="4-undefined"
+                          style={
+                            Object {
+                              "flex": "130 0 auto",
+                              "maxWidth": null,
+                              "width": "130px",
+                            }
+                          }
+                        >
+                          <div
+                            className="rt-th"
+                            onClick={[Function]}
+                            role="columnheader"
+                            style={
+                              Object {
+                                "flex": "130 0 auto",
+                                "maxWidth": null,
+                                "width": "130px",
+                              }
+                            }
+                            tabIndex="-1"
+                          >
+                            Focus Area
+                          </div>
+                        </ThComponent>
+                        <ThComponent
+                          className=""
+                          key="5-undefined"
+                          style={
+                            Object {
+                              "flex": "100 0 auto",
+                              "maxWidth": null,
+                              "width": "100px",
+                            }
+                          }
+                        >
+                          <div
+                            className="rt-th"
+                            onClick={[Function]}
+                            role="columnheader"
+                            style={
+                              Object {
+                                "flex": "100 0 auto",
+                                "maxWidth": null,
+                                "width": "100px",
+                              }
+                            }
+                            tabIndex="-1"
+                          >
+                            Reason
+                          </div>
+                        </ThComponent>
+                        <ThComponent
+                          className=""
+                          key="6-undefined"
+                          style={
+                            Object {
+                              "flex": "60 0 auto",
+                              "maxWidth": "60px",
+                              "width": "60px",
+                            }
+                          }
+                        >
+                          <div
+                            className="rt-th"
+                            onClick={[Function]}
+                            role="columnheader"
+                            style={
+                              Object {
+                                "flex": "60 0 auto",
+                                "maxWidth": "60px",
+                                "width": "60px",
+                              }
+                            }
+                            tabIndex="-1"
+                          >
+                            Status
+                          </div>
+                        </ThComponent>
+                        <ThComponent
+                          className=""
+                          key="7-undefined"
+                          style={
+                            Object {
+                              "flex": "120 0 auto",
+                              "maxWidth": null,
+                              "width": "120px",
+                            }
+                          }
+                        >
+                          <div
+                            className="rt-th"
+                            onClick={[Function]}
+                            role="columnheader"
+                            style={
+                              Object {
+                                "flex": "120 0 auto",
+                                "maxWidth": null,
+                                "width": "120px",
+                              }
+                            }
+                            tabIndex="-1"
+                          >
+                            Case Notif. Date
+                          </div>
+                        </ThComponent>
+                        <ThComponent
+                          className=""
+                          key="8-undefined"
+                          style={
+                            Object {
+                              "flex": "100 0 auto",
+                              "maxWidth": null,
+                              "width": "100px",
+                            }
+                          }
+                        >
+                          <div
+                            className="rt-th"
+                            onClick={[Function]}
+                            role="columnheader"
+                            style={
+                              Object {
+                                "flex": "100 0 auto",
+                                "maxWidth": null,
+                                "width": "100px",
+                              }
+                            }
+                            tabIndex="-1"
+                          >
+                            Case Class.
+                          </div>
+                        </ThComponent>
+                      </div>
+                    </TrComponent>
+                  </div>
+                </Thead>
+                <Thead
+                  className="-header"
+                  style={
+                    Object {
+                      "minWidth": "910px",
+                    }
+                  }
+                >
+                  <div
+                    className="rt-thead -header"
+                    style={
+                      Object {
+                        "minWidth": "910px",
+                      }
+                    }
+                  >
+                    <TrComponent>
+                      <div
+                        className="rt-tr"
+                        role="row"
+                      >
+                        <ThComponent
+                          className="rt-resizable-header -cursor-pointer"
+                          key="0-province"
+                          style={
+                            Object {
+                              "flex": "100 0 auto",
+                              "maxWidth": null,
+                              "width": "100px",
+                            }
+                          }
+                          toggleSort={[Function]}
+                        >
+                          <div
+                            className="rt-th rt-resizable-header -cursor-pointer"
+                            onClick={[Function]}
+                            role="columnheader"
+                            style={
+                              Object {
+                                "flex": "100 0 auto",
+                                "maxWidth": null,
+                                "width": "100px",
+                              }
+                            }
+                            tabIndex="-1"
+                          >
+                            <div
+                              className="rt-resizable-header-content"
+                            />
+                            <Resizer
+                              onMouseDown={[Function]}
+                              onTouchStart={[Function]}
+                            >
+                              <div
+                                className="rt-resizer"
+                                onMouseDown={[Function]}
+                                onTouchStart={[Function]}
+                              />
+                            </Resizer>
+                          </div>
+                        </ThComponent>
+                        <ThComponent
+                          className="rt-resizable-header -cursor-pointer"
+                          key="1-district"
+                          style={
+                            Object {
+                              "flex": "100 0 auto",
+                              "maxWidth": null,
+                              "width": "100px",
+                            }
+                          }
+                          toggleSort={[Function]}
+                        >
+                          <div
+                            className="rt-th rt-resizable-header -cursor-pointer"
+                            onClick={[Function]}
+                            role="columnheader"
+                            style={
+                              Object {
+                                "flex": "100 0 auto",
+                                "maxWidth": null,
+                                "width": "100px",
+                              }
+                            }
+                            tabIndex="-1"
+                          >
+                            <div
+                              className="rt-resizable-header-content"
+                            />
+                            <Resizer
+                              onMouseDown={[Function]}
+                              onTouchStart={[Function]}
+                            >
+                              <div
+                                className="rt-resizer"
+                                onMouseDown={[Function]}
+                                onTouchStart={[Function]}
+                              />
+                            </Resizer>
+                          </div>
+                        </ThComponent>
+                        <ThComponent
+                          className="rt-resizable-header -cursor-pointer"
+                          key="2-canton"
+                          style={
+                            Object {
+                              "flex": "100 0 auto",
+                              "maxWidth": null,
+                              "width": "100px",
+                            }
+                          }
+                          toggleSort={[Function]}
+                        >
+                          <div
+                            className="rt-th rt-resizable-header -cursor-pointer"
+                            onClick={[Function]}
+                            role="columnheader"
+                            style={
+                              Object {
+                                "flex": "100 0 auto",
+                                "maxWidth": null,
+                                "width": "100px",
+                              }
+                            }
+                            tabIndex="-1"
+                          >
+                            <div
+                              className="rt-resizable-header-content"
+                            />
+                            <Resizer
+                              onMouseDown={[Function]}
+                              onTouchStart={[Function]}
+                            >
+                              <div
+                                className="rt-resizer"
+                                onMouseDown={[Function]}
+                                onTouchStart={[Function]}
+                              />
+                            </Resizer>
+                          </div>
+                        </ThComponent>
+                        <ThComponent
+                          className="rt-resizable-header -cursor-pointer"
+                          key="3-village"
+                          style={
+                            Object {
+                              "flex": "100 0 auto",
+                              "maxWidth": null,
+                              "width": "100px",
+                            }
+                          }
+                          toggleSort={[Function]}
+                        >
+                          <div
+                            className="rt-th rt-resizable-header -cursor-pointer"
+                            onClick={[Function]}
+                            role="columnheader"
+                            style={
+                              Object {
+                                "flex": "100 0 auto",
+                                "maxWidth": null,
+                                "width": "100px",
+                              }
+                            }
+                            tabIndex="-1"
+                          >
+                            <div
+                              className="rt-resizable-header-content"
+                            />
+                            <Resizer
+                              onMouseDown={[Function]}
+                              onTouchStart={[Function]}
+                            >
+                              <div
+                                className="rt-resizer"
+                                onMouseDown={[Function]}
+                                onTouchStart={[Function]}
+                              />
+                            </Resizer>
+                          </div>
+                        </ThComponent>
+                        <ThComponent
+                          className="rt-resizable-header -cursor-pointer"
+                          key="4-focusArea"
+                          style={
+                            Object {
+                              "flex": "130 0 auto",
+                              "maxWidth": null,
+                              "width": "130px",
+                            }
+                          }
+                          toggleSort={[Function]}
+                        >
+                          <div
+                            className="rt-th rt-resizable-header -cursor-pointer"
+                            onClick={[Function]}
+                            role="columnheader"
+                            style={
+                              Object {
+                                "flex": "130 0 auto",
+                                "maxWidth": null,
+                                "width": "130px",
+                              }
+                            }
+                            tabIndex="-1"
+                          >
+                            <div
+                              className="rt-resizable-header-content"
+                            />
+                            <Resizer
+                              onMouseDown={[Function]}
+                              onTouchStart={[Function]}
+                            >
+                              <div
+                                className="rt-resizer"
+                                onMouseDown={[Function]}
+                                onTouchStart={[Function]}
+                              />
+                            </Resizer>
+                          </div>
+                        </ThComponent>
+                        <ThComponent
+                          className="rt-resizable-header -cursor-pointer"
+                          key="5-reason"
+                          style={
+                            Object {
+                              "flex": "100 0 auto",
+                              "maxWidth": null,
+                              "width": "100px",
+                            }
+                          }
+                          toggleSort={[Function]}
+                        >
+                          <div
+                            className="rt-th rt-resizable-header -cursor-pointer"
+                            onClick={[Function]}
+                            role="columnheader"
+                            style={
+                              Object {
+                                "flex": "100 0 auto",
+                                "maxWidth": null,
+                                "width": "100px",
+                              }
+                            }
+                            tabIndex="-1"
+                          >
+                            <div
+                              className="rt-resizable-header-content"
+                            />
+                            <Resizer
+                              onMouseDown={[Function]}
+                              onTouchStart={[Function]}
+                            >
+                              <div
+                                className="rt-resizer"
+                                onMouseDown={[Function]}
+                                onTouchStart={[Function]}
+                              />
+                            </Resizer>
+                          </div>
+                        </ThComponent>
+                        <ThComponent
+                          className="rt-resizable-header -cursor-pointer"
+                          key="6-status"
+                          style={
+                            Object {
+                              "flex": "60 0 auto",
+                              "maxWidth": "60px",
+                              "width": "60px",
+                            }
+                          }
+                          toggleSort={[Function]}
+                        >
+                          <div
+                            className="rt-th rt-resizable-header -cursor-pointer"
+                            onClick={[Function]}
+                            role="columnheader"
+                            style={
+                              Object {
+                                "flex": "60 0 auto",
+                                "maxWidth": "60px",
+                                "width": "60px",
+                              }
+                            }
+                            tabIndex="-1"
+                          >
+                            <div
+                              className="rt-resizable-header-content"
+                            />
+                            <Resizer
+                              onMouseDown={[Function]}
+                              onTouchStart={[Function]}
+                            >
+                              <div
+                                className="rt-resizer"
+                                onMouseDown={[Function]}
+                                onTouchStart={[Function]}
+                              />
+                            </Resizer>
+                          </div>
+                        </ThComponent>
+                        <ThComponent
+                          className="rt-resizable-header -cursor-pointer"
+                          key="7-caseNotificationDate"
+                          style={
+                            Object {
+                              "flex": "120 0 auto",
+                              "maxWidth": null,
+                              "width": "120px",
+                            }
+                          }
+                          toggleSort={[Function]}
+                        >
+                          <div
+                            className="rt-th rt-resizable-header -cursor-pointer"
+                            onClick={[Function]}
+                            role="columnheader"
+                            style={
+                              Object {
+                                "flex": "120 0 auto",
+                                "maxWidth": null,
+                                "width": "120px",
+                              }
+                            }
+                            tabIndex="-1"
+                          >
+                            <div
+                              className="rt-resizable-header-content"
+                            />
+                            <Resizer
+                              onMouseDown={[Function]}
+                              onTouchStart={[Function]}
+                            >
+                              <div
+                                className="rt-resizer"
+                                onMouseDown={[Function]}
+                                onTouchStart={[Function]}
+                              />
+                            </Resizer>
+                          </div>
+                        </ThComponent>
+                        <ThComponent
+                          className="rt-resizable-header -cursor-pointer"
+                          key="8-caseClassification"
+                          style={
+                            Object {
+                              "flex": "100 0 auto",
+                              "maxWidth": null,
+                              "width": "100px",
+                            }
+                          }
+                          toggleSort={[Function]}
+                        >
+                          <div
+                            className="rt-th rt-resizable-header -cursor-pointer"
+                            onClick={[Function]}
+                            role="columnheader"
+                            style={
+                              Object {
+                                "flex": "100 0 auto",
+                                "maxWidth": null,
+                                "width": "100px",
+                              }
+                            }
+                            tabIndex="-1"
+                          >
+                            <div
+                              className="rt-resizable-header-content"
+                            />
+                            <Resizer
+                              onMouseDown={[Function]}
+                              onTouchStart={[Function]}
+                            >
+                              <div
+                                className="rt-resizer"
+                                onMouseDown={[Function]}
+                                onTouchStart={[Function]}
+                              />
+                            </Resizer>
+                          </div>
+                        </ThComponent>
+                      </div>
+                    </TrComponent>
+                  </div>
+                </Thead>
+                <Tbody
+                  className=""
+                  style={
+                    Object {
+                      "minWidth": "910px",
+                    }
+                  }
+                >
+                  <div
+                    className="rt-tbody"
+                    style={
+                      Object {
+                        "minWidth": "910px",
+                      }
+                    }
+                  >
+                    <TrGroupComponent
+                      key="0"
+                    >
+                      <div
+                        className="rt-tr-group"
+                        role="rowgroup"
+                      >
+                        <TrComponent
+                          className="-odd"
+                        >
+                          <div
+                            className="rt-tr -odd"
+                            role="row"
+                          >
+                            <TdComponent
+                              className=""
+                              key="0-province"
+                              onClick={[Function]}
+                              style={
+                                Object {
+                                  "flex": "100 0 auto",
+                                  "maxWidth": null,
+                                  "width": "100px",
+                                }
+                              }
+                            >
+                              <div
+                                className="rt-td"
+                                onClick={[Function]}
+                                role="gridcell"
+                                style={
+                                  Object {
+                                    "flex": "100 0 auto",
+                                    "maxWidth": null,
+                                    "width": "100px",
+                                  }
+                                }
+                              />
+                            </TdComponent>
+                            <TdComponent
+                              className=""
+                              key="1-district"
+                              onClick={[Function]}
+                              style={
+                                Object {
+                                  "flex": "100 0 auto",
+                                  "maxWidth": null,
+                                  "width": "100px",
+                                }
+                              }
+                            >
+                              <div
+                                className="rt-td"
+                                onClick={[Function]}
+                                role="gridcell"
+                                style={
+                                  Object {
+                                    "flex": "100 0 auto",
+                                    "maxWidth": null,
+                                    "width": "100px",
+                                  }
+                                }
+                              />
+                            </TdComponent>
+                            <TdComponent
+                              className=""
+                              key="2-canton"
+                              onClick={[Function]}
+                              style={
+                                Object {
+                                  "flex": "100 0 auto",
+                                  "maxWidth": null,
+                                  "width": "100px",
+                                }
+                              }
+                            >
+                              <div
+                                className="rt-td"
+                                onClick={[Function]}
+                                role="gridcell"
+                                style={
+                                  Object {
+                                    "flex": "100 0 auto",
+                                    "maxWidth": null,
+                                    "width": "100px",
+                                  }
+                                }
+                              />
+                            </TdComponent>
+                            <TdComponent
+                              className=""
+                              key="3-village"
+                              onClick={[Function]}
+                              style={
+                                Object {
+                                  "flex": "100 0 auto",
+                                  "maxWidth": null,
+                                  "width": "100px",
+                                }
+                              }
+                            >
+                              <div
+                                className="rt-td"
+                                onClick={[Function]}
+                                role="gridcell"
+                                style={
+                                  Object {
+                                    "flex": "100 0 auto",
+                                    "maxWidth": null,
+                                    "width": "100px",
+                                  }
+                                }
+                              />
+                            </TdComponent>
+                            <TdComponent
+                              className=""
+                              key="4-focusArea"
+                              onClick={[Function]}
+                              style={
+                                Object {
+                                  "flex": "130 0 auto",
+                                  "maxWidth": null,
+                                  "width": "130px",
+                                }
+                              }
+                            >
+                              <div
+                                className="rt-td"
+                                onClick={[Function]}
+                                role="gridcell"
+                                style={
+                                  Object {
+                                    "flex": "130 0 auto",
+                                    "maxWidth": null,
+                                    "width": "130px",
+                                  }
+                                }
+                              >
+                                <Cell
+                                  classes={
+                                    Array [
+                                      undefined,
+                                      "",
+                                      undefined,
+                                    ]
+                                  }
+                                  column={
+                                    Object {
+                                      "Aggregated": undefined,
+                                      "Cell": [Function],
+                                      "Expander": undefined,
+                                      "Filter": undefined,
+                                      "Footer": undefined,
+                                      "Header": "",
+                                      "Pivot": undefined,
+                                      "PivotValue": undefined,
+                                      "Placeholder": undefined,
+                                      "accessor": [Function],
+                                      "aggregate": undefined,
+                                      "className": "",
+                                      "filterAll": false,
+                                      "filterMethod": undefined,
+                                      "filterable": undefined,
+                                      "footerClassName": "",
+                                      "footerStyle": Object {},
+                                      "getFooterProps": [Function],
+                                      "getHeaderProps": [Function],
+                                      "getProps": [Function],
+                                      "headerClassName": "",
+                                      "headerStyle": Object {},
+                                      "id": "focusArea",
+                                      "minResizeWidth": 11,
+                                      "minWidth": 130,
+                                      "parentColumn": Object {
+                                        "Header": "Focus Area",
+                                        "columns": Array [
+                                          Object {
+                                            "Cell": [Function],
+                                            "Header": "",
+                                            "accessor": "focusArea",
+                                            "minWidth": 130,
+                                          },
+                                        ],
+                                      },
+                                      "resizable": undefined,
+                                      "show": true,
+                                      "sortMethod": undefined,
+                                      "sortable": undefined,
+                                      "style": Object {},
+                                    }
+                                  }
+                                  columnProps={
+                                    Object {
+                                      "className": undefined,
+                                      "rest": Object {},
+                                      "style": undefined,
+                                    }
+                                  }
+                                  index={0}
+                                  level={0}
+                                  nestingPath={
+                                    Array [
+                                      0,
+                                    ]
+                                  }
+                                  original={
+                                    Object {
+                                      "canton": "",
+                                      "caseClassification": null,
+                                      "caseNotificationDate": null,
+                                      "district": "",
+                                      "focusArea": "",
+                                      "id": "93d3a80e-714c-51c7-a382-7633f1eb1f1b",
+                                      "jurisdiction_id": "",
+                                      "jurisdiction_parent_id": " NULL",
+                                      "plan_id": "e9c9a069-7d22-44c0-a59e-9a483948716b",
+                                      "province": null,
+                                      "reason": "Case-triggered",
+                                      "status": "A1",
+                                      "village": "",
+                                    }
+                                  }
+                                  page={0}
+                                  pageSize={20}
+                                  resized={Array []}
+                                  row={
+                                    Object {
+                                      "_index": 0,
+                                      "_nestingLevel": 0,
+                                      "_original": Object {
+                                        "canton": "",
+                                        "caseClassification": null,
+                                        "caseNotificationDate": null,
+                                        "district": "",
+                                        "focusArea": "",
+                                        "id": "93d3a80e-714c-51c7-a382-7633f1eb1f1b",
+                                        "jurisdiction_id": "",
+                                        "jurisdiction_parent_id": " NULL",
+                                        "plan_id": "e9c9a069-7d22-44c0-a59e-9a483948716b",
+                                        "province": null,
+                                        "reason": "Case-triggered",
+                                        "status": "A1",
+                                        "village": "",
+                                      },
+                                      "_subRows": undefined,
+                                      "_viewIndex": 0,
+                                      "canton": "",
+                                      "caseClassification": null,
+                                      "caseNotificationDate": null,
+                                      "district": "",
+                                      "focusArea": "",
+                                      "province": null,
+                                      "reason": "Case-triggered",
+                                      "status": "A1",
+                                      "village": "",
+                                    }
+                                  }
+                                  show={true}
+                                  styles={Object {}}
+                                  tdProps={
+                                    Object {
+                                      "className": undefined,
+                                      "rest": Object {},
+                                      "style": undefined,
+                                    }
+                                  }
+                                  value=""
+                                  viewIndex={0}
+                                  width={130}
+                                >
+                                  <div>
+                                      
+                                  </div>
+                                </Cell>
+                              </div>
+                            </TdComponent>
+                            <TdComponent
+                              className=""
+                              key="5-reason"
+                              onClick={[Function]}
+                              style={
+                                Object {
+                                  "flex": "100 0 auto",
+                                  "maxWidth": null,
+                                  "width": "100px",
+                                }
+                              }
+                            >
+                              <div
+                                className="rt-td"
+                                onClick={[Function]}
+                                role="gridcell"
+                                style={
+                                  Object {
+                                    "flex": "100 0 auto",
+                                    "maxWidth": null,
+                                    "width": "100px",
+                                  }
+                                }
+                              >
+                                Case-triggered
+                              </div>
+                            </TdComponent>
+                            <TdComponent
+                              className=""
+                              key="6-status"
+                              onClick={[Function]}
+                              style={
+                                Object {
+                                  "flex": "60 0 auto",
+                                  "maxWidth": "60px",
+                                  "width": "60px",
+                                }
+                              }
+                            >
+                              <div
+                                className="rt-td"
+                                onClick={[Function]}
+                                role="gridcell"
+                                style={
+                                  Object {
+                                    "flex": "60 0 auto",
+                                    "maxWidth": "60px",
+                                    "width": "60px",
+                                  }
+                                }
+                              >
+                                A1
+                              </div>
+                            </TdComponent>
+                            <TdComponent
+                              className=""
+                              key="7-caseNotificationDate"
+                              onClick={[Function]}
+                              style={
+                                Object {
+                                  "flex": "120 0 auto",
+                                  "maxWidth": null,
+                                  "width": "120px",
+                                }
+                              }
+                            >
+                              <div
+                                className="rt-td"
+                                onClick={[Function]}
+                                role="gridcell"
+                                style={
+                                  Object {
+                                    "flex": "120 0 auto",
+                                    "maxWidth": null,
+                                    "width": "120px",
+                                  }
+                                }
+                              >
+                                <Cell
+                                  classes={
+                                    Array [
+                                      undefined,
+                                      "",
+                                      undefined,
+                                    ]
+                                  }
+                                  column={
+                                    Object {
+                                      "Aggregated": undefined,
+                                      "Cell": [Function],
+                                      "Expander": undefined,
+                                      "Filter": undefined,
+                                      "Footer": undefined,
+                                      "Header": "",
+                                      "Pivot": undefined,
+                                      "PivotValue": undefined,
+                                      "Placeholder": undefined,
+                                      "accessor": [Function],
+                                      "aggregate": undefined,
+                                      "className": "",
+                                      "filterAll": false,
+                                      "filterMethod": undefined,
+                                      "filterable": undefined,
+                                      "footerClassName": "",
+                                      "footerStyle": Object {},
+                                      "getFooterProps": [Function],
+                                      "getHeaderProps": [Function],
+                                      "getProps": [Function],
+                                      "headerClassName": "",
+                                      "headerStyle": Object {},
+                                      "id": "caseNotificationDate",
+                                      "minResizeWidth": 11,
+                                      "minWidth": 120,
+                                      "parentColumn": Object {
+                                        "Header": "Case Notif. Date",
+                                        "columns": Array [
+                                          Object {
+                                            "Cell": [Function],
+                                            "Header": "",
+                                            "accessor": "caseNotificationDate",
+                                            "minWidth": 120,
+                                          },
+                                        ],
+                                      },
+                                      "resizable": undefined,
+                                      "show": true,
+                                      "sortMethod": undefined,
+                                      "sortable": undefined,
+                                      "style": Object {},
+                                    }
+                                  }
+                                  columnProps={
+                                    Object {
+                                      "className": undefined,
+                                      "rest": Object {},
+                                      "style": undefined,
+                                    }
+                                  }
+                                  index={0}
+                                  level={0}
+                                  nestingPath={
+                                    Array [
+                                      0,
+                                    ]
+                                  }
+                                  original={
+                                    Object {
+                                      "canton": "",
+                                      "caseClassification": null,
+                                      "caseNotificationDate": null,
+                                      "district": "",
+                                      "focusArea": "",
+                                      "id": "93d3a80e-714c-51c7-a382-7633f1eb1f1b",
+                                      "jurisdiction_id": "",
+                                      "jurisdiction_parent_id": " NULL",
+                                      "plan_id": "e9c9a069-7d22-44c0-a59e-9a483948716b",
+                                      "province": null,
+                                      "reason": "Case-triggered",
+                                      "status": "A1",
+                                      "village": "",
+                                    }
+                                  }
+                                  page={0}
+                                  pageSize={20}
+                                  resized={Array []}
+                                  row={
+                                    Object {
+                                      "_index": 0,
+                                      "_nestingLevel": 0,
+                                      "_original": Object {
+                                        "canton": "",
+                                        "caseClassification": null,
+                                        "caseNotificationDate": null,
+                                        "district": "",
+                                        "focusArea": "",
+                                        "id": "93d3a80e-714c-51c7-a382-7633f1eb1f1b",
+                                        "jurisdiction_id": "",
+                                        "jurisdiction_parent_id": " NULL",
+                                        "plan_id": "e9c9a069-7d22-44c0-a59e-9a483948716b",
+                                        "province": null,
+                                        "reason": "Case-triggered",
+                                        "status": "A1",
+                                        "village": "",
+                                      },
+                                      "_subRows": undefined,
+                                      "_viewIndex": 0,
+                                      "canton": "",
+                                      "caseClassification": null,
+                                      "caseNotificationDate": null,
+                                      "district": "",
+                                      "focusArea": "",
+                                      "province": null,
+                                      "reason": "Case-triggered",
+                                      "status": "A1",
+                                      "village": "",
+                                    }
+                                  }
+                                  show={true}
+                                  styles={Object {}}
+                                  tdProps={
+                                    Object {
+                                      "className": undefined,
+                                      "rest": Object {},
+                                      "style": undefined,
+                                    }
+                                  }
+                                  value={null}
+                                  viewIndex={0}
+                                  width={120}
+                                >
+                                  <div />
+                                </Cell>
+                              </div>
+                            </TdComponent>
+                            <TdComponent
+                              className=""
+                              key="8-caseClassification"
+                              onClick={[Function]}
+                              style={
+                                Object {
+                                  "flex": "100 0 auto",
+                                  "maxWidth": null,
+                                  "width": "100px",
+                                }
+                              }
+                            >
+                              <div
+                                className="rt-td"
+                                onClick={[Function]}
+                                role="gridcell"
+                                style={
+                                  Object {
+                                    "flex": "100 0 auto",
+                                    "maxWidth": null,
+                                    "width": "100px",
+                                  }
+                                }
+                              />
+                            </TdComponent>
+                          </div>
+                        </TrComponent>
+                      </div>
+                    </TrGroupComponent>
+                    <TrGroupComponent
+                      key="1"
+                    >
+                      <div
+                        className="rt-tr-group"
+                        role="rowgroup"
+                      >
+                        <TrComponent
+                          className="-even"
+                        >
+                          <div
+                            className="rt-tr -even"
+                            role="row"
+                          >
+                            <TdComponent
+                              className=""
+                              key="0-province"
+                              onClick={[Function]}
+                              style={
+                                Object {
+                                  "flex": "100 0 auto",
+                                  "maxWidth": null,
+                                  "width": "100px",
+                                }
+                              }
+                            >
+                              <div
+                                className="rt-td"
+                                onClick={[Function]}
+                                role="gridcell"
+                                style={
+                                  Object {
+                                    "flex": "100 0 auto",
+                                    "maxWidth": null,
+                                    "width": "100px",
+                                  }
+                                }
+                              />
+                            </TdComponent>
+                            <TdComponent
+                              className=""
+                              key="1-district"
+                              onClick={[Function]}
+                              style={
+                                Object {
+                                  "flex": "100 0 auto",
+                                  "maxWidth": null,
+                                  "width": "100px",
+                                }
+                              }
+                            >
+                              <div
+                                className="rt-td"
+                                onClick={[Function]}
+                                role="gridcell"
+                                style={
+                                  Object {
+                                    "flex": "100 0 auto",
+                                    "maxWidth": null,
+                                    "width": "100px",
+                                  }
+                                }
+                              />
+                            </TdComponent>
+                            <TdComponent
+                              className=""
+                              key="2-canton"
+                              onClick={[Function]}
+                              style={
+                                Object {
+                                  "flex": "100 0 auto",
+                                  "maxWidth": null,
+                                  "width": "100px",
+                                }
+                              }
+                            >
+                              <div
+                                className="rt-td"
+                                onClick={[Function]}
+                                role="gridcell"
+                                style={
+                                  Object {
+                                    "flex": "100 0 auto",
+                                    "maxWidth": null,
+                                    "width": "100px",
+                                  }
+                                }
+                              />
+                            </TdComponent>
+                            <TdComponent
+                              className=""
+                              key="3-village"
+                              onClick={[Function]}
+                              style={
+                                Object {
+                                  "flex": "100 0 auto",
+                                  "maxWidth": null,
+                                  "width": "100px",
+                                }
+                              }
+                            >
+                              <div
+                                className="rt-td"
+                                onClick={[Function]}
+                                role="gridcell"
+                                style={
+                                  Object {
+                                    "flex": "100 0 auto",
+                                    "maxWidth": null,
+                                    "width": "100px",
+                                  }
+                                }
+                              />
+                            </TdComponent>
+                            <TdComponent
+                              className=""
+                              key="4-focusArea"
+                              onClick={[Function]}
+                              style={
+                                Object {
+                                  "flex": "130 0 auto",
+                                  "maxWidth": null,
+                                  "width": "130px",
+                                }
+                              }
+                            >
+                              <div
+                                className="rt-td"
+                                onClick={[Function]}
+                                role="gridcell"
+                                style={
+                                  Object {
+                                    "flex": "130 0 auto",
+                                    "maxWidth": null,
+                                    "width": "130px",
+                                  }
+                                }
+                              >
+                                <Cell
+                                  classes={
+                                    Array [
+                                      undefined,
+                                      "",
+                                      undefined,
+                                    ]
+                                  }
+                                  column={
+                                    Object {
+                                      "Aggregated": undefined,
+                                      "Cell": [Function],
+                                      "Expander": undefined,
+                                      "Filter": undefined,
+                                      "Footer": undefined,
+                                      "Header": "",
+                                      "Pivot": undefined,
+                                      "PivotValue": undefined,
+                                      "Placeholder": undefined,
+                                      "accessor": [Function],
+                                      "aggregate": undefined,
+                                      "className": "",
+                                      "filterAll": false,
+                                      "filterMethod": undefined,
+                                      "filterable": undefined,
+                                      "footerClassName": "",
+                                      "footerStyle": Object {},
+                                      "getFooterProps": [Function],
+                                      "getHeaderProps": [Function],
+                                      "getProps": [Function],
+                                      "headerClassName": "",
+                                      "headerStyle": Object {},
+                                      "id": "focusArea",
+                                      "minResizeWidth": 11,
+                                      "minWidth": 130,
+                                      "parentColumn": Object {
+                                        "Header": "Focus Area",
+                                        "columns": Array [
+                                          Object {
+                                            "Cell": [Function],
+                                            "Header": "",
+                                            "accessor": "focusArea",
+                                            "minWidth": 130,
+                                          },
+                                        ],
+                                      },
+                                      "resizable": undefined,
+                                      "show": true,
+                                      "sortMethod": undefined,
+                                      "sortable": undefined,
+                                      "style": Object {},
+                                    }
+                                  }
+                                  columnProps={
+                                    Object {
+                                      "className": undefined,
+                                      "rest": Object {},
+                                      "style": undefined,
+                                    }
+                                  }
+                                  index={1}
+                                  level={0}
+                                  nestingPath={
+                                    Array [
+                                      1,
+                                    ]
+                                  }
+                                  original={
+                                    Object {
+                                      "canton": "",
+                                      "caseClassification": null,
+                                      "caseNotificationDate": null,
+                                      "district": "",
+                                      "focusArea": "",
+                                      "id": "plan-id-2",
+                                      "jurisdiction_id": "",
+                                      "jurisdiction_parent_id": "null",
+                                      "plan_id": "plan-id-2",
+                                      "province": null,
+                                      "reason": "Case-triggered",
+                                      "status": "A1",
+                                      "village": "",
+                                    }
+                                  }
+                                  page={0}
+                                  pageSize={20}
+                                  resized={Array []}
+                                  row={
+                                    Object {
+                                      "_index": 1,
+                                      "_nestingLevel": 0,
+                                      "_original": Object {
+                                        "canton": "",
+                                        "caseClassification": null,
+                                        "caseNotificationDate": null,
+                                        "district": "",
+                                        "focusArea": "",
+                                        "id": "plan-id-2",
+                                        "jurisdiction_id": "",
+                                        "jurisdiction_parent_id": "null",
+                                        "plan_id": "plan-id-2",
+                                        "province": null,
+                                        "reason": "Case-triggered",
+                                        "status": "A1",
+                                        "village": "",
+                                      },
+                                      "_subRows": undefined,
+                                      "_viewIndex": 1,
+                                      "canton": "",
+                                      "caseClassification": null,
+                                      "caseNotificationDate": null,
+                                      "district": "",
+                                      "focusArea": "",
+                                      "province": null,
+                                      "reason": "Case-triggered",
+                                      "status": "A1",
+                                      "village": "",
+                                    }
+                                  }
+                                  show={true}
+                                  styles={Object {}}
+                                  tdProps={
+                                    Object {
+                                      "className": undefined,
+                                      "rest": Object {},
+                                      "style": undefined,
+                                    }
+                                  }
+                                  value=""
+                                  viewIndex={1}
+                                  width={130}
+                                >
+                                  <div>
+                                      
+                                  </div>
+                                </Cell>
+                              </div>
+                            </TdComponent>
+                            <TdComponent
+                              className=""
+                              key="5-reason"
+                              onClick={[Function]}
+                              style={
+                                Object {
+                                  "flex": "100 0 auto",
+                                  "maxWidth": null,
+                                  "width": "100px",
+                                }
+                              }
+                            >
+                              <div
+                                className="rt-td"
+                                onClick={[Function]}
+                                role="gridcell"
+                                style={
+                                  Object {
+                                    "flex": "100 0 auto",
+                                    "maxWidth": null,
+                                    "width": "100px",
+                                  }
+                                }
+                              >
+                                Case-triggered
+                              </div>
+                            </TdComponent>
+                            <TdComponent
+                              className=""
+                              key="6-status"
+                              onClick={[Function]}
+                              style={
+                                Object {
+                                  "flex": "60 0 auto",
+                                  "maxWidth": "60px",
+                                  "width": "60px",
+                                }
+                              }
+                            >
+                              <div
+                                className="rt-td"
+                                onClick={[Function]}
+                                role="gridcell"
+                                style={
+                                  Object {
+                                    "flex": "60 0 auto",
+                                    "maxWidth": "60px",
+                                    "width": "60px",
+                                  }
+                                }
+                              >
+                                A1
+                              </div>
+                            </TdComponent>
+                            <TdComponent
+                              className=""
+                              key="7-caseNotificationDate"
+                              onClick={[Function]}
+                              style={
+                                Object {
+                                  "flex": "120 0 auto",
+                                  "maxWidth": null,
+                                  "width": "120px",
+                                }
+                              }
+                            >
+                              <div
+                                className="rt-td"
+                                onClick={[Function]}
+                                role="gridcell"
+                                style={
+                                  Object {
+                                    "flex": "120 0 auto",
+                                    "maxWidth": null,
+                                    "width": "120px",
+                                  }
+                                }
+                              >
+                                <Cell
+                                  classes={
+                                    Array [
+                                      undefined,
+                                      "",
+                                      undefined,
+                                    ]
+                                  }
+                                  column={
+                                    Object {
+                                      "Aggregated": undefined,
+                                      "Cell": [Function],
+                                      "Expander": undefined,
+                                      "Filter": undefined,
+                                      "Footer": undefined,
+                                      "Header": "",
+                                      "Pivot": undefined,
+                                      "PivotValue": undefined,
+                                      "Placeholder": undefined,
+                                      "accessor": [Function],
+                                      "aggregate": undefined,
+                                      "className": "",
+                                      "filterAll": false,
+                                      "filterMethod": undefined,
+                                      "filterable": undefined,
+                                      "footerClassName": "",
+                                      "footerStyle": Object {},
+                                      "getFooterProps": [Function],
+                                      "getHeaderProps": [Function],
+                                      "getProps": [Function],
+                                      "headerClassName": "",
+                                      "headerStyle": Object {},
+                                      "id": "caseNotificationDate",
+                                      "minResizeWidth": 11,
+                                      "minWidth": 120,
+                                      "parentColumn": Object {
+                                        "Header": "Case Notif. Date",
+                                        "columns": Array [
+                                          Object {
+                                            "Cell": [Function],
+                                            "Header": "",
+                                            "accessor": "caseNotificationDate",
+                                            "minWidth": 120,
+                                          },
+                                        ],
+                                      },
+                                      "resizable": undefined,
+                                      "show": true,
+                                      "sortMethod": undefined,
+                                      "sortable": undefined,
+                                      "style": Object {},
+                                    }
+                                  }
+                                  columnProps={
+                                    Object {
+                                      "className": undefined,
+                                      "rest": Object {},
+                                      "style": undefined,
+                                    }
+                                  }
+                                  index={1}
+                                  level={0}
+                                  nestingPath={
+                                    Array [
+                                      1,
+                                    ]
+                                  }
+                                  original={
+                                    Object {
+                                      "canton": "",
+                                      "caseClassification": null,
+                                      "caseNotificationDate": null,
+                                      "district": "",
+                                      "focusArea": "",
+                                      "id": "plan-id-2",
+                                      "jurisdiction_id": "",
+                                      "jurisdiction_parent_id": "null",
+                                      "plan_id": "plan-id-2",
+                                      "province": null,
+                                      "reason": "Case-triggered",
+                                      "status": "A1",
+                                      "village": "",
+                                    }
+                                  }
+                                  page={0}
+                                  pageSize={20}
+                                  resized={Array []}
+                                  row={
+                                    Object {
+                                      "_index": 1,
+                                      "_nestingLevel": 0,
+                                      "_original": Object {
+                                        "canton": "",
+                                        "caseClassification": null,
+                                        "caseNotificationDate": null,
+                                        "district": "",
+                                        "focusArea": "",
+                                        "id": "plan-id-2",
+                                        "jurisdiction_id": "",
+                                        "jurisdiction_parent_id": "null",
+                                        "plan_id": "plan-id-2",
+                                        "province": null,
+                                        "reason": "Case-triggered",
+                                        "status": "A1",
+                                        "village": "",
+                                      },
+                                      "_subRows": undefined,
+                                      "_viewIndex": 1,
+                                      "canton": "",
+                                      "caseClassification": null,
+                                      "caseNotificationDate": null,
+                                      "district": "",
+                                      "focusArea": "",
+                                      "province": null,
+                                      "reason": "Case-triggered",
+                                      "status": "A1",
+                                      "village": "",
                                     }
                                   }
                                   show={true}
@@ -3475,7 +5911,7 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
                             "canton": "Chadiza",
                             "caseClassification": null,
                             "caseNotificationDate": null,
-                            "district": null,
+                            "district": "",
                             "focusArea": "NVI_439",
                             "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
                             "jurisdiction_id": "2944",
@@ -3498,7 +5934,7 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
                               "canton": "Chadiza",
                               "caseClassification": null,
                               "caseNotificationDate": null,
-                              "district": null,
+                              "district": "",
                               "focusArea": "NVI_439",
                               "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
                               "jurisdiction_id": "2944",
@@ -3514,7 +5950,7 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
                             "canton": "Chadiza",
                             "caseClassification": null,
                             "caseNotificationDate": null,
-                            "district": null,
+                            "district": "",
                             "focusArea": "NVI_439",
                             "province": null,
                             "reason": "Routine",
@@ -3753,7 +6189,7 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
                             "canton": "Chadiza",
                             "caseClassification": null,
                             "caseNotificationDate": null,
-                            "district": null,
+                            "district": "",
                             "focusArea": "NVI_439",
                             "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
                             "jurisdiction_id": "2944",
@@ -3776,7 +6212,7 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
                               "canton": "Chadiza",
                               "caseClassification": null,
                               "caseNotificationDate": null,
-                              "district": null,
+                              "district": "",
                               "focusArea": "NVI_439",
                               "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
                               "jurisdiction_id": "2944",
@@ -3792,7 +6228,7 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
                             "canton": "Chadiza",
                             "caseClassification": null,
                             "caseNotificationDate": null,
-                            "district": null,
+                            "district": "",
                             "focusArea": "NVI_439",
                             "province": null,
                             "reason": "Routine",
