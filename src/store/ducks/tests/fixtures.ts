@@ -32,6 +32,31 @@ export const plan2 = {
   plan_title: 'A1-Tha Luang Village 1 Focus 01',
 };
 
+export const plan5 = {
+  id: '93d3a80e-714c-51c7-a382-7633f1eb1f1b',
+  jurisdiction_depth: 0,
+  jurisdiction_id: ' NULL',
+  jurisdiction_name: ' NULL',
+  jurisdiction_name_path: 'null',
+  jurisdiction_parent_id: ' NULL',
+  jurisdiction_path: 'null',
+  plan_fi_reason: 'Case-triggered',
+  plan_fi_status: 'A1',
+  plan_id: 'e9c9a069-7d22-44c0-a59e-9a483948716b',
+  plan_intervention_type: 'FI',
+  plan_status: 'active',
+  plan_title: 'A1 - Ban Chamrak Mu - Focus 02 Rubber Plantation',
+};
+
+export const plan6 = {
+  ...plan2,
+  jurisdiction_id: 'null',
+  jurisdiction_name: 'null',
+  jurisdiction_name_path: 'null',
+  jurisdiction_parent_id: 'null',
+  jurisdiction_path: 'null',
+};
+
 export const plan3 = {
   id: '1502e539',
   jurisdiction_depth: 4,
