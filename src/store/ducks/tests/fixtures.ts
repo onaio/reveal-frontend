@@ -284,10 +284,45 @@ export const task3 = {
 
 export const task4 = {
   geojson: {
-    geometry: null,
+    geometry: {
+      coordinates: [28.3524419816308, -15.4178320108929],
+      type: 'Point',
+    },
     id: '01d0b84c-df06-426c-a272-6858e84fea31',
     properties: {
       action_code: 'Blood Screening',
+      color: '#FFDC00',
+      goal_id: 'RACD_blood_screening_1km_radius',
+      jurisdiction_id: '450fc15b-5bd2-468a-927a-49cb10d3bcac',
+      jurisdiction_name: 'TLv1_01',
+      jurisdiction_parent_id: 'dad42fa6-b9b8-4658-bf25-bfa7ab5b16ae',
+      plan_id: '10f9e9fa-ce34-4b27-a961-72fab5206ab6',
+      structure_code: null,
+      structure_id: null,
+      structure_name: null,
+      structure_type: null,
+      task_business_status: 'Not Visited',
+      task_execution_end_date: '2019-04-01',
+      task_execution_start_date: '2019-04-08',
+      task_focus: 'Blood Screening',
+      task_status: 'Ready',
+      task_task_for: 'c222d4ba-b3c4-4cc8-abae-bdea06511b27',
+    },
+    type: 'Feature',
+  },
+  goal_id: 'RACD_blood_screening_1km_radius',
+  jurisdiction_id: '450fc15b-5bd2-468a-927a-49cb10d3bcac',
+  plan_id: '10f9e9fa-ce34-4b27-a961-72fab5206ab6',
+  task_identifier: '01d0b84c-df06-426c-a272-6858e84fea31',
+};
+
+export const task5 = {
+  geojson: {
+    geometry: null,
+    id: '01d0b84c-df06-426c-a272-6858e84fzq12',
+    properties: {
+      action_code: 'Blood Screening',
+      color: '#FFDC00',
       goal_id: 'RACD_blood_screening_1km_radius',
       jurisdiction_id: '450fc15b-5bd2-468a-927a-49cb10d3bcac',
       jurisdiction_name: 'TLv1_01',
@@ -319,6 +354,8 @@ task76.geojson.id = 'moshT';
 export { task76 };
 
 export const tasks = [task1, task2, task3, task4];
+
+export const tasksByGoal = [task4, task5];
 
 const coloredTask1: any = cloneDeep(task1);
 coloredTask1.geojson.properties.color = '#ff3';

@@ -25,9 +25,17 @@ import {
 } from '../../constants';
 import { ConfigStore, FlexObject } from '../../helpers/utils';
 import store from '../../store';
+import { Goal } from '../../store/ducks/goals';
 import { Jurisdiction, JurisdictionGeoJSON } from '../../store/ducks/jurisdictions';
 import { Task } from '../../store/ducks/tasks';
 import './gisida.css';
+
+/** handlers Interface */
+interface Handlers {
+  name: string;
+  type: string;
+  method: any;
+}
 /** LineLayerObj Interface  */
 interface LineLayerObj {
   id: string;
@@ -87,9 +95,18 @@ interface GisidaState {
   doRenderMap: boolean;
   geoData: Jurisdiction;
   hasGeometries: boolean | false;
-  tasks: Task;
+  tasks: Task[] | null;
   initMapWithoutTasks: boolean | false;
   renderTasks: boolean | false;
+}
+/** GisidaWrapper Props Interface */
+interface GisidaProps {
+  currentGoal?: string | null;
+  geoData: Jurisdiction;
+  goal?: Goal[] | null;
+  handlers: Handlers[];
+  tasks: Task[] | null;
+  onInit?: any;
 }
 
 /** Returns a single layer configuration */
@@ -100,8 +117,8 @@ const LayerStore = (layer: FlexObject) => {
   return layer;
 };
 
-class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
-  constructor(props: FlexObject) {
+class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
+  constructor(props: GisidaProps) {
     super(props);
     const initialState = store.getState();
     this.state = {
@@ -111,9 +128,9 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
       geoData: this.props.geoData || false,
       hasGeometries: false,
       initMapWithoutTasks: false,
-      locations: this.props.locations || false,
+      locations: false,
       renderTasks: false,
-      tasks: this.props.tasks || false,
+      tasks: this.props.tasks || null,
     };
 
     // 1. Register mapReducers in reducer registery;
@@ -147,7 +164,7 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
     }
   }
 
-  public componentWillReceiveProps(nextProps: FlexObject) {
+  public componentWillReceiveProps(nextProps: GisidaProps) {
     if (this.props.geoData !== nextProps.geoData && this.state.doRenderMap) {
       this.setState(
         {
@@ -174,7 +191,7 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
     }
   }
 
-  public componentWillUpdate(nextProps: FlexObject) {
+  public componentWillUpdate(nextProps: GisidaProps) {
     if (
       (nextProps.tasks &&
         nextProps.tasks.length &&
@@ -191,7 +208,7 @@ class GisidaWrapper extends React.Component<FlexObject, GisidaState> {
   public render() {
     const { minHeight } = this.props || '80vh';
     const currentState = store.getState();
-    const mapId = this.props.mapId || MAP_ID;
+    const mapId = MAP_ID;
     const doRenderMap = this.state.doRenderMap && typeof currentState[mapId] !== 'undefined';
     if (!doRenderMap) {
       return <Loading minHeight={minHeight} />;
