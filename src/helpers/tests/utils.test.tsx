@@ -2,10 +2,12 @@ import * as gatekeeper from '@onaio/gatekeeper';
 import { cloneDeep } from 'lodash';
 import { BLACK, GREEN, RED, YELLOW } from '../../colors';
 import { ONADATA_OAUTH_STATE, OPENSRP_OAUTH_STATE } from '../../configs/env';
+import { Plan } from '../../store/ducks/plans';
 import { InitialTask } from '../../store/ducks/tasks';
 import * as fixtures from '../../store/ducks/tests/fixtures';
 import { colorMaps } from '../structureColorMaps';
 import {
+  extractPlan,
   getColor,
   getColorByValue,
   getLocationColumns,
@@ -238,5 +240,27 @@ describe('helpers/utils', () => {
       weight: '65',
     };
     expect(transformValues(sample, ['height', 'name'], '', [null, 'null'])).toEqual(otherExpected);
+  });
+
+  it('extractPlan handles plans with null jurisdiction name path', () => {
+    const plan: Plan = cloneDeep(fixtures.plan1);
+    plan.jurisdiction_name_path = 'null';
+    const result = extractPlan(plan);
+    const expected = {
+      canton: null,
+      caseClassification: null,
+      caseNotificationDate: null,
+      district: null,
+      focusArea: plan.jurisdiction_name,
+      id: plan.id,
+      jurisdiction_id: plan.jurisdiction_parent_id,
+      jurisdiction_parent_id: plan.jurisdiction_parent_id,
+      plan_id: plan.plan_id,
+      province: null,
+      reason: plan.plan_fi_reason,
+      status: plan.plan_fi_status,
+      village: null,
+    };
+    expect(result).toEqual(expected);
   });
 });

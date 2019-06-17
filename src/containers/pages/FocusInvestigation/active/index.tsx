@@ -27,7 +27,12 @@ import {
 } from '../../../../constants';
 import { renderClassificationRow } from '../../../../helpers/indicators';
 import '../../../../helpers/tables.css';
-import { extractPlan, getLocationColumns, RouteParams } from '../../../../helpers/utils';
+import {
+  extractPlan,
+  getLocationColumns,
+  RouteParams,
+  transformValues,
+} from '../../../../helpers/utils';
 import supersetFetch from '../../../../services/superset';
 import plansReducer, {
   fetchPlans,
@@ -73,7 +78,20 @@ class ActiveFocusInvestigation extends React.Component<
     if (plansArray.length === 0) {
       return <Loading />;
     }
-    const thePlans = plansArray.map((item: Plan) => extractPlan(item));
+    const thePlans = plansArray.map((item: Plan) => {
+      let thisItem = extractPlan(item);
+      // transform values of this properties if they are null
+      const propertiesToTransform = [
+        'village',
+        'canton',
+        'district',
+        'provice',
+        'jurisdiction_id',
+        'focusArea',
+      ];
+      thisItem = transformValues(thisItem, propertiesToTransform);
+      return thisItem;
+    });
     const locationColumns: Column[] = getLocationColumns(locationHierarchy, true);
     const otherColumns: Column[] = [
       {
@@ -83,11 +101,15 @@ class ActiveFocusInvestigation extends React.Component<
             Cell: (cell: CellInfo) => {
               return (
                 <div>
-                  <Link to={`${FI_SINGLE_MAP_URL}/${cell.original.id}`}>
-                    <FontAwesomeIcon icon={['fas', 'map']} />
-                  </Link>
+                  {cell.original.focusArea.trim() && (
+                    <Link to={`${FI_SINGLE_MAP_URL}/${cell.original.id}`}>
+                      <FontAwesomeIcon icon={['fas', 'map']} />
+                    </Link>
+                  )}
                   &nbsp;&nbsp;
-                  <Link to={`${FI_SINGLE_URL}/${cell.original.id}`}>{cell.value}</Link>
+                  {cell.original.focusArea.trim() && (
+                    <Link to={`${FI_SINGLE_URL}/${cell.original.id}`}>{cell.value}</Link>
+                  )}
                 </div>
               );
             },

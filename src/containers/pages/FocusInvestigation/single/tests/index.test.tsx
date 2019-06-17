@@ -70,6 +70,34 @@ describe('containers/pages/SingleFI', () => {
     wrapper.unmount();
   });
 
+  it('renders SingleFI correctly for null plan jurisdction id', () => {
+    const mock: any = jest.fn();
+    const supersetMock: any = jest.fn();
+    supersetMock.mockImplementation(() => Promise.resolve(fixtures.plan5));
+    const props = {
+      goalsArray: [],
+      history,
+      location: mock,
+      match: {
+        isExact: true,
+        params: { id: fixtures.plan5.id },
+        path: `${FI_SINGLE_URL}/:id`,
+        url: `${FI_SINGLE_URL}/16`,
+      },
+      planById: fixtures.plan5,
+      plansArray: [fixtures.plan5],
+      plansIdArray: [fixtures.plan5.id],
+      supersetService: supersetMock,
+    };
+    const wrapper = mount(
+      <Router history={history}>
+        <SingleFI {...props} />
+      </Router>
+    );
+    expect(toJson(wrapper)).toMatchSnapshot();
+    wrapper.unmount();
+  });
+
   it('It works with the Redux store', () => {
     const mock: any = jest.fn();
     store.dispatch(fetchPlans(fixtures.plans));

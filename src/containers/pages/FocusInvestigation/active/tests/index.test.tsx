@@ -36,6 +36,23 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
     );
   });
 
+  it('renders without crashing for null jurisdictions_name_path', () => {
+    const mock: any = jest.fn();
+    const allTasks = fixtures.plans.concat([fixtures.plan5 as any, fixtures.plan6 as any]);
+    const props = {
+      fetchPlansActionCreator: jest.fn(),
+      history,
+      location: mock,
+      match: mock,
+      plansArray: allTasks,
+    };
+    shallow(
+      <Router history={history}>
+        <ActiveFocusInvestigation {...props} />
+      </Router>
+    );
+  });
+
   it('renders ActiveFocusInvestigation correctly', () => {
     const mock: any = jest.fn();
     mock.mockImplementation(() => Promise.resolve(fixtures.plans));
@@ -45,6 +62,26 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
       location: mock,
       match: mock,
       plansArray: fixtures.plans,
+      supersetService: mock,
+    };
+    const wrapper = mount(
+      <Router history={history}>
+        <ActiveFocusInvestigation {...props} />
+      </Router>
+    );
+    expect(toJson(wrapper)).toMatchSnapshot();
+    wrapper.unmount();
+  });
+
+  it('renders ActiveFocusInvestigation correctly for null jurisdictions', () => {
+    const mock: any = jest.fn();
+    mock.mockImplementation(() => Promise.resolve(fixtures.plans));
+    const props = {
+      fetchPlansActionCreator: jest.fn(),
+      history,
+      location: mock,
+      match: mock,
+      plansArray: [fixtures.plan5, fixtures.plan6],
       supersetService: mock,
     };
     const wrapper = mount(
