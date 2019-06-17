@@ -7,6 +7,7 @@ import { Router } from 'react-router';
 import { FI_SINGLE_URL } from '../../../../../constants';
 import store from '../../../../../store';
 import { fetchGoals } from '../../../../../store/ducks/goals';
+import { fetchJurisdictions } from '../../../../../store/ducks/jurisdictions';
 import { fetchPlans } from '../../../../../store/ducks/plans';
 import * as fixtures from '../../../../../store/ducks/tests/fixtures';
 import ConnectedSingleFI, { SingleFI } from '../../single';
@@ -107,8 +108,10 @@ describe('containers/pages/SingleFI', () => {
     const mock: any = jest.fn();
     store.dispatch(fetchPlans(fixtures.plans));
     store.dispatch(fetchGoals(fixtures.goals));
+    store.dispatch(fetchJurisdictions(fixtures.jurisdictions));
     const props = {
       history,
+      jurisdiction: fixtures.jurisdictions[0],
       location: mock,
       match: {
         isExact: true,
@@ -125,6 +128,7 @@ describe('containers/pages/SingleFI', () => {
       </Provider>
     );
     expect(toJson(wrapper)).toMatchSnapshot();
+    expect(wrapper.find('GisidaWrapper').props()).toMatchSnapshot();
     wrapper.unmount();
   });
 });
