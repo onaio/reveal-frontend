@@ -7,12 +7,15 @@ import { Router } from 'react-router';
 import { FI_SINGLE_URL } from '../../../../../constants';
 import store from '../../../../../store';
 import { fetchGoals } from '../../../../../store/ducks/goals';
+import { fetchJurisdictions } from '../../../../../store/ducks/jurisdictions';
 import { fetchPlans } from '../../../../../store/ducks/plans';
 import * as fixtures from '../../../../../store/ducks/tests/fixtures';
 import ConnectedSingleFI, { SingleFI } from '../../single';
 
-const history = createBrowserHistory();
+jest.mock('../../../../../components/GisidaWrapper');
 jest.mock('../../../../../configs/env');
+
+const history = createBrowserHistory();
 
 describe('containers/pages/SingleFI', () => {
   beforeEach(() => {
@@ -24,6 +27,7 @@ describe('containers/pages/SingleFI', () => {
     const props = {
       goalsArray: fixtures.plan1Goals,
       history,
+      jurisdiction: fixtures.jurisdictions[0],
       location: mock,
       match: {
         isExact: true,
@@ -49,6 +53,7 @@ describe('containers/pages/SingleFI', () => {
     const props = {
       goalsArray: fixtures.plan1Goals,
       history,
+      jurisdiction: fixtures.jurisdictions[0],
       location: mock,
       match: {
         isExact: true,
@@ -67,6 +72,7 @@ describe('containers/pages/SingleFI', () => {
       </Router>
     );
     expect(toJson(wrapper)).toMatchSnapshot();
+    expect(wrapper.find('GisidaWrapper').props()).toMatchSnapshot();
     wrapper.unmount();
   });
 
@@ -77,6 +83,7 @@ describe('containers/pages/SingleFI', () => {
     const props = {
       goalsArray: [],
       history,
+      jurisdiction: fixtures.jurisdictions[0],
       location: mock,
       match: {
         isExact: true,
@@ -94,7 +101,7 @@ describe('containers/pages/SingleFI', () => {
         <SingleFI {...props} />
       </Router>
     );
-    expect(toJson(wrapper)).toMatchSnapshot();
+    expect(wrapper.find('GisidaWrapper').length).toEqual(0);
     wrapper.unmount();
   });
 
@@ -102,8 +109,10 @@ describe('containers/pages/SingleFI', () => {
     const mock: any = jest.fn();
     store.dispatch(fetchPlans(fixtures.plans));
     store.dispatch(fetchGoals(fixtures.goals));
+    store.dispatch(fetchJurisdictions(fixtures.jurisdictions));
     const props = {
       history,
+      jurisdiction: fixtures.jurisdictions[0],
       location: mock,
       match: {
         isExact: true,
@@ -120,6 +129,7 @@ describe('containers/pages/SingleFI', () => {
       </Provider>
     );
     expect(toJson(wrapper)).toMatchSnapshot();
+    expect(wrapper.find('GisidaWrapper').props()).toMatchSnapshot();
     wrapper.unmount();
   });
 });

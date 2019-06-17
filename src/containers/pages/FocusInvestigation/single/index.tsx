@@ -5,8 +5,13 @@ import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
+import GisidaWrapper from '../../../../components/GisidaWrapper';
 import Loading from '../../../../components/page/Loading';
-import { SUPERSET_GOALS_SLICE, SUPERSET_PLANS_SLICE } from '../../../../configs/env';
+import {
+  SUPERSET_GOALS_SLICE,
+  SUPERSET_JURISDICTIONS_SLICE,
+  SUPERSET_PLANS_SLICE,
+} from '../../../../configs/env';
 import {
   ACTIVE_INVESTIGATION,
   CANTON,
@@ -33,6 +38,12 @@ import goalsReducer, {
   Goal,
   reducerName as goalsReducerName,
 } from '../../../../store/ducks/goals';
+import jurisdictionReducer, {
+  fetchJurisdictions,
+  getJurisdictionById,
+  Jurisdiction,
+  reducerName as jurisdictionReducerName,
+} from '../../../../store/ducks/jurisdictions';
 import plansReducer, {
   fetchPlans,
   getPlanById,
@@ -47,12 +58,16 @@ import './single.css';
 reducerRegistry.register(goalsReducerName, goalsReducer);
 /** register the plans reducer */
 reducerRegistry.register(plansReducerName, plansReducer);
+/** register the jurisdictions reducer */
+reducerRegistry.register(jurisdictionReducerName, jurisdictionReducer);
 
 /** interface to describe props for ActiveFI component */
 export interface SingleFIProps {
   fetchGoalsActionCreator: typeof fetchGoals;
+  fetchJurisdictionsActionCreator: typeof fetchJurisdictions;
   fetchPlansActionCreator: typeof fetchPlans;
   goalsArray: Goal[];
+  jurisdiction: Jurisdiction | null;
   planById: Plan | null;
   plansArray: Plan[];
   plansIdArray: string[];
@@ -62,8 +77,10 @@ export interface SingleFIProps {
 /** default props for ActiveFI component */
 export const defaultSingleFIProps: SingleFIProps = {
   fetchGoalsActionCreator: fetchGoals,
+  fetchJurisdictionsActionCreator: fetchJurisdictions,
   fetchPlansActionCreator: fetchPlans,
   goalsArray: [],
+  jurisdiction: null,
   planById: null,
   plansArray: [],
   plansIdArray: [],
@@ -78,20 +95,28 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
   }
 
   public async componentDidMount() {
-    const { fetchGoalsActionCreator, fetchPlansActionCreator, supersetService } = this.props;
+    const {
+      fetchGoalsActionCreator,
+      fetchJurisdictionsActionCreator,
+      fetchPlansActionCreator,
+      supersetService,
+    } = this.props;
     await supersetService(SUPERSET_PLANS_SLICE).then((result: Plan[]) =>
       fetchPlansActionCreator(result)
     );
     await supersetService(SUPERSET_GOALS_SLICE).then((result2: Goal[]) =>
       fetchGoalsActionCreator(result2)
     );
+    await supersetFetch(SUPERSET_JURISDICTIONS_SLICE).then((result: Jurisdiction[]) =>
+      fetchJurisdictionsActionCreator(result)
+    );
   }
 
   public render() {
-    const { goalsArray, planById } = this.props;
+    const { goalsArray, jurisdiction, planById } = this.props;
     const theGoals = goalsArray;
 
-    if (!planById || !theGoals) {
+    if (!planById || !theGoals || !jurisdiction) {
       return <Loading />;
     }
 
@@ -114,7 +139,9 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
           <Col className="col-6">
             <h4 className="mb-4">{FOCUS_AREA_INFO}</h4>
             {theObject.jurisdiction_id && (
-              <div style={{ background: 'lightgrey', height: '200px' }} />
+              <div className="map-area">
+                <GisidaWrapper geoData={jurisdiction} minHeight="200px" />
+              </div>
             )}
             <dl className="row mt-3">
               <dt className="col-5">{DISTRICT}</dt>
@@ -183,11 +210,14 @@ interface DispatchedStateProps {
 const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateProps => {
   const plan = getPlanById(state, ownProps.match.params.id);
   let goalsArray = null;
+  let jurisdiction = null;
   if (plan) {
     goalsArray = getGoalsByPlanAndJurisdiction(state, plan.plan_id, plan.jurisdiction_id);
+    jurisdiction = getJurisdictionById(state, plan.jurisdiction_id);
   }
   const result = {
     goalsArray,
+    jurisdiction,
     planById: plan,
     plansArray: getPlansArray(state),
     plansIdArray: getPlansIdArray(state),
@@ -197,6 +227,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
 
 const mapDispatchToProps = {
   fetchGoalsActionCreator: fetchGoals,
+  fetchJurisdictionsActionCreator: fetchJurisdictions,
   fetchPlansActionCreator: fetchPlans,
 };
 

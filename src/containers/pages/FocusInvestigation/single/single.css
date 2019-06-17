@@ -7,3 +7,8 @@
 .responseItem {
   margin-bottom: 45px;
 }
+
+.map-area #map-1 {
+  height: 200px;
+  min-height: 200px;
+}
