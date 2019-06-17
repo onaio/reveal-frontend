@@ -155,11 +155,16 @@ export function extractPlan(plan: Plan) {
   const locationNames: SeamlessImmutable.ImmutableArray<string> = SeamlessImmutable(
     plan.jurisdiction_name_path
   );
-  const mutableLocationNames = locationNames.asMutable();
+
+  let mutableLocationNames: SeamlessImmutable.ImmutableArray<string>;
+  if (locationNames instanceof Array) {
+    const locations = locationNames.asMutable().reverse();
+    mutableLocationNames = SeamlessImmutable(locations);
+  } else {
+    mutableLocationNames = SeamlessImmutable([]);
+  }
 
   if (mutableLocationNames) {
-    mutableLocationNames.reverse();
-
     for (let i = 0; i < 4; i++) {
       const locationName = mutableLocationNames[i];
       if (locationName) {
