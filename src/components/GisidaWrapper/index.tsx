@@ -244,7 +244,6 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
             element.geojson.geometry &&
             element.geojson.geometry.type === MULTI_POLYGON)
         ) {
-          // polygons.push(element);
           let fillLayer: FillLayerObj | null = null;
           fillLayer = {
             ...fillLayerConfig,
@@ -265,7 +264,7 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
         }
       });
 
-      if (points.length) {
+      if (points.length > 0) {
         // build a feature collection for points
         let featureColl = {};
         featureColl = {
