@@ -23,7 +23,7 @@ describe('renders GisidaWrapper correctly', () => {
       </Router>
     );
   });
-  it('Renders map component without tasks', () => {
+  it('Renders map component without tasks goes through', () => {
     const props = {
       geoData: fixtures.jurisdictions[0],
       goal: fixtures.goals,
@@ -63,16 +63,4 @@ describe('renders GisidaWrapper correctly', () => {
     expect(toJson(wrapper)).toMatchSnapshot();
     wrapper.unmount();
   });
-  // it('Renders Loading', () => {
-  //   const props = {
-  //     currentGoal: null,
-  //     geoData: { geojson: null, jurisdiction_id: '22222' },
-  //     goal: fixtures.goals,
-  //     handlers: [],
-  //     tasks: fixtures.tasksByGoal,
-  //   };
-  //   const wrapper = shallow(<GisidaWrapper {...props} />);
-  //   expect(toJson(wrapper)).toMatchSnapshot();
-  //   wrapper.unmount();
-  // });
 });

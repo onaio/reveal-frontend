@@ -1,18 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders GisidaWrapper correctly Renders Loading 1`] = `
-<Ripple
-  borderColor="#ff5d00"
-  borderStyle="solid"
-  borderWidth="4px"
-  height="64px"
-  minHeight="80vh"
-  width="64px"
-/>
-`;
-
 exports[`renders GisidaWrapper correctly Renders map component with tasks 1`] = `
 <Connect(e)
+  handlers={Array []}
   mapId="map-1"
   store={
     Object {
@@ -26,7 +16,7 @@ exports[`renders GisidaWrapper correctly Renders map component with tasks 1`] = 
 />
 `;
 
-exports[`renders GisidaWrapper correctly Renders map component without tasks 1`] = `
+exports[`renders GisidaWrapper correctly Renders map component without tasks goes through 1`] = `
 <Ripple
   borderColor="#ff5d00"
   borderStyle="solid"
@@ -37,8 +27,9 @@ exports[`renders GisidaWrapper correctly Renders map component without tasks 1`]
 />
 `;
 
-exports[`renders GisidaWrapper correctly Renders map component without tasks 2`] = `
+exports[`renders GisidaWrapper correctly Renders map component without tasks goes through 2`] = `
 <Connect(e)
+  handlers={Array []}
   mapId="map-1"
   store={
     Object {

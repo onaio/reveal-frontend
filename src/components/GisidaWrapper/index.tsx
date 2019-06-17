@@ -34,8 +34,9 @@ import './gisida.css';
 interface Handlers {
   name: string;
   type: string;
-  method: any;
+  method: (e: any) => void;
 }
+/** Layer Interfaces Types don't leverage typescript full potential */
 /** LineLayerObj Interface  */
 interface LineLayerObj {
   id: string;
@@ -106,7 +107,7 @@ interface GisidaProps {
   goal?: Goal[] | null;
   handlers: Handlers[];
   tasks: Task[] | null;
-  onInit?: any;
+  // onInit?: any; //  test whether this is needed
 }
 
 /** Returns a single layer configuration */
@@ -399,10 +400,11 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
           });
         }
       }
-
-      if (this.props.onInit) {
-        this.props.onInit();
-      }
+      /** Uncertain if  This chould not be in this component */
+      // if (this.props.onInit) {
+      //   console.log(this.props.onInit);
+      //   this.props.onInit();
+      // }
     });
   }
 }
