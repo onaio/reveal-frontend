@@ -183,7 +183,7 @@ export const fillLayerConfig = {
   id: 'single-jurisdiction',
   paint: {
     'fill-color': '#FFDC00',
-    'fill-opacity': 1,
+    'fill-opacity': 0.7,
     'fill-outline-color': '#FFDC00',
   },
   source: {
@@ -207,7 +207,7 @@ export const circleLayerConfig = {
   id: 'single-jurisdiction',
   paint: {
     'circle-color': '#FFDC00',
-    'circle-opacity': 1,
+    'circle-opacity': 0.7,
     'circle-radius': {
       base: 1.75,
       stops: [[12, 2], [22, 180]],
