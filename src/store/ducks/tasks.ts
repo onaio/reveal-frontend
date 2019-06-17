@@ -35,28 +35,28 @@ export interface InitialProperties {
   task_task_for: string;
 }
 
-/** Extends InitialProperties to include additional
- *  geojson.properties object properties
- */
 interface ColorUpdate {
   color: Color;
 }
+/** Extends InitialProperties to include additional
+ *  geojson.properties object properties
+ */
 export type UpdatedProperties = UpdateType<InitialProperties, ColorUpdate>;
 
-/** interface for task.geojson for
- * task as received from the fetch request / superset
- */
 interface InitialPropertiesUpdate {
   properties: InitialProperties;
 }
+/** interface for task.geojson for
+ * task as received from the fetch request / superset
+ */
 export type InitialTaskGeoJSON = UpdateType<GeoJSON, InitialPropertiesUpdate>;
 
-/** interface for task GeoJSON after any properties are added
- * to geojson.properties
- */
 interface UpdatedPropertiesUpdate {
   properties: UpdatedProperties;
 }
+/** interface for task GeoJSON after any properties are added
+ * to geojson.properties
+ */
 export type TaskGeoJSON = UpdateType<InitialTaskGeoJSON, UpdatedPropertiesUpdate>;
 
 /** interface for task Object for
@@ -70,12 +70,12 @@ export interface InitialTask {
   task_identifier: string;
 }
 
-/** Task interface where geoJson implements InitialProperties
- * interface with added properties e.g .color
- */
 interface GeoJsonUpdate {
   geojson: TaskGeoJSON;
 }
+/** Task interface where geoJson implements InitialProperties
+ * interface with added properties e.g .color
+ */
 export type Task = UpdateType<InitialTask, GeoJsonUpdate>;
 
 // actions
