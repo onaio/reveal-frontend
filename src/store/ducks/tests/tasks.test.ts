@@ -1,9 +1,17 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import { cloneDeep, keyBy, values } from 'lodash';
 import { FlushThunks } from 'redux-testkit';
+import { FeatureCollection } from '../../../helpers/utils';
 import store from '../../index';
 import reducer, {
   fetchTasks,
+  getAllFC,
+  getFCByGoalId,
+  getFCByJurisdictionId,
+  getFCByPlanAndGoalAndJurisdiction,
+  getFCByPlanAndJurisdiction,
+  getFCByPlanId,
+  getFCByStructureId,
   getTaskById,
   getTasksArray,
   getTasksByGoalId,
@@ -14,7 +22,9 @@ import reducer, {
   getTasksByPlanId,
   getTasksByStructureId,
   getTasksIdArray,
+  InitialTaskGeoJSON,
   reducerName,
+  resetTasks,
   Task,
 } from '../tasks';
 import * as fixtures from './fixtures';
@@ -27,6 +37,10 @@ describe('reducers/tasks', () => {
   beforeEach(() => {
     flushThunks = FlushThunks.createMiddleware();
     jest.resetAllMocks();
+  });
+
+  afterEach(() => {
+    store.dispatch(resetTasks());
   });
 
   it('should have initial state', () => {
@@ -129,5 +143,111 @@ describe('reducers/tasks', () => {
         task_identifier: 'moshT',
       });
     }
+  });
+});
+
+// goeJSON Feature Collection selectors tests
+describe('reducers/tasks/FeatureCollectionSelectors', () => {
+  let flushThunks;
+
+  beforeEach(() => {
+    flushThunks = FlushThunks.createMiddleware();
+    jest.resetAllMocks();
+  });
+
+  afterEach(() => {
+    store.dispatch(resetTasks());
+  });
+
+  it('works for initial state', () => {
+    const expected: FeatureCollection<InitialTaskGeoJSON> = {
+      features: [],
+      type: 'FeatureCollection',
+    };
+    const placebo = 'randomId';
+    expect(getAllFC(store.getState())).toEqual(expected);
+    expect(getFCByGoalId(store.getState(), placebo)).toEqual(expected);
+    expect(getFCByPlanAndGoalAndJurisdiction(store.getState(), placebo, placebo, placebo)).toEqual(
+      expected
+    );
+    expect(getFCByJurisdictionId(store.getState(), placebo)).toEqual(expected);
+    expect(getFCByPlanId(store.getState(), placebo)).toEqual(expected);
+    expect(getFCByPlanAndJurisdiction(store.getState(), placebo, placebo)).toEqual(expected);
+    expect(getFCByStructureId(store.getState(), placebo)).toEqual(expected);
+  });
+
+  it('gets all tasks as Feature Collection', () => {
+    store.dispatch(fetchTasks([fixtures.task1, fixtures.task2]));
+    const expected: FeatureCollection<InitialTaskGeoJSON> = {
+      features: [fixtures.task1.geojson, fixtures.task2.geojson],
+      type: 'FeatureCollection',
+    };
+    expect(getAllFC(store.getState())).toEqual(expected);
+  });
+
+  it('filters tasks as FeatureCollection by plan', () => {
+    store.dispatch(fetchTasks(fixtures.tasks));
+    const planId = '356b6b84-fc36-4389-a44a-2b038ed2f38d';
+    const expected: FeatureCollection<InitialTaskGeoJSON> = {
+      features: [fixtures.task3.geojson],
+      type: 'FeatureCollection',
+    };
+    expect(getFCByPlanId(store.getState(), planId)).toEqual(expected);
+  });
+
+  it('filters tasks as FeatureCollection by goal', () => {
+    store.dispatch(fetchTasks(fixtures.tasks));
+    const goalId = 'RACD_blood_screening_1km_radius';
+    const expected: FeatureCollection<InitialTaskGeoJSON> = {
+      features: [fixtures.task4.geojson],
+      type: 'FeatureCollection',
+    };
+    expect(getFCByGoalId(store.getState(), goalId)).toEqual(expected);
+  });
+
+  it('filters tasks as FeatureCollection by jurisdiction', () => {
+    store.dispatch(fetchTasks(fixtures.tasks));
+    const JurisdictionId = '450fc15b-5bd2-468a-927a-49cb10d3bcac';
+    const expected: FeatureCollection<InitialTaskGeoJSON> = {
+      features: [fixtures.task1.geojson, fixtures.task2.geojson, fixtures.task4.geojson],
+      type: 'FeatureCollection',
+    };
+    expect(getFCByJurisdictionId(store.getState(), JurisdictionId)).toEqual(expected);
+  });
+
+  it('filters tasks as FeatureCollection by plan && jurisdiction', () => {
+    store.dispatch(fetchTasks(fixtures.tasks));
+    const planId = '10f9e9fa-ce34-4b27-a961-72fab5206ab6';
+    const jurisdictionId = '450fc15b-5bd2-468a-927a-49cb10d3bcac';
+    const expected: FeatureCollection<InitialTaskGeoJSON> = {
+      features: [fixtures.task1.geojson, fixtures.task2.geojson, fixtures.task4.geojson],
+      type: 'FeatureCollection',
+    };
+    expect(getFCByPlanAndJurisdiction(store.getState(), planId, jurisdictionId)).toEqual(expected);
+  });
+
+  it('filters tasks as FeatureCollection by plan && jurisdiction && goal', () => {
+    store.dispatch(fetchTasks(fixtures.tasks));
+    const planId = '10f9e9fa-ce34-4b27-a961-72fab5206ab6';
+    const jurisdictionId = '450fc15b-5bd2-468a-927a-49cb10d3bcac';
+    const goalId = 'RACD_bednet_dist_1km_radius';
+
+    const expected: FeatureCollection<InitialTaskGeoJSON> = {
+      features: [fixtures.task2.geojson],
+      type: 'FeatureCollection',
+    };
+    expect(
+      getFCByPlanAndGoalAndJurisdiction(store.getState(), planId, goalId, jurisdictionId)
+    ).toEqual(expected);
+  });
+
+  it('filters tasks as FeatureCollection by structure', () => {
+    store.dispatch(fetchTasks(fixtures.tasks));
+    const structureId = 'a19eeb63-45d0-4744-9a9d-76d0694103f6';
+    const expected = {
+      features: [fixtures.task1.geojson],
+      type: 'FeatureCollection',
+    };
+    expect(getFCByStructureId(store.getState(), structureId)).toEqual(expected);
   });
 });

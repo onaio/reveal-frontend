@@ -308,3 +308,27 @@ export function transformValues<T>(
   });
   return thisObj;
 }
+
+/** Generic Type for any object to be updated
+ *  where T is the base interface and Y is the interface
+ * to extend the base
+ */
+export type UpdateType<T extends any, Y> = T & Y;
+
+/** Interface for FeatureCollection */
+export interface FeatureCollection<T> {
+  type: 'FeatureCollection';
+  features: T[];
+}
+
+/** creates an object that wraps geojson features around
+ * a standard FeatureCollection format and returns it as the FeatureCollection
+ * @param {T[]} objFeatureCollection - a list of features objects
+ * @return {FeatureCollection<T>} - a geoJSON Feature Collection object
+ */
+export function wrapFeatureCollection<T>(objFeatureCollection: T[]): FeatureCollection<T> {
+  return {
+    features: objFeatureCollection,
+    type: 'FeatureCollection',
+  };
+}
