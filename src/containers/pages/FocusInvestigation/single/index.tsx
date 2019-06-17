@@ -52,7 +52,6 @@ import plansReducer, {
   Plan,
   reducerName as plansReducerName,
 } from '../../../../store/ducks/plans';
-import * as fixtures from '../../../../store/ducks/tests/fixtures';
 import './single.css';
 
 /** register the goals reducer */
