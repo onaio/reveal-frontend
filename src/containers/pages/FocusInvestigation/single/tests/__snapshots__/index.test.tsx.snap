@@ -55,6 +55,114 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
           "replace": [Function],
         }
       }
+      jurisdiction={
+        Object {
+          "geojson": Object {
+            "geometry": Object {
+              "coordinates": Array [
+                Array [
+                  Array [
+                    101.166915893555,
+                    15.0715019595332,
+                  ],
+                  Array [
+                    101.165628433228,
+                    15.069429992157,
+                  ],
+                  Array [
+                    101.164855957031,
+                    15.0649130333519,
+                  ],
+                  Array [
+                    101.164898872375,
+                    15.061473449978,
+                  ],
+                  Array [
+                    101.165843009949,
+                    15.0585311116698,
+                  ],
+                  Array [
+                    101.168718338013,
+                    15.0577022766384,
+                  ],
+                  Array [
+                    101.173524856567,
+                    15.0577437184666,
+                  ],
+                  Array [
+                    101.179447174072,
+                    15.0583653449216,
+                  ],
+                  Array [
+                    101.183996200562,
+                    15.0589455279759,
+                  ],
+                  Array [
+                    101.189103126526,
+                    15.0597743581685,
+                  ],
+                  Array [
+                    101.191892623901,
+                    15.0629238834779,
+                  ],
+                  Array [
+                    101.191549301147,
+                    15.0671093647448,
+                  ],
+                  Array [
+                    101.19086265564,
+                    15.0727036913665,
+                  ],
+                  Array [
+                    101.190605163574,
+                    15.0748170653661,
+                  ],
+                  Array [
+                    101.188631057739,
+                    15.0768061040682,
+                  ],
+                  Array [
+                    101.185412406921,
+                    15.0769304183694,
+                  ],
+                  Array [
+                    101.182150840759,
+                    15.0772619228176,
+                  ],
+                  Array [
+                    101.177172660828,
+                    15.0780906816776,
+                  ],
+                  Array [
+                    101.174211502075,
+                    15.0777591785211,
+                  ],
+                  Array [
+                    101.172151565552,
+                    15.0765989134045,
+                  ],
+                  Array [
+                    101.168503761292,
+                    15.0753557651845,
+                  ],
+                  Array [
+                    101.166915893555,
+                    15.0715019595332,
+                  ],
+                ],
+              ],
+              "type": "Polygon",
+            },
+            "id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
+            "properties": Object {
+              "jurisdiction_name": "TLv1_01",
+              "jurisdiction_parent_id": "dad42fa6-b9b8-4658-bf25-bfa7ab5b16ae",
+            },
+            "type": "Feature",
+          },
+          "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
+        }
+      }
       location={[MockFunction]}
       match={
         Object {
@@ -69,6 +177,7 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
     >
       <SingleFI
         fetchGoalsActionCreator={[Function]}
+        fetchJurisdictionsActionCreator={[Function]}
         fetchPlansActionCreator={[Function]}
         goalsArray={
           Array [
@@ -142,6 +251,114 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
             },
             "push": [Function],
             "replace": [Function],
+          }
+        }
+        jurisdiction={
+          Object {
+            "geojson": Object {
+              "geometry": Object {
+                "coordinates": Array [
+                  Array [
+                    Array [
+                      101.166915893555,
+                      15.0715019595332,
+                    ],
+                    Array [
+                      101.165628433228,
+                      15.069429992157,
+                    ],
+                    Array [
+                      101.164855957031,
+                      15.0649130333519,
+                    ],
+                    Array [
+                      101.164898872375,
+                      15.061473449978,
+                    ],
+                    Array [
+                      101.165843009949,
+                      15.0585311116698,
+                    ],
+                    Array [
+                      101.168718338013,
+                      15.0577022766384,
+                    ],
+                    Array [
+                      101.173524856567,
+                      15.0577437184666,
+                    ],
+                    Array [
+                      101.179447174072,
+                      15.0583653449216,
+                    ],
+                    Array [
+                      101.183996200562,
+                      15.0589455279759,
+                    ],
+                    Array [
+                      101.189103126526,
+                      15.0597743581685,
+                    ],
+                    Array [
+                      101.191892623901,
+                      15.0629238834779,
+                    ],
+                    Array [
+                      101.191549301147,
+                      15.0671093647448,
+                    ],
+                    Array [
+                      101.19086265564,
+                      15.0727036913665,
+                    ],
+                    Array [
+                      101.190605163574,
+                      15.0748170653661,
+                    ],
+                    Array [
+                      101.188631057739,
+                      15.0768061040682,
+                    ],
+                    Array [
+                      101.185412406921,
+                      15.0769304183694,
+                    ],
+                    Array [
+                      101.182150840759,
+                      15.0772619228176,
+                    ],
+                    Array [
+                      101.177172660828,
+                      15.0780906816776,
+                    ],
+                    Array [
+                      101.174211502075,
+                      15.0777591785211,
+                    ],
+                    Array [
+                      101.172151565552,
+                      15.0765989134045,
+                    ],
+                    Array [
+                      101.168503761292,
+                      15.0753557651845,
+                    ],
+                    Array [
+                      101.166915893555,
+                      15.0715019595332,
+                    ],
+                  ],
+                ],
+                "type": "Polygon",
+              },
+              "id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
+              "properties": Object {
+                "jurisdiction_name": "TLv1_01",
+                "jurisdiction_parent_id": "dad42fa6-b9b8-4658-bf25-bfa7ab5b16ae",
+              },
+              "type": "Feature",
+            },
+            "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
           }
         }
         location={[MockFunction]}
@@ -248,13 +465,120 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
                     Focus Area Information
                   </h4>
                   <div
-                    style={
-                      Object {
-                        "background": "lightgrey",
-                        "height": "200px",
+                    className="map-area"
+                  >
+                    <GisidaWrapper
+                      geoData={
+                        Object {
+                          "geojson": Object {
+                            "geometry": Object {
+                              "coordinates": Array [
+                                Array [
+                                  Array [
+                                    101.166915893555,
+                                    15.0715019595332,
+                                  ],
+                                  Array [
+                                    101.165628433228,
+                                    15.069429992157,
+                                  ],
+                                  Array [
+                                    101.164855957031,
+                                    15.0649130333519,
+                                  ],
+                                  Array [
+                                    101.164898872375,
+                                    15.061473449978,
+                                  ],
+                                  Array [
+                                    101.165843009949,
+                                    15.0585311116698,
+                                  ],
+                                  Array [
+                                    101.168718338013,
+                                    15.0577022766384,
+                                  ],
+                                  Array [
+                                    101.173524856567,
+                                    15.0577437184666,
+                                  ],
+                                  Array [
+                                    101.179447174072,
+                                    15.0583653449216,
+                                  ],
+                                  Array [
+                                    101.183996200562,
+                                    15.0589455279759,
+                                  ],
+                                  Array [
+                                    101.189103126526,
+                                    15.0597743581685,
+                                  ],
+                                  Array [
+                                    101.191892623901,
+                                    15.0629238834779,
+                                  ],
+                                  Array [
+                                    101.191549301147,
+                                    15.0671093647448,
+                                  ],
+                                  Array [
+                                    101.19086265564,
+                                    15.0727036913665,
+                                  ],
+                                  Array [
+                                    101.190605163574,
+                                    15.0748170653661,
+                                  ],
+                                  Array [
+                                    101.188631057739,
+                                    15.0768061040682,
+                                  ],
+                                  Array [
+                                    101.185412406921,
+                                    15.0769304183694,
+                                  ],
+                                  Array [
+                                    101.182150840759,
+                                    15.0772619228176,
+                                  ],
+                                  Array [
+                                    101.177172660828,
+                                    15.0780906816776,
+                                  ],
+                                  Array [
+                                    101.174211502075,
+                                    15.0777591785211,
+                                  ],
+                                  Array [
+                                    101.172151565552,
+                                    15.0765989134045,
+                                  ],
+                                  Array [
+                                    101.168503761292,
+                                    15.0753557651845,
+                                  ],
+                                  Array [
+                                    101.166915893555,
+                                    15.0715019595332,
+                                  ],
+                                ],
+                              ],
+                              "type": "Polygon",
+                            },
+                            "id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
+                            "properties": Object {
+                              "jurisdiction_name": "TLv1_01",
+                              "jurisdiction_parent_id": "dad42fa6-b9b8-4658-bf25-bfa7ab5b16ae",
+                            },
+                            "type": "Feature",
+                          },
+                          "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
+                        }
                       }
-                    }
-                  />
+                      minHeight="200px"
+                    />
+                  </div>
                   <dl
                     className="row mt-3"
                   >
@@ -527,6 +851,118 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
 </Provider>
 `;
 
+exports[`containers/pages/SingleFI It works with the Redux store 2`] = `
+Object {
+  "geoData": Object {
+    "geojson": Object {
+      "geometry": Object {
+        "coordinates": Array [
+          Array [
+            Array [
+              101.166915893555,
+              15.0715019595332,
+            ],
+            Array [
+              101.165628433228,
+              15.069429992157,
+            ],
+            Array [
+              101.164855957031,
+              15.0649130333519,
+            ],
+            Array [
+              101.164898872375,
+              15.061473449978,
+            ],
+            Array [
+              101.165843009949,
+              15.0585311116698,
+            ],
+            Array [
+              101.168718338013,
+              15.0577022766384,
+            ],
+            Array [
+              101.173524856567,
+              15.0577437184666,
+            ],
+            Array [
+              101.179447174072,
+              15.0583653449216,
+            ],
+            Array [
+              101.183996200562,
+              15.0589455279759,
+            ],
+            Array [
+              101.189103126526,
+              15.0597743581685,
+            ],
+            Array [
+              101.191892623901,
+              15.0629238834779,
+            ],
+            Array [
+              101.191549301147,
+              15.0671093647448,
+            ],
+            Array [
+              101.19086265564,
+              15.0727036913665,
+            ],
+            Array [
+              101.190605163574,
+              15.0748170653661,
+            ],
+            Array [
+              101.188631057739,
+              15.0768061040682,
+            ],
+            Array [
+              101.185412406921,
+              15.0769304183694,
+            ],
+            Array [
+              101.182150840759,
+              15.0772619228176,
+            ],
+            Array [
+              101.177172660828,
+              15.0780906816776,
+            ],
+            Array [
+              101.174211502075,
+              15.0777591785211,
+            ],
+            Array [
+              101.172151565552,
+              15.0765989134045,
+            ],
+            Array [
+              101.168503761292,
+              15.0753557651845,
+            ],
+            Array [
+              101.166915893555,
+              15.0715019595332,
+            ],
+          ],
+        ],
+        "type": "Polygon",
+      },
+      "id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
+      "properties": Object {
+        "jurisdiction_name": "TLv1_01",
+        "jurisdiction_parent_id": "dad42fa6-b9b8-4658-bf25-bfa7ab5b16ae",
+      },
+      "type": "Feature",
+    },
+    "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
+  },
+  "minHeight": "200px",
+}
+`;
+
 exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
 <Router
   history={
@@ -552,6 +988,7 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
 >
   <SingleFI
     fetchGoalsActionCreator={[Function]}
+    fetchJurisdictionsActionCreator={[Function]}
     fetchPlansActionCreator={[Function]}
     goalsArray={
       Array [
@@ -605,6 +1042,114 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
         },
         "push": [Function],
         "replace": [Function],
+      }
+    }
+    jurisdiction={
+      Object {
+        "geojson": Object {
+          "geometry": Object {
+            "coordinates": Array [
+              Array [
+                Array [
+                  101.166915893555,
+                  15.0715019595332,
+                ],
+                Array [
+                  101.165628433228,
+                  15.069429992157,
+                ],
+                Array [
+                  101.164855957031,
+                  15.0649130333519,
+                ],
+                Array [
+                  101.164898872375,
+                  15.061473449978,
+                ],
+                Array [
+                  101.165843009949,
+                  15.0585311116698,
+                ],
+                Array [
+                  101.168718338013,
+                  15.0577022766384,
+                ],
+                Array [
+                  101.173524856567,
+                  15.0577437184666,
+                ],
+                Array [
+                  101.179447174072,
+                  15.0583653449216,
+                ],
+                Array [
+                  101.183996200562,
+                  15.0589455279759,
+                ],
+                Array [
+                  101.189103126526,
+                  15.0597743581685,
+                ],
+                Array [
+                  101.191892623901,
+                  15.0629238834779,
+                ],
+                Array [
+                  101.191549301147,
+                  15.0671093647448,
+                ],
+                Array [
+                  101.19086265564,
+                  15.0727036913665,
+                ],
+                Array [
+                  101.190605163574,
+                  15.0748170653661,
+                ],
+                Array [
+                  101.188631057739,
+                  15.0768061040682,
+                ],
+                Array [
+                  101.185412406921,
+                  15.0769304183694,
+                ],
+                Array [
+                  101.182150840759,
+                  15.0772619228176,
+                ],
+                Array [
+                  101.177172660828,
+                  15.0780906816776,
+                ],
+                Array [
+                  101.174211502075,
+                  15.0777591785211,
+                ],
+                Array [
+                  101.172151565552,
+                  15.0765989134045,
+                ],
+                Array [
+                  101.168503761292,
+                  15.0753557651845,
+                ],
+                Array [
+                  101.166915893555,
+                  15.0715019595332,
+                ],
+              ],
+            ],
+            "type": "Polygon",
+          },
+          "id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
+          "properties": Object {
+            "jurisdiction_name": "TLv1_01",
+            "jurisdiction_parent_id": "dad42fa6-b9b8-4658-bf25-bfa7ab5b16ae",
+          },
+          "type": "Feature",
+        },
+        "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
       }
     }
     location={[MockFunction]}
@@ -746,13 +1291,120 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
                 Focus Area Information
               </h4>
               <div
-                style={
-                  Object {
-                    "background": "lightgrey",
-                    "height": "200px",
+                className="map-area"
+              >
+                <GisidaWrapper
+                  geoData={
+                    Object {
+                      "geojson": Object {
+                        "geometry": Object {
+                          "coordinates": Array [
+                            Array [
+                              Array [
+                                101.166915893555,
+                                15.0715019595332,
+                              ],
+                              Array [
+                                101.165628433228,
+                                15.069429992157,
+                              ],
+                              Array [
+                                101.164855957031,
+                                15.0649130333519,
+                              ],
+                              Array [
+                                101.164898872375,
+                                15.061473449978,
+                              ],
+                              Array [
+                                101.165843009949,
+                                15.0585311116698,
+                              ],
+                              Array [
+                                101.168718338013,
+                                15.0577022766384,
+                              ],
+                              Array [
+                                101.173524856567,
+                                15.0577437184666,
+                              ],
+                              Array [
+                                101.179447174072,
+                                15.0583653449216,
+                              ],
+                              Array [
+                                101.183996200562,
+                                15.0589455279759,
+                              ],
+                              Array [
+                                101.189103126526,
+                                15.0597743581685,
+                              ],
+                              Array [
+                                101.191892623901,
+                                15.0629238834779,
+                              ],
+                              Array [
+                                101.191549301147,
+                                15.0671093647448,
+                              ],
+                              Array [
+                                101.19086265564,
+                                15.0727036913665,
+                              ],
+                              Array [
+                                101.190605163574,
+                                15.0748170653661,
+                              ],
+                              Array [
+                                101.188631057739,
+                                15.0768061040682,
+                              ],
+                              Array [
+                                101.185412406921,
+                                15.0769304183694,
+                              ],
+                              Array [
+                                101.182150840759,
+                                15.0772619228176,
+                              ],
+                              Array [
+                                101.177172660828,
+                                15.0780906816776,
+                              ],
+                              Array [
+                                101.174211502075,
+                                15.0777591785211,
+                              ],
+                              Array [
+                                101.172151565552,
+                                15.0765989134045,
+                              ],
+                              Array [
+                                101.168503761292,
+                                15.0753557651845,
+                              ],
+                              Array [
+                                101.166915893555,
+                                15.0715019595332,
+                              ],
+                            ],
+                          ],
+                          "type": "Polygon",
+                        },
+                        "id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
+                        "properties": Object {
+                          "jurisdiction_name": "TLv1_01",
+                          "jurisdiction_parent_id": "dad42fa6-b9b8-4658-bf25-bfa7ab5b16ae",
+                        },
+                        "type": "Feature",
+                      },
+                      "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
+                    }
                   }
-                }
-              />
+                  minHeight="200px"
+                />
+              </div>
               <dl
                 className="row mt-3"
               >
@@ -1212,4 +1864,116 @@ exports[`containers/pages/SingleFI renders SingleFI correctly for null plan juri
     </div>
   </SingleFI>
 </Router>
+`;
+
+exports[`containers/pages/SingleFI renders SingleFI correctly 2`] = `
+Object {
+  "geoData": Object {
+    "geojson": Object {
+      "geometry": Object {
+        "coordinates": Array [
+          Array [
+            Array [
+              101.166915893555,
+              15.0715019595332,
+            ],
+            Array [
+              101.165628433228,
+              15.069429992157,
+            ],
+            Array [
+              101.164855957031,
+              15.0649130333519,
+            ],
+            Array [
+              101.164898872375,
+              15.061473449978,
+            ],
+            Array [
+              101.165843009949,
+              15.0585311116698,
+            ],
+            Array [
+              101.168718338013,
+              15.0577022766384,
+            ],
+            Array [
+              101.173524856567,
+              15.0577437184666,
+            ],
+            Array [
+              101.179447174072,
+              15.0583653449216,
+            ],
+            Array [
+              101.183996200562,
+              15.0589455279759,
+            ],
+            Array [
+              101.189103126526,
+              15.0597743581685,
+            ],
+            Array [
+              101.191892623901,
+              15.0629238834779,
+            ],
+            Array [
+              101.191549301147,
+              15.0671093647448,
+            ],
+            Array [
+              101.19086265564,
+              15.0727036913665,
+            ],
+            Array [
+              101.190605163574,
+              15.0748170653661,
+            ],
+            Array [
+              101.188631057739,
+              15.0768061040682,
+            ],
+            Array [
+              101.185412406921,
+              15.0769304183694,
+            ],
+            Array [
+              101.182150840759,
+              15.0772619228176,
+            ],
+            Array [
+              101.177172660828,
+              15.0780906816776,
+            ],
+            Array [
+              101.174211502075,
+              15.0777591785211,
+            ],
+            Array [
+              101.172151565552,
+              15.0765989134045,
+            ],
+            Array [
+              101.168503761292,
+              15.0753557651845,
+            ],
+            Array [
+              101.166915893555,
+              15.0715019595332,
+            ],
+          ],
+        ],
+        "type": "Polygon",
+      },
+      "id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
+      "properties": Object {
+        "jurisdiction_name": "TLv1_01",
+        "jurisdiction_parent_id": "dad42fa6-b9b8-4658-bf25-bfa7ab5b16ae",
+      },
+      "type": "Feature",
+    },
+    "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
+  },
+  "minHeight": "200px",
+}
 `;
