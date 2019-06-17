@@ -70,13 +70,13 @@ export interface InitialTask {
   task_identifier: string;
 }
 
-interface GeoJsonUpdate {
+interface GeoJSONUpdate {
   geojson: TaskGeoJSON;
 }
 /** Task interface where geoJson implements InitialProperties
  * interface with added properties e.g .color
  */
-export type Task = UpdateType<InitialTask, GeoJsonUpdate>;
+export type Task = UpdateType<InitialTask, GeoJSONUpdate>;
 
 // actions
 /** TASKS_FETCHED action type */
