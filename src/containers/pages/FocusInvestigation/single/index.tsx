@@ -25,7 +25,7 @@ import {
   TARGET,
 } from '../../../../constants';
 import ProgressBar from '../../../../helpers/ProgressBar';
-import { extractPlan, RouteParams } from '../../../../helpers/utils';
+import { extractPlan, RouteParams, transformValues } from '../../../../helpers/utils';
 import supersetFetch from '../../../../services/superset';
 import goalsReducer, {
   fetchGoals,
@@ -95,8 +95,16 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
       return <Loading />;
     }
 
-    const theObject = extractPlan(planById);
-
+    let theObject = extractPlan(planById);
+    const propertiesToTransform = [
+      'village',
+      'canton',
+      'district',
+      'provice',
+      'jurisdiction_id',
+      'focusArea',
+    ];
+    theObject = transformValues(theObject, propertiesToTransform);
     return (
       <div>
         <h2 className="page-title mt-4 mb-5">
@@ -105,7 +113,9 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
         <Row>
           <Col className="col-6">
             <h4 className="mb-4">{FOCUS_AREA_INFO}</h4>
-            <div style={{ background: 'lightgrey', height: '200px' }} />
+            {theObject.jurisdiction_id && (
+              <div style={{ background: 'lightgrey', height: '200px' }} />
+            )}
             <dl className="row mt-3">
               <dt className="col-5">{DISTRICT}</dt>
               <dd className="col-7">{theObject.district}</dd>
