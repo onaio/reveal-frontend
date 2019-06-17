@@ -11,8 +11,10 @@ import { fetchPlans } from '../../../../../store/ducks/plans';
 import * as fixtures from '../../../../../store/ducks/tests/fixtures';
 import ConnectedSingleFI, { SingleFI } from '../../single';
 
-const history = createBrowserHistory();
+jest.mock('../../../../../components/GisidaWrapper');
 jest.mock('../../../../../configs/env');
+
+const history = createBrowserHistory();
 
 describe('containers/pages/SingleFI', () => {
   beforeEach(() => {
@@ -24,6 +26,7 @@ describe('containers/pages/SingleFI', () => {
     const props = {
       goalsArray: fixtures.plan1Goals,
       history,
+      jurisdiction: fixtures.jurisdictions[0],
       location: mock,
       match: {
         isExact: true,
@@ -49,6 +52,7 @@ describe('containers/pages/SingleFI', () => {
     const props = {
       goalsArray: fixtures.plan1Goals,
       history,
+      jurisdiction: fixtures.jurisdictions[0],
       location: mock,
       match: {
         isExact: true,
@@ -67,6 +71,7 @@ describe('containers/pages/SingleFI', () => {
       </Router>
     );
     expect(toJson(wrapper)).toMatchSnapshot();
+    expect(wrapper.find('GisidaWrapper').props()).toMatchSnapshot();
     wrapper.unmount();
   });
 
