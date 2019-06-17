@@ -1,4 +1,5 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
+import mapboxgl from 'mapbox-gl';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
@@ -194,6 +195,29 @@ class SingleActiveFIMap extends React.Component<
           }
         },
         name: 'drillDownClick',
+        type: 'click',
+      },
+      {
+        /**
+         * @param {any} synthetic event a wrapper event around native events
+         */
+        method: function pointClick(e: any) {
+          const features = e.target.queryRenderedFeatures(e.point);
+          const coordinates = features[0].geometry.coordinates.slice();
+          const description = features[0].properties.action_code;
+          // Ensure that if the map is zoomed out such that multiple
+          // copies of the feature are visible, the popup appears
+          // over the copy being pointed to.
+          while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+            coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+          }
+          const windowObject: FlexObject = window;
+          new mapboxgl.Popup()
+            .setLngLat(coordinates)
+            .setHTML(description)
+            .addTo(windowObject.maps[0]);
+        },
+        name: 'pointClick',
         type: 'click',
       },
     ];
