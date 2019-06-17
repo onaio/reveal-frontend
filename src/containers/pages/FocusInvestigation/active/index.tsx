@@ -27,7 +27,12 @@ import {
 } from '../../../../constants';
 import { renderClassificationRow } from '../../../../helpers/indicators';
 import '../../../../helpers/tables.css';
-import { extractPlan, getLocationColumns, RouteParams } from '../../../../helpers/utils';
+import {
+  extractPlan,
+  getLocationColumns,
+  RouteParams,
+  transformValues,
+} from '../../../../helpers/utils';
 import supersetFetch from '../../../../services/superset';
 import plansReducer, {
   fetchPlans,
@@ -73,7 +78,12 @@ class ActiveFocusInvestigation extends React.Component<
     if (plansArray.length === 0) {
       return <Loading />;
     }
-    const thePlans = plansArray.map((item: Plan) => extractPlan(item));
+    const thePlans = plansArray.map((item: Plan) => {
+      let thisItem = extractPlan(item);
+      const propertiesToTransform = ['village', 'canton', 'district', 'provice', 'jurisdiction_id'];
+      thisItem = transformValues(thisItem, propertiesToTransform);
+      return thisItem;
+    });
     const locationColumns: Column[] = getLocationColumns(locationHierarchy, true);
     const otherColumns: Column[] = [
       {
