@@ -130,6 +130,7 @@ export type ORANGE_THRESHOLD = typeof ORANGE_THRESHOLD;
 export const ONE = 0;
 export const ZERO = 0;
 
+/** Point layer configuration */
 export const pointLayerConfig = {
   id: 'single-jurisdiction-20191910',
   layout: {
