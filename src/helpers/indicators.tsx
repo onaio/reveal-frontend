@@ -4,6 +4,39 @@ import { CellInfo } from 'react-table';
 import { GREEN, ORANGE, RED, YELLOW } from '../colors';
 import { GREEN_THRESHOLD, ORANGE_THRESHOLD, YELLOW_THRESHOLD, ZERO } from '../configs/settings';
 import { FlexObject, percentage } from '../helpers/utils';
+import { Goal } from '../store/ducks/goals';
+
+/** Enum describing operators */
+enum Operators {
+  Equal = '=',
+  GreaterThan = '>',
+  GreaterThanOrEqual = '>=',
+  LessThan = '<',
+  LessThanOrEqual = '<=',
+}
+
+/** something goes here */
+export function goalIndicator(goal: Goal) {
+  const percentAchieved: number = 0;
+  let achievedValue: number = goal.completed_task_count;
+  const totalAttempts: number = goal.task_count;
+  const targetValue: number = goal.goal_value;
+
+  // deal with percentages if needed
+  if (goal.goal_unit.toLowerCase() === 'percent') {
+    if (totalAttempts === 0) {
+      achievedValue = 0;
+    } else {
+      achievedValue = (achievedValue / totalAttempts) * 100;
+    }
+  }
+
+  if (goal.goal_comparator in [Operators.LessThan, Operators.LessThanOrEqual]) {
+    // in this case we are targeting a reduction
+  } else {
+    // in this case we are targeting an increase
+  }
+}
 
 /** Returns a table cell rendered with different colors based on focus
  * investigation response adherence conditional formatting
