@@ -288,7 +288,7 @@ export function getAllFC(state: Partial<Store>): FeatureCollection<TaskGeoJSON> 
 
 /** get tasks as FeatureCollection filtered by goal_id
  * @param {Partial<Store>} state - the redux store
- * @param {string} goalId - task.geojson.properties.goal_id
+ * @param {string} goalId - the goal id
  * @return {FeatureCollection} - an geoJSON Feature Collection object
  */
 export function getFCByGoalId(
@@ -303,7 +303,7 @@ export function getFCByGoalId(
 
 /** get tasks as FeatureCollection filtered by plan_id
  * @param {partial<Store>} state - the redux store
- * @param {string} planId - task.geojson.properties.plan_id
+ * @param {string} planId - the plan id
  * @return {FeatureCollection} - an geoJSON Feature Collection object
  */
 export function getFCByPlanId(
@@ -318,7 +318,7 @@ export function getFCByPlanId(
 
 /** get tasks as FeatureCollection filtered by jurisdiction_id
  * @param {partial<Store>} state - the redux store
- * @param {string} jurisdictionId - task.geojson.properties.jurisdiction_id
+ * @param {string} jurisdictionId - the jurisdiction id
  * @return {FeatureCollection} - an geoJSON Feature Collection object
  */
 export function getFCByJurisdictionId(
@@ -333,7 +333,7 @@ export function getFCByJurisdictionId(
 
 /** get tasks as FeatureCollection filtered by structure_id
  * @param {partial<Store>} state - the redux store
- * @param {string} structureId - task.geojson.properties.structure_id
+ * @param {string} structureId - the structure id
  * @return {FeatureCollection} - an geoJSON Feature Collection object
  */
 export function getFCByStructureId(
@@ -348,8 +348,8 @@ export function getFCByStructureId(
 
 /** get tasks as FeatureCollection filtered by plan and jurisdiction
  * @param {partial<Store>} state - the redux store
- * @param {string} planId - task.geojson.properties.plan_id
- * @param {string} jurisdictionId - task.geojson.properties.jurisdiction_id
+ * @param {string} planId - the plan id
+ * @param {string} jurisdictionId - the jurisdiction id
  * @return {FeatureCollection} - an geoJSON Feature Collection object
  */
 export function getFCByPlanAndJurisdiction(
@@ -367,9 +367,9 @@ export function getFCByPlanAndJurisdiction(
 
 /** get tasks as FeatureCollection filtered by structure_id
  * @param {partial<Store>} state - the redux store
- * @param {string} planId - task.geojson.properties.plan_id
- * @param {string} goalId - task.geojson.properties.goal_id
- * @param {string} jurisdictionId - task.geojson.properties.jurisdiction_id
+ * @param {string} planId - the plan id
+ * @param {string} goalId - the goal id
+ * @param {string} jurisdictionId - the jurisdiction id
  * @return {FeatureCollection} - an geoJSON Feature Collection object
  */
 export function getFCByPlanAndGoalAndJurisdiction(
