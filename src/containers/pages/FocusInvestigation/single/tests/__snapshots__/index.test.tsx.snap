@@ -468,6 +468,7 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
                     className="map-area"
                   >
                     <GisidaWrapper
+                      currentGoal={null}
                       geoData={
                         Object {
                           "geojson": Object {
@@ -576,7 +577,10 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
                           "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
                         }
                       }
+                      goal={null}
+                      handlers={Array []}
                       minHeight="200px"
+                      tasks={null}
                     />
                   </div>
                   <dl
@@ -853,6 +857,7 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
 
 exports[`containers/pages/SingleFI It works with the Redux store 2`] = `
 Object {
+  "currentGoal": null,
   "geoData": Object {
     "geojson": Object {
       "geometry": Object {
@@ -959,7 +964,10 @@ Object {
     },
     "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
   },
+  "goal": null,
+  "handlers": Array [],
   "minHeight": "200px",
+  "tasks": null,
 }
 `;
 
@@ -1294,6 +1302,7 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
                 className="map-area"
               >
                 <GisidaWrapper
+                  currentGoal={null}
                   geoData={
                     Object {
                       "geojson": Object {
@@ -1402,7 +1411,10 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
                       "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
                     }
                   }
+                  goal={null}
+                  handlers={Array []}
                   minHeight="200px"
+                  tasks={null}
                 />
               </div>
               <dl
@@ -1620,6 +1632,7 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
 
 exports[`containers/pages/SingleFI renders SingleFI correctly 2`] = `
 Object {
+  "currentGoal": null,
   "geoData": Object {
     "geojson": Object {
       "geometry": Object {
@@ -1726,6 +1739,9 @@ Object {
     },
     "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
   },
+  "goal": null,
+  "handlers": Array [],
   "minHeight": "200px",
+  "tasks": null,
 }
 `;
