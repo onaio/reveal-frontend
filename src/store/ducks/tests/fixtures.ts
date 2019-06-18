@@ -284,14 +284,10 @@ export const task3 = {
 
 export const task4 = {
   geojson: {
-    geometry: {
-      coordinates: [28.3524419816308, -15.4178320108929],
-      type: 'Point',
-    },
+    geometry: null,
     id: '01d0b84c-df06-426c-a272-6858e84fea31',
     properties: {
       action_code: 'Blood Screening',
-      color: '#FFDC00',
       goal_id: 'RACD_blood_screening_1km_radius',
       jurisdiction_id: '450fc15b-5bd2-468a-927a-49cb10d3bcac',
       jurisdiction_name: 'TLv1_01',
