@@ -64,11 +64,12 @@ describe('renders GisidaWrapper correctly', () => {
       handlers: [],
       tasks: fixtures.bednetTasks,
     };
-    const wrapper = shallow(<GisidaWrapper {...props1} />);
+    const wrapper = mount(<GisidaWrapper {...props1} />);
     /** Investigate why it won't set state inside initmap even though it goes into init map this leads to setting dorenderMap to state manually */
     wrapper.setState({ doRenderMap: true });
     wrapper.setProps({ ...props });
     expect(toJson(wrapper)).toMatchSnapshot();
+    expect(wrapper.find('MapComponent').props()).toMatchSnapshot();
     wrapper.unmount();
   });
 });
