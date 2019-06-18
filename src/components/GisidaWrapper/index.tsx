@@ -28,6 +28,7 @@ import store from '../../store';
 import { Goal } from '../../store/ducks/goals';
 import { Jurisdiction, JurisdictionGeoJSON } from '../../store/ducks/jurisdictions';
 import { Task } from '../../store/ducks/tasks';
+import { jurisdictions } from '../../store/ducks/tests/fixtures';
 import './gisida.css';
 
 /** handlers Interface */
@@ -107,7 +108,7 @@ interface GisidaProps {
   goal?: Goal[] | null;
   handlers: Handlers[];
   tasks: Task[] | null;
-  minHeight: string;
+  minHeight?: string;
   // onInit?: any; //  test whether this is needed
 }
 
@@ -118,8 +119,16 @@ const LayerStore = (layer: FlexObject) => {
   }
   return layer;
 };
-
+/** default props for ActiveFI Map component */
+export const defaultGisidaProps: GisidaProps = {
+  currentGoal: null,
+  geoData: jurisdictions[0],
+  goal: null,
+  handlers: [],
+  tasks: null,
+};
 class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
+  public static defaultProps = defaultGisidaProps;
   constructor(props: GisidaProps) {
     super(props);
     const initialState = store.getState();
