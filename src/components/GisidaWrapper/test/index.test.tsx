@@ -18,8 +18,6 @@ jest.mock('gisida-react', () => {
 reducerRegistry.register(APP, ducks.APP.default);
 reducerRegistry.register(MAP_ID, ducks.MAP.default);
 
-/** The test requires mapbox-gl-js mock to test Gisida's Map child component. Check https://github.com/mapbox/mapbox-gl-js/issues/5026  for more info */
-// Work in Progress
 const history = createBrowserHistory();
 describe('renders GisidaWrapper correctly', () => {
   it('renders component without crashing', () => {
@@ -76,7 +74,10 @@ describe('renders GisidaWrapper correctly', () => {
       tasks: fixtures.bednetTasks,
     };
     const wrapper = mount(<GisidaWrapper {...props1} />);
-    /** Investigate why it won't set state inside initmap even though it goes into init map this leads to setting dorenderMap to state manually */
+    /** Investigate why it won't set state inside initmap even though
+     * it goes into init map this leads to setting dorenderMap to state
+     * manually
+     */
     wrapper.setState({ doRenderMap: true });
     wrapper.setProps({ ...props });
     expect(toJson(wrapper)).toMatchSnapshot();
