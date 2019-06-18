@@ -466,6 +466,8 @@ coloredTask6.geojson.properties.color = '#ff0000';
 const coloredTask7: any = cloneDeep(task7);
 coloredTask7.geojson.properties.color = '#000000';
 
+export const bednetTasks = [coloredTask5, coloredTask6, coloredTask7];
+
 export const coloredTasks = {
   task1: coloredTask1,
   task2: coloredTask2,
