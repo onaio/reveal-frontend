@@ -126,6 +126,8 @@ export const defaultGisidaProps: GisidaProps = {
   handlers: [],
   tasks: null,
 };
+
+/** Wrapper component for Gisida-powered maps */
 class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
   public static defaultProps = defaultGisidaProps;
   constructor(props: GisidaProps) {
