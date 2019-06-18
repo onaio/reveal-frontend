@@ -212,7 +212,6 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
     goals = getGoalsByPlanAndJurisdiction(state, plan.plan_id, plan.jurisdiction_id);
   }
   if (plan && jurisdiction && (goals && goals.length > 1)) {
-    /** DIRTY MANGY hack  to be improved by getting the goal_id from  the sidebar selection */
     tasks = getTasksByPlanAndGoalAndJurisdiction(
       state,
       plan.plan_id,
