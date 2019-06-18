@@ -107,6 +107,7 @@ interface GisidaProps {
   goal?: Goal[] | null;
   handlers: Handlers[];
   tasks: Task[] | null;
+  minHeight: string;
   // onInit?: any; //  test whether this is needed
 }
 
