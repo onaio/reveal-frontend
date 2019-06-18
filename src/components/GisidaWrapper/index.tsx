@@ -409,11 +409,6 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
           });
         }
       }
-      /** Uncertain if  This chould not be in this component */
-      // if (this.props.onInit) {
-      //   console.log(this.props.onInit);
-      //   this.props.onInit();
-      // }
     });
   }
 }
