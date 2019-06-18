@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders GisidaWrapper correctly renders map component with tasks 1`] = `
+exports[`components/GisidaWrapper renders map component with tasks 1`] = `
 <GisidaWrapper
   currentGoal="RACD_bednet_dist_1km_radius"
   geoData={
@@ -386,7 +386,7 @@ exports[`renders GisidaWrapper correctly renders map component with tasks 1`] = 
 </GisidaWrapper>
 `;
 
-exports[`renders GisidaWrapper correctly renders map component with tasks 2`] = `
+exports[`components/GisidaWrapper renders map component with tasks 2`] = `
 Object {
   "handlers": Array [],
   "mapId": "map-1",
@@ -400,7 +400,7 @@ Object {
 }
 `;
 
-exports[`renders GisidaWrapper correctly renders map component with tasks 3`] = `
+exports[`components/GisidaWrapper renders map component with tasks 3`] = `
 Object {
   "accessToken": "pk.eyJ1Ijoib25hIiwiYSI6IlVYbkdyclkifQ.0Bz-QOOXZZK01dq4MuMImQ",
   "apiAccessToken": "138a7ff6dfdcb5b4e41eb2d39bcc76ce5d296e89",
@@ -422,7 +422,7 @@ Object {
 }
 `;
 
-exports[`renders GisidaWrapper correctly renders map component with tasks 4`] = `
+exports[`components/GisidaWrapper renders map component with tasks 4`] = `
 Object {
   "activeLayerId": "",
   "activeLayerIds": Array [],
@@ -1351,7 +1351,7 @@ Object {
   "primaryLayer": "",
   "primarySubLayer": "",
   "reloadLayerId": null,
-  "reloadLayers": 0.5314771727248129,
+  "reloadLayers": 0.9125976831212261,
   "showFilterPanel": false,
   "showProfile": false,
   "showSpinner": false,
@@ -1360,7 +1360,7 @@ Object {
 }
 `;
 
-exports[`renders GisidaWrapper correctly renders map component without tasks 1`] = `
+exports[`components/GisidaWrapper renders map component without tasks 1`] = `
 Object {
   "accessToken": false,
   "appName": "React Gisida",
@@ -1377,7 +1377,7 @@ Object {
 }
 `;
 
-exports[`renders GisidaWrapper correctly renders map component without tasks 2`] = `
+exports[`components/GisidaWrapper renders map component without tasks 2`] = `
 Object {
   "activeLayerId": "",
   "activeLayerIds": Array [],
@@ -1417,7 +1417,7 @@ Object {
 }
 `;
 
-exports[`renders GisidaWrapper correctly renders map component without tasks 3`] = `
+exports[`components/GisidaWrapper renders map component without tasks 3`] = `
 <GisidaWrapper
   currentGoal={null}
   geoData={
@@ -1665,7 +1665,7 @@ exports[`renders GisidaWrapper correctly renders map component without tasks 3`]
 </GisidaWrapper>
 `;
 
-exports[`renders GisidaWrapper correctly renders map component without tasks 4`] = `
+exports[`components/GisidaWrapper renders map component without tasks 4`] = `
 <GisidaWrapper
   currentGoal={null}
   geoData={
@@ -1884,7 +1884,7 @@ exports[`renders GisidaWrapper correctly renders map component without tasks 4`]
 </GisidaWrapper>
 `;
 
-exports[`renders GisidaWrapper correctly renders map component without tasks 5`] = `
+exports[`components/GisidaWrapper renders map component without tasks 5`] = `
 Object {
   "handlers": Array [],
   "mapId": "map-1",
@@ -1898,7 +1898,7 @@ Object {
 }
 `;
 
-exports[`renders GisidaWrapper correctly renders map component without tasks 6`] = `
+exports[`components/GisidaWrapper renders map component without tasks 6`] = `
 Object {
   "accessToken": "pk.eyJ1Ijoib25hIiwiYSI6IlVYbkdyclkifQ.0Bz-QOOXZZK01dq4MuMImQ",
   "apiAccessToken": "138a7ff6dfdcb5b4e41eb2d39bcc76ce5d296e89",
@@ -1920,7 +1920,7 @@ Object {
 }
 `;
 
-exports[`renders GisidaWrapper correctly renders map component without tasks 7`] = `
+exports[`components/GisidaWrapper renders map component without tasks 7`] = `
 Object {
   "activeLayerId": "",
   "activeLayerIds": Array [],
@@ -2192,7 +2192,7 @@ Object {
   "primaryLayer": "",
   "primarySubLayer": "",
   "reloadLayerId": null,
-  "reloadLayers": 0.001053931701884503,
+  "reloadLayers": 0.23018661077126357,
   "showFilterPanel": false,
   "showProfile": false,
   "showSpinner": false,
