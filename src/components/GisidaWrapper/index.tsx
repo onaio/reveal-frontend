@@ -145,7 +145,6 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
       tasks: this.props.tasks || null,
     };
 
-    // 1. Register mapReducers in reducer registery;
     if (!initialState.APP && ducks.APP) {
       reducerRegistry.register(APP, ducks.APP.default);
     }
