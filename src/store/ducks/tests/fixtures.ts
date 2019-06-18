@@ -45,7 +45,7 @@ export const plan5 = {
   plan_id: 'e9c9a069-7d22-44c0-a59e-9a483948716b',
   plan_intervention_type: 'FI',
   plan_status: 'active',
-  plan_title: 'A1 - Ban Chamrak Mu - Focus 02 Rubber Plantation',
+  plan_title: 'A1-Ban Chamrak Mu-Focus 02 Rubber Plantation',
 };
 
 export const plan6 = {
@@ -314,33 +314,125 @@ export const task4 = {
 
 export const task5 = {
   geojson: {
-    geometry: null,
-    id: '01d0b84c-df06-426c-a272-6858e84fzq12',
+    geometry: {
+      coordinates: [
+        [
+          [101.18838429451, 15.0904724723464],
+          [101.188470125198, 15.0904724723464],
+          [101.188470125198, 15.0905915992282],
+          [101.18838429451, 15.0905915992282],
+          [101.18838429451, 15.0904724723464],
+        ],
+      ],
+      type: 'Polygon',
+    },
+    id: '250399fc-12e9-415e-aadf-ee3d009fcdf6',
     properties: {
-      action_code: 'Blood Screening',
-      color: '#FFDC00',
-      goal_id: 'RACD_blood_screening_1km_radius',
-      jurisdiction_id: '450fc15b-5bd2-468a-927a-49cb10d3bcac',
-      jurisdiction_name: 'TLv1_01',
+      action_code: 'Bednet Distribution',
+      goal_id: 'RACD_bednet_dist_1km_radius',
+      jurisdiction_id: '304cbcd4-0850-404a-a8b1-486b02f7b84d',
+      jurisdiction_name: 'TLv1_02',
       jurisdiction_parent_id: 'dad42fa6-b9b8-4658-bf25-bfa7ab5b16ae',
-      plan_id: '10f9e9fa-ce34-4b27-a961-72fab5206ab6',
-      structure_code: null,
-      structure_id: null,
-      structure_name: null,
-      structure_type: null,
+      plan_id: '89fh38sg-h83s-9xf2-a7h2-pl98dh320lbc',
+      structure_code: '0a840508-d1ac-4082-89f8-c1ffabdfe976',
+      structure_id: '0a840508-d1ac-4082-89f8-c1ffabdfe976',
+      structure_name: '0a840508-d1ac-4082-89f8-c1ffabdfe976',
+      structure_type: '0a840508-d1ac-4082-89f8-c1ffabdfe976',
       task_business_status: 'Not Visited',
-      task_execution_end_date: '2019-04-01',
-      task_execution_start_date: '2019-04-08',
-      task_focus: 'Blood Screening',
+      task_execution_end_date: '2019-06-18',
+      task_execution_start_date: '2019-06-15',
+      task_focus: 'Bednet Distribution',
       task_status: 'Ready',
-      task_task_for: 'c222d4ba-b3c4-4cc8-abae-bdea06511b27',
+      task_task_for: '0a840508-d1ac-4082-89f8-c1ffabdfe976',
     },
     type: 'Feature',
   },
-  goal_id: 'RACD_blood_screening_1km_radius',
-  jurisdiction_id: '450fc15b-5bd2-468a-927a-49cb10d3bcac',
-  plan_id: '10f9e9fa-ce34-4b27-a961-72fab5206ab6',
-  task_identifier: '01d0b84c-df06-426c-a272-6858e84fea31',
+  goal_id: 'RACD_bednet_dist_1km_radius',
+  jurisdiction_id: '304cbcd4-0850-404a-a8b1-486b02f7b84d',
+  plan_id: '89fh38sg-h83s-9xf2-a7h2-pl98dh320lbc',
+  task_identifier: '250399fc-12e9-415e-aadf-ee3d009fcdf6',
+};
+
+export const task6 = {
+  geojson: {
+    geometry: {
+      coordinates: [
+        [
+          [101.18939012289, 15.091948605081],
+          [101.189454495907, 15.091948605081],
+          [101.189454495907, 15.0920547826543],
+          [101.18939012289, 15.0920547826543],
+          [101.18939012289, 15.091948605081],
+        ],
+      ],
+      type: 'Polygon',
+    },
+    id: '18049c84-8762-4951-904d-44485b4df3f0',
+    properties: {
+      action_code: 'Bednet Distribution',
+      goal_id: 'RACD_bednet_dist_1km_radius',
+      jurisdiction_id: '304cbcd4-0850-404a-a8b1-486b02f7b84d',
+      jurisdiction_name: 'TLv1_02',
+      jurisdiction_parent_id: 'dad42fa6-b9b8-4658-bf25-bfa7ab5b16ae',
+      plan_id: '89fh38sg-h83s-9xf2-a7h2-pl98dh320lbc',
+      structure_code: '3d5bec31-14f6-4baa-a68b-fdcc37918991',
+      structure_id: '3d5bec31-14f6-4baa-a68b-fdcc37918991',
+      structure_name: '3d5bec31-14f6-4baa-a68b-fdcc37918991',
+      structure_type: '3d5bec31-14f6-4baa-a68b-fdcc37918991',
+      task_business_status: 'Not Visited',
+      task_execution_end_date: '2019-06-18',
+      task_execution_start_date: '2019-06-15',
+      task_focus: 'Bednet Distribution',
+      task_status: 'Ready',
+      task_task_for: '3d5bec31-14f6-4baa-a68b-fdcc37918991',
+    },
+    type: 'Feature',
+  },
+  goal_id: 'RACD_bednet_dist_1km_radius',
+  jurisdiction_id: '304cbcd4-0850-404a-a8b1-486b02f7b84d',
+  plan_id: '89fh38sg-h83s-9xf2-a7h2-pl98dh320lbc',
+  task_identifier: '18049c84-8762-4951-904d-44485b4df3f0',
+};
+
+export const task7 = {
+  geojson: {
+    geometry: {
+      coordinates: [
+        [
+          [101.188456714153, 15.0921402426137],
+          [101.188577413559, 15.0921402426137],
+          [101.188577413559, 15.0922153437619],
+          [101.188456714153, 15.0922153437619],
+          [101.188456714153, 15.0921402426137],
+        ],
+      ],
+      type: 'Polygon',
+    },
+    id: '16a794e4-46de-4733-8f4d-9d0b9db8b298',
+    properties: {
+      action_code: 'Bednet Distribution',
+      goal_id: 'RACD_bednet_dist_1km_radius',
+      jurisdiction_id: '304cbcd4-0850-404a-a8b1-486b02f7b84d',
+      jurisdiction_name: 'TLv1_02',
+      jurisdiction_parent_id: 'dad42fa6-b9b8-4658-bf25-bfa7ab5b16ae',
+      plan_id: '89fh38sg-h83s-9xf2-a7h2-pl98dh320lbc',
+      structure_code: 'c15f5b44-ff72-44f3-b0bd-e2399462a536',
+      structure_id: 'c15f5b44-ff72-44f3-b0bd-e2399462a536',
+      structure_name: 'c15f5b44-ff72-44f3-b0bd-e2399462a536',
+      structure_type: 'c15f5b44-ff72-44f3-b0bd-e2399462a536',
+      task_business_status: 'Not Visited',
+      task_execution_end_date: '2019-06-18',
+      task_execution_start_date: '2019-06-15',
+      task_focus: 'Bednet Distribution',
+      task_status: 'Ready',
+      task_task_for: 'c15f5b44-ff72-44f3-b0bd-e2399462a536',
+    },
+    type: 'Feature',
+  },
+  goal_id: 'RACD_bednet_dist_1km_radius',
+  jurisdiction_id: '304cbcd4-0850-404a-a8b1-486b02f7b84d',
+  plan_id: '89fh38sg-h83s-9xf2-a7h2-pl98dh320lbc',
+  task_identifier: '16a794e4-46de-4733-8f4d-9d0b9db8b298',
 };
 
 const task76 = cloneDeep(task2);
