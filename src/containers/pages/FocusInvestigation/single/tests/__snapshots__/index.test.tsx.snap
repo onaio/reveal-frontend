@@ -467,8 +467,7 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
                   <div
                     className="map-area"
                   >
-                    <GisidaWrapper
-                      currentGoal={null}
+                    <GisidaWrapperMock
                       geoData={
                         Object {
                           "geojson": Object {
@@ -577,11 +576,12 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
                           "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
                         }
                       }
-                      goal={null}
-                      handlers={Array []}
                       minHeight="200px"
-                      tasks={null}
-                    />
+                    >
+                      <div>
+                        I love oov
+                      </div>
+                    </GisidaWrapperMock>
                   </div>
                   <dl
                     className="row mt-3"
@@ -857,7 +857,6 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
 
 exports[`containers/pages/SingleFI It works with the Redux store 2`] = `
 Object {
-  "currentGoal": null,
   "geoData": Object {
     "geojson": Object {
       "geometry": Object {
@@ -964,10 +963,7 @@ Object {
     },
     "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
   },
-  "goal": null,
-  "handlers": Array [],
   "minHeight": "200px",
-  "tasks": null,
 }
 `;
 
@@ -1301,8 +1297,7 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
               <div
                 className="map-area"
               >
-                <GisidaWrapper
-                  currentGoal={null}
+                <GisidaWrapperMock
                   geoData={
                     Object {
                       "geojson": Object {
@@ -1411,11 +1406,12 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
                       "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
                     }
                   }
-                  goal={null}
-                  handlers={Array []}
                   minHeight="200px"
-                  tasks={null}
-                />
+                >
+                  <div>
+                    I love oov
+                  </div>
+                </GisidaWrapperMock>
               </div>
               <dl
                 className="row mt-3"
@@ -1632,7 +1628,6 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
 
 exports[`containers/pages/SingleFI renders SingleFI correctly 2`] = `
 Object {
-  "currentGoal": null,
   "geoData": Object {
     "geojson": Object {
       "geometry": Object {
@@ -1739,9 +1734,6 @@ Object {
     },
     "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
   },
-  "goal": null,
-  "handlers": Array [],
   "minHeight": "200px",
-  "tasks": null,
 }
 `;
