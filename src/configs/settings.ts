@@ -130,6 +130,7 @@ export type ORANGE_THRESHOLD = typeof ORANGE_THRESHOLD;
 export const ONE = 0;
 export const ZERO = 0;
 
+/** Point layer configuration */
 export const pointLayerConfig = {
   id: 'single-jurisdiction-20191910',
   layout: {
@@ -158,6 +159,7 @@ export const pointLayerConfig = {
   visible: false,
 };
 
+/** Line layer configuration */
 export const lineLayerConfig = {
   id: 'single-jurisdiction',
   paint: {
@@ -179,6 +181,7 @@ export const lineLayerConfig = {
   visible: false,
 };
 
+/** Fill layer configuration */
 export const fillLayerConfig = {
   id: 'single-jurisdiction',
   paint: {
@@ -200,6 +203,7 @@ export const fillLayerConfig = {
   visible: false,
 };
 
+/** Circle layer configuration */
 export const circleLayerConfig = {
   categories: {
     color: '#ff0000',

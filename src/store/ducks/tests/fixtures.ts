@@ -153,12 +153,30 @@ export const goal4 = {
   task_count: 18,
 };
 
+export const goal5 = {
+  action_code: 'Bednet Distribution',
+  completed_task_count: 4,
+  goal_comparator: '>=',
+  goal_id: 'RACD_bednet_dist_1km_radius',
+  goal_unit: 'percent',
+  goal_value: 100,
+  id: 'e50f7156-c80e-541e-a24c-0b3e0d95b868',
+  jurisdiction_id: '304cbcd4-0850-404a-a8b1-486b02f7b84d',
+  measure: 'Percent of residential structures visited',
+  plan_id: '89fh38sg-h83s-9xf2-a7h2-pl98dh320lbc',
+  task_business_status_map: {
+    Complete: 4,
+    'Not Visited': 11,
+  },
+  task_count: 15,
+};
+
 const goal37 = clone(goal4);
 goal37.id = '1337';
 (goal37.task_business_status_map as any) = JSON.stringify(goal37.task_business_status_map);
 export { goal37 };
 
-export const goals = [goal1, goal2, goal3, goal4];
+export const goals = [goal1, goal2, goal3, goal4, goal5];
 
 export const plan1Goals = [goal1, goal2];
 
@@ -312,6 +330,129 @@ export const task4 = {
   task_identifier: '01d0b84c-df06-426c-a272-6858e84fea31',
 };
 
+export const task5 = {
+  geojson: {
+    geometry: {
+      coordinates: [
+        [
+          [101.18838429451, 15.0904724723464],
+          [101.188470125198, 15.0904724723464],
+          [101.188470125198, 15.0905915992282],
+          [101.18838429451, 15.0905915992282],
+          [101.18838429451, 15.0904724723464],
+        ],
+      ],
+      type: 'Polygon',
+    },
+    id: '250399fc-12e9-415e-aadf-ee3d009fcdf6',
+    properties: {
+      action_code: 'Bednet Distribution',
+      goal_id: 'RACD_bednet_dist_1km_radius',
+      jurisdiction_id: '304cbcd4-0850-404a-a8b1-486b02f7b84d',
+      jurisdiction_name: 'TLv1_02',
+      jurisdiction_parent_id: 'dad42fa6-b9b8-4658-bf25-bfa7ab5b16ae',
+      plan_id: '89fh38sg-h83s-9xf2-a7h2-pl98dh320lbc',
+      structure_code: '0a840508-d1ac-4082-89f8-c1ffabdfe976',
+      structure_id: '0a840508-d1ac-4082-89f8-c1ffabdfe976',
+      structure_name: '0a840508-d1ac-4082-89f8-c1ffabdfe976',
+      structure_type: '0a840508-d1ac-4082-89f8-c1ffabdfe976',
+      task_business_status: 'Not Visited',
+      task_execution_end_date: '2019-06-18',
+      task_execution_start_date: '2019-06-15',
+      task_focus: 'Bednet Distribution',
+      task_status: 'Ready',
+      task_task_for: '0a840508-d1ac-4082-89f8-c1ffabdfe976',
+    },
+    type: 'Feature',
+  },
+  goal_id: 'RACD_bednet_dist_1km_radius',
+  jurisdiction_id: '304cbcd4-0850-404a-a8b1-486b02f7b84d',
+  plan_id: '89fh38sg-h83s-9xf2-a7h2-pl98dh320lbc',
+  task_identifier: '250399fc-12e9-415e-aadf-ee3d009fcdf6',
+};
+
+export const task6 = {
+  geojson: {
+    geometry: {
+      coordinates: [
+        [
+          [101.18939012289, 15.091948605081],
+          [101.189454495907, 15.091948605081],
+          [101.189454495907, 15.0920547826543],
+          [101.18939012289, 15.0920547826543],
+          [101.18939012289, 15.091948605081],
+        ],
+      ],
+      type: 'Polygon',
+    },
+    id: '18049c84-8762-4951-904d-44485b4df3f0',
+    properties: {
+      action_code: 'Bednet Distribution',
+      goal_id: 'RACD_bednet_dist_1km_radius',
+      jurisdiction_id: '304cbcd4-0850-404a-a8b1-486b02f7b84d',
+      jurisdiction_name: 'TLv1_02',
+      jurisdiction_parent_id: 'dad42fa6-b9b8-4658-bf25-bfa7ab5b16ae',
+      plan_id: '89fh38sg-h83s-9xf2-a7h2-pl98dh320lbc',
+      structure_code: '3d5bec31-14f6-4baa-a68b-fdcc37918991',
+      structure_id: '3d5bec31-14f6-4baa-a68b-fdcc37918991',
+      structure_name: '3d5bec31-14f6-4baa-a68b-fdcc37918991',
+      structure_type: '3d5bec31-14f6-4baa-a68b-fdcc37918991',
+      task_business_status: 'Not Visited',
+      task_execution_end_date: '2019-06-18',
+      task_execution_start_date: '2019-06-15',
+      task_focus: 'Bednet Distribution',
+      task_status: 'Ready',
+      task_task_for: '3d5bec31-14f6-4baa-a68b-fdcc37918991',
+    },
+    type: 'Feature',
+  },
+  goal_id: 'RACD_bednet_dist_1km_radius',
+  jurisdiction_id: '304cbcd4-0850-404a-a8b1-486b02f7b84d',
+  plan_id: '89fh38sg-h83s-9xf2-a7h2-pl98dh320lbc',
+  task_identifier: '18049c84-8762-4951-904d-44485b4df3f0',
+};
+
+export const task7 = {
+  geojson: {
+    geometry: {
+      coordinates: [
+        [
+          [101.188456714153, 15.0921402426137],
+          [101.188577413559, 15.0921402426137],
+          [101.188577413559, 15.0922153437619],
+          [101.188456714153, 15.0922153437619],
+          [101.188456714153, 15.0921402426137],
+        ],
+      ],
+      type: 'Polygon',
+    },
+    id: '16a794e4-46de-4733-8f4d-9d0b9db8b298',
+    properties: {
+      action_code: 'Bednet Distribution',
+      goal_id: 'RACD_bednet_dist_1km_radius',
+      jurisdiction_id: '304cbcd4-0850-404a-a8b1-486b02f7b84d',
+      jurisdiction_name: 'TLv1_02',
+      jurisdiction_parent_id: 'dad42fa6-b9b8-4658-bf25-bfa7ab5b16ae',
+      plan_id: '89fh38sg-h83s-9xf2-a7h2-pl98dh320lbc',
+      structure_code: 'c15f5b44-ff72-44f3-b0bd-e2399462a536',
+      structure_id: 'c15f5b44-ff72-44f3-b0bd-e2399462a536',
+      structure_name: 'c15f5b44-ff72-44f3-b0bd-e2399462a536',
+      structure_type: 'c15f5b44-ff72-44f3-b0bd-e2399462a536',
+      task_business_status: 'Not Visited',
+      task_execution_end_date: '2019-06-18',
+      task_execution_start_date: '2019-06-15',
+      task_focus: 'Bednet Distribution',
+      task_status: 'Ready',
+      task_task_for: 'c15f5b44-ff72-44f3-b0bd-e2399462a536',
+    },
+    type: 'Feature',
+  },
+  goal_id: 'RACD_bednet_dist_1km_radius',
+  jurisdiction_id: '304cbcd4-0850-404a-a8b1-486b02f7b84d',
+  plan_id: '89fh38sg-h83s-9xf2-a7h2-pl98dh320lbc',
+  task_identifier: '16a794e4-46de-4733-8f4d-9d0b9db8b298',
+};
+
 const task76 = cloneDeep(task2);
 task76.task_identifier = 'moshT';
 task76.geojson.id = 'moshT';
@@ -319,6 +460,8 @@ task76.geojson.id = 'moshT';
 export { task76 };
 
 export const tasks = [task1, task2, task3, task4];
+
+export const tasksByGoal = [task4, task5];
 
 const coloredTask1: any = cloneDeep(task1);
 coloredTask1.geojson.properties.color = '#ff3';
@@ -331,6 +474,17 @@ coloredTask3.geojson.properties.color = '#33ad33';
 
 const coloredTask4: any = cloneDeep(task4);
 coloredTask4.geojson.properties.color = '#ff3';
+
+const coloredTask5: any = cloneDeep(task5);
+coloredTask5.geojson.properties.color = '#ff3';
+
+const coloredTask6: any = cloneDeep(task6);
+coloredTask6.geojson.properties.color = '#ff0000';
+
+const coloredTask7: any = cloneDeep(task7);
+coloredTask7.geojson.properties.color = '#000000';
+
+export const bednetTasks = [coloredTask5, coloredTask6, coloredTask7];
 
 export const coloredTasks = {
   task1: coloredTask1,
@@ -433,6 +587,45 @@ export const jurisdictions = [
       type: 'Feature',
     },
     jurisdiction_id: '10f9e9fa-ce34-4b27-a961-72fab5206ab6',
+  },
+  {
+    geojson: {
+      geometry: {
+        coordinates: [
+          [
+            [101.19704246521, 15.0950795263559],
+            [101.194038391113, 15.0953281335118],
+            [101.192235946655, 15.0947480496953],
+            [101.190090179443, 15.0938364862116],
+            [101.188459396362, 15.0930077887413],
+            [101.187858581543, 15.091764736475],
+            [101.187686920166, 15.0895272240692],
+            [101.188201904297, 15.088201279674],
+            [101.190690994263, 15.0879526641789],
+            [101.193265914917, 15.0872068159487],
+            [101.195669174194, 15.08662670996],
+            [101.196699142456, 15.0862952201128],
+            [101.198244094849, 15.0853007474691],
+            [101.199789047241, 15.0855493660662],
+            [101.200733184814, 15.086460965101],
+            [101.201505661011, 15.087372560226],
+            [101.20210647583, 15.0896929665368],
+            [101.202192306519, 15.0916818660653],
+            [101.201848983765, 15.0933392681173],
+            [101.198930740356, 15.0943337031422],
+            [101.19704246521, 15.0950795263559],
+          ],
+        ],
+        type: 'Polygon',
+      },
+      id: '304cbcd4-0850-404a-a8b1-486b02f7b84d',
+      properties: {
+        jurisdiction_name: 'TLv1_02',
+        jurisdiction_parent_id: 'dad42fa6-b9b8-4658-bf25-bfa7ab5b16ae',
+      },
+      type: 'Feature',
+    },
+    jurisdiction_id: '304cbcd4-0850-404a-a8b1-486b02f7b84d',
   },
 ];
 
