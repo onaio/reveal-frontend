@@ -109,7 +109,6 @@ interface GisidaProps {
   handlers: Handlers[];
   tasks: Task[] | null;
   minHeight?: string;
-  // onInit?: any; //  test whether this is needed
 }
 
 /** Returns a single layer configuration */
