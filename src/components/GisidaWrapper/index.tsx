@@ -258,6 +258,11 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
           fillLayer = {
             ...fillLayerConfig,
             id: `${element.goal_id}-${element.task_identifier}`,
+            paint: {
+              ...fillLayerConfig.paint,
+              'fill-color': ['get', 'color'],
+              'fill-outline-color': ['get', 'color'],
+            },
             source: {
               ...fillLayerConfig.source,
               data: {
