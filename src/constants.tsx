@@ -79,6 +79,7 @@ export const APP = 'APP';
 export type APP = typeof APP;
 export const NO_GEOMETRIES_RESPONSE = 'Goals have no Geometries';
 export type NO_GEOMETRIES_RESPONSE = typeof NO_GEOMETRIES_RESPONSE;
+
 // internal urls
 export const LOGIN_URL = '/login';
 export type LOGIN_URL = typeof LOGIN_URL;
