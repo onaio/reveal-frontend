@@ -457,6 +457,15 @@ coloredTask3.geojson.properties.color = '#33ad33';
 const coloredTask4: any = cloneDeep(task4);
 coloredTask4.geojson.properties.color = '#ff3';
 
+const coloredTask5: any = cloneDeep(task5);
+coloredTask5.geojson.properties.color = '#ff3';
+
+const coloredTask6: any = cloneDeep(task6);
+coloredTask6.geojson.properties.color = '#ff0000';
+
+const coloredTask7: any = cloneDeep(task7);
+coloredTask7.geojson.properties.color = '#000000';
+
 export const coloredTasks = {
   task1: coloredTask1,
   task2: coloredTask2,
