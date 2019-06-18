@@ -6,6 +6,7 @@ import { createBrowserHistory } from 'history';
 import React from 'react';
 import { Router } from 'react-router';
 import { APP, MAP_ID } from '../../../constants';
+import store from '../../../store';
 import * as fixtures from '../../../store/ducks/tests/fixtures';
 import GisidaWrapper from '../index';
 
@@ -43,6 +44,8 @@ describe('renders GisidaWrapper correctly', () => {
       tasks: null,
     };
     const wrapper = mount(<GisidaWrapper {...props} />);
+    expect(store.getState().APP).toMatchSnapshot();
+    expect(store.getState()['map-1']).toMatchSnapshot();
     expect(toJson(wrapper)).toMatchSnapshot();
     jest.useFakeTimers();
     wrapper.setProps({ ...props });
@@ -52,6 +55,8 @@ describe('renders GisidaWrapper correctly', () => {
     expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 3000);
     expect(toJson(wrapper)).toMatchSnapshot();
     expect(wrapper.find('MapComponent').props()).toMatchSnapshot();
+    expect(store.getState().APP).toMatchSnapshot();
+    expect(store.getState()['map-1']).toMatchSnapshot();
     wrapper.unmount();
   });
 
@@ -76,6 +81,8 @@ describe('renders GisidaWrapper correctly', () => {
     wrapper.setProps({ ...props });
     expect(toJson(wrapper)).toMatchSnapshot();
     expect(wrapper.find('MapComponent').props()).toMatchSnapshot();
+    expect(store.getState().APP).toMatchSnapshot();
+    expect(store.getState()['map-1']).toMatchSnapshot();
     wrapper.unmount();
   });
 });
