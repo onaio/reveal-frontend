@@ -303,9 +303,9 @@ export function getFCByGoalId(
   state: Partial<Store>,
   goalId: string
 ): FeatureCollection<TaskGeoJSON> {
-  const geoJsonFeatures: TaskGeoJSON[] = values((state as any)[reducerName].tasksById)
-    .map(e => e.geojson)
-    .filter(e => e.properties.goal_id === goalId);
+  const geoJsonFeatures: TaskGeoJSON[] = getTasksGeoJsonData(state).filter(
+    e => e.properties.goal_id === goalId
+  );
   return wrapFeatureCollection(geoJsonFeatures);
 }
 
@@ -318,9 +318,9 @@ export function getFCByPlanId(
   state: Partial<Store>,
   planId: string
 ): FeatureCollection<TaskGeoJSON> {
-  const geoJsonFeatures: TaskGeoJSON[] = values((state as any)[reducerName].tasksById)
-    .map(e => e.geojson)
-    .filter(e => e.properties.plan_id === planId);
+  const geoJsonFeatures: TaskGeoJSON[] = getTasksGeoJsonData(state).filter(
+    e => e.properties.plan_id === planId
+  );
   return wrapFeatureCollection(geoJsonFeatures);
 }
 
@@ -333,9 +333,9 @@ export function getFCByJurisdictionId(
   state: Partial<Store>,
   jurisdictionId: string
 ): FeatureCollection<TaskGeoJSON> {
-  const geoJsonFeatures: TaskGeoJSON[] = values((state as any)[reducerName].tasksById)
-    .map(e => e.geojson)
-    .filter(e => e.properties.jurisdiction_id === jurisdictionId);
+  const geoJsonFeatures: TaskGeoJSON[] = getTasksGeoJsonData(state).filter(
+    e => e.properties.jurisdiction_id === jurisdictionId
+  );
   return wrapFeatureCollection(geoJsonFeatures);
 }
 
@@ -348,9 +348,9 @@ export function getFCByStructureId(
   state: Partial<Store>,
   structureId: string
 ): FeatureCollection<TaskGeoJSON> {
-  const geoJsonFeatures: TaskGeoJSON[] = values((state as any)[reducerName].tasksById)
-    .map(e => e.geojson)
-    .filter(e => e.properties.structure_id === structureId);
+  const geoJsonFeatures: TaskGeoJSON[] = getTasksGeoJsonData(state).filter(
+    e => e.properties.structure_id === structureId
+  );
   return wrapFeatureCollection(geoJsonFeatures);
 }
 
@@ -365,11 +365,9 @@ export function getFCByPlanAndJurisdiction(
   planId: string,
   jurisdictionId: string
 ): FeatureCollection<TaskGeoJSON> {
-  const geoJsonFeatures: TaskGeoJSON[] = values((state as any)[reducerName].tasksById)
-    .map(e => e.geojson)
-    .filter(
-      e => e.properties.plan_id === planId && e.properties.jurisdiction_id === jurisdictionId
-    );
+  const geoJsonFeatures: TaskGeoJSON[] = getTasksGeoJsonData(state).filter(
+    e => e.properties.plan_id === planId && e.properties.jurisdiction_id === jurisdictionId
+  );
   return wrapFeatureCollection(geoJsonFeatures);
 }
 
@@ -386,13 +384,11 @@ export function getFCByPlanAndGoalAndJurisdiction(
   goalId: string,
   jurisdictionId: string
 ): FeatureCollection<TaskGeoJSON> {
-  const geoJsonFeatures: TaskGeoJSON[] = values((state as any)[reducerName].tasksById)
-    .map(e => e.geojson)
-    .filter(
-      e =>
-        e.properties.plan_id === planId &&
-        e.properties.goal_id === goalId &&
-        e.properties.jurisdiction_id === jurisdictionId
-    );
+  const geoJsonFeatures: TaskGeoJSON[] = getTasksGeoJsonData(state).filter(
+    e =>
+      e.properties.plan_id === planId &&
+      e.properties.goal_id === goalId &&
+      e.properties.jurisdiction_id === jurisdictionId
+  );
   return wrapFeatureCollection(geoJsonFeatures);
 }
