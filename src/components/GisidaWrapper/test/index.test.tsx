@@ -24,7 +24,7 @@ describe('renders GisidaWrapper correctly', () => {
     );
   });
 
-  it('renders map component without tasks goes through', () => {
+  it('renders map component without tasks', () => {
     const props = {
       geoData: fixtures.jurisdictions[0],
       goal: fixtures.goals,
@@ -43,7 +43,7 @@ describe('renders GisidaWrapper correctly', () => {
     wrapper.unmount();
   });
 
-  it('Renders map component with tasks', () => {
+  it('renders map component with tasks', () => {
     const props1 = {
       currentGoal: null,
       geoData: fixtures.jurisdictions[2],
