@@ -7,7 +7,7 @@ import * as React from 'react';
 import { DEFAULT_MAP_COLOR } from '../../colors';
 import Loading from '../../components/page/Loading/index';
 import { GISIDA_MAPBOX_TOKEN, GISIDA_ONADATA_API_TOKEN } from '../../configs/env';
-import { circleLayerConfig, fillLayerConfig } from '../../configs/settings';
+import { circleLayerConfig, fillLayerConfig, lineLayerConfig } from '../../configs/settings';
 import {
   APP,
   DEFAULT_LAYER_LINE_OPACITY,
@@ -331,20 +331,15 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
     }
     const layers: LineLayerObj[] | FillLayerObj[] | PointLayerObj[] | FlexObject = [
       {
+        ...lineLayerConfig,
         id: `${MAIN_PLAN}-${geoData.jurisdiction_id}`,
-        paint: {
-          'line-color': DEFAULT_MAP_COLOR,
-          'line-opacity': DEFAULT_LAYER_LINE_OPACITY,
-          'line-width': DEFAULT_LAYER_LINE_WIDTH,
-        },
         source: {
+          ...lineLayerConfig.source,
           data: {
+            ...lineLayerConfig.source.data,
             data: JSON.stringify(locations),
-            type: STRINGIFIED_GEOJSON,
           },
-          type: GEOJSON,
         },
-        type: DEFAULT_LINE_TYPE,
         visible: true,
       },
     ];
