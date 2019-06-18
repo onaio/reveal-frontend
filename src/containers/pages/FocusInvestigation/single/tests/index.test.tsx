@@ -12,7 +12,11 @@ import { fetchPlans } from '../../../../../store/ducks/plans';
 import * as fixtures from '../../../../../store/ducks/tests/fixtures';
 import ConnectedSingleFI, { SingleFI } from '../../single';
 
-jest.mock('../../../../../components/GisidaWrapper');
+jest.mock('../../../../../components/GisidaWrapper', () => {
+  const GisidaWrapperMock = () => <div>I love oov</div>;
+  return GisidaWrapperMock;
+});
+
 jest.mock('../../../../../configs/env');
 
 const history = createBrowserHistory();
@@ -72,7 +76,7 @@ describe('containers/pages/SingleFI', () => {
       </Router>
     );
     expect(toJson(wrapper)).toMatchSnapshot();
-    expect(wrapper.find('GisidaWrapper').props()).toMatchSnapshot();
+    expect(wrapper.find('GisidaWrapperMock').props()).toMatchSnapshot();
     wrapper.unmount();
   });
 
@@ -101,7 +105,7 @@ describe('containers/pages/SingleFI', () => {
         <SingleFI {...props} />
       </Router>
     );
-    expect(wrapper.find('GisidaWrapper').length).toEqual(0);
+    expect(wrapper.find('GisidaWrapperMock').length).toEqual(0);
     wrapper.unmount();
   });
 
@@ -129,7 +133,7 @@ describe('containers/pages/SingleFI', () => {
       </Provider>
     );
     expect(toJson(wrapper)).toMatchSnapshot();
-    expect(wrapper.find('GisidaWrapper').props()).toMatchSnapshot();
+    expect(wrapper.find('GisidaWrapperMock').props()).toMatchSnapshot();
     wrapper.unmount();
   });
 });
