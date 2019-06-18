@@ -402,8 +402,8 @@ Object {
 
 exports[`components/GisidaWrapper renders map component with tasks 3`] = `
 Object {
-  "accessToken": "pk.eyJ1Ijoib25hIiwiYSI6IlVYbkdyclkifQ.0Bz-QOOXZZK01dq4MuMImQ",
-  "apiAccessToken": "138a7ff6dfdcb5b4e41eb2d39bcc76ce5d296e89",
+  "accessToken": Any<String>,
+  "apiAccessToken": Any<String>,
   "appName": "TLv1_02",
   "loaded": true,
   "mapConfig": Object {
@@ -1351,7 +1351,7 @@ Object {
   "primaryLayer": "",
   "primarySubLayer": "",
   "reloadLayerId": null,
-  "reloadLayers": 0.9125976831212261,
+  "reloadLayers": Any<Number>,
   "showFilterPanel": false,
   "showProfile": false,
   "showSpinner": false,
@@ -1900,8 +1900,8 @@ Object {
 
 exports[`components/GisidaWrapper renders map component without tasks 6`] = `
 Object {
-  "accessToken": "pk.eyJ1Ijoib25hIiwiYSI6IlVYbkdyclkifQ.0Bz-QOOXZZK01dq4MuMImQ",
-  "apiAccessToken": "138a7ff6dfdcb5b4e41eb2d39bcc76ce5d296e89",
+  "accessToken": Any<String>,
+  "apiAccessToken": Any<String>,
   "appName": "TLv1_01",
   "loaded": true,
   "mapConfig": Object {
@@ -2192,7 +2192,7 @@ Object {
   "primaryLayer": "",
   "primarySubLayer": "",
   "reloadLayerId": null,
-  "reloadLayers": 0.23018661077126357,
+  "reloadLayers": Any<Number>,
   "showFilterPanel": false,
   "showProfile": false,
   "showSpinner": false,
