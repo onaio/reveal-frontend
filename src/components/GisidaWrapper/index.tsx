@@ -1,5 +1,6 @@
 import GeojsonExtent from '@mapbox/geojson-extent';
 import reducerRegistry from '@onaio/redux-reducer-registry';
+import { Feature } from 'geojson';
 import { Actions, ducks, loadLayers } from 'gisida';
 import { Map } from 'gisida-react';
 import { FillPaint, LinePaint, Style, SymbolPaint } from 'mapbox-gl';
@@ -16,14 +17,14 @@ import {
   MULTI_POLYGON,
   NO_GEOMETRIES_RESPONSE,
   POINT,
-  POLYGON,
+  POLYGON,STRINGIFIED_GEOJSON,
 } from '../../constants';
 import { EventData } from '../../helpers/mapbox';
-import { ConfigStore, FlexObject } from '../../helpers/utils';
+import { ConfigStore,FeatureCollection, FlexObject } from '../../helpers/utils';
 import store from '../../store';
 import { Goal } from '../../store/ducks/goals';
 import { Jurisdiction, JurisdictionGeoJSON } from '../../store/ducks/jurisdictions';
-import { Task } from '../../store/ducks/tasks';
+import { Task, TaskGeoJSON } from '../../store/ducks/tasks';
 import './gisida.css';
 
 /** handlers Interface */
@@ -92,9 +93,11 @@ interface GisidaState {
   doRenderMap: boolean;
   geoData: Jurisdiction | false;
   hasGeometries: boolean | false;
-  tasks: Task[] | null;
+  //tasks: Task[] | null;
   initMapWithoutTasks: boolean | false;
   renderTasks: boolean | false;
+  featureCollection: FeatureCollection<TaskGeoJSON>;
+  initMapWithoutFC: boolean | false;
 }
 /** GisidaWrapper Props Interface */
 interface GisidaProps {
@@ -102,9 +105,10 @@ interface GisidaProps {
   geoData: Jurisdiction | null;
   goal?: Goal[] | null;
   handlers: Handlers[];
-  tasks: Task[] | null;
+  //tasks: Task[] | null;
   minHeight?: string;
   basemapStyle?: string | Style;
+  featureCollection: FeatureCollection<TaskGeoJSON> | null
 }
 
 /** Returns a single layer configuration */
@@ -121,7 +125,8 @@ export const defaultGisidaProps: GisidaProps = {
   geoData: null,
   goal: null,
   handlers: [],
-  tasks: null,
+  //tasks: null,
+  featureCollection: null,
 };
 
 /** Wrapper component for Gisida-powered maps */
@@ -139,7 +144,9 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
       initMapWithoutTasks: false,
       locations: false,
       renderTasks: false,
-      tasks: this.props.tasks || null,
+      //tasks: this.props.tasks || false, // so this is replaced by feature collection
+      featureCollection: this.props.featureCollection || false, // why is this or false though
+      initMapWithoutFC: false,
     };
 
     if (!initialState.APP && ducks.APP) {
@@ -151,9 +158,14 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
   }
 
   public componentWillMount() {
-    if (!this.props.tasks) {
+    // if (!this.props.tasks) { // guess we are gonna be initmapwithoutFeaturecollection
+    //   this.setState({
+    //     initMapWithoutTasks: true,
+    //   });
+    // }
+    if (!this.props.featureCollection.features) {
       this.setState({
-        initMapWithoutTasks: true,
+        initMapWithoutFC: true,
       });
     }
   }
@@ -161,9 +173,13 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
   public componentDidMount() {
     if (!this.state.locations) {
       this.setState(
+        // {
+        //   doInitMap: true,
+        //   initMapWithoutTasks: false, // how is locations related to tasks and why does it lead to initMapWithout Tasks being false, how does geoData come in
+        // }
         {
           doInitMap: true,
-          initMapWithoutTasks: false,
+          initMapWithoutFC: false, // still need to know why? here
         },
         () => {
           this.getLocations(this.props.geoData);
@@ -186,12 +202,25 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
       );
     }
 
+    // if (
+    //   (!(nextProps.tasks && nextProps.tasks.length) && !this.state.initMapWithoutTasks) ||
+    //   typeof nextProps.tasks === 'undefined'
+    // ) {
+    //   this.setState({ doInitMap: true, initMapWithoutTasks: true }, () => {
+    //     // Dirty work around! Arbitrary delay to allow style load before adding layers
+    //     setTimeout(() => {
+    //       this.initMap(null);
+    //     }, 3000);
+    //   });
+    // }
     if (
-      (!(nextProps.tasks && nextProps.tasks.length) && !this.state.initMapWithoutTasks) ||
-      nextProps.tasks === null
+      (!(nextProps.featureCollection.features && nextProps.featureCollection.features.length) && // dont think using array length as boolean in js is a good idea. Research on which is better, using length or an utility like lodash's some
+        !this.state.initMapWithoutTasks) ||
+      typeof nextProps.featureCollectin.features === 'undefined'
     ) {
-      this.setState({ doInitMap: true, initMapWithoutTasks: true }, () => {
-        // Dirty work around! Arbitrary delay to allow style load before adding layers
+      this.setState({ doInitMap: true, initMapWithoutFC: true }, () => {
+        // setState apparently takes a callback
+        //     // Dirty work around! Arbitrary delay to allow style load before adding layers
         setTimeout(() => {
           this.initMap(null);
         }, 3000);
@@ -199,16 +228,26 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
     }
   }
 
-  public componentWillUpdate(nextProps: GisidaProps) {
+  public componentWillUpdate(nextProps: FlexObject) {
+    // if (
+    //   // this is where the task data rerenders on change of the current Goal
+    //   nextProps.tasks &&
+    //   nextProps.tasks.length &&
+    //   (nextProps.currentGoal !== this.props.currentGoal &&
+    //     (this.state.locations || this.state.doInitMap))
+    // ) {
+    //   this.setState({ doInitMap: false, initMapWithoutTasks: false }, () => {
+    //     this.initMap(nextProps.tasks);
+    //   });
+    // }
     if (
-      (nextProps.tasks &&
-        nextProps.tasks.length &&
-        (nextProps.currentGoal !== this.props.currentGoal &&
-          (this.state.locations || this.state.doInitMap))) ||
-      typeof nextProps.currentGoal === 'undefined'
+      nextProps.featureCollection.features &&
+      nextProps.featureCollection.features.length &&
+      nextProps.currentGoal !== this.props.currentGoal &&
+      (this.state.locations || this.state.doInitMap)
     ) {
-      this.setState({ doInitMap: false, initMapWithoutTasks: false }, () => {
-        this.initMap(nextProps.tasks);
+      this.setState({ doInitMap: false, initMapWithoutFC: false }, () => {
+        this.initMap(nextProps.featureCollection.features);
       });
     }
   }
