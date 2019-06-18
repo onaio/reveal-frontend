@@ -4,6 +4,7 @@ import { Actions, ducks, loadLayers } from 'gisida';
 import { Map } from 'gisida-react';
 import { FillPaint, LinePaint, SymbolPaint } from 'mapbox-gl';
 import * as React from 'react';
+import { DEFAULT_MAP_COLOR } from '../../colors';
 import Loading from '../../components/page/Loading/index';
 import { GISIDA_MAPBOX_TOKEN, GISIDA_ONADATA_API_TOKEN } from '../../configs/env';
 import { circleLayerConfig, fillLayerConfig } from '../../configs/settings';
@@ -332,7 +333,7 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
       {
         id: `${MAIN_PLAN}-${geoData.jurisdiction_id}`,
         paint: {
-          'line-color': '#FFDC00',
+          'line-color': DEFAULT_MAP_COLOR,
           'line-opacity': DEFAULT_LAYER_LINE_OPACITY,
           'line-width': DEFAULT_LAYER_LINE_WIDTH,
         },
