@@ -181,6 +181,7 @@ export const lineLayerConfig = {
   visible: false,
 };
 
+/** Fill layer configuration */
 export const fillLayerConfig = {
   id: 'single-jurisdiction',
   paint: {
