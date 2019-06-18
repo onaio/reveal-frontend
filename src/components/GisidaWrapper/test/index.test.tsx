@@ -1,8 +1,11 @@
+import reducerRegistry from '@onaio/redux-reducer-registry';
 import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
+import { ducks } from 'gisida';
 import { createBrowserHistory } from 'history';
 import React from 'react';
 import { Router } from 'react-router';
+import { APP, MAP_ID } from '../../../constants';
 import * as fixtures from '../../../store/ducks/tests/fixtures';
 import GisidaWrapper from '../index';
 
@@ -10,6 +13,9 @@ jest.mock('gisida-react', () => {
   const MapComponent = () => <div>I love oov</div>;
   return { Map: MapComponent };
 });
+
+reducerRegistry.register(APP, ducks.APP.default);
+reducerRegistry.register(MAP_ID, ducks.MAP.default);
 
 /** The test requires mapbox-gl-js mock to test Gisida's Map child component. Check https://github.com/mapbox/mapbox-gl-js/issues/5026  for more info */
 // Work in Progress
