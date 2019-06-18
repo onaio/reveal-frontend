@@ -4,25 +4,19 @@ import { Actions, ducks, loadLayers } from 'gisida';
 import { Map } from 'gisida-react';
 import { FillPaint, LinePaint, SymbolPaint } from 'mapbox-gl';
 import * as React from 'react';
-import { DEFAULT_MAP_COLOR } from '../../colors';
 import Loading from '../../components/page/Loading/index';
 import { GISIDA_MAPBOX_TOKEN, GISIDA_ONADATA_API_TOKEN } from '../../configs/env';
 import { circleLayerConfig, fillLayerConfig, lineLayerConfig } from '../../configs/settings';
 import {
   APP,
-  DEFAULT_LAYER_LINE_OPACITY,
-  DEFAULT_LAYER_LINE_WIDTH,
-  DEFAULT_LINE_TYPE,
   FEATURE,
   FEATURE_COLLECTION,
-  GEOJSON,
   MAIN_PLAN,
   MAP_ID,
   MULTI_POLYGON,
   NO_GEOMETRIES_RESPONSE,
   POINT,
   POLYGON,
-  STRINGIFIED_GEOJSON,
 } from '../../constants';
 import { ConfigStore, FlexObject } from '../../helpers/utils';
 import store from '../../store';
