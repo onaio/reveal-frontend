@@ -203,6 +203,7 @@ export const fillLayerConfig = {
   visible: false,
 };
 
+/** Circle layer configuration */
 export const circleLayerConfig = {
   categories: {
     color: '#ff0000',
