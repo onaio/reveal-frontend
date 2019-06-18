@@ -1,4 +1,5 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
+import { Feature } from 'geojson';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
@@ -30,7 +31,7 @@ import {
 } from '../../../../../constants';
 import { popupHandler } from '../../../../../helpers/handlers';
 import { getGoalReport } from '../../../../../helpers/indicators';
-import { FlexObject, RouteParams } from '../../../../../helpers/utils';
+import { FlexObject,FeatureCollection, RouteParams } from '../../../../../helpers/utils';
 import supersetFetch from '../../../../../services/superset';
 import goalsReducer, {
   fetchGoals,
@@ -54,9 +55,11 @@ import plansReducer, {
 } from '../../../../../store/ducks/plans';
 import tasksReducer, {
   fetchTasks,
+  getFCByPlanAndGoalAndJurisdiction,
   getTasksByPlanAndGoalAndJurisdiction,
   reducerName as tasksReducerName,
   Task,
+  TaskGeoJSON,
 } from '../../../../../store/ducks/tasks';
 import './style.css';
 /** register reducers */
@@ -68,6 +71,7 @@ reducerRegistry.register(tasksReducerName, tasksReducer);
 /** interface to describe props for ActiveFI Map component */
 export interface MapSingleFIProps {
   currentGoal: string | null;
+  featureCollection: FeatureCollection<TaskGeoJSON>;
   fetchGoalsActionCreator: typeof fetchGoals;
   fetchJurisdictionsActionCreator: typeof fetchJurisdictions;
   fetchPlansActionCreator: typeof fetchPlans;
@@ -78,9 +82,16 @@ export interface MapSingleFIProps {
   tasks: Task[] | null;
 }
 
+/** default value for feature Collection */
+const defaultFeatureCollection: FeatureCollection<TaskGeoJSON> = {
+  features: [],
+  type: 'FeatureCollection',
+};
+
 /** default props for ActiveFI Map component */
 export const defaultMapSingleFIProps: MapSingleFIProps = {
   currentGoal: null,
+  featureCollection: defaultFeatureCollection,
   fetchGoalsActionCreator: fetchGoals,
   fetchJurisdictionsActionCreator: fetchJurisdictions,
   fetchPlansActionCreator: fetchPlans,
@@ -124,7 +135,14 @@ class SingleActiveFIMap extends React.Component<
   }
 
   public render() {
-    const { jurisdiction, plan, goals, tasks, currentGoal } = this.props;
+    const {
+      jurisdiction,
+      plan,
+      goals,
+      tasks,
+      currentGoal,
+      featureCollection,
+    } = this.props;
     if (!jurisdiction || !plan) {
       return <Loading />;
     }
@@ -171,7 +189,7 @@ class SingleActiveFIMap extends React.Component<
                 handlers={this.buildHandlers()}
                 geoData={jurisdiction}
                 goal={goals}
-                tasks={tasks}
+                tasks={tasks} // replace this with Feature collection, maybe object of feature collection keyed by the type of features
                 currentGoal={currentGoal}
               />
             </div>
@@ -237,6 +255,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
   let jurisdiction = null;
   let tasks = null;
   let currentGoal = null;
+  let featureCollection = defaultFeatureCollection;
   if (plan) {
     jurisdiction = getJurisdictionById(state, plan.jurisdiction_id);
     goals = getGoalsByPlanAndJurisdiction(state, plan.plan_id, plan.jurisdiction_id);
@@ -249,9 +268,18 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
       plan.jurisdiction_id
     );
     currentGoal = ownProps.match.params.goalId;
+    /** DIRTY MANGY hack  to be improved by getting the goal_id from  the sidebar selection */
+    featureCollection = getFCByPlanAndGoalAndJurisdiction(
+      state,
+      plan.plan_id,
+      ownProps.match.params.goalId,
+      plan.jurisdiction_id,
+      false
+    );
   }
   return {
     currentGoal,
+    featureCollection,
     goals,
     jurisdiction,
     plan,
