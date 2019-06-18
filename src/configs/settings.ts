@@ -159,6 +159,7 @@ export const pointLayerConfig = {
   visible: false,
 };
 
+/** Line layer configuration */
 export const lineLayerConfig = {
   id: 'single-jurisdiction',
   paint: {
