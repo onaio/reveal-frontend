@@ -1,19 +1,403 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`renders GisidaWrapper correctly renders map component with tasks 1`] = `
-<MapComponent
-  handlers={Array []}
-  mapId="map-1"
-  store={
+<GisidaWrapper
+  currentGoal="RACD_bednet_dist_1km_radius"
+  geoData={
     Object {
-      "dispatch": [Function],
-      "getState": [Function],
-      "replaceReducer": [Function],
-      "subscribe": [Function],
-      Symbol(observable): [Function],
+      "geojson": Object {
+        "geometry": Object {
+          "coordinates": Array [
+            Array [
+              Array [
+                101.19704246521,
+                15.0950795263559,
+              ],
+              Array [
+                101.194038391113,
+                15.0953281335118,
+              ],
+              Array [
+                101.192235946655,
+                15.0947480496953,
+              ],
+              Array [
+                101.190090179443,
+                15.0938364862116,
+              ],
+              Array [
+                101.188459396362,
+                15.0930077887413,
+              ],
+              Array [
+                101.187858581543,
+                15.091764736475,
+              ],
+              Array [
+                101.187686920166,
+                15.0895272240692,
+              ],
+              Array [
+                101.188201904297,
+                15.088201279674,
+              ],
+              Array [
+                101.190690994263,
+                15.0879526641789,
+              ],
+              Array [
+                101.193265914917,
+                15.0872068159487,
+              ],
+              Array [
+                101.195669174194,
+                15.08662670996,
+              ],
+              Array [
+                101.196699142456,
+                15.0862952201128,
+              ],
+              Array [
+                101.198244094849,
+                15.0853007474691,
+              ],
+              Array [
+                101.199789047241,
+                15.0855493660662,
+              ],
+              Array [
+                101.200733184814,
+                15.086460965101,
+              ],
+              Array [
+                101.201505661011,
+                15.087372560226,
+              ],
+              Array [
+                101.20210647583,
+                15.0896929665368,
+              ],
+              Array [
+                101.202192306519,
+                15.0916818660653,
+              ],
+              Array [
+                101.201848983765,
+                15.0933392681173,
+              ],
+              Array [
+                101.198930740356,
+                15.0943337031422,
+              ],
+              Array [
+                101.19704246521,
+                15.0950795263559,
+              ],
+            ],
+          ],
+          "type": "Polygon",
+        },
+        "id": "304cbcd4-0850-404a-a8b1-486b02f7b84d",
+        "properties": Object {
+          "jurisdiction_name": "TLv1_02",
+          "jurisdiction_parent_id": "dad42fa6-b9b8-4658-bf25-bfa7ab5b16ae",
+        },
+        "type": "Feature",
+      },
+      "jurisdiction_id": "304cbcd4-0850-404a-a8b1-486b02f7b84d",
     }
   }
-/>
+  goal={
+    Array [
+      Object {
+        "action_code": "Case Confirmation",
+        "completed_task_count": 0,
+        "goal_comparator": "=",
+        "goal_id": "Case_Confirmation",
+        "goal_unit": "each",
+        "goal_value": 1,
+        "id": "5a27ec10-7a5f-563c-ba11-4de150b336af",
+        "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
+        "measure": "Case confirmation complete",
+        "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+        "task_business_status_map": Object {},
+        "task_count": 0,
+      },
+      Object {
+        "action_code": "Larval Dipping",
+        "completed_task_count": 0,
+        "goal_comparator": ">=",
+        "goal_id": "Larval_Dipping_Min_3_Sites",
+        "goal_unit": "each",
+        "goal_value": 3,
+        "id": "f8d4e0a9-5867-5c78-9e26-de45d72556c4",
+        "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
+        "measure": "Number of larval dipping activities",
+        "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+        "task_business_status_map": Object {
+          "Not Visited": 2,
+        },
+        "task_count": 2,
+      },
+      Object {
+        "action_code": "Blood Screening",
+        "completed_task_count": 0,
+        "goal_comparator": "=",
+        "goal_id": "RACD_blood_screening_1km_radius",
+        "goal_unit": "percent",
+        "goal_value": 100,
+        "id": "19b86421-3cb2-5698-9f11-c1bdafbe5e6d",
+        "jurisdiction_id": "1337",
+        "measure": "Percent of registered people tested",
+        "plan_id": "1337",
+        "task_business_status_map": Object {},
+        "task_count": 0,
+      },
+      Object {
+        "action_code": "Mosquito Collection",
+        "completed_task_count": 3,
+        "goal_comparator": ">=",
+        "goal_id": "Mosquito_Collection_Min_3_Traps",
+        "goal_unit": "traps",
+        "goal_value": 3,
+        "id": "0f03cef6-1654-5bba-8898-1d2a8000e5b1",
+        "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
+        "measure": "Number of mosquito collection traps",
+        "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+        "task_business_status_map": Object {
+          "Complete": 3,
+          "In Progress": 3,
+          "Incomplete": 1,
+          "Not Eligible": 6,
+          "Not Visited": 5,
+        },
+        "task_count": 18,
+      },
+      Object {
+        "action_code": "Bednet Distribution",
+        "completed_task_count": 4,
+        "goal_comparator": ">=",
+        "goal_id": "RACD_bednet_dist_1km_radius",
+        "goal_unit": "percent",
+        "goal_value": 100,
+        "id": "e50f7156-c80e-541e-a24c-0b3e0d95b868",
+        "jurisdiction_id": "304cbcd4-0850-404a-a8b1-486b02f7b84d",
+        "measure": "Percent of residential structures visited",
+        "plan_id": "89fh38sg-h83s-9xf2-a7h2-pl98dh320lbc",
+        "task_business_status_map": Object {
+          "Complete": 4,
+          "Not Visited": 11,
+        },
+        "task_count": 15,
+      },
+    ]
+  }
+  handlers={Array []}
+  tasks={
+    Array [
+      Object {
+        "geojson": Object {
+          "geometry": Object {
+            "coordinates": Array [
+              Array [
+                Array [
+                  101.18838429451,
+                  15.0904724723464,
+                ],
+                Array [
+                  101.188470125198,
+                  15.0904724723464,
+                ],
+                Array [
+                  101.188470125198,
+                  15.0905915992282,
+                ],
+                Array [
+                  101.18838429451,
+                  15.0905915992282,
+                ],
+                Array [
+                  101.18838429451,
+                  15.0904724723464,
+                ],
+              ],
+            ],
+            "type": "Polygon",
+          },
+          "id": "250399fc-12e9-415e-aadf-ee3d009fcdf6",
+          "properties": Object {
+            "action_code": "Bednet Distribution",
+            "color": "#ff3",
+            "goal_id": "RACD_bednet_dist_1km_radius",
+            "jurisdiction_id": "304cbcd4-0850-404a-a8b1-486b02f7b84d",
+            "jurisdiction_name": "TLv1_02",
+            "jurisdiction_parent_id": "dad42fa6-b9b8-4658-bf25-bfa7ab5b16ae",
+            "plan_id": "89fh38sg-h83s-9xf2-a7h2-pl98dh320lbc",
+            "structure_code": "0a840508-d1ac-4082-89f8-c1ffabdfe976",
+            "structure_id": "0a840508-d1ac-4082-89f8-c1ffabdfe976",
+            "structure_name": "0a840508-d1ac-4082-89f8-c1ffabdfe976",
+            "structure_type": "0a840508-d1ac-4082-89f8-c1ffabdfe976",
+            "task_business_status": "Not Visited",
+            "task_execution_end_date": "2019-06-18",
+            "task_execution_start_date": "2019-06-15",
+            "task_focus": "Bednet Distribution",
+            "task_status": "Ready",
+            "task_task_for": "0a840508-d1ac-4082-89f8-c1ffabdfe976",
+          },
+          "type": "Feature",
+        },
+        "goal_id": "RACD_bednet_dist_1km_radius",
+        "jurisdiction_id": "304cbcd4-0850-404a-a8b1-486b02f7b84d",
+        "plan_id": "89fh38sg-h83s-9xf2-a7h2-pl98dh320lbc",
+        "task_identifier": "250399fc-12e9-415e-aadf-ee3d009fcdf6",
+      },
+      Object {
+        "geojson": Object {
+          "geometry": Object {
+            "coordinates": Array [
+              Array [
+                Array [
+                  101.18939012289,
+                  15.091948605081,
+                ],
+                Array [
+                  101.189454495907,
+                  15.091948605081,
+                ],
+                Array [
+                  101.189454495907,
+                  15.0920547826543,
+                ],
+                Array [
+                  101.18939012289,
+                  15.0920547826543,
+                ],
+                Array [
+                  101.18939012289,
+                  15.091948605081,
+                ],
+              ],
+            ],
+            "type": "Polygon",
+          },
+          "id": "18049c84-8762-4951-904d-44485b4df3f0",
+          "properties": Object {
+            "action_code": "Bednet Distribution",
+            "color": "#ff0000",
+            "goal_id": "RACD_bednet_dist_1km_radius",
+            "jurisdiction_id": "304cbcd4-0850-404a-a8b1-486b02f7b84d",
+            "jurisdiction_name": "TLv1_02",
+            "jurisdiction_parent_id": "dad42fa6-b9b8-4658-bf25-bfa7ab5b16ae",
+            "plan_id": "89fh38sg-h83s-9xf2-a7h2-pl98dh320lbc",
+            "structure_code": "3d5bec31-14f6-4baa-a68b-fdcc37918991",
+            "structure_id": "3d5bec31-14f6-4baa-a68b-fdcc37918991",
+            "structure_name": "3d5bec31-14f6-4baa-a68b-fdcc37918991",
+            "structure_type": "3d5bec31-14f6-4baa-a68b-fdcc37918991",
+            "task_business_status": "Not Visited",
+            "task_execution_end_date": "2019-06-18",
+            "task_execution_start_date": "2019-06-15",
+            "task_focus": "Bednet Distribution",
+            "task_status": "Ready",
+            "task_task_for": "3d5bec31-14f6-4baa-a68b-fdcc37918991",
+          },
+          "type": "Feature",
+        },
+        "goal_id": "RACD_bednet_dist_1km_radius",
+        "jurisdiction_id": "304cbcd4-0850-404a-a8b1-486b02f7b84d",
+        "plan_id": "89fh38sg-h83s-9xf2-a7h2-pl98dh320lbc",
+        "task_identifier": "18049c84-8762-4951-904d-44485b4df3f0",
+      },
+      Object {
+        "geojson": Object {
+          "geometry": Object {
+            "coordinates": Array [
+              Array [
+                Array [
+                  101.188456714153,
+                  15.0921402426137,
+                ],
+                Array [
+                  101.188577413559,
+                  15.0921402426137,
+                ],
+                Array [
+                  101.188577413559,
+                  15.0922153437619,
+                ],
+                Array [
+                  101.188456714153,
+                  15.0922153437619,
+                ],
+                Array [
+                  101.188456714153,
+                  15.0921402426137,
+                ],
+              ],
+            ],
+            "type": "Polygon",
+          },
+          "id": "16a794e4-46de-4733-8f4d-9d0b9db8b298",
+          "properties": Object {
+            "action_code": "Bednet Distribution",
+            "color": "#000000",
+            "goal_id": "RACD_bednet_dist_1km_radius",
+            "jurisdiction_id": "304cbcd4-0850-404a-a8b1-486b02f7b84d",
+            "jurisdiction_name": "TLv1_02",
+            "jurisdiction_parent_id": "dad42fa6-b9b8-4658-bf25-bfa7ab5b16ae",
+            "plan_id": "89fh38sg-h83s-9xf2-a7h2-pl98dh320lbc",
+            "structure_code": "c15f5b44-ff72-44f3-b0bd-e2399462a536",
+            "structure_id": "c15f5b44-ff72-44f3-b0bd-e2399462a536",
+            "structure_name": "c15f5b44-ff72-44f3-b0bd-e2399462a536",
+            "structure_type": "c15f5b44-ff72-44f3-b0bd-e2399462a536",
+            "task_business_status": "Not Visited",
+            "task_execution_end_date": "2019-06-18",
+            "task_execution_start_date": "2019-06-15",
+            "task_focus": "Bednet Distribution",
+            "task_status": "Ready",
+            "task_task_for": "c15f5b44-ff72-44f3-b0bd-e2399462a536",
+          },
+          "type": "Feature",
+        },
+        "goal_id": "RACD_bednet_dist_1km_radius",
+        "jurisdiction_id": "304cbcd4-0850-404a-a8b1-486b02f7b84d",
+        "plan_id": "89fh38sg-h83s-9xf2-a7h2-pl98dh320lbc",
+        "task_identifier": "16a794e4-46de-4733-8f4d-9d0b9db8b298",
+      },
+    ]
+  }
+>
+  <MapComponent
+    handlers={Array []}
+    mapId="map-1"
+    store={
+      Object {
+        "dispatch": [Function],
+        "getState": [Function],
+        "replaceReducer": [Function],
+        "subscribe": [Function],
+        Symbol(observable): [Function],
+      }
+    }
+  >
+    <div>
+      I love oov
+    </div>
+  </MapComponent>
+</GisidaWrapper>
+`;
+
+exports[`renders GisidaWrapper correctly renders map component with tasks 2`] = `
+Object {
+  "handlers": Array [],
+  "mapId": "map-1",
+  "store": Object {
+    "dispatch": [Function],
+    "getState": [Function],
+    "replaceReducer": [Function],
+    "subscribe": [Function],
+    Symbol(observable): [Function],
+  },
+}
 `;
 
 exports[`renders GisidaWrapper correctly renders map component without tasks 1`] = `
