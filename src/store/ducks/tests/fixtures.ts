@@ -45,7 +45,7 @@ export const plan5 = {
   plan_id: 'e9c9a069-7d22-44c0-a59e-9a483948716b',
   plan_intervention_type: 'FI',
   plan_status: 'active',
-  plan_title: 'A1-Ban Chamrak Mu-Focus 02 Rubber Plantation',
+  plan_title: 'A1 - Ban Chamrak Mu - Focus 02 Rubber Plantation',
 };
 
 export const plan6 = {
