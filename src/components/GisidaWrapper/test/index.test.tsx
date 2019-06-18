@@ -52,7 +52,7 @@ describe('renders GisidaWrapper correctly', () => {
       tasks: fixtures.bednetTasks,
     };
     const props = {
-      currentGoal: fixtures.task1.goal_id,
+      currentGoal: fixtures.task6.goal_id,
       geoData: fixtures.jurisdictions[2],
       goal: fixtures.goals,
       handlers: [],
