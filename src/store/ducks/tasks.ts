@@ -3,6 +3,7 @@ import { get, keyBy, keys, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
 import SeamlessImmutable from 'seamless-immutable';
 import {
+  cleanObjCollection,
   FeatureCollection,
   GeoJSON,
   getColor,
@@ -275,15 +276,22 @@ export function getTasksByPlanAndGoalAndJurisdiction(
   );
 }
 
+/** responsible for only getting task geojson data for all tasks from reducer
+ * @param {state} - the store state
+ * @return {TaskGeoJSON []} - returns a list of all tasks' geojson whose geoms are not null
+ */
+function getTasksGeoJsonData(state: Partial<Store>): TaskGeoJSON[] {
+  const tasksGeoJsonFeatures = values((state as any)[reducerName].tasksById).map(e => e.geojson);
+  return cleanObjCollection(tasksGeoJsonFeatures, 'geometry');
+}
+
 /** get all tasks as a Feature Collection
  * @param {Partial<Store>} state - the redux store
  * @return {FeatureCollection<TaskGeoJSON>} - an geoJSON Feature Collection object
  */
 export function getAllFC(state: Partial<Store>): FeatureCollection<TaskGeoJSON> {
-  const geoJsonFeatures: TaskGeoJSON[] = values((state as any)[reducerName].tasksById).map(
-    e => e.geojson
-  );
-  return wrapFeatureCollection(geoJsonFeatures);
+  const allGeojsonFeatures = getTasksGeoJsonData(state);
+  return wrapFeatureCollection(allGeojsonFeatures);
 }
 
 /** get tasks as FeatureCollection filtered by goal_id
