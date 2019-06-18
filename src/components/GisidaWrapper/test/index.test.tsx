@@ -19,7 +19,7 @@ reducerRegistry.register(APP, ducks.APP.default);
 reducerRegistry.register(MAP_ID, ducks.MAP.default);
 
 const history = createBrowserHistory();
-describe('renders GisidaWrapper correctly', () => {
+describe('components/GisidaWrapper', () => {
   it('renders component without crashing', () => {
     const props = {
       geoData: fixtures.jurisdictions[0],
