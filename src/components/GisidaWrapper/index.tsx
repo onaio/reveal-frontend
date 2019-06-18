@@ -38,7 +38,7 @@ interface Handlers {
   type: string;
   method: (e: any) => void;
 }
-/** Layer Interfaces Types don't leverage typescript full potential */
+
 /** LineLayerObj Interface  */
 interface LineLayerObj {
   id: string;
