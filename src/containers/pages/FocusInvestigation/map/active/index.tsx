@@ -1,5 +1,4 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
-import mapboxgl from 'mapbox-gl';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
@@ -84,7 +83,10 @@ export const defaultMapSingleFIProps: MapSingleFIProps = {
   plan: null,
   tasks: null,
 };
-
+/** declare globals interface */
+declare global {
+  const mapboxgl: any;
+}
 /** Map View for Single Active Focus Investigation */
 class SingleActiveFIMap extends React.Component<
   RouteComponentProps<RouteParams> & MapSingleFIProps,
@@ -185,11 +187,12 @@ class SingleActiveFIMap extends React.Component<
          */
         method: function drillDownClick(e: any) {
           const features = e.target.queryRenderedFeatures(e.point);
-
           if (features[0] && Number(features[0].id) !== Number(self.props.match.params.id)) {
             const url =
               features && features[0] && features[0].id
                 ? features[0].id
+                : self.props.match.params.id && self.props.currentGoal
+                ? `${self.props.match.params.id}/${self.props.currentGoal}`
                 : self.props.match.params.id;
             self.props.history.push(`/focus-investigation/map/${url}`);
           }
@@ -201,21 +204,33 @@ class SingleActiveFIMap extends React.Component<
         /**
          * @param {any} synthetic event a wrapper event around native events
          */
-        method: function pointClick(e: any) {
-          const features = e.target.queryRenderedFeatures(e.point);
-          const coordinates = features[0].geometry.coordinates.slice();
-          const description = features[0].properties.action_code;
-          // Ensure that if the map is zoomed out such that multiple
-          // copies of the feature are visible, the popup appears
-          // over the copy being pointed to.
-          while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-            coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+        method: function pointClick(event: any) {
+          event.preventDefault();
+          const features = event.target.queryRenderedFeatures(event.point);
+          if (
+            features &&
+            features[0] &&
+            features[0].geometry &&
+            features[0].geometry.coordinates &&
+            features[0].properties &&
+            features[0].properties.action_code &&
+            features[0].layer.type !== 'fill'
+          ) {
+            const coordinates = features[0].geometry.coordinates.slice();
+            const description = features[0].properties.action_code;
+            /** Ensure that if the map is zoomed out such that multiple
+             * copies of the feature are visible,
+             * the popup appears over the copy being pointed to
+             */
+            while (Math.abs(event.lngLat.lng - coordinates[0]) > 180) {
+              coordinates[0] += event.lngLat.lng > coordinates[0] ? 360 : -360;
+            }
+            const windowObject: FlexObject = window;
+            new mapboxgl.Popup()
+              .setLngLat(coordinates)
+              .setHTML(description)
+              .addTo(windowObject.maps[0]);
           }
-          const windowObject: FlexObject = window;
-          new mapboxgl.Popup()
-            .setLngLat(coordinates)
-            .setHTML(description)
-            .addTo(windowObject.maps[0]);
         },
         name: 'pointClick',
         type: 'click',
