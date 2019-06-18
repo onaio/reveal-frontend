@@ -53,8 +53,13 @@ describe('components/GisidaWrapper', () => {
     expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 3000);
     expect(toJson(wrapper)).toMatchSnapshot();
     expect(wrapper.find('MapComponent').props()).toMatchSnapshot();
-    expect(store.getState().APP).toMatchSnapshot();
-    expect(store.getState()['map-1']).toMatchSnapshot();
+    expect(store.getState().APP).toMatchSnapshot({
+      accessToken: expect.any(String),
+      apiAccessToken: expect.any(String),
+    });
+    expect(store.getState()['map-1']).toMatchSnapshot({
+      reloadLayers: expect.any(Number),
+    });
     wrapper.unmount();
   });
 
@@ -82,8 +87,13 @@ describe('components/GisidaWrapper', () => {
     wrapper.setProps({ ...props });
     expect(toJson(wrapper)).toMatchSnapshot();
     expect(wrapper.find('MapComponent').props()).toMatchSnapshot();
-    expect(store.getState().APP).toMatchSnapshot();
-    expect(store.getState()['map-1']).toMatchSnapshot();
+    expect(store.getState().APP).toMatchSnapshot({
+      accessToken: expect.any(String),
+      apiAccessToken: expect.any(String),
+    });
+    expect(store.getState()['map-1']).toMatchSnapshot({
+      reloadLayers: expect.any(Number),
+    });
     wrapper.unmount();
   });
 });
