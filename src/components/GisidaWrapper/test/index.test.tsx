@@ -1,10 +1,15 @@
-import { shallow } from 'enzyme';
+import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import { createBrowserHistory } from 'history';
 import React from 'react';
 import { Router } from 'react-router';
 import * as fixtures from '../../../store/ducks/tests/fixtures';
 import GisidaWrapper from '../index';
+
+jest.mock('gisida-react', () => {
+  const MapComponent = () => <div>I love oov</div>;
+  return { Map: MapComponent };
+});
 
 /** The test requires mapbox-gl-js mock to test Gisida's Map child component. Check https://github.com/mapbox/mapbox-gl-js/issues/5026  for more info */
 // Work in Progress
@@ -31,15 +36,16 @@ describe('renders GisidaWrapper correctly', () => {
       handlers: [],
       tasks: null,
     };
-    const wrapper = shallow(<GisidaWrapper {...props} />);
+    const wrapper = mount(<GisidaWrapper {...props} />);
     expect(toJson(wrapper)).toMatchSnapshot();
     jest.useFakeTimers();
     wrapper.setProps({ ...props });
-
+    wrapper.setState({ doRenderMap: true });
     jest.runOnlyPendingTimers();
     expect(setTimeout).toHaveBeenCalledTimes(1);
     expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 3000);
     expect(toJson(wrapper)).toMatchSnapshot();
+    expect(wrapper.find('MapComponent').props()).toMatchSnapshot();
     wrapper.unmount();
   });
 
