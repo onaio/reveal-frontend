@@ -16,8 +16,8 @@ enum Operators {
 }
 
 /** something goes here */
-export function goalIndicator(goal: Goal) {
-  const percentAchieved: number = 0;
+export function goalPercentAchieved(goal: Goal): number {
+  let percentAchieved: number = 0;
   let achievedValue: number = goal.completed_task_count;
   const totalAttempts: number = goal.task_count;
   const targetValue: number = goal.goal_value;
@@ -31,11 +31,19 @@ export function goalIndicator(goal: Goal) {
     }
   }
 
+  if (targetValue === 0) {
+    return 0;
+  }
+
   if (goal.goal_comparator in [Operators.LessThan, Operators.LessThanOrEqual]) {
     // in this case we are targeting a reduction
+    percentAchieved = (targetValue - achievedValue) / targetValue;
   } else {
     // in this case we are targeting an increase
+    percentAchieved = (targetValue - achievedValue) / targetValue;
   }
+
+  return percentAchieved;
 }
 
 /** Returns a table cell rendered with different colors based on focus
