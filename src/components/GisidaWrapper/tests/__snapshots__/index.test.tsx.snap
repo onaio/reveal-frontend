@@ -1528,92 +1528,9 @@ exports[`components/GisidaWrapper renders map component without tasks 3`] = `
       "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
     }
   }
-  goal={
-    Array [
-      Object {
-        "action_code": "Case Confirmation",
-        "completed_task_count": 0,
-        "goal_comparator": "=",
-        "goal_id": "Case_Confirmation",
-        "goal_unit": "each",
-        "goal_value": 1,
-        "id": "5a27ec10-7a5f-563c-ba11-4de150b336af",
-        "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
-        "measure": "Case confirmation complete",
-        "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
-        "task_business_status_map": Object {},
-        "task_count": 0,
-      },
-      Object {
-        "action_code": "Larval Dipping",
-        "completed_task_count": 0,
-        "goal_comparator": ">=",
-        "goal_id": "Larval_Dipping_Min_3_Sites",
-        "goal_unit": "each",
-        "goal_value": 3,
-        "id": "f8d4e0a9-5867-5c78-9e26-de45d72556c4",
-        "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
-        "measure": "Number of larval dipping activities",
-        "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
-        "task_business_status_map": Object {
-          "Not Visited": 2,
-        },
-        "task_count": 2,
-      },
-      Object {
-        "action_code": "Blood Screening",
-        "completed_task_count": 0,
-        "goal_comparator": "=",
-        "goal_id": "RACD_blood_screening_1km_radius",
-        "goal_unit": "percent",
-        "goal_value": 100,
-        "id": "19b86421-3cb2-5698-9f11-c1bdafbe5e6d",
-        "jurisdiction_id": "1337",
-        "measure": "Percent of registered people tested",
-        "plan_id": "1337",
-        "task_business_status_map": Object {},
-        "task_count": 0,
-      },
-      Object {
-        "action_code": "Mosquito Collection",
-        "completed_task_count": 3,
-        "goal_comparator": ">=",
-        "goal_id": "Mosquito_Collection_Min_3_Traps",
-        "goal_unit": "traps",
-        "goal_value": 3,
-        "id": "0f03cef6-1654-5bba-8898-1d2a8000e5b1",
-        "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
-        "measure": "Number of mosquito collection traps",
-        "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
-        "task_business_status_map": Object {
-          "Complete": 3,
-          "In Progress": 3,
-          "Incomplete": 1,
-          "Not Eligible": 6,
-          "Not Visited": 5,
-        },
-        "task_count": 18,
-      },
-      Object {
-        "action_code": "Bednet Distribution",
-        "completed_task_count": 4,
-        "goal_comparator": ">=",
-        "goal_id": "RACD_bednet_dist_1km_radius",
-        "goal_unit": "percent",
-        "goal_value": 100,
-        "id": "e50f7156-c80e-541e-a24c-0b3e0d95b868",
-        "jurisdiction_id": "304cbcd4-0850-404a-a8b1-486b02f7b84d",
-        "measure": "Percent of residential structures visited",
-        "plan_id": "89fh38sg-h83s-9xf2-a7h2-pl98dh320lbc",
-        "task_business_status_map": Object {
-          "Complete": 4,
-          "Not Visited": 11,
-        },
-        "task_count": 15,
-      },
-    ]
-  }
+  goal={null}
   handlers={Array []}
+  minHeight="200px"
   tasks={null}
 >
   <Ripple
@@ -1621,14 +1538,14 @@ exports[`components/GisidaWrapper renders map component without tasks 3`] = `
     borderStyle="solid"
     borderWidth="4px"
     height="64px"
-    minHeight="80vh"
+    minHeight="200px"
     width="64px"
   >
     <div
       className="lds-ripple-parent"
       style={
         Object {
-          "minHeight": "80vh",
+          "minHeight": "200px",
         }
       }
     >
@@ -1776,92 +1693,9 @@ exports[`components/GisidaWrapper renders map component without tasks 4`] = `
       "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
     }
   }
-  goal={
-    Array [
-      Object {
-        "action_code": "Case Confirmation",
-        "completed_task_count": 0,
-        "goal_comparator": "=",
-        "goal_id": "Case_Confirmation",
-        "goal_unit": "each",
-        "goal_value": 1,
-        "id": "5a27ec10-7a5f-563c-ba11-4de150b336af",
-        "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
-        "measure": "Case confirmation complete",
-        "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
-        "task_business_status_map": Object {},
-        "task_count": 0,
-      },
-      Object {
-        "action_code": "Larval Dipping",
-        "completed_task_count": 0,
-        "goal_comparator": ">=",
-        "goal_id": "Larval_Dipping_Min_3_Sites",
-        "goal_unit": "each",
-        "goal_value": 3,
-        "id": "f8d4e0a9-5867-5c78-9e26-de45d72556c4",
-        "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
-        "measure": "Number of larval dipping activities",
-        "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
-        "task_business_status_map": Object {
-          "Not Visited": 2,
-        },
-        "task_count": 2,
-      },
-      Object {
-        "action_code": "Blood Screening",
-        "completed_task_count": 0,
-        "goal_comparator": "=",
-        "goal_id": "RACD_blood_screening_1km_radius",
-        "goal_unit": "percent",
-        "goal_value": 100,
-        "id": "19b86421-3cb2-5698-9f11-c1bdafbe5e6d",
-        "jurisdiction_id": "1337",
-        "measure": "Percent of registered people tested",
-        "plan_id": "1337",
-        "task_business_status_map": Object {},
-        "task_count": 0,
-      },
-      Object {
-        "action_code": "Mosquito Collection",
-        "completed_task_count": 3,
-        "goal_comparator": ">=",
-        "goal_id": "Mosquito_Collection_Min_3_Traps",
-        "goal_unit": "traps",
-        "goal_value": 3,
-        "id": "0f03cef6-1654-5bba-8898-1d2a8000e5b1",
-        "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
-        "measure": "Number of mosquito collection traps",
-        "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
-        "task_business_status_map": Object {
-          "Complete": 3,
-          "In Progress": 3,
-          "Incomplete": 1,
-          "Not Eligible": 6,
-          "Not Visited": 5,
-        },
-        "task_count": 18,
-      },
-      Object {
-        "action_code": "Bednet Distribution",
-        "completed_task_count": 4,
-        "goal_comparator": ">=",
-        "goal_id": "RACD_bednet_dist_1km_radius",
-        "goal_unit": "percent",
-        "goal_value": 100,
-        "id": "e50f7156-c80e-541e-a24c-0b3e0d95b868",
-        "jurisdiction_id": "304cbcd4-0850-404a-a8b1-486b02f7b84d",
-        "measure": "Percent of residential structures visited",
-        "plan_id": "89fh38sg-h83s-9xf2-a7h2-pl98dh320lbc",
-        "task_business_status_map": Object {
-          "Complete": 4,
-          "Not Visited": 11,
-        },
-        "task_count": 15,
-      },
-    ]
-  }
+  goal={null}
   handlers={Array []}
+  minHeight="200px"
   tasks={null}
 >
   <MapComponent

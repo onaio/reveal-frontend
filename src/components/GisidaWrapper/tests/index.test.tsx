@@ -37,9 +37,7 @@ describe('components/GisidaWrapper', () => {
   it('renders map component without tasks', () => {
     const props = {
       geoData: fixtures.jurisdictions[0],
-      goal: fixtures.goals,
-      handlers: [],
-      tasks: null,
+      minHeight: '200px',
     };
     const wrapper = mount(<GisidaWrapper {...props} />);
     expect(store.getState().APP).toMatchSnapshot();
