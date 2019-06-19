@@ -186,7 +186,7 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
 
     if (
       (!(nextProps.tasks && nextProps.tasks.length) && !this.state.initMapWithoutTasks) ||
-      typeof nextProps.tasks === 'undefined'
+      nextProps.tasks === null
     ) {
       this.setState({ doInitMap: true, initMapWithoutTasks: true }, () => {
         // Dirty work around! Arbitrary delay to allow style load before adding layers
