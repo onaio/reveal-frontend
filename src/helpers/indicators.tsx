@@ -56,6 +56,33 @@ export function goalPercentAchieved(goal: Goal): number {
   return percentAchieved;
 }
 
+/** interface for Goal report */
+export interface GoalReport {
+  achievedValue: number /** the achieved value */;
+  percentAchieved: number /** progress towards goal achievement */;
+  prettyPercentAchieved: string /** pretty string of percentAchieved */;
+  targetValue: number /** the target value */;
+}
+
+/** Utility function to get an object containing values for goal indicators
+ * @param {Goal} goal - the goal
+ * @returns {GoalReport} the Goal Report object
+ */
+export function getGoalReport(goal: Goal): GoalReport {
+  const percentAchieved = goalPercentAchieved(goal);
+  let targetValue = goal.task_count;
+  if (goal.goal_unit.toLowerCase() !== 'percent') {
+    targetValue = goal.goal_value;
+  }
+
+  return {
+    achievedValue: goal.completed_task_count,
+    percentAchieved,
+    prettyPercentAchieved: percentage(percentAchieved),
+    targetValue,
+  };
+}
+
 /** Returns a table cell rendered with different colors based on focus
  * investigation response adherence conditional formatting
  */
