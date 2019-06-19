@@ -13,7 +13,7 @@ import { fetchTasks } from '../../../../../../store/ducks/tasks';
 import * as fixtures from '../../../../../../store/ducks/tests/fixtures';
 import ConnectedMapSingleFI, { SingleActiveFIMap } from '../../active/';
 
-jest.mock('../../../../../../components/GisidaWrapper');
+// jest.mock('../../../../../../components/GisidaWrapper');
 jest.mock('../../../../../../configs/env');
 
 const history = createBrowserHistory();
@@ -94,9 +94,7 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
         features: [fixtures.task4.geojson],
         type: 'FeatureCollection',
       },
-      // goals: [fixtures.goal3],
       history,
-      // jurisdiction: fixtures.jurisdictions[0],
       location: mock,
       match: {
         isExact: true,
@@ -104,8 +102,6 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
         path: `${FI_SINGLE_URL}/:id`,
         url: `${FI_SINGLE_URL}/13`,
       },
-      // plan: fixtures.plan1,
-      // tasks: fixtures.tasks,
     };
     const wrapper = mount(
       <Router history={history}>
@@ -116,34 +112,4 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
     expect(wrapper.find('GisidaWrapper').props()).toMatchSnapshot();
     wrapper.unmount();
   });
-
-  // it('renders without crashing', () => {
-  //     const mock: any = jest.fn();
-  //     const props = {
-  //         currentGoal: fixtures.goal3,
-  //         featureCollection:{
-  //             type: 'FeatureCollection',
-  //             features: [fixtures.]
-  //         };
-  //         // fetchGoalsActionActionCreator;
-  //         // fetchJurisdictionActionCreator;
-  //         // fetchPlansActionCreator:
-  //         // fetchTasksActionCreator;
-  //         goals: [fixtures.goal3],
-  //         jurisdiction: fixtures.jurisdictions[0],
-  //         plan: fixtures.plan1,
-  //         tasks: fixtures.tasks,
-  //         history,
-  //         location: mock,
-  //         match:{
-  //             isExact: true,
-  //             params: {id: fixtures.plan1.id},
-  //             path: `${FI_SINGLE_URL}/:id`,
-  //             url: `${FI_SINGLE_URL}/13`,
-  //         }
-  //     };
-  //     shallow(<Router history={history}>
-  //         <SingleActiveFIMap {...props} />
-  //     </Router>);
-  // })
 });
