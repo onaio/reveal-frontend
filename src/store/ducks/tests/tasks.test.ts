@@ -21,6 +21,7 @@ import reducer, {
   getTasksByPlanAndJurisdiction,
   getTasksByPlanId,
   getTasksByStructureId,
+  getTasksGeoJsonData,
   getTasksIdArray,
   InitialTaskGeoJSON,
   reducerName,
@@ -249,5 +250,23 @@ describe('reducers/tasks/FeatureCollectionSelectors', () => {
       type: 'FeatureCollection',
     };
     expect(getFCByStructureId(store.getState(), structureId)).toEqual(expected);
+  });
+
+  it('filters out tasks with null geoms', () => {
+    const thisTasks = cloneDeep(fixtures.tasks);
+    store.dispatch(fetchTasks(thisTasks));
+    const expected = [fixtures.task1.geojson, fixtures.task2.geojson, fixtures.task3.geojson];
+    expect(getTasksGeoJsonData(store.getState())).toEqual(expected);
+    store.dispatch(resetTasks());
+    const missingGeomTask = {
+      ...fixtures.task1,
+      geojson: {
+        id: fixtures.task1.geojson.id,
+        properties: fixtures.task1.geojson.properties,
+        type: fixtures.task1.geojson.type,
+      },
+    };
+    const allTasks = thisTasks.concat([missingGeomTask as any]);
+    expect(getTasksGeoJsonData(store.getState())).toEqual(expected);
   });
 });
