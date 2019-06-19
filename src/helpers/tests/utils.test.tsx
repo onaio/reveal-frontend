@@ -8,6 +8,7 @@ import * as fixtures from '../../store/ducks/tests/fixtures';
 import { colorMaps } from '../structureColorMaps';
 import {
   extractPlan,
+  filterDeep,
   getColor,
   getColorByValue,
   getLocationColumns,
@@ -262,5 +263,62 @@ describe('helpers/utils', () => {
       village: null,
     };
     expect(result).toEqual(expected);
+  });
+
+  it('FilterDeep objects correctly', () => {
+    const baseSample = {
+      firstName: 'Douglas',
+      id: 'uuid',
+      secondName: 'Crocford',
+    };
+    expect(filterDeep([baseSample], 'firstName')).toEqual([baseSample]);
+    (baseSample as any).firstName = null;
+    expect(filterDeep([baseSample], 'firstName')).toEqual([]);
+    expect(filterDeep([baseSample], 'secondName')).toEqual([baseSample]);
+  });
+
+  it('filtersDeep nested Objects correctly', () => {
+    const baseSample = {
+      id: 'uuid',
+      name: {
+        firstName: 'Douglas',
+        secondName: 'Crocford',
+      },
+    };
+    expect(filterDeep([baseSample], 'firstName')).toEqual([baseSample]);
+    (baseSample as any).name.firstName = null;
+    expect(filterDeep([baseSample], 'firstName')).toEqual([]);
+    expect(filterDeep([baseSample], 'secondName')).toEqual([baseSample]);
+  });
+
+  it('filtersDeep nested Objects with list correctly', () => {
+    const baseSample = {
+      id: 'uuid',
+      name: [
+        {
+          chinese: {
+            firstName: 'Douglas chinese',
+            secondName: 'Crocford chinese',
+          },
+        },
+        {
+          german: {
+            firstName: 'Douglas German',
+            secondName: 'Crocford German',
+          },
+        },
+        {
+          english: {
+            firstName: 'Douglas English',
+            secondName: 'Crocford english',
+          },
+        },
+      ],
+    };
+    const chineseSample = cloneDeep(baseSample);
+    (chineseSample as any).name.chinese.firstname = null;
+    expect(filterDeep([baseSample], 'firstName')).toEqual([baseSample]);
+    expect(filterDeep([chineseSample], 'firstName')).toEqual([]);
+    expect(filterDeep([chineseSample], 'secondName')).toEqual([chineseSample]);
   });
 });
