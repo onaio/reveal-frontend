@@ -321,4 +321,32 @@ describe('helpers/utils', () => {
     expect(filterDeep([chineseSample], 'firstName')).toEqual([]);
     expect(filterDeep([chineseSample], 'secondName')).toEqual([chineseSample]);
   });
+
+  it('deep filters on Edge cases; property name is absent', () => {
+    const baseSample = {
+      id: 'uuid',
+      name: [
+        {
+          chinese: {
+            firstName: 'Douglas chinese',
+            secondName: 'Crocford chinese',
+          },
+        },
+        {
+          german: {
+            firstName: 'Douglas German',
+            secondName: 'Crocford German',
+          },
+        },
+        {
+          english: {
+            firstName: 'Douglas English',
+            secondName: 'Crocford english',
+          },
+        },
+      ],
+    };
+    expect(filterDeep([baseSample], 'firstName')).toEqual([baseSample]);
+    expect(filterDeep([baseSample], 'thirdName')).toEqual([]);
+  });
 });
