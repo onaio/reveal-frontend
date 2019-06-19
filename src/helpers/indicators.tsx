@@ -15,7 +15,10 @@ enum Operators {
   LessThanOrEqual = '<=',
 }
 
-/** something goes here */
+/** Get the level of achievement towards the goal target as a percentage
+ * @param {Goal} goal - the goal
+ * @returns {number} percentAchieved
+ */
 export function goalPercentAchieved(goal: Goal): number {
   let percentAchieved: number = 0;
   let achievedValue: number = goal.completed_task_count;
