@@ -8,7 +8,7 @@ import * as fixtures from '../../store/ducks/tests/fixtures';
 import { colorMaps } from '../structureColorMaps';
 import {
   extractPlan,
-  filterDeep,
+  filterDeepPredicate,
   getColor,
   getColorByValue,
   getLocationColumns,
@@ -271,10 +271,15 @@ describe('helpers/utils', () => {
       id: 'uuid',
       secondName: 'Crocford',
     };
-    expect(filterDeep([baseSample], 'firstName')).toEqual([baseSample]);
+
+    expect([baseSample].filter((e: any) => filterDeepPredicate(e, 'firstName'))).toEqual([
+      baseSample,
+    ]);
     (baseSample as any).firstName = null;
-    expect(filterDeep([baseSample], 'firstName')).toEqual([]);
-    expect(filterDeep([baseSample], 'secondName')).toEqual([baseSample]);
+    expect([baseSample].filter((e: any) => filterDeepPredicate(e, 'firstName'))).toEqual([]);
+    expect([baseSample].filter((e: any) => filterDeepPredicate(e, 'secondName'))).toEqual([
+      baseSample,
+    ]);
   });
 
   it('filtersDeep nested Objects correctly', () => {
@@ -285,10 +290,14 @@ describe('helpers/utils', () => {
         secondName: 'Crocford',
       },
     };
-    expect(filterDeep([baseSample], 'firstName')).toEqual([baseSample]);
+    expect([baseSample].filter((e: any) => filterDeepPredicate(e, 'firstName'))).toEqual([
+      baseSample,
+    ]);
     (baseSample as any).name.firstName = null;
-    expect(filterDeep([baseSample], 'firstName')).toEqual([]);
-    expect(filterDeep([baseSample], 'secondName')).toEqual([baseSample]);
+    expect([baseSample].filter((e: any) => filterDeepPredicate(e, 'firstName'))).toEqual([]);
+    expect([baseSample].filter((e: any) => filterDeepPredicate(e, 'secondName'))).toEqual([
+      baseSample,
+    ]);
   });
 
   it('filtersDeep nested Objects with list correctly', () => {
@@ -317,9 +326,13 @@ describe('helpers/utils', () => {
     };
     const chineseSample = cloneDeep(baseSample);
     (chineseSample as any).name.chinese.firstname = null;
-    expect(filterDeep([baseSample], 'firstName')).toEqual([baseSample]);
-    expect(filterDeep([chineseSample], 'firstName')).toEqual([]);
-    expect(filterDeep([chineseSample], 'secondName')).toEqual([chineseSample]);
+    expect([baseSample].filter((e: any) => filterDeepPredicate(e, 'firstName'))).toEqual([
+      baseSample,
+    ]);
+    expect([chineseSample].filter((e: any) => filterDeepPredicate(e, 'firstName'))).toEqual([]);
+    expect([chineseSample].filter((e: any) => filterDeepPredicate(e, 'secondName'))).toEqual([
+      chineseSample,
+    ]);
   });
 
   it('deep filters on Edge cases; property name is absent', () => {
@@ -346,7 +359,9 @@ describe('helpers/utils', () => {
         },
       ],
     };
-    expect(filterDeep([baseSample], 'firstName')).toEqual([baseSample]);
-    expect(filterDeep([baseSample], 'thirdName')).toEqual([]);
+    expect([baseSample].filter((e: any) => filterDeepPredicate(e, 'firstName'))).toEqual([
+      baseSample,
+    ]);
+    expect([baseSample].filter((e: any) => filterDeepPredicate(e, 'secondName'))).toEqual([]);
   });
 });
