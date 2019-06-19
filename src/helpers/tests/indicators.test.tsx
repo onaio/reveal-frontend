@@ -3,7 +3,7 @@ import { goalPercentAchieved } from '../indicators';
 
 describe('helpers/indicators', () => {
   it('goalPercentAchieved works', () => {
-    // expect(goalPercentAchieved(fixtures.goal1)).toEqual(0);
+    expect(goalPercentAchieved(fixtures.goal1)).toEqual(0);
     expect(goalPercentAchieved(fixtures.goal4)).toEqual(
       fixtures.goal4.completed_task_count / fixtures.goal4.goal_value
     );
