@@ -1,0 +1,1815 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap correctly 1`] = `
+<Router
+  history={
+    Object {
+      "action": "POP",
+      "block": [Function],
+      "createHref": [Function],
+      "go": [Function],
+      "goBack": [Function],
+      "goForward": [Function],
+      "length": 1,
+      "listen": [Function],
+      "location": Object {
+        "hash": "",
+        "pathname": "/",
+        "search": "",
+        "state": undefined,
+      },
+      "push": [Function],
+      "replace": [Function],
+    }
+  }
+>
+  <SingleActiveFIMap
+    allTasks={Array []}
+    currentGoal={
+      Object {
+        "action_code": "Blood Screening",
+        "completed_task_count": 0,
+        "goal_comparator": "=",
+        "goal_id": "RACD_blood_screening_1km_radius",
+        "goal_unit": "percent",
+        "goal_value": 100,
+        "id": "19b86421-3cb2-5698-9f11-c1bdafbe5e6d",
+        "jurisdiction_id": "1337",
+        "measure": "Percent of registered people tested",
+        "plan_id": "1337",
+        "task_business_status_map": Object {},
+        "task_count": 0,
+      }
+    }
+    featureCollection={
+      Object {
+        "features": Array [
+          Object {
+            "geometry": null,
+            "id": "01d0b84c-df06-426c-a272-6858e84fea31",
+            "properties": Object {
+              "action_code": "Blood Screening",
+              "goal_id": "RACD_blood_screening_1km_radius",
+              "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
+              "jurisdiction_name": "TLv1_01",
+              "jurisdiction_parent_id": "dad42fa6-b9b8-4658-bf25-bfa7ab5b16ae",
+              "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+              "structure_code": null,
+              "structure_id": null,
+              "structure_name": null,
+              "structure_type": null,
+              "task_business_status": "Not Visited",
+              "task_execution_end_date": "2019-04-01",
+              "task_execution_start_date": "2019-04-08",
+              "task_focus": "Blood Screening",
+              "task_status": "Ready",
+              "task_task_for": "c222d4ba-b3c4-4cc8-abae-bdea06511b27",
+            },
+            "type": "Feature",
+          },
+        ],
+        "type": "FeatureCollection",
+      }
+    }
+    fetchGoalsActionCreator={[Function]}
+    fetchJurisdictionsActionCreator={[Function]}
+    fetchPlansActionCreator={[Function]}
+    fetchTasksActionCreator={[Function]}
+    goals={
+      Array [
+        Object {
+          "action_code": "Blood Screening",
+          "completed_task_count": 0,
+          "goal_comparator": "=",
+          "goal_id": "RACD_blood_screening_1km_radius",
+          "goal_unit": "percent",
+          "goal_value": 100,
+          "id": "19b86421-3cb2-5698-9f11-c1bdafbe5e6d",
+          "jurisdiction_id": "1337",
+          "measure": "Percent of registered people tested",
+          "plan_id": "1337",
+          "task_business_status_map": Object {},
+          "task_count": 0,
+        },
+      ]
+    }
+    history={
+      Object {
+        "action": "POP",
+        "block": [Function],
+        "createHref": [Function],
+        "go": [Function],
+        "goBack": [Function],
+        "goForward": [Function],
+        "length": 1,
+        "listen": [Function],
+        "location": Object {
+          "hash": "",
+          "pathname": "/",
+          "search": "",
+          "state": undefined,
+        },
+        "push": [Function],
+        "replace": [Function],
+      }
+    }
+    jurisdiction={
+      Object {
+        "geojson": Object {
+          "geometry": Object {
+            "coordinates": Array [
+              Array [
+                Array [
+                  101.166915893555,
+                  15.0715019595332,
+                ],
+                Array [
+                  101.165628433228,
+                  15.069429992157,
+                ],
+                Array [
+                  101.164855957031,
+                  15.0649130333519,
+                ],
+                Array [
+                  101.164898872375,
+                  15.061473449978,
+                ],
+                Array [
+                  101.165843009949,
+                  15.0585311116698,
+                ],
+                Array [
+                  101.168718338013,
+                  15.0577022766384,
+                ],
+                Array [
+                  101.173524856567,
+                  15.0577437184666,
+                ],
+                Array [
+                  101.179447174072,
+                  15.0583653449216,
+                ],
+                Array [
+                  101.183996200562,
+                  15.0589455279759,
+                ],
+                Array [
+                  101.189103126526,
+                  15.0597743581685,
+                ],
+                Array [
+                  101.191892623901,
+                  15.0629238834779,
+                ],
+                Array [
+                  101.191549301147,
+                  15.0671093647448,
+                ],
+                Array [
+                  101.19086265564,
+                  15.0727036913665,
+                ],
+                Array [
+                  101.190605163574,
+                  15.0748170653661,
+                ],
+                Array [
+                  101.188631057739,
+                  15.0768061040682,
+                ],
+                Array [
+                  101.185412406921,
+                  15.0769304183694,
+                ],
+                Array [
+                  101.182150840759,
+                  15.0772619228176,
+                ],
+                Array [
+                  101.177172660828,
+                  15.0780906816776,
+                ],
+                Array [
+                  101.174211502075,
+                  15.0777591785211,
+                ],
+                Array [
+                  101.172151565552,
+                  15.0765989134045,
+                ],
+                Array [
+                  101.168503761292,
+                  15.0753557651845,
+                ],
+                Array [
+                  101.166915893555,
+                  15.0715019595332,
+                ],
+              ],
+            ],
+            "type": "Polygon",
+          },
+          "id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
+          "properties": Object {
+            "jurisdiction_name": "TLv1_01",
+            "jurisdiction_parent_id": "dad42fa6-b9b8-4658-bf25-bfa7ab5b16ae",
+          },
+          "type": "Feature",
+        },
+        "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
+      }
+    }
+    location={[MockFunction]}
+    match={
+      Object {
+        "isExact": true,
+        "params": Object {
+          "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
+        },
+        "path": "/focus-investigation/view/:id",
+        "url": "/focus-investigation/view/13",
+      }
+    }
+    plan={
+      Object {
+        "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
+        "jurisdiction_depth": 2,
+        "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
+        "jurisdiction_name": "NVI_439",
+        "jurisdiction_name_path": Array [
+          "Chadiza",
+          "Naviluli",
+        ],
+        "jurisdiction_parent_id": "2944",
+        "jurisdiction_path": Array [
+          "2939",
+          "2944",
+        ],
+        "plan_fi_reason": "Routine",
+        "plan_fi_status": "A1",
+        "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+        "plan_intervention_type": "FI",
+        "plan_status": "active",
+        "plan_title": "A1-Tha Luang Village 1 Focus 01",
+      }
+    }
+    tasks={
+      Array [
+        Object {
+          "geojson": Object {
+            "geometry": Object {
+              "coordinates": Array [
+                Array [
+                  Array [
+                    101.188427209854,
+                    15.0909179029537,
+                  ],
+                  Array [
+                    101.18852108717,
+                    15.0909179029537,
+                  ],
+                  Array [
+                    101.18852108717,
+                    15.0910085427885,
+                  ],
+                  Array [
+                    101.188427209854,
+                    15.0910085427885,
+                  ],
+                  Array [
+                    101.188427209854,
+                    15.0909179029537,
+                  ],
+                ],
+              ],
+              "type": "Polygon",
+            },
+            "id": "e652f8b2-b884-42d5-832a-86009c10a812",
+            "properties": Object {
+              "action_code": "RACD Register Family",
+              "goal_id": "RACD_register_family_1km_radius",
+              "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
+              "jurisdiction_name": "TLv1_01",
+              "jurisdiction_parent_id": "dad42fa6-b9b8-4658-bf25-bfa7ab5b16ae",
+              "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+              "structure_code": "a19eeb63-45d0-4744-9a9d-76d0694103f6",
+              "structure_id": "a19eeb63-45d0-4744-9a9d-76d0694103f6",
+              "structure_name": "a19eeb63-45d0-4744-9a9d-76d0694103f6",
+              "structure_type": "a19eeb63-45d0-4744-9a9d-76d0694103f6",
+              "task_business_status": "Not Visited",
+              "task_execution_end_date": "2019-04-01",
+              "task_execution_start_date": "2019-04-08",
+              "task_focus": "95515b0d-b9c0-496e-83c7-7af8b4924d1f",
+              "task_status": "Ready",
+              "task_task_for": "a19eeb63-45d0-4744-9a9d-76d0694103f6",
+            },
+            "type": "Feature",
+          },
+          "goal_id": "RACD_register_family_1km_radius",
+          "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
+          "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+          "task_identifier": "e652f8b2-b884-42d5-832a-86009c10a812",
+        },
+        Object {
+          "geojson": Object {
+            "geometry": Object {
+              "coordinates": Array [
+                Array [
+                  Array [
+                    101.177725195885,
+                    15.0658221308165,
+                  ],
+                  Array [
+                    101.177684962749,
+                    15.0657263002127,
+                  ],
+                  Array [
+                    101.177778840065,
+                    15.0656848599382,
+                  ],
+                  Array [
+                    101.177832484245,
+                    15.0657781005444,
+                  ],
+                  Array [
+                    101.177725195885,
+                    15.0658221308165,
+                  ],
+                ],
+              ],
+              "type": "Polygon",
+            },
+            "id": "03458d28-af61-4f70-b110-73a3429ada2d",
+            "properties": Object {
+              "action_code": "Bednet Distribution",
+              "goal_id": "RACD_bednet_dist_1km_radius",
+              "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
+              "jurisdiction_name": "TLv1_01",
+              "jurisdiction_parent_id": "dad42fa6-b9b8-4658-bf25-bfa7ab5b16ae",
+              "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+              "structure_code": "da765947-5e4d-49f7-9eb8-2d2d00681f65",
+              "structure_id": "da765947-5e4d-49f7-9eb8-2d2d00681f65",
+              "structure_name": "da765947-5e4d-49f7-9eb8-2d2d00681f65",
+              "structure_type": "da765947-5e4d-49f7-9eb8-2d2d00681f65",
+              "task_business_status": "Not Visited",
+              "task_execution_end_date": "2019-04-01",
+              "task_execution_start_date": "2019-04-08",
+              "task_focus": "Bednet Distribution",
+              "task_status": "Ready",
+              "task_task_for": "da765947-5e4d-49f7-9eb8-2d2d00681f65",
+            },
+            "type": "Feature",
+          },
+          "goal_id": "RACD_bednet_dist_1km_radius",
+          "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
+          "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+          "task_identifier": "03458d28-af61-4f70-b110-73a3429ada2d",
+        },
+        Object {
+          "geojson": Object {
+            "geometry": Object {
+              "coordinates": Array [
+                28.3524419816308,
+                -15.4178320108929,
+              ],
+              "type": "Point",
+            },
+            "id": "e3e1f2a7-4c53-4059-ab81-0811539e0c5e",
+            "properties": Object {
+              "action_code": "Mosquito Collection",
+              "goal_id": "Mosquito_Collection_Min_3_Traps",
+              "jurisdiction_id": "3952",
+              "jurisdiction_name": "Akros_2",
+              "jurisdiction_parent_id": "3019",
+              "plan_id": "356b6b84-fc36-4389-a44a-2b038ed2f38d",
+              "structure_code": "5f7a0d7c-1412-4af6-83ed-f94787b205e8",
+              "structure_id": "5f7a0d7c-1412-4af6-83ed-f94787b205e8",
+              "structure_name": "5f7a0d7c-1412-4af6-83ed-f94787b205e8",
+              "structure_type": "5f7a0d7c-1412-4af6-83ed-f94787b205e8",
+              "task_business_status": "Complete",
+              "task_execution_end_date": "2019-04-01",
+              "task_execution_start_date": "2019-04-08",
+              "task_focus": "Mosquito Collection",
+              "task_status": "Completed",
+              "task_task_for": "5f7a0d7c-1412-4af6-83ed-f94787b205e8",
+            },
+            "type": "Feature",
+          },
+          "goal_id": "Mosquito_Collection_Min_3_Traps",
+          "jurisdiction_id": "3952",
+          "plan_id": "356b6b84-fc36-4389-a44a-2b038ed2f38d",
+          "task_identifier": "e3e1f2a7-4c53-4059-ab81-0811539e0c5e",
+        },
+        Object {
+          "geojson": Object {
+            "geometry": null,
+            "id": "01d0b84c-df06-426c-a272-6858e84fea31",
+            "properties": Object {
+              "action_code": "Blood Screening",
+              "goal_id": "RACD_blood_screening_1km_radius",
+              "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
+              "jurisdiction_name": "TLv1_01",
+              "jurisdiction_parent_id": "dad42fa6-b9b8-4658-bf25-bfa7ab5b16ae",
+              "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+              "structure_code": null,
+              "structure_id": null,
+              "structure_name": null,
+              "structure_type": null,
+              "task_business_status": "Not Visited",
+              "task_execution_end_date": "2019-04-01",
+              "task_execution_start_date": "2019-04-08",
+              "task_focus": "Blood Screening",
+              "task_status": "Ready",
+              "task_task_for": "c222d4ba-b3c4-4cc8-abae-bdea06511b27",
+            },
+            "type": "Feature",
+          },
+          "goal_id": "RACD_blood_screening_1km_radius",
+          "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
+          "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+          "task_identifier": "01d0b84c-df06-426c-a272-6858e84fea31",
+        },
+      ]
+    }
+  >
+    <div>
+      <h2
+        className="page-title mt-4 mb-4"
+      >
+        Focus Investigation
+        : 
+        NVI_439
+      </h2>
+      <div
+        className="row no-gutters"
+      >
+        <div
+          className="col-9"
+        >
+          <div
+            className="map"
+          >
+            <GisidaWrapper
+              allTasks={Array []}
+              currentGoal={
+                Object {
+                  "action_code": "Blood Screening",
+                  "completed_task_count": 0,
+                  "goal_comparator": "=",
+                  "goal_id": "RACD_blood_screening_1km_radius",
+                  "goal_unit": "percent",
+                  "goal_value": 100,
+                  "id": "19b86421-3cb2-5698-9f11-c1bdafbe5e6d",
+                  "jurisdiction_id": "1337",
+                  "measure": "Percent of registered people tested",
+                  "plan_id": "1337",
+                  "task_business_status_map": Object {},
+                  "task_count": 0,
+                }
+              }
+              featureCollection={
+                Object {
+                  "features": Array [
+                    Object {
+                      "geometry": null,
+                      "id": "01d0b84c-df06-426c-a272-6858e84fea31",
+                      "properties": Object {
+                        "action_code": "Blood Screening",
+                        "goal_id": "RACD_blood_screening_1km_radius",
+                        "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
+                        "jurisdiction_name": "TLv1_01",
+                        "jurisdiction_parent_id": "dad42fa6-b9b8-4658-bf25-bfa7ab5b16ae",
+                        "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+                        "structure_code": null,
+                        "structure_id": null,
+                        "structure_name": null,
+                        "structure_type": null,
+                        "task_business_status": "Not Visited",
+                        "task_execution_end_date": "2019-04-01",
+                        "task_execution_start_date": "2019-04-08",
+                        "task_focus": "Blood Screening",
+                        "task_status": "Ready",
+                        "task_task_for": "c222d4ba-b3c4-4cc8-abae-bdea06511b27",
+                      },
+                      "type": "Feature",
+                    },
+                  ],
+                  "type": "FeatureCollection",
+                }
+              }
+              geoData={
+                Object {
+                  "geojson": Object {
+                    "geometry": Object {
+                      "coordinates": Array [
+                        Array [
+                          Array [
+                            101.166915893555,
+                            15.0715019595332,
+                          ],
+                          Array [
+                            101.165628433228,
+                            15.069429992157,
+                          ],
+                          Array [
+                            101.164855957031,
+                            15.0649130333519,
+                          ],
+                          Array [
+                            101.164898872375,
+                            15.061473449978,
+                          ],
+                          Array [
+                            101.165843009949,
+                            15.0585311116698,
+                          ],
+                          Array [
+                            101.168718338013,
+                            15.0577022766384,
+                          ],
+                          Array [
+                            101.173524856567,
+                            15.0577437184666,
+                          ],
+                          Array [
+                            101.179447174072,
+                            15.0583653449216,
+                          ],
+                          Array [
+                            101.183996200562,
+                            15.0589455279759,
+                          ],
+                          Array [
+                            101.189103126526,
+                            15.0597743581685,
+                          ],
+                          Array [
+                            101.191892623901,
+                            15.0629238834779,
+                          ],
+                          Array [
+                            101.191549301147,
+                            15.0671093647448,
+                          ],
+                          Array [
+                            101.19086265564,
+                            15.0727036913665,
+                          ],
+                          Array [
+                            101.190605163574,
+                            15.0748170653661,
+                          ],
+                          Array [
+                            101.188631057739,
+                            15.0768061040682,
+                          ],
+                          Array [
+                            101.185412406921,
+                            15.0769304183694,
+                          ],
+                          Array [
+                            101.182150840759,
+                            15.0772619228176,
+                          ],
+                          Array [
+                            101.177172660828,
+                            15.0780906816776,
+                          ],
+                          Array [
+                            101.174211502075,
+                            15.0777591785211,
+                          ],
+                          Array [
+                            101.172151565552,
+                            15.0765989134045,
+                          ],
+                          Array [
+                            101.168503761292,
+                            15.0753557651845,
+                          ],
+                          Array [
+                            101.166915893555,
+                            15.0715019595332,
+                          ],
+                        ],
+                      ],
+                      "type": "Polygon",
+                    },
+                    "id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
+                    "properties": Object {
+                      "jurisdiction_name": "TLv1_01",
+                      "jurisdiction_parent_id": "dad42fa6-b9b8-4658-bf25-bfa7ab5b16ae",
+                    },
+                    "type": "Feature",
+                  },
+                  "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
+                }
+              }
+              goal={
+                Array [
+                  Object {
+                    "action_code": "Blood Screening",
+                    "completed_task_count": 0,
+                    "goal_comparator": "=",
+                    "goal_id": "RACD_blood_screening_1km_radius",
+                    "goal_unit": "percent",
+                    "goal_value": 100,
+                    "id": "19b86421-3cb2-5698-9f11-c1bdafbe5e6d",
+                    "jurisdiction_id": "1337",
+                    "measure": "Percent of registered people tested",
+                    "plan_id": "1337",
+                    "task_business_status_map": Object {},
+                    "task_count": 0,
+                  },
+                ]
+              }
+              handlers={
+                Array [
+                  Object {
+                    "method": [Function],
+                    "name": "drillDownClick",
+                    "type": "click",
+                  },
+                ]
+              }
+              tasks={
+                Array [
+                  Object {
+                    "geojson": Object {
+                      "geometry": Object {
+                        "coordinates": Array [
+                          Array [
+                            Array [
+                              101.188427209854,
+                              15.0909179029537,
+                            ],
+                            Array [
+                              101.18852108717,
+                              15.0909179029537,
+                            ],
+                            Array [
+                              101.18852108717,
+                              15.0910085427885,
+                            ],
+                            Array [
+                              101.188427209854,
+                              15.0910085427885,
+                            ],
+                            Array [
+                              101.188427209854,
+                              15.0909179029537,
+                            ],
+                          ],
+                        ],
+                        "type": "Polygon",
+                      },
+                      "id": "e652f8b2-b884-42d5-832a-86009c10a812",
+                      "properties": Object {
+                        "action_code": "RACD Register Family",
+                        "goal_id": "RACD_register_family_1km_radius",
+                        "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
+                        "jurisdiction_name": "TLv1_01",
+                        "jurisdiction_parent_id": "dad42fa6-b9b8-4658-bf25-bfa7ab5b16ae",
+                        "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+                        "structure_code": "a19eeb63-45d0-4744-9a9d-76d0694103f6",
+                        "structure_id": "a19eeb63-45d0-4744-9a9d-76d0694103f6",
+                        "structure_name": "a19eeb63-45d0-4744-9a9d-76d0694103f6",
+                        "structure_type": "a19eeb63-45d0-4744-9a9d-76d0694103f6",
+                        "task_business_status": "Not Visited",
+                        "task_execution_end_date": "2019-04-01",
+                        "task_execution_start_date": "2019-04-08",
+                        "task_focus": "95515b0d-b9c0-496e-83c7-7af8b4924d1f",
+                        "task_status": "Ready",
+                        "task_task_for": "a19eeb63-45d0-4744-9a9d-76d0694103f6",
+                      },
+                      "type": "Feature",
+                    },
+                    "goal_id": "RACD_register_family_1km_radius",
+                    "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
+                    "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+                    "task_identifier": "e652f8b2-b884-42d5-832a-86009c10a812",
+                  },
+                  Object {
+                    "geojson": Object {
+                      "geometry": Object {
+                        "coordinates": Array [
+                          Array [
+                            Array [
+                              101.177725195885,
+                              15.0658221308165,
+                            ],
+                            Array [
+                              101.177684962749,
+                              15.0657263002127,
+                            ],
+                            Array [
+                              101.177778840065,
+                              15.0656848599382,
+                            ],
+                            Array [
+                              101.177832484245,
+                              15.0657781005444,
+                            ],
+                            Array [
+                              101.177725195885,
+                              15.0658221308165,
+                            ],
+                          ],
+                        ],
+                        "type": "Polygon",
+                      },
+                      "id": "03458d28-af61-4f70-b110-73a3429ada2d",
+                      "properties": Object {
+                        "action_code": "Bednet Distribution",
+                        "goal_id": "RACD_bednet_dist_1km_radius",
+                        "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
+                        "jurisdiction_name": "TLv1_01",
+                        "jurisdiction_parent_id": "dad42fa6-b9b8-4658-bf25-bfa7ab5b16ae",
+                        "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+                        "structure_code": "da765947-5e4d-49f7-9eb8-2d2d00681f65",
+                        "structure_id": "da765947-5e4d-49f7-9eb8-2d2d00681f65",
+                        "structure_name": "da765947-5e4d-49f7-9eb8-2d2d00681f65",
+                        "structure_type": "da765947-5e4d-49f7-9eb8-2d2d00681f65",
+                        "task_business_status": "Not Visited",
+                        "task_execution_end_date": "2019-04-01",
+                        "task_execution_start_date": "2019-04-08",
+                        "task_focus": "Bednet Distribution",
+                        "task_status": "Ready",
+                        "task_task_for": "da765947-5e4d-49f7-9eb8-2d2d00681f65",
+                      },
+                      "type": "Feature",
+                    },
+                    "goal_id": "RACD_bednet_dist_1km_radius",
+                    "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
+                    "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+                    "task_identifier": "03458d28-af61-4f70-b110-73a3429ada2d",
+                  },
+                  Object {
+                    "geojson": Object {
+                      "geometry": Object {
+                        "coordinates": Array [
+                          28.3524419816308,
+                          -15.4178320108929,
+                        ],
+                        "type": "Point",
+                      },
+                      "id": "e3e1f2a7-4c53-4059-ab81-0811539e0c5e",
+                      "properties": Object {
+                        "action_code": "Mosquito Collection",
+                        "goal_id": "Mosquito_Collection_Min_3_Traps",
+                        "jurisdiction_id": "3952",
+                        "jurisdiction_name": "Akros_2",
+                        "jurisdiction_parent_id": "3019",
+                        "plan_id": "356b6b84-fc36-4389-a44a-2b038ed2f38d",
+                        "structure_code": "5f7a0d7c-1412-4af6-83ed-f94787b205e8",
+                        "structure_id": "5f7a0d7c-1412-4af6-83ed-f94787b205e8",
+                        "structure_name": "5f7a0d7c-1412-4af6-83ed-f94787b205e8",
+                        "structure_type": "5f7a0d7c-1412-4af6-83ed-f94787b205e8",
+                        "task_business_status": "Complete",
+                        "task_execution_end_date": "2019-04-01",
+                        "task_execution_start_date": "2019-04-08",
+                        "task_focus": "Mosquito Collection",
+                        "task_status": "Completed",
+                        "task_task_for": "5f7a0d7c-1412-4af6-83ed-f94787b205e8",
+                      },
+                      "type": "Feature",
+                    },
+                    "goal_id": "Mosquito_Collection_Min_3_Traps",
+                    "jurisdiction_id": "3952",
+                    "plan_id": "356b6b84-fc36-4389-a44a-2b038ed2f38d",
+                    "task_identifier": "e3e1f2a7-4c53-4059-ab81-0811539e0c5e",
+                  },
+                  Object {
+                    "geojson": Object {
+                      "geometry": null,
+                      "id": "01d0b84c-df06-426c-a272-6858e84fea31",
+                      "properties": Object {
+                        "action_code": "Blood Screening",
+                        "goal_id": "RACD_blood_screening_1km_radius",
+                        "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
+                        "jurisdiction_name": "TLv1_01",
+                        "jurisdiction_parent_id": "dad42fa6-b9b8-4658-bf25-bfa7ab5b16ae",
+                        "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+                        "structure_code": null,
+                        "structure_id": null,
+                        "structure_name": null,
+                        "structure_type": null,
+                        "task_business_status": "Not Visited",
+                        "task_execution_end_date": "2019-04-01",
+                        "task_execution_start_date": "2019-04-08",
+                        "task_focus": "Blood Screening",
+                        "task_status": "Ready",
+                        "task_task_for": "c222d4ba-b3c4-4cc8-abae-bdea06511b27",
+                      },
+                      "type": "Feature",
+                    },
+                    "goal_id": "RACD_blood_screening_1km_radius",
+                    "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
+                    "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+                    "task_identifier": "01d0b84c-df06-426c-a272-6858e84fea31",
+                  },
+                ]
+              }
+            >
+              <Ripple
+                borderColor="#ff5d00"
+                borderStyle="solid"
+                borderWidth="4px"
+                height="64px"
+                minHeight="80vh"
+                width="64px"
+              >
+                <div
+                  className="lds-ripple-parent"
+                  style={
+                    Object {
+                      "minHeight": "80vh",
+                    }
+                  }
+                >
+                  <div
+                    className="lds-ripple"
+                    style={
+                      Object {
+                        "height": "64px",
+                        "width": "64px",
+                      }
+                    }
+                  >
+                    <div
+                      style={
+                        Object {
+                          "borderColor": "#ff5d00",
+                          "borderStyle": "solid",
+                          "borderWidth": "4px",
+                        }
+                      }
+                    />
+                    <div
+                      style={
+                        Object {
+                          "borderColor": "#ff5d00",
+                          "borderStyle": "solid",
+                          "borderWidth": "4px",
+                        }
+                      }
+                    />
+                  </div>
+                </div>
+              </Ripple>
+            </GisidaWrapper>
+          </div>
+        </div>
+        <div
+          className="col-3"
+        >
+          <div
+            className="mapSidebar"
+          >
+            <h5>
+              Response
+            </h5>
+            <hr />
+            <div
+              className="responseItem"
+              key="RACD_blood_screening_1km_radius"
+            >
+              <NavLink
+                activeClassName="active"
+                aria-current="page"
+                className="task-link"
+                style={
+                  Object {
+                    "textDecoration": "none",
+                  }
+                }
+                to="/focus-investigation/map/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f/RACD_blood_screening_1km_radius"
+              >
+                <Route
+                  path="\\\\/focus-investigation\\\\/map\\\\/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f\\\\/RACD_blood_screening_1km_radius"
+                >
+                  <Link
+                    aria-current={null}
+                    className="task-link"
+                    replace={false}
+                    style={
+                      Object {
+                        "textDecoration": "none",
+                      }
+                    }
+                    to="/focus-investigation/map/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f/RACD_blood_screening_1km_radius"
+                  >
+                    <a
+                      aria-current={null}
+                      className="task-link"
+                      href="/focus-investigation/map/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f/RACD_blood_screening_1km_radius"
+                      onClick={[Function]}
+                      style={
+                        Object {
+                          "textDecoration": "none",
+                        }
+                      }
+                    >
+                      <h6>
+                        Blood Screening
+                      </h6>
+                    </a>
+                  </Link>
+                </Route>
+              </NavLink>
+              <div
+                className="targetItem"
+              >
+                <p>
+                  Measure
+                  : 
+                  Percent of registered people tested
+                </p>
+                <p>
+                  Target
+                  : 
+                  0
+                   
+                  of
+                   
+                  100
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </SingleActiveFIMap>
+</Router>
+`;
+
+exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap correctly 2`] = `
+Object {
+  "allTasks": Array [],
+  "currentGoal": Object {
+    "action_code": "Blood Screening",
+    "completed_task_count": 0,
+    "goal_comparator": "=",
+    "goal_id": "RACD_blood_screening_1km_radius",
+    "goal_unit": "percent",
+    "goal_value": 100,
+    "id": "19b86421-3cb2-5698-9f11-c1bdafbe5e6d",
+    "jurisdiction_id": "1337",
+    "measure": "Percent of registered people tested",
+    "plan_id": "1337",
+    "task_business_status_map": Object {},
+    "task_count": 0,
+  },
+  "featureCollection": Object {
+    "features": Array [
+      Object {
+        "geometry": null,
+        "id": "01d0b84c-df06-426c-a272-6858e84fea31",
+        "properties": Object {
+          "action_code": "Blood Screening",
+          "goal_id": "RACD_blood_screening_1km_radius",
+          "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
+          "jurisdiction_name": "TLv1_01",
+          "jurisdiction_parent_id": "dad42fa6-b9b8-4658-bf25-bfa7ab5b16ae",
+          "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+          "structure_code": null,
+          "structure_id": null,
+          "structure_name": null,
+          "structure_type": null,
+          "task_business_status": "Not Visited",
+          "task_execution_end_date": "2019-04-01",
+          "task_execution_start_date": "2019-04-08",
+          "task_focus": "Blood Screening",
+          "task_status": "Ready",
+          "task_task_for": "c222d4ba-b3c4-4cc8-abae-bdea06511b27",
+        },
+        "type": "Feature",
+      },
+    ],
+    "type": "FeatureCollection",
+  },
+  "geoData": Object {
+    "geojson": Object {
+      "geometry": Object {
+        "coordinates": Array [
+          Array [
+            Array [
+              101.166915893555,
+              15.0715019595332,
+            ],
+            Array [
+              101.165628433228,
+              15.069429992157,
+            ],
+            Array [
+              101.164855957031,
+              15.0649130333519,
+            ],
+            Array [
+              101.164898872375,
+              15.061473449978,
+            ],
+            Array [
+              101.165843009949,
+              15.0585311116698,
+            ],
+            Array [
+              101.168718338013,
+              15.0577022766384,
+            ],
+            Array [
+              101.173524856567,
+              15.0577437184666,
+            ],
+            Array [
+              101.179447174072,
+              15.0583653449216,
+            ],
+            Array [
+              101.183996200562,
+              15.0589455279759,
+            ],
+            Array [
+              101.189103126526,
+              15.0597743581685,
+            ],
+            Array [
+              101.191892623901,
+              15.0629238834779,
+            ],
+            Array [
+              101.191549301147,
+              15.0671093647448,
+            ],
+            Array [
+              101.19086265564,
+              15.0727036913665,
+            ],
+            Array [
+              101.190605163574,
+              15.0748170653661,
+            ],
+            Array [
+              101.188631057739,
+              15.0768061040682,
+            ],
+            Array [
+              101.185412406921,
+              15.0769304183694,
+            ],
+            Array [
+              101.182150840759,
+              15.0772619228176,
+            ],
+            Array [
+              101.177172660828,
+              15.0780906816776,
+            ],
+            Array [
+              101.174211502075,
+              15.0777591785211,
+            ],
+            Array [
+              101.172151565552,
+              15.0765989134045,
+            ],
+            Array [
+              101.168503761292,
+              15.0753557651845,
+            ],
+            Array [
+              101.166915893555,
+              15.0715019595332,
+            ],
+          ],
+        ],
+        "type": "Polygon",
+      },
+      "id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
+      "properties": Object {
+        "jurisdiction_name": "TLv1_01",
+        "jurisdiction_parent_id": "dad42fa6-b9b8-4658-bf25-bfa7ab5b16ae",
+      },
+      "type": "Feature",
+    },
+    "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
+  },
+  "goal": Array [
+    Object {
+      "action_code": "Blood Screening",
+      "completed_task_count": 0,
+      "goal_comparator": "=",
+      "goal_id": "RACD_blood_screening_1km_radius",
+      "goal_unit": "percent",
+      "goal_value": 100,
+      "id": "19b86421-3cb2-5698-9f11-c1bdafbe5e6d",
+      "jurisdiction_id": "1337",
+      "measure": "Percent of registered people tested",
+      "plan_id": "1337",
+      "task_business_status_map": Object {},
+      "task_count": 0,
+    },
+  ],
+  "handlers": Array [
+    Object {
+      "method": [Function],
+      "name": "drillDownClick",
+      "type": "click",
+    },
+  ],
+  "tasks": Array [
+    Object {
+      "geojson": Object {
+        "geometry": Object {
+          "coordinates": Array [
+            Array [
+              Array [
+                101.188427209854,
+                15.0909179029537,
+              ],
+              Array [
+                101.18852108717,
+                15.0909179029537,
+              ],
+              Array [
+                101.18852108717,
+                15.0910085427885,
+              ],
+              Array [
+                101.188427209854,
+                15.0910085427885,
+              ],
+              Array [
+                101.188427209854,
+                15.0909179029537,
+              ],
+            ],
+          ],
+          "type": "Polygon",
+        },
+        "id": "e652f8b2-b884-42d5-832a-86009c10a812",
+        "properties": Object {
+          "action_code": "RACD Register Family",
+          "goal_id": "RACD_register_family_1km_radius",
+          "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
+          "jurisdiction_name": "TLv1_01",
+          "jurisdiction_parent_id": "dad42fa6-b9b8-4658-bf25-bfa7ab5b16ae",
+          "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+          "structure_code": "a19eeb63-45d0-4744-9a9d-76d0694103f6",
+          "structure_id": "a19eeb63-45d0-4744-9a9d-76d0694103f6",
+          "structure_name": "a19eeb63-45d0-4744-9a9d-76d0694103f6",
+          "structure_type": "a19eeb63-45d0-4744-9a9d-76d0694103f6",
+          "task_business_status": "Not Visited",
+          "task_execution_end_date": "2019-04-01",
+          "task_execution_start_date": "2019-04-08",
+          "task_focus": "95515b0d-b9c0-496e-83c7-7af8b4924d1f",
+          "task_status": "Ready",
+          "task_task_for": "a19eeb63-45d0-4744-9a9d-76d0694103f6",
+        },
+        "type": "Feature",
+      },
+      "goal_id": "RACD_register_family_1km_radius",
+      "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
+      "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+      "task_identifier": "e652f8b2-b884-42d5-832a-86009c10a812",
+    },
+    Object {
+      "geojson": Object {
+        "geometry": Object {
+          "coordinates": Array [
+            Array [
+              Array [
+                101.177725195885,
+                15.0658221308165,
+              ],
+              Array [
+                101.177684962749,
+                15.0657263002127,
+              ],
+              Array [
+                101.177778840065,
+                15.0656848599382,
+              ],
+              Array [
+                101.177832484245,
+                15.0657781005444,
+              ],
+              Array [
+                101.177725195885,
+                15.0658221308165,
+              ],
+            ],
+          ],
+          "type": "Polygon",
+        },
+        "id": "03458d28-af61-4f70-b110-73a3429ada2d",
+        "properties": Object {
+          "action_code": "Bednet Distribution",
+          "goal_id": "RACD_bednet_dist_1km_radius",
+          "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
+          "jurisdiction_name": "TLv1_01",
+          "jurisdiction_parent_id": "dad42fa6-b9b8-4658-bf25-bfa7ab5b16ae",
+          "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+          "structure_code": "da765947-5e4d-49f7-9eb8-2d2d00681f65",
+          "structure_id": "da765947-5e4d-49f7-9eb8-2d2d00681f65",
+          "structure_name": "da765947-5e4d-49f7-9eb8-2d2d00681f65",
+          "structure_type": "da765947-5e4d-49f7-9eb8-2d2d00681f65",
+          "task_business_status": "Not Visited",
+          "task_execution_end_date": "2019-04-01",
+          "task_execution_start_date": "2019-04-08",
+          "task_focus": "Bednet Distribution",
+          "task_status": "Ready",
+          "task_task_for": "da765947-5e4d-49f7-9eb8-2d2d00681f65",
+        },
+        "type": "Feature",
+      },
+      "goal_id": "RACD_bednet_dist_1km_radius",
+      "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
+      "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+      "task_identifier": "03458d28-af61-4f70-b110-73a3429ada2d",
+    },
+    Object {
+      "geojson": Object {
+        "geometry": Object {
+          "coordinates": Array [
+            28.3524419816308,
+            -15.4178320108929,
+          ],
+          "type": "Point",
+        },
+        "id": "e3e1f2a7-4c53-4059-ab81-0811539e0c5e",
+        "properties": Object {
+          "action_code": "Mosquito Collection",
+          "goal_id": "Mosquito_Collection_Min_3_Traps",
+          "jurisdiction_id": "3952",
+          "jurisdiction_name": "Akros_2",
+          "jurisdiction_parent_id": "3019",
+          "plan_id": "356b6b84-fc36-4389-a44a-2b038ed2f38d",
+          "structure_code": "5f7a0d7c-1412-4af6-83ed-f94787b205e8",
+          "structure_id": "5f7a0d7c-1412-4af6-83ed-f94787b205e8",
+          "structure_name": "5f7a0d7c-1412-4af6-83ed-f94787b205e8",
+          "structure_type": "5f7a0d7c-1412-4af6-83ed-f94787b205e8",
+          "task_business_status": "Complete",
+          "task_execution_end_date": "2019-04-01",
+          "task_execution_start_date": "2019-04-08",
+          "task_focus": "Mosquito Collection",
+          "task_status": "Completed",
+          "task_task_for": "5f7a0d7c-1412-4af6-83ed-f94787b205e8",
+        },
+        "type": "Feature",
+      },
+      "goal_id": "Mosquito_Collection_Min_3_Traps",
+      "jurisdiction_id": "3952",
+      "plan_id": "356b6b84-fc36-4389-a44a-2b038ed2f38d",
+      "task_identifier": "e3e1f2a7-4c53-4059-ab81-0811539e0c5e",
+    },
+    Object {
+      "geojson": Object {
+        "geometry": null,
+        "id": "01d0b84c-df06-426c-a272-6858e84fea31",
+        "properties": Object {
+          "action_code": "Blood Screening",
+          "goal_id": "RACD_blood_screening_1km_radius",
+          "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
+          "jurisdiction_name": "TLv1_01",
+          "jurisdiction_parent_id": "dad42fa6-b9b8-4658-bf25-bfa7ab5b16ae",
+          "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+          "structure_code": null,
+          "structure_id": null,
+          "structure_name": null,
+          "structure_type": null,
+          "task_business_status": "Not Visited",
+          "task_execution_end_date": "2019-04-01",
+          "task_execution_start_date": "2019-04-08",
+          "task_focus": "Blood Screening",
+          "task_status": "Ready",
+          "task_task_for": "c222d4ba-b3c4-4cc8-abae-bdea06511b27",
+        },
+        "type": "Feature",
+      },
+      "goal_id": "RACD_blood_screening_1km_radius",
+      "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
+      "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+      "task_identifier": "01d0b84c-df06-426c-a272-6858e84fea31",
+    },
+  ],
+}
+`;
+
+exports[`containers/pages/FocusInvestigation/activeMap works with redux store 1`] = `
+<Router
+  history={
+    Object {
+      "action": "POP",
+      "block": [Function],
+      "createHref": [Function],
+      "go": [Function],
+      "goBack": [Function],
+      "goForward": [Function],
+      "length": 1,
+      "listen": [Function],
+      "location": Object {
+        "hash": "",
+        "pathname": "/",
+        "search": "",
+        "state": undefined,
+      },
+      "push": [Function],
+      "replace": [Function],
+    }
+  }
+>
+  <SingleActiveFIMap
+    allTasks={Array []}
+    currentGoal={
+      Object {
+        "action_code": "Blood Screening",
+        "completed_task_count": 0,
+        "goal_comparator": "=",
+        "goal_id": "RACD_blood_screening_1km_radius",
+        "goal_unit": "percent",
+        "goal_value": 100,
+        "id": "19b86421-3cb2-5698-9f11-c1bdafbe5e6d",
+        "jurisdiction_id": "1337",
+        "measure": "Percent of registered people tested",
+        "plan_id": "1337",
+        "task_business_status_map": Object {},
+        "task_count": 0,
+      }
+    }
+    featureCollection={
+      Object {
+        "features": Array [
+          Object {
+            "geometry": null,
+            "id": "01d0b84c-df06-426c-a272-6858e84fea31",
+            "properties": Object {
+              "action_code": "Blood Screening",
+              "color": "#ff3",
+              "goal_id": "RACD_blood_screening_1km_radius",
+              "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
+              "jurisdiction_name": "TLv1_01",
+              "jurisdiction_parent_id": "dad42fa6-b9b8-4658-bf25-bfa7ab5b16ae",
+              "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+              "structure_code": null,
+              "structure_id": null,
+              "structure_name": null,
+              "structure_type": null,
+              "task_business_status": "Not Visited",
+              "task_execution_end_date": "2019-04-01",
+              "task_execution_start_date": "2019-04-08",
+              "task_focus": "Blood Screening",
+              "task_status": "Ready",
+              "task_task_for": "c222d4ba-b3c4-4cc8-abae-bdea06511b27",
+            },
+            "type": "Feature",
+          },
+        ],
+        "type": "FeatureCollection",
+      }
+    }
+    fetchGoalsActionCreator={[Function]}
+    fetchJurisdictionsActionCreator={[Function]}
+    fetchPlansActionCreator={[Function]}
+    fetchTasksActionCreator={[Function]}
+    goals={null}
+    history={
+      Object {
+        "action": "POP",
+        "block": [Function],
+        "createHref": [Function],
+        "go": [Function],
+        "goBack": [Function],
+        "goForward": [Function],
+        "length": 1,
+        "listen": [Function],
+        "location": Object {
+          "hash": "",
+          "pathname": "/",
+          "search": "",
+          "state": undefined,
+        },
+        "push": [Function],
+        "replace": [Function],
+      }
+    }
+    jurisdiction={null}
+    location={[MockFunction]}
+    match={
+      Object {
+        "isExact": true,
+        "params": Object {
+          "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
+        },
+        "path": "/focus-investigation/view/:id",
+        "url": "/focus-investigation/view/13",
+      }
+    }
+    plan={null}
+    tasks={null}
+  >
+    <Ripple
+      borderColor="#ff5d00"
+      borderStyle="solid"
+      borderWidth="4px"
+      height="64px"
+      minHeight="80vh"
+      width="64px"
+    >
+      <div
+        className="lds-ripple-parent"
+        style={
+          Object {
+            "minHeight": "80vh",
+          }
+        }
+      >
+        <div
+          className="lds-ripple"
+          style={
+            Object {
+              "height": "64px",
+              "width": "64px",
+            }
+          }
+        >
+          <div
+            style={
+              Object {
+                "borderColor": "#ff5d00",
+                "borderStyle": "solid",
+                "borderWidth": "4px",
+              }
+            }
+          />
+          <div
+            style={
+              Object {
+                "borderColor": "#ff5d00",
+                "borderStyle": "solid",
+                "borderWidth": "4px",
+              }
+            }
+          />
+        </div>
+      </div>
+    </Ripple>
+  </SingleActiveFIMap>
+</Router>
+`;
+
+exports[`containers/pages/FocusInvestigation/activeMap works with redux store 2`] = `
+Object {
+  "allTasks": Array [],
+  "currentGoal": Object {
+    "action_code": "Blood Screening",
+    "completed_task_count": 0,
+    "goal_comparator": "=",
+    "goal_id": "RACD_blood_screening_1km_radius",
+    "goal_unit": "percent",
+    "goal_value": 100,
+    "id": "19b86421-3cb2-5698-9f11-c1bdafbe5e6d",
+    "jurisdiction_id": "1337",
+    "measure": "Percent of registered people tested",
+    "plan_id": "1337",
+    "task_business_status_map": Object {},
+    "task_count": 0,
+  },
+  "featureCollection": Object {
+    "features": Array [
+      Object {
+        "geometry": null,
+        "id": "01d0b84c-df06-426c-a272-6858e84fea31",
+        "properties": Object {
+          "action_code": "Blood Screening",
+          "goal_id": "RACD_blood_screening_1km_radius",
+          "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
+          "jurisdiction_name": "TLv1_01",
+          "jurisdiction_parent_id": "dad42fa6-b9b8-4658-bf25-bfa7ab5b16ae",
+          "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+          "structure_code": null,
+          "structure_id": null,
+          "structure_name": null,
+          "structure_type": null,
+          "task_business_status": "Not Visited",
+          "task_execution_end_date": "2019-04-01",
+          "task_execution_start_date": "2019-04-08",
+          "task_focus": "Blood Screening",
+          "task_status": "Ready",
+          "task_task_for": "c222d4ba-b3c4-4cc8-abae-bdea06511b27",
+        },
+        "type": "Feature",
+      },
+    ],
+    "type": "FeatureCollection",
+  },
+  "geoData": Object {
+    "geojson": Object {
+      "geometry": Object {
+        "coordinates": Array [
+          Array [
+            Array [
+              101.166915893555,
+              15.0715019595332,
+            ],
+            Array [
+              101.165628433228,
+              15.069429992157,
+            ],
+            Array [
+              101.164855957031,
+              15.0649130333519,
+            ],
+            Array [
+              101.164898872375,
+              15.061473449978,
+            ],
+            Array [
+              101.165843009949,
+              15.0585311116698,
+            ],
+            Array [
+              101.168718338013,
+              15.0577022766384,
+            ],
+            Array [
+              101.173524856567,
+              15.0577437184666,
+            ],
+            Array [
+              101.179447174072,
+              15.0583653449216,
+            ],
+            Array [
+              101.183996200562,
+              15.0589455279759,
+            ],
+            Array [
+              101.189103126526,
+              15.0597743581685,
+            ],
+            Array [
+              101.191892623901,
+              15.0629238834779,
+            ],
+            Array [
+              101.191549301147,
+              15.0671093647448,
+            ],
+            Array [
+              101.19086265564,
+              15.0727036913665,
+            ],
+            Array [
+              101.190605163574,
+              15.0748170653661,
+            ],
+            Array [
+              101.188631057739,
+              15.0768061040682,
+            ],
+            Array [
+              101.185412406921,
+              15.0769304183694,
+            ],
+            Array [
+              101.182150840759,
+              15.0772619228176,
+            ],
+            Array [
+              101.177172660828,
+              15.0780906816776,
+            ],
+            Array [
+              101.174211502075,
+              15.0777591785211,
+            ],
+            Array [
+              101.172151565552,
+              15.0765989134045,
+            ],
+            Array [
+              101.168503761292,
+              15.0753557651845,
+            ],
+            Array [
+              101.166915893555,
+              15.0715019595332,
+            ],
+          ],
+        ],
+        "type": "Polygon",
+      },
+      "id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
+      "properties": Object {
+        "jurisdiction_name": "TLv1_01",
+        "jurisdiction_parent_id": "dad42fa6-b9b8-4658-bf25-bfa7ab5b16ae",
+      },
+      "type": "Feature",
+    },
+    "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
+  },
+  "goal": Array [
+    Object {
+      "action_code": "Blood Screening",
+      "completed_task_count": 0,
+      "goal_comparator": "=",
+      "goal_id": "RACD_blood_screening_1km_radius",
+      "goal_unit": "percent",
+      "goal_value": 100,
+      "id": "19b86421-3cb2-5698-9f11-c1bdafbe5e6d",
+      "jurisdiction_id": "1337",
+      "measure": "Percent of registered people tested",
+      "plan_id": "1337",
+      "task_business_status_map": Object {},
+      "task_count": 0,
+    },
+  ],
+  "handlers": Array [
+    Object {
+      "method": [Function],
+      "name": "drillDownClick",
+      "type": "click",
+    },
+  ],
+  "tasks": Array [
+    Object {
+      "geojson": Object {
+        "geometry": Object {
+          "coordinates": Array [
+            Array [
+              Array [
+                101.188427209854,
+                15.0909179029537,
+              ],
+              Array [
+                101.18852108717,
+                15.0909179029537,
+              ],
+              Array [
+                101.18852108717,
+                15.0910085427885,
+              ],
+              Array [
+                101.188427209854,
+                15.0910085427885,
+              ],
+              Array [
+                101.188427209854,
+                15.0909179029537,
+              ],
+            ],
+          ],
+          "type": "Polygon",
+        },
+        "id": "e652f8b2-b884-42d5-832a-86009c10a812",
+        "properties": Object {
+          "action_code": "RACD Register Family",
+          "goal_id": "RACD_register_family_1km_radius",
+          "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
+          "jurisdiction_name": "TLv1_01",
+          "jurisdiction_parent_id": "dad42fa6-b9b8-4658-bf25-bfa7ab5b16ae",
+          "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+          "structure_code": "a19eeb63-45d0-4744-9a9d-76d0694103f6",
+          "structure_id": "a19eeb63-45d0-4744-9a9d-76d0694103f6",
+          "structure_name": "a19eeb63-45d0-4744-9a9d-76d0694103f6",
+          "structure_type": "a19eeb63-45d0-4744-9a9d-76d0694103f6",
+          "task_business_status": "Not Visited",
+          "task_execution_end_date": "2019-04-01",
+          "task_execution_start_date": "2019-04-08",
+          "task_focus": "95515b0d-b9c0-496e-83c7-7af8b4924d1f",
+          "task_status": "Ready",
+          "task_task_for": "a19eeb63-45d0-4744-9a9d-76d0694103f6",
+        },
+        "type": "Feature",
+      },
+      "goal_id": "RACD_register_family_1km_radius",
+      "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
+      "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+      "task_identifier": "e652f8b2-b884-42d5-832a-86009c10a812",
+    },
+    Object {
+      "geojson": Object {
+        "geometry": Object {
+          "coordinates": Array [
+            Array [
+              Array [
+                101.177725195885,
+                15.0658221308165,
+              ],
+              Array [
+                101.177684962749,
+                15.0657263002127,
+              ],
+              Array [
+                101.177778840065,
+                15.0656848599382,
+              ],
+              Array [
+                101.177832484245,
+                15.0657781005444,
+              ],
+              Array [
+                101.177725195885,
+                15.0658221308165,
+              ],
+            ],
+          ],
+          "type": "Polygon",
+        },
+        "id": "03458d28-af61-4f70-b110-73a3429ada2d",
+        "properties": Object {
+          "action_code": "Bednet Distribution",
+          "goal_id": "RACD_bednet_dist_1km_radius",
+          "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
+          "jurisdiction_name": "TLv1_01",
+          "jurisdiction_parent_id": "dad42fa6-b9b8-4658-bf25-bfa7ab5b16ae",
+          "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+          "structure_code": "da765947-5e4d-49f7-9eb8-2d2d00681f65",
+          "structure_id": "da765947-5e4d-49f7-9eb8-2d2d00681f65",
+          "structure_name": "da765947-5e4d-49f7-9eb8-2d2d00681f65",
+          "structure_type": "da765947-5e4d-49f7-9eb8-2d2d00681f65",
+          "task_business_status": "Not Visited",
+          "task_execution_end_date": "2019-04-01",
+          "task_execution_start_date": "2019-04-08",
+          "task_focus": "Bednet Distribution",
+          "task_status": "Ready",
+          "task_task_for": "da765947-5e4d-49f7-9eb8-2d2d00681f65",
+        },
+        "type": "Feature",
+      },
+      "goal_id": "RACD_bednet_dist_1km_radius",
+      "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
+      "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+      "task_identifier": "03458d28-af61-4f70-b110-73a3429ada2d",
+    },
+    Object {
+      "geojson": Object {
+        "geometry": Object {
+          "coordinates": Array [
+            28.3524419816308,
+            -15.4178320108929,
+          ],
+          "type": "Point",
+        },
+        "id": "e3e1f2a7-4c53-4059-ab81-0811539e0c5e",
+        "properties": Object {
+          "action_code": "Mosquito Collection",
+          "goal_id": "Mosquito_Collection_Min_3_Traps",
+          "jurisdiction_id": "3952",
+          "jurisdiction_name": "Akros_2",
+          "jurisdiction_parent_id": "3019",
+          "plan_id": "356b6b84-fc36-4389-a44a-2b038ed2f38d",
+          "structure_code": "5f7a0d7c-1412-4af6-83ed-f94787b205e8",
+          "structure_id": "5f7a0d7c-1412-4af6-83ed-f94787b205e8",
+          "structure_name": "5f7a0d7c-1412-4af6-83ed-f94787b205e8",
+          "structure_type": "5f7a0d7c-1412-4af6-83ed-f94787b205e8",
+          "task_business_status": "Complete",
+          "task_execution_end_date": "2019-04-01",
+          "task_execution_start_date": "2019-04-08",
+          "task_focus": "Mosquito Collection",
+          "task_status": "Completed",
+          "task_task_for": "5f7a0d7c-1412-4af6-83ed-f94787b205e8",
+        },
+        "type": "Feature",
+      },
+      "goal_id": "Mosquito_Collection_Min_3_Traps",
+      "jurisdiction_id": "3952",
+      "plan_id": "356b6b84-fc36-4389-a44a-2b038ed2f38d",
+      "task_identifier": "e3e1f2a7-4c53-4059-ab81-0811539e0c5e",
+    },
+    Object {
+      "geojson": Object {
+        "geometry": null,
+        "id": "01d0b84c-df06-426c-a272-6858e84fea31",
+        "properties": Object {
+          "action_code": "Blood Screening",
+          "goal_id": "RACD_blood_screening_1km_radius",
+          "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
+          "jurisdiction_name": "TLv1_01",
+          "jurisdiction_parent_id": "dad42fa6-b9b8-4658-bf25-bfa7ab5b16ae",
+          "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+          "structure_code": null,
+          "structure_id": null,
+          "structure_name": null,
+          "structure_type": null,
+          "task_business_status": "Not Visited",
+          "task_execution_end_date": "2019-04-01",
+          "task_execution_start_date": "2019-04-08",
+          "task_focus": "Blood Screening",
+          "task_status": "Ready",
+          "task_task_for": "c222d4ba-b3c4-4cc8-abae-bdea06511b27",
+        },
+        "type": "Feature",
+      },
+      "goal_id": "RACD_blood_screening_1km_radius",
+      "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
+      "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+      "task_identifier": "01d0b84c-df06-426c-a272-6858e84fea31",
+    },
+  ],
+}
+`;
