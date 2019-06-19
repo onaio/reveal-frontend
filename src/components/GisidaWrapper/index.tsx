@@ -163,7 +163,7 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
     //     initMapWithoutTasks: true,
     //   });
     // }
-    if (!this.props.featureCollection.features) {
+    if (this.props.featureCollection && !this.props.featureCollection.features) {
       this.setState({
         initMapWithoutFC: true,
       });
@@ -214,9 +214,10 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
     //   });
     // }
     if (
-      (!(nextProps.featureCollection.features && nextProps.featureCollection.features.length) && // dont think using array length as boolean in js is a good idea. Research on which is better, using length or an utility like lodash's some
-        !this.state.initMapWithoutTasks) ||
-      typeof nextProps.featureCollectin.features === 'undefined'
+      nextProps.featureCollection &&
+      ((!(nextProps.featureCollection.features && nextProps.featureCollection.features.length) && // dont think using array length as boolean in js is a good idea. Research on which is better, using length or an utility like lodash's some
+        !this.state.initMapWithoutFC) ||
+        typeof nextProps.featureCollection.features === 'undefined')
     ) {
       this.setState({ doInitMap: true, initMapWithoutFC: true }, () => {
         // setState apparently takes a callback
@@ -241,6 +242,7 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
     //   });
     // }
     if (
+      nextProps.featureCollection &&
       nextProps.featureCollection.features &&
       nextProps.featureCollection.features.length &&
       nextProps.currentGoal !== this.props.currentGoal &&
