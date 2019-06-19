@@ -29,7 +29,9 @@ import {
   RESPONSE,
   TARGET,
 } from '../../../../constants';
+import { getGoalReport } from '../../../../helpers/indicators';
 import ProgressBar from '../../../../helpers/ProgressBar';
+import { percentage } from '../../../../helpers/utils';
 import { extractPlan, RouteParams, transformValues } from '../../../../helpers/utils';
 import supersetFetch from '../../../../services/superset';
 import goalsReducer, {
@@ -167,6 +169,7 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
 
               {/** loop through the goals */
               theGoals.map((item: Goal) => {
+                const goalReport = getGoalReport(item);
                 return (
                   <div className="responseItem" key={item.goal_id}>
                     <h6>{item.action_code}</h6>
@@ -175,9 +178,10 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
                         {MEASURE}: {item.measure}
                       </p>
                       <p>
-                        {TARGET}: {item.task_count} {OF} {item.goal_value}
+                        {TARGET}: {goalReport.prettyPercentAchieved} ({goalReport.achievedValue}{' '}
+                        {OF} {goalReport.targetValue})
                       </p>
-                      <ProgressBar value={item.task_count} max={item.goal_value} />
+                      <ProgressBar value={goalReport.percentAchieved} max={1} />
                     </div>
                   </div>
                 );
