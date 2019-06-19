@@ -35,15 +35,22 @@ export function goalPercentAchieved(goal: Goal): number {
   }
 
   if (targetValue === 0) {
-    return 0;
+    return 0; /** Not yet supported */
   }
 
-  if (goal.goal_comparator in [Operators.LessThan, Operators.LessThanOrEqual]) {
+  if (achievedValue === targetValue) {
+    return achievedValue / targetValue;
+  }
+
+  if (
+    goal.goal_comparator === Operators.LessThan ||
+    goal.goal_comparator === Operators.LessThanOrEqual
+  ) {
     // in this case we are targeting a reduction
-    percentAchieved = (targetValue - achievedValue) / targetValue;
+    percentAchieved = 0; /** Not yet supported */
   } else {
     // in this case we are targeting an increase
-    percentAchieved = (targetValue - achievedValue) / targetValue;
+    percentAchieved = achievedValue / targetValue;
   }
 
   return percentAchieved;
