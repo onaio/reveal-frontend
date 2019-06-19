@@ -1,5 +1,5 @@
 import * as fixtures from '../../store/ducks/tests/fixtures';
-import { goalPercentAchieved } from '../indicators';
+import { getGoalReport, goalPercentAchieved } from '../indicators';
 
 describe('helpers/indicators', () => {
   it('goalPercentAchieved works', () => {
@@ -47,5 +47,38 @@ describe('helpers/indicators', () => {
       task_count: 100,
     };
     expect(goalPercentAchieved(goal)).toEqual(0);
+  });
+
+  it('getGoalReport works', () => {
+    expect(getGoalReport(fixtures.goal1)).toEqual({
+      achievedValue: 0,
+      percentAchieved: 0,
+      prettyPercentAchieved: '0%',
+      targetValue: 1,
+    });
+    expect(getGoalReport(fixtures.goal2)).toEqual({
+      achievedValue: 0,
+      percentAchieved: 0,
+      prettyPercentAchieved: '0%',
+      targetValue: 3,
+    });
+    expect(getGoalReport(fixtures.goal3)).toEqual({
+      achievedValue: 0,
+      percentAchieved: 0,
+      prettyPercentAchieved: '0%',
+      targetValue: 0,
+    });
+    expect(getGoalReport(fixtures.goal4)).toEqual({
+      achievedValue: 3,
+      percentAchieved: 1,
+      prettyPercentAchieved: '100%',
+      targetValue: 3,
+    });
+    expect(getGoalReport(fixtures.goal5)).toEqual({
+      achievedValue: 4,
+      percentAchieved: 0.26666666666666666,
+      prettyPercentAchieved: '27%',
+      targetValue: 15,
+    });
   });
 });
