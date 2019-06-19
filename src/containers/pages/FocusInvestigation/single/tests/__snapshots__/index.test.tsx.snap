@@ -690,11 +690,14 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
                         <p>
                           Target
                           : 
+                          0%
+                           (
                           0
                            
                           of
                            
                           1
+                          )
                         </p>
                         <ProgressBar
                           decimalPoints={0}
@@ -747,18 +750,21 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
                         <p>
                           Target
                           : 
-                          2
+                          0%
+                           (
+                          0
                            
                           of
                            
                           3
+                          )
                         </p>
                         <ProgressBar
                           decimalPoints={0}
                           height="10px"
-                          max={3}
+                          max={1}
                           min={0}
-                          value={2}
+                          value={0}
                         >
                           <div
                             className="progress"
@@ -770,15 +776,15 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
                             }
                           >
                             <div
-                              aria-valuemax={3}
+                              aria-valuemax={1}
                               aria-valuemin={0}
-                              aria-valuenow={66.66666666666666}
+                              aria-valuenow={0}
                               className="progress-bar"
                               role="progressbar"
                               style={
                                 Object {
-                                  "backgroundColor": "#ff5c33",
-                                  "width": "67%",
+                                  "backgroundColor": "#ff3",
+                                  "width": "0%",
                                 }
                               }
                             />
@@ -804,18 +810,21 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
                         <p>
                           Target
                           : 
-                          18
+                          100%
+                           (
+                          3
                            
                           of
                            
                           3
+                          )
                         </p>
                         <ProgressBar
                           decimalPoints={0}
                           height="10px"
-                          max={3}
+                          max={1}
                           min={0}
-                          value={18}
+                          value={1}
                         >
                           <div
                             className="progress"
@@ -827,15 +836,15 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
                             }
                           >
                             <div
-                              aria-valuemax={3}
+                              aria-valuemax={1}
                               aria-valuemin={0}
-                              aria-valuenow={600}
+                              aria-valuenow={100}
                               className="progress-bar"
                               role="progressbar"
                               style={
                                 Object {
                                   "backgroundColor": "#33ad33",
-                                  "width": "600%",
+                                  "width": "100%",
                                 }
                               }
                             />
@@ -1520,11 +1529,14 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
                     <p>
                       Target
                       : 
+                      0%
+                       (
                       0
                        
                       of
                        
                       1
+                      )
                     </p>
                     <ProgressBar
                       decimalPoints={0}
@@ -1577,18 +1589,21 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
                     <p>
                       Target
                       : 
-                      2
+                      0%
+                       (
+                      0
                        
                       of
                        
                       3
+                      )
                     </p>
                     <ProgressBar
                       decimalPoints={0}
                       height="10px"
-                      max={3}
+                      max={1}
                       min={0}
-                      value={2}
+                      value={0}
                     >
                       <div
                         className="progress"
@@ -1600,15 +1615,15 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
                         }
                       >
                         <div
-                          aria-valuemax={3}
+                          aria-valuemax={1}
                           aria-valuemin={0}
-                          aria-valuenow={66.66666666666666}
+                          aria-valuenow={0}
                           className="progress-bar"
                           role="progressbar"
                           style={
                             Object {
-                              "backgroundColor": "#ff5c33",
-                              "width": "67%",
+                              "backgroundColor": "#ff3",
+                              "width": "0%",
                             }
                           }
                         />
