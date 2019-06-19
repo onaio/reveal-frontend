@@ -83,6 +83,7 @@ export const defaultMapSingleFIProps: MapSingleFIProps = {
   plan: null,
   tasks: null,
 };
+
 /** Map View for Single Active Focus Investigation */
 class SingleActiveFIMap extends React.Component<
   RouteComponentProps<RouteParams> & MapSingleFIProps,
@@ -199,6 +200,9 @@ class SingleActiveFIMap extends React.Component<
     return handlers;
   }
 }
+
+export { SingleActiveFIMap };
+
 /** map state to props
  * @param {partial<store>} - the redux store
  * @param {any} ownProps - the props
