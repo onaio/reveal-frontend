@@ -3,7 +3,6 @@ import { get, keyBy, keys, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
 import SeamlessImmutable from 'seamless-immutable';
 import {
-  cleanObjCollection,
   FeatureCollection,
   GeoJSON,
   getColor,
@@ -277,33 +276,46 @@ export function getTasksByPlanAndGoalAndJurisdiction(
 }
 
 /** responsible for only getting task geojson data for all tasks from reducer
- * @param {state} - the store state
+ * @param {Partial<Store>} state - the store state
+ * @param {boolean} includeNullGeoms - if to include features with null geometries in FC
  * @return {TaskGeoJSON []} - returns a list of all tasks' geojson whose geoms are not null
  */
-function getTasksGeoJsonData(state: Partial<Store>): TaskGeoJSON[] {
-  const tasksGeoJsonFeatures = values((state as any)[reducerName].tasksById).map(e => e.geojson);
-  return cleanObjCollection(tasksGeoJsonFeatures, 'geometry');
+export function getTasksGeoJsonData(
+  state: Partial<Store>,
+  includeNullGeoms: boolean = true
+): TaskGeoJSON[] {
+  let results = values((state as any)[reducerName].tasksById).map(e => e.geojson);
+  if (!includeNullGeoms) {
+    results = results.filter(e => e && e.geometry);
+  }
+  return results;
 }
 
 /** get all tasks as a Feature Collection
  * @param {Partial<Store>} state - the redux store
+ * @param {boolean} includeNullGeoms - if to include features with null geometries in FC
  * @return {FeatureCollection<TaskGeoJSON>} - an geoJSON Feature Collection object
  */
-export function getAllFC(state: Partial<Store>): FeatureCollection<TaskGeoJSON> {
-  const allGeojsonFeatures = getTasksGeoJsonData(state);
+export function getAllFC(
+  state: Partial<Store>,
+  includeNullGeoms: boolean = true
+): FeatureCollection<TaskGeoJSON> {
+  const allGeojsonFeatures = getTasksGeoJsonData(state, includeNullGeoms);
   return wrapFeatureCollection(allGeojsonFeatures);
 }
 
 /** get tasks as FeatureCollection filtered by goal_id
  * @param {Partial<Store>} state - the redux store
  * @param {string} goalId - the goal id
+ * @param {boolean} includeNullGeoms - if to include features with null geometries in FC
  * @return {FeatureCollection} - an geoJSON Feature Collection object
  */
 export function getFCByGoalId(
   state: Partial<Store>,
-  goalId: string
+  goalId: string,
+  includeNullGeoms: boolean = true
 ): FeatureCollection<TaskGeoJSON> {
-  const geoJsonFeatures: TaskGeoJSON[] = getTasksGeoJsonData(state).filter(
+  const geoJsonFeatures: TaskGeoJSON[] = getTasksGeoJsonData(state, includeNullGeoms).filter(
     e => e.properties.goal_id === goalId
   );
   return wrapFeatureCollection(geoJsonFeatures);
@@ -312,13 +324,15 @@ export function getFCByGoalId(
 /** get tasks as FeatureCollection filtered by plan_id
  * @param {partial<Store>} state - the redux store
  * @param {string} planId - the plan id
+ * @param {boolean} includeNullGeoms - if to include features with null geometries in FC
  * @return {FeatureCollection} - an geoJSON Feature Collection object
  */
 export function getFCByPlanId(
   state: Partial<Store>,
-  planId: string
+  planId: string,
+  includeNullGeoms: boolean = true
 ): FeatureCollection<TaskGeoJSON> {
-  const geoJsonFeatures: TaskGeoJSON[] = getTasksGeoJsonData(state).filter(
+  const geoJsonFeatures: TaskGeoJSON[] = getTasksGeoJsonData(state, includeNullGeoms).filter(
     e => e.properties.plan_id === planId
   );
   return wrapFeatureCollection(geoJsonFeatures);
@@ -327,13 +341,15 @@ export function getFCByPlanId(
 /** get tasks as FeatureCollection filtered by jurisdiction_id
  * @param {partial<Store>} state - the redux store
  * @param {string} jurisdictionId - the jurisdiction id
+ * @param {boolean} includeNullGeoms - if to include features with null geometries in FC
  * @return {FeatureCollection} - an geoJSON Feature Collection object
  */
 export function getFCByJurisdictionId(
   state: Partial<Store>,
-  jurisdictionId: string
+  jurisdictionId: string,
+  includeNullGeoms: boolean = true
 ): FeatureCollection<TaskGeoJSON> {
-  const geoJsonFeatures: TaskGeoJSON[] = getTasksGeoJsonData(state).filter(
+  const geoJsonFeatures: TaskGeoJSON[] = getTasksGeoJsonData(state, includeNullGeoms).filter(
     e => e.properties.jurisdiction_id === jurisdictionId
   );
   return wrapFeatureCollection(geoJsonFeatures);
@@ -342,13 +358,15 @@ export function getFCByJurisdictionId(
 /** get tasks as FeatureCollection filtered by structure_id
  * @param {partial<Store>} state - the redux store
  * @param {string} structureId - the structure id
+ * @param {boolean} includeNullGeoms - if to include features with null geometries in FC
  * @return {FeatureCollection} - an geoJSON Feature Collection object
  */
 export function getFCByStructureId(
   state: Partial<Store>,
-  structureId: string
+  structureId: string,
+  includeNullGeoms: boolean = true
 ): FeatureCollection<TaskGeoJSON> {
-  const geoJsonFeatures: TaskGeoJSON[] = getTasksGeoJsonData(state).filter(
+  const geoJsonFeatures: TaskGeoJSON[] = getTasksGeoJsonData(state, includeNullGeoms).filter(
     e => e.properties.structure_id === structureId
   );
   return wrapFeatureCollection(geoJsonFeatures);
@@ -358,14 +376,16 @@ export function getFCByStructureId(
  * @param {partial<Store>} state - the redux store
  * @param {string} planId - the plan id
  * @param {string} jurisdictionId - the jurisdiction id
+ * @param {boolean} includeNullGeoms - if to include features with null geometries in FC
  * @return {FeatureCollection} - an geoJSON Feature Collection object
  */
 export function getFCByPlanAndJurisdiction(
   state: Partial<Store>,
   planId: string,
-  jurisdictionId: string
+  jurisdictionId: string,
+  includeNullGeoms: boolean = true
 ): FeatureCollection<TaskGeoJSON> {
-  const geoJsonFeatures: TaskGeoJSON[] = getTasksGeoJsonData(state).filter(
+  const geoJsonFeatures: TaskGeoJSON[] = getTasksGeoJsonData(state, includeNullGeoms).filter(
     e => e.properties.plan_id === planId && e.properties.jurisdiction_id === jurisdictionId
   );
   return wrapFeatureCollection(geoJsonFeatures);
@@ -376,15 +396,17 @@ export function getFCByPlanAndJurisdiction(
  * @param {string} planId - the plan id
  * @param {string} goalId - the goal id
  * @param {string} jurisdictionId - the jurisdiction id
+ * @param {boolean} includeNullGeoms - if to include features with null geometries in FC
  * @return {FeatureCollection} - an geoJSON Feature Collection object
  */
 export function getFCByPlanAndGoalAndJurisdiction(
   state: Partial<Store>,
   planId: string,
   goalId: string,
-  jurisdictionId: string
+  jurisdictionId: string,
+  includeNullGeoms: boolean = true
 ): FeatureCollection<TaskGeoJSON> {
-  const geoJsonFeatures: TaskGeoJSON[] = getTasksGeoJsonData(state).filter(
+  const geoJsonFeatures: TaskGeoJSON[] = getTasksGeoJsonData(state, includeNullGeoms).filter(
     e =>
       e.properties.plan_id === planId &&
       e.properties.goal_id === goalId &&
