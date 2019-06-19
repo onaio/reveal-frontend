@@ -4,6 +4,84 @@ import { CellInfo } from 'react-table';
 import { GREEN, ORANGE, RED, YELLOW } from '../colors';
 import { GREEN_THRESHOLD, ORANGE_THRESHOLD, YELLOW_THRESHOLD, ZERO } from '../configs/settings';
 import { FlexObject, percentage } from '../helpers/utils';
+import { Goal } from '../store/ducks/goals';
+
+/** Enum describing operators */
+enum Operators {
+  Equal = '=',
+  GreaterThan = '>',
+  GreaterThanOrEqual = '>=',
+  LessThan = '<',
+  LessThanOrEqual = '<=',
+}
+
+/** Get the level of achievement towards the goal target as a percentage
+ * @param {Goal} goal - the goal
+ * @returns {number} percentAchieved
+ */
+export function goalPercentAchieved(goal: Goal): number {
+  let percentAchieved: number = 0;
+  let achievedValue: number = goal.completed_task_count;
+  const totalAttempts: number = goal.task_count;
+  const targetValue: number = goal.goal_value;
+
+  // deal with percentages if needed
+  if (goal.goal_unit.toLowerCase() === 'percent') {
+    if (totalAttempts === 0) {
+      achievedValue = 0;
+    } else {
+      achievedValue = (achievedValue / totalAttempts) * 100;
+    }
+  }
+
+  if (targetValue === 0) {
+    return 0; /** Not yet supported */
+  }
+
+  if (achievedValue === targetValue) {
+    return achievedValue / targetValue;
+  }
+
+  if (
+    goal.goal_comparator === Operators.LessThan ||
+    goal.goal_comparator === Operators.LessThanOrEqual
+  ) {
+    // in this case we are targeting a reduction
+    percentAchieved = 0; /** Not yet supported */
+  } else {
+    // in this case we are targeting an increase
+    percentAchieved = achievedValue / targetValue;
+  }
+
+  return percentAchieved;
+}
+
+/** interface for Goal report */
+export interface GoalReport {
+  achievedValue: number /** the achieved value */;
+  percentAchieved: number /** progress towards goal achievement */;
+  prettyPercentAchieved: string /** pretty string of percentAchieved */;
+  targetValue: number /** the target value */;
+}
+
+/** Utility function to get an object containing values for goal indicators
+ * @param {Goal} goal - the goal
+ * @returns {GoalReport} the Goal Report object
+ */
+export function getGoalReport(goal: Goal): GoalReport {
+  const percentAchieved = goalPercentAchieved(goal);
+  let targetValue = goal.task_count;
+  if (goal.goal_unit.toLowerCase() !== 'percent') {
+    targetValue = goal.goal_value;
+  }
+
+  return {
+    achievedValue: goal.completed_task_count,
+    percentAchieved,
+    prettyPercentAchieved: percentage(percentAchieved),
+    targetValue,
+  };
+}
 
 /** Returns a table cell rendered with different colors based on focus
  * investigation response adherence conditional formatting

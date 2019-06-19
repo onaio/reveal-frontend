@@ -20,6 +20,7 @@ import {
   RESPONSE,
   TARGET,
 } from '../../../../../constants';
+import { getGoalReport } from '../../../../../helpers/indicators';
 import { FlexObject, RouteParams } from '../../../../../helpers/utils';
 import supersetFetch from '../../../../../services/superset';
 import goalsReducer, {
@@ -82,6 +83,7 @@ export const defaultMapSingleFIProps: MapSingleFIProps = {
   plan: null,
   tasks: null,
 };
+
 /** Map View for Single Active Focus Investigation */
 class SingleActiveFIMap extends React.Component<
   RouteComponentProps<RouteParams> & MapSingleFIProps,
@@ -142,6 +144,7 @@ class SingleActiveFIMap extends React.Component<
               <hr />
               {goals &&
                 goals.map((item: Goal) => {
+                  const goalReport = getGoalReport(item);
                   return (
                     <div className="responseItem" key={item.goal_id}>
                       <NavLink
@@ -156,7 +159,8 @@ class SingleActiveFIMap extends React.Component<
                           {MEASURE}: {item.measure}
                         </p>
                         <p>
-                          {TARGET}: {item.task_count} {OF} {item.goal_value}
+                          {TARGET}: {goalReport.prettyPercentAchieved} ({goalReport.achievedValue}{' '}
+                          {OF} {goalReport.targetValue})
                         </p>
                       </div>
                     </div>
@@ -196,6 +200,9 @@ class SingleActiveFIMap extends React.Component<
     return handlers;
   }
 }
+
+export { SingleActiveFIMap };
+
 /** map state to props
  * @param {partial<store>} - the redux store
  * @param {any} ownProps - the props

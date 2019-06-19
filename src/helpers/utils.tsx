@@ -49,6 +49,7 @@ export function percentage(num: number, decimalPoints: number = 0) {
   return `${(num * 100).toFixed(decimalPoints)}%`;
 }
 
+/** Map props interface */
 export interface MapProps {
   [key: string]: any;
 }
