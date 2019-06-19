@@ -20,8 +20,7 @@ import {
   RESPONSE,
   TARGET,
 } from '../../../../../constants';
-import { getGoalReport } from '../../../../../helpers/indicators';
-import { FlexObject, RouteParams } from '../../../../../helpers/utils';
+import { FlexObject, popupHandler, RouteParams } from '../../../../../helpers/utils';
 import supersetFetch from '../../../../../services/superset';
 import goalsReducer, {
   fetchGoals,
@@ -83,10 +82,7 @@ export const defaultMapSingleFIProps: MapSingleFIProps = {
   plan: null,
   tasks: null,
 };
-/** declare globals interface */
-declare global {
-  const mapboxgl: any;
-}
+
 /** Map View for Single Active Focus Investigation */
 class SingleActiveFIMap extends React.Component<
   RouteComponentProps<RouteParams> & MapSingleFIProps,
@@ -204,34 +200,7 @@ class SingleActiveFIMap extends React.Component<
         /**
          * @param {any} synthetic event a wrapper event around native events
          */
-        method: function pointClick(event: any) {
-          event.preventDefault();
-          const features = event.target.queryRenderedFeatures(event.point);
-          if (
-            features &&
-            features[0] &&
-            features[0].geometry &&
-            features[0].geometry.coordinates &&
-            features[0].properties &&
-            features[0].properties.action_code &&
-            features[0].layer.type !== 'fill'
-          ) {
-            const coordinates = features[0].geometry.coordinates.slice();
-            const description = features[0].properties.action_code;
-            /** Ensure that if the map is zoomed out such that multiple
-             * copies of the feature are visible,
-             * the popup appears over the copy being pointed to
-             */
-            while (Math.abs(event.lngLat.lng - coordinates[0]) > 180) {
-              coordinates[0] += event.lngLat.lng > coordinates[0] ? 360 : -360;
-            }
-            const windowObject: FlexObject = window;
-            new mapboxgl.Popup()
-              .setLngLat(coordinates)
-              .setHTML(description)
-              .addTo(windowObject.maps[0]);
-          }
-        },
+        method: popupHandler,
         name: 'pointClick',
         type: 'click',
       },
