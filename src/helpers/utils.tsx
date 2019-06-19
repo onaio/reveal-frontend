@@ -5,6 +5,7 @@ import { findKey, uniq } from 'lodash';
 import { FitBoundsOptions, Layer, Style } from 'mapbox-gl';
 import { Column } from 'react-table';
 import SeamlessImmutable from 'seamless-immutable';
+import { Z_FILTERED } from 'zlib';
 import * as colors from '../colors';
 import { DIGITAL_GLOBE_CONNECT_ID, ONADATA_OAUTH_STATE, OPENSRP_OAUTH_STATE } from '../configs/env';
 import { locationHierarchy, LocationItem } from '../configs/settings';
@@ -356,4 +357,49 @@ export function wrapFeatureCollection<T>(objFeatureCollection: T[]): FeatureColl
     features: objFeatureCollection,
     type: 'FeatureCollection',
   };
+}
+
+/** wrapper around deepFilter */
+export function filterDeepPredicate(obj, propertyName: string) {
+  let status: boolean = true;
+  try {
+    status = deepFilter(obj, propertyName);
+  } catch (err) {
+    if (err === `${propertyName} is not truthy`) {
+      status = false;
+    }
+  }
+  return status;
+}
+
+/** filter a list of objects for which specified propertyname is truthy
+ * caveats:
+ *  - will return falsy if at least one appearance of the propertyName is falsy
+ *  - works if nested structures are objects or arrays
+ *  - return falsy value if specified propertyName is no where in object
+ * Primary usecase: to clean featureColletion of tasks with null geometries
+ * @param {T[]} objs  -  a list of objects from which to filter
+ * @param {string} propertyName - name of property to filter on
+ *
+ * @return {T[]} - a list of same objects after being filtered
+ */
+export function deepFilter<T>(obj: T, propertyName: string): boolean {
+  // do we have to do a recursive search for this object, probably we have a utility that can help us
+  // hack to quicly iterate. => work only for tasks
+
+  // start the generic functionality
+
+  for (const [key, value] of Object.entries(obj)) {
+    if (Object.prototype.toString.call(value) === '[object Array]') {
+      value.forEach((element: any) => {
+        deepFilter<T>(element, propertyName);
+      });
+    } else if (Object.prototype.toString.call(value) === '[object Object]') {
+      deepFilter<T>(value, propertyName);
+    }
+    if (key === propertyName && !value) {
+      throw new Error(`${propertyName} is not truthy`);
+    }
+  }
+  return false;
 }
