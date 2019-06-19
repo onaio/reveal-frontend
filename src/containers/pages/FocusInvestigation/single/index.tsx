@@ -31,7 +31,6 @@ import {
 } from '../../../../constants';
 import { getGoalReport } from '../../../../helpers/indicators';
 import ProgressBar from '../../../../helpers/ProgressBar';
-import { percentage } from '../../../../helpers/utils';
 import { extractPlan, RouteParams, transformValues } from '../../../../helpers/utils';
 import supersetFetch from '../../../../services/superset';
 import goalsReducer, {
