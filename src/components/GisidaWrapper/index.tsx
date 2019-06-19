@@ -23,7 +23,6 @@ import store from '../../store';
 import { Goal } from '../../store/ducks/goals';
 import { Jurisdiction, JurisdictionGeoJSON } from '../../store/ducks/jurisdictions';
 import { Task } from '../../store/ducks/tasks';
-import { jurisdictions } from '../../store/ducks/tests/fixtures';
 import './gisida.css';
 
 /** handlers Interface */
@@ -90,7 +89,7 @@ interface GisidaState {
   locations: JurisdictionGeoJSON | false;
   doInitMap: boolean;
   doRenderMap: boolean;
-  geoData: Jurisdiction;
+  geoData: Jurisdiction | false;
   hasGeometries: boolean | false;
   tasks: Task[] | null;
   initMapWithoutTasks: boolean | false;
@@ -99,7 +98,7 @@ interface GisidaState {
 /** GisidaWrapper Props Interface */
 interface GisidaProps {
   currentGoal?: string | null;
-  geoData: Jurisdiction;
+  geoData: Jurisdiction | null;
   goal?: Goal[] | null;
   handlers: Handlers[];
   tasks: Task[] | null;
@@ -113,10 +112,11 @@ const LayerStore = (layer: FlexObject) => {
   }
   return layer;
 };
+
 /** default props for ActiveFI Map component */
 export const defaultGisidaProps: GisidaProps = {
   currentGoal: null,
-  geoData: jurisdictions[0],
+  geoData: null,
   goal: null,
   handlers: [],
   tasks: null,
@@ -175,7 +175,7 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
       this.setState(
         {
           doRenderMap: false,
-          geoData: nextProps.geoData,
+          geoData: nextProps.geoData || false,
           locations: false,
         },
         () => {
@@ -320,7 +320,7 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
     }
     const { geoData } = this.props;
     const { locations, bounds } = this.state;
-    if (!locations) {
+    if (!locations || !geoData) {
       return false;
     }
     const layers: LineLayerObj[] | FillLayerObj[] | PointLayerObj[] | FlexObject = [
