@@ -46,7 +46,6 @@ import plansReducer, {
 import tasksReducer, {
   fetchTasks,
   getTasksByPlanAndGoalAndJurisdiction,
-  getTasksByPlanAndJurisdiction,
   reducerName as tasksReducerName,
   Task,
 } from '../../../../../store/ducks/tasks';
@@ -178,7 +177,7 @@ class SingleActiveFIMap extends React.Component<
     const handlers = [
       {
         /**
-         * @param {mapboxgl.EventData} synthetic event a wrapper event around native events
+         * @param { mapboxgl.EventData} synthetic event a wrapper event around native events
          */
         method: popupHandler,
         name: 'pointClick',
