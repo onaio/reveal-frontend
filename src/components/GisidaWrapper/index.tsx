@@ -26,10 +26,10 @@ import { Task } from '../../store/ducks/tasks';
 import './gisida.css';
 
 /** handlers Interface */
-interface Handlers {
+export interface Handlers {
   name: string;
   type: string;
-  method: (e: any) => void;
+  method: (e: mapboxgl.EventData) => void;
 }
 
 /** LineLayerObj Interface  */
