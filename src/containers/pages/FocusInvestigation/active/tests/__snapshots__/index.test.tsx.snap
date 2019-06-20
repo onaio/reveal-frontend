@@ -138,6 +138,45 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
     }
   >
     <div>
+      <HeaderBreadcrumb
+        currentPage={
+          Object {
+            "label": "Focus Area",
+            "url": "/focus-investigation",
+          }
+        }
+        pages={Array []}
+      >
+        <div>
+          <Breadcrumb
+            aria-label="breadcrumb"
+            className="reveal-breadcrumb"
+            listTag="ol"
+            tag="nav"
+          >
+            <nav
+              aria-label="breadcrumb"
+              className="reveal-breadcrumb"
+            >
+              <ol
+                className="breadcrumb"
+              >
+                <BreadcrumbItem
+                  active={true}
+                  tag="li"
+                >
+                  <li
+                    aria-current="page"
+                    className="active breadcrumb-item"
+                  >
+                    Focus Area
+                  </li>
+                </BreadcrumbItem>
+              </ol>
+            </nav>
+          </Breadcrumb>
+        </div>
+      </HeaderBreadcrumb>
       <h3
         className="mb-3 mt-5 page-title"
       >
@@ -2580,6 +2619,48 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
 </Router>
 `;
 
+exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigation correctly 2`] = `
+<HeaderBreadcrumb
+  currentPage={
+    Object {
+      "label": "Focus Area",
+      "url": "/focus-investigation",
+    }
+  }
+  pages={Array []}
+>
+  <div>
+    <Breadcrumb
+      aria-label="breadcrumb"
+      className="reveal-breadcrumb"
+      listTag="ol"
+      tag="nav"
+    >
+      <nav
+        aria-label="breadcrumb"
+        className="reveal-breadcrumb"
+      >
+        <ol
+          className="breadcrumb"
+        >
+          <BreadcrumbItem
+            active={true}
+            tag="li"
+          >
+            <li
+              aria-current="page"
+              className="active breadcrumb-item"
+            >
+              Focus Area
+            </li>
+          </BreadcrumbItem>
+        </ol>
+      </nav>
+    </Breadcrumb>
+  </div>
+</HeaderBreadcrumb>
+`;
+
 exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigation correctly for null jurisdictions 1`] = `
 <Router
   history={
@@ -2706,6 +2787,45 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
     }
   >
     <div>
+      <HeaderBreadcrumb
+        currentPage={
+          Object {
+            "label": "Focus Area",
+            "url": "/focus-investigation",
+          }
+        }
+        pages={Array []}
+      >
+        <div>
+          <Breadcrumb
+            aria-label="breadcrumb"
+            className="reveal-breadcrumb"
+            listTag="ol"
+            tag="nav"
+          >
+            <nav
+              aria-label="breadcrumb"
+              className="reveal-breadcrumb"
+            >
+              <ol
+                className="breadcrumb"
+              >
+                <BreadcrumbItem
+                  active={true}
+                  tag="li"
+                >
+                  <li
+                    aria-current="page"
+                    className="active breadcrumb-item"
+                  >
+                    Focus Area
+                  </li>
+                </BreadcrumbItem>
+              </ol>
+            </nav>
+          </Breadcrumb>
+        </div>
+      </HeaderBreadcrumb>
       <h3
         className="mb-3 mt-5 page-title"
       >

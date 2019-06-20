@@ -428,6 +428,101 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
         supersetService={[Function]}
       >
         <div>
+          <HeaderBreadcrumb
+            currentPage={
+              Object {
+                "label": "NVI_439",
+                "url": "/focus-investigation/view/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
+              }
+            }
+            pages={
+              Array [
+                Object {
+                  "label": "Focus Area",
+                  "url": "/focus-investigation",
+                },
+                Object {
+                  "label": "Chadiza",
+                  "url": "",
+                },
+                Object {
+                  "label": "Naviluli",
+                  "url": "",
+                },
+              ]
+            }
+          >
+            <div>
+              <Breadcrumb
+                aria-label="breadcrumb"
+                className="reveal-breadcrumb"
+                listTag="ol"
+                tag="nav"
+              >
+                <nav
+                  aria-label="breadcrumb"
+                  className="reveal-breadcrumb"
+                >
+                  <ol
+                    className="breadcrumb"
+                  >
+                    <BreadcrumbItem
+                      key="0"
+                      tag="li"
+                    >
+                      <li
+                        className="breadcrumb-item"
+                      >
+                        <Link
+                          key="0"
+                          replace={false}
+                          to="/focus-investigation"
+                        >
+                          <a
+                            href="/focus-investigation"
+                            onClick={[Function]}
+                          >
+                            Focus Area
+                          </a>
+                        </Link>
+                      </li>
+                    </BreadcrumbItem>
+                    <BreadcrumbItem
+                      key="1"
+                      tag="li"
+                    >
+                      <li
+                        className="breadcrumb-item"
+                      >
+                        Chadiza
+                      </li>
+                    </BreadcrumbItem>
+                    <BreadcrumbItem
+                      key="2"
+                      tag="li"
+                    >
+                      <li
+                        className="breadcrumb-item"
+                      >
+                        Naviluli
+                      </li>
+                    </BreadcrumbItem>
+                    <BreadcrumbItem
+                      active={true}
+                      tag="li"
+                    >
+                      <li
+                        aria-current="page"
+                        className="active breadcrumb-item"
+                      >
+                        NVI_439
+                      </li>
+                    </BreadcrumbItem>
+                  </ol>
+                </nav>
+              </Breadcrumb>
+            </div>
+          </HeaderBreadcrumb>
           <h2
             className="page-title mt-4 mb-5"
           >
@@ -1267,6 +1362,101 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
     }
   >
     <div>
+      <HeaderBreadcrumb
+        currentPage={
+          Object {
+            "label": "NVI_439",
+            "url": "/focus-investigation/view/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
+          }
+        }
+        pages={
+          Array [
+            Object {
+              "label": "Focus Area",
+              "url": "/focus-investigation",
+            },
+            Object {
+              "label": "Chadiza",
+              "url": "",
+            },
+            Object {
+              "label": "Naviluli",
+              "url": "",
+            },
+          ]
+        }
+      >
+        <div>
+          <Breadcrumb
+            aria-label="breadcrumb"
+            className="reveal-breadcrumb"
+            listTag="ol"
+            tag="nav"
+          >
+            <nav
+              aria-label="breadcrumb"
+              className="reveal-breadcrumb"
+            >
+              <ol
+                className="breadcrumb"
+              >
+                <BreadcrumbItem
+                  key="0"
+                  tag="li"
+                >
+                  <li
+                    className="breadcrumb-item"
+                  >
+                    <Link
+                      key="0"
+                      replace={false}
+                      to="/focus-investigation"
+                    >
+                      <a
+                        href="/focus-investigation"
+                        onClick={[Function]}
+                      >
+                        Focus Area
+                      </a>
+                    </Link>
+                  </li>
+                </BreadcrumbItem>
+                <BreadcrumbItem
+                  key="1"
+                  tag="li"
+                >
+                  <li
+                    className="breadcrumb-item"
+                  >
+                    Chadiza
+                  </li>
+                </BreadcrumbItem>
+                <BreadcrumbItem
+                  key="2"
+                  tag="li"
+                >
+                  <li
+                    className="breadcrumb-item"
+                  >
+                    Naviluli
+                  </li>
+                </BreadcrumbItem>
+                <BreadcrumbItem
+                  active={true}
+                  tag="li"
+                >
+                  <li
+                    aria-current="page"
+                    className="active breadcrumb-item"
+                  >
+                    NVI_439
+                  </li>
+                </BreadcrumbItem>
+              </ol>
+            </nav>
+          </Breadcrumb>
+        </div>
+      </HeaderBreadcrumb>
       <h2
         className="page-title mt-4 mb-5"
       >
