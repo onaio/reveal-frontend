@@ -5,6 +5,9 @@ import { RouteComponentProps } from 'react-router';
 import { NavLink } from 'react-router-dom';
 import { Store } from 'redux';
 import GisidaWrapper from '../../../../../components/GisidaWrapper';
+import HeaderBreadcrumb, {
+  BreadCrumbItems,
+} from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../../components/page/Loading';
 import {
   SUPERSET_GOALS_SLICE,
@@ -14,7 +17,11 @@ import {
 } from '../../../../../configs/env';
 import {
   FI_SINGLE_MAP_URL,
+  FI_SINGLE_URL,
+  FI_URL,
+  FOCUS_AREA_HEADER,
   FOCUS_INVESTIGATION,
+  MAP,
   MEASURE,
   OF,
   RESPONSE,
@@ -121,8 +128,33 @@ class SingleActiveFIMap extends React.Component<
     if (!jurisdiction || !plan) {
       return <Loading />;
     }
+    const basePage = {
+      label: FOCUS_AREA_HEADER,
+      url: `${FI_URL}`,
+    };
+    const secondLastPage = {
+      label: plan.jurisdiction_name,
+      url: `${FI_SINGLE_URL}/${plan.id}`,
+    };
+    const breadCrumbProps: BreadCrumbItems = {
+      currentPage: {
+        label: `${MAP}`,
+        url: `${FI_SINGLE_MAP_URL}/${plan.id}`,
+      },
+      pages: [],
+    };
+    const pages = plan.jurisdiction_name_path.map(namePath =>
+      // return a page object for each name path
+      ({
+        label: namePath,
+        url: '',
+      })
+    );
+    breadCrumbProps.pages = [basePage, ...pages, secondLastPage];
+
     return (
       <div>
+        <HeaderBreadcrumb {...breadCrumbProps} />
         <h2 className="page-title mt-4 mb-4">
           {FOCUS_INVESTIGATION}: {plan && plan.jurisdiction_name ? plan.jurisdiction_name : null}
         </h2>
