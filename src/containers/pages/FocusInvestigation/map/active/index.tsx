@@ -53,7 +53,6 @@ import plansReducer, {
 import tasksReducer, {
   fetchTasks,
   getTasksByPlanAndGoalAndJurisdiction,
-  getTasksByPlanAndJurisdiction,
   reducerName as tasksReducerName,
   Task,
 } from '../../../../../store/ducks/tasks';
@@ -143,7 +142,9 @@ class SingleActiveFIMap extends React.Component<
       },
       pages: [],
     };
-    const pages = plan.jurisdiction_name_path.map(namePath =>
+    const namePaths =
+      plan.jurisdiction_name_path instanceof Array ? plan.jurisdiction_name_path : [];
+    const pages = namePaths.map(namePath =>
       // return a page object for each name path
       ({
         label: namePath,

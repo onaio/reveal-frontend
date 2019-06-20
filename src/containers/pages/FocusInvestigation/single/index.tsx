@@ -148,7 +148,9 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
       },
       pages: [],
     };
-    const pages = planById.jurisdiction_name_path.map(namePath =>
+    const namePaths =
+      planById.jurisdiction_name_path instanceof Array ? planById.jurisdiction_name_path : [];
+    const pages = namePaths.map(namePath =>
       // return a page object for each name path
       ({
         label: namePath,

@@ -22,10 +22,10 @@ import {
   DEFINITIONS,
   FI_SINGLE_MAP_URL,
   FI_SINGLE_URL,
+  FI_URL,
   FOCUS_AREA_HEADER,
   REASON_HEADER,
   STATUS_HEADER,
-  FI_URL,
 } from '../../../../constants';
 import { renderClassificationRow } from '../../../../helpers/indicators';
 import '../../../../helpers/tables.css';
