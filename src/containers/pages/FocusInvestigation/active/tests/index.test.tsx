@@ -70,6 +70,7 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
       </Router>
     );
     expect(toJson(wrapper)).toMatchSnapshot();
+    expect(toJson(wrapper.find('HeaderBreadcrumb'))).toMatchSnapshot();
     wrapper.unmount();
   });
 
@@ -90,6 +91,7 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
       </Router>
     );
     expect(toJson(wrapper)).toMatchSnapshot();
+    expect(wrapper.find('HeaderBreadcrumb').length).toEqual(1);
     wrapper.unmount();
   });
 
