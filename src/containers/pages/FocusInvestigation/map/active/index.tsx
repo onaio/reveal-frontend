@@ -20,7 +20,8 @@ import {
   RESPONSE,
   TARGET,
 } from '../../../../../constants';
-import { FlexObject, popupHandler, RouteParams } from '../../../../../helpers/utils';
+import { popupHandler } from '../../../../../helpers/handlers';
+import { FlexObject, RouteParams } from '../../../../../helpers/utils';
 import supersetFetch from '../../../../../services/superset';
 import goalsReducer, {
   fetchGoals,
@@ -50,7 +51,6 @@ import tasksReducer, {
   Task,
 } from '../../../../../store/ducks/tasks';
 import './style.css';
-
 /** register reducers */
 reducerRegistry.register(jurisdictionReducerName, jurisdictionReducer);
 reducerRegistry.register(goalsReducerName, goalsReducer);
@@ -174,31 +174,11 @@ class SingleActiveFIMap extends React.Component<
 
   /** event handlers */
   private buildHandlers() {
-    const id = this.props && this.props.plan && this.props.plan.id;
     const self = this;
     const handlers = [
       {
         /**
-         * @param {any} synthetic event a wrapper event around native events
-         */
-        method: function drillDownClick(e: any) {
-          const features = e.target.queryRenderedFeatures(e.point);
-          if (features[0] && Number(features[0].id) !== Number(self.props.match.params.id)) {
-            const url =
-              features && features[0] && features[0].id
-                ? features[0].id
-                : self.props.match.params.id && self.props.currentGoal
-                ? `${self.props.match.params.id}/${self.props.currentGoal}`
-                : self.props.match.params.id;
-            self.props.history.push(`/focus-investigation/map/${url}`);
-          }
-        },
-        name: 'drillDownClick',
-        type: 'click',
-      },
-      {
-        /**
-         * @param {any} synthetic event a wrapper event around native events
+         * @param {mapboxgl.EventData} synthetic event a wrapper event around native events
          */
         method: popupHandler,
         name: 'pointClick',
