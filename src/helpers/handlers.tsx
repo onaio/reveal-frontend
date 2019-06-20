@@ -1,4 +1,6 @@
+import './handlers.css';
 import { EventData } from './mapbox';
+import { FlexObject } from './utils';
 
 /** declare globals interface */
 declare global {
@@ -11,19 +13,33 @@ declare global {
 /** Having features as any type is not most desirable this has been qued up as part of technical debt payment */
 export function popupHandler(event: EventData) {
   const features = event.target.queryRenderedFeatures(event.point) as any;
-
-  if (
-    features &&
-    features[0] &&
-    features[0].geometry &&
-    features[0].geometry.coordinates &&
-    features[0].properties &&
-    features[0].properties.action_code &&
-    features[0].layer.type !== 'line'
-  ) {
-    const coordinates =
-      features[0].layer.type === 'fill' ? event.lngLat : features[0].geometry.coordinates.slice();
-    const description = features[0].properties.action_code;
+  let description: string = '';
+  features.forEach((feature: any) => {
+    if (
+      feature &&
+      feature.geometry &&
+      feature.geometry.coordinates &&
+      feature.properties &&
+      feature.properties.action_code &&
+      feature.layer.type !== 'line' &&
+      feature.layer.id
+    ) {
+      // /** Dirty & very Mangy code */
+      // let taskid;
+      // taskid = feature.layer.id;
+      // if (taskid.includes('-')) {
+      //   taskid = taskid.split('-');
+      //   taskid.shift();
+      //   taskid = taskid.join('-');
+      // }
+      description += `<p class="heading"> ${feature.properties.action_code}</b></p> <p> ${
+        feature.properties.task_business_status
+      }</p><br/><br/>`;
+    }
+  });
+  if (description) {
+    description = '<div>' + description + '</div>';
+    const coordinates: any = event.lngLat;
     /** Ensure that if the map is zoomed out such that multiple
      * copies of the feature are visible,
      * the popup appears over the copy being pointed to
