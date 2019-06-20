@@ -22,13 +22,18 @@ class HeaderBreadcrumb extends React.Component<BreadCrumbItems, {}> {
     const { currentPage, pages } = this.props;
 
     const linkList = pages.map((page, key) => {
-      return (
-        <BreadcrumbItem key={key}>
+      // conditionally add urls to breadcrumbs
+      let breadCrumbItem: string | JSX.Element;
+      if (page.url && page.url.trim()) {
+        breadCrumbItem = (
           <Link to={page.url!} key={key}>
             {page.label}
           </Link>
-        </BreadcrumbItem>
-      );
+        );
+      } else {
+        breadCrumbItem = page.label;
+      }
+      return <BreadcrumbItem key={key}>{breadCrumbItem}</BreadcrumbItem>;
     });
 
     return (
