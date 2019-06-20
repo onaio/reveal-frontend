@@ -1,8 +1,10 @@
 // this is the FocusInvestigation "active" page component
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
+import { Link } from 'react-router-dom';
 import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
 import GisidaWrapper from '../../../../components/GisidaWrapper';
@@ -21,6 +23,7 @@ import {
   COMPLETE,
   DISTRICT,
   FI_REASON,
+  FI_SINGLE_MAP_URL,
   FI_SINGLE_URL,
   FI_STATUS,
   FI_URL,
@@ -192,7 +195,16 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
           </Col>
           <Col className="col-6">
             <div className="fi-active">
-              <h5 className="mb-4 mt-1">{ACTIVE_INVESTIGATION}</h5>
+              {ACTIVE_INVESTIGATION}
+
+              <h5 className="mb-4 mt-1">
+                {theObject.jurisdiction_id && (
+                  <Link to={`${FI_SINGLE_MAP_URL}/${theObject.id}`}>
+                    <FontAwesomeIcon icon={['fas', 'map']} />
+                  </Link>
+                )}
+                &nbsp;&nbsp;{ACTIVE_INVESTIGATION}: {theObject.caseNotificationDate}
+              </h5>
               <dl className="row mt-3">
                 <dt className="col-5">{COMPLETE}</dt>
                 <dd className="col-7">{NO}</dd>
