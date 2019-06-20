@@ -5,7 +5,7 @@ import { findKey, uniq } from 'lodash';
 import { Column } from 'react-table';
 import SeamlessImmutable from 'seamless-immutable';
 import * as colors from '../colors';
-import { ONADATA_OAUTH_STATE, OPENSRP_OAUTH_STATE } from '../configs/env';
+import { DIGITAL_GLOBE_CONNECT_ID, ONADATA_OAUTH_STATE, OPENSRP_OAUTH_STATE } from '../configs/env';
 import { locationHierarchy, LocationItem } from '../configs/settings';
 import {
   BEDNET_DISTRIBUTION_CODE,
@@ -114,7 +114,7 @@ export interface SiteConfigAppMapconfig {
   center?: number[];
   container: string;
   fitBoundsOptions?: FitBoundsOptions;
-  style: string;
+  style: string | FlexObject;
   zoom?: number;
 }
 
@@ -211,7 +211,33 @@ export const ConfigStore = (
   // Build options for mapbox-gl-js initialization
   let mapConfig: SiteConfigAppMapconfig = {
     container: container || mapConfigContainer || 'map',
-    style: style || mapConfigStyle || 'mapbox://styles/mapbox/satellite-v9',
+    style:
+      style ||
+      mapConfigStyle ||
+      (DIGITAL_GLOBE_CONNECT_ID
+        ? {
+            layers: [
+              {
+                id: 'earthwatch-basemap',
+                maxzoom: 16,
+                minzoom: 1,
+                source: 'diimagery',
+                type: 'raster',
+              },
+            ],
+            sources: {
+              diimagery: {
+                scheme: 'tms',
+                tileSize: 256,
+                tiles: [
+                  `https://earthwatch.digitalglobe.com/earthservice/tmsaccess/tms/1.0.0/DigitalGlobe:ImageryTileService@EPSG:3857@png/{z}/{x}/{y}.png?connectId=${DIGITAL_GLOBE_CONNECT_ID}`,
+                ],
+                type: 'raster',
+              },
+            },
+            version: 8,
+          }
+        : 'mapbox://styles/mapbox/satellite-v9'),
   };
   if (bounds || mapConfigBounds) {
     mapConfig = {

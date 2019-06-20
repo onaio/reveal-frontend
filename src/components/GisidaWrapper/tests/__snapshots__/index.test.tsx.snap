@@ -2,6 +2,7 @@
 
 exports[`components/GisidaWrapper renders map component with tasks 1`] = `
 <GisidaWrapper
+  basemapStyle="mapbox://styles/mapbox/satellite-v9"
   currentGoal="RACD_bednet_dist_1km_radius"
   geoData={
     Object {
@@ -1419,6 +1420,7 @@ Object {
 
 exports[`components/GisidaWrapper renders map component without tasks 3`] = `
 <GisidaWrapper
+  basemapStyle="mapbox://styles/mapbox/satellite-v9"
   currentGoal={null}
   geoData={
     Object {
@@ -1584,6 +1586,7 @@ exports[`components/GisidaWrapper renders map component without tasks 3`] = `
 
 exports[`components/GisidaWrapper renders map component without tasks 4`] = `
 <GisidaWrapper
+  basemapStyle="mapbox://styles/mapbox/satellite-v9"
   currentGoal={null}
   geoData={
     Object {

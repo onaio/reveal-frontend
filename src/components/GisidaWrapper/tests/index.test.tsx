@@ -36,6 +36,7 @@ describe('components/GisidaWrapper', () => {
 
   it('renders map component without tasks', () => {
     const props = {
+      basemapStyle: 'mapbox://styles/mapbox/satellite-v9',
       geoData: fixtures.jurisdictions[0],
       minHeight: '200px',
     };
@@ -63,6 +64,7 @@ describe('components/GisidaWrapper', () => {
 
   it('renders map component with tasks', () => {
     const props1 = {
+      basemapStyle: 'mapbox://styles/mapbox/satellite-v9',
       currentGoal: null,
       geoData: fixtures.jurisdictions[2],
       goal: fixtures.goals,
