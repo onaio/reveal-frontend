@@ -18,6 +18,7 @@ import {
   POINT,
   POLYGON,
 } from '../../constants';
+import { EventData } from '../../helpers/mapbox';
 import { ConfigStore, FlexObject } from '../../helpers/utils';
 import store from '../../store';
 import { Goal } from '../../store/ducks/goals';
@@ -29,7 +30,7 @@ import './gisida.css';
 export interface Handlers {
   name: string;
   type: string;
-  method: (e: mapboxgl.EventData) => void;
+  method: (e: EventData) => void;
 }
 
 /** LineLayerObj Interface  */
