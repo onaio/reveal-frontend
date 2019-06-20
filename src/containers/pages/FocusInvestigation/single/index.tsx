@@ -6,6 +6,9 @@ import { RouteComponentProps } from 'react-router';
 import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
 import GisidaWrapper from '../../../../components/GisidaWrapper';
+import HeaderBreadcrumbs, {
+  BreadCrumbItems,
+} from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
 import {
   SUPERSET_GOALS_SLICE,
@@ -18,7 +21,10 @@ import {
   COMPLETE,
   DISTRICT,
   FI_REASON,
+  FI_SINGLE_URL,
   FI_STATUS,
+  FI_URL,
+  FOCUS_AREA_HEADER,
   FOCUS_AREA_INFO,
   FOCUS_INVESTIGATION,
   IN,
@@ -131,8 +137,29 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
       'focusArea',
     ];
     theObject = transformValues(theObject, propertiesToTransform);
+    const basePage = {
+      label: FOCUS_AREA_HEADER,
+      url: `${FI_URL}`,
+    };
+    const breadCrumbProps: BreadCrumbItems = {
+      currentPage: {
+        label: theObject.focusArea,
+        url: `${FI_SINGLE_URL}/${planById.id}`,
+      },
+      pages: [],
+    };
+    const pages = planById.jurisdiction_name_path.map(namePath =>
+      // return a page object for each name path
+      ({
+        label: namePath,
+        url: '',
+      })
+    );
+    breadCrumbProps.pages = [basePage, ...pages];
+
     return (
       <div>
+        <HeaderBreadcrumbs {...breadCrumbProps} />
         <h2 className="page-title mt-4 mb-5">
           {FOCUS_INVESTIGATION} {IN} {theObject.focusArea}
         </h2>
