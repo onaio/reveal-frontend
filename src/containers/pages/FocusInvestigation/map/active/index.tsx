@@ -21,6 +21,7 @@ import {
   TARGET,
 } from '../../../../../constants';
 import { popupHandler } from '../../../../../helpers/handlers';
+import { getGoalReport } from '../../../../../helpers/indicators';
 import { FlexObject, RouteParams } from '../../../../../helpers/utils';
 import supersetFetch from '../../../../../services/superset';
 import goalsReducer, {
@@ -173,7 +174,6 @@ class SingleActiveFIMap extends React.Component<
 
   /** event handlers */
   private buildHandlers() {
-    const self = this;
     const handlers = [
       {
         /**
