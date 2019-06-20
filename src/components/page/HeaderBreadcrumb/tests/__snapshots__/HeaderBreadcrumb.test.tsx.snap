@@ -40,6 +40,13 @@ exports[`components/page/HeaderBreadcrumb renders HeaderBreadcrumb correctly 1`]
           "label": "Programs",
           "url": "/programs",
         },
+        Object {
+          "label": "Provinces",
+          "url": "",
+        },
+        Object {
+          "label": "Disctricts",
+        },
       ]
     }
   >
@@ -97,6 +104,26 @@ exports[`components/page/HeaderBreadcrumb renders HeaderBreadcrumb correctly 1`]
                     Programs
                   </a>
                 </Link>
+              </li>
+            </BreadcrumbItem>
+            <BreadcrumbItem
+              key="2"
+              tag="li"
+            >
+              <li
+                className="breadcrumb-item"
+              >
+                Provinces
+              </li>
+            </BreadcrumbItem>
+            <BreadcrumbItem
+              key="3"
+              tag="li"
+            >
+              <li
+                className="breadcrumb-item"
+              >
+                Disctricts
               </li>
             </BreadcrumbItem>
             <BreadcrumbItem
