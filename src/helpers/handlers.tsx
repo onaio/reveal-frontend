@@ -1,3 +1,5 @@
+import { EventData } from './mapbox';
+
 /** declare globals interface */
 declare global {
   interface Window {
@@ -5,9 +7,11 @@ declare global {
   }
   const mapboxgl: typeof mapboxgl;
 }
-export function popupHandler(event: mapboxgl.EventData) {
-  event.preventDefault();
-  const features = event.target.queryRenderedFeatures(event.point);
+
+/** something */
+export function popupHandler(event: EventData) {
+  const features = event.target.queryRenderedFeatures(event.point) as any;
+
   if (
     features &&
     features[0] &&
