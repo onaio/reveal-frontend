@@ -11,6 +11,7 @@ import 'react-table/react-table.css';
 import { Table } from 'reactstrap';
 import { Store } from 'redux';
 import DrillDownTableLinkedCell from '../../../../components/DrillDownTableLinkedCell';
+import HeaderBreadCrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
 import { SUPERSET_PLANS_SLICE } from '../../../../configs/env';
 import { FIClassifications, locationHierarchy } from '../../../../configs/settings';
@@ -24,6 +25,7 @@ import {
   FOCUS_AREA_HEADER,
   REASON_HEADER,
   STATUS_HEADER,
+  FI_URL,
 } from '../../../../constants';
 import { renderClassificationRow } from '../../../../helpers/indicators';
 import '../../../../helpers/tables.css';
@@ -74,6 +76,13 @@ class ActiveFocusInvestigation extends React.Component<
   }
 
   public render() {
+    const breadcrumbProps = {
+      currentPage: {
+        label: `${FOCUS_AREA_HEADER}`,
+        url: `${FI_URL}`,
+      },
+      pages: [],
+    };
     const { plansArray } = this.props;
     if (plansArray.length === 0) {
       return <Loading />;
@@ -180,6 +189,7 @@ class ActiveFocusInvestigation extends React.Component<
 
     return (
       <div>
+        <HeaderBreadCrumb {...breadcrumbProps} />
         <h3 className="mb-3 mt-5 page-title">{ACTIVE_FOCUS_INVESTIGATION}</h3>
         <DrillDownTable {...tableProps} />
         <h5 className="mt-5">{DEFINITIONS}</h5>
