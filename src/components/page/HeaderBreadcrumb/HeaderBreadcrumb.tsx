@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 
 interface Page {
-  url: string;
+  url?: string;
   label: string;
 }
 
@@ -24,7 +24,7 @@ class HeaderBreadcrumb extends React.Component<BreadCrumbItems, {}> {
     const linkList = pages.map((page, key) => {
       return (
         <BreadcrumbItem key={key}>
-          <Link to={page.url} key={key}>
+          <Link to={page.url!} key={key}>
             {page.label}
           </Link>
         </BreadcrumbItem>
