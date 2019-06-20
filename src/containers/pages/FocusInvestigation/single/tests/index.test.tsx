@@ -78,6 +78,7 @@ describe('containers/pages/SingleFI', () => {
     expect(toJson(wrapper)).toMatchSnapshot();
     expect(wrapper.find('GisidaWrapperMock').props()).toMatchSnapshot();
     expect(wrapper.find('HeaderBreadcrumb').length).toEqual(1);
+    expect(wrapper.find('FontAwesomeIcon').length).toEqual(1);
     wrapper.unmount();
   });
 
@@ -108,6 +109,7 @@ describe('containers/pages/SingleFI', () => {
     );
     expect(wrapper.find('GisidaWrapperMock').length).toEqual(0);
     expect(wrapper.find('HeaderBreadcrumb').length).toEqual(1);
+    expect(wrapper.find('FontAwesomeIcon').length).toEqual(0);
     wrapper.unmount();
   });
 
