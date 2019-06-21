@@ -97,11 +97,6 @@ export function oAuthUserInfoGetter(apiResponse: { [key: string]: any }): Sessio
   }
 }
 
-/** Map props interface */
-export interface MapProps {
-  [key: string]: any;
-}
-
 /** interface to describe map configuration object */
 export interface MapConfig {
   [key: string]: FlexObject;
