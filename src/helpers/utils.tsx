@@ -97,11 +97,6 @@ export function oAuthUserInfoGetter(apiResponse: { [key: string]: any }): Sessio
   }
 }
 
-/** interface to describe map configuration object */
-export interface MapConfig {
-  [key: string]: FlexObject;
-}
-
 /** interface to describe bound options */
 export interface FitBoundsOptions {
   padding?: number;
