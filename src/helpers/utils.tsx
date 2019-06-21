@@ -2,6 +2,7 @@ import { getOnadataUserInfo, getOpenSRPUserInfo } from '@onaio/gatekeeper';
 import { SessionState } from '@onaio/session-reducer';
 import { Color } from 'csstype';
 import { findKey, uniq } from 'lodash';
+import { Style } from 'mapbox-gl';
 import { Column } from 'react-table';
 import SeamlessImmutable from 'seamless-immutable';
 import * as colors from '../colors';
@@ -114,7 +115,7 @@ export interface SiteConfigAppMapconfig {
   center?: number[];
   container: string;
   fitBoundsOptions?: FitBoundsOptions;
-  style: string | FlexObject;
+  style: string | Style;
   zoom?: number;
 }
 
