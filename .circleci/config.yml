@@ -19,6 +19,9 @@ jobs:
           REACT_APP_ENABLE_USERS: "true"
           REACT_APP_ENABLE_ABOUT: "true"
           REACT_APP_DISABLE_LOGIN_PROTECTION: "true"
+          REACT_APP_GISIDA_ONADATA_API_TOKEN: hunter2
+          REACT_APP_GISIDA_MAPBOX_TOKEN: hunter2
+          REACT_APP_DIGITAL_GLOBE_CONNECT_ID: hunter2
           REACT_APP_SUPERSET_API_BASE: "https://superset.reveal-stage.smartregister.org/"
           REACT_APP_SUPERSET_API_ENDPOINT: "slice"
           REACT_APP_OPENSRP_CLIENT_ID: "hunter2"
