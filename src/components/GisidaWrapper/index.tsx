@@ -2,7 +2,7 @@ import GeojsonExtent from '@mapbox/geojson-extent';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import { Actions, ducks, loadLayers } from 'gisida';
 import { Map } from 'gisida-react';
-import { FillPaint, LinePaint, SymbolPaint } from 'mapbox-gl';
+import { FillPaint, LinePaint, Style, SymbolPaint } from 'mapbox-gl';
 import * as React from 'react';
 import Loading from '../../components/page/Loading/index';
 import { GISIDA_MAPBOX_TOKEN, GISIDA_ONADATA_API_TOKEN } from '../../configs/env';
@@ -103,7 +103,7 @@ interface GisidaProps {
   handlers: Handlers[];
   tasks: Task[] | null;
   minHeight?: string;
-  basemapStyle?: string | FlexObject;
+  basemapStyle?: string | Style;
 }
 
 /** Returns a single layer configuration */
