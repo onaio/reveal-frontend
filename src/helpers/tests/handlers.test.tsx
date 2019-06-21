@@ -5,7 +5,6 @@ window.URL.createObjectURL = jest.fn();
 
 describe('helpers/handlers', () => {
   it('calls queryRenderedFeatures', () => {
-    const mock = jest.fn();
     const event = {
       lngLat: {
         lat: 15.065355545319008,
@@ -58,10 +57,11 @@ describe('helpers/handlers', () => {
     };
 
     const mockedPopup = Popup;
-
+    const setLngLatMock = jest.fn();
+    const setHTMLMock = jest.fn();
     mockedPopup.prototype.setLngLat = (e: any) => {
       e.setHTML = (f: any) => {
-        e.addTo = mock;
+        e.addTo = setLngLatMock;
         return e;
       };
       return e;
@@ -76,6 +76,6 @@ describe('helpers/handlers', () => {
 
     popupHandler(event as any);
 
-    expect(mock).toHaveBeenCalledWith(2);
+    expect(setLngLatMock).toHaveBeenCalledWith({ _container: { id: 'map-1' } });
   });
 });
