@@ -50,11 +50,6 @@ export function percentage(num: number, decimalPoints: number = 0) {
   return `${(num * 100).toFixed(decimalPoints)}%`;
 }
 
-/** Map props interface */
-export interface MapProps {
-  [key: string]: any;
-}
-
 /** Gets react table columns from the location hierarchy in configs */
 export function getLocationColumns(
   locations: LocationItem[] = locationHierarchy,
@@ -102,14 +97,28 @@ export function oAuthUserInfoGetter(apiResponse: { [key: string]: any }): Sessio
   }
 }
 
+/** Map props interface */
+export interface MapProps {
+  [key: string]: any;
+}
+
+/** interface to describe map configuration object */
 export interface MapConfig {
   [key: string]: FlexObject;
 }
 
+/** interface to describe map configuration objects */
+export interface MapConfigs {
+  [key: string]: FlexObject;
+  [key: number]: FlexObject;
+}
+
+/** interface to describe bound options */
 export interface FitBoundsOptions {
   padding?: number;
 }
 
+/** interface to describe Gisida map configuration */
 export interface SiteConfigAppMapconfig {
   bounds?: number[];
   center?: number[];
@@ -119,6 +128,7 @@ export interface SiteConfigAppMapconfig {
   zoom?: number;
 }
 
+/** interface to describe Gisida site app configuration object */
 export interface SiteConfigApp {
   accessToken: string;
   apiAccessToken: string;
@@ -126,69 +136,25 @@ export interface SiteConfigApp {
   mapConfig: SiteConfigAppMapconfig;
 }
 
+/** interface to describe Gisida site configuration */
 export interface SiteConfig {
   APP: SiteConfigApp;
   LAYERS: any[];
 }
 
-export interface MapConfigs {
-  [key: string]: FlexObject;
-  [key: number]: FlexObject;
-}
+/**gets the key whose value contains the string in code
+ * @param {ColorMapsTypes} obj - the object to search the key in
+ * @param {string} status - task business status to filter, used as predicate filter
+ * @return {string} - a hexadecimal color code
+ */
 
-/** utility method to extract plan from superset response object */
-export function extractPlan(plan: Plan) {
-  const result: { [key: string]: any } = {
-    canton: null,
-    caseClassification: null,
-    caseNotificationDate: null,
-    district: null,
-    focusArea: plan.jurisdiction_name,
-    id: plan.id,
-    jurisdiction_id: plan.jurisdiction_parent_id,
-    jurisdiction_parent_id: plan.jurisdiction_parent_id,
-    plan_id: plan.plan_id,
-    province: null,
-    reason: plan.plan_fi_reason,
-    status: plan.plan_fi_status,
-    village: null,
-  };
-
-  const locationNames: SeamlessImmutable.ImmutableArray<string> = SeamlessImmutable(
-    plan.jurisdiction_name_path
-  );
-
-  let mutableLocationNames: SeamlessImmutable.ImmutableArray<string>;
-  if (locationNames instanceof Array) {
-    const locations = locationNames.asMutable().reverse();
-    mutableLocationNames = SeamlessImmutable(locations);
-  } else {
-    mutableLocationNames = SeamlessImmutable([]);
-  }
-
-  if (mutableLocationNames) {
-    for (let i = 0; i < 4; i++) {
-      const locationName = mutableLocationNames[i];
-      if (locationName) {
-        if (i === 0) {
-          result.village = mutableLocationNames[i];
-        }
-        if (i === 1) {
-          result.canton = mutableLocationNames[i];
-        }
-        if (i === 2) {
-          result.district = mutableLocationNames[i];
-        }
-        if (i === 3) {
-          result.province = mutableLocationNames[i];
-        }
-      }
-    }
-  }
-
-  return result;
-}
-
+/** Creates a Gisida site configuration object
+ * @param {FlexObject} options - map options
+ * @param {string} GISIDA_MAPBOX_TOKEN - mapbox token
+ * @param {string} GISIDA_ONADATA_API_TOKEN - Onadata API token
+ * @param {string} LayerStore - map layers
+ * @return {SiteConfig} - Gisida site configuration
+ */
 export const ConfigStore = (
   options: FlexObject,
   GISIDA_MAPBOX_TOKEN: string,
@@ -268,6 +234,59 @@ export const ConfigStore = (
   };
   return config;
 };
+
+/** utility method to extract plan from superset response object */
+export function extractPlan(plan: Plan) {
+  const result: { [key: string]: any } = {
+    canton: null,
+    caseClassification: null,
+    caseNotificationDate: null,
+    district: null,
+    focusArea: plan.jurisdiction_name,
+    id: plan.id,
+    jurisdiction_id: plan.jurisdiction_parent_id,
+    jurisdiction_parent_id: plan.jurisdiction_parent_id,
+    plan_id: plan.plan_id,
+    province: null,
+    reason: plan.plan_fi_reason,
+    status: plan.plan_fi_status,
+    village: null,
+  };
+
+  const locationNames: SeamlessImmutable.ImmutableArray<string> = SeamlessImmutable(
+    plan.jurisdiction_name_path
+  );
+
+  let mutableLocationNames: SeamlessImmutable.ImmutableArray<string>;
+  if (locationNames instanceof Array) {
+    const locations = locationNames.asMutable().reverse();
+    mutableLocationNames = SeamlessImmutable(locations);
+  } else {
+    mutableLocationNames = SeamlessImmutable([]);
+  }
+
+  if (mutableLocationNames) {
+    for (let i = 0; i < 4; i++) {
+      const locationName = mutableLocationNames[i];
+      if (locationName) {
+        if (i === 0) {
+          result.village = mutableLocationNames[i];
+        }
+        if (i === 1) {
+          result.canton = mutableLocationNames[i];
+        }
+        if (i === 2) {
+          result.district = mutableLocationNames[i];
+        }
+        if (i === 3) {
+          result.province = mutableLocationNames[i];
+        }
+      }
+    }
+  }
+
+  return result;
+}
 
 /**gets the key whose value contains the string in code
  * @param {ColorMapsTypes} obj - the object to search the key in
