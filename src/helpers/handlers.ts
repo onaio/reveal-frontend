@@ -26,14 +26,6 @@ export function popupHandler(event: EventData) {
       feature.layer.type !== 'line' &&
       feature.layer.id
     ) {
-      // /** Dirty & very Mangy code */
-      // let taskid;
-      // taskid = feature.layer.id;
-      // if (taskid.includes('-')) {
-      //   taskid = taskid.split('-');
-      //   taskid.shift();
-      //   taskid = taskid.join('-');
-      // }
       description += `<p class="heading"> ${feature.properties.action_code}</b></p> <p> ${
         feature.properties.task_business_status
       }</p><br/><br/>`;
