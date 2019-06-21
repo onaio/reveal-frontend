@@ -2,6 +2,7 @@ import { Color } from 'csstype';
 import { get, keyBy, keys, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
 import SeamlessImmutable from 'seamless-immutable';
+import { POLYGON } from '../../constants';
 import {
   FeatureCollection,
   GeoJSON,
@@ -224,6 +225,21 @@ export function getTasksByJurisdictionId(state: Partial<Store>, jurisdictionId: 
   return values((state as any)[reducerName].tasksById).filter(
     (e: Task) => e.jurisdiction_id === jurisdictionId
   );
+}
+
+/** get Structures by jurisdiction id
+ * Structures are tasks whose geometry is of type Polygon
+ * @param {Partial<Store>} state - the redux store
+ * @param {string} jurisdictionId - the jurisdiction id
+ * @returns {Task[]} an array of tasks
+ */
+export function getStructuresByJurisdictionId(
+  state: Partial<Store>,
+  jurisdictionId: string
+): Task[] {
+  return getTasksByJurisdictionId(state, jurisdictionId).filter((e: Task) => {
+    return e.geojson.geometry && e.geojson.geometry.type === POLYGON;
+  });
 }
 
 /** get tasks by structure id
