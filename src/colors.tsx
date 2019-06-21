@@ -9,6 +9,8 @@ export const RED = '#ff5c33';
 export type RED = typeof RED;
 export const BLACK = '#000';
 export type BLACK = typeof BLACK;
+export const GREY = '#c7c7c7';
+export type GREY = typeof GREY;
 
 // map stuff
 export const DEFAULT_MAP_COLOR = '#FFDC00';
