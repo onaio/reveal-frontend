@@ -64,6 +64,9 @@ describe('helpers/handlers', () => {
         lng: 101.1799767158821,
       });
       e.setHTML = (f: any) => {
+        expect(f).toEqual(
+          '<div><p class="heading"> Bednet Distribution</b></p> <p> Not Visited</p><br/><br/></div>'
+        );
         e.addTo = addToMock;
         return e;
       };
