@@ -1,8 +1,8 @@
 import GeojsonExtent from '@mapbox/geojson-extent';
 import reducerRegistry from '@onaio/redux-reducer-registry';
-import { Feature } from 'geojson';
 import { Actions, ducks, loadLayers } from 'gisida';
 import { Map } from 'gisida-react';
+import { some } from 'lodash';
 import { FillPaint, LinePaint, Style, SymbolPaint } from 'mapbox-gl';
 import * as React from 'react';
 import Loading from '../../components/page/Loading/index';
@@ -18,7 +18,6 @@ import {
   NO_GEOMETRIES_RESPONSE,
   POINT,
   POLYGON,
-  STRINGIFIED_GEOJSON,
 } from '../../constants';
 import { EventData } from '../../helpers/mapbox';
 import { ConfigStore,FeatureCollection, FlexObject } from '../../helpers/utils';
@@ -92,12 +91,10 @@ interface GisidaState {
   locations: JurisdictionGeoJSON | false;
   doInitMap: boolean;
   doRenderMap: boolean;
-  geoData: Jurisdiction | false;
+  geoData: Jurisdiction | false; // probably something i dont know, why say boolean or false, isn't false boolean in itself
   hasGeometries: boolean | false;
-  // tasks: Task[] | null;
-  initMapWithoutTasks: boolean | false;
-  renderTasks: boolean | false;
-  featureCollection: FeatureCollection<TaskGeoJSON>;
+  renderFeatures: boolean | false;
+  featureCollection: FeatureCollection<TaskGeoJSON> | null;
   initMapWithoutFC: boolean | false;
 }
 /** GisidaWrapper Props Interface */
@@ -107,7 +104,6 @@ interface GisidaProps {
   geoData: Jurisdiction | null;
   goal?: Goal[] | null;
   handlers: Handlers[];
-  // tasks: Task[] | null;
   minHeight?: string;
   basemapStyle?: string | Style;
 }
@@ -127,7 +123,6 @@ export const defaultGisidaProps: GisidaProps = {
   geoData: null,
   goal: null,
   handlers: [],
-  // tasks: null,
 };
 
 /** Wrapper component for Gisida-powered maps */
@@ -140,14 +135,12 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
       bounds: [],
       doInitMap: false,
       doRenderMap: false,
-      featureCollection: this.props.featureCollection!, // why is this or false though
+      featureCollection: this.props.featureCollection,
       geoData: this.props.geoData || false,
       hasGeometries: false,
       initMapWithoutFC: false,
-      initMapWithoutTasks: false,
       locations: false,
-      renderTasks: false,
-      // tasks: this.props.tasks || false, // so this is replaced by feature collection
+      renderFeatures: false,
     };
 
     if (!initialState.APP && ducks.APP) {
@@ -159,12 +152,13 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
   }
 
   public componentWillMount() {
-    // if (!this.props.tasks) { // guess we are gonna be initmapwithoutFeaturecollection
-    //   this.setState({
-    //     initMapWithoutTasks: true,
-    //   });
-    // }
-    if (this.props.featureCollection && !this.props.featureCollection.features) {
+    const features: TaskGeoJSON[] =
+      (this.props.featureCollection && this.props.featureCollection.features) || [];
+    /** Init map without features if no features were proped in,
+     * features.some will return true if features array has atleast one
+     * object that evaluates to true
+     */
+    if (!some(features)) {
       this.setState({
         initMapWithoutFC: true,
       });
@@ -174,10 +168,6 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
   public componentDidMount() {
     if (!this.state.locations) {
       this.setState(
-        // {
-        //   doInitMap: true,
-        //   initMapWithoutTasks: false, // how is locations related to tasks and why does it lead to initMapWithout Tasks being false, how does geoData come in
-        // }
         {
           doInitMap: true,
           initMapWithoutFC: false, // still need to know why? here
@@ -202,26 +192,13 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
         }
       );
     }
-
-    // if (
-    //   (!(nextProps.tasks && nextProps.tasks.length) && !this.state.initMapWithoutTasks) ||
-    //   typeof nextProps.tasks === 'undefined'
-    // ) {
-    //   this.setState({ doInitMap: true, initMapWithoutTasks: true }, () => {
-    //     // Dirty work around! Arbitrary delay to allow style load before adding layers
-    //     setTimeout(() => {
-    //       this.initMap(null);
-    //     }, 3000);
-    //   });
-    // }
-    if (
-      nextProps.featureCollection &&
-      ((!(nextProps.featureCollection.features && nextProps.featureCollection.features.length) && // dont think using array length as boolean in js is a good idea. Research on which is better, using length or an utility like lodash's some
-        !this.state.initMapWithoutFC) ||
-        typeof nextProps.featureCollection.features === 'undefined')
-    ) {
+    const features: TaskGeoJSON[] =
+      (nextProps.featureCollection && nextProps.featureCollection.features) || [];
+    /** If there are no features and init map without features is false
+     * or when there are just no features
+     */
+    if ((!some(features) && !this.state.initMapWithoutFC) || features === []) {
       this.setState({ doInitMap: true, initMapWithoutFC: true }, () => {
-        // setState apparently takes a callback
         //     // Dirty work around! Arbitrary delay to allow style load before adding layers
         setTimeout(() => {
           this.initMap(null);
@@ -231,23 +208,18 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
   }
 
   public componentWillUpdate(nextProps: FlexObject) {
-    // if (
-    //   // this is where the task data rerenders on change of the current Goal
-    //   nextProps.tasks &&
-    //   nextProps.tasks.length &&
-    //   (nextProps.currentGoal !== this.props.currentGoal &&
-    //     (this.state.locations || this.state.doInitMap))
-    // ) {
-    //   this.setState({ doInitMap: false, initMapWithoutTasks: false }, () => {
-    //     this.initMap(nextProps.tasks);
-    //   });
-    // }
+    const features: TaskGeoJSON[] =
+      (nextProps.featurecollection && nextProps.featureCollection.features) || [];
+    /** condition1: features are present, some features were passed in
+     * condition2: currentGoal changed and either of locations or doInitMap is truthy
+     * condition3: currentGoal changed to undefined
+     * if condition1 and condition2 or condition3 execute
+     */
     if (
-      nextProps.featureCollection &&
-      nextProps.featureCollection.features &&
-      nextProps.featureCollection.features.length &&
-      nextProps.currentGoal !== this.props.currentGoal &&
-      (this.state.locations || this.state.doInitMap)
+      (some(features) &&
+        (nextProps.currentGoal !== this.props.currentGoal &&
+          (this.state.locations || this.state.doInitMap))) ||
+      nextProps.currentGoal === 'undefined'
     ) {
       this.setState({ doInitMap: false, initMapWithoutFC: false }, () => {
         this.initMap(nextProps.featureCollection.features);
@@ -281,9 +253,8 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
 
   // Define map site-config object to init the store
   private initMap(featureCollection: FeatureCollection<TaskGeoJSON> | null) {
-    if (featureCollection && featureCollection.features) {
-      // best way to use an array as implicit boolean
-      const features = featureCollection.features;
+    const features: TaskGeoJSON[] = (featureCollection && featureCollection.features) || [];
+    if (some(features)) {
       const points: TaskGeoJSON[] = [];
       // handle geometries of type polygon or multipolygon
       features.forEach((feature: TaskGeoJSON) => {
@@ -354,7 +325,8 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
           hasGeometries: true,
         });
       }
-    } else if (featureCollection!.features && !(featureCollection!.features.length > 0)) {
+    } // else if featureCollection prop was given but with empty features array
+    else if (featureCollection && !some(features)) {
       alert(NO_GEOMETRIES_RESPONSE);
       this.setState({
         hasGeometries: false,
