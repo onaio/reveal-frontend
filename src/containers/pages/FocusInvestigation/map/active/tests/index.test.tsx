@@ -13,7 +13,7 @@ import { fetchTasks } from '../../../../../../store/ducks/tasks';
 import * as fixtures from '../../../../../../store/ducks/tests/fixtures';
 import ConnectedMapSingleFI, { SingleActiveFIMap } from '../../active/';
 
-// jest.mock('../../../../../../components/GisidaWrapper');
+jest.mock('../../../../../../components/GisidaWrapper');
 jest.mock('../../../../../../configs/env');
 
 const history = createBrowserHistory();
@@ -104,9 +104,11 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
       },
     };
     const wrapper = mount(
-      <Router history={history}>
-        <SingleActiveFIMap {...props} />
-      </Router>
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedMapSingleFI {...props} />
+        </Router>
+      </Provider>
     );
     expect(toJson(wrapper)).toMatchSnapshot();
     expect(wrapper.find('GisidaWrapper').props()).toMatchSnapshot();
