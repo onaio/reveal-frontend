@@ -36,6 +36,7 @@ describe('components/GisidaWrapper', () => {
 
   it('renders map component without tasks', () => {
     const props = {
+      basemapStyle: 'mapbox://styles/mapbox/satellite-v9',
       geoData: fixtures.jurisdictions[0],
       minHeight: '200px',
     };
@@ -63,6 +64,7 @@ describe('components/GisidaWrapper', () => {
 
   it('renders map component with tasks', () => {
     const props1 = {
+      basemapStyle: 'mapbox://styles/mapbox/satellite-v9',
       currentGoal: null,
       geoData: fixtures.jurisdictions[2],
       goal: fixtures.goals,
@@ -91,6 +93,41 @@ describe('components/GisidaWrapper', () => {
     });
     expect(store.getState()['map-1']).toMatchSnapshot({
       reloadLayers: expect.any(Number),
+    });
+    wrapper.unmount();
+  });
+
+  it('works with DigitalGlobe base layer', () => {
+    const props1 = {
+      currentGoal: null,
+      geoData: fixtures.jurisdictions[2],
+      goal: fixtures.goals,
+      handlers: [],
+      tasks: fixtures.bednetTasks,
+    };
+    const props = {
+      currentGoal: fixtures.task6.goal_id,
+      geoData: fixtures.jurisdictions[2],
+      goal: fixtures.goals,
+      handlers: [],
+      tasks: fixtures.bednetTasks,
+    };
+    const wrapper = mount(<GisidaWrapper {...props1} />);
+    wrapper.setState({ doRenderMap: true });
+    wrapper.setProps({ ...props });
+    expect(toJson(wrapper)).toMatchSnapshot();
+    expect(store.getState().APP).toMatchSnapshot({
+      accessToken: expect.any(String),
+      apiAccessToken: expect.any(String),
+      mapConfig: {
+        style: {
+          sources: {
+            diimagery: {
+              tiles: [expect.any(String)],
+            },
+          },
+        },
+      },
     });
     wrapper.unmount();
   });

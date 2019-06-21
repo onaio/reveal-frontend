@@ -2,10 +2,11 @@ import { getOnadataUserInfo, getOpenSRPUserInfo } from '@onaio/gatekeeper';
 import { SessionState } from '@onaio/session-reducer';
 import { Color } from 'csstype';
 import { findKey, uniq } from 'lodash';
+import { FitBoundsOptions, Layer, Style } from 'mapbox-gl';
 import { Column } from 'react-table';
 import SeamlessImmutable from 'seamless-immutable';
 import * as colors from '../colors';
-import { ONADATA_OAUTH_STATE, OPENSRP_OAUTH_STATE } from '../configs/env';
+import { DIGITAL_GLOBE_CONNECT_ID, ONADATA_OAUTH_STATE, OPENSRP_OAUTH_STATE } from '../configs/env';
 import { locationHierarchy, LocationItem } from '../configs/settings';
 import {
   BEDNET_DISTRIBUTION_CODE,
@@ -47,11 +48,6 @@ export interface GeoJSON {
 /** Returns a number as a decimal e.g. 0.18 becomes 18% */
 export function percentage(num: number, decimalPoints: number = 0) {
   return `${(num * 100).toFixed(decimalPoints)}%`;
-}
-
-/** Map props interface */
-export interface MapProps {
-  [key: string]: any;
 }
 
 /** Gets react table columns from the location hierarchy in configs */
@@ -101,23 +97,17 @@ export function oAuthUserInfoGetter(apiResponse: { [key: string]: any }): Sessio
   }
 }
 
-export interface MapConfig {
-  [key: string]: FlexObject;
-}
-
-export interface FitBoundsOptions {
-  padding?: number;
-}
-
+/** interface to describe Gisida map configuration */
 export interface SiteConfigAppMapconfig {
   bounds?: number[];
   center?: number[];
   container: string;
   fitBoundsOptions?: FitBoundsOptions;
-  style: string;
+  style: string | Style;
   zoom?: number;
 }
 
+/** interface to describe Gisida site app configuration object */
 export interface SiteConfigApp {
   accessToken: string;
   apiAccessToken: string;
@@ -125,15 +115,98 @@ export interface SiteConfigApp {
   mapConfig: SiteConfigAppMapconfig;
 }
 
+/** interface to describe Gisida site configuration */
 export interface SiteConfig {
   APP: SiteConfigApp;
-  LAYERS: any[];
+  LAYERS: Layer[];
 }
 
-export interface MapConfigs {
-  [key: string]: FlexObject;
-  [key: number]: FlexObject;
-}
+/** Creates a Gisida site configuration object
+ * @param {FlexObject} options - map options
+ * @param {string} GISIDA_MAPBOX_TOKEN - mapbox token
+ * @param {string} GISIDA_ONADATA_API_TOKEN - Onadata API token
+ * @param {string} LayerStore - map layers
+ * @return {SiteConfig} - Gisida site configuration
+ */
+export const ConfigStore = (
+  options: FlexObject,
+  GISIDA_MAPBOX_TOKEN: string,
+  GISIDA_ONADATA_API_TOKEN: string,
+  LayerStore: FlexObject
+) => {
+  // Define basic config properties
+  const { accessToken, apiAccessToken, appName, mapConfig: mbConfig, layers } = options;
+  // Define flattened APP.mapConfig properties
+  const {
+    mapConfigCenter,
+    mapConfigContainer,
+    mapConfigStyle,
+    mapConfigZoom,
+    mapConfigBounds,
+    mapConfigFitBoundsOptions,
+  } = options;
+  // Define non-flattened APP.Config properties
+  const { center, container, style, zoom, bounds, fitBoundsOptions } = mbConfig || options;
+
+  // Build options for mapbox-gl-js initialization
+  let mapConfig: SiteConfigAppMapconfig = {
+    container: container || mapConfigContainer || 'map',
+    style:
+      style ||
+      mapConfigStyle ||
+      (DIGITAL_GLOBE_CONNECT_ID
+        ? {
+            layers: [
+              {
+                id: 'earthwatch-basemap',
+                maxzoom: 16,
+                minzoom: 1,
+                source: 'diimagery',
+                type: 'raster',
+              },
+            ],
+            sources: {
+              diimagery: {
+                scheme: 'tms',
+                tileSize: 256,
+                tiles: [
+                  `https://earthwatch.digitalglobe.com/earthservice/tmsaccess/tms/1.0.0/DigitalGlobe:ImageryTileService@EPSG:3857@png/{z}/{x}/{y}.png?connectId=${DIGITAL_GLOBE_CONNECT_ID}`,
+                ],
+                type: 'raster',
+              },
+            },
+            version: 8,
+          }
+        : 'mapbox://styles/mapbox/satellite-v9'),
+  };
+  if (bounds || mapConfigBounds) {
+    mapConfig = {
+      ...mapConfig,
+      bounds: bounds || mapConfigBounds,
+      fitBoundsOptions: fitBoundsOptions || mapConfigFitBoundsOptions || { padding: 20 },
+    };
+  } else {
+    mapConfig = {
+      ...mapConfig,
+      center: center || mapConfigCenter || [0, 0],
+      zoom: zoom || mapConfigZoom || 0,
+    };
+  }
+  // Build APP options for Gisida
+  const APP: SiteConfigApp = {
+    accessToken: accessToken || GISIDA_MAPBOX_TOKEN,
+    apiAccessToken: apiAccessToken || GISIDA_ONADATA_API_TOKEN,
+    appName,
+    mapConfig,
+  };
+
+  // Build SiteConfig
+  const config: SiteConfig = {
+    APP,
+    LAYERS: layers.map(LayerStore),
+  };
+  return config;
+};
 
 /** utility method to extract plan from superset response object */
 export function extractPlan(plan: Plan) {
@@ -187,60 +260,6 @@ export function extractPlan(plan: Plan) {
 
   return result;
 }
-
-export const ConfigStore = (
-  options: FlexObject,
-  GISIDA_MAPBOX_TOKEN: string,
-  GISIDA_ONADATA_API_TOKEN: string,
-  LayerStore: FlexObject
-) => {
-  // Define basic config properties
-  const { accessToken, apiAccessToken, appName, mapConfig: mbConfig, layers } = options;
-  // Define flattened APP.mapConfig properties
-  const {
-    mapConfigCenter,
-    mapConfigContainer,
-    mapConfigStyle,
-    mapConfigZoom,
-    mapConfigBounds,
-    mapConfigFitBoundsOptions,
-  } = options;
-  // Define non-flattened APP.Config properties
-  const { center, container, style, zoom, bounds, fitBoundsOptions } = mbConfig || options;
-
-  // Build options for mapbox-gl-js initialization
-  let mapConfig: SiteConfigAppMapconfig = {
-    container: container || mapConfigContainer || 'map',
-    style: style || mapConfigStyle || 'mapbox://styles/mapbox/satellite-v9',
-  };
-  if (bounds || mapConfigBounds) {
-    mapConfig = {
-      ...mapConfig,
-      bounds: bounds || mapConfigBounds,
-      fitBoundsOptions: fitBoundsOptions || mapConfigFitBoundsOptions || { padding: 20 },
-    };
-  } else {
-    mapConfig = {
-      ...mapConfig,
-      center: center || mapConfigCenter || [0, 0],
-      zoom: zoom || mapConfigZoom || 0,
-    };
-  }
-  // Build APP options for Gisida
-  const APP: SiteConfigApp = {
-    accessToken: accessToken || GISIDA_MAPBOX_TOKEN,
-    apiAccessToken: apiAccessToken || GISIDA_ONADATA_API_TOKEN,
-    appName,
-    mapConfig,
-  };
-
-  // Build SiteConfig
-  const config: SiteConfig = {
-    APP,
-    LAYERS: layers.map(LayerStore),
-  };
-  return config;
-};
 
 /**gets the key whose value contains the string in code
  * @param {ColorMapsTypes} obj - the object to search the key in
