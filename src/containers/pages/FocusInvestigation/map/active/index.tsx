@@ -46,7 +46,6 @@ import plansReducer, {
 import tasksReducer, {
   fetchTasks,
   getTasksByPlanAndGoalAndJurisdiction,
-  getTasksByPlanAndJurisdiction,
   reducerName as tasksReducerName,
   Task,
 } from '../../../../../store/ducks/tasks';
