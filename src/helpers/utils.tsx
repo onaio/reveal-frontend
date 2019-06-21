@@ -159,8 +159,8 @@ export const ConfigStore = (
             layers: [
               {
                 id: 'earthwatch-basemap',
-                maxzoom: 16,
-                minzoom: 1,
+                maxzoom: 22,
+                minzoom: 0,
                 source: 'diimagery',
                 type: 'raster',
               },
