@@ -1,3 +1,4 @@
+import { LngLat } from 'mapbox-gl';
 import { MAP_ID } from '../constants';
 import './handlers.css';
 import { EventData } from './mapbox';
@@ -13,7 +14,7 @@ declare global {
 
 /** Having features as any type is not most desirable this has been qued up as part of technical debt payment */
 export function popupHandler(event: EventData) {
-  const features = event.target.queryRenderedFeatures(event.point) as any;
+  const features = event.target.queryRenderedFeatures(event.point) as any[];
   let description: string = '';
   features.forEach((feature: any) => {
     if (
@@ -40,14 +41,14 @@ export function popupHandler(event: EventData) {
   });
   if (description.length) {
     description = '<div>' + description + '</div>';
-    const coordinates: any = event.lngLat;
+    const coordinates: LngLat = event.lngLat;
     /** Ensure that if the map is zoomed out such that multiple
      * copies of the feature are visible,
      * the popup appears over the copy being pointed to
      */
 
-    while (Math.abs(event.lngLat.lng - coordinates[0]) > 180) {
-      coordinates[0] += event.lngLat.lng > coordinates[0] ? 360 : -360;
+    while (Math.abs(event.lngLat.lng - coordinates.lng) > 180) {
+      coordinates.lng += event.lngLat.lng > coordinates.lng ? 360 : -360;
     }
     // to do map container_id should come from props incase we have many maps to show
     const loadedMap =
