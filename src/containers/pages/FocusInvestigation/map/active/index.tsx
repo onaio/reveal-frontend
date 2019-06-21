@@ -31,7 +31,7 @@ import {
 } from '../../../../../constants';
 import { popupHandler } from '../../../../../helpers/handlers';
 import { getGoalReport } from '../../../../../helpers/indicators';
-import { FlexObject,FeatureCollection, RouteParams } from '../../../../../helpers/utils';
+import { FeatureCollection, FlexObject, RouteParams } from '../../../../../helpers/utils';
 import supersetFetch from '../../../../../services/superset';
 import goalsReducer, {
   fetchGoals,
@@ -135,14 +135,7 @@ class SingleActiveFIMap extends React.Component<
   }
 
   public render() {
-    const {
-      jurisdiction,
-      plan,
-      goals,
-      tasks,
-      currentGoal,
-      featureCollection,
-    } = this.props;
+    const { jurisdiction, plan, goals, currentGoal, featureCollection } = this.props;
     if (!jurisdiction || !plan) {
       return <Loading />;
     }
@@ -189,8 +182,8 @@ class SingleActiveFIMap extends React.Component<
                 handlers={this.buildHandlers()}
                 geoData={jurisdiction}
                 goal={goals}
-                tasks={tasks} // replace this with Feature collection, maybe object of feature collection keyed by the type of features
                 currentGoal={currentGoal}
+                featureCollection={featureCollection}
               />
             </div>
           </div>
