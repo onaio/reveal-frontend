@@ -170,6 +170,15 @@ describe('components/GisidaWrapper', () => {
     expect(store.getState().APP).toMatchSnapshot({
       accessToken: expect.any(String),
       apiAccessToken: expect.any(String),
+      mapConfig: {
+        style: {
+          sources: {
+            diimagery: {
+              tiles: [expect.any(String)],
+            },
+          },
+        },
+      },
     });
     expect(store.getState()['map-1']).toMatchSnapshot({
       reloadLayers: expect.any(Number),
