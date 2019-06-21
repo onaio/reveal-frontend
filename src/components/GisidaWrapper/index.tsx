@@ -24,7 +24,7 @@ import { ConfigStore,FeatureCollection, FlexObject } from '../../helpers/utils';
 import store from '../../store';
 import { Goal } from '../../store/ducks/goals';
 import { Jurisdiction, JurisdictionGeoJSON } from '../../store/ducks/jurisdictions';
-import { Task, TaskGeoJSON } from '../../store/ducks/tasks';
+import { TaskGeoJSON } from '../../store/ducks/tasks';
 import './gisida.css';
 
 /** handlers Interface */
