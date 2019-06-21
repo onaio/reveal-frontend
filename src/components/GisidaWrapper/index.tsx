@@ -197,7 +197,7 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
     /** If there are no features and init map without features is false
      * or when there are just no features
      */
-    if ((!some(features) && !this.state.initMapWithoutFC) || features === []) {
+    if ((!some(features) && !this.state.initMapWithoutFC) || !some(features)) {
       this.setState({ doInitMap: true, initMapWithoutFC: true }, () => {
         //     // Dirty work around! Arbitrary delay to allow style load before adding layers
         setTimeout(() => {
@@ -209,7 +209,7 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
 
   public componentWillUpdate(nextProps: FlexObject) {
     const features: TaskGeoJSON[] =
-      (nextProps.featurecollection && nextProps.featureCollection.features) || [];
+      (nextProps.featureCollection && nextProps.featureCollection.features) || [];
     /** condition1: features are present, some features were passed in
      * condition2: currentGoal changed and either of locations or doInitMap is truthy
      * condition3: currentGoal changed to undefined
@@ -222,7 +222,7 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
       nextProps.currentGoal === 'undefined'
     ) {
       this.setState({ doInitMap: false, initMapWithoutFC: false }, () => {
-        this.initMap(nextProps.featureCollection.features);
+        this.initMap(nextProps.featureCollection);
       });
     }
   }
