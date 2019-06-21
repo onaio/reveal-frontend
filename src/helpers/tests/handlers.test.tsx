@@ -57,11 +57,14 @@ describe('helpers/handlers', () => {
     };
 
     const mockedPopup = Popup;
-    const setLngLatMock = jest.fn();
-    const setHTMLMock = jest.fn();
+    const addToMock = jest.fn();
     mockedPopup.prototype.setLngLat = (e: any) => {
+      expect(e).toEqual({
+        lat: 15.065355545319008,
+        lng: 101.1799767158821,
+      });
       e.setHTML = (f: any) => {
-        e.addTo = setLngLatMock;
+        e.addTo = addToMock;
         return e;
       };
       return e;
@@ -73,6 +76,6 @@ describe('helpers/handlers', () => {
 
     popupHandler(event as any);
 
-    expect(setLngLatMock).toHaveBeenCalledWith({ _container: { id: 'map-1' } });
+    expect(addToMock).toHaveBeenCalledWith({ _container: { id: 'map-1' } });
   });
 });
