@@ -2,7 +2,7 @@ import { getOnadataUserInfo, getOpenSRPUserInfo } from '@onaio/gatekeeper';
 import { SessionState } from '@onaio/session-reducer';
 import { Color } from 'csstype';
 import { findKey, uniq } from 'lodash';
-import { Style } from 'mapbox-gl';
+import { FitBoundsOptions, Style } from 'mapbox-gl';
 import { Column } from 'react-table';
 import SeamlessImmutable from 'seamless-immutable';
 import * as colors from '../colors';
@@ -95,11 +95,6 @@ export function oAuthUserInfoGetter(apiResponse: { [key: string]: any }): Sessio
         return getOnadataUserInfo(apiResponse);
     }
   }
-}
-
-/** interface to describe bound options */
-export interface FitBoundsOptions {
-  padding?: number;
 }
 
 /** interface to describe Gisida map configuration */
