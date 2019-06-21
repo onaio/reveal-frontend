@@ -19,8 +19,9 @@ import {
   FI_SINGLE_MAP_URL,
   FI_SINGLE_URL,
   FI_URL,
-  FOCUS_AREA_HEADER,
   FOCUS_INVESTIGATION,
+  HOME,
+  HOME_URL,
   MAP,
   MEASURE,
   OF,
@@ -125,8 +126,12 @@ class SingleActiveFIMap extends React.Component<
     if (!jurisdiction || !plan) {
       return <Loading />;
     }
+    const homePage = {
+      label: `${HOME}`,
+      url: `${HOME_URL}`,
+    };
     const basePage = {
-      label: FOCUS_AREA_HEADER,
+      label: FOCUS_INVESTIGATION,
       url: `${FI_URL}`,
     };
     const secondLastPage = {
@@ -149,7 +154,7 @@ class SingleActiveFIMap extends React.Component<
         url: '',
       })
     );
-    breadCrumbProps.pages = [basePage, ...pages, secondLastPage];
+    breadCrumbProps.pages = [homePage, basePage, ...pages, secondLastPage];
 
     return (
       <div>
