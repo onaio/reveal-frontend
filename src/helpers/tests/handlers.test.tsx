@@ -63,7 +63,7 @@ describe('helpers/handlers', () => {
         lat: 15.065355545319008,
         lng: 101.1799767158821,
       });
-      e.setHTML = (f: any) => {
+      e.setHTML = (f: string) => {
         expect(f).toEqual(
           '<div><p class="heading"> Bednet Distribution</b></p> <p> Not Visited</p><br/><br/></div>'
         );
