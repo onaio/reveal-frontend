@@ -37,7 +37,7 @@ export function popupHandler(event: EventData) {
       }</p><br/><br/>`;
     }
   });
-  if (description) {
+  if (description.length) {
     description = '<div>' + description + '</div>';
     const coordinates: any = event.lngLat;
     /** Ensure that if the map is zoomed out such that multiple
