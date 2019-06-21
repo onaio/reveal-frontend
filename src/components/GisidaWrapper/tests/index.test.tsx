@@ -6,7 +6,9 @@ import { createBrowserHistory } from 'history';
 import React from 'react';
 import { Router } from 'react-router';
 import { APP, MAP_ID } from '../../../constants';
+import { FeatureCollection } from '../../../helpers/utils';
 import store from '../../../store';
+import { TaskGeoJSON } from '../../../store/ducks/tasks';
 import * as fixtures from '../../../store/ducks/tests/fixtures';
 import GisidaWrapper from '../index';
 
@@ -22,10 +24,10 @@ const history = createBrowserHistory();
 describe('components/GisidaWrapper', () => {
   it('renders component without crashing', () => {
     const props = {
+      featureCollection: null,
       geoData: fixtures.jurisdictions[0],
       goal: fixtures.goals,
       handlers: [],
-      tasks: null,
     };
     shallow(
       <Router history={history}>
@@ -34,7 +36,7 @@ describe('components/GisidaWrapper', () => {
     );
   });
 
-  it('renders map component without tasks', () => {
+  it('renders map component without Featurecollection', () => {
     const props = {
       basemapStyle: 'mapbox://styles/mapbox/satellite-v9',
       geoData: fixtures.jurisdictions[0],
@@ -62,21 +64,25 @@ describe('components/GisidaWrapper', () => {
     wrapper.unmount();
   });
 
-  it('renders map component with tasks', () => {
+  it('renders map component with FeatureCollection', () => {
+    const featureCollection: FeatureCollection<TaskGeoJSON> = {
+      features: fixtures.bednetTasks.map((task: any) => task.geojson),
+      type: 'FeatureCollection',
+    };
     const props1 = {
       basemapStyle: 'mapbox://styles/mapbox/satellite-v9',
       currentGoal: null,
+      featureCollection,
       geoData: fixtures.jurisdictions[2],
       goal: fixtures.goals,
       handlers: [],
-      tasks: fixtures.bednetTasks,
     };
     const props = {
       currentGoal: fixtures.task6.goal_id,
+      featureCollection,
       geoData: fixtures.jurisdictions[2],
       goal: fixtures.goals,
       handlers: [],
-      tasks: fixtures.bednetTasks,
     };
     const wrapper = mount(<GisidaWrapper {...props1} />);
     /** Investigate why it won't set state inside initmap even though
