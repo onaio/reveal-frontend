@@ -131,12 +131,6 @@ export interface SiteConfig {
   LAYERS: any[];
 }
 
-/**gets the key whose value contains the string in code
- * @param {ColorMapsTypes} obj - the object to search the key in
- * @param {string} status - task business status to filter, used as predicate filter
- * @return {string} - a hexadecimal color code
- */
-
 /** Creates a Gisida site configuration object
  * @param {FlexObject} options - map options
  * @param {string} GISIDA_MAPBOX_TOKEN - mapbox token
