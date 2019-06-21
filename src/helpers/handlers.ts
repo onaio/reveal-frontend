@@ -53,6 +53,5 @@ export function popupHandler(event: EventData) {
       .setLngLat(coordinates)
       .setHTML(description)
       .addTo(loadedMap);
-    // Change the cursor to a pointer when the mouse is over the states layer.
   }
 }
