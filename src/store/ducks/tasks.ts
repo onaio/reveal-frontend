@@ -371,6 +371,22 @@ export function getFCByJurisdictionId(
   return wrapFeatureCollection(geoJsonFeatures);
 }
 
+/** get Structures FeatureCollection by jurisdiction id
+ * Structures are tasks whose geometry is of type Polygon
+ * @param {Partial<Store>} state - the redux store
+ * @param {string} jurisdictionId - the jurisdiction id
+ * @returns {FeatureCollection} - a geoJSON Feature Collection object
+ */
+export function getStructuresFCByJurisdictionId(
+  state: Partial<Store>,
+  jurisdictionId: string
+): FeatureCollection<TaskGeoJSON> {
+  const structures = getTasksByJurisdictionId(state, jurisdictionId).filter((e: Task) => {
+    return e.geojson.geometry && e.geojson.geometry.type === POLYGON;
+  });
+  return wrapFeatureCollection(values(structures.map(e => e.geojson)));
+}
+
 /** get tasks as FeatureCollection filtered by structure_id
  * @param {partial<Store>} state - the redux store
  * @param {string} structureId - the structure id
