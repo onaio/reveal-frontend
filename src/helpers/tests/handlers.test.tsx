@@ -66,13 +66,10 @@ describe('helpers/handlers', () => {
       };
       return e;
     };
-    mockedPopup.prototype.setHTML = jest.fn();
-    mockedPopup.prototype.addTo = jest.fn();
 
     (global as any).mapboxgl = {
       Popup: mockedPopup,
     };
-    // (global as any).URL.createObjectURL = jest.fn();
 
     popupHandler(event as any);
 
