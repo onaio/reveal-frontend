@@ -141,11 +141,18 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
       <HeaderBreadcrumb
         currentPage={
           Object {
-            "label": "Focus Area",
+            "label": "Focus Investigation",
             "url": "/focus-investigation",
           }
         }
-        pages={Array []}
+        pages={
+          Array [
+            Object {
+              "label": "Home",
+              "url": "/",
+            },
+          ]
+        }
       >
         <div>
           <Breadcrumb
@@ -162,6 +169,27 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                 className="breadcrumb"
               >
                 <BreadcrumbItem
+                  key="0"
+                  tag="li"
+                >
+                  <li
+                    className="breadcrumb-item"
+                  >
+                    <Link
+                      key="0"
+                      replace={false}
+                      to="/"
+                    >
+                      <a
+                        href="/"
+                        onClick={[Function]}
+                      >
+                        Home
+                      </a>
+                    </Link>
+                  </li>
+                </BreadcrumbItem>
+                <BreadcrumbItem
                   active={true}
                   tag="li"
                 >
@@ -169,7 +197,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                     aria-current="page"
                     className="active breadcrumb-item"
                   >
-                    Focus Area
+                    Focus Investigation
                   </li>
                 </BreadcrumbItem>
               </ol>
@@ -2623,11 +2651,18 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
 <HeaderBreadcrumb
   currentPage={
     Object {
-      "label": "Focus Area",
+      "label": "Focus Investigation",
       "url": "/focus-investigation",
     }
   }
-  pages={Array []}
+  pages={
+    Array [
+      Object {
+        "label": "Home",
+        "url": "/",
+      },
+    ]
+  }
 >
   <div>
     <Breadcrumb
@@ -2644,6 +2679,27 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
           className="breadcrumb"
         >
           <BreadcrumbItem
+            key="0"
+            tag="li"
+          >
+            <li
+              className="breadcrumb-item"
+            >
+              <Link
+                key="0"
+                replace={false}
+                to="/"
+              >
+                <a
+                  href="/"
+                  onClick={[Function]}
+                >
+                  Home
+                </a>
+              </Link>
+            </li>
+          </BreadcrumbItem>
+          <BreadcrumbItem
             active={true}
             tag="li"
           >
@@ -2651,7 +2707,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
               aria-current="page"
               className="active breadcrumb-item"
             >
-              Focus Area
+              Focus Investigation
             </li>
           </BreadcrumbItem>
         </ol>
@@ -2790,11 +2846,18 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
       <HeaderBreadcrumb
         currentPage={
           Object {
-            "label": "Focus Area",
+            "label": "Focus Investigation",
             "url": "/focus-investigation",
           }
         }
-        pages={Array []}
+        pages={
+          Array [
+            Object {
+              "label": "Home",
+              "url": "/",
+            },
+          ]
+        }
       >
         <div>
           <Breadcrumb
@@ -2811,6 +2874,27 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                 className="breadcrumb"
               >
                 <BreadcrumbItem
+                  key="0"
+                  tag="li"
+                >
+                  <li
+                    className="breadcrumb-item"
+                  >
+                    <Link
+                      key="0"
+                      replace={false}
+                      to="/"
+                    >
+                      <a
+                        href="/"
+                        onClick={[Function]}
+                      >
+                        Home
+                      </a>
+                    </Link>
+                  </li>
+                </BreadcrumbItem>
+                <BreadcrumbItem
                   active={true}
                   tag="li"
                 >
@@ -2818,7 +2902,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                     aria-current="page"
                     className="active breadcrumb-item"
                   >
-                    Focus Area
+                    Focus Investigation
                   </li>
                 </BreadcrumbItem>
               </ol>

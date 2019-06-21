@@ -438,7 +438,11 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
             pages={
               Array [
                 Object {
-                  "label": "Focus Area",
+                  "label": "Home",
+                  "url": "/",
+                },
+                Object {
+                  "label": "Focus Investigation",
                   "url": "/focus-investigation",
                 },
                 Object {
@@ -476,13 +480,13 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
                         <Link
                           key="0"
                           replace={false}
-                          to="/focus-investigation"
+                          to="/"
                         >
                           <a
-                            href="/focus-investigation"
+                            href="/"
                             onClick={[Function]}
                           >
-                            Focus Area
+                            Home
                           </a>
                         </Link>
                       </li>
@@ -494,11 +498,32 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
                       <li
                         className="breadcrumb-item"
                       >
-                        Chadiza
+                        <Link
+                          key="1"
+                          replace={false}
+                          to="/focus-investigation"
+                        >
+                          <a
+                            href="/focus-investigation"
+                            onClick={[Function]}
+                          >
+                            Focus Investigation
+                          </a>
+                        </Link>
                       </li>
                     </BreadcrumbItem>
                     <BreadcrumbItem
                       key="2"
+                      tag="li"
+                    >
+                      <li
+                        className="breadcrumb-item"
+                      >
+                        Chadiza
+                      </li>
+                    </BreadcrumbItem>
+                    <BreadcrumbItem
+                      key="3"
                       tag="li"
                     >
                       <li
@@ -1372,7 +1397,11 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
         pages={
           Array [
             Object {
-              "label": "Focus Area",
+              "label": "Home",
+              "url": "/",
+            },
+            Object {
+              "label": "Focus Investigation",
               "url": "/focus-investigation",
             },
             Object {
@@ -1410,13 +1439,13 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
                     <Link
                       key="0"
                       replace={false}
-                      to="/focus-investigation"
+                      to="/"
                     >
                       <a
-                        href="/focus-investigation"
+                        href="/"
                         onClick={[Function]}
                       >
-                        Focus Area
+                        Home
                       </a>
                     </Link>
                   </li>
@@ -1428,11 +1457,32 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
                   <li
                     className="breadcrumb-item"
                   >
-                    Chadiza
+                    <Link
+                      key="1"
+                      replace={false}
+                      to="/focus-investigation"
+                    >
+                      <a
+                        href="/focus-investigation"
+                        onClick={[Function]}
+                      >
+                        Focus Investigation
+                      </a>
+                    </Link>
                   </li>
                 </BreadcrumbItem>
                 <BreadcrumbItem
                   key="2"
+                  tag="li"
+                >
+                  <li
+                    className="breadcrumb-item"
+                  >
+                    Chadiza
+                  </li>
+                </BreadcrumbItem>
+                <BreadcrumbItem
+                  key="3"
                   tag="li"
                 >
                   <li
