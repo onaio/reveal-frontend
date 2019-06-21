@@ -3,7 +3,7 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Col, Row } from 'reactstrap';
 import { ENABLE_FI, ENABLE_IRS } from '../../../configs/env';
-import { FI_URL, IRS_URL } from '../../../constants';
+import { FI_URL, INTERVENTION_IRS_URL } from '../../../constants';
 import './Home.css';
 
 class Home extends React.Component<{}, {}> {
@@ -23,7 +23,7 @@ class Home extends React.Component<{}, {}> {
         <Row className="intervention-box">
           {ENABLE_IRS && (
             <Col md="6">
-              <Link to={IRS_URL} className="intervention-link">
+              <Link to={INTERVENTION_IRS_URL} className="intervention-link">
                 <Button
                   color="outline"
                   className="btn-intervention btn-lg btn-block btn-outline-dark"

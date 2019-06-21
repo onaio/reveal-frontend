@@ -14,7 +14,7 @@ import {
   FI_SINGLE_MAP_URL,
   FI_SINGLE_URL,
   FI_URL,
-  IRS_URL,
+  INTERVENTION_IRS_URL,
   LOGIN_URL,
   LOGOUT_URL,
 } from '../constants';
@@ -24,7 +24,7 @@ import HistoricalFocusInvestigation from '../containers/pages/FocusInvestigation
 import SingleActiveFIMap from '../containers/pages/FocusInvestigation/map/active';
 import SingleFI from '../containers/pages/FocusInvestigation/single';
 import Home from '../containers/pages/Home/Home';
-import IRS from '../containers/pages/IRS/IRS';
+import IRS from '../containers/pages/InterventionPlan/IRS';
 import { oAuthUserInfoGetter } from '../helpers/utils';
 
 library.add(faMap);
@@ -50,7 +50,7 @@ class App extends Component {
               <ConnectedPrivateRoute
                 disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                 exact={true}
-                path={IRS_URL}
+                path={INTERVENTION_IRS_URL}
                 component={IRS}
               />
               <ConnectedPrivateRoute
