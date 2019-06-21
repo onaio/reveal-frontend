@@ -185,6 +185,7 @@ class SingleActiveFIMap extends React.Component<
                 handlers={this.buildHandlers()}
                 geoData={jurisdiction}
                 goal={goals}
+                structures={this.props.structures}
                 currentGoal={currentGoal}
                 featureCollection={featureCollection}
               />
