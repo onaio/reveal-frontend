@@ -2,7 +2,7 @@ import { getOnadataUserInfo, getOpenSRPUserInfo } from '@onaio/gatekeeper';
 import { SessionState } from '@onaio/session-reducer';
 import { Color } from 'csstype';
 import { findKey, uniq } from 'lodash';
-import { FitBoundsOptions, Style } from 'mapbox-gl';
+import { FitBoundsOptions, Layer, Style } from 'mapbox-gl';
 import { Column } from 'react-table';
 import SeamlessImmutable from 'seamless-immutable';
 import * as colors from '../colors';
@@ -118,7 +118,7 @@ export interface SiteConfigApp {
 /** interface to describe Gisida site configuration */
 export interface SiteConfig {
   APP: SiteConfigApp;
-  LAYERS: any[];
+  LAYERS: Layer[];
 }
 
 /** Creates a Gisida site configuration object
