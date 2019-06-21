@@ -96,4 +96,39 @@ describe('components/GisidaWrapper', () => {
     });
     wrapper.unmount();
   });
+
+  it('works with DigitalGlobe base layer', () => {
+    const props1 = {
+      currentGoal: null,
+      geoData: fixtures.jurisdictions[2],
+      goal: fixtures.goals,
+      handlers: [],
+      tasks: fixtures.bednetTasks,
+    };
+    const props = {
+      currentGoal: fixtures.task6.goal_id,
+      geoData: fixtures.jurisdictions[2],
+      goal: fixtures.goals,
+      handlers: [],
+      tasks: fixtures.bednetTasks,
+    };
+    const wrapper = mount(<GisidaWrapper {...props1} />);
+    wrapper.setState({ doRenderMap: true });
+    wrapper.setProps({ ...props });
+    expect(toJson(wrapper)).toMatchSnapshot();
+    expect(store.getState().APP).toMatchSnapshot({
+      accessToken: expect.any(String),
+      apiAccessToken: expect.any(String),
+      mapConfig: {
+        style: {
+          sources: {
+            diimagery: {
+              tiles: [expect.any(String)],
+            },
+          },
+        },
+      },
+    });
+    wrapper.unmount();
+  });
 });
