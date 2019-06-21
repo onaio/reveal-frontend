@@ -1,4 +1,4 @@
-import { LngLat } from 'mapbox-gl';
+import { LngLat, Map } from 'mapbox-gl';
 import { MAP_ID } from '../constants';
 import './handlers.css';
 import { EventData } from './mapbox';
@@ -10,6 +10,10 @@ declare global {
     maps: mapboxgl.Map[];
   }
   const mapboxgl: typeof mapboxgl;
+}
+
+interface GisidaMap extends Map {
+  _container: FlexObject;
 }
 
 /** Having features as any type is not most desirable this has been qued up as part of technical debt payment */
@@ -44,7 +48,7 @@ export function popupHandler(event: EventData) {
     }
     // to do map container_id should come from props incase we have many maps to show
     const loadedMap =
-      window.maps[window.maps.map((d: FlexObject) => d._container.id).indexOf(MAP_ID)];
+      window.maps[window.maps.map((map: Map) => (map as GisidaMap)._container.id).indexOf(MAP_ID)];
     new mapboxgl.Popup()
       .setLngLat(coordinates)
       .setHTML(description)
