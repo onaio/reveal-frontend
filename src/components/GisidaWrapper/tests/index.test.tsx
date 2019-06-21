@@ -104,19 +104,23 @@ describe('components/GisidaWrapper', () => {
   });
 
   it('works with DigitalGlobe base layer', () => {
+    const featureCollection: FeatureCollection<TaskGeoJSON> = {
+      features: fixtures.bednetTasks.map((task: any) => task.geojson),
+      type: 'FeatureCollection',
+    };
     const props1 = {
       currentGoal: null,
+      featureCollection,
       geoData: fixtures.jurisdictions[2],
       goal: fixtures.goals,
       handlers: [],
-      tasks: fixtures.bednetTasks,
     };
     const props = {
       currentGoal: fixtures.task6.goal_id,
+      featureCollection,
       geoData: fixtures.jurisdictions[2],
       goal: fixtures.goals,
       handlers: [],
-      tasks: fixtures.bednetTasks,
     };
     const wrapper = mount(<GisidaWrapper {...props1} />);
     wrapper.setState({ doRenderMap: true });
