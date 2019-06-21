@@ -13,6 +13,7 @@ export interface BreadCrumbItems {
   pages: Page[];
 }
 
+/** Create Breadcrumps Component */
 class HeaderBreadcrumb extends React.Component<BreadCrumbItems, {}> {
   constructor(props: BreadCrumbItems) {
     super(props);
@@ -22,7 +23,7 @@ class HeaderBreadcrumb extends React.Component<BreadCrumbItems, {}> {
     const { currentPage, pages } = this.props;
 
     const linkList = pages.map((page, key) => {
-      // conditionally add urls to breadcrumbs
+      // render breadcrumb items with urls as links or without urls as text nodes
       let breadCrumbItem: string | JSX.Element;
       if (page.url && page.url.trim()) {
         breadCrumbItem = (
