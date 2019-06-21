@@ -22,7 +22,13 @@ import {
   ENABLE_USERS,
   WEBSITE_NAME,
 } from '../../../configs/env';
-import { FI_HISTORICAL_URL, FI_URL, IRS_URL, LOGIN_URL, LOGOUT_URL } from '../../../constants';
+import {
+  FI_HISTORICAL_URL,
+  FI_URL,
+  INTERVENTION_IRS_URL,
+  LOGIN_URL,
+  LOGOUT_URL,
+} from '../../../constants';
 import './Header.css';
 
 /** interface for Header state */
@@ -80,7 +86,7 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
               </NavItem>
               {ENABLE_IRS && (
                 <NavItem>
-                  <NavLink to={IRS_URL} className="nav-link" activeClassName="active">
+                  <NavLink to={INTERVENTION_IRS_URL} className="nav-link" activeClassName="active">
                     IRS
                   </NavLink>
                 </NavItem>
