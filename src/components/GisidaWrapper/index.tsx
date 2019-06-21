@@ -91,7 +91,7 @@ interface GisidaState {
   locations: JurisdictionGeoJSON | false;
   doInitMap: boolean;
   doRenderMap: boolean;
-  geoData: Jurisdiction | false; // probably something i dont know, why say boolean or false, isn't false boolean in itself
+  geoData: Jurisdiction | false;
   hasGeometries: boolean | false;
   renderFeatures: boolean | false;
   featureCollection: FeatureCollection<TaskGeoJSON> | null;
