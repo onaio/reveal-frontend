@@ -171,7 +171,12 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
       <div>
         <HeaderBreadcrumbs {...breadCrumbProps} />
         <h2 className="page-title mt-4 mb-5">
-          {FOCUS_INVESTIGATION} {IN} {theObject.focusArea}
+          {theObject.jurisdiction_id && (
+            <Link to={`${FI_SINGLE_MAP_URL}/${theObject.id}`}>
+              <FontAwesomeIcon icon={['fas', 'map']} />
+            </Link>
+          )}
+          &nbsp;&nbsp;{FOCUS_INVESTIGATION} {IN} {theObject.focusArea}
         </h2>
         <Row>
           <Col className="col-6">
@@ -195,15 +200,8 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
           </Col>
           <Col className="col-6">
             <div className="fi-active">
-              {ACTIVE_INVESTIGATION}
-
               <h5 className="mb-4 mt-1">
-                {theObject.jurisdiction_id && (
-                  <Link to={`${FI_SINGLE_MAP_URL}/${theObject.id}`}>
-                    <FontAwesomeIcon icon={['fas', 'map']} />
-                  </Link>
-                )}
-                &nbsp;&nbsp;{ACTIVE_INVESTIGATION}: {theObject.caseNotificationDate}
+                {ACTIVE_INVESTIGATION}: {theObject.caseNotificationDate}
               </h5>
               <dl className="row mt-3">
                 <dt className="col-5">{COMPLETE}</dt>
