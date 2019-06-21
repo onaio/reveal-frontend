@@ -7,7 +7,7 @@ import { FillPaint, LinePaint, Style, SymbolPaint } from 'mapbox-gl';
 import * as React from 'react';
 import Loading from '../../components/page/Loading/index';
 import { GISIDA_MAPBOX_TOKEN, GISIDA_ONADATA_API_TOKEN } from '../../configs/env';
-import { circleLayerConfig, fillLayerConfig, lineLayerConfig } from '../../configs/settings';
+import { circleLayerConfig, fillLayerConfig, lineLayerConfig, structureFillColor } from '../../configs/settings';
 import {
   APP,
   FEATURE_COLLECTION,
@@ -23,7 +23,7 @@ import { ConfigStore, FeatureCollection, FlexObject } from '../../helpers/utils'
 import store from '../../store';
 import { Goal } from '../../store/ducks/goals';
 import { Jurisdiction, JurisdictionGeoJSON } from '../../store/ducks/jurisdictions';
-import { TaskGeoJSON } from '../../store/ducks/tasks';
+import { Task, TaskGeoJSON } from '../../store/ducks/tasks';
 import './gisida.css';
 
 /** handlers Interface */
@@ -82,8 +82,6 @@ interface FillLayerObj {
   visible: boolean;
 }
 
-const builtGeometriesContainer: PointLayerObj[] | LineLayerObj[] | FillLayerObj[] | FlexObject = [];
-
 /** GisidaWrapper state interface */
 interface GisidaState {
   bounds: number[];
@@ -102,6 +100,7 @@ interface GisidaProps {
   geoData: Jurisdiction | null;
   goal?: Goal[] | null;
   handlers: Handlers[];
+  structures: Task[] | null;
   minHeight?: string;
   basemapStyle?: string | Style;
 }
@@ -121,6 +120,7 @@ export const defaultGisidaProps: GisidaProps = {
   geoData: null,
   goal: null,
   handlers: [],
+  structures: null,
 };
 
 /** Wrapper component for Gisida-powered maps */
@@ -250,7 +250,36 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
 
   // Define map site-config object to init the store
   private initMap(featureCollection: FeatureCollection<TaskGeoJSON> | null) {
+    const builtGeometriesContainer: PointLayerObj[] | LineLayerObj[] | FillLayerObj[] | FlexObject = [];
     const features: TaskGeoJSON[] = (featureCollection && featureCollection.features) || [];
+
+    // deal with structures
+    const { structures } = this.props;
+    if (structures) {
+      structures.forEach((element: Task) => {
+        if (element.geojson.geometry && element.geojson.geometry.type === POLYGON) {
+          const structureLayer: FillLayerObj = {
+            ...fillLayerConfig,
+            id: `structure-${element.task_identifier}`,
+            paint: {
+              ...fillLayerConfig.paint,
+              'fill-color': structureFillColor,
+              'fill-outline-color': GREY,
+            },
+            source: {
+              ...fillLayerConfig.source,
+              data: {
+                ...fillLayerConfig.source.data,
+                data: JSON.stringify(element.geojson),
+              },
+            },
+            visible: true,
+          };
+          symbolLayers.push(structureLayer);
+        }
+      });
+    }
+
     if (some(features)) {
       const points: TaskGeoJSON[] = [];
       // handle geometries of type polygon or multipolygon
@@ -317,6 +346,7 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
         hasGeometries: false,
       });
     }
+
     const { geoData } = this.props;
     const { locations, bounds } = this.state;
     if (!locations || !geoData) {
