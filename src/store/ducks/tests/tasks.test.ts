@@ -13,6 +13,7 @@ import reducer, {
   getFCByPlanId,
   getFCByStructureId,
   getStructuresByJurisdictionId,
+  getStructuresFCByJurisdictionId,
   getTaskById,
   getTasksArray,
   getTasksByGoalId,
@@ -219,6 +220,16 @@ describe('reducers/tasks/FeatureCollectionSelectors', () => {
       type: 'FeatureCollection',
     };
     expect(getFCByJurisdictionId(store.getState(), JurisdictionId)).toEqual(expected);
+  });
+
+  it('filters tasks as structures FeatureCollection by jurisdiction', () => {
+    store.dispatch(fetchTasks(fixtures.tasks));
+    const JurisdictionId = '450fc15b-5bd2-468a-927a-49cb10d3bcac';
+    const expected: FeatureCollection<InitialTaskGeoJSON> = {
+      features: [fixtures.task1.geojson, fixtures.task2.geojson],
+      type: 'FeatureCollection',
+    };
+    expect(getStructuresFCByJurisdictionId(store.getState(), JurisdictionId)).toEqual(expected);
   });
 
   it('filters tasks as FeatureCollection by plan && jurisdiction', () => {
