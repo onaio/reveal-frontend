@@ -102,12 +102,6 @@ export interface MapConfig {
   [key: string]: FlexObject;
 }
 
-/** interface to describe map configuration objects */
-export interface MapConfigs {
-  [key: string]: FlexObject;
-  [key: number]: FlexObject;
-}
-
 /** interface to describe bound options */
 export interface FitBoundsOptions {
   padding?: number;
