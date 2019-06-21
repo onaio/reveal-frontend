@@ -141,4 +141,39 @@ describe('components/GisidaWrapper', () => {
     });
     wrapper.unmount();
   });
+
+  it('renders map component with structures', () => {
+    const props1 = {
+      currentGoal: null,
+      geoData: fixtures.jurisdictions[1],
+      goal: fixtures.goals,
+      handlers: [],
+      structures: [fixtures.coloredTasks.task1, fixtures.coloredTasks.task2],
+      tasks: fixtures.bednetTasks,
+    };
+    const props = {
+      currentGoal: fixtures.task6.goal_id,
+      geoData: fixtures.jurisdictions[1],
+      goal: fixtures.goals,
+      handlers: [],
+      structures: [fixtures.coloredTasks.task1, fixtures.coloredTasks.task2],
+      tasks: fixtures.bednetTasks,
+    };
+    const wrapper = mount(<GisidaWrapper {...props1} />);
+    /** Investigate why it won't set state inside initmap even though
+     * it goes into init map this leads to setting dorenderMap to state
+     * manually
+     */
+    wrapper.setState({ doRenderMap: true });
+    wrapper.setProps({ ...props });
+    expect(wrapper.find('MapComponent').props()).toMatchSnapshot();
+    expect(store.getState().APP).toMatchSnapshot({
+      accessToken: expect.any(String),
+      apiAccessToken: expect.any(String),
+    });
+    expect(store.getState()['map-1']).toMatchSnapshot({
+      reloadLayers: expect.any(Number),
+    });
+    wrapper.unmount();
+  });
 });
