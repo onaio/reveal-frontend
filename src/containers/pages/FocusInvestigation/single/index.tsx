@@ -24,9 +24,10 @@ import {
   FI_SINGLE_URL,
   FI_STATUS,
   FI_URL,
-  FOCUS_AREA_HEADER,
   FOCUS_AREA_INFO,
   FOCUS_INVESTIGATION,
+  HOME,
+  HOME_URL,
   IN,
   MARK_AS_COMPLETE,
   MEASURE,
@@ -138,8 +139,12 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
     ];
     theObject = transformValues(theObject, propertiesToTransform);
     const basePage = {
-      label: FOCUS_AREA_HEADER,
+      label: FOCUS_INVESTIGATION,
       url: `${FI_URL}`,
+    };
+    const homePage = {
+      label: `${HOME}`,
+      url: `${HOME_URL}`,
     };
     const breadCrumbProps: BreadCrumbItems = {
       currentPage: {
@@ -157,7 +162,7 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
         url: '',
       })
     );
-    breadCrumbProps.pages = [basePage, ...pages];
+    breadCrumbProps.pages = [homePage, basePage, ...pages];
 
     return (
       <div>

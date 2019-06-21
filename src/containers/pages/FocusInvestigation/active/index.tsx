@@ -11,7 +11,9 @@ import 'react-table/react-table.css';
 import { Table } from 'reactstrap';
 import { Store } from 'redux';
 import DrillDownTableLinkedCell from '../../../../components/DrillDownTableLinkedCell';
-import HeaderBreadCrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
+import HeaderBreadCrumb, {
+  BreadCrumbItems,
+} from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
 import { SUPERSET_PLANS_SLICE } from '../../../../configs/env';
 import { FIClassifications, locationHierarchy } from '../../../../configs/settings';
@@ -24,6 +26,9 @@ import {
   FI_SINGLE_URL,
   FI_URL,
   FOCUS_AREA_HEADER,
+  FOCUS_INVESTIGATION,
+  HOME,
+  HOME_URL,
   REASON_HEADER,
   STATUS_HEADER,
 } from '../../../../constants';
@@ -76,13 +81,19 @@ class ActiveFocusInvestigation extends React.Component<
   }
 
   public render() {
-    const breadcrumbProps = {
+    const breadcrumbProps: BreadCrumbItems = {
       currentPage: {
-        label: `${FOCUS_AREA_HEADER}`,
+        label: `${FOCUS_INVESTIGATION}`,
         url: `${FI_URL}`,
       },
       pages: [],
     };
+    const homePage = {
+      label: `${HOME}`,
+      url: `${HOME_URL}`,
+    };
+    breadcrumbProps.pages = [homePage];
+
     const { plansArray } = this.props;
     if (plansArray.length === 0) {
       return <Loading />;
