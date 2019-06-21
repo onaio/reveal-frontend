@@ -135,7 +135,7 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
       bounds: [],
       doInitMap: false,
       doRenderMap: false,
-      featureCollection: this.props.featureCollection,
+      featureCollection: this.props.featureCollection || null,
       geoData: this.props.geoData || false,
       hasGeometries: false,
       initMapWithoutFC: false,
