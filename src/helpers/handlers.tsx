@@ -1,3 +1,4 @@
+import { MAP_ID } from '../constants';
 import './handlers.css';
 import { EventData } from './mapbox';
 import { FlexObject } from './utils';
@@ -48,10 +49,13 @@ export function popupHandler(event: EventData) {
     while (Math.abs(event.lngLat.lng - coordinates[0]) > 180) {
       coordinates[0] += event.lngLat.lng > coordinates[0] ? 360 : -360;
     }
+    // to do map container_id should come from props incase we have many maps to show
+    const loadedMap =
+      window.maps[window.maps.map((d: FlexObject) => d._container.id).indexOf(MAP_ID)];
     new mapboxgl.Popup()
       .setLngLat(coordinates)
       .setHTML(description)
-      .addTo(window.maps[0]);
+      .addTo(loadedMap);
     // Change the cursor to a pointer when the mouse is over the states layer.
   }
 }
