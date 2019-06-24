@@ -13,7 +13,10 @@ import { fetchTasks } from '../../../../../../store/ducks/tasks';
 import * as fixtures from '../../../../../../store/ducks/tests/fixtures';
 import ConnectedMapSingleFI, { SingleActiveFIMap } from '../../active/';
 
-jest.mock('../../../../../../components/GisidaWrapper');
+jest.mock('../../../../../../components/GisidaWrapper', () => {
+  const GisidaWrapperMock = () => <div>I love oov</div>;
+  return GisidaWrapperMock;
+});
 jest.mock('../../../../../../configs/env');
 
 const history = createBrowserHistory();
@@ -78,7 +81,7 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
       </Router>
     );
     expect(toJson(wrapper)).toMatchSnapshot();
-    expect(wrapper.find('GisidaWrapper').props()).toMatchSnapshot();
+    expect(wrapper.find('GisidaWrapperMock').props()).toMatchSnapshot();
     wrapper.unmount();
   });
 
@@ -111,7 +114,7 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
       </Provider>
     );
     expect(toJson(wrapper)).toMatchSnapshot();
-    expect(wrapper.find('GisidaWrapper').props()).toMatchSnapshot();
+    expect(wrapper.find('GisidaWrapperMock').props()).toMatchSnapshot();
     wrapper.unmount();
   });
 });
