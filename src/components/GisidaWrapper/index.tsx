@@ -20,7 +20,7 @@ import {
   POLYGON,
 } from '../../constants';
 import { EventData } from '../../helpers/mapbox';
-import { ConfigStore,FeatureCollection, FlexObject } from '../../helpers/utils';
+import { ConfigStore, FeatureCollection, FlexObject } from '../../helpers/utils';
 import store from '../../store';
 import { Goal } from '../../store/ducks/goals';
 import { Jurisdiction, JurisdictionGeoJSON } from '../../store/ducks/jurisdictions';
@@ -170,7 +170,7 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
       this.setState(
         {
           doInitMap: true,
-          initMapWithoutFC: false, // still need to know why? here
+          initMapWithoutFC: false,
         },
         () => {
           this.getLocations(this.props.geoData);
