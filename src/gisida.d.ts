@@ -1,10 +1,15 @@
 declare module 'gisida' {
+  import { Map as mbMap } from 'mapbox-gl';
   import { ParseResult } from 'papaparse';
   import { AnyAction } from 'redux';
 
   /** interface for generic object */
   interface FlexObject {
     [key: string]: any;
+  }
+
+  export interface GisidaMap extends mbMap {
+    _container: FlexObject;
   }
 
   /** Method that returns state */

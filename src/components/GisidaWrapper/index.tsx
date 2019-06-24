@@ -1,6 +1,6 @@
 import GeojsonExtent from '@mapbox/geojson-extent';
 import reducerRegistry from '@onaio/redux-reducer-registry';
-import { Actions, ducks, loadLayers } from 'gisida';
+import { Actions, ducks, GisidaMap, loadLayers } from 'gisida';
 import { Map } from 'gisida-react';
 import { some } from 'lodash';
 import { FillPaint, LinePaint, Map as mbMap, Style, SymbolPaint } from 'mapbox-gl';
@@ -13,7 +13,6 @@ import {
   fillLayerConfig,
   lineLayerConfig,
   structureFillColor,
-  structureFillOpacity,
 } from '../../configs/settings';
 import {
   APP,
@@ -408,7 +407,22 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
       });
 
       // load visible layers to store
-      loadLayers(MAP_ID, store.dispatch, visibleLayers);
+      const styleLoadIntervalTimeout = new Date().getTime() + 10000;
+      // wait for map to finish loading, then load layers
+      const styleLoadInterval = window.setInterval(() => {
+        if (
+          window.maps &&
+          window.maps.find((e: mbMap) => (e as GisidaMap)._container.id === MAP_ID)
+        ) {
+          const map = window.maps.find((e: mbMap) => (e as GisidaMap)._container.id === MAP_ID);
+          if (map && map.isStyleLoaded) {
+            loadLayers(MAP_ID, store.dispatch, visibleLayers);
+            window.clearInterval(styleLoadInterval);
+          } else if (new Date().getTime() > styleLoadIntervalTimeout) {
+            window.clearInterval(styleLoadInterval);
+          }
+        }
+      }, 500);
 
       // handles tasks with geometries
       if (this.state.hasGeometries && Object.keys(currentState[MAP_ID].layers).length > 1) {

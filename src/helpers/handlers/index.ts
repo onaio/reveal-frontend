@@ -1,7 +1,7 @@
+import { GisidaMap } from 'gisida';
 import { LngLat, Map } from 'mapbox-gl';
 import { MAP_ID } from '../../constants';
 import { EventData } from '../mapbox';
-import { FlexObject } from '../utils';
 import './handlers.css';
 
 /** declare globals interface */
@@ -10,10 +10,6 @@ declare global {
     maps: mapboxgl.Map[];
   }
   const mapboxgl: typeof mapboxgl;
-}
-
-interface GisidaMap extends Map {
-  _container: FlexObject;
 }
 
 /** Having features as any type is not most desirable this has been qued up as part of technical debt payment */

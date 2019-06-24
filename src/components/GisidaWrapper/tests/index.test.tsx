@@ -58,9 +58,7 @@ describe('components/GisidaWrapper', () => {
       accessToken: expect.any(String),
       apiAccessToken: expect.any(String),
     });
-    expect(store.getState()['map-1']).toMatchSnapshot({
-      reloadLayers: expect.any(Number),
-    });
+    expect(store.getState()['map-1']).toMatchSnapshot();
     wrapper.unmount();
   });
 
@@ -97,9 +95,7 @@ describe('components/GisidaWrapper', () => {
       accessToken: expect.any(String),
       apiAccessToken: expect.any(String),
     });
-    expect(store.getState()['map-1']).toMatchSnapshot({
-      reloadLayers: expect.any(Number),
-    });
+    expect(store.getState()['map-1']).toMatchSnapshot();
     wrapper.unmount();
   });
 
@@ -180,9 +176,10 @@ describe('components/GisidaWrapper', () => {
         },
       },
     });
-    expect(store.getState()['map-1']).toMatchSnapshot({
-      reloadLayers: expect.any(Number),
-    });
+    // expect(store.getState()['map-1']).toMatchSnapshot({
+    //   reloadLayers: expect.any(Object),
+    // });
+    expect(store.getState()['map-1']).toMatchSnapshot();
     wrapper.unmount();
   });
 });
