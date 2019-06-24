@@ -5,7 +5,6 @@ import { findKey, uniq } from 'lodash';
 import { FitBoundsOptions, Layer, Style } from 'mapbox-gl';
 import { Column } from 'react-table';
 import SeamlessImmutable from 'seamless-immutable';
-import { Z_FILTERED } from 'zlib';
 import * as colors from '../colors';
 import { DIGITAL_GLOBE_CONNECT_ID, ONADATA_OAUTH_STATE, OPENSRP_OAUTH_STATE } from '../configs/env';
 import { locationHierarchy, LocationItem } from '../configs/settings';

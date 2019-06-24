@@ -8,7 +8,6 @@ import * as fixtures from '../../store/ducks/tests/fixtures';
 import { colorMaps } from '../structureColorMaps';
 import {
   extractPlan,
-  filterDeepPredicate,
   getColor,
   getColorByValue,
   getLocationColumns,
