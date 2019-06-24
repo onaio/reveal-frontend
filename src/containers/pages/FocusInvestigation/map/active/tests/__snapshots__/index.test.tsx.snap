@@ -595,7 +595,7 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
           <div
             className="map"
           >
-            <GisidaWrapper
+            <GisidaWrapperMock
               currentGoal={
                 Object {
                   "action_code": "Blood Screening",
@@ -777,7 +777,11 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
                   },
                 ]
               }
-            />
+            >
+              <div>
+                I love oov
+              </div>
+            </GisidaWrapperMock>
           </div>
         </div>
         <div
@@ -1526,7 +1530,7 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store 1`
               <div
                 className="map"
               >
-                <GisidaWrapper
+                <GisidaWrapperMock
                   currentGoal={null}
                   featureCollection={
                     Object {
@@ -1652,7 +1656,11 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store 1`
                       },
                     ]
                   }
-                />
+                >
+                  <div>
+                    I love oov
+                  </div>
+                </GisidaWrapperMock>
               </div>
             </div>
             <div
