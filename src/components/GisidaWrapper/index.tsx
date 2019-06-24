@@ -3,12 +3,18 @@ import reducerRegistry from '@onaio/redux-reducer-registry';
 import { Actions, ducks, loadLayers } from 'gisida';
 import { Map } from 'gisida-react';
 import { some } from 'lodash';
-import { FillPaint, LinePaint, Style, SymbolPaint } from 'mapbox-gl';
+import { FillPaint, LinePaint, Map as mbMap, Style, SymbolPaint } from 'mapbox-gl';
 import * as React from 'react';
 import { GREY } from '../../colors';
 import Loading from '../../components/page/Loading/index';
 import { GISIDA_MAPBOX_TOKEN, GISIDA_ONADATA_API_TOKEN } from '../../configs/env';
-import { circleLayerConfig, fillLayerConfig, lineLayerConfig, structureFillColor } from '../../configs/settings';
+import {
+  circleLayerConfig,
+  fillLayerConfig,
+  lineLayerConfig,
+  structureFillColor,
+  structureFillOpacity,
+} from '../../configs/settings';
 import {
   APP,
   FEATURE_COLLECTION,

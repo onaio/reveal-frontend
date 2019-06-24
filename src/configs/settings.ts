@@ -1,5 +1,13 @@
 /** This is the main configuration module */
 import { Providers } from '@onaio/gatekeeper';
+import { Expression } from 'mapbox-gl';
+import {
+  GREY,
+  STRUCTURE_COMPLETE_GREEN,
+  STRUCTURE_INCOMPLETE_RED,
+  STRUCTURE_INELIGIBLE_BLACK,
+  STRUCTURE_NOT_VISTITED_YELLOW,
+} from './../colors';
 import {
   DOMAIN_NAME,
   ENABLE_ONADATA_OAUTH,
@@ -230,3 +238,31 @@ export const circleLayerConfig = {
   type: 'circle',
   visible: false,
 };
+
+export const structureFillColor: Expression = [
+  'match',
+  ['get', 'task_business_status'],
+  ['Not Visited'],
+  STRUCTURE_NOT_VISTITED_YELLOW,
+  ['Not Sprayed', 'Incomplete', 'In Progress'],
+  STRUCTURE_INCOMPLETE_RED,
+  ['Sprayed', 'Complete'],
+  STRUCTURE_COMPLETE_GREEN,
+  ['Not Sprayable', 'Not Eligible'],
+  STRUCTURE_INELIGIBLE_BLACK,
+  GREY,
+];
+
+export const structureFillOpacity: Expression = [
+  'match',
+  ['get', 'task_business_status'],
+  ['Not Visited'],
+  0.7,
+  ['Not Sprayed', 'Incomplete', 'In Progress'],
+  0.7,
+  ['Sprayed'],
+  0.7,
+  ['Not Sprayable'],
+  1,
+  0.75,
+];

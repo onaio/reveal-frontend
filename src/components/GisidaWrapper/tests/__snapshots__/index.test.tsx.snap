@@ -1213,7 +1213,34 @@ Object {
       "legendBottom": 40,
       "loaded": true,
       "paint": Object {
-        "fill-color": "#c7c7c7",
+        "fill-color": Array [
+          "match",
+          Array [
+            "get",
+            "task_business_status",
+          ],
+          Array [
+            "Not Visited",
+          ],
+          "#f3cc49",
+          Array [
+            "Not Sprayed",
+            "Incomplete",
+            "In Progress",
+          ],
+          "#dd3f36",
+          Array [
+            "Sprayed",
+            "Complete",
+          ],
+          "#7dba3b",
+          Array [
+            "Not Sprayable",
+            "Not Eligible",
+          ],
+          "#171717",
+          "#c7c7c7",
+        ],
         "fill-opacity": 0.7,
         "fill-outline-color": "#c7c7c7",
       },
@@ -1274,7 +1301,34 @@ Object {
         "id": "structure-03458d28-af61-4f70-b110-73a3429ada2d",
         "layout": Object {},
         "paint": Object {
-          "fill-color": "#c7c7c7",
+          "fill-color": Array [
+            "match",
+            Array [
+              "get",
+              "task_business_status",
+            ],
+            Array [
+              "Not Visited",
+            ],
+            "#f3cc49",
+            Array [
+              "Not Sprayed",
+              "Incomplete",
+              "In Progress",
+            ],
+            "#dd3f36",
+            Array [
+              "Sprayed",
+              "Complete",
+            ],
+            "#7dba3b",
+            Array [
+              "Not Sprayable",
+              "Not Eligible",
+            ],
+            "#171717",
+            "#c7c7c7",
+          ],
           "fill-opacity": 0.7,
           "fill-outline-color": "#fff",
         },
@@ -1346,7 +1400,34 @@ Object {
       "legendBottom": 40,
       "loaded": true,
       "paint": Object {
-        "fill-color": "#c7c7c7",
+        "fill-color": Array [
+          "match",
+          Array [
+            "get",
+            "task_business_status",
+          ],
+          Array [
+            "Not Visited",
+          ],
+          "#f3cc49",
+          Array [
+            "Not Sprayed",
+            "Incomplete",
+            "In Progress",
+          ],
+          "#dd3f36",
+          Array [
+            "Sprayed",
+            "Complete",
+          ],
+          "#7dba3b",
+          Array [
+            "Not Sprayable",
+            "Not Eligible",
+          ],
+          "#171717",
+          "#c7c7c7",
+        ],
         "fill-opacity": 0.7,
         "fill-outline-color": "#c7c7c7",
       },
@@ -1407,7 +1488,34 @@ Object {
         "id": "structure-e652f8b2-b884-42d5-832a-86009c10a812",
         "layout": Object {},
         "paint": Object {
-          "fill-color": "#c7c7c7",
+          "fill-color": Array [
+            "match",
+            Array [
+              "get",
+              "task_business_status",
+            ],
+            Array [
+              "Not Visited",
+            ],
+            "#f3cc49",
+            Array [
+              "Not Sprayed",
+              "Incomplete",
+              "In Progress",
+            ],
+            "#dd3f36",
+            Array [
+              "Sprayed",
+              "Complete",
+            ],
+            "#7dba3b",
+            Array [
+              "Not Sprayable",
+              "Not Eligible",
+            ],
+            "#171717",
+            "#c7c7c7",
+          ],
           "fill-opacity": 0.7,
           "fill-outline-color": "#fff",
         },
