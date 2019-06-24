@@ -1,8 +1,8 @@
 import { LngLat, Map } from 'mapbox-gl';
-import { MAP_ID } from '../constants';
+import { MAP_ID } from '../../constants';
+import { EventData } from '../mapbox';
+import { FlexObject } from '../utils';
 import './handlers.css';
-import { EventData } from './mapbox';
-import { FlexObject } from './utils';
 
 /** declare globals interface */
 declare global {

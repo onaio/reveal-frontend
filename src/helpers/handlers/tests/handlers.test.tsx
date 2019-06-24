@@ -1,5 +1,5 @@
 import { Popup } from 'mapbox-gl';
-import { popupHandler } from '../handlers';
+import { popupHandler } from '../index';
 
 window.URL.createObjectURL = jest.fn();
 
