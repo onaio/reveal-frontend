@@ -1,20 +1,22 @@
-// This component represents the breadcrumbs in the header part of the web app
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 
+/** interface describing page object for use in breadcrumbs */
 interface Page {
-  url: string;
+  url?: string;
   label: string;
 }
 
-export interface BreadCrumbItems {
+/** interface for breadcrumb items */
+export interface BreadCrumbProps {
   currentPage: Page;
   pages: Page[];
 }
 
-class HeaderBreadcrumb extends React.Component<BreadCrumbItems, {}> {
-  constructor(props: BreadCrumbItems) {
+/** Configurable Breadcrumbs Component */
+class HeaderBreadcrumb extends React.Component<BreadCrumbProps, {}> {
+  constructor(props: BreadCrumbProps) {
     super(props);
   }
 
@@ -22,13 +24,18 @@ class HeaderBreadcrumb extends React.Component<BreadCrumbItems, {}> {
     const { currentPage, pages } = this.props;
 
     const linkList = pages.map((page, key) => {
-      return (
-        <BreadcrumbItem key={key}>
-          <Link to={page.url} key={key}>
+      // render breadcrumb items with urls as links or without urls as text nodes
+      let breadCrumbItem: string | JSX.Element;
+      if (page.url && page.url.trim()) {
+        breadCrumbItem = (
+          <Link to={page.url!} key={key}>
             {page.label}
           </Link>
-        </BreadcrumbItem>
-      );
+        );
+      } else {
+        breadCrumbItem = page.label;
+      }
+      return <BreadcrumbItem key={key}>{breadCrumbItem}</BreadcrumbItem>;
     });
 
     return (

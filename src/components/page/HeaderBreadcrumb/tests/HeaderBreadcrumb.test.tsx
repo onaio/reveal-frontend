@@ -47,6 +47,13 @@ describe('components/page/HeaderBreadcrumb', () => {
           label: 'Programs',
           url: '/programs',
         },
+        {
+          label: 'Provinces',
+          url: '',
+        },
+        {
+          label: 'Disctricts',
+        },
       ],
     };
     const wrapper = mount(

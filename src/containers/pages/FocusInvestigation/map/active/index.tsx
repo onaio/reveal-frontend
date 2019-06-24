@@ -5,6 +5,9 @@ import { RouteComponentProps } from 'react-router';
 import { NavLink } from 'react-router-dom';
 import { Store } from 'redux';
 import GisidaWrapper from '../../../../../components/GisidaWrapper';
+import HeaderBreadcrumb, {
+  BreadCrumbProps,
+} from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../../components/page/Loading';
 import {
   SUPERSET_GOALS_SLICE,
@@ -14,7 +17,12 @@ import {
 } from '../../../../../configs/env';
 import {
   FI_SINGLE_MAP_URL,
+  FI_SINGLE_URL,
+  FI_URL,
   FOCUS_INVESTIGATION,
+  HOME,
+  HOME_URL,
+  MAP,
   MEASURE,
   OF,
   RESPONSE,
@@ -120,12 +128,43 @@ class SingleActiveFIMap extends React.Component<
     if (!jurisdiction || !plan) {
       return <Loading />;
     }
+    const homePage = {
+      label: `${HOME}`,
+      url: `${HOME_URL}`,
+    };
+    const basePage = {
+      label: FOCUS_INVESTIGATION,
+      url: `${FI_URL}`,
+    };
+    const secondLastPage = {
+      label: plan.jurisdiction_name,
+      url: `${FI_SINGLE_URL}/${plan.id}`,
+    };
+    const breadCrumbProps: BreadCrumbProps = {
+      currentPage: {
+        label: `${MAP}`,
+        url: `${FI_SINGLE_MAP_URL}/${plan.id}`,
+      },
+      pages: [],
+    };
+    const namePaths =
+      plan.jurisdiction_name_path instanceof Array ? plan.jurisdiction_name_path : [];
+    const pages = namePaths.map(namePath =>
+      // return a page object for each name path
+      ({
+        label: namePath,
+        url: '',
+      })
+    );
+    breadCrumbProps.pages = [homePage, basePage, ...pages, secondLastPage];
+
     return (
       <div>
+        <HeaderBreadcrumb {...breadCrumbProps} />
         <h2 className="page-title mt-4 mb-4">
           {FOCUS_INVESTIGATION}: {plan && plan.jurisdiction_name ? plan.jurisdiction_name : null}
         </h2>
-        <div className="row no-gutters">
+        <div className="row no-gutters mb-5">
           <div className="col-9">
             <div className="map">
               <GisidaWrapper

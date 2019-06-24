@@ -138,6 +138,73 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
     }
   >
     <div>
+      <HeaderBreadcrumb
+        currentPage={
+          Object {
+            "label": "Focus Investigation",
+            "url": "/focus-investigation",
+          }
+        }
+        pages={
+          Array [
+            Object {
+              "label": "Home",
+              "url": "/",
+            },
+          ]
+        }
+      >
+        <div>
+          <Breadcrumb
+            aria-label="breadcrumb"
+            className="reveal-breadcrumb"
+            listTag="ol"
+            tag="nav"
+          >
+            <nav
+              aria-label="breadcrumb"
+              className="reveal-breadcrumb"
+            >
+              <ol
+                className="breadcrumb"
+              >
+                <BreadcrumbItem
+                  key="0"
+                  tag="li"
+                >
+                  <li
+                    className="breadcrumb-item"
+                  >
+                    <Link
+                      key="0"
+                      replace={false}
+                      to="/"
+                    >
+                      <a
+                        href="/"
+                        onClick={[Function]}
+                      >
+                        Home
+                      </a>
+                    </Link>
+                  </li>
+                </BreadcrumbItem>
+                <BreadcrumbItem
+                  active={true}
+                  tag="li"
+                >
+                  <li
+                    aria-current="page"
+                    className="active breadcrumb-item"
+                  >
+                    Focus Investigation
+                  </li>
+                </BreadcrumbItem>
+              </ol>
+            </nav>
+          </Breadcrumb>
+        </div>
+      </HeaderBreadcrumb>
       <h3
         className="mb-3 mt-5 page-title"
       >
@@ -2580,6 +2647,76 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
 </Router>
 `;
 
+exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigation correctly 2`] = `
+<HeaderBreadcrumb
+  currentPage={
+    Object {
+      "label": "Focus Investigation",
+      "url": "/focus-investigation",
+    }
+  }
+  pages={
+    Array [
+      Object {
+        "label": "Home",
+        "url": "/",
+      },
+    ]
+  }
+>
+  <div>
+    <Breadcrumb
+      aria-label="breadcrumb"
+      className="reveal-breadcrumb"
+      listTag="ol"
+      tag="nav"
+    >
+      <nav
+        aria-label="breadcrumb"
+        className="reveal-breadcrumb"
+      >
+        <ol
+          className="breadcrumb"
+        >
+          <BreadcrumbItem
+            key="0"
+            tag="li"
+          >
+            <li
+              className="breadcrumb-item"
+            >
+              <Link
+                key="0"
+                replace={false}
+                to="/"
+              >
+                <a
+                  href="/"
+                  onClick={[Function]}
+                >
+                  Home
+                </a>
+              </Link>
+            </li>
+          </BreadcrumbItem>
+          <BreadcrumbItem
+            active={true}
+            tag="li"
+          >
+            <li
+              aria-current="page"
+              className="active breadcrumb-item"
+            >
+              Focus Investigation
+            </li>
+          </BreadcrumbItem>
+        </ol>
+      </nav>
+    </Breadcrumb>
+  </div>
+</HeaderBreadcrumb>
+`;
+
 exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigation correctly for null jurisdictions 1`] = `
 <Router
   history={
@@ -2706,6 +2843,73 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
     }
   >
     <div>
+      <HeaderBreadcrumb
+        currentPage={
+          Object {
+            "label": "Focus Investigation",
+            "url": "/focus-investigation",
+          }
+        }
+        pages={
+          Array [
+            Object {
+              "label": "Home",
+              "url": "/",
+            },
+          ]
+        }
+      >
+        <div>
+          <Breadcrumb
+            aria-label="breadcrumb"
+            className="reveal-breadcrumb"
+            listTag="ol"
+            tag="nav"
+          >
+            <nav
+              aria-label="breadcrumb"
+              className="reveal-breadcrumb"
+            >
+              <ol
+                className="breadcrumb"
+              >
+                <BreadcrumbItem
+                  key="0"
+                  tag="li"
+                >
+                  <li
+                    className="breadcrumb-item"
+                  >
+                    <Link
+                      key="0"
+                      replace={false}
+                      to="/"
+                    >
+                      <a
+                        href="/"
+                        onClick={[Function]}
+                      >
+                        Home
+                      </a>
+                    </Link>
+                  </li>
+                </BreadcrumbItem>
+                <BreadcrumbItem
+                  active={true}
+                  tag="li"
+                >
+                  <li
+                    aria-current="page"
+                    className="active breadcrumb-item"
+                  >
+                    Focus Investigation
+                  </li>
+                </BreadcrumbItem>
+              </ol>
+            </nav>
+          </Breadcrumb>
+        </div>
+      </HeaderBreadcrumb>
       <h3
         className="mb-3 mt-5 page-title"
       >

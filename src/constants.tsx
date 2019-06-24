@@ -1,4 +1,6 @@
 // strings
+export const MAP = 'map';
+export type MAP = typeof MAP;
 export const LOCATION = 'Location';
 export type LOCATION = typeof LOCATION;
 export const PROVINCE = 'Province';

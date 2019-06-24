@@ -428,9 +428,181 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
         supersetService={[Function]}
       >
         <div>
+          <HeaderBreadcrumb
+            currentPage={
+              Object {
+                "label": "NVI_439",
+                "url": "/focus-investigation/view/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
+              }
+            }
+            pages={
+              Array [
+                Object {
+                  "label": "Home",
+                  "url": "/",
+                },
+                Object {
+                  "label": "Focus Investigation",
+                  "url": "/focus-investigation",
+                },
+                Object {
+                  "label": "Chadiza",
+                  "url": "",
+                },
+                Object {
+                  "label": "Naviluli",
+                  "url": "",
+                },
+              ]
+            }
+          >
+            <div>
+              <Breadcrumb
+                aria-label="breadcrumb"
+                className="reveal-breadcrumb"
+                listTag="ol"
+                tag="nav"
+              >
+                <nav
+                  aria-label="breadcrumb"
+                  className="reveal-breadcrumb"
+                >
+                  <ol
+                    className="breadcrumb"
+                  >
+                    <BreadcrumbItem
+                      key="0"
+                      tag="li"
+                    >
+                      <li
+                        className="breadcrumb-item"
+                      >
+                        <Link
+                          key="0"
+                          replace={false}
+                          to="/"
+                        >
+                          <a
+                            href="/"
+                            onClick={[Function]}
+                          >
+                            Home
+                          </a>
+                        </Link>
+                      </li>
+                    </BreadcrumbItem>
+                    <BreadcrumbItem
+                      key="1"
+                      tag="li"
+                    >
+                      <li
+                        className="breadcrumb-item"
+                      >
+                        <Link
+                          key="1"
+                          replace={false}
+                          to="/focus-investigation"
+                        >
+                          <a
+                            href="/focus-investigation"
+                            onClick={[Function]}
+                          >
+                            Focus Investigation
+                          </a>
+                        </Link>
+                      </li>
+                    </BreadcrumbItem>
+                    <BreadcrumbItem
+                      key="2"
+                      tag="li"
+                    >
+                      <li
+                        className="breadcrumb-item"
+                      >
+                        Chadiza
+                      </li>
+                    </BreadcrumbItem>
+                    <BreadcrumbItem
+                      key="3"
+                      tag="li"
+                    >
+                      <li
+                        className="breadcrumb-item"
+                      >
+                        Naviluli
+                      </li>
+                    </BreadcrumbItem>
+                    <BreadcrumbItem
+                      active={true}
+                      tag="li"
+                    >
+                      <li
+                        aria-current="page"
+                        className="active breadcrumb-item"
+                      >
+                        NVI_439
+                      </li>
+                    </BreadcrumbItem>
+                  </ol>
+                </nav>
+              </Breadcrumb>
+            </div>
+          </HeaderBreadcrumb>
           <h2
             className="page-title mt-4 mb-5"
           >
+            <Link
+              replace={false}
+              to="/focus-investigation/map/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
+            >
+              <a
+                href="/focus-investigation/map/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
+                onClick={[Function]}
+              >
+                <FontAwesomeIcon
+                  border={false}
+                  className=""
+                  fixedWidth={false}
+                  flip={null}
+                  icon={
+                    Array [
+                      "fas",
+                      "map",
+                    ]
+                  }
+                  inverse={false}
+                  listItem={false}
+                  mask={null}
+                  pull={null}
+                  pulse={false}
+                  rotation={null}
+                  size={null}
+                  spin={false}
+                  symbol={false}
+                  title=""
+                  transform={null}
+                >
+                  <svg
+                    aria-hidden="true"
+                    className="svg-inline--fa fa-map fa-w-18 "
+                    data-icon="map"
+                    data-prefix="fas"
+                    focusable="false"
+                    role="img"
+                    style={Object {}}
+                    viewBox="0 0 576 512"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M0 117.66v346.32c0 11.32 11.43 19.06 21.94 14.86L160 416V32L20.12 87.95A32.006 32.006 0 0 0 0 117.66zM192 416l192 64V96L192 32v384zM554.06 33.16L416 96v384l139.88-55.95A31.996 31.996 0 0 0 576 394.34V48.02c0-11.32-11.43-19.06-21.94-14.86z"
+                      fill="currentColor"
+                      style={Object {}}
+                    />
+                  </svg>
+                </FontAwesomeIcon>
+              </a>
+            </Link>
+              
             Focus Investigation
              
             in
@@ -651,6 +823,7 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
                       className="mb-4 mt-1"
                     >
                       Active Investigation
+                      : 
                     </h5>
                     <dl
                       className="row mt-3"
@@ -1267,9 +1440,181 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
     }
   >
     <div>
+      <HeaderBreadcrumb
+        currentPage={
+          Object {
+            "label": "NVI_439",
+            "url": "/focus-investigation/view/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
+          }
+        }
+        pages={
+          Array [
+            Object {
+              "label": "Home",
+              "url": "/",
+            },
+            Object {
+              "label": "Focus Investigation",
+              "url": "/focus-investigation",
+            },
+            Object {
+              "label": "Chadiza",
+              "url": "",
+            },
+            Object {
+              "label": "Naviluli",
+              "url": "",
+            },
+          ]
+        }
+      >
+        <div>
+          <Breadcrumb
+            aria-label="breadcrumb"
+            className="reveal-breadcrumb"
+            listTag="ol"
+            tag="nav"
+          >
+            <nav
+              aria-label="breadcrumb"
+              className="reveal-breadcrumb"
+            >
+              <ol
+                className="breadcrumb"
+              >
+                <BreadcrumbItem
+                  key="0"
+                  tag="li"
+                >
+                  <li
+                    className="breadcrumb-item"
+                  >
+                    <Link
+                      key="0"
+                      replace={false}
+                      to="/"
+                    >
+                      <a
+                        href="/"
+                        onClick={[Function]}
+                      >
+                        Home
+                      </a>
+                    </Link>
+                  </li>
+                </BreadcrumbItem>
+                <BreadcrumbItem
+                  key="1"
+                  tag="li"
+                >
+                  <li
+                    className="breadcrumb-item"
+                  >
+                    <Link
+                      key="1"
+                      replace={false}
+                      to="/focus-investigation"
+                    >
+                      <a
+                        href="/focus-investigation"
+                        onClick={[Function]}
+                      >
+                        Focus Investigation
+                      </a>
+                    </Link>
+                  </li>
+                </BreadcrumbItem>
+                <BreadcrumbItem
+                  key="2"
+                  tag="li"
+                >
+                  <li
+                    className="breadcrumb-item"
+                  >
+                    Chadiza
+                  </li>
+                </BreadcrumbItem>
+                <BreadcrumbItem
+                  key="3"
+                  tag="li"
+                >
+                  <li
+                    className="breadcrumb-item"
+                  >
+                    Naviluli
+                  </li>
+                </BreadcrumbItem>
+                <BreadcrumbItem
+                  active={true}
+                  tag="li"
+                >
+                  <li
+                    aria-current="page"
+                    className="active breadcrumb-item"
+                  >
+                    NVI_439
+                  </li>
+                </BreadcrumbItem>
+              </ol>
+            </nav>
+          </Breadcrumb>
+        </div>
+      </HeaderBreadcrumb>
       <h2
         className="page-title mt-4 mb-5"
       >
+        <Link
+          replace={false}
+          to="/focus-investigation/map/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
+        >
+          <a
+            href="/focus-investigation/map/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
+            onClick={[Function]}
+          >
+            <FontAwesomeIcon
+              border={false}
+              className=""
+              fixedWidth={false}
+              flip={null}
+              icon={
+                Array [
+                  "fas",
+                  "map",
+                ]
+              }
+              inverse={false}
+              listItem={false}
+              mask={null}
+              pull={null}
+              pulse={false}
+              rotation={null}
+              size={null}
+              spin={false}
+              symbol={false}
+              title=""
+              transform={null}
+            >
+              <svg
+                aria-hidden="true"
+                className="svg-inline--fa fa-map fa-w-18 "
+                data-icon="map"
+                data-prefix="fas"
+                focusable="false"
+                role="img"
+                style={Object {}}
+                viewBox="0 0 576 512"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 117.66v346.32c0 11.32 11.43 19.06 21.94 14.86L160 416V32L20.12 87.95A32.006 32.006 0 0 0 0 117.66zM192 416l192 64V96L192 32v384zM554.06 33.16L416 96v384l139.88-55.95A31.996 31.996 0 0 0 576 394.34V48.02c0-11.32-11.43-19.06-21.94-14.86z"
+                  fill="currentColor"
+                  style={Object {}}
+                />
+              </svg>
+            </FontAwesomeIcon>
+          </a>
+        </Link>
+          
         Focus Investigation
          
         in
@@ -1490,6 +1835,7 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
                   className="mb-4 mt-1"
                 >
                   Active Investigation
+                  : 
                 </h5>
                 <dl
                   className="row mt-3"

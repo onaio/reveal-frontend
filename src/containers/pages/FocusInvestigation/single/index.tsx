@@ -1,11 +1,16 @@
 // this is the FocusInvestigation "active" page component
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
+import { Link } from 'react-router-dom';
 import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
 import GisidaWrapper from '../../../../components/GisidaWrapper';
+import HeaderBreadcrumbs, {
+  BreadCrumbProps,
+} from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
 import {
   SUPERSET_GOALS_SLICE,
@@ -18,9 +23,14 @@ import {
   COMPLETE,
   DISTRICT,
   FI_REASON,
+  FI_SINGLE_MAP_URL,
+  FI_SINGLE_URL,
   FI_STATUS,
+  FI_URL,
   FOCUS_AREA_INFO,
   FOCUS_INVESTIGATION,
+  HOME,
+  HOME_URL,
   IN,
   MARK_AS_COMPLETE,
   MEASURE,
@@ -131,10 +141,42 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
       'focusArea',
     ];
     theObject = transformValues(theObject, propertiesToTransform);
+    const basePage = {
+      label: FOCUS_INVESTIGATION,
+      url: `${FI_URL}`,
+    };
+    const homePage = {
+      label: `${HOME}`,
+      url: `${HOME_URL}`,
+    };
+    const breadCrumbProps: BreadCrumbProps = {
+      currentPage: {
+        label: theObject.focusArea,
+        url: `${FI_SINGLE_URL}/${planById.id}`,
+      },
+      pages: [],
+    };
+    const namePaths =
+      planById.jurisdiction_name_path instanceof Array ? planById.jurisdiction_name_path : [];
+    const pages = namePaths.map(namePath =>
+      // return a page object for each name path
+      ({
+        label: namePath,
+        url: '',
+      })
+    );
+    breadCrumbProps.pages = [homePage, basePage, ...pages];
+
     return (
       <div>
+        <HeaderBreadcrumbs {...breadCrumbProps} />
         <h2 className="page-title mt-4 mb-5">
-          {FOCUS_INVESTIGATION} {IN} {theObject.focusArea}
+          {theObject.jurisdiction_id && (
+            <Link to={`${FI_SINGLE_MAP_URL}/${theObject.id}`}>
+              <FontAwesomeIcon icon={['fas', 'map']} />
+            </Link>
+          )}
+          &nbsp;&nbsp;{FOCUS_INVESTIGATION} {IN} {theObject.focusArea}
         </h2>
         <Row>
           <Col className="col-6">
@@ -158,7 +200,9 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
           </Col>
           <Col className="col-6">
             <div className="fi-active">
-              <h5 className="mb-4 mt-1">{ACTIVE_INVESTIGATION}</h5>
+              <h5 className="mb-4 mt-1">
+                {ACTIVE_INVESTIGATION}: {theObject.caseNotificationDate}
+              </h5>
               <dl className="row mt-3">
                 <dt className="col-5">{COMPLETE}</dt>
                 <dd className="col-7">{NO}</dd>
