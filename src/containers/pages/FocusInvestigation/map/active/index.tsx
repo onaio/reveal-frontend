@@ -164,7 +164,7 @@ class SingleActiveFIMap extends React.Component<
         <h2 className="page-title mt-4 mb-4">
           {FOCUS_INVESTIGATION}: {plan && plan.jurisdiction_name ? plan.jurisdiction_name : null}
         </h2>
-        <div className="row no-gutters">
+        <div className="row no-gutters mb-5">
           <div className="col-9">
             <div className="map">
               <GisidaWrapper
