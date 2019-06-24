@@ -10,7 +10,6 @@ import { GISIDA_MAPBOX_TOKEN, GISIDA_ONADATA_API_TOKEN } from '../../configs/env
 import { circleLayerConfig, fillLayerConfig, lineLayerConfig } from '../../configs/settings';
 import {
   APP,
-  FEATURE,
   FEATURE_COLLECTION,
   MAIN_PLAN,
   MAP_ID,
@@ -199,7 +198,7 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
      */
     if ((!some(features) && !this.state.initMapWithoutFC) || !some(features)) {
       this.setState({ doInitMap: true, initMapWithoutFC: true }, () => {
-        //     // Dirty work around! Arbitrary delay to allow style load before adding layers
+        // Dirty work around! Arbitrary delay to allow style load before adding layers
         setTimeout(() => {
           this.initMap(null);
         }, 3000);
@@ -289,20 +288,8 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
 
       if (points.length > 0) {
         // build a feature collection for points
-        let featureColl = {};
-        featureColl = {
-          features: points.map((point: TaskGeoJSON) => {
-            const propsObj = {
-              ...(point && point.properties),
-            };
-            return {
-              geometry: {
-                ...point.geometry,
-              },
-              properties: propsObj,
-              type: FEATURE,
-            };
-          }),
+        const pointsFeatureCollection = {
+          features: points,
           type: FEATURE_COLLECTION,
         };
         symbolLayers.push({
@@ -316,7 +303,7 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
             ...circleLayerConfig.source,
             data: {
               ...circleLayerConfig.source.data,
-              data: JSON.stringify(featureColl),
+              data: JSON.stringify(pointsFeatureCollection),
             },
           },
         });

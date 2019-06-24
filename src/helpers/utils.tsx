@@ -12,6 +12,7 @@ import {
   BEDNET_DISTRIBUTION_CODE,
   BLOOD_SCREENING_CODE,
   CASE_CONFIRMATION_CODE,
+  FEATURE_COLLECTION,
   IRS_CODE,
   LARVAL_DIPPING_CODE,
   MOSQUITO_COLLECTION_CODE,
@@ -342,7 +343,7 @@ export type UpdateType<T extends any, Y> = T & Y;
 
 /** Interface for FeatureCollection */
 export interface FeatureCollection<T> {
-  type: 'FeatureCollection';
+  type: FEATURE_COLLECTION;
   features: T[];
 }
 
@@ -354,6 +355,6 @@ export interface FeatureCollection<T> {
 export function wrapFeatureCollection<T>(objFeatureCollection: T[]): FeatureCollection<T> {
   return {
     features: objFeatureCollection,
-    type: 'FeatureCollection',
+    type: FEATURE_COLLECTION,
   };
 }
