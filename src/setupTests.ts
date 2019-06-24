@@ -8,3 +8,15 @@ import Adapter from 'enzyme-adapter-react-16';
 enzyme.configure({ adapter: new Adapter() });
 library.add(faMap);
 library.add(faUser);
+
+window.maps = [
+  {
+    _container: {
+      id: 'map-1',
+    },
+  } as any,
+];
+
+(window.URL as any) = {
+  createObjectURL: () => 'https://example.com',
+};

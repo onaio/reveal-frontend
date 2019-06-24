@@ -80,7 +80,10 @@
     ]
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": "react-app",
+    "globals": {
+      "mapboxgl": true
+    }
   },
   "browserslist": [
     ">0.2%",
