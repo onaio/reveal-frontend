@@ -13,7 +13,7 @@ export interface BreadCrumbItems {
   pages: Page[];
 }
 
-/** Create Breadcrumps Component */
+/** Configurable Breadcrumbs Component */
 class HeaderBreadcrumb extends React.Component<BreadCrumbItems, {}> {
   constructor(props: BreadCrumbItems) {
     super(props);
