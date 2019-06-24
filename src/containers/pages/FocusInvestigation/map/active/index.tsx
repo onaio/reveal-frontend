@@ -176,9 +176,6 @@ class SingleActiveFIMap extends React.Component<
   private buildHandlers() {
     const handlers = [
       {
-        /**
-         * @param { mapboxgl.EventData} synthetic event a wrapper event around native events
-         */
         method: popupHandler,
         name: 'pointClick',
         type: 'click',
