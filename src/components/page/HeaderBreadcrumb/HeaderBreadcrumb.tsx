@@ -3,6 +3,7 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 
+/** interface describing page object for use in breadcrumbs */
 interface Page {
   url?: string;
   label: string;
