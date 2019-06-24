@@ -9,14 +9,14 @@ interface Page {
 }
 
 /** interface for breadcrumb items */
-export interface BreadCrumbItems {
+export interface BreadCrumbProps {
   currentPage: Page;
   pages: Page[];
 }
 
 /** Configurable Breadcrumbs Component */
-class HeaderBreadcrumb extends React.Component<BreadCrumbItems, {}> {
-  constructor(props: BreadCrumbItems) {
+class HeaderBreadcrumb extends React.Component<BreadCrumbProps, {}> {
+  constructor(props: BreadCrumbProps) {
     super(props);
   }
 
