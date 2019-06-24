@@ -1,4 +1,3 @@
-// This component represents the breadcrumbs in the header part of the web app
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
@@ -9,6 +8,7 @@ interface Page {
   label: string;
 }
 
+/** interface for breadcrumb items */
 export interface BreadCrumbItems {
   currentPage: Page;
   pages: Page[];
