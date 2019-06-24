@@ -434,6 +434,151 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
     }
   >
     <div>
+      <HeaderBreadcrumb
+        currentPage={
+          Object {
+            "label": "map",
+            "url": "/focus-investigation/map/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
+          }
+        }
+        pages={
+          Array [
+            Object {
+              "label": "Home",
+              "url": "/",
+            },
+            Object {
+              "label": "Focus Investigation",
+              "url": "/focus-investigation",
+            },
+            Object {
+              "label": "Chadiza",
+              "url": "",
+            },
+            Object {
+              "label": "Naviluli",
+              "url": "",
+            },
+            Object {
+              "label": "NVI_439",
+              "url": "/focus-investigation/view/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
+            },
+          ]
+        }
+      >
+        <div>
+          <Breadcrumb
+            aria-label="breadcrumb"
+            className="reveal-breadcrumb"
+            listTag="ol"
+            tag="nav"
+          >
+            <nav
+              aria-label="breadcrumb"
+              className="reveal-breadcrumb"
+            >
+              <ol
+                className="breadcrumb"
+              >
+                <BreadcrumbItem
+                  key="0"
+                  tag="li"
+                >
+                  <li
+                    className="breadcrumb-item"
+                  >
+                    <Link
+                      key="0"
+                      replace={false}
+                      to="/"
+                    >
+                      <a
+                        href="/"
+                        onClick={[Function]}
+                      >
+                        Home
+                      </a>
+                    </Link>
+                  </li>
+                </BreadcrumbItem>
+                <BreadcrumbItem
+                  key="1"
+                  tag="li"
+                >
+                  <li
+                    className="breadcrumb-item"
+                  >
+                    <Link
+                      key="1"
+                      replace={false}
+                      to="/focus-investigation"
+                    >
+                      <a
+                        href="/focus-investigation"
+                        onClick={[Function]}
+                      >
+                        Focus Investigation
+                      </a>
+                    </Link>
+                  </li>
+                </BreadcrumbItem>
+                <BreadcrumbItem
+                  key="2"
+                  tag="li"
+                >
+                  <li
+                    className="breadcrumb-item"
+                  >
+                    Chadiza
+                  </li>
+                </BreadcrumbItem>
+                <BreadcrumbItem
+                  key="3"
+                  tag="li"
+                >
+                  <li
+                    className="breadcrumb-item"
+                  >
+                    Naviluli
+                  </li>
+                </BreadcrumbItem>
+                <BreadcrumbItem
+                  key="4"
+                  tag="li"
+                >
+                  <li
+                    className="breadcrumb-item"
+                  >
+                    <Link
+                      key="4"
+                      replace={false}
+                      to="/focus-investigation/view/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
+                    >
+                      <a
+                        href="/focus-investigation/view/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
+                        onClick={[Function]}
+                      >
+                        NVI_439
+                      </a>
+                    </Link>
+                  </li>
+                </BreadcrumbItem>
+                <BreadcrumbItem
+                  active={true}
+                  tag="li"
+                >
+                  <li
+                    aria-current="page"
+                    className="active breadcrumb-item"
+                  >
+                    map
+                  </li>
+                </BreadcrumbItem>
+              </ol>
+            </nav>
+          </Breadcrumb>
+        </div>
+      </HeaderBreadcrumb>
       <h2
         className="page-title mt-4 mb-4"
       >
@@ -442,7 +587,7 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
         NVI_439
       </h2>
       <div
-        className="row no-gutters"
+        className="row no-gutters mb-5"
       >
         <div
           className="col-9"
@@ -627,7 +772,7 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
                 Array [
                   Object {
                     "method": [Function],
-                    "name": "drillDownClick",
+                    "name": "pointClick",
                     "type": "click",
                   },
                 ]
@@ -891,7 +1036,7 @@ Object {
   "handlers": Array [
     Object {
       "method": [Function],
-      "name": "drillDownClick",
+      "name": "pointClick",
       "type": "click",
     },
   ],
@@ -1220,6 +1365,151 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store 1`
         tasks={null}
       >
         <div>
+          <HeaderBreadcrumb
+            currentPage={
+              Object {
+                "label": "map",
+                "url": "/focus-investigation/map/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
+              }
+            }
+            pages={
+              Array [
+                Object {
+                  "label": "Home",
+                  "url": "/",
+                },
+                Object {
+                  "label": "Focus Investigation",
+                  "url": "/focus-investigation",
+                },
+                Object {
+                  "label": "Chadiza",
+                  "url": "",
+                },
+                Object {
+                  "label": "Naviluli",
+                  "url": "",
+                },
+                Object {
+                  "label": "NVI_439",
+                  "url": "/focus-investigation/view/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
+                },
+              ]
+            }
+          >
+            <div>
+              <Breadcrumb
+                aria-label="breadcrumb"
+                className="reveal-breadcrumb"
+                listTag="ol"
+                tag="nav"
+              >
+                <nav
+                  aria-label="breadcrumb"
+                  className="reveal-breadcrumb"
+                >
+                  <ol
+                    className="breadcrumb"
+                  >
+                    <BreadcrumbItem
+                      key="0"
+                      tag="li"
+                    >
+                      <li
+                        className="breadcrumb-item"
+                      >
+                        <Link
+                          key="0"
+                          replace={false}
+                          to="/"
+                        >
+                          <a
+                            href="/"
+                            onClick={[Function]}
+                          >
+                            Home
+                          </a>
+                        </Link>
+                      </li>
+                    </BreadcrumbItem>
+                    <BreadcrumbItem
+                      key="1"
+                      tag="li"
+                    >
+                      <li
+                        className="breadcrumb-item"
+                      >
+                        <Link
+                          key="1"
+                          replace={false}
+                          to="/focus-investigation"
+                        >
+                          <a
+                            href="/focus-investigation"
+                            onClick={[Function]}
+                          >
+                            Focus Investigation
+                          </a>
+                        </Link>
+                      </li>
+                    </BreadcrumbItem>
+                    <BreadcrumbItem
+                      key="2"
+                      tag="li"
+                    >
+                      <li
+                        className="breadcrumb-item"
+                      >
+                        Chadiza
+                      </li>
+                    </BreadcrumbItem>
+                    <BreadcrumbItem
+                      key="3"
+                      tag="li"
+                    >
+                      <li
+                        className="breadcrumb-item"
+                      >
+                        Naviluli
+                      </li>
+                    </BreadcrumbItem>
+                    <BreadcrumbItem
+                      key="4"
+                      tag="li"
+                    >
+                      <li
+                        className="breadcrumb-item"
+                      >
+                        <Link
+                          key="4"
+                          replace={false}
+                          to="/focus-investigation/view/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
+                        >
+                          <a
+                            href="/focus-investigation/view/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
+                            onClick={[Function]}
+                          >
+                            NVI_439
+                          </a>
+                        </Link>
+                      </li>
+                    </BreadcrumbItem>
+                    <BreadcrumbItem
+                      active={true}
+                      tag="li"
+                    >
+                      <li
+                        aria-current="page"
+                        className="active breadcrumb-item"
+                      >
+                        map
+                      </li>
+                    </BreadcrumbItem>
+                  </ol>
+                </nav>
+              </Breadcrumb>
+            </div>
+          </HeaderBreadcrumb>
           <h2
             className="page-title mt-4 mb-4"
           >
@@ -1228,7 +1518,7 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store 1`
             NVI_439
           </h2>
           <div
-            className="row no-gutters"
+            className="row no-gutters mb-5"
           >
             <div
               className="col-9"
@@ -1357,7 +1647,7 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store 1`
                     Array [
                       Object {
                         "method": [Function],
-                        "name": "drillDownClick",
+                        "name": "pointClick",
                         "type": "click",
                       },
                     ]
@@ -1502,7 +1792,7 @@ Object {
   "handlers": Array [
     Object {
       "method": [Function],
-      "name": "drillDownClick",
+      "name": "pointClick",
       "type": "click",
     },
   ],
