@@ -9,7 +9,7 @@ import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
 import GisidaWrapper from '../../../../components/GisidaWrapper';
 import HeaderBreadcrumbs, {
-  BreadCrumbItems,
+  BreadCrumbProps,
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
 import {
@@ -149,7 +149,7 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
       label: `${HOME}`,
       url: `${HOME_URL}`,
     };
-    const breadCrumbProps: BreadCrumbItems = {
+    const breadCrumbProps: BreadCrumbProps = {
       currentPage: {
         label: theObject.focusArea,
         url: `${FI_SINGLE_URL}/${planById.id}`,

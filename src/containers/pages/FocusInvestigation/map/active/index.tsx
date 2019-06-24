@@ -6,7 +6,7 @@ import { NavLink } from 'react-router-dom';
 import { Store } from 'redux';
 import GisidaWrapper from '../../../../../components/GisidaWrapper';
 import HeaderBreadcrumb, {
-  BreadCrumbItems,
+  BreadCrumbProps,
 } from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../../components/page/Loading';
 import {
@@ -140,7 +140,7 @@ class SingleActiveFIMap extends React.Component<
       label: plan.jurisdiction_name,
       url: `${FI_SINGLE_URL}/${plan.id}`,
     };
-    const breadCrumbProps: BreadCrumbItems = {
+    const breadCrumbProps: BreadCrumbProps = {
       currentPage: {
         label: `${MAP}`,
         url: `${FI_SINGLE_MAP_URL}/${plan.id}`,

@@ -12,7 +12,7 @@ import { Table } from 'reactstrap';
 import { Store } from 'redux';
 import DrillDownTableLinkedCell from '../../../../components/DrillDownTableLinkedCell';
 import HeaderBreadCrumb, {
-  BreadCrumbItems,
+  BreadCrumbProps,
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
 import { SUPERSET_PLANS_SLICE } from '../../../../configs/env';
@@ -81,7 +81,7 @@ class ActiveFocusInvestigation extends React.Component<
   }
 
   public render() {
-    const breadcrumbProps: BreadCrumbItems = {
+    const breadcrumbProps: BreadCrumbProps = {
       currentPage: {
         label: `${FOCUS_INVESTIGATION}`,
         url: `${FI_URL}`,
