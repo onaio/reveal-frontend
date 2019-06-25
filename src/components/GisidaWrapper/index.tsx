@@ -2,6 +2,7 @@ import GeojsonExtent from '@mapbox/geojson-extent';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import { Actions, ducks, loadLayers } from 'gisida';
 import { Map } from 'gisida-react';
+import { some } from 'lodash';
 import { FillPaint, LinePaint, Style, SymbolPaint } from 'mapbox-gl';
 import * as React from 'react';
 import Loading from '../../components/page/Loading/index';
@@ -9,7 +10,6 @@ import { GISIDA_MAPBOX_TOKEN, GISIDA_ONADATA_API_TOKEN } from '../../configs/env
 import { circleLayerConfig, fillLayerConfig, lineLayerConfig } from '../../configs/settings';
 import {
   APP,
-  FEATURE,
   FEATURE_COLLECTION,
   MAIN_PLAN,
   MAP_ID,
@@ -19,11 +19,11 @@ import {
   POLYGON,
 } from '../../constants';
 import { EventData } from '../../helpers/mapbox';
-import { ConfigStore, FlexObject } from '../../helpers/utils';
+import { ConfigStore, FeatureCollection, FlexObject } from '../../helpers/utils';
 import store from '../../store';
 import { Goal } from '../../store/ducks/goals';
 import { Jurisdiction, JurisdictionGeoJSON } from '../../store/ducks/jurisdictions';
-import { Task } from '../../store/ducks/tasks';
+import { TaskGeoJSON } from '../../store/ducks/tasks';
 import './gisida.css';
 
 /** handlers Interface */
@@ -92,17 +92,17 @@ interface GisidaState {
   doRenderMap: boolean;
   geoData: Jurisdiction | false;
   hasGeometries: boolean | false;
-  tasks: Task[] | null;
-  initMapWithoutTasks: boolean | false;
-  renderTasks: boolean | false;
+  renderFeatures: boolean | false;
+  featureCollection: FeatureCollection<TaskGeoJSON> | null;
+  initMapWithoutFC: boolean | false;
 }
 /** GisidaWrapper Props Interface */
 interface GisidaProps {
   currentGoal?: string | null;
+  featureCollection: FeatureCollection<TaskGeoJSON> | null;
   geoData: Jurisdiction | null;
   goal?: Goal[] | null;
   handlers: Handlers[];
-  tasks: Task[] | null;
   minHeight?: string;
   basemapStyle?: string | Style;
 }
@@ -118,10 +118,10 @@ const LayerStore = (layer: FlexObject) => {
 /** default props for ActiveFI Map component */
 export const defaultGisidaProps: GisidaProps = {
   currentGoal: null,
+  featureCollection: null,
   geoData: null,
   goal: null,
   handlers: [],
-  tasks: null,
 };
 
 /** Wrapper component for Gisida-powered maps */
@@ -134,12 +134,12 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
       bounds: [],
       doInitMap: false,
       doRenderMap: false,
+      featureCollection: this.props.featureCollection || null,
       geoData: this.props.geoData || false,
       hasGeometries: false,
-      initMapWithoutTasks: false,
+      initMapWithoutFC: false,
       locations: false,
-      renderTasks: false,
-      tasks: this.props.tasks || null,
+      renderFeatures: false,
     };
 
     if (!initialState.APP && ducks.APP) {
@@ -151,9 +151,15 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
   }
 
   public componentWillMount() {
-    if (!this.props.tasks) {
+    const features: TaskGeoJSON[] =
+      (this.props.featureCollection && this.props.featureCollection.features) || [];
+    /** Init map without features if no features were proped in,
+     * features.some will return true if features array has atleast one
+     * object that evaluates to true
+     */
+    if (!some(features)) {
       this.setState({
-        initMapWithoutTasks: true,
+        initMapWithoutFC: true,
       });
     }
   }
@@ -163,7 +169,7 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
       this.setState(
         {
           doInitMap: true,
-          initMapWithoutTasks: false,
+          initMapWithoutFC: false,
         },
         () => {
           this.getLocations(this.props.geoData);
@@ -185,12 +191,13 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
         }
       );
     }
-
-    if (
-      (!(nextProps.tasks && nextProps.tasks.length) && !this.state.initMapWithoutTasks) ||
-      nextProps.tasks === null
-    ) {
-      this.setState({ doInitMap: true, initMapWithoutTasks: true }, () => {
+    const features: TaskGeoJSON[] =
+      (nextProps.featureCollection && nextProps.featureCollection.features) || [];
+    /** If there are no features and init map without features is false
+     * or when there are just no features
+     */
+    if ((!some(features) && !this.state.initMapWithoutFC) || !some(features)) {
+      this.setState({ doInitMap: true, initMapWithoutFC: true }, () => {
         // Dirty work around! Arbitrary delay to allow style load before adding layers
         setTimeout(() => {
           this.initMap(null);
@@ -199,16 +206,22 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
     }
   }
 
-  public componentWillUpdate(nextProps: GisidaProps) {
+  public componentWillUpdate(nextProps: FlexObject) {
+    const features: TaskGeoJSON[] =
+      (nextProps.featureCollection && nextProps.featureCollection.features) || [];
+    /** condition1: features are present, some features were passed in
+     * condition2: currentGoal changed and either of locations or doInitMap is truthy
+     * condition3: currentGoal changed to undefined
+     * if condition1 and condition2 or condition3 execute
+     */
     if (
-      (nextProps.tasks &&
-        nextProps.tasks.length &&
+      (some(features) &&
         (nextProps.currentGoal !== this.props.currentGoal &&
           (this.state.locations || this.state.doInitMap))) ||
-      typeof nextProps.currentGoal === 'undefined'
+      nextProps.currentGoal === 'undefined'
     ) {
-      this.setState({ doInitMap: false, initMapWithoutTasks: false }, () => {
-        this.initMap(nextProps.tasks);
+      this.setState({ doInitMap: false, initMapWithoutFC: false }, () => {
+        this.initMap(nextProps.featureCollection);
       });
     }
   }
@@ -238,23 +251,20 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
   }
 
   // Define map site-config object to init the store
-  private initMap(tasks: Task[] | null) {
-    // filter out tasks with null geoms
-    tasks = tasks && tasks.filter((task: Task) => task.geojson.geometry !== null);
-    if (tasks && tasks.length > 0) {
-      const points: Task[] = [];
+  private initMap(featureCollection: FeatureCollection<TaskGeoJSON> | null) {
+    const features: TaskGeoJSON[] = (featureCollection && featureCollection.features) || [];
+    if (some(features)) {
+      const points: TaskGeoJSON[] = [];
       // handle geometries of type polygon or multipolygon
-      tasks.forEach((element: Task) => {
+      features.forEach((feature: TaskGeoJSON) => {
         if (
-          (element.geojson.geometry && element.geojson.geometry.type === POLYGON) ||
-          (element.geojson &&
-            element.geojson.geometry &&
-            element.geojson.geometry.type === MULTI_POLYGON)
+          (feature.geometry && feature.geometry.type === POLYGON) ||
+          (feature && feature.geometry && feature.geometry.type === MULTI_POLYGON)
         ) {
           let fillLayer: FillLayerObj | null = null;
           fillLayer = {
             ...fillLayerConfig,
-            id: `${element.goal_id}-${element.task_identifier}`,
+            id: `${feature.properties.goal_id}-${feature.id}`,
             paint: {
               ...fillLayerConfig.paint,
               'fill-color': ['get', 'color'],
@@ -264,34 +274,22 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
               ...fillLayerConfig.source,
               data: {
                 ...fillLayerConfig.source.data,
-                data: JSON.stringify(element.geojson),
+                data: JSON.stringify(feature),
               },
             },
           };
           symbolLayers.push(fillLayer);
         }
-        if (element.geojson.geometry && element.geojson.geometry.type === POINT) {
+        if (feature.geometry && feature.geometry.type === POINT) {
           // push type point tasks to points list
-          points.push(element);
+          points.push(feature);
         }
       });
 
       if (points.length > 0) {
         // build a feature collection for points
-        let featureColl = {};
-        featureColl = {
-          features: points.map((point: Task) => {
-            const propsObj = {
-              ...(point.geojson && point.geojson.properties),
-            };
-            return {
-              geometry: {
-                ...point.geojson.geometry,
-              },
-              properties: propsObj,
-              type: FEATURE,
-            };
-          }),
+        const pointsFeatureCollection = {
+          features: points,
           type: FEATURE_COLLECTION,
         };
         symbolLayers.push({
@@ -305,7 +303,7 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
             ...circleLayerConfig.source,
             data: {
               ...circleLayerConfig.source.data,
-              data: JSON.stringify(featureColl),
+              data: JSON.stringify(pointsFeatureCollection),
             },
           },
         });
@@ -314,7 +312,8 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
           hasGeometries: true,
         });
       }
-    } else if (tasks && !(tasks.length > 0)) {
+    } // else if featureCollection prop was given but with empty features array
+    else if (featureCollection && !some(features)) {
       alert(NO_GEOMETRIES_RESPONSE);
       this.setState({
         hasGeometries: false,
