@@ -92,7 +92,6 @@ interface GisidaState {
   doRenderMap: boolean;
   geoData: Jurisdiction | false;
   hasGeometries: boolean | false;
-  renderFeatures: boolean | false;
   featureCollection: FeatureCollection<TaskGeoJSON> | null;
   initMapWithoutFC: boolean | false;
 }
@@ -139,7 +138,6 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
       hasGeometries: false,
       initMapWithoutFC: false,
       locations: false,
-      renderFeatures: false,
     };
 
     if (!initialState.APP && ducks.APP) {
@@ -196,7 +194,7 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
     /** If there are no features and init map without features is false
      * or when there are just no features
      */
-    if ((!some(features) && !this.state.initMapWithoutFC) || !some(features)) {
+    if (!some(features) && !this.state.initMapWithoutFC) {
       this.setState({ doInitMap: true, initMapWithoutFC: true }, () => {
         // Dirty work around! Arbitrary delay to allow style load before adding layers
         setTimeout(() => {
