@@ -192,9 +192,9 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
     const features: TaskGeoJSON[] =
       (nextProps.featureCollection && nextProps.featureCollection.features) || [];
     /** If there are no features and init map without features is false
-     * or when there are just no features
+     * and location data is set
      */
-    if (!some(features) && !this.state.initMapWithoutFC) {
+    if (!some(features) && !this.state.initMapWithoutFC && this.state.locations) {
       this.setState({ doInitMap: true, initMapWithoutFC: true }, () => {
         // Dirty work around! Arbitrary delay to allow style load before adding layers
         setTimeout(() => {
