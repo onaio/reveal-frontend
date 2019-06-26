@@ -82,7 +82,7 @@ interface FillLayerObj {
   visible: boolean;
 }
 
-const symbolLayers: PointLayerObj[] | LineLayerObj[] | FillLayerObj[] | FlexObject = [];
+const builtGeometriesContainer: PointLayerObj[] | LineLayerObj[] | FillLayerObj[] | FlexObject = [];
 
 /** GisidaWrapper state interface */
 interface GisidaState {
@@ -276,7 +276,7 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
               },
             },
           };
-          symbolLayers.push(fillLayer);
+          builtGeometriesContainer.push(fillLayer);
         }
         if (feature.geometry && feature.geometry.type === POINT) {
           // push type point tasks to points list
@@ -290,7 +290,7 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
           features: points,
           type: FEATURE_COLLECTION,
         };
-        symbolLayers.push({
+        builtGeometriesContainer.push({
           ...circleLayerConfig,
           id: this.props.currentGoal,
           paint: {
@@ -336,8 +336,8 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
         visible: true,
       },
     ];
-    if (symbolLayers.length) {
-      symbolLayers.forEach((value: LineLayerObj | FillLayerObj | PointLayerObj) => {
+    if (builtGeometriesContainer.length) {
+      builtGeometriesContainer.forEach((value: LineLayerObj | FillLayerObj | PointLayerObj) => {
         layers.push(value);
       });
     }
