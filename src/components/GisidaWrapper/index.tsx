@@ -82,7 +82,7 @@ interface FillLayerObj {
   visible: boolean;
 }
 
-const symbolLayers: PointLayerObj[] | LineLayerObj[] | FillLayerObj[] | FlexObject = [];
+const builtGeometriesContainer: PointLayerObj[] | LineLayerObj[] | FillLayerObj[] | FlexObject = [];
 
 /** GisidaWrapper state interface */
 interface GisidaState {
@@ -92,7 +92,6 @@ interface GisidaState {
   doRenderMap: boolean;
   geoData: Jurisdiction | false;
   hasGeometries: boolean | false;
-  renderFeatures: boolean | false;
   featureCollection: FeatureCollection<TaskGeoJSON> | null;
   initMapWithoutFC: boolean | false;
 }
@@ -139,7 +138,6 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
       hasGeometries: false,
       initMapWithoutFC: false,
       locations: false,
-      renderFeatures: false,
     };
 
     if (!initialState.APP && ducks.APP) {
@@ -194,9 +192,9 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
     const features: TaskGeoJSON[] =
       (nextProps.featureCollection && nextProps.featureCollection.features) || [];
     /** If there are no features and init map without features is false
-     * or when there are just no features
+     * and location data is set
      */
-    if ((!some(features) && !this.state.initMapWithoutFC) || !some(features)) {
+    if (!some(features) && !this.state.initMapWithoutFC && this.state.locations) {
       this.setState({ doInitMap: true, initMapWithoutFC: true }, () => {
         // Dirty work around! Arbitrary delay to allow style load before adding layers
         setTimeout(() => {
@@ -278,7 +276,7 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
               },
             },
           };
-          symbolLayers.push(fillLayer);
+          builtGeometriesContainer.push(fillLayer);
         }
         if (feature.geometry && feature.geometry.type === POINT) {
           // push type point tasks to points list
@@ -292,7 +290,7 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
           features: points,
           type: FEATURE_COLLECTION,
         };
-        symbolLayers.push({
+        builtGeometriesContainer.push({
           ...circleLayerConfig,
           id: this.props.currentGoal,
           paint: {
@@ -338,8 +336,8 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
         visible: true,
       },
     ];
-    if (symbolLayers.length) {
-      symbolLayers.forEach((value: LineLayerObj | FillLayerObj | PointLayerObj) => {
+    if (builtGeometriesContainer.length) {
+      builtGeometriesContainer.forEach((value: LineLayerObj | FillLayerObj | PointLayerObj) => {
         layers.push(value);
       });
     }
