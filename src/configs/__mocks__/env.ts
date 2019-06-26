@@ -6,3 +6,6 @@
 
 export const SUPERSET_PLANS_SLICE = 0;
 export type SUPERSET_PLANS_SLICE = typeof SUPERSET_PLANS_SLICE;
+
+export const DIGITAL_GLOBE_CONNECT_ID = 'hunter2';
+export type DIGITAL_GLOBE_CONNECT_ID = typeof DIGITAL_GLOBE_CONNECT_ID;
