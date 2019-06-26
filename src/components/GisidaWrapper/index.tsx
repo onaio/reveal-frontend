@@ -256,7 +256,11 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
 
   // Define map site-config object to init the store
   private initMap(featureCollection: FeatureCollection<TaskGeoJSON> | null) {
-    const builtGeometriesContainer: PointLayerObj[] | LineLayerObj[] | FillLayerObj[] | FlexObject = [];
+    const builtGeometriesContainer:
+      | PointLayerObj[]
+      | LineLayerObj[]
+      | FillLayerObj[]
+      | FlexObject = [];
     const features: TaskGeoJSON[] = (featureCollection && featureCollection.features) || [];
 
     // deal with structures
@@ -281,7 +285,7 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
             },
             visible: true,
           };
-          symbolLayers.push(structureLayer);
+          builtGeometriesContainer.push(structureLayer);
         }
       });
     }
