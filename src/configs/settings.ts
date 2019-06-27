@@ -189,24 +189,27 @@ export const lineLayerConfig = {
   visible: false,
 };
 
+/** Fill opacity configuration */
+export const structureFillOpacity: Expression = [
+  'match',
+  ['get', 'task_business_status'],
+  ['Not Visited'],
+  0.7,
+  ['Not Sprayed', 'Incomplete', 'In Progress'],
+  0.7,
+  ['Sprayed'],
+  0.7,
+  ['Not Sprayable'],
+  1,
+  0.75,
+];
+
 /** Fill layer configuration */
 export const fillLayerConfig = {
   id: 'single-jurisdiction',
   paint: {
     'fill-color': '#FFDC00',
-    'fill-opacity': [
-      'match',
-      ['get', 'task_business_status'],
-      ['Not Visited'],
-      0.7,
-      ['Not Sprayed'],
-      0.7,
-      ['Sprayed'],
-      0.7,
-      ['Not Sprayable'],
-      1,
-      0.75,
-    ],
+    'fill-opacity': structureFillOpacity,
     'fill-outline-color': '#FFDC00',
   },
   source: {
@@ -261,18 +264,4 @@ export const structureFillColor: Expression = [
   ['Not Sprayable', 'Not Eligible'],
   STRUCTURE_INELIGIBLE_BLACK,
   GREY,
-];
-
-export const structureFillOpacity: Expression = [
-  'match',
-  ['get', 'task_business_status'],
-  ['Not Visited'],
-  0.7,
-  ['Not Sprayed', 'Incomplete', 'In Progress'],
-  0.7,
-  ['Sprayed'],
-  0.7,
-  ['Not Sprayable'],
-  1,
-  0.75,
 ];
