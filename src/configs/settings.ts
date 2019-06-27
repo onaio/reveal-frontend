@@ -155,7 +155,7 @@ export const pointLayerConfig = {
   source: {
     data: {
       data: {
-        coordinates: [101.177725195885, 15.0658221308165],
+        coordinates: [],
         type: 'Point',
       },
       type: 'stringified-geojson',
@@ -178,7 +178,7 @@ export const lineLayerConfig = {
   source: {
     data: {
       data: {
-        coordinates: [101.177725195885, 15.0658221308165],
+        coordinates: [],
         type: 'Point',
       },
       type: 'stringified-geojson',
@@ -215,7 +215,7 @@ export const fillLayerConfig = {
   source: {
     data: {
       data: {
-        coordinates: [101.177725195885, 15.0658221308165],
+        coordinates: [],
         type: 'Point',
       },
       type: 'stringified-geojson',
@@ -241,7 +241,7 @@ export const circleLayerConfig = {
   source: {
     data: {
       data: {
-        coordinates: [101.177725195885, 15.0658221308165],
+        coordinates: [],
         type: 'Point',
       },
       type: 'stringified-geojson',
