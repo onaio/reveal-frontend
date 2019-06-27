@@ -236,6 +236,7 @@ export const circleLayerConfig = {
       base: 1.75,
       stops: [[12, 2], [22, 180]],
     },
+    'circle-stroke-width': 1,
   },
   source: {
     data: {
