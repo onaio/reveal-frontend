@@ -1,5 +1,6 @@
 /** This is the main configuration module */
 import { Providers } from '@onaio/gatekeeper';
+import { Expression } from 'mapbox-gl';
 import {
   DOMAIN_NAME,
   ENABLE_ONADATA_OAUTH,
@@ -130,35 +131,6 @@ export type ORANGE_THRESHOLD = typeof ORANGE_THRESHOLD;
 export const ONE = 0;
 export const ZERO = 0;
 
-/** Point layer configuration */
-export const pointLayerConfig = {
-  id: 'single-jurisdiction-20191910',
-  layout: {
-    'icon-image': 'circle-15',
-    'icon-size': 2,
-  },
-  minzoom: 1,
-  paint: {
-    'text-color': '#000',
-    'text-halo-blur': 1,
-    'text-halo-color': '#fff',
-    'text-halo-width': 1.3,
-  },
-  source: {
-    data: {
-      data: {
-        coordinates: [101.177725195885, 15.0658221308165],
-        type: 'Point',
-      },
-      type: 'stringified-geojson',
-    },
-    minzoom: 1,
-    type: 'geojson',
-  },
-  type: 'symbol',
-  visible: false,
-};
-
 /** Line layer configuration */
 export const lineLayerConfig = {
   id: 'single-jurisdiction',
@@ -170,7 +142,7 @@ export const lineLayerConfig = {
   source: {
     data: {
       data: {
-        coordinates: [101.177725195885, 15.0658221308165],
+        coordinates: [],
         type: 'Point',
       },
       type: 'stringified-geojson',
@@ -181,18 +153,33 @@ export const lineLayerConfig = {
   visible: false,
 };
 
+/** Fill opacity configuration */
+export const structureFillOpacity: Expression = [
+  'match',
+  ['get', 'task_business_status'],
+  ['Not Visited'],
+  0.7,
+  ['Not Sprayed', 'Incomplete', 'In Progress'],
+  0.7,
+  ['Sprayed'],
+  0.7,
+  ['Not Sprayable'],
+  1,
+  0.75,
+];
+
 /** Fill layer configuration */
 export const fillLayerConfig = {
   id: 'single-jurisdiction',
   paint: {
     'fill-color': '#FFDC00',
-    'fill-opacity': 0.7,
+    'fill-opacity': structureFillOpacity,
     'fill-outline-color': '#FFDC00',
   },
   source: {
     data: {
       data: {
-        coordinates: [101.177725195885, 15.0658221308165],
+        coordinates: [],
         type: 'Point',
       },
       type: 'stringified-geojson',
@@ -212,15 +199,13 @@ export const circleLayerConfig = {
   paint: {
     'circle-color': '#FFDC00',
     'circle-opacity': 0.7,
-    'circle-radius': {
-      base: 1.75,
-      stops: [[12, 2], [22, 180]],
-    },
+    'circle-radius': ['interpolate', ['linear'], ['zoom'], 13.98, 0, 17.79, 10, 18.8, 15],
+    'circle-stroke-width': 1,
   },
   source: {
     data: {
       data: {
-        coordinates: [101.177725195885, 15.0658221308165],
+        coordinates: [],
         type: 'Point',
       },
       type: 'stringified-geojson',

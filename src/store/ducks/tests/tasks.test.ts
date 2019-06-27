@@ -12,6 +12,8 @@ import reducer, {
   getFCByPlanAndJurisdiction,
   getFCByPlanId,
   getFCByStructureId,
+  getStructuresByJurisdictionId,
+  getStructuresFCByJurisdictionId,
   getTaskById,
   getTasksArray,
   getTasksByGoalId,
@@ -51,6 +53,7 @@ describe('reducers/tasks', () => {
     expect(getTaskById(store.getState(), 'someId')).toEqual(null);
     expect(getTasksByPlanId(store.getState(), 'someId')).toEqual([]);
     expect(getTasksByGoalId(store.getState(), 'someId')).toEqual([]);
+    expect(getStructuresByJurisdictionId(store.getState(), 'someId')).toEqual([]);
     expect(getTasksByJurisdictionId(store.getState(), 'someId')).toEqual([]);
     expect(getTasksByStructureId(store.getState(), 'someId')).toEqual([]);
     expect(getTasksByPlanAndJurisdiction(store.getState(), 'a', 'b')).toEqual([]);
@@ -77,6 +80,9 @@ describe('reducers/tasks', () => {
     expect(getTasksByJurisdictionId(store.getState(), '3952')).toEqual([
       fixtures.coloredTasks.task3,
     ]);
+    expect(
+      getStructuresByJurisdictionId(store.getState(), '450fc15b-5bd2-468a-927a-49cb10d3bcac')
+    ).toEqual([fixtures.coloredTasks.task1, fixtures.coloredTasks.task2]);
     expect(getTasksByStructureId(store.getState(), 'a19eeb63-45d0-4744-9a9d-76d0694103f6')).toEqual(
       [fixtures.coloredTasks.task1]
     );
@@ -214,6 +220,16 @@ describe('reducers/tasks/FeatureCollectionSelectors', () => {
       type: 'FeatureCollection',
     };
     expect(getFCByJurisdictionId(store.getState(), JurisdictionId)).toEqual(expected);
+  });
+
+  it('filters tasks as structures FeatureCollection by jurisdiction', () => {
+    store.dispatch(fetchTasks(fixtures.tasks));
+    const JurisdictionId = '450fc15b-5bd2-468a-927a-49cb10d3bcac';
+    const expected: FeatureCollection<InitialTaskGeoJSON> = {
+      features: [fixtures.task1.geojson, fixtures.task2.geojson],
+      type: 'FeatureCollection',
+    };
+    expect(getStructuresFCByJurisdictionId(store.getState(), JurisdictionId)).toEqual(expected);
   });
 
   it('filters tasks as FeatureCollection by plan && jurisdiction', () => {

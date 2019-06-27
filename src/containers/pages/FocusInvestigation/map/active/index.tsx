@@ -1,5 +1,4 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
-import { Feature } from 'geojson';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
@@ -56,6 +55,7 @@ import plansReducer, {
 import tasksReducer, {
   fetchTasks,
   getFCByPlanAndGoalAndJurisdiction,
+  getStructuresByJurisdictionId,
   getTasksByPlanAndGoalAndJurisdiction,
   reducerName as tasksReducerName,
   Task,
@@ -79,6 +79,7 @@ export interface MapSingleFIProps {
   goals: Goal[] | null;
   jurisdiction: Jurisdiction | null;
   plan: Plan | null;
+  structures: Task[] | null /** we use this to get all structures */;
   tasks: Task[] | null;
 }
 
@@ -99,6 +100,7 @@ export const defaultMapSingleFIProps: MapSingleFIProps = {
   goals: null,
   jurisdiction: null,
   plan: null,
+  structures: null,
   tasks: null,
 };
 
@@ -182,6 +184,7 @@ class SingleActiveFIMap extends React.Component<
                 handlers={this.buildHandlers()}
                 geoData={jurisdiction}
                 goal={goals}
+                structures={this.props.structures}
                 currentGoal={currentGoal}
                 featureCollection={featureCollection}
               />
@@ -249,10 +252,14 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
   let tasks = null;
   let currentGoal = null;
   let featureCollection = defaultFeatureCollection;
+  let structures = null;
+
   if (plan) {
     jurisdiction = getJurisdictionById(state, plan.jurisdiction_id);
+    structures = getStructuresByJurisdictionId(state, plan.jurisdiction_id);
     goals = getGoalsByPlanAndJurisdiction(state, plan.plan_id, plan.jurisdiction_id);
   }
+
   if (plan && jurisdiction && (goals && goals.length > 1)) {
     tasks = getTasksByPlanAndGoalAndJurisdiction(
       state,
@@ -278,6 +285,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
     plan,
     plansArray: getPlansArray(state),
     plansIdArray: getPlansIdArray(state),
+    structures,
     tasks,
   };
 };

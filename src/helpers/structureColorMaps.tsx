@@ -1,7 +1,15 @@
 /** Color enumerations for Tasks business status
  * and action codes
  */
-import { BLACK, GREEN, RED, YELLOW } from '../colors';
+import {
+  BLACK,
+  TASK_BLUE as BLUE,
+  TASK_GREEN as GREEN,
+  TASK_PINK as PINK,
+  TASK_PURPLE as PURPLE,
+  TASK_RED as RED,
+  YELLOW,
+} from '../colors';
 
 /** Interface for color maps for all task action_codes */
 export interface ColorMapsTypes {
@@ -26,6 +34,7 @@ const RACD_REGISTER_FAMILY: ColorMapsTypes = {
   ...defaultColorMaps,
 };
 RACD_REGISTER_FAMILY[RED] = ['Incomplete', 'Refused'];
+RACD_REGISTER_FAMILY[PINK] = ['Complete'];
 
 /** color codes for Mosquito Collection action code */
 const MOSQUITO_COLLECTION: ColorMapsTypes = {
@@ -50,12 +59,14 @@ const BEDNET_DISTRIBUTION: ColorMapsTypes = {
   ...defaultColorMaps,
 };
 BEDNET_DISTRIBUTION[RED] = ['Incomplete', 'Refused'];
+BEDNET_DISTRIBUTION[BLUE] = ['Complete'];
 
 /** color codes for Blood Screening action code */
 const BLOOD_SCREENING: ColorMapsTypes = {
   ...defaultColorMaps,
 };
 BLOOD_SCREENING[RED] = ['Incomplete', 'Refused'];
+BLOOD_SCREENING[PURPLE] = ['Complete'];
 
 export const colorMaps = {
   BEDNET_DISTRIBUTION,

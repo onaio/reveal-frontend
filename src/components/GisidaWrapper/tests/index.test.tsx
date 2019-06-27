@@ -17,6 +17,8 @@ jest.mock('gisida-react', () => {
   return { Map: MapComponent };
 });
 
+jest.mock('../../../configs/env');
+
 reducerRegistry.register(APP, ducks.APP.default);
 reducerRegistry.register(MAP_ID, ducks.MAP.default);
 
@@ -58,9 +60,7 @@ describe('components/GisidaWrapper', () => {
       accessToken: expect.any(String),
       apiAccessToken: expect.any(String),
     });
-    expect(store.getState()['map-1']).toMatchSnapshot({
-      reloadLayers: expect.any(Number),
-    });
+    expect(store.getState()['map-1']).toMatchSnapshot();
     wrapper.unmount();
   });
 
@@ -97,9 +97,7 @@ describe('components/GisidaWrapper', () => {
       accessToken: expect.any(String),
       apiAccessToken: expect.any(String),
     });
-    expect(store.getState()['map-1']).toMatchSnapshot({
-      reloadLayers: expect.any(Number),
-    });
+    expect(store.getState()['map-1']).toMatchSnapshot();
     wrapper.unmount();
   });
 
@@ -139,6 +137,52 @@ describe('components/GisidaWrapper', () => {
         },
       },
     });
+    wrapper.unmount();
+  });
+
+  it('renders map component with structures', () => {
+    const featureCollection: FeatureCollection<TaskGeoJSON> = {
+      features: fixtures.bednetTasks.map((task: any) => task.geojson),
+      type: 'FeatureCollection',
+    };
+    const props1 = {
+      currentGoal: null,
+      featureCollection,
+      geoData: fixtures.jurisdictions[1],
+      goal: fixtures.goals,
+      handlers: [],
+      structures: [fixtures.coloredTasks.task1, fixtures.coloredTasks.task2],
+    };
+    const props = {
+      currentGoal: fixtures.task6.goal_id,
+      featureCollection,
+      geoData: fixtures.jurisdictions[1],
+      goal: fixtures.goals,
+      handlers: [],
+      structures: [fixtures.coloredTasks.task1, fixtures.coloredTasks.task2],
+    };
+    const wrapper = mount(<GisidaWrapper {...props1} />);
+    /** Investigate why it won't set state inside initmap even though
+     * it goes into init map this leads to setting dorenderMap to state
+     * manually
+     */
+    wrapper.setState({ doRenderMap: true });
+    wrapper.setProps({ ...props });
+    expect(wrapper.find('MapComponent').props()).toMatchSnapshot();
+    expect(store.getState().APP).toMatchSnapshot({
+      accessToken: expect.any(String),
+      apiAccessToken: expect.any(String),
+      mapConfig: {
+        style: {
+          sources: {
+            diimagery: {
+              tiles: [expect.any(String)],
+            },
+          },
+        },
+      },
+    });
+    expect(store.getState()['map-1']).toMatchSnapshot();
     wrapper.unmount();
   });
 });
