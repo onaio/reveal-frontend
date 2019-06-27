@@ -251,17 +251,3 @@ export const circleLayerConfig = {
   type: 'circle',
   visible: false,
 };
-
-export const structureFillColor: Expression = [
-  'match',
-  ['get', 'task_business_status'],
-  ['Not Visited'],
-  STRUCTURE_NOT_VISTITED_YELLOW,
-  ['Not Sprayed', 'Incomplete', 'In Progress'],
-  STRUCTURE_INCOMPLETE_RED,
-  ['Sprayed', 'Complete'],
-  STRUCTURE_COMPLETE_GREEN,
-  ['Not Sprayable', 'Not Eligible'],
-  STRUCTURE_INELIGIBLE_BLACK,
-  GREY,
-];
