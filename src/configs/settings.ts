@@ -232,10 +232,7 @@ export const circleLayerConfig = {
   paint: {
     'circle-color': '#FFDC00',
     'circle-opacity': 0.7,
-    'circle-radius': {
-      base: 1.75,
-      stops: [[12, 2], [22, 180]],
-    },
+    'circle-radius': ['interpolate', ['linear'], ['zoom'], 13.98, 0, 17.79, 10, 18.8, 15],
     'circle-stroke-width': 1,
   },
   source: {
