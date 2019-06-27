@@ -8,12 +8,7 @@ import * as React from 'react';
 import { GREY } from '../../colors';
 import Loading from '../../components/page/Loading/index';
 import { GISIDA_MAPBOX_TOKEN, GISIDA_ONADATA_API_TOKEN } from '../../configs/env';
-import {
-  circleLayerConfig,
-  fillLayerConfig,
-  lineLayerConfig,
-  structureFillColor,
-} from '../../configs/settings';
+import { circleLayerConfig, fillLayerConfig, lineLayerConfig } from '../../configs/settings';
 import {
   APP,
   FEATURE_COLLECTION,
