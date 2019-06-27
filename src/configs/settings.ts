@@ -194,7 +194,19 @@ export const fillLayerConfig = {
   id: 'single-jurisdiction',
   paint: {
     'fill-color': '#FFDC00',
-    'fill-opacity': 0.7,
+    'fill-opacity': [
+      'match',
+      ['get', 'task_business_status'],
+      ['Not Visited'],
+      0.7,
+      ['Not Sprayed'],
+      0.7,
+      ['Sprayed'],
+      0.7,
+      ['Not Sprayable'],
+      1,
+      0.75,
+    ],
     'fill-outline-color': '#FFDC00',
   },
   source: {
