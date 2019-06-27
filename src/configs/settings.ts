@@ -2,13 +2,6 @@
 import { Providers } from '@onaio/gatekeeper';
 import { Expression } from 'mapbox-gl';
 import {
-  GREY,
-  STRUCTURE_COMPLETE_GREEN,
-  STRUCTURE_INCOMPLETE_RED,
-  STRUCTURE_INELIGIBLE_BLACK,
-  STRUCTURE_NOT_VISTITED_YELLOW,
-} from './../colors';
-import {
   DOMAIN_NAME,
   ENABLE_ONADATA_OAUTH,
   ENABLE_OPENSRP_OAUTH,
