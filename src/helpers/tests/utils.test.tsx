@@ -249,7 +249,7 @@ describe('helpers/utils', () => {
   });
 
   it('extractPlan handles plans with null jurisdiction name path', () => {
-    const plan: Plan = cloneDeep(fixtures.plan1);
+    const plan: Plan = cloneDeep(fixtures.plan1) as Plan;
     (plan as any).jurisdiction_name_path = 'null';
     const result = extractPlan(plan);
     const expected = {
