@@ -442,9 +442,14 @@ export function getFCByPlanAndGoalAndJurisdiction(
   planId: string,
   goalId: string,
   jurisdictionId: string,
-  includeNullGeoms: boolean = true
+  includeNullGeoms: boolean = true,
+  structureType: string[] | null = null
 ): FeatureCollection<TaskGeoJSON> {
-  const geoJsonFeatures: TaskGeoJSON[] = getTasksGeoJsonData(state, includeNullGeoms).filter(
+  const geoJsonFeatures: TaskGeoJSON[] = getTasksGeoJsonData(
+    state,
+    includeNullGeoms,
+    structureType
+  ).filter(
     e =>
       e.properties.plan_id === planId &&
       e.properties.goal_id === goalId &&
