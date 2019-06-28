@@ -55,7 +55,7 @@ import plansReducer, {
 import tasksReducer, {
   fetchTasks,
   getFCByPlanAndGoalAndJurisdiction,
-  getStructuresByJurisdictionId,
+  getStructuresFCByJurisdictionId,
   reducerName as tasksReducerName,
   Task,
   TaskGeoJSON,
@@ -78,7 +78,7 @@ export interface MapSingleFIProps {
   goals: Goal[] | null;
   jurisdiction: Jurisdiction | null;
   plan: Plan | null;
-  structures: Task[] | null /** we use this to get all structures */;
+  structures: FeatureCollection<TaskGeoJSON> | null /** we use this to get all structures */;
   tasks: Task[] | null;
 }
 
@@ -254,7 +254,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
 
   if (plan) {
     jurisdiction = getJurisdictionById(state, plan.jurisdiction_id);
-    structures = getStructuresByJurisdictionId(state, plan.jurisdiction_id);
+    structures = getStructuresFCByJurisdictionId(state, plan.jurisdiction_id);
     goals = getGoalsByPlanAndJurisdiction(state, plan.plan_id, plan.jurisdiction_id);
   }
 
