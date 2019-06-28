@@ -8,7 +8,7 @@ import {
   TASK_PINK as PINK,
   TASK_PURPLE as PURPLE,
   TASK_RED as RED,
-  YELLOW,
+  TASK_YELLOW as YELLOW,
 } from '../colors';
 
 /** Interface for color maps for all task action_codes */
