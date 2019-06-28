@@ -2,7 +2,7 @@ import { Color } from 'csstype';
 import { get, keyBy, keys, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
 import SeamlessImmutable from 'seamless-immutable';
-import { POLYGON } from '../../constants';
+import { MULTI_POLYGON, POLYGON } from '../../constants';
 import {
   FeatureCollection,
   GeoJSON,
@@ -238,7 +238,10 @@ export function getStructuresByJurisdictionId(
   jurisdictionId: string
 ): Task[] {
   return getTasksByJurisdictionId(state, jurisdictionId).filter((e: Task) => {
-    return e.geojson.geometry && e.geojson.geometry.type === POLYGON;
+    return (
+      e.geojson.geometry &&
+      (e.geojson.geometry.type === POLYGON || e.geojson.geometry.type === MULTI_POLYGON)
+    );
   });
 }
 

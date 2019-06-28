@@ -262,7 +262,11 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
     const { structures } = this.props;
     if (structures) {
       structures.forEach((element: Task) => {
-        if (element.geojson.geometry && element.geojson.geometry.type === POLYGON) {
+        if (
+          element.geojson.geometry &&
+          (element.geojson.geometry.type === POLYGON ||
+            element.geojson.geometry.type === MULTI_POLYGON)
+        ) {
           const structureLayer: FillLayerObj = {
             ...fillLayerConfig,
             id: `structure-${element.task_identifier}`,
