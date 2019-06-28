@@ -60,6 +60,7 @@ const BEDNET_DISTRIBUTION: ColorMapsTypes = {
 };
 BEDNET_DISTRIBUTION[RED] = ['Incomplete', 'Refused'];
 BEDNET_DISTRIBUTION[BLUE] = ['Complete'];
+delete BEDNET_DISTRIBUTION[GREEN];
 
 /** color codes for Blood Screening action code */
 const BLOOD_SCREENING: ColorMapsTypes = {
