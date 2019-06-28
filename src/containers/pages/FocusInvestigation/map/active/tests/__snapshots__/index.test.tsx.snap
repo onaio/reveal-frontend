@@ -1109,7 +1109,7 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store 1`
               "id": "01d0b84c-df06-426c-a272-6858e84fea31",
               "properties": Object {
                 "action_code": "Blood Screening",
-                "color": "#ff3",
+                "color": "#FFCA16",
                 "goal_id": "RACD_blood_screening_1km_radius",
                 "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
                 "jurisdiction_name": "TLv1_01",
@@ -1403,7 +1403,7 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store 1`
                 "id": "e652f8b2-b884-42d5-832a-86009c10a812",
                 "properties": Object {
                   "action_code": "RACD Register Family",
-                  "color": "#ff3",
+                  "color": "#FFCA16",
                   "goal_id": "RACD_register_family_1km_radius",
                   "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
                   "jurisdiction_name": "TLv1_01",
@@ -1459,7 +1459,7 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store 1`
                 "id": "03458d28-af61-4f70-b110-73a3429ada2d",
                 "properties": Object {
                   "action_code": "Bednet Distribution",
-                  "color": "#ff3",
+                  "color": "#FFCA16",
                   "goal_id": "RACD_bednet_dist_1km_radius",
                   "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
                   "jurisdiction_name": "TLv1_01",
@@ -1809,7 +1809,7 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store 1`
                           "id": "e652f8b2-b884-42d5-832a-86009c10a812",
                           "properties": Object {
                             "action_code": "RACD Register Family",
-                            "color": "#ff3",
+                            "color": "#FFCA16",
                             "goal_id": "RACD_register_family_1km_radius",
                             "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
                             "jurisdiction_name": "TLv1_01",
@@ -1865,7 +1865,7 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store 1`
                           "id": "03458d28-af61-4f70-b110-73a3429ada2d",
                           "properties": Object {
                             "action_code": "Bednet Distribution",
-                            "color": "#ff3",
+                            "color": "#FFCA16",
                             "goal_id": "RACD_bednet_dist_1km_radius",
                             "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
                             "jurisdiction_name": "TLv1_01",
@@ -2072,7 +2072,7 @@ Object {
         "id": "e652f8b2-b884-42d5-832a-86009c10a812",
         "properties": Object {
           "action_code": "RACD Register Family",
-          "color": "#ff3",
+          "color": "#FFCA16",
           "goal_id": "RACD_register_family_1km_radius",
           "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
           "jurisdiction_name": "TLv1_01",
@@ -2128,7 +2128,7 @@ Object {
         "id": "03458d28-af61-4f70-b110-73a3429ada2d",
         "properties": Object {
           "action_code": "Bednet Distribution",
-          "color": "#ff3",
+          "color": "#FFCA16",
           "goal_id": "RACD_bednet_dist_1km_radius",
           "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
           "jurisdiction_name": "TLv1_01",
