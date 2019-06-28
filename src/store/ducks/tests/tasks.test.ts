@@ -1,6 +1,7 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import { cloneDeep, keyBy, values } from 'lodash';
 import { FlushThunks } from 'redux-testkit';
+import { MULTI_POLYGON, POINT, POLYGON } from '../../../constants';
 import { FeatureCollection } from '../../../helpers/utils';
 import store from '../../index';
 import reducer, {
@@ -273,5 +274,23 @@ describe('reducers/tasks/FeatureCollectionSelectors', () => {
     store.dispatch(fetchTasks(thisTasks));
     const expected = [fixtures.task1.geojson, fixtures.task2.geojson, fixtures.task3.geojson];
     expect(getTasksGeoJsonData(store.getState(), false)).toEqual(expected);
+  });
+
+  it('filters out tasks by structure type Point', () => {
+    const thisTasks = cloneDeep(fixtures.tasks);
+    store.dispatch(fetchTasks(thisTasks));
+    const expected = [fixtures.task1.geojson, fixtures.task2.geojson, fixtures.task3.geojson];
+    expect(getTasksGeoJsonData(store.getState(), false, [POINT])).toEqual(
+      expected.filter(e => e.geometry.type === 'Point')
+    );
+  });
+
+  it('filters out tasks by structure type Polygon or MultiPolygon', () => {
+    const thisTasks = cloneDeep(fixtures.tasks);
+    store.dispatch(fetchTasks(thisTasks));
+    const expected = [fixtures.task1.geojson, fixtures.task2.geojson, fixtures.task3.geojson];
+    expect(getTasksGeoJsonData(store.getState(), false, [POLYGON, MULTI_POLYGON])).toEqual(
+      expected.filter(e => e.geometry.type !== 'Point')
+    );
   });
 });
