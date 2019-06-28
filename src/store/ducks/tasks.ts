@@ -2,7 +2,7 @@ import { Color } from 'csstype';
 import { get, keyBy, keys, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
 import SeamlessImmutable from 'seamless-immutable';
-import { MULTI_POLYGON, POLYGON } from '../../constants';
+import { MULTI_POLYGON, POINT, POLYGON } from '../../constants';
 import {
   FeatureCollection,
   GeoJSON,
@@ -301,11 +301,16 @@ export function getTasksByPlanAndGoalAndJurisdiction(
  */
 export function getTasksGeoJsonData(
   state: Partial<Store>,
-  includeNullGeoms: boolean = true
+  includeNullGeoms: boolean = true,
+  structureType: string[] | null = null
 ): TaskGeoJSON[] {
   let results = values((state as any)[reducerName].tasksById).map(e => e.geojson);
-  if (!includeNullGeoms) {
-    results = results.filter(e => e && e.geometry);
+  if (!includeNullGeoms || structureType) {
+    if (structureType) {
+      results = results.filter(e => e && e.geometry && structureType.includes(e.geometry.type));
+    } else {
+      results = results.filter(e => e && e.geometry);
+    }
   }
   return results;
 }
