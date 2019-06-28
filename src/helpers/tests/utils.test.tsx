@@ -1,6 +1,14 @@
 import * as gatekeeper from '@onaio/gatekeeper';
 import { cloneDeep } from 'lodash';
-import { BLACK, TASK_GREEN as GREEN, TASK_RED as RED, YELLOW } from '../../colors';
+import {
+  BLACK,
+  TASK_BLUE as BLUE,
+  TASK_GREEN as GREEN,
+  TASK_PINK as PINK,
+  TASK_PURPLE as PURPLE,
+  TASK_RED as RED,
+  TASK_YELLOW as YELLOW,
+} from '../../colors';
 import { ONADATA_OAUTH_STATE, OPENSRP_OAUTH_STATE } from '../../configs/env';
 import { Plan } from '../../store/ducks/plans';
 import { InitialTask } from '../../store/ducks/tasks';
@@ -106,7 +114,7 @@ describe('helpers/utils', () => {
   it('gets correct color for RACD Register Family', () => {
     const task = cloneDeep(fixtures.task1);
     const sampleColorMap: SampleColorMap = {
-      Complete: GREEN,
+      Complete: PINK,
       Incomplete: RED,
       'Not Eligible': BLACK,
       'Not Visited': YELLOW,
@@ -158,7 +166,7 @@ describe('helpers/utils', () => {
     const task = cloneDeep(fixtures.task1);
     task.geojson.properties.action_code = 'Bednet Distribution';
     const sampleColorMap: SampleColorMap = {
-      Complete: GREEN,
+      Complete: BLUE,
       Incomplete: RED,
       'Not Eligible': BLACK,
       'Not Visited': YELLOW,
@@ -184,7 +192,7 @@ describe('helpers/utils', () => {
     const task = cloneDeep(fixtures.task1);
     task.geojson.properties.action_code = 'Blood Screening';
     const sampleColorMap: SampleColorMap = {
-      Complete: GREEN,
+      Complete: PURPLE,
       Incomplete: RED,
       'Not Eligible': BLACK,
       'Not Visited': YELLOW,
@@ -243,7 +251,7 @@ describe('helpers/utils', () => {
   });
 
   it('extractPlan handles plans with null jurisdiction name path', () => {
-    const plan: Plan = cloneDeep(fixtures.plan1);
+    const plan: Plan = cloneDeep(fixtures.plan1) as Plan;
     (plan as any).jurisdiction_name_path = 'null';
     const result = extractPlan(plan);
     const expected = {

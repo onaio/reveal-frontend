@@ -55,8 +55,7 @@ import plansReducer, {
 import tasksReducer, {
   fetchTasks,
   getFCByPlanAndGoalAndJurisdiction,
-  getStructuresByJurisdictionId,
-  getTasksByPlanAndGoalAndJurisdiction,
+  getStructuresFCByJurisdictionId,
   reducerName as tasksReducerName,
   Task,
   TaskGeoJSON,
@@ -79,8 +78,7 @@ export interface MapSingleFIProps {
   goals: Goal[] | null;
   jurisdiction: Jurisdiction | null;
   plan: Plan | null;
-  structures: Task[] | null /** we use this to get all structures */;
-  tasks: Task[] | null;
+  structures: FeatureCollection<TaskGeoJSON> | null /** we use this to get all structures */;
 }
 
 /** default value for feature Collection */
@@ -101,7 +99,6 @@ export const defaultMapSingleFIProps: MapSingleFIProps = {
   jurisdiction: null,
   plan: null,
   structures: null,
-  tasks: null,
 };
 
 /** Map View for Single Active Focus Investigation */
@@ -131,7 +128,7 @@ class SingleActiveFIMap extends React.Component<
     await supersetFetch(SUPERSET_GOALS_SLICE).then((result3: Goal[]) =>
       fetchGoalsActionCreator(result3)
     );
-    await supersetFetch(SUPERSET_STRUCTURES_SLICE).then((result4: Task[]) =>
+    await supersetFetch(SUPERSET_STRUCTURES_SLICE, { row_limit: 3000 }).then((result4: Task[]) =>
       fetchTasksActionCreator(result4)
     );
   }
@@ -249,26 +246,18 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
   const plan = getPlanById(state, ownProps.match.params.id);
   let goals = null;
   let jurisdiction = null;
-  let tasks = null;
   let currentGoal = null;
   let featureCollection = defaultFeatureCollection;
   let structures = null;
 
   if (plan) {
     jurisdiction = getJurisdictionById(state, plan.jurisdiction_id);
-    structures = getStructuresByJurisdictionId(state, plan.jurisdiction_id);
+    structures = getStructuresFCByJurisdictionId(state, plan.jurisdiction_id);
     goals = getGoalsByPlanAndJurisdiction(state, plan.plan_id, plan.jurisdiction_id);
   }
 
   if (plan && jurisdiction && (goals && goals.length > 1)) {
-    tasks = getTasksByPlanAndGoalAndJurisdiction(
-      state,
-      plan.plan_id,
-      ownProps.match.params.goalId,
-      plan.jurisdiction_id
-    );
     currentGoal = ownProps.match.params.goalId;
-    /** DIRTY MANGY hack  to be improved by getting the goal_id from  the sidebar selection */
     featureCollection = getFCByPlanAndGoalAndJurisdiction(
       state,
       plan.plan_id,
@@ -286,7 +275,6 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
     plansArray: getPlansArray(state),
     plansIdArray: getPlansIdArray(state),
     structures,
-    tasks,
   };
 };
 

@@ -2,7 +2,7 @@ import { Color } from 'csstype';
 import { get, keyBy, keys, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
 import SeamlessImmutable from 'seamless-immutable';
-import { POLYGON } from '../../constants';
+import { MULTI_POLYGON, POINT, POLYGON } from '../../constants';
 import {
   FeatureCollection,
   GeoJSON,
@@ -238,7 +238,10 @@ export function getStructuresByJurisdictionId(
   jurisdictionId: string
 ): Task[] {
   return getTasksByJurisdictionId(state, jurisdictionId).filter((e: Task) => {
-    return e.geojson.geometry && e.geojson.geometry.type === POLYGON;
+    return (
+      e.geojson.geometry &&
+      (e.geojson.geometry.type === POLYGON || e.geojson.geometry.type === MULTI_POLYGON)
+    );
   });
 }
 
@@ -298,11 +301,16 @@ export function getTasksByPlanAndGoalAndJurisdiction(
  */
 export function getTasksGeoJsonData(
   state: Partial<Store>,
-  includeNullGeoms: boolean = true
+  includeNullGeoms: boolean = true,
+  structureType: string[] | null = null
 ): TaskGeoJSON[] {
   let results = values((state as any)[reducerName].tasksById).map(e => e.geojson);
-  if (!includeNullGeoms) {
-    results = results.filter(e => e && e.geometry);
+  if (!includeNullGeoms || structureType) {
+    if (structureType) {
+      results = results.filter(e => e && e.geometry && structureType.includes(e.geometry.type));
+    } else {
+      results = results.filter(e => e && e.geometry);
+    }
   }
   return results;
 }
@@ -381,9 +389,7 @@ export function getStructuresFCByJurisdictionId(
   state: Partial<Store>,
   jurisdictionId: string
 ): FeatureCollection<TaskGeoJSON> {
-  const structures = getTasksByJurisdictionId(state, jurisdictionId).filter((e: Task) => {
-    return e.geojson.geometry && e.geojson.geometry.type === POLYGON;
-  });
+  const structures = getStructuresByJurisdictionId(state, jurisdictionId);
   return wrapFeatureCollection(values(structures.map(e => e.geojson)));
 }
 
@@ -436,9 +442,14 @@ export function getFCByPlanAndGoalAndJurisdiction(
   planId: string,
   goalId: string,
   jurisdictionId: string,
-  includeNullGeoms: boolean = true
+  includeNullGeoms: boolean = true,
+  structureType: string[] | null = null
 ): FeatureCollection<TaskGeoJSON> {
-  const geoJsonFeatures: TaskGeoJSON[] = getTasksGeoJsonData(state, includeNullGeoms).filter(
+  const geoJsonFeatures: TaskGeoJSON[] = getTasksGeoJsonData(
+    state,
+    includeNullGeoms,
+    structureType
+  ).filter(
     e =>
       e.properties.plan_id === planId &&
       e.properties.goal_id === goalId &&

@@ -8,7 +8,7 @@ import { FI_SINGLE_URL } from '../../../../../constants';
 import store from '../../../../../store';
 import { fetchGoals } from '../../../../../store/ducks/goals';
 import { fetchJurisdictions } from '../../../../../store/ducks/jurisdictions';
-import { fetchPlans } from '../../../../../store/ducks/plans';
+import { fetchPlans, Plan } from '../../../../../store/ducks/plans';
 import * as fixtures from '../../../../../store/ducks/tests/fixtures';
 import ConnectedSingleFI, { SingleFI } from '../../single';
 
@@ -39,8 +39,8 @@ describe('containers/pages/SingleFI', () => {
         path: `${FI_SINGLE_URL}/:id`,
         url: `${FI_SINGLE_URL}/13`,
       },
-      planById: fixtures.plan1,
-      plansArray: fixtures.plans,
+      planById: fixtures.plan1 as Plan,
+      plansArray: fixtures.plans as Plan[],
       plansIdArray: fixtures.plansIdArray,
     };
     shallow(
@@ -65,8 +65,8 @@ describe('containers/pages/SingleFI', () => {
         path: `${FI_SINGLE_URL}/:id`,
         url: `${FI_SINGLE_URL}/16`,
       },
-      planById: fixtures.plan1,
-      plansArray: fixtures.plans,
+      planById: fixtures.plan1 as Plan,
+      plansArray: fixtures.plans as Plan[],
       plansIdArray: fixtures.plansIdArray,
       supersetService: supersetMock,
     };
@@ -115,7 +115,7 @@ describe('containers/pages/SingleFI', () => {
 
   it('It works with the Redux store', () => {
     const mock: any = jest.fn();
-    store.dispatch(fetchPlans(fixtures.plans));
+    store.dispatch(fetchPlans(fixtures.plans as Plan[]));
     store.dispatch(fetchGoals(fixtures.goals));
     store.dispatch(fetchJurisdictions(fixtures.jurisdictions));
     const props = {
