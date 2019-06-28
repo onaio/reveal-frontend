@@ -68,6 +68,7 @@ const BLOOD_SCREENING: ColorMapsTypes = {
 };
 BLOOD_SCREENING[RED] = ['Incomplete', 'Refused'];
 BLOOD_SCREENING[PURPLE] = ['Complete'];
+delete BLOOD_SCREENING[GREEN] /** Remove the default color for Complete */;
 
 export const colorMaps = {
   BEDNET_DISTRIBUTION,
