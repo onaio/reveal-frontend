@@ -38,7 +38,7 @@ exports[`components/GisidaWrapper renders map component with FeatureCollection 1
           "id": "250399fc-12e9-415e-aadf-ee3d009fcdf6",
           "properties": Object {
             "action_code": "Bednet Distribution",
-            "color": "#ff3",
+            "color": "#FFCA16",
             "goal_id": "RACD_bednet_dist_1km_radius",
             "jurisdiction_id": "304cbcd4-0850-404a-a8b1-486b02f7b84d",
             "jurisdiction_name": "TLv1_02",
@@ -88,7 +88,7 @@ exports[`components/GisidaWrapper renders map component with FeatureCollection 1
           "id": "18049c84-8762-4951-904d-44485b4df3f0",
           "properties": Object {
             "action_code": "Bednet Distribution",
-            "color": "#ff0000",
+            "color": "#F12525",
             "goal_id": "RACD_bednet_dist_1km_radius",
             "jurisdiction_id": "304cbcd4-0850-404a-a8b1-486b02f7b84d",
             "jurisdiction_name": "TLv1_02",
@@ -1021,7 +1021,7 @@ exports[`components/GisidaWrapper works with DigitalGlobe base layer 1`] = `
           "id": "250399fc-12e9-415e-aadf-ee3d009fcdf6",
           "properties": Object {
             "action_code": "Bednet Distribution",
-            "color": "#ff3",
+            "color": "#FFCA16",
             "goal_id": "RACD_bednet_dist_1km_radius",
             "jurisdiction_id": "304cbcd4-0850-404a-a8b1-486b02f7b84d",
             "jurisdiction_name": "TLv1_02",
@@ -1071,7 +1071,7 @@ exports[`components/GisidaWrapper works with DigitalGlobe base layer 1`] = `
           "id": "18049c84-8762-4951-904d-44485b4df3f0",
           "properties": Object {
             "action_code": "Bednet Distribution",
-            "color": "#ff0000",
+            "color": "#F12525",
             "goal_id": "RACD_bednet_dist_1km_radius",
             "jurisdiction_id": "304cbcd4-0850-404a-a8b1-486b02f7b84d",
             "jurisdiction_name": "TLv1_02",
