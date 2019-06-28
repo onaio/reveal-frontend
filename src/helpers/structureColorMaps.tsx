@@ -35,6 +35,7 @@ const RACD_REGISTER_FAMILY: ColorMapsTypes = {
 };
 RACD_REGISTER_FAMILY[RED] = ['Incomplete', 'Refused'];
 RACD_REGISTER_FAMILY[PINK] = ['Complete'];
+delete RACD_REGISTER_FAMILY[GREEN] /** Remove the default color for Complete */;
 
 /** color codes for Mosquito Collection action code */
 const MOSQUITO_COLLECTION: ColorMapsTypes = {
