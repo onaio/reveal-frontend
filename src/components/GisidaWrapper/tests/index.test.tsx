@@ -46,7 +46,7 @@ describe('components/GisidaWrapper', () => {
     };
     const wrapper = mount(<GisidaWrapper {...props} />);
     expect(store.getState().APP).toMatchSnapshot();
-    expect(store.getState()['map-1']).toMatchSnapshot();
+    expect(store.getState()['map-1']).toMatchSnapshot({});
     expect(toJson(wrapper)).toMatchSnapshot();
     wrapper.setProps({ ...props });
     wrapper.setState({ doRenderMap: true });
@@ -126,7 +126,10 @@ describe('components/GisidaWrapper', () => {
         store.dispatch((Actions as any).toggleLayer(MAP_ID, layer.id, true));
       }
     }
-    expect(store.getState()['map-1']).toMatchSnapshot();
+    expect(store.getState()['map-1']).toMatchSnapshot({
+      currentRegion: expect.any(Number),
+      reloadLayers: expect.any(Number),
+    });
     const componentWillUnmount = jest.spyOn(wrapper.instance(), 'componentWillUnmount');
     wrapper.unmount();
     expect(componentWillUnmount).toHaveBeenCalled();
@@ -236,7 +239,10 @@ describe('components/GisidaWrapper', () => {
         store.dispatch((Actions as any).toggleLayer(MAP_ID, layer.id, true));
       }
     }
-    expect(store.getState()['map-1']).toMatchSnapshot();
+    expect(store.getState()['map-1']).toMatchSnapshot({
+      currentRegion: expect.any(Number),
+      reloadLayers: expect.any(Number),
+    });
     const componentWillUnmount = jest.spyOn(wrapper.instance(), 'componentWillUnmount');
     wrapper.unmount();
     expect(componentWillUnmount).toHaveBeenCalled();
