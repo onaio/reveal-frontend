@@ -7,7 +7,7 @@ import {
   TASK_PINK as PINK,
   TASK_PURPLE as PURPLE,
   TASK_RED as RED,
-  YELLOW,
+  TASK_YELLOW as YELLOW,
 } from '../../colors';
 import { ONADATA_OAUTH_STATE, OPENSRP_OAUTH_STATE } from '../../configs/env';
 import { Plan } from '../../store/ducks/plans';
