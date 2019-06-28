@@ -1,6 +1,12 @@
 import * as gatekeeper from '@onaio/gatekeeper';
 import { cloneDeep } from 'lodash';
-import { BLACK, TASK_GREEN as GREEN, TASK_RED as RED, YELLOW } from '../../colors';
+import {
+  BLACK,
+  TASK_BLUE as BLUE,
+  TASK_GREEN as GREEN,
+  TASK_RED as RED,
+  YELLOW,
+} from '../../colors';
 import { ONADATA_OAUTH_STATE, OPENSRP_OAUTH_STATE } from '../../configs/env';
 import { Plan } from '../../store/ducks/plans';
 import { InitialTask } from '../../store/ducks/tasks';
@@ -158,7 +164,7 @@ describe('helpers/utils', () => {
     const task = cloneDeep(fixtures.task1);
     task.geojson.properties.action_code = 'Bednet Distribution';
     const sampleColorMap: SampleColorMap = {
-      Complete: GREEN,
+      Complete: BLUE,
       Incomplete: RED,
       'Not Eligible': BLACK,
       'Not Visited': YELLOW,
