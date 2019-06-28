@@ -125,7 +125,7 @@ describe('reducers/tasks', () => {
           id: 'moshT',
           properties: {
             action_code: 'Bednet Distribution',
-            color: '#ff3',
+            color: '#FFCA16',
             goal_id: 'RACD_bednet_dist_1km_radius',
             jurisdiction_id: '450fc15b-5bd2-468a-927a-49cb10d3bcac',
             jurisdiction_name: 'TLv1_01',
