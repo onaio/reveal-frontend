@@ -6,7 +6,7 @@ import { createBrowserHistory } from 'history';
 import React from 'react';
 import { Router } from 'react-router';
 import { APP, MAP_ID } from '../../../constants';
-import { FeatureCollection, wrapFeatureCollection } from '../../../helpers/utils';
+import { FeatureCollection, toggleLayer, wrapFeatureCollection } from '../../../helpers/utils';
 import store from '../../../store';
 import { Task, TaskGeoJSON } from '../../../store/ducks/tasks';
 import * as fixtures from '../../../store/ducks/tests/fixtures';
@@ -112,20 +112,8 @@ describe('components/GisidaWrapper', () => {
      * Had to copy the entire toggle functionality to test the
      * toggling functionality of this component
      */
-    let layer;
-    const allLayers = Object.keys(store.getState()['map-1'].layers);
-    let eachLayer: string;
-    // console.log('all Layers', store.getState()['map-1'].layers);
-    for (eachLayer of allLayers) {
-      layer = store.getState()['map-1'].layers[eachLayer];
-      /** Toggle layers to show on the map */
-      if (
-        layer.visible &&
-        (layer.id.includes(props.currentGoal) || layer.id.includes('main-plan-layer'))
-      ) {
-        store.dispatch((Actions as any).toggleLayer(MAP_ID, layer.id, true));
-      }
-    }
+    const allLayers = store.getState()['map-1'].layers;
+    toggleLayer(allLayers, props.currentGoal, store, Actions);
     expect(store.getState()['map-1']).toMatchSnapshot({
       currentRegion: expect.any(Number),
       reloadLayers: expect.any(Number),
@@ -225,20 +213,9 @@ describe('components/GisidaWrapper', () => {
      * Had to copy the entire toggle functionality to test the
      * toggling functionality of this component
      */
-    let layer;
-    const allLayers = Object.keys(store.getState()['map-1'].layers);
-    let eachLayer: string;
-    // console.log('all Layers', store.getState()['map-1'].layers);
-    for (eachLayer of allLayers) {
-      layer = store.getState()['map-1'].layers[eachLayer];
-      /** Toggle layers to show on the map */
-      if (
-        layer.visible &&
-        (layer.id.includes(props.currentGoal) || layer.id.includes('main-plan-layer'))
-      ) {
-        store.dispatch((Actions as any).toggleLayer(MAP_ID, layer.id, true));
-      }
-    }
+
+    const allLayers = store.getState()['map-1'].layers;
+    toggleLayer(allLayers, props.currentGoal, store, Actions);
     expect(store.getState()['map-1']).toMatchSnapshot({
       currentRegion: expect.any(Number),
       reloadLayers: expect.any(Number),

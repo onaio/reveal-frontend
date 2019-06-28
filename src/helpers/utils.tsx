@@ -15,6 +15,7 @@ import {
   FEATURE_COLLECTION,
   IRS_CODE,
   LARVAL_DIPPING_CODE,
+  MAP_ID,
   MOSQUITO_COLLECTION_CODE,
   RACD_REGISTER_FAMILY_CODE,
 } from '../constants';
@@ -357,4 +358,17 @@ export function wrapFeatureCollection<T>(objFeatureCollection: T[]): FeatureColl
     features: objFeatureCollection,
     type: FEATURE_COLLECTION,
   };
+}
+
+export function toggleLayer(allLayers: FlexObject, currentGoal: string, store: any, Actions: any) {
+  let layer;
+  let eachLayer: string;
+  // console.log('all Layers', store.getState()['map-1'].layers);
+  for (eachLayer of Object.keys(allLayers)) {
+    layer = allLayers[eachLayer];
+    /** Toggle layers to show on the map */
+    if (layer.visible && (layer.id.includes(currentGoal) || layer.id.includes('main-plan-layer'))) {
+      store.dispatch((Actions as any).toggleLayer(MAP_ID, layer.id, true));
+    }
+  }
 }
