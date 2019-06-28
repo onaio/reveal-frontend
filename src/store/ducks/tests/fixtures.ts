@@ -464,22 +464,22 @@ export const tasks = [task1, task2, task3, task4];
 export const tasksByGoal = [task4, task5];
 
 const coloredTask1: any = cloneDeep(task1);
-coloredTask1.geojson.properties.color = '#ff3';
+coloredTask1.geojson.properties.color = '#FFCA16';
 
 const coloredTask2: any = cloneDeep(task2);
-coloredTask2.geojson.properties.color = '#ff3';
+coloredTask2.geojson.properties.color = '#FFCA16';
 
 const coloredTask3: any = cloneDeep(task3);
 coloredTask3.geojson.properties.color = '#68BB0C';
 
 const coloredTask4: any = cloneDeep(task4);
-coloredTask4.geojson.properties.color = '#ff3';
+coloredTask4.geojson.properties.color = '#FFCA16';
 
 const coloredTask5: any = cloneDeep(task5);
-coloredTask5.geojson.properties.color = '#ff3';
+coloredTask5.geojson.properties.color = '#FFCA16';
 
 const coloredTask6: any = cloneDeep(task6);
-coloredTask6.geojson.properties.color = '#ff0000';
+coloredTask6.geojson.properties.color = '#F12525';
 
 const coloredTask7: any = cloneDeep(task7);
 coloredTask7.geojson.properties.color = '#000000';
