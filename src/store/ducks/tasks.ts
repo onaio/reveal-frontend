@@ -384,9 +384,7 @@ export function getStructuresFCByJurisdictionId(
   state: Partial<Store>,
   jurisdictionId: string
 ): FeatureCollection<TaskGeoJSON> {
-  const structures = getTasksByJurisdictionId(state, jurisdictionId).filter((e: Task) => {
-    return e.geojson.geometry && e.geojson.geometry.type === POLYGON;
-  });
+  const structures = getStructuresByJurisdictionId(state, jurisdictionId);
   return wrapFeatureCollection(values(structures.map(e => e.geojson)));
 }
 
