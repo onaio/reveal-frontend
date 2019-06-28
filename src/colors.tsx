@@ -37,3 +37,5 @@ export const TASK_GREEN = '#68BB0C';
 export type TASK_GREEN = typeof TASK_GREEN;
 export const TASK_RED = '#F12525';
 export type TASK_RED = typeof TASK_RED;
+export const TASK_YELLOW = '#FFCA16';
+export type TASK_YELLOW = typeof TASK_YELLOW;
