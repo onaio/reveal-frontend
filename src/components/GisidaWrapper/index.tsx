@@ -101,7 +101,7 @@ interface GisidaProps {
   geoData: Jurisdiction | null;
   goal?: Goal[] | null;
   handlers: Handlers[];
-  structures: Task[] | null;
+  structures: FeatureCollection<TaskGeoJSON> | null;
   minHeight?: string;
   basemapStyle?: string | Style;
 }
@@ -261,32 +261,24 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
     // deal with structures
     const { structures } = this.props;
     if (structures) {
-      structures.forEach((element: Task) => {
-        if (
-          element.geojson.geometry &&
-          (element.geojson.geometry.type === POLYGON ||
-            element.geojson.geometry.type === MULTI_POLYGON)
-        ) {
-          const structureLayer: FillLayerObj = {
-            ...fillLayerConfig,
-            id: `structure-${element.task_identifier}`,
-            paint: {
-              ...fillLayerConfig.paint,
-              'fill-color': GREY,
-              'fill-outline-color': GREY,
-            },
-            source: {
-              ...fillLayerConfig.source,
-              data: {
-                ...fillLayerConfig.source.data,
-                data: JSON.stringify(element.geojson),
-              },
-            },
-            visible: true,
-          };
-          builtGeometriesContainer.push(structureLayer);
-        }
-      });
+      const structureLayer: FillLayerObj = {
+        ...fillLayerConfig,
+        id: `structure-26`,
+        paint: {
+          ...fillLayerConfig.paint,
+          'fill-color': GREY,
+          'fill-outline-color': GREY,
+        },
+        source: {
+          ...fillLayerConfig.source,
+          data: {
+            ...fillLayerConfig.source.data,
+            data: JSON.stringify(structures),
+          },
+        },
+        visible: true,
+      };
+      builtGeometriesContainer.push(structureLayer);
     }
 
     if (some(features)) {
