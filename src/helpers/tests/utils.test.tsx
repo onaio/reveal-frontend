@@ -4,6 +4,7 @@ import {
   BLACK,
   TASK_BLUE as BLUE,
   TASK_GREEN as GREEN,
+  TASK_PINK as PINK,
   TASK_PURPLE as PURPLE,
   TASK_RED as RED,
   YELLOW,
@@ -113,7 +114,7 @@ describe('helpers/utils', () => {
   it('gets correct color for RACD Register Family', () => {
     const task = cloneDeep(fixtures.task1);
     const sampleColorMap: SampleColorMap = {
-      Complete: GREEN,
+      Complete: PINK,
       Incomplete: RED,
       'Not Eligible': BLACK,
       'Not Visited': YELLOW,
