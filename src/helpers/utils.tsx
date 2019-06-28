@@ -5,7 +5,7 @@ import { findKey, uniq } from 'lodash';
 import { FitBoundsOptions, Layer, Style } from 'mapbox-gl';
 import { Column } from 'react-table';
 import SeamlessImmutable from 'seamless-immutable';
-import * as colors from '../colors';
+import { TASK_YELLOW } from '../colors';
 import { DIGITAL_GLOBE_CONNECT_ID, ONADATA_OAUTH_STATE, OPENSRP_OAUTH_STATE } from '../configs/env';
 import { locationHierarchy, LocationItem } from '../configs/settings';
 import {
@@ -270,7 +270,7 @@ export function extractPlan(plan: Plan) {
 export function getColorByValue(obj: ColorMapsTypes, status: string): Color {
   // @param o - obj[key] for key in iterate
   const key = findKey(obj, o => o.indexOf(status) >= 0);
-  return key ? key : colors.YELLOW;
+  return key ? key : TASK_YELLOW;
 }
 
 /** Given a task object , retrieves the contextual coloring
@@ -304,7 +304,7 @@ export function getColor(taskObject: InitialTask): Color {
       return getColorByValue(colorMaps.CASE_CONFIRMATION, properties.task_business_status);
     }
     default: {
-      return colors.YELLOW;
+      return TASK_YELLOW;
     }
   }
 }
