@@ -6,9 +6,9 @@ import { createBrowserHistory } from 'history';
 import React from 'react';
 import { Router } from 'react-router';
 import { APP, MAP_ID } from '../../../constants';
-import { FeatureCollection } from '../../../helpers/utils';
+import { FeatureCollection, wrapFeatureCollection } from '../../../helpers/utils';
 import store from '../../../store';
-import { TaskGeoJSON } from '../../../store/ducks/tasks';
+import { Task, TaskGeoJSON } from '../../../store/ducks/tasks';
 import * as fixtures from '../../../store/ducks/tests/fixtures';
 import GisidaWrapper from '../index';
 
@@ -62,7 +62,10 @@ describe('components/GisidaWrapper', () => {
       apiAccessToken: expect.any(String),
     });
     jest.runOnlyPendingTimers();
-    expect(store.getState()['map-1']).toMatchSnapshot();
+    expect(store.getState()['map-1']).toMatchSnapshot({
+      currentRegion: expect.any(Number),
+      reloadLayers: expect.any(Number),
+    });
     const componentWillUnmount = jest.spyOn(wrapper.instance(), 'componentWillUnmount');
     wrapper.unmount();
     expect(componentWillUnmount).toHaveBeenCalled();
@@ -96,13 +99,14 @@ describe('components/GisidaWrapper', () => {
     wrapper.setState({ doRenderMap: true });
     wrapper.setProps({ ...props });
     expect(toJson(wrapper)).toMatchSnapshot();
-    expect(wrapper.find('MapComponent').props()).toMatchSnapshot();
+    expect(wrapper.find('MapComponent').props()).toMatchSnapshot({});
     store.dispatch((Actions as any).mapRendered('map-1', true));
     store.dispatch((Actions as any).mapLoaded('map-1', true));
     expect(store.getState().APP).toMatchSnapshot({
       accessToken: expect.any(String),
       apiAccessToken: expect.any(String),
     });
+
     jest.runOnlyPendingTimers();
     /** Investigate why it won't set state for hasGeometries to true.
      * Had to copy the entire toggle functionality to test the
@@ -119,7 +123,7 @@ describe('components/GisidaWrapper', () => {
         layer.visible &&
         (layer.id.includes(props.currentGoal) || layer.id.includes('main-plan-layer'))
       ) {
-        store.dispatch(Actions.toggleLayer(MAP_ID, layer.id, true));
+        store.dispatch((Actions as any).toggleLayer(MAP_ID, layer.id, true));
       }
     }
     expect(store.getState()['map-1']).toMatchSnapshot();
@@ -171,7 +175,7 @@ describe('components/GisidaWrapper', () => {
 
   it('renders map component with structures', () => {
     const featureCollection: FeatureCollection<TaskGeoJSON> = {
-      features: fixtures.bednetTasks.map((task: any) => task.geojson),
+      features: fixtures.bednetTasks.map((task: Task) => task.geojson),
       type: 'FeatureCollection',
     };
     const props1 = {
@@ -180,7 +184,7 @@ describe('components/GisidaWrapper', () => {
       geoData: fixtures.jurisdictions[1],
       goal: fixtures.goals,
       handlers: [],
-      structures: [fixtures.coloredTasks.task1, fixtures.coloredTasks.task2],
+      structures: wrapFeatureCollection([fixtures.coloredTasks.task1, fixtures.coloredTasks.task2]),
     };
     const props = {
       currentGoal: fixtures.task6.goal_id,
@@ -188,7 +192,7 @@ describe('components/GisidaWrapper', () => {
       geoData: fixtures.jurisdictions[1],
       goal: fixtures.goals,
       handlers: [],
-      structures: [fixtures.coloredTasks.task1, fixtures.coloredTasks.task2],
+      structures: wrapFeatureCollection([fixtures.coloredTasks.task1, fixtures.coloredTasks.task2]),
     };
     const wrapper = mount(<GisidaWrapper {...props1} />);
     /** Investigate why it won't set state inside initmap even though
@@ -229,7 +233,7 @@ describe('components/GisidaWrapper', () => {
         layer.visible &&
         (layer.id.includes(props.currentGoal) || layer.id.includes('main-plan-layer'))
       ) {
-        store.dispatch(Actions.toggleLayer(MAP_ID, layer.id, true));
+        store.dispatch((Actions as any).toggleLayer(MAP_ID, layer.id, true));
       }
     }
     expect(store.getState()['map-1']).toMatchSnapshot();
