@@ -1,7 +1,7 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
-import { ducks } from 'gisida';
+import { Actions, ducks } from 'gisida';
 import { createBrowserHistory } from 'history';
 import React from 'react';
 import { Router } from 'react-router';
@@ -18,10 +18,10 @@ jest.mock('gisida-react', () => {
 });
 
 jest.mock('../../../configs/env');
+jest.useFakeTimers();
 
 reducerRegistry.register(APP, ducks.APP.default);
 reducerRegistry.register(MAP_ID, ducks.MAP.default);
-
 const history = createBrowserHistory();
 describe('components/GisidaWrapper', () => {
   it('renders component without crashing', () => {
@@ -48,7 +48,6 @@ describe('components/GisidaWrapper', () => {
     expect(store.getState().APP).toMatchSnapshot();
     expect(store.getState()['map-1']).toMatchSnapshot();
     expect(toJson(wrapper)).toMatchSnapshot();
-    jest.useFakeTimers();
     wrapper.setProps({ ...props });
     wrapper.setState({ doRenderMap: true });
     jest.runOnlyPendingTimers();
@@ -56,12 +55,17 @@ describe('components/GisidaWrapper', () => {
     expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 3000);
     expect(toJson(wrapper)).toMatchSnapshot();
     expect(wrapper.find('MapComponent').props()).toMatchSnapshot();
+    store.dispatch((Actions as any).mapRendered('map-1', true));
+    store.dispatch((Actions as any).mapLoaded('map-1', true));
     expect(store.getState().APP).toMatchSnapshot({
       accessToken: expect.any(String),
       apiAccessToken: expect.any(String),
     });
+    jest.runOnlyPendingTimers();
     expect(store.getState()['map-1']).toMatchSnapshot();
+    const componentWillUnmount = jest.spyOn(wrapper.instance(), 'componentWillUnmount');
     wrapper.unmount();
+    expect(componentWillUnmount).toHaveBeenCalled();
   });
 
   it('renders map component with FeatureCollection', () => {
@@ -93,12 +97,35 @@ describe('components/GisidaWrapper', () => {
     wrapper.setProps({ ...props });
     expect(toJson(wrapper)).toMatchSnapshot();
     expect(wrapper.find('MapComponent').props()).toMatchSnapshot();
+    store.dispatch((Actions as any).mapRendered('map-1', true));
+    store.dispatch((Actions as any).mapLoaded('map-1', true));
     expect(store.getState().APP).toMatchSnapshot({
       accessToken: expect.any(String),
       apiAccessToken: expect.any(String),
     });
+    jest.runOnlyPendingTimers();
+    /** Investigate why it won't set state for hasGeometries to true.
+     * Had to copy the entire toggle functionality to test the
+     * toggling functionality of this component
+     */
+    let layer;
+    const allLayers = Object.keys(store.getState()['map-1'].layers);
+    let eachLayer: string;
+    // console.log('all Layers', store.getState()['map-1'].layers);
+    for (eachLayer of allLayers) {
+      layer = store.getState()['map-1'].layers[eachLayer];
+      /** Toggle layers to show on the map */
+      if (
+        layer.visible &&
+        (layer.id.includes(props.currentGoal) || layer.id.includes('main-plan-layer'))
+      ) {
+        store.dispatch(Actions.toggleLayer(MAP_ID, layer.id, true));
+      }
+    }
     expect(store.getState()['map-1']).toMatchSnapshot();
+    const componentWillUnmount = jest.spyOn(wrapper.instance(), 'componentWillUnmount');
     wrapper.unmount();
+    expect(componentWillUnmount).toHaveBeenCalled();
   });
 
   it('works with DigitalGlobe base layer', () => {
@@ -137,7 +164,9 @@ describe('components/GisidaWrapper', () => {
         },
       },
     });
+    const componentWillUnmount = jest.spyOn(wrapper.instance(), 'componentWillUnmount');
     wrapper.unmount();
+    expect(componentWillUnmount).toHaveBeenCalled();
   });
 
   it('renders map component with structures', () => {
@@ -169,6 +198,8 @@ describe('components/GisidaWrapper', () => {
     wrapper.setState({ doRenderMap: true });
     wrapper.setProps({ ...props });
     expect(wrapper.find('MapComponent').props()).toMatchSnapshot();
+    store.dispatch((Actions as any).mapRendered('map-1', true));
+    store.dispatch((Actions as any).mapLoaded('map-1', true));
     expect(store.getState().APP).toMatchSnapshot({
       accessToken: expect.any(String),
       apiAccessToken: expect.any(String),
@@ -182,7 +213,28 @@ describe('components/GisidaWrapper', () => {
         },
       },
     });
+    jest.runOnlyPendingTimers();
+    /** Investigate why it won't set state for hasGeometries to true.
+     * Had to copy the entire toggle functionality to test the
+     * toggling functionality of this component
+     */
+    let layer;
+    const allLayers = Object.keys(store.getState()['map-1'].layers);
+    let eachLayer: string;
+    // console.log('all Layers', store.getState()['map-1'].layers);
+    for (eachLayer of allLayers) {
+      layer = store.getState()['map-1'].layers[eachLayer];
+      /** Toggle layers to show on the map */
+      if (
+        layer.visible &&
+        (layer.id.includes(props.currentGoal) || layer.id.includes('main-plan-layer'))
+      ) {
+        store.dispatch(Actions.toggleLayer(MAP_ID, layer.id, true));
+      }
+    }
     expect(store.getState()['map-1']).toMatchSnapshot();
+    const componentWillUnmount = jest.spyOn(wrapper.instance(), 'componentWillUnmount');
     wrapper.unmount();
+    expect(componentWillUnmount).toHaveBeenCalled();
   });
 });

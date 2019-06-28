@@ -14,6 +14,7 @@ window.maps = [
     _container: {
       id: 'map-1',
     },
+    isStyleLoaded: true,
   } as any,
 ];
 
