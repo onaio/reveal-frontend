@@ -4,6 +4,7 @@ import {
   BLACK,
   TASK_BLUE as BLUE,
   TASK_GREEN as GREEN,
+  TASK_PURPLE as PURPLE,
   TASK_RED as RED,
   YELLOW,
 } from '../../colors';
@@ -190,7 +191,7 @@ describe('helpers/utils', () => {
     const task = cloneDeep(fixtures.task1);
     task.geojson.properties.action_code = 'Blood Screening';
     const sampleColorMap: SampleColorMap = {
-      Complete: GREEN,
+      Complete: PURPLE,
       Incomplete: RED,
       'Not Eligible': BLACK,
       'Not Visited': YELLOW,
