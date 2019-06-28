@@ -258,7 +258,6 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
 
   if (plan && jurisdiction && (goals && goals.length > 1)) {
     currentGoal = ownProps.match.params.goalId;
-    /** DIRTY MANGY hack  to be improved by getting the goal_id from  the sidebar selection */
     featureCollection = getFCByPlanAndGoalAndJurisdiction(
       state,
       plan.plan_id,
