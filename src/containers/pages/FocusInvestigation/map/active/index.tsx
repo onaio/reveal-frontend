@@ -56,7 +56,6 @@ import tasksReducer, {
   fetchTasks,
   getFCByPlanAndGoalAndJurisdiction,
   getStructuresByJurisdictionId,
-  getTasksByPlanAndGoalAndJurisdiction,
   reducerName as tasksReducerName,
   Task,
   TaskGeoJSON,
@@ -249,7 +248,6 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
   const plan = getPlanById(state, ownProps.match.params.id);
   let goals = null;
   let jurisdiction = null;
-  let tasks = null;
   let currentGoal = null;
   let featureCollection = defaultFeatureCollection;
   let structures = null;
@@ -261,12 +259,6 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
   }
 
   if (plan && jurisdiction && (goals && goals.length > 1)) {
-    tasks = getTasksByPlanAndGoalAndJurisdiction(
-      state,
-      plan.plan_id,
-      ownProps.match.params.goalId,
-      plan.jurisdiction_id
-    );
     currentGoal = ownProps.match.params.goalId;
     /** DIRTY MANGY hack  to be improved by getting the goal_id from  the sidebar selection */
     featureCollection = getFCByPlanAndGoalAndJurisdiction(
@@ -286,7 +278,6 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
     plansArray: getPlansArray(state),
     plansIdArray: getPlansIdArray(state),
     structures,
-    tasks,
   };
 };
 
