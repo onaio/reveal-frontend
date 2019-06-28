@@ -79,7 +79,6 @@ export interface MapSingleFIProps {
   jurisdiction: Jurisdiction | null;
   plan: Plan | null;
   structures: FeatureCollection<TaskGeoJSON> | null /** we use this to get all structures */;
-  tasks: Task[] | null;
 }
 
 /** default value for feature Collection */
@@ -100,7 +99,6 @@ export const defaultMapSingleFIProps: MapSingleFIProps = {
   jurisdiction: null,
   plan: null,
   structures: null,
-  tasks: null,
 };
 
 /** Map View for Single Active Focus Investigation */
