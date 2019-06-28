@@ -5,10 +5,11 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import { FI_SINGLE_URL } from '../../../../../../constants';
+import { wrapFeatureCollection } from '../../../../../../helpers/utils';
 import store from '../../../../../../store';
 import { fetchGoals } from '../../../../../../store/ducks/goals';
 import { fetchJurisdictions } from '../../../../../../store/ducks/jurisdictions';
-import { fetchPlans } from '../../../../../../store/ducks/plans';
+import { fetchPlans, Plan } from '../../../../../../store/ducks/plans';
 import { fetchTasks } from '../../../../../../store/ducks/tasks';
 import * as fixtures from '../../../../../../store/ducks/tests/fixtures';
 import ConnectedMapSingleFI, { SingleActiveFIMap } from '../../active/';
@@ -29,11 +30,8 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
   it('renders without crashing', () => {
     const mock: any = jest.fn();
     const props = {
-      currentGoal: fixtures.goal3,
-      featureCollection: {
-        features: [fixtures.task4.geojson],
-        type: 'FeatureCollection',
-      },
+      currentGoal: fixtures.goal3.goal_id,
+      featureCollection: wrapFeatureCollection([fixtures.coloredTasks.task4.geojson]),
       goals: [fixtures.goal3],
       history,
       jurisdiction: fixtures.jurisdictions[0],
@@ -44,8 +42,7 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
         path: `${FI_SINGLE_URL}/:id`,
         url: `${FI_SINGLE_URL}/13`,
       },
-      plan: fixtures.plan1,
-      tasks: fixtures.tasks,
+      plan: fixtures.plan1 as Plan,
     };
     shallow(
       <Router history={history}>
@@ -57,11 +54,8 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
   it('renders SingleActiveFimap correctly', () => {
     const mock: any = jest.fn();
     const props = {
-      currentGoal: fixtures.goal3,
-      featureCollection: {
-        features: [fixtures.task4.geojson],
-        type: 'FeatureCollection',
-      },
+      currentGoal: fixtures.goal3.goal_id,
+      featureCollection: wrapFeatureCollection([fixtures.coloredTasks.task4.geojson]),
       goals: [fixtures.goal3],
       history,
       jurisdiction: fixtures.jurisdictions[0],
@@ -72,8 +66,7 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
         path: `${FI_SINGLE_URL}/:id`,
         url: `${FI_SINGLE_URL}/13`,
       },
-      plan: fixtures.plan1,
-      tasks: fixtures.tasks,
+      plan: fixtures.plan1 as Plan,
     };
     const wrapper = mount(
       <Router history={history}>
@@ -89,7 +82,7 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
     const mock: any = jest.fn();
     store.dispatch(fetchGoals([fixtures.goal3]));
     store.dispatch(fetchJurisdictions([fixtures.jurisdictions[0]]));
-    store.dispatch(fetchPlans([fixtures.plan1]));
+    store.dispatch(fetchPlans([fixtures.plan1 as Plan]));
     store.dispatch(fetchTasks(fixtures.tasks));
     const props = {
       currentGoal: fixtures.goal3,
