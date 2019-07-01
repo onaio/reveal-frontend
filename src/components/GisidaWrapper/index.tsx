@@ -22,7 +22,7 @@ import {
 import { EventData } from '../../helpers/mapbox';
 import { ConfigStore, FeatureCollection, FlexObject } from '../../helpers/utils';
 import store from '../../store';
-import { Goal } from '../../store/ducks/goals';
+import { fetchCurrentGoal, Goal } from '../../store/ducks/goals';
 import { Jurisdiction, JurisdictionGeoJSON } from '../../store/ducks/jurisdictions';
 import { Task, TaskGeoJSON } from '../../store/ducks/tasks';
 import './gisida.css';
@@ -225,6 +225,7 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
     }
   }
   public componentWillUnmount() {
+    store.dispatch(fetchCurrentGoal(null));
     const stateOnUnmount = store.getState();
     Object.keys(stateOnUnmount[MAP_ID].layers).forEach((layer: string) => {
       if (stateOnUnmount[MAP_ID].layers[layer].visible) {
