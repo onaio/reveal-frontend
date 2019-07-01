@@ -1,4 +1,5 @@
 import { get, keyBy, values } from 'lodash';
+import { string } from 'prop-types';
 import { AnyAction, Store } from 'redux';
 import SeamlessImmutable from 'seamless-immutable';
 import { FlexObject } from '../../helpers/utils';
@@ -21,10 +22,12 @@ export interface Goal {
   task_business_status_map: FlexObject;
   task_count: number;
 }
-
 // actions
 /** GOALS_FETCHED action type */
 export const GOALS_FETCHED = 'reveal/reducer/goals/GOALS_FETCHED';
+
+/** FETCH_CURRENT_GOAL action type */
+export const FETCH_CURRENT_GOAL = 'reveal/reducer/goals/FETCH_CURRENT_GOAL';
 
 /** interface for authorize action */
 interface FetchGoalsAction extends AnyAction {
@@ -32,12 +35,18 @@ interface FetchGoalsAction extends AnyAction {
   type: typeof GOALS_FETCHED;
 }
 
-/** Create type for Goal reducer actions */
-export type GoalActionTypes = FetchGoalsAction | AnyAction;
+interface FetchCurrentGoalAction extends AnyAction {
+  currentGoal: string | null;
+  type: typeof FETCH_CURRENT_GOAL;
+}
+
+/** Create type for Goal reducer action */
+export type GoalActionTypes = FetchGoalsAction | FetchCurrentGoalAction | AnyAction;
 
 /** interface for Goal state */
 interface GoalState {
   goalsById: { [key: string]: Goal[] };
+  currentGoal: string | null;
 }
 
 /** immutable Goal state */
@@ -45,6 +54,7 @@ export type ImmutableGoalState = GoalState & SeamlessImmutable.ImmutableObject<G
 
 /** initial Goal state */
 const initialState: ImmutableGoalState = SeamlessImmutable({
+  currentGoal: null,
   goalsById: {},
 });
 
@@ -55,6 +65,11 @@ export default function reducer(state = initialState, action: GoalActionTypes): 
       return SeamlessImmutable({
         ...state,
         goalsById: action.goalsById,
+      });
+    case FETCH_CURRENT_GOAL:
+      return SeamlessImmutable({
+        ...state,
+        currentGoal: action.currentGoal,
       });
     default:
       return state;
@@ -79,6 +94,16 @@ export const fetchGoals = (goalsList: Goal[] = []): FetchGoalsAction => {
       goal => goal.id
     ),
     type: GOALS_FETCHED,
+  };
+};
+
+/** fetch Current Goal
+ * @returns {FetchCurrentGoalAction} FetchCurrentGoalAction
+ */
+export const fetchCurrentGoal = (currentGoal: string | null): FetchCurrentGoalAction => {
+  return {
+    currentGoal,
+    type: FETCH_CURRENT_GOAL,
   };
 };
 
@@ -143,4 +168,8 @@ export function getGoalsByPlanAndJurisdiction(
   return values((state as any)[reducerName].goalsById).filter(
     (e: Goal) => e.plan_id === planId && e.jurisdiction_id === jurisdictionId
   );
+}
+
+export function getCurrentGoal(state: Partial<Store>) {
+  return (state as any)[reducerName].currentGoal;
 }
