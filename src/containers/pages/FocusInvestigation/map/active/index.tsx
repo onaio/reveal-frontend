@@ -35,7 +35,9 @@ import ProgressBar from '../../../../../helpers/ProgressBar';
 import { FeatureCollection, FlexObject, RouteParams } from '../../../../../helpers/utils';
 import supersetFetch from '../../../../../services/superset';
 import goalsReducer, {
+  fetchCurrentGoal,
   fetchGoals,
+  getCurrentGoal,
   getGoalsByPlanAndJurisdiction,
   Goal,
   reducerName as goalsReducerName,
@@ -73,6 +75,7 @@ reducerRegistry.register(tasksReducerName, tasksReducer);
 export interface MapSingleFIProps {
   currentGoal: string | null;
   featureCollection: FeatureCollection<TaskGeoJSON>;
+  fetchCurrentGoalActionCreator: typeof fetchCurrentGoal;
   fetchGoalsActionCreator: typeof fetchGoals;
   fetchJurisdictionsActionCreator: typeof fetchJurisdictions;
   fetchPlansActionCreator: typeof fetchPlans;
@@ -93,6 +96,7 @@ const defaultFeatureCollection: FeatureCollection<TaskGeoJSON> = {
 export const defaultMapSingleFIProps: MapSingleFIProps = {
   currentGoal: null,
   featureCollection: defaultFeatureCollection,
+  fetchCurrentGoalActionCreator: fetchCurrentGoal,
   fetchGoalsActionCreator: fetchGoals,
   fetchJurisdictionsActionCreator: fetchJurisdictions,
   fetchPlansActionCreator: fetchPlans,
@@ -133,6 +137,15 @@ class SingleActiveFIMap extends React.Component<
     await supersetFetch(SUPERSET_STRUCTURES_SLICE, { row_limit: 3000 }).then((result4: Task[]) =>
       fetchTasksActionCreator(result4)
     );
+  }
+  public componentWillReceiveProps(nextProps: any) {
+    const { fetchCurrentGoalActionCreator, match } = this.props;
+
+    if (match.params.goalId !== nextProps.match.params.goalId) {
+      fetchCurrentGoalActionCreator(
+        nextProps.match.params.goalId ? nextProps.match.params.goalId : null
+      );
+    }
   }
 
   public render() {
@@ -250,7 +263,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
   const plan = getPlanById(state, ownProps.match.params.id);
   let goals = null;
   let jurisdiction = null;
-  let currentGoal = null;
+  let currentGoal;
   let featureCollection = defaultFeatureCollection;
   let structures = null;
 
@@ -261,7 +274,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
   }
 
   if (plan && jurisdiction && (goals && goals.length > 1)) {
-    currentGoal = ownProps.match.params.goalId;
+    currentGoal = getCurrentGoal(state);
     featureCollection = getFCByPlanAndGoalAndJurisdiction(
       state,
       plan.plan_id,
@@ -284,6 +297,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
 
 /** map props to actions that may be dispatched by component */
 const mapDispatchToProps = {
+  fetchCurrentGoalActionCreator: fetchCurrentGoal,
   fetchGoalsActionCreator: fetchGoals,
   fetchJurisdictionsActionCreator: fetchJurisdictions,
   fetchPlansActionCreator: fetchPlans,
