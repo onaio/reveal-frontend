@@ -1,14 +1,14 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
-import { ducks } from 'gisida';
+import { Actions, ducks } from 'gisida';
 import { createBrowserHistory } from 'history';
 import React from 'react';
 import { Router } from 'react-router';
 import { APP, MAP_ID } from '../../../constants';
-import { FeatureCollection } from '../../../helpers/utils';
+import { FeatureCollection, toggleLayer, wrapFeatureCollection } from '../../../helpers/utils';
 import store from '../../../store';
-import { TaskGeoJSON } from '../../../store/ducks/tasks';
+import { Task, TaskGeoJSON } from '../../../store/ducks/tasks';
 import * as fixtures from '../../../store/ducks/tests/fixtures';
 import GisidaWrapper from '../index';
 
@@ -18,10 +18,10 @@ jest.mock('gisida-react', () => {
 });
 
 jest.mock('../../../configs/env');
+jest.useFakeTimers();
 
 reducerRegistry.register(APP, ducks.APP.default);
 reducerRegistry.register(MAP_ID, ducks.MAP.default);
-
 const history = createBrowserHistory();
 describe('components/GisidaWrapper', () => {
   it('renders component without crashing', () => {
@@ -46,9 +46,8 @@ describe('components/GisidaWrapper', () => {
     };
     const wrapper = mount(<GisidaWrapper {...props} />);
     expect(store.getState().APP).toMatchSnapshot();
-    expect(store.getState()['map-1']).toMatchSnapshot();
+    expect(store.getState()['map-1']).toMatchSnapshot({});
     expect(toJson(wrapper)).toMatchSnapshot();
-    jest.useFakeTimers();
     wrapper.setProps({ ...props });
     wrapper.setState({ doRenderMap: true });
     jest.runOnlyPendingTimers();
@@ -56,12 +55,20 @@ describe('components/GisidaWrapper', () => {
     expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 3000);
     expect(toJson(wrapper)).toMatchSnapshot();
     expect(wrapper.find('MapComponent').props()).toMatchSnapshot();
+    store.dispatch((Actions as any).mapRendered('map-1', true));
+    store.dispatch((Actions as any).mapLoaded('map-1', true));
     expect(store.getState().APP).toMatchSnapshot({
       accessToken: expect.any(String),
       apiAccessToken: expect.any(String),
     });
-    expect(store.getState()['map-1']).toMatchSnapshot();
+    jest.runOnlyPendingTimers();
+    expect(store.getState()['map-1']).toMatchSnapshot({
+      currentRegion: expect.any(Number),
+      reloadLayers: expect.any(Number),
+    });
+    const componentWillUnmount = jest.spyOn(wrapper.instance(), 'componentWillUnmount');
     wrapper.unmount();
+    expect(componentWillUnmount).toHaveBeenCalled();
   });
 
   it('renders map component with FeatureCollection', () => {
@@ -92,13 +99,28 @@ describe('components/GisidaWrapper', () => {
     wrapper.setState({ doRenderMap: true });
     wrapper.setProps({ ...props });
     expect(toJson(wrapper)).toMatchSnapshot();
-    expect(wrapper.find('MapComponent').props()).toMatchSnapshot();
+    expect(wrapper.find('MapComponent').props()).toMatchSnapshot({});
+    store.dispatch((Actions as any).mapRendered('map-1', true));
+    store.dispatch((Actions as any).mapLoaded('map-1', true));
     expect(store.getState().APP).toMatchSnapshot({
       accessToken: expect.any(String),
       apiAccessToken: expect.any(String),
     });
-    expect(store.getState()['map-1']).toMatchSnapshot();
+
+    jest.runOnlyPendingTimers();
+    /** Investigate why it won't set state for hasGeometries to true.
+     * Had to copy the entire toggle functionality to test the
+     * toggling functionality of this component
+     */
+    const allLayers = store.getState()['map-1'].layers;
+    toggleLayer(allLayers, props.currentGoal, store, Actions);
+    expect(store.getState()['map-1']).toMatchSnapshot({
+      currentRegion: expect.any(Number),
+      reloadLayers: expect.any(Number),
+    });
+    const componentWillUnmount = jest.spyOn(wrapper.instance(), 'componentWillUnmount');
     wrapper.unmount();
+    expect(componentWillUnmount).toHaveBeenCalled();
   });
 
   it('works with DigitalGlobe base layer', () => {
@@ -137,12 +159,14 @@ describe('components/GisidaWrapper', () => {
         },
       },
     });
+    const componentWillUnmount = jest.spyOn(wrapper.instance(), 'componentWillUnmount');
     wrapper.unmount();
+    expect(componentWillUnmount).toHaveBeenCalled();
   });
 
   it('renders map component with structures', () => {
     const featureCollection: FeatureCollection<TaskGeoJSON> = {
-      features: fixtures.bednetTasks.map((task: any) => task.geojson),
+      features: fixtures.bednetTasks.map((task: Task) => task.geojson),
       type: 'FeatureCollection',
     };
     const props1 = {
@@ -151,7 +175,7 @@ describe('components/GisidaWrapper', () => {
       geoData: fixtures.jurisdictions[1],
       goal: fixtures.goals,
       handlers: [],
-      structures: [fixtures.coloredTasks.task1, fixtures.coloredTasks.task2],
+      structures: wrapFeatureCollection([fixtures.coloredTasks.task1, fixtures.coloredTasks.task2]),
     };
     const props = {
       currentGoal: fixtures.task6.goal_id,
@@ -159,7 +183,7 @@ describe('components/GisidaWrapper', () => {
       geoData: fixtures.jurisdictions[1],
       goal: fixtures.goals,
       handlers: [],
-      structures: [fixtures.coloredTasks.task1, fixtures.coloredTasks.task2],
+      structures: wrapFeatureCollection([fixtures.coloredTasks.task1, fixtures.coloredTasks.task2]),
     };
     const wrapper = mount(<GisidaWrapper {...props1} />);
     /** Investigate why it won't set state inside initmap even though
@@ -169,6 +193,8 @@ describe('components/GisidaWrapper', () => {
     wrapper.setState({ doRenderMap: true });
     wrapper.setProps({ ...props });
     expect(wrapper.find('MapComponent').props()).toMatchSnapshot();
+    store.dispatch((Actions as any).mapRendered('map-1', true));
+    store.dispatch((Actions as any).mapLoaded('map-1', true));
     expect(store.getState().APP).toMatchSnapshot({
       accessToken: expect.any(String),
       apiAccessToken: expect.any(String),
@@ -182,7 +208,20 @@ describe('components/GisidaWrapper', () => {
         },
       },
     });
-    expect(store.getState()['map-1']).toMatchSnapshot();
+    jest.runOnlyPendingTimers();
+    /** Investigate why it won't set state for hasGeometries to true.
+     * Had to copy the entire toggle functionality to test the
+     * toggling functionality of this component
+     */
+
+    const allLayers = store.getState()['map-1'].layers;
+    toggleLayer(allLayers, props.currentGoal, store, Actions);
+    expect(store.getState()['map-1']).toMatchSnapshot({
+      currentRegion: expect.any(Number),
+      reloadLayers: expect.any(Number),
+    });
+    const componentWillUnmount = jest.spyOn(wrapper.instance(), 'componentWillUnmount');
     wrapper.unmount();
+    expect(componentWillUnmount).toHaveBeenCalled();
   });
 });

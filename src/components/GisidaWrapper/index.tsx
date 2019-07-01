@@ -224,6 +224,14 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
       });
     }
   }
+  public componentWillUnmount() {
+    const stateOnUnmount = store.getState();
+    Object.keys(stateOnUnmount[MAP_ID].layers).forEach((layer: string) => {
+      if (stateOnUnmount[MAP_ID].layers[layer].visible) {
+        store.dispatch(Actions.toggleLayer(MAP_ID, stateOnUnmount[MAP_ID].layers[layer].id, false));
+      }
+    });
+  }
 
   public render() {
     const { minHeight } = this.props || '80vh';

@@ -79,6 +79,6 @@ describe('helpers/handlers', () => {
 
     popupHandler(event as any);
 
-    expect(addToMock).toHaveBeenCalledWith({ _container: { id: 'map-1' } });
+    expect(addToMock).toHaveBeenCalledWith({ _container: { id: 'map-1' }, isStyleLoaded: true });
   });
 });
