@@ -363,7 +363,6 @@ export function wrapFeatureCollection<T>(objFeatureCollection: T[]): FeatureColl
 export function toggleLayer(allLayers: FlexObject, currentGoal: string, store: any, Actions: any) {
   let layer;
   let eachLayer: string;
-  // console.log('all Layers', store.getState()['map-1'].layers);
   for (eachLayer of Object.keys(allLayers)) {
     layer = allLayers[eachLayer];
     /** Toggle layers to show on the map */
