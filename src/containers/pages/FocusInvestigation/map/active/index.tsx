@@ -140,12 +140,12 @@ class SingleActiveFIMap extends React.Component<
       return <Loading />;
     }
     const homePage = {
-      label: `${HOME}`,
-      url: `${HOME_URL}`,
+      label: HOME,
+      url: HOME_URL,
     };
     const basePage = {
       label: FOCUS_INVESTIGATIONS,
-      url: `${FI_URL}`,
+      url: FI_URL,
     };
     const secondLastPage = {
       label: plan.jurisdiction_name,
@@ -153,7 +153,7 @@ class SingleActiveFIMap extends React.Component<
     };
     const breadCrumbProps: BreadCrumbProps = {
       currentPage: {
-        label: `${MAP}`,
+        label: plan.plan_title,
         url: `${FI_SINGLE_MAP_URL}/${plan.id}`,
       },
       pages: [],
@@ -173,7 +173,7 @@ class SingleActiveFIMap extends React.Component<
       <div>
         <HeaderBreadcrumb {...breadCrumbProps} />
         <h2 className="page-title mt-4 mb-4">
-          {FOCUS_INVESTIGATION}: {plan && plan.jurisdiction_name ? plan.jurisdiction_name : null}
+          {FOCUS_INVESTIGATION}: {plan && plan.plan_title}
         </h2>
         <div className="row no-gutters mb-5">
           <div className="col-9">
