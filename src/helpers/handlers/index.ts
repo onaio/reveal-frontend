@@ -1,8 +1,6 @@
 import { GisidaMap } from 'gisida';
 import { LngLat, Map } from 'mapbox-gl';
 import { MAP_ID } from '../../constants';
-import store from '../../store';
-import { getCurrentGoal } from '../../store/ducks/goals';
 import { EventData } from '../mapbox';
 import './handlers.css';
 
@@ -16,8 +14,6 @@ declare global {
 
 /** Having features as any type is not most desirable this has been qued up as part of technical debt payment */
 export function popupHandler(event: EventData) {
-  const currentState = store.getState();
-  const currentGoal = getCurrentGoal(currentState);
   /** currentGoal is currently not being used but we may/ may not use it in the future  */
   const features = event.target.queryRenderedFeatures(event.point) as any[];
   let description: string = '';
