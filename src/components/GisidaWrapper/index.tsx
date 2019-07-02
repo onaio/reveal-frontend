@@ -103,6 +103,7 @@ interface GisidaProps {
   goal?: Goal[] | null;
   handlers: Handlers[];
   structures: FeatureCollection<TaskGeoJSON> | null;
+  singleFi?: boolean;
   minHeight?: string;
   basemapStyle?: string | Style;
 }
@@ -122,6 +123,7 @@ export const defaultGisidaProps: GisidaProps = {
   geoData: null,
   goal: null,
   handlers: [],
+  singleFi: false,
   structures: null,
 };
 
@@ -194,9 +196,17 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
     const features: TaskGeoJSON[] =
       (nextProps.featureCollection && nextProps.featureCollection.features) || [];
     /** If there are no features and init map without features is false
-     * and location data is set
+     * and location data is set the check below assumes all plans have structures
      */
-    if (!some(features) && !this.state.initMapWithoutFC && this.state.locations) {
+    if (
+      (!some(features) &&
+        !this.state.initMapWithoutFC &&
+        this.state.locations &&
+        this.props.structures !== nextProps.structures &&
+        nextProps.structures &&
+        nextProps.structures.features.length) ||
+      nextProps.singleFi
+    ) {
       this.setState({ doInitMap: true, initMapWithoutFC: true }, () => {
         // Dirty work around! Arbitrary delay to allow style load before adding layers
         setTimeout(() => {
@@ -215,10 +225,10 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
      * if condition1 and condition2 or condition3 execute
      */
     if (
-      (some(features) &&
-        (nextProps.currentGoal !== this.props.currentGoal &&
-          (this.state.locations || this.state.doInitMap))) ||
-      nextProps.currentGoal === 'undefined'
+      some(features) &&
+      ((nextProps.currentGoal !== this.props.currentGoal &&
+        (this.state.locations || this.state.doInitMap)) ||
+        nextProps.singleFi)
     ) {
       this.setState({ doInitMap: false, initMapWithoutFC: false }, () => {
         this.initMap(nextProps.featureCollection);
