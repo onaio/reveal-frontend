@@ -246,7 +246,7 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
       <HeaderBreadcrumb
         currentPage={
           Object {
-            "label": "map",
+            "label": "A1-Tha Luang Village 1 Focus 01",
             "url": "/focus-investigation/map/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
           }
         }
@@ -257,7 +257,7 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
               "url": "/",
             },
             Object {
-              "label": "Focus Investigation",
+              "label": "Focus Investigations",
               "url": "/focus-investigation",
             },
             Object {
@@ -326,7 +326,7 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
                         href="/focus-investigation"
                         onClick={[Function]}
                       >
-                        Focus Investigation
+                        Focus Investigations
                       </a>
                     </Link>
                   </li>
@@ -380,7 +380,7 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
                     aria-current="page"
                     className="active breadcrumb-item"
                   >
-                    map
+                    A1-Tha Luang Village 1 Focus 01
                   </li>
                 </BreadcrumbItem>
               </ol>
@@ -393,7 +393,7 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
       >
         Focus Investigation
         : 
-        NVI_439
+        A1-Tha Luang Village 1 Focus 01
       </h2>
       <div
         className="row no-gutters mb-5"
@@ -1263,7 +1263,7 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store 1`
           <HeaderBreadcrumb
             currentPage={
               Object {
-                "label": "map",
+                "label": "A1-Tha Luang Village 1 Focus 01",
                 "url": "/focus-investigation/map/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
               }
             }
@@ -1274,7 +1274,7 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store 1`
                   "url": "/",
                 },
                 Object {
-                  "label": "Focus Investigation",
+                  "label": "Focus Investigations",
                   "url": "/focus-investigation",
                 },
                 Object {
@@ -1343,7 +1343,7 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store 1`
                             href="/focus-investigation"
                             onClick={[Function]}
                           >
-                            Focus Investigation
+                            Focus Investigations
                           </a>
                         </Link>
                       </li>
@@ -1397,7 +1397,7 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store 1`
                         aria-current="page"
                         className="active breadcrumb-item"
                       >
-                        map
+                        A1-Tha Luang Village 1 Focus 01
                       </li>
                     </BreadcrumbItem>
                   </ol>
@@ -1410,7 +1410,7 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store 1`
           >
             Focus Investigation
             : 
-            NVI_439
+            A1-Tha Luang Village 1 Focus 01
           </h2>
           <div
             className="row no-gutters mb-5"
