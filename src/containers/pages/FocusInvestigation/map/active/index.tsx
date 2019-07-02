@@ -20,6 +20,7 @@ import {
   FI_SINGLE_URL,
   FI_URL,
   FOCUS_INVESTIGATION,
+  FOCUS_INVESTIGATIONS,
   HOME,
   HOME_URL,
   MAP,
@@ -30,6 +31,7 @@ import {
 } from '../../../../../constants';
 import { popupHandler } from '../../../../../helpers/handlers';
 import { getGoalReport } from '../../../../../helpers/indicators';
+import ProgressBar from '../../../../../helpers/ProgressBar';
 import { FeatureCollection, FlexObject, RouteParams } from '../../../../../helpers/utils';
 import supersetFetch from '../../../../../services/superset';
 import goalsReducer, {
@@ -139,12 +141,12 @@ class SingleActiveFIMap extends React.Component<
       return <Loading />;
     }
     const homePage = {
-      label: `${HOME}`,
-      url: `${HOME_URL}`,
+      label: HOME,
+      url: HOME_URL,
     };
     const basePage = {
-      label: FOCUS_INVESTIGATION,
-      url: `${FI_URL}`,
+      label: FOCUS_INVESTIGATIONS,
+      url: FI_URL,
     };
     const secondLastPage = {
       label: plan.jurisdiction_name,
@@ -152,7 +154,7 @@ class SingleActiveFIMap extends React.Component<
     };
     const breadCrumbProps: BreadCrumbProps = {
       currentPage: {
-        label: `${MAP}`,
+        label: plan.plan_title,
         url: `${FI_SINGLE_MAP_URL}/${plan.id}`,
       },
       pages: [],
@@ -172,7 +174,7 @@ class SingleActiveFIMap extends React.Component<
       <div>
         <HeaderBreadcrumb {...breadCrumbProps} />
         <h2 className="page-title mt-4 mb-4">
-          {FOCUS_INVESTIGATION}: {plan && plan.jurisdiction_name ? plan.jurisdiction_name : null}
+          {FOCUS_INVESTIGATION}: {plan && plan.plan_title}
         </h2>
         <div className="row no-gutters mb-5">
           <div className="col-9">
@@ -211,6 +213,8 @@ class SingleActiveFIMap extends React.Component<
                           {TARGET}: {goalReport.prettyPercentAchieved} ({goalReport.achievedValue}{' '}
                           {OF} {goalReport.targetValue})
                         </p>
+                        <br />
+                        <ProgressBar value={goalReport.percentAchieved} max={1} />
                       </div>
                     </div>
                   );

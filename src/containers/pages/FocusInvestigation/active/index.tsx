@@ -26,7 +26,7 @@ import {
   FI_SINGLE_URL,
   FI_URL,
   FOCUS_AREA_HEADER,
-  FOCUS_INVESTIGATION,
+  FOCUS_INVESTIGATIONS,
   HOME,
   HOME_URL,
   REASON_HEADER,
@@ -83,7 +83,7 @@ class ActiveFocusInvestigation extends React.Component<
   public render() {
     const breadcrumbProps: BreadCrumbProps = {
       currentPage: {
-        label: `${FOCUS_INVESTIGATION}`,
+        label: `${FOCUS_INVESTIGATIONS}`,
         url: `${FI_URL}`,
       },
       pages: [],
