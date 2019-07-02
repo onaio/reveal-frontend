@@ -171,7 +171,7 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
       <div className="mb-5">
         <HeaderBreadcrumbs {...breadCrumbProps} />
         <h2 className="page-title mt-4 mb-5">
-          &nbsp;&nbsp;{FOCUS_INVESTIGATIONS} {IN} {theObject.focusArea}
+          {FOCUS_INVESTIGATIONS} {IN} {theObject.focusArea}
         </h2>
         <Row>
           <Col className="col-6">
