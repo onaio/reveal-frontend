@@ -29,6 +29,7 @@ import {
   FI_URL,
   FOCUS_AREA_INFO,
   FOCUS_INVESTIGATION,
+  FOCUS_INVESTIGATIONS,
   HOME,
   HOME_URL,
   IN,
@@ -142,7 +143,7 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
     ];
     theObject = transformValues(theObject, propertiesToTransform);
     const basePage = {
-      label: FOCUS_INVESTIGATION,
+      label: FOCUS_INVESTIGATIONS,
       url: `${FI_URL}`,
     };
     const homePage = {
