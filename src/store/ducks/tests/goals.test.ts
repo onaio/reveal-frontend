@@ -3,7 +3,9 @@ import { keyBy } from 'lodash';
 import { FlushThunks } from 'redux-testkit';
 import store from '../../index';
 import reducer, {
+  fetchCurrentGoal,
   fetchGoals,
+  getCurrentGoal,
   getGoalById,
   getGoalsByGoalId,
   getGoalsById,
@@ -32,6 +34,7 @@ describe('reducers/goals', () => {
     expect(getGoalsByGoalId(store.getState(), 'someId')).toEqual([]);
     expect(getGoalsByJurisdictionId(store.getState(), 'someId')).toEqual([]);
     expect(getGoalsByPlanAndJurisdiction(store.getState(), 'a', 'b')).toEqual([]);
+    expect(getCurrentGoal(store.getState())).toEqual(null);
   });
 
   it('should fetch goals', () => {
@@ -57,6 +60,11 @@ describe('reducers/goals', () => {
         '450fc15b-5bd2-468a-927a-49cb10d3bcac'
       )
     ).toEqual([fixtures.goal1, fixtures.goal2, fixtures.goal4]);
+  });
+
+  it('should fetch currentGoal', () => {
+    store.dispatch(fetchCurrentGoal(fixtures.currentGoal));
+    expect(getCurrentGoal(store.getState())).toEqual(fixtures.currentGoal);
   });
 
   it('should save goals correctly', () => {

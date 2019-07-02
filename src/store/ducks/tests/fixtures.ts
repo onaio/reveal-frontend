@@ -636,3 +636,4 @@ jurisdiction3.geojson.id = 'abcde';
 export { jurisdiction3 };
 
 export const jurisdictionsIdsArray = jurisdictions.map((e: any) => e.jurisdiction_id);
+export const currentGoal = 'RACD_register_all_families';
