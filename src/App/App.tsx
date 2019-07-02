@@ -24,7 +24,10 @@ import HistoricalFocusInvestigation from '../containers/pages/FocusInvestigation
 import SingleActiveFIMap from '../containers/pages/FocusInvestigation/map/active';
 import SingleFI from '../containers/pages/FocusInvestigation/single';
 import Home from '../containers/pages/Home/Home';
-import IRS from '../containers/pages/InterventionPlan/IRS';
+import IrsPlans from '../containers/pages/InterventionPlan/IRS';
+import IrsDraftPlan from '../containers/pages/InterventionPlan/IRS/draft';
+import IrsFinalizedPlan from '../containers/pages/InterventionPlan/IRS/finalized';
+import IrsNewPlan from '../containers/pages/InterventionPlan/IRS/new';
 import { oAuthUserInfoGetter } from '../helpers/utils';
 
 library.add(faMap);
@@ -51,8 +54,30 @@ class App extends Component {
                 disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                 exact={true}
                 path={INTERVENTION_IRS_URL}
-                component={IRS}
+                component={IrsPlans}
               />
+
+              <ConnectedPrivateRoute
+                disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                exact={true}
+                path={`${INTERVENTION_IRS_URL}/new`}
+                component={IrsNewPlan}
+              />
+
+              <ConnectedPrivateRoute
+                disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                exact={true}
+                path={`${INTERVENTION_IRS_URL}/draft`} // todo - add :id
+                component={IrsDraftPlan}
+              />
+
+              <ConnectedPrivateRoute
+                disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                exact={true}
+                path={`${INTERVENTION_IRS_URL}/plan`} // todo - add :id
+                component={IrsFinalizedPlan}
+              />
+
               <ConnectedPrivateRoute
                 disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                 exact={true}

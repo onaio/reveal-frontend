@@ -23,12 +23,14 @@ exports[`containers/pages/IRS renders IRS correctly 1`] = `
     }
   }
 >
-  <IRS>
+  <IrsPlans>
     <div>
-      <h1>
-        IRS
-      </h1>
+      <h2
+        className="page-title"
+      >
+        IRS Plans
+      </h2>
     </div>
-  </IRS>
+  </IrsPlans>
 </Router>
 `;

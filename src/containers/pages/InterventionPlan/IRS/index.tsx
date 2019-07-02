@@ -1,7 +1,7 @@
-// this is the IRS page component
+// this is the IRS LIST view page component
 import * as React from 'react';
 
-class IRS extends React.Component<{}, {}> {
+class IrsPlans extends React.Component<{}, {}> {
   constructor(props: {}) {
     super(props);
   }
@@ -9,10 +9,10 @@ class IRS extends React.Component<{}, {}> {
   public render() {
     return (
       <div>
-        <h1>IRS</h1>
+        <h2 className="page-title">IRS Plans</h2>
       </div>
     );
   }
 }
 
-export default IRS;
+export default IrsPlans;
