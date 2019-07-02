@@ -150,13 +150,9 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
       label: HOME,
       url: HOME_URL,
     };
-    const focusAreaPage = {
-      label: theObject.focusArea,
-      url: '',
-    };
     const breadCrumbProps: BreadCrumbProps = {
       currentPage: {
-        label: theObject.plan_title,
+        label: theObject.focusArea,
         url: `${FI_SINGLE_URL}/${planById.id}`,
       },
       pages: [],
@@ -170,17 +166,12 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
         url: '',
       })
     );
-    breadCrumbProps.pages = [homePage, basePage, ...pages, focusAreaPage];
+    breadCrumbProps.pages = [homePage, basePage, ...pages];
 
     return (
       <div className="mb-5">
         <HeaderBreadcrumbs {...breadCrumbProps} />
         <h2 className="page-title mt-4 mb-5">
-          {theObject.jurisdiction_id && (
-            <Link to={`${FI_SINGLE_MAP_URL}/${theObject.id}`}>
-              <FontAwesomeIcon icon={['fas', 'map']} />
-            </Link>
-          )}
           &nbsp;&nbsp;{FOCUS_INVESTIGATIONS} {IN} {theObject.focusArea}
         </h2>
         <Row>
@@ -206,7 +197,15 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
           <Col className="col-6">
             <div className="fi-active">
               <h5 className="mb-4 mt-1">
-                {ACTIVE_INVESTIGATION}: {theObject.plan_title}
+                <Link to={`${FI_SINGLE_MAP_URL}/${theObject.id}`}>
+                  {theObject.jurisdiction_id && (
+                    <span>
+                      <FontAwesomeIcon icon={['fas', 'map']} />
+                      &nbsp;
+                    </span>
+                  )}
+                  {ACTIVE_INVESTIGATION}: {theObject.plan_title}
+                </Link>
               </h5>
               <dl className="row mt-3">
                 <dt className="col-5">{COMPLETE}</dt>
