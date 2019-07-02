@@ -553,7 +553,6 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
           <h2
             className="page-title mt-4 mb-5"
           >
-              
             Focus Investigations
              
             in
@@ -1605,7 +1604,6 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
       <h2
         className="page-title mt-4 mb-5"
       >
-          
         Focus Investigations
          
         in
