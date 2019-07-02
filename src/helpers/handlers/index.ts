@@ -18,44 +18,41 @@ declare global {
 export function popupHandler(event: EventData) {
   const currentState = store.getState();
   const currentGoal = getCurrentGoal(currentState);
-  if (currentGoal) {
-    const features = event.target.queryRenderedFeatures(event.point) as any[];
-    let description: string = '';
-    features.forEach((feature: any) => {
-      if (
-        feature &&
-        feature.geometry &&
-        feature.geometry.coordinates &&
-        feature.properties &&
-        feature.properties.action_code &&
-        feature.layer.type !== 'line' &&
-        feature.layer.id
-      ) {
-        description += `<p class="heading"> ${feature.properties.action_code}</b></p> <p> ${
-          feature.properties.task_business_status
-        }</p><br/><br/>`;
-      }
-    });
-    if (description.length) {
-      description = '<div>' + description + '</div>';
-      const coordinates: LngLat = event.lngLat;
-      /** Ensure that if the map is zoomed out such that multiple
-       * copies of the feature are visible,
-       * the popup appears over the copy being pointed to
-       */
-
-      while (Math.abs(event.lngLat.lng - coordinates.lng) > 180) {
-        coordinates.lng += event.lngLat.lng > coordinates.lng ? 360 : -360;
-      }
-      // to do map container_id should come from props incase we have many maps to show
-      const loadedMap =
-        window.maps[
-          window.maps.map((map: Map) => (map as GisidaMap)._container.id).indexOf(MAP_ID)
-        ];
-      new mapboxgl.Popup()
-        .setLngLat(coordinates)
-        .setHTML(description)
-        .addTo(loadedMap);
+  /** currentGoal is currently not being used but we may/ may not use it in the future  */
+  const features = event.target.queryRenderedFeatures(event.point) as any[];
+  let description: string = '';
+  features.forEach((feature: any) => {
+    if (
+      feature &&
+      feature.geometry &&
+      feature.geometry.coordinates &&
+      feature.properties &&
+      feature.properties.action_code &&
+      feature.layer.type !== 'line' &&
+      feature.layer.id
+    ) {
+      description += `<p class="heading"> ${feature.properties.action_code}</b></p> <p> ${
+        feature.properties.task_business_status
+      }</p><br/><br/>`;
     }
+  });
+  if (description.length) {
+    description = '<div>' + description + '</div>';
+    const coordinates: LngLat = event.lngLat;
+    /** Ensure that if the map is zoomed out such that multiple
+     * copies of the feature are visible,
+     * the popup appears over the copy being pointed to
+     */
+
+    while (Math.abs(event.lngLat.lng - coordinates.lng) > 180) {
+      coordinates.lng += event.lngLat.lng > coordinates.lng ? 360 : -360;
+    }
+    // to do map container_id should come from props incase we have many maps to show
+    const loadedMap =
+      window.maps[window.maps.map((map: Map) => (map as GisidaMap)._container.id).indexOf(MAP_ID)];
+    new mapboxgl.Popup()
+      .setLngLat(coordinates)
+      .setHTML(description)
+      .addTo(loadedMap);
   }
 }
