@@ -20,6 +20,7 @@ import {
   POLYGON,
   STRUCTURES,
 } from '../../constants';
+import { singleFI } from '../../containers/pages/FocusInvestigation/active/tests/fixtures';
 import { EventData } from '../../helpers/mapbox';
 import { ConfigStore, FeatureCollection, FlexObject } from '../../helpers/utils';
 import store from '../../store';
@@ -94,6 +95,7 @@ interface GisidaState {
   hasGeometries: boolean | false;
   featureCollection: FeatureCollection<TaskGeoJSON> | null;
   initMapWithoutFC: boolean | false;
+  singleFi?: boolean;
 }
 /** GisidaWrapper Props Interface */
 interface GisidaProps {
@@ -103,7 +105,7 @@ interface GisidaProps {
   goal?: Goal[] | null;
   handlers: Handlers[];
   structures: FeatureCollection<TaskGeoJSON> | null;
-  singleFi?: boolean;
+  singleFi?: boolean | undefined;
   minHeight?: string;
   basemapStyle?: string | Style;
 }
@@ -142,6 +144,7 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
       hasGeometries: false,
       initMapWithoutFC: false,
       locations: false,
+      singleFi: this.props.singleFi || undefined,
     };
 
     if (!initialState.APP && ducks.APP) {
@@ -196,14 +199,11 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
     const features: TaskGeoJSON[] =
       (nextProps.featureCollection && nextProps.featureCollection.features) || [];
     /** If there are no features and init map without features is false
-     * and location data is set the check below assumes all plans have structures
+     * and location data is set
      */
     if (
       (!some(features) && !this.state.initMapWithoutFC && this.state.locations) ||
-      (this.props.structures !== nextProps.structures &&
-        nextProps.structures &&
-        nextProps.structures.features.length) ||
-      nextProps.singleFi
+      (nextProps.singleFi && this.state.singleFi)
     ) {
       this.setState({ doInitMap: true, initMapWithoutFC: true }, () => {
         // Dirty work around! Arbitrary delay to allow style load before adding layers
@@ -224,11 +224,10 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
      */
     if (
       some(features) &&
-      ((nextProps.currentGoal !== this.props.currentGoal &&
-        (this.state.locations || this.state.doInitMap)) ||
-        nextProps.singleFi)
+      (nextProps.currentGoal !== this.props.currentGoal &&
+        (this.state.locations || this.state.doInitMap))
     ) {
-      this.setState({ doInitMap: false, initMapWithoutFC: false }, () => {
+      this.setState({ doInitMap: false, initMapWithoutFC: false, singleFi: false }, () => {
         this.initMap(nextProps.featureCollection);
       });
     }
@@ -263,7 +262,7 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
     }
     if (locations) {
       const bounds = GeojsonExtent(locations);
-      this.setState({ locations, doInitMap: true, bounds });
+      this.setState({ locations, doInitMap: true, bounds, initMapWithoutFC: false });
     }
   }
 
