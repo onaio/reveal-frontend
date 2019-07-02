@@ -264,6 +264,7 @@ describe('helpers/utils', () => {
       jurisdiction_id: plan.jurisdiction_parent_id,
       jurisdiction_parent_id: plan.jurisdiction_parent_id,
       plan_id: plan.plan_id,
+      plan_title: plan.plan_title,
       province: null,
       reason: plan.plan_fi_reason,
       status: plan.plan_fi_status,
