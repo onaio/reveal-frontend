@@ -20,6 +20,7 @@ import {
   FI_SINGLE_URL,
   FI_URL,
   FOCUS_INVESTIGATION,
+  FOCUS_INVESTIGATIONS,
   HOME,
   HOME_URL,
   MAP,
@@ -143,7 +144,7 @@ class SingleActiveFIMap extends React.Component<
       url: `${HOME_URL}`,
     };
     const basePage = {
-      label: FOCUS_INVESTIGATION,
+      label: FOCUS_INVESTIGATIONS,
       url: `${FI_URL}`,
     };
     const secondLastPage = {
