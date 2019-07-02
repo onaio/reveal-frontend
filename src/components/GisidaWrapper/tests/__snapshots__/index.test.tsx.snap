@@ -2884,7 +2884,7 @@ Object {
       "legendBottom": 40,
       "loaded": true,
       "paint": Object {
-        "fill-color": "#c7c7c7",
+        "fill-color": "#666a6d",
         "fill-opacity": Array [
           "match",
           Array [
@@ -2911,7 +2911,7 @@ Object {
           1,
           0.75,
         ],
-        "fill-outline-color": "#c7c7c7",
+        "fill-outline-color": "#666a6d",
       },
       "source": Object {
         "data": Object {
@@ -3037,7 +3037,7 @@ Object {
         "id": "structure-26",
         "layout": Object {},
         "paint": Object {
-          "fill-color": "#c7c7c7",
+          "fill-color": "#666a6d",
           "fill-opacity": Array [
             "match",
             Array [
