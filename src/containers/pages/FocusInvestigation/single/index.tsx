@@ -178,7 +178,7 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
             <h4 className="mb-4">{FOCUS_AREA_INFO}</h4>
             {theObject.jurisdiction_id && (
               <div className="map-area">
-                <GisidaWrapper geoData={jurisdiction} minHeight="200px" />
+                <GisidaWrapper geoData={jurisdiction} minHeight="200px" singleFi={true} />
               </div>
             )}
             <dl className="row mt-3">
