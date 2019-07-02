@@ -20,7 +20,6 @@ import {
   POLYGON,
   STRUCTURES,
 } from '../../constants';
-import { singleFI } from '../../containers/pages/FocusInvestigation/active/tests/fixtures';
 import { EventData } from '../../helpers/mapbox';
 import { ConfigStore, FeatureCollection, FlexObject } from '../../helpers/utils';
 import store from '../../store';
@@ -203,7 +202,13 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
      */
     if (
       (!some(features) && !this.state.initMapWithoutFC && this.state.locations) ||
-      (nextProps.singleFi && this.state.singleFi)
+      (nextProps.singleFi && this.state.singleFi) ||
+      (!some(features) &&
+        !this.state.initMapWithoutFC &&
+        this.state.locations &&
+        (this.props.structures !== nextProps.structures &&
+          nextProps.structures &&
+          nextProps.structures.features.length))
     ) {
       this.setState({ doInitMap: true, initMapWithoutFC: true }, () => {
         // Dirty work around! Arbitrary delay to allow style load before adding layers
