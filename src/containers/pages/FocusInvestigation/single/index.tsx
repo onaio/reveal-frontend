@@ -144,15 +144,19 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
     theObject = transformValues(theObject, propertiesToTransform);
     const basePage = {
       label: FOCUS_INVESTIGATIONS,
-      url: `${FI_URL}`,
+      url: FI_URL,
     };
     const homePage = {
-      label: `${HOME}`,
-      url: `${HOME_URL}`,
+      label: HOME,
+      url: HOME_URL,
+    };
+    const focusAreaPage = {
+      label: theObject.focusArea,
+      url: '',
     };
     const breadCrumbProps: BreadCrumbProps = {
       currentPage: {
-        label: theObject.focusArea,
+        label: theObject.plan_title,
         url: `${FI_SINGLE_URL}/${planById.id}`,
       },
       pages: [],
@@ -166,10 +170,10 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
         url: '',
       })
     );
-    breadCrumbProps.pages = [homePage, basePage, ...pages];
+    breadCrumbProps.pages = [homePage, basePage, ...pages, focusAreaPage];
 
     return (
-      <div>
+      <div className="mb-5">
         <HeaderBreadcrumbs {...breadCrumbProps} />
         <h2 className="page-title mt-4 mb-5">
           {theObject.jurisdiction_id && (
@@ -177,7 +181,7 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
               <FontAwesomeIcon icon={['fas', 'map']} />
             </Link>
           )}
-          &nbsp;&nbsp;{FOCUS_INVESTIGATION} {IN} {theObject.focusArea}
+          &nbsp;&nbsp;{FOCUS_INVESTIGATIONS} {IN} {theObject.focusArea}
         </h2>
         <Row>
           <Col className="col-6">
@@ -202,7 +206,7 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
           <Col className="col-6">
             <div className="fi-active">
               <h5 className="mb-4 mt-1">
-                {ACTIVE_INVESTIGATION}: {theObject.caseNotificationDate}
+                {ACTIVE_INVESTIGATION}: {theObject.plan_title}
               </h5>
               <dl className="row mt-3">
                 <dt className="col-5">{COMPLETE}</dt>
@@ -230,13 +234,17 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
                   </div>
                 );
               })}
-              {/* <Row className="mt-5">
+              <Row className="mt-5">
                 <Col className="col-6 offset-md-3">
-                  <button type="button" className="btn btn-outline-primary btn-block">
+                  <button
+                    type="button"
+                    className="btn btn-outline-primary btn-block"
+                    disabled={true}
+                  >
                     {MARK_AS_COMPLETE}
                   </button>
                 </Col>
-              </Row> */}
+              </Row>
             </div>
           </Col>
         </Row>
