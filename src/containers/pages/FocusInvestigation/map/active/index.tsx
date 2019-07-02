@@ -31,6 +31,7 @@ import {
 } from '../../../../../constants';
 import { popupHandler } from '../../../../../helpers/handlers';
 import { getGoalReport } from '../../../../../helpers/indicators';
+import ProgressBar from '../../../../../helpers/ProgressBar';
 import { FeatureCollection, FlexObject, RouteParams } from '../../../../../helpers/utils';
 import supersetFetch from '../../../../../services/superset';
 import goalsReducer, {
@@ -212,6 +213,8 @@ class SingleActiveFIMap extends React.Component<
                           {TARGET}: {goalReport.prettyPercentAchieved} ({goalReport.achievedValue}{' '}
                           {OF} {goalReport.targetValue})
                         </p>
+                        <br />
+                        <ProgressBar value={goalReport.percentAchieved} max={1} />
                       </div>
                     </div>
                   );
