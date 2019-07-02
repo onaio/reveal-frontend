@@ -3,7 +3,6 @@ import { keyBy } from 'lodash';
 import { FlushThunks } from 'redux-testkit';
 import store from '../../index';
 import reducer, {
-  fetchCurrentGoal,
   fetchGoals,
   getCurrentGoal,
   getGoalById,
@@ -14,16 +13,15 @@ import reducer, {
   getGoalsByPlanId,
   Goal,
   reducerName,
+  setCurrentGoal,
 } from '../goals';
 import * as fixtures from './fixtures';
 
 reducerRegistry.register(reducerName, reducer);
 
 describe('reducers/goals', () => {
-  let flushThunks;
-
   beforeEach(() => {
-    flushThunks = FlushThunks.createMiddleware();
+    FlushThunks.createMiddleware();
     jest.resetAllMocks();
   });
 
@@ -62,9 +60,13 @@ describe('reducers/goals', () => {
     ).toEqual([fixtures.goal1, fixtures.goal2, fixtures.goal4]);
   });
 
-  it('should fetch currentGoal', () => {
-    store.dispatch(fetchCurrentGoal(fixtures.currentGoal));
+  it('should set currentGoal', () => {
+    store.dispatch(setCurrentGoal(fixtures.currentGoal));
     expect(getCurrentGoal(store.getState())).toEqual(fixtures.currentGoal);
+    store.dispatch(setCurrentGoal(fixtures.nextGoal));
+    expect(getCurrentGoal(store.getState())).toEqual(fixtures.nextGoal);
+    store.dispatch(setCurrentGoal(null));
+    expect(getCurrentGoal(store.getState())).toEqual(null);
   });
 
   it('should save goals correctly', () => {
