@@ -18,6 +18,7 @@ import {
   NO_GEOMETRIES_RESPONSE,
   POINT,
   POLYGON,
+  STRUCTURES,
 } from '../../constants';
 import { EventData } from '../../helpers/mapbox';
 import { ConfigStore, FeatureCollection, FlexObject } from '../../helpers/utils';
@@ -440,7 +441,8 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
           if (
             layer.visible &&
             !layer.id.includes(this.props.currentGoal) &&
-            !layer.id.includes(MAIN_PLAN)
+            !layer.id.includes(MAIN_PLAN) &&
+            !layer.id.includes(STRUCTURES)
           ) {
             store.dispatch(Actions.toggleLayer(MAP_ID, layer.id, false));
           }
@@ -449,7 +451,7 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
       } else if (!this.state.hasGeometries && Object.keys(currentState[MAP_ID].layers).length > 1) {
         Object.keys(currentState[MAP_ID].layers).forEach((l: string) => {
           layer = currentState[MAP_ID].layers[l];
-          if (layer.visible && !layer.id.includes(MAIN_PLAN)) {
+          if (layer.visible && !layer.id.includes(MAIN_PLAN) && !layer.id.includes(STRUCTURES)) {
             activeIds.push(layer.id);
           }
         });
