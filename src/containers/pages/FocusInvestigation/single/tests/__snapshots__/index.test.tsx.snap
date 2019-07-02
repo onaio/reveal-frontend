@@ -427,7 +427,9 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
         }
         supersetService={[Function]}
       >
-        <div>
+        <div
+          className="mb-5"
+        >
           <HeaderBreadcrumb
             currentPage={
               Object {
@@ -442,7 +444,7 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
                   "url": "/",
                 },
                 Object {
-                  "label": "Focus Investigation",
+                  "label": "Focus Investigations",
                   "url": "/focus-investigation",
                 },
                 Object {
@@ -507,7 +509,7 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
                             href="/focus-investigation"
                             onClick={[Function]}
                           >
-                            Focus Investigation
+                            Focus Investigations
                           </a>
                         </Link>
                       </li>
@@ -551,59 +553,8 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
           <h2
             className="page-title mt-4 mb-5"
           >
-            <Link
-              replace={false}
-              to="/focus-investigation/map/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
-            >
-              <a
-                href="/focus-investigation/map/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
-                onClick={[Function]}
-              >
-                <FontAwesomeIcon
-                  border={false}
-                  className=""
-                  fixedWidth={false}
-                  flip={null}
-                  icon={
-                    Array [
-                      "fas",
-                      "map",
-                    ]
-                  }
-                  inverse={false}
-                  listItem={false}
-                  mask={null}
-                  pull={null}
-                  pulse={false}
-                  rotation={null}
-                  size={null}
-                  spin={false}
-                  symbol={false}
-                  title=""
-                  transform={null}
-                >
-                  <svg
-                    aria-hidden="true"
-                    className="svg-inline--fa fa-map fa-w-18 "
-                    data-icon="map"
-                    data-prefix="fas"
-                    focusable="false"
-                    role="img"
-                    style={Object {}}
-                    viewBox="0 0 576 512"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M0 117.66v346.32c0 11.32 11.43 19.06 21.94 14.86L160 416V32L20.12 87.95A32.006 32.006 0 0 0 0 117.66zM192 416l192 64V96L192 32v384zM554.06 33.16L416 96v384l139.88-55.95A31.996 31.996 0 0 0 576 394.34V48.02c0-11.32-11.43-19.06-21.94-14.86z"
-                      fill="currentColor"
-                      style={Object {}}
-                    />
-                  </svg>
-                </FontAwesomeIcon>
-              </a>
-            </Link>
               
-            Focus Investigation
+            Focus Investigations
              
             in
              
@@ -822,8 +773,63 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
                     <h5
                       className="mb-4 mt-1"
                     >
-                      Active Investigation
-                      : 
+                      <Link
+                        replace={false}
+                        to="/focus-investigation/map/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
+                      >
+                        <a
+                          href="/focus-investigation/map/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
+                          onClick={[Function]}
+                        >
+                          <span>
+                            <FontAwesomeIcon
+                              border={false}
+                              className=""
+                              fixedWidth={false}
+                              flip={null}
+                              icon={
+                                Array [
+                                  "fas",
+                                  "map",
+                                ]
+                              }
+                              inverse={false}
+                              listItem={false}
+                              mask={null}
+                              pull={null}
+                              pulse={false}
+                              rotation={null}
+                              size={null}
+                              spin={false}
+                              symbol={false}
+                              title=""
+                              transform={null}
+                            >
+                              <svg
+                                aria-hidden="true"
+                                className="svg-inline--fa fa-map fa-w-18 "
+                                data-icon="map"
+                                data-prefix="fas"
+                                focusable="false"
+                                role="img"
+                                style={Object {}}
+                                viewBox="0 0 576 512"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M0 117.66v346.32c0 11.32 11.43 19.06 21.94 14.86L160 416V32L20.12 87.95A32.006 32.006 0 0 0 0 117.66zM192 416l192 64V96L192 32v384zM554.06 33.16L416 96v384l139.88-55.95A31.996 31.996 0 0 0 576 394.34V48.02c0-11.32-11.43-19.06-21.94-14.86z"
+                                  fill="currentColor"
+                                  style={Object {}}
+                                />
+                              </svg>
+                            </FontAwesomeIcon>
+                             
+                          </span>
+                          Active Investigation
+                          : 
+                          A1-Tha Luang Village 1 Focus 01
+                        </a>
+                      </Link>
                     </h5>
                     <dl
                       className="row mt-3"
@@ -1025,6 +1031,40 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
                         </ProgressBar>
                       </div>
                     </div>
+                    <Row
+                      className="mt-5"
+                      tag="div"
+                    >
+                      <div
+                        className="mt-5 row"
+                      >
+                        <Col
+                          className="col-6 offset-md-3"
+                          tag="div"
+                          widths={
+                            Array [
+                              "xs",
+                              "sm",
+                              "md",
+                              "lg",
+                              "xl",
+                            ]
+                          }
+                        >
+                          <div
+                            className="col-6 offset-md-3 col"
+                          >
+                            <button
+                              className="btn btn-outline-primary btn-block"
+                              disabled={true}
+                              type="button"
+                            >
+                              Mark as complete
+                            </button>
+                          </div>
+                        </Col>
+                      </div>
+                    </Row>
                   </div>
                 </div>
               </Col>
@@ -1439,7 +1479,9 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
       }
     }
   >
-    <div>
+    <div
+      className="mb-5"
+    >
       <HeaderBreadcrumb
         currentPage={
           Object {
@@ -1454,7 +1496,7 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
               "url": "/",
             },
             Object {
-              "label": "Focus Investigation",
+              "label": "Focus Investigations",
               "url": "/focus-investigation",
             },
             Object {
@@ -1519,7 +1561,7 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
                         href="/focus-investigation"
                         onClick={[Function]}
                       >
-                        Focus Investigation
+                        Focus Investigations
                       </a>
                     </Link>
                   </li>
@@ -1563,59 +1605,8 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
       <h2
         className="page-title mt-4 mb-5"
       >
-        <Link
-          replace={false}
-          to="/focus-investigation/map/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
-        >
-          <a
-            href="/focus-investigation/map/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
-            onClick={[Function]}
-          >
-            <FontAwesomeIcon
-              border={false}
-              className=""
-              fixedWidth={false}
-              flip={null}
-              icon={
-                Array [
-                  "fas",
-                  "map",
-                ]
-              }
-              inverse={false}
-              listItem={false}
-              mask={null}
-              pull={null}
-              pulse={false}
-              rotation={null}
-              size={null}
-              spin={false}
-              symbol={false}
-              title=""
-              transform={null}
-            >
-              <svg
-                aria-hidden="true"
-                className="svg-inline--fa fa-map fa-w-18 "
-                data-icon="map"
-                data-prefix="fas"
-                focusable="false"
-                role="img"
-                style={Object {}}
-                viewBox="0 0 576 512"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M0 117.66v346.32c0 11.32 11.43 19.06 21.94 14.86L160 416V32L20.12 87.95A32.006 32.006 0 0 0 0 117.66zM192 416l192 64V96L192 32v384zM554.06 33.16L416 96v384l139.88-55.95A31.996 31.996 0 0 0 576 394.34V48.02c0-11.32-11.43-19.06-21.94-14.86z"
-                  fill="currentColor"
-                  style={Object {}}
-                />
-              </svg>
-            </FontAwesomeIcon>
-          </a>
-        </Link>
           
-        Focus Investigation
+        Focus Investigations
          
         in
          
@@ -1834,8 +1825,63 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
                 <h5
                   className="mb-4 mt-1"
                 >
-                  Active Investigation
-                  : 
+                  <Link
+                    replace={false}
+                    to="/focus-investigation/map/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
+                  >
+                    <a
+                      href="/focus-investigation/map/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
+                      onClick={[Function]}
+                    >
+                      <span>
+                        <FontAwesomeIcon
+                          border={false}
+                          className=""
+                          fixedWidth={false}
+                          flip={null}
+                          icon={
+                            Array [
+                              "fas",
+                              "map",
+                            ]
+                          }
+                          inverse={false}
+                          listItem={false}
+                          mask={null}
+                          pull={null}
+                          pulse={false}
+                          rotation={null}
+                          size={null}
+                          spin={false}
+                          symbol={false}
+                          title=""
+                          transform={null}
+                        >
+                          <svg
+                            aria-hidden="true"
+                            className="svg-inline--fa fa-map fa-w-18 "
+                            data-icon="map"
+                            data-prefix="fas"
+                            focusable="false"
+                            role="img"
+                            style={Object {}}
+                            viewBox="0 0 576 512"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M0 117.66v346.32c0 11.32 11.43 19.06 21.94 14.86L160 416V32L20.12 87.95A32.006 32.006 0 0 0 0 117.66zM192 416l192 64V96L192 32v384zM554.06 33.16L416 96v384l139.88-55.95A31.996 31.996 0 0 0 576 394.34V48.02c0-11.32-11.43-19.06-21.94-14.86z"
+                              fill="currentColor"
+                              style={Object {}}
+                            />
+                          </svg>
+                        </FontAwesomeIcon>
+                         
+                      </span>
+                      Active Investigation
+                      : 
+                      A1-Tha Luang Village 1 Focus 01
+                    </a>
+                  </Link>
                 </h5>
                 <dl
                   className="row mt-3"
@@ -1977,6 +2023,40 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
                     </ProgressBar>
                   </div>
                 </div>
+                <Row
+                  className="mt-5"
+                  tag="div"
+                >
+                  <div
+                    className="mt-5 row"
+                  >
+                    <Col
+                      className="col-6 offset-md-3"
+                      tag="div"
+                      widths={
+                        Array [
+                          "xs",
+                          "sm",
+                          "md",
+                          "lg",
+                          "xl",
+                        ]
+                      }
+                    >
+                      <div
+                        className="col-6 offset-md-3 col"
+                      >
+                        <button
+                          className="btn btn-outline-primary btn-block"
+                          disabled={true}
+                          type="button"
+                        >
+                          Mark as complete
+                        </button>
+                      </div>
+                    </Col>
+                  </div>
+                </Row>
               </div>
             </div>
           </Col>
