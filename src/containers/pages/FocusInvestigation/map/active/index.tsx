@@ -35,12 +35,12 @@ import ProgressBar from '../../../../../helpers/ProgressBar';
 import { FeatureCollection, FlexObject, RouteParams } from '../../../../../helpers/utils';
 import supersetFetch from '../../../../../services/superset';
 import goalsReducer, {
-  fetchCurrentGoal,
   fetchGoals,
   getCurrentGoal,
   getGoalsByPlanAndJurisdiction,
   Goal,
   reducerName as goalsReducerName,
+  setCurrentGoal,
 } from '../../../../../store/ducks/goals';
 import jurisdictionReducer, {
   fetchJurisdictions,
@@ -75,7 +75,7 @@ reducerRegistry.register(tasksReducerName, tasksReducer);
 export interface MapSingleFIProps {
   currentGoal: string | null;
   featureCollection: FeatureCollection<TaskGeoJSON>;
-  fetchCurrentGoalActionCreator: typeof fetchCurrentGoal;
+  setCurrentGoalActionCreator: typeof setCurrentGoal;
   fetchGoalsActionCreator: typeof fetchGoals;
   fetchJurisdictionsActionCreator: typeof fetchJurisdictions;
   fetchPlansActionCreator: typeof fetchPlans;
@@ -96,7 +96,6 @@ const defaultFeatureCollection: FeatureCollection<TaskGeoJSON> = {
 export const defaultMapSingleFIProps: MapSingleFIProps = {
   currentGoal: null,
   featureCollection: defaultFeatureCollection,
-  fetchCurrentGoalActionCreator: fetchCurrentGoal,
   fetchGoalsActionCreator: fetchGoals,
   fetchJurisdictionsActionCreator: fetchJurisdictions,
   fetchPlansActionCreator: fetchPlans,
@@ -104,6 +103,7 @@ export const defaultMapSingleFIProps: MapSingleFIProps = {
   goals: null,
   jurisdiction: null,
   plan: null,
+  setCurrentGoalActionCreator: setCurrentGoal,
   structures: null,
 };
 
@@ -139,10 +139,10 @@ class SingleActiveFIMap extends React.Component<
     );
   }
   public componentWillReceiveProps(nextProps: any) {
-    const { fetchCurrentGoalActionCreator, match } = this.props;
+    const { setCurrentGoalActionCreator, match } = this.props;
 
     if (match.params.goalId !== nextProps.match.params.goalId) {
-      fetchCurrentGoalActionCreator(
+      setCurrentGoalActionCreator(
         nextProps.match.params.goalId ? nextProps.match.params.goalId : null
       );
     }
@@ -297,11 +297,11 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
 
 /** map props to actions that may be dispatched by component */
 const mapDispatchToProps = {
-  fetchCurrentGoalActionCreator: fetchCurrentGoal,
   fetchGoalsActionCreator: fetchGoals,
   fetchJurisdictionsActionCreator: fetchJurisdictions,
   fetchPlansActionCreator: fetchPlans,
   fetchTasksActionCreator: fetchTasks,
+  setCurrentGoalActionCreator: setCurrentGoal,
 };
 
 /** Create connected SingleActiveFIMAP */

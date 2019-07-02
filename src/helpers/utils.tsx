@@ -30,7 +30,7 @@ export interface FlexObject {
 
 /** Route params interface */
 export interface RouteParams {
-  goalId: any;
+  goalId?: string;
   id?: string;
 }
 

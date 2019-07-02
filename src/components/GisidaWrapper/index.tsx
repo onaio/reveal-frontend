@@ -18,12 +18,12 @@ import {
   NO_GEOMETRIES_RESPONSE,
   POINT,
   POLYGON,
-  STRUCTURES,
+  STRUCTURE_LAYER,
 } from '../../constants';
 import { EventData } from '../../helpers/mapbox';
 import { ConfigStore, FeatureCollection, FlexObject } from '../../helpers/utils';
 import store from '../../store';
-import { fetchCurrentGoal, Goal } from '../../store/ducks/goals';
+import { Goal, setCurrentGoal } from '../../store/ducks/goals';
 import { Jurisdiction, JurisdictionGeoJSON } from '../../store/ducks/jurisdictions';
 import { Task, TaskGeoJSON } from '../../store/ducks/tasks';
 import './gisida.css';
@@ -238,7 +238,7 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
     }
   }
   public componentWillUnmount() {
-    store.dispatch(fetchCurrentGoal(null));
+    store.dispatch(setCurrentGoal(null));
     const stateOnUnmount = store.getState();
     Object.keys(stateOnUnmount[MAP_ID].layers).forEach((layer: string) => {
       if (stateOnUnmount[MAP_ID].layers[layer].visible) {
@@ -454,7 +454,7 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
             layer.visible &&
             !layer.id.includes(this.props.currentGoal) &&
             !layer.id.includes(MAIN_PLAN) &&
-            !layer.id.includes(STRUCTURES)
+            !layer.id.includes(STRUCTURE_LAYER)
           ) {
             store.dispatch(Actions.toggleLayer(MAP_ID, layer.id, false));
           }
@@ -463,7 +463,11 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
       } else if (!this.state.hasGeometries && Object.keys(currentState[MAP_ID].layers).length > 1) {
         Object.keys(currentState[MAP_ID].layers).forEach((l: string) => {
           layer = currentState[MAP_ID].layers[l];
-          if (layer.visible && !layer.id.includes(MAIN_PLAN) && !layer.id.includes(STRUCTURES)) {
+          if (
+            layer.visible &&
+            !layer.id.includes(MAIN_PLAN) &&
+            !layer.id.includes(STRUCTURE_LAYER)
+          ) {
             activeIds.push(layer.id);
           }
         });
