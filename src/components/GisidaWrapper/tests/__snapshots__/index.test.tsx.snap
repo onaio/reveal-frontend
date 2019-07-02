@@ -1565,6 +1565,9 @@ Object {
   "activeLayerId": "main-plan-layer-10f9e9fa-ce34-4b27-a961-72fab5206ab6",
   "activeLayerIds": Array [
     "main-plan-layer-304cbcd4-0850-404a-a8b1-486b02f7b84d",
+    "RACD_bednet_dist_1km_radius-250399fc-12e9-415e-aadf-ee3d009fcdf6",
+    "RACD_bednet_dist_1km_radius-18049c84-8762-4951-904d-44485b4df3f0",
+    "RACD_bednet_dist_1km_radius-16a794e4-46de-4733-8f4d-9d0b9db8b298",
     "main-plan-layer-10f9e9fa-ce34-4b27-a961-72fab5206ab6",
   ],
   "activeLayerObjs": Array [],
@@ -1778,7 +1781,7 @@ Object {
         "visible": true,
       },
       "type": "fill",
-      "visible": false,
+      "visible": true,
     },
     "RACD_bednet_dist_1km_radius-18049c84-8762-4951-904d-44485b4df3f0": Object {
       "filters": Object {},
@@ -1970,7 +1973,7 @@ Object {
         "visible": true,
       },
       "type": "fill",
-      "visible": false,
+      "visible": true,
     },
     "RACD_bednet_dist_1km_radius-250399fc-12e9-415e-aadf-ee3d009fcdf6": Object {
       "filters": Object {},
@@ -2162,7 +2165,7 @@ Object {
         "visible": true,
       },
       "type": "fill",
-      "visible": false,
+      "visible": true,
     },
     "main-plan-layer-10f9e9fa-ce34-4b27-a961-72fab5206ab6": Object {
       "filters": Object {},
