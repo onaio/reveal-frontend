@@ -24,7 +24,76 @@ exports[`containers/pages/IRS renders IRS correctly 1`] = `
   }
 >
   <IrsPlans>
-    <div>
+    <div
+      className="mb-5"
+    >
+      <HeaderBreadcrumb
+        currentPage={
+          Object {
+            "label": "IRS",
+            "url": "/intervention/irs",
+          }
+        }
+        pages={
+          Array [
+            Object {
+              "label": "Home",
+              "url": "/",
+            },
+          ]
+        }
+      >
+        <div>
+          <Breadcrumb
+            aria-label="breadcrumb"
+            className="reveal-breadcrumb"
+            listTag="ol"
+            tag="nav"
+          >
+            <nav
+              aria-label="breadcrumb"
+              className="reveal-breadcrumb"
+            >
+              <ol
+                className="breadcrumb"
+              >
+                <BreadcrumbItem
+                  key="0"
+                  tag="li"
+                >
+                  <li
+                    className="breadcrumb-item"
+                  >
+                    <Link
+                      key="0"
+                      replace={false}
+                      to="/"
+                    >
+                      <a
+                        href="/"
+                        onClick={[Function]}
+                      >
+                        Home
+                      </a>
+                    </Link>
+                  </li>
+                </BreadcrumbItem>
+                <BreadcrumbItem
+                  active={true}
+                  tag="li"
+                >
+                  <li
+                    aria-current="page"
+                    className="active breadcrumb-item"
+                  >
+                    IRS
+                  </li>
+                </BreadcrumbItem>
+              </ol>
+            </nav>
+          </Breadcrumb>
+        </div>
+      </HeaderBreadcrumb>
       <h2
         className="page-title"
       >
