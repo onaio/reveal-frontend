@@ -699,6 +699,7 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
                         }
                       }
                       minHeight="200px"
+                      singleFi={true}
                     >
                       <div>
                         I love oov
@@ -1185,6 +1186,7 @@ Object {
     "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
   },
   "minHeight": "200px",
+  "singleFi": true,
 }
 `;
 
@@ -1750,6 +1752,7 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
                     }
                   }
                   minHeight="200px"
+                  singleFi={true}
                 >
                   <div>
                     I love oov
@@ -2174,5 +2177,6 @@ Object {
     "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
   },
   "minHeight": "200px",
+  "singleFi": true,
 }
 `;

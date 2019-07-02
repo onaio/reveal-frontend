@@ -199,10 +199,8 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
      * and location data is set the check below assumes all plans have structures
      */
     if (
-      (!some(features) &&
-        !this.state.initMapWithoutFC &&
-        this.state.locations &&
-        this.props.structures !== nextProps.structures &&
+      (!some(features) && !this.state.initMapWithoutFC && this.state.locations) ||
+      (this.props.structures !== nextProps.structures &&
         nextProps.structures &&
         nextProps.structures.features.length) ||
       nextProps.singleFi
