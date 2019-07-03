@@ -94,7 +94,6 @@ interface GisidaState {
   hasGeometries: boolean | false;
   featureCollection: FeatureCollection<TaskGeoJSON> | null;
   initMapWithoutFC: boolean | false;
-  singleFi?: boolean;
 }
 /** GisidaWrapper Props Interface */
 interface GisidaProps {
@@ -104,7 +103,6 @@ interface GisidaProps {
   goal?: Goal[] | null;
   handlers: Handlers[];
   structures: FeatureCollection<TaskGeoJSON> | null;
-  singleFi?: boolean | undefined;
   minHeight?: string;
   basemapStyle?: string | Style;
 }
@@ -124,7 +122,6 @@ export const defaultGisidaProps: GisidaProps = {
   geoData: null,
   goal: null,
   handlers: [],
-  singleFi: false,
   structures: null,
 };
 
@@ -143,7 +140,6 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
       hasGeometries: false,
       initMapWithoutFC: false,
       locations: false,
-      singleFi: this.props.singleFi || undefined,
     };
 
     if (!initialState.APP && ducks.APP) {
@@ -202,7 +198,7 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
      */
     if (
       (!some(features) && !this.state.initMapWithoutFC && this.state.locations) ||
-      (nextProps.singleFi && this.state.singleFi) ||
+      nextProps.goal === null ||
       (!some(features) &&
         !this.state.initMapWithoutFC &&
         this.state.locations &&
@@ -232,7 +228,7 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
       (nextProps.currentGoal !== this.props.currentGoal &&
         (this.state.locations || this.state.doInitMap))
     ) {
-      this.setState({ doInitMap: false, initMapWithoutFC: false, singleFi: false }, () => {
+      this.setState({ doInitMap: false, initMapWithoutFC: false }, () => {
         this.initMap(nextProps.featureCollection);
       });
     }
