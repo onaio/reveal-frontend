@@ -1,19 +1,32 @@
-// this is the IRS NEW view page component
+// this is the IRS Plan page component
 import * as React from 'react';
+import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
+import { Store } from 'redux';
+
+import { HOME, HOME_URL, INTERVENTION_IRS_URL } from '../../../../../constants';
+import { RouteParams } from '../../../../../helpers/utils';
+
+import { getPlanById, Plan } from '../../../../../store/ducks/plans';
 
 import HeaderBreadcrumbs, {
   BreadCrumbProps,
 } from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
-import { HOME, HOME_URL, INTERVENTION_IRS_URL } from '../../../../../constants';
-import { RouteParams } from '../../../../../helpers/utils';
 
 export interface IrsPlanProps {
-  id: string | null;
+  planId: string | null;
+  plan: Plan | null;
+  isNewPlan: boolean;
+  isDraftPlan: boolean;
+  isFinalizedPlan: boolean;
 }
 
 export const defaultIrsPlanProps: IrsPlanProps = {
-  id: null,
+  isDraftPlan: false,
+  isFinalizedPlan: false,
+  isNewPlan: false,
+  plan: null,
+  planId: null,
 };
 
 class IrsPlan extends React.Component<RouteComponentProps<RouteParams> & IrsPlanProps, {}> {
@@ -47,4 +60,28 @@ class IrsPlan extends React.Component<RouteComponentProps<RouteParams> & IrsPlan
   }
 }
 
-export default IrsPlan;
+/** Connect the component to the store */
+
+/** interface to describe props from mapStateToProps */
+interface DispatchedStateProps {
+  planId: string | null;
+}
+
+export { IrsPlan };
+
+const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateProps => {
+  const planId = ownProps.match.params.id || null;
+  const props = {
+    isNewPlan: planId === null,
+    planId,
+    ...ownProps,
+  };
+  if (planId) {
+    props.plan = getPlanById(state, planId);
+  }
+  return props;
+};
+
+const ConnectedIrsPlan = connect(mapStateToProps)(IrsPlan);
+
+export default ConnectedIrsPlan;
