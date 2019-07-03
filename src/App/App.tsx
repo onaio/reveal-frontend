@@ -65,14 +65,14 @@ class App extends Component {
               <ConnectedPrivateRoute
                 disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                 exact={true}
-                path={`${INTERVENTION_IRS_URL}/draft`} // todo - add :id
+                path={`${INTERVENTION_IRS_URL}/draft/:id`}
                 component={IrsPlan}
               />
 
               <ConnectedPrivateRoute
                 disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                 exact={true}
-                path={`${INTERVENTION_IRS_URL}/plan`} // todo - add :id
+                path={`${INTERVENTION_IRS_URL}/plan/:id`}
                 component={IrsPlan}
               />
 
