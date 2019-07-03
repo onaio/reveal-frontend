@@ -216,12 +216,13 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
      * and location data is set
      */
     if (
-      !some(features) &&
-      this.state.locations &&
-      !this.state.initMapWithStructures &&
-      (this.props.structures !== nextProps.structures &&
-        nextProps.structures &&
-        nextProps.structures.features.length)
+      (!some(features) &&
+        this.state.locations &&
+        !this.state.initMapWithStructures &&
+        (this.props.structures !== nextProps.structures &&
+          nextProps.structures &&
+          nextProps.structures.features.length)) ||
+      (this.props.currentGoal !== nextProps.currentGoal && !some(features))
     ) {
       this.setState(
         { doInitMap: true, initMapWithoutFC: true, initMapWithStructures: true },
