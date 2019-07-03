@@ -15,10 +15,10 @@ import HeaderBreadcrumbs, {
 
 export interface IrsPlanProps {
   planId: string | null;
-  plan: Plan | null;
-  isNewPlan: boolean;
-  isDraftPlan: boolean;
-  isFinalizedPlan: boolean;
+  plan?: Plan | null;
+  isNewPlan?: boolean;
+  isDraftPlan?: boolean;
+  isFinalizedPlan?: boolean;
 }
 
 export const defaultIrsPlanProps: IrsPlanProps = {
@@ -76,7 +76,8 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
     planId,
     ...ownProps,
   };
-  if (planId) {
+  if (planId && false) {
+    // todo - actually fetch the plans first
     props.plan = getPlanById(state, planId);
   }
   return props;

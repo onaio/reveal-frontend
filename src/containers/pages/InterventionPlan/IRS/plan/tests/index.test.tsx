@@ -4,17 +4,16 @@ import { createBrowserHistory } from 'history';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
-import { FI_SINGLE_URL } from '../../../../constants';
-import store from '../../../../store';
-import { Plan } from '../../../../store/ducks/plans';
-import * as fixtures from '../../../../store/ducks/tests/fixtures';
-import ConnectedIrsPlans, { IrsPlans } from '../IRS';
+import { FI_SINGLE_URL } from '../../../../../../constants';
+import store from '../../../../../../store';
+import * as fixtures from '../../../../../../store/ducks/tests/fixtures';
 
-jest.mock('../../../../configs/env');
+import ConnectedIrsPlan, { IrsPlan } from './..';
 
+jest.mock('../../../../../../configs/env');
 const history = createBrowserHistory();
 
-describe('containers/pages/IRS', () => {
+describe('containers/pages/IRS/plan', () => {
   beforeEach(() => {
     jest.resetAllMocks();
   });
@@ -26,38 +25,36 @@ describe('containers/pages/IRS', () => {
       location: mock,
       match: {
         isExact: true,
-        params: {},
-        path: FI_SINGLE_URL,
-        url: FI_SINGLE_URL,
+        params: { id: '1234' },
+        path: `${FI_SINGLE_URL}/plan/:id`,
+        url: `${FI_SINGLE_URL}/plan/1234`,
       },
-      plansArray: fixtures.plans as Plan[],
-      plansIdArray: fixtures.plansIdArray,
+      planId: '1234',
     };
     shallow(
       <Router history={history}>
-        <IrsPlans {...props} />
+        <IrsPlan {...props} />
       </Router>
     );
   });
 
-  it('renders plans list correctly', () => {
+  it('renders IRS Plan page correctly', () => {
     const mock: any = jest.fn();
+    const { id } = fixtures.plan1;
     const props = {
       history,
       location: mock,
       match: {
         isExact: true,
-        path: FI_SINGLE_URL,
-        url: FI_SINGLE_URL,
+        params: { id },
+        path: `${FI_SINGLE_URL}/plan/:id`,
+        url: `${FI_SINGLE_URL}/plan/${id}`,
       },
-      plansArray: fixtures.plans as Plan[],
-      plansIdArray: fixtures.plansIdArray,
     };
-
     const wrapper = mount(
       <Provider store={store}>
         <Router history={history}>
-          <ConnectedIrsPlans {...props} />
+          <ConnectedIrsPlan {...props} />
         </Router>
       </Provider>
     );
