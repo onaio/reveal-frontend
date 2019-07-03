@@ -1,14 +1,23 @@
 // this is the IRS NEW view page component
 import * as React from 'react';
-
-import { HOME, HOME_URL, INTERVENTION_IRS_URL } from '../../../../../constants';
+import { RouteComponentProps } from 'react-router';
 
 import HeaderBreadcrumbs, {
   BreadCrumbProps,
 } from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
+import { HOME, HOME_URL, INTERVENTION_IRS_URL } from '../../../../../constants';
+import { RouteParams } from '../../../../../helpers/utils';
 
-class IrsPlan extends React.Component<{}, {}> {
-  constructor(props: {}) {
+export interface IrsPlanProps {
+  id: string | null;
+}
+
+export const defaultIrsPlanProps: IrsPlanProps = {
+  id: null,
+};
+
+class IrsPlan extends React.Component<RouteComponentProps<RouteParams> & IrsPlanProps, {}> {
+  constructor(props: RouteComponentProps<RouteParams> & IrsPlanProps) {
     super(props);
   }
 
