@@ -351,7 +351,6 @@ exports[`components/GisidaWrapper renders map component with FeatureCollection 1
     ]
   }
   handlers={Array []}
-  singleFi={false}
   structures={null}
 >
   <MapComponent
@@ -3383,7 +3382,6 @@ exports[`components/GisidaWrapper renders map component without Featurecollectio
   goal={null}
   handlers={Array []}
   minHeight="200px"
-  singleFi={false}
   structures={null}
 >
   <Ripple
@@ -3551,7 +3549,6 @@ exports[`components/GisidaWrapper renders map component without Featurecollectio
   goal={null}
   handlers={Array []}
   minHeight="200px"
-  singleFi={false}
   structures={null}
 >
   <MapComponent
@@ -4241,7 +4238,6 @@ exports[`components/GisidaWrapper works with DigitalGlobe base layer 1`] = `
     ]
   }
   handlers={Array []}
-  singleFi={false}
   structures={null}
 >
   <MapComponent
