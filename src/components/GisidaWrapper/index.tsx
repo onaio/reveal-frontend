@@ -94,6 +94,7 @@ interface GisidaState {
   hasGeometries: boolean | false;
   featureCollection: FeatureCollection<TaskGeoJSON> | null;
   initMapWithoutFC: boolean | false;
+  initMapWithStructures: boolean;
 }
 /** GisidaWrapper Props Interface */
 interface GisidaProps {
@@ -138,6 +139,7 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
       featureCollection: this.props.featureCollection || null,
       geoData: this.props.geoData || false,
       hasGeometries: false,
+      initMapWithStructures: false,
       initMapWithoutFC: false,
       locations: false,
     };
@@ -165,6 +167,8 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
   }
 
   public componentDidMount() {
+    const features: TaskGeoJSON[] =
+      (this.props.featureCollection && this.props.featureCollection.features) || [];
     if (!this.state.locations) {
       this.setState(
         {
@@ -176,9 +180,26 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
         }
       );
     }
+    /** Handles Map without structures Render map with jurisdiction only  */
+    if (
+      (!some(features) && !this.state.initMapWithoutFC && this.state.locations) ||
+      this.props.goal === null
+    ) {
+      this.setState(
+        { doInitMap: true, initMapWithoutFC: true, initMapWithStructures: true },
+        () => {
+          // Dirty work around! Arbitrary delay to allow style load before adding layers
+          setTimeout(() => {
+            this.initMap(null);
+          }, 3000);
+        }
+      );
+    }
   }
 
   public componentWillReceiveProps(nextProps: GisidaProps) {
+    const features: TaskGeoJSON[] =
+      (this.props.featureCollection && this.props.featureCollection.features) || [];
     if (this.props.geoData !== nextProps.geoData && this.state.doRenderMap) {
       this.setState(
         {
@@ -191,27 +212,26 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
         }
       );
     }
-    const features: TaskGeoJSON[] =
-      (nextProps.featureCollection && nextProps.featureCollection.features) || [];
-    /** If there are no features and init map without features is false
+    /** If there are no features  & structures have been set on nextprops
      * and location data is set
      */
     if (
-      (!some(features) && !this.state.initMapWithoutFC && this.state.locations) ||
-      nextProps.goal === null ||
-      (!some(features) &&
-        !this.state.initMapWithoutFC &&
-        this.state.locations &&
-        (this.props.structures !== nextProps.structures &&
-          nextProps.structures &&
-          nextProps.structures.features.length))
+      !some(features) &&
+      this.state.locations &&
+      !this.state.initMapWithStructures &&
+      (this.props.structures !== nextProps.structures &&
+        nextProps.structures &&
+        nextProps.structures.features.length)
     ) {
-      this.setState({ doInitMap: true, initMapWithoutFC: true }, () => {
-        // Dirty work around! Arbitrary delay to allow style load before adding layers
-        setTimeout(() => {
-          this.initMap(null);
-        }, 3000);
-      });
+      this.setState(
+        { doInitMap: true, initMapWithoutFC: true, initMapWithStructures: true },
+        () => {
+          // Dirty work around! Arbitrary delay to allow style load before adding layers
+          setTimeout(() => {
+            this.initMap(null);
+          }, 3000);
+        }
+      );
     }
   }
 
