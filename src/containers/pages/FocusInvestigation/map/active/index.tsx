@@ -25,7 +25,10 @@ import {
   HOME_URL,
   MAP,
   MEASURE,
+  MULTI_POLYGON,
   OF,
+  POINT,
+  POLYGON,
   RESPONSE,
   TARGET,
 } from '../../../../../constants';
@@ -83,6 +86,8 @@ export interface MapSingleFIProps {
   goals: Goal[] | null;
   jurisdiction: Jurisdiction | null;
   plan: Plan | null;
+  pointGeometries: FeatureCollection<TaskGeoJSON>;
+  polygonGeometries: FeatureCollection<TaskGeoJSON>;
   structures: FeatureCollection<TaskGeoJSON> | null /** we use this to get all structures */;
 }
 
@@ -104,6 +109,8 @@ export const defaultMapSingleFIProps: MapSingleFIProps = {
   jurisdiction: null,
   plan: null,
   setCurrentGoalActionCreator: setCurrentGoal,
+  pointGeometries: defaultFeatureCollection,
+  polygonGeometries: defaultFeatureCollection,
   structures: null,
 };
 
@@ -149,7 +156,16 @@ class SingleActiveFIMap extends React.Component<
   }
 
   public render() {
-    const { jurisdiction, plan, goals, currentGoal, featureCollection } = this.props;
+    const {
+      jurisdiction,
+      plan,
+      goals,
+      currentGoal,
+      featureCollection,
+      pointGeometries,
+      polygonGeometries,
+      structures,
+    } = this.props;
     if (!jurisdiction || !plan) {
       return <Loading />;
     }
@@ -265,6 +281,8 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
   let jurisdiction = null;
   let currentGoal;
   let featureCollection = defaultFeatureCollection;
+  let pointFeatureCollection = defaultFeatureCollection;
+  let polygonFeatureCollection = defaultFeatureCollection;
   let structures = null;
 
   if (plan) {
@@ -282,6 +300,22 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
       plan.jurisdiction_id,
       false
     );
+    pointFeatureCollection = getFCByPlanAndGoalAndJurisdiction(
+      state,
+      plan.plan_id,
+      ownProps.match.params.goalId,
+      plan.jurisdiction_id,
+      false,
+      [POINT]
+    );
+    polygonFeatureCollection = getFCByPlanAndGoalAndJurisdiction(
+      state,
+      plan.plan_id,
+      ownProps.match.params.goalId,
+      plan.jurisdiction_id,
+      false,
+      [POLYGON, MULTI_POLYGON]
+    );
   }
   return {
     currentGoal,
@@ -291,6 +325,8 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
     plan,
     plansArray: getPlansArray(state),
     plansIdArray: getPlansIdArray(state),
+    pointGeometries: pointFeatureCollection,
+    polygonGeometries: polygonFeatureCollection,
     structures,
   };
 };
