@@ -241,6 +241,18 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
       }
     }
     setCurrentGoalActionCreator={[Function]}
+    pointGeometries={
+      Object {
+        "features": Array [],
+        "type": "FeatureCollection",
+      }
+    }
+    polygonGeometries={
+      Object {
+        "features": Array [],
+        "type": "FeatureCollection",
+      }
+    }
     structures={null}
   >
     <div>
@@ -1185,6 +1197,18 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store 1`
           ]
         }
         setCurrentGoalActionCreator={[Function]}
+        pointGeometries={
+          Object {
+            "features": Array [],
+            "type": "FeatureCollection",
+          }
+        }
+        polygonGeometries={
+          Object {
+            "features": Array [],
+            "type": "FeatureCollection",
+          }
+        }
         structures={
           Object {
             "features": Array [
