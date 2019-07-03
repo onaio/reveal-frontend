@@ -7,7 +7,7 @@ import HeaderBreadcrumbs, {
   BreadCrumbProps,
 } from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 
-class IrsNewPlan extends React.Component<{}, {}> {
+class IrsPlan extends React.Component<{}, {}> {
   constructor(props: {}) {
     super(props);
   }
@@ -38,4 +38,4 @@ class IrsNewPlan extends React.Component<{}, {}> {
   }
 }
 
-export default IrsNewPlan;
+export default IrsPlan;
