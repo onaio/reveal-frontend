@@ -18,11 +18,12 @@ import {
   NO_GEOMETRIES_RESPONSE,
   POINT,
   POLYGON,
+  STRUCTURE_LAYER,
 } from '../../constants';
 import { EventData } from '../../helpers/mapbox';
 import { ConfigStore, FeatureCollection, FlexObject } from '../../helpers/utils';
 import store from '../../store';
-import { Goal } from '../../store/ducks/goals';
+import { Goal, setCurrentGoal } from '../../store/ducks/goals';
 import { Jurisdiction, JurisdictionGeoJSON } from '../../store/ducks/jurisdictions';
 import { Task, TaskGeoJSON } from '../../store/ducks/tasks';
 import './gisida.css';
@@ -93,6 +94,7 @@ interface GisidaState {
   hasGeometries: boolean | false;
   featureCollection: FeatureCollection<TaskGeoJSON> | null;
   initMapWithoutFC: boolean | false;
+  initMapWithStructures: boolean;
 }
 /** GisidaWrapper Props Interface */
 interface GisidaProps {
@@ -137,6 +139,7 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
       featureCollection: this.props.featureCollection || null,
       geoData: this.props.geoData || false,
       hasGeometries: false,
+      initMapWithStructures: false,
       initMapWithoutFC: false,
       locations: false,
     };
@@ -164,6 +167,8 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
   }
 
   public componentDidMount() {
+    const features: TaskGeoJSON[] =
+      (this.props.featureCollection && this.props.featureCollection.features) || [];
     if (!this.state.locations) {
       this.setState(
         {
@@ -175,9 +180,26 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
         }
       );
     }
+    /** Handles Map without structures Render map with jurisdiction only  */
+    if (
+      (!some(features) && !this.state.initMapWithoutFC && this.state.locations) ||
+      this.props.goal === null
+    ) {
+      this.setState(
+        { doInitMap: true, initMapWithoutFC: true, initMapWithStructures: true },
+        () => {
+          // Dirty work around! Arbitrary delay to allow style load before adding layers
+          setTimeout(() => {
+            this.initMap(null);
+          }, 3000);
+        }
+      );
+    }
   }
 
   public componentWillReceiveProps(nextProps: GisidaProps) {
+    const features: TaskGeoJSON[] =
+      (this.props.featureCollection && this.props.featureCollection.features) || [];
     if (this.props.geoData !== nextProps.geoData && this.state.doRenderMap) {
       this.setState(
         {
@@ -190,18 +212,27 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
         }
       );
     }
-    const features: TaskGeoJSON[] =
-      (nextProps.featureCollection && nextProps.featureCollection.features) || [];
-    /** If there are no features and init map without features is false
+    /** If there are no features  & structures have been set on nextprops
      * and location data is set
      */
-    if (!some(features) && !this.state.initMapWithoutFC && this.state.locations) {
-      this.setState({ doInitMap: true, initMapWithoutFC: true }, () => {
-        // Dirty work around! Arbitrary delay to allow style load before adding layers
-        setTimeout(() => {
-          this.initMap(null);
-        }, 3000);
-      });
+    if (
+      (!some(features) &&
+        this.state.locations &&
+        !this.state.initMapWithStructures &&
+        (this.props.structures !== nextProps.structures &&
+          nextProps.structures &&
+          nextProps.structures.features.length)) ||
+      (this.props.currentGoal !== nextProps.currentGoal && !some(features))
+    ) {
+      this.setState(
+        { doInitMap: true, initMapWithoutFC: true, initMapWithStructures: true },
+        () => {
+          // Dirty work around! Arbitrary delay to allow style load before adding layers
+          setTimeout(() => {
+            this.initMap(null);
+          }, 3000);
+        }
+      );
     }
   }
 
@@ -214,10 +245,9 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
      * if condition1 and condition2 or condition3 execute
      */
     if (
-      (some(features) &&
-        (nextProps.currentGoal !== this.props.currentGoal &&
-          (this.state.locations || this.state.doInitMap))) ||
-      nextProps.currentGoal === 'undefined'
+      some(features) &&
+      (nextProps.currentGoal !== this.props.currentGoal &&
+        (this.state.locations || this.state.doInitMap))
     ) {
       this.setState({ doInitMap: false, initMapWithoutFC: false }, () => {
         this.initMap(nextProps.featureCollection);
@@ -225,6 +255,7 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
     }
   }
   public componentWillUnmount() {
+    store.dispatch(setCurrentGoal(null));
     const stateOnUnmount = store.getState();
     Object.keys(stateOnUnmount[MAP_ID].layers).forEach((layer: string) => {
       if (stateOnUnmount[MAP_ID].layers[layer].visible) {
@@ -253,7 +284,7 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
     }
     if (locations) {
       const bounds = GeojsonExtent(locations);
-      this.setState({ locations, doInitMap: true, bounds });
+      this.setState({ locations, doInitMap: true, bounds, initMapWithoutFC: false });
     }
   }
 
@@ -439,7 +470,8 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
           if (
             layer.visible &&
             !layer.id.includes(this.props.currentGoal) &&
-            !layer.id.includes(MAIN_PLAN)
+            !layer.id.includes(MAIN_PLAN) &&
+            !layer.id.includes(STRUCTURE_LAYER)
           ) {
             store.dispatch(Actions.toggleLayer(MAP_ID, layer.id, false));
           }
@@ -448,7 +480,11 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
       } else if (!this.state.hasGeometries && Object.keys(currentState[MAP_ID].layers).length > 1) {
         Object.keys(currentState[MAP_ID].layers).forEach((l: string) => {
           layer = currentState[MAP_ID].layers[l];
-          if (layer.visible && !layer.id.includes(MAIN_PLAN)) {
+          if (
+            layer.visible &&
+            !layer.id.includes(MAIN_PLAN) &&
+            !layer.id.includes(STRUCTURE_LAYER)
+          ) {
             activeIds.push(layer.id);
           }
         });

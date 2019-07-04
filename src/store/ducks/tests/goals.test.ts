@@ -4,6 +4,7 @@ import { FlushThunks } from 'redux-testkit';
 import store from '../../index';
 import reducer, {
   fetchGoals,
+  getCurrentGoal,
   getGoalById,
   getGoalsByGoalId,
   getGoalsById,
@@ -12,16 +13,15 @@ import reducer, {
   getGoalsByPlanId,
   Goal,
   reducerName,
+  setCurrentGoal,
 } from '../goals';
 import * as fixtures from './fixtures';
 
 reducerRegistry.register(reducerName, reducer);
 
 describe('reducers/goals', () => {
-  let flushThunks;
-
   beforeEach(() => {
-    flushThunks = FlushThunks.createMiddleware();
+    FlushThunks.createMiddleware();
     jest.resetAllMocks();
   });
 
@@ -32,6 +32,7 @@ describe('reducers/goals', () => {
     expect(getGoalsByGoalId(store.getState(), 'someId')).toEqual([]);
     expect(getGoalsByJurisdictionId(store.getState(), 'someId')).toEqual([]);
     expect(getGoalsByPlanAndJurisdiction(store.getState(), 'a', 'b')).toEqual([]);
+    expect(getCurrentGoal(store.getState())).toEqual(null);
   });
 
   it('should fetch goals', () => {
@@ -57,6 +58,15 @@ describe('reducers/goals', () => {
         '450fc15b-5bd2-468a-927a-49cb10d3bcac'
       )
     ).toEqual([fixtures.goal1, fixtures.goal2, fixtures.goal4]);
+  });
+
+  it('should set currentGoal', () => {
+    store.dispatch(setCurrentGoal(fixtures.currentGoal));
+    expect(getCurrentGoal(store.getState())).toEqual(fixtures.currentGoal);
+    store.dispatch(setCurrentGoal(fixtures.nextGoal));
+    expect(getCurrentGoal(store.getState())).toEqual(fixtures.nextGoal);
+    store.dispatch(setCurrentGoal(null));
+    expect(getCurrentGoal(store.getState())).toEqual(null);
   });
 
   it('should save goals correctly', () => {

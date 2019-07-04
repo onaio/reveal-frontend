@@ -36,9 +36,11 @@ import { FeatureCollection, FlexObject, RouteParams } from '../../../../../helpe
 import supersetFetch from '../../../../../services/superset';
 import goalsReducer, {
   fetchGoals,
+  getCurrentGoal,
   getGoalsByPlanAndJurisdiction,
   Goal,
   reducerName as goalsReducerName,
+  setCurrentGoal,
 } from '../../../../../store/ducks/goals';
 import jurisdictionReducer, {
   fetchJurisdictions,
@@ -73,6 +75,7 @@ reducerRegistry.register(tasksReducerName, tasksReducer);
 export interface MapSingleFIProps {
   currentGoal: string | null;
   featureCollection: FeatureCollection<TaskGeoJSON>;
+  setCurrentGoalActionCreator: typeof setCurrentGoal;
   fetchGoalsActionCreator: typeof fetchGoals;
   fetchJurisdictionsActionCreator: typeof fetchJurisdictions;
   fetchPlansActionCreator: typeof fetchPlans;
@@ -100,6 +103,7 @@ export const defaultMapSingleFIProps: MapSingleFIProps = {
   goals: null,
   jurisdiction: null,
   plan: null,
+  setCurrentGoalActionCreator: setCurrentGoal,
   structures: null,
 };
 
@@ -133,6 +137,15 @@ class SingleActiveFIMap extends React.Component<
     await supersetFetch(SUPERSET_STRUCTURES_SLICE, { row_limit: 3000 }).then((result4: Task[]) =>
       fetchTasksActionCreator(result4)
     );
+  }
+  public componentWillReceiveProps(nextProps: any) {
+    const { setCurrentGoalActionCreator, match } = this.props;
+
+    if (match.params.goalId !== nextProps.match.params.goalId) {
+      setCurrentGoalActionCreator(
+        nextProps.match.params.goalId ? nextProps.match.params.goalId : null
+      );
+    }
   }
 
   public render() {
@@ -250,7 +263,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
   const plan = getPlanById(state, ownProps.match.params.id);
   let goals = null;
   let jurisdiction = null;
-  let currentGoal = null;
+  let currentGoal;
   let featureCollection = defaultFeatureCollection;
   let structures = null;
 
@@ -261,7 +274,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
   }
 
   if (plan && jurisdiction && (goals && goals.length > 1)) {
-    currentGoal = ownProps.match.params.goalId;
+    currentGoal = getCurrentGoal(state);
     featureCollection = getFCByPlanAndGoalAndJurisdiction(
       state,
       plan.plan_id,
@@ -288,6 +301,7 @@ const mapDispatchToProps = {
   fetchJurisdictionsActionCreator: fetchJurisdictions,
   fetchPlansActionCreator: fetchPlans,
   fetchTasksActionCreator: fetchTasks,
+  setCurrentGoalActionCreator: setCurrentGoal,
 };
 
 /** Create connected SingleActiveFIMAP */

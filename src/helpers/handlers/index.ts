@@ -14,6 +14,7 @@ declare global {
 
 /** Having features as any type is not most desirable this has been qued up as part of technical debt payment */
 export function popupHandler(event: EventData) {
+  /** currentGoal is currently not being used but we may/ may not use it in the future  */
   const features = event.target.queryRenderedFeatures(event.point) as any[];
   let description: string = '';
   features.forEach((feature: any) => {
