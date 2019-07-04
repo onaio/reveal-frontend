@@ -100,6 +100,8 @@ interface GisidaState {
 interface GisidaProps {
   currentGoal?: string | null;
   featureCollection: FeatureCollection<TaskGeoJSON> | null;
+  pointGeometries: FeatureCollection<TaskGeoJSON> | null;
+  polygonGeometries: FeatureCollection<TaskGeoJSON> | null;
   geoData: Jurisdiction | null;
   goal?: Goal[] | null;
   handlers: Handlers[];
@@ -123,6 +125,8 @@ export const defaultGisidaProps: GisidaProps = {
   geoData: null,
   goal: null,
   handlers: [],
+  pointGeometries: null,
+  polygonGeometries: null,
   structures: null,
 };
 
