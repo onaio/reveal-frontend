@@ -3402,7 +3402,6 @@ exports[`components/GisidaWrapper renders map component without Featurecollectio
 <GisidaWrapper
   basemapStyle="mapbox://styles/mapbox/satellite-v9"
   currentGoal={null}
-  featureCollection={null}
   geoData={
     Object {
       "geojson": Object {
@@ -3571,7 +3570,6 @@ exports[`components/GisidaWrapper renders map component without Featurecollectio
 <GisidaWrapper
   basemapStyle="mapbox://styles/mapbox/satellite-v9"
   currentGoal={null}
-  featureCollection={null}
   geoData={
     Object {
       "geojson": Object {
