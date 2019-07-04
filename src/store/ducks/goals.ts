@@ -26,7 +26,7 @@ export interface Goal {
 export const GOALS_FETCHED = 'reveal/reducer/goals/GOALS_FETCHED';
 
 /** SET_CURRENT_GOAL action type */
-export const SET_CURRENT_GOAL = 'reveal/reducer/goals/FETCH_CURRENT_GOAL';
+export const SET_CURRENT_GOAL = 'reveal/reducer/goals/SET_CURRENT_GOAL';
 
 /** interface for authorize action */
 interface FetchGoalsAction extends AnyAction {
