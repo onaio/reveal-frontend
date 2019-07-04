@@ -2875,9 +2875,9 @@ Object {
       "type": "line",
       "visible": false,
     },
-    "structure-26": Object {
+    "structure-layer": Object {
       "filters": Object {},
-      "id": "structure-26",
+      "id": "structure-layer",
       "isChartMin": true,
       "isLoading": false,
       "labels": undefined,
@@ -3034,7 +3034,7 @@ Object {
         "type": "geojson",
       },
       "styleSpec": Object {
-        "id": "structure-26",
+        "id": "structure-layer",
         "layout": Object {},
         "paint": Object {
           "fill-color": "#666a6d",
