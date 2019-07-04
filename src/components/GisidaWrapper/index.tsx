@@ -173,8 +173,10 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
   }
 
   public componentDidMount() {
-    const features: TaskGeoJSON[] =
-      (this.props.featureCollection && this.props.featureCollection.features) || [];
+    const pointFeatures: TaskGeoJSON[] =
+      (this.props.pointGeometries && this.props.pointGeometries.features) || [];
+    const polygonFeatures: TaskGeoJSON[] =
+      (this.props.polygonGeometries && this.props.polygonGeometries.features) || [];
     if (!this.state.locations) {
       this.setState(
         {
@@ -188,7 +190,10 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
     }
     /** Handles Map without structures Render map with jurisdiction only  */
     if (
-      (!some(features) && !this.state.initMapWithoutFC && this.state.locations) ||
+      (!some(pointFeatures) &&
+        !some(polygonFeatures) &&
+        !this.state.initMapWithoutFC &&
+        this.state.locations) ||
       this.props.goal === null
     ) {
       this.setState(
@@ -196,7 +201,7 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
         () => {
           // Dirty work around! Arbitrary delay to allow style load before adding layers
           setTimeout(() => {
-            this.initMap(null);
+            this.initMap(null, null);
           }, 3000);
         }
       );
@@ -204,8 +209,6 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
   }
 
   public componentWillReceiveProps(nextProps: GisidaProps) {
-    const features: TaskGeoJSON[] =
-      (this.props.featureCollection && this.props.featureCollection.features) || [];
     if (this.props.geoData !== nextProps.geoData && this.state.doRenderMap) {
       this.setState(
         {
@@ -226,16 +229,26 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
      * and location data is set
      */
     if (
-      (!some(pointFeatures) || !some(polygonFeatures)) &&
-      !this.state.initMapWithoutFC &&
-      this.state.locations
+      (!some(pointFeatures) &&
+        !some(polygonFeatures) &&
+        this.state.locations &&
+        !this.state.initMapWithStructures &&
+        (this.props.structures !== nextProps.structures &&
+          nextProps.structures &&
+          nextProps.structures.features.length)) ||
+      (this.props.currentGoal !== nextProps.currentGoal &&
+        !some(pointFeatures) &&
+        !some(polygonFeatures))
     ) {
-      this.setState({ doInitMap: true, initMapWithoutFC: true }, () => {
-        // Dirty work around! Arbitrary delay to allow style load before adding layers
-        setTimeout(() => {
-          this.initMap(null, null);
-        }, 3000);
-      });
+      this.setState(
+        { doInitMap: true, initMapWithoutFC: true, initMapWithStructures: true },
+        () => {
+          // Dirty work around! Arbitrary delay to allow style load before adding layers
+          setTimeout(() => {
+            this.initMap(null, null);
+          }, 3000);
+        }
+      );
     }
   }
 
@@ -314,7 +327,7 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
     if (structures) {
       const structureLayer: FillLayerObj = {
         ...fillLayerConfig,
-        id: `structure-26`,
+        id: STRUCTURE_LAYER,
         paint: {
           ...fillLayerConfig.paint,
           'fill-color': GREY,
@@ -334,7 +347,7 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
     if (pointGeometries) {
       builtGeometriesContainer.push({
         ...circleLayerConfig,
-        id: `${this.props.currentGoal}-circle`,
+        id: `${this.props.currentGoal}-point`,
         paint: {
           ...circleLayerConfig.paint,
           'circle-color': ['get', 'color'],
@@ -432,7 +445,6 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
     //     hasGeometries: false,
     //   });
     // }
-
     const { geoData } = this.props;
     const { locations, bounds } = this.state;
     if (!locations || !geoData) {
