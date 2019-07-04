@@ -215,6 +215,8 @@ class SingleActiveFIMap extends React.Component<
                 structures={this.props.structures}
                 currentGoal={currentGoal}
                 featureCollection={featureCollection}
+                pointGeometries={pointGeometries}
+                polygonGeometries={polygonGeometries}
               />
             </div>
           </div>
