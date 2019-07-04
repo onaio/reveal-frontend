@@ -92,14 +92,12 @@ interface GisidaState {
   doRenderMap: boolean;
   geoData: Jurisdiction | false;
   hasGeometries: boolean | false;
-  featureCollection: FeatureCollection<TaskGeoJSON> | null;
   initMapWithoutFC: boolean | false;
   initMapWithStructures: boolean;
 }
 /** GisidaWrapper Props Interface */
 interface GisidaProps {
   currentGoal?: string | null;
-  featureCollection: FeatureCollection<TaskGeoJSON> | null;
   pointGeometries: FeatureCollection<TaskGeoJSON> | null;
   polygonGeometries: FeatureCollection<TaskGeoJSON> | null;
   geoData: Jurisdiction | null;
@@ -121,7 +119,6 @@ const LayerStore = (layer: FlexObject) => {
 /** default props for ActiveFI Map component */
 export const defaultGisidaProps: GisidaProps = {
   currentGoal: null,
-  featureCollection: null,
   geoData: null,
   goal: null,
   handlers: [],
@@ -140,7 +137,6 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
       bounds: [],
       doInitMap: false,
       doRenderMap: false,
-      featureCollection: this.props.featureCollection || null,
       geoData: this.props.geoData || false,
       hasGeometries: false,
       initMapWithStructures: false,

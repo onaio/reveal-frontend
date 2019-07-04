@@ -77,7 +77,6 @@ reducerRegistry.register(tasksReducerName, tasksReducer);
 /** interface to describe props for ActiveFI Map component */
 export interface MapSingleFIProps {
   currentGoal: string | null;
-  featureCollection: FeatureCollection<TaskGeoJSON>;
   setCurrentGoalActionCreator: typeof setCurrentGoal;
   fetchGoalsActionCreator: typeof fetchGoals;
   fetchJurisdictionsActionCreator: typeof fetchJurisdictions;
@@ -100,7 +99,6 @@ const defaultFeatureCollection: FeatureCollection<TaskGeoJSON> = {
 /** default props for ActiveFI Map component */
 export const defaultMapSingleFIProps: MapSingleFIProps = {
   currentGoal: null,
-  featureCollection: defaultFeatureCollection,
   fetchGoalsActionCreator: fetchGoals,
   fetchJurisdictionsActionCreator: fetchJurisdictions,
   fetchPlansActionCreator: fetchPlans,
@@ -108,9 +106,9 @@ export const defaultMapSingleFIProps: MapSingleFIProps = {
   goals: null,
   jurisdiction: null,
   plan: null,
-  setCurrentGoalActionCreator: setCurrentGoal,
   pointGeometries: defaultFeatureCollection,
   polygonGeometries: defaultFeatureCollection,
+  setCurrentGoalActionCreator: setCurrentGoal,
   structures: null,
 };
 
@@ -161,7 +159,6 @@ class SingleActiveFIMap extends React.Component<
       plan,
       goals,
       currentGoal,
-      featureCollection,
       pointGeometries,
       polygonGeometries,
       structures,
@@ -214,7 +211,6 @@ class SingleActiveFIMap extends React.Component<
                 goal={goals}
                 structures={this.props.structures}
                 currentGoal={currentGoal}
-                featureCollection={featureCollection}
                 pointGeometries={pointGeometries}
                 polygonGeometries={polygonGeometries}
               />
@@ -282,7 +278,6 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
   let goals = null;
   let jurisdiction = null;
   let currentGoal;
-  let featureCollection = defaultFeatureCollection;
   let pointFeatureCollection = defaultFeatureCollection;
   let polygonFeatureCollection = defaultFeatureCollection;
   let structures = null;
@@ -295,13 +290,6 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
 
   if (plan && jurisdiction && (goals && goals.length > 1)) {
     currentGoal = getCurrentGoal(state);
-    featureCollection = getFCByPlanAndGoalAndJurisdiction(
-      state,
-      plan.plan_id,
-      ownProps.match.params.goalId,
-      plan.jurisdiction_id,
-      false
-    );
     pointFeatureCollection = getFCByPlanAndGoalAndJurisdiction(
       state,
       plan.plan_id,
@@ -321,7 +309,6 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
   }
   return {
     currentGoal,
-    featureCollection,
     goals,
     jurisdiction,
     plan,
