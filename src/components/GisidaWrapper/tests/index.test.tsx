@@ -76,6 +76,15 @@ describe('components/GisidaWrapper', () => {
       features: fixtures.bednetTasks.map((task: any) => task.geojson),
       type: 'FeatureCollection',
     };
+    const polygonGeometries: FeatureCollection<TaskGeoJSON> = {
+      features: fixtures.polygonTask.map((task: any) => task.geojson),
+      type: 'FeatureCollection',
+    };
+    const pointGeometries: FeatureCollection<TaskGeoJSON> = {
+      features: fixtures.pointTasks.map((task: any) => task.geojson),
+      type: 'FeatureCollection',
+    };
+
     const props1 = {
       basemapStyle: 'mapbox://styles/mapbox/satellite-v9',
       currentGoal: null,
@@ -83,6 +92,8 @@ describe('components/GisidaWrapper', () => {
       geoData: fixtures.jurisdictions[2],
       goal: fixtures.goals,
       handlers: [],
+      pointGeometries,
+      polygonGeometries,
     };
     const props = {
       currentGoal: fixtures.task6.goal_id,
@@ -90,6 +101,8 @@ describe('components/GisidaWrapper', () => {
       geoData: fixtures.jurisdictions[2],
       goal: fixtures.goals,
       handlers: [],
+      pointGeometries,
+      polygonGeometries,
     };
     const wrapper = mount(<GisidaWrapper {...props1} />);
     /** Investigate why it won't set state inside initmap even though
@@ -128,12 +141,23 @@ describe('components/GisidaWrapper', () => {
       features: fixtures.bednetTasks.map((task: any) => task.geojson),
       type: 'FeatureCollection',
     };
+    const polygonGeometries: FeatureCollection<TaskGeoJSON> = {
+      features: fixtures.polygonTask.map((task: any) => task.geojson),
+      type: 'FeatureCollection',
+    };
+    const pointGeometries: FeatureCollection<TaskGeoJSON> = {
+      features: fixtures.pointTasks.map((task: any) => task.geojson),
+      type: 'FeatureCollection',
+    };
+
     const props1 = {
       currentGoal: null,
       featureCollection,
       geoData: fixtures.jurisdictions[2],
       goal: fixtures.goals,
       handlers: [],
+      pointGeometries,
+      polygonGeometries,
     };
     const props = {
       currentGoal: fixtures.task6.goal_id,
@@ -141,6 +165,8 @@ describe('components/GisidaWrapper', () => {
       geoData: fixtures.jurisdictions[2],
       goal: fixtures.goals,
       handlers: [],
+      pointGeometries,
+      polygonGeometries,
     };
     const wrapper = mount(<GisidaWrapper {...props1} />);
     wrapper.setState({ doRenderMap: true });
@@ -166,15 +192,26 @@ describe('components/GisidaWrapper', () => {
 
   it('renders map component with structures', () => {
     const featureCollection: FeatureCollection<TaskGeoJSON> = {
-      features: fixtures.bednetTasks.map((task: Task) => task.geojson),
+      features: fixtures.bednetTasks.map((task: any) => task.geojson),
       type: 'FeatureCollection',
     };
+    const polygonGeometries: FeatureCollection<TaskGeoJSON> = {
+      features: fixtures.polygonTask.map((task: any) => task.geojson),
+      type: 'FeatureCollection',
+    };
+    const pointGeometries: FeatureCollection<TaskGeoJSON> = {
+      features: fixtures.pointTasks.map((task: any) => task.geojson),
+      type: 'FeatureCollection',
+    };
+
     const props1 = {
       currentGoal: null,
       featureCollection,
       geoData: fixtures.jurisdictions[1],
       goal: fixtures.goals,
       handlers: [],
+      pointGeometries,
+      polygonGeometries,
       structures: wrapFeatureCollection([fixtures.coloredTasks.task1, fixtures.coloredTasks.task2]),
     };
     const props = {
@@ -183,6 +220,8 @@ describe('components/GisidaWrapper', () => {
       geoData: fixtures.jurisdictions[1],
       goal: fixtures.goals,
       handlers: [],
+      pointGeometries,
+      polygonGeometries,
       structures: wrapFeatureCollection([fixtures.coloredTasks.task1, fixtures.coloredTasks.task2]),
     };
     const wrapper = mount(<GisidaWrapper {...props1} />);
