@@ -81,7 +81,6 @@ interface GisidaState {
   doInitMap: boolean;
   doRenderMap: boolean;
   geoData: Jurisdiction | false;
-  hasGeometries: boolean | false;
   initMapWithoutFC: boolean | false;
   initMapWithStructures: boolean;
 }
@@ -128,7 +127,6 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
       doInitMap: false,
       doRenderMap: false,
       geoData: this.props.geoData || false,
-      hasGeometries: false,
       initMapWithStructures: false,
       initMapWithoutFC: false,
       locations: false,
@@ -437,8 +435,9 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
         }
       }, 500);
 
-      // handles tasks with geometries
-      if (this.state.hasGeometries && Object.keys(currentState[MAP_ID].layers).length > 1) {
+      // toggle off layers that aren't structures, main plan and currentGoal layers
+
+      if (Object.keys(currentState[MAP_ID].layers).length > 1) {
         const allLayers = Object.keys(currentState[MAP_ID].layers);
         let eachLayer: string;
         for (eachLayer of allLayers) {
@@ -454,23 +453,6 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
           ) {
             store.dispatch(Actions.toggleLayer(MAP_ID, layer.id, false));
           }
-        }
-        // handle tasks with no geometries
-      } else if (!this.state.hasGeometries && Object.keys(currentState[MAP_ID].layers).length > 1) {
-        Object.keys(currentState[MAP_ID].layers).forEach((l: string) => {
-          layer = currentState[MAP_ID].layers[l];
-          if (
-            layer.visible &&
-            !layer.id.includes(MAIN_PLAN) &&
-            !layer.id.includes(STRUCTURE_LAYER)
-          ) {
-            activeIds.push(layer.id);
-          }
-        });
-        if (activeIds.length) {
-          activeIds.forEach((a: string) => {
-            store.dispatch(Actions.toggleLayer(MAP_ID, a, false));
-          });
         }
       }
     });
