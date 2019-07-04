@@ -302,7 +302,7 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
     if (structures) {
       const structureLayer: FillLayerObj = {
         ...fillLayerConfig,
-        id: `structure-26`,
+        id: STRUCTURE_LAYER,
         paint: {
           ...fillLayerConfig.paint,
           'fill-color': GREY,
