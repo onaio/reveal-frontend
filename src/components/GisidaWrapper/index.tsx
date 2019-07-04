@@ -9,23 +9,13 @@ import { GREY } from '../../colors';
 import Loading from '../../components/page/Loading/index';
 import { GISIDA_MAPBOX_TOKEN, GISIDA_ONADATA_API_TOKEN } from '../../configs/env';
 import { circleLayerConfig, fillLayerConfig, lineLayerConfig } from '../../configs/settings';
-import {
-  APP,
-  FEATURE_COLLECTION,
-  MAIN_PLAN,
-  MAP_ID,
-  MULTI_POLYGON,
-  NO_GEOMETRIES_RESPONSE,
-  POINT,
-  POLYGON,
-  STRUCTURE_LAYER,
-} from '../../constants';
+import { APP, MAIN_PLAN, MAP_ID, STRUCTURE_LAYER } from '../../constants';
 import { EventData } from '../../helpers/mapbox';
 import { ConfigStore, FeatureCollection, FlexObject } from '../../helpers/utils';
 import store from '../../store';
 import { Goal, setCurrentGoal } from '../../store/ducks/goals';
 import { Jurisdiction, JurisdictionGeoJSON } from '../../store/ducks/jurisdictions';
-import { Task, TaskGeoJSON } from '../../store/ducks/tasks';
+import { TaskGeoJSON } from '../../store/ducks/tasks';
 import './gisida.css';
 
 /** handlers Interface */
@@ -316,7 +306,6 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
       | LineLayerObj[]
       | FillLayerObj[]
       | FlexObject = [];
-    // const features: TaskGeoJSON[] = (featureCollection && featureCollection.features) || [];
 
     // deal with structures
     const { structures } = this.props;
@@ -340,6 +329,7 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
       };
       builtGeometriesContainer.push(structureLayer);
     }
+    // handle Point layer types
     if (pointGeometries) {
       builtGeometriesContainer.push({
         ...circleLayerConfig,
@@ -357,6 +347,7 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
         },
       });
     }
+    // Handle fill layers
     if (polygonGeometries) {
       builtGeometriesContainer.push({
         ...fillLayerConfig,
@@ -375,72 +366,6 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
         },
       });
     }
-    // if (some(features)) {
-    //   const points: TaskGeoJSON[] = [];
-    //   // handle geometries of type polygon or multipolygon
-    //   features.forEach((feature: TaskGeoJSON) => {
-    //     if (
-    //       (feature.geometry && feature.geometry.type === POLYGON) ||
-    //       (feature && feature.geometry && feature.geometry.type === MULTI_POLYGON)
-    //     ) {
-    //       let fillLayer: FillLayerObj | null = null;
-    //       fillLayer = {
-    //         ...fillLayerConfig,
-    //         id: `${feature.properties.goal_id}-${feature.id}`,
-    //         paint: {
-    //           ...fillLayerConfig.paint,
-    //           'fill-color': ['get', 'color'],
-    //           'fill-outline-color': ['get', 'color'],
-    //         },
-    //         source: {
-    //           ...fillLayerConfig.source,
-    //           data: {
-    //             ...fillLayerConfig.source.data,
-    //             data: JSON.stringify(feature),
-    //           },
-    //         },
-    //       };
-    //       builtGeometriesContainer.push(fillLayer);
-    //     }
-    //     if (feature.geometry && feature.geometry.type === POINT) {
-    //       // push type point tasks to points list
-    //       points.push(feature);
-    //     }
-    //   });
-
-    //   if (points.length > 0) {
-    //     // build a feature collection for points
-    //     const pointsFeatureCollection = {
-    //       features: points,
-    //       type: FEATURE_COLLECTION,
-    //     };
-    //     builtGeometriesContainer.push({
-    //       ...circleLayerConfig,
-    //       id: this.props.currentGoal,
-    //       paint: {
-    //         ...circleLayerConfig.paint,
-    //         'circle-color': ['get', 'color'],
-    //       },
-    //       source: {
-    //         ...circleLayerConfig.source,
-    //         data: {
-    //           ...circleLayerConfig.source.data,
-    //           data: JSON.stringify(pointsFeatureCollection),
-    //         },
-    //       },
-    //     });
-
-    //     this.setState({
-    //       hasGeometries: true,
-    //     });
-    //   }
-    // } // else if featureCollection prop was given but with empty features array
-    // else if (featureCollection && !some(features)) {
-    //   alert(NO_GEOMETRIES_RESPONSE);
-    //   this.setState({
-    //     hasGeometries: false,
-    //   });
-    // }
     const { geoData } = this.props;
     const { locations, bounds } = this.state;
     if (!locations || !geoData) {
