@@ -87,8 +87,8 @@ interface GisidaState {
 /** GisidaWrapper Props Interface */
 interface GisidaProps {
   currentGoal?: string | null;
-  pointGeometries: FeatureCollection<TaskGeoJSON> | null;
-  polygonGeometries: FeatureCollection<TaskGeoJSON> | null;
+  pointFeatureCollection: FeatureCollection<TaskGeoJSON> | null;
+  polygonFeatureCollection: FeatureCollection<TaskGeoJSON> | null;
   geoData: Jurisdiction | null;
   goal?: Goal[] | null;
   handlers: Handlers[];
@@ -111,8 +111,8 @@ export const defaultGisidaProps: GisidaProps = {
   geoData: null,
   goal: null,
   handlers: [],
-  pointGeometries: null,
-  polygonGeometries: null,
+  pointFeatureCollection: null,
+  polygonFeatureCollection: null,
   structures: null,
 };
 
@@ -142,14 +142,14 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
 
   public componentWillMount() {
     const pointFeatures: TaskGeoJSON[] =
-      (this.props.pointGeometries && this.props.pointGeometries.features) || [];
+      (this.props.pointFeatureCollection && this.props.pointFeatureCollection.features) || [];
     const polygonFeatures: TaskGeoJSON[] =
-      (this.props.polygonGeometries && this.props.polygonGeometries.features) || [];
+      (this.props.polygonFeatureCollection && this.props.polygonFeatureCollection.features) || [];
     /** Init map without features if no features were proped in,
      * features.some will return true if features array has atleast one
      * object that evaluates to true
      */
-    if (!some(pointFeatures) || !some(polygonFeatures)) {
+    if (!some(pointFeatures) && !some(polygonFeatures)) {
       this.setState({
         initMapWithoutFC: true,
       });
@@ -158,9 +158,9 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
 
   public componentDidMount() {
     const pointFeatures: TaskGeoJSON[] =
-      (this.props.pointGeometries && this.props.pointGeometries.features) || [];
+      (this.props.pointFeatureCollection && this.props.pointFeatureCollection.features) || [];
     const polygonFeatures: TaskGeoJSON[] =
-      (this.props.polygonGeometries && this.props.polygonGeometries.features) || [];
+      (this.props.polygonFeatureCollection && this.props.polygonFeatureCollection.features) || [];
     if (!this.state.locations) {
       this.setState(
         {
@@ -206,11 +206,13 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
       );
     }
     const pointFeatures: TaskGeoJSON[] =
-      (this.props.pointGeometries && this.props.pointGeometries.features) || [];
+      (this.props.pointFeatureCollection && this.props.pointFeatureCollection.features) || [];
     const polygonFeatures: TaskGeoJSON[] =
-      (this.props.polygonGeometries && this.props.polygonGeometries.features) || [];
-    /** If there are no features and init map without features is false
+      (this.props.polygonFeatureCollection && this.props.polygonFeatureCollection.features) || [];
+    /** If there are no pointFeatureCollection & polygonFeatureCollection and init map with structures is false
      * and location data is set
+     * and this structures aren't equal to next structures
+     * or currentGoals have changed and data
      */
     if (
       (!some(pointFeatures) &&
@@ -229,7 +231,7 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
         () => {
           // Dirty work around! Arbitrary delay to allow style load before adding layers
           setTimeout(() => {
-            this.initMap(null, null);
+            this.initMap(null);
           }, 3000);
         }
       );
@@ -238,25 +240,20 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
 
   public componentWillUpdate(nextProps: FlexObject) {
     const pointFeatures: TaskGeoJSON[] =
-      (this.props.pointGeometries && this.props.pointGeometries.features) || [];
+      (this.props.pointFeatureCollection && this.props.pointFeatureCollection.features) || [];
     const polygonFeatures: TaskGeoJSON[] =
-      (this.props.polygonGeometries && this.props.polygonGeometries.features) || [];
-    /** condition1: features are present, some features were passed in
+      (this.props.polygonFeatureCollection && this.props.polygonFeatureCollection.features) || [];
+    /** condition1: features are present, point features or polygon features present
      * condition2: currentGoal changed and either of locations or doInitMap is truthy
-     * condition3: currentGoal changed to undefined
-     * if condition1 and condition2 or condition3 execute
+     * if condition1 and condition2 execute
      */
     if (
-      ((some(pointFeatures) || some(polygonFeatures)) &&
-        (nextProps.currentGoal !== this.props.currentGoal &&
-          (this.state.locations || this.state.doInitMap))) ||
-      nextProps.currentGoal === 'undefined'
+      (some(pointFeatures) || some(polygonFeatures)) &&
+      (nextProps.currentGoal !== this.props.currentGoal &&
+        (this.state.locations || this.state.doInitMap))
     ) {
       this.setState({ doInitMap: false, initMapWithoutFC: false }, () => {
-        this.initMap(
-          pointFeatures.length ? nextProps.pointGeometries : null,
-          polygonFeatures.length ? nextProps.polygonGeometries : null
-        );
+        this.initMap(nextProps.pointFeatureCollection, nextProps.polygonFeatureCollection);
       });
     }
   }
@@ -296,8 +293,8 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
 
   // Define map site-config object to init the store
   private initMap(
-    pointGeometries: FeatureCollection<TaskGeoJSON> | null,
-    polygonGeometries: FeatureCollection<TaskGeoJSON> | null
+    pointFeatureCollection?: FeatureCollection<TaskGeoJSON> | null,
+    polygonFeatureCollection?: FeatureCollection<TaskGeoJSON> | null
   ) {
     const builtGeometriesContainer:
       | PointLayerObj[]
@@ -328,7 +325,7 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
       builtGeometriesContainer.push(structureLayer);
     }
     // handle Point layer types
-    if (pointGeometries) {
+    if (pointFeatureCollection) {
       builtGeometriesContainer.push({
         ...circleLayerConfig,
         id: `${this.props.currentGoal}-point`,
@@ -340,13 +337,13 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
           ...circleLayerConfig.source,
           data: {
             ...circleLayerConfig.source.data,
-            data: JSON.stringify(pointGeometries),
+            data: JSON.stringify(pointFeatureCollection),
           },
         },
       });
     }
     // Handle fill layers
-    if (polygonGeometries) {
+    if (polygonFeatureCollection) {
       builtGeometriesContainer.push({
         ...fillLayerConfig,
         id: `${this.props.currentGoal}-fill`,
@@ -359,7 +356,7 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
           ...fillLayerConfig.source,
           data: {
             ...fillLayerConfig.source.data,
-            data: JSON.stringify(polygonGeometries),
+            data: JSON.stringify(polygonFeatureCollection),
           },
         },
       });
@@ -405,7 +402,6 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
       // Initialize Gisida stores
       let layer;
       const currentState = store.getState();
-      const activeIds: string[] = [];
       store.dispatch(Actions.initApp(config.APP));
       /** Make all selected tasks visible by changing the visible flag to true */
       const visibleLayers = config.LAYERS.map((l: FlexObject) => {
