@@ -1,7 +1,7 @@
 import GeojsonExtent from '@mapbox/geojson-extent';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import { Actions, ducks, GisidaMap, loadLayers } from 'gisida';
-import { Map } from 'gisida-react';
+import { Map, Spinner } from 'gisida-react';
 import { some } from 'lodash';
 import { FillPaint, LinePaint, Map as mbMap, Style, SymbolPaint } from 'mapbox-gl';
 import * as React from 'react';
@@ -16,6 +16,7 @@ import store from '../../store';
 import { Goal, setCurrentGoal } from '../../store/ducks/goals';
 import { Jurisdiction, JurisdictionGeoJSON } from '../../store/ducks/jurisdictions';
 import { TaskGeoJSON } from '../../store/ducks/tasks';
+import { pointTasks } from '../../store/ducks/tests/fixtures';
 import './gisida.css';
 
 /** handlers Interface */
@@ -253,7 +254,10 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
         (this.state.locations || this.state.doInitMap))
     ) {
       this.setState({ doInitMap: false, initMapWithoutFC: false }, () => {
-        this.initMap(nextProps.pointFeatureCollection, nextProps.polygonFeatureCollection);
+        this.initMap(
+          pointFeatures.length ? nextProps.pointFeatureCollection : null,
+          polygonFeatures.length ? nextProps.polygonFeatureCollection : null
+        );
       });
     }
   }
@@ -275,7 +279,11 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
     if (!doRenderMap) {
       return <Loading minHeight={minHeight} />;
     }
-    return <Map mapId={mapId} store={store} handlers={this.props.handlers} />;
+    return (
+      <Map mapId={mapId} store={store} handlers={this.props.handlers}>
+        <Spinner store={store} />
+      </Map>
+    );
   }
 
   // Get relevant goejson locations
