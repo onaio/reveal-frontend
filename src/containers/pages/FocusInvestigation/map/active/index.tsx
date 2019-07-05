@@ -23,7 +23,6 @@ import {
   FOCUS_INVESTIGATIONS,
   HOME,
   HOME_URL,
-  MAP,
   MEASURE,
   MULTI_POLYGON,
   OF,
@@ -85,8 +84,8 @@ export interface MapSingleFIProps {
   goals: Goal[] | null;
   jurisdiction: Jurisdiction | null;
   plan: Plan | null;
-  pointGeometries: FeatureCollection<TaskGeoJSON>;
-  polygonGeometries: FeatureCollection<TaskGeoJSON>;
+  pointFeatureCollection: FeatureCollection<TaskGeoJSON>;
+  polygonFeatureCollection: FeatureCollection<TaskGeoJSON>;
   structures: FeatureCollection<TaskGeoJSON> | null /** we use this to get all structures */;
 }
 
@@ -106,8 +105,8 @@ export const defaultMapSingleFIProps: MapSingleFIProps = {
   goals: null,
   jurisdiction: null,
   plan: null,
-  pointGeometries: defaultFeatureCollection,
-  polygonGeometries: defaultFeatureCollection,
+  pointFeatureCollection: defaultFeatureCollection,
+  polygonFeatureCollection: defaultFeatureCollection,
   setCurrentGoalActionCreator: setCurrentGoal,
   structures: null,
 };
@@ -159,8 +158,8 @@ class SingleActiveFIMap extends React.Component<
       plan,
       goals,
       currentGoal,
-      pointGeometries,
-      polygonGeometries,
+      pointFeatureCollection,
+      polygonFeatureCollection,
       structures,
     } = this.props;
     if (!jurisdiction || !plan) {
@@ -209,10 +208,10 @@ class SingleActiveFIMap extends React.Component<
                 handlers={this.buildHandlers()}
                 geoData={jurisdiction}
                 goal={goals}
-                structures={this.props.structures}
+                structures={structures}
                 currentGoal={currentGoal}
-                pointGeometries={pointGeometries}
-                polygonGeometries={polygonGeometries}
+                pointFeatureCollection={pointFeatureCollection}
+                polygonFeatureCollection={polygonFeatureCollection}
               />
             </div>
           </div>
@@ -314,8 +313,8 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
     plan,
     plansArray: getPlansArray(state),
     plansIdArray: getPlansIdArray(state),
-    pointGeometries: pointFeatureCollection,
-    polygonGeometries: polygonFeatureCollection,
+    pointFeatureCollection,
+    polygonFeatureCollection,
     structures,
   };
 };
