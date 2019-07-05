@@ -240,13 +240,13 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
         "plan_title": "A1-Tha Luang Village 1 Focus 01",
       }
     }
-    pointGeometries={
+    pointFeatureCollection={
       Object {
         "features": Array [],
         "type": "FeatureCollection",
       }
     }
-    polygonGeometries={
+    polygonFeatureCollection={
       Object {
         "features": Array [],
         "type": "FeatureCollection",
@@ -554,13 +554,13 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
                   },
                 ]
               }
-              pointGeometries={
+              pointFeatureCollection={
                 Object {
                   "features": Array [],
                   "type": "FeatureCollection",
                 }
               }
-              polygonGeometries={
+              polygonFeatureCollection={
                 Object {
                   "features": Array [],
                   "type": "FeatureCollection",
@@ -825,11 +825,11 @@ Object {
       "type": "click",
     },
   ],
-  "pointGeometries": Object {
+  "pointFeatureCollection": Object {
     "features": Array [],
     "type": "FeatureCollection",
   },
-  "polygonGeometries": Object {
+  "polygonFeatureCollection": Object {
     "features": Array [],
     "type": "FeatureCollection",
   },
@@ -1181,13 +1181,13 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store 1`
             "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
           ]
         }
-        pointGeometries={
+        pointFeatureCollection={
           Object {
             "features": Array [],
             "type": "FeatureCollection",
           }
         }
-        polygonGeometries={
+        polygonFeatureCollection={
           Object {
             "features": Array [],
             "type": "FeatureCollection",
@@ -1584,13 +1584,13 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store 1`
                       },
                     ]
                   }
-                  pointGeometries={
+                  pointFeatureCollection={
                     Object {
                       "features": Array [],
                       "type": "FeatureCollection",
                     }
                   }
-                  polygonGeometries={
+                  polygonFeatureCollection={
                     Object {
                       "features": Array [],
                       "type": "FeatureCollection",
@@ -1847,11 +1847,11 @@ Object {
       "type": "click",
     },
   ],
-  "pointGeometries": Object {
+  "pointFeatureCollection": Object {
     "features": Array [],
     "type": "FeatureCollection",
   },
-  "polygonGeometries": Object {
+  "polygonFeatureCollection": Object {
     "features": Array [],
     "type": "FeatureCollection",
   },

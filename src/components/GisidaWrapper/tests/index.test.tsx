@@ -114,9 +114,9 @@ describe('components/GisidaWrapper', () => {
     });
 
     jest.runOnlyPendingTimers();
-    /** Investigate why it won't set state for hasGeometries to true.
-     * Had to copy the entire toggle functionality to test the
-     * toggling functionality of this component
+    /** Investigate why it won't toggleLayers considering.
+     * point and polygon featurecollection has been added to props
+     * Had to add toggling functionality to test that out.
      */
     const allLayers = store.getState()['map-1'].layers;
     toggleLayer(allLayers, props.currentGoal, store, Actions);
@@ -229,9 +229,9 @@ describe('components/GisidaWrapper', () => {
       },
     });
     jest.runOnlyPendingTimers();
-    /** Investigate why it won't set state for hasGeometries to true.
-     * Had to copy the entire toggle functionality to test the
-     * toggling functionality of this component
+    /** Investigate why it won't toggleLayers considering.
+     * point and polygon featurecollection has been added to props
+     * Had to add toggling functionality to test that out.
      */
 
     const allLayers = store.getState()['map-1'].layers;
