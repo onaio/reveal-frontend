@@ -254,10 +254,20 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
               "Header": "Focus Area",
               "columns": Array [
                 Object {
-                  "Cell": [Function],
                   "Header": "",
                   "accessor": "focusArea",
                   "minWidth": 130,
+                },
+              ],
+            },
+            Object {
+              "Header": "Investigation Name",
+              "columns": Array [
+                Object {
+                  "Cell": [Function],
+                  "Header": "",
+                  "accessor": "plan_title",
+                  "minWidth": 200,
                 },
               ],
             },
@@ -446,10 +456,20 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                 "Header": "Focus Area",
                 "columns": Array [
                   Object {
-                    "Cell": [Function],
                     "Header": "",
                     "accessor": "focusArea",
                     "minWidth": 130,
+                  },
+                ],
+              },
+              Object {
+                "Header": "Investigation Name",
+                "columns": Array [
+                  Object {
+                    "Cell": [Function],
+                    "Header": "",
+                    "accessor": "plan_title",
+                    "minWidth": 200,
                   },
                 ],
               },
@@ -633,7 +653,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                   className="-headerGroups"
                   style={
                     Object {
-                      "minWidth": "910px",
+                      "minWidth": "1110px",
                     }
                   }
                 >
@@ -641,7 +661,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                     className="rt-thead -headerGroups"
                     style={
                       Object {
-                        "minWidth": "910px",
+                        "minWidth": "1110px",
                       }
                     }
                   >
@@ -790,6 +810,33 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                           key="5-undefined"
                           style={
                             Object {
+                              "flex": "200 0 auto",
+                              "maxWidth": null,
+                              "width": "200px",
+                            }
+                          }
+                        >
+                          <div
+                            className="rt-th"
+                            onClick={[Function]}
+                            role="columnheader"
+                            style={
+                              Object {
+                                "flex": "200 0 auto",
+                                "maxWidth": null,
+                                "width": "200px",
+                              }
+                            }
+                            tabIndex="-1"
+                          >
+                            Investigation Name
+                          </div>
+                        </ThComponent>
+                        <ThComponent
+                          className=""
+                          key="6-undefined"
+                          style={
+                            Object {
                               "flex": "100 0 auto",
                               "maxWidth": null,
                               "width": "100px",
@@ -814,7 +861,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                         </ThComponent>
                         <ThComponent
                           className=""
-                          key="6-undefined"
+                          key="7-undefined"
                           style={
                             Object {
                               "flex": "60 0 auto",
@@ -841,7 +888,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                         </ThComponent>
                         <ThComponent
                           className=""
-                          key="7-undefined"
+                          key="8-undefined"
                           style={
                             Object {
                               "flex": "120 0 auto",
@@ -868,7 +915,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                         </ThComponent>
                         <ThComponent
                           className=""
-                          key="8-undefined"
+                          key="9-undefined"
                           style={
                             Object {
                               "flex": "100 0 auto",
@@ -901,7 +948,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                   className="-header"
                   style={
                     Object {
-                      "minWidth": "910px",
+                      "minWidth": "1110px",
                     }
                   }
                 >
@@ -909,7 +956,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                     className="rt-thead -header"
                     style={
                       Object {
-                        "minWidth": "910px",
+                        "minWidth": "1110px",
                       }
                     }
                   >
@@ -1120,7 +1167,47 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                         </ThComponent>
                         <ThComponent
                           className="rt-resizable-header -cursor-pointer"
-                          key="5-reason"
+                          key="5-plan_title"
+                          style={
+                            Object {
+                              "flex": "200 0 auto",
+                              "maxWidth": null,
+                              "width": "200px",
+                            }
+                          }
+                          toggleSort={[Function]}
+                        >
+                          <div
+                            className="rt-th rt-resizable-header -cursor-pointer"
+                            onClick={[Function]}
+                            role="columnheader"
+                            style={
+                              Object {
+                                "flex": "200 0 auto",
+                                "maxWidth": null,
+                                "width": "200px",
+                              }
+                            }
+                            tabIndex="-1"
+                          >
+                            <div
+                              className="rt-resizable-header-content"
+                            />
+                            <Resizer
+                              onMouseDown={[Function]}
+                              onTouchStart={[Function]}
+                            >
+                              <div
+                                className="rt-resizer"
+                                onMouseDown={[Function]}
+                                onTouchStart={[Function]}
+                              />
+                            </Resizer>
+                          </div>
+                        </ThComponent>
+                        <ThComponent
+                          className="rt-resizable-header -cursor-pointer"
+                          key="6-reason"
                           style={
                             Object {
                               "flex": "100 0 auto",
@@ -1160,7 +1247,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                         </ThComponent>
                         <ThComponent
                           className="rt-resizable-header -cursor-pointer"
-                          key="6-status"
+                          key="7-status"
                           style={
                             Object {
                               "flex": "60 0 auto",
@@ -1200,7 +1287,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                         </ThComponent>
                         <ThComponent
                           className="rt-resizable-header -cursor-pointer"
-                          key="7-caseNotificationDate"
+                          key="8-caseNotificationDate"
                           style={
                             Object {
                               "flex": "120 0 auto",
@@ -1240,7 +1327,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                         </ThComponent>
                         <ThComponent
                           className="rt-resizable-header -cursor-pointer"
-                          key="8-caseClassification"
+                          key="9-caseClassification"
                           style={
                             Object {
                               "flex": "100 0 auto",
@@ -1286,7 +1373,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                   className=""
                   style={
                     Object {
-                      "minWidth": "910px",
+                      "minWidth": "1110px",
                     }
                   }
                 >
@@ -1294,7 +1381,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                     className="rt-tbody"
                     style={
                       Object {
-                        "minWidth": "910px",
+                        "minWidth": "1110px",
                       }
                     }
                   >
@@ -1440,6 +1527,33 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                   }
                                 }
                               >
+                                NVI_439
+                              </div>
+                            </TdComponent>
+                            <TdComponent
+                              className=""
+                              key="5-plan_title"
+                              onClick={[Function]}
+                              style={
+                                Object {
+                                  "flex": "200 0 auto",
+                                  "maxWidth": null,
+                                  "width": "200px",
+                                }
+                              }
+                            >
+                              <div
+                                className="rt-td"
+                                onClick={[Function]}
+                                role="gridcell"
+                                style={
+                                  Object {
+                                    "flex": "200 0 auto",
+                                    "maxWidth": null,
+                                    "width": "200px",
+                                  }
+                                }
+                              >
                                 <Cell
                                   classes={
                                     Array [
@@ -1472,17 +1586,17 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                       "getProps": [Function],
                                       "headerClassName": "",
                                       "headerStyle": Object {},
-                                      "id": "focusArea",
+                                      "id": "plan_title",
                                       "minResizeWidth": 11,
-                                      "minWidth": 130,
+                                      "minWidth": 200,
                                       "parentColumn": Object {
-                                        "Header": "Focus Area",
+                                        "Header": "Investigation Name",
                                         "columns": Array [
                                           Object {
                                             "Cell": [Function],
                                             "Header": "",
-                                            "accessor": "focusArea",
-                                            "minWidth": 130,
+                                            "accessor": "plan_title",
+                                            "minWidth": 200,
                                           },
                                         ],
                                       },
@@ -1555,6 +1669,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                       "caseNotificationDate": null,
                                       "district": "",
                                       "focusArea": "NVI_439",
+                                      "plan_title": "A1-Tha Luang Village 1 Focus 01",
                                       "province": null,
                                       "reason": "Routine",
                                       "status": "A1",
@@ -1570,9 +1685,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                       "style": undefined,
                                     }
                                   }
-                                  value="NVI_439"
+                                  value="A1-Tha Luang Village 1 Focus 01"
                                   viewIndex={0}
-                                  width={130}
+                                  width={200}
                                 >
                                   <div>
                                     <Link
@@ -1635,7 +1750,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                         href="/focus-investigation/view/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
                                         onClick={[Function]}
                                       >
-                                        NVI_439
+                                        A1-Tha Luang Village 1 Focus 01
                                       </a>
                                     </Link>
                                   </div>
@@ -1644,7 +1759,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             </TdComponent>
                             <TdComponent
                               className=""
-                              key="5-reason"
+                              key="6-reason"
                               onClick={[Function]}
                               style={
                                 Object {
@@ -1671,7 +1786,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             </TdComponent>
                             <TdComponent
                               className=""
-                              key="6-status"
+                              key="7-status"
                               onClick={[Function]}
                               style={
                                 Object {
@@ -1698,7 +1813,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             </TdComponent>
                             <TdComponent
                               className=""
-                              key="7-caseNotificationDate"
+                              key="8-caseNotificationDate"
                               onClick={[Function]}
                               style={
                                 Object {
@@ -1835,6 +1950,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                       "caseNotificationDate": null,
                                       "district": "",
                                       "focusArea": "NVI_439",
+                                      "plan_title": "A1-Tha Luang Village 1 Focus 01",
                                       "province": null,
                                       "reason": "Routine",
                                       "status": "A1",
@@ -1860,7 +1976,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             </TdComponent>
                             <TdComponent
                               className=""
-                              key="8-caseClassification"
+                              key="9-caseClassification"
                               onClick={[Function]}
                               style={
                                 Object {
@@ -2029,6 +2145,33 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                   }
                                 }
                               >
+                                TLv1_02
+                              </div>
+                            </TdComponent>
+                            <TdComponent
+                              className=""
+                              key="5-plan_title"
+                              onClick={[Function]}
+                              style={
+                                Object {
+                                  "flex": "200 0 auto",
+                                  "maxWidth": null,
+                                  "width": "200px",
+                                }
+                              }
+                            >
+                              <div
+                                className="rt-td"
+                                onClick={[Function]}
+                                role="gridcell"
+                                style={
+                                  Object {
+                                    "flex": "200 0 auto",
+                                    "maxWidth": null,
+                                    "width": "200px",
+                                  }
+                                }
+                              >
                                 <Cell
                                   classes={
                                     Array [
@@ -2061,17 +2204,17 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                       "getProps": [Function],
                                       "headerClassName": "",
                                       "headerStyle": Object {},
-                                      "id": "focusArea",
+                                      "id": "plan_title",
                                       "minResizeWidth": 11,
-                                      "minWidth": 130,
+                                      "minWidth": 200,
                                       "parentColumn": Object {
-                                        "Header": "Focus Area",
+                                        "Header": "Investigation Name",
                                         "columns": Array [
                                           Object {
                                             "Cell": [Function],
                                             "Header": "",
-                                            "accessor": "focusArea",
-                                            "minWidth": 130,
+                                            "accessor": "plan_title",
+                                            "minWidth": 200,
                                           },
                                         ],
                                       },
@@ -2144,6 +2287,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                       "caseNotificationDate": null,
                                       "district": "",
                                       "focusArea": "TLv1_02",
+                                      "plan_title": "A1-Tha Luang Village 1 Focus 01",
                                       "province": null,
                                       "reason": "Case-triggered",
                                       "status": "A1",
@@ -2159,9 +2303,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                       "style": undefined,
                                     }
                                   }
-                                  value="TLv1_02"
+                                  value="A1-Tha Luang Village 1 Focus 01"
                                   viewIndex={1}
-                                  width={130}
+                                  width={200}
                                 >
                                   <div>
                                     <Link
@@ -2224,7 +2368,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                         href="/focus-investigation/view/plan-id-2"
                                         onClick={[Function]}
                                       >
-                                        TLv1_02
+                                        A1-Tha Luang Village 1 Focus 01
                                       </a>
                                     </Link>
                                   </div>
@@ -2233,7 +2377,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             </TdComponent>
                             <TdComponent
                               className=""
-                              key="5-reason"
+                              key="6-reason"
                               onClick={[Function]}
                               style={
                                 Object {
@@ -2260,7 +2404,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             </TdComponent>
                             <TdComponent
                               className=""
-                              key="6-status"
+                              key="7-status"
                               onClick={[Function]}
                               style={
                                 Object {
@@ -2287,7 +2431,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             </TdComponent>
                             <TdComponent
                               className=""
-                              key="7-caseNotificationDate"
+                              key="8-caseNotificationDate"
                               onClick={[Function]}
                               style={
                                 Object {
@@ -2424,6 +2568,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                       "caseNotificationDate": null,
                                       "district": "",
                                       "focusArea": "TLv1_02",
+                                      "plan_title": "A1-Tha Luang Village 1 Focus 01",
                                       "province": null,
                                       "reason": "Case-triggered",
                                       "status": "A1",
@@ -2449,7 +2594,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             </TdComponent>
                             <TdComponent
                               className=""
-                              key="8-caseClassification"
+                              key="9-caseClassification"
                               onClick={[Function]}
                               style={
                                 Object {
@@ -2971,10 +3116,20 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
               "Header": "Focus Area",
               "columns": Array [
                 Object {
-                  "Cell": [Function],
                   "Header": "",
                   "accessor": "focusArea",
                   "minWidth": 130,
+                },
+              ],
+            },
+            Object {
+              "Header": "Investigation Name",
+              "columns": Array [
+                Object {
+                  "Cell": [Function],
+                  "Header": "",
+                  "accessor": "plan_title",
+                  "minWidth": 200,
                 },
               ],
             },
@@ -3163,10 +3318,20 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                 "Header": "Focus Area",
                 "columns": Array [
                   Object {
-                    "Cell": [Function],
                     "Header": "",
                     "accessor": "focusArea",
                     "minWidth": 130,
+                  },
+                ],
+              },
+              Object {
+                "Header": "Investigation Name",
+                "columns": Array [
+                  Object {
+                    "Cell": [Function],
+                    "Header": "",
+                    "accessor": "plan_title",
+                    "minWidth": 200,
                   },
                 ],
               },
@@ -3350,7 +3515,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                   className="-headerGroups"
                   style={
                     Object {
-                      "minWidth": "910px",
+                      "minWidth": "1110px",
                     }
                   }
                 >
@@ -3358,7 +3523,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                     className="rt-thead -headerGroups"
                     style={
                       Object {
-                        "minWidth": "910px",
+                        "minWidth": "1110px",
                       }
                     }
                   >
@@ -3507,6 +3672,33 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                           key="5-undefined"
                           style={
                             Object {
+                              "flex": "200 0 auto",
+                              "maxWidth": null,
+                              "width": "200px",
+                            }
+                          }
+                        >
+                          <div
+                            className="rt-th"
+                            onClick={[Function]}
+                            role="columnheader"
+                            style={
+                              Object {
+                                "flex": "200 0 auto",
+                                "maxWidth": null,
+                                "width": "200px",
+                              }
+                            }
+                            tabIndex="-1"
+                          >
+                            Investigation Name
+                          </div>
+                        </ThComponent>
+                        <ThComponent
+                          className=""
+                          key="6-undefined"
+                          style={
+                            Object {
                               "flex": "100 0 auto",
                               "maxWidth": null,
                               "width": "100px",
@@ -3531,7 +3723,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                         </ThComponent>
                         <ThComponent
                           className=""
-                          key="6-undefined"
+                          key="7-undefined"
                           style={
                             Object {
                               "flex": "60 0 auto",
@@ -3558,7 +3750,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                         </ThComponent>
                         <ThComponent
                           className=""
-                          key="7-undefined"
+                          key="8-undefined"
                           style={
                             Object {
                               "flex": "120 0 auto",
@@ -3585,7 +3777,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                         </ThComponent>
                         <ThComponent
                           className=""
-                          key="8-undefined"
+                          key="9-undefined"
                           style={
                             Object {
                               "flex": "100 0 auto",
@@ -3618,7 +3810,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                   className="-header"
                   style={
                     Object {
-                      "minWidth": "910px",
+                      "minWidth": "1110px",
                     }
                   }
                 >
@@ -3626,7 +3818,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                     className="rt-thead -header"
                     style={
                       Object {
-                        "minWidth": "910px",
+                        "minWidth": "1110px",
                       }
                     }
                   >
@@ -3837,7 +4029,47 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                         </ThComponent>
                         <ThComponent
                           className="rt-resizable-header -cursor-pointer"
-                          key="5-reason"
+                          key="5-plan_title"
+                          style={
+                            Object {
+                              "flex": "200 0 auto",
+                              "maxWidth": null,
+                              "width": "200px",
+                            }
+                          }
+                          toggleSort={[Function]}
+                        >
+                          <div
+                            className="rt-th rt-resizable-header -cursor-pointer"
+                            onClick={[Function]}
+                            role="columnheader"
+                            style={
+                              Object {
+                                "flex": "200 0 auto",
+                                "maxWidth": null,
+                                "width": "200px",
+                              }
+                            }
+                            tabIndex="-1"
+                          >
+                            <div
+                              className="rt-resizable-header-content"
+                            />
+                            <Resizer
+                              onMouseDown={[Function]}
+                              onTouchStart={[Function]}
+                            >
+                              <div
+                                className="rt-resizer"
+                                onMouseDown={[Function]}
+                                onTouchStart={[Function]}
+                              />
+                            </Resizer>
+                          </div>
+                        </ThComponent>
+                        <ThComponent
+                          className="rt-resizable-header -cursor-pointer"
+                          key="6-reason"
                           style={
                             Object {
                               "flex": "100 0 auto",
@@ -3877,7 +4109,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                         </ThComponent>
                         <ThComponent
                           className="rt-resizable-header -cursor-pointer"
-                          key="6-status"
+                          key="7-status"
                           style={
                             Object {
                               "flex": "60 0 auto",
@@ -3917,7 +4149,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                         </ThComponent>
                         <ThComponent
                           className="rt-resizable-header -cursor-pointer"
-                          key="7-caseNotificationDate"
+                          key="8-caseNotificationDate"
                           style={
                             Object {
                               "flex": "120 0 auto",
@@ -3957,7 +4189,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                         </ThComponent>
                         <ThComponent
                           className="rt-resizable-header -cursor-pointer"
-                          key="8-caseClassification"
+                          key="9-caseClassification"
                           style={
                             Object {
                               "flex": "100 0 auto",
@@ -4003,7 +4235,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                   className=""
                   style={
                     Object {
-                      "minWidth": "910px",
+                      "minWidth": "1110px",
                     }
                   }
                 >
@@ -4011,7 +4243,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                     className="rt-tbody"
                     style={
                       Object {
-                        "minWidth": "910px",
+                        "minWidth": "1110px",
                       }
                     }
                   >
@@ -4152,6 +4384,31 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                     "width": "130px",
                                   }
                                 }
+                              />
+                            </TdComponent>
+                            <TdComponent
+                              className=""
+                              key="5-plan_title"
+                              onClick={[Function]}
+                              style={
+                                Object {
+                                  "flex": "200 0 auto",
+                                  "maxWidth": null,
+                                  "width": "200px",
+                                }
+                              }
+                            >
+                              <div
+                                className="rt-td"
+                                onClick={[Function]}
+                                role="gridcell"
+                                style={
+                                  Object {
+                                    "flex": "200 0 auto",
+                                    "maxWidth": null,
+                                    "width": "200px",
+                                  }
+                                }
                               >
                                 <Cell
                                   classes={
@@ -4185,17 +4442,17 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                       "getProps": [Function],
                                       "headerClassName": "",
                                       "headerStyle": Object {},
-                                      "id": "focusArea",
+                                      "id": "plan_title",
                                       "minResizeWidth": 11,
-                                      "minWidth": 130,
+                                      "minWidth": 200,
                                       "parentColumn": Object {
-                                        "Header": "Focus Area",
+                                        "Header": "Investigation Name",
                                         "columns": Array [
                                           Object {
                                             "Cell": [Function],
                                             "Header": "",
-                                            "accessor": "focusArea",
-                                            "minWidth": 130,
+                                            "accessor": "plan_title",
+                                            "minWidth": 200,
                                           },
                                         ],
                                       },
@@ -4268,6 +4525,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                       "caseNotificationDate": null,
                                       "district": "",
                                       "focusArea": "",
+                                      "plan_title": "A1 - Ban Chamrak Mu - Focus 02 Rubber Plantation",
                                       "province": null,
                                       "reason": "Case-triggered",
                                       "status": "A1",
@@ -4283,9 +4541,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                       "style": undefined,
                                     }
                                   }
-                                  value=""
+                                  value="A1 - Ban Chamrak Mu - Focus 02 Rubber Plantation"
                                   viewIndex={0}
-                                  width={130}
+                                  width={200}
                                 >
                                   <div>
                                       
@@ -4295,7 +4553,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             </TdComponent>
                             <TdComponent
                               className=""
-                              key="5-reason"
+                              key="6-reason"
                               onClick={[Function]}
                               style={
                                 Object {
@@ -4322,7 +4580,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             </TdComponent>
                             <TdComponent
                               className=""
-                              key="6-status"
+                              key="7-status"
                               onClick={[Function]}
                               style={
                                 Object {
@@ -4349,7 +4607,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             </TdComponent>
                             <TdComponent
                               className=""
-                              key="7-caseNotificationDate"
+                              key="8-caseNotificationDate"
                               onClick={[Function]}
                               style={
                                 Object {
@@ -4486,6 +4744,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                       "caseNotificationDate": null,
                                       "district": "",
                                       "focusArea": "",
+                                      "plan_title": "A1 - Ban Chamrak Mu - Focus 02 Rubber Plantation",
                                       "province": null,
                                       "reason": "Case-triggered",
                                       "status": "A1",
@@ -4511,7 +4770,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             </TdComponent>
                             <TdComponent
                               className=""
-                              key="8-caseClassification"
+                              key="9-caseClassification"
                               onClick={[Function]}
                               style={
                                 Object {
@@ -4675,6 +4934,31 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                     "width": "130px",
                                   }
                                 }
+                              />
+                            </TdComponent>
+                            <TdComponent
+                              className=""
+                              key="5-plan_title"
+                              onClick={[Function]}
+                              style={
+                                Object {
+                                  "flex": "200 0 auto",
+                                  "maxWidth": null,
+                                  "width": "200px",
+                                }
+                              }
+                            >
+                              <div
+                                className="rt-td"
+                                onClick={[Function]}
+                                role="gridcell"
+                                style={
+                                  Object {
+                                    "flex": "200 0 auto",
+                                    "maxWidth": null,
+                                    "width": "200px",
+                                  }
+                                }
                               >
                                 <Cell
                                   classes={
@@ -4708,17 +4992,17 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                       "getProps": [Function],
                                       "headerClassName": "",
                                       "headerStyle": Object {},
-                                      "id": "focusArea",
+                                      "id": "plan_title",
                                       "minResizeWidth": 11,
-                                      "minWidth": 130,
+                                      "minWidth": 200,
                                       "parentColumn": Object {
-                                        "Header": "Focus Area",
+                                        "Header": "Investigation Name",
                                         "columns": Array [
                                           Object {
                                             "Cell": [Function],
                                             "Header": "",
-                                            "accessor": "focusArea",
-                                            "minWidth": 130,
+                                            "accessor": "plan_title",
+                                            "minWidth": 200,
                                           },
                                         ],
                                       },
@@ -4791,6 +5075,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                       "caseNotificationDate": null,
                                       "district": "",
                                       "focusArea": "",
+                                      "plan_title": "A1-Tha Luang Village 1 Focus 01",
                                       "province": null,
                                       "reason": "Case-triggered",
                                       "status": "A1",
@@ -4806,9 +5091,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                       "style": undefined,
                                     }
                                   }
-                                  value=""
+                                  value="A1-Tha Luang Village 1 Focus 01"
                                   viewIndex={1}
-                                  width={130}
+                                  width={200}
                                 >
                                   <div>
                                       
@@ -4818,7 +5103,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             </TdComponent>
                             <TdComponent
                               className=""
-                              key="5-reason"
+                              key="6-reason"
                               onClick={[Function]}
                               style={
                                 Object {
@@ -4845,7 +5130,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             </TdComponent>
                             <TdComponent
                               className=""
-                              key="6-status"
+                              key="7-status"
                               onClick={[Function]}
                               style={
                                 Object {
@@ -4872,7 +5157,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             </TdComponent>
                             <TdComponent
                               className=""
-                              key="7-caseNotificationDate"
+                              key="8-caseNotificationDate"
                               onClick={[Function]}
                               style={
                                 Object {
@@ -5009,6 +5294,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                       "caseNotificationDate": null,
                                       "district": "",
                                       "focusArea": "",
+                                      "plan_title": "A1-Tha Luang Village 1 Focus 01",
                                       "province": null,
                                       "reason": "Case-triggered",
                                       "status": "A1",
@@ -5034,7 +5320,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             </TdComponent>
                             <TdComponent
                               className=""
-                              key="8-caseClassification"
+                              key="9-caseClassification"
                               onClick={[Function]}
                               style={
                                 Object {
@@ -5260,7 +5546,7 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
         className="-headerGroups"
         style={
           Object {
-            "minWidth": "910px",
+            "minWidth": "1110px",
           }
         }
       >
@@ -5268,7 +5554,7 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
           className="rt-thead -headerGroups"
           style={
             Object {
-              "minWidth": "910px",
+              "minWidth": "1110px",
             }
           }
         >
@@ -5417,6 +5703,33 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
                 key="5-undefined"
                 style={
                   Object {
+                    "flex": "200 0 auto",
+                    "maxWidth": null,
+                    "width": "200px",
+                  }
+                }
+              >
+                <div
+                  className="rt-th"
+                  onClick={[Function]}
+                  role="columnheader"
+                  style={
+                    Object {
+                      "flex": "200 0 auto",
+                      "maxWidth": null,
+                      "width": "200px",
+                    }
+                  }
+                  tabIndex="-1"
+                >
+                  Investigation Name
+                </div>
+              </ThComponent>
+              <ThComponent
+                className=""
+                key="6-undefined"
+                style={
+                  Object {
                     "flex": "100 0 auto",
                     "maxWidth": null,
                     "width": "100px",
@@ -5441,7 +5754,7 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
               </ThComponent>
               <ThComponent
                 className=""
-                key="6-undefined"
+                key="7-undefined"
                 style={
                   Object {
                     "flex": "60 0 auto",
@@ -5468,7 +5781,7 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
               </ThComponent>
               <ThComponent
                 className=""
-                key="7-undefined"
+                key="8-undefined"
                 style={
                   Object {
                     "flex": "120 0 auto",
@@ -5495,7 +5808,7 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
               </ThComponent>
               <ThComponent
                 className=""
-                key="8-undefined"
+                key="9-undefined"
                 style={
                   Object {
                     "flex": "100 0 auto",
@@ -5528,7 +5841,7 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
         className="-header"
         style={
           Object {
-            "minWidth": "910px",
+            "minWidth": "1110px",
           }
         }
       >
@@ -5536,7 +5849,7 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
           className="rt-thead -header"
           style={
             Object {
-              "minWidth": "910px",
+              "minWidth": "1110px",
             }
           }
         >
@@ -5747,7 +6060,47 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
               </ThComponent>
               <ThComponent
                 className="rt-resizable-header -cursor-pointer"
-                key="5-reason"
+                key="5-plan_title"
+                style={
+                  Object {
+                    "flex": "200 0 auto",
+                    "maxWidth": null,
+                    "width": "200px",
+                  }
+                }
+                toggleSort={[Function]}
+              >
+                <div
+                  className="rt-th rt-resizable-header -cursor-pointer"
+                  onClick={[Function]}
+                  role="columnheader"
+                  style={
+                    Object {
+                      "flex": "200 0 auto",
+                      "maxWidth": null,
+                      "width": "200px",
+                    }
+                  }
+                  tabIndex="-1"
+                >
+                  <div
+                    className="rt-resizable-header-content"
+                  />
+                  <Resizer
+                    onMouseDown={[Function]}
+                    onTouchStart={[Function]}
+                  >
+                    <div
+                      className="rt-resizer"
+                      onMouseDown={[Function]}
+                      onTouchStart={[Function]}
+                    />
+                  </Resizer>
+                </div>
+              </ThComponent>
+              <ThComponent
+                className="rt-resizable-header -cursor-pointer"
+                key="6-reason"
                 style={
                   Object {
                     "flex": "100 0 auto",
@@ -5787,7 +6140,7 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
               </ThComponent>
               <ThComponent
                 className="rt-resizable-header -cursor-pointer"
-                key="6-status"
+                key="7-status"
                 style={
                   Object {
                     "flex": "60 0 auto",
@@ -5827,7 +6180,7 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
               </ThComponent>
               <ThComponent
                 className="rt-resizable-header -cursor-pointer"
-                key="7-caseNotificationDate"
+                key="8-caseNotificationDate"
                 style={
                   Object {
                     "flex": "120 0 auto",
@@ -5867,7 +6220,7 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
               </ThComponent>
               <ThComponent
                 className="rt-resizable-header -cursor-pointer"
-                key="8-caseClassification"
+                key="9-caseClassification"
                 style={
                   Object {
                     "flex": "100 0 auto",
@@ -5913,7 +6266,7 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
         className=""
         style={
           Object {
-            "minWidth": "910px",
+            "minWidth": "1110px",
           }
         }
       >
@@ -5921,7 +6274,7 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
           className="rt-tbody"
           style={
             Object {
-              "minWidth": "910px",
+              "minWidth": "1110px",
             }
           }
         >
@@ -6067,6 +6420,33 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
                         }
                       }
                     >
+                      NVI_439
+                    </div>
+                  </TdComponent>
+                  <TdComponent
+                    className=""
+                    key="5-plan_title"
+                    onClick={[Function]}
+                    style={
+                      Object {
+                        "flex": "200 0 auto",
+                        "maxWidth": null,
+                        "width": "200px",
+                      }
+                    }
+                  >
+                    <div
+                      className="rt-td"
+                      onClick={[Function]}
+                      role="gridcell"
+                      style={
+                        Object {
+                          "flex": "200 0 auto",
+                          "maxWidth": null,
+                          "width": "200px",
+                        }
+                      }
+                    >
                       <Cell
                         classes={
                           Array [
@@ -6099,17 +6479,17 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
                             "getProps": [Function],
                             "headerClassName": "",
                             "headerStyle": Object {},
-                            "id": "focusArea",
+                            "id": "plan_title",
                             "minResizeWidth": 11,
-                            "minWidth": 130,
+                            "minWidth": 200,
                             "parentColumn": Object {
-                              "Header": "Focus Area",
+                              "Header": "Investigation Name",
                               "columns": Array [
                                 Object {
                                   "Cell": [Function],
                                   "Header": "",
-                                  "accessor": "focusArea",
-                                  "minWidth": 130,
+                                  "accessor": "plan_title",
+                                  "minWidth": 200,
                                 },
                               ],
                             },
@@ -6182,6 +6562,7 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
                             "caseNotificationDate": null,
                             "district": "",
                             "focusArea": "NVI_439",
+                            "plan_title": "A1-Tha Luang Village 1 Focus 01",
                             "province": null,
                             "reason": "Routine",
                             "status": "A1",
@@ -6197,9 +6578,9 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
                             "style": undefined,
                           }
                         }
-                        value="NVI_439"
+                        value="A1-Tha Luang Village 1 Focus 01"
                         viewIndex={0}
-                        width={130}
+                        width={200}
                       >
                         <div>
                           <Link
@@ -6262,7 +6643,7 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
                               href="/focus-investigation/view/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
                               onClick={[Function]}
                             >
-                              NVI_439
+                              A1-Tha Luang Village 1 Focus 01
                             </a>
                           </Link>
                         </div>
@@ -6271,7 +6652,7 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
                   </TdComponent>
                   <TdComponent
                     className=""
-                    key="5-reason"
+                    key="6-reason"
                     onClick={[Function]}
                     style={
                       Object {
@@ -6298,7 +6679,7 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
                   </TdComponent>
                   <TdComponent
                     className=""
-                    key="6-status"
+                    key="7-status"
                     onClick={[Function]}
                     style={
                       Object {
@@ -6325,7 +6706,7 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
                   </TdComponent>
                   <TdComponent
                     className=""
-                    key="7-caseNotificationDate"
+                    key="8-caseNotificationDate"
                     onClick={[Function]}
                     style={
                       Object {
@@ -6462,6 +6843,7 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
                             "caseNotificationDate": null,
                             "district": "",
                             "focusArea": "NVI_439",
+                            "plan_title": "A1-Tha Luang Village 1 Focus 01",
                             "province": null,
                             "reason": "Routine",
                             "status": "A1",
@@ -6487,7 +6869,7 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
                   </TdComponent>
                   <TdComponent
                     className=""
-                    key="8-caseClassification"
+                    key="9-caseClassification"
                     onClick={[Function]}
                     style={
                       Object {

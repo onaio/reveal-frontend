@@ -29,6 +29,7 @@ import {
   FOCUS_INVESTIGATIONS,
   HOME,
   HOME_URL,
+  INVESTIGATION_NAME_HEADER,
   REASON_HEADER,
   STATUS_HEADER,
 } from '../../../../constants';
@@ -118,6 +119,16 @@ class ActiveFocusInvestigation extends React.Component<
         Header: FOCUS_AREA_HEADER,
         columns: [
           {
+            Header: '',
+            accessor: 'focusArea',
+            minWidth: 130,
+          },
+        ],
+      },
+      {
+        Header: INVESTIGATION_NAME_HEADER,
+        columns: [
+          {
             Cell: (cell: CellInfo) => {
               return (
                 <div>
@@ -134,8 +145,8 @@ class ActiveFocusInvestigation extends React.Component<
               );
             },
             Header: '',
-            accessor: 'focusArea',
-            minWidth: 130,
+            accessor: 'plan_title',
+            minWidth: 200,
           },
         ],
       },
