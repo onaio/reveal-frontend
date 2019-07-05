@@ -26,7 +26,6 @@ const history = createBrowserHistory();
 describe('components/GisidaWrapper', () => {
   it('renders component without crashing', () => {
     const props = {
-      featureCollection: null,
       geoData: fixtures.jurisdictions[0],
       goal: fixtures.goals,
       handlers: [],
@@ -72,24 +71,31 @@ describe('components/GisidaWrapper', () => {
   });
 
   it('renders map component with FeatureCollection', () => {
-    const featureCollection: FeatureCollection<TaskGeoJSON> = {
-      features: fixtures.bednetTasks.map((task: any) => task.geojson),
+    const polygonFeatureCollection: FeatureCollection<TaskGeoJSON> = {
+      features: fixtures.polygonTask.map((task: any) => task.geojson),
       type: 'FeatureCollection',
     };
+    const pointFeatureCollection: FeatureCollection<TaskGeoJSON> = {
+      features: fixtures.pointTasks.map((task: any) => task.geojson),
+      type: 'FeatureCollection',
+    };
+
     const props1 = {
       basemapStyle: 'mapbox://styles/mapbox/satellite-v9',
       currentGoal: null,
-      featureCollection,
       geoData: fixtures.jurisdictions[2],
       goal: fixtures.goals,
       handlers: [],
+      pointFeatureCollection,
+      polygonFeatureCollection,
     };
     const props = {
       currentGoal: fixtures.task6.goal_id,
-      featureCollection,
       geoData: fixtures.jurisdictions[2],
       goal: fixtures.goals,
       handlers: [],
+      pointFeatureCollection,
+      polygonFeatureCollection,
     };
     const wrapper = mount(<GisidaWrapper {...props1} />);
     /** Investigate why it won't set state inside initmap even though
@@ -108,9 +114,9 @@ describe('components/GisidaWrapper', () => {
     });
 
     jest.runOnlyPendingTimers();
-    /** Investigate why it won't set state for hasGeometries to true.
-     * Had to copy the entire toggle functionality to test the
-     * toggling functionality of this component
+    /** Investigate why it won't toggleLayers considering.
+     * point and polygon featurecollection has been added to props
+     * Had to add toggling functionality to test that out.
      */
     const allLayers = store.getState()['map-1'].layers;
     toggleLayer(allLayers, props.currentGoal, store, Actions);
@@ -124,23 +130,30 @@ describe('components/GisidaWrapper', () => {
   });
 
   it('works with DigitalGlobe base layer', () => {
-    const featureCollection: FeatureCollection<TaskGeoJSON> = {
-      features: fixtures.bednetTasks.map((task: any) => task.geojson),
+    const polygonFeatureCollection: FeatureCollection<TaskGeoJSON> = {
+      features: fixtures.polygonTask.map((task: any) => task.geojson),
       type: 'FeatureCollection',
     };
+    const pointFeatureCollection: FeatureCollection<TaskGeoJSON> = {
+      features: fixtures.pointTasks.map((task: any) => task.geojson),
+      type: 'FeatureCollection',
+    };
+
     const props1 = {
       currentGoal: null,
-      featureCollection,
       geoData: fixtures.jurisdictions[2],
       goal: fixtures.goals,
       handlers: [],
+      pointFeatureCollection,
+      polygonFeatureCollection,
     };
     const props = {
       currentGoal: fixtures.task6.goal_id,
-      featureCollection,
       geoData: fixtures.jurisdictions[2],
       goal: fixtures.goals,
       handlers: [],
+      pointFeatureCollection,
+      polygonFeatureCollection,
     };
     const wrapper = mount(<GisidaWrapper {...props1} />);
     wrapper.setState({ doRenderMap: true });
@@ -165,24 +178,31 @@ describe('components/GisidaWrapper', () => {
   });
 
   it('renders map component with structures', () => {
-    const featureCollection: FeatureCollection<TaskGeoJSON> = {
-      features: fixtures.bednetTasks.map((task: Task) => task.geojson),
+    const polygonFeatureCollection: FeatureCollection<TaskGeoJSON> = {
+      features: fixtures.polygonTask.map((task: any) => task.geojson),
       type: 'FeatureCollection',
     };
+    const pointFeatureCollection: FeatureCollection<TaskGeoJSON> = {
+      features: fixtures.pointTasks.map((task: any) => task.geojson),
+      type: 'FeatureCollection',
+    };
+
     const props1 = {
       currentGoal: null,
-      featureCollection,
       geoData: fixtures.jurisdictions[1],
       goal: fixtures.goals,
       handlers: [],
+      pointFeatureCollection,
+      polygonFeatureCollection,
       structures: wrapFeatureCollection([fixtures.coloredTasks.task1, fixtures.coloredTasks.task2]),
     };
     const props = {
       currentGoal: fixtures.task6.goal_id,
-      featureCollection,
       geoData: fixtures.jurisdictions[1],
       goal: fixtures.goals,
       handlers: [],
+      pointFeatureCollection,
+      polygonFeatureCollection,
       structures: wrapFeatureCollection([fixtures.coloredTasks.task1, fixtures.coloredTasks.task2]),
     };
     const wrapper = mount(<GisidaWrapper {...props1} />);
@@ -209,9 +229,9 @@ describe('components/GisidaWrapper', () => {
       },
     });
     jest.runOnlyPendingTimers();
-    /** Investigate why it won't set state for hasGeometries to true.
-     * Had to copy the entire toggle functionality to test the
-     * toggling functionality of this component
+    /** Investigate why it won't toggleLayers considering.
+     * point and polygon featurecollection has been added to props
+     * Had to add toggling functionality to test that out.
      */
 
     const allLayers = store.getState()['map-1'].layers;

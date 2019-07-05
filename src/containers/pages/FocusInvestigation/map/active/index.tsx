@@ -23,9 +23,11 @@ import {
   FOCUS_INVESTIGATIONS,
   HOME,
   HOME_URL,
-  MAP,
   MEASURE,
+  MULTI_POLYGON,
   OF,
+  POINT,
+  POLYGON,
   RESPONSE,
   TARGET,
 } from '../../../../../constants';
@@ -74,7 +76,6 @@ reducerRegistry.register(tasksReducerName, tasksReducer);
 /** interface to describe props for ActiveFI Map component */
 export interface MapSingleFIProps {
   currentGoal: string | null;
-  featureCollection: FeatureCollection<TaskGeoJSON>;
   setCurrentGoalActionCreator: typeof setCurrentGoal;
   fetchGoalsActionCreator: typeof fetchGoals;
   fetchJurisdictionsActionCreator: typeof fetchJurisdictions;
@@ -83,6 +84,8 @@ export interface MapSingleFIProps {
   goals: Goal[] | null;
   jurisdiction: Jurisdiction | null;
   plan: Plan | null;
+  pointFeatureCollection: FeatureCollection<TaskGeoJSON>;
+  polygonFeatureCollection: FeatureCollection<TaskGeoJSON>;
   structures: FeatureCollection<TaskGeoJSON> | null /** we use this to get all structures */;
 }
 
@@ -95,7 +98,6 @@ const defaultFeatureCollection: FeatureCollection<TaskGeoJSON> = {
 /** default props for ActiveFI Map component */
 export const defaultMapSingleFIProps: MapSingleFIProps = {
   currentGoal: null,
-  featureCollection: defaultFeatureCollection,
   fetchGoalsActionCreator: fetchGoals,
   fetchJurisdictionsActionCreator: fetchJurisdictions,
   fetchPlansActionCreator: fetchPlans,
@@ -103,6 +105,8 @@ export const defaultMapSingleFIProps: MapSingleFIProps = {
   goals: null,
   jurisdiction: null,
   plan: null,
+  pointFeatureCollection: defaultFeatureCollection,
+  polygonFeatureCollection: defaultFeatureCollection,
   setCurrentGoalActionCreator: setCurrentGoal,
   structures: null,
 };
@@ -149,7 +153,15 @@ class SingleActiveFIMap extends React.Component<
   }
 
   public render() {
-    const { jurisdiction, plan, goals, currentGoal, featureCollection } = this.props;
+    const {
+      jurisdiction,
+      plan,
+      goals,
+      currentGoal,
+      pointFeatureCollection,
+      polygonFeatureCollection,
+      structures,
+    } = this.props;
     if (!jurisdiction || !plan) {
       return <Loading />;
     }
@@ -196,9 +208,10 @@ class SingleActiveFIMap extends React.Component<
                 handlers={this.buildHandlers()}
                 geoData={jurisdiction}
                 goal={goals}
-                structures={this.props.structures}
+                structures={structures}
                 currentGoal={currentGoal}
-                featureCollection={featureCollection}
+                pointFeatureCollection={pointFeatureCollection}
+                polygonFeatureCollection={polygonFeatureCollection}
               />
             </div>
           </div>
@@ -264,7 +277,8 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
   let goals = null;
   let jurisdiction = null;
   let currentGoal;
-  let featureCollection = defaultFeatureCollection;
+  let pointFeatureCollection = defaultFeatureCollection;
+  let polygonFeatureCollection = defaultFeatureCollection;
   let structures = null;
 
   if (plan) {
@@ -275,22 +289,32 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
 
   if (plan && jurisdiction && (goals && goals.length > 1)) {
     currentGoal = getCurrentGoal(state);
-    featureCollection = getFCByPlanAndGoalAndJurisdiction(
+    pointFeatureCollection = getFCByPlanAndGoalAndJurisdiction(
       state,
       plan.plan_id,
       ownProps.match.params.goalId,
       plan.jurisdiction_id,
-      false
+      false,
+      [POINT]
+    );
+    polygonFeatureCollection = getFCByPlanAndGoalAndJurisdiction(
+      state,
+      plan.plan_id,
+      ownProps.match.params.goalId,
+      plan.jurisdiction_id,
+      false,
+      [POLYGON, MULTI_POLYGON]
     );
   }
   return {
     currentGoal,
-    featureCollection,
     goals,
     jurisdiction,
     plan,
     plansArray: getPlansArray(state),
     plansIdArray: getPlansIdArray(state),
+    pointFeatureCollection,
+    polygonFeatureCollection,
     structures,
   };
 };

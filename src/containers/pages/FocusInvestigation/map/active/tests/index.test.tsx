@@ -31,7 +31,6 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
     const mock: any = jest.fn();
     const props = {
       currentGoal: fixtures.goal3.goal_id,
-      featureCollection: wrapFeatureCollection([fixtures.coloredTasks.task4.geojson]),
       goals: [fixtures.goal3],
       history,
       jurisdiction: fixtures.jurisdictions[0],
@@ -43,6 +42,8 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
         url: `${FI_SINGLE_URL}/13`,
       },
       plan: fixtures.plan1 as Plan,
+      pointFeatureCollection: wrapFeatureCollection([fixtures.coloredTasks.task3.geojson]),
+      polygonFeatureCollection: wrapFeatureCollection([fixtures.coloredTasks.task2.geojson]),
     };
     shallow(
       <Router history={history}>
@@ -55,7 +56,6 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
     const mock: any = jest.fn();
     const props = {
       currentGoal: fixtures.goal3.goal_id,
-      featureCollection: wrapFeatureCollection([fixtures.coloredTasks.task4.geojson]),
       goals: [fixtures.goal3],
       history,
       jurisdiction: fixtures.jurisdictions[0],
@@ -67,6 +67,8 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
         url: `${FI_SINGLE_URL}/13`,
       },
       plan: fixtures.plan1 as Plan,
+      pointFeatureCollection: wrapFeatureCollection([fixtures.coloredTasks.task3.geojson]),
+      polygonFeatureCollection: wrapFeatureCollection([fixtures.coloredTasks.task2.geojson]),
     };
     const wrapper = mount(
       <Router history={history}>
@@ -86,10 +88,6 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
     store.dispatch(fetchTasks(fixtures.tasks));
     const props = {
       currentGoal: fixtures.goal3,
-      featureCollection: {
-        features: [fixtures.task4.geojson],
-        type: 'FeatureCollection',
-      },
       history,
       location: mock,
       match: {
@@ -98,6 +96,8 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
         path: `${FI_SINGLE_URL}/:id`,
         url: `${FI_SINGLE_URL}/13`,
       },
+      pointFeatureCollection: wrapFeatureCollection([fixtures.coloredTasks.task3.geojson]),
+      polygonFeatureCollection: wrapFeatureCollection([fixtures.coloredTasks.task2.geojson]),
     };
     const wrapper = mount(
       <Provider store={store}>
