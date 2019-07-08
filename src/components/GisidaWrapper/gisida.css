@@ -3,3 +3,22 @@
   display: block !important;
   min-height: 800px;
 }
+
+#spinner-map-1 {
+  left: -208px;
+}
+
+div#spinner-map-1.spinner {
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  right: -242px;
+  margin-left: auto;
+  margin-right: auto;
+  top: 45%;
+  background-color: #ffdc01;
+  z-index: 1001;
+  border-radius: 100%;
+  -webkit-animation: sk-scaleout 1s infinite ease-in-out;
+  animation: sk-scaleout 1s infinite ease-in-out;
+}
