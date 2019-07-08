@@ -254,6 +254,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
               "Header": "Focus Area",
               "columns": Array [
                 Object {
+                  "Cell": [Function],
                   "Header": "",
                   "accessor": "focusArea",
                   "minWidth": 130,
@@ -456,6 +457,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                 "Header": "Focus Area",
                 "columns": Array [
                   Object {
+                    "Cell": [Function],
                     "Header": "",
                     "accessor": "focusArea",
                     "minWidth": 130,
@@ -1527,7 +1529,155 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                   }
                                 }
                               >
-                                NVI_439
+                                <Cell
+                                  classes={
+                                    Array [
+                                      undefined,
+                                      "",
+                                      undefined,
+                                    ]
+                                  }
+                                  column={
+                                    Object {
+                                      "Aggregated": undefined,
+                                      "Cell": [Function],
+                                      "Expander": undefined,
+                                      "Filter": undefined,
+                                      "Footer": undefined,
+                                      "Header": "",
+                                      "Pivot": undefined,
+                                      "PivotValue": undefined,
+                                      "Placeholder": undefined,
+                                      "accessor": [Function],
+                                      "aggregate": undefined,
+                                      "className": "",
+                                      "filterAll": false,
+                                      "filterMethod": undefined,
+                                      "filterable": undefined,
+                                      "footerClassName": "",
+                                      "footerStyle": Object {},
+                                      "getFooterProps": [Function],
+                                      "getHeaderProps": [Function],
+                                      "getProps": [Function],
+                                      "headerClassName": "",
+                                      "headerStyle": Object {},
+                                      "id": "focusArea",
+                                      "minResizeWidth": 11,
+                                      "minWidth": 130,
+                                      "parentColumn": Object {
+                                        "Header": "Focus Area",
+                                        "columns": Array [
+                                          Object {
+                                            "Cell": [Function],
+                                            "Header": "",
+                                            "accessor": "focusArea",
+                                            "minWidth": 130,
+                                          },
+                                        ],
+                                      },
+                                      "resizable": undefined,
+                                      "show": true,
+                                      "sortMethod": undefined,
+                                      "sortable": undefined,
+                                      "style": Object {},
+                                    }
+                                  }
+                                  columnProps={
+                                    Object {
+                                      "className": undefined,
+                                      "rest": Object {},
+                                      "style": undefined,
+                                    }
+                                  }
+                                  index={0}
+                                  level={0}
+                                  nestingPath={
+                                    Array [
+                                      0,
+                                    ]
+                                  }
+                                  original={
+                                    Object {
+                                      "canton": "Chadiza",
+                                      "caseClassification": null,
+                                      "caseNotificationDate": null,
+                                      "district": "",
+                                      "focusArea": "NVI_439",
+                                      "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
+                                      "jurisdiction_id": "2944",
+                                      "jurisdiction_parent_id": "2944",
+                                      "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+                                      "plan_title": "A1-Tha Luang Village 1 Focus 01",
+                                      "province": null,
+                                      "reason": "Routine",
+                                      "status": "A1",
+                                      "village": "Naviluli",
+                                    }
+                                  }
+                                  page={0}
+                                  pageSize={20}
+                                  resized={Array []}
+                                  row={
+                                    Object {
+                                      "_index": 0,
+                                      "_nestingLevel": 0,
+                                      "_original": Object {
+                                        "canton": "Chadiza",
+                                        "caseClassification": null,
+                                        "caseNotificationDate": null,
+                                        "district": "",
+                                        "focusArea": "NVI_439",
+                                        "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
+                                        "jurisdiction_id": "2944",
+                                        "jurisdiction_parent_id": "2944",
+                                        "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+                                        "plan_title": "A1-Tha Luang Village 1 Focus 01",
+                                        "province": null,
+                                        "reason": "Routine",
+                                        "status": "A1",
+                                        "village": "Naviluli",
+                                      },
+                                      "_subRows": undefined,
+                                      "_viewIndex": 0,
+                                      "canton": "Chadiza",
+                                      "caseClassification": null,
+                                      "caseNotificationDate": null,
+                                      "district": "",
+                                      "focusArea": "NVI_439",
+                                      "plan_title": "A1-Tha Luang Village 1 Focus 01",
+                                      "province": null,
+                                      "reason": "Routine",
+                                      "status": "A1",
+                                      "village": "Naviluli",
+                                    }
+                                  }
+                                  show={true}
+                                  styles={Object {}}
+                                  tdProps={
+                                    Object {
+                                      "className": undefined,
+                                      "rest": Object {},
+                                      "style": undefined,
+                                    }
+                                  }
+                                  value="NVI_439"
+                                  viewIndex={0}
+                                  width={130}
+                                >
+                                  <div>
+                                    <Link
+                                      replace={false}
+                                      to="/focus-investigation/map/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
+                                    >
+                                      <a
+                                        href="/focus-investigation/map/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
+                                        onClick={[Function]}
+                                      >
+                                        NVI_439
+                                      </a>
+                                    </Link>
+                                  </div>
+                                </Cell>
                               </div>
                             </TdComponent>
                             <TdComponent
@@ -1690,58 +1840,6 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                   width={200}
                                 >
                                   <div>
-                                    <Link
-                                      replace={false}
-                                      to="/focus-investigation/map/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
-                                    >
-                                      <a
-                                        href="/focus-investigation/map/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
-                                        onClick={[Function]}
-                                      >
-                                        <FontAwesomeIcon
-                                          border={false}
-                                          className=""
-                                          fixedWidth={false}
-                                          flip={null}
-                                          icon={
-                                            Array [
-                                              "fas",
-                                              "map",
-                                            ]
-                                          }
-                                          inverse={false}
-                                          listItem={false}
-                                          mask={null}
-                                          pull={null}
-                                          pulse={false}
-                                          rotation={null}
-                                          size={null}
-                                          spin={false}
-                                          symbol={false}
-                                          title=""
-                                          transform={null}
-                                        >
-                                          <svg
-                                            aria-hidden="true"
-                                            className="svg-inline--fa fa-map fa-w-18 "
-                                            data-icon="map"
-                                            data-prefix="fas"
-                                            focusable="false"
-                                            role="img"
-                                            style={Object {}}
-                                            viewBox="0 0 576 512"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                          >
-                                            <path
-                                              d="M0 117.66v346.32c0 11.32 11.43 19.06 21.94 14.86L160 416V32L20.12 87.95A32.006 32.006 0 0 0 0 117.66zM192 416l192 64V96L192 32v384zM554.06 33.16L416 96v384l139.88-55.95A31.996 31.996 0 0 0 576 394.34V48.02c0-11.32-11.43-19.06-21.94-14.86z"
-                                              fill="currentColor"
-                                              style={Object {}}
-                                            />
-                                          </svg>
-                                        </FontAwesomeIcon>
-                                      </a>
-                                    </Link>
-                                      
                                     <Link
                                       replace={false}
                                       to="/focus-investigation/view/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
@@ -2145,7 +2243,155 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                   }
                                 }
                               >
-                                TLv1_02
+                                <Cell
+                                  classes={
+                                    Array [
+                                      undefined,
+                                      "",
+                                      undefined,
+                                    ]
+                                  }
+                                  column={
+                                    Object {
+                                      "Aggregated": undefined,
+                                      "Cell": [Function],
+                                      "Expander": undefined,
+                                      "Filter": undefined,
+                                      "Footer": undefined,
+                                      "Header": "",
+                                      "Pivot": undefined,
+                                      "PivotValue": undefined,
+                                      "Placeholder": undefined,
+                                      "accessor": [Function],
+                                      "aggregate": undefined,
+                                      "className": "",
+                                      "filterAll": false,
+                                      "filterMethod": undefined,
+                                      "filterable": undefined,
+                                      "footerClassName": "",
+                                      "footerStyle": Object {},
+                                      "getFooterProps": [Function],
+                                      "getHeaderProps": [Function],
+                                      "getProps": [Function],
+                                      "headerClassName": "",
+                                      "headerStyle": Object {},
+                                      "id": "focusArea",
+                                      "minResizeWidth": 11,
+                                      "minWidth": 130,
+                                      "parentColumn": Object {
+                                        "Header": "Focus Area",
+                                        "columns": Array [
+                                          Object {
+                                            "Cell": [Function],
+                                            "Header": "",
+                                            "accessor": "focusArea",
+                                            "minWidth": 130,
+                                          },
+                                        ],
+                                      },
+                                      "resizable": undefined,
+                                      "show": true,
+                                      "sortMethod": undefined,
+                                      "sortable": undefined,
+                                      "style": Object {},
+                                    }
+                                  }
+                                  columnProps={
+                                    Object {
+                                      "className": undefined,
+                                      "rest": Object {},
+                                      "style": undefined,
+                                    }
+                                  }
+                                  index={1}
+                                  level={0}
+                                  nestingPath={
+                                    Array [
+                                      1,
+                                    ]
+                                  }
+                                  original={
+                                    Object {
+                                      "canton": "Canton Tha Luang",
+                                      "caseClassification": null,
+                                      "caseNotificationDate": null,
+                                      "district": "",
+                                      "focusArea": "TLv1_02",
+                                      "id": "plan-id-2",
+                                      "jurisdiction_id": "2977",
+                                      "jurisdiction_parent_id": "2977",
+                                      "plan_id": "plan-id-2",
+                                      "plan_title": "A1-Tha Luang Village 1 Focus 01",
+                                      "province": null,
+                                      "reason": "Case-triggered",
+                                      "status": "A1",
+                                      "village": "Tha Luang Village",
+                                    }
+                                  }
+                                  page={0}
+                                  pageSize={20}
+                                  resized={Array []}
+                                  row={
+                                    Object {
+                                      "_index": 1,
+                                      "_nestingLevel": 0,
+                                      "_original": Object {
+                                        "canton": "Canton Tha Luang",
+                                        "caseClassification": null,
+                                        "caseNotificationDate": null,
+                                        "district": "",
+                                        "focusArea": "TLv1_02",
+                                        "id": "plan-id-2",
+                                        "jurisdiction_id": "2977",
+                                        "jurisdiction_parent_id": "2977",
+                                        "plan_id": "plan-id-2",
+                                        "plan_title": "A1-Tha Luang Village 1 Focus 01",
+                                        "province": null,
+                                        "reason": "Case-triggered",
+                                        "status": "A1",
+                                        "village": "Tha Luang Village",
+                                      },
+                                      "_subRows": undefined,
+                                      "_viewIndex": 1,
+                                      "canton": "Canton Tha Luang",
+                                      "caseClassification": null,
+                                      "caseNotificationDate": null,
+                                      "district": "",
+                                      "focusArea": "TLv1_02",
+                                      "plan_title": "A1-Tha Luang Village 1 Focus 01",
+                                      "province": null,
+                                      "reason": "Case-triggered",
+                                      "status": "A1",
+                                      "village": "Tha Luang Village",
+                                    }
+                                  }
+                                  show={true}
+                                  styles={Object {}}
+                                  tdProps={
+                                    Object {
+                                      "className": undefined,
+                                      "rest": Object {},
+                                      "style": undefined,
+                                    }
+                                  }
+                                  value="TLv1_02"
+                                  viewIndex={1}
+                                  width={130}
+                                >
+                                  <div>
+                                    <Link
+                                      replace={false}
+                                      to="/focus-investigation/map/plan-id-2"
+                                    >
+                                      <a
+                                        href="/focus-investigation/map/plan-id-2"
+                                        onClick={[Function]}
+                                      >
+                                        TLv1_02
+                                      </a>
+                                    </Link>
+                                  </div>
+                                </Cell>
                               </div>
                             </TdComponent>
                             <TdComponent
@@ -2308,58 +2554,6 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                   width={200}
                                 >
                                   <div>
-                                    <Link
-                                      replace={false}
-                                      to="/focus-investigation/map/plan-id-2"
-                                    >
-                                      <a
-                                        href="/focus-investigation/map/plan-id-2"
-                                        onClick={[Function]}
-                                      >
-                                        <FontAwesomeIcon
-                                          border={false}
-                                          className=""
-                                          fixedWidth={false}
-                                          flip={null}
-                                          icon={
-                                            Array [
-                                              "fas",
-                                              "map",
-                                            ]
-                                          }
-                                          inverse={false}
-                                          listItem={false}
-                                          mask={null}
-                                          pull={null}
-                                          pulse={false}
-                                          rotation={null}
-                                          size={null}
-                                          spin={false}
-                                          symbol={false}
-                                          title=""
-                                          transform={null}
-                                        >
-                                          <svg
-                                            aria-hidden="true"
-                                            className="svg-inline--fa fa-map fa-w-18 "
-                                            data-icon="map"
-                                            data-prefix="fas"
-                                            focusable="false"
-                                            role="img"
-                                            style={Object {}}
-                                            viewBox="0 0 576 512"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                          >
-                                            <path
-                                              d="M0 117.66v346.32c0 11.32 11.43 19.06 21.94 14.86L160 416V32L20.12 87.95A32.006 32.006 0 0 0 0 117.66zM192 416l192 64V96L192 32v384zM554.06 33.16L416 96v384l139.88-55.95A31.996 31.996 0 0 0 576 394.34V48.02c0-11.32-11.43-19.06-21.94-14.86z"
-                                              fill="currentColor"
-                                              style={Object {}}
-                                            />
-                                          </svg>
-                                        </FontAwesomeIcon>
-                                      </a>
-                                    </Link>
-                                      
                                     <Link
                                       replace={false}
                                       to="/focus-investigation/view/plan-id-2"
@@ -3116,6 +3310,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
               "Header": "Focus Area",
               "columns": Array [
                 Object {
+                  "Cell": [Function],
                   "Header": "",
                   "accessor": "focusArea",
                   "minWidth": 130,
@@ -3318,6 +3513,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                 "Header": "Focus Area",
                 "columns": Array [
                   Object {
+                    "Cell": [Function],
                     "Header": "",
                     "accessor": "focusArea",
                     "minWidth": 130,
@@ -4384,7 +4580,145 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                     "width": "130px",
                                   }
                                 }
-                              />
+                              >
+                                <Cell
+                                  classes={
+                                    Array [
+                                      undefined,
+                                      "",
+                                      undefined,
+                                    ]
+                                  }
+                                  column={
+                                    Object {
+                                      "Aggregated": undefined,
+                                      "Cell": [Function],
+                                      "Expander": undefined,
+                                      "Filter": undefined,
+                                      "Footer": undefined,
+                                      "Header": "",
+                                      "Pivot": undefined,
+                                      "PivotValue": undefined,
+                                      "Placeholder": undefined,
+                                      "accessor": [Function],
+                                      "aggregate": undefined,
+                                      "className": "",
+                                      "filterAll": false,
+                                      "filterMethod": undefined,
+                                      "filterable": undefined,
+                                      "footerClassName": "",
+                                      "footerStyle": Object {},
+                                      "getFooterProps": [Function],
+                                      "getHeaderProps": [Function],
+                                      "getProps": [Function],
+                                      "headerClassName": "",
+                                      "headerStyle": Object {},
+                                      "id": "focusArea",
+                                      "minResizeWidth": 11,
+                                      "minWidth": 130,
+                                      "parentColumn": Object {
+                                        "Header": "Focus Area",
+                                        "columns": Array [
+                                          Object {
+                                            "Cell": [Function],
+                                            "Header": "",
+                                            "accessor": "focusArea",
+                                            "minWidth": 130,
+                                          },
+                                        ],
+                                      },
+                                      "resizable": undefined,
+                                      "show": true,
+                                      "sortMethod": undefined,
+                                      "sortable": undefined,
+                                      "style": Object {},
+                                    }
+                                  }
+                                  columnProps={
+                                    Object {
+                                      "className": undefined,
+                                      "rest": Object {},
+                                      "style": undefined,
+                                    }
+                                  }
+                                  index={0}
+                                  level={0}
+                                  nestingPath={
+                                    Array [
+                                      0,
+                                    ]
+                                  }
+                                  original={
+                                    Object {
+                                      "canton": "",
+                                      "caseClassification": null,
+                                      "caseNotificationDate": null,
+                                      "district": "",
+                                      "focusArea": "",
+                                      "id": "93d3a80e-714c-51c7-a382-7633f1eb1f1b",
+                                      "jurisdiction_id": "",
+                                      "jurisdiction_parent_id": " NULL",
+                                      "plan_id": "e9c9a069-7d22-44c0-a59e-9a483948716b",
+                                      "plan_title": "A1 - Ban Chamrak Mu - Focus 02 Rubber Plantation",
+                                      "province": null,
+                                      "reason": "Case-triggered",
+                                      "status": "A1",
+                                      "village": "",
+                                    }
+                                  }
+                                  page={0}
+                                  pageSize={20}
+                                  resized={Array []}
+                                  row={
+                                    Object {
+                                      "_index": 0,
+                                      "_nestingLevel": 0,
+                                      "_original": Object {
+                                        "canton": "",
+                                        "caseClassification": null,
+                                        "caseNotificationDate": null,
+                                        "district": "",
+                                        "focusArea": "",
+                                        "id": "93d3a80e-714c-51c7-a382-7633f1eb1f1b",
+                                        "jurisdiction_id": "",
+                                        "jurisdiction_parent_id": " NULL",
+                                        "plan_id": "e9c9a069-7d22-44c0-a59e-9a483948716b",
+                                        "plan_title": "A1 - Ban Chamrak Mu - Focus 02 Rubber Plantation",
+                                        "province": null,
+                                        "reason": "Case-triggered",
+                                        "status": "A1",
+                                        "village": "",
+                                      },
+                                      "_subRows": undefined,
+                                      "_viewIndex": 0,
+                                      "canton": "",
+                                      "caseClassification": null,
+                                      "caseNotificationDate": null,
+                                      "district": "",
+                                      "focusArea": "",
+                                      "plan_title": "A1 - Ban Chamrak Mu - Focus 02 Rubber Plantation",
+                                      "province": null,
+                                      "reason": "Case-triggered",
+                                      "status": "A1",
+                                      "village": "",
+                                    }
+                                  }
+                                  show={true}
+                                  styles={Object {}}
+                                  tdProps={
+                                    Object {
+                                      "className": undefined,
+                                      "rest": Object {},
+                                      "style": undefined,
+                                    }
+                                  }
+                                  value=""
+                                  viewIndex={0}
+                                  width={130}
+                                >
+                                  <div />
+                                </Cell>
+                              </div>
                             </TdComponent>
                             <TdComponent
                               className=""
@@ -4545,9 +4879,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                   viewIndex={0}
                                   width={200}
                                 >
-                                  <div>
-                                      
-                                  </div>
+                                  <div />
                                 </Cell>
                               </div>
                             </TdComponent>
@@ -4934,7 +5266,145 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                     "width": "130px",
                                   }
                                 }
-                              />
+                              >
+                                <Cell
+                                  classes={
+                                    Array [
+                                      undefined,
+                                      "",
+                                      undefined,
+                                    ]
+                                  }
+                                  column={
+                                    Object {
+                                      "Aggregated": undefined,
+                                      "Cell": [Function],
+                                      "Expander": undefined,
+                                      "Filter": undefined,
+                                      "Footer": undefined,
+                                      "Header": "",
+                                      "Pivot": undefined,
+                                      "PivotValue": undefined,
+                                      "Placeholder": undefined,
+                                      "accessor": [Function],
+                                      "aggregate": undefined,
+                                      "className": "",
+                                      "filterAll": false,
+                                      "filterMethod": undefined,
+                                      "filterable": undefined,
+                                      "footerClassName": "",
+                                      "footerStyle": Object {},
+                                      "getFooterProps": [Function],
+                                      "getHeaderProps": [Function],
+                                      "getProps": [Function],
+                                      "headerClassName": "",
+                                      "headerStyle": Object {},
+                                      "id": "focusArea",
+                                      "minResizeWidth": 11,
+                                      "minWidth": 130,
+                                      "parentColumn": Object {
+                                        "Header": "Focus Area",
+                                        "columns": Array [
+                                          Object {
+                                            "Cell": [Function],
+                                            "Header": "",
+                                            "accessor": "focusArea",
+                                            "minWidth": 130,
+                                          },
+                                        ],
+                                      },
+                                      "resizable": undefined,
+                                      "show": true,
+                                      "sortMethod": undefined,
+                                      "sortable": undefined,
+                                      "style": Object {},
+                                    }
+                                  }
+                                  columnProps={
+                                    Object {
+                                      "className": undefined,
+                                      "rest": Object {},
+                                      "style": undefined,
+                                    }
+                                  }
+                                  index={1}
+                                  level={0}
+                                  nestingPath={
+                                    Array [
+                                      1,
+                                    ]
+                                  }
+                                  original={
+                                    Object {
+                                      "canton": "",
+                                      "caseClassification": null,
+                                      "caseNotificationDate": null,
+                                      "district": "",
+                                      "focusArea": "",
+                                      "id": "plan-id-2",
+                                      "jurisdiction_id": "",
+                                      "jurisdiction_parent_id": "null",
+                                      "plan_id": "plan-id-2",
+                                      "plan_title": "A1-Tha Luang Village 1 Focus 01",
+                                      "province": null,
+                                      "reason": "Case-triggered",
+                                      "status": "A1",
+                                      "village": "",
+                                    }
+                                  }
+                                  page={0}
+                                  pageSize={20}
+                                  resized={Array []}
+                                  row={
+                                    Object {
+                                      "_index": 1,
+                                      "_nestingLevel": 0,
+                                      "_original": Object {
+                                        "canton": "",
+                                        "caseClassification": null,
+                                        "caseNotificationDate": null,
+                                        "district": "",
+                                        "focusArea": "",
+                                        "id": "plan-id-2",
+                                        "jurisdiction_id": "",
+                                        "jurisdiction_parent_id": "null",
+                                        "plan_id": "plan-id-2",
+                                        "plan_title": "A1-Tha Luang Village 1 Focus 01",
+                                        "province": null,
+                                        "reason": "Case-triggered",
+                                        "status": "A1",
+                                        "village": "",
+                                      },
+                                      "_subRows": undefined,
+                                      "_viewIndex": 1,
+                                      "canton": "",
+                                      "caseClassification": null,
+                                      "caseNotificationDate": null,
+                                      "district": "",
+                                      "focusArea": "",
+                                      "plan_title": "A1-Tha Luang Village 1 Focus 01",
+                                      "province": null,
+                                      "reason": "Case-triggered",
+                                      "status": "A1",
+                                      "village": "",
+                                    }
+                                  }
+                                  show={true}
+                                  styles={Object {}}
+                                  tdProps={
+                                    Object {
+                                      "className": undefined,
+                                      "rest": Object {},
+                                      "style": undefined,
+                                    }
+                                  }
+                                  value=""
+                                  viewIndex={1}
+                                  width={130}
+                                >
+                                  <div />
+                                </Cell>
+                              </div>
                             </TdComponent>
                             <TdComponent
                               className=""
@@ -5095,9 +5565,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                   viewIndex={1}
                                   width={200}
                                 >
-                                  <div>
-                                      
-                                  </div>
+                                  <div />
                                 </Cell>
                               </div>
                             </TdComponent>
@@ -6420,7 +6888,155 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
                         }
                       }
                     >
-                      NVI_439
+                      <Cell
+                        classes={
+                          Array [
+                            undefined,
+                            "",
+                            undefined,
+                          ]
+                        }
+                        column={
+                          Object {
+                            "Aggregated": undefined,
+                            "Cell": [Function],
+                            "Expander": undefined,
+                            "Filter": undefined,
+                            "Footer": undefined,
+                            "Header": "",
+                            "Pivot": undefined,
+                            "PivotValue": undefined,
+                            "Placeholder": undefined,
+                            "accessor": [Function],
+                            "aggregate": undefined,
+                            "className": "",
+                            "filterAll": false,
+                            "filterMethod": undefined,
+                            "filterable": undefined,
+                            "footerClassName": "",
+                            "footerStyle": Object {},
+                            "getFooterProps": [Function],
+                            "getHeaderProps": [Function],
+                            "getProps": [Function],
+                            "headerClassName": "",
+                            "headerStyle": Object {},
+                            "id": "focusArea",
+                            "minResizeWidth": 11,
+                            "minWidth": 130,
+                            "parentColumn": Object {
+                              "Header": "Focus Area",
+                              "columns": Array [
+                                Object {
+                                  "Cell": [Function],
+                                  "Header": "",
+                                  "accessor": "focusArea",
+                                  "minWidth": 130,
+                                },
+                              ],
+                            },
+                            "resizable": undefined,
+                            "show": true,
+                            "sortMethod": undefined,
+                            "sortable": undefined,
+                            "style": Object {},
+                          }
+                        }
+                        columnProps={
+                          Object {
+                            "className": undefined,
+                            "rest": Object {},
+                            "style": undefined,
+                          }
+                        }
+                        index={0}
+                        level={0}
+                        nestingPath={
+                          Array [
+                            0,
+                          ]
+                        }
+                        original={
+                          Object {
+                            "canton": "Chadiza",
+                            "caseClassification": null,
+                            "caseNotificationDate": null,
+                            "district": "",
+                            "focusArea": "NVI_439",
+                            "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
+                            "jurisdiction_id": "2944",
+                            "jurisdiction_parent_id": "2944",
+                            "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+                            "plan_title": "A1-Tha Luang Village 1 Focus 01",
+                            "province": null,
+                            "reason": "Routine",
+                            "status": "A1",
+                            "village": "Naviluli",
+                          }
+                        }
+                        page={0}
+                        pageSize={20}
+                        resized={Array []}
+                        row={
+                          Object {
+                            "_index": 0,
+                            "_nestingLevel": 0,
+                            "_original": Object {
+                              "canton": "Chadiza",
+                              "caseClassification": null,
+                              "caseNotificationDate": null,
+                              "district": "",
+                              "focusArea": "NVI_439",
+                              "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
+                              "jurisdiction_id": "2944",
+                              "jurisdiction_parent_id": "2944",
+                              "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+                              "plan_title": "A1-Tha Luang Village 1 Focus 01",
+                              "province": null,
+                              "reason": "Routine",
+                              "status": "A1",
+                              "village": "Naviluli",
+                            },
+                            "_subRows": undefined,
+                            "_viewIndex": 0,
+                            "canton": "Chadiza",
+                            "caseClassification": null,
+                            "caseNotificationDate": null,
+                            "district": "",
+                            "focusArea": "NVI_439",
+                            "plan_title": "A1-Tha Luang Village 1 Focus 01",
+                            "province": null,
+                            "reason": "Routine",
+                            "status": "A1",
+                            "village": "Naviluli",
+                          }
+                        }
+                        show={true}
+                        styles={Object {}}
+                        tdProps={
+                          Object {
+                            "className": undefined,
+                            "rest": Object {},
+                            "style": undefined,
+                          }
+                        }
+                        value="NVI_439"
+                        viewIndex={0}
+                        width={130}
+                      >
+                        <div>
+                          <Link
+                            replace={false}
+                            to="/focus-investigation/map/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
+                          >
+                            <a
+                              href="/focus-investigation/map/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
+                              onClick={[Function]}
+                            >
+                              NVI_439
+                            </a>
+                          </Link>
+                        </div>
+                      </Cell>
                     </div>
                   </TdComponent>
                   <TdComponent
@@ -6583,58 +7199,6 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
                         width={200}
                       >
                         <div>
-                          <Link
-                            replace={false}
-                            to="/focus-investigation/map/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
-                          >
-                            <a
-                              href="/focus-investigation/map/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
-                              onClick={[Function]}
-                            >
-                              <FontAwesomeIcon
-                                border={false}
-                                className=""
-                                fixedWidth={false}
-                                flip={null}
-                                icon={
-                                  Array [
-                                    "fas",
-                                    "map",
-                                  ]
-                                }
-                                inverse={false}
-                                listItem={false}
-                                mask={null}
-                                pull={null}
-                                pulse={false}
-                                rotation={null}
-                                size={null}
-                                spin={false}
-                                symbol={false}
-                                title=""
-                                transform={null}
-                              >
-                                <svg
-                                  aria-hidden="true"
-                                  className="svg-inline--fa fa-map fa-w-18 "
-                                  data-icon="map"
-                                  data-prefix="fas"
-                                  focusable="false"
-                                  role="img"
-                                  style={Object {}}
-                                  viewBox="0 0 576 512"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    d="M0 117.66v346.32c0 11.32 11.43 19.06 21.94 14.86L160 416V32L20.12 87.95A32.006 32.006 0 0 0 0 117.66zM192 416l192 64V96L192 32v384zM554.06 33.16L416 96v384l139.88-55.95A31.996 31.996 0 0 0 576 394.34V48.02c0-11.32-11.43-19.06-21.94-14.86z"
-                                    fill="currentColor"
-                                    style={Object {}}
-                                  />
-                                </svg>
-                              </FontAwesomeIcon>
-                            </a>
-                          </Link>
-                            
                           <Link
                             replace={false}
                             to="/focus-investigation/view/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"

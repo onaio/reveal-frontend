@@ -119,6 +119,15 @@ class ActiveFocusInvestigation extends React.Component<
         Header: FOCUS_AREA_HEADER,
         columns: [
           {
+            Cell: (cell: CellInfo) => {
+              return (
+                <div>
+                  {cell.original.focusArea.trim() && (
+                    <Link to={`${FI_SINGLE_MAP_URL}/${cell.original.id}`}>{cell.value}</Link>
+                  )}
+                </div>
+              );
+            },
             Header: '',
             accessor: 'focusArea',
             minWidth: 130,
@@ -132,12 +141,6 @@ class ActiveFocusInvestigation extends React.Component<
             Cell: (cell: CellInfo) => {
               return (
                 <div>
-                  {cell.original.focusArea.trim() && (
-                    <Link to={`${FI_SINGLE_MAP_URL}/${cell.original.id}`}>
-                      <FontAwesomeIcon icon={['fas', 'map']} />
-                    </Link>
-                  )}
-                  &nbsp;&nbsp;
                   {cell.original.focusArea.trim() && (
                     <Link to={`${FI_SINGLE_URL}/${cell.original.id}`}>{cell.value}</Link>
                   )}
