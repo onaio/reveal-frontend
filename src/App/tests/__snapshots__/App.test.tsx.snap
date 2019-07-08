@@ -240,21 +240,21 @@ exports[`App renders App correctly 1`] = `
                                         activeClassName="active"
                                         aria-current="page"
                                         className="nav-link"
-                                        to="/irs"
+                                        to="/intervention/irs"
                                       >
                                         <Route
-                                          path="\\\\/irs"
+                                          path="\\\\/intervention\\\\/irs"
                                         >
                                           <Link
                                             aria-current={null}
                                             className="nav-link"
                                             replace={false}
-                                            to="/irs"
+                                            to="/intervention/irs"
                                           >
                                             <a
                                               aria-current={null}
                                               className="nav-link"
-                                              href="/irs"
+                                              href="/intervention/irs"
                                               onClick={[Function]}
                                             >
                                               IRS
@@ -719,11 +719,11 @@ exports[`App renders App correctly 1`] = `
                                       <Link
                                         className="intervention-link"
                                         replace={false}
-                                        to="/irs"
+                                        to="/intervention/irs"
                                       >
                                         <a
                                           className="intervention-link"
-                                          href="/irs"
+                                          href="/intervention/irs"
                                           onClick={[Function]}
                                         >
                                           <Button
