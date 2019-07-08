@@ -12,9 +12,19 @@ import { Task, TaskGeoJSON } from '../../../store/ducks/tasks';
 import * as fixtures from '../../../store/ducks/tests/fixtures';
 import GisidaWrapper from '../index';
 
+// jest.mock('gisida-react', () => {
+//   const MapComponent = () => <div>I love oov</div>;
+//   return { Map: MapComponent };
+// });
+
 jest.mock('gisida-react', () => {
-  const MapComponent = () => <div>I love oov</div>;
-  return { Map: MapComponent };
+  function MapComponent() {
+    return <div>I love oov</div>;
+  }
+  MapComponent.Spinner = 'MapComponent.Spinner';
+  return {
+    Map: MapComponent,
+  };
 });
 
 jest.mock('../../../configs/env');

@@ -412,6 +412,17 @@ exports[`components/GisidaWrapper renders map component with FeatureCollection 1
 
 exports[`components/GisidaWrapper renders map component with FeatureCollection 2`] = `
 Object {
+  "children": <UNDEFINED
+    store={
+      Object {
+        "dispatch": [Function],
+        "getState": [Function],
+        "replaceReducer": [Function],
+        "subscribe": [Function],
+        Symbol(observable): [Function],
+      }
+    }
+  />,
   "handlers": Array [],
   "mapId": "map-1",
   "store": Object {
@@ -1510,6 +1521,17 @@ Object {
 
 exports[`components/GisidaWrapper renders map component with structures 1`] = `
 Object {
+  "children": <UNDEFINED
+    store={
+      Object {
+        "dispatch": [Function],
+        "getState": [Function],
+        "replaceReducer": [Function],
+        "subscribe": [Function],
+        Symbol(observable): [Function],
+      }
+    }
+  />,
   "handlers": Array [],
   "mapId": "map-1",
   "store": Object {
@@ -3550,6 +3572,17 @@ exports[`components/GisidaWrapper renders map component without Featurecollectio
 
 exports[`components/GisidaWrapper renders map component without Featurecollection 5`] = `
 Object {
+  "children": <UNDEFINED
+    store={
+      Object {
+        "dispatch": [Function],
+        "getState": [Function],
+        "replaceReducer": [Function],
+        "subscribe": [Function],
+        Symbol(observable): [Function],
+      }
+    }
+  />,
   "handlers": Array [],
   "mapId": "map-1",
   "store": Object {
