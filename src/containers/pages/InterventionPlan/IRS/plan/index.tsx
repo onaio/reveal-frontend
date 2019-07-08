@@ -21,6 +21,7 @@ import plansReducer, {
 import HeaderBreadcrumbs, {
   BreadCrumbProps,
 } from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
+import Loading from '../../../../../components/page/Loading';
 
 /** register the plans reducer */
 reducerRegistry.register(plansReducerName, plansReducer);
@@ -57,6 +58,10 @@ class IrsPlan extends React.Component<RouteComponentProps<RouteParams> & IrsPlan
   }
 
   public render() {
+    const { planId, planById, isDraftPlan, isFinalizedPlan } = this.props;
+    if (planId && !planById) {
+      return <Loading />;
+    }
     const homePage = {
       label: HOME,
       url: HOME_URL,
@@ -65,10 +70,16 @@ class IrsPlan extends React.Component<RouteComponentProps<RouteParams> & IrsPlan
       label: 'IRS',
       url: INTERVENTION_IRS_URL,
     };
+    const pageLabel =
+      (isFinalizedPlan && planById && planById.plan_title) ||
+      (isDraftPlan && planById && `${planById.plan_title} (draft)`) ||
+      'New Plan';
+    const urlPathAppend =
+      (isFinalizedPlan && `plan/${planId}`) || (isDraftPlan && `draft/${planId}`) || 'new';
     const breadCrumbProps: BreadCrumbProps = {
       currentPage: {
-        label: 'New Plan',
-        url: `${INTERVENTION_IRS_URL}/new`,
+        label: pageLabel,
+        url: `${INTERVENTION_IRS_URL}/${urlPathAppend}`,
       },
       pages: [homePage, basePage],
     };
@@ -76,7 +87,7 @@ class IrsPlan extends React.Component<RouteComponentProps<RouteParams> & IrsPlan
     return (
       <div className="mb-5">
         <HeaderBreadcrumbs {...breadCrumbProps} />
-        <h2 className="page-title">IRS: New Plan</h2>
+        <h2 className="page-title">IRS: {pageLabel}</h2>
       </div>
     );
   }
