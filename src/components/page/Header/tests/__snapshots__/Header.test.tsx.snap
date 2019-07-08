@@ -217,21 +217,21 @@ exports[`components/page/Header renders header correctly 1`] = `
                               activeClassName="active"
                               aria-current="page"
                               className="nav-link"
-                              to="/irs"
+                              to="/intervention/irs"
                             >
                               <Route
-                                path="\\\\/irs"
+                                path="\\\\/intervention\\\\/irs"
                               >
                                 <Link
                                   aria-current={null}
                                   className="nav-link"
                                   replace={false}
-                                  to="/irs"
+                                  to="/intervention/irs"
                                 >
                                   <a
                                     aria-current={null}
                                     className="nav-link"
-                                    href="/irs"
+                                    href="/intervention/irs"
                                     onClick={[Function]}
                                   >
                                     IRS
@@ -712,21 +712,21 @@ exports[`components/page/Header renders header correctly when authenticated 1`] 
                               activeClassName="active"
                               aria-current="page"
                               className="nav-link"
-                              to="/irs"
+                              to="/intervention/irs"
                             >
                               <Route
-                                path="\\\\/irs"
+                                path="\\\\/intervention\\\\/irs"
                               >
                                 <Link
                                   aria-current={null}
                                   className="nav-link"
                                   replace={false}
-                                  to="/irs"
+                                  to="/intervention/irs"
                                 >
                                   <a
                                     aria-current={null}
                                     className="nav-link"
-                                    href="/irs"
+                                    href="/intervention/irs"
                                     onClick={[Function]}
                                   >
                                     IRS

@@ -85,11 +85,11 @@ exports[`containers/pages/Home renders Home correctly 1`] = `
               <Link
                 className="intervention-link"
                 replace={false}
-                to="/irs"
+                to="/intervention/irs"
               >
                 <a
                   className="intervention-link"
-                  href="/irs"
+                  href="/intervention/irs"
                   onClick={[Function]}
                 >
                   <Button

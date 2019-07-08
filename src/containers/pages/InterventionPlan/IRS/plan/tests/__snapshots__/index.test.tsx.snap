@@ -1,0 +1,211 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`containers/pages/IRS/plan renders IRS Plan page correctly 1`] = `
+<Provider
+  store={
+    Object {
+      "dispatch": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+      Symbol(observable): [Function],
+    }
+  }
+>
+  <Router
+    history={
+      Object {
+        "action": "POP",
+        "block": [Function],
+        "createHref": [Function],
+        "go": [Function],
+        "goBack": [Function],
+        "goForward": [Function],
+        "length": 1,
+        "listen": [Function],
+        "location": Object {
+          "hash": "",
+          "pathname": "/",
+          "search": "",
+          "state": undefined,
+        },
+        "push": [Function],
+        "replace": [Function],
+      }
+    }
+  >
+    <Connect(IrsPlan)
+      history={
+        Object {
+          "action": "POP",
+          "block": [Function],
+          "createHref": [Function],
+          "go": [Function],
+          "goBack": [Function],
+          "goForward": [Function],
+          "length": 1,
+          "listen": [Function],
+          "location": Object {
+            "hash": "",
+            "pathname": "/",
+            "search": "",
+            "state": undefined,
+          },
+          "push": [Function],
+          "replace": [Function],
+        }
+      }
+      location={[MockFunction]}
+      match={
+        Object {
+          "isExact": true,
+          "params": Object {
+            "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
+          },
+          "path": "/focus-investigation/view/plan/:id",
+          "url": "/focus-investigation/view/plan/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
+        }
+      }
+    >
+      <IrsPlan
+        dispatch={[Function]}
+        history={
+          Object {
+            "action": "POP",
+            "block": [Function],
+            "createHref": [Function],
+            "go": [Function],
+            "goBack": [Function],
+            "goForward": [Function],
+            "length": 1,
+            "listen": [Function],
+            "location": Object {
+              "hash": "",
+              "pathname": "/",
+              "search": "",
+              "state": undefined,
+            },
+            "push": [Function],
+            "replace": [Function],
+          }
+        }
+        isNewPlan={false}
+        location={[MockFunction]}
+        match={
+          Object {
+            "isExact": true,
+            "params": Object {
+              "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
+            },
+            "path": "/focus-investigation/view/plan/:id",
+            "url": "/focus-investigation/view/plan/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
+          }
+        }
+        planId="ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
+      >
+        <div
+          className="mb-5"
+        >
+          <HeaderBreadcrumb
+            currentPage={
+              Object {
+                "label": "New Plan",
+                "url": "/intervention/irs/new",
+              }
+            }
+            pages={
+              Array [
+                Object {
+                  "label": "Home",
+                  "url": "/",
+                },
+                Object {
+                  "label": "IRS",
+                  "url": "/intervention/irs",
+                },
+              ]
+            }
+          >
+            <div>
+              <Breadcrumb
+                aria-label="breadcrumb"
+                className="reveal-breadcrumb"
+                listTag="ol"
+                tag="nav"
+              >
+                <nav
+                  aria-label="breadcrumb"
+                  className="reveal-breadcrumb"
+                >
+                  <ol
+                    className="breadcrumb"
+                  >
+                    <BreadcrumbItem
+                      key="0"
+                      tag="li"
+                    >
+                      <li
+                        className="breadcrumb-item"
+                      >
+                        <Link
+                          key="0"
+                          replace={false}
+                          to="/"
+                        >
+                          <a
+                            href="/"
+                            onClick={[Function]}
+                          >
+                            Home
+                          </a>
+                        </Link>
+                      </li>
+                    </BreadcrumbItem>
+                    <BreadcrumbItem
+                      key="1"
+                      tag="li"
+                    >
+                      <li
+                        className="breadcrumb-item"
+                      >
+                        <Link
+                          key="1"
+                          replace={false}
+                          to="/intervention/irs"
+                        >
+                          <a
+                            href="/intervention/irs"
+                            onClick={[Function]}
+                          >
+                            IRS
+                          </a>
+                        </Link>
+                      </li>
+                    </BreadcrumbItem>
+                    <BreadcrumbItem
+                      active={true}
+                      tag="li"
+                    >
+                      <li
+                        aria-current="page"
+                        className="active breadcrumb-item"
+                      >
+                        New Plan
+                      </li>
+                    </BreadcrumbItem>
+                  </ol>
+                </nav>
+              </Breadcrumb>
+            </div>
+          </HeaderBreadcrumb>
+          <h2
+            className="page-title"
+          >
+            IRS: New Plan
+          </h2>
+        </div>
+      </IrsPlan>
+    </Connect(IrsPlan)>
+  </Router>
+</Provider>
+`;
