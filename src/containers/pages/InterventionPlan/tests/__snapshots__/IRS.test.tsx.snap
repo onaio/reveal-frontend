@@ -153,82 +153,52 @@ exports[`containers/pages/IRS renders plans list correctly 1`] = `
         }
         supersetService={[Function]}
       >
-        <div
-          className="mb-5"
+        <Ripple
+          borderColor="#ff5d00"
+          borderStyle="solid"
+          borderWidth="4px"
+          height="64px"
+          minHeight="80vh"
+          width="64px"
         >
-          <HeaderBreadcrumb
-            currentPage={
+          <div
+            className="lds-ripple-parent"
+            style={
               Object {
-                "label": "IRS",
-                "url": "/intervention/irs",
+                "minHeight": "80vh",
               }
             }
-            pages={
-              Array [
+          >
+            <div
+              className="lds-ripple"
+              style={
                 Object {
-                  "label": "Home",
-                  "url": "/",
-                },
-              ]
-            }
-          >
-            <div>
-              <Breadcrumb
-                aria-label="breadcrumb"
-                className="reveal-breadcrumb"
-                listTag="ol"
-                tag="nav"
-              >
-                <nav
-                  aria-label="breadcrumb"
-                  className="reveal-breadcrumb"
-                >
-                  <ol
-                    className="breadcrumb"
-                  >
-                    <BreadcrumbItem
-                      key="0"
-                      tag="li"
-                    >
-                      <li
-                        className="breadcrumb-item"
-                      >
-                        <Link
-                          key="0"
-                          replace={false}
-                          to="/"
-                        >
-                          <a
-                            href="/"
-                            onClick={[Function]}
-                          >
-                            Home
-                          </a>
-                        </Link>
-                      </li>
-                    </BreadcrumbItem>
-                    <BreadcrumbItem
-                      active={true}
-                      tag="li"
-                    >
-                      <li
-                        aria-current="page"
-                        className="active breadcrumb-item"
-                      >
-                        IRS
-                      </li>
-                    </BreadcrumbItem>
-                  </ol>
-                </nav>
-              </Breadcrumb>
+                  "height": "64px",
+                  "width": "64px",
+                }
+              }
+            >
+              <div
+                style={
+                  Object {
+                    "borderColor": "#ff5d00",
+                    "borderStyle": "solid",
+                    "borderWidth": "4px",
+                  }
+                }
+              />
+              <div
+                style={
+                  Object {
+                    "borderColor": "#ff5d00",
+                    "borderStyle": "solid",
+                    "borderWidth": "4px",
+                  }
+                }
+              />
             </div>
-          </HeaderBreadcrumb>
-          <h2
-            className="page-title"
-          >
-            IRS Plans
-          </h2>
-        </div>
+          </div>
+        </Ripple>
       </IrsPlans>
     </Connect(IrsPlans)>
   </Router>

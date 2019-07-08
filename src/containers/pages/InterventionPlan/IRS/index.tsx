@@ -2,8 +2,11 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
+import { Link } from 'react-router-dom';
+import { CellInfo, Column } from 'react-table';
 import { Store } from 'redux';
 
+import DrillDownTable from '@onaio/drill-down-table';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 
 import { SUPERSET_PLANS_SLICE } from '../../../../configs/env';
@@ -19,9 +22,11 @@ import plansReducer, {
   reducerName as plansReducerName,
 } from '../../../../store/ducks/plans';
 
+import DrillDownTableLinkedCell from '../../../../components/DrillDownTableLinkedCell';
 import HeaderBreadcrumbs, {
   BreadCrumbProps,
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
+import Loading from '../../../../components/page/Loading';
 
 /** register the plans reducer */
 reducerRegistry.register(plansReducerName, plansReducer);
@@ -62,10 +67,67 @@ class IrsPlans extends React.Component<IrsPlansProps & RouteComponentProps<Route
       pages: [homePage],
     };
 
+    const { plansArray } = this.props;
+    if (plansArray.length === 0) {
+      return <Loading />;
+    }
+
+    const columns: Column[] = [
+      {
+        Header: 'Name',
+        columns: [
+          {
+            Cell: (cell: CellInfo) => {
+              return (
+                <div>
+                  <Link to={`${INTERVENTION_IRS_URL}/plan/${cell.original.id}`}>{cell.value}</Link>
+                </div>
+              );
+            },
+            Header: '',
+            accessor: 'plan_title',
+            minWidth: 200,
+          },
+        ],
+      },
+      {
+        Header: 'Date Created',
+        columns: [
+          {
+            Header: '',
+            accessor: 'plan_date',
+          },
+        ],
+      },
+      {
+        Header: 'Status',
+        columns: [
+          {
+            Header: '',
+            accessor: 'plan_status',
+          },
+        ],
+      },
+    ];
+
+    const tableProps = {
+      CellComponent: DrillDownTableLinkedCell,
+      columns,
+      data: [...plansArray],
+      identifierField: 'id',
+      linkerField: 'id',
+      minRows: 0,
+      rootParentId: null,
+      showPageSizeOptions: false,
+      showPagination: false,
+      useDrillDownTrProps: false,
+    };
+
     return (
       <div className="mb-5">
         <HeaderBreadcrumbs {...breadCrumbProps} />
         <h2 className="page-title">IRS Plans</h2>
+        <DrillDownTable {...tableProps} />
       </div>
     );
   }
@@ -79,13 +141,9 @@ interface DispatchedStateProps {
 
 const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateProps => {
   const props = {
-    plansArray: [],
+    plansArray: getPlansArray(state, InterventionType.IRS),
     ...ownProps,
   };
-
-  if (state) {
-    props.plansArray = getPlansArray(state, InterventionType.IRS);
-  }
   return props;
 };
 
