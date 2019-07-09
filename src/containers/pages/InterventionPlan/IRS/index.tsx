@@ -88,7 +88,9 @@ class IrsPlans extends React.Component<IrsPlansProps & RouteComponentProps<Route
             Cell: (cell: CellInfo) => {
               return (
                 <div>
-                  <Link to={`${INTERVENTION_IRS_URL}/plan/${cell.original.id}`}>{cell.value}</Link>
+                  <Link to={`${INTERVENTION_IRS_URL}/plan/${cell.original.plan_id}`}>
+                    {cell.value}
+                  </Link>
                 </div>
               );
             },

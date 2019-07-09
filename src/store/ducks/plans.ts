@@ -36,6 +36,7 @@ export const PLANS_FETCHED = 'reveal/reducer/plans/PLANS_FETCHED';
 /** interface for authorize action */
 interface FetchPlansAction extends AnyAction {
   plansById: { [key: string]: Plan };
+  plansByPlanId: { [key: string]: Plan };
   type: typeof PLANS_FETCHED;
 }
 
@@ -45,6 +46,7 @@ export type PlanActionTypes = FetchPlansAction | AnyAction;
 /** interface for Plan state */
 interface PlanState {
   plansById: { [key: string]: Plan };
+  plansByPlanId: { [key: string]: Plan };
 }
 
 /** immutable Plan state */
@@ -53,6 +55,7 @@ export type ImmutablePlanState = PlanState & SeamlessImmutable.ImmutableObject<P
 /** initial Plan state */
 const initialState: ImmutablePlanState = SeamlessImmutable({
   plansById: {},
+  plansByPlanId: {},
 });
 
 /** the Plan reducer function */
@@ -62,6 +65,7 @@ export default function reducer(state = initialState, action: PlanActionTypes): 
       return SeamlessImmutable({
         ...state,
         plansById: action.plansById,
+        plansByPlanId: action.plansByPlanId,
       });
     default:
       return state;
@@ -88,6 +92,21 @@ export const fetchPlans = (plansList: Plan[] = []): FetchPlansAction => ({
       return plan;
     }),
     plan => plan.id
+  ),
+  plansByPlanId: keyBy(
+    plansList.map((plan: Plan) => {
+      /** ensure jurisdiction_name_path is parsed */
+      if (typeof plan.jurisdiction_name_path === 'string') {
+        plan.jurisdiction_name_path = JSON.parse(plan.jurisdiction_name_path);
+      }
+      /** ensure jurisdiction_path is parsed */
+      if (typeof plan.jurisdiction_path === 'string') {
+        plan.jurisdiction_path = JSON.parse(plan.jurisdiction_path);
+      }
+      plan = transformValues<Plan>(plan, ['plan_fi_reason', 'plan_fi_status']);
+      return plan;
+    }),
+    plan => plan.plan_id
   ),
   type: PLANS_FETCHED,
 });
@@ -136,4 +155,12 @@ export function getPlansIdArray(
  */
 export function getPlanById(state: Partial<Store>, id: string): Plan | null {
   return get((state as any)[reducerName].plansById, id) || null;
+}
+
+/** get one plan by its plan_id
+ * @param {Partial<Store>} state - the redux store
+ * @param {string} planId - the plan_id
+ */
+export function getPlanByPlanId(state: Partial<Store>, planId: string): Plan | null {
+  return get((state as any)[reducerName].plansByPlanId, planId) || null;
 }
