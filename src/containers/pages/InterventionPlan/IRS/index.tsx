@@ -9,9 +9,10 @@ import { Store } from 'redux';
 
 import DrillDownTable from '@onaio/drill-down-table';
 import reducerRegistry from '@onaio/redux-reducer-registry';
+import superset from '@onaio/superset-connector';
 
 import { SUPERSET_PLANS_SLICE } from '../../../../configs/env';
-import { HOME, HOME_URL, INTERVENTION_IRS_URL } from '../../../../constants';
+import { HOME, HOME_URL, INTERVENTION_IRS_URL, IRS_PLAN_TYPE } from '../../../../constants';
 
 import { RouteParams } from '../../../../helpers/utils';
 import supersetFetch from '../../../../services/superset';
@@ -52,7 +53,13 @@ class IrsPlans extends React.Component<IrsPlansProps & RouteComponentProps<Route
 
   public componentDidMount() {
     const { fetchPlansActionCreator, supersetService } = this.props;
-    supersetService(SUPERSET_PLANS_SLICE).then((result: Plan[]) => fetchPlansActionCreator(result));
+
+    const supersetParams = superset.getFormData(2000, [
+      { comparator: IRS_PLAN_TYPE, operator: '==', subject: 'plan_intervention_type' },
+    ]);
+    supersetService(SUPERSET_PLANS_SLICE, supersetParams).then((result: Plan[]) =>
+      fetchPlansActionCreator(result)
+    );
   }
 
   public render() {
