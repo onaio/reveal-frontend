@@ -123,3 +123,9 @@ export const BLOOD_SCREENING_CODE = 'Blood Screening';
 export type BLOOD_SCREENING_CODE = typeof BLOOD_SCREENING_CODE;
 export const IRS_CODE = 'IRS';
 export type IRS = typeof IRS_CODE;
+
+// plans
+export const FI_PLAN_TYPE = 'FI';
+export type FI_PLAN_TYPE = typeof FI_PLAN_TYPE;
+export const IRS_PLAN_TYPE = 'IRS';
+export type IRS_PLAN_TYPE = typeof IRS_PLAN_TYPE;
