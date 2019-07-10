@@ -1042,10 +1042,10 @@ exports[`containers/pages/IRS renders plans list correctly 1`] = `
                                       <div>
                                         <Link
                                           replace={false}
-                                          to="/intervention/irs/plan/10f9e9fa-ce34-4b27-a961-72fab5206ab6"
+                                          to="/intervention/irs/plan/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
                                         >
                                           <a
-                                            href="/intervention/irs/plan/10f9e9fa-ce34-4b27-a961-72fab5206ab6"
+                                            href="/intervention/irs/plan/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
                                             onClick={[Function]}
                                           >
                                             A1-Tha Luang Village 1 Focus 01

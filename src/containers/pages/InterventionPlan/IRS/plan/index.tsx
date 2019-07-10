@@ -11,7 +11,7 @@ import superset from '@onaio/superset-connector';
 import {
   SUPERSET_JURISDICTIONS_SLICE,
   SUPERSET_PLAN_STRUCTURE_PIVOT_SLICE,
-  SUPERSET_PLANS_SLICE,
+  SUPERSET_PLANS_TABLE_SLICE,
 } from '../../../../../configs/env';
 import { HOME, HOME_URL, INTERVENTION_IRS_URL, IRS_PLAN_TYPE } from '../../../../../constants';
 import { RouteParams } from '../../../../../helpers/utils';
@@ -26,10 +26,11 @@ import jurisdictionReducer, {
   reducerName as jurisdictionReducerName,
 } from '../../../../../store/ducks/jurisdictions';
 import plansReducer, {
-  fetchPlans,
+  fetchPlanRecords,
   getPlanById,
   getPlanByPlanId,
   Plan,
+  PlanRecord,
   reducerName as plansReducerName,
 } from '../../../../../store/ducks/plans';
 
@@ -44,7 +45,7 @@ reducerRegistry.register(jurisdictionReducerName, jurisdictionReducer);
 
 export interface IrsPlanProps {
   fetchJurisdictionsActionCreator: typeof fetchJurisdictions;
-  fetchPlansActionCreator: typeof fetchPlans;
+  fetchPlansActionCreator: typeof fetchPlanRecords;
   isDraftPlan?: boolean;
   isFinalizedPlan?: boolean;
   isNewPlan?: boolean;
@@ -56,7 +57,7 @@ export interface IrsPlanProps {
 
 export const defaultIrsPlanProps: IrsPlanProps = {
   fetchJurisdictionsActionCreator: fetchJurisdictions,
-  fetchPlansActionCreator: fetchPlans,
+  fetchPlansActionCreator: fetchPlanRecords,
   isDraftPlan: false,
   isFinalizedPlan: false,
   isNewPlan: false,
@@ -84,11 +85,11 @@ class IrsPlan extends React.Component<RouteComponentProps<RouteParams> & IrsPlan
 
     if (planId && !planById) {
       const planSupersetParams = superset.getFormData(10, [
-        { comparator: planId, operator: '==', subject: 'plan_id' },
+        { comparator: planId, operator: '==', subject: 'identifier' },
       ]);
 
-      supersetService(SUPERSET_PLANS_SLICE, planSupersetParams).then((planResult: Plan[]) =>
-        fetchPlansActionCreator(planResult)
+      supersetService(SUPERSET_PLANS_TABLE_SLICE, planSupersetParams).then(
+        (planResult: PlanRecord[]) => fetchPlansActionCreator(planResult)
       );
     }
 
@@ -187,7 +188,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
   const planId = ownProps.match.params.id || null;
   const isNewPlan = planId === null;
   const jurisdictionIds = getJurisdictionsIdArray(state);
-  const plan = getPlanByPlanId(state, planId);
+  const plan = getPlanById(state, planId);
   const isDraftPlan = plan && plan.plan_status !== 'active';
   const isFinalizedPlan = plan && plan.plan_status === 'active';
   const props = {
@@ -204,7 +205,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
 
 const mapDispatchToProps = {
   fetchJurisdictionsActionCreator: fetchJurisdictions,
-  fetchPlansActionCreator: fetchPlans,
+  fetchPlansActionCreator: fetchPlanRecords,
 };
 
 const ConnectedIrsPlan = connect(

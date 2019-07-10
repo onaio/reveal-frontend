@@ -11,16 +11,17 @@ import DrillDownTable from '@onaio/drill-down-table';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset from '@onaio/superset-connector';
 
-import { SUPERSET_PLANS_SLICE } from '../../../../configs/env';
+import { SUPERSET_PLANS_TABLE_SLICE } from '../../../../configs/env';
 import { HOME, HOME_URL, INTERVENTION_IRS_URL, IRS_PLAN_TYPE } from '../../../../constants';
 
 import { RouteParams } from '../../../../helpers/utils';
 import supersetFetch from '../../../../services/superset';
 import plansReducer, {
-  fetchPlans,
+  fetchPlanRecords,
   getPlansArray,
   InterventionType,
   Plan,
+  PlanRecord,
   reducerName as plansReducerName,
 } from '../../../../store/ducks/plans';
 
@@ -34,13 +35,13 @@ import Loading from '../../../../components/page/Loading';
 reducerRegistry.register(plansReducerName, plansReducer);
 
 export interface IrsPlansProps {
-  fetchPlansActionCreator: typeof fetchPlans;
+  fetchPlansActionCreator: typeof fetchPlanRecords;
   plansArray: Plan[];
   supersetService: typeof supersetFetch;
 }
 
 export const defaultIrsPlansProps: IrsPlansProps = {
-  fetchPlansActionCreator: fetchPlans,
+  fetchPlansActionCreator: fetchPlanRecords,
   plansArray: [],
   supersetService: supersetFetch,
 };
@@ -53,11 +54,10 @@ class IrsPlans extends React.Component<IrsPlansProps & RouteComponentProps<Route
 
   public componentDidMount() {
     const { fetchPlansActionCreator, supersetService } = this.props;
-
-    const supersetParams = superset.getFormData(2000, [
-      { comparator: IRS_PLAN_TYPE, operator: '==', subject: 'plan_intervention_type' },
+    const supersetParams = superset.getFormData(1000, [
+      { comparator: IRS_PLAN_TYPE, operator: '==', subject: 'intervention_type' },
     ]);
-    supersetService(SUPERSET_PLANS_SLICE, supersetParams).then((result: Plan[]) =>
+    supersetService(SUPERSET_PLANS_TABLE_SLICE, supersetParams).then((result: PlanRecord[]) =>
       fetchPlansActionCreator(result)
     );
   }
@@ -88,9 +88,7 @@ class IrsPlans extends React.Component<IrsPlansProps & RouteComponentProps<Route
             Cell: (cell: CellInfo) => {
               return (
                 <div>
-                  <Link to={`${INTERVENTION_IRS_URL}/plan/${cell.original.plan_id}`}>
-                    {cell.value}
-                  </Link>
+                  <Link to={`${INTERVENTION_IRS_URL}/plan/${cell.original.id}`}>{cell.value}</Link>
                 </div>
               );
             },
@@ -161,7 +159,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
   return props;
 };
 
-const mapDispatchToProps = { fetchPlansActionCreator: fetchPlans };
+const mapDispatchToProps = { fetchPlansActionCreator: fetchPlanRecords };
 
 const ConnectedIrsPlans = connect(
   mapStateToProps,
