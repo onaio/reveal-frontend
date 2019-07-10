@@ -325,25 +325,22 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
         },
         visible: true,
       };
-      builtGeometriesContainer.push(
-        structureLayer
-        //   {
-        //   ...lineLayerConfig,
-        //   id: `${STRUCTURE_LAYER}-line`,
-        //   paint: {
-        //     'line-color': '#FFDC00',
-        //     'line-opacity': 0.7,
-        //     'line-width': 2,
-        //   },
-        //   source: {
-        //     ...lineLayerConfig.source,
-        //     data: {
-        //       ...lineLayerConfig.source.data,
-        //       data: JSON.stringify(structures),
-        //     },
-        //   },
-        // }
-      );
+      builtGeometriesContainer.push(structureLayer, {
+        ...lineLayerConfig,
+        id: `${STRUCTURE_LAYER}-line`,
+        paint: {
+          'line-color': '#FFDC00',
+          'line-opacity': 0.7,
+          'line-width': 2,
+        },
+        source: {
+          ...lineLayerConfig.source,
+          data: {
+            ...lineLayerConfig.source.data,
+            data: JSON.stringify(structures),
+          },
+        },
+      });
     }
     // handle Point layer types
     if (pointFeatureCollection) {
@@ -381,23 +378,23 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
               data: JSON.stringify(polygonFeatureCollection),
             },
           },
+        },
+        {
+          ...lineLayerConfig,
+          id: `${this.props.currentGoal}-fill-line`,
+          paint: {
+            'line-color': '#FFDC00',
+            'line-opacity': 0.7,
+            'line-width': 2,
+          },
+          source: {
+            ...lineLayerConfig.source,
+            data: {
+              ...lineLayerConfig.source.data,
+              data: JSON.stringify(polygonFeatureCollection),
+            },
+          },
         }
-        // {
-        //   ...lineLayerConfig,
-        //   id: `${this.props.currentGoal}-fill-line`,
-        //   paint: {
-        //     'line-color': '#FFDC00',
-        //     'line-opacity': 0.7,
-        //     'line-width': 2,
-        //   },
-        //   source: {
-        //     ...lineLayerConfig.source,
-        //     data: {
-        //       ...lineLayerConfig.source.data,
-        //       data: JSON.stringify(polygonFeatureCollection),
-        //     },
-        //   },
-        // }
       );
     }
     const { geoData } = this.props;
