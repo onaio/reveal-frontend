@@ -1,5 +1,5 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
-import superset, { SupersetConfig } from '@onaio/superset-connector';
+import superset, { SupersetConnectorConfig } from '@onaio/superset-connector';
 import { OPENSRP_OAUTH_STATE, SUPERSET_API_BASE, SUPERSET_API_ENDPOINT } from '../../configs/env';
 import { FlexObject } from '../../helpers/utils';
 import store from '../../store';
@@ -40,7 +40,7 @@ const supersetFetch = async (
   callback: typeof fetchCallback = fetchCallback,
   middleware: typeof fetchMiddleware = fetchMiddleware
 ) => {
-  const config: SupersetConfig = {
+  const config: SupersetConnectorConfig = {
     base: SUPERSET_API_BASE,
     endpoint: SUPERSET_API_ENDPOINT,
     extraPath: sliceId,
@@ -49,6 +49,7 @@ const supersetFetch = async (
      * `state` parameter so that we can use it here
      */
     provider: getOauthProviderState(store.getState()) || OPENSRP_OAUTH_STATE,
+    token: '',
   };
 
   const accessToken = getAccessToken(store.getState());
