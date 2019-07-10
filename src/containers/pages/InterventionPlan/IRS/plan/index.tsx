@@ -33,6 +33,7 @@ import plansReducer, {
   reducerName as plansReducerName,
 } from '../../../../../store/ducks/plans';
 
+import { FlexObject } from '@onaio/drill-down-table/dist/types/helpers/utils';
 import HeaderBreadcrumbs, {
   BreadCrumbProps,
 } from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
@@ -146,6 +147,25 @@ class IrsPlan extends React.Component<RouteComponentProps<RouteParams> & IrsPlan
     if (planId && !planById) {
       return <Loading />;
     }
+
+    const pageLabel =
+      (isFinalizedPlan && planById && planById.plan_title) ||
+      (isDraftPlan && planById && `${planById.plan_title} (draft)`) ||
+      'New Plan';
+
+    const breadCrumbProps = this.getBreadCrumbProps(this.props as any, pageLabel);
+
+    return (
+      <div className="mb-5">
+        <HeaderBreadcrumbs {...breadCrumbProps} />
+        <h2 className="page-title">IRS: {pageLabel}</h2>
+      </div>
+    );
+  }
+
+  /** getBreadCrumbProps - get properties for HeaderBreadcrumbs component  */
+  private getBreadCrumbProps(props: any, pageLabel: string) {
+    const { isDraftPlan, isFinalizedPlan, planId } = props;
     const homePage = {
       label: HOME,
       url: HOME_URL,
@@ -154,10 +174,6 @@ class IrsPlan extends React.Component<RouteComponentProps<RouteParams> & IrsPlan
       label: 'IRS',
       url: INTERVENTION_IRS_URL,
     };
-    const pageLabel =
-      (isFinalizedPlan && planById && planById.plan_title) ||
-      (isDraftPlan && planById && `${planById.plan_title} (draft)`) ||
-      'New Plan';
     const urlPathAppend =
       (isFinalizedPlan && `plan/${planId}`) || (isDraftPlan && `draft/${planId}`) || 'new';
     const breadCrumbProps: BreadCrumbProps = {
@@ -167,13 +183,7 @@ class IrsPlan extends React.Component<RouteComponentProps<RouteParams> & IrsPlan
       },
       pages: [homePage, basePage],
     };
-
-    return (
-      <div className="mb-5">
-        <HeaderBreadcrumbs {...breadCrumbProps} />
-        <h2 className="page-title">IRS: {pageLabel}</h2>
-      </div>
-    );
+    return breadCrumbProps;
   }
 }
 
