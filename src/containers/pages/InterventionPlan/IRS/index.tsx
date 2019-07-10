@@ -18,10 +18,10 @@ import { RouteParams } from '../../../../helpers/utils';
 import supersetFetch from '../../../../services/superset';
 import plansReducer, {
   fetchPlanRecords,
-  getPlansArray,
+  getPlanRecordsArray,
   InterventionType,
-  Plan,
   PlanRecord,
+  PlanRecordResponse,
   reducerName as plansReducerName,
 } from '../../../../store/ducks/plans';
 
@@ -34,18 +34,21 @@ import Loading from '../../../../components/page/Loading';
 /** register the plans reducer */
 reducerRegistry.register(plansReducerName, plansReducer);
 
+/** IrsPlansProps - interface for IRS Plans page */
 export interface IrsPlansProps {
   fetchPlansActionCreator: typeof fetchPlanRecords;
-  plansArray: Plan[];
+  plansArray: PlanRecord[];
   supersetService: typeof supersetFetch;
 }
 
+/** defaultIrsPlansProps - default props for IRS Plans page */
 export const defaultIrsPlansProps: IrsPlansProps = {
   fetchPlansActionCreator: fetchPlanRecords,
   plansArray: [],
   supersetService: supersetFetch,
 };
 
+/** IrsPlans - component for IRS Plans page */
 class IrsPlans extends React.Component<IrsPlansProps & RouteComponentProps<RouteParams>, {}> {
   public static defaultProps: IrsPlansProps = defaultIrsPlansProps;
   constructor(props: RouteComponentProps<RouteParams> & IrsPlansProps) {
@@ -57,8 +60,8 @@ class IrsPlans extends React.Component<IrsPlansProps & RouteComponentProps<Route
     const supersetParams = superset.getFormData(1000, [
       { comparator: IRS_PLAN_TYPE, operator: '==', subject: 'intervention_type' },
     ]);
-    supersetService(SUPERSET_PLANS_TABLE_SLICE, supersetParams).then((result: PlanRecord[]) =>
-      fetchPlansActionCreator(result)
+    supersetService(SUPERSET_PLANS_TABLE_SLICE, supersetParams).then(
+      (result: PlanRecordResponse[]) => fetchPlansActionCreator(result)
     );
   }
 
@@ -118,6 +121,7 @@ class IrsPlans extends React.Component<IrsPlansProps & RouteComponentProps<Route
       },
     ];
 
+    /** tableProps - props for DrillDownTable component */
     const tableProps = {
       CellComponent: DrillDownTableLinkedCell,
       columns,
@@ -148,12 +152,12 @@ class IrsPlans extends React.Component<IrsPlansProps & RouteComponentProps<Route
 export { IrsPlans };
 
 interface DispatchedStateProps {
-  plansArray: Plan[];
+  plansArray: PlanRecord[];
 }
 
 const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateProps => {
   const props = {
-    plansArray: getPlansArray(state, InterventionType.IRS),
+    plansArray: getPlanRecordsArray(state, InterventionType.IRS),
     ...ownProps,
   };
   return props;

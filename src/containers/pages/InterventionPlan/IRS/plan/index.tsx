@@ -27,10 +27,9 @@ import jurisdictionReducer, {
 } from '../../../../../store/ducks/jurisdictions';
 import plansReducer, {
   fetchPlanRecords,
-  getPlanById,
-  getPlanByPlanId,
-  Plan,
+  getPlanRecordById,
   PlanRecord,
+  PlanRecordResponse,
   reducerName as plansReducerName,
 } from '../../../../../store/ducks/plans';
 
@@ -43,6 +42,7 @@ import Loading from '../../../../../components/page/Loading';
 reducerRegistry.register(plansReducerName, plansReducer);
 reducerRegistry.register(jurisdictionReducerName, jurisdictionReducer);
 
+/** IrsPlanProps - interface for IRS Plan page */
 export interface IrsPlanProps {
   fetchJurisdictionsActionCreator: typeof fetchJurisdictions;
   fetchPlansActionCreator: typeof fetchPlanRecords;
@@ -50,11 +50,12 @@ export interface IrsPlanProps {
   isFinalizedPlan?: boolean;
   isNewPlan?: boolean;
   jurisdictionIds: string[];
-  planById?: Plan | null;
+  planById?: PlanRecord | null;
   planId: string | null;
   supersetService: typeof supersetFetch;
 }
 
+/** defaultIrsPlanProps - default props for IRS Plan page */
 export const defaultIrsPlanProps: IrsPlanProps = {
   fetchJurisdictionsActionCreator: fetchJurisdictions,
   fetchPlansActionCreator: fetchPlanRecords,
@@ -67,6 +68,7 @@ export const defaultIrsPlanProps: IrsPlanProps = {
   supersetService: supersetFetch,
 };
 
+/** IrsPlan - component for IRS Plan page */
 class IrsPlan extends React.Component<RouteComponentProps<RouteParams> & IrsPlanProps, {}> {
   public static defaultProps = defaultIrsPlanProps;
   constructor(props: RouteComponentProps<RouteParams> & IrsPlanProps) {
@@ -89,7 +91,7 @@ class IrsPlan extends React.Component<RouteComponentProps<RouteParams> & IrsPlan
       ]);
 
       supersetService(SUPERSET_PLANS_TABLE_SLICE, planSupersetParams).then(
-        (planResult: PlanRecord[]) => fetchPlansActionCreator(planResult)
+        (planResult: PlanRecordResponse[]) => fetchPlansActionCreator(planResult)
       );
     }
 
@@ -188,7 +190,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
   const planId = ownProps.match.params.id || null;
   const isNewPlan = planId === null;
   const jurisdictionIds = getJurisdictionsIdArray(state);
-  const plan = getPlanById(state, planId);
+  const plan = getPlanRecordById(state, planId);
   const isDraftPlan = plan && plan.plan_status !== 'active';
   const isFinalizedPlan = plan && plan.plan_status === 'active';
   const props = {
