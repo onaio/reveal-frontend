@@ -13,14 +13,22 @@ export enum InterventionType {
 }
 
 /** interface for plan Object */
-export interface Plan {
+export interface PlanRecordResponse {
+  date: string;
+  effective_period_end: string;
+  effective_period_start: string;
+  identifier: string;
+  intervention_type: string;
+  fi_reason: string;
+  fi_status: string;
+  name: string;
+  status: string;
+  title: string;
+  version: string;
+}
+
+export interface PlanRecord {
   id: string;
-  jurisdiction_depth: number;
-  jurisdiction_id: string;
-  jurisdiction_name: string;
-  jurisdiction_name_path: string[];
-  jurisdiction_parent_id: string;
-  jurisdiction_path: string[];
   plan_effective_period_end: string;
   plan_effective_period_start: string;
   plan_fi_reason: string;
@@ -32,22 +40,19 @@ export interface Plan {
   plan_version?: string;
 }
 
-export interface PlanRecord {
-  date: string;
-  effective_period_end: string;
-  effective_period_start: string;
-  identifier: string;
-  intervention_type: string;
-  fi_reason: string;
-  fi_status: string;
-  status: string;
-  title: string;
-  version: string;
+export interface Plan extends PlanRecord {
+  jurisdiction_depth: number;
+  jurisdiction_id: string;
+  jurisdiction_name: string;
+  jurisdiction_name_path: string[];
+  jurisdiction_parent_id: string;
+  jurisdiction_path: string[];
 }
 
 // actions
 /** PLANS_FETCHED action type */
 export const PLANS_FETCHED = 'reveal/reducer/plans/PLANS_FETCHED';
+export const PLAN_RECORDS_FETCHED = 'reveal/reducer/plans/PLAN_RECORDS_FETCHED';
 
 /** interface for authorize action */
 interface FetchPlansAction extends AnyAction {
@@ -55,12 +60,18 @@ interface FetchPlansAction extends AnyAction {
   type: typeof PLANS_FETCHED;
 }
 
+interface FetchPlanRecordsAction extends AnyAction {
+  planRecordsById: { [key: string]: PlanRecord };
+  type: typeof PLAN_RECORDS_FETCHED;
+}
+
 /** Create type for Plan reducer actions */
-export type PlanActionTypes = FetchPlansAction | AnyAction;
+export type PlanActionTypes = FetchPlansAction | FetchPlanRecordsAction | AnyAction;
 
 /** interface for Plan state */
 interface PlanState {
-  plansById: { [key: string]: Plan };
+  plansById?: { [key: string]: Plan };
+  planRecordsById?: { [key: string]: PlanRecord };
 }
 
 /** immutable Plan state */
@@ -68,6 +79,7 @@ export type ImmutablePlanState = PlanState & SeamlessImmutable.ImmutableObject<P
 
 /** initial Plan state */
 const initialState: ImmutablePlanState = SeamlessImmutable({
+  planRecordsById: {},
   plansById: {},
 });
 
@@ -78,6 +90,11 @@ export default function reducer(state = initialState, action: PlanActionTypes): 
       return SeamlessImmutable({
         ...state,
         plansById: action.plansById,
+      });
+    case PLAN_RECORDS_FETCHED:
+      return SeamlessImmutable({
+        ...state,
+        planRecordsById: action.planRecordsById,
       });
     default:
       return state;
@@ -111,17 +128,11 @@ export const fetchPlans = (plansList: Plan[] = []): FetchPlansAction => ({
 /** fetch Plans from plan table creator
  * @param {PlanRecord[]} planList - an array of plan record obejcts
  */
-export const fetchPlanRecords = (planList: PlanRecord[] = []): FetchPlansAction => ({
-  plansById: keyBy(
-    planList.map((plan: PlanRecord) => {
+export const fetchPlanRecords = (planList: PlanRecordResponse[] = []): FetchPlanRecordsAction => ({
+  planRecordsById: keyBy(
+    planList.map((plan: PlanRecordResponse) => {
       const thePlan = {
         id: plan.identifier,
-        jurisdiction_depth: 0,
-        jurisdiction_id: '',
-        jurisdiction_name: '',
-        jurisdiction_name_path: [],
-        jurisdiction_parent_id: '',
-        jurisdiction_path: [],
         plan_effective_period_end: plan.effective_period_end,
         plan_effective_period_start: plan.effective_period_start,
         plan_fi_reason: plan.fi_reason,
@@ -132,11 +143,11 @@ export const fetchPlanRecords = (planList: PlanRecord[] = []): FetchPlansAction 
         plan_title: plan.title,
         plan_version: plan.version,
       };
-      return transformValues<Plan>(thePlan, ['plan_fi_reason', 'plan_fi_status']);
+      return transformValues<PlanRecord>(thePlan, ['plan_fi_reason', 'plan_fi_status']);
     }),
     plan => plan.id
   ),
-  type: PLANS_FETCHED,
+  type: PLAN_RECORDS_FETCHED,
 });
 
 // selectors
@@ -183,4 +194,51 @@ export function getPlansIdArray(
  */
 export function getPlanById(state: Partial<Store>, id: string): Plan | null {
   return get((state as any)[reducerName].plansById, id) || null;
+}
+
+/** get plan records by id
+ * @param {Partial<Store>} state - the redux store
+ * @param {InterventionType} intervention - the intervention type
+ */
+export function getPlanRecordsById(
+  state: Partial<Store>,
+  intervention: InterventionType = InterventionType.FI
+): { [key: string]: PlanRecord } {
+  const planRecordsById = (state as any)[reducerName].planRecordsById;
+  return pickBy(
+    planRecordsById,
+    (plan: PlanRecord) => plan.plan_intervention_type === intervention
+  );
+}
+
+/** get an array of plan record objects
+ * @param {Partial<Store>} state - the redux store
+ * @param {InterventionType} intervention - the intervention type
+ */
+export function getPlanRecordsArray(
+  state: Partial<Store>,
+  intervention: InterventionType = InterventionType.FI
+): PlanRecord[] {
+  return values((state as any)[reducerName].planRecordsById).filter(
+    (plan: PlanRecord) => plan.plan_intervention_type === intervention
+  );
+}
+
+/** get an array of plan ids
+ * @param {Partial<Store>} state - the redux store
+ * @param {InterventionType} intervention - the intervention type
+ */
+export function getPlanRecordsIdArray(
+  state: Partial<Store>,
+  intervention: InterventionType = InterventionType.FI
+): string[] {
+  return keys(getPlanRecordsById(state, intervention));
+}
+
+/** get one plan using its id
+ * @param {Partial<Store>} state - the redux store
+ * @param {string} id - the plan id
+ */
+export function getPlanRecordById(state: Partial<Store>, id: string): PlanRecord | null {
+  return get((state as any)[reducerName].planRecordsById, id) || null;
 }

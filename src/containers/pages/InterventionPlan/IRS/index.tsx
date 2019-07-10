@@ -18,10 +18,10 @@ import { RouteParams } from '../../../../helpers/utils';
 import supersetFetch from '../../../../services/superset';
 import plansReducer, {
   fetchPlanRecords,
-  getPlansArray,
+  getPlanRecordsArray,
   InterventionType,
-  Plan,
   PlanRecord,
+  PlanRecordResponse,
   reducerName as plansReducerName,
 } from '../../../../store/ducks/plans';
 
@@ -36,7 +36,7 @@ reducerRegistry.register(plansReducerName, plansReducer);
 
 export interface IrsPlansProps {
   fetchPlansActionCreator: typeof fetchPlanRecords;
-  plansArray: Plan[];
+  plansArray: PlanRecord[];
   supersetService: typeof supersetFetch;
 }
 
@@ -57,8 +57,8 @@ class IrsPlans extends React.Component<IrsPlansProps & RouteComponentProps<Route
     const supersetParams = superset.getFormData(1000, [
       { comparator: 'IRS', operator: '==', subject: 'intervention_type' },
     ]);
-    supersetService(SUPERSET_PLANS_TABLE_SLICE, supersetParams).then((result: PlanRecord[]) =>
-      fetchPlansActionCreator(result)
+    supersetService(SUPERSET_PLANS_TABLE_SLICE, supersetParams).then(
+      (result: PlanRecordResponse[]) => fetchPlansActionCreator(result)
     );
   }
 
@@ -148,12 +148,12 @@ class IrsPlans extends React.Component<IrsPlansProps & RouteComponentProps<Route
 export { IrsPlans };
 
 interface DispatchedStateProps {
-  plansArray: Plan[];
+  plansArray: PlanRecord[];
 }
 
 const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateProps => {
   const props = {
-    plansArray: getPlansArray(state, InterventionType.IRS),
+    plansArray: getPlanRecordsArray(state, InterventionType.IRS),
     ...ownProps,
   };
   return props;

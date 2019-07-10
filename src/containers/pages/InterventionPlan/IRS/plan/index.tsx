@@ -15,9 +15,9 @@ import supersetFetch from '../../../../../services/superset';
 
 import plansReducer, {
   fetchPlanRecords,
-  getPlanById,
-  Plan,
+  getPlanRecordById,
   PlanRecord,
+  PlanRecordResponse,
   reducerName as plansReducerName,
 } from '../../../../../store/ducks/plans';
 
@@ -34,7 +34,7 @@ export interface IrsPlanProps {
   isDraftPlan?: boolean;
   isFinalizedPlan?: boolean;
   isNewPlan?: boolean;
-  planById?: Plan | null;
+  planById?: PlanRecord | null;
   planId: string | null;
   supersetService: typeof supersetFetch;
 }
@@ -60,8 +60,8 @@ class IrsPlan extends React.Component<RouteComponentProps<RouteParams> & IrsPlan
     const supersetParams = superset.getFormData(1000, [
       { comparator: 'IRS', operator: '==', subject: 'intervention_type' },
     ]);
-    supersetService(SUPERSET_PLANS_TABLE_SLICE, supersetParams).then((result: PlanRecord[]) =>
-      fetchPlansActionCreator(result)
+    supersetService(SUPERSET_PLANS_TABLE_SLICE, supersetParams).then(
+      (result: PlanRecordResponse[]) => fetchPlansActionCreator(result)
     );
   }
 
@@ -113,7 +113,7 @@ export { IrsPlan };
 const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateProps => {
   const planId = ownProps.match.params.id || null;
   const isNewPlan = planId === null;
-  const plan = getPlanById(state, planId);
+  const plan = getPlanRecordById(state, planId);
   const isDraftPlan = plan && plan.plan_status !== 'active';
   const isFinalizedPlan = plan && plan.plan_status === 'active';
   const props = {
