@@ -94,6 +94,7 @@ exports[`containers/pages/IRS/plan renders IRS Plan page correctly 1`] = `
         isFinalizedPlan={null}
         isNewPlan={false}
         jurisdictionIds={Array []}
+        jurisdictionsArray={Array []}
         location={[MockFunction]}
         match={
           Object {

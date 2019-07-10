@@ -2,25 +2,27 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
+import { CellInfo, Column } from 'react-table';
+import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
 
+import DrillDownTable, { DrillDownProps } from '@onaio/drill-down-table';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset from '@onaio/superset-connector';
-// import DrillDownTable from '@onaio/drill-down-table';
 
 import {
   SUPERSET_JURISDICTIONS_SLICE,
   SUPERSET_PLAN_STRUCTURE_PIVOT_SLICE,
   SUPERSET_PLANS_TABLE_SLICE,
 } from '../../../../../configs/env';
-import { HOME, HOME_URL, INTERVENTION_IRS_URL, IRS_PLAN_TYPE } from '../../../../../constants';
+import { HOME, HOME_URL, INTERVENTION_IRS_URL } from '../../../../../constants';
 import { RouteParams } from '../../../../../helpers/utils';
 
 import supersetFetch from '../../../../../services/superset';
 
 import jurisdictionReducer, {
   fetchJurisdictions,
-  getJurisdictionById,
+  getJurisdictionsArray,
   getJurisdictionsIdArray,
   Jurisdiction,
   reducerName as jurisdictionReducerName,
@@ -33,7 +35,7 @@ import plansReducer, {
   reducerName as plansReducerName,
 } from '../../../../../store/ducks/plans';
 
-import { FlexObject } from '@onaio/drill-down-table/dist/types/helpers/utils';
+import DrillDownTableLinkedCell from '../../../../../components/DrillDownTableLinkedCell';
 import HeaderBreadcrumbs, {
   BreadCrumbProps,
 } from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
@@ -51,6 +53,7 @@ export interface IrsPlanProps {
   isFinalizedPlan?: boolean;
   isNewPlan?: boolean;
   jurisdictionIds: string[];
+  jurisdictionsArray: Jurisdiction[];
   planById?: PlanRecord | null;
   planId: string | null;
   supersetService: typeof supersetFetch;
@@ -64,6 +67,7 @@ export const defaultIrsPlanProps: IrsPlanProps = {
   isFinalizedPlan: false,
   isNewPlan: false,
   jurisdictionIds: [],
+  jurisdictionsArray: [],
   planById: null,
   planId: null,
   supersetService: supersetFetch,
@@ -153,18 +157,96 @@ class IrsPlan extends React.Component<RouteComponentProps<RouteParams> & IrsPlan
       (isDraftPlan && planById && `${planById.plan_title} (draft)`) ||
       'New Plan';
 
-    const breadCrumbProps = this.getBreadCrumbProps(this.props as any, pageLabel);
+    const breadCrumbProps = this.getBreadCrumbProps(this.props, pageLabel);
+
+    let planTableProps: DrillDownProps<any> | null; // todo - type with DrillDownProps
+    if (isFinalizedPlan) {
+      planTableProps = this.getFinalizedPlanTableProps(this.props);
+    } else {
+      planTableProps = null;
+    }
 
     return (
       <div className="mb-5">
         <HeaderBreadcrumbs {...breadCrumbProps} />
-        <h2 className="page-title">IRS: {pageLabel}</h2>
+        <Row>
+          <Col>
+            <h2 className="page-title">IRS: {pageLabel}</h2>
+            {/* rename button will go here */}
+          </Col>
+          {/* <Col>Save / finalize buttons will go here</Col> */}
+        </Row>
+
+        {/* <Row><Col>Map will go here!</Col></Row> */}
+
+        {/* Section for table of jurisdictions */}
+        {/* todo - set a real conditional */}
+        {planTableProps && (
+          <Row>
+            <Col>
+              <h3>Jurisdictions</h3>
+              <DrillDownTable {...planTableProps} />
+            </Col>
+          </Row>
+        )}
       </div>
     );
   }
 
-  /** getBreadCrumbProps - get properties for HeaderBreadcrumbs component  */
-  private getBreadCrumbProps(props: any, pageLabel: string) {
+  /** getFinalizedPlanTableProps - getter for (flat) DrilldownTable props
+   * @param props - component props
+   * @returns tableProps|null - compatible object for DrillDownTable props
+   */
+  private getFinalizedPlanTableProps(props: IrsPlanProps) {
+    const { jurisdictionsArray } = props;
+    if (!jurisdictionsArray.length) {
+      return null;
+    }
+    const jurisdictionData = jurisdictionsArray.map((j: Jurisdiction) => ({
+      ...j.geojson.properties,
+    }));
+    const columns: Column[] = [
+      {
+        Header: 'Name',
+        columns: [
+          {
+            Header: '',
+            accessor: 'jurisdiction_name',
+          },
+        ],
+      },
+      {
+        Header: 'Teams Assigned',
+        columns: [
+          {
+            Header: '',
+            accessor: () => <span className="text-info">None assigned</span>,
+            id: 'teams_assigned',
+          },
+        ],
+      },
+    ];
+    const tableProps: DrillDownProps<any> = {
+      CellComponent: DrillDownTableLinkedCell,
+      columns,
+      data: [...jurisdictionData],
+      identifierField: 'jurisdiction_id',
+      linkerField: 'jurisdiction_id',
+      minRows: 0,
+      rootParentId: null,
+      showPageSizeOptions: false,
+      showPagination: false,
+      useDrillDownTrProps: false,
+    };
+    return tableProps;
+  }
+
+  /** getBreadCrumbProps - get properties for HeaderBreadcrumbs component
+   * @param props - component props
+   * @param pageLabel - string for the current page lable
+   * @returns breadCrumbProps - compatible object for HeaderBreadcrumbs props
+   */
+  private getBreadCrumbProps(props: IrsPlanProps, pageLabel: string) {
     const { isDraftPlan, isFinalizedPlan, planId } = props;
     const homePage = {
       label: HOME,
@@ -199,6 +281,7 @@ export { IrsPlan };
 const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateProps => {
   const planId = ownProps.match.params.id || null;
   const isNewPlan = planId === null;
+  const jurisdictionsArray = getJurisdictionsArray(state);
   const jurisdictionIds = getJurisdictionsIdArray(state);
   const plan = getPlanRecordById(state, planId);
   const isDraftPlan = plan && plan.plan_status !== 'active';
@@ -208,6 +291,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
     isFinalizedPlan,
     isNewPlan,
     jurisdictionIds,
+    jurisdictionsArray,
     planById: plan,
     planId,
     ...ownProps,
