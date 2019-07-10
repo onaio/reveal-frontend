@@ -29,6 +29,7 @@ import Loading from '../../../../../components/page/Loading';
 /** register the plans reducer */
 reducerRegistry.register(plansReducerName, plansReducer);
 
+/** IrsPlanProps - interface for IRS Plan page */
 export interface IrsPlanProps {
   fetchPlansActionCreator: typeof fetchPlanRecords;
   isDraftPlan?: boolean;
@@ -39,6 +40,7 @@ export interface IrsPlanProps {
   supersetService: typeof supersetFetch;
 }
 
+/** defaultIrsPlanProps - default props for IRS Plan page */
 export const defaultIrsPlanProps: IrsPlanProps = {
   fetchPlansActionCreator: fetchPlanRecords,
   isDraftPlan: false,
@@ -49,6 +51,7 @@ export const defaultIrsPlanProps: IrsPlanProps = {
   supersetService: supersetFetch,
 };
 
+/** IrsPlan - component for IRS Plan page */
 class IrsPlan extends React.Component<RouteComponentProps<RouteParams> & IrsPlanProps, {}> {
   public static defaultProps = defaultIrsPlanProps;
   constructor(props: RouteComponentProps<RouteParams> & IrsPlanProps) {

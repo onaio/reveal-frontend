@@ -6,13 +6,16 @@ import { transformValues } from '../../helpers/utils';
 /** the reducer name */
 export const reducerName = 'plans';
 
+// todo: add '*' as any?
 /** Enum representing the possible intervention types */
 export enum InterventionType {
   FI = 'FI',
   IRS = 'IRS',
 }
 
-/** interface for plan Object */
+/** interface for plan Objects */
+
+/** PlanRecordResponse - interface for response objects from SUPERSET_PLANS_TABLE_SLICE */
 export interface PlanRecordResponse {
   date: string;
   effective_period_end: string;
@@ -27,6 +30,7 @@ export interface PlanRecordResponse {
   version: string;
 }
 
+/** PlanRecord - base Plan interface for plan objects,  keyed by `id` in state */
 export interface PlanRecord {
   id: string;
   plan_effective_period_end: string;
@@ -40,6 +44,8 @@ export interface PlanRecord {
   plan_version?: string;
 }
 
+// todo - Rename?
+/** Plan - interface for plan[-jurisdiction] objects */
 export interface Plan extends PlanRecord {
   jurisdiction_depth: number;
   jurisdiction_id: string;
@@ -52,14 +58,15 @@ export interface Plan extends PlanRecord {
 // actions
 /** PLANS_FETCHED action type */
 export const PLANS_FETCHED = 'reveal/reducer/plans/PLANS_FETCHED';
+/** PLAN_RECORDS_FETCHED action type */
 export const PLAN_RECORDS_FETCHED = 'reveal/reducer/plans/PLAN_RECORDS_FETCHED';
 
-/** interface for authorize action */
+/** FetchPlansAction interface for PLANS_FETCHED */
 interface FetchPlansAction extends AnyAction {
   plansById: { [key: string]: Plan };
   type: typeof PLANS_FETCHED;
 }
-
+/** FetchPlanRecordsAction interface for PLAN_RECORDS_FETCHED */
 interface FetchPlanRecordsAction extends AnyAction {
   planRecordsById: { [key: string]: PlanRecord };
   type: typeof PLAN_RECORDS_FETCHED;
@@ -70,8 +77,8 @@ export type PlanActionTypes = FetchPlansAction | FetchPlanRecordsAction | AnyAct
 
 /** interface for Plan state */
 interface PlanState {
-  plansById?: { [key: string]: Plan };
-  planRecordsById?: { [key: string]: PlanRecord };
+  planRecordsById: { [key: string]: PlanRecord };
+  plansById: { [key: string]: Plan };
 }
 
 /** immutable Plan state */
@@ -103,7 +110,7 @@ export default function reducer(state = initialState, action: PlanActionTypes): 
 
 // action creators
 
-/** fetch Plans creator
+/** fetchPlans - action creator setting plansById
  * @param {Plan[]} plansList - array of plan objects
  */
 export const fetchPlans = (plansList: Plan[] = []): FetchPlansAction => ({
@@ -125,7 +132,7 @@ export const fetchPlans = (plansList: Plan[] = []): FetchPlansAction => ({
   type: PLANS_FETCHED,
 });
 
-/** fetch Plans from plan table creator
+/** fetchPlanRecords - action creator setting planRecordsById
  * @param {PlanRecord[]} planList - an array of plan record obejcts
  */
 export const fetchPlanRecords = (planList: PlanRecordResponse[] = []): FetchPlanRecordsAction => ({
@@ -152,7 +159,7 @@ export const fetchPlanRecords = (planList: PlanRecordResponse[] = []): FetchPlan
 
 // selectors
 
-/** get plans by id
+/** getPlansById - get plansById by intervention type
  * @param {Partial<Store>} state - the redux store
  * @param {InterventionType} intervention - the intervention type
  */
@@ -164,7 +171,7 @@ export function getPlansById(
   return pickBy(plansById, (plan: Plan) => plan.plan_intervention_type === intervention);
 }
 
-/** get an array of plan objects
+/** getPlansArray - get an array of Plans by intervention type
  * @param {Partial<Store>} state - the redux store
  * @param {InterventionType} intervention - the intervention type
  */
@@ -177,7 +184,7 @@ export function getPlansArray(
   );
 }
 
-/** get an array of plan ids
+/** getPlansIdArray - get an array of Plan ids by intervention type
  * @param {Partial<Store>} state - the redux store
  * @param {InterventionType} intervention - the intervention type
  */
@@ -188,7 +195,7 @@ export function getPlansIdArray(
   return keys(getPlansById(state, intervention));
 }
 
-/** get one plan using its id
+/** getPlanById - get one Plan by id
  * @param {Partial<Store>} state - the redux store
  * @param {string} id - the plan id
  */
@@ -196,7 +203,7 @@ export function getPlanById(state: Partial<Store>, id: string): Plan | null {
   return get((state as any)[reducerName].plansById, id) || null;
 }
 
-/** get plan records by id
+/** getPlanRecordsById - get planRecordsById by intervention type
  * @param {Partial<Store>} state - the redux store
  * @param {InterventionType} intervention - the intervention type
  */
@@ -211,7 +218,7 @@ export function getPlanRecordsById(
   );
 }
 
-/** get an array of plan record objects
+/** getPlanRecordsArray - get an array of PlanRecords by intervention type
  * @param {Partial<Store>} state - the redux store
  * @param {InterventionType} intervention - the intervention type
  */
@@ -224,7 +231,7 @@ export function getPlanRecordsArray(
   );
 }
 
-/** get an array of plan ids
+/** getPlanRecordsIdArray - get an array of PlanRecord ids
  * @param {Partial<Store>} state - the redux store
  * @param {InterventionType} intervention - the intervention type
  */
@@ -235,7 +242,7 @@ export function getPlanRecordsIdArray(
   return keys(getPlanRecordsById(state, intervention));
 }
 
-/** get one plan using its id
+/** getPlanRecordById - get one PlanRecord by id
  * @param {Partial<Store>} state - the redux store
  * @param {string} id - the plan id
  */

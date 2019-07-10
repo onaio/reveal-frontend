@@ -34,18 +34,21 @@ import Loading from '../../../../components/page/Loading';
 /** register the plans reducer */
 reducerRegistry.register(plansReducerName, plansReducer);
 
+/** IrsPlansProps - interface for IRS Plans page */
 export interface IrsPlansProps {
   fetchPlansActionCreator: typeof fetchPlanRecords;
   plansArray: PlanRecord[];
   supersetService: typeof supersetFetch;
 }
 
+/** defaultIrsPlansProps - default props for IRS Plans page */
 export const defaultIrsPlansProps: IrsPlansProps = {
   fetchPlansActionCreator: fetchPlanRecords,
   plansArray: [],
   supersetService: supersetFetch,
 };
 
+/** IrsPlans - component for IRS Plans page */
 class IrsPlans extends React.Component<IrsPlansProps & RouteComponentProps<RouteParams>, {}> {
   public static defaultProps: IrsPlansProps = defaultIrsPlansProps;
   constructor(props: RouteComponentProps<RouteParams> & IrsPlansProps) {
@@ -118,6 +121,7 @@ class IrsPlans extends React.Component<IrsPlansProps & RouteComponentProps<Route
       },
     ];
 
+    /** tableProps - props for DrillDownTable component */
     const tableProps = {
       CellComponent: DrillDownTableLinkedCell,
       columns,
