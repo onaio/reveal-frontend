@@ -21,12 +21,28 @@ export interface Plan {
   jurisdiction_name_path: string[];
   jurisdiction_parent_id: string;
   jurisdiction_path: string[];
+  plan_effective_period_end: string;
+  plan_effective_period_start: string;
   plan_fi_reason: string;
   plan_fi_status: string;
   plan_id: string;
   plan_intervention_type: InterventionType;
   plan_status: string;
   plan_title: string;
+  plan_version?: string;
+}
+
+export interface PlanRecord {
+  date: string;
+  effective_period_end: string;
+  effective_period_start: string;
+  identifier: string;
+  intervention_type: string;
+  fi_reason: string;
+  fi_status: string;
+  status: string;
+  title: string;
+  version: string;
 }
 
 // actions
@@ -86,6 +102,37 @@ export const fetchPlans = (plansList: Plan[] = []): FetchPlansAction => ({
       }
       plan = transformValues<Plan>(plan, ['plan_fi_reason', 'plan_fi_status']);
       return plan;
+    }),
+    plan => plan.id
+  ),
+  type: PLANS_FETCHED,
+});
+
+/** fetch Plans from plan table creator
+ * @param {PlanRecord[]} planList - an array of plan record obejcts
+ */
+export const fetchPlanRecords = (planList: PlanRecord[] = []): FetchPlansAction => ({
+  plansById: keyBy(
+    planList.map((plan: PlanRecord) => {
+      const thePlan = {
+        id: plan.identifier,
+        jurisdiction_depth: 0,
+        jurisdiction_id: '',
+        jurisdiction_name: '',
+        jurisdiction_name_path: [],
+        jurisdiction_parent_id: '',
+        jurisdiction_path: [],
+        plan_effective_period_end: plan.effective_period_end,
+        plan_effective_period_start: plan.effective_period_start,
+        plan_fi_reason: plan.fi_reason,
+        plan_fi_status: plan.fi_status,
+        plan_id: plan.identifier,
+        plan_intervention_type: plan.intervention_type as InterventionType,
+        plan_status: plan.status,
+        plan_title: plan.title,
+        plan_version: plan.version,
+      };
+      return transformValues<Plan>(thePlan, ['plan_fi_reason', 'plan_fi_status']);
     }),
     plan => plan.id
   ),

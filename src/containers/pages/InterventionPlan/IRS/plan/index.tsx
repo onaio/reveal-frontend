@@ -5,16 +5,19 @@ import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { Store } from 'redux';
 
-import { SUPERSET_PLANS_SLICE } from '../../../../../configs/env';
+import superset from '@onaio/superset-connector';
+
+import { SUPERSET_PLANS_TABLE_SLICE } from '../../../../../configs/env';
 import { HOME, HOME_URL, INTERVENTION_IRS_URL } from '../../../../../constants';
 import { RouteParams } from '../../../../../helpers/utils';
 
 import supersetFetch from '../../../../../services/superset';
 
 import plansReducer, {
-  fetchPlans,
+  fetchPlanRecords,
   getPlanById,
   Plan,
+  PlanRecord,
   reducerName as plansReducerName,
 } from '../../../../../store/ducks/plans';
 
@@ -27,7 +30,7 @@ import Loading from '../../../../../components/page/Loading';
 reducerRegistry.register(plansReducerName, plansReducer);
 
 export interface IrsPlanProps {
-  fetchPlansActionCreator: typeof fetchPlans;
+  fetchPlansActionCreator: typeof fetchPlanRecords;
   isDraftPlan?: boolean;
   isFinalizedPlan?: boolean;
   isNewPlan?: boolean;
@@ -37,7 +40,7 @@ export interface IrsPlanProps {
 }
 
 export const defaultIrsPlanProps: IrsPlanProps = {
-  fetchPlansActionCreator: fetchPlans,
+  fetchPlansActionCreator: fetchPlanRecords,
   isDraftPlan: false,
   isFinalizedPlan: false,
   isNewPlan: false,
@@ -54,7 +57,12 @@ class IrsPlan extends React.Component<RouteComponentProps<RouteParams> & IrsPlan
 
   public componentDidMount() {
     const { supersetService, fetchPlansActionCreator } = this.props;
-    supersetService(SUPERSET_PLANS_SLICE).then((result: Plan[]) => fetchPlansActionCreator(result));
+    const supersetParams = superset.getFormData(1000, [
+      { comparator: 'IRS', operator: '==', subject: 'intervention_type' },
+    ]);
+    supersetService(SUPERSET_PLANS_TABLE_SLICE, supersetParams).then((result: PlanRecord[]) =>
+      fetchPlansActionCreator(result)
+    );
   }
 
   public render() {
@@ -120,7 +128,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
 };
 
 const mapDispatchToProps = {
-  fetchPlansActionCreator: fetchPlans,
+  fetchPlansActionCreator: fetchPlanRecords,
 };
 
 const ConnectedIrsPlan = connect(
