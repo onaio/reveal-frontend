@@ -227,7 +227,7 @@ class IrsPlan extends React.Component<RouteComponentProps<RouteParams> & IrsPlan
     if (isFinalizedPlan) {
       planTableProps = this.getFinalizedPlanTableProps(this.props);
     } else {
-      planTableProps = null;
+      planTableProps = this.getDrilldownPlanTableProps(this.props);
     }
 
     return (
@@ -244,7 +244,6 @@ class IrsPlan extends React.Component<RouteComponentProps<RouteParams> & IrsPlan
         {/* <Row><Col>Map will go here!</Col></Row> */}
 
         {/* Section for table of jurisdictions */}
-        {/* todo - set a real conditional */}
         {planTableProps && (
           <Row>
             <Col>
@@ -255,6 +254,61 @@ class IrsPlan extends React.Component<RouteComponentProps<RouteParams> & IrsPlan
         )}
       </div>
     );
+  }
+
+  /** getDrilldownPlanTableProps - getter for hierarchical DrilldownTable props
+   * @param props - component props
+   * @returns tableProps|null - compatible object for DrillDownTable props
+   */
+  private getDrilldownPlanTableProps(props: IrsPlanProps) {
+    const { jurisdictionsArray } = props;
+    if (!jurisdictionsArray.length) {
+      return null;
+    }
+    const jurisdictionData = jurisdictionsArray.map((j: Jurisdiction) => ({
+      ...j.geojson.properties,
+    }));
+
+    // to do - add checkmark selection column
+    // to do - add checkmark selection event handler
+    // to do - add selection object to component state
+    // to do - deduce hierarchy and rows to show
+    // to do - make Name column clickable
+    const columns: Column[] = [
+      {
+        Header: 'Name',
+        columns: [
+          {
+            Header: '',
+            accessor: 'jurisdiction_name',
+          },
+        ],
+      },
+      {
+        Header: 'Teams Assigned',
+        columns: [
+          {
+            Header: '',
+            accessor: () => <span className="text-info">None assigned</span>,
+            id: 'teams_assigned',
+          },
+        ],
+      },
+    ];
+
+    const tableProps: DrillDownProps<any> = {
+      CellComponent: DrillDownTableLinkedCell,
+      columns,
+      data: [...jurisdictionData],
+      identifierField: 'jurisdiction_id',
+      linkerField: 'jurisdiction_id',
+      minRows: 0,
+      rootParentId: null,
+      showPageSizeOptions: false,
+      showPagination: false,
+      useDrillDownTrProps: false,
+    };
+    return tableProps;
   }
 
   /** getFinalizedPlanTableProps - getter for (flat) DrilldownTable props
