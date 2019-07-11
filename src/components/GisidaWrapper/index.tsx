@@ -231,7 +231,7 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
         () => {
           // Dirty work around! Arbitrary delay to allow style load before adding layers
           setTimeout(() => {
-            this.initMap(null);
+            this.initMap(null, null);
           }, 3000);
         }
       );
@@ -253,7 +253,10 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
         (this.state.locations || this.state.doInitMap))
     ) {
       this.setState({ doInitMap: false, initMapWithoutFC: false }, () => {
-        this.initMap(nextProps.pointFeatureCollection, nextProps.polygonFeatureCollection);
+        this.initMap(
+          pointFeatures.length ? nextProps.pointFeatureCollection : null,
+          polygonFeatures.length ? nextProps.polygonFeatureCollection : null
+        );
       });
     }
   }
@@ -322,7 +325,22 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
         },
         visible: true,
       };
-      builtGeometriesContainer.push(structureLayer);
+      builtGeometriesContainer.push(structureLayer, {
+        ...lineLayerConfig,
+        id: `${STRUCTURE_LAYER}-line`,
+        paint: {
+          'line-color': GREY,
+          'line-opacity': 1,
+          'line-width': 2,
+        },
+        source: {
+          ...lineLayerConfig.source,
+          data: {
+            ...lineLayerConfig.source.data,
+            data: JSON.stringify(structures),
+          },
+        },
+      });
     }
     // handle Point layer types
     if (pointFeatureCollection) {
@@ -332,6 +350,8 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
         paint: {
           ...circleLayerConfig.paint,
           'circle-color': ['get', 'color'],
+          'circle-stroke-color': ['get', 'color'],
+          'circle-stroke-opacity': 1,
         },
         source: {
           ...circleLayerConfig.source,
@@ -344,22 +364,40 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
     }
     // Handle fill layers
     if (polygonFeatureCollection) {
-      builtGeometriesContainer.push({
-        ...fillLayerConfig,
-        id: `${this.props.currentGoal}-fill`,
-        paint: {
-          ...fillLayerConfig.paint,
-          'fill-color': ['get', 'color'],
-          'fill-outline-color': ['get', 'color'],
-        },
-        source: {
-          ...fillLayerConfig.source,
-          data: {
-            ...fillLayerConfig.source.data,
-            data: JSON.stringify(polygonFeatureCollection),
+      builtGeometriesContainer.push(
+        {
+          ...fillLayerConfig,
+          id: `${this.props.currentGoal}-fill`,
+          paint: {
+            ...fillLayerConfig.paint,
+            'fill-color': ['get', 'color'],
+            'fill-outline-color': ['get', 'color'],
+          },
+          source: {
+            ...fillLayerConfig.source,
+            data: {
+              ...fillLayerConfig.source.data,
+              data: JSON.stringify(polygonFeatureCollection),
+            },
           },
         },
-      });
+        {
+          ...lineLayerConfig,
+          id: `${this.props.currentGoal}-fill-line`,
+          paint: {
+            'line-color': ['get', 'color'],
+            'line-opacity': 1,
+            'line-width': 2,
+          },
+          source: {
+            ...lineLayerConfig.source,
+            data: {
+              ...lineLayerConfig.source.data,
+              data: JSON.stringify(polygonFeatureCollection),
+            },
+          },
+        }
+      );
     }
     const { geoData } = this.props;
     const { locations, bounds } = this.state;

@@ -200,7 +200,7 @@ export const circleLayerConfig = {
     'circle-color': '#FFDC00',
     'circle-opacity': 0.7,
     'circle-radius': ['interpolate', ['linear'], ['zoom'], 13.98, 0, 17.79, 10, 18.8, 15],
-    'circle-stroke-width': 1,
+    'circle-stroke-width': 2,
   },
   source: {
     data: {
