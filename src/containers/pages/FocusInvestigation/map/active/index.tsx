@@ -1,4 +1,5 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
+import superset from '@onaio/superset-connector';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
@@ -128,19 +129,27 @@ class SingleActiveFIMap extends React.Component<
       fetchPlansActionCreator,
       fetchTasksActionCreator,
     } = this.props;
+    const id = this.props.match.params.id;
+    if (id) {
+      const supersetParams = superset.getFormData(3000, [
+        { comparator: id, operator: '==', subject: 'plan_id' },
+      ]);
 
-    await supersetFetch(SUPERSET_JURISDICTIONS_SLICE).then((result: Jurisdiction[]) =>
-      fetchJurisdictionsActionCreator(result)
-    );
-    await supersetFetch(SUPERSET_PLANS_SLICE).then((result2: Plan[]) =>
-      fetchPlansActionCreator(result2)
-    );
-    await supersetFetch(SUPERSET_GOALS_SLICE).then((result3: Goal[]) =>
-      fetchGoalsActionCreator(result3)
-    );
-    await supersetFetch(SUPERSET_STRUCTURES_SLICE, { row_limit: 3000 }).then((result4: Task[]) =>
-      fetchTasksActionCreator(result4)
-    );
+      await supersetFetch(SUPERSET_JURISDICTIONS_SLICE, supersetParams).then(
+        (result: Jurisdiction[]) => {
+          fetchJurisdictionsActionCreator(result);
+        }
+      );
+      await supersetFetch(SUPERSET_PLANS_SLICE, supersetParams).then((result2: Plan[]) => {
+        fetchPlansActionCreator(result2);
+      });
+      await supersetFetch(SUPERSET_GOALS_SLICE, supersetParams).then((result3: Goal[]) => {
+        fetchGoalsActionCreator(result3);
+      });
+      await supersetFetch(SUPERSET_STRUCTURES_SLICE, supersetParams).then((result4: Task[]) => {
+        fetchTasksActionCreator(result4);
+      });
+    }
   }
   public componentWillReceiveProps(nextProps: any) {
     const { setCurrentGoalActionCreator, match } = this.props;
