@@ -68,7 +68,7 @@ exports[`containers/pages/IRS/plan renders IRS Plan page correctly 1`] = `
       }
     >
       <IrsPlan
-        dispatch={[Function]}
+        fetchPlansActionCreator={[Function]}
         history={
           Object {
             "action": "POP",
@@ -89,6 +89,8 @@ exports[`containers/pages/IRS/plan renders IRS Plan page correctly 1`] = `
             "replace": [Function],
           }
         }
+        isDraftPlan={null}
+        isFinalizedPlan={null}
         isNewPlan={false}
         location={[MockFunction]}
         match={
@@ -101,109 +103,56 @@ exports[`containers/pages/IRS/plan renders IRS Plan page correctly 1`] = `
             "url": "/focus-investigation/view/plan/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
           }
         }
+        planById={null}
         planId="ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
+        supersetService={[Function]}
       >
-        <div
-          className="mb-5"
+        <Ripple
+          borderColor="#ff5d00"
+          borderStyle="solid"
+          borderWidth="4px"
+          height="64px"
+          minHeight="80vh"
+          width="64px"
         >
-          <HeaderBreadcrumb
-            currentPage={
+          <div
+            className="lds-ripple-parent"
+            style={
               Object {
-                "label": "New Plan",
-                "url": "/intervention/irs/new",
+                "minHeight": "80vh",
               }
             }
-            pages={
-              Array [
-                Object {
-                  "label": "Home",
-                  "url": "/",
-                },
-                Object {
-                  "label": "IRS",
-                  "url": "/intervention/irs",
-                },
-              ]
-            }
           >
-            <div>
-              <Breadcrumb
-                aria-label="breadcrumb"
-                className="reveal-breadcrumb"
-                listTag="ol"
-                tag="nav"
-              >
-                <nav
-                  aria-label="breadcrumb"
-                  className="reveal-breadcrumb"
-                >
-                  <ol
-                    className="breadcrumb"
-                  >
-                    <BreadcrumbItem
-                      key="0"
-                      tag="li"
-                    >
-                      <li
-                        className="breadcrumb-item"
-                      >
-                        <Link
-                          key="0"
-                          replace={false}
-                          to="/"
-                        >
-                          <a
-                            href="/"
-                            onClick={[Function]}
-                          >
-                            Home
-                          </a>
-                        </Link>
-                      </li>
-                    </BreadcrumbItem>
-                    <BreadcrumbItem
-                      key="1"
-                      tag="li"
-                    >
-                      <li
-                        className="breadcrumb-item"
-                      >
-                        <Link
-                          key="1"
-                          replace={false}
-                          to="/intervention/irs"
-                        >
-                          <a
-                            href="/intervention/irs"
-                            onClick={[Function]}
-                          >
-                            IRS
-                          </a>
-                        </Link>
-                      </li>
-                    </BreadcrumbItem>
-                    <BreadcrumbItem
-                      active={true}
-                      tag="li"
-                    >
-                      <li
-                        aria-current="page"
-                        className="active breadcrumb-item"
-                      >
-                        New Plan
-                      </li>
-                    </BreadcrumbItem>
-                  </ol>
-                </nav>
-              </Breadcrumb>
+            <div
+              className="lds-ripple"
+              style={
+                Object {
+                  "height": "64px",
+                  "width": "64px",
+                }
+              }
+            >
+              <div
+                style={
+                  Object {
+                    "borderColor": "#ff5d00",
+                    "borderStyle": "solid",
+                    "borderWidth": "4px",
+                  }
+                }
+              />
+              <div
+                style={
+                  Object {
+                    "borderColor": "#ff5d00",
+                    "borderStyle": "solid",
+                    "borderWidth": "4px",
+                  }
+                }
+              />
             </div>
-          </HeaderBreadcrumb>
-          <h2
-            className="page-title"
-          >
-            IRS: New Plan
-          </h2>
-        </div>
+          </div>
+        </Ripple>
       </IrsPlan>
     </Connect(IrsPlan)>
   </Router>

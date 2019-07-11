@@ -87,6 +87,89 @@ export const plans = [plan1, plan2];
 
 export const plansIdArray = [plan1.plan_id];
 
+export const planRecordResponse1 = {
+  date: '2019-06-24',
+  effective_period_end: '2019-07-31',
+  effective_period_start: '2019-06-18',
+  fi_reason: 'Case-triggered',
+  fi_status: 'A1',
+  identifier: '6c7904b2-c556-4004-a9b9-114617832954',
+  intervention_type: 'FI',
+  name: 'A1-KOK_YAI-Focus_02-Rubber_Plantation',
+  status: 'active',
+  title: 'A1 - KOK YAI - Focus 02 - Rubber Plantation',
+  version: '1',
+};
+
+export const planRecordResponse2 = {
+  date: '2019-05-16',
+  effective_period_end: '2019-08-30',
+  effective_period_start: '2019-05-15',
+  fi_reason: 'Case-triggered',
+  fi_status: 'A2',
+  identifier: '89fh38sg-h83s-9xf2-a7h2-pl98dh320lbc',
+  intervention_type: 'FI',
+  name: 'A2-Tha_Luang_Village_1_Focus_02',
+  status: 'active',
+  title: 'A2-Tha Luang Village 1 Focus 02',
+  version: '1',
+};
+
+export const planRecordResponse3 = {
+  date: '2019-05-24',
+  effective_period_end: '2019-09-30',
+  effective_period_start: '2019-05-27',
+  fi_reason: ' NULL',
+  fi_status: ' NULL',
+  identifier: '90d1095b-4f66-4341-86e2-362c82b2b0b2',
+  intervention_type: 'IRS',
+  name: 'A1-KhlongNamSai-IRS-01',
+  status: 'active',
+  title: 'A1 - Khlong Nam Sai - IRS 01',
+  version: '1',
+};
+
+export const planRecordResponses = [planRecordResponse1, planRecordResponse2, planRecordResponse3];
+
+export const planRecordsById = {
+  '6c7904b2-c556-4004-a9b9-114617832954': {
+    id: '6c7904b2-c556-4004-a9b9-114617832954',
+    plan_effective_period_end: '2019-07-31',
+    plan_effective_period_start: '2019-06-18',
+    plan_fi_reason: 'Case-triggered',
+    plan_fi_status: 'A1',
+    plan_id: '6c7904b2-c556-4004-a9b9-114617832954',
+    plan_intervention_type: 'FI',
+    plan_status: 'active',
+    plan_title: 'A1 - KOK YAI - Focus 02 - Rubber Plantation',
+    plan_version: '1',
+  },
+  '89fh38sg-h83s-9xf2-a7h2-pl98dh320lbc': {
+    id: '89fh38sg-h83s-9xf2-a7h2-pl98dh320lbc',
+    plan_effective_period_end: '2019-08-30',
+    plan_effective_period_start: '2019-05-15',
+    plan_fi_reason: 'Case-triggered',
+    plan_fi_status: 'A2',
+    plan_id: '89fh38sg-h83s-9xf2-a7h2-pl98dh320lbc',
+    plan_intervention_type: 'FI',
+    plan_status: 'active',
+    plan_title: 'A2-Tha Luang Village 1 Focus 02',
+    plan_version: '1',
+  },
+  '90d1095b-4f66-4341-86e2-362c82b2b0b2': {
+    id: '90d1095b-4f66-4341-86e2-362c82b2b0b2',
+    plan_effective_period_end: '2019-09-30',
+    plan_effective_period_start: '2019-05-27',
+    plan_fi_reason: '',
+    plan_fi_status: '',
+    plan_id: '90d1095b-4f66-4341-86e2-362c82b2b0b2',
+    plan_intervention_type: 'IRS',
+    plan_status: 'active',
+    plan_title: 'A1 - Khlong Nam Sai - IRS 01',
+    plan_version: '1',
+  },
+};
+
 export const goal1 = {
   action_code: 'Case Confirmation',
   completed_task_count: 0,

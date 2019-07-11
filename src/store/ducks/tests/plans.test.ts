@@ -1,15 +1,21 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
-import { keyBy, pickBy, values } from 'lodash';
+import { keyBy, keys, pickBy, values } from 'lodash';
 import { FlushThunks } from 'redux-testkit';
 import store from '../../index';
 import reducer, {
+  fetchPlanRecords,
   fetchPlans,
   getPlanById,
+  getPlanRecordById,
+  getPlanRecordsArray,
+  getPlanRecordsById,
+  getPlanRecordsIdArray,
   getPlansArray,
   getPlansById,
   getPlansIdArray,
   InterventionType,
   Plan,
+  PlanRecord,
   reducerName,
 } from '../plans';
 import * as fixtures from './fixtures';
@@ -29,9 +35,13 @@ describe('reducers/plans', () => {
     expect(getPlansIdArray(store.getState())).toEqual([]);
     expect(getPlansArray(store.getState())).toEqual([]);
     expect(getPlanById(store.getState(), 'someId')).toEqual(null);
+    expect(getPlanRecordsById(store.getState())).toEqual({});
+    expect(getPlanRecordsIdArray(store.getState())).toEqual([]);
+    expect(getPlanRecordsArray(store.getState())).toEqual([]);
+    expect(getPlanRecordById(store.getState(), 'somId')).toEqual(null);
   });
 
-  it('should fetch plans', () => {
+  it('should fetch Plans', () => {
     store.dispatch(fetchPlans(fixtures.plans));
     const allPlans = keyBy(fixtures.plans, (plan: Plan) => plan.id);
     const fiPlans = pickBy(allPlans, (e: Plan) => e.plan_intervention_type === InterventionType.FI);
@@ -51,6 +61,40 @@ describe('reducers/plans', () => {
     expect(getPlanById(store.getState(), 'ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f')).toEqual(
       allPlans['ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f']
     );
+  });
+
+  it('should fetch PlanRecords', () => {
+    store.dispatch(fetchPlanRecords(fixtures.planRecordResponses));
+    const { planRecordsById: allPlanRecords } = fixtures;
+
+    const fiPlanRecords = pickBy(
+      allPlanRecords,
+      (e: PlanRecord) => e.plan_intervention_type === InterventionType.FI
+    );
+    const irsPlanRecords = pickBy(
+      allPlanRecords,
+      (e: PlanRecord) => e.plan_intervention_type === InterventionType.IRS
+    );
+    expect(getPlanRecordsById(store.getState())).toEqual(fiPlanRecords);
+    expect(getPlanRecordsById(store.getState(), InterventionType.IRS)).toEqual(irsPlanRecords);
+
+    const fiRecordPlanIds = keys(fiPlanRecords);
+    const irsRecordPlansIds = keys(irsPlanRecords);
+    expect(getPlanRecordsIdArray(store.getState())).toEqual(fiRecordPlanIds);
+    expect(getPlanRecordsIdArray(store.getState(), InterventionType.IRS)).toEqual(
+      irsRecordPlansIds
+    );
+
+    const fiPlanRecordsArray = values(fiPlanRecords);
+    const irsPlanRecordsArray = values(irsPlanRecords);
+    expect(getPlanRecordsArray(store.getState())).toEqual(fiPlanRecordsArray);
+    expect(getPlanRecordsArray(store.getState(), InterventionType.IRS)).toEqual(
+      irsPlanRecordsArray
+    );
+
+    const planId = '6c7904b2-c556-4004-a9b9-114617832954';
+    const planRecord = allPlanRecords[planId];
+    expect(getPlanRecordById(store.getState(), planId)).toEqual(planRecord);
   });
 
   it('should save plans correctly', () => {
