@@ -68,6 +68,8 @@ exports[`containers/pages/IRS/plan renders IRS Plan page correctly 1`] = `
       }
     >
       <IrsPlan
+        allJurisdictionIds={Array []}
+        fetchAllJurisdictionIdsActionCreator={[Function]}
         fetchJurisdictionsActionCreator={[Function]}
         fetchPlansActionCreator={[Function]}
         history={
@@ -93,8 +95,8 @@ exports[`containers/pages/IRS/plan renders IRS Plan page correctly 1`] = `
         isDraftPlan={null}
         isFinalizedPlan={null}
         isNewPlan={false}
-        jurisdictionIds={Array []}
         jurisdictionsArray={Array []}
+        loadedJurisdictionIds={Array []}
         location={[MockFunction]}
         match={
           Object {

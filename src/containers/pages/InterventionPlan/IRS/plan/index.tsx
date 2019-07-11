@@ -21,7 +21,9 @@ import { RouteParams } from '../../../../../helpers/utils';
 import supersetFetch from '../../../../../services/superset';
 
 import jurisdictionReducer, {
+  fetchAllJurisdictionIds,
   fetchJurisdictions,
+  getAllJurisdictionsIdArray,
   getJurisdictionsArray,
   getJurisdictionsIdArray,
   Jurisdiction,
@@ -35,6 +37,7 @@ import plansReducer, {
   reducerName as plansReducerName,
 } from '../../../../../store/ducks/plans';
 
+import { strict } from 'assert';
 import DrillDownTableLinkedCell from '../../../../../components/DrillDownTableLinkedCell';
 import HeaderBreadcrumbs, {
   BreadCrumbProps,
@@ -47,13 +50,15 @@ reducerRegistry.register(jurisdictionReducerName, jurisdictionReducer);
 
 /** IrsPlanProps - interface for IRS Plan page */
 export interface IrsPlanProps {
+  allJurisdictionIds: string[];
+  fetchAllJurisdictionIdsActionCreator: typeof fetchAllJurisdictionIds;
   fetchJurisdictionsActionCreator: typeof fetchJurisdictions;
   fetchPlansActionCreator: typeof fetchPlanRecords;
   isDraftPlan?: boolean;
   isFinalizedPlan?: boolean;
   isNewPlan?: boolean;
-  jurisdictionIds: string[];
   jurisdictionsArray: Jurisdiction[];
+  loadedJurisdictionIds: string[];
   planById?: PlanRecord | null;
   planId: string | null;
   supersetService: typeof supersetFetch;
@@ -61,13 +66,15 @@ export interface IrsPlanProps {
 
 /** defaultIrsPlanProps - default props for IRS Plan page */
 export const defaultIrsPlanProps: IrsPlanProps = {
+  allJurisdictionIds: [],
+  fetchAllJurisdictionIdsActionCreator: fetchAllJurisdictionIds,
   fetchJurisdictionsActionCreator: fetchJurisdictions,
   fetchPlansActionCreator: fetchPlanRecords,
   isDraftPlan: false,
   isFinalizedPlan: false,
   isNewPlan: false,
-  jurisdictionIds: [],
   jurisdictionsArray: [],
+  loadedJurisdictionIds: [],
   planById: null,
   planId: null,
   supersetService: supersetFetch,
@@ -80,52 +87,82 @@ class IrsPlan extends React.Component<RouteComponentProps<RouteParams> & IrsPlan
     super(props);
   }
 
-  public componentDidMount() {
+  public async componentDidMount() {
     const {
+      allJurisdictionIds,
+      fetchAllJurisdictionIdsActionCreator,
       fetchJurisdictionsActionCreator,
       fetchPlansActionCreator,
-      jurisdictionIds,
+      isFinalizedPlan,
+      loadedJurisdictionIds,
       planId,
       planById,
       supersetService,
     } = this.props;
+
+    // console.log('1. allJurisdictionIds.length', allJurisdictionIds.length);
+
+    let allJurIds: string[] = [];
+    if (!allJurisdictionIds.length || allJurisdictionIds.length === loadedJurisdictionIds.length) {
+      // todo - is there a better way to fetch a list of ALL jurisdiction ids?
+      await supersetFetch(SUPERSET_PLAN_STRUCTURE_PIVOT_SLICE).then(result => {
+        // console.log('2. result.length', result && result.length);
+        // populate array of unique `jurisdiction_id`s
+        if (result && result.length) {
+          for (const j of result) {
+            if (allJurIds.indexOf(j.jurisdiction_id) === -1) {
+              allJurIds.push(j.jurisdiction_id);
+            }
+          }
+        }
+        // console.log('3. allJurIds.length', allJurIds.length);
+        return fetchAllJurisdictionIdsActionCreator([...allJurIds]);
+      });
+    } else {
+      allJurIds = [...allJurisdictionIds];
+      // console.log('4. allJurIds.length', allJurIds.length);
+    }
 
     if (planId && !planById) {
       const planSupersetParams = superset.getFormData(10, [
         { comparator: planId, operator: '==', subject: 'identifier' },
       ]);
 
-      supersetService(SUPERSET_PLANS_TABLE_SLICE, planSupersetParams).then(
+      await supersetService(SUPERSET_PLANS_TABLE_SLICE, planSupersetParams).then(
         (planResult: PlanRecordResponse[]) => fetchPlansActionCreator(planResult)
       );
     }
 
     // get new jurisdictions associated with this plan
-    if (planId) {
+    let planJurisdictionIdsToGet: string[] = [];
+    let otherJurisdictionIdsToGet: string[] = [];
+    if (planId && isFinalizedPlan) {
       const pivotParams = superset.getFormData(500, [
         { comparator: planId, operator: '==', subject: 'plan_id' },
       ]);
-      supersetService(SUPERSET_PLAN_STRUCTURE_PIVOT_SLICE, pivotParams).then(
+      await supersetService(SUPERSET_PLAN_STRUCTURE_PIVOT_SLICE, pivotParams).then(
         relevantJuridictions => {
           if (!relevantJuridictions) {
             return new Promise((resolve, reject) => reject());
           }
 
           // define jurisdictions not in the store
-          const jurisdictionIdsToGet = relevantJuridictions
+          planJurisdictionIdsToGet = relevantJuridictions
             .map((j: any) =>
-              !jurisdictionIds.includes(j.jurisdiction_id) ? j.jurisdiction_id : null
+              !loadedJurisdictionIds.includes(j.jurisdiction_id) ? j.jurisdiction_id : null
             )
-            .filter((j: string | null) => j);
+            .filter((j: string | null) => j && strict.length);
 
-          if (!jurisdictionIdsToGet.length) {
+          // console.log('5. planJurisdictionIdsToGet.length', planJurisdictionIdsToGet.length);
+
+          if (!planJurisdictionIdsToGet.length) {
             return new Promise(resolve => resolve());
           }
 
           // build superset adhoc filter expression
           let sqlFilterExpression = '';
-          for (let i = 0; i < jurisdictionIdsToGet.length; i += 1) {
-            const jurId = jurisdictionIdsToGet[i];
+          for (let i = 0; i < planJurisdictionIdsToGet.length; i += 1) {
+            const jurId = planJurisdictionIdsToGet[i];
             if (i) {
               sqlFilterExpression += ' OR ';
             }
@@ -133,15 +170,42 @@ class IrsPlan extends React.Component<RouteComponentProps<RouteParams> & IrsPlan
           }
 
           // define superset params for
-          const jurisdictionSupersetParams = superset.getFormData(1000, [
+          const planJurisdictionSupersetParams = superset.getFormData(1000, [
             { sqlExpression: sqlFilterExpression },
           ]);
 
-          return supersetService(SUPERSET_JURISDICTIONS_SLICE, jurisdictionSupersetParams).then(
+          return supersetService(SUPERSET_JURISDICTIONS_SLICE, planJurisdictionSupersetParams).then(
             (jurisdictionResults: Jurisdiction[]) =>
               fetchJurisdictionsActionCreator(jurisdictionResults)
           );
         }
+      );
+    }
+
+    // load all juridictions
+    if (!isFinalizedPlan) {
+      otherJurisdictionIdsToGet = allJurIds.filter((j: string) => {
+        return !loadedJurisdictionIds.includes(j) && !planJurisdictionIdsToGet.includes(j);
+      });
+
+      // console.log('6. otherJurisdictionIdsToGet.length', otherJurisdictionIdsToGet.length);
+
+      // build query params
+      let sqlFilterExpression = '';
+      for (let i = 0; i < otherJurisdictionIdsToGet.length; i += 1) {
+        const jurId = otherJurisdictionIdsToGet[i];
+        if (i) {
+          sqlFilterExpression += ' OR ';
+        }
+        sqlFilterExpression += `jurisdiction_id = '${jurId}'`;
+      }
+      const otherJurisdictionSupersetParams = superset.getFormData(1000, [
+        { sqlExpression: sqlFilterExpression },
+      ]);
+
+      supersetService(SUPERSET_JURISDICTIONS_SLICE, otherJurisdictionSupersetParams).then(
+        (jurisdictionResults: Jurisdiction[]) =>
+          fetchJurisdictionsActionCreator(jurisdictionResults)
       );
     }
   }
@@ -280,18 +344,22 @@ export { IrsPlan };
 
 const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateProps => {
   const planId = ownProps.match.params.id || null;
-  const isNewPlan = planId === null;
-  const jurisdictionsArray = getJurisdictionsArray(state);
-  const jurisdictionIds = getJurisdictionsIdArray(state);
   const plan = getPlanRecordById(state, planId);
+  const isNewPlan = planId === null;
   const isDraftPlan = plan && plan.plan_status !== 'active';
   const isFinalizedPlan = plan && plan.plan_status === 'active';
+
+  const allJurisdictionIds = getAllJurisdictionsIdArray(state);
+  const jurisdictionsArray = getJurisdictionsArray(state);
+  const loadedJurisdictionIds = getJurisdictionsIdArray(state);
+
   const props = {
+    allJurisdictionIds,
     isDraftPlan,
     isFinalizedPlan,
     isNewPlan,
-    jurisdictionIds,
     jurisdictionsArray,
+    loadedJurisdictionIds,
     planById: plan,
     planId,
     ...ownProps,
@@ -300,6 +368,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
 };
 
 const mapDispatchToProps = {
+  fetchAllJurisdictionIdsActionCreator: fetchAllJurisdictionIds,
   fetchJurisdictionsActionCreator: fetchJurisdictions,
   fetchPlansActionCreator: fetchPlanRecords,
 };

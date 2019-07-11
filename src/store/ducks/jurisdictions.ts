@@ -1,4 +1,5 @@
-import { get, keyBy, keys, values } from 'lodash';
+import { FlexObject } from '@onaio/drill-down-table/dist/types/helpers/utils';
+import { get, keyBy, keys, pickBy, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
 import SeamlessImmutable from 'seamless-immutable';
 import { GeoJSON, Geometry } from '../../helpers/utils';
@@ -20,20 +21,38 @@ export interface Jurisdiction {
   jurisdiction_id: string;
 }
 
+export interface AllJurisdictionIds {
+  [key: string]: {
+    id: string;
+    isLoaded: boolean | undefined;
+  };
+}
+
 // actions
 export const FETCH_JURISDICTION = 'reveal/reducer/jurisdiction/FETCH_JURISDICTION';
+export const FETCH_ALL_JURISDICTION_IDS = 'reveal/reducer/jurisdiction/FETCH_ALL_JURISDICTION_IDS';
 
 /** fetch jurisdiction action */
 interface FetchJurisdictionAction extends AnyAction {
+  allJurisdictionIds?: AllJurisdictionIds;
   jurisdictionsById: { [key: string]: Jurisdiction };
   type: typeof FETCH_JURISDICTION;
 }
 
+interface FetchAllJurisdictionIdsAction extends AnyAction {
+  allJurisdictionIds: AllJurisdictionIds;
+  type: typeof FETCH_ALL_JURISDICTION_IDS;
+}
+
 /** jurisdiction action types */
-export type JurisdictionActionTypes = FetchJurisdictionAction | AnyAction;
+export type JurisdictionActionTypes =
+  | FetchJurisdictionAction
+  | FetchAllJurisdictionIdsAction
+  | AnyAction;
 
 /** interface to describe jurisdiction state */
 interface JurisdictionState {
+  allJurisdictionIds: AllJurisdictionIds;
   jurisdictionsById: { [key: string]: Jurisdiction };
 }
 
@@ -43,6 +62,7 @@ export type ImmutableJurisdictionState = JurisdictionState &
 
 /** initial state */
 const initialState: ImmutableJurisdictionState = SeamlessImmutable({
+  allJurisdictionIds: {} as AllJurisdictionIds,
   jurisdictionsById: {},
 });
 
@@ -61,6 +81,11 @@ export default function reducer(
         });
       }
       return state;
+    case FETCH_ALL_JURISDICTION_IDS:
+      return SeamlessImmutable({
+        ...state,
+        allJurisdictionIds: action.allJurisdictionIds,
+      });
     default:
       return state;
   }
@@ -73,6 +98,10 @@ export default function reducer(
  */
 export const fetchJurisdictions = (jurisdictionList: Jurisdiction[] = []) => {
   return {
+    allJurisdictionIds: keyBy(
+      jurisdictionList.map((j: Jurisdiction) => ({ id: j.jurisdiction_id, isLoaded: true })),
+      j => j.id
+    ),
     jurisdictionsById: keyBy(
       jurisdictionList.map((item: Jurisdiction) => {
         /** ensure geojson is parsed */
@@ -90,6 +119,12 @@ export const fetchJurisdictions = (jurisdictionList: Jurisdiction[] = []) => {
     type: FETCH_JURISDICTION,
   };
 };
+
+/** fetch all Jurisdiction Ids creator */
+export const fetchAllJurisdictionIds = (jurisdictionIds: string[]) => ({
+  allJurisdictionIds: keyBy(jurisdictionIds.map((id: string) => ({ id })), j => j.id),
+  type: FETCH_ALL_JURISDICTION_IDS,
+});
 
 // selectors
 /** get jurisdictions by id
@@ -122,4 +157,27 @@ export function getJurisdictionsArray(state: Partial<Store>): Jurisdiction[] {
  */
 export function getJurisdictionsIdArray(state: Partial<Store>): string[] {
   return keys((state as any)[reducerName].jurisdictionsById);
+}
+
+export function getAllJurisdictionsIds(state: Partial<Store>): string[] {
+  return (state as any)[reducerName].allJurisdictionIds;
+}
+
+/** get an array of all jurisdiction ids
+ * @param {Partial<Store>} state - the redux store
+ * @param {boolean|undefined} isLoaded optional - filter by isLoaded
+ * @returns an array of all jurisdictions available from the server
+ */
+export function getAllJurisdictionsIdArray(
+  state: Partial<Store>,
+  isLoaded?: boolean | undefined
+): string[] {
+  if (typeof isLoaded === 'undefined') {
+    return keys((state as any)[reducerName].allJurisdictionIds);
+  }
+  return keys(
+    pickBy((state as any)[reducerName].allJurisdictionIds, (j: FlexObject) =>
+      isLoaded ? j.isLoaded : !j.isLoaded
+    )
+  );
 }
