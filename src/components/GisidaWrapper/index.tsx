@@ -344,39 +344,23 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
     }
     // handle Point layer types
     if (pointFeatureCollection) {
-      builtGeometriesContainer.push(
-        {
-          ...circleLayerConfig,
-          id: `${this.props.currentGoal}-point`,
-          paint: {
-            ...circleLayerConfig.paint,
-            'circle-color': ['get', 'color'],
-          },
-          source: {
-            ...circleLayerConfig.source,
-            data: {
-              ...circleLayerConfig.source.data,
-              data: JSON.stringify(pointFeatureCollection),
-            },
+      builtGeometriesContainer.push({
+        ...circleLayerConfig,
+        id: `${this.props.currentGoal}-point`,
+        paint: {
+          ...circleLayerConfig.paint,
+          'circle-color': ['get', 'color'],
+          'circle-stroke-color': ['get', 'color'],
+          'circle-stroke-opacity': 1,
+        },
+        source: {
+          ...circleLayerConfig.source,
+          data: {
+            ...circleLayerConfig.source.data,
+            data: JSON.stringify(pointFeatureCollection),
           },
         },
-        {
-          ...lineLayerConfig,
-          id: `${this.props.currentGoal}-point-line`,
-          paint: {
-            'line-color': ['get', 'color'],
-            'line-opacity': 1,
-            'line-width': 2,
-          },
-          source: {
-            ...lineLayerConfig.source,
-            data: {
-              ...lineLayerConfig.source.data,
-              data: JSON.stringify(pointFeatureCollection),
-            },
-          },
-        }
-      );
+      });
     }
     // Handle fill layers
     if (polygonFeatureCollection) {
