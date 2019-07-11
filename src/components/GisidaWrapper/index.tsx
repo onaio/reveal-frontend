@@ -329,7 +329,7 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
         ...lineLayerConfig,
         id: `${STRUCTURE_LAYER}-line`,
         paint: {
-          'line-color': ['get', 'color'],
+          'line-color': GREY,
           'line-opacity': 1,
           'line-width': 2,
         },
@@ -362,7 +362,7 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
         },
         {
           ...lineLayerConfig,
-          id: `${this.props.currentGoal}-point-circle-line`,
+          id: `${this.props.currentGoal}-point-line`,
           paint: {
             'line-color': ['get', 'color'],
             'line-opacity': 1,
