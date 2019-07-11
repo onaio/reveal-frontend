@@ -452,7 +452,6 @@ Object {
   "activeLayerIds": Array [
     "main-plan-layer-304cbcd4-0850-404a-a8b1-486b02f7b84d",
     "RACD_bednet_dist_1km_radius-point",
-    "RACD_bednet_dist_1km_radius-point-line",
     "RACD_bednet_dist_1km_radius-fill",
     "RACD_bednet_dist_1km_radius-fill-line",
   ],
@@ -1260,7 +1259,12 @@ Object {
           18.8,
           15,
         ],
-        "circle-stroke-width": 1,
+        "circle-stroke-color": Array [
+          "get",
+          "color",
+        ],
+        "circle-stroke-opacity": 1,
+        "circle-stroke-width": 2,
       },
       "source": Object {
         "data": Object {
@@ -1324,9 +1328,12 @@ Object {
             18.8,
             15,
           ],
-          "circle-stroke-color": "#fff",
+          "circle-stroke-color": Array [
+            "get",
+            "color",
+          ],
           "circle-stroke-opacity": 1,
-          "circle-stroke-width": 1,
+          "circle-stroke-width": 2,
         },
         "source": Object {
           "data": Object {
@@ -1370,115 +1377,6 @@ Object {
         "visible": true,
       },
       "type": "circle",
-      "visible": true,
-    },
-    "RACD_bednet_dist_1km_radius-point-line": Object {
-      "filters": Object {},
-      "id": "RACD_bednet_dist_1km_radius-point-line",
-      "isChartMin": true,
-      "isLoading": false,
-      "labels": undefined,
-      "legendBottom": 40,
-      "loaded": true,
-      "paint": Object {
-        "line-color": Array [
-          "get",
-          "color",
-        ],
-        "line-opacity": 1,
-        "line-width": 2,
-      },
-      "source": Object {
-        "data": Object {
-          "features": Array [
-            Object {
-              "geometry": Object {
-                "coordinates": Array [
-                  28.3524419816308,
-                  -15.4178320108929,
-                ],
-                "type": "Point",
-              },
-              "id": "e3e1f2a7-4c53-4059-ab81-0811539e0c5e",
-              "properties": Object {
-                "action_code": "Mosquito Collection",
-                "color": "#68BB0C",
-                "goal_id": "Mosquito_Collection_Min_3_Traps",
-                "jurisdiction_id": "3952",
-                "jurisdiction_name": "Akros_2",
-                "jurisdiction_parent_id": "3019",
-                "plan_id": "356b6b84-fc36-4389-a44a-2b038ed2f38d",
-                "structure_code": "5f7a0d7c-1412-4af6-83ed-f94787b205e8",
-                "structure_id": "5f7a0d7c-1412-4af6-83ed-f94787b205e8",
-                "structure_name": "5f7a0d7c-1412-4af6-83ed-f94787b205e8",
-                "structure_type": "5f7a0d7c-1412-4af6-83ed-f94787b205e8",
-                "task_business_status": "Complete",
-                "task_execution_end_date": "2019-04-01",
-                "task_execution_start_date": "2019-04-08",
-                "task_focus": "Mosquito Collection",
-                "task_status": "Completed",
-                "task_task_for": "5f7a0d7c-1412-4af6-83ed-f94787b205e8",
-              },
-              "type": "Feature",
-            },
-          ],
-          "type": "FeatureCollection",
-        },
-        "type": "geojson",
-      },
-      "styleSpec": Object {
-        "id": "RACD_bednet_dist_1km_radius-point-line",
-        "layout": Object {},
-        "paint": Object {
-          "line-color": Array [
-            "get",
-            "color",
-          ],
-          "line-opacity": 1,
-          "line-width": 2,
-        },
-        "source": Object {
-          "data": Object {
-            "features": Array [
-              Object {
-                "geometry": Object {
-                  "coordinates": Array [
-                    28.3524419816308,
-                    -15.4178320108929,
-                  ],
-                  "type": "Point",
-                },
-                "id": "e3e1f2a7-4c53-4059-ab81-0811539e0c5e",
-                "properties": Object {
-                  "action_code": "Mosquito Collection",
-                  "color": "#68BB0C",
-                  "goal_id": "Mosquito_Collection_Min_3_Traps",
-                  "jurisdiction_id": "3952",
-                  "jurisdiction_name": "Akros_2",
-                  "jurisdiction_parent_id": "3019",
-                  "plan_id": "356b6b84-fc36-4389-a44a-2b038ed2f38d",
-                  "structure_code": "5f7a0d7c-1412-4af6-83ed-f94787b205e8",
-                  "structure_id": "5f7a0d7c-1412-4af6-83ed-f94787b205e8",
-                  "structure_name": "5f7a0d7c-1412-4af6-83ed-f94787b205e8",
-                  "structure_type": "5f7a0d7c-1412-4af6-83ed-f94787b205e8",
-                  "task_business_status": "Complete",
-                  "task_execution_end_date": "2019-04-01",
-                  "task_execution_start_date": "2019-04-08",
-                  "task_focus": "Mosquito Collection",
-                  "task_status": "Completed",
-                  "task_task_for": "5f7a0d7c-1412-4af6-83ed-f94787b205e8",
-                },
-                "type": "Feature",
-              },
-            ],
-            "type": "FeatureCollection",
-          },
-          "type": "geojson",
-        },
-        "type": "line",
-        "visible": true,
-      },
-      "type": "line",
       "visible": true,
     },
     "main-plan-layer-304cbcd4-0850-404a-a8b1-486b02f7b84d": Object {
@@ -2031,7 +1929,6 @@ Object {
   "activeLayerIds": Array [
     "main-plan-layer-304cbcd4-0850-404a-a8b1-486b02f7b84d",
     "RACD_bednet_dist_1km_radius-point",
-    "RACD_bednet_dist_1km_radius-point-line",
     "RACD_bednet_dist_1km_radius-fill",
     "RACD_bednet_dist_1km_radius-fill-line",
     "main-plan-layer-10f9e9fa-ce34-4b27-a961-72fab5206ab6",
@@ -2840,7 +2737,12 @@ Object {
           18.8,
           15,
         ],
-        "circle-stroke-width": 1,
+        "circle-stroke-color": Array [
+          "get",
+          "color",
+        ],
+        "circle-stroke-opacity": 1,
+        "circle-stroke-width": 2,
       },
       "source": Object {
         "data": Object {
@@ -2904,9 +2806,12 @@ Object {
             18.8,
             15,
           ],
-          "circle-stroke-color": "#fff",
+          "circle-stroke-color": Array [
+            "get",
+            "color",
+          ],
           "circle-stroke-opacity": 1,
-          "circle-stroke-width": 1,
+          "circle-stroke-width": 2,
         },
         "source": Object {
           "data": Object {
@@ -2950,115 +2855,6 @@ Object {
         "visible": true,
       },
       "type": "circle",
-      "visible": true,
-    },
-    "RACD_bednet_dist_1km_radius-point-line": Object {
-      "filters": Object {},
-      "id": "RACD_bednet_dist_1km_radius-point-line",
-      "isChartMin": true,
-      "isLoading": false,
-      "labels": undefined,
-      "legendBottom": 40,
-      "loaded": true,
-      "paint": Object {
-        "line-color": Array [
-          "get",
-          "color",
-        ],
-        "line-opacity": 1,
-        "line-width": 2,
-      },
-      "source": Object {
-        "data": Object {
-          "features": Array [
-            Object {
-              "geometry": Object {
-                "coordinates": Array [
-                  28.3524419816308,
-                  -15.4178320108929,
-                ],
-                "type": "Point",
-              },
-              "id": "e3e1f2a7-4c53-4059-ab81-0811539e0c5e",
-              "properties": Object {
-                "action_code": "Mosquito Collection",
-                "color": "#68BB0C",
-                "goal_id": "Mosquito_Collection_Min_3_Traps",
-                "jurisdiction_id": "3952",
-                "jurisdiction_name": "Akros_2",
-                "jurisdiction_parent_id": "3019",
-                "plan_id": "356b6b84-fc36-4389-a44a-2b038ed2f38d",
-                "structure_code": "5f7a0d7c-1412-4af6-83ed-f94787b205e8",
-                "structure_id": "5f7a0d7c-1412-4af6-83ed-f94787b205e8",
-                "structure_name": "5f7a0d7c-1412-4af6-83ed-f94787b205e8",
-                "structure_type": "5f7a0d7c-1412-4af6-83ed-f94787b205e8",
-                "task_business_status": "Complete",
-                "task_execution_end_date": "2019-04-01",
-                "task_execution_start_date": "2019-04-08",
-                "task_focus": "Mosquito Collection",
-                "task_status": "Completed",
-                "task_task_for": "5f7a0d7c-1412-4af6-83ed-f94787b205e8",
-              },
-              "type": "Feature",
-            },
-          ],
-          "type": "FeatureCollection",
-        },
-        "type": "geojson",
-      },
-      "styleSpec": Object {
-        "id": "RACD_bednet_dist_1km_radius-point-line",
-        "layout": Object {},
-        "paint": Object {
-          "line-color": Array [
-            "get",
-            "color",
-          ],
-          "line-opacity": 1,
-          "line-width": 2,
-        },
-        "source": Object {
-          "data": Object {
-            "features": Array [
-              Object {
-                "geometry": Object {
-                  "coordinates": Array [
-                    28.3524419816308,
-                    -15.4178320108929,
-                  ],
-                  "type": "Point",
-                },
-                "id": "e3e1f2a7-4c53-4059-ab81-0811539e0c5e",
-                "properties": Object {
-                  "action_code": "Mosquito Collection",
-                  "color": "#68BB0C",
-                  "goal_id": "Mosquito_Collection_Min_3_Traps",
-                  "jurisdiction_id": "3952",
-                  "jurisdiction_name": "Akros_2",
-                  "jurisdiction_parent_id": "3019",
-                  "plan_id": "356b6b84-fc36-4389-a44a-2b038ed2f38d",
-                  "structure_code": "5f7a0d7c-1412-4af6-83ed-f94787b205e8",
-                  "structure_id": "5f7a0d7c-1412-4af6-83ed-f94787b205e8",
-                  "structure_name": "5f7a0d7c-1412-4af6-83ed-f94787b205e8",
-                  "structure_type": "5f7a0d7c-1412-4af6-83ed-f94787b205e8",
-                  "task_business_status": "Complete",
-                  "task_execution_end_date": "2019-04-01",
-                  "task_execution_start_date": "2019-04-08",
-                  "task_focus": "Mosquito Collection",
-                  "task_status": "Completed",
-                  "task_task_for": "5f7a0d7c-1412-4af6-83ed-f94787b205e8",
-                },
-                "type": "Feature",
-              },
-            ],
-            "type": "FeatureCollection",
-          },
-          "type": "geojson",
-        },
-        "type": "line",
-        "visible": true,
-      },
-      "type": "line",
       "visible": true,
     },
     "main-plan-layer-10f9e9fa-ce34-4b27-a961-72fab5206ab6": Object {
