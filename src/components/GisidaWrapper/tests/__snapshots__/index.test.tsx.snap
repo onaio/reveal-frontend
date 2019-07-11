@@ -452,7 +452,7 @@ Object {
   "activeLayerIds": Array [
     "main-plan-layer-304cbcd4-0850-404a-a8b1-486b02f7b84d",
     "RACD_bednet_dist_1km_radius-point",
-    "RACD_bednet_dist_1km_radius-point-circle-line",
+    "RACD_bednet_dist_1km_radius-point-line",
     "RACD_bednet_dist_1km_radius-fill",
     "RACD_bednet_dist_1km_radius-fill-line",
   ],
@@ -1372,9 +1372,9 @@ Object {
       "type": "circle",
       "visible": true,
     },
-    "RACD_bednet_dist_1km_radius-point-circle-line": Object {
+    "RACD_bednet_dist_1km_radius-point-line": Object {
       "filters": Object {},
-      "id": "RACD_bednet_dist_1km_radius-point-circle-line",
+      "id": "RACD_bednet_dist_1km_radius-point-line",
       "isChartMin": true,
       "isLoading": false,
       "labels": undefined,
@@ -1427,7 +1427,7 @@ Object {
         "type": "geojson",
       },
       "styleSpec": Object {
-        "id": "RACD_bednet_dist_1km_radius-point-circle-line",
+        "id": "RACD_bednet_dist_1km_radius-point-line",
         "layout": Object {},
         "paint": Object {
           "line-color": Array [
@@ -2031,7 +2031,7 @@ Object {
   "activeLayerIds": Array [
     "main-plan-layer-304cbcd4-0850-404a-a8b1-486b02f7b84d",
     "RACD_bednet_dist_1km_radius-point",
-    "RACD_bednet_dist_1km_radius-point-circle-line",
+    "RACD_bednet_dist_1km_radius-point-line",
     "RACD_bednet_dist_1km_radius-fill",
     "RACD_bednet_dist_1km_radius-fill-line",
     "main-plan-layer-10f9e9fa-ce34-4b27-a961-72fab5206ab6",
@@ -2952,9 +2952,9 @@ Object {
       "type": "circle",
       "visible": true,
     },
-    "RACD_bednet_dist_1km_radius-point-circle-line": Object {
+    "RACD_bednet_dist_1km_radius-point-line": Object {
       "filters": Object {},
-      "id": "RACD_bednet_dist_1km_radius-point-circle-line",
+      "id": "RACD_bednet_dist_1km_radius-point-line",
       "isChartMin": true,
       "isLoading": false,
       "labels": undefined,
@@ -3007,7 +3007,7 @@ Object {
         "type": "geojson",
       },
       "styleSpec": Object {
-        "id": "RACD_bednet_dist_1km_radius-point-circle-line",
+        "id": "RACD_bednet_dist_1km_radius-point-line",
         "layout": Object {},
         "paint": Object {
           "line-color": Array [
@@ -4096,10 +4096,7 @@ Object {
       "legendBottom": 40,
       "loaded": true,
       "paint": Object {
-        "line-color": Array [
-          "get",
-          "color",
-        ],
+        "line-color": "#666a6d",
         "line-opacity": 1,
         "line-width": 2,
       },
@@ -4227,10 +4224,7 @@ Object {
         "id": "structure-layer-line",
         "layout": Object {},
         "paint": Object {
-          "line-color": Array [
-            "get",
-            "color",
-          ],
+          "line-color": "#666a6d",
           "line-opacity": 1,
           "line-width": 2,
         },
