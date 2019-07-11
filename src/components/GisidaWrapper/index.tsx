@@ -329,8 +329,8 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
         ...lineLayerConfig,
         id: `${STRUCTURE_LAYER}-line`,
         paint: {
-          'line-color': '#FFDC00',
-          'line-opacity': 0.7,
+          'line-color': ['get', 'color'],
+          'line-opacity': 1,
           'line-width': 2,
         },
         source: {
@@ -344,21 +344,39 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
     }
     // handle Point layer types
     if (pointFeatureCollection) {
-      builtGeometriesContainer.push({
-        ...circleLayerConfig,
-        id: `${this.props.currentGoal}-point`,
-        paint: {
-          ...circleLayerConfig.paint,
-          'circle-color': ['get', 'color'],
-        },
-        source: {
-          ...circleLayerConfig.source,
-          data: {
-            ...circleLayerConfig.source.data,
-            data: JSON.stringify(pointFeatureCollection),
+      builtGeometriesContainer.push(
+        {
+          ...circleLayerConfig,
+          id: `${this.props.currentGoal}-point`,
+          paint: {
+            ...circleLayerConfig.paint,
+            'circle-color': ['get', 'color'],
+          },
+          source: {
+            ...circleLayerConfig.source,
+            data: {
+              ...circleLayerConfig.source.data,
+              data: JSON.stringify(pointFeatureCollection),
+            },
           },
         },
-      });
+        {
+          ...lineLayerConfig,
+          id: `${this.props.currentGoal}-point-circle-line`,
+          paint: {
+            'line-color': ['get', 'color'],
+            'line-opacity': 1,
+            'line-width': 2,
+          },
+          source: {
+            ...lineLayerConfig.source,
+            data: {
+              ...lineLayerConfig.source.data,
+              data: JSON.stringify(pointFeatureCollection),
+            },
+          },
+        }
+      );
     }
     // Handle fill layers
     if (polygonFeatureCollection) {
@@ -383,8 +401,8 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
           ...lineLayerConfig,
           id: `${this.props.currentGoal}-fill-line`,
           paint: {
-            'line-color': '#FFDC00',
-            'line-opacity': 0.7,
+            'line-color': ['get', 'color'],
+            'line-opacity': 1,
             'line-width': 2,
           },
           source: {
