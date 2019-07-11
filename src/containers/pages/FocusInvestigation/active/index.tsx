@@ -2,6 +2,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import DrillDownTable from '@onaio/drill-down-table';
 import reducerRegistry from '@onaio/redux-reducer-registry';
+import superset from '@onaio/superset-connector';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
@@ -22,6 +23,7 @@ import {
   CASE_CLASSIFICATION_HEADER,
   CASE_NOTIF_DATE_HEADER,
   DEFINITIONS,
+  FI_PLAN_TYPE,
   FI_SINGLE_MAP_URL,
   FI_SINGLE_URL,
   FI_URL,
@@ -78,7 +80,12 @@ class ActiveFocusInvestigation extends React.Component<
 
   public componentDidMount() {
     const { fetchPlansActionCreator, supersetService } = this.props;
-    supersetService(SUPERSET_PLANS_SLICE).then((result: Plan[]) => fetchPlansActionCreator(result));
+    const supersetParams = superset.getFormData(2000, [
+      { comparator: FI_PLAN_TYPE, operator: '==', subject: 'plan_intervention_type' },
+    ]);
+    supersetService(SUPERSET_PLANS_SLICE, supersetParams).then((result: Plan[]) =>
+      fetchPlansActionCreator(result)
+    );
   }
 
   public render() {
