@@ -86,6 +86,8 @@ export type STRUCTURES = typeof STRUCTURES;
 export const PERSONS = 'person(s)';
 export type PERSON = typeof PERSONS;
 
+export const JURISDICTION_ID = 'jurisdiction_id';
+export type JURISDICTION_ID = typeof JURISDICTION_ID;
 // internal urls
 export const LOGIN_URL = '/login';
 export type LOGIN_URL = typeof LOGIN_URL;
