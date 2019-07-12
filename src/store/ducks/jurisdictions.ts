@@ -15,10 +15,14 @@ export interface JurisdictionGeoJSON extends GeoJSON {
   };
 }
 
+// todo - distingquish non-geo Jurisdiction, inheritted by new JurisdictionGeo type
 /** interface to describe Jurisdiction */
 export interface Jurisdiction {
-  geojson: JurisdictionGeoJSON;
+  geographic_level?: number;
+  geojson?: JurisdictionGeoJSON;
   jurisdiction_id: string;
+  name?: string | null;
+  parent_id?: string | null;
 }
 
 export interface AllJurisdictionIds {
@@ -99,7 +103,10 @@ export default function reducer(
 export const fetchJurisdictions = (jurisdictionList: Jurisdiction[] = []) => {
   return {
     allJurisdictionIds: keyBy(
-      jurisdictionList.map((j: Jurisdiction) => ({ id: j.jurisdiction_id, isLoaded: true })),
+      jurisdictionList.map((j: Jurisdiction) => ({
+        id: j.jurisdiction_id,
+        isLoaded: typeof j.geojson !== 'undefined',
+      })),
       j => j.id
     ),
     jurisdictionsById: keyBy(
@@ -109,7 +116,7 @@ export const fetchJurisdictions = (jurisdictionList: Jurisdiction[] = []) => {
           item.geojson = JSON.parse(item.geojson);
         }
         /** ensure geometry is parsed */
-        if (typeof item.geojson.geometry === 'string') {
+        if (item.geojson && typeof item.geojson.geometry === 'string') {
           item.geojson.geometry = JSON.parse(item.geojson.geometry);
         }
         return item;
