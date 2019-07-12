@@ -138,7 +138,7 @@ class SingleActiveFIMap extends React.Component<
         { comparator: planId, operator: '==', subject: 'plan_id' },
       ]);
       await supersetFetch(SUPERSET_PLAN_STRUCTURE_PIVOT_SLICE, pivotParams).then(
-        relevantJurisdictions => {
+        async relevantJurisdictions => {
           if (!relevantJurisdictions) {
             return new Promise(reject => {
               reject();
@@ -155,11 +155,11 @@ class SingleActiveFIMap extends React.Component<
           const planJurisdictionSupersetParams = superset.getFormData(1000, [
             { sqlExpression: sqlFilterExpression },
           ]);
-          return supersetFetch(SUPERSET_JURISDICTIONS_SLICE, planJurisdictionSupersetParams).then(
-            (jurisdictionResults: Jurisdiction[]) => {
-              fetchJurisdictionsActionCreator(jurisdictionResults);
-            }
+          const jurisdictionResults = await supersetFetch(
+            SUPERSET_JURISDICTIONS_SLICE,
+            planJurisdictionSupersetParams
           );
+          fetchJurisdictionsActionCreator(jurisdictionResults);
         }
       );
       /** define superset params for jurisdictions */
@@ -178,7 +178,6 @@ class SingleActiveFIMap extends React.Component<
       });
     }
   }
-
   public componentWillReceiveProps(nextProps: any) {
     const { setCurrentGoalActionCreator, match } = this.props;
 
