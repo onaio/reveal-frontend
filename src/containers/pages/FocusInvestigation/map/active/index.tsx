@@ -14,6 +14,7 @@ import Loading from '../../../../../components/page/Loading';
 import {
   SUPERSET_GOALS_SLICE,
   SUPERSET_JURISDICTIONS_SLICE,
+  SUPERSET_PLAN_STRUCTURE_PIVOT_SLICE,
   SUPERSET_PLANS_SLICE,
   SUPERSET_STRUCTURES_SLICE,
 } from '../../../../../configs/env';
@@ -25,6 +26,7 @@ import {
   FOCUS_INVESTIGATIONS,
   HOME,
   HOME_URL,
+  JURISDICTION_ID,
   MEASURE,
   MULTI_POLYGON,
   OF,
@@ -135,15 +137,39 @@ class SingleActiveFIMap extends React.Component<
     } = this.props;
     const planId = plan && plan.plan_id;
     if (planId) {
+      const pivotParams = superset.getFormData(3000, [
+        { comparator: planId, operator: '==', subject: 'plan_id' },
+      ]);
+      await supersetFetch(SUPERSET_PLAN_STRUCTURE_PIVOT_SLICE, pivotParams).then(
+        relevantJurisdictions => {
+          if (!relevantJurisdictions) {
+            return new Promise(reject => {
+              reject();
+            });
+          }
+          let sqlFilterExpression = '';
+          for (let i = 0; i < relevantJurisdictions.length; i += 1) {
+            const jurId = relevantJurisdictions[i].jurisdiction_id;
+            if (i) {
+              sqlFilterExpression += ' OR ';
+            }
+            sqlFilterExpression += `${JURISDICTION_ID} = '${jurId}'`;
+          }
+          const planJurisdictionSupersetParams = superset.getFormData(1000, [
+            { sqlExpression: sqlFilterExpression },
+          ]);
+          return supersetFetch(SUPERSET_JURISDICTIONS_SLICE, planJurisdictionSupersetParams).then(
+            (jurisdictionResults: Jurisdiction[]) => {
+              fetchJurisdictionsActionCreator(jurisdictionResults);
+            }
+          );
+        }
+      );
+      /** define superset params for jurisdictions */
       const supersetParams = superset.getFormData(3000, [
         { comparator: planId, operator: '==', subject: 'plan_id' },
       ]);
-
-      await supersetFetch(SUPERSET_JURISDICTIONS_SLICE, supersetParams).then(
-        (result: Jurisdiction[]) => {
-          fetchJurisdictionsActionCreator(result);
-        }
-      );
+      /** Implement Ad hoc Queris since jurisdictions have no plan_id */
       await supersetFetch(SUPERSET_PLANS_SLICE, supersetParams).then((result2: Plan[]) => {
         fetchPlansActionCreator(result2);
       });
@@ -155,6 +181,7 @@ class SingleActiveFIMap extends React.Component<
       });
     }
   }
+
   public componentWillReceiveProps(nextProps: any) {
     const { setCurrentGoalActionCreator, match } = this.props;
 
