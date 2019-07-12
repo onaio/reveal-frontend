@@ -128,11 +128,12 @@ class SingleActiveFIMap extends React.Component<
       fetchJurisdictionsActionCreator,
       fetchPlansActionCreator,
       fetchTasksActionCreator,
+      plan,
     } = this.props;
-    const id = this.props.match.params.id;
-    if (id) {
+    const planId = plan && plan.plan_id;
+    if (planId) {
       const supersetParams = superset.getFormData(3000, [
-        { comparator: id, operator: '==', subject: 'plan_id' },
+        { comparator: planId, operator: '==', subject: 'plan_id' },
       ]);
 
       await supersetFetch(SUPERSET_JURISDICTIONS_SLICE, supersetParams).then(
