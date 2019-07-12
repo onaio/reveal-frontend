@@ -79,7 +79,8 @@ export const NO_GEOMETRIES_RESPONSE = 'Goals have no Geometries';
 export type NO_GEOMETRIES_RESPONSE = typeof NO_GEOMETRIES_RESPONSE;
 export const STRUCTURE_LAYER = 'structure-layer';
 export type STRUCTURE_LAYER = typeof STRUCTURE_LAYER;
-
+export const JURISDICTION_ID = 'jurisdiction_id';
+export type JURISDICTION_ID = typeof JURISDICTION_ID;
 // internal urls
 export const LOGIN_URL = '/login';
 export type LOGIN_URL = typeof LOGIN_URL;
