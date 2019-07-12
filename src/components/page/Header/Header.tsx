@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { User } from '@onaio/session-reducer';
+import superset from '@onaio/superset-connector';
 import * as React from 'react';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { Link, NavLink } from 'react-router-dom';
@@ -20,6 +21,8 @@ import {
   ENABLE_FI,
   ENABLE_IRS,
   ENABLE_USERS,
+  SUPERSET_API_BASE,
+  SUPERSET_API_ENDPOINT,
   WEBSITE_NAME,
 } from '../../../configs/env';
 import {
@@ -64,7 +67,15 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
       isOpen: false,
     };
   }
-
+  public componentWillReceiveProps(nextProps: any) {
+    /** Once props change and authenticated  is false meaning someone logged out */
+    if (this.props.authenticated !== nextProps.authenticated && !nextProps.authenticated) {
+      superset.deAuthZ(
+        { base: SUPERSET_API_BASE, endpoint: SUPERSET_API_ENDPOINT, token: '' },
+        res => res.status
+      );
+    }
+  }
   public render() {
     const { authenticated, user } = this.props;
     const path = this.props.location.pathname;
