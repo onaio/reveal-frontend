@@ -18,6 +18,11 @@ import {
 } from '../../../../../configs/env';
 import { HOME, HOME_URL, INTERVENTION_IRS_URL } from '../../../../../constants';
 import { FlexObject, RouteParams } from '../../../../../helpers/utils';
+import {
+  ADMN0_PCODE,
+  CountriesAdmin0,
+  JurisdictionsByCountry,
+} from './../../../../../configs/settings';
 
 import supersetFetch from '../../../../../services/superset';
 
@@ -85,7 +90,9 @@ export const defaultIrsPlanProps: IrsPlanProps = {
 };
 
 interface IrsPlanState {
+  filteredJurisdictions: Jurisdiction[];
   isEditingPlanName: boolean;
+  isSelectingCountry: boolean;
   newPlan: null | PlanRecord;
   previousPlanName: string;
 }
@@ -99,7 +106,9 @@ class IrsPlan extends React.Component<
   constructor(props: RouteComponentProps<RouteParams> & IrsPlanProps) {
     super(props);
     this.state = {
+      filteredJurisdictions: [],
       isEditingPlanName: false,
+      isSelectingCountry: props.isNewPlan || false,
       newPlan: props.isNewPlan
         ? {
             id: '',
@@ -258,7 +267,7 @@ class IrsPlan extends React.Component<
 
   public render() {
     const { planId, planById, isDraftPlan, isFinalizedPlan, isNewPlan } = this.props;
-    const { newPlan, isEditingPlanName } = this.state;
+    const { newPlan, isEditingPlanName, isSelectingCountry } = this.state;
     if ((planId && !planById) || (isNewPlan && !newPlan)) {
       return <Loading />;
     }
@@ -275,7 +284,7 @@ class IrsPlan extends React.Component<
     if (isFinalizedPlan) {
       planTableProps = this.getFinalizedPlanTableProps(this.props);
     } else {
-      planTableProps = this.getDrilldownPlanTableProps(this.props);
+      planTableProps = this.getDrilldownPlanTableProps(this.state);
     }
 
     const onEditNameButtonClick = (e: any) => {
@@ -290,49 +299,80 @@ class IrsPlan extends React.Component<
     const onSaveEditNameButtonClick = (e: any) => {
       this.onSaveEditNameButtonClick(e);
     };
+
+    const onSelectCountryChange = (e: any) => {
+      this.onSelectCountryChange(e);
+    };
+
+    const planHeaderRow = (
+      <Row>
+        {isFinalizedPlan && (
+          <Col>
+            <h2 className="page-title">IRS: {pageLabel}</h2>
+          </Col>
+        )}
+        {!isFinalizedPlan && !isEditingPlanName && (
+          <Col>
+            <h2 className="page-title">IRS: {pageLabel}</h2>
+            <Button color="link" onClick={onEditNameButtonClick}>
+              edit
+            </Button>
+          </Col>
+        )}
+        {!isFinalizedPlan && newPlan && isEditingPlanName && (
+          <Col>
+            <h2 className="page-title edit">IRS:</h2>
+            <InputGroup className="edit-plan-title-input-group">
+              <Input
+                id="edit-plan-title-input"
+                name="edit-plan-title-input"
+                onChange={onEditNameInputChange}
+                placeholder={newPlan.plan_title}
+              />
+              <InputGroupAddon addonType="append">
+                <Button color="secondary" onClick={onCancleEditNameButtonClick}>
+                  cancel
+                </Button>
+              </InputGroupAddon>
+              <InputGroupAddon addonType="append">
+                <Button color="primary" onClick={onSaveEditNameButtonClick}>
+                  save
+                </Button>
+              </InputGroupAddon>
+            </InputGroup>
+          </Col>
+        )}
+        {/* <Col>Save / finalize buttons will go here</Col> */}
+      </Row>
+    );
+
+    if (isSelectingCountry) {
+      return (
+        <div className="mb-5">
+          <HeaderBreadcrumbs {...breadCrumbProps} />
+          {planHeaderRow}
+          <Row>
+            <Col>
+              <Input
+                id="select-plan-country"
+                name="select-plan-country"
+                onChange={onSelectCountryChange}
+                type="select"
+              >
+                <option>Choose a Country</option>
+                <option value="TH">Thailand</option>
+                <option value="ZM">Zambia</option>
+              </Input>
+            </Col>
+          </Row>
+        </div>
+      );
+    }
+
     return (
       <div className="mb-5">
         <HeaderBreadcrumbs {...breadCrumbProps} />
-        <Row>
-          {isFinalizedPlan && (
-            <Col>
-              <h2 className="page-title">IRS: {pageLabel}</h2>
-            </Col>
-          )}
-          {!isFinalizedPlan && !isEditingPlanName && (
-            <Col>
-              <h2 className="page-title">IRS: {pageLabel}</h2>
-              <Button color="link" onClick={onEditNameButtonClick}>
-                edit
-              </Button>
-            </Col>
-          )}
-          {!isFinalizedPlan && newPlan && isEditingPlanName && (
-            <Col>
-              <h2 className="page-title edit">IRS:</h2>
-              <InputGroup className="edit-plan-title-input-group">
-                <Input
-                  id="edit-plan-title-input"
-                  name="edit-plan-title-input"
-                  onChange={onEditNameInputChange}
-                  placeholder={newPlan.plan_title}
-                />
-                <InputGroupAddon addonType="append">
-                  <Button color="secondary" onClick={onCancleEditNameButtonClick}>
-                    cancel
-                  </Button>
-                </InputGroupAddon>
-                <InputGroupAddon addonType="append">
-                  <Button color="primary" onClick={onSaveEditNameButtonClick}>
-                    save
-                  </Button>
-                </InputGroupAddon>
-              </InputGroup>
-            </Col>
-          )}
-          {/* <Col>Save / finalize buttons will go here</Col> */}
-        </Row>
-
+        {planHeaderRow}
         {/* <Row><Col>Map will go here!</Col></Row> */}
 
         {/* Section for table of jurisdictions */}
@@ -346,6 +386,38 @@ class IrsPlan extends React.Component<
         )}
       </div>
     );
+  }
+
+  private onSelectCountryChange(e: any) {
+    if (!e || !e.target || !(e.target.value as ADMN0_PCODE)) {
+      return false;
+    }
+    const { jurisdictionsArray } = this.props;
+    const country: JurisdictionsByCountry = CountriesAdmin0[e.target.value as ADMN0_PCODE];
+
+    const jurisdictionsToInclude: string[] = [];
+    const jurisdictionsToCheck: string[] = [...country.jurisdictionIds];
+
+    while (jurisdictionsToCheck.length) {
+      const parentJurisdictionId = jurisdictionsToCheck.shift();
+      jurisdictionsToInclude.push(parentJurisdictionId as string);
+
+      for (const jurisdiction of jurisdictionsArray) {
+        if (jurisdiction.parent_id === parentJurisdictionId) {
+          jurisdictionsToCheck.push(jurisdiction.jurisdiction_id);
+        }
+      }
+    }
+
+    const filteredJurisdictions: Jurisdiction[] = jurisdictionsArray.filter(
+      (jurisdiction: Jurisdiction) =>
+        jurisdictionsToInclude.indexOf(jurisdiction.jurisdiction_id) !== -1
+    );
+
+    this.setState({
+      filteredJurisdictions,
+      isSelectingCountry: false,
+    });
   }
   private getNewPlanTitle() {
     const date = new Date();
@@ -401,13 +473,13 @@ class IrsPlan extends React.Component<
    * @param props - component props
    * @returns tableProps|null - compatible object for DrillDownTable props
    */
-  private getDrilldownPlanTableProps(props: IrsPlanProps) {
-    const { jurisdictionsArray } = props;
-    if (!jurisdictionsArray.length) {
+  private getDrilldownPlanTableProps(state: IrsPlanState) {
+    const { filteredJurisdictions } = state;
+    if (!filteredJurisdictions.length) {
       return null;
     }
 
-    const jurisdictionData = jurisdictionsArray.map((j: Jurisdiction) =>
+    const jurisdictionData = filteredJurisdictions.map((j: Jurisdiction) =>
       j.geojson
         ? {
             ...j.geojson.properties,
