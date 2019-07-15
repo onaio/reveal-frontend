@@ -26,7 +26,7 @@ export interface InitialProperties {
 /** interface for structure.geojson for
  * structure as received from the fetch request / superset
  */
-export type InitialStructureGeoJSON = UpdateType<GeoJSON, InitialProperties>;
+export type InitialStructureGeoJSON = GeoJSON;
 
 /** interface for structure Object for
  * structure as received from the fetch request / superset
