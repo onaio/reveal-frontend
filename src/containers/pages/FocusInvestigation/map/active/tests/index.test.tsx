@@ -11,6 +11,7 @@ import store from '../../../../../../store';
 import { fetchGoals } from '../../../../../../store/ducks/goals';
 import { fetchJurisdictions } from '../../../../../../store/ducks/jurisdictions';
 import { fetchPlans, Plan } from '../../../../../../store/ducks/plans';
+import { setStructures } from '../../../../../../store/ducks/structures';
 import { fetchTasks } from '../../../../../../store/ducks/tasks';
 import * as fixtures from '../../../../../../store/ducks/tests/fixtures';
 import ConnectedMapSingleFI, { SingleActiveFIMap } from '../../active/';
@@ -45,6 +46,7 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
       plan: fixtures.plan1 as Plan,
       pointFeatureCollection: wrapFeatureCollection([fixtures.coloredTasks.task3.geojson]),
       polygonFeatureCollection: wrapFeatureCollection([fixtures.coloredTasks.task2.geojson]),
+      structures: wrapFeatureCollection([fixtures.structure1.geojson]),
     };
     shallow(
       <Router history={history}>
@@ -70,6 +72,7 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
       plan: fixtures.plan1 as Plan,
       pointFeatureCollection: wrapFeatureCollection([fixtures.coloredTasks.task3.geojson]),
       polygonFeatureCollection: wrapFeatureCollection([fixtures.coloredTasks.task2.geojson]),
+      structures: wrapFeatureCollection([fixtures.structure1.geojson]),
     };
     const wrapper = mount(
       <Router history={history}>
@@ -83,7 +86,7 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
     wrapper.unmount();
   });
 
-  it('works with redux store', () => {
+  it('works with redux store (gisidawrapper component that loads jurisdiction without structures and tasks)', () => {
     const mock: any = jest.fn();
     store.dispatch(fetchGoals([fixtures.goal3]));
     store.dispatch(fetchJurisdictions([fixtures.jurisdictions[0]]));

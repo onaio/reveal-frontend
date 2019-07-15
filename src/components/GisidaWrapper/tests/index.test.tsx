@@ -29,6 +29,7 @@ describe('components/GisidaWrapper', () => {
       geoData: fixtures.jurisdictions[0],
       goal: fixtures.goals,
       handlers: [],
+      structures: wrapFeatureCollection([fixtures.structure1.geojson]),
     };
     shallow(
       <Router history={history}>
@@ -42,6 +43,7 @@ describe('components/GisidaWrapper', () => {
       basemapStyle: 'mapbox://styles/mapbox/satellite-v9',
       geoData: fixtures.jurisdictions[0],
       minHeight: '200px',
+      structures: wrapFeatureCollection([fixtures.structure1.geojson]),
     };
     const wrapper = mount(<GisidaWrapper {...props} />);
     expect(store.getState().APP).toMatchSnapshot();
@@ -88,6 +90,7 @@ describe('components/GisidaWrapper', () => {
       handlers: [],
       pointFeatureCollection,
       polygonFeatureCollection,
+      structures: wrapFeatureCollection([fixtures.structure1.geojson]),
     };
     const props = {
       currentGoal: fixtures.task6.goal_id,
@@ -96,6 +99,7 @@ describe('components/GisidaWrapper', () => {
       handlers: [],
       pointFeatureCollection,
       polygonFeatureCollection,
+      structures: wrapFeatureCollection([fixtures.structure1.geojson]),
     };
     const wrapper = mount(<GisidaWrapper {...props1} />);
     /** Investigate why it won't set state inside initmap even though
@@ -146,6 +150,7 @@ describe('components/GisidaWrapper', () => {
       handlers: [],
       pointFeatureCollection,
       polygonFeatureCollection,
+      structures: wrapFeatureCollection([fixtures.structure1.geojson]),
     };
     const props = {
       currentGoal: fixtures.task6.goal_id,
@@ -154,6 +159,7 @@ describe('components/GisidaWrapper', () => {
       handlers: [],
       pointFeatureCollection,
       polygonFeatureCollection,
+      structures: wrapFeatureCollection([fixtures.structure1.geojson]),
     };
     const wrapper = mount(<GisidaWrapper {...props1} />);
     wrapper.setState({ doRenderMap: true });
@@ -194,7 +200,7 @@ describe('components/GisidaWrapper', () => {
       handlers: [],
       pointFeatureCollection,
       polygonFeatureCollection,
-      structures: wrapFeatureCollection([fixtures.coloredTasks.task1, fixtures.coloredTasks.task2]),
+      structures: wrapFeatureCollection([fixtures.structure1.geojson]),
     };
     const props = {
       currentGoal: fixtures.task6.goal_id,
@@ -203,7 +209,7 @@ describe('components/GisidaWrapper', () => {
       handlers: [],
       pointFeatureCollection,
       polygonFeatureCollection,
-      structures: wrapFeatureCollection([fixtures.coloredTasks.task1, fixtures.coloredTasks.task2]),
+      structures: wrapFeatureCollection([fixtures.structure1.geojson]),
     };
     const wrapper = mount(<GisidaWrapper {...props1} />);
     /** Investigate why it won't set state inside initmap even though
