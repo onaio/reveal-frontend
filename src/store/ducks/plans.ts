@@ -13,6 +13,8 @@ export enum InterventionType {
   IRS = 'IRS',
 }
 
+export type InterventionStatus = 'new' | 'draft' | 'active';
+
 /** interface for plan Objects */
 
 /** PlanRecordResponse - interface for response objects from SUPERSET_PLANS_TABLE_SLICE */
@@ -39,9 +41,10 @@ export interface PlanRecord {
   plan_fi_status: string;
   plan_id: string;
   plan_intervention_type: InterventionType;
-  plan_status: string;
+  plan_status: InterventionStatus;
   plan_title: string;
   plan_version?: string;
+  plan_jurisdictions_ids?: string[];
 }
 
 // todo - Rename?
@@ -148,7 +151,7 @@ export const fetchPlanRecords = (planList: PlanRecordResponse[] = []): FetchPlan
         plan_fi_status: plan.fi_status,
         plan_id: plan.identifier,
         plan_intervention_type: plan.intervention_type as InterventionType,
-        plan_status: plan.status,
+        plan_status: plan.status as InterventionStatus,
         plan_title: plan.title,
         plan_version: plan.version,
       };

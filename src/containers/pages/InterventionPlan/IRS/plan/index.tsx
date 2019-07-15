@@ -3,7 +3,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { Column } from 'react-table';
-import { Col, Row } from 'reactstrap';
+import { Button, Col, Input, InputGroup, InputGroupAddon, Row } from 'reactstrap';
 import { Store } from 'redux';
 
 import DrillDownTable, { DrillDownProps, DropDownCell } from '@onaio/drill-down-table';
@@ -33,6 +33,8 @@ import jurisdictionReducer, {
 import plansReducer, {
   fetchPlanRecords,
   getPlanRecordById,
+  InterventionStatus,
+  InterventionType,
   PlanRecord,
   PlanRecordResponse,
   reducerName as plansReducerName,
@@ -43,6 +45,8 @@ import HeaderBreadcrumbs, {
   BreadCrumbProps,
 } from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../../components/page/Loading';
+
+import './style.css';
 
 /** register the plans reducer */
 reducerRegistry.register(plansReducerName, plansReducer);
@@ -80,11 +84,39 @@ export const defaultIrsPlanProps: IrsPlanProps = {
   supersetService: supersetFetch,
 };
 
+interface IrsPlanState {
+  isEditingPlanName: boolean;
+  newPlan: null | PlanRecord;
+  previousPlanName: string;
+}
+
 /** IrsPlan - component for IRS Plan page */
-class IrsPlan extends React.Component<RouteComponentProps<RouteParams> & IrsPlanProps, {}> {
+class IrsPlan extends React.Component<
+  RouteComponentProps<RouteParams> & IrsPlanProps,
+  IrsPlanState
+> {
   public static defaultProps = defaultIrsPlanProps;
   constructor(props: RouteComponentProps<RouteParams> & IrsPlanProps) {
     super(props);
+    this.state = {
+      isEditingPlanName: false,
+      newPlan: props.isNewPlan
+        ? {
+            id: '',
+            plan_effective_period_end: '',
+            plan_effective_period_start: '',
+            plan_fi_reason: '',
+            plan_fi_status: '',
+            plan_id: '',
+            plan_intervention_type: InterventionType.IRS,
+            plan_jurisdictions_ids: [],
+            plan_status: 'new',
+            plan_title: this.getNewPlanTitle(),
+            plan_version: '',
+          }
+        : null,
+      previousPlanName: '',
+    };
   }
 
   public async componentDidMount() {
@@ -225,14 +257,16 @@ class IrsPlan extends React.Component<RouteComponentProps<RouteParams> & IrsPlan
   }
 
   public render() {
-    const { planId, planById, isDraftPlan, isFinalizedPlan } = this.props;
-    if (planId && !planById) {
+    const { planId, planById, isDraftPlan, isFinalizedPlan, isNewPlan } = this.props;
+    const { newPlan, isEditingPlanName } = this.state;
+    if ((planId && !planById) || (isNewPlan && !newPlan)) {
       return <Loading />;
     }
 
     const pageLabel =
       (isFinalizedPlan && planById && planById.plan_title) ||
       (isDraftPlan && planById && `${planById.plan_title} (draft)`) ||
+      (newPlan && newPlan.plan_title) ||
       'New Plan';
 
     const breadCrumbProps = this.getBreadCrumbProps(this.props, pageLabel);
@@ -244,14 +278,58 @@ class IrsPlan extends React.Component<RouteComponentProps<RouteParams> & IrsPlan
       planTableProps = this.getDrilldownPlanTableProps(this.props);
     }
 
+    const onEditNameButtonClick = (e: any) => {
+      this.onEditNameButtonClick(e);
+    };
+    const onEditNameInputChange = (e: any) => {
+      this.onEditNameInputChange(e);
+    };
+    const onCancleEditNameButtonClick = (e: any) => {
+      this.onCancleEditNameButtonClick(e);
+    };
+    const onSaveEditNameButtonClick = (e: any) => {
+      this.onSaveEditNameButtonClick(e);
+    };
     return (
       <div className="mb-5">
         <HeaderBreadcrumbs {...breadCrumbProps} />
         <Row>
-          <Col>
-            <h2 className="page-title">IRS: {pageLabel}</h2>
-            {/* rename button will go here */}
-          </Col>
+          {isFinalizedPlan && (
+            <Col>
+              <h2 className="page-title">IRS: {pageLabel}</h2>
+            </Col>
+          )}
+          {!isFinalizedPlan && !isEditingPlanName && (
+            <Col>
+              <h2 className="page-title">IRS: {pageLabel}</h2>
+              <Button color="link" onClick={onEditNameButtonClick}>
+                edit
+              </Button>
+            </Col>
+          )}
+          {!isFinalizedPlan && newPlan && isEditingPlanName && (
+            <Col>
+              <h2 className="page-title edit">IRS:</h2>
+              <InputGroup className="edit-plan-title-input-group">
+                <Input
+                  id="edit-plan-title-input"
+                  name="edit-plan-title-input"
+                  onChange={onEditNameInputChange}
+                  placeholder={newPlan.plan_title}
+                />
+                <InputGroupAddon addonType="append">
+                  <Button color="secondary" onClick={onCancleEditNameButtonClick}>
+                    cancel
+                  </Button>
+                </InputGroupAddon>
+                <InputGroupAddon addonType="append">
+                  <Button color="primary" onClick={onSaveEditNameButtonClick}>
+                    save
+                  </Button>
+                </InputGroupAddon>
+              </InputGroup>
+            </Col>
+          )}
           {/* <Col>Save / finalize buttons will go here</Col> */}
         </Row>
 
@@ -268,6 +346,55 @@ class IrsPlan extends React.Component<RouteComponentProps<RouteParams> & IrsPlan
         )}
       </div>
     );
+  }
+  private getNewPlanTitle() {
+    const date = new Date();
+    return `${InterventionType.IRS}_${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`;
+  }
+
+  private onEditNameButtonClick(e: any) {
+    e.preventDefault();
+    if (this.state.newPlan) {
+      this.setState({
+        isEditingPlanName: true,
+        previousPlanName: this.state.newPlan.plan_title,
+      });
+    }
+  }
+
+  private onEditNameInputChange(e: any) {
+    const { newPlan: NewPlan } = this.state;
+    if (NewPlan) {
+      const newPlan: PlanRecord = {
+        ...NewPlan,
+        plan_title: e.target.value,
+      };
+      this.setState({ newPlan });
+    }
+  }
+
+  private onCancleEditNameButtonClick(e: any) {
+    e.preventDefault();
+    const { newPlan: NewPlan, previousPlanName } = this.state;
+    if (NewPlan) {
+      const newPlan: PlanRecord = {
+        ...NewPlan,
+        plan_title: previousPlanName,
+      };
+      this.setState({
+        isEditingPlanName: false,
+        newPlan,
+        previousPlanName: '',
+      });
+    }
+  }
+
+  private onSaveEditNameButtonClick(e: any) {
+    e.preventDefault();
+    this.setState({
+      isEditingPlanName: false,
+      previousPlanName: '',
+    });
   }
 
   /** getDrilldownPlanTableProps - getter for hierarchical DrilldownTable props

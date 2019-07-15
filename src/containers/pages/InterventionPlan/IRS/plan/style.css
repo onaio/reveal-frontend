@@ -1,0 +1,10 @@
+.page-title {
+  display: inline-block;
+  margin-right: 6px;
+}
+
+.edit-plan-title-input-group {
+  display: inline-flex;
+  max-width: 50%;
+  top: -4px;
+}
