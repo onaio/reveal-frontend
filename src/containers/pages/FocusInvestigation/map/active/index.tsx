@@ -1,4 +1,4 @@
-import reducerRegistry from '@onaio/redux-reducer-registry';
+import reducerRegistry, { store } from '@onaio/redux-reducer-registry';
 import superset from '@onaio/superset-connector';
 import * as React from 'react';
 import { Helmet } from 'react-helmet';
@@ -64,7 +64,13 @@ import plansReducer, {
   Plan,
   reducerName as plansReducerName,
 } from '../../../../../store/ducks/plans';
-import { getStructuresFC, setStructures, Structure } from '../../../../../store/ducks/structures';
+import structuresReducer, {
+  getStructuresFC,
+  InitialStructureGeoJSON,
+  reducerName as structuresReducerName,
+  setStructures,
+  Structure,
+} from '../../../../../store/ducks/structures';
 import tasksReducer, {
   fetchTasks,
   getFCByPlanAndGoalAndJurisdiction,
@@ -78,6 +84,7 @@ import './style.css';
 /** register reducers */
 reducerRegistry.register(jurisdictionReducerName, jurisdictionReducer);
 reducerRegistry.register(goalsReducerName, goalsReducer);
+reducerRegistry.register(structuresReducerName, structuresReducer);
 reducerRegistry.register(plansReducerName, plansReducer);
 reducerRegistry.register(tasksReducerName, tasksReducer);
 
@@ -95,7 +102,9 @@ export interface MapSingleFIProps {
   plan: Plan | null;
   pointFeatureCollection: FeatureCollection<TaskGeoJSON>;
   polygonFeatureCollection: FeatureCollection<TaskGeoJSON>;
-  structures: FeatureCollection<TaskGeoJSON> | null /** we use this to get all structures */;
+  structures: FeatureCollection<
+    InitialStructureGeoJSON
+  > | null /** we use this to get all structures */;
 }
 
 /** default value for feature Collection */
@@ -334,10 +343,8 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
   let pointFeatureCollection = defaultFeatureCollection;
   let polygonFeatureCollection = defaultFeatureCollection;
   let structures = null;
-
   if (plan) {
     jurisdiction = getJurisdictionById(state, plan.jurisdiction_id);
-    structures = getStructuresFCByJurisdictionId(state, plan.jurisdiction_id);
     goals = getGoalsByPlanAndJurisdiction(state, plan.plan_id, plan.jurisdiction_id);
   }
 
@@ -359,6 +366,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
       false,
       [POLYGON, MULTI_POLYGON]
     );
+    structures = getStructuresFC(state);
   }
   return {
     currentGoal,

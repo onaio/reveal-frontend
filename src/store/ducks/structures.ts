@@ -1,11 +1,10 @@
-import { Color } from 'csstype';
 import { keyBy, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
 import SeamlessImmutable from 'seamless-immutable';
 import { FeatureCollection, GeoJSON, UpdateType, wrapFeatureCollection } from '../../helpers/utils';
 
 /** the reducer name */
-export const reducerName = 'structure';
+export const reducerName = 'structures';
 
 /** Interface for structure.geojson.properties for structure
  *  as received from the fetch request / superset
@@ -16,37 +15,18 @@ export interface InitialProperties {
   name: string;
   type: string;
   status: string;
-  version: string;
-  server_version: string;
+  version: number;
+  server_version: number;
   jurisdiction_id: string;
   geographic_level: number | null;
   effective_end_date: string | null;
   effective_start_date: string | null;
 }
 
-interface ColorUpdate {
-  color: Color;
-}
-/** Extends InitialProperties to include additional
- *  geojson.properties object properties
- */
-export type UpdatedProperties = UpdateType<InitialProperties, ColorUpdate>;
-
-interface InitialPropertiesUpdate {
-  properties: InitialProperties;
-}
 /** interface for structure.geojson for
  * structure as received from the fetch request / superset
  */
-export type InitialStructureGeoJSON = UpdateType<GeoJSON, InitialPropertiesUpdate>;
-
-interface UpdatedPropertiesUpdate {
-  properties: UpdatedProperties;
-}
-/** interface for structure GeoJSON after any properties are added
- * to geojson.properties
- */
-export type StructureGeoJSON = UpdateType<InitialStructureGeoJSON, UpdatedPropertiesUpdate>;
+export type InitialStructureGeoJSON = UpdateType<GeoJSON, InitialProperties>;
 
 /** interface for structure Object for
  * structure as received from the fetch request / superset
@@ -57,13 +37,7 @@ export interface InitialStructure {
   jurisdiction_id: string;
 }
 
-interface GeoJSONUpdate {
-  geojson: StructureGeoJSON;
-}
-/** Structure interface where geoJson implements InitialProperties
- * interface with added properties e.g .color
- */
-export type Structure = UpdateType<InitialStructure, GeoJSONUpdate>;
+export type Structure = InitialStructure;
 
 // actions
 /** STRUCTURES_SET action type */
@@ -153,12 +127,8 @@ export function getStructuresArray(state: Partial<Store>): Structure[] {
  * @param {Partial<Store>} state - the redux store
  * @returns {FeatureCollection} - a geoJSON Feature Collection object
  */
-export function getStructuresFC(state: Partial<Store>): FeatureCollection<StructureGeoJSON> {
+export function getStructuresFC(state: Partial<Store>): FeatureCollection<InitialStructureGeoJSON> {
   return wrapFeatureCollection(
-    values(
-      (state as any)[reducerName].structuresById.map(
-        (eachStructure: Structure) => eachStructure.geojson
-      )
-    )
+    values(getStructuresArray(state).map((eachStructure: Structure) => eachStructure.geojson))
   );
 }
