@@ -414,9 +414,18 @@ class IrsPlan extends React.Component<
         jurisdictionsToInclude.indexOf(jurisdiction.jurisdiction_id) !== -1
     );
 
+    const { newPlan: NewPlan } = this.state;
+    const newPlan: PlanRecord | null = NewPlan
+      ? {
+          ...NewPlan,
+          plan_jurisdictions_ids: [...jurisdictionsToInclude],
+        }
+      : NewPlan;
+
     this.setState({
       filteredJurisdictions,
       isSelectingCountry: false,
+      newPlan,
     });
   }
   private getNewPlanTitle() {
