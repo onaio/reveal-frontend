@@ -17,6 +17,7 @@ import {
   SUPERSET_PLAN_STRUCTURE_PIVOT_SLICE,
   SUPERSET_PLANS_SLICE,
   SUPERSET_STRUCTURES_SLICE,
+  SUPERSET_TASKS_SLICE,
 } from '../../../../../configs/env';
 import {
   FI_SINGLE_MAP_URL,
@@ -63,6 +64,7 @@ import plansReducer, {
   Plan,
   reducerName as plansReducerName,
 } from '../../../../../store/ducks/plans';
+import { getStructuresFC, setStructures, Structure } from '../../../../../store/ducks/structures';
 import tasksReducer, {
   fetchTasks,
   getFCByPlanAndGoalAndJurisdiction,
@@ -86,6 +88,7 @@ export interface MapSingleFIProps {
   fetchGoalsActionCreator: typeof fetchGoals;
   fetchJurisdictionsActionCreator: typeof fetchJurisdictions;
   fetchPlansActionCreator: typeof fetchPlans;
+  fetchStructuresActionCreator: typeof setStructures;
   fetchTasksActionCreator: typeof fetchTasks;
   goals: Goal[] | null;
   jurisdiction: Jurisdiction | null;
@@ -107,6 +110,7 @@ export const defaultMapSingleFIProps: MapSingleFIProps = {
   fetchGoalsActionCreator: fetchGoals,
   fetchJurisdictionsActionCreator: fetchJurisdictions,
   fetchPlansActionCreator: fetchPlans,
+  fetchStructuresActionCreator: setStructures,
   fetchTasksActionCreator: fetchTasks,
   goals: null,
   jurisdiction: null,
@@ -132,6 +136,7 @@ class SingleActiveFIMap extends React.Component<
       fetchGoalsActionCreator,
       fetchJurisdictionsActionCreator,
       fetchPlansActionCreator,
+      fetchStructuresActionCreator,
       fetchTasksActionCreator,
       plan,
     } = this.props;
@@ -140,6 +145,7 @@ class SingleActiveFIMap extends React.Component<
       const pivotParams = superset.getFormData(3000, [
         { comparator: planId, operator: '==', subject: 'plan_id' },
       ]);
+      let sqlFilterExpression = '';
       await supersetFetch(SUPERSET_PLAN_STRUCTURE_PIVOT_SLICE, pivotParams).then(
         async relevantJurisdictions => {
           if (!relevantJurisdictions) {
@@ -147,7 +153,6 @@ class SingleActiveFIMap extends React.Component<
               reject();
             });
           }
-          let sqlFilterExpression = '';
           for (let i = 0; i < relevantJurisdictions.length; i += 1) {
             const jurId = relevantJurisdictions[i].jurisdiction_id;
             if (i) {
@@ -165,18 +170,25 @@ class SingleActiveFIMap extends React.Component<
           fetchJurisdictionsActionCreator(jurisdictionResults);
         }
       );
+      /** define superset params for structures */
+      const structuresparams = superset.getFormData(3000, [{ sqlExpression: sqlFilterExpression }]);
       /** define superset params for jurisdictions */
       const supersetParams = superset.getFormData(3000, [
         { comparator: planId, operator: '==', subject: 'plan_id' },
       ]);
       /** Implement Ad hoc Queris since jurisdictions have no plan_id */
+      await supersetFetch(SUPERSET_STRUCTURES_SLICE, structuresparams).then(
+        (structuresResults: Structure[]) => {
+          fetchStructuresActionCreator(structuresResults);
+        }
+      );
       await supersetFetch(SUPERSET_PLANS_SLICE, supersetParams).then((result2: Plan[]) => {
         fetchPlansActionCreator(result2);
       });
       await supersetFetch(SUPERSET_GOALS_SLICE, supersetParams).then((result3: Goal[]) => {
         fetchGoalsActionCreator(result3);
       });
-      await supersetFetch(SUPERSET_STRUCTURES_SLICE, supersetParams).then((result4: Task[]) => {
+      await supersetFetch(SUPERSET_TASKS_SLICE, supersetParams).then((result4: Task[]) => {
         fetchTasksActionCreator(result4);
       });
     }
@@ -366,6 +378,7 @@ const mapDispatchToProps = {
   fetchGoalsActionCreator: fetchGoals,
   fetchJurisdictionsActionCreator: fetchJurisdictions,
   fetchPlansActionCreator: fetchPlans,
+  fetchStructuresActionCreator: setStructures,
   fetchTasksActionCreator: fetchTasks,
   setCurrentGoalActionCreator: setCurrentGoal,
 };
