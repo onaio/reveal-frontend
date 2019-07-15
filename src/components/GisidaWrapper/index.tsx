@@ -15,6 +15,7 @@ import { ConfigStore, FeatureCollection, FlexObject } from '../../helpers/utils'
 import store from '../../store';
 import { Goal, setCurrentGoal } from '../../store/ducks/goals';
 import { Jurisdiction, JurisdictionGeoJSON } from '../../store/ducks/jurisdictions';
+import { InitialStructureGeoJSON } from '../../store/ducks/structures';
 import { TaskGeoJSON } from '../../store/ducks/tasks';
 import './gisida.css';
 
@@ -92,7 +93,7 @@ interface GisidaProps {
   geoData: Jurisdiction | null;
   goal?: Goal[] | null;
   handlers: Handlers[];
-  structures: FeatureCollection<TaskGeoJSON> | null;
+  structures: FeatureCollection<InitialStructureGeoJSON> | null;
   minHeight?: string;
   basemapStyle?: string | Style;
 }
