@@ -8,7 +8,12 @@ import * as React from 'react';
 import { GREY } from '../../colors';
 import Loading from '../../components/page/Loading/index';
 import { GISIDA_MAPBOX_TOKEN, GISIDA_ONADATA_API_TOKEN } from '../../configs/env';
-import { circleLayerConfig, fillLayerConfig, lineLayerConfig } from '../../configs/settings';
+import {
+  circleLayerConfig,
+  fillLayerConfig,
+  lineLayerConfig,
+  symbolLayerConfig,
+} from '../../configs/settings';
 import { APP, MAIN_PLAN, MAP_ID, STRUCTURE_LAYER } from '../../constants';
 import { EventData } from '../../helpers/mapbox';
 import { ConfigStore, FeatureCollection, FlexObject } from '../../helpers/utils';
@@ -345,6 +350,22 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
     }
     // handle Point layer types
     if (pointFeatureCollection) {
+      let mosquitoCollectionSymbolLayer;
+      if (this.props.currentGoal === 'Mosquito_Collection_Min_3_Traps') {
+        // build symbol layers to render on top of circle layers
+        mosquitoCollectionSymbolLayer = {
+          ...symbolLayerConfig,
+          id: `${this.props.currentGoal}-symbol`,
+          layout: {
+            'icon-image': 'mosquito',
+            'icon-size': 0.25,
+          },
+          source: {
+            ...symbolLayerConfig.source.data,
+            data: JSON.stringify(pointFeatureCollection),
+          },
+        };
+      }
       builtGeometriesContainer.push({
         ...circleLayerConfig,
         id: `${this.props.currentGoal}-point`,
@@ -362,6 +383,9 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
           },
         },
       });
+      if (mosquitoCollectionSymbolLayer) {
+        builtGeometriesContainer.push(mosquitoCollectionSymbolLayer);
+      }
     }
     // Handle fill layers
     if (polygonFeatureCollection) {

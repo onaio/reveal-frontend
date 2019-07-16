@@ -215,3 +215,22 @@ export const circleLayerConfig = {
   type: 'circle',
   visible: false,
 };
+
+export const symbolLayerConfig = {
+  id: 'symbollayers',
+  layout: {
+    'icon-image': 'mosquito',
+    'icon-size': 0.25,
+  },
+  source: {
+    data: {
+      data: {
+        coordinates: [],
+        type: 'Point',
+      },
+      type: 'FeatureCollection',
+    },
+    type: 'geojson',
+  },
+  type: 'symbol',
+};
