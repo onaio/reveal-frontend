@@ -2,9 +2,11 @@ import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import { createBrowserHistory } from 'history';
 import React from 'react';
+import { Helmet } from 'react-helmet';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import { FI_SINGLE_URL } from '../../../../../constants';
+import { FI_SINGLE_TITLE } from '../../../../../constants';
 import store from '../../../../../store';
 import { fetchGoals } from '../../../../../store/ducks/goals';
 import { fetchJurisdictions } from '../../../../../store/ducks/jurisdictions';
@@ -75,6 +77,10 @@ describe('containers/pages/SingleFI', () => {
         <SingleFI {...props} />
       </Router>
     );
+    // check that the documents title was changed correctly
+    const helmet = Helmet.peek();
+    expect(helmet.title).toEqual(FI_SINGLE_TITLE);
+
     expect(toJson(wrapper)).toMatchSnapshot();
     expect(wrapper.find('GisidaWrapperMock').props()).toMatchSnapshot();
     expect(wrapper.find('HeaderBreadcrumb').length).toEqual(1);

@@ -3,8 +3,10 @@ import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import { createBrowserHistory } from 'history';
 import React from 'react';
+import { Helmet } from 'react-helmet';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
+import { FI_ACTIVE_TITLE } from '../../../../../constants';
 import store from '../../../../../store';
 import reducer, { fetchPlans, reducerName } from '../../../../../store/ducks/plans';
 import * as fixtures from '../../../../../store/ducks/tests/fixtures';
@@ -53,7 +55,7 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
     );
   });
 
-  it('renders ActiveFocusInvestigation correctly', () => {
+  it('renders ActiveFocusInvestigation correctly $ changes page title', () => {
     const mock: any = jest.fn();
     mock.mockImplementation(() => Promise.resolve(fixtures.plans));
     const props = {
@@ -69,6 +71,8 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
         <ActiveFocusInvestigation {...props} />
       </Router>
     );
+    const helmet = Helmet.peek();
+    expect(helmet.title).toEqual(FI_ACTIVE_TITLE);
     expect(toJson(wrapper)).toMatchSnapshot();
     expect(toJson(wrapper.find('HeaderBreadcrumb'))).toMatchSnapshot();
     wrapper.unmount();
