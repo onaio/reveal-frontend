@@ -307,20 +307,22 @@ class IrsPlan extends React.Component<
     const planHeaderRow = (
       <Row>
         {isFinalizedPlan && (
-          <Col>
+          <Col className="page-title-col">
             <h2 className="page-title">IRS: {pageLabel}</h2>
+            <hr />
           </Col>
         )}
         {!isFinalizedPlan && !isEditingPlanName && (
-          <Col>
+          <Col className="page-title-col">
             <h2 className="page-title">IRS: {pageLabel}</h2>
             <Button color="link" onClick={onEditNameButtonClick}>
               edit
             </Button>
+            <hr />
           </Col>
         )}
         {!isFinalizedPlan && newPlan && isEditingPlanName && (
-          <Col>
+          <Col className="page-title-col">
             <h2 className="page-title edit">IRS:</h2>
             <InputGroup className="edit-plan-title-input-group">
               <Input
@@ -340,6 +342,7 @@ class IrsPlan extends React.Component<
                 </Button>
               </InputGroupAddon>
             </InputGroup>
+            <hr />
           </Col>
         )}
         {/* <Col>Save / finalize buttons will go here</Col> */}
@@ -379,7 +382,7 @@ class IrsPlan extends React.Component<
         {planTableProps && (
           <Row>
             <Col>
-              <h3>Jurisdictions</h3>
+              <h3 className="table-title">Jurisdictions</h3>
               <DrillDownTable {...planTableProps} />
             </Col>
           </Row>
@@ -528,6 +531,21 @@ class IrsPlan extends React.Component<
     }
   }
 
+  private onToggleAllCheckboxChange(e: any) {
+    const { newPlan: NewPlan, filteredJurisdictions } = this.state;
+    if (e && e.target && NewPlan) {
+      const { checked: isSelected } = e.target;
+      const newPlanJurisdictionIds: string[] = isSelected
+        ? filteredJurisdictions.map((j: Jurisdiction) => j.jurisdiction_id)
+        : [];
+      const newPlan: PlanRecord = {
+        ...(this.state.newPlan as PlanRecord),
+        plan_jurisdictions_ids: [...newPlanJurisdictionIds],
+      };
+      this.setState({ newPlan });
+    }
+  }
+
   /** getDrilldownPlanTableProps - getter for hierarchical DrilldownTable props
    * @param props - component props
    * @returns tableProps|null - compatible object for DrillDownTable props
@@ -540,6 +558,9 @@ class IrsPlan extends React.Component<
     }
 
     const planJurisdictionIds = [...newPlan.plan_jurisdictions_ids];
+    const onToggleAllCheckboxChange = (e: any) => {
+      this.onToggleAllCheckboxChange(e);
+    };
     const onTableCheckboxChange = (e: any) => {
       this.onTableCheckboxChange(e);
     };
@@ -549,13 +570,21 @@ class IrsPlan extends React.Component<
 
     const columns = [
       {
-        Header: '',
+        Header: () => (
+          <Input
+            checked={planJurisdictionIds.length === filteredJurisdictions.length}
+            className="plan-jurisdiction-select-all-checkbox"
+            onChange={onToggleAllCheckboxChange}
+            type="checkbox"
+          />
+        ),
         columns: [
           {
             Header: '',
             accessor: (j: Jurisdiction) => (
               <Input
                 checked={planJurisdictionIds.includes(j.jurisdiction_id)}
+                className="plan-jurisdiction-selection-checkbox"
                 onChange={onTableCheckboxChange}
                 onClick={onTableCheckboxClick}
                 type="checkbox"
@@ -563,11 +592,12 @@ class IrsPlan extends React.Component<
               />
             ),
             id: 'jurisdiction_selection',
+            maxWidth: 24,
           },
         ],
       },
       {
-        Header: 'Title',
+        Header: 'Name',
         columns: [
           {
             Header: '',
