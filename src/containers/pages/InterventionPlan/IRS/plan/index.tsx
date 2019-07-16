@@ -388,6 +388,30 @@ class IrsPlan extends React.Component<
     );
   }
 
+  private getDecendantJurisdictionIds(
+    ParentIds: string[],
+    jurisdictionsArray: Jurisdiction[],
+    doIncludeParentIds: boolean = true
+  ): string[] {
+    const decendantIds: string[] = [];
+    const parentIds: string[] = [...ParentIds];
+
+    while (parentIds.length) {
+      const parentId = parentIds.shift() as string;
+      if (ParentIds.indexOf(parentId) === -1 || doIncludeParentIds) {
+        decendantIds.push(parentId);
+      }
+
+      for (const jurisdiction of jurisdictionsArray) {
+        if (jurisdiction.parent_id === parentId) {
+          parentIds.push(jurisdiction.jurisdiction_id);
+        }
+      }
+    }
+
+    return decendantIds;
+  }
+
   private onSelectCountryChange(e: any) {
     if (!e || !e.target || !(e.target.value as ADMN0_PCODE)) {
       return false;
@@ -395,19 +419,10 @@ class IrsPlan extends React.Component<
     const { jurisdictionsArray } = this.props;
     const country: JurisdictionsByCountry = CountriesAdmin0[e.target.value as ADMN0_PCODE];
 
-    const jurisdictionsToInclude: string[] = [];
-    const jurisdictionsToCheck: string[] = [...country.jurisdictionIds];
-
-    while (jurisdictionsToCheck.length) {
-      const parentJurisdictionId = jurisdictionsToCheck.shift();
-      jurisdictionsToInclude.push(parentJurisdictionId as string);
-
-      for (const jurisdiction of jurisdictionsArray) {
-        if (jurisdiction.parent_id === parentJurisdictionId) {
-          jurisdictionsToCheck.push(jurisdiction.jurisdiction_id);
-        }
-      }
-    }
+    const jurisdictionsToInclude = this.getDecendantJurisdictionIds(
+      country.jurisdictionIds,
+      jurisdictionsArray
+    );
 
     const filteredJurisdictions: Jurisdiction[] = jurisdictionsArray.filter(
       (jurisdiction: Jurisdiction) =>
