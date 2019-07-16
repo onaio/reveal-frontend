@@ -493,35 +493,108 @@ class IrsPlan extends React.Component<
     });
   }
 
+  private onToggleJurisdictionSelection(id: string, isSelected: boolean) {
+    const { newPlan: NewPlan, filteredJurisdictions } = this.state;
+    if (NewPlan && NewPlan.plan_jurisdictions_ids && filteredJurisdictions.length) {
+      const newPlanJurisdictionIds = [...NewPlan.plan_jurisdictions_ids];
+
+      // define child jurisdictions of clicked jurisdiction
+      const jurisdictionIdsToToggle = this.getDecendantJurisdictionIds([id], filteredJurisdictions);
+
+      // loop through all child jurisdictions
+      for (const jurisdictionId of jurisdictionIdsToToggle) {
+        // if checked and not in plan_jurisdictions_ids, add it
+        if (!newPlanJurisdictionIds.includes(jurisdictionId)) {
+          newPlanJurisdictionIds.push(jurisdictionId);
+          // if not checked and in plan_jurisdictions_ids, remove it
+        } else {
+          newPlanJurisdictionIds.splice(newPlanJurisdictionIds.indexOf(jurisdictionId), 1);
+        }
+      }
+
+      // define newPlan with newPlanJurisdictionIds, set state
+      const newPlan: PlanRecord = {
+        ...NewPlan,
+        plan_jurisdictions_ids: [...newPlanJurisdictionIds],
+      };
+      this.setState({ newPlan });
+    }
+  }
+
+  private onTableCheckboxChange(e: any) {
+    if (e && e.target) {
+      const { value: id, checked: isSelected } = e.target;
+      this.onToggleJurisdictionSelection(id, isSelected);
+    }
+  }
+
   /** getDrilldownPlanTableProps - getter for hierarchical DrilldownTable props
    * @param props - component props
    * @returns tableProps|null - compatible object for DrillDownTable props
    */
   private getDrilldownPlanTableProps(state: IrsPlanState) {
-    const { filteredJurisdictions } = state;
-    if (!filteredJurisdictions.length) {
+    const { filteredJurisdictions, newPlan } = state;
+
+    if (!newPlan || !newPlan.plan_jurisdictions_ids) {
       return null;
     }
 
-    const jurisdictionData = filteredJurisdictions.map((j: Jurisdiction) =>
-      j.geojson
-        ? {
-            ...j.geojson.properties,
-          }
-        : {
-            ...{ id: j.jurisdiction_id },
-            ...j,
-          }
-    );
+    const planJurisdictionIds = [...newPlan.plan_jurisdictions_ids];
+    const onTableCheckboxChange = (e: any) => {
+      this.onTableCheckboxChange(e);
+    };
+    const onTableCheckboxClick = (e: any) => {
+      e.stopPropagation();
+    };
 
-    // to do - add checkmark selection column
-    // to do - add checkmark selection event handler
-    // to do - add selection object to component state
+    const columns = [
+      {
+        Header: '',
+        columns: [
+          {
+            Header: '',
+            accessor: (j: Jurisdiction) => (
+              <Input
+                checked={planJurisdictionIds.includes(j.jurisdiction_id)}
+                onChange={onTableCheckboxChange}
+                onClick={onTableCheckboxClick}
+                type="checkbox"
+                value={j.jurisdiction_id}
+              />
+            ),
+            id: 'jurisdiction_selection',
+          },
+        ],
+      },
+      {
+        Header: 'Title',
+        columns: [
+          {
+            Header: '',
+            accessor: 'name',
+          },
+        ],
+      },
+      {
+        Header: 'ID',
+        columns: [
+          {
+            Header: '',
+            accessor: 'jurisdiction_id',
+          },
+        ],
+      },
+    ];
+
     // to do - make Name column clickable
 
     const tableProps: DrillDownProps<any> = {
       CellComponent: DropDownCell,
-      data: [...jurisdictionData],
+      columns,
+      data: filteredJurisdictions.map((j: any) => ({
+        ...j,
+        id: j.jurisdiction_id,
+      })),
       minRows: 0,
       rootParentId: null,
       showPagination: false,
