@@ -2,8 +2,10 @@ import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import { createBrowserHistory } from 'history';
 import React from 'react';
+import { Helmet } from 'react-helmet';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
+import { IRS_TITLE } from '../../../../constants';
 import { FI_SINGLE_URL } from '../../../../constants';
 import store from '../../../../store';
 import { Plan } from '../../../../store/ducks/plans';
@@ -61,6 +63,8 @@ describe('containers/pages/IRS', () => {
         </Router>
       </Provider>
     );
+    const helmet = Helmet.peek();
+    expect(helmet.title).toEqual(IRS_TITLE);
     expect(toJson(wrapper)).toMatchSnapshot();
     wrapper.unmount();
   });
