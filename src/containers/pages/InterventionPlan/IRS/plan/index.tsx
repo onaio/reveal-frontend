@@ -3,7 +3,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { Column } from 'react-table';
-import { Col, Row } from 'reactstrap';
+import { Button, Col, Input, InputGroup, InputGroupAddon, Row } from 'reactstrap';
 import { Store } from 'redux';
 
 import DrillDownTable, { DrillDownProps, DropDownCell } from '@onaio/drill-down-table';
@@ -18,6 +18,11 @@ import {
 } from '../../../../../configs/env';
 import { HOME, HOME_URL, INTERVENTION_IRS_URL } from '../../../../../constants';
 import { FlexObject, RouteParams } from '../../../../../helpers/utils';
+import {
+  ADMN0_PCODE,
+  CountriesAdmin0,
+  JurisdictionsByCountry,
+} from './../../../../../configs/settings';
 
 import supersetFetch from '../../../../../services/superset';
 
@@ -33,6 +38,8 @@ import jurisdictionReducer, {
 import plansReducer, {
   fetchPlanRecords,
   getPlanRecordById,
+  InterventionStatus,
+  InterventionType,
   PlanRecord,
   PlanRecordResponse,
   reducerName as plansReducerName,
@@ -43,6 +50,8 @@ import HeaderBreadcrumbs, {
   BreadCrumbProps,
 } from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../../components/page/Loading';
+
+import './style.css';
 
 /** register the plans reducer */
 reducerRegistry.register(plansReducerName, plansReducer);
@@ -80,11 +89,43 @@ export const defaultIrsPlanProps: IrsPlanProps = {
   supersetService: supersetFetch,
 };
 
+interface IrsPlanState {
+  filteredJurisdictions: Jurisdiction[];
+  isEditingPlanName: boolean;
+  isSelectingCountry: boolean;
+  newPlan: null | PlanRecord;
+  previousPlanName: string;
+}
+
 /** IrsPlan - component for IRS Plan page */
-class IrsPlan extends React.Component<RouteComponentProps<RouteParams> & IrsPlanProps, {}> {
+class IrsPlan extends React.Component<
+  RouteComponentProps<RouteParams> & IrsPlanProps,
+  IrsPlanState
+> {
   public static defaultProps = defaultIrsPlanProps;
   constructor(props: RouteComponentProps<RouteParams> & IrsPlanProps) {
     super(props);
+    this.state = {
+      filteredJurisdictions: [],
+      isEditingPlanName: false,
+      isSelectingCountry: props.isNewPlan || false,
+      newPlan: props.isNewPlan
+        ? {
+            id: '',
+            plan_effective_period_end: '',
+            plan_effective_period_start: '',
+            plan_fi_reason: '',
+            plan_fi_status: '',
+            plan_id: '',
+            plan_intervention_type: InterventionType.IRS,
+            plan_jurisdictions_ids: [],
+            plan_status: 'new',
+            plan_title: this.getNewPlanTitle(),
+            plan_version: '',
+          }
+        : null,
+      previousPlanName: '',
+    };
   }
 
   public async componentDidMount() {
@@ -225,14 +266,16 @@ class IrsPlan extends React.Component<RouteComponentProps<RouteParams> & IrsPlan
   }
 
   public render() {
-    const { planId, planById, isDraftPlan, isFinalizedPlan } = this.props;
-    if (planId && !planById) {
+    const { planId, planById, isDraftPlan, isFinalizedPlan, isNewPlan } = this.props;
+    const { newPlan, isEditingPlanName, isSelectingCountry } = this.state;
+    if ((planId && !planById) || (isNewPlan && !newPlan)) {
       return <Loading />;
     }
 
     const pageLabel =
       (isFinalizedPlan && planById && planById.plan_title) ||
       (isDraftPlan && planById && `${planById.plan_title} (draft)`) ||
+      (newPlan && newPlan.plan_title) ||
       'New Plan';
 
     const breadCrumbProps = this.getBreadCrumbProps(this.props, pageLabel);
@@ -241,27 +284,105 @@ class IrsPlan extends React.Component<RouteComponentProps<RouteParams> & IrsPlan
     if (isFinalizedPlan) {
       planTableProps = this.getFinalizedPlanTableProps(this.props);
     } else {
-      planTableProps = this.getDrilldownPlanTableProps(this.props);
+      planTableProps = this.getDrilldownPlanTableProps(this.state);
+    }
+
+    const onEditNameButtonClick = (e: any) => {
+      this.onEditNameButtonClick(e);
+    };
+    const onEditNameInputChange = (e: any) => {
+      this.onEditNameInputChange(e);
+    };
+    const onCancleEditNameButtonClick = (e: any) => {
+      this.onCancleEditNameButtonClick(e);
+    };
+    const onSaveEditNameButtonClick = (e: any) => {
+      this.onSaveEditNameButtonClick(e);
+    };
+
+    const onSelectCountryChange = (e: any) => {
+      this.onSelectCountryChange(e);
+    };
+
+    const planHeaderRow = (
+      <Row>
+        {isFinalizedPlan && (
+          <Col className="page-title-col">
+            <h2 className="page-title">IRS: {pageLabel}</h2>
+            <hr />
+          </Col>
+        )}
+        {!isFinalizedPlan && !isEditingPlanName && (
+          <Col className="page-title-col">
+            <h2 className="page-title">IRS: {pageLabel}</h2>
+            <Button color="link" onClick={onEditNameButtonClick}>
+              edit
+            </Button>
+            <hr />
+          </Col>
+        )}
+        {!isFinalizedPlan && newPlan && isEditingPlanName && (
+          <Col className="page-title-col">
+            <h2 className="page-title edit">IRS:</h2>
+            <InputGroup className="edit-plan-title-input-group">
+              <Input
+                id="edit-plan-title-input"
+                name="edit-plan-title-input"
+                onChange={onEditNameInputChange}
+                placeholder={newPlan.plan_title}
+              />
+              <InputGroupAddon addonType="append">
+                <Button color="secondary" onClick={onCancleEditNameButtonClick}>
+                  cancel
+                </Button>
+              </InputGroupAddon>
+              <InputGroupAddon addonType="append">
+                <Button color="primary" onClick={onSaveEditNameButtonClick}>
+                  save
+                </Button>
+              </InputGroupAddon>
+            </InputGroup>
+            <hr />
+          </Col>
+        )}
+        {/* <Col>Save / finalize buttons will go here</Col> */}
+      </Row>
+    );
+
+    if (isSelectingCountry) {
+      return (
+        <div className="mb-5">
+          <HeaderBreadcrumbs {...breadCrumbProps} />
+          {planHeaderRow}
+          <Row>
+            <Col>
+              <Input
+                id="select-plan-country"
+                name="select-plan-country"
+                onChange={onSelectCountryChange}
+                type="select"
+              >
+                <option>Choose a Country</option>
+                <option value="TH">Thailand</option>
+                <option value="ZM">Zambia</option>
+              </Input>
+            </Col>
+          </Row>
+        </div>
+      );
     }
 
     return (
       <div className="mb-5">
         <HeaderBreadcrumbs {...breadCrumbProps} />
-        <Row>
-          <Col>
-            <h2 className="page-title">IRS: {pageLabel}</h2>
-            {/* rename button will go here */}
-          </Col>
-          {/* <Col>Save / finalize buttons will go here</Col> */}
-        </Row>
-
+        {planHeaderRow}
         {/* <Row><Col>Map will go here!</Col></Row> */}
 
         {/* Section for table of jurisdictions */}
         {planTableProps && (
           <Row>
             <Col>
-              <h3>Jurisdictions</h3>
+              <h3 className="table-title">Jurisdictions</h3>
               <DrillDownTable {...planTableProps} />
             </Col>
           </Row>
@@ -270,35 +391,240 @@ class IrsPlan extends React.Component<RouteComponentProps<RouteParams> & IrsPlan
     );
   }
 
+  private getDecendantJurisdictionIds(
+    ParentIds: string[],
+    jurisdictionsArray: Jurisdiction[],
+    doIncludeParentIds: boolean = true
+  ): string[] {
+    const decendantIds: string[] = [];
+    const parentIds: string[] = [...ParentIds];
+
+    while (parentIds.length) {
+      const parentId = parentIds.shift() as string;
+      if (ParentIds.indexOf(parentId) === -1 || doIncludeParentIds) {
+        decendantIds.push(parentId);
+      }
+
+      for (const jurisdiction of jurisdictionsArray) {
+        if (jurisdiction.parent_id === parentId) {
+          parentIds.push(jurisdiction.jurisdiction_id);
+        }
+      }
+    }
+
+    return decendantIds;
+  }
+
+  private onSelectCountryChange(e: any) {
+    if (!e || !e.target || !(e.target.value as ADMN0_PCODE)) {
+      return false;
+    }
+    const { jurisdictionsArray } = this.props;
+    const country: JurisdictionsByCountry = CountriesAdmin0[e.target.value as ADMN0_PCODE];
+
+    const jurisdictionsToInclude = this.getDecendantJurisdictionIds(
+      country.jurisdictionIds,
+      jurisdictionsArray
+    );
+
+    const filteredJurisdictions: Jurisdiction[] = jurisdictionsArray.filter(
+      (jurisdiction: Jurisdiction) =>
+        jurisdictionsToInclude.indexOf(jurisdiction.jurisdiction_id) !== -1
+    );
+
+    const { newPlan: NewPlan } = this.state;
+    const newPlan: PlanRecord | null = NewPlan
+      ? {
+          ...NewPlan,
+          plan_jurisdictions_ids: [...jurisdictionsToInclude],
+        }
+      : NewPlan;
+
+    this.setState({
+      filteredJurisdictions,
+      isSelectingCountry: false,
+      newPlan,
+    });
+  }
+  private getNewPlanTitle() {
+    const date = new Date();
+    return `${InterventionType.IRS}_${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`;
+  }
+
+  private onEditNameButtonClick(e: any) {
+    e.preventDefault();
+    if (this.state.newPlan) {
+      this.setState({
+        isEditingPlanName: true,
+        previousPlanName: this.state.newPlan.plan_title,
+      });
+    }
+  }
+
+  private onEditNameInputChange(e: any) {
+    const { newPlan: NewPlan } = this.state;
+    if (NewPlan) {
+      const newPlan: PlanRecord = {
+        ...NewPlan,
+        plan_title: e.target.value,
+      };
+      this.setState({ newPlan });
+    }
+  }
+
+  private onCancleEditNameButtonClick(e: any) {
+    e.preventDefault();
+    const { newPlan: NewPlan, previousPlanName } = this.state;
+    if (NewPlan) {
+      const newPlan: PlanRecord = {
+        ...NewPlan,
+        plan_title: previousPlanName,
+      };
+      this.setState({
+        isEditingPlanName: false,
+        newPlan,
+        previousPlanName: '',
+      });
+    }
+  }
+
+  private onSaveEditNameButtonClick(e: any) {
+    e.preventDefault();
+    this.setState({
+      isEditingPlanName: false,
+      previousPlanName: '',
+    });
+  }
+
+  private onToggleJurisdictionSelection(id: string, isSelected: boolean) {
+    const { newPlan: NewPlan, filteredJurisdictions } = this.state;
+    if (NewPlan && NewPlan.plan_jurisdictions_ids && filteredJurisdictions.length) {
+      const newPlanJurisdictionIds = [...NewPlan.plan_jurisdictions_ids];
+
+      // define child jurisdictions of clicked jurisdiction
+      const jurisdictionIdsToToggle = this.getDecendantJurisdictionIds([id], filteredJurisdictions);
+
+      // loop through all child jurisdictions
+      for (const jurisdictionId of jurisdictionIdsToToggle) {
+        // if checked and not in plan_jurisdictions_ids, add it
+        if (!newPlanJurisdictionIds.includes(jurisdictionId)) {
+          newPlanJurisdictionIds.push(jurisdictionId);
+          // if not checked and in plan_jurisdictions_ids, remove it
+        } else {
+          newPlanJurisdictionIds.splice(newPlanJurisdictionIds.indexOf(jurisdictionId), 1);
+        }
+      }
+
+      // define newPlan with newPlanJurisdictionIds, set state
+      const newPlan: PlanRecord = {
+        ...NewPlan,
+        plan_jurisdictions_ids: [...newPlanJurisdictionIds],
+      };
+      this.setState({ newPlan });
+    }
+  }
+
+  private onTableCheckboxChange(e: any) {
+    if (e && e.target) {
+      const { value: id, checked: isSelected } = e.target;
+      this.onToggleJurisdictionSelection(id, isSelected);
+    }
+  }
+
+  private onToggleAllCheckboxChange(e: any) {
+    const { newPlan: NewPlan, filteredJurisdictions } = this.state;
+    if (e && e.target && NewPlan) {
+      const { checked: isSelected } = e.target;
+      const newPlanJurisdictionIds: string[] = isSelected
+        ? filteredJurisdictions.map((j: Jurisdiction) => j.jurisdiction_id)
+        : [];
+      const newPlan: PlanRecord = {
+        ...(this.state.newPlan as PlanRecord),
+        plan_jurisdictions_ids: [...newPlanJurisdictionIds],
+      };
+      this.setState({ newPlan });
+    }
+  }
+
   /** getDrilldownPlanTableProps - getter for hierarchical DrilldownTable props
    * @param props - component props
    * @returns tableProps|null - compatible object for DrillDownTable props
    */
-  private getDrilldownPlanTableProps(props: IrsPlanProps) {
-    const { jurisdictionsArray } = props;
-    if (!jurisdictionsArray.length) {
+  private getDrilldownPlanTableProps(state: IrsPlanState) {
+    const { filteredJurisdictions, newPlan } = state;
+
+    if (!newPlan || !newPlan.plan_jurisdictions_ids) {
       return null;
     }
 
-    const jurisdictionData = jurisdictionsArray.map((j: Jurisdiction) =>
-      j.geojson
-        ? {
-            ...j.geojson.properties,
-          }
-        : {
-            ...{ id: j.jurisdiction_id },
-            ...j,
-          }
-    );
+    const planJurisdictionIds = [...newPlan.plan_jurisdictions_ids];
+    const onToggleAllCheckboxChange = (e: any) => {
+      this.onToggleAllCheckboxChange(e);
+    };
+    const onTableCheckboxChange = (e: any) => {
+      this.onTableCheckboxChange(e);
+    };
+    const onTableCheckboxClick = (e: any) => {
+      e.stopPropagation();
+    };
 
-    // to do - add checkmark selection column
-    // to do - add checkmark selection event handler
-    // to do - add selection object to component state
+    const columns = [
+      {
+        Header: () => (
+          <Input
+            checked={planJurisdictionIds.length === filteredJurisdictions.length}
+            className="plan-jurisdiction-select-all-checkbox"
+            onChange={onToggleAllCheckboxChange}
+            type="checkbox"
+          />
+        ),
+        columns: [
+          {
+            Header: '',
+            accessor: (j: Jurisdiction) => (
+              <Input
+                checked={planJurisdictionIds.includes(j.jurisdiction_id)}
+                className="plan-jurisdiction-selection-checkbox"
+                onChange={onTableCheckboxChange}
+                onClick={onTableCheckboxClick}
+                type="checkbox"
+                value={j.jurisdiction_id}
+              />
+            ),
+            id: 'jurisdiction_selection',
+            maxWidth: 24,
+          },
+        ],
+      },
+      {
+        Header: 'Name',
+        columns: [
+          {
+            Header: '',
+            accessor: 'name',
+          },
+        ],
+      },
+      {
+        Header: 'ID',
+        columns: [
+          {
+            Header: '',
+            accessor: 'jurisdiction_id',
+          },
+        ],
+      },
+    ];
+
     // to do - make Name column clickable
 
     const tableProps: DrillDownProps<any> = {
       CellComponent: DropDownCell,
-      data: [...jurisdictionData],
+      columns,
+      data: filteredJurisdictions.map((j: any) => ({
+        ...j,
+        id: j.jurisdiction_id,
+      })),
       identifierField: 'jurisdiction_id',
       linkerField: 'name',
       minRows: 0,

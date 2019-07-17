@@ -215,3 +215,47 @@ export const circleLayerConfig = {
   type: 'circle',
   visible: false,
 };
+
+export interface ADMN0 {
+  ADMN0_PCODE: string;
+  ADMN0_EN: string;
+}
+export interface ADMN1 extends ADMN0 {
+  ADMN1_PCODE: string;
+  ADMN1_EN: string;
+}
+export interface ADMN2 extends ADMN1 {
+  ADMN2_PCODE: string;
+  ADMN2_EN: string;
+}
+export interface ADMN3 extends ADMN2 {
+  ADMN3_PCODE: string;
+  ADMN3_EN: string;
+}
+
+export interface JurisdictionsByCountry extends ADMN0 {
+  jurisdictionIds: string[];
+  id?: string;
+}
+
+export const ZambiaAdmin0: JurisdictionsByCountry = {
+  ADMN0_EN: 'Zambia',
+  ADMN0_PCODE: 'ZM',
+  jurisdictionIds: ['2939', '2940', '2942', '2942', '2953', '2954'],
+};
+
+export const ThailandAdmin0: JurisdictionsByCountry = {
+  ADMN0_EN: 'Thailand',
+  ADMN0_PCODE: 'TH',
+  jurisdictionIds: [
+    '61707fc2-c6ac-4112-a8d6-2a4861958396',
+    '64301afa-e973-447b-a88c-4da20025c76f',
+    '7f204867-fab0-4246-a97c-92e0b936cab6',
+    '9c3c2db4-bddd-44c5-870a-a0eef539e4da',
+  ],
+};
+export type ADMN0_PCODE = 'TH' | 'ZM';
+export const CountriesAdmin0 = {
+  TH: ThailandAdmin0,
+  ZM: ZambiaAdmin0,
+};

@@ -1,0 +1,28 @@
+.page-title {
+  display: inline-block;
+  margin-right: 6px;
+}
+
+.page-title-col hr {
+  display: block;
+  margin-top: 6px;
+}
+
+.table-title {
+  font-weight: 200;
+}
+
+.edit-plan-title-input-group {
+  display: inline-flex;
+  max-width: 50%;
+  top: -4px;
+}
+
+.plan-jurisdiction-selection-checkbox {
+  margin-left: 0px;
+}
+
+.plan-jurisdiction-select-all-checkbox {
+  margin-left: 0px;
+  margin-top: 0.075rem;
+}
