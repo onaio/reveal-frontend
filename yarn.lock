@@ -1102,10 +1102,10 @@
   resolved "https://registry.yarnpkg.com/@onaio/session-reducer/-/session-reducer-0.0.10.tgz#ba245827b0d52355bf0b921ff139fc56f9e80e7f"
   integrity sha512-xEwtJW9ouFBcQbaT49ihg+fApC8wFZ9KIycATMsTIXUWaMe4Dbp38Dc0w0hPwlSr+cTgCXBQMCP658GXyskDcg==
 
-"@onaio/superset-connector@^0.0.11":
-  version "0.0.11"
-  resolved "https://registry.yarnpkg.com/@onaio/superset-connector/-/superset-connector-0.0.11.tgz#2104c712cc1c988b322d25c8d1b2de2465a42fbc"
-  integrity sha512-PWysD43GkrCBOtgmX5SNxeMmQ3AqjW1TqgdUv+Qs6//EhB24lbi34nI3WAuX6QtXZ/VSMfSeEb/Z5gBJg52kuw==
+"@onaio/superset-connector@^0.0.13":
+  version "0.0.13"
+  resolved "https://registry.yarnpkg.com/@onaio/superset-connector/-/superset-connector-0.0.13.tgz#5736a565bfd29d4a952398491627c4eda3301b69"
+  integrity sha512-cXwBXDqP93j3V332mimjmRXqfKOZrQ0AzrCpkB3ouVgfBmxyki6NkStDPzr2vxUdcofkDYSxQchoZIB2jaYOhQ==
   dependencies:
     "@types/papaparse" "^4.5.11"
     papaparse "^4.6.3"
