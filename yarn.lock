@@ -1067,10 +1067,10 @@
   dependencies:
     "@onaio/redux-reducer-registry" "^0.0.8"
 
-"@onaio/drill-down-table@^0.0.16":
-  version "0.0.16"
-  resolved "https://registry.yarnpkg.com/@onaio/drill-down-table/-/drill-down-table-0.0.16.tgz#6edd4a1f607c6e6cd0e63e1f039780d4655ae64d"
-  integrity sha512-miFKnGvvGPoCF30UZSmK0UI6d15niij//2x2NPCLJRwwn8Yk+eleZAGCMaw3x1oo7h5dM91p7i4MTFtg5uZCjA==
+"@onaio/drill-down-table@^0.0.20":
+  version "0.0.20"
+  resolved "https://registry.yarnpkg.com/@onaio/drill-down-table/-/drill-down-table-0.0.20.tgz#4a3ee3dd2a494e00647fc76167c9f2903f9b2a24"
+  integrity sha512-Y8eFBzuA7CyL8Y+gnCGh45uzxiwPC0yuN7r9BucmG9J7bZtS9RcOlmTrkU7GG95eYf7yqhBCGXh3/kxIXSv0jg==
   dependencies:
     "@types/react-table" "^6.7.22"
     prop-types "^15.6.1"
