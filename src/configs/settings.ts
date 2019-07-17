@@ -220,7 +220,13 @@ export const symbolLayerConfig = {
   id: 'symbollayers',
   layout: {
     'icon-image': 'mosquito',
-    'icon-size': 0.25,
+    'icon-size': 0.001,
+  },
+  paint: {
+    'text-color': '#0000ff',
+    'text-halo-blur': 1,
+    'text-halo-color': '#fff',
+    'text-halo-width': 1.3,
   },
   source: {
     data: {
@@ -228,8 +234,9 @@ export const symbolLayerConfig = {
         coordinates: [],
         type: 'Point',
       },
-      type: 'FeatureCollection',
+      type: 'stringified-geojson',
     },
+    minzoom: 0.2,
     type: 'geojson',
   },
   type: 'symbol',

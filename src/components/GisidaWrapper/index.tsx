@@ -361,8 +361,11 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
             'icon-size': 0.25,
           },
           source: {
-            ...symbolLayerConfig.source.data,
-            data: JSON.stringify(pointFeatureCollection),
+            ...symbolLayerConfig.source,
+            data: {
+              ...symbolLayerConfig.source.data,
+              data: JSON.stringify(pointFeatureCollection),
+            },
           },
         };
       }

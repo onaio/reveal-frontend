@@ -110,6 +110,11 @@ export interface SiteConfigAppMapconfig {
   style: string | Style;
   zoom?: number;
 }
+/** Interface for MapIcons */
+export interface MapIcons {
+  id: string;
+  imageUrl: string;
+}
 
 /** interface to describe Gisida site app configuration object */
 export interface SiteConfigApp {
@@ -117,6 +122,7 @@ export interface SiteConfigApp {
   apiAccessToken: string;
   appName: string;
   mapConfig: SiteConfigAppMapconfig;
+  mapIcons: MapIcons[];
 }
 
 /** interface to describe Gisida site configuration */
@@ -196,12 +202,31 @@ export const ConfigStore = (
       zoom: zoom || mapConfigZoom || 0,
     };
   }
+  // icons to add to map
+  const imgArr = [
+    {
+      id: 'case-confirmation',
+      imageUrl:
+        'https://raw.githubusercontent.com/onaio/reveal-frontend/add-icons/src/assets/images/case-confirmation.png',
+    },
+    {
+      id: 'larval',
+      imageUrl:
+        'https://raw.githubusercontent.com/onaio/reveal-frontend/add-icons/src/assets/images/larval.png',
+    },
+    {
+      id: 'mosquito',
+      imageUrl:
+        'https://raw.githubusercontent.com/onaio/reveal-frontend/add-icons/src/assets/images/mosquito.png',
+    },
+  ];
   // Build APP options for Gisida
   const APP: SiteConfigApp = {
     accessToken: accessToken || GISIDA_MAPBOX_TOKEN,
     apiAccessToken: apiAccessToken || GISIDA_ONADATA_API_TOKEN,
     appName,
     mapConfig,
+    mapIcons: imgArr,
   };
 
   // Build SiteConfig
