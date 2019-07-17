@@ -2,6 +2,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import * as React from 'react';
+import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { Link } from 'react-router-dom';
@@ -39,6 +40,7 @@ import {
   RESPONSE,
   TARGET,
 } from '../../../../constants';
+import { FI_SINGLE_TITLE } from '../../../../constants';
 import { getGoalReport } from '../../../../helpers/indicators';
 import ProgressBar from '../../../../helpers/ProgressBar';
 import { extractPlan, RouteParams, transformValues } from '../../../../helpers/utils';
@@ -169,6 +171,9 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
 
     return (
       <div className="mb-5">
+        <Helmet>
+          <title>{FI_SINGLE_TITLE}</title>
+        </Helmet>
         <HeaderBreadcrumbs {...breadCrumbProps} />
         <h2 className="page-title mt-4 mb-5">
           {FOCUS_INVESTIGATIONS} {IN} {theObject.focusArea}

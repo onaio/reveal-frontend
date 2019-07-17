@@ -430,6 +430,24 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
         <div
           className="mb-5"
         >
+          <HelmetWrapper
+            defer={true}
+            encodeSpecialCharacters={true}
+          >
+            <SideEffect(NullComponent)
+              defer={true}
+              encodeSpecialCharacters={true}
+              title="undefined - single"
+              titleAttributes={Object {}}
+            >
+              <NullComponent
+                defer={true}
+                encodeSpecialCharacters={true}
+                title="undefined - single"
+                titleAttributes={Object {}}
+              />
+            </SideEffect(NullComponent)>
+          </HelmetWrapper>
           <HeaderBreadcrumb
             currentPage={
               Object {
@@ -1481,6 +1499,24 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
     <div
       className="mb-5"
     >
+      <HelmetWrapper
+        defer={true}
+        encodeSpecialCharacters={true}
+      >
+        <SideEffect(NullComponent)
+          defer={true}
+          encodeSpecialCharacters={true}
+          title="undefined - single"
+          titleAttributes={Object {}}
+        >
+          <NullComponent
+            defer={true}
+            encodeSpecialCharacters={true}
+            title="undefined - single"
+            titleAttributes={Object {}}
+          />
+        </SideEffect(NullComponent)>
+      </HelmetWrapper>
       <HeaderBreadcrumb
         currentPage={
           Object {
