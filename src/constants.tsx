@@ -1,5 +1,3 @@
-import { WEBSITE_NAME } from '../src/configs/env';
-
 // strings
 export const MAP = 'map';
 export type MAP = typeof MAP;
@@ -101,20 +99,18 @@ export const FI_HISTORICAL_URL = '/focus-investigation/historical';
 export type FI_HISTORICAL_URL = typeof FI_HISTORICAL_URL;
 
 // container pages title names
-export const HOME_TITLE = `${WEBSITE_NAME} - home`;
+export const HOME_TITLE = `Home page`;
 export type HOME_TITLE = typeof HOME_TITLE;
-export const FI_ACTIVE_TITLE = `${WEBSITE_NAME} - active`;
+export const FI_ACTIVE_TITLE = `Active Focus Investigation`;
 export type FI_ACTIVE_TITLE = typeof FI_ACTIVE_TITLE;
-export const FI_HISTORICAL_TITLE = `${WEBSITE_NAME} - historical`;
+export const FI_HISTORICAL_TITLE = `Historical Focus Investigation`;
 export type FI_HISTORICAL_TITLE = typeof FI_HISTORICAL_TITLE;
-export const FI_SINGLE_MAP_TITLE = `${WEBSITE_NAME} - map`;
+export const FI_SINGLE_MAP_TITLE = `Active Focus Investigation Map`;
 export type FI_SINGLE_MAP_TITLE = typeof FI_SINGLE_MAP_TITLE;
-export const FI_SINGLE_TITLE = `${WEBSITE_NAME} - single`;
+export const FI_SINGLE_TITLE = `Single Active Focus Investigation`;
 export type FI_SINGLE_TITLE = typeof FI_SINGLE_TITLE;
-export const IRS_TITLE = `${WEBSITE_NAME} - IRS`;
+export const IRS_TITLE = `Indoor residual Spray`;
 export type IRS_TITLE = typeof IRS_TITLE;
-export const IRS_PLAN_TITLE = `${WEBSITE_NAME} - single`;
-export type IRS_PLAN_TITLE = typeof IRS_PLAN_TITLE;
 
 // colors
 export const GREEN = 'Green';
