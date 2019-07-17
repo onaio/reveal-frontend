@@ -236,7 +236,7 @@ export const symbolLayerConfig = {
       },
       type: 'stringified-geojson',
     },
-    minzoom: 0.2,
+    minzoom: 5.2,
     type: 'geojson',
   },
   type: 'symbol',

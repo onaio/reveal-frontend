@@ -311,7 +311,13 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
       | FillLayerObj[]
       | FlexObject = [];
 
-    // deal with structures
+    /** Goals with icons array  */
+    const goalsWithSymbols = [
+      'Mosquito_Collection_Min_3_Traps',
+      'Larval_Dipping_Min_3_Sites',
+      'Case_Confirmation',
+    ];
+    /**  Deal with structures */
     const { structures } = this.props;
     if (structures) {
       const structureLayer: FillLayerObj = {
@@ -351,60 +357,30 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
     // handle Point layer types
     if (pointFeatureCollection) {
       /** Build symbol layers to render on top of circle layers */
-      // const goalsWithSymbols = ['Mosquito_Collection_Min_3_Traps', 'Larval_Dipping_Min_3_Sites', 'Case_Confirmation'];
-
-      let mosquitoCollectionSymbolLayer;
-      let larvalDippingSymbolLayer;
-      let caseConfirmation;
-      if (this.props.currentGoal === 'Mosquito_Collection_Min_3_Traps') {
-        mosquitoCollectionSymbolLayer = {
-          ...symbolLayerConfig,
-          id: `${this.props.currentGoal}-symbol`,
-          layout: {
-            'icon-image': 'mosquito',
-            'icon-size': 0.05,
-          },
-          source: {
-            ...symbolLayerConfig.source,
-            data: {
-              ...symbolLayerConfig.source.data,
-              data: JSON.stringify(pointFeatureCollection),
+      goalsWithSymbols.forEach((goal: string) => {
+        if (goal === this.props.currentGoal) {
+          const iconGoal = this.props.currentGoal.includes('Mosquito_Collection')
+            ? 'mosquito'
+            : this.props.currentGoal.includes('Larval_Dipping')
+            ? 'larval'
+            : 'case-confirmation';
+          builtGeometriesContainer.push({
+            ...symbolLayerConfig,
+            id: `${this.props.currentGoal}-symbol`,
+            layout: {
+              'icon-image': iconGoal,
+              'icon-size': 0.03,
             },
-          },
-        };
-      } else if (this.props.currentGoal === 'Larval_Dipping_Min_3_Sites') {
-        larvalDippingSymbolLayer = {
-          ...symbolLayerConfig,
-          id: `${this.props.currentGoal}-symbol`,
-          layout: {
-            'icon-image': 'larval',
-            'icon-size': 0.05,
-          },
-          source: {
-            ...symbolLayerConfig.source,
-            data: {
-              ...symbolLayerConfig.source.data,
-              data: JSON.stringify(pointFeatureCollection),
+            source: {
+              ...symbolLayerConfig.source,
+              data: {
+                ...symbolLayerConfig.source.data,
+                data: JSON.stringify(pointFeatureCollection),
+              },
             },
-          },
-        };
-      } else if (this.props.currentGoal === 'Case_Confirmation') {
-        caseConfirmation = {
-          ...symbolLayerConfig,
-          id: `${this.props.currentGoal}-symbol`,
-          layout: {
-            'icon-image': 'case-confirmation',
-            'icon-size': 0.05,
-          },
-          source: {
-            ...symbolLayerConfig.source,
-            data: {
-              ...symbolLayerConfig.source.data,
-              data: JSON.stringify(pointFeatureCollection),
-            },
-          },
-        };
-      }
+          });
+        }
+      });
       builtGeometriesContainer.push({
         ...circleLayerConfig,
         id: `${this.props.currentGoal}-point`,
@@ -422,82 +398,34 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
           },
         },
       });
-      if (mosquitoCollectionSymbolLayer) {
-        builtGeometriesContainer.push(mosquitoCollectionSymbolLayer);
-      }
-      if (larvalDippingSymbolLayer) {
-        builtGeometriesContainer.push(larvalDippingSymbolLayer);
-      }
-      if (caseConfirmation) {
-        builtGeometriesContainer.push(caseConfirmation);
-      }
     }
     // Handle fill layers
     if (polygonFeatureCollection) {
       /** Build symbol layers to render on top of circle layers */
-      // const goalsWithSymbols = ['Mosquito_Collection_Min_3_Traps', 'Larval_Dipping_Min_3_Sites', 'Case_Confirmation'];
-
-      let mosquitoCollectionSymbolLayer;
-      let larvalDippingSymbolLayer;
-      let caseConfirmation;
-      if (this.props.currentGoal === 'Mosquito_Collection_Min_3_Traps') {
-        mosquitoCollectionSymbolLayer = {
-          ...symbolLayerConfig,
-          id: `${this.props.currentGoal}-symbol`,
-          layout: {
-            'icon-image': 'mosquito',
-            'icon-size': 0.05,
-          },
-          source: {
-            ...symbolLayerConfig.source,
-            data: {
-              ...symbolLayerConfig.source.data,
-              data: JSON.stringify(polygonFeatureCollection),
+      goalsWithSymbols.forEach((goal: string) => {
+        if (goal === this.props.currentGoal) {
+          const iconGoal = this.props.currentGoal.includes('Mosquito_Collection')
+            ? 'mosquito'
+            : this.props.currentGoal.includes('Larval_Dipping')
+            ? 'larval'
+            : 'case-confirmation';
+          builtGeometriesContainer.push({
+            ...symbolLayerConfig,
+            id: `${this.props.currentGoal}-symbol`,
+            layout: {
+              'icon-image': iconGoal,
+              'icon-size': 0.03,
             },
-          },
-        };
-      } else if (this.props.currentGoal === 'Larval_Dipping_Min_3_Sites') {
-        larvalDippingSymbolLayer = {
-          ...symbolLayerConfig,
-          id: `${this.props.currentGoal}-symbol`,
-          layout: {
-            'icon-image': 'larval',
-            'icon-size': 0.05,
-          },
-          source: {
-            ...symbolLayerConfig.source,
-            data: {
-              ...symbolLayerConfig.source.data,
-              data: JSON.stringify(polygonFeatureCollection),
+            source: {
+              ...symbolLayerConfig.source,
+              data: {
+                ...symbolLayerConfig.source.data,
+                data: JSON.stringify(polygonFeatureCollection),
+              },
             },
-          },
-        };
-      } else if (this.props.currentGoal === 'Case_Confirmation') {
-        caseConfirmation = {
-          ...symbolLayerConfig,
-          id: `${this.props.currentGoal}-symbol`,
-          layout: {
-            'icon-image': 'case-confirmation',
-            'icon-size': 0.05,
-          },
-          source: {
-            ...symbolLayerConfig.source,
-            data: {
-              ...symbolLayerConfig.source.data,
-              data: JSON.stringify(polygonFeatureCollection),
-            },
-          },
-        };
-      }
-      if (mosquitoCollectionSymbolLayer) {
-        builtGeometriesContainer.push(mosquitoCollectionSymbolLayer);
-      }
-      if (larvalDippingSymbolLayer) {
-        builtGeometriesContainer.push(larvalDippingSymbolLayer);
-      }
-      if (caseConfirmation) {
-        builtGeometriesContainer.push(caseConfirmation);
-      }
+          });
+        }
+      });
       builtGeometriesContainer.push(
         {
           ...fillLayerConfig,
