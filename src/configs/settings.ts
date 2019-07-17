@@ -220,7 +220,7 @@ export const symbolLayerConfig = {
   id: 'symbollayers',
   layout: {
     'icon-image': 'mosquito',
-    'icon-size': 0.001,
+    'icon-size': 2,
   },
   paint: {
     'text-color': '#0000ff',
