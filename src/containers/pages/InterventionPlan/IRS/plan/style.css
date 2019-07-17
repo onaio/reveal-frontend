@@ -12,6 +12,11 @@
   font-weight: 200;
 }
 
+.table-bread-crumbs {
+  padding-left: 0;
+  background: transparent;
+}
+
 .edit-plan-title-input-group {
   display: inline-flex;
   max-width: 50%;

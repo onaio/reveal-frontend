@@ -51,6 +51,7 @@ import HeaderBreadcrumbs, {
 } from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../../components/page/Loading';
 
+import { Link } from 'react-router-dom';
 import './style.css';
 
 /** register the plans reducer */
@@ -89,12 +90,21 @@ export const defaultIrsPlanProps: IrsPlanProps = {
   supersetService: supersetFetch,
 };
 
+interface TableCrumb {
+  label: string;
+  id: string | null;
+  active: boolean;
+}
+
 interface IrsPlanState {
+  doRenderTable: boolean;
   filteredJurisdictions: Jurisdiction[];
+  focusJurisdictionId: string | null;
   isEditingPlanName: boolean;
   isSelectingCountry: boolean;
   newPlan: null | PlanRecord;
   previousPlanName: string;
+  tableCrumbs: TableCrumb[];
 }
 
 /** IrsPlan - component for IRS Plan page */
@@ -106,7 +116,9 @@ class IrsPlan extends React.Component<
   constructor(props: RouteComponentProps<RouteParams> & IrsPlanProps) {
     super(props);
     this.state = {
+      doRenderTable: true,
       filteredJurisdictions: [],
+      focusJurisdictionId: null,
       isEditingPlanName: false,
       isSelectingCountry: props.isNewPlan || false,
       newPlan: props.isNewPlan
@@ -125,6 +137,7 @@ class IrsPlan extends React.Component<
           }
         : null,
       previousPlanName: '',
+      tableCrumbs: [],
     };
   }
 
@@ -267,7 +280,13 @@ class IrsPlan extends React.Component<
 
   public render() {
     const { planId, planById, isDraftPlan, isFinalizedPlan, isNewPlan } = this.props;
-    const { newPlan, isEditingPlanName, isSelectingCountry } = this.state;
+    const {
+      doRenderTable,
+      tableCrumbs,
+      newPlan,
+      isEditingPlanName,
+      isSelectingCountry,
+    } = this.state;
     if ((planId && !planById) || (isNewPlan && !newPlan)) {
       return <Loading />;
     }
@@ -372,6 +391,37 @@ class IrsPlan extends React.Component<
       );
     }
 
+    const onTableBreadCrumbClick = (e: any) => {
+      e.preventDefault();
+      if (e && e.target && e.target.id) {
+        this.onResetDrilldownTableHierarchy(e.target.id);
+      }
+    };
+
+    const tableBreadCrumbs = (
+      <ol className="table-bread-crumbs breadcrumb">
+        {this.state.tableCrumbs.map((crumb, i) => {
+          const { active, id, label } = crumb;
+          return (
+            <li key={i} className="breadcrumb-item">
+              {active ? (
+                label
+              ) : (
+                <a
+                  className={`table-bread-crumb-link`}
+                  href=""
+                  id={id || 'null'}
+                  onClick={onTableBreadCrumbClick}
+                >
+                  {label}
+                </a>
+              )}
+            </li>
+          );
+        })}
+      </ol>
+    );
+
     return (
       <div className="mb-5">
         <HeaderBreadcrumbs {...breadCrumbProps} />
@@ -383,7 +433,8 @@ class IrsPlan extends React.Component<
           <Row>
             <Col>
               <h3 className="table-title">Jurisdictions</h3>
-              <DrillDownTable {...planTableProps} />
+              {tableCrumbs.length && tableBreadCrumbs}
+              {doRenderTable && <DrillDownTable {...planTableProps} />}
             </Col>
           </Row>
         )}
@@ -391,30 +442,7 @@ class IrsPlan extends React.Component<
     );
   }
 
-  private getDecendantJurisdictionIds(
-    ParentIds: string[],
-    jurisdictionsArray: Jurisdiction[],
-    doIncludeParentIds: boolean = true
-  ): string[] {
-    const decendantIds: string[] = [];
-    const parentIds: string[] = [...ParentIds];
-
-    while (parentIds.length) {
-      const parentId = parentIds.shift() as string;
-      if (ParentIds.indexOf(parentId) === -1 || doIncludeParentIds) {
-        decendantIds.push(parentId);
-      }
-
-      for (const jurisdiction of jurisdictionsArray) {
-        if (jurisdiction.parent_id === parentId) {
-          parentIds.push(jurisdiction.jurisdiction_id);
-        }
-      }
-    }
-
-    return decendantIds;
-  }
-
+  // Jurisdiction Hierarchy Control
   private onSelectCountryChange(e: any) {
     if (!e || !e.target || !(e.target.value as ADMN0_PCODE)) {
       return false;
@@ -440,12 +468,74 @@ class IrsPlan extends React.Component<
         }
       : NewPlan;
 
+    const tableCrumbs: TableCrumb[] = [
+      {
+        active: true,
+        id: null,
+        label: country.ADMN0_EN,
+      },
+    ];
+
     this.setState({
       filteredJurisdictions,
       isSelectingCountry: false,
       newPlan,
+      tableCrumbs,
     });
   }
+
+  private onResetDrilldownTableHierarchy(Id: string | null) {
+    const id = Id !== 'null' ? Id : null;
+    const { tableCrumbs } = this.state;
+    const nextActiveCrumbIndex = tableCrumbs.map(c => c.id).indexOf(id) + 1;
+    const nextCrumbs = [...tableCrumbs];
+    nextCrumbs.splice(nextActiveCrumbIndex);
+    nextCrumbs[nextCrumbs.length - 1].active = true;
+
+    this.setState(
+      {
+        doRenderTable: false,
+        focusJurisdictionId: id,
+        tableCrumbs: nextCrumbs,
+      },
+      () => {
+        this.setState({
+          doRenderTable: true,
+        });
+      }
+    );
+  }
+
+  private onDrilldownClick(id: string) {
+    const { tableCrumbs } = this.state;
+    const { jurisdictionsArray } = this.props;
+
+    let newCrumb: TableCrumb | null = null;
+    for (const j of jurisdictionsArray) {
+      if (j.jurisdiction_id === id) {
+        newCrumb = {
+          active: true,
+          id,
+          label: j.name || 'Jurisdiction',
+        };
+        break;
+      }
+    }
+
+    const newCrumbs: TableCrumb[] = tableCrumbs.map(c => ({
+      ...c,
+      active: false,
+    }));
+
+    if (newCrumb) {
+      this.setState({
+        focusJurisdictionId: (id as string) || null,
+        tableCrumbs: [...newCrumbs, newCrumb],
+      });
+    }
+  }
+
+  // Plan Title Control
   private getNewPlanTitle() {
     const date = new Date();
     return `${InterventionType.IRS}_${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`;
@@ -496,6 +586,7 @@ class IrsPlan extends React.Component<
     });
   }
 
+  // Jurisdiction Selection Control
   private onToggleJurisdictionSelection(id: string, isSelected: boolean) {
     const { newPlan: NewPlan, filteredJurisdictions } = this.state;
     if (NewPlan && NewPlan.plan_jurisdictions_ids && filteredJurisdictions.length) {
@@ -546,6 +637,56 @@ class IrsPlan extends React.Component<
     }
   }
 
+  // Getter methods
+  private getParentJurisdiction(id: string): Jurisdiction | null {
+    const { jurisdictionsArray } = this.props;
+    let childJurisdiction: Jurisdiction | null = null;
+
+    // identify child jurisdiction
+    for (const c of jurisdictionsArray) {
+      if (c.jurisdiction_id === id) {
+        childJurisdiction = { ...c };
+        break;
+      }
+    }
+
+    // return parent jurisidction
+    if (childJurisdiction) {
+      for (const p of jurisdictionsArray) {
+        if (p.jurisdiction_id === childJurisdiction.parent_id) {
+          return { ...p };
+        }
+      }
+    }
+
+    // if no child or parent jurisdiction is found, return null
+    return null;
+  }
+
+  private getDecendantJurisdictionIds(
+    ParentIds: string[],
+    jurisdictionsArray: Jurisdiction[],
+    doIncludeParentIds: boolean = true
+  ): string[] {
+    const decendantIds: string[] = [];
+    const parentIds: string[] = [...ParentIds];
+
+    while (parentIds.length) {
+      const parentId = parentIds.shift() as string;
+      if (ParentIds.indexOf(parentId) === -1 || doIncludeParentIds) {
+        decendantIds.push(parentId);
+      }
+
+      for (const jurisdiction of jurisdictionsArray) {
+        if (jurisdiction.parent_id === parentId) {
+          parentIds.push(jurisdiction.jurisdiction_id);
+        }
+      }
+    }
+
+    return decendantIds;
+  }
+
   /** getDrilldownPlanTableProps - getter for hierarchical DrilldownTable props
    * @param props - component props
    * @returns tableProps|null - compatible object for DrillDownTable props
@@ -566,6 +707,12 @@ class IrsPlan extends React.Component<
     };
     const onTableCheckboxClick = (e: any) => {
       e.stopPropagation();
+    };
+
+    const onDrilldownClick = (e: any) => {
+      if (e && e.target && e.target.id) {
+        this.onDrilldownClick(e.target.id);
+      }
     };
 
     const columns = [
@@ -601,7 +748,12 @@ class IrsPlan extends React.Component<
         columns: [
           {
             Header: '',
-            accessor: 'name',
+            accessor: (j: Jurisdiction) => (
+              <span id={j.jurisdiction_id} onClick={onDrilldownClick}>
+                {j.name}
+              </span>
+            ),
+            id: 'name',
           },
         ],
       },
@@ -616,8 +768,6 @@ class IrsPlan extends React.Component<
       },
     ];
 
-    // to do - make Name column clickable
-
     const tableProps: DrillDownProps<any> = {
       CellComponent: DropDownCell,
       columns,
@@ -629,7 +779,7 @@ class IrsPlan extends React.Component<
       linkerField: 'name',
       minRows: 0,
       parentIdentifierField: 'parent_id',
-      rootParentId: null,
+      rootParentId: this.state.focusJurisdictionId,
       showPagination: false,
       useDrillDownTrProps: true,
     };

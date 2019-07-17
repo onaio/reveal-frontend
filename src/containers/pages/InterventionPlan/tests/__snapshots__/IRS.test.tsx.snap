@@ -354,11 +354,13 @@ exports[`containers/pages/IRS renders plans list correctly 1`] = `
                 },
               ]
             }
+            hasChildren={[Function]}
             identifierField="id"
             linkerField="id"
             minRows={0}
             parentIdentifierField="parent_id"
             rootParentId={null}
+            shouldUseEffect={false}
             showPageSizeOptions={false}
             showPagination={false}
             useDrillDownTrProps={false}
@@ -540,6 +542,7 @@ exports[`containers/pages/IRS renders plans list correctly 1`] = `
               getTrGroupProps={[Function]}
               getTrProps={[Function]}
               groupedByPivotKey="_groupedByPivot"
+              hasChildren={[Function]}
               identifierField="id"
               indexKey="_index"
               linkerField="id"
@@ -575,6 +578,7 @@ exports[`containers/pages/IRS renders plans list correctly 1`] = `
               rootParentId={null}
               rowsSelectorText="rows per page"
               rowsText="rows"
+              shouldUseEffect={false}
               showPageJump={true}
               showPageSizeOptions={false}
               showPagination={false}
