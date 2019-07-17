@@ -208,6 +208,7 @@ class HistoricalFocusInvestigation extends React.Component<
       minRows: 0,
       parentIdentifierField: 'parent',
       rootParentId: id || null,
+      shouldUseEffect: true,
       showPageSizeOptions: false,
       showPagination: false,
       useDrillDownTrProps: false,
