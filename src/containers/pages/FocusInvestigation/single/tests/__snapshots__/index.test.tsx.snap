@@ -437,13 +437,13 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
             <SideEffect(NullComponent)
               defer={true}
               encodeSpecialCharacters={true}
-              title="undefined - single"
+              title="Single Active Focus Investigation"
               titleAttributes={Object {}}
             >
               <NullComponent
                 defer={true}
                 encodeSpecialCharacters={true}
-                title="undefined - single"
+                title="Single Active Focus Investigation"
                 titleAttributes={Object {}}
               />
             </SideEffect(NullComponent)>
@@ -1506,13 +1506,13 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
         <SideEffect(NullComponent)
           defer={true}
           encodeSpecialCharacters={true}
-          title="undefined - single"
+          title="Single Active Focus Investigation"
           titleAttributes={Object {}}
         >
           <NullComponent
             defer={true}
             encodeSpecialCharacters={true}
-            title="undefined - single"
+            title="Single Active Focus Investigation"
             titleAttributes={Object {}}
           />
         </SideEffect(NullComponent)>

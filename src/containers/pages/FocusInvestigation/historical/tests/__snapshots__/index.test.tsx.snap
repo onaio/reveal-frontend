@@ -16371,13 +16371,13 @@ exports[`containers/pages/HistoricalFocusInvestigation renders HistoricalFocusIn
         <SideEffect(NullComponent)
           defer={true}
           encodeSpecialCharacters={true}
-          title="Reveal - historical"
+          title="Historical Focus Investigation"
           titleAttributes={Object {}}
         >
           <NullComponent
             defer={true}
             encodeSpecialCharacters={true}
-            title="Reveal - historical"
+            title="Historical Focus Investigation"
             titleAttributes={Object {}}
           />
         </SideEffect(NullComponent)>

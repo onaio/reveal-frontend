@@ -34,13 +34,13 @@ exports[`containers/pages/Home renders Home correctly & changes Title of page 1`
         <SideEffect(NullComponent)
           defer={true}
           encodeSpecialCharacters={true}
-          title="Reveal - home"
+          title="Home page"
           titleAttributes={Object {}}
         >
           <NullComponent
             defer={true}
             encodeSpecialCharacters={true}
-            title="Reveal - home"
+            title="Home page"
             titleAttributes={Object {}}
           />
         </SideEffect(NullComponent)>
