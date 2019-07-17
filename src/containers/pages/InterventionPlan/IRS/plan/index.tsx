@@ -299,7 +299,10 @@ class IrsPlan extends React.Component<RouteComponentProps<RouteParams> & IrsPlan
     const tableProps: DrillDownProps<any> = {
       CellComponent: DropDownCell,
       data: [...jurisdictionData],
+      identifierField: 'jurisdiction_id',
+      linkerField: 'name',
       minRows: 0,
+      parentIdentifierField: 'parent_id',
       rootParentId: null,
       showPagination: false,
       useDrillDownTrProps: true,
@@ -348,12 +351,15 @@ class IrsPlan extends React.Component<RouteComponentProps<RouteParams> & IrsPlan
         ],
       },
     ];
+
     const tableProps: DrillDownProps<any> = {
       CellComponent: DropDownCell,
       columns,
       data: [...jurisdictionData],
+      identifierField: 'jurisdiction_id',
       linkerField: 'jurisdiction_name',
       minRows: 0,
+      parentIdentifierField: 'parent_id',
       rootParentId: null,
       showPageSizeOptions: false,
       showPagination: false,
