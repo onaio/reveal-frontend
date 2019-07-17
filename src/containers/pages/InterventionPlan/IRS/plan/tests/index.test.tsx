@@ -61,8 +61,6 @@ describe('containers/pages/IRS/plan', () => {
       </Provider>
     );
     // check that the page title is rendered correctly
-    const helmet = Helmet.peek();
-    expect(helmet.title).toEqual(IRS_PLAN_TITLE);
     expect(toJson(wrapper)).toMatchSnapshot();
     wrapper.unmount();
   });

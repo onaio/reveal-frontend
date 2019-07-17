@@ -21,6 +21,7 @@ import plansReducer, {
   reducerName as plansReducerName,
 } from '../../../../../store/ducks/plans';
 
+import { Helmet } from 'react-helmet';
 import HeaderBreadcrumbs, {
   BreadCrumbProps,
 } from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
@@ -97,6 +98,9 @@ class IrsPlan extends React.Component<RouteComponentProps<RouteParams> & IrsPlan
 
     return (
       <div className="mb-5">
+        <Helmet>
+          <title>IRS: {pageLabel}</title>
+        </Helmet>
         <HeaderBreadcrumbs {...breadCrumbProps} />
         <h2 className="page-title">IRS: {pageLabel}</h2>
       </div>
