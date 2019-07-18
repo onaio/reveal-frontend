@@ -43,7 +43,7 @@ export type Structure = InitialStructure;
 /** STRUCTURES_SET action type */
 export const STRUCTURES_SET = 'reveal/reducer/structures/STRUCTURES_SET';
 
-/** interface for authorize action */
+/** interface for setStructure action */
 interface SetStructuresAction extends AnyAction {
   structuresById: { [key: string]: Structure };
   type: typeof STRUCTURES_SET;
@@ -87,7 +87,7 @@ export default function reducer(
 
 // action creators
 
-/** fetch Structure creator
+/** set Structure creator
  * @param {Structure[]} structuresList - array of structure objects
  */
 export const setStructures = (structuresList: InitialStructure[] = []): SetStructuresAction => {
