@@ -36,6 +36,7 @@ import {
   MEASURE,
   NO,
   OF,
+  PROGRESS,
   RESPONSE,
   TARGET,
 } from '../../../../constants';
@@ -212,7 +213,6 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
               </dl>
               <hr />
               <h5 className="mb-4 mt-4">{RESPONSE}</h5>
-
               {/** loop through the goals */
               theGoals.map((item: Goal) => {
                 const goalReport = getGoalReport(item);
@@ -224,8 +224,9 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
                         {MEASURE}: {item.measure}
                       </p>
                       <p>
-                        {TARGET}: {goalReport.prettyPercentAchieved} ({goalReport.achievedValue}{' '}
-                        {OF} {goalReport.targetValue})
+                        {PROGRESS}: {item.completed_task_count} {OF} {goalReport.targetValue}{' '}
+                        {item.goal_unit.toLowerCase() === 'percent' ? 'structures' : item.goal_unit}{' '}
+                        ({goalReport.prettyPercentAchieved})
                       </p>
                       <ProgressBar value={goalReport.percentAchieved} max={1} />
                     </div>

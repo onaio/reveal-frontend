@@ -28,6 +28,7 @@ import {
   OF,
   POINT,
   POLYGON,
+  PROGRESS,
   RESPONSE,
   TARGET,
 } from '../../../../../constants';
@@ -236,8 +237,11 @@ class SingleActiveFIMap extends React.Component<
                           {MEASURE}: {item.measure}
                         </p>
                         <p>
-                          {TARGET}: {goalReport.prettyPercentAchieved} ({goalReport.achievedValue}{' '}
-                          {OF} {goalReport.targetValue})
+                          {PROGRESS}: {item.completed_task_count} {OF} {goalReport.targetValue}{' '}
+                          {item.goal_unit.toLowerCase() === 'percent'
+                            ? 'structures'
+                            : item.goal_unit}{' '}
+                          ({goalReport.prettyPercentAchieved})
                         </p>
                         <br />
                         <ProgressBar value={goalReport.percentAchieved} max={1} />
