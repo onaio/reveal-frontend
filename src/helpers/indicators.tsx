@@ -19,7 +19,7 @@ enum Operators {
  * @param {Goal} goal - the goal
  * @returns {number} percentAchieved
  */
-export function goalPercentAchieved(goal: Goal): number {
+export function goalRatioAchieved(goal: Goal): number {
   let percentAchieved: number = 0;
   let achievedValue: number = goal.completed_task_count;
   const totalAttempts: number = goal.task_count;
@@ -69,7 +69,7 @@ export interface GoalReport {
  * @returns {GoalReport} the Goal Report object
  */
 export function getGoalReport(goal: Goal): GoalReport {
-  const percentAchieved = goalPercentAchieved(goal);
+  const percentAchieved = goalRatioAchieved(goal);
   let targetValue = goal.task_count;
   if (goal.goal_unit.toLowerCase() !== 'percent') {
     targetValue = goal.goal_value;
