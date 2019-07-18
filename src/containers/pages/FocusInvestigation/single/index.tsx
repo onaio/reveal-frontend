@@ -29,6 +29,7 @@ import {
   FI_STATUS,
   FI_URL,
   FOCUS_AREA_INFO,
+  FOCUS_INVESTIGATION,
   FOCUS_INVESTIGATIONS,
   HOME,
   HOME_URL,
@@ -40,7 +41,6 @@ import {
   RESPONSE,
   TARGET,
 } from '../../../../constants';
-import { FI_SINGLE_TITLE } from '../../../../constants';
 import { getGoalReport } from '../../../../helpers/indicators';
 import ProgressBar from '../../../../helpers/ProgressBar';
 import { extractPlan, RouteParams, transformValues } from '../../../../helpers/utils';
@@ -172,7 +172,7 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
     return (
       <div className="mb-5">
         <Helmet>
-          <title>{FI_SINGLE_TITLE}</title>
+          <title>{`${FOCUS_INVESTIGATIONS} ${IN} ${theObject.focusArea}`}</title>
         </Helmet>
         <HeaderBreadcrumbs {...breadCrumbProps} />
         <h2 className="page-title mt-4 mb-5">

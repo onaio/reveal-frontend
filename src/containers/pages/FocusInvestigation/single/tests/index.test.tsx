@@ -79,7 +79,7 @@ describe('containers/pages/SingleFI', () => {
     );
     // check that the documents title was changed correctly
     const helmet = Helmet.peek();
-    expect(helmet.title).toEqual(FI_SINGLE_TITLE);
+    expect(helmet.title).toEqual('Focus Investigations in NVI_439');
 
     expect(toJson(wrapper)).toMatchSnapshot();
     expect(wrapper.find('GisidaWrapperMock').props()).toMatchSnapshot();

@@ -201,7 +201,7 @@ class SingleActiveFIMap extends React.Component<
     return (
       <div>
         <Helmet>
-          <title>{FI_SINGLE_MAP_TITLE}</title>
+          <title>{`${FOCUS_INVESTIGATION}: ${plan && plan.plan_title}`}</title>
         </Helmet>
         <HeaderBreadcrumb {...breadCrumbProps} />
         <h2 className="page-title mt-4 mb-4">

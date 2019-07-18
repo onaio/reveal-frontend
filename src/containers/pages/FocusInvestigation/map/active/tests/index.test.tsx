@@ -5,7 +5,6 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
-import { FI_SINGLE_MAP_TITLE } from '../../../../../../constants';
 import { FI_SINGLE_URL } from '../../../../../../constants';
 import { wrapFeatureCollection } from '../../../../../../helpers/utils';
 import store from '../../../../../../store';
@@ -78,7 +77,7 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
       </Router>
     );
     const helmet = Helmet.peek();
-    expect(helmet.title).toEqual(FI_SINGLE_MAP_TITLE);
+    expect(helmet.title).toEqual('Focus Investigation: A1-Tha Luang Village 1 Focus 01');
     expect(toJson(wrapper)).toMatchSnapshot();
     expect(wrapper.find('GisidaWrapperMock').props()).toMatchSnapshot();
     wrapper.unmount();
