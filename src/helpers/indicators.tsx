@@ -15,9 +15,9 @@ enum Operators {
   LessThanOrEqual = '<=',
 }
 
-/** Get the level of achievement towards the goal target as a percentage
+/** Get the level of achievement towards the goal target as a ratio
  * @param {Goal} goal - the goal
- * @returns {number} percentAchieved
+ * @returns {number} ratio Achieved
  */
 export function goalRatioAchieved(goal: Goal): number {
   let percentAchieved: number = 0;
@@ -73,6 +73,8 @@ export function getGoalReport(goal: Goal): GoalReport {
   let targetValue = goal.task_count;
   if (goal.goal_unit.toLowerCase() !== 'percent') {
     targetValue = goal.goal_value;
+  } else {
+    targetValue = Math.round((goal.goal_value * goal.task_count) / 100);
   }
 
   return {
