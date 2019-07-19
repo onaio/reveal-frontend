@@ -3,6 +3,7 @@ import * as React from 'react';
 import { CellInfo } from 'react-table';
 import { GREEN, ORANGE, RED, YELLOW } from '../colors';
 import { GREEN_THRESHOLD, ORANGE_THRESHOLD, YELLOW_THRESHOLD, ZERO } from '../configs/settings';
+import { BLOOD_SCREENING_CODE, CASE_CONFIRMATION_CODE, PERSONS, STRUCTURES } from '../constants';
 import { FlexObject, percentage, roundToPrecision } from '../helpers/utils';
 import { Goal } from '../store/ducks/goals';
 
@@ -54,6 +55,7 @@ export interface GoalReport {
   percentAchieved: number /** progress towards goal achievement */;
   prettyPercentAchieved: string /** pretty string of percentAchieved */;
   targetValue: number /** the target value */;
+  goalUnit: string /** goal_unit */;
 }
 
 /** Utility function to get an object containing values for goal indicators
@@ -63,14 +65,20 @@ export interface GoalReport {
 export function getGoalReport(goal: Goal): GoalReport {
   const percentAchieved = goalRatioAchieved(goal);
   let targetValue = goal.task_count;
+  let goalUnit: string = goal.goal_unit;
   if (goal.goal_unit.toLowerCase() !== 'percent') {
     targetValue = goal.goal_value;
   } else {
+    goalUnit =
+      [CASE_CONFIRMATION_CODE, BLOOD_SCREENING_CODE].indexOf(goal.action_code) > -1
+        ? PERSONS
+        : STRUCTURES;
     targetValue = Math.round((goal.goal_value * goal.task_count) / 100);
   }
 
   return {
     achievedValue: goal.completed_task_count,
+    goalUnit,
     percentAchieved,
     prettyPercentAchieved: percentage(percentAchieved),
     targetValue,
