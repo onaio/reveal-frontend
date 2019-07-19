@@ -151,54 +151,27 @@ class SingleActiveFIMap extends React.Component<
       fetchTasksActionCreator,
       plan,
     } = this.props;
-    const planId = plan && plan.plan_id;
-    if (planId) {
-      const pivotParams = superset.getFormData(3000, [
-        { comparator: planId, operator: '==', subject: 'plan_id' },
-      ]);
-      // let sqlFilterExpression = '';
-      let jurisdictionId;
-      await supersetFetch(SUPERSET_PLAN_STRUCTURE_PIVOT_SLICE, pivotParams).then(
-        async relevantJurisdictions => {
-          if (!relevantJurisdictions) {
-            return new Promise(reject => {
-              reject();
-            });
-          }
-          jurisdictionId =
-            relevantJurisdictions.length > 1
-              ? relevantJurisdictions[0].jurisdiction_id
-              : relevantJurisdictions.map((d: Jurisdictions) => d.jurisdiction_id).join(' ,');
 
-          const planJurisdictionSupersetParams = superset.getFormData(1000, [
-            { comparator: jurisdictionId, operator: 'in', subject: 'jurisdiction_id' },
-          ]);
-          const jurisdictionResults = await supersetFetch(
-            SUPERSET_JURISDICTIONS_SLICE,
-            planJurisdictionSupersetParams
-          );
-          fetchJurisdictionsActionCreator(jurisdictionResults);
-        }
+    if (plan && plan.plan_id) {
+      /** define superset filter params for jurisdictions */
+      const jurisdictionsParams = superset.getFormData(3000, [
+        { comparator: plan.jurisdiction_id, operator: '==', subject: 'jurisdiction_id' },
+      ]);
+      await supersetFetch(SUPERSET_JURISDICTIONS_SLICE, jurisdictionsParams).then(
+        (result: Jurisdiction[]) => fetchJurisdictionsActionCreator(result)
       );
-      /** define superset params for structures */
-      let structuresparams;
-      if (jurisdictionId) {
-        structuresparams = superset.getFormData(3000, [
-          { comparator: jurisdictionId, operator: 'in', subject: 'jurisdiction_id' },
-        ]);
-      }
-      /** define superset params for jurisdictions */
+      /** define superset params for filtering by plan_id */
       const supersetParams = superset.getFormData(3000, [
-        { comparator: planId, operator: '==', subject: 'plan_id' },
+        { comparator: plan.plan_id, operator: '==', subject: 'plan_id' },
       ]);
       /** define superset params for goals */
       const goalsParams = superset.getFormData(
         3000,
-        [{ comparator: planId, operator: '==', subject: 'plan_id' }],
+        [{ comparator: plan.plan_id, operator: '==', subject: 'plan_id' }],
         { action_prefix: true }
       );
-      /** Implement Ad hoc Queris since jurisdictions have no plan_id */
-      await supersetFetch(SUPERSET_STRUCTURES_SLICE, structuresparams).then(
+      /** Implement Ad hoc Queries since jurisdictions have no plan_id */
+      await supersetFetch(SUPERSET_STRUCTURES_SLICE, jurisdictionsParams).then(
         (structuresResults: Structure[]) => {
           fetchStructuresActionCreator(structuresResults);
         }
