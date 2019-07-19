@@ -4745,62 +4745,6 @@ exports[`components/GisidaWrapper renders map component without Featurecollectio
       "type": "FeatureCollection",
     }
   }
-  goal={null}
-  handlers={Array []}
-  minHeight="200px"
-  pointFeatureCollection={null}
-  polygonFeatureCollection={null}
-  structures={
-    Object {
-      "features": Array [
-        Object {
-          "geometry": Object {
-            "coordinates": Array [
-              Array [
-                Array [
-                  101.188427209854,
-                  15.0909179029537,
-                ],
-                Array [
-                  101.18852108717,
-                  15.0909179029537,
-                ],
-                Array [
-                  101.18852108717,
-                  15.0910085427885,
-                ],
-                Array [
-                  101.188427209854,
-                  15.0910085427885,
-                ],
-                Array [
-                  101.188427209854,
-                  15.0909179029537,
-                ],
-              ],
-            ],
-            "type": "Polygon",
-          },
-          "id": "e652f8b2-b884-42d5-832a-86009c10a812",
-          "properties": Object {
-            "code": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
-            "effective_end_date": null,
-            "effective_start_date": null,
-            "geographic_level": 6,
-            "jurisdiction_id": "4550a8ab-b310-4881-8c76-1b6a817ea63a",
-            "name": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
-            "server_version": 1562120301666,
-            "status": "Active",
-            "type": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
-            "uid": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
-            "version": 0,
-          },
-          "type": "Feature",
-        },
-      ],
-      "type": "FeatureCollection",
-    }
-  }
 >
   <MapComponent
     handlers={Array []}
