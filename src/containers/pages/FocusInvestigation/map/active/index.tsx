@@ -39,7 +39,12 @@ import {
 import { popupHandler } from '../../../../../helpers/handlers';
 import { getGoalReport } from '../../../../../helpers/indicators';
 import ProgressBar from '../../../../../helpers/ProgressBar';
-import { FeatureCollection, FlexObject, RouteParams } from '../../../../../helpers/utils';
+import {
+  FeatureCollection,
+  FlexObject,
+  RouteParams,
+  StructureGeoJSON,
+} from '../../../../../helpers/utils';
 import supersetFetch from '../../../../../services/superset';
 import goalsReducer, {
   fetchGoals,
@@ -65,10 +70,9 @@ import plansReducer, {
 } from '../../../../../store/ducks/plans';
 import structuresReducer, {
   getStructuresFCByJurisdictionId,
-  InitialStructure,
-  InitialStructureGeoJSON,
   reducerName as structuresReducerName,
   setStructures,
+  Structure,
 } from '../../../../../store/ducks/structures';
 import tasksReducer, {
   fetchTasks,
@@ -77,7 +81,6 @@ import tasksReducer, {
   Task,
   TaskGeoJSON,
 } from '../../../../../store/ducks/tasks';
-import { jurisdictions } from '../../../../../store/ducks/tests/fixtures';
 import './style.css';
 
 /** register reducers */
@@ -101,9 +104,7 @@ export interface MapSingleFIProps {
   plan: Plan | null;
   pointFeatureCollection: FeatureCollection<TaskGeoJSON>;
   polygonFeatureCollection: FeatureCollection<TaskGeoJSON>;
-  structures: FeatureCollection<
-    InitialStructureGeoJSON
-  > | null /** we use this to get all structures */;
+  structures: FeatureCollection<StructureGeoJSON> | null /** we use this to get all structures */;
 }
 
 export interface Jurisdictions {
@@ -196,7 +197,7 @@ class SingleActiveFIMap extends React.Component<
       ]);
       /** Implement Ad hoc Queris since jurisdictions have no plan_id */
       await supersetFetch(SUPERSET_STRUCTURES_SLICE, structuresparams).then(
-        (structuresResults: InitialStructure[]) => {
+        (structuresResults: Structure[]) => {
           fetchStructuresActionCreator(structuresResults);
         }
       );

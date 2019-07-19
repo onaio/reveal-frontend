@@ -11,11 +11,10 @@ import { GISIDA_MAPBOX_TOKEN, GISIDA_ONADATA_API_TOKEN } from '../../configs/env
 import { circleLayerConfig, fillLayerConfig, lineLayerConfig } from '../../configs/settings';
 import { APP, MAIN_PLAN, MAP_ID, STRUCTURE_LAYER } from '../../constants';
 import { EventData } from '../../helpers/mapbox';
-import { ConfigStore, FeatureCollection, FlexObject } from '../../helpers/utils';
+import { ConfigStore, FeatureCollection, FlexObject, StructureGeoJSON } from '../../helpers/utils';
 import store from '../../store';
 import { Goal, setCurrentGoal } from '../../store/ducks/goals';
 import { Jurisdiction, JurisdictionGeoJSON } from '../../store/ducks/jurisdictions';
-import { InitialStructureGeoJSON } from '../../store/ducks/structures';
 import { TaskGeoJSON } from '../../store/ducks/tasks';
 import './gisida.css';
 
@@ -93,7 +92,7 @@ interface GisidaProps {
   geoData: Jurisdiction | null;
   goal?: Goal[] | null;
   handlers: Handlers[];
-  structures: FeatureCollection<InitialStructureGeoJSON> | null;
+  structures: FeatureCollection<StructureGeoJSON> | null;
   minHeight?: string;
   basemapStyle?: string | Style;
 }

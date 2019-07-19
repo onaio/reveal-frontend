@@ -1,38 +1,20 @@
 import { keyBy, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
 import SeamlessImmutable from 'seamless-immutable';
-import { FeatureCollection, GeoJSON, UpdateType, wrapFeatureCollection } from '../../helpers/utils';
+import { FeatureCollection, StructureGeoJSON, wrapFeatureCollection } from '../../helpers/utils';
 
 /** the reducer name */
 export const reducerName = 'structures';
 
-/** Interface for structure.geojson.properties for structure
- *  as received from the fetch request / superset
- */
-export interface InitialProperties {
-  uid: string;
-  code: string;
-  name: string;
-  type: string;
-  status: string;
-  version: number;
-  server_version: number;
-  jurisdiction_id: string;
-  geographic_level: number | null;
-  effective_end_date: string | null;
-  effective_start_date: string | null;
-}
-
 /** interface for structure.geojson for
  * structure as received from the fetch request / superset
  */
-export type InitialStructureGeoJSON = GeoJSON;
 
 /** interface for structure Object for
  * structure as received from the fetch request / superset
  */
-export interface InitialStructure {
-  geojson: InitialStructureGeoJSON;
+export interface Structure {
+  geojson: StructureGeoJSON;
   id: string;
   jurisdiction_id: string;
 }
@@ -43,7 +25,7 @@ export const STRUCTURES_SET = 'reveal/reducer/structures/STRUCTURES_SET';
 
 /** interface for setStructure action */
 interface SetStructuresAction extends AnyAction {
-  structuresById: { [key: string]: InitialStructure };
+  structuresById: { [key: string]: Structure };
   type: typeof STRUCTURES_SET;
 }
 
@@ -52,7 +34,7 @@ export type StructureActionTypes = SetStructuresAction | AnyAction;
 
 /** interface for Structure state */
 interface StructureState {
-  structuresById: { [key: string]: InitialStructure };
+  structuresById: { [key: string]: Structure };
 }
 
 /** immutable Structure state */
@@ -88,11 +70,11 @@ export default function reducer(
 /** set Structure creator
  * @param {Structure[]} structuresList - array of structure objects
  */
-export const setStructures = (structuresList: InitialStructure[] = []): SetStructuresAction => {
+export const setStructures = (structuresList: Structure[] = []): SetStructuresAction => {
   return {
     structuresById: keyBy(
       structuresList.map(
-        (structure: InitialStructure): InitialStructure => {
+        (structure: Structure): Structure => {
           /** ensure geojson is parsed */
           if (typeof structure.geojson === 'string') {
             structure.geojson = JSON.parse(structure.geojson);
@@ -101,7 +83,7 @@ export const setStructures = (structuresList: InitialStructure[] = []): SetStruc
           if (typeof structure.geojson.geometry === 'string') {
             structure.geojson.geometry = JSON.parse(structure.geojson.geometry);
           }
-          return structure as InitialStructure;
+          return structure as Structure;
         }
       ),
       structure => structure.id
@@ -117,13 +99,11 @@ export const setStructures = (structuresList: InitialStructure[] = []): SetStruc
  * @param {Partial<Store>} state - the redux store
  * @returns {FeatureCollection} - a geoJSON Feature Collection object
  */
-export function getAllStructuresFC(
-  state: Partial<Store>
-): FeatureCollection<InitialStructureGeoJSON> {
+export function getAllStructuresFC(state: Partial<Store>): FeatureCollection<StructureGeoJSON> {
   return wrapFeatureCollection(
     values(
       values((state as any)[reducerName].structuresById).map(
-        (eachStructure: InitialStructure) => eachStructure.geojson
+        (eachStructure: Structure) => eachStructure.geojson
       )
     )
   );
@@ -132,12 +112,12 @@ export function getAllStructuresFC(
 /** responsible for only getting structure geojson data for all structures from reducer
  * @param {Partial<Store>} state - the store state
  * @param {boolean} includeNullGeoms - if to include structures with null geometries in FC
- * @return {InitialStructureGeoJSON []} - returns a list of all structures geojson whose geoms are not null
+ * @return {StructureGeoJSON []} - returns a list of all structures geojson whose geoms are not null
  */
 export function getStructuresGeoJsonData(
   state: Partial<Store>,
   includeNullGeoms: boolean = true
-): InitialStructureGeoJSON[] {
+): StructureGeoJSON[] {
   let results = values((state as any)[reducerName].structuresById).map(e => e.geojson);
   if (!includeNullGeoms) {
     results = results.filter(e => e && e.geometry);
@@ -157,8 +137,8 @@ export function getStructuresFCByJurisdictionId(
   state: Partial<Store>,
   jurisdictionId: string,
   includeNullGeoms: boolean = true
-): FeatureCollection<InitialStructureGeoJSON> {
-  const geoJsonFeatures: InitialStructureGeoJSON[] = getStructuresGeoJsonData(
+): FeatureCollection<StructureGeoJSON> {
+  const geoJsonFeatures: StructureGeoJSON[] = getStructuresGeoJsonData(
     state,
     includeNullGeoms
   ).filter(e => e.properties.jurisdiction_id === jurisdictionId);
