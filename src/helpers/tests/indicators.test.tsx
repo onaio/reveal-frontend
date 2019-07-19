@@ -1,13 +1,13 @@
+import { map } from 'lodash';
 import * as fixtures from '../../store/ducks/tests/fixtures';
 import { getGoalReport, goalRatioAchieved } from '../indicators';
 
 describe('helpers/indicators', () => {
   it('goalPercentAchieved works', () => {
     // returns correct percentage for all goal_unit values
-    const expected: number[] = [0, 0, 0, 1, 0.26666666666666666, 0.35555555555555557];
-    fixtures.goals.forEach((goal, index) => {
-      expect(goalRatioAchieved(goal)).toEqual(expected[index]);
-    });
+    const expected: number[] = [0, 0, 0, 1, 0.27, 0.36];
+    const got = map(fixtures.goals, goal => goalRatioAchieved(goal));
+    expect(got).toEqual(expected);
   });
 
   it('goalPercentAchieved works for reducing goals', () => {
@@ -73,15 +73,21 @@ describe('helpers/indicators', () => {
     });
     expect(getGoalReport(fixtures.goal5)).toEqual({
       achievedValue: 4,
-      percentAchieved: 0.26666666666666666,
+      percentAchieved: 0.27,
       prettyPercentAchieved: '27%',
       targetValue: 15,
     });
     expect(getGoalReport(fixtures.goal6)).toEqual({
       achievedValue: 4,
-      percentAchieved: 0.35555555555555557,
+      percentAchieved: 0.36,
       prettyPercentAchieved: '36%',
       targetValue: 11,
+    });
+    expect(getGoalReport(fixtures.goal7)).toEqual({
+      achievedValue: 3,
+      percentAchieved: 0.6,
+      prettyPercentAchieved: '60%',
+      targetValue: 5,
     });
   });
 });
