@@ -8,12 +8,16 @@ export const plan1 = {
   jurisdiction_name_path: ['Chadiza', 'Naviluli'],
   jurisdiction_parent_id: '2944',
   jurisdiction_path: ['2939', '2944'],
+  plan_date: '2019-06-18',
+  plan_effective_period_end: '2019-06-18',
+  plan_effective_period_start: '2019-07-31',
   plan_fi_reason: 'Routine',
   plan_fi_status: 'A1',
   plan_id: '10f9e9fa-ce34-4b27-a961-72fab5206ab6',
   plan_intervention_type: 'FI',
   plan_status: 'active',
   plan_title: 'A1-Tha Luang Village 1 Focus 01',
+  plan_version: '1',
 };
 
 export const plan2 = {
@@ -24,12 +28,16 @@ export const plan2 = {
   jurisdiction_name_path: ['Canton Tha Luang', 'Tha Luang Village'],
   jurisdiction_parent_id: '2977',
   jurisdiction_path: ['2989', '2977'],
+  plan_date: '2019-06-18',
+  plan_effective_period_end: '2019-06-18',
+  plan_effective_period_start: '2019-07-31',
   plan_fi_reason: 'Case-triggered',
   plan_fi_status: 'A1',
   plan_id: 'plan-id-2',
   plan_intervention_type: 'IRS',
   plan_status: 'active',
   plan_title: 'A1-Tha Luang Village 1 Focus 01',
+  plan_version: '1',
 };
 
 export const plan5 = {
@@ -40,12 +48,16 @@ export const plan5 = {
   jurisdiction_name_path: 'null',
   jurisdiction_parent_id: ' NULL',
   jurisdiction_path: 'null',
+  plan_date: '2019-06-18',
+  plan_effective_period_end: '2019-06-18',
+  plan_effective_period_start: '2019-07-31',
   plan_fi_reason: 'Case-triggered',
   plan_fi_status: 'A1',
   plan_id: 'e9c9a069-7d22-44c0-a59e-9a483948716b',
   plan_intervention_type: 'FI',
   plan_status: 'active',
   plan_title: 'A1 - Ban Chamrak Mu - Focus 02 Rubber Plantation',
+  plan_version: '1',
 };
 
 export const plan6 = {
@@ -75,12 +87,47 @@ export const plan3 = {
     '872cc59e-0bce-427a-bd1f-6ef674dba8e2',
     'dad42fa6-b9b8-4658-bf25-bfa7ab5b16ae',
   ]),
+  plan_date: '2019-06-18',
+  plan_effective_period_end: '2019-06-18',
+  plan_effective_period_start: '2019-07-31',
   plan_fi_reason: 'Routine',
   plan_fi_status: 'A1',
   plan_id: '10f9e9fa-ce34-4b27-a961-72fab5206ab6',
   plan_intervention_type: 'FI',
   plan_status: 'active',
   plan_title: 'A1-Tha Luang Village 1 Focus 01',
+  plan_version: '1',
+};
+
+export const plan99 = {
+  id: '236ca3fb-1b74-5028-a0c8-ab954bb28044',
+  jurisdiction_depth: 4,
+  jurisdiction_id: '4550a8ab-b310-4881-8c76-1b6a817ea63a',
+  jurisdiction_name: 'Tha Sen 8',
+  jurisdiction_name_path: [
+    'Trat 2',
+    'Mueng Trat District 2',
+    'Laem Klat Canton 2',
+    'Laem Klat Moo 8',
+  ],
+  jurisdiction_parent_id: 'a14c6253-2d3d-4bcc-8c49-35f9e44c66e1',
+  jurisdiction_path: [
+    '61707fc2 - c6ac - 4112 - a8d6 - 2a4861958396',
+    '8a8e4987- 95a9-4b2e - b746 - 3c9c3eec15c5',
+    '735a94f9 - 6ed2 - 4bcd - b242 - 8c2b5f714bee',
+    'a14c6253 - 2d3d - 4bcc - 8c49 - 35f9e44c66e1',
+  ],
+  plan_date: '2019-07-03',
+  plan_effective_period_end: '2019-07-30',
+  plan_effective_period_start: '2019-06-18',
+  plan_fi_reason: 'Case-triggered',
+  plan_fi_status: 'A1',
+  plan_id: '5ad62ca5-6b9b-4c5e-bd72-c9824074c385',
+  plan_intervention_type: 'FI',
+  plan_name: 'A1-ThaSen8_01',
+  plan_status: 'active',
+  plan_title: 'A1 - Tha Sen 8- Focus 01',
+  plan_version: '1',
 };
 
 export const plans = [plan1, plan2];
@@ -134,6 +181,7 @@ export const planRecordResponses = [planRecordResponse1, planRecordResponse2, pl
 export const planRecordsById = {
   '6c7904b2-c556-4004-a9b9-114617832954': {
     id: '6c7904b2-c556-4004-a9b9-114617832954',
+    plan_date: '2019-06-24',
     plan_effective_period_end: '2019-07-31',
     plan_effective_period_start: '2019-06-18',
     plan_fi_reason: 'Case-triggered',
@@ -146,6 +194,7 @@ export const planRecordsById = {
   },
   '89fh38sg-h83s-9xf2-a7h2-pl98dh320lbc': {
     id: '89fh38sg-h83s-9xf2-a7h2-pl98dh320lbc',
+    plan_date: '2019-05-16',
     plan_effective_period_end: '2019-08-30',
     plan_effective_period_start: '2019-05-15',
     plan_fi_reason: 'Case-triggered',
@@ -158,6 +207,7 @@ export const planRecordsById = {
   },
   '90d1095b-4f66-4341-86e2-362c82b2b0b2': {
     id: '90d1095b-4f66-4341-86e2-362c82b2b0b2',
+    plan_date: '2019-05-24',
     plan_effective_period_end: '2019-09-30',
     plan_effective_period_start: '2019-05-27',
     plan_fi_reason: '',

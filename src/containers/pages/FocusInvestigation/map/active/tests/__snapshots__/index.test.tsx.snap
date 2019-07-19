@@ -201,12 +201,16 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
           "2939",
           "2944",
         ],
+        "plan_date": "2019-06-18",
+        "plan_effective_period_end": "2019-06-18",
+        "plan_effective_period_start": "2019-07-31",
         "plan_fi_reason": "Routine",
         "plan_fi_status": "A1",
         "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
         "plan_intervention_type": "FI",
         "plan_status": "active",
         "plan_title": "A1-Tha Luang Village 1 Focus 01",
+        "plan_version": "1",
       }
     }
     pointFeatureCollection={
@@ -1408,12 +1412,16 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store 1`
               "2939",
               "2944",
             ],
+            "plan_date": "2019-06-18",
+            "plan_effective_period_end": "2019-06-18",
+            "plan_effective_period_start": "2019-07-31",
             "plan_fi_reason": "Routine",
             "plan_fi_status": "A1",
             "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
             "plan_intervention_type": "FI",
             "plan_status": "active",
             "plan_title": "A1-Tha Luang Village 1 Focus 01",
+            "plan_version": "1",
           }
         }
         plansArray={
@@ -1432,12 +1440,16 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store 1`
                 "2939",
                 "2944",
               ],
+              "plan_date": "2019-06-18",
+              "plan_effective_period_end": "2019-06-18",
+              "plan_effective_period_start": "2019-07-31",
               "plan_fi_reason": "Routine",
               "plan_fi_status": "A1",
               "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
               "plan_intervention_type": "FI",
               "plan_status": "active",
               "plan_title": "A1-Tha Luang Village 1 Focus 01",
+              "plan_version": "1",
             },
           ]
         }

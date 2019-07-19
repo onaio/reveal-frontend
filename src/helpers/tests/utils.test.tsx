@@ -250,6 +250,21 @@ describe('helpers/utils', () => {
     expect(transformValues(sample, ['height', 'name'], '', [null, 'null'])).toEqual(otherExpected);
   });
 
+  it('extractPlan works', () => {
+    expect(extractPlan(fixtures.plan99 as Plan)).toEqual({
+      ...fixtures.plan99,
+      canton: 'Laem Klat Canton 2',
+      caseClassification: null,
+      caseNotificationDate: '2019-07-03',
+      district: 'Mueng Trat District 2',
+      focusArea: 'Tha Sen 8',
+      province: 'Trat 2',
+      reason: 'Case-triggered',
+      status: 'A1',
+      village: 'Laem Klat Moo 8',
+    });
+  });
+
   it('extractPlan handles plans with null jurisdiction name path', () => {
     const plan: Plan = cloneDeep(fixtures.plan1) as Plan;
     (plan as any).jurisdiction_name_path = 'null';
@@ -261,10 +276,22 @@ describe('helpers/utils', () => {
       district: null,
       focusArea: plan.jurisdiction_name,
       id: plan.id,
-      jurisdiction_id: plan.jurisdiction_parent_id,
+      jurisdiction_depth: plan.jurisdiction_depth,
+      jurisdiction_id: plan.jurisdiction_id,
+      jurisdiction_name: plan.jurisdiction_name,
+      jurisdiction_name_path: plan.jurisdiction_name_path,
       jurisdiction_parent_id: plan.jurisdiction_parent_id,
+      jurisdiction_path: plan.jurisdiction_path,
+      plan_date: plan.plan_date,
+      plan_effective_period_end: plan.plan_effective_period_end,
+      plan_effective_period_start: plan.plan_effective_period_start,
+      plan_fi_reason: plan.plan_fi_reason,
+      plan_fi_status: plan.plan_fi_status,
       plan_id: plan.plan_id,
+      plan_intervention_type: plan.plan_intervention_type,
+      plan_status: plan.plan_status,
       plan_title: plan.plan_title,
+      plan_version: plan.plan_version,
       province: null,
       reason: plan.plan_fi_reason,
       status: plan.plan_fi_status,

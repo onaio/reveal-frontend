@@ -12,6 +12,7 @@ import {
   BEDNET_DISTRIBUTION_CODE,
   BLOOD_SCREENING_CODE,
   CASE_CONFIRMATION_CODE,
+  CASE_TRIGGERED_PLAN,
   FEATURE_COLLECTION,
   IRS_CODE,
   LARVAL_DIPPING_CODE,
@@ -214,16 +215,14 @@ export const ConfigStore = (
 /** utility method to extract plan from superset response object */
 export function extractPlan(plan: Plan) {
   const result: { [key: string]: any } = {
+    ...plan,
     canton: null,
     caseClassification: null,
-    caseNotificationDate: null,
+    caseNotificationDate: plan.plan_fi_reason === CASE_TRIGGERED_PLAN ? plan.plan_date : null,
     district: null,
     focusArea: plan.jurisdiction_name,
-    id: plan.id,
-    jurisdiction_id: plan.jurisdiction_parent_id,
+    jurisdiction_id: plan.jurisdiction_id,
     jurisdiction_parent_id: plan.jurisdiction_parent_id,
-    plan_id: plan.plan_id,
-    plan_title: plan.plan_title,
     province: null,
     reason: plan.plan_fi_reason,
     status: plan.plan_fi_status,
