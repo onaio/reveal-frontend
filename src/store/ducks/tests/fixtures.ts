@@ -374,6 +374,26 @@ export const goal7 = {
   task_count: 6,
 };
 
+export const goal8 = {
+  action_code: 'RACD Register Family',
+  action_description:
+    'Register all families & famiy members in all residential structures enumerated (100%) within the operational area',
+  action_prefix: '2',
+  action_reason: 'Investigation',
+  action_title: 'Family Registration',
+  completed_task_count: 0,
+  goal_comparator: '>=',
+  goal_id: 'RACD_register_all_families',
+  goal_unit: 'Percent',
+  goal_value: 100,
+  id: '43cebec8-1900-51e2-83a8-9041b380cdee',
+  jurisdiction_id: '674b66eb-b2aa-49b0-8635-2df5b0490aa8',
+  measure: 'Percent of residential structures with full family registration',
+  plan_id: '629badcb-2ea9-43a8-bcda-8489ab157b8d',
+  task_business_status_map: {},
+  task_count: 0,
+};
+
 const goal37 = clone(goal4);
 goal37.id = '1337';
 (goal37.task_business_status_map as any) = JSON.stringify(goal37.task_business_status_map);
