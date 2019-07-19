@@ -746,6 +746,39 @@ export const structure2 = {
   id: '155324',
   jurisdiction_id: '4550a8ab-b310-4881-8c76-1b6a817ea63a',
 };
+export const structure3 = {
+  geojson: {
+    geometry: {
+      coordinates: [
+        [
+          [101.177725195885, 15.0658221308165],
+          [101.177684962749, 15.0657263002127],
+          [101.177778840065, 15.0656848599382],
+          [101.177832484245, 15.0657781005444],
+          [101.177725195885, 15.0658221308165],
+        ],
+      ],
+      type: 'Polygon',
+    },
+    id: '03458d28-af61-4f70-b110-73a3429ada2d',
+    properties: {
+      code: '18bbb83b-844b-4847-9cfa-1b00e8f98d0b',
+      effective_end_date: null,
+      effective_start_date: null,
+      geographic_level: 6,
+      jurisdiction_id: '4550a8ab-b310-4881-8c76-1b6a817ea63a',
+      name: '18bbb83b-844b-4847-9cfa-1b00e8f98d0b',
+      server_version: 1562120301665,
+      status: 'Active',
+      type: '18bbb83b-844b-4847-9cfa-1b00e8f98d0b',
+      uid: '18bbb83b-844b-4847-9cfa-1b00e8f98d0b',
+      version: 0,
+    },
+    type: 'Feature',
+  },
+  id: '155324',
+  jurisdiction_id: '4050a8ab-b310-4881-8c76-1b6a817ea63a',
+};
 export const structures = [structure1, structure2];
 export const jurisdictions = [
   {
