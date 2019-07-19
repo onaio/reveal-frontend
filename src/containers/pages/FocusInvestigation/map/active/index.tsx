@@ -64,19 +64,11 @@ import plansReducer, {
   reducerName as plansReducerName,
 } from '../../../../../store/ducks/plans';
 import structuresReducer, {
-<<<<<<< fa9616b316388966b4c082e1e386b112fbba02eb
   getStructuresFCByJurisdictionId,
   reducerName as structuresReducerName,
   setStructures,
   Structure,
   StructureGeoJSON,
-=======
-  getStructuresFC,
-  InitialStructureGeoJSON,
-  reducerName as structuresReducerName,
-  setStructures,
-  Structure,
->>>>>>> Fix structures logic on store
 } from '../../../../../store/ducks/structures';
 import tasksReducer, {
   fetchTasks,
@@ -85,6 +77,7 @@ import tasksReducer, {
   Task,
   TaskGeoJSON,
 } from '../../../../../store/ducks/tasks';
+import { jurisdictions } from '../../../../../store/ducks/tests/fixtures';
 import './style.css';
 
 /** register reducers */
@@ -108,7 +101,6 @@ export interface MapSingleFIProps {
   plan: Plan | null;
   pointFeatureCollection: FeatureCollection<TaskGeoJSON>;
   polygonFeatureCollection: FeatureCollection<TaskGeoJSON>;
-<<<<<<< fa9616b316388966b4c082e1e386b112fbba02eb
   structures: FeatureCollection<StructureGeoJSON> | null /** we use this to get all structures */;
 }
 
@@ -116,11 +108,12 @@ export interface Jurisdictions {
   id: string;
   jurisdiction_id: string;
   plan_id: string;
-=======
-  structures: FeatureCollection<
-    InitialStructureGeoJSON
-  > | null /** we use this to get all structures */;
->>>>>>> Fix structures logic on store
+}
+
+export interface Jurisdictions {
+  id: string;
+  jurisdiction_id: string;
+  plan_id: string;
 }
 
 /** default value for feature Collection */
@@ -386,14 +379,10 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
       false,
       [POLYGON, MULTI_POLYGON]
     );
-<<<<<<< fa9616b316388966b4c082e1e386b112fbba02eb
     structures = getStructuresFCByJurisdictionId(
       state,
       jurisdiction && jurisdiction.jurisdiction_id
     );
-=======
-    structures = getStructuresFC(state);
->>>>>>> Fix structures logic on store
   }
   return {
     currentGoal,
