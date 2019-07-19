@@ -81,6 +81,10 @@ export const STRUCTURE_LAYER = 'structure-layer';
 export type STRUCTURE_LAYER = typeof STRUCTURE_LAYER;
 export const PROGRESS = 'Progress';
 export type PROGRESS = typeof PROGRESS;
+export const STRUCTURES = 'structure(s)';
+export type STRUCTURES = typeof STRUCTURES;
+export const PERSONS = 'person(s)';
+export type PERSON = typeof PERSONS;
 
 // internal urls
 export const LOGIN_URL = '/login';
