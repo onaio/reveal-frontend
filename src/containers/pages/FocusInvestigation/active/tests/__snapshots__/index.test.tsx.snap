@@ -397,7 +397,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
             Object {
               "canton": "Canton Tha Luang",
               "caseClassification": null,
-              "caseNotificationDate": null,
+              "caseNotificationDate": "2019-06-18",
               "district": "",
               "focusArea": "TLv1_02",
               "id": "plan-id-2",
@@ -607,7 +607,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
               Object {
                 "canton": "Canton Tha Luang",
                 "caseClassification": null,
-                "caseNotificationDate": null,
+                "caseNotificationDate": "2019-06-18",
                 "district": "",
                 "focusArea": "TLv1_02",
                 "id": "plan-id-2",
@@ -2331,7 +2331,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                     Object {
                                       "canton": "Canton Tha Luang",
                                       "caseClassification": null,
-                                      "caseNotificationDate": null,
+                                      "caseNotificationDate": "2019-06-18",
                                       "district": "",
                                       "focusArea": "TLv1_02",
                                       "id": "plan-id-2",
@@ -2358,7 +2358,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                       "_original": Object {
                                         "canton": "Canton Tha Luang",
                                         "caseClassification": null,
-                                        "caseNotificationDate": null,
+                                        "caseNotificationDate": "2019-06-18",
                                         "district": "",
                                         "focusArea": "TLv1_02",
                                         "id": "plan-id-2",
@@ -2378,7 +2378,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                       "_viewIndex": 1,
                                       "canton": "Canton Tha Luang",
                                       "caseClassification": null,
-                                      "caseNotificationDate": null,
+                                      "caseNotificationDate": "2019-06-18",
                                       "district": "",
                                       "focusArea": "TLv1_02",
                                       "plan_title": "A1-Tha Luang Village 1 Focus 01",
@@ -2618,7 +2618,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                     Object {
                                       "canton": "Canton Tha Luang",
                                       "caseClassification": null,
-                                      "caseNotificationDate": null,
+                                      "caseNotificationDate": "2019-06-18",
                                       "district": "",
                                       "focusArea": "TLv1_02",
                                       "id": "plan-id-2",
@@ -2645,7 +2645,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                       "_original": Object {
                                         "canton": "Canton Tha Luang",
                                         "caseClassification": null,
-                                        "caseNotificationDate": null,
+                                        "caseNotificationDate": "2019-06-18",
                                         "district": "",
                                         "focusArea": "TLv1_02",
                                         "id": "plan-id-2",
@@ -2665,7 +2665,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                       "_viewIndex": 1,
                                       "canton": "Canton Tha Luang",
                                       "caseClassification": null,
-                                      "caseNotificationDate": null,
+                                      "caseNotificationDate": "2019-06-18",
                                       "district": "",
                                       "focusArea": "TLv1_02",
                                       "plan_title": "A1-Tha Luang Village 1 Focus 01",
@@ -2684,11 +2684,13 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                       "style": undefined,
                                     }
                                   }
-                                  value={null}
+                                  value="2019-06-18"
                                   viewIndex={1}
                                   width={120}
                                 >
-                                  <div />
+                                  <div>
+                                    2019-06-18
+                                  </div>
                                 </Cell>
                               </div>
                             </TdComponent>
@@ -3340,7 +3342,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
             Object {
               "canton": "",
               "caseClassification": null,
-              "caseNotificationDate": null,
+              "caseNotificationDate": "2019-06-18",
               "district": "",
               "focusArea": "",
               "id": "93d3a80e-714c-51c7-a382-7633f1eb1f1b",
@@ -3359,7 +3361,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
             Object {
               "canton": "",
               "caseClassification": null,
-              "caseNotificationDate": null,
+              "caseNotificationDate": "2019-06-18",
               "district": "",
               "focusArea": "",
               "id": "plan-id-2",
@@ -3550,7 +3552,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
               Object {
                 "canton": "",
                 "caseClassification": null,
-                "caseNotificationDate": null,
+                "caseNotificationDate": "2019-06-18",
                 "district": "",
                 "focusArea": "",
                 "id": "93d3a80e-714c-51c7-a382-7633f1eb1f1b",
@@ -3569,7 +3571,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
               Object {
                 "canton": "",
                 "caseClassification": null,
-                "caseNotificationDate": null,
+                "caseNotificationDate": "2019-06-18",
                 "district": "",
                 "focusArea": "",
                 "id": "plan-id-2",
@@ -4657,7 +4659,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                     Object {
                                       "canton": "",
                                       "caseClassification": null,
-                                      "caseNotificationDate": null,
+                                      "caseNotificationDate": "2019-06-18",
                                       "district": "",
                                       "focusArea": "",
                                       "id": "93d3a80e-714c-51c7-a382-7633f1eb1f1b",
@@ -4684,7 +4686,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                       "_original": Object {
                                         "canton": "",
                                         "caseClassification": null,
-                                        "caseNotificationDate": null,
+                                        "caseNotificationDate": "2019-06-18",
                                         "district": "",
                                         "focusArea": "",
                                         "id": "93d3a80e-714c-51c7-a382-7633f1eb1f1b",
@@ -4704,7 +4706,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                       "_viewIndex": 0,
                                       "canton": "",
                                       "caseClassification": null,
-                                      "caseNotificationDate": null,
+                                      "caseNotificationDate": "2019-06-18",
                                       "district": "",
                                       "focusArea": "",
                                       "plan_title": "A1 - Ban Chamrak Mu - Focus 02 Rubber Plantation",
@@ -4882,7 +4884,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                     Object {
                                       "canton": "",
                                       "caseClassification": null,
-                                      "caseNotificationDate": null,
+                                      "caseNotificationDate": "2019-06-18",
                                       "district": "",
                                       "focusArea": "",
                                       "id": "93d3a80e-714c-51c7-a382-7633f1eb1f1b",
@@ -4909,7 +4911,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                       "_original": Object {
                                         "canton": "",
                                         "caseClassification": null,
-                                        "caseNotificationDate": null,
+                                        "caseNotificationDate": "2019-06-18",
                                         "district": "",
                                         "focusArea": "",
                                         "id": "93d3a80e-714c-51c7-a382-7633f1eb1f1b",
@@ -4929,7 +4931,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                       "_viewIndex": 0,
                                       "canton": "",
                                       "caseClassification": null,
-                                      "caseNotificationDate": null,
+                                      "caseNotificationDate": "2019-06-18",
                                       "district": "",
                                       "focusArea": "",
                                       "plan_title": "A1 - Ban Chamrak Mu - Focus 02 Rubber Plantation",
@@ -4948,11 +4950,13 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                       "style": undefined,
                                     }
                                   }
-                                  value={null}
+                                  value="2019-06-18"
                                   viewIndex={0}
                                   width={120}
                                 >
-                                  <div />
+                                  <div>
+                                    2019-06-18
+                                  </div>
                                 </Cell>
                               </div>
                             </TdComponent>
@@ -5219,7 +5223,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                     Object {
                                       "canton": "",
                                       "caseClassification": null,
-                                      "caseNotificationDate": null,
+                                      "caseNotificationDate": "2019-06-18",
                                       "district": "",
                                       "focusArea": "",
                                       "id": "plan-id-2",
@@ -5246,7 +5250,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                       "_original": Object {
                                         "canton": "",
                                         "caseClassification": null,
-                                        "caseNotificationDate": null,
+                                        "caseNotificationDate": "2019-06-18",
                                         "district": "",
                                         "focusArea": "",
                                         "id": "plan-id-2",
@@ -5266,7 +5270,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                       "_viewIndex": 1,
                                       "canton": "",
                                       "caseClassification": null,
-                                      "caseNotificationDate": null,
+                                      "caseNotificationDate": "2019-06-18",
                                       "district": "",
                                       "focusArea": "",
                                       "plan_title": "A1-Tha Luang Village 1 Focus 01",
@@ -5444,7 +5448,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                     Object {
                                       "canton": "",
                                       "caseClassification": null,
-                                      "caseNotificationDate": null,
+                                      "caseNotificationDate": "2019-06-18",
                                       "district": "",
                                       "focusArea": "",
                                       "id": "plan-id-2",
@@ -5471,7 +5475,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                       "_original": Object {
                                         "canton": "",
                                         "caseClassification": null,
-                                        "caseNotificationDate": null,
+                                        "caseNotificationDate": "2019-06-18",
                                         "district": "",
                                         "focusArea": "",
                                         "id": "plan-id-2",
@@ -5491,7 +5495,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                       "_viewIndex": 1,
                                       "canton": "",
                                       "caseClassification": null,
-                                      "caseNotificationDate": null,
+                                      "caseNotificationDate": "2019-06-18",
                                       "district": "",
                                       "focusArea": "",
                                       "plan_title": "A1-Tha Luang Village 1 Focus 01",
@@ -5510,11 +5514,13 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                       "style": undefined,
                                     }
                                   }
-                                  value={null}
+                                  value="2019-06-18"
                                   viewIndex={1}
                                   width={120}
                                 >
-                                  <div />
+                                  <div>
+                                    2019-06-18
+                                  </div>
                                 </Cell>
                               </div>
                             </TdComponent>
