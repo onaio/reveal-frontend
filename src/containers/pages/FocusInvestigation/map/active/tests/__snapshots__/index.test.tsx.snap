@@ -889,7 +889,7 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
                       }
                     >
                       <h6>
-                        Blood Screening
+                        RACD Blood screening
                       </h6>
                     </a>
                   </Link>
