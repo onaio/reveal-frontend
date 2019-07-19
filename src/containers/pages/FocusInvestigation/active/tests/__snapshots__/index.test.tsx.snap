@@ -115,6 +115,8 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
             "2939",
             "2944",
           ],
+          "plan_effective_period_end": "2019-06-18",
+          "plan_effective_period_start": "2019-07-31",
           "plan_fi_reason": "Routine",
           "plan_fi_status": "A1",
           "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
@@ -136,6 +138,8 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
             "2989",
             "2977",
           ],
+          "plan_effective_period_end": "2019-06-18",
+          "plan_effective_period_start": "2019-07-31",
           "plan_fi_reason": "Case-triggered",
           "plan_fi_status": "A1",
           "plan_id": "plan-id-2",
@@ -403,11 +407,13 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
             },
           ]
         }
+        hasChildren={[Function]}
         identifierField="id"
         linkerField="id"
         minRows={0}
         parentIdentifierField="parent"
         rootParentId={null}
+        shouldUseEffect={false}
         showPageSizeOptions={false}
         showPagination={false}
         useDrillDownTrProps={false}
@@ -647,6 +653,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
           getTrGroupProps={[Function]}
           getTrProps={[Function]}
           groupedByPivotKey="_groupedByPivot"
+          hasChildren={[Function]}
           identifierField="id"
           indexKey="_index"
           linkerField="id"
@@ -682,6 +689,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
           rootParentId={null}
           rowsSelectorText="rows per page"
           rowsText="rows"
+          shouldUseEffect={false}
           showPageJump={true}
           showPageSizeOptions={false}
           showPagination={false}
@@ -3037,6 +3045,8 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
           "jurisdiction_name_path": "null",
           "jurisdiction_parent_id": " NULL",
           "jurisdiction_path": "null",
+          "plan_effective_period_end": "2019-06-18",
+          "plan_effective_period_start": "2019-07-31",
           "plan_fi_reason": "Case-triggered",
           "plan_fi_status": "A1",
           "plan_id": "e9c9a069-7d22-44c0-a59e-9a483948716b",
@@ -3052,6 +3062,8 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
           "jurisdiction_name_path": "null",
           "jurisdiction_parent_id": "null",
           "jurisdiction_path": "null",
+          "plan_effective_period_end": "2019-06-18",
+          "plan_effective_period_start": "2019-07-31",
           "plan_fi_reason": "Case-triggered",
           "plan_fi_status": "A1",
           "plan_id": "plan-id-2",
@@ -3319,11 +3331,13 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
             },
           ]
         }
+        hasChildren={[Function]}
         identifierField="id"
         linkerField="id"
         minRows={0}
         parentIdentifierField="parent"
         rootParentId={null}
+        shouldUseEffect={false}
         showPageSizeOptions={false}
         showPagination={false}
         useDrillDownTrProps={false}
@@ -3563,6 +3577,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
           getTrGroupProps={[Function]}
           getTrProps={[Function]}
           groupedByPivotKey="_groupedByPivot"
+          hasChildren={[Function]}
           identifierField="id"
           indexKey="_index"
           linkerField="id"
@@ -3598,6 +3613,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
           rootParentId={null}
           rowsSelectorText="rows per page"
           rowsText="rows"
+          shouldUseEffect={false}
           showPageJump={true}
           showPageSizeOptions={false}
           showPagination={false}
