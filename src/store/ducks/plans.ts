@@ -13,7 +13,12 @@ export enum InterventionType {
   IRS = 'IRS',
 }
 
-/** interface for plan Objects */
+/** Enum representing the possible intervention types */
+export enum PlanStatus {
+  ACTIVE = 'active',
+  DRAFT = 'draft',
+  RETIRED = 'retired',
+}
 
 /** PlanRecordResponse - interface for response objects from SUPERSET_PLANS_TABLE_SLICE */
 export interface PlanRecordResponse {
