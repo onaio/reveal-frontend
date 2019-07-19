@@ -79,6 +79,7 @@ exports[`containers/pages/IRS renders plans list correctly 1`] = `
               "2939",
               "2944",
             ],
+            "plan_date": "2019-06-18",
             "plan_effective_period_end": "2019-06-18",
             "plan_effective_period_start": "2019-07-31",
             "plan_fi_reason": "Routine",
@@ -102,6 +103,7 @@ exports[`containers/pages/IRS renders plans list correctly 1`] = `
               "2989",
               "2977",
             ],
+            "plan_date": "2019-06-18",
             "plan_effective_period_end": "2019-06-18",
             "plan_effective_period_start": "2019-07-31",
             "plan_fi_reason": "Case-triggered",
@@ -165,6 +167,7 @@ exports[`containers/pages/IRS renders plans list correctly 1`] = `
                 "2939",
                 "2944",
               ],
+              "plan_date": "2019-06-18",
               "plan_effective_period_end": "2019-06-18",
               "plan_effective_period_start": "2019-07-31",
               "plan_fi_reason": "Routine",
@@ -188,6 +191,7 @@ exports[`containers/pages/IRS renders plans list correctly 1`] = `
                 "2989",
                 "2977",
               ],
+              "plan_date": "2019-06-18",
               "plan_effective_period_end": "2019-06-18",
               "plan_effective_period_start": "2019-07-31",
               "plan_fi_reason": "Case-triggered",
@@ -350,6 +354,7 @@ exports[`containers/pages/IRS renders plans list correctly 1`] = `
                     "2939",
                     "2944",
                   ],
+                  "plan_date": "2019-06-18",
                   "plan_effective_period_end": "2019-06-18",
                   "plan_effective_period_start": "2019-07-31",
                   "plan_fi_reason": "Routine",
@@ -373,6 +378,7 @@ exports[`containers/pages/IRS renders plans list correctly 1`] = `
                     "2989",
                     "2977",
                   ],
+                  "plan_date": "2019-06-18",
                   "plan_effective_period_end": "2019-06-18",
                   "plan_effective_period_start": "2019-07-31",
                   "plan_fi_reason": "Case-triggered",
@@ -500,6 +506,7 @@ exports[`containers/pages/IRS renders plans list correctly 1`] = `
                       "2939",
                       "2944",
                     ],
+                    "plan_date": "2019-06-18",
                     "plan_effective_period_end": "2019-06-18",
                     "plan_effective_period_start": "2019-07-31",
                     "plan_fi_reason": "Routine",
@@ -523,6 +530,7 @@ exports[`containers/pages/IRS renders plans list correctly 1`] = `
                       "2989",
                       "2977",
                     ],
+                    "plan_date": "2019-06-18",
                     "plan_effective_period_end": "2019-06-18",
                     "plan_effective_period_start": "2019-07-31",
                     "plan_fi_reason": "Case-triggered",
@@ -1021,6 +1029,7 @@ exports[`containers/pages/IRS renders plans list correctly 1`] = `
                                             "2939",
                                             "2944",
                                           ],
+                                          "plan_date": "2019-06-18",
                                           "plan_effective_period_end": "2019-06-18",
                                           "plan_effective_period_start": "2019-07-31",
                                           "plan_fi_reason": "Routine",
@@ -1052,6 +1061,7 @@ exports[`containers/pages/IRS renders plans list correctly 1`] = `
                                               "2939",
                                               "2944",
                                             ],
+                                            "plan_date": "2019-06-18",
                                             "plan_effective_period_end": "2019-06-18",
                                             "plan_effective_period_start": "2019-07-31",
                                             "plan_fi_reason": "Routine",
@@ -1063,7 +1073,7 @@ exports[`containers/pages/IRS renders plans list correctly 1`] = `
                                           },
                                           "_subRows": undefined,
                                           "_viewIndex": 0,
-                                          "plan_date": undefined,
+                                          "plan_date": "2019-06-18",
                                           "plan_status": "active",
                                           "plan_title": "A1-Tha Luang Village 1 Focus 01",
                                         }
@@ -1120,7 +1130,9 @@ exports[`containers/pages/IRS renders plans list correctly 1`] = `
                                         "width": "100px",
                                       }
                                     }
-                                  />
+                                  >
+                                    2019-06-18
+                                  </div>
                                 </TdComponent>
                                 <TdComponent
                                   className=""
@@ -1273,6 +1285,7 @@ exports[`containers/pages/IRS renders plans list correctly 1`] = `
                                             "2989",
                                             "2977",
                                           ],
+                                          "plan_date": "2019-06-18",
                                           "plan_effective_period_end": "2019-06-18",
                                           "plan_effective_period_start": "2019-07-31",
                                           "plan_fi_reason": "Case-triggered",
@@ -1304,6 +1317,7 @@ exports[`containers/pages/IRS renders plans list correctly 1`] = `
                                               "2989",
                                               "2977",
                                             ],
+                                            "plan_date": "2019-06-18",
                                             "plan_effective_period_end": "2019-06-18",
                                             "plan_effective_period_start": "2019-07-31",
                                             "plan_fi_reason": "Case-triggered",
@@ -1315,7 +1329,7 @@ exports[`containers/pages/IRS renders plans list correctly 1`] = `
                                           },
                                           "_subRows": undefined,
                                           "_viewIndex": 1,
-                                          "plan_date": undefined,
+                                          "plan_date": "2019-06-18",
                                           "plan_status": "active",
                                           "plan_title": "A1-Tha Luang Village 1 Focus 01",
                                         }
@@ -1372,7 +1386,9 @@ exports[`containers/pages/IRS renders plans list correctly 1`] = `
                                         "width": "100px",
                                       }
                                     }
-                                  />
+                                  >
+                                    2019-06-18
+                                  </div>
                                 </TdComponent>
                                 <TdComponent
                                   className=""
