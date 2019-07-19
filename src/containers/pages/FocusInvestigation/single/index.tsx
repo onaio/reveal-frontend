@@ -223,7 +223,7 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
                 const goalReport = getGoalReport(item);
                 return (
                   <div className="responseItem" key={item.goal_id}>
-                    <h6>{item.action_code}</h6>
+                    <h6>{item.action_title}</h6>
                     <div className="targetItem">
                       <p>
                         {MEASURE}: {item.measure}

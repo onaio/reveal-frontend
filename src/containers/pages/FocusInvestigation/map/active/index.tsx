@@ -298,7 +298,7 @@ class SingleActiveFIMap extends React.Component<
                         className="task-link"
                         style={{ textDecoration: 'none' }}
                       >
-                        <h6>{item.action_code}</h6>
+                        <h6>{item.action_title}</h6>
                       </NavLink>
                       <div className="targetItem">
                         <p>
