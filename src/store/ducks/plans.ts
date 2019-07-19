@@ -13,13 +13,12 @@ export enum InterventionType {
   IRS = 'IRS',
 }
 
-export type InterventionStatus = 'new' | 'draft' | 'active';
-
 /** interface for plan Objects */
 /** Enum representing the possible intervention types */
 export enum PlanStatus {
   ACTIVE = 'active',
   DRAFT = 'draft',
+  NEW = 'new',
   RETIRED = 'retired',
 }
 

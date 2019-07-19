@@ -38,10 +38,10 @@ import jurisdictionReducer, {
 import plansReducer, {
   fetchPlanRecords,
   getPlanRecordById,
-  InterventionStatus,
   InterventionType,
   PlanRecord,
   PlanRecordResponse,
+  PlanStatus,
   reducerName as plansReducerName,
 } from '../../../../../store/ducks/plans';
 
@@ -103,7 +103,7 @@ interface IrsPlanState {
   focusJurisdictionId: string | null;
   isEditingPlanName: boolean;
   isSelectingCountry: boolean;
-  newPlan: null | PlanRecord;
+  newPlan: PlanRecord | null;
   previousPlanName: string;
   tableCrumbs: TableCrumb[];
 }
@@ -125,6 +125,7 @@ class IrsPlan extends React.Component<
       newPlan: props.isNewPlan
         ? {
             id: '',
+            plan_date: this.getNewPlanDate(),
             plan_effective_period_end: '',
             plan_effective_period_start: '',
             plan_fi_reason: '',
@@ -132,7 +133,7 @@ class IrsPlan extends React.Component<
             plan_id: '',
             plan_intervention_type: InterventionType.IRS,
             plan_jurisdictions_ids: [],
-            plan_status: 'new',
+            plan_status: PlanStatus.NEW,
             plan_title: this.getNewPlanTitle(),
             plan_version: '',
           }
@@ -540,9 +541,13 @@ class IrsPlan extends React.Component<
   }
 
   // Plan Title Control
-  private getNewPlanTitle() {
+  private getNewPlanDate(): string {
     const date = new Date();
-    return `${InterventionType.IRS}_${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`;
+    return `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`;
+  }
+  private getNewPlanTitle(): string {
+    const date = this.getNewPlanDate();
+    return `${InterventionType.IRS}_${date}`;
   }
 
   private onEditNameButtonClick(e: any) {
