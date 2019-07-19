@@ -113,19 +113,31 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
       fetchGoalsActionCreator,
       fetchJurisdictionsActionCreator,
       fetchPlansActionCreator,
+      planById,
       supersetService,
     } = this.props;
-    /** define superset params for goals */
-    const goalsParams = superset.getFormData(3000, [], { action_prefix: true });
-    await supersetService(SUPERSET_PLANS_SLICE).then((result: Plan[]) =>
-      fetchPlansActionCreator(result)
-    );
-    await supersetService(SUPERSET_GOALS_SLICE, goalsParams).then((result2: Goal[]) =>
-      fetchGoalsActionCreator(result2)
-    );
-    await supersetFetch(SUPERSET_JURISDICTIONS_SLICE).then((result: Jurisdiction[]) =>
-      fetchJurisdictionsActionCreator(result)
-    );
+
+    if (planById && planById.plan_id) {
+      /** define superset filter params for plans */
+      const plansParams = superset.getFormData(3000, [
+        { comparator: planById.plan_id, operator: '==', subject: 'plan_id' },
+      ]);
+      /** define superset params for goals */
+      const goalsParams = superset.getFormData(
+        3000,
+        [{ comparator: planById.plan_id, operator: '==', subject: 'plan_id' }],
+        { action_prefix: true }
+      );
+      await supersetService(SUPERSET_PLANS_SLICE, plansParams).then((result: Plan[]) =>
+        fetchPlansActionCreator(result)
+      );
+      await supersetService(SUPERSET_GOALS_SLICE, goalsParams).then((result2: Goal[]) =>
+        fetchGoalsActionCreator(result2)
+      );
+      await supersetFetch(SUPERSET_JURISDICTIONS_SLICE).then((result: Jurisdiction[]) =>
+        fetchJurisdictionsActionCreator(result)
+      );
+    }
   }
 
   public render() {
