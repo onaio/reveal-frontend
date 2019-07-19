@@ -17,6 +17,7 @@ export const plan1 = {
   plan_intervention_type: 'FI',
   plan_status: 'active',
   plan_title: 'A1-Tha Luang Village 1 Focus 01',
+  plan_version: '1',
 };
 
 export const plan2 = {
@@ -36,6 +37,7 @@ export const plan2 = {
   plan_intervention_type: 'IRS',
   plan_status: 'active',
   plan_title: 'A1-Tha Luang Village 1 Focus 01',
+  plan_version: '1',
 };
 
 export const plan5 = {
@@ -55,6 +57,7 @@ export const plan5 = {
   plan_intervention_type: 'FI',
   plan_status: 'active',
   plan_title: 'A1 - Ban Chamrak Mu - Focus 02 Rubber Plantation',
+  plan_version: '1',
 };
 
 export const plan6 = {
@@ -93,6 +96,7 @@ export const plan3 = {
   plan_intervention_type: 'FI',
   plan_status: 'active',
   plan_title: 'A1-Tha Luang Village 1 Focus 01',
+  plan_version: '1',
 };
 
 export const plan99 = {
