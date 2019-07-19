@@ -250,6 +250,21 @@ describe('helpers/utils', () => {
     expect(transformValues(sample, ['height', 'name'], '', [null, 'null'])).toEqual(otherExpected);
   });
 
+  it('extractPlan works', () => {
+    expect(extractPlan(fixtures.plan99 as Plan)).toEqual({
+      ...fixtures.plan99,
+      canton: 'Laem Klat Canton 2',
+      caseClassification: null,
+      caseNotificationDate: '2019-07-03',
+      district: 'Mueng Trat District 2',
+      focusArea: 'Tha Sen 8',
+      province: 'Trat 2',
+      reason: 'Case-triggered',
+      status: 'A1',
+      village: 'Laem Klat Moo 8',
+    });
+  });
+
   it('extractPlan handles plans with null jurisdiction name path', () => {
     const plan: Plan = cloneDeep(fixtures.plan1) as Plan;
     (plan as any).jurisdiction_name_path = 'null';
