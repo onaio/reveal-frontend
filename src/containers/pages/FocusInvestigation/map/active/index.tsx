@@ -1,4 +1,4 @@
-import reducerRegistry, { store } from '@onaio/redux-reducer-registry';
+import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset from '@onaio/superset-connector';
 import * as React from 'react';
 import { Helmet } from 'react-helmet';
@@ -14,7 +14,6 @@ import Loading from '../../../../../components/page/Loading';
 import {
   SUPERSET_GOALS_SLICE,
   SUPERSET_JURISDICTIONS_SLICE,
-  SUPERSET_PLAN_STRUCTURE_PIVOT_SLICE,
   SUPERSET_PLANS_SLICE,
   SUPERSET_STRUCTURES_SLICE,
   SUPERSET_TASKS_SLICE,
@@ -34,7 +33,6 @@ import {
   POLYGON,
   PROGRESS,
   RESPONSE,
-  TARGET,
 } from '../../../../../constants';
 import { popupHandler } from '../../../../../helpers/handlers';
 import { getGoalReport } from '../../../../../helpers/indicators';
@@ -157,48 +155,27 @@ class SingleActiveFIMap extends React.Component<
       fetchTasksActionCreator,
       plan,
     } = this.props;
-    const planId = plan && plan.plan_id;
-    if (planId) {
-      const pivotParams = superset.getFormData(3000, [
-        { comparator: planId, operator: '==', subject: 'plan_id' },
-      ]);
-      // let sqlFilterExpression = '';
-      let jurisdictionId;
-      await supersetFetch(SUPERSET_PLAN_STRUCTURE_PIVOT_SLICE, pivotParams).then(
-        async relevantJurisdictions => {
-          if (!relevantJurisdictions) {
-            return new Promise(reject => {
-              reject();
-            });
-          }
-          jurisdictionId =
-            relevantJurisdictions.length > 1
-              ? relevantJurisdictions[0].jurisdiction_id
-              : relevantJurisdictions.map((d: Jurisdictions) => d.jurisdiction_id).join(' ,');
 
-          const planJurisdictionSupersetParams = superset.getFormData(1000, [
-            { comparator: jurisdictionId, operator: 'in', subject: 'jurisdiction_id' },
-          ]);
-          const jurisdictionResults = await supersetFetch(
-            SUPERSET_JURISDICTIONS_SLICE,
-            planJurisdictionSupersetParams
-          );
-          fetchJurisdictionsActionCreator(jurisdictionResults);
-        }
-      );
-      /** define superset params for structures */
-      let structuresparams;
-      if (jurisdictionId) {
-        structuresparams = superset.getFormData(3000, [
-          { comparator: jurisdictionId, operator: 'in', subject: 'jurisdiction_id' },
-        ]);
-      }
-      /** define superset params for jurisdictions */
-      const supersetParams = superset.getFormData(3000, [
-        { comparator: planId, operator: '==', subject: 'plan_id' },
+    if (plan && plan.plan_id) {
+      /** define superset filter params for jurisdictions */
+      const jurisdictionsParams = superset.getFormData(3000, [
+        { comparator: plan.jurisdiction_id, operator: '==', subject: 'jurisdiction_id' },
       ]);
-      /** Implement Ad hoc Queris since jurisdictions have no plan_id */
-      await supersetFetch(SUPERSET_STRUCTURES_SLICE, structuresparams).then(
+      await supersetFetch(SUPERSET_JURISDICTIONS_SLICE, jurisdictionsParams).then(
+        (result: Jurisdiction[]) => fetchJurisdictionsActionCreator(result)
+      );
+      /** define superset params for filtering by plan_id */
+      const supersetParams = superset.getFormData(3000, [
+        { comparator: plan.plan_id, operator: '==', subject: 'plan_id' },
+      ]);
+      /** define superset params for goals */
+      const goalsParams = superset.getFormData(
+        3000,
+        [{ comparator: plan.plan_id, operator: '==', subject: 'plan_id' }],
+        { action_prefix: true }
+      );
+      /** Implement Ad hoc Queries since jurisdictions have no plan_id */
+      await supersetFetch(SUPERSET_STRUCTURES_SLICE, jurisdictionsParams).then(
         (structuresResults: Structure[]) => {
           fetchStructuresActionCreator(structuresResults);
         }
@@ -206,7 +183,7 @@ class SingleActiveFIMap extends React.Component<
       await supersetFetch(SUPERSET_PLANS_SLICE, supersetParams).then((result2: Plan[]) => {
         fetchPlansActionCreator(result2);
       });
-      await supersetFetch(SUPERSET_GOALS_SLICE, supersetParams).then((result3: Goal[]) => {
+      await supersetFetch(SUPERSET_GOALS_SLICE, goalsParams).then((result3: Goal[]) => {
         fetchGoalsActionCreator(result3);
       });
       await supersetFetch(SUPERSET_TASKS_SLICE, supersetParams).then((result4: Task[]) => {
@@ -304,7 +281,7 @@ class SingleActiveFIMap extends React.Component<
                         className="task-link"
                         style={{ textDecoration: 'none' }}
                       >
-                        <h6>{item.action_code}</h6>
+                        <h6>{item.action_title}</h6>
                       </NavLink>
                       <div className="targetItem">
                         <p>

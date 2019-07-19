@@ -183,6 +183,10 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
           Array [
             Object {
               "action_code": "Case Confirmation",
+              "action_description": "Confirm the index case",
+              "action_prefix": "1",
+              "action_reason": "Investigation",
+              "action_title": "Case Confirmation",
               "completed_task_count": 0,
               "goal_comparator": "=",
               "goal_id": "Case_Confirmation",
@@ -197,6 +201,10 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
             },
             Object {
               "action_code": "Larval Dipping",
+              "action_description": "Perform a minimum of three larval dipping activities in the operational area",
+              "action_prefix": "5",
+              "action_reason": "Investigation",
+              "action_title": "Larval Dipping",
               "completed_task_count": 0,
               "goal_comparator": ">=",
               "goal_id": "Larval_Dipping_Min_3_Sites",
@@ -213,6 +221,10 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
             },
             Object {
               "action_code": "Mosquito Collection",
+              "action_description": "Set a minimum of three mosquito collection traps and complete the mosquito collection process",
+              "action_prefix": "6",
+              "action_reason": "Investigation",
+              "action_title": "Mosquito Collection",
               "completed_task_count": 3,
               "goal_comparator": ">=",
               "goal_id": "Mosquito_Collection_Min_3_Traps",
@@ -1251,6 +1263,10 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
       Array [
         Object {
           "action_code": "Case Confirmation",
+          "action_description": "Confirm the index case",
+          "action_prefix": "1",
+          "action_reason": "Investigation",
+          "action_title": "Case Confirmation",
           "completed_task_count": 0,
           "goal_comparator": "=",
           "goal_id": "Case_Confirmation",
@@ -1265,6 +1281,10 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
         },
         Object {
           "action_code": "Larval Dipping",
+          "action_description": "Perform a minimum of three larval dipping activities in the operational area",
+          "action_prefix": "5",
+          "action_reason": "Investigation",
+          "action_title": "Larval Dipping",
           "completed_task_count": 0,
           "goal_comparator": ">=",
           "goal_id": "Larval_Dipping_Min_3_Sites",
@@ -1511,6 +1531,18 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
         "calls": Array [
           Array [
             0,
+            Object {
+              "adhoc_filters": Array [
+                Object {
+                  "clause": "WHERE",
+                  "comparator": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+                  "expressionType": "SIMPLE",
+                  "operator": "==",
+                  "subject": "plan_id",
+                },
+              ],
+              "row_limit": 3000,
+            },
           ],
         ],
         "results": Array [

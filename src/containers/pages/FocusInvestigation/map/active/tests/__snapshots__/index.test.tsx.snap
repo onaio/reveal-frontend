@@ -34,6 +34,10 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
       Array [
         Object {
           "action_code": "Blood Screening",
+          "action_description": "Visit all residential structures (100%) within a 1 km radius of a confirmed index case and test each registered person",
+          "action_prefix": "4",
+          "action_reason": "Investigation",
+          "action_title": "RACD Blood screening",
           "completed_task_count": 0,
           "goal_comparator": "=",
           "goal_id": "RACD_blood_screening_1km_radius",
@@ -655,6 +659,10 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
                 Array [
                   Object {
                     "action_code": "Blood Screening",
+                    "action_description": "Visit all residential structures (100%) within a 1 km radius of a confirmed index case and test each registered person",
+                    "action_prefix": "4",
+                    "action_reason": "Investigation",
+                    "action_title": "RACD Blood screening",
                     "completed_task_count": 0,
                     "goal_comparator": "=",
                     "goal_id": "RACD_blood_screening_1km_radius",
@@ -881,7 +889,7 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
                       }
                     >
                       <h6>
-                        Blood Screening
+                        RACD Blood screening
                       </h6>
                     </a>
                   </Link>
@@ -1063,6 +1071,10 @@ Object {
   "goal": Array [
     Object {
       "action_code": "Blood Screening",
+      "action_description": "Visit all residential structures (100%) within a 1 km radius of a confirmed index case and test each registered person",
+      "action_prefix": "4",
+      "action_reason": "Investigation",
+      "action_title": "RACD Blood screening",
       "completed_task_count": 0,
       "goal_comparator": "=",
       "goal_id": "RACD_blood_screening_1km_radius",
@@ -1263,6 +1275,10 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store (g
       currentGoal={
         Object {
           "action_code": "Blood Screening",
+          "action_description": "Visit all residential structures (100%) within a 1 km radius of a confirmed index case and test each registered person",
+          "action_prefix": "4",
+          "action_reason": "Investigation",
+          "action_title": "RACD Blood screening",
           "completed_task_count": 0,
           "goal_comparator": "=",
           "goal_id": "RACD_blood_screening_1km_radius",
