@@ -381,7 +381,7 @@ export const goal8 = {
   action_prefix: '2',
   action_reason: 'Investigation',
   action_title: 'Family Registration',
-  completed_task_count: 0,
+  completed_task_count: 7,
   goal_comparator: '>=',
   goal_id: 'RACD_register_all_families',
   goal_unit: 'Percent',
@@ -390,8 +390,8 @@ export const goal8 = {
   jurisdiction_id: '674b66eb-b2aa-49b0-8635-2df5b0490aa8',
   measure: 'Percent of residential structures with full family registration',
   plan_id: '629badcb-2ea9-43a8-bcda-8489ab157b8d',
-  task_business_status_map: {},
-  task_count: 0,
+  task_business_status_map: { Complete: 7, 'Not Visited': 220 },
+  task_count: 227,
 };
 
 const goal37 = clone(goal4);
