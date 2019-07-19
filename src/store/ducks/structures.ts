@@ -37,15 +37,13 @@ export interface InitialStructure {
   jurisdiction_id: string;
 }
 
-export type Structure = InitialStructure;
-
 // actions
 /** STRUCTURES_SET action type */
 export const STRUCTURES_SET = 'reveal/reducer/structures/STRUCTURES_SET';
 
 /** interface for setStructure action */
 interface SetStructuresAction extends AnyAction {
-  structuresById: { [key: string]: Structure };
+  structuresById: { [key: string]: InitialStructure };
   type: typeof STRUCTURES_SET;
 }
 
@@ -54,7 +52,7 @@ export type StructureActionTypes = SetStructuresAction | AnyAction;
 
 /** interface for Structure state */
 interface StructureState {
-  structuresById: { [key: string]: Structure };
+  structuresById: { [key: string]: InitialStructure };
 }
 
 /** immutable Structure state */
@@ -94,7 +92,7 @@ export const setStructures = (structuresList: InitialStructure[] = []): SetStruc
   return {
     structuresById: keyBy(
       structuresList.map(
-        (structure: InitialStructure): Structure => {
+        (structure: InitialStructure): InitialStructure => {
           /** ensure geojson is parsed */
           if (typeof structure.geojson === 'string') {
             structure.geojson = JSON.parse(structure.geojson);
@@ -103,7 +101,7 @@ export const setStructures = (structuresList: InitialStructure[] = []): SetStruc
           if (typeof structure.geojson.geometry === 'string') {
             structure.geojson.geometry = JSON.parse(structure.geojson.geometry);
           }
-          return structure as Structure;
+          return structure as InitialStructure;
         }
       ),
       structure => structure.id
@@ -118,7 +116,7 @@ export const setStructures = (structuresList: InitialStructure[] = []): SetStruc
  * @param {Partial<Store>} state - the redux store
  * @returns {Structure[]} an array of structures
  */
-export function getStructuresArray(state: Partial<Store>): Structure[] {
+export function getStructuresArray(state: Partial<Store>): InitialStructure[] {
   return values((state as any)[reducerName].structuresById);
 }
 
@@ -129,6 +127,8 @@ export function getStructuresArray(state: Partial<Store>): Structure[] {
  */
 export function getStructuresFC(state: Partial<Store>): FeatureCollection<InitialStructureGeoJSON> {
   return wrapFeatureCollection(
-    values(getStructuresArray(state).map((eachStructure: Structure) => eachStructure.geojson))
+    values(
+      getStructuresArray(state).map((eachStructure: InitialStructure) => eachStructure.geojson)
+    )
   );
 }
