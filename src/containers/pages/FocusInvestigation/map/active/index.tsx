@@ -27,7 +27,6 @@ import {
   FOCUS_INVESTIGATIONS,
   HOME,
   HOME_URL,
-  JURISDICTION_ID,
   MEASURE,
   MULTI_POLYGON,
   OF,
@@ -65,20 +64,20 @@ import plansReducer, {
   reducerName as plansReducerName,
 } from '../../../../../store/ducks/plans';
 import structuresReducer, {
-  getStructuresFC,
+  getStructuresFCByJurisdictionId,
+  InitialStructure,
   InitialStructureGeoJSON,
   reducerName as structuresReducerName,
   setStructures,
-  Structure,
 } from '../../../../../store/ducks/structures';
 import tasksReducer, {
   fetchTasks,
   getFCByPlanAndGoalAndJurisdiction,
-  getStructuresFCByJurisdictionId,
   reducerName as tasksReducerName,
   Task,
   TaskGeoJSON,
 } from '../../../../../store/ducks/tasks';
+import { jurisdictions } from '../../../../../store/ducks/tests/fixtures';
 import './style.css';
 
 /** register reducers */
@@ -105,6 +104,12 @@ export interface MapSingleFIProps {
   structures: FeatureCollection<
     InitialStructureGeoJSON
   > | null /** we use this to get all structures */;
+}
+
+export interface Jurisdictions {
+  id: string;
+  jurisdiction_id: string;
+  plan_id: string;
 }
 
 /** default value for feature Collection */
@@ -154,7 +159,8 @@ class SingleActiveFIMap extends React.Component<
       const pivotParams = superset.getFormData(3000, [
         { comparator: planId, operator: '==', subject: 'plan_id' },
       ]);
-      let sqlFilterExpression = '';
+      // let sqlFilterExpression = '';
+      let jurisdictionId;
       await supersetFetch(SUPERSET_PLAN_STRUCTURE_PIVOT_SLICE, pivotParams).then(
         async relevantJurisdictions => {
           if (!relevantJurisdictions) {
@@ -162,15 +168,13 @@ class SingleActiveFIMap extends React.Component<
               reject();
             });
           }
-          for (let i = 0; i < relevantJurisdictions.length; i += 1) {
-            const jurId = relevantJurisdictions[i].jurisdiction_id;
-            if (i) {
-              sqlFilterExpression += ' OR ';
-            }
-            sqlFilterExpression += `${JURISDICTION_ID} = '${jurId}'`;
-          }
+          jurisdictionId =
+            relevantJurisdictions.length > 1
+              ? relevantJurisdictions[0].jurisdiction_id
+              : relevantJurisdictions.map((d: Jurisdictions) => d.jurisdiction_id).join(' ,');
+
           const planJurisdictionSupersetParams = superset.getFormData(1000, [
-            { sqlExpression: sqlFilterExpression },
+            { comparator: jurisdictionId, operator: 'in', subject: 'jurisdiction_id' },
           ]);
           const jurisdictionResults = await supersetFetch(
             SUPERSET_JURISDICTIONS_SLICE,
@@ -180,14 +184,19 @@ class SingleActiveFIMap extends React.Component<
         }
       );
       /** define superset params for structures */
-      const structuresparams = superset.getFormData(3000, [{ sqlExpression: sqlFilterExpression }]);
+      let structuresparams;
+      if (jurisdictionId) {
+        structuresparams = superset.getFormData(3000, [
+          { comparator: jurisdictionId, operator: 'in', subject: 'jurisdiction_id' },
+        ]);
+      }
       /** define superset params for jurisdictions */
       const supersetParams = superset.getFormData(3000, [
         { comparator: planId, operator: '==', subject: 'plan_id' },
       ]);
       /** Implement Ad hoc Queris since jurisdictions have no plan_id */
       await supersetFetch(SUPERSET_STRUCTURES_SLICE, structuresparams).then(
-        (structuresResults: Structure[]) => {
+        (structuresResults: InitialStructure[]) => {
           fetchStructuresActionCreator(structuresResults);
         }
       );
@@ -366,7 +375,10 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
       false,
       [POLYGON, MULTI_POLYGON]
     );
-    structures = getStructuresFC(state);
+    structures = getStructuresFCByJurisdictionId(
+      state,
+      jurisdiction && jurisdiction.jurisdiction_id
+    );
   }
   return {
     currentGoal,
