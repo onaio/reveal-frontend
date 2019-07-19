@@ -122,7 +122,7 @@ export interface SiteConfigApp {
   apiAccessToken: string;
   appName: string;
   mapConfig: SiteConfigAppMapconfig;
-  mapIcons: MapIcons[];
+  mapIcons?: MapIcons[];
 }
 
 /** interface to describe Gisida site configuration */

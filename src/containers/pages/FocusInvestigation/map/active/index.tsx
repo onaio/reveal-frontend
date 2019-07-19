@@ -77,7 +77,6 @@ import tasksReducer, {
   Task,
   TaskGeoJSON,
 } from '../../../../../store/ducks/tasks';
-import { jurisdictions } from '../../../../../store/ducks/tests/fixtures';
 import './style.css';
 
 /** register reducers */
