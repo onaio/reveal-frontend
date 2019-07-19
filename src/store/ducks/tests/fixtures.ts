@@ -400,7 +400,7 @@ goal37.id = '1337';
 export { goal37 };
 
 // there are tests that rely on the order of this Array
-export const goals = [goal1, goal2, goal3, goal4, goal5, goal6];
+export const goals = [goal1, goal2, goal3, goal4, goal5, goal6, goal8];
 
 export const plan1Goals = [goal1, goal2];
 
