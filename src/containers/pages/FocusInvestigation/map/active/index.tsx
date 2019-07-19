@@ -16,7 +16,6 @@ import {
   SUPERSET_PLANS_SLICE,
   SUPERSET_STRUCTURES_SLICE,
 } from '../../../../../configs/env';
-import { FI_SINGLE_MAP_TITLE } from '../../../../../constants';
 import {
   FI_SINGLE_MAP_URL,
   FI_SINGLE_URL,
