@@ -1,6 +1,7 @@
 // this is the FocusInvestigation "active" page component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import reducerRegistry from '@onaio/redux-reducer-registry';
+import superset from '@onaio/superset-connector';
 import * as React from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
@@ -29,7 +30,6 @@ import {
   FI_STATUS,
   FI_URL,
   FOCUS_AREA_INFO,
-  FOCUS_INVESTIGATION,
   FOCUS_INVESTIGATIONS,
   HOME,
   HOME_URL,
@@ -115,10 +115,12 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
       fetchPlansActionCreator,
       supersetService,
     } = this.props;
+    /** define superset params for goals */
+    const goalsParams = superset.getFormData(3000, [], { action_prefix: true });
     await supersetService(SUPERSET_PLANS_SLICE).then((result: Plan[]) =>
       fetchPlansActionCreator(result)
     );
-    await supersetService(SUPERSET_GOALS_SLICE).then((result2: Goal[]) =>
+    await supersetService(SUPERSET_GOALS_SLICE, goalsParams).then((result2: Goal[]) =>
       fetchGoalsActionCreator(result2)
     );
     await supersetFetch(SUPERSET_JURISDICTIONS_SLICE).then((result: Jurisdiction[]) =>
