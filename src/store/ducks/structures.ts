@@ -112,23 +112,55 @@ export const setStructures = (structuresList: InitialStructure[] = []): SetStruc
 
 // selectors
 
-/** get an array of structure objects
- * @param {Partial<Store>} state - the redux store
- * @returns {Structure[]} an array of structures
- */
-export function getStructuresArray(state: Partial<Store>): InitialStructure[] {
-  return values((state as any)[reducerName].structuresById);
-}
-
 /** get Structures FeatureCollection
  * Structures are tasks whose geometry is of type Polygon
  * @param {Partial<Store>} state - the redux store
  * @returns {FeatureCollection} - a geoJSON Feature Collection object
  */
-export function getStructuresFC(state: Partial<Store>): FeatureCollection<InitialStructureGeoJSON> {
+export function getAllStructuresFC(
+  state: Partial<Store>
+): FeatureCollection<InitialStructureGeoJSON> {
   return wrapFeatureCollection(
     values(
-      getStructuresArray(state).map((eachStructure: InitialStructure) => eachStructure.geojson)
+      values((state as any)[reducerName].structuresById).map(
+        (eachStructure: InitialStructure) => eachStructure.geojson
+      )
     )
   );
+}
+
+/** responsible for only getting structure geojson data for all structures from reducer
+ * @param {Partial<Store>} state - the store state
+ * @param {boolean} includeNullGeoms - if to include structures with null geometries in FC
+ * @return {InitialStructureGeoJSON []} - returns a list of all structures geojson whose geoms are not null
+ */
+export function getStructuresGeoJsonData(
+  state: Partial<Store>,
+  includeNullGeoms: boolean = true
+): InitialStructureGeoJSON[] {
+  let results = values((state as any)[reducerName].structuresById).map(e => e.geojson);
+  if (!includeNullGeoms) {
+    results = results.filter(e => e && e.geometry);
+  } else {
+    results = results;
+  }
+  return results;
+}
+
+/** get structures as FeatureCollection filtered by jurisdiction_id
+ * @param {partial<Store>} state - the redux store
+ * @param {string} jurisdictionId - the jurisdiction id
+ * @param {boolean} includeNullGeoms - if to include features with null geometries in FC
+ * @return {FeatureCollection} - an geoJSON Feature Collection object
+ */
+export function getStructuresFCByJurisdictionId(
+  state: Partial<Store>,
+  jurisdictionId: string,
+  includeNullGeoms: boolean = true
+): FeatureCollection<InitialStructureGeoJSON> {
+  const geoJsonFeatures: InitialStructureGeoJSON[] = getStructuresGeoJsonData(
+    state,
+    includeNullGeoms
+  ).filter(e => e.properties.jurisdiction_id === jurisdictionId);
+  return wrapFeatureCollection(geoJsonFeatures);
 }
