@@ -208,13 +208,13 @@ exports[`containers/pages/IRS renders plans list correctly 1`] = `
             <SideEffect(NullComponent)
               defer={true}
               encodeSpecialCharacters={true}
-              title="Indoor residual Spray"
+              title="IRS"
               titleAttributes={Object {}}
             >
               <NullComponent
                 defer={true}
                 encodeSpecialCharacters={true}
-                title="Indoor residual Spray"
+                title="IRS"
                 titleAttributes={Object {}}
               />
             </SideEffect(NullComponent)>
