@@ -461,9 +461,11 @@ class IrsPlan extends React.Component<
                   save
                 </Button>
               </InputGroupAddon>
-              <Button color="link" onClick={onEditPlanSettingsButtonClick}>
-                Plan settings...
-              </Button>
+              <InputGroupAddon addonType="append">
+                <Button outline={true} color="secondary" onClick={onEditPlanSettingsButtonClick}>
+                  Plan settings...
+                </Button>
+              </InputGroupAddon>
             </InputGroup>
             <hr />
           </Col>
