@@ -1,5 +1,5 @@
 import * as gatekeeper from '@onaio/gatekeeper';
-import { cloneDeep } from 'lodash';
+import { cloneDeep, map } from 'lodash';
 import {
   BLACK,
   TASK_BLUE as BLUE,
@@ -20,6 +20,7 @@ import {
   getColorByValue,
   getLocationColumns,
   oAuthUserInfoGetter,
+  roundToPrecision,
   transformValues,
 } from '../utils';
 
@@ -271,5 +272,13 @@ describe('helpers/utils', () => {
       village: null,
     };
     expect(result).toEqual(expected);
+  });
+
+  it('rounds Decimal values correctly', () => {
+    const values = [1, 1.2354532, 1.523, 0.002143, 0.00009, 2431, 9.9999];
+    const precisions = [0, 2, 1, 0, 3, 4, 3];
+    const expected = [1, 1.24, 1.5, 0, 0, 2431, 10];
+    const got = map(values, (value, index) => roundToPrecision(value, precisions[index]));
+    expect(got).toEqual(expected);
   });
 });
