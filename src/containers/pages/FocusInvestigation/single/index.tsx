@@ -40,7 +40,6 @@ import {
   OF,
   PROGRESS,
   RESPONSE,
-  TARGET,
 } from '../../../../constants';
 import { getGoalReport } from '../../../../helpers/indicators';
 import ProgressBar from '../../../../helpers/ProgressBar';

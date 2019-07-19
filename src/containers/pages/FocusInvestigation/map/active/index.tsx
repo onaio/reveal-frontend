@@ -14,7 +14,6 @@ import Loading from '../../../../../components/page/Loading';
 import {
   SUPERSET_GOALS_SLICE,
   SUPERSET_JURISDICTIONS_SLICE,
-  SUPERSET_PLAN_STRUCTURE_PIVOT_SLICE,
   SUPERSET_PLANS_SLICE,
   SUPERSET_STRUCTURES_SLICE,
   SUPERSET_TASKS_SLICE,
@@ -34,7 +33,6 @@ import {
   POLYGON,
   PROGRESS,
   RESPONSE,
-  TARGET,
 } from '../../../../../constants';
 import { popupHandler } from '../../../../../helpers/handlers';
 import { getGoalReport } from '../../../../../helpers/indicators';
