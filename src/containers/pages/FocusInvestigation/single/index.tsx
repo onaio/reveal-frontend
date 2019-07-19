@@ -128,14 +128,18 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
         [{ comparator: planById.plan_id, operator: '==', subject: 'plan_id' }],
         { action_prefix: true }
       );
+      /** define superset filter params for jurisdictions */
+      const jurisdictionsParams = superset.getFormData(3000, [
+        { comparator: planById.jurisdiction_id, operator: '==', subject: 'jurisdiction_id' },
+      ]);
       await supersetService(SUPERSET_PLANS_SLICE, plansParams).then((result: Plan[]) =>
         fetchPlansActionCreator(result)
       );
       await supersetService(SUPERSET_GOALS_SLICE, goalsParams).then((result2: Goal[]) =>
         fetchGoalsActionCreator(result2)
       );
-      await supersetFetch(SUPERSET_JURISDICTIONS_SLICE).then((result: Jurisdiction[]) =>
-        fetchJurisdictionsActionCreator(result)
+      await supersetFetch(SUPERSET_JURISDICTIONS_SLICE, jurisdictionsParams).then(
+        (result: Jurisdiction[]) => fetchJurisdictionsActionCreator(result)
       );
     }
   }
