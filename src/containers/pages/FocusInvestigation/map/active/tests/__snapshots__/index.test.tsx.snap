@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap correctly 1`] = `
+exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap correctly & changes page title 1`] = `
 <Router
   history={
     Object {
@@ -307,6 +307,24 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
     structures={null}
   >
     <div>
+      <HelmetWrapper
+        defer={true}
+        encodeSpecialCharacters={true}
+      >
+        <SideEffect(NullComponent)
+          defer={true}
+          encodeSpecialCharacters={true}
+          title="Focus Investigation: A1-Tha Luang Village 1 Focus 01"
+          titleAttributes={Object {}}
+        >
+          <NullComponent
+            defer={true}
+            encodeSpecialCharacters={true}
+            title="Focus Investigation: A1-Tha Luang Village 1 Focus 01"
+            titleAttributes={Object {}}
+          />
+        </SideEffect(NullComponent)>
+      </HelmetWrapper>
       <HeaderBreadcrumb
         currentPage={
           Object {
@@ -826,7 +844,7 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
 </Router>
 `;
 
-exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap correctly 2`] = `
+exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap correctly & changes page title 2`] = `
 Object {
   "currentGoal": "RACD_blood_screening_1km_radius",
   "geoData": Object {
@@ -1550,6 +1568,24 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store 1`
         }
       >
         <div>
+          <HelmetWrapper
+            defer={true}
+            encodeSpecialCharacters={true}
+          >
+            <SideEffect(NullComponent)
+              defer={true}
+              encodeSpecialCharacters={true}
+              title="Focus Investigation: A1-Tha Luang Village 1 Focus 01"
+              titleAttributes={Object {}}
+            >
+              <NullComponent
+                defer={true}
+                encodeSpecialCharacters={true}
+                title="Focus Investigation: A1-Tha Luang Village 1 Focus 01"
+                titleAttributes={Object {}}
+              />
+            </SideEffect(NullComponent)>
+          </HelmetWrapper>
           <HeaderBreadcrumb
             currentPage={
               Object {

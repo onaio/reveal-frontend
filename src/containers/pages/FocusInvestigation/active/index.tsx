@@ -4,6 +4,7 @@ import DrillDownTable from '@onaio/drill-down-table';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset from '@onaio/superset-connector';
 import * as React from 'react';
+import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { Link } from 'react-router-dom';
@@ -18,6 +19,7 @@ import HeaderBreadCrumb, {
 import Loading from '../../../../components/page/Loading';
 import { SUPERSET_PLANS_SLICE } from '../../../../configs/env';
 import { FIClassifications, locationHierarchy } from '../../../../configs/settings';
+import { FI_ACTIVE_TITLE } from '../../../../constants';
 import {
   ACTIVE_FOCUS_INVESTIGATION,
   CASE_CLASSIFICATION_HEADER,
@@ -218,6 +220,9 @@ class ActiveFocusInvestigation extends React.Component<
 
     return (
       <div>
+        <Helmet>
+          <title>{FI_ACTIVE_TITLE}</title>
+        </Helmet>
         <HeaderBreadCrumb {...breadcrumbProps} />
         <h3 className="mb-3 mt-5 page-title">{ACTIVE_FOCUS_INVESTIGATION}</h3>
         <DrillDownTable {...tableProps} />

@@ -201,6 +201,24 @@ exports[`containers/pages/IRS renders plans list correctly 1`] = `
         <div
           className="mb-5"
         >
+          <HelmetWrapper
+            defer={true}
+            encodeSpecialCharacters={true}
+          >
+            <SideEffect(NullComponent)
+              defer={true}
+              encodeSpecialCharacters={true}
+              title="IRS"
+              titleAttributes={Object {}}
+            >
+              <NullComponent
+                defer={true}
+                encodeSpecialCharacters={true}
+                title="IRS"
+                titleAttributes={Object {}}
+              />
+            </SideEffect(NullComponent)>
+          </HelmetWrapper>
           <HeaderBreadcrumb
             currentPage={
               Object {

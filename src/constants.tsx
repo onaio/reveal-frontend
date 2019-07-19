@@ -98,6 +98,16 @@ export type FI_SINGLE_MAP_URL = typeof FI_SINGLE_MAP_URL;
 export const FI_HISTORICAL_URL = '/focus-investigation/historical';
 export type FI_HISTORICAL_URL = typeof FI_HISTORICAL_URL;
 
+// container pages title names
+export const HOME_TITLE = `Home page`;
+export type HOME_TITLE = typeof HOME_TITLE;
+export const FI_ACTIVE_TITLE = `Active Focus Investigation`;
+export type FI_ACTIVE_TITLE = typeof FI_ACTIVE_TITLE;
+export const FI_HISTORICAL_TITLE = `Historical Focus Investigations`;
+export type FI_HISTORICAL_TITLE = typeof FI_HISTORICAL_TITLE;
+export const IRS_TITLE = `IRS`;
+export type IRS_TITLE = typeof IRS_TITLE;
+
 // colors
 export const GREEN = 'Green';
 export type GREEN = typeof GREEN;

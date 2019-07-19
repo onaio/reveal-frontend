@@ -2,9 +2,11 @@ import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import { createBrowserHistory } from 'history';
 import React from 'react';
+import { Helmet } from 'react-helmet';
 import { Route, Router, Switch } from 'react-router';
 import { Link } from 'react-router-dom';
 import { FI_HISTORICAL_URL } from '../../../../../constants';
+import { FI_HISTORICAL_TITLE } from '../../../../../constants';
 import HistoricalFocusInvestigation from '../../historical';
 
 const history = createBrowserHistory();
@@ -33,7 +35,7 @@ describe('containers/pages/HistoricalFocusInvestigation', () => {
     );
   });
 
-  it('renders HistoricalFocusInvestigation correctly', () => {
+  it('renders HistoricalFocusInvestigation correctly & changes page title', () => {
     const mock: any = jest.fn();
     const props = {
       history,
@@ -50,6 +52,8 @@ describe('containers/pages/HistoricalFocusInvestigation', () => {
         <HistoricalFocusInvestigation {...props} />
       </Router>
     );
+    const helmet = Helmet.peek();
+    expect(helmet.title).toEqual(FI_HISTORICAL_TITLE);
     expect(toJson(wrapper)).toMatchSnapshot();
     wrapper.unmount();
   });
