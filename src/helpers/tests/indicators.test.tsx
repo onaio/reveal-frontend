@@ -14,6 +14,11 @@ describe('helpers/indicators', () => {
   it('goalPercentAchieved works for reducing goals', () => {
     const goal = {
       action_code: 'Blood Screening',
+      action_description:
+        'Visit all residential structures (100%) within a 1 km radius of a confirmed index case and test each registered person',
+      action_prefix: '4',
+      action_reason: 'Investigation',
+      action_title: 'RACD Blood screening',
       completed_task_count: 100,
       goal_comparator: '<',
       goal_id: 'RACD_blood_screening_1km_radius',
@@ -32,6 +37,11 @@ describe('helpers/indicators', () => {
   it('goalPercentAchieved works for target that is 0', () => {
     const goal = {
       action_code: 'Blood Screening',
+      action_description:
+        'Visit all residential structures (100%) within a 1 km radius of a confirmed index case and test each registered person',
+      action_prefix: '4',
+      action_reason: 'Investigation',
+      action_title: 'RACD Blood screening',
       completed_task_count: 100,
       goal_comparator: '<',
       goal_id: 'RACD_blood_screening_1km_radius',
