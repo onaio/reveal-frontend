@@ -105,7 +105,7 @@ export const FI_ACTIVE_TITLE = `Active Focus Investigation`;
 export type FI_ACTIVE_TITLE = typeof FI_ACTIVE_TITLE;
 export const FI_HISTORICAL_TITLE = `Historical Focus Investigations`;
 export type FI_HISTORICAL_TITLE = typeof FI_HISTORICAL_TITLE;
-export const IRS_TITLE = `Indoor residual Spray`;
+export const IRS_TITLE = `IRS`;
 export type IRS_TITLE = typeof IRS_TITLE;
 
 // colors
