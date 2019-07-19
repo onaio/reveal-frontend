@@ -238,10 +238,7 @@ class SingleActiveFIMap extends React.Component<
                         </p>
                         <p>
                           {PROGRESS}: {item.completed_task_count} {OF} {goalReport.targetValue}{' '}
-                          {item.goal_unit.toLowerCase() === 'percent'
-                            ? 'structures'
-                            : item.goal_unit}{' '}
-                          ({goalReport.prettyPercentAchieved})
+                          {goalReport.goalUnit} ({goalReport.prettyPercentAchieved})
                         </p>
                         <br />
                         <ProgressBar value={goalReport.percentAchieved} max={1} />

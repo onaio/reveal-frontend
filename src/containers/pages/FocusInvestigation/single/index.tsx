@@ -225,8 +225,7 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
                       </p>
                       <p>
                         {PROGRESS}: {item.completed_task_count} {OF} {goalReport.targetValue}{' '}
-                        {item.goal_unit.toLowerCase() === 'percent' ? 'structures' : item.goal_unit}{' '}
-                        ({goalReport.prettyPercentAchieved})
+                        {goalReport.goalUnit} ({goalReport.prettyPercentAchieved})
                       </p>
                       <ProgressBar value={goalReport.percentAchieved} max={1} />
                     </div>
