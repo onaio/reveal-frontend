@@ -28,11 +28,16 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
     fetchGoalsActionCreator={[Function]}
     fetchJurisdictionsActionCreator={[Function]}
     fetchPlansActionCreator={[Function]}
+    fetchStructuresActionCreator={[Function]}
     fetchTasksActionCreator={[Function]}
     goals={
       Array [
         Object {
           "action_code": "Blood Screening",
+          "action_description": "Visit all residential structures (100%) within a 1 km radius of a confirmed index case and test each registered person",
+          "action_prefix": "4",
+          "action_reason": "Investigation",
+          "action_title": "RACD Blood screening",
           "completed_task_count": 0,
           "goal_comparator": "=",
           "goal_id": "RACD_blood_screening_1km_radius",
@@ -201,12 +206,16 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
           "2939",
           "2944",
         ],
+        "plan_date": "2019-06-18",
+        "plan_effective_period_end": "2019-06-18",
+        "plan_effective_period_start": "2019-07-31",
         "plan_fi_reason": "Routine",
         "plan_fi_status": "A1",
         "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
         "plan_intervention_type": "FI",
         "plan_status": "active",
         "plan_title": "A1-Tha Luang Village 1 Focus 01",
+        "plan_version": "1",
       }
     }
     pointFeatureCollection={
@@ -304,7 +313,57 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
       }
     }
     setCurrentGoalActionCreator={[Function]}
-    structures={null}
+    structures={
+      Object {
+        "features": Array [
+          Object {
+            "geometry": Object {
+              "coordinates": Array [
+                Array [
+                  Array [
+                    101.188427209854,
+                    15.0909179029537,
+                  ],
+                  Array [
+                    101.18852108717,
+                    15.0909179029537,
+                  ],
+                  Array [
+                    101.18852108717,
+                    15.0910085427885,
+                  ],
+                  Array [
+                    101.188427209854,
+                    15.0910085427885,
+                  ],
+                  Array [
+                    101.188427209854,
+                    15.0909179029537,
+                  ],
+                ],
+              ],
+              "type": "Polygon",
+            },
+            "id": "e652f8b2-b884-42d5-832a-86009c10a812",
+            "properties": Object {
+              "code": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
+              "effective_end_date": null,
+              "effective_start_date": null,
+              "geographic_level": 6,
+              "jurisdiction_id": "4550a8ab-b310-4881-8c76-1b6a817ea63a",
+              "name": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
+              "server_version": 1562120301666,
+              "status": "Active",
+              "type": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
+              "uid": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
+              "version": 0,
+            },
+            "type": "Feature",
+          },
+        ],
+        "type": "FeatureCollection",
+      }
+    }
   >
     <div>
       <HelmetWrapper
@@ -600,6 +659,10 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
                 Array [
                   Object {
                     "action_code": "Blood Screening",
+                    "action_description": "Visit all residential structures (100%) within a 1 km radius of a confirmed index case and test each registered person",
+                    "action_prefix": "4",
+                    "action_reason": "Investigation",
+                    "action_title": "RACD Blood screening",
                     "completed_task_count": 0,
                     "goal_comparator": "=",
                     "goal_id": "RACD_blood_screening_1km_radius",
@@ -717,7 +780,57 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
                   "type": "FeatureCollection",
                 }
               }
-              structures={null}
+              structures={
+                Object {
+                  "features": Array [
+                    Object {
+                      "geometry": Object {
+                        "coordinates": Array [
+                          Array [
+                            Array [
+                              101.188427209854,
+                              15.0909179029537,
+                            ],
+                            Array [
+                              101.18852108717,
+                              15.0909179029537,
+                            ],
+                            Array [
+                              101.18852108717,
+                              15.0910085427885,
+                            ],
+                            Array [
+                              101.188427209854,
+                              15.0910085427885,
+                            ],
+                            Array [
+                              101.188427209854,
+                              15.0909179029537,
+                            ],
+                          ],
+                        ],
+                        "type": "Polygon",
+                      },
+                      "id": "e652f8b2-b884-42d5-832a-86009c10a812",
+                      "properties": Object {
+                        "code": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
+                        "effective_end_date": null,
+                        "effective_start_date": null,
+                        "geographic_level": 6,
+                        "jurisdiction_id": "4550a8ab-b310-4881-8c76-1b6a817ea63a",
+                        "name": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
+                        "server_version": 1562120301666,
+                        "status": "Active",
+                        "type": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
+                        "uid": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
+                        "version": 0,
+                      },
+                      "type": "Feature",
+                    },
+                  ],
+                  "type": "FeatureCollection",
+                }
+              }
             >
               <div>
                 I love oov
@@ -776,7 +889,7 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
                       }
                     >
                       <h6>
-                        Blood Screening
+                        RACD Blood screening
                       </h6>
                     </a>
                   </Link>
@@ -791,15 +904,17 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
                   Percent of registered people tested
                 </p>
                 <p>
-                  Target
+                  Progress
                   : 
-                  0%
-                   (
                   0
                    
                   of
                    
                   0
+                   
+                  person(s)
+                   (
+                  0%
                   )
                 </p>
                 <br />
@@ -956,6 +1071,10 @@ Object {
   "goal": Array [
     Object {
       "action_code": "Blood Screening",
+      "action_description": "Visit all residential structures (100%) within a 1 km radius of a confirmed index case and test each registered person",
+      "action_prefix": "4",
+      "action_reason": "Investigation",
+      "action_title": "RACD Blood screening",
       "completed_task_count": 0,
       "goal_comparator": "=",
       "goal_id": "RACD_blood_screening_1km_radius",
@@ -1066,11 +1185,59 @@ Object {
     ],
     "type": "FeatureCollection",
   },
-  "structures": null,
+  "structures": Object {
+    "features": Array [
+      Object {
+        "geometry": Object {
+          "coordinates": Array [
+            Array [
+              Array [
+                101.188427209854,
+                15.0909179029537,
+              ],
+              Array [
+                101.18852108717,
+                15.0909179029537,
+              ],
+              Array [
+                101.18852108717,
+                15.0910085427885,
+              ],
+              Array [
+                101.188427209854,
+                15.0910085427885,
+              ],
+              Array [
+                101.188427209854,
+                15.0909179029537,
+              ],
+            ],
+          ],
+          "type": "Polygon",
+        },
+        "id": "e652f8b2-b884-42d5-832a-86009c10a812",
+        "properties": Object {
+          "code": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
+          "effective_end_date": null,
+          "effective_start_date": null,
+          "geographic_level": 6,
+          "jurisdiction_id": "4550a8ab-b310-4881-8c76-1b6a817ea63a",
+          "name": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
+          "server_version": 1562120301666,
+          "status": "Active",
+          "type": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
+          "uid": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
+          "version": 0,
+        },
+        "type": "Feature",
+      },
+    ],
+    "type": "FeatureCollection",
+  },
 }
 `;
 
-exports[`containers/pages/FocusInvestigation/activeMap works with redux store 1`] = `
+exports[`containers/pages/FocusInvestigation/activeMap works with redux store (gisidawrapper component that loads jurisdiction without structures and tasks) 1`] = `
 <Provider
   store={
     Object {
@@ -1108,6 +1275,10 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store 1`
       currentGoal={
         Object {
           "action_code": "Blood Screening",
+          "action_description": "Visit all residential structures (100%) within a 1 km radius of a confirmed index case and test each registered person",
+          "action_prefix": "4",
+          "action_reason": "Investigation",
+          "action_title": "RACD Blood screening",
           "completed_task_count": 0,
           "goal_comparator": "=",
           "goal_id": "RACD_blood_screening_1km_radius",
@@ -1252,6 +1423,7 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store 1`
         fetchGoalsActionCreator={[Function]}
         fetchJurisdictionsActionCreator={[Function]}
         fetchPlansActionCreator={[Function]}
+        fetchStructuresActionCreator={[Function]}
         fetchTasksActionCreator={[Function]}
         goals={Array []}
         history={
@@ -1408,12 +1580,16 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store 1`
               "2939",
               "2944",
             ],
+            "plan_date": "2019-06-18",
+            "plan_effective_period_end": "2019-06-18",
+            "plan_effective_period_start": "2019-07-31",
             "plan_fi_reason": "Routine",
             "plan_fi_status": "A1",
             "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
             "plan_intervention_type": "FI",
             "plan_status": "active",
             "plan_title": "A1-Tha Luang Village 1 Focus 01",
+            "plan_version": "1",
           }
         }
         plansArray={
@@ -1432,12 +1608,16 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store 1`
                 "2939",
                 "2944",
               ],
+              "plan_date": "2019-06-18",
+              "plan_effective_period_end": "2019-06-18",
+              "plan_effective_period_start": "2019-07-31",
               "plan_fi_reason": "Routine",
               "plan_fi_status": "A1",
               "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
               "plan_intervention_type": "FI",
               "plan_status": "active",
               "plan_title": "A1-Tha Luang Village 1 Focus 01",
+              "plan_version": "1",
             },
           ]
         }
@@ -1459,113 +1639,7 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store 1`
           }
         }
         setCurrentGoalActionCreator={[Function]}
-        structures={
-          Object {
-            "features": Array [
-              Object {
-                "geometry": Object {
-                  "coordinates": Array [
-                    Array [
-                      Array [
-                        101.188427209854,
-                        15.0909179029537,
-                      ],
-                      Array [
-                        101.18852108717,
-                        15.0909179029537,
-                      ],
-                      Array [
-                        101.18852108717,
-                        15.0910085427885,
-                      ],
-                      Array [
-                        101.188427209854,
-                        15.0910085427885,
-                      ],
-                      Array [
-                        101.188427209854,
-                        15.0909179029537,
-                      ],
-                    ],
-                  ],
-                  "type": "Polygon",
-                },
-                "id": "e652f8b2-b884-42d5-832a-86009c10a812",
-                "properties": Object {
-                  "action_code": "RACD Register Family",
-                  "color": "#FFCA16",
-                  "goal_id": "RACD_register_family_1km_radius",
-                  "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
-                  "jurisdiction_name": "TLv1_01",
-                  "jurisdiction_parent_id": "dad42fa6-b9b8-4658-bf25-bfa7ab5b16ae",
-                  "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
-                  "structure_code": "a19eeb63-45d0-4744-9a9d-76d0694103f6",
-                  "structure_id": "a19eeb63-45d0-4744-9a9d-76d0694103f6",
-                  "structure_name": "a19eeb63-45d0-4744-9a9d-76d0694103f6",
-                  "structure_type": "a19eeb63-45d0-4744-9a9d-76d0694103f6",
-                  "task_business_status": "Not Visited",
-                  "task_execution_end_date": "2019-04-01",
-                  "task_execution_start_date": "2019-04-08",
-                  "task_focus": "95515b0d-b9c0-496e-83c7-7af8b4924d1f",
-                  "task_status": "Ready",
-                  "task_task_for": "a19eeb63-45d0-4744-9a9d-76d0694103f6",
-                },
-                "type": "Feature",
-              },
-              Object {
-                "geometry": Object {
-                  "coordinates": Array [
-                    Array [
-                      Array [
-                        101.177725195885,
-                        15.0658221308165,
-                      ],
-                      Array [
-                        101.177684962749,
-                        15.0657263002127,
-                      ],
-                      Array [
-                        101.177778840065,
-                        15.0656848599382,
-                      ],
-                      Array [
-                        101.177832484245,
-                        15.0657781005444,
-                      ],
-                      Array [
-                        101.177725195885,
-                        15.0658221308165,
-                      ],
-                    ],
-                  ],
-                  "type": "Polygon",
-                },
-                "id": "03458d28-af61-4f70-b110-73a3429ada2d",
-                "properties": Object {
-                  "action_code": "Bednet Distribution",
-                  "color": "#FFCA16",
-                  "goal_id": "RACD_bednet_dist_1km_radius",
-                  "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
-                  "jurisdiction_name": "TLv1_01",
-                  "jurisdiction_parent_id": "dad42fa6-b9b8-4658-bf25-bfa7ab5b16ae",
-                  "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
-                  "structure_code": "da765947-5e4d-49f7-9eb8-2d2d00681f65",
-                  "structure_id": "da765947-5e4d-49f7-9eb8-2d2d00681f65",
-                  "structure_name": "da765947-5e4d-49f7-9eb8-2d2d00681f65",
-                  "structure_type": "da765947-5e4d-49f7-9eb8-2d2d00681f65",
-                  "task_business_status": "Not Visited",
-                  "task_execution_end_date": "2019-04-01",
-                  "task_execution_start_date": "2019-04-08",
-                  "task_focus": "Bednet Distribution",
-                  "task_status": "Ready",
-                  "task_task_for": "da765947-5e4d-49f7-9eb8-2d2d00681f65",
-                },
-                "type": "Feature",
-              },
-            ],
-            "type": "FeatureCollection",
-          }
-        }
+        structures={null}
       >
         <div>
           <HelmetWrapper
@@ -1879,113 +1953,7 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store 1`
                       "type": "FeatureCollection",
                     }
                   }
-                  structures={
-                    Object {
-                      "features": Array [
-                        Object {
-                          "geometry": Object {
-                            "coordinates": Array [
-                              Array [
-                                Array [
-                                  101.188427209854,
-                                  15.0909179029537,
-                                ],
-                                Array [
-                                  101.18852108717,
-                                  15.0909179029537,
-                                ],
-                                Array [
-                                  101.18852108717,
-                                  15.0910085427885,
-                                ],
-                                Array [
-                                  101.188427209854,
-                                  15.0910085427885,
-                                ],
-                                Array [
-                                  101.188427209854,
-                                  15.0909179029537,
-                                ],
-                              ],
-                            ],
-                            "type": "Polygon",
-                          },
-                          "id": "e652f8b2-b884-42d5-832a-86009c10a812",
-                          "properties": Object {
-                            "action_code": "RACD Register Family",
-                            "color": "#FFCA16",
-                            "goal_id": "RACD_register_family_1km_radius",
-                            "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
-                            "jurisdiction_name": "TLv1_01",
-                            "jurisdiction_parent_id": "dad42fa6-b9b8-4658-bf25-bfa7ab5b16ae",
-                            "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
-                            "structure_code": "a19eeb63-45d0-4744-9a9d-76d0694103f6",
-                            "structure_id": "a19eeb63-45d0-4744-9a9d-76d0694103f6",
-                            "structure_name": "a19eeb63-45d0-4744-9a9d-76d0694103f6",
-                            "structure_type": "a19eeb63-45d0-4744-9a9d-76d0694103f6",
-                            "task_business_status": "Not Visited",
-                            "task_execution_end_date": "2019-04-01",
-                            "task_execution_start_date": "2019-04-08",
-                            "task_focus": "95515b0d-b9c0-496e-83c7-7af8b4924d1f",
-                            "task_status": "Ready",
-                            "task_task_for": "a19eeb63-45d0-4744-9a9d-76d0694103f6",
-                          },
-                          "type": "Feature",
-                        },
-                        Object {
-                          "geometry": Object {
-                            "coordinates": Array [
-                              Array [
-                                Array [
-                                  101.177725195885,
-                                  15.0658221308165,
-                                ],
-                                Array [
-                                  101.177684962749,
-                                  15.0657263002127,
-                                ],
-                                Array [
-                                  101.177778840065,
-                                  15.0656848599382,
-                                ],
-                                Array [
-                                  101.177832484245,
-                                  15.0657781005444,
-                                ],
-                                Array [
-                                  101.177725195885,
-                                  15.0658221308165,
-                                ],
-                              ],
-                            ],
-                            "type": "Polygon",
-                          },
-                          "id": "03458d28-af61-4f70-b110-73a3429ada2d",
-                          "properties": Object {
-                            "action_code": "Bednet Distribution",
-                            "color": "#FFCA16",
-                            "goal_id": "RACD_bednet_dist_1km_radius",
-                            "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
-                            "jurisdiction_name": "TLv1_01",
-                            "jurisdiction_parent_id": "dad42fa6-b9b8-4658-bf25-bfa7ab5b16ae",
-                            "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
-                            "structure_code": "da765947-5e4d-49f7-9eb8-2d2d00681f65",
-                            "structure_id": "da765947-5e4d-49f7-9eb8-2d2d00681f65",
-                            "structure_name": "da765947-5e4d-49f7-9eb8-2d2d00681f65",
-                            "structure_type": "da765947-5e4d-49f7-9eb8-2d2d00681f65",
-                            "task_business_status": "Not Visited",
-                            "task_execution_end_date": "2019-04-01",
-                            "task_execution_start_date": "2019-04-08",
-                            "task_focus": "Bednet Distribution",
-                            "task_status": "Ready",
-                            "task_task_for": "da765947-5e4d-49f7-9eb8-2d2d00681f65",
-                          },
-                          "type": "Feature",
-                        },
-                      ],
-                      "type": "FeatureCollection",
-                    }
-                  }
+                  structures={null}
                 >
                   <div>
                     I love oov
@@ -2013,7 +1981,7 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store 1`
 </Provider>
 `;
 
-exports[`containers/pages/FocusInvestigation/activeMap works with redux store 2`] = `
+exports[`containers/pages/FocusInvestigation/activeMap works with redux store (gisidawrapper component that loads jurisdiction without structures and tasks) 2`] = `
 Object {
   "currentGoal": null,
   "geoData": Object {
@@ -2138,110 +2106,6 @@ Object {
     "features": Array [],
     "type": "FeatureCollection",
   },
-  "structures": Object {
-    "features": Array [
-      Object {
-        "geometry": Object {
-          "coordinates": Array [
-            Array [
-              Array [
-                101.188427209854,
-                15.0909179029537,
-              ],
-              Array [
-                101.18852108717,
-                15.0909179029537,
-              ],
-              Array [
-                101.18852108717,
-                15.0910085427885,
-              ],
-              Array [
-                101.188427209854,
-                15.0910085427885,
-              ],
-              Array [
-                101.188427209854,
-                15.0909179029537,
-              ],
-            ],
-          ],
-          "type": "Polygon",
-        },
-        "id": "e652f8b2-b884-42d5-832a-86009c10a812",
-        "properties": Object {
-          "action_code": "RACD Register Family",
-          "color": "#FFCA16",
-          "goal_id": "RACD_register_family_1km_radius",
-          "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
-          "jurisdiction_name": "TLv1_01",
-          "jurisdiction_parent_id": "dad42fa6-b9b8-4658-bf25-bfa7ab5b16ae",
-          "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
-          "structure_code": "a19eeb63-45d0-4744-9a9d-76d0694103f6",
-          "structure_id": "a19eeb63-45d0-4744-9a9d-76d0694103f6",
-          "structure_name": "a19eeb63-45d0-4744-9a9d-76d0694103f6",
-          "structure_type": "a19eeb63-45d0-4744-9a9d-76d0694103f6",
-          "task_business_status": "Not Visited",
-          "task_execution_end_date": "2019-04-01",
-          "task_execution_start_date": "2019-04-08",
-          "task_focus": "95515b0d-b9c0-496e-83c7-7af8b4924d1f",
-          "task_status": "Ready",
-          "task_task_for": "a19eeb63-45d0-4744-9a9d-76d0694103f6",
-        },
-        "type": "Feature",
-      },
-      Object {
-        "geometry": Object {
-          "coordinates": Array [
-            Array [
-              Array [
-                101.177725195885,
-                15.0658221308165,
-              ],
-              Array [
-                101.177684962749,
-                15.0657263002127,
-              ],
-              Array [
-                101.177778840065,
-                15.0656848599382,
-              ],
-              Array [
-                101.177832484245,
-                15.0657781005444,
-              ],
-              Array [
-                101.177725195885,
-                15.0658221308165,
-              ],
-            ],
-          ],
-          "type": "Polygon",
-        },
-        "id": "03458d28-af61-4f70-b110-73a3429ada2d",
-        "properties": Object {
-          "action_code": "Bednet Distribution",
-          "color": "#FFCA16",
-          "goal_id": "RACD_bednet_dist_1km_radius",
-          "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
-          "jurisdiction_name": "TLv1_01",
-          "jurisdiction_parent_id": "dad42fa6-b9b8-4658-bf25-bfa7ab5b16ae",
-          "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
-          "structure_code": "da765947-5e4d-49f7-9eb8-2d2d00681f65",
-          "structure_id": "da765947-5e4d-49f7-9eb8-2d2d00681f65",
-          "structure_name": "da765947-5e4d-49f7-9eb8-2d2d00681f65",
-          "structure_type": "da765947-5e4d-49f7-9eb8-2d2d00681f65",
-          "task_business_status": "Not Visited",
-          "task_execution_end_date": "2019-04-01",
-          "task_execution_start_date": "2019-04-08",
-          "task_focus": "Bednet Distribution",
-          "task_status": "Ready",
-          "task_task_for": "da765947-5e4d-49f7-9eb8-2d2d00681f65",
-        },
-        "type": "Feature",
-      },
-    ],
-    "type": "FeatureCollection",
-  },
+  "structures": null,
 }
 `;

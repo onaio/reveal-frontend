@@ -8,12 +8,16 @@ export const plan1 = {
   jurisdiction_name_path: ['Chadiza', 'Naviluli'],
   jurisdiction_parent_id: '2944',
   jurisdiction_path: ['2939', '2944'],
+  plan_date: '2019-06-18',
+  plan_effective_period_end: '2019-06-18',
+  plan_effective_period_start: '2019-07-31',
   plan_fi_reason: 'Routine',
   plan_fi_status: 'A1',
   plan_id: '10f9e9fa-ce34-4b27-a961-72fab5206ab6',
   plan_intervention_type: 'FI',
   plan_status: 'active',
   plan_title: 'A1-Tha Luang Village 1 Focus 01',
+  plan_version: '1',
 };
 
 export const plan2 = {
@@ -24,12 +28,16 @@ export const plan2 = {
   jurisdiction_name_path: ['Canton Tha Luang', 'Tha Luang Village'],
   jurisdiction_parent_id: '2977',
   jurisdiction_path: ['2989', '2977'],
+  plan_date: '2019-06-18',
+  plan_effective_period_end: '2019-06-18',
+  plan_effective_period_start: '2019-07-31',
   plan_fi_reason: 'Case-triggered',
   plan_fi_status: 'A1',
   plan_id: 'plan-id-2',
   plan_intervention_type: 'IRS',
   plan_status: 'active',
   plan_title: 'A1-Tha Luang Village 1 Focus 01',
+  plan_version: '1',
 };
 
 export const plan5 = {
@@ -40,12 +48,16 @@ export const plan5 = {
   jurisdiction_name_path: 'null',
   jurisdiction_parent_id: ' NULL',
   jurisdiction_path: 'null',
+  plan_date: '2019-06-18',
+  plan_effective_period_end: '2019-06-18',
+  plan_effective_period_start: '2019-07-31',
   plan_fi_reason: 'Case-triggered',
   plan_fi_status: 'A1',
   plan_id: 'e9c9a069-7d22-44c0-a59e-9a483948716b',
   plan_intervention_type: 'FI',
   plan_status: 'active',
   plan_title: 'A1 - Ban Chamrak Mu - Focus 02 Rubber Plantation',
+  plan_version: '1',
 };
 
 export const plan6 = {
@@ -75,12 +87,47 @@ export const plan3 = {
     '872cc59e-0bce-427a-bd1f-6ef674dba8e2',
     'dad42fa6-b9b8-4658-bf25-bfa7ab5b16ae',
   ]),
+  plan_date: '2019-06-18',
+  plan_effective_period_end: '2019-06-18',
+  plan_effective_period_start: '2019-07-31',
   plan_fi_reason: 'Routine',
   plan_fi_status: 'A1',
   plan_id: '10f9e9fa-ce34-4b27-a961-72fab5206ab6',
   plan_intervention_type: 'FI',
   plan_status: 'active',
   plan_title: 'A1-Tha Luang Village 1 Focus 01',
+  plan_version: '1',
+};
+
+export const plan99 = {
+  id: '236ca3fb-1b74-5028-a0c8-ab954bb28044',
+  jurisdiction_depth: 4,
+  jurisdiction_id: '4550a8ab-b310-4881-8c76-1b6a817ea63a',
+  jurisdiction_name: 'Tha Sen 8',
+  jurisdiction_name_path: [
+    'Trat 2',
+    'Mueng Trat District 2',
+    'Laem Klat Canton 2',
+    'Laem Klat Moo 8',
+  ],
+  jurisdiction_parent_id: 'a14c6253-2d3d-4bcc-8c49-35f9e44c66e1',
+  jurisdiction_path: [
+    '61707fc2 - c6ac - 4112 - a8d6 - 2a4861958396',
+    '8a8e4987- 95a9-4b2e - b746 - 3c9c3eec15c5',
+    '735a94f9 - 6ed2 - 4bcd - b242 - 8c2b5f714bee',
+    'a14c6253 - 2d3d - 4bcc - 8c49 - 35f9e44c66e1',
+  ],
+  plan_date: '2019-07-03',
+  plan_effective_period_end: '2019-07-30',
+  plan_effective_period_start: '2019-06-18',
+  plan_fi_reason: 'Case-triggered',
+  plan_fi_status: 'A1',
+  plan_id: '5ad62ca5-6b9b-4c5e-bd72-c9824074c385',
+  plan_intervention_type: 'FI',
+  plan_name: 'A1-ThaSen8_01',
+  plan_status: 'active',
+  plan_title: 'A1 - Tha Sen 8- Focus 01',
+  plan_version: '1',
 };
 
 export const plans = [plan1, plan2];
@@ -134,6 +181,7 @@ export const planRecordResponses = [planRecordResponse1, planRecordResponse2, pl
 export const planRecordsById = {
   '6c7904b2-c556-4004-a9b9-114617832954': {
     id: '6c7904b2-c556-4004-a9b9-114617832954',
+    plan_date: '2019-06-24',
     plan_effective_period_end: '2019-07-31',
     plan_effective_period_start: '2019-06-18',
     plan_fi_reason: 'Case-triggered',
@@ -146,6 +194,7 @@ export const planRecordsById = {
   },
   '89fh38sg-h83s-9xf2-a7h2-pl98dh320lbc': {
     id: '89fh38sg-h83s-9xf2-a7h2-pl98dh320lbc',
+    plan_date: '2019-05-16',
     plan_effective_period_end: '2019-08-30',
     plan_effective_period_start: '2019-05-15',
     plan_fi_reason: 'Case-triggered',
@@ -158,6 +207,7 @@ export const planRecordsById = {
   },
   '90d1095b-4f66-4341-86e2-362c82b2b0b2': {
     id: '90d1095b-4f66-4341-86e2-362c82b2b0b2',
+    plan_date: '2019-05-24',
     plan_effective_period_end: '2019-09-30',
     plan_effective_period_start: '2019-05-27',
     plan_fi_reason: '',
@@ -172,6 +222,10 @@ export const planRecordsById = {
 
 export const goal1 = {
   action_code: 'Case Confirmation',
+  action_description: 'Confirm the index case',
+  action_prefix: '1',
+  action_reason: 'Investigation',
+  action_title: 'Case Confirmation',
   completed_task_count: 0,
   goal_comparator: '=',
   goal_id: 'Case_Confirmation',
@@ -187,6 +241,11 @@ export const goal1 = {
 
 export const goal2 = {
   action_code: 'Larval Dipping',
+  action_description:
+    'Perform a minimum of three larval dipping activities in the operational area',
+  action_prefix: '5',
+  action_reason: 'Investigation',
+  action_title: 'Larval Dipping',
   completed_task_count: 0,
   goal_comparator: '>=',
   goal_id: 'Larval_Dipping_Min_3_Sites',
@@ -202,6 +261,11 @@ export const goal2 = {
 
 export const goal3 = {
   action_code: 'Blood Screening',
+  action_description:
+    'Visit all residential structures (100%) within a 1 km radius of a confirmed index case and test each registered person',
+  action_prefix: '4',
+  action_reason: 'Investigation',
+  action_title: 'RACD Blood screening',
   completed_task_count: 0,
   goal_comparator: '=',
   goal_id: 'RACD_blood_screening_1km_radius',
@@ -217,6 +281,11 @@ export const goal3 = {
 
 export const goal4 = {
   action_code: 'Mosquito Collection',
+  action_description:
+    'Set a minimum of three mosquito collection traps and complete the mosquito collection process',
+  action_prefix: '6',
+  action_reason: 'Investigation',
+  action_title: 'Mosquito Collection',
   completed_task_count: 3,
   goal_comparator: '>=',
   goal_id: 'Mosquito_Collection_Min_3_Traps',
@@ -238,6 +307,11 @@ export const goal4 = {
 
 export const goal5 = {
   action_code: 'Bednet Distribution',
+  action_description:
+    'Visit 100% of residential structures in the operational area and provide nets',
+  action_prefix: '3',
+  action_reason: 'Routine',
+  action_title: 'Bednet Distribution',
   completed_task_count: 4,
   goal_comparator: '>=',
   goal_id: 'RACD_bednet_dist_1km_radius',
@@ -254,12 +328,79 @@ export const goal5 = {
   task_count: 15,
 };
 
+export const goal6 = {
+  action_code: 'Bednet Distribution',
+  action_description:
+    'Visit 75% of residential structures in the operational area and provide nets',
+  action_prefix: '3',
+  action_reason: 'Routine',
+  action_title: 'Bednet Distribution',
+  completed_task_count: 4,
+  goal_comparator: '>=',
+  goal_id: 'RACD_bednet_dist_1km_radius',
+  goal_unit: 'percent',
+  goal_value: 75,
+  id: 'e50f7156-c80e-541e-a24c-0b3e0d95b868',
+  jurisdiction_id: '304cbcd4-0850-404a-a8b1-486b02f7b84d',
+  measure: 'Percent of residential structures visited',
+  plan_id: '89fh38sg-h83s-9xf2-a7h2-pl98dh320lbc',
+  task_business_status_map: {
+    Complete: 4,
+    'Not Visited': 11,
+  },
+  task_count: 15,
+};
+
+export const goal7 = {
+  action_code: 'Bednet Distribution',
+  action_description:
+    'Visit 90% of residential structures in the operational area and provide nets',
+  action_prefix: '3',
+  action_reason: 'Routine',
+  action_title: 'Bednet Distribution',
+  completed_task_count: 3,
+  goal_comparator: '>=',
+  goal_id: 'RACD_bednet_dist_1km_radius',
+  goal_unit: 'percent',
+  goal_value: 90,
+  id: 'e50f7156-c80e-541e-a24c-0b3e0d95b868',
+  jurisdiction_id: '304cbcd4-0850-404a-a8b1-486b02f7b84d',
+  measure: 'Percent of residential structures visited',
+  plan_id: '89fh38sg-h83s-9xf2-a7h2-pl98dh320lbc',
+  task_business_status_map: {
+    Complete: 4,
+    'Not Visited': 11,
+  },
+  task_count: 6,
+};
+
+export const goal8 = {
+  action_code: 'RACD Register Family',
+  action_description:
+    'Register all families & famiy members in all residential structures enumerated (100%) within the operational area',
+  action_prefix: '2',
+  action_reason: 'Investigation',
+  action_title: 'Family Registration',
+  completed_task_count: 7,
+  goal_comparator: '>=',
+  goal_id: 'RACD_register_all_families',
+  goal_unit: 'Percent',
+  goal_value: 100,
+  id: '43cebec8-1900-51e2-83a8-9041b380cdee',
+  jurisdiction_id: '674b66eb-b2aa-49b0-8635-2df5b0490aa8',
+  measure: 'Percent of residential structures with full family registration',
+  plan_id: '629badcb-2ea9-43a8-bcda-8489ab157b8d',
+  task_business_status_map: { Complete: 7, 'Not Visited': 220 },
+  task_count: 227,
+};
+
 const goal37 = clone(goal4);
 goal37.id = '1337';
 (goal37.task_business_status_map as any) = JSON.stringify(goal37.task_business_status_map);
 export { goal37 };
 
-export const goals = [goal1, goal2, goal3, goal4, goal5];
+// there are tests that rely on the order of this Array
+export const goals = [goal1, goal2, goal3, goal4, goal5, goal6, goal8];
 
 export const plan1Goals = [goal1, goal2];
 
@@ -592,6 +733,107 @@ export const taskIdsArray = [
   task4.task_identifier,
 ];
 
+export const structure1 = {
+  geojson: {
+    geometry: {
+      coordinates: [
+        [
+          [101.188427209854, 15.0909179029537],
+          [101.18852108717, 15.0909179029537],
+          [101.18852108717, 15.0910085427885],
+          [101.188427209854, 15.0910085427885],
+          [101.188427209854, 15.0909179029537],
+        ],
+      ],
+      type: 'Polygon',
+    },
+    id: 'e652f8b2-b884-42d5-832a-86009c10a812',
+    properties: {
+      code: 'bbcf2240-0a2d-4df7-8890-2c928f5bccaa',
+      effective_end_date: null,
+      effective_start_date: null,
+      geographic_level: 6,
+      jurisdiction_id: '4550a8ab-b310-4881-8c76-1b6a817ea63a',
+      name: 'bbcf2240-0a2d-4df7-8890-2c928f5bccaa',
+      server_version: 1562120301666,
+      status: 'Active',
+      type: 'bbcf2240-0a2d-4df7-8890-2c928f5bccaa',
+      uid: 'bbcf2240-0a2d-4df7-8890-2c928f5bccaa',
+      version: 0,
+    },
+    type: 'Feature',
+  },
+  id: '155288',
+  jurisdiction_id: '4550a8ab-b310-4881-8c76-1b6a817ea63a',
+};
+
+export const structure2 = {
+  geojson: {
+    geometry: {
+      coordinates: [
+        [
+          [101.177725195885, 15.0658221308165],
+          [101.177684962749, 15.0657263002127],
+          [101.177778840065, 15.0656848599382],
+          [101.177832484245, 15.0657781005444],
+          [101.177725195885, 15.0658221308165],
+        ],
+      ],
+      type: 'Polygon',
+    },
+    id: '03458d28-af61-4f70-b110-73a3429ada2d',
+    properties: {
+      code: '18bbb83b-844b-4847-9cfa-1b00e8f98d0b',
+      effective_end_date: null,
+      effective_start_date: null,
+      geographic_level: 6,
+      jurisdiction_id: '4550a8ab-b310-4881-8c76-1b6a817ea63a',
+      name: '18bbb83b-844b-4847-9cfa-1b00e8f98d0b',
+      server_version: 1562120301665,
+      status: 'Active',
+      type: '18bbb83b-844b-4847-9cfa-1b00e8f98d0b',
+      uid: '18bbb83b-844b-4847-9cfa-1b00e8f98d0b',
+      version: 0,
+    },
+    type: 'Feature',
+  },
+  id: '155324',
+  jurisdiction_id: '4550a8ab-b310-4881-8c76-1b6a817ea63a',
+};
+export const structure3 = {
+  geojson: {
+    geometry: {
+      coordinates: [
+        [
+          [101.177725195885, 15.0658221308165],
+          [101.177684962749, 15.0657263002127],
+          [101.177778840065, 15.0656848599382],
+          [101.177832484245, 15.0657781005444],
+          [101.177725195885, 15.0658221308165],
+        ],
+      ],
+      type: 'Polygon',
+    },
+    id: '03458d28-af61-4f70-b110-73a3429ada2d',
+    properties: {
+      code: '18bbb83b-844b-4847-9cfa-1b00e8f98d0b',
+      effective_end_date: null,
+      effective_start_date: null,
+      geographic_level: 6,
+      jurisdiction_id: '4550a8ab-b310-4881-8c76-1b6a817ea63a',
+      name: '18bbb83b-844b-4847-9cfa-1b00e8f98d0b',
+      server_version: 1562120301665,
+      status: 'Active',
+      type: '18bbb83b-844b-4847-9cfa-1b00e8f98d0b',
+      uid: '18bbb83b-844b-4847-9cfa-1b00e8f98d0b',
+      version: 0,
+    },
+    type: 'Feature',
+  },
+  id: '155324',
+  jurisdiction_id: '4050a8ab-b310-4881-8c76-1b6a817ea63a',
+};
+export const structures = [structure1, structure2];
 export const jurisdictions = [
   {
     geojson: {

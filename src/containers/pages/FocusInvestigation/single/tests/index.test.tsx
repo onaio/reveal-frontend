@@ -6,7 +6,6 @@ import { Helmet } from 'react-helmet';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import { FI_SINGLE_URL } from '../../../../../constants';
-import { FI_SINGLE_TITLE } from '../../../../../constants';
 import store from '../../../../../store';
 import { fetchGoals } from '../../../../../store/ducks/goals';
 import { fetchJurisdictions } from '../../../../../store/ducks/jurisdictions';

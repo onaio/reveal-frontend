@@ -3,7 +3,8 @@ import * as React from 'react';
 import { CellInfo } from 'react-table';
 import { GREEN, ORANGE, RED, YELLOW } from '../colors';
 import { GREEN_THRESHOLD, ORANGE_THRESHOLD, YELLOW_THRESHOLD, ZERO } from '../configs/settings';
-import { FlexObject, percentage } from '../helpers/utils';
+import { BLOOD_SCREENING_CODE, CASE_CONFIRMATION_CODE, PERSONS, STRUCTURES } from '../constants';
+import { FlexObject, percentage, roundToPrecision } from '../helpers/utils';
 import { Goal } from '../store/ducks/goals';
 
 /** Enum describing operators */
@@ -15,45 +16,37 @@ enum Operators {
   LessThanOrEqual = '<=',
 }
 
-/** Get the level of achievement towards the goal target as a percentage
+/** Get the level of achievement towards the goal target as a ratio
  * @param {Goal} goal - the goal
- * @returns {number} percentAchieved
+ * @returns {number} ratio Achieved
  */
-export function goalPercentAchieved(goal: Goal): number {
-  let percentAchieved: number = 0;
-  let achievedValue: number = goal.completed_task_count;
+export function goalRatioAchieved(goal: Goal): number {
+  let ratioAchieved: number = 0;
+  const achievedValue: number = goal.completed_task_count;
   const totalAttempts: number = goal.task_count;
-  const targetValue: number = goal.goal_value;
+  let targetValue: number = goal.goal_value;
 
-  // deal with percentages if needed
+  // set the actual target value for percentages
   if (goal.goal_unit.toLowerCase() === 'percent') {
-    if (totalAttempts === 0) {
-      achievedValue = 0;
-    } else {
-      achievedValue = (achievedValue / totalAttempts) * 100;
-    }
+    targetValue = roundToPrecision((targetValue * totalAttempts) / 100);
   }
 
   if (targetValue === 0) {
     return 0; /** Not yet supported */
   }
 
-  if (achievedValue === targetValue) {
-    return achievedValue / targetValue;
-  }
+  // get the completed ratio
+  ratioAchieved = roundToPrecision(achievedValue / targetValue, 2);
 
   if (
     goal.goal_comparator === Operators.LessThan ||
     goal.goal_comparator === Operators.LessThanOrEqual
   ) {
     // in this case we are targeting a reduction
-    percentAchieved = 0; /** Not yet supported */
-  } else {
-    // in this case we are targeting an increase
-    percentAchieved = achievedValue / targetValue;
+    ratioAchieved = 0; /** Not yet supported */
   }
 
-  return percentAchieved;
+  return ratioAchieved;
 }
 
 /** interface for Goal report */
@@ -62,6 +55,7 @@ export interface GoalReport {
   percentAchieved: number /** progress towards goal achievement */;
   prettyPercentAchieved: string /** pretty string of percentAchieved */;
   targetValue: number /** the target value */;
+  goalUnit: string /** goal_unit */;
 }
 
 /** Utility function to get an object containing values for goal indicators
@@ -69,14 +63,22 @@ export interface GoalReport {
  * @returns {GoalReport} the Goal Report object
  */
 export function getGoalReport(goal: Goal): GoalReport {
-  const percentAchieved = goalPercentAchieved(goal);
+  const percentAchieved = goalRatioAchieved(goal);
   let targetValue = goal.task_count;
+  let goalUnit: string = goal.goal_unit;
   if (goal.goal_unit.toLowerCase() !== 'percent') {
     targetValue = goal.goal_value;
+  } else {
+    goalUnit =
+      [CASE_CONFIRMATION_CODE, BLOOD_SCREENING_CODE].indexOf(goal.action_code) > -1
+        ? PERSONS
+        : STRUCTURES;
+    targetValue = Math.round((goal.goal_value * goal.task_count) / 100);
   }
 
   return {
     achievedValue: goal.completed_task_count,
+    goalUnit,
     percentAchieved,
     prettyPercentAchieved: percentage(percentAchieved),
     targetValue,

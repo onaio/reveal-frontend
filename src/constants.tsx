@@ -79,7 +79,15 @@ export const NO_GEOMETRIES_RESPONSE = 'Goals have no Geometries';
 export type NO_GEOMETRIES_RESPONSE = typeof NO_GEOMETRIES_RESPONSE;
 export const STRUCTURE_LAYER = 'structure-layer';
 export type STRUCTURE_LAYER = typeof STRUCTURE_LAYER;
+export const PROGRESS = 'Progress';
+export type PROGRESS = typeof PROGRESS;
+export const STRUCTURES = 'structure(s)';
+export type STRUCTURES = typeof STRUCTURES;
+export const PERSONS = 'person(s)';
+export type PERSONS = typeof PERSONS;
 
+export const JURISDICTION_ID = 'jurisdiction_id';
+export type JURISDICTION_ID = typeof JURISDICTION_ID;
 // internal urls
 export const LOGIN_URL = '/login';
 export type LOGIN_URL = typeof LOGIN_URL;
@@ -135,6 +143,10 @@ export const IRS_CODE = 'IRS';
 export type IRS = typeof IRS_CODE;
 
 // plans
+export const ROUTINE_PLAN = 'Routine';
+export type ROUTINE_PLAN = typeof ROUTINE_PLAN;
+export const CASE_TRIGGERED_PLAN = 'Case-triggered';
+export type CASE_TRIGGERED_PLAN = typeof CASE_TRIGGERED_PLAN;
 export const FI_PLAN_TYPE = 'FI';
 export type FI_PLAN_TYPE = typeof FI_PLAN_TYPE;
 export const IRS_PLAN_TYPE = 'IRS';

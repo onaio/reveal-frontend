@@ -1,6 +1,7 @@
 // this is the FocusInvestigation "active" page component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import reducerRegistry from '@onaio/redux-reducer-registry';
+import superset from '@onaio/superset-connector';
 import * as React from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
@@ -29,7 +30,6 @@ import {
   FI_STATUS,
   FI_URL,
   FOCUS_AREA_INFO,
-  FOCUS_INVESTIGATION,
   FOCUS_INVESTIGATIONS,
   HOME,
   HOME_URL,
@@ -38,8 +38,8 @@ import {
   MEASURE,
   NO,
   OF,
+  PROGRESS,
   RESPONSE,
-  TARGET,
 } from '../../../../constants';
 import { getGoalReport } from '../../../../helpers/indicators';
 import ProgressBar from '../../../../helpers/ProgressBar';
@@ -112,17 +112,35 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
       fetchGoalsActionCreator,
       fetchJurisdictionsActionCreator,
       fetchPlansActionCreator,
+      planById,
       supersetService,
     } = this.props;
-    await supersetService(SUPERSET_PLANS_SLICE).then((result: Plan[]) =>
-      fetchPlansActionCreator(result)
-    );
-    await supersetService(SUPERSET_GOALS_SLICE).then((result2: Goal[]) =>
-      fetchGoalsActionCreator(result2)
-    );
-    await supersetFetch(SUPERSET_JURISDICTIONS_SLICE).then((result: Jurisdiction[]) =>
-      fetchJurisdictionsActionCreator(result)
-    );
+
+    if (planById && planById.plan_id) {
+      /** define superset filter params for plans */
+      const plansParams = superset.getFormData(3000, [
+        { comparator: planById.plan_id, operator: '==', subject: 'plan_id' },
+      ]);
+      /** define superset params for goals */
+      const goalsParams = superset.getFormData(
+        3000,
+        [{ comparator: planById.plan_id, operator: '==', subject: 'plan_id' }],
+        { action_prefix: true }
+      );
+      /** define superset filter params for jurisdictions */
+      const jurisdictionsParams = superset.getFormData(3000, [
+        { comparator: planById.jurisdiction_id, operator: '==', subject: 'jurisdiction_id' },
+      ]);
+      await supersetService(SUPERSET_PLANS_SLICE, plansParams).then((result: Plan[]) =>
+        fetchPlansActionCreator(result)
+      );
+      await supersetService(SUPERSET_GOALS_SLICE, goalsParams).then((result2: Goal[]) =>
+        fetchGoalsActionCreator(result2)
+      );
+      await supersetFetch(SUPERSET_JURISDICTIONS_SLICE, jurisdictionsParams).then(
+        (result: Jurisdiction[]) => fetchJurisdictionsActionCreator(result)
+      );
+    }
   }
 
   public render() {
@@ -217,20 +235,19 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
               </dl>
               <hr />
               <h5 className="mb-4 mt-4">{RESPONSE}</h5>
-
               {/** loop through the goals */
               theGoals.map((item: Goal) => {
                 const goalReport = getGoalReport(item);
                 return (
                   <div className="responseItem" key={item.goal_id}>
-                    <h6>{item.action_code}</h6>
+                    <h6>{item.action_title}</h6>
                     <div className="targetItem">
                       <p>
                         {MEASURE}: {item.measure}
                       </p>
                       <p>
-                        {TARGET}: {goalReport.prettyPercentAchieved} ({goalReport.achievedValue}{' '}
-                        {OF} {goalReport.targetValue})
+                        {PROGRESS}: {item.completed_task_count} {OF} {goalReport.targetValue}{' '}
+                        {goalReport.goalUnit} ({goalReport.prettyPercentAchieved})
                       </p>
                       <ProgressBar value={goalReport.percentAchieved} max={1} />
                     </div>

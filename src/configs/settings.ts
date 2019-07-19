@@ -259,3 +259,29 @@ export const CountriesAdmin0 = {
   TH: ThailandAdmin0,
   ZM: ZambiaAdmin0,
 };
+
+export const symbolLayerConfig = {
+  id: 'symbollayers',
+  layout: {
+    'icon-image': 'mosquito',
+    'icon-size': 2,
+  },
+  paint: {
+    'text-color': '#0000ff',
+    'text-halo-blur': 1,
+    'text-halo-color': '#fff',
+    'text-halo-width': 1.3,
+  },
+  source: {
+    data: {
+      data: {
+        coordinates: [],
+        type: 'Point',
+      },
+      type: 'stringified-geojson',
+    },
+    minzoom: 5.2,
+    type: 'geojson',
+  },
+  type: 'symbol',
+};

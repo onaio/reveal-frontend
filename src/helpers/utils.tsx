@@ -12,6 +12,7 @@ import {
   BEDNET_DISTRIBUTION_CODE,
   BLOOD_SCREENING_CODE,
   CASE_CONFIRMATION_CODE,
+  CASE_TRIGGERED_PLAN,
   FEATURE_COLLECTION,
   IRS_CODE,
   LARVAL_DIPPING_CODE,
@@ -109,6 +110,11 @@ export interface SiteConfigAppMapconfig {
   style: string | Style;
   zoom?: number;
 }
+/** Interface for MapIcons */
+export interface MapIcons {
+  id: string;
+  imageUrl: string;
+}
 
 /** interface to describe Gisida site app configuration object */
 export interface SiteConfigApp {
@@ -116,6 +122,7 @@ export interface SiteConfigApp {
   apiAccessToken: string;
   appName: string;
   mapConfig: SiteConfigAppMapconfig;
+  mapIcons?: MapIcons[];
 }
 
 /** interface to describe Gisida site configuration */
@@ -195,12 +202,31 @@ export const ConfigStore = (
       zoom: zoom || mapConfigZoom || 0,
     };
   }
+  // icons to add to map
+  const imgArr = [
+    {
+      id: 'case-confirmation',
+      imageUrl:
+        'https://raw.githubusercontent.com/onaio/reveal-frontend/add-icons/src/assets/images/case-confirmation.png',
+    },
+    {
+      id: 'larval',
+      imageUrl:
+        'https://raw.githubusercontent.com/onaio/reveal-frontend/add-icons/src/assets/images/larval.png',
+    },
+    {
+      id: 'mosquito',
+      imageUrl:
+        'https://raw.githubusercontent.com/onaio/reveal-frontend/add-icons/src/assets/images/mosquito.png',
+    },
+  ];
   // Build APP options for Gisida
   const APP: SiteConfigApp = {
     accessToken: accessToken || GISIDA_MAPBOX_TOKEN,
     apiAccessToken: apiAccessToken || GISIDA_ONADATA_API_TOKEN,
     appName,
     mapConfig,
+    mapIcons: imgArr,
   };
 
   // Build SiteConfig
@@ -214,16 +240,14 @@ export const ConfigStore = (
 /** utility method to extract plan from superset response object */
 export function extractPlan(plan: Plan) {
   const result: { [key: string]: any } = {
+    ...plan,
     canton: null,
     caseClassification: null,
-    caseNotificationDate: null,
+    caseNotificationDate: plan.plan_fi_reason === CASE_TRIGGERED_PLAN ? plan.plan_date : null,
     district: null,
     focusArea: plan.jurisdiction_name,
-    id: plan.id,
-    jurisdiction_id: plan.jurisdiction_parent_id,
+    jurisdiction_id: plan.jurisdiction_id,
     jurisdiction_parent_id: plan.jurisdiction_parent_id,
-    plan_id: plan.plan_id,
-    plan_title: plan.plan_title,
     province: null,
     reason: plan.plan_fi_reason,
     status: plan.plan_fi_status,
@@ -372,4 +396,16 @@ export function toggleLayer(allLayers: FlexObject, currentGoal: string, store: a
       store.dispatch((Actions as any).toggleLayer(MAP_ID, layer.id, true));
     }
   }
+}
+
+/** Rounds a floating point number to a given precision
+ *
+ * @param n - A number of type double to rounded of
+ * @param precision - the number of decimals to be in the mantissa
+ *
+ * @return - a number that is rounded off the given precision
+ */
+export function roundToPrecision(n: number, precision: number = 0): number {
+  const factor = Math.pow(10, precision);
+  return Math.round(n * factor) / factor;
 }

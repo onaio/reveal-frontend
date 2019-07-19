@@ -112,6 +112,10 @@ exports[`components/GisidaWrapper renders map component with FeatureCollection 1
     Array [
       Object {
         "action_code": "Case Confirmation",
+        "action_description": "Confirm the index case",
+        "action_prefix": "1",
+        "action_reason": "Investigation",
+        "action_title": "Case Confirmation",
         "completed_task_count": 0,
         "goal_comparator": "=",
         "goal_id": "Case_Confirmation",
@@ -126,6 +130,10 @@ exports[`components/GisidaWrapper renders map component with FeatureCollection 1
       },
       Object {
         "action_code": "Larval Dipping",
+        "action_description": "Perform a minimum of three larval dipping activities in the operational area",
+        "action_prefix": "5",
+        "action_reason": "Investigation",
+        "action_title": "Larval Dipping",
         "completed_task_count": 0,
         "goal_comparator": ">=",
         "goal_id": "Larval_Dipping_Min_3_Sites",
@@ -142,6 +150,10 @@ exports[`components/GisidaWrapper renders map component with FeatureCollection 1
       },
       Object {
         "action_code": "Blood Screening",
+        "action_description": "Visit all residential structures (100%) within a 1 km radius of a confirmed index case and test each registered person",
+        "action_prefix": "4",
+        "action_reason": "Investigation",
+        "action_title": "RACD Blood screening",
         "completed_task_count": 0,
         "goal_comparator": "=",
         "goal_id": "RACD_blood_screening_1km_radius",
@@ -156,6 +168,10 @@ exports[`components/GisidaWrapper renders map component with FeatureCollection 1
       },
       Object {
         "action_code": "Mosquito Collection",
+        "action_description": "Set a minimum of three mosquito collection traps and complete the mosquito collection process",
+        "action_prefix": "6",
+        "action_reason": "Investigation",
+        "action_title": "Mosquito Collection",
         "completed_task_count": 3,
         "goal_comparator": ">=",
         "goal_id": "Mosquito_Collection_Min_3_Traps",
@@ -176,6 +192,10 @@ exports[`components/GisidaWrapper renders map component with FeatureCollection 1
       },
       Object {
         "action_code": "Bednet Distribution",
+        "action_description": "Visit 100% of residential structures in the operational area and provide nets",
+        "action_prefix": "3",
+        "action_reason": "Routine",
+        "action_title": "Bednet Distribution",
         "completed_task_count": 4,
         "goal_comparator": ">=",
         "goal_id": "RACD_bednet_dist_1km_radius",
@@ -190,6 +210,48 @@ exports[`components/GisidaWrapper renders map component with FeatureCollection 1
           "Not Visited": 11,
         },
         "task_count": 15,
+      },
+      Object {
+        "action_code": "Bednet Distribution",
+        "action_description": "Visit 75% of residential structures in the operational area and provide nets",
+        "action_prefix": "3",
+        "action_reason": "Routine",
+        "action_title": "Bednet Distribution",
+        "completed_task_count": 4,
+        "goal_comparator": ">=",
+        "goal_id": "RACD_bednet_dist_1km_radius",
+        "goal_unit": "percent",
+        "goal_value": 75,
+        "id": "e50f7156-c80e-541e-a24c-0b3e0d95b868",
+        "jurisdiction_id": "304cbcd4-0850-404a-a8b1-486b02f7b84d",
+        "measure": "Percent of residential structures visited",
+        "plan_id": "89fh38sg-h83s-9xf2-a7h2-pl98dh320lbc",
+        "task_business_status_map": Object {
+          "Complete": 4,
+          "Not Visited": 11,
+        },
+        "task_count": 15,
+      },
+      Object {
+        "action_code": "RACD Register Family",
+        "action_description": "Register all families & famiy members in all residential structures enumerated (100%) within the operational area",
+        "action_prefix": "2",
+        "action_reason": "Investigation",
+        "action_title": "Family Registration",
+        "completed_task_count": 7,
+        "goal_comparator": ">=",
+        "goal_id": "RACD_register_all_families",
+        "goal_unit": "Percent",
+        "goal_value": 100,
+        "id": "43cebec8-1900-51e2-83a8-9041b380cdee",
+        "jurisdiction_id": "674b66eb-b2aa-49b0-8635-2df5b0490aa8",
+        "measure": "Percent of residential structures with full family registration",
+        "plan_id": "629badcb-2ea9-43a8-bcda-8489ab157b8d",
+        "task_business_status_map": Object {
+          "Complete": 7,
+          "Not Visited": 220,
+        },
+        "task_count": 227,
       },
     ]
   }
@@ -388,7 +450,57 @@ exports[`components/GisidaWrapper renders map component with FeatureCollection 1
       "type": "FeatureCollection",
     }
   }
-  structures={null}
+  structures={
+    Object {
+      "features": Array [
+        Object {
+          "geometry": Object {
+            "coordinates": Array [
+              Array [
+                Array [
+                  101.188427209854,
+                  15.0909179029537,
+                ],
+                Array [
+                  101.18852108717,
+                  15.0909179029537,
+                ],
+                Array [
+                  101.18852108717,
+                  15.0910085427885,
+                ],
+                Array [
+                  101.188427209854,
+                  15.0910085427885,
+                ],
+                Array [
+                  101.188427209854,
+                  15.0909179029537,
+                ],
+              ],
+            ],
+            "type": "Polygon",
+          },
+          "id": "e652f8b2-b884-42d5-832a-86009c10a812",
+          "properties": Object {
+            "code": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
+            "effective_end_date": null,
+            "effective_start_date": null,
+            "geographic_level": 6,
+            "jurisdiction_id": "4550a8ab-b310-4881-8c76-1b6a817ea63a",
+            "name": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
+            "server_version": 1562120301666,
+            "status": "Active",
+            "type": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
+            "uid": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
+            "version": 0,
+          },
+          "type": "Feature",
+        },
+      ],
+      "type": "FeatureCollection",
+    }
+  }
 >
   <MapComponent
     handlers={Array []}
@@ -443,6 +555,20 @@ Object {
     },
     "style": "mapbox://styles/mapbox/satellite-v9",
   },
+  "mapIcons": Array [
+    Object {
+      "id": "case-confirmation",
+      "imageUrl": "https://raw.githubusercontent.com/onaio/reveal-frontend/add-icons/src/assets/images/case-confirmation.png",
+    },
+    Object {
+      "id": "larval",
+      "imageUrl": "https://raw.githubusercontent.com/onaio/reveal-frontend/add-icons/src/assets/images/larval.png",
+    },
+    Object {
+      "id": "mosquito",
+      "imageUrl": "https://raw.githubusercontent.com/onaio/reveal-frontend/add-icons/src/assets/images/mosquito.png",
+    },
+  ],
 }
 `;
 
@@ -1849,6 +1975,318 @@ Object {
       "type": "line",
       "visible": false,
     },
+    "structure-layer": Object {
+      "filters": Object {},
+      "id": "structure-layer",
+      "isChartMin": true,
+      "isLoading": false,
+      "labels": undefined,
+      "legendBottom": 40,
+      "loaded": true,
+      "paint": Object {
+        "fill-color": "#666a6d",
+        "fill-opacity": Array [
+          "match",
+          Array [
+            "get",
+            "task_business_status",
+          ],
+          Array [
+            "Not Visited",
+          ],
+          0.7,
+          Array [
+            "Not Sprayed",
+            "Incomplete",
+            "In Progress",
+          ],
+          0.7,
+          Array [
+            "Sprayed",
+          ],
+          0.7,
+          Array [
+            "Not Sprayable",
+          ],
+          1,
+          0.75,
+        ],
+        "fill-outline-color": "#666a6d",
+      },
+      "source": Object {
+        "data": Object {
+          "features": Array [
+            Object {
+              "geometry": Object {
+                "coordinates": Array [
+                  Array [
+                    Array [
+                      101.188427209854,
+                      15.0909179029537,
+                    ],
+                    Array [
+                      101.18852108717,
+                      15.0909179029537,
+                    ],
+                    Array [
+                      101.18852108717,
+                      15.0910085427885,
+                    ],
+                    Array [
+                      101.188427209854,
+                      15.0910085427885,
+                    ],
+                    Array [
+                      101.188427209854,
+                      15.0909179029537,
+                    ],
+                  ],
+                ],
+                "type": "Polygon",
+              },
+              "id": "e652f8b2-b884-42d5-832a-86009c10a812",
+              "properties": Object {
+                "code": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
+                "effective_end_date": null,
+                "effective_start_date": null,
+                "geographic_level": 6,
+                "jurisdiction_id": "4550a8ab-b310-4881-8c76-1b6a817ea63a",
+                "name": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
+                "server_version": 1562120301666,
+                "status": "Active",
+                "type": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
+                "uid": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
+                "version": 0,
+              },
+              "type": "Feature",
+            },
+          ],
+          "type": "FeatureCollection",
+        },
+        "type": "geojson",
+      },
+      "styleSpec": Object {
+        "id": "structure-layer",
+        "layout": Object {},
+        "paint": Object {
+          "fill-color": "#666a6d",
+          "fill-opacity": Array [
+            "match",
+            Array [
+              "get",
+              "task_business_status",
+            ],
+            Array [
+              "Not Visited",
+            ],
+            0.7,
+            Array [
+              "Not Sprayed",
+              "Incomplete",
+              "In Progress",
+            ],
+            0.7,
+            Array [
+              "Sprayed",
+            ],
+            0.7,
+            Array [
+              "Not Sprayable",
+            ],
+            1,
+            0.75,
+          ],
+          "fill-outline-color": "#fff",
+        },
+        "source": Object {
+          "data": Object {
+            "features": Array [
+              Object {
+                "geometry": Object {
+                  "coordinates": Array [
+                    Array [
+                      Array [
+                        101.188427209854,
+                        15.0909179029537,
+                      ],
+                      Array [
+                        101.18852108717,
+                        15.0909179029537,
+                      ],
+                      Array [
+                        101.18852108717,
+                        15.0910085427885,
+                      ],
+                      Array [
+                        101.188427209854,
+                        15.0910085427885,
+                      ],
+                      Array [
+                        101.188427209854,
+                        15.0909179029537,
+                      ],
+                    ],
+                  ],
+                  "type": "Polygon",
+                },
+                "id": "e652f8b2-b884-42d5-832a-86009c10a812",
+                "properties": Object {
+                  "code": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
+                  "effective_end_date": null,
+                  "effective_start_date": null,
+                  "geographic_level": 6,
+                  "jurisdiction_id": "4550a8ab-b310-4881-8c76-1b6a817ea63a",
+                  "name": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
+                  "server_version": 1562120301666,
+                  "status": "Active",
+                  "type": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
+                  "uid": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
+                  "version": 0,
+                },
+                "type": "Feature",
+              },
+            ],
+            "type": "FeatureCollection",
+          },
+          "type": "geojson",
+        },
+        "type": "fill",
+        "visible": true,
+      },
+      "type": "fill",
+      "visible": true,
+    },
+    "structure-layer-line": Object {
+      "filters": Object {},
+      "id": "structure-layer-line",
+      "isChartMin": true,
+      "isLoading": false,
+      "labels": undefined,
+      "legendBottom": 40,
+      "loaded": true,
+      "paint": Object {
+        "line-color": "#666a6d",
+        "line-opacity": 1,
+        "line-width": 2,
+      },
+      "source": Object {
+        "data": Object {
+          "features": Array [
+            Object {
+              "geometry": Object {
+                "coordinates": Array [
+                  Array [
+                    Array [
+                      101.188427209854,
+                      15.0909179029537,
+                    ],
+                    Array [
+                      101.18852108717,
+                      15.0909179029537,
+                    ],
+                    Array [
+                      101.18852108717,
+                      15.0910085427885,
+                    ],
+                    Array [
+                      101.188427209854,
+                      15.0910085427885,
+                    ],
+                    Array [
+                      101.188427209854,
+                      15.0909179029537,
+                    ],
+                  ],
+                ],
+                "type": "Polygon",
+              },
+              "id": "e652f8b2-b884-42d5-832a-86009c10a812",
+              "properties": Object {
+                "code": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
+                "effective_end_date": null,
+                "effective_start_date": null,
+                "geographic_level": 6,
+                "jurisdiction_id": "4550a8ab-b310-4881-8c76-1b6a817ea63a",
+                "name": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
+                "server_version": 1562120301666,
+                "status": "Active",
+                "type": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
+                "uid": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
+                "version": 0,
+              },
+              "type": "Feature",
+            },
+          ],
+          "type": "FeatureCollection",
+        },
+        "type": "geojson",
+      },
+      "styleSpec": Object {
+        "id": "structure-layer-line",
+        "layout": Object {},
+        "paint": Object {
+          "line-color": "#666a6d",
+          "line-opacity": 1,
+          "line-width": 2,
+        },
+        "source": Object {
+          "data": Object {
+            "features": Array [
+              Object {
+                "geometry": Object {
+                  "coordinates": Array [
+                    Array [
+                      Array [
+                        101.188427209854,
+                        15.0909179029537,
+                      ],
+                      Array [
+                        101.18852108717,
+                        15.0909179029537,
+                      ],
+                      Array [
+                        101.18852108717,
+                        15.0910085427885,
+                      ],
+                      Array [
+                        101.188427209854,
+                        15.0910085427885,
+                      ],
+                      Array [
+                        101.188427209854,
+                        15.0909179029537,
+                      ],
+                    ],
+                  ],
+                  "type": "Polygon",
+                },
+                "id": "e652f8b2-b884-42d5-832a-86009c10a812",
+                "properties": Object {
+                  "code": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
+                  "effective_end_date": null,
+                  "effective_start_date": null,
+                  "geographic_level": 6,
+                  "jurisdiction_id": "4550a8ab-b310-4881-8c76-1b6a817ea63a",
+                  "name": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
+                  "server_version": 1562120301666,
+                  "status": "Active",
+                  "type": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
+                  "uid": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
+                  "version": 0,
+                },
+                "type": "Feature",
+              },
+            ],
+            "type": "FeatureCollection",
+          },
+          "type": "geojson",
+        },
+        "type": "line",
+        "visible": true,
+      },
+      "type": "line",
+      "visible": true,
+    },
   },
   "mapId": "map-1",
   "menuIsOpen": true,
@@ -1920,6 +2358,20 @@ Object {
       "version": 8,
     },
   },
+  "mapIcons": Array [
+    Object {
+      "id": "case-confirmation",
+      "imageUrl": "https://raw.githubusercontent.com/onaio/reveal-frontend/add-icons/src/assets/images/case-confirmation.png",
+    },
+    Object {
+      "id": "larval",
+      "imageUrl": "https://raw.githubusercontent.com/onaio/reveal-frontend/add-icons/src/assets/images/larval.png",
+    },
+    Object {
+      "id": "mosquito",
+      "imageUrl": "https://raw.githubusercontent.com/onaio/reveal-frontend/add-icons/src/assets/images/mosquito.png",
+    },
+  ],
 }
 `;
 
@@ -3608,116 +4060,48 @@ Object {
         "data": Object {
           "features": Array [
             Object {
-              "geojson": Object {
-                "geometry": Object {
-                  "coordinates": Array [
+              "geometry": Object {
+                "coordinates": Array [
+                  Array [
                     Array [
-                      Array [
-                        101.188427209854,
-                        15.0909179029537,
-                      ],
-                      Array [
-                        101.18852108717,
-                        15.0909179029537,
-                      ],
-                      Array [
-                        101.18852108717,
-                        15.0910085427885,
-                      ],
-                      Array [
-                        101.188427209854,
-                        15.0910085427885,
-                      ],
-                      Array [
-                        101.188427209854,
-                        15.0909179029537,
-                      ],
+                      101.188427209854,
+                      15.0909179029537,
+                    ],
+                    Array [
+                      101.18852108717,
+                      15.0909179029537,
+                    ],
+                    Array [
+                      101.18852108717,
+                      15.0910085427885,
+                    ],
+                    Array [
+                      101.188427209854,
+                      15.0910085427885,
+                    ],
+                    Array [
+                      101.188427209854,
+                      15.0909179029537,
                     ],
                   ],
-                  "type": "Polygon",
-                },
-                "id": "e652f8b2-b884-42d5-832a-86009c10a812",
-                "properties": Object {
-                  "action_code": "RACD Register Family",
-                  "color": "#FFCA16",
-                  "goal_id": "RACD_register_family_1km_radius",
-                  "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
-                  "jurisdiction_name": "TLv1_01",
-                  "jurisdiction_parent_id": "dad42fa6-b9b8-4658-bf25-bfa7ab5b16ae",
-                  "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
-                  "structure_code": "a19eeb63-45d0-4744-9a9d-76d0694103f6",
-                  "structure_id": "a19eeb63-45d0-4744-9a9d-76d0694103f6",
-                  "structure_name": "a19eeb63-45d0-4744-9a9d-76d0694103f6",
-                  "structure_type": "a19eeb63-45d0-4744-9a9d-76d0694103f6",
-                  "task_business_status": "Not Visited",
-                  "task_execution_end_date": "2019-04-01",
-                  "task_execution_start_date": "2019-04-08",
-                  "task_focus": "95515b0d-b9c0-496e-83c7-7af8b4924d1f",
-                  "task_status": "Ready",
-                  "task_task_for": "a19eeb63-45d0-4744-9a9d-76d0694103f6",
-                },
-                "type": "Feature",
+                ],
+                "type": "Polygon",
               },
-              "goal_id": "RACD_register_family_1km_radius",
-              "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
-              "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
-              "task_identifier": "e652f8b2-b884-42d5-832a-86009c10a812",
-            },
-            Object {
-              "geojson": Object {
-                "geometry": Object {
-                  "coordinates": Array [
-                    Array [
-                      Array [
-                        101.177725195885,
-                        15.0658221308165,
-                      ],
-                      Array [
-                        101.177684962749,
-                        15.0657263002127,
-                      ],
-                      Array [
-                        101.177778840065,
-                        15.0656848599382,
-                      ],
-                      Array [
-                        101.177832484245,
-                        15.0657781005444,
-                      ],
-                      Array [
-                        101.177725195885,
-                        15.0658221308165,
-                      ],
-                    ],
-                  ],
-                  "type": "Polygon",
-                },
-                "id": "03458d28-af61-4f70-b110-73a3429ada2d",
-                "properties": Object {
-                  "action_code": "Bednet Distribution",
-                  "color": "#FFCA16",
-                  "goal_id": "RACD_bednet_dist_1km_radius",
-                  "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
-                  "jurisdiction_name": "TLv1_01",
-                  "jurisdiction_parent_id": "dad42fa6-b9b8-4658-bf25-bfa7ab5b16ae",
-                  "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
-                  "structure_code": "da765947-5e4d-49f7-9eb8-2d2d00681f65",
-                  "structure_id": "da765947-5e4d-49f7-9eb8-2d2d00681f65",
-                  "structure_name": "da765947-5e4d-49f7-9eb8-2d2d00681f65",
-                  "structure_type": "da765947-5e4d-49f7-9eb8-2d2d00681f65",
-                  "task_business_status": "Not Visited",
-                  "task_execution_end_date": "2019-04-01",
-                  "task_execution_start_date": "2019-04-08",
-                  "task_focus": "Bednet Distribution",
-                  "task_status": "Ready",
-                  "task_task_for": "da765947-5e4d-49f7-9eb8-2d2d00681f65",
-                },
-                "type": "Feature",
+              "id": "e652f8b2-b884-42d5-832a-86009c10a812",
+              "properties": Object {
+                "code": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
+                "effective_end_date": null,
+                "effective_start_date": null,
+                "geographic_level": 6,
+                "jurisdiction_id": "4550a8ab-b310-4881-8c76-1b6a817ea63a",
+                "name": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
+                "server_version": 1562120301666,
+                "status": "Active",
+                "type": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
+                "uid": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
+                "version": 0,
               },
-              "goal_id": "RACD_bednet_dist_1km_radius",
-              "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
-              "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
-              "task_identifier": "03458d28-af61-4f70-b110-73a3429ada2d",
+              "type": "Feature",
             },
           ],
           "type": "FeatureCollection",
@@ -3761,146 +4145,6 @@ Object {
           "data": Object {
             "features": Array [
               Object {
-                "geojson": Object {
-                  "geometry": Object {
-                    "coordinates": Array [
-                      Array [
-                        Array [
-                          101.188427209854,
-                          15.0909179029537,
-                        ],
-                        Array [
-                          101.18852108717,
-                          15.0909179029537,
-                        ],
-                        Array [
-                          101.18852108717,
-                          15.0910085427885,
-                        ],
-                        Array [
-                          101.188427209854,
-                          15.0910085427885,
-                        ],
-                        Array [
-                          101.188427209854,
-                          15.0909179029537,
-                        ],
-                      ],
-                    ],
-                    "type": "Polygon",
-                  },
-                  "id": "e652f8b2-b884-42d5-832a-86009c10a812",
-                  "properties": Object {
-                    "action_code": "RACD Register Family",
-                    "color": "#FFCA16",
-                    "goal_id": "RACD_register_family_1km_radius",
-                    "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
-                    "jurisdiction_name": "TLv1_01",
-                    "jurisdiction_parent_id": "dad42fa6-b9b8-4658-bf25-bfa7ab5b16ae",
-                    "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
-                    "structure_code": "a19eeb63-45d0-4744-9a9d-76d0694103f6",
-                    "structure_id": "a19eeb63-45d0-4744-9a9d-76d0694103f6",
-                    "structure_name": "a19eeb63-45d0-4744-9a9d-76d0694103f6",
-                    "structure_type": "a19eeb63-45d0-4744-9a9d-76d0694103f6",
-                    "task_business_status": "Not Visited",
-                    "task_execution_end_date": "2019-04-01",
-                    "task_execution_start_date": "2019-04-08",
-                    "task_focus": "95515b0d-b9c0-496e-83c7-7af8b4924d1f",
-                    "task_status": "Ready",
-                    "task_task_for": "a19eeb63-45d0-4744-9a9d-76d0694103f6",
-                  },
-                  "type": "Feature",
-                },
-                "goal_id": "RACD_register_family_1km_radius",
-                "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
-                "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
-                "task_identifier": "e652f8b2-b884-42d5-832a-86009c10a812",
-              },
-              Object {
-                "geojson": Object {
-                  "geometry": Object {
-                    "coordinates": Array [
-                      Array [
-                        Array [
-                          101.177725195885,
-                          15.0658221308165,
-                        ],
-                        Array [
-                          101.177684962749,
-                          15.0657263002127,
-                        ],
-                        Array [
-                          101.177778840065,
-                          15.0656848599382,
-                        ],
-                        Array [
-                          101.177832484245,
-                          15.0657781005444,
-                        ],
-                        Array [
-                          101.177725195885,
-                          15.0658221308165,
-                        ],
-                      ],
-                    ],
-                    "type": "Polygon",
-                  },
-                  "id": "03458d28-af61-4f70-b110-73a3429ada2d",
-                  "properties": Object {
-                    "action_code": "Bednet Distribution",
-                    "color": "#FFCA16",
-                    "goal_id": "RACD_bednet_dist_1km_radius",
-                    "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
-                    "jurisdiction_name": "TLv1_01",
-                    "jurisdiction_parent_id": "dad42fa6-b9b8-4658-bf25-bfa7ab5b16ae",
-                    "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
-                    "structure_code": "da765947-5e4d-49f7-9eb8-2d2d00681f65",
-                    "structure_id": "da765947-5e4d-49f7-9eb8-2d2d00681f65",
-                    "structure_name": "da765947-5e4d-49f7-9eb8-2d2d00681f65",
-                    "structure_type": "da765947-5e4d-49f7-9eb8-2d2d00681f65",
-                    "task_business_status": "Not Visited",
-                    "task_execution_end_date": "2019-04-01",
-                    "task_execution_start_date": "2019-04-08",
-                    "task_focus": "Bednet Distribution",
-                    "task_status": "Ready",
-                    "task_task_for": "da765947-5e4d-49f7-9eb8-2d2d00681f65",
-                  },
-                  "type": "Feature",
-                },
-                "goal_id": "RACD_bednet_dist_1km_radius",
-                "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
-                "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
-                "task_identifier": "03458d28-af61-4f70-b110-73a3429ada2d",
-              },
-            ],
-            "type": "FeatureCollection",
-          },
-          "type": "geojson",
-        },
-        "type": "fill",
-        "visible": true,
-      },
-      "type": "fill",
-      "visible": true,
-    },
-    "structure-layer-line": Object {
-      "filters": Object {},
-      "id": "structure-layer-line",
-      "isChartMin": true,
-      "isLoading": false,
-      "labels": undefined,
-      "legendBottom": 40,
-      "loaded": true,
-      "paint": Object {
-        "line-color": "#666a6d",
-        "line-opacity": 1,
-        "line-width": 2,
-      },
-      "source": Object {
-        "data": Object {
-          "features": Array [
-            Object {
-              "geojson": Object {
                 "geometry": Object {
                   "coordinates": Array [
                     Array [
@@ -3930,86 +4174,90 @@ Object {
                 },
                 "id": "e652f8b2-b884-42d5-832a-86009c10a812",
                 "properties": Object {
-                  "action_code": "RACD Register Family",
-                  "color": "#FFCA16",
-                  "goal_id": "RACD_register_family_1km_radius",
-                  "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
-                  "jurisdiction_name": "TLv1_01",
-                  "jurisdiction_parent_id": "dad42fa6-b9b8-4658-bf25-bfa7ab5b16ae",
-                  "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
-                  "structure_code": "a19eeb63-45d0-4744-9a9d-76d0694103f6",
-                  "structure_id": "a19eeb63-45d0-4744-9a9d-76d0694103f6",
-                  "structure_name": "a19eeb63-45d0-4744-9a9d-76d0694103f6",
-                  "structure_type": "a19eeb63-45d0-4744-9a9d-76d0694103f6",
-                  "task_business_status": "Not Visited",
-                  "task_execution_end_date": "2019-04-01",
-                  "task_execution_start_date": "2019-04-08",
-                  "task_focus": "95515b0d-b9c0-496e-83c7-7af8b4924d1f",
-                  "task_status": "Ready",
-                  "task_task_for": "a19eeb63-45d0-4744-9a9d-76d0694103f6",
+                  "code": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
+                  "effective_end_date": null,
+                  "effective_start_date": null,
+                  "geographic_level": 6,
+                  "jurisdiction_id": "4550a8ab-b310-4881-8c76-1b6a817ea63a",
+                  "name": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
+                  "server_version": 1562120301666,
+                  "status": "Active",
+                  "type": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
+                  "uid": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
+                  "version": 0,
                 },
                 "type": "Feature",
               },
-              "goal_id": "RACD_register_family_1km_radius",
-              "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
-              "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
-              "task_identifier": "e652f8b2-b884-42d5-832a-86009c10a812",
-            },
+            ],
+            "type": "FeatureCollection",
+          },
+          "type": "geojson",
+        },
+        "type": "fill",
+        "visible": true,
+      },
+      "type": "fill",
+      "visible": true,
+    },
+    "structure-layer-line": Object {
+      "filters": Object {},
+      "id": "structure-layer-line",
+      "isChartMin": true,
+      "isLoading": false,
+      "labels": undefined,
+      "legendBottom": 40,
+      "loaded": true,
+      "paint": Object {
+        "line-color": "#666a6d",
+        "line-opacity": 1,
+        "line-width": 2,
+      },
+      "source": Object {
+        "data": Object {
+          "features": Array [
             Object {
-              "geojson": Object {
-                "geometry": Object {
-                  "coordinates": Array [
+              "geometry": Object {
+                "coordinates": Array [
+                  Array [
                     Array [
-                      Array [
-                        101.177725195885,
-                        15.0658221308165,
-                      ],
-                      Array [
-                        101.177684962749,
-                        15.0657263002127,
-                      ],
-                      Array [
-                        101.177778840065,
-                        15.0656848599382,
-                      ],
-                      Array [
-                        101.177832484245,
-                        15.0657781005444,
-                      ],
-                      Array [
-                        101.177725195885,
-                        15.0658221308165,
-                      ],
+                      101.188427209854,
+                      15.0909179029537,
+                    ],
+                    Array [
+                      101.18852108717,
+                      15.0909179029537,
+                    ],
+                    Array [
+                      101.18852108717,
+                      15.0910085427885,
+                    ],
+                    Array [
+                      101.188427209854,
+                      15.0910085427885,
+                    ],
+                    Array [
+                      101.188427209854,
+                      15.0909179029537,
                     ],
                   ],
-                  "type": "Polygon",
-                },
-                "id": "03458d28-af61-4f70-b110-73a3429ada2d",
-                "properties": Object {
-                  "action_code": "Bednet Distribution",
-                  "color": "#FFCA16",
-                  "goal_id": "RACD_bednet_dist_1km_radius",
-                  "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
-                  "jurisdiction_name": "TLv1_01",
-                  "jurisdiction_parent_id": "dad42fa6-b9b8-4658-bf25-bfa7ab5b16ae",
-                  "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
-                  "structure_code": "da765947-5e4d-49f7-9eb8-2d2d00681f65",
-                  "structure_id": "da765947-5e4d-49f7-9eb8-2d2d00681f65",
-                  "structure_name": "da765947-5e4d-49f7-9eb8-2d2d00681f65",
-                  "structure_type": "da765947-5e4d-49f7-9eb8-2d2d00681f65",
-                  "task_business_status": "Not Visited",
-                  "task_execution_end_date": "2019-04-01",
-                  "task_execution_start_date": "2019-04-08",
-                  "task_focus": "Bednet Distribution",
-                  "task_status": "Ready",
-                  "task_task_for": "da765947-5e4d-49f7-9eb8-2d2d00681f65",
-                },
-                "type": "Feature",
+                ],
+                "type": "Polygon",
               },
-              "goal_id": "RACD_bednet_dist_1km_radius",
-              "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
-              "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
-              "task_identifier": "03458d28-af61-4f70-b110-73a3429ada2d",
+              "id": "e652f8b2-b884-42d5-832a-86009c10a812",
+              "properties": Object {
+                "code": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
+                "effective_end_date": null,
+                "effective_start_date": null,
+                "geographic_level": 6,
+                "jurisdiction_id": "4550a8ab-b310-4881-8c76-1b6a817ea63a",
+                "name": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
+                "server_version": 1562120301666,
+                "status": "Active",
+                "type": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
+                "uid": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
+                "version": 0,
+              },
+              "type": "Feature",
             },
           ],
           "type": "FeatureCollection",
@@ -4028,116 +4276,48 @@ Object {
           "data": Object {
             "features": Array [
               Object {
-                "geojson": Object {
-                  "geometry": Object {
-                    "coordinates": Array [
+                "geometry": Object {
+                  "coordinates": Array [
+                    Array [
                       Array [
-                        Array [
-                          101.188427209854,
-                          15.0909179029537,
-                        ],
-                        Array [
-                          101.18852108717,
-                          15.0909179029537,
-                        ],
-                        Array [
-                          101.18852108717,
-                          15.0910085427885,
-                        ],
-                        Array [
-                          101.188427209854,
-                          15.0910085427885,
-                        ],
-                        Array [
-                          101.188427209854,
-                          15.0909179029537,
-                        ],
+                        101.188427209854,
+                        15.0909179029537,
+                      ],
+                      Array [
+                        101.18852108717,
+                        15.0909179029537,
+                      ],
+                      Array [
+                        101.18852108717,
+                        15.0910085427885,
+                      ],
+                      Array [
+                        101.188427209854,
+                        15.0910085427885,
+                      ],
+                      Array [
+                        101.188427209854,
+                        15.0909179029537,
                       ],
                     ],
-                    "type": "Polygon",
-                  },
-                  "id": "e652f8b2-b884-42d5-832a-86009c10a812",
-                  "properties": Object {
-                    "action_code": "RACD Register Family",
-                    "color": "#FFCA16",
-                    "goal_id": "RACD_register_family_1km_radius",
-                    "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
-                    "jurisdiction_name": "TLv1_01",
-                    "jurisdiction_parent_id": "dad42fa6-b9b8-4658-bf25-bfa7ab5b16ae",
-                    "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
-                    "structure_code": "a19eeb63-45d0-4744-9a9d-76d0694103f6",
-                    "structure_id": "a19eeb63-45d0-4744-9a9d-76d0694103f6",
-                    "structure_name": "a19eeb63-45d0-4744-9a9d-76d0694103f6",
-                    "structure_type": "a19eeb63-45d0-4744-9a9d-76d0694103f6",
-                    "task_business_status": "Not Visited",
-                    "task_execution_end_date": "2019-04-01",
-                    "task_execution_start_date": "2019-04-08",
-                    "task_focus": "95515b0d-b9c0-496e-83c7-7af8b4924d1f",
-                    "task_status": "Ready",
-                    "task_task_for": "a19eeb63-45d0-4744-9a9d-76d0694103f6",
-                  },
-                  "type": "Feature",
+                  ],
+                  "type": "Polygon",
                 },
-                "goal_id": "RACD_register_family_1km_radius",
-                "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
-                "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
-                "task_identifier": "e652f8b2-b884-42d5-832a-86009c10a812",
-              },
-              Object {
-                "geojson": Object {
-                  "geometry": Object {
-                    "coordinates": Array [
-                      Array [
-                        Array [
-                          101.177725195885,
-                          15.0658221308165,
-                        ],
-                        Array [
-                          101.177684962749,
-                          15.0657263002127,
-                        ],
-                        Array [
-                          101.177778840065,
-                          15.0656848599382,
-                        ],
-                        Array [
-                          101.177832484245,
-                          15.0657781005444,
-                        ],
-                        Array [
-                          101.177725195885,
-                          15.0658221308165,
-                        ],
-                      ],
-                    ],
-                    "type": "Polygon",
-                  },
-                  "id": "03458d28-af61-4f70-b110-73a3429ada2d",
-                  "properties": Object {
-                    "action_code": "Bednet Distribution",
-                    "color": "#FFCA16",
-                    "goal_id": "RACD_bednet_dist_1km_radius",
-                    "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
-                    "jurisdiction_name": "TLv1_01",
-                    "jurisdiction_parent_id": "dad42fa6-b9b8-4658-bf25-bfa7ab5b16ae",
-                    "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
-                    "structure_code": "da765947-5e4d-49f7-9eb8-2d2d00681f65",
-                    "structure_id": "da765947-5e4d-49f7-9eb8-2d2d00681f65",
-                    "structure_name": "da765947-5e4d-49f7-9eb8-2d2d00681f65",
-                    "structure_type": "da765947-5e4d-49f7-9eb8-2d2d00681f65",
-                    "task_business_status": "Not Visited",
-                    "task_execution_end_date": "2019-04-01",
-                    "task_execution_start_date": "2019-04-08",
-                    "task_focus": "Bednet Distribution",
-                    "task_status": "Ready",
-                    "task_task_for": "da765947-5e4d-49f7-9eb8-2d2d00681f65",
-                  },
-                  "type": "Feature",
+                "id": "e652f8b2-b884-42d5-832a-86009c10a812",
+                "properties": Object {
+                  "code": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
+                  "effective_end_date": null,
+                  "effective_start_date": null,
+                  "geographic_level": 6,
+                  "jurisdiction_id": "4550a8ab-b310-4881-8c76-1b6a817ea63a",
+                  "name": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
+                  "server_version": 1562120301666,
+                  "status": "Active",
+                  "type": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
+                  "uid": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
+                  "version": 0,
                 },
-                "goal_id": "RACD_bednet_dist_1km_radius",
-                "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
-                "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
-                "task_identifier": "03458d28-af61-4f70-b110-73a3429ada2d",
+                "type": "Feature",
               },
             ],
             "type": "FeatureCollection",
@@ -4341,7 +4521,57 @@ exports[`components/GisidaWrapper renders map component without Featurecollectio
   minHeight="200px"
   pointFeatureCollection={null}
   polygonFeatureCollection={null}
-  structures={null}
+  structures={
+    Object {
+      "features": Array [
+        Object {
+          "geometry": Object {
+            "coordinates": Array [
+              Array [
+                Array [
+                  101.188427209854,
+                  15.0909179029537,
+                ],
+                Array [
+                  101.18852108717,
+                  15.0909179029537,
+                ],
+                Array [
+                  101.18852108717,
+                  15.0910085427885,
+                ],
+                Array [
+                  101.188427209854,
+                  15.0910085427885,
+                ],
+                Array [
+                  101.188427209854,
+                  15.0909179029537,
+                ],
+              ],
+            ],
+            "type": "Polygon",
+          },
+          "id": "e652f8b2-b884-42d5-832a-86009c10a812",
+          "properties": Object {
+            "code": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
+            "effective_end_date": null,
+            "effective_start_date": null,
+            "geographic_level": 6,
+            "jurisdiction_id": "4550a8ab-b310-4881-8c76-1b6a817ea63a",
+            "name": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
+            "server_version": 1562120301666,
+            "status": "Active",
+            "type": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
+            "uid": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
+            "version": 0,
+          },
+          "type": "Feature",
+        },
+      ],
+      "type": "FeatureCollection",
+    }
+  }
 >
   <Ripple
     borderColor="#ff5d00"
@@ -4509,7 +4739,57 @@ exports[`components/GisidaWrapper renders map component without Featurecollectio
   minHeight="200px"
   pointFeatureCollection={null}
   polygonFeatureCollection={null}
-  structures={null}
+  structures={
+    Object {
+      "features": Array [
+        Object {
+          "geometry": Object {
+            "coordinates": Array [
+              Array [
+                Array [
+                  101.188427209854,
+                  15.0909179029537,
+                ],
+                Array [
+                  101.18852108717,
+                  15.0909179029537,
+                ],
+                Array [
+                  101.18852108717,
+                  15.0910085427885,
+                ],
+                Array [
+                  101.188427209854,
+                  15.0910085427885,
+                ],
+                Array [
+                  101.188427209854,
+                  15.0909179029537,
+                ],
+              ],
+            ],
+            "type": "Polygon",
+          },
+          "id": "e652f8b2-b884-42d5-832a-86009c10a812",
+          "properties": Object {
+            "code": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
+            "effective_end_date": null,
+            "effective_start_date": null,
+            "geographic_level": 6,
+            "jurisdiction_id": "4550a8ab-b310-4881-8c76-1b6a817ea63a",
+            "name": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
+            "server_version": 1562120301666,
+            "status": "Active",
+            "type": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
+            "uid": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
+            "version": 0,
+          },
+          "type": "Feature",
+        },
+      ],
+      "type": "FeatureCollection",
+    }
+  }
 >
   <MapComponent
     handlers={Array []}
@@ -4564,6 +4844,20 @@ Object {
     },
     "style": "mapbox://styles/mapbox/satellite-v9",
   },
+  "mapIcons": Array [
+    Object {
+      "id": "case-confirmation",
+      "imageUrl": "https://raw.githubusercontent.com/onaio/reveal-frontend/add-icons/src/assets/images/case-confirmation.png",
+    },
+    Object {
+      "id": "larval",
+      "imageUrl": "https://raw.githubusercontent.com/onaio/reveal-frontend/add-icons/src/assets/images/larval.png",
+    },
+    Object {
+      "id": "mosquito",
+      "imageUrl": "https://raw.githubusercontent.com/onaio/reveal-frontend/add-icons/src/assets/images/mosquito.png",
+    },
+  ],
 }
 `;
 
@@ -4831,6 +5125,318 @@ Object {
       "type": "line",
       "visible": true,
     },
+    "structure-layer": Object {
+      "filters": Object {},
+      "id": "structure-layer",
+      "isChartMin": true,
+      "isLoading": false,
+      "labels": undefined,
+      "legendBottom": 40,
+      "loaded": true,
+      "paint": Object {
+        "fill-color": "#666a6d",
+        "fill-opacity": Array [
+          "match",
+          Array [
+            "get",
+            "task_business_status",
+          ],
+          Array [
+            "Not Visited",
+          ],
+          0.7,
+          Array [
+            "Not Sprayed",
+            "Incomplete",
+            "In Progress",
+          ],
+          0.7,
+          Array [
+            "Sprayed",
+          ],
+          0.7,
+          Array [
+            "Not Sprayable",
+          ],
+          1,
+          0.75,
+        ],
+        "fill-outline-color": "#666a6d",
+      },
+      "source": Object {
+        "data": Object {
+          "features": Array [
+            Object {
+              "geometry": Object {
+                "coordinates": Array [
+                  Array [
+                    Array [
+                      101.188427209854,
+                      15.0909179029537,
+                    ],
+                    Array [
+                      101.18852108717,
+                      15.0909179029537,
+                    ],
+                    Array [
+                      101.18852108717,
+                      15.0910085427885,
+                    ],
+                    Array [
+                      101.188427209854,
+                      15.0910085427885,
+                    ],
+                    Array [
+                      101.188427209854,
+                      15.0909179029537,
+                    ],
+                  ],
+                ],
+                "type": "Polygon",
+              },
+              "id": "e652f8b2-b884-42d5-832a-86009c10a812",
+              "properties": Object {
+                "code": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
+                "effective_end_date": null,
+                "effective_start_date": null,
+                "geographic_level": 6,
+                "jurisdiction_id": "4550a8ab-b310-4881-8c76-1b6a817ea63a",
+                "name": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
+                "server_version": 1562120301666,
+                "status": "Active",
+                "type": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
+                "uid": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
+                "version": 0,
+              },
+              "type": "Feature",
+            },
+          ],
+          "type": "FeatureCollection",
+        },
+        "type": "geojson",
+      },
+      "styleSpec": Object {
+        "id": "structure-layer",
+        "layout": Object {},
+        "paint": Object {
+          "fill-color": "#666a6d",
+          "fill-opacity": Array [
+            "match",
+            Array [
+              "get",
+              "task_business_status",
+            ],
+            Array [
+              "Not Visited",
+            ],
+            0.7,
+            Array [
+              "Not Sprayed",
+              "Incomplete",
+              "In Progress",
+            ],
+            0.7,
+            Array [
+              "Sprayed",
+            ],
+            0.7,
+            Array [
+              "Not Sprayable",
+            ],
+            1,
+            0.75,
+          ],
+          "fill-outline-color": "#fff",
+        },
+        "source": Object {
+          "data": Object {
+            "features": Array [
+              Object {
+                "geometry": Object {
+                  "coordinates": Array [
+                    Array [
+                      Array [
+                        101.188427209854,
+                        15.0909179029537,
+                      ],
+                      Array [
+                        101.18852108717,
+                        15.0909179029537,
+                      ],
+                      Array [
+                        101.18852108717,
+                        15.0910085427885,
+                      ],
+                      Array [
+                        101.188427209854,
+                        15.0910085427885,
+                      ],
+                      Array [
+                        101.188427209854,
+                        15.0909179029537,
+                      ],
+                    ],
+                  ],
+                  "type": "Polygon",
+                },
+                "id": "e652f8b2-b884-42d5-832a-86009c10a812",
+                "properties": Object {
+                  "code": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
+                  "effective_end_date": null,
+                  "effective_start_date": null,
+                  "geographic_level": 6,
+                  "jurisdiction_id": "4550a8ab-b310-4881-8c76-1b6a817ea63a",
+                  "name": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
+                  "server_version": 1562120301666,
+                  "status": "Active",
+                  "type": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
+                  "uid": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
+                  "version": 0,
+                },
+                "type": "Feature",
+              },
+            ],
+            "type": "FeatureCollection",
+          },
+          "type": "geojson",
+        },
+        "type": "fill",
+        "visible": true,
+      },
+      "type": "fill",
+      "visible": true,
+    },
+    "structure-layer-line": Object {
+      "filters": Object {},
+      "id": "structure-layer-line",
+      "isChartMin": true,
+      "isLoading": false,
+      "labels": undefined,
+      "legendBottom": 40,
+      "loaded": true,
+      "paint": Object {
+        "line-color": "#666a6d",
+        "line-opacity": 1,
+        "line-width": 2,
+      },
+      "source": Object {
+        "data": Object {
+          "features": Array [
+            Object {
+              "geometry": Object {
+                "coordinates": Array [
+                  Array [
+                    Array [
+                      101.188427209854,
+                      15.0909179029537,
+                    ],
+                    Array [
+                      101.18852108717,
+                      15.0909179029537,
+                    ],
+                    Array [
+                      101.18852108717,
+                      15.0910085427885,
+                    ],
+                    Array [
+                      101.188427209854,
+                      15.0910085427885,
+                    ],
+                    Array [
+                      101.188427209854,
+                      15.0909179029537,
+                    ],
+                  ],
+                ],
+                "type": "Polygon",
+              },
+              "id": "e652f8b2-b884-42d5-832a-86009c10a812",
+              "properties": Object {
+                "code": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
+                "effective_end_date": null,
+                "effective_start_date": null,
+                "geographic_level": 6,
+                "jurisdiction_id": "4550a8ab-b310-4881-8c76-1b6a817ea63a",
+                "name": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
+                "server_version": 1562120301666,
+                "status": "Active",
+                "type": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
+                "uid": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
+                "version": 0,
+              },
+              "type": "Feature",
+            },
+          ],
+          "type": "FeatureCollection",
+        },
+        "type": "geojson",
+      },
+      "styleSpec": Object {
+        "id": "structure-layer-line",
+        "layout": Object {},
+        "paint": Object {
+          "line-color": "#666a6d",
+          "line-opacity": 1,
+          "line-width": 2,
+        },
+        "source": Object {
+          "data": Object {
+            "features": Array [
+              Object {
+                "geometry": Object {
+                  "coordinates": Array [
+                    Array [
+                      Array [
+                        101.188427209854,
+                        15.0909179029537,
+                      ],
+                      Array [
+                        101.18852108717,
+                        15.0909179029537,
+                      ],
+                      Array [
+                        101.18852108717,
+                        15.0910085427885,
+                      ],
+                      Array [
+                        101.188427209854,
+                        15.0910085427885,
+                      ],
+                      Array [
+                        101.188427209854,
+                        15.0909179029537,
+                      ],
+                    ],
+                  ],
+                  "type": "Polygon",
+                },
+                "id": "e652f8b2-b884-42d5-832a-86009c10a812",
+                "properties": Object {
+                  "code": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
+                  "effective_end_date": null,
+                  "effective_start_date": null,
+                  "geographic_level": 6,
+                  "jurisdiction_id": "4550a8ab-b310-4881-8c76-1b6a817ea63a",
+                  "name": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
+                  "server_version": 1562120301666,
+                  "status": "Active",
+                  "type": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
+                  "uid": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
+                  "version": 0,
+                },
+                "type": "Feature",
+              },
+            ],
+            "type": "FeatureCollection",
+          },
+          "type": "geojson",
+        },
+        "type": "line",
+        "visible": true,
+      },
+      "type": "line",
+      "visible": true,
+    },
   },
   "mapId": "map-1",
   "menuIsOpen": true,
@@ -4844,7 +5450,7 @@ Object {
   "showProfile": false,
   "showSpinner": false,
   "timeseries": Object {},
-  "visibleLayerId": "main-plan-layer-450fc15b-5bd2-468a-927a-49cb10d3bcac",
+  "visibleLayerId": "structure-layer-line",
 }
 `;
 
@@ -4959,6 +5565,10 @@ exports[`components/GisidaWrapper works with DigitalGlobe base layer 1`] = `
     Array [
       Object {
         "action_code": "Case Confirmation",
+        "action_description": "Confirm the index case",
+        "action_prefix": "1",
+        "action_reason": "Investigation",
+        "action_title": "Case Confirmation",
         "completed_task_count": 0,
         "goal_comparator": "=",
         "goal_id": "Case_Confirmation",
@@ -4973,6 +5583,10 @@ exports[`components/GisidaWrapper works with DigitalGlobe base layer 1`] = `
       },
       Object {
         "action_code": "Larval Dipping",
+        "action_description": "Perform a minimum of three larval dipping activities in the operational area",
+        "action_prefix": "5",
+        "action_reason": "Investigation",
+        "action_title": "Larval Dipping",
         "completed_task_count": 0,
         "goal_comparator": ">=",
         "goal_id": "Larval_Dipping_Min_3_Sites",
@@ -4989,6 +5603,10 @@ exports[`components/GisidaWrapper works with DigitalGlobe base layer 1`] = `
       },
       Object {
         "action_code": "Blood Screening",
+        "action_description": "Visit all residential structures (100%) within a 1 km radius of a confirmed index case and test each registered person",
+        "action_prefix": "4",
+        "action_reason": "Investigation",
+        "action_title": "RACD Blood screening",
         "completed_task_count": 0,
         "goal_comparator": "=",
         "goal_id": "RACD_blood_screening_1km_radius",
@@ -5003,6 +5621,10 @@ exports[`components/GisidaWrapper works with DigitalGlobe base layer 1`] = `
       },
       Object {
         "action_code": "Mosquito Collection",
+        "action_description": "Set a minimum of three mosquito collection traps and complete the mosquito collection process",
+        "action_prefix": "6",
+        "action_reason": "Investigation",
+        "action_title": "Mosquito Collection",
         "completed_task_count": 3,
         "goal_comparator": ">=",
         "goal_id": "Mosquito_Collection_Min_3_Traps",
@@ -5023,6 +5645,10 @@ exports[`components/GisidaWrapper works with DigitalGlobe base layer 1`] = `
       },
       Object {
         "action_code": "Bednet Distribution",
+        "action_description": "Visit 100% of residential structures in the operational area and provide nets",
+        "action_prefix": "3",
+        "action_reason": "Routine",
+        "action_title": "Bednet Distribution",
         "completed_task_count": 4,
         "goal_comparator": ">=",
         "goal_id": "RACD_bednet_dist_1km_radius",
@@ -5037,6 +5663,48 @@ exports[`components/GisidaWrapper works with DigitalGlobe base layer 1`] = `
           "Not Visited": 11,
         },
         "task_count": 15,
+      },
+      Object {
+        "action_code": "Bednet Distribution",
+        "action_description": "Visit 75% of residential structures in the operational area and provide nets",
+        "action_prefix": "3",
+        "action_reason": "Routine",
+        "action_title": "Bednet Distribution",
+        "completed_task_count": 4,
+        "goal_comparator": ">=",
+        "goal_id": "RACD_bednet_dist_1km_radius",
+        "goal_unit": "percent",
+        "goal_value": 75,
+        "id": "e50f7156-c80e-541e-a24c-0b3e0d95b868",
+        "jurisdiction_id": "304cbcd4-0850-404a-a8b1-486b02f7b84d",
+        "measure": "Percent of residential structures visited",
+        "plan_id": "89fh38sg-h83s-9xf2-a7h2-pl98dh320lbc",
+        "task_business_status_map": Object {
+          "Complete": 4,
+          "Not Visited": 11,
+        },
+        "task_count": 15,
+      },
+      Object {
+        "action_code": "RACD Register Family",
+        "action_description": "Register all families & famiy members in all residential structures enumerated (100%) within the operational area",
+        "action_prefix": "2",
+        "action_reason": "Investigation",
+        "action_title": "Family Registration",
+        "completed_task_count": 7,
+        "goal_comparator": ">=",
+        "goal_id": "RACD_register_all_families",
+        "goal_unit": "Percent",
+        "goal_value": 100,
+        "id": "43cebec8-1900-51e2-83a8-9041b380cdee",
+        "jurisdiction_id": "674b66eb-b2aa-49b0-8635-2df5b0490aa8",
+        "measure": "Percent of residential structures with full family registration",
+        "plan_id": "629badcb-2ea9-43a8-bcda-8489ab157b8d",
+        "task_business_status_map": Object {
+          "Complete": 7,
+          "Not Visited": 220,
+        },
+        "task_count": 227,
       },
     ]
   }
@@ -5235,7 +5903,57 @@ exports[`components/GisidaWrapper works with DigitalGlobe base layer 1`] = `
       "type": "FeatureCollection",
     }
   }
-  structures={null}
+  structures={
+    Object {
+      "features": Array [
+        Object {
+          "geometry": Object {
+            "coordinates": Array [
+              Array [
+                Array [
+                  101.188427209854,
+                  15.0909179029537,
+                ],
+                Array [
+                  101.18852108717,
+                  15.0909179029537,
+                ],
+                Array [
+                  101.18852108717,
+                  15.0910085427885,
+                ],
+                Array [
+                  101.188427209854,
+                  15.0910085427885,
+                ],
+                Array [
+                  101.188427209854,
+                  15.0909179029537,
+                ],
+              ],
+            ],
+            "type": "Polygon",
+          },
+          "id": "e652f8b2-b884-42d5-832a-86009c10a812",
+          "properties": Object {
+            "code": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
+            "effective_end_date": null,
+            "effective_start_date": null,
+            "geographic_level": 6,
+            "jurisdiction_id": "4550a8ab-b310-4881-8c76-1b6a817ea63a",
+            "name": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
+            "server_version": 1562120301666,
+            "status": "Active",
+            "type": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
+            "uid": "bbcf2240-0a2d-4df7-8890-2c928f5bccaa",
+            "version": 0,
+          },
+          "type": "Feature",
+        },
+      ],
+      "type": "FeatureCollection",
+    }
+  }
 >
   <MapComponent
     handlers={Array []}
@@ -5297,5 +6015,19 @@ Object {
       "version": 8,
     },
   },
+  "mapIcons": Array [
+    Object {
+      "id": "case-confirmation",
+      "imageUrl": "https://raw.githubusercontent.com/onaio/reveal-frontend/add-icons/src/assets/images/case-confirmation.png",
+    },
+    Object {
+      "id": "larval",
+      "imageUrl": "https://raw.githubusercontent.com/onaio/reveal-frontend/add-icons/src/assets/images/larval.png",
+    },
+    Object {
+      "id": "mosquito",
+      "imageUrl": "https://raw.githubusercontent.com/onaio/reveal-frontend/add-icons/src/assets/images/mosquito.png",
+    },
+  ],
 }
 `;
