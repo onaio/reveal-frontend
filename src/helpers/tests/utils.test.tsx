@@ -291,6 +291,7 @@ describe('helpers/utils', () => {
       plan_intervention_type: plan.plan_intervention_type,
       plan_status: plan.plan_status,
       plan_title: plan.plan_title,
+      plan_version: plan.plan_version,
       province: null,
       reason: plan.plan_fi_reason,
       status: plan.plan_fi_status,
