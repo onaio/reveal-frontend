@@ -38,6 +38,7 @@ export interface PlanRecordResponse {
 /** PlanRecord - base Plan interface for plan objects,  keyed by `id` in state */
 export interface PlanRecord {
   id: string;
+  plan_date: string;
   plan_effective_period_end: string;
   plan_effective_period_start: string;
   plan_fi_reason: string;
@@ -145,6 +146,7 @@ export const fetchPlanRecords = (planList: PlanRecordResponse[] = []): FetchPlan
     planList.map((plan: PlanRecordResponse) => {
       const thePlan = {
         id: plan.identifier,
+        plan_date: plan.date,
         plan_effective_period_end: plan.effective_period_end,
         plan_effective_period_start: plan.effective_period_start,
         plan_fi_reason: plan.fi_reason,
