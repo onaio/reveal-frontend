@@ -76,6 +76,11 @@ describe('reducers/goals', () => {
     if (goal37FromStore) {
       expect(goal37FromStore).toEqual({
         action_code: 'Mosquito Collection',
+        action_description:
+          'Set a minimum of three mosquito collection traps and complete the mosquito collection process',
+        action_prefix: '6',
+        action_reason: 'Investigation',
+        action_title: 'Mosquito Collection',
         completed_task_count: 3,
         goal_comparator: '>=',
         goal_id: 'Mosquito_Collection_Min_3_Traps',
