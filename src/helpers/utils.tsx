@@ -35,25 +35,6 @@ export interface RouteParams {
   id?: string;
 }
 
-/** Interface for Structure properties */
-
-/** Interface for structure.geojson.properties for structure
- *  as received from the fetch request / superset
- */
-export interface StructureProperties {
-  uid: string;
-  code: string;
-  name: string;
-  type: string;
-  status: string;
-  version: number;
-  server_version: number;
-  jurisdiction_id: string;
-  geographic_level: number | null;
-  effective_end_date: string | null;
-  effective_start_date: string | null;
-}
-
 /** Geometry object interface */
 export interface Geometry {
   coordinates: number[][][] | number[];
@@ -65,14 +46,6 @@ export interface GeoJSON {
   geometry: Geometry | null;
   id: string;
   properties: FlexObject;
-  type: string;
-}
-
-/** StructureGeoJSON Object Interface */
-export interface StructureGeoJSON {
-  geometry: Geometry | null;
-  id: string;
-  properties: StructureProperties;
   type: string;
 }
 

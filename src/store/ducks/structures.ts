@@ -1,14 +1,35 @@
 import { keyBy, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
 import SeamlessImmutable from 'seamless-immutable';
-import { FeatureCollection, StructureGeoJSON, wrapFeatureCollection } from '../../helpers/utils';
+import { FeatureCollection, Geometry, wrapFeatureCollection } from '../../helpers/utils';
 
 /** the reducer name */
 export const reducerName = 'structures';
 
-/** interface for structure.geojson for
- * structure as received from the fetch request / superset
+/** Interface for structure.geojson.properties for structure
+ *  as received from the fetch request / superset
  */
+export interface StructureProperties {
+  uid: string;
+  code: string;
+  name: string;
+  type: string;
+  status: string;
+  version: number;
+  server_version: number;
+  jurisdiction_id: string;
+  geographic_level: number | null;
+  effective_end_date: string | null;
+  effective_start_date: string | null;
+}
+
+/** StructureGeoJSON Object Interface */
+export interface StructureGeoJSON {
+  geometry: Geometry | null;
+  id: string;
+  properties: StructureProperties;
+  type: string;
+}
 
 /** interface for structure Object for
  * structure as received from the fetch request / superset
