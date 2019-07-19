@@ -222,6 +222,10 @@ export const planRecordsById = {
 
 export const goal1 = {
   action_code: 'Case Confirmation',
+  action_description: 'Confirm the index case',
+  action_prefix: '1',
+  action_reason: 'Investigation',
+  action_title: 'Case Confirmation',
   completed_task_count: 0,
   goal_comparator: '=',
   goal_id: 'Case_Confirmation',
@@ -237,6 +241,11 @@ export const goal1 = {
 
 export const goal2 = {
   action_code: 'Larval Dipping',
+  action_description:
+    'Perform a minimum of three larval dipping activities in the operational area',
+  action_prefix: '5',
+  action_reason: 'Investigation',
+  action_title: 'Larval Dipping',
   completed_task_count: 0,
   goal_comparator: '>=',
   goal_id: 'Larval_Dipping_Min_3_Sites',
@@ -252,6 +261,11 @@ export const goal2 = {
 
 export const goal3 = {
   action_code: 'Blood Screening',
+  action_description:
+    'Visit all residential structures (100%) within a 1 km radius of a confirmed index case and test each registered person',
+  action_prefix: '4',
+  action_reason: 'Investigation',
+  action_title: 'RACD Blood screening',
   completed_task_count: 0,
   goal_comparator: '=',
   goal_id: 'RACD_blood_screening_1km_radius',
@@ -267,6 +281,11 @@ export const goal3 = {
 
 export const goal4 = {
   action_code: 'Mosquito Collection',
+  action_description:
+    'Set a minimum of three mosquito collection traps and complete the mosquito collection process',
+  action_prefix: '6',
+  action_reason: 'Investigation',
+  action_title: 'Mosquito Collection',
   completed_task_count: 3,
   goal_comparator: '>=',
   goal_id: 'Mosquito_Collection_Min_3_Traps',
@@ -288,6 +307,11 @@ export const goal4 = {
 
 export const goal5 = {
   action_code: 'Bednet Distribution',
+  action_description:
+    'Visit 100% of residential structures in the operational area and provide nets',
+  action_prefix: '3',
+  action_reason: 'Routine',
+  action_title: 'Bednet Distribution',
   completed_task_count: 4,
   goal_comparator: '>=',
   goal_id: 'RACD_bednet_dist_1km_radius',
@@ -306,6 +330,11 @@ export const goal5 = {
 
 export const goal6 = {
   action_code: 'Bednet Distribution',
+  action_description:
+    'Visit 75% of residential structures in the operational area and provide nets',
+  action_prefix: '3',
+  action_reason: 'Routine',
+  action_title: 'Bednet Distribution',
   completed_task_count: 4,
   goal_comparator: '>=',
   goal_id: 'RACD_bednet_dist_1km_radius',
@@ -324,6 +353,11 @@ export const goal6 = {
 
 export const goal7 = {
   action_code: 'Bednet Distribution',
+  action_description:
+    'Visit 90% of residential structures in the operational area and provide nets',
+  action_prefix: '3',
+  action_reason: 'Routine',
+  action_title: 'Bednet Distribution',
   completed_task_count: 3,
   goal_comparator: '>=',
   goal_id: 'RACD_bednet_dist_1km_radius',
