@@ -795,15 +795,17 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
                   Percent of registered people tested
                 </p>
                 <p>
-                  Target
+                  Progress
                   : 
-                  0%
-                   (
                   0
                    
                   of
                    
                   0
+                   
+                  person(s)
+                   (
+                  0%
                   )
                 </p>
                 <br />

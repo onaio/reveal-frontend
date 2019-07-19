@@ -372,3 +372,15 @@ export function toggleLayer(allLayers: FlexObject, currentGoal: string, store: a
     }
   }
 }
+
+/** Rounds a floating point number to a given precision
+ *
+ * @param n - A number of type double to rounded of
+ * @param precision - the number of decimals to be in the mantissa
+ *
+ * @return - a number that is rounded off the given precision
+ */
+export function roundToPrecision(n: number, precision: number = 0): number {
+  const factor = Math.pow(10, precision);
+  return Math.round(n * factor) / factor;
+}

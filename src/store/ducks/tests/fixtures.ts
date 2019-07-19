@@ -304,12 +304,49 @@ export const goal5 = {
   task_count: 15,
 };
 
+export const goal6 = {
+  action_code: 'Bednet Distribution',
+  completed_task_count: 4,
+  goal_comparator: '>=',
+  goal_id: 'RACD_bednet_dist_1km_radius',
+  goal_unit: 'percent',
+  goal_value: 75,
+  id: 'e50f7156-c80e-541e-a24c-0b3e0d95b868',
+  jurisdiction_id: '304cbcd4-0850-404a-a8b1-486b02f7b84d',
+  measure: 'Percent of residential structures visited',
+  plan_id: '89fh38sg-h83s-9xf2-a7h2-pl98dh320lbc',
+  task_business_status_map: {
+    Complete: 4,
+    'Not Visited': 11,
+  },
+  task_count: 15,
+};
+
+export const goal7 = {
+  action_code: 'Bednet Distribution',
+  completed_task_count: 3,
+  goal_comparator: '>=',
+  goal_id: 'RACD_bednet_dist_1km_radius',
+  goal_unit: 'percent',
+  goal_value: 90,
+  id: 'e50f7156-c80e-541e-a24c-0b3e0d95b868',
+  jurisdiction_id: '304cbcd4-0850-404a-a8b1-486b02f7b84d',
+  measure: 'Percent of residential structures visited',
+  plan_id: '89fh38sg-h83s-9xf2-a7h2-pl98dh320lbc',
+  task_business_status_map: {
+    Complete: 4,
+    'Not Visited': 11,
+  },
+  task_count: 6,
+};
+
 const goal37 = clone(goal4);
 goal37.id = '1337';
 (goal37.task_business_status_map as any) = JSON.stringify(goal37.task_business_status_map);
 export { goal37 };
 
-export const goals = [goal1, goal2, goal3, goal4, goal5];
+// there are tests that rely on the order of this Array
+export const goals = [goal1, goal2, goal3, goal4, goal5, goal6];
 
 export const plan1Goals = [goal1, goal2];
 

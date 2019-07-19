@@ -892,15 +892,17 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
                           Case confirmation complete
                         </p>
                         <p>
-                          Target
+                          Progress
                           : 
-                          0%
-                           (
                           0
                            
                           of
                            
                           1
+                           
+                          each
+                           (
+                          0%
                           )
                         </p>
                         <ProgressBar
@@ -952,15 +954,17 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
                           Number of larval dipping activities
                         </p>
                         <p>
-                          Target
+                          Progress
                           : 
-                          0%
-                           (
                           0
                            
                           of
                            
                           3
+                           
+                          each
+                           (
+                          0%
                           )
                         </p>
                         <ProgressBar
@@ -1012,15 +1016,17 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
                           Number of mosquito collection traps
                         </p>
                         <p>
-                          Target
+                          Progress
                           : 
-                          100%
-                           (
                           3
                            
                           of
                            
                           3
+                           
+                          traps
+                           (
+                          100%
                           )
                         </p>
                         <ProgressBar
@@ -1973,15 +1979,17 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
                       Case confirmation complete
                     </p>
                     <p>
-                      Target
+                      Progress
                       : 
-                      0%
-                       (
                       0
                        
                       of
                        
                       1
+                       
+                      each
+                       (
+                      0%
                       )
                     </p>
                     <ProgressBar
@@ -2033,15 +2041,17 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
                       Number of larval dipping activities
                     </p>
                     <p>
-                      Target
+                      Progress
                       : 
-                      0%
-                       (
                       0
                        
                       of
                        
                       3
+                       
+                      each
+                       (
+                      0%
                       )
                     </p>
                     <ProgressBar
