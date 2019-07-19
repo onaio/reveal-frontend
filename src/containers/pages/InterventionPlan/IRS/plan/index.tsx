@@ -3,7 +3,17 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { Column } from 'react-table';
-import { Button, Col, Input, InputGroup, InputGroupAddon, Row } from 'reactstrap';
+import {
+  Button,
+  Col,
+  Form,
+  FormGroup,
+  Input,
+  InputGroup,
+  InputGroupAddon,
+  Label,
+  Row,
+} from 'reactstrap';
 import { Store } from 'redux';
 
 import DrillDownTable, { DrillDownProps, DropDownCell } from '@onaio/drill-down-table';
@@ -52,7 +62,6 @@ import HeaderBreadcrumbs, {
 } from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../../components/page/Loading';
 
-import { Link } from 'react-router-dom';
 import './style.css';
 
 /** register the plans reducer */
@@ -102,8 +111,9 @@ interface IrsPlanState {
   filteredJurisdictions: Jurisdiction[];
   focusJurisdictionId: string | null;
   isEditingPlanName: boolean;
-  isSelectingCountry: boolean;
+  isStartingPlan: boolean;
   newPlan: PlanRecord | null;
+  planCountry: string;
   previousPlanName: string;
   tableCrumbs: TableCrumb[];
 }
@@ -121,7 +131,7 @@ class IrsPlan extends React.Component<
       filteredJurisdictions: [],
       focusJurisdictionId: null,
       isEditingPlanName: false,
-      isSelectingCountry: props.isNewPlan || false,
+      isStartingPlan: props.isNewPlan || false,
       newPlan: props.isNewPlan
         ? {
             id: '',
@@ -138,6 +148,7 @@ class IrsPlan extends React.Component<
             plan_version: '',
           }
         : null,
+      planCountry: '',
       previousPlanName: '',
       tableCrumbs: [],
     };
@@ -283,11 +294,12 @@ class IrsPlan extends React.Component<
   public render() {
     const { planId, planById, isDraftPlan, isFinalizedPlan, isNewPlan } = this.props;
     const {
+      planCountry,
       doRenderTable,
       tableCrumbs,
       newPlan,
       isEditingPlanName,
-      isSelectingCountry,
+      isStartingPlan,
     } = this.state;
     if ((planId && !planById) || (isNewPlan && !newPlan)) {
       return <Loading />;
@@ -308,21 +320,108 @@ class IrsPlan extends React.Component<
       planTableProps = this.getDrilldownPlanTableProps(this.state);
     }
 
+    const onSetPlanNameChange = (e: any) => {
+      this.onSetPlanNameChange(e);
+    };
+    const onSetPlanStartDateChange = (e: any) => {
+      this.onSetPlanStartDateChange(e);
+    };
+    const onSetPlanEndDateChange = (e: any) => {
+      this.onSetPlanEndDateChange(e);
+    };
+    const onSelectCountryChange = (e: any) => {
+      this.onSelectCountryChange(e);
+    };
+    const onStartPlanFormSubmit = (e: any) => {
+      this.onStartPlanFormSubmit(e);
+    };
+
+    if (isStartingPlan && newPlan) {
+      const { plan_effective_period_end, plan_effective_period_start, plan_title } = newPlan;
+      return (
+        <div className="mb-5">
+          <HeaderBreadcrumbs {...breadCrumbProps} />
+          <Row>
+            <Col>
+              <h2 className="page-title">New IRS Plan</h2>
+              <hr />
+            </Col>
+          </Row>
+          <Row>
+            <Col xs="6">
+              <Form>
+                <FormGroup>
+                  <Label for="set-plan-name">Plan Name</Label>
+                  <Input
+                    id="set-plan-name"
+                    onChange={onSetPlanNameChange}
+                    placeholder={plan_title}
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <Label for="set-plan-start-date">Start Date</Label>
+                  <Input
+                    id="set-plan-start-date"
+                    onChange={onSetPlanStartDateChange}
+                    defaultValue={plan_effective_period_start}
+                    type="date"
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <Label for="set-plan-end-date">End Date</Label>
+                  <Input
+                    id="set-plan-end-date"
+                    onChange={onSetPlanEndDateChange}
+                    defaultValue={plan_effective_period_end}
+                    type="date"
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <Label for="select-plan-country">Select a Country</Label>
+                  <Input
+                    id="select-plan-country"
+                    defaultValue={planCountry}
+                    name="select-plan-country"
+                    onChange={onSelectCountryChange}
+                    type="select"
+                  >
+                    <option>...</option>
+                    <option value="TH">Thailand</option>
+                    <option value="ZM">Zambia</option>
+                  </Input>
+                </FormGroup>
+                <Button
+                  color="primary"
+                  disabled={
+                    !newPlan.plan_effective_period_end.length ||
+                    !newPlan.plan_effective_period_start.length ||
+                    !planCountry.length
+                  }
+                  onClick={onStartPlanFormSubmit}
+                >
+                  Select Jurisdictions
+                </Button>
+              </Form>
+            </Col>
+          </Row>
+        </div>
+      );
+    }
+
     const onEditNameButtonClick = (e: any) => {
       this.onEditNameButtonClick(e);
-    };
-    const onEditNameInputChange = (e: any) => {
-      this.onEditNameInputChange(e);
     };
     const onCancleEditNameButtonClick = (e: any) => {
       this.onCancleEditNameButtonClick(e);
     };
+    const onEditNameInputChange = (e: any) => {
+      this.onEditNameInputChange(e);
+    };
     const onSaveEditNameButtonClick = (e: any) => {
       this.onSaveEditNameButtonClick(e);
     };
-
-    const onSelectCountryChange = (e: any) => {
-      this.onSelectCountryChange(e);
+    const onEditPlanSettingsButtonClick = (e: any) => {
+      this.onEditPlanSettingsButtonClick(e);
     };
 
     const planHeaderRow = (
@@ -362,6 +461,9 @@ class IrsPlan extends React.Component<
                   save
                 </Button>
               </InputGroupAddon>
+              <Button color="link" onClick={onEditPlanSettingsButtonClick}>
+                Plan settings...
+              </Button>
             </InputGroup>
             <hr />
           </Col>
@@ -370,36 +472,9 @@ class IrsPlan extends React.Component<
       </Row>
     );
 
-    if (isSelectingCountry) {
-      return (
-        <div className="mb-5">
-          <HeaderBreadcrumbs {...breadCrumbProps} />
-          {planHeaderRow}
-          <Row>
-            <Col>
-              <Input
-                id="select-plan-country"
-                name="select-plan-country"
-                onChange={onSelectCountryChange}
-                type="select"
-              >
-                <option>Choose a Country</option>
-                <option value="TH">Thailand</option>
-                <option value="ZM">Zambia</option>
-              </Input>
-            </Col>
-          </Row>
-        </div>
-      );
-    }
-
     const onTableBreadCrumbClick = (e: any) => {
-      e.preventDefault();
-      if (e && e.target && e.target.id) {
-        this.onResetDrilldownTableHierarchy(e.target.id);
-      }
+      this.onTableBreadCrumbClick(e);
     };
-
     const tableBreadCrumbs = (
       <ol className="table-bread-crumbs breadcrumb">
         {this.state.tableCrumbs.map((crumb, i) => {
@@ -448,46 +523,12 @@ class IrsPlan extends React.Component<
   }
 
   // Jurisdiction Hierarchy Control
-  private onSelectCountryChange(e: any) {
-    if (!e || !e.target || !(e.target.value as ADMN0_PCODE)) {
-      return false;
+  private onTableBreadCrumbClick = (e: any) => {
+    e.preventDefault();
+    if (e && e.target && e.target.id) {
+      this.onResetDrilldownTableHierarchy(e.target.id);
     }
-    const { jurisdictionsArray } = this.props;
-    const country: JurisdictionsByCountry = CountriesAdmin0[e.target.value as ADMN0_PCODE];
-
-    const jurisdictionsToInclude = this.getDecendantJurisdictionIds(
-      country.jurisdictionIds,
-      jurisdictionsArray
-    );
-
-    const filteredJurisdictions: Jurisdiction[] = jurisdictionsArray.filter(
-      (jurisdiction: Jurisdiction) =>
-        jurisdictionsToInclude.indexOf(jurisdiction.jurisdiction_id) !== -1
-    );
-
-    const { newPlan: NewPlan } = this.state;
-    const newPlan: PlanRecord | null = NewPlan
-      ? {
-          ...NewPlan,
-          plan_jurisdictions_ids: [...jurisdictionsToInclude],
-        }
-      : NewPlan;
-
-    const tableCrumbs: TableCrumb[] = [
-      {
-        active: true,
-        id: null,
-        label: country.ADMN0_EN,
-      },
-    ];
-
-    this.setState({
-      filteredJurisdictions,
-      isSelectingCountry: false,
-      newPlan,
-      tableCrumbs,
-    });
-  }
+  };
 
   private onResetDrilldownTableHierarchy(Id: string | null) {
     const id = Id !== 'null' ? Id : null;
@@ -543,7 +584,7 @@ class IrsPlan extends React.Component<
   // Plan Title Control
   private getNewPlanDate(): string {
     const date = new Date();
-    return `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`;
+    return `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
   }
   private getNewPlanTitle(): string {
     const date = this.getNewPlanDate();
@@ -559,7 +600,6 @@ class IrsPlan extends React.Component<
       });
     }
   }
-
   private onEditNameInputChange(e: any) {
     const { newPlan: NewPlan } = this.state;
     if (NewPlan) {
@@ -570,7 +610,6 @@ class IrsPlan extends React.Component<
       this.setState({ newPlan });
     }
   }
-
   private onCancleEditNameButtonClick(e: any) {
     e.preventDefault();
     const { newPlan: NewPlan, previousPlanName } = this.state;
@@ -586,12 +625,88 @@ class IrsPlan extends React.Component<
       });
     }
   }
-
   private onSaveEditNameButtonClick(e: any) {
     e.preventDefault();
     this.setState({
       isEditingPlanName: false,
       previousPlanName: '',
+    });
+  }
+  private onEditPlanSettingsButtonClick(e: any) {
+    if (!this.props.isFinalizedPlan) {
+      this.setState({ isStartingPlan: true });
+    }
+  }
+
+  // new plan form handlers
+  private onSetPlanNameChange(e: any) {
+    if (e && e.target && e.target.value) {
+      const newPlan: PlanRecord = {
+        ...(this.state.newPlan as PlanRecord),
+        plan_title: e.target.value,
+      };
+      this.setState({ newPlan });
+    }
+  }
+  private onSetPlanStartDateChange(e: any) {
+    if (e && e.target && e.target.value) {
+      const newPlan: PlanRecord = {
+        ...(this.state.newPlan as PlanRecord),
+        plan_effective_period_start: e.target.value,
+      };
+      this.setState({ newPlan });
+    }
+  }
+  private onSetPlanEndDateChange(e: any) {
+    if (e && e.target && e.target.value) {
+      const newPlan: PlanRecord = {
+        ...(this.state.newPlan as PlanRecord),
+        plan_effective_period_end: e.target.value,
+      };
+      this.setState({ newPlan });
+    }
+  }
+  private onSelectCountryChange(e: any) {
+    if (e && e.target && (e.target.value as ADMN0_PCODE)) {
+      this.setState({ planCountry: e.target.value });
+    }
+  }
+  private onStartPlanFormSubmit(e: any) {
+    const { planCountry } = this.state;
+    const { jurisdictionsArray } = this.props;
+    const country: JurisdictionsByCountry = CountriesAdmin0[planCountry as ADMN0_PCODE];
+
+    const jurisdictionsToInclude = this.getDecendantJurisdictionIds(
+      country.jurisdictionIds,
+      jurisdictionsArray
+    );
+
+    const filteredJurisdictions: Jurisdiction[] = jurisdictionsArray.filter(
+      (jurisdiction: Jurisdiction) =>
+        jurisdictionsToInclude.indexOf(jurisdiction.jurisdiction_id) !== -1
+    );
+
+    const { newPlan: NewPlan } = this.state;
+    const newPlan: PlanRecord | null = NewPlan
+      ? {
+          ...NewPlan,
+          plan_jurisdictions_ids: [...jurisdictionsToInclude],
+        }
+      : NewPlan;
+
+    const tableCrumbs: TableCrumb[] = [
+      {
+        active: true,
+        id: null,
+        label: country.ADMN0_EN,
+      },
+    ];
+
+    this.setState({
+      filteredJurisdictions,
+      isStartingPlan: false,
+      newPlan,
+      tableCrumbs,
     });
   }
 
