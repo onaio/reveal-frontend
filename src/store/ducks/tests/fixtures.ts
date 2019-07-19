@@ -8,6 +8,7 @@ export const plan1 = {
   jurisdiction_name_path: ['Chadiza', 'Naviluli'],
   jurisdiction_parent_id: '2944',
   jurisdiction_path: ['2939', '2944'],
+  plan_date: '2019-06-18',
   plan_effective_period_end: '2019-06-18',
   plan_effective_period_start: '2019-07-31',
   plan_fi_reason: 'Routine',
@@ -26,6 +27,7 @@ export const plan2 = {
   jurisdiction_name_path: ['Canton Tha Luang', 'Tha Luang Village'],
   jurisdiction_parent_id: '2977',
   jurisdiction_path: ['2989', '2977'],
+  plan_date: '2019-06-18',
   plan_effective_period_end: '2019-06-18',
   plan_effective_period_start: '2019-07-31',
   plan_fi_reason: 'Case-triggered',
@@ -44,6 +46,7 @@ export const plan5 = {
   jurisdiction_name_path: 'null',
   jurisdiction_parent_id: ' NULL',
   jurisdiction_path: 'null',
+  plan_date: '2019-06-18',
   plan_effective_period_end: '2019-06-18',
   plan_effective_period_start: '2019-07-31',
   plan_fi_reason: 'Case-triggered',
@@ -81,6 +84,7 @@ export const plan3 = {
     '872cc59e-0bce-427a-bd1f-6ef674dba8e2',
     'dad42fa6-b9b8-4658-bf25-bfa7ab5b16ae',
   ]),
+  plan_date: '2019-06-18',
   plan_effective_period_end: '2019-06-18',
   plan_effective_period_start: '2019-07-31',
   plan_fi_reason: 'Routine',
@@ -142,6 +146,7 @@ export const planRecordResponses = [planRecordResponse1, planRecordResponse2, pl
 export const planRecordsById = {
   '6c7904b2-c556-4004-a9b9-114617832954': {
     id: '6c7904b2-c556-4004-a9b9-114617832954',
+    plan_date: '2019-07-31',
     plan_effective_period_end: '2019-07-31',
     plan_effective_period_start: '2019-06-18',
     plan_fi_reason: 'Case-triggered',
@@ -154,6 +159,7 @@ export const planRecordsById = {
   },
   '89fh38sg-h83s-9xf2-a7h2-pl98dh320lbc': {
     id: '89fh38sg-h83s-9xf2-a7h2-pl98dh320lbc',
+    plan_date: '2019-08-30',
     plan_effective_period_end: '2019-08-30',
     plan_effective_period_start: '2019-05-15',
     plan_fi_reason: 'Case-triggered',
@@ -166,6 +172,7 @@ export const planRecordsById = {
   },
   '90d1095b-4f66-4341-86e2-362c82b2b0b2': {
     id: '90d1095b-4f66-4341-86e2-362c82b2b0b2',
+    plan_date: '2019-09-30',
     plan_effective_period_end: '2019-09-30',
     plan_effective_period_start: '2019-05-27',
     plan_fi_reason: '',
