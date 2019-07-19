@@ -6,7 +6,7 @@ import { getGoalReport, goalRatioAchieved } from '../indicators';
 describe('helpers/indicators', () => {
   it('goalPercentAchieved works', () => {
     // returns correct percentage for all goal_unit values
-    const expected: number[] = [0, 0, 0, 1, 0.27, 0.36];
+    const expected: number[] = [0, 0, 0, 1, 0.27, 0.36, 0.03];
     const got = map(fixtures.goals, goal => goalRatioAchieved(goal));
     expect(got).toEqual(expected);
   });
