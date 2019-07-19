@@ -12,6 +12,7 @@ import {
   BEDNET_DISTRIBUTION_CODE,
   BLOOD_SCREENING_CODE,
   CASE_CONFIRMATION_CODE,
+  CASE_TRIGGERED_PLAN,
   FEATURE_COLLECTION,
   IRS_CODE,
   LARVAL_DIPPING_CODE,
@@ -216,7 +217,7 @@ export function extractPlan(plan: Plan) {
   const result: { [key: string]: any } = {
     canton: null,
     caseClassification: null,
-    caseNotificationDate: null,
+    caseNotificationDate: plan.plan_fi_reason === CASE_TRIGGERED_PLAN ? plan.plan_date : null,
     district: null,
     focusArea: plan.jurisdiction_name,
     id: plan.id,
