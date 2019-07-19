@@ -1,4 +1,5 @@
 import { map } from 'lodash';
+import { PERSONS, STRUCTURES } from '../../constants';
 import * as fixtures from '../../store/ducks/tests/fixtures';
 import { getGoalReport, goalRatioAchieved } from '../indicators';
 
@@ -49,42 +50,49 @@ describe('helpers/indicators', () => {
   it('getGoalReport works', () => {
     expect(getGoalReport(fixtures.goal1)).toEqual({
       achievedValue: 0,
+      goalUnit: 'each',
       percentAchieved: 0,
       prettyPercentAchieved: '0%',
       targetValue: 1,
     });
     expect(getGoalReport(fixtures.goal2)).toEqual({
       achievedValue: 0,
+      goalUnit: 'each',
       percentAchieved: 0,
       prettyPercentAchieved: '0%',
       targetValue: 3,
     });
     expect(getGoalReport(fixtures.goal3)).toEqual({
       achievedValue: 0,
+      goalUnit: PERSONS,
       percentAchieved: 0,
       prettyPercentAchieved: '0%',
       targetValue: 0,
     });
     expect(getGoalReport(fixtures.goal4)).toEqual({
       achievedValue: 3,
+      goalUnit: 'traps',
       percentAchieved: 1,
       prettyPercentAchieved: '100%',
       targetValue: 3,
     });
     expect(getGoalReport(fixtures.goal5)).toEqual({
       achievedValue: 4,
+      goalUnit: STRUCTURES,
       percentAchieved: 0.27,
       prettyPercentAchieved: '27%',
       targetValue: 15,
     });
     expect(getGoalReport(fixtures.goal6)).toEqual({
       achievedValue: 4,
+      goalUnit: STRUCTURES,
       percentAchieved: 0.36,
       prettyPercentAchieved: '36%',
       targetValue: 11,
     });
     expect(getGoalReport(fixtures.goal7)).toEqual({
       achievedValue: 3,
+      goalUnit: STRUCTURES,
       percentAchieved: 0.6,
       prettyPercentAchieved: '60%',
       targetValue: 5,
