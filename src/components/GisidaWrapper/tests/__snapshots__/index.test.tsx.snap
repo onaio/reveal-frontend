@@ -510,6 +510,20 @@ Object {
     },
     "style": "mapbox://styles/mapbox/satellite-v9",
   },
+  "mapIcons": Array [
+    Object {
+      "id": "case-confirmation",
+      "imageUrl": "https://raw.githubusercontent.com/onaio/reveal-frontend/add-icons/src/assets/images/case-confirmation.png",
+    },
+    Object {
+      "id": "larval",
+      "imageUrl": "https://raw.githubusercontent.com/onaio/reveal-frontend/add-icons/src/assets/images/larval.png",
+    },
+    Object {
+      "id": "mosquito",
+      "imageUrl": "https://raw.githubusercontent.com/onaio/reveal-frontend/add-icons/src/assets/images/mosquito.png",
+    },
+  ],
 }
 `;
 
@@ -2299,6 +2313,20 @@ Object {
       "version": 8,
     },
   },
+  "mapIcons": Array [
+    Object {
+      "id": "case-confirmation",
+      "imageUrl": "https://raw.githubusercontent.com/onaio/reveal-frontend/add-icons/src/assets/images/case-confirmation.png",
+    },
+    Object {
+      "id": "larval",
+      "imageUrl": "https://raw.githubusercontent.com/onaio/reveal-frontend/add-icons/src/assets/images/larval.png",
+    },
+    Object {
+      "id": "mosquito",
+      "imageUrl": "https://raw.githubusercontent.com/onaio/reveal-frontend/add-icons/src/assets/images/mosquito.png",
+    },
+  ],
 }
 `;
 
@@ -4771,6 +4799,20 @@ Object {
     },
     "style": "mapbox://styles/mapbox/satellite-v9",
   },
+  "mapIcons": Array [
+    Object {
+      "id": "case-confirmation",
+      "imageUrl": "https://raw.githubusercontent.com/onaio/reveal-frontend/add-icons/src/assets/images/case-confirmation.png",
+    },
+    Object {
+      "id": "larval",
+      "imageUrl": "https://raw.githubusercontent.com/onaio/reveal-frontend/add-icons/src/assets/images/larval.png",
+    },
+    Object {
+      "id": "mosquito",
+      "imageUrl": "https://raw.githubusercontent.com/onaio/reveal-frontend/add-icons/src/assets/images/mosquito.png",
+    },
+  ],
 }
 `;
 
@@ -5883,5 +5925,19 @@ Object {
       "version": 8,
     },
   },
+  "mapIcons": Array [
+    Object {
+      "id": "case-confirmation",
+      "imageUrl": "https://raw.githubusercontent.com/onaio/reveal-frontend/add-icons/src/assets/images/case-confirmation.png",
+    },
+    Object {
+      "id": "larval",
+      "imageUrl": "https://raw.githubusercontent.com/onaio/reveal-frontend/add-icons/src/assets/images/larval.png",
+    },
+    Object {
+      "id": "mosquito",
+      "imageUrl": "https://raw.githubusercontent.com/onaio/reveal-frontend/add-icons/src/assets/images/mosquito.png",
+    },
+  ],
 }
 `;

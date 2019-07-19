@@ -8,7 +8,12 @@ import * as React from 'react';
 import { GREY } from '../../colors';
 import Loading from '../../components/page/Loading/index';
 import { GISIDA_MAPBOX_TOKEN, GISIDA_ONADATA_API_TOKEN } from '../../configs/env';
-import { circleLayerConfig, fillLayerConfig, lineLayerConfig } from '../../configs/settings';
+import {
+  circleLayerConfig,
+  fillLayerConfig,
+  lineLayerConfig,
+  symbolLayerConfig,
+} from '../../configs/settings';
 import { APP, MAIN_PLAN, MAP_ID, STRUCTURE_LAYER } from '../../constants';
 import { EventData } from '../../helpers/mapbox';
 import { ConfigStore, FeatureCollection, FlexObject } from '../../helpers/utils';
@@ -306,7 +311,13 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
       | FillLayerObj[]
       | FlexObject = [];
 
-    // deal with structures
+    /** Goals with icons array  */
+    const goalsWithSymbols = [
+      'Mosquito_Collection_Min_3_Traps',
+      'Larval_Dipping_Min_3_Sites',
+      'Case_Confirmation',
+    ];
+    /**  Deal with structures */
     const { structures } = this.props;
     if (structures) {
       const structureLayer: FillLayerObj = {
@@ -345,6 +356,31 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
     }
     // handle Point layer types
     if (pointFeatureCollection) {
+      /** Build symbol layers to render on top of circle layers */
+      goalsWithSymbols.forEach((goal: string) => {
+        if (goal === this.props.currentGoal) {
+          const iconGoal = this.props.currentGoal.includes('Mosquito_Collection')
+            ? 'mosquito'
+            : this.props.currentGoal.includes('Larval_Dipping')
+            ? 'larval'
+            : 'case-confirmation';
+          builtGeometriesContainer.push({
+            ...symbolLayerConfig,
+            id: `${this.props.currentGoal}-symbol`,
+            layout: {
+              'icon-image': iconGoal,
+              'icon-size': 0.03,
+            },
+            source: {
+              ...symbolLayerConfig.source,
+              data: {
+                ...symbolLayerConfig.source.data,
+                data: JSON.stringify(pointFeatureCollection),
+              },
+            },
+          });
+        }
+      });
       builtGeometriesContainer.push({
         ...circleLayerConfig,
         id: `${this.props.currentGoal}-point`,
@@ -365,6 +401,31 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
     }
     // Handle fill layers
     if (polygonFeatureCollection) {
+      /** Build symbol layers to render on top of circle layers */
+      goalsWithSymbols.forEach((goal: string) => {
+        if (goal === this.props.currentGoal) {
+          const iconGoal = this.props.currentGoal.includes('Mosquito_Collection')
+            ? 'mosquito'
+            : this.props.currentGoal.includes('Larval_Dipping')
+            ? 'larval'
+            : 'case-confirmation';
+          builtGeometriesContainer.push({
+            ...symbolLayerConfig,
+            id: `${this.props.currentGoal}-symbol`,
+            layout: {
+              'icon-image': iconGoal,
+              'icon-size': 0.03,
+            },
+            source: {
+              ...symbolLayerConfig.source,
+              data: {
+                ...symbolLayerConfig.source.data,
+                data: JSON.stringify(polygonFeatureCollection),
+              },
+            },
+          });
+        }
+      });
       builtGeometriesContainer.push(
         {
           ...fillLayerConfig,
