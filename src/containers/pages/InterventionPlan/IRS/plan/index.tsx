@@ -46,6 +46,7 @@ import plansReducer, {
 } from '../../../../../store/ducks/plans';
 
 import { strict } from 'assert';
+import { Helmet } from 'react-helmet';
 import HeaderBreadcrumbs, {
   BreadCrumbProps,
 } from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
@@ -424,6 +425,9 @@ class IrsPlan extends React.Component<
 
     return (
       <div className="mb-5">
+        <Helmet>
+          <title>IRS: {pageLabel}</title>
+        </Helmet>
         <HeaderBreadcrumbs {...breadCrumbProps} />
         {planHeaderRow}
         {/* <Row><Col>Map will go here!</Col></Row> */}

@@ -1,5 +1,6 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import * as React from 'react';
+import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { NavLink } from 'react-router-dom';
@@ -15,6 +16,7 @@ import {
   SUPERSET_PLANS_SLICE,
   SUPERSET_STRUCTURES_SLICE,
 } from '../../../../../configs/env';
+import { FI_SINGLE_MAP_TITLE } from '../../../../../constants';
 import {
   FI_SINGLE_MAP_URL,
   FI_SINGLE_URL,
@@ -67,6 +69,7 @@ import tasksReducer, {
   TaskGeoJSON,
 } from '../../../../../store/ducks/tasks';
 import './style.css';
+
 /** register reducers */
 reducerRegistry.register(jurisdictionReducerName, jurisdictionReducer);
 reducerRegistry.register(goalsReducerName, goalsReducer);
@@ -197,6 +200,9 @@ class SingleActiveFIMap extends React.Component<
 
     return (
       <div>
+        <Helmet>
+          <title>{`${FOCUS_INVESTIGATION}: ${plan && plan.plan_title}`}</title>
+        </Helmet>
         <HeaderBreadcrumb {...breadCrumbProps} />
         <h2 className="page-title mt-4 mb-4">
           {FOCUS_INVESTIGATION}: {plan && plan.plan_title}

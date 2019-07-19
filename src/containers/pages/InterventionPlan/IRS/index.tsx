@@ -25,11 +25,13 @@ import plansReducer, {
   reducerName as plansReducerName,
 } from '../../../../store/ducks/plans';
 
+import { Helmet } from 'react-helmet';
 import DrillDownTableLinkedCell from '../../../../components/DrillDownTableLinkedCell';
 import HeaderBreadcrumbs, {
   BreadCrumbProps,
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
+import { IRS_TITLE } from '../../../../constants';
 
 /** register the plans reducer */
 reducerRegistry.register(plansReducerName, plansReducer);
@@ -137,6 +139,9 @@ class IrsPlans extends React.Component<IrsPlansProps & RouteComponentProps<Route
 
     return (
       <div className="mb-5">
+        <Helmet>
+          <title>{IRS_TITLE}</title>
+        </Helmet>
         <HeaderBreadcrumbs {...breadCrumbProps} />
         <h2 className="page-title">IRS Plans</h2>
         <DrillDownTable {...tableProps} />

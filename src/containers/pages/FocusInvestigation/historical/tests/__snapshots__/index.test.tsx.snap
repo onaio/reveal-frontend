@@ -16319,7 +16319,7 @@ exports[`containers/pages/HistoricalFocusInvestigation drilling down HistoricalF
 </ReactTable>
 `;
 
-exports[`containers/pages/HistoricalFocusInvestigation renders HistoricalFocusInvestigation correctly 1`] = `
+exports[`containers/pages/HistoricalFocusInvestigation renders HistoricalFocusInvestigation correctly & changes page title 1`] = `
 <Router
   history={
     Object {
@@ -16374,6 +16374,24 @@ exports[`containers/pages/HistoricalFocusInvestigation renders HistoricalFocusIn
     }
   >
     <div>
+      <HelmetWrapper
+        defer={true}
+        encodeSpecialCharacters={true}
+      >
+        <SideEffect(NullComponent)
+          defer={true}
+          encodeSpecialCharacters={true}
+          title="Historical Focus Investigations"
+          titleAttributes={Object {}}
+        >
+          <NullComponent
+            defer={true}
+            encodeSpecialCharacters={true}
+            title="Historical Focus Investigations"
+            titleAttributes={Object {}}
+          />
+        </SideEffect(NullComponent)>
+      </HelmetWrapper>
       <HeaderBreadcrumb
         currentPage={
           Object {

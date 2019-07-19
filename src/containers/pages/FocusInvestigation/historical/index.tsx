@@ -1,6 +1,7 @@
 // this is the FocusInvestigation "historical" page component
 import DrillDownTable from '@onaio/drill-down-table';
 import * as React from 'react';
+import { Helmet } from 'react-helmet';
 import { RouteComponentProps } from 'react-router';
 import { CellInfo } from 'react-table';
 import 'react-table/react-table.css';
@@ -17,6 +18,7 @@ import {
   HOME_URL,
   PROVINCE,
 } from '../../../../constants';
+import { FI_HISTORICAL_TITLE } from '../../../../constants';
 import { getFIAdherenceIndicator, renderClassificationRow } from '../../../../helpers/indicators';
 import '../../../../helpers/tables.css';
 import { FlexObject, percentage, RouteParams } from '../../../../helpers/utils';
@@ -265,6 +267,9 @@ class HistoricalFocusInvestigation extends React.Component<
 
     return (
       <div>
+        <Helmet>
+          <title>{FI_HISTORICAL_TITLE}</title>
+        </Helmet>
         <HeaderBreadcrumb {...breadcrumbProps} />
         <h3 className="mb-3 page-title">{pageTitle}</h3>
         <div>

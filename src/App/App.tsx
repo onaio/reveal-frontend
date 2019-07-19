@@ -4,9 +4,11 @@ import { faMap } from '@fortawesome/free-solid-svg-icons';
 import ConnectedPrivateRoute from '@onaio/connected-private-route';
 import { ConnectedLogout, ConnectedOauthCallback, OauthLogin } from '@onaio/gatekeeper';
 import React, { Component } from 'react';
+import { Helmet } from 'react-helmet';
 import { Route, Switch } from 'react-router';
 import { Col, Container, Row } from 'reactstrap';
 import Loading from '../components/page/Loading';
+import { WEBSITE_NAME } from '../configs/env';
 import { DISABLE_LOGIN_PROTECTION } from '../configs/env';
 import { providers } from '../configs/settings';
 import {
@@ -38,6 +40,7 @@ class App extends Component {
   public render() {
     return (
       <Container>
+        <Helmet titleTemplate={`%s | ` + WEBSITE_NAME} defaultTitle="" />
         <ConnectedHeader />
         <Row id="main-page-row">
           <Col>

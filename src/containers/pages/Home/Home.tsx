@@ -1,9 +1,11 @@
 // this is the home page component
 import * as React from 'react';
+import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { Button, Col, Row } from 'reactstrap';
 import { ENABLE_FI, ENABLE_IRS } from '../../../configs/env';
 import { FI_URL, INTERVENTION_IRS_URL } from '../../../constants';
+import { HOME_TITLE } from '../../../constants';
 import './Home.css';
 
 class Home extends React.Component<{}, {}> {
@@ -14,6 +16,9 @@ class Home extends React.Component<{}, {}> {
   public render() {
     return (
       <div className="text-center">
+        <Helmet>
+          <title>{HOME_TITLE}</title>
+        </Helmet>
         <Row className="welcome-box">
           <Col>
             <h3>Welcome to Reveal</h3>

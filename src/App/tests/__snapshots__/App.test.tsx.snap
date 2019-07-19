@@ -41,6 +41,26 @@ exports[`App renders App correctly 1`] = `
         <div
           className="container"
         >
+          <HelmetWrapper
+            defaultTitle=""
+            defer={true}
+            encodeSpecialCharacters={true}
+            titleTemplate="%s | Reveal"
+          >
+            <SideEffect(NullComponent)
+              defaultTitle=""
+              defer={true}
+              encodeSpecialCharacters={true}
+              titleTemplate="%s | Reveal"
+            >
+              <NullComponent
+                defaultTitle=""
+                defer={true}
+                encodeSpecialCharacters={true}
+                titleTemplate="%s | Reveal"
+              />
+            </SideEffect(NullComponent)>
+          </HelmetWrapper>
           <Connect(withRouter(HeaderComponent))>
             <withRouter(HeaderComponent)
               authenticated={false}
@@ -661,6 +681,24 @@ exports[`App renders App correctly 1`] = `
                             <div
                               className="text-center"
                             >
+                              <HelmetWrapper
+                                defer={true}
+                                encodeSpecialCharacters={true}
+                              >
+                                <SideEffect(NullComponent)
+                                  defer={true}
+                                  encodeSpecialCharacters={true}
+                                  title="Home page"
+                                  titleAttributes={Object {}}
+                                >
+                                  <NullComponent
+                                    defer={true}
+                                    encodeSpecialCharacters={true}
+                                    title="Home page"
+                                    titleAttributes={Object {}}
+                                  />
+                                </SideEffect(NullComponent)>
+                              </HelmetWrapper>
                               <Row
                                 className="welcome-box"
                                 tag="div"

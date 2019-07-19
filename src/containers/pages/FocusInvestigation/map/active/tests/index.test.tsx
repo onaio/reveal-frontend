@@ -2,6 +2,7 @@ import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import { createBrowserHistory } from 'history';
 import React from 'react';
+import { Helmet } from 'react-helmet';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import { FI_SINGLE_URL } from '../../../../../../constants';
@@ -52,7 +53,7 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
     );
   });
 
-  it('renders SingleActiveFimap correctly', () => {
+  it('renders SingleActiveFimap correctly & changes page title', () => {
     const mock: any = jest.fn();
     const props = {
       currentGoal: fixtures.goal3.goal_id,
@@ -75,6 +76,8 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
         <SingleActiveFIMap {...props} />
       </Router>
     );
+    const helmet = Helmet.peek();
+    expect(helmet.title).toEqual('Focus Investigation: A1-Tha Luang Village 1 Focus 01');
     expect(toJson(wrapper)).toMatchSnapshot();
     expect(wrapper.find('GisidaWrapperMock').props()).toMatchSnapshot();
     wrapper.unmount();
