@@ -88,6 +88,7 @@ exports[`containers/pages/IRS renders plans list correctly 1`] = `
             "plan_intervention_type": "FI",
             "plan_status": "active",
             "plan_title": "A1-Tha Luang Village 1 Focus 01",
+            "plan_version": "1",
           },
           Object {
             "id": "plan-id-2",
@@ -112,6 +113,7 @@ exports[`containers/pages/IRS renders plans list correctly 1`] = `
             "plan_intervention_type": "IRS",
             "plan_status": "active",
             "plan_title": "A1-Tha Luang Village 1 Focus 01",
+            "plan_version": "1",
           },
         ]
       }
@@ -176,6 +178,7 @@ exports[`containers/pages/IRS renders plans list correctly 1`] = `
               "plan_intervention_type": "FI",
               "plan_status": "active",
               "plan_title": "A1-Tha Luang Village 1 Focus 01",
+              "plan_version": "1",
             },
             Object {
               "id": "plan-id-2",
@@ -200,6 +203,7 @@ exports[`containers/pages/IRS renders plans list correctly 1`] = `
               "plan_intervention_type": "IRS",
               "plan_status": "active",
               "plan_title": "A1-Tha Luang Village 1 Focus 01",
+              "plan_version": "1",
             },
           ]
         }
@@ -363,6 +367,7 @@ exports[`containers/pages/IRS renders plans list correctly 1`] = `
                   "plan_intervention_type": "FI",
                   "plan_status": "active",
                   "plan_title": "A1-Tha Luang Village 1 Focus 01",
+                  "plan_version": "1",
                 },
                 Object {
                   "id": "plan-id-2",
@@ -387,6 +392,7 @@ exports[`containers/pages/IRS renders plans list correctly 1`] = `
                   "plan_intervention_type": "IRS",
                   "plan_status": "active",
                   "plan_title": "A1-Tha Luang Village 1 Focus 01",
+                  "plan_version": "1",
                 },
               ]
             }
@@ -515,6 +521,7 @@ exports[`containers/pages/IRS renders plans list correctly 1`] = `
                     "plan_intervention_type": "FI",
                     "plan_status": "active",
                     "plan_title": "A1-Tha Luang Village 1 Focus 01",
+                    "plan_version": "1",
                   },
                   Object {
                     "id": "plan-id-2",
@@ -539,6 +546,7 @@ exports[`containers/pages/IRS renders plans list correctly 1`] = `
                     "plan_intervention_type": "IRS",
                     "plan_status": "active",
                     "plan_title": "A1-Tha Luang Village 1 Focus 01",
+                    "plan_version": "1",
                   },
                 ]
               }
@@ -1038,6 +1046,7 @@ exports[`containers/pages/IRS renders plans list correctly 1`] = `
                                           "plan_intervention_type": "FI",
                                           "plan_status": "active",
                                           "plan_title": "A1-Tha Luang Village 1 Focus 01",
+                                          "plan_version": "1",
                                         }
                                       }
                                       page={0}
@@ -1070,6 +1079,7 @@ exports[`containers/pages/IRS renders plans list correctly 1`] = `
                                             "plan_intervention_type": "FI",
                                             "plan_status": "active",
                                             "plan_title": "A1-Tha Luang Village 1 Focus 01",
+                                            "plan_version": "1",
                                           },
                                           "_subRows": undefined,
                                           "_viewIndex": 0,
@@ -1294,6 +1304,7 @@ exports[`containers/pages/IRS renders plans list correctly 1`] = `
                                           "plan_intervention_type": "IRS",
                                           "plan_status": "active",
                                           "plan_title": "A1-Tha Luang Village 1 Focus 01",
+                                          "plan_version": "1",
                                         }
                                       }
                                       page={0}
@@ -1326,6 +1337,7 @@ exports[`containers/pages/IRS renders plans list correctly 1`] = `
                                             "plan_intervention_type": "IRS",
                                             "plan_status": "active",
                                             "plan_title": "A1-Tha Luang Village 1 Focus 01",
+                                            "plan_version": "1",
                                           },
                                           "_subRows": undefined,
                                           "_viewIndex": 1,
