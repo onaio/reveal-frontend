@@ -9,6 +9,10 @@ export const reducerName = 'goals';
 /** interface for goal Object */
 export interface Goal {
   action_code: string;
+  action_description: string;
+  action_prefix: string;
+  action_reason: string;
+  action_title: string;
   completed_task_count: number;
   goal_comparator: string;
   goal_id: string;
