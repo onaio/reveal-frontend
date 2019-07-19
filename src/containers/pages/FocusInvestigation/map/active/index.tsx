@@ -1,4 +1,5 @@
-import reducerRegistry from '@onaio/redux-reducer-registry';
+import reducerRegistry, { store } from '@onaio/redux-reducer-registry';
+import superset from '@onaio/superset-connector';
 import * as React from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
@@ -13,8 +14,10 @@ import Loading from '../../../../../components/page/Loading';
 import {
   SUPERSET_GOALS_SLICE,
   SUPERSET_JURISDICTIONS_SLICE,
+  SUPERSET_PLAN_STRUCTURE_PIVOT_SLICE,
   SUPERSET_PLANS_SLICE,
   SUPERSET_STRUCTURES_SLICE,
+  SUPERSET_TASKS_SLICE,
 } from '../../../../../configs/env';
 import {
   FI_SINGLE_MAP_URL,
@@ -60,10 +63,16 @@ import plansReducer, {
   Plan,
   reducerName as plansReducerName,
 } from '../../../../../store/ducks/plans';
+import structuresReducer, {
+  getStructuresFCByJurisdictionId,
+  reducerName as structuresReducerName,
+  setStructures,
+  Structure,
+  StructureGeoJSON,
+} from '../../../../../store/ducks/structures';
 import tasksReducer, {
   fetchTasks,
   getFCByPlanAndGoalAndJurisdiction,
-  getStructuresFCByJurisdictionId,
   reducerName as tasksReducerName,
   Task,
   TaskGeoJSON,
@@ -73,6 +82,7 @@ import './style.css';
 /** register reducers */
 reducerRegistry.register(jurisdictionReducerName, jurisdictionReducer);
 reducerRegistry.register(goalsReducerName, goalsReducer);
+reducerRegistry.register(structuresReducerName, structuresReducer);
 reducerRegistry.register(plansReducerName, plansReducer);
 reducerRegistry.register(tasksReducerName, tasksReducer);
 
@@ -83,13 +93,20 @@ export interface MapSingleFIProps {
   fetchGoalsActionCreator: typeof fetchGoals;
   fetchJurisdictionsActionCreator: typeof fetchJurisdictions;
   fetchPlansActionCreator: typeof fetchPlans;
+  fetchStructuresActionCreator: typeof setStructures;
   fetchTasksActionCreator: typeof fetchTasks;
   goals: Goal[] | null;
   jurisdiction: Jurisdiction | null;
   plan: Plan | null;
   pointFeatureCollection: FeatureCollection<TaskGeoJSON>;
   polygonFeatureCollection: FeatureCollection<TaskGeoJSON>;
-  structures: FeatureCollection<TaskGeoJSON> | null /** we use this to get all structures */;
+  structures: FeatureCollection<StructureGeoJSON> | null /** we use this to get all structures */;
+}
+
+export interface Jurisdictions {
+  id: string;
+  jurisdiction_id: string;
+  plan_id: string;
 }
 
 /** default value for feature Collection */
@@ -104,6 +121,7 @@ export const defaultMapSingleFIProps: MapSingleFIProps = {
   fetchGoalsActionCreator: fetchGoals,
   fetchJurisdictionsActionCreator: fetchJurisdictions,
   fetchPlansActionCreator: fetchPlans,
+  fetchStructuresActionCreator: setStructures,
   fetchTasksActionCreator: fetchTasks,
   goals: null,
   jurisdiction: null,
@@ -129,21 +147,66 @@ class SingleActiveFIMap extends React.Component<
       fetchGoalsActionCreator,
       fetchJurisdictionsActionCreator,
       fetchPlansActionCreator,
+      fetchStructuresActionCreator,
       fetchTasksActionCreator,
+      plan,
     } = this.props;
+    const planId = plan && plan.plan_id;
+    if (planId) {
+      const pivotParams = superset.getFormData(3000, [
+        { comparator: planId, operator: '==', subject: 'plan_id' },
+      ]);
+      // let sqlFilterExpression = '';
+      let jurisdictionId;
+      await supersetFetch(SUPERSET_PLAN_STRUCTURE_PIVOT_SLICE, pivotParams).then(
+        async relevantJurisdictions => {
+          if (!relevantJurisdictions) {
+            return new Promise(reject => {
+              reject();
+            });
+          }
+          jurisdictionId =
+            relevantJurisdictions.length > 1
+              ? relevantJurisdictions[0].jurisdiction_id
+              : relevantJurisdictions.map((d: Jurisdictions) => d.jurisdiction_id).join(' ,');
 
-    await supersetFetch(SUPERSET_JURISDICTIONS_SLICE).then((result: Jurisdiction[]) =>
-      fetchJurisdictionsActionCreator(result)
-    );
-    await supersetFetch(SUPERSET_PLANS_SLICE).then((result2: Plan[]) =>
-      fetchPlansActionCreator(result2)
-    );
-    await supersetFetch(SUPERSET_GOALS_SLICE).then((result3: Goal[]) =>
-      fetchGoalsActionCreator(result3)
-    );
-    await supersetFetch(SUPERSET_STRUCTURES_SLICE, { row_limit: 3000 }).then((result4: Task[]) =>
-      fetchTasksActionCreator(result4)
-    );
+          const planJurisdictionSupersetParams = superset.getFormData(1000, [
+            { comparator: jurisdictionId, operator: 'in', subject: 'jurisdiction_id' },
+          ]);
+          const jurisdictionResults = await supersetFetch(
+            SUPERSET_JURISDICTIONS_SLICE,
+            planJurisdictionSupersetParams
+          );
+          fetchJurisdictionsActionCreator(jurisdictionResults);
+        }
+      );
+      /** define superset params for structures */
+      let structuresparams;
+      if (jurisdictionId) {
+        structuresparams = superset.getFormData(3000, [
+          { comparator: jurisdictionId, operator: 'in', subject: 'jurisdiction_id' },
+        ]);
+      }
+      /** define superset params for jurisdictions */
+      const supersetParams = superset.getFormData(3000, [
+        { comparator: planId, operator: '==', subject: 'plan_id' },
+      ]);
+      /** Implement Ad hoc Queris since jurisdictions have no plan_id */
+      await supersetFetch(SUPERSET_STRUCTURES_SLICE, structuresparams).then(
+        (structuresResults: Structure[]) => {
+          fetchStructuresActionCreator(structuresResults);
+        }
+      );
+      await supersetFetch(SUPERSET_PLANS_SLICE, supersetParams).then((result2: Plan[]) => {
+        fetchPlansActionCreator(result2);
+      });
+      await supersetFetch(SUPERSET_GOALS_SLICE, supersetParams).then((result3: Goal[]) => {
+        fetchGoalsActionCreator(result3);
+      });
+      await supersetFetch(SUPERSET_TASKS_SLICE, supersetParams).then((result4: Task[]) => {
+        fetchTasksActionCreator(result4);
+      });
+    }
   }
   public componentWillReceiveProps(nextProps: any) {
     const { setCurrentGoalActionCreator, match } = this.props;
@@ -286,10 +349,8 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
   let pointFeatureCollection = defaultFeatureCollection;
   let polygonFeatureCollection = defaultFeatureCollection;
   let structures = null;
-
   if (plan) {
     jurisdiction = getJurisdictionById(state, plan.jurisdiction_id);
-    structures = getStructuresFCByJurisdictionId(state, plan.jurisdiction_id);
     goals = getGoalsByPlanAndJurisdiction(state, plan.plan_id, plan.jurisdiction_id);
   }
 
@@ -311,6 +372,10 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
       false,
       [POLYGON, MULTI_POLYGON]
     );
+    structures = getStructuresFCByJurisdictionId(
+      state,
+      jurisdiction && jurisdiction.jurisdiction_id
+    );
   }
   return {
     currentGoal,
@@ -330,6 +395,7 @@ const mapDispatchToProps = {
   fetchGoalsActionCreator: fetchGoals,
   fetchJurisdictionsActionCreator: fetchJurisdictions,
   fetchPlansActionCreator: fetchPlans,
+  fetchStructuresActionCreator: setStructures,
   fetchTasksActionCreator: fetchTasks,
   setCurrentGoalActionCreator: setCurrentGoal,
 };
