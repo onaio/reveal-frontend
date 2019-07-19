@@ -39,12 +39,7 @@ import {
 import { popupHandler } from '../../../../../helpers/handlers';
 import { getGoalReport } from '../../../../../helpers/indicators';
 import ProgressBar from '../../../../../helpers/ProgressBar';
-import {
-  FeatureCollection,
-  FlexObject,
-  RouteParams,
-  StructureGeoJSON,
-} from '../../../../../helpers/utils';
+import { FeatureCollection, FlexObject, RouteParams } from '../../../../../helpers/utils';
 import supersetFetch from '../../../../../services/superset';
 import goalsReducer, {
   fetchGoals,
@@ -73,6 +68,7 @@ import structuresReducer, {
   reducerName as structuresReducerName,
   setStructures,
   Structure,
+  StructureGeoJSON,
 } from '../../../../../store/ducks/structures';
 import tasksReducer, {
   fetchTasks,

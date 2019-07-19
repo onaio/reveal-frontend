@@ -1,6 +1,6 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import { cloneDeep, keyBy } from 'lodash';
-import { FeatureCollection, StructureGeoJSON } from '../../../helpers/utils';
+import { FeatureCollection } from '../../../helpers/utils';
 import store from '../../index';
 import reducer, {
   getAllStructuresFC,
@@ -9,6 +9,7 @@ import reducer, {
   reducerName,
   setStructures,
   Structure,
+  StructureGeoJSON,
 } from '../structures';
 import * as fixtures from './fixtures';
 
