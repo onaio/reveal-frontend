@@ -1,4 +1,4 @@
-import reducerRegistry, { store } from '@onaio/redux-reducer-registry';
+import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset from '@onaio/superset-connector';
 import * as React from 'react';
 import { Helmet } from 'react-helmet';
@@ -191,6 +191,12 @@ class SingleActiveFIMap extends React.Component<
       const supersetParams = superset.getFormData(3000, [
         { comparator: planId, operator: '==', subject: 'plan_id' },
       ]);
+      /** define superset params for goals */
+      const goalsParams = superset.getFormData(
+        3000,
+        [{ comparator: planId, operator: '==', subject: 'plan_id' }],
+        { action_prefix: true }
+      );
       /** Implement Ad hoc Queris since jurisdictions have no plan_id */
       await supersetFetch(SUPERSET_STRUCTURES_SLICE, structuresparams).then(
         (structuresResults: Structure[]) => {
@@ -200,7 +206,7 @@ class SingleActiveFIMap extends React.Component<
       await supersetFetch(SUPERSET_PLANS_SLICE, supersetParams).then((result2: Plan[]) => {
         fetchPlansActionCreator(result2);
       });
-      await supersetFetch(SUPERSET_GOALS_SLICE, supersetParams).then((result3: Goal[]) => {
+      await supersetFetch(SUPERSET_GOALS_SLICE, goalsParams).then((result3: Goal[]) => {
         fetchGoalsActionCreator(result3);
       });
       await supersetFetch(SUPERSET_TASKS_SLICE, supersetParams).then((result4: Task[]) => {
