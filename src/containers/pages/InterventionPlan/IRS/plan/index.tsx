@@ -134,7 +134,7 @@ class IrsPlan extends React.Component<
       isStartingPlan: props.isNewPlan || false,
       newPlan: props.isNewPlan
         ? {
-            id: '',
+            id: '', // todo - generate unique id
             plan_date: this.getNewPlanDate(),
             plan_effective_period_end: '',
             plan_effective_period_start: '',
@@ -344,7 +344,6 @@ class IrsPlan extends React.Component<
           <Row>
             <Col>
               <h2 className="page-title">New IRS Plan</h2>
-              <hr />
             </Col>
           </Row>
           <Row>
@@ -423,26 +422,27 @@ class IrsPlan extends React.Component<
     const onEditPlanSettingsButtonClick = (e: any) => {
       this.onEditPlanSettingsButtonClick(e);
     };
+    const onSaveAsDraftButtonClick = (e: any) => {
+      this.onSaveAsDraftButtonClick(e);
+    };
 
     const planHeaderRow = (
       <Row>
         {isFinalizedPlan && (
-          <Col className="page-title-col">
+          <Col xs="10" className="page-title-col">
             <h2 className="page-title">IRS: {pageLabel}</h2>
-            <hr />
           </Col>
         )}
         {!isFinalizedPlan && !isEditingPlanName && (
-          <Col className="page-title-col">
+          <Col xs="10" className="page-title-col">
             <h2 className="page-title">IRS: {pageLabel}</h2>
             <Button color="link" onClick={onEditNameButtonClick}>
               edit
             </Button>
-            <hr />
           </Col>
         )}
         {!isFinalizedPlan && newPlan && isEditingPlanName && (
-          <Col className="page-title-col">
+          <Col xs="10" className="page-title-col">
             <h2 className="page-title edit">IRS:</h2>
             <InputGroup className="edit-plan-title-input-group">
               <Input
@@ -467,10 +467,16 @@ class IrsPlan extends React.Component<
                 </Button>
               </InputGroupAddon>
             </InputGroup>
-            <hr />
           </Col>
         )}
         {/* <Col>Save / finalize buttons will go here</Col> */}
+        {!isFinalizedPlan && (
+          <Col xs="2" className="save-plan-buttons-column">
+            <Button color="success" onClick={onSaveAsDraftButtonClick}>
+              Save as a Draft
+            </Button>
+          </Col>
+        )}
       </Row>
     );
 
@@ -531,7 +537,6 @@ class IrsPlan extends React.Component<
       this.onResetDrilldownTableHierarchy(e.target.id);
     }
   };
-
   private onResetDrilldownTableHierarchy(Id: string | null) {
     const id = Id !== 'null' ? Id : null;
     const { tableCrumbs } = this.state;
@@ -553,7 +558,6 @@ class IrsPlan extends React.Component<
       }
     );
   }
-
   private onDrilldownClick(id: string) {
     const { tableCrumbs } = this.state;
     const { jurisdictionsArray } = this.props;
@@ -592,7 +596,6 @@ class IrsPlan extends React.Component<
     const date = this.getNewPlanDate();
     return `${InterventionType.IRS}_${date}`;
   }
-
   private onEditNameButtonClick(e: any) {
     e.preventDefault();
     if (this.state.newPlan) {
@@ -640,7 +643,7 @@ class IrsPlan extends React.Component<
     }
   }
 
-  // new plan form handlers
+  // new Plan form handlers
   private onSetPlanNameChange(e: any) {
     if (e && e.target && e.target.value) {
       const newPlan: PlanRecord = {
@@ -740,14 +743,12 @@ class IrsPlan extends React.Component<
       this.setState({ newPlan });
     }
   }
-
   private onTableCheckboxChange(e: any) {
     if (e && e.target) {
       const { value: id, checked: isSelected } = e.target;
       this.onToggleJurisdictionSelection(id, isSelected);
     }
   }
-
   private onToggleAllCheckboxChange(e: any) {
     const { newPlan: NewPlan, filteredJurisdictions } = this.state;
     if (e && e.target && NewPlan) {
@@ -788,7 +789,6 @@ class IrsPlan extends React.Component<
     // if no child or parent jurisdiction is found, return null
     return null;
   }
-
   private getDecendantJurisdictionIds(
     ParentIds: string[],
     jurisdictionsArray: Jurisdiction[],
@@ -812,7 +812,6 @@ class IrsPlan extends React.Component<
 
     return decendantIds;
   }
-
   /** getDrilldownPlanTableProps - getter for hierarchical DrilldownTable props
    * @param props - component props
    * @returns tableProps|null - compatible object for DrillDownTable props
@@ -911,7 +910,6 @@ class IrsPlan extends React.Component<
     };
     return tableProps;
   }
-
   /** getFinalizedPlanTableProps - getter for (flat) DrilldownTable props
    * @param props - component props
    * @returns tableProps|null - compatible object for DrillDownTable props
@@ -969,7 +967,6 @@ class IrsPlan extends React.Component<
     };
     return tableProps;
   }
-
   /** getBreadCrumbProps - get properties for HeaderBreadcrumbs component
    * @param props - component props
    * @param pageLabel - string for the current page lable
@@ -995,6 +992,26 @@ class IrsPlan extends React.Component<
       pages: [homePage, basePage],
     };
     return breadCrumbProps;
+  }
+
+  // Service handlers
+  private onSaveAsDraftButtonClick(e: any) {
+    const { newPlan } = this.state;
+
+    // todo - create PlanRecord to NewPlanSubmission extractor
+    const newPlanDraft = {
+      ...newPlan,
+      plan_status: PlanStatus.DRAFT,
+    };
+
+    // console.log('NEW PLAN!!!!', newPlanDraft)
+
+    // PUSH to OpenSRP endpoint
+    // if res.ok
+    // save to state as new PlanRecord
+    // navigate to `/plan/draft/${newPlan.plan_id}
+    // else
+    // throw error (popup)
   }
 }
 
