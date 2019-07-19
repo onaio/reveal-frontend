@@ -209,7 +209,7 @@ class SingleActiveFIMap extends React.Component<
       await supersetFetch(SUPERSET_GOALS_SLICE, supersetParams).then((result3: Goal[]) => {
         fetchGoalsActionCreator(result3);
       });
-      await supersetFetch(SUPERSET_STRUCTURES_SLICE, supersetParams).then((result4: Task[]) => {
+      await supersetFetch(SUPERSET_TASKS_SLICE, supersetParams).then((result4: Task[]) => {
         fetchTasksActionCreator(result4);
       });
     }
