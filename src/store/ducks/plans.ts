@@ -267,3 +267,9 @@ export function getPlanRecordsIdArray(
 export function getPlanRecordById(state: Partial<Store>, id: string): PlanRecord | null {
   return get((state as any)[reducerName].planRecordsById, id) || null;
 }
+
+export function getPlansByReason(state: Partial<Store>, reason: string): Plan[] {
+  return values((state as any)[reducerName].plansById).filter(
+    (plan: Plan) => plan.plan_fi_reason === reason
+  );
+}
