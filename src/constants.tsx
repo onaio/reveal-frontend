@@ -85,7 +85,10 @@ export const STRUCTURES = 'structure(s)';
 export type STRUCTURES = typeof STRUCTURES;
 export const PERSONS = 'person(s)';
 export type PERSONS = typeof PERSONS;
-
+export const CASE_TRIGGERED = 'Case-triggered';
+export type CASE_TRIGGERED = typeof CASE_TRIGGERED;
+export const ROUTINE = 'Routine';
+export type ROUTINE = typeof ROUTINE;
 export const JURISDICTION_ID = 'jurisdiction_id';
 export type JURISDICTION_ID = typeof JURISDICTION_ID;
 // internal urls
