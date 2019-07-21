@@ -19,6 +19,7 @@ import HeaderBreadCrumb, {
 import Loading from '../../../../components/page/Loading';
 import { SUPERSET_PLANS_SLICE } from '../../../../configs/env';
 import { FIClassifications, locationHierarchy } from '../../../../configs/settings';
+import { CASE_TRIGGERED, FI_ACTIVE_TITLE, ROUTINE } from '../../../../constants';
 import {
   ACTIVE_FOCUS_INVESTIGATION,
   CASE_CLASSIFICATION_HEADER,
@@ -47,7 +48,7 @@ import {
 import supersetFetch from '../../../../services/superset';
 import plansReducer, {
   fetchPlans,
-  getPlansArray,
+  getPlansByReason,
   Plan,
   reducerName as plansReducerName,
 } from '../../../../store/ducks/plans';
@@ -57,15 +58,17 @@ reducerRegistry.register(plansReducerName, plansReducer);
 
 /** interface to describe props for ActiveFI component */
 export interface ActiveFIProps {
+  caseTriggeredPlans: Plan[] | null;
   fetchPlansActionCreator: typeof fetchPlans;
-  plansArray: Plan[];
+  routinePlans: Plan[] | null;
   supersetService: typeof supersetFetch;
 }
 
 /** default props for ActiveFI component */
 export const defaultActiveFIProps: ActiveFIProps = {
+  caseTriggeredPlans: [],
   fetchPlansActionCreator: fetchPlans,
-  plansArray: [],
+  routinePlans: [],
   supersetService: supersetFetch,
 };
 
@@ -103,120 +106,15 @@ class ActiveFocusInvestigation extends React.Component<
     };
     breadcrumbProps.pages = [homePage];
 
-    const { plansArray } = this.props;
-    if (plansArray.length === 0) {
+    const { caseTriggeredPlans, routinePlans } = this.props;
+    if (
+      (caseTriggeredPlans && caseTriggeredPlans.length === 0) ||
+      (routinePlans && routinePlans.length === 0)
+    ) {
       return <Loading />;
     }
-    const thePlans = plansArray.map((item: Plan) => {
-      let thisItem = extractPlan(item);
-      // transform values of this properties if they are null
-      const propertiesToTransform = [
-        'village',
-        'canton',
-        'district',
-        'provice',
-        'jurisdiction_id',
-        'focusArea',
-      ];
-      thisItem = transformValues(thisItem, propertiesToTransform);
-      return thisItem;
-    });
-    const locationColumns: Column[] = getLocationColumns(locationHierarchy, true);
-    const otherColumns: Column[] = [
-      {
-        Header: FOCUS_AREA_HEADER,
-        columns: [
-          {
-            Header: '',
-            accessor: 'focusArea',
-            minWidth: 130,
-          },
-        ],
-      },
-      {
-        Header: INVESTIGATION_NAME_HEADER,
-        columns: [
-          {
-            Cell: (cell: CellInfo) => {
-              return (
-                <div>
-                  {cell.original.focusArea.trim() && (
-                    <Link to={`${FI_SINGLE_MAP_URL}/${cell.original.id}`}>
-                      <FontAwesomeIcon icon={['fas', 'map']} />
-                    </Link>
-                  )}
-                  &nbsp;&nbsp;
-                  {cell.original.focusArea.trim() && (
-                    <Link to={`${FI_SINGLE_URL}/${cell.original.id}`}>{cell.value}</Link>
-                  )}
-                </div>
-              );
-            },
-            Header: '',
-            accessor: 'plan_title',
-            minWidth: 200,
-          },
-        ],
-      },
-      {
-        Header: REASON_HEADER,
-        columns: [
-          {
-            Header: '',
-            accessor: 'reason',
-            minWidth: 100,
-          },
-        ],
-      },
-      {
-        Header: STATUS_HEADER,
-        columns: [
-          {
-            Header: '',
-            accessor: 'status',
-            maxWidth: 60,
-          },
-        ],
-      },
-      {
-        Header: CASE_NOTIF_DATE_HEADER,
-        columns: [
-          {
-            Cell: (cell: CellInfo) => {
-              return <div>{cell.value}</div>;
-            },
-            Header: '',
-            accessor: 'caseNotificationDate',
-            minWidth: 120,
-          },
-        ],
-      },
-      {
-        Header: CASE_CLASSIFICATION_HEADER,
-        columns: [
-          {
-            Header: '',
-            accessor: 'caseClassification',
-          },
-        ],
-      },
-    ];
-    const allColumns: Column[] = locationColumns.concat(otherColumns);
-
-    const tableProps = {
-      CellComponent: DrillDownTableLinkedCell,
-      columns: allColumns,
-      data: thePlans,
-      identifierField: 'id',
-      linkerField: 'id',
-      minRows: 0,
-      parentIdentifierField: 'parent',
-      rootParentId: null,
-      showPageSizeOptions: false,
-      showPagination: false,
-      useDrillDownTrProps: false,
-    };
-
+    // debugger;
+    const a: any = [];
     return (
       <div>
         <Helmet>
@@ -224,7 +122,126 @@ class ActiveFocusInvestigation extends React.Component<
         </Helmet>
         <HeaderBreadCrumb {...breadcrumbProps} />
         <h3 className="mb-3 mt-5 page-title">{ACTIVE_FOCUS_INVESTIGATION}</h3>
-        <DrillDownTable {...tableProps} />
+        {[caseTriggeredPlans, routinePlans].forEach((plansArray: Plan[] | null) => {
+          if (plansArray && plansArray.length) {
+            const thePlans = plansArray.map((item: Plan) => {
+              let thisItem = extractPlan(item);
+              // transform values of this properties if they are null
+              const propertiesToTransform = [
+                'village',
+                'canton',
+                'district',
+                'provice',
+                'jurisdiction_id',
+                'focusArea',
+              ];
+              thisItem = transformValues(thisItem, propertiesToTransform);
+              return thisItem;
+            });
+            const locationColumns: Column[] = getLocationColumns(locationHierarchy, true);
+            const otherColumns: Column[] = [
+              {
+                Header: FOCUS_AREA_HEADER,
+                columns: [
+                  {
+                    Header: '',
+                    accessor: 'focusArea',
+                    minWidth: 130,
+                  },
+                ],
+              },
+              {
+                Header: INVESTIGATION_NAME_HEADER,
+                columns: [
+                  {
+                    Cell: (cell: CellInfo) => {
+                      return (
+                        <div>
+                          {cell.original.focusArea.trim() && (
+                            <Link to={`${FI_SINGLE_MAP_URL}/${cell.original.id}`}>
+                              <FontAwesomeIcon icon={['fas', 'map']} />
+                            </Link>
+                          )}
+                          &nbsp;&nbsp;
+                          {cell.original.focusArea.trim() && (
+                            <Link to={`${FI_SINGLE_URL}/${cell.original.id}`}>{cell.value}</Link>
+                          )}
+                        </div>
+                      );
+                    },
+                    Header: '',
+                    accessor: 'plan_title',
+                    minWidth: 200,
+                  },
+                ],
+              },
+              {
+                Header: REASON_HEADER,
+                columns: [
+                  {
+                    Header: '',
+                    accessor: 'reason',
+                    minWidth: 100,
+                  },
+                ],
+              },
+              {
+                Header: STATUS_HEADER,
+                columns: [
+                  {
+                    Header: '',
+                    accessor: 'status',
+                    maxWidth: 60,
+                  },
+                ],
+              },
+              {
+                Header: CASE_NOTIF_DATE_HEADER,
+                columns: [
+                  {
+                    Cell: (cell: CellInfo) => {
+                      return <div>{cell.value}</div>;
+                    },
+                    Header: '',
+                    accessor: 'caseNotificationDate',
+                    minWidth: 120,
+                  },
+                ],
+              },
+              {
+                Header: CASE_CLASSIFICATION_HEADER,
+                columns: [
+                  {
+                    Header: '',
+                    accessor: 'caseClassification',
+                  },
+                ],
+              },
+            ];
+            const allColumns: Column[] = locationColumns.concat(otherColumns);
+
+            const tableProps = {
+              CellComponent: DrillDownTableLinkedCell,
+              columns: allColumns,
+              data: thePlans,
+              identifierField: 'id',
+              linkerField: 'id',
+              minRows: 0,
+              parentIdentifierField: 'parent',
+              rootParentId: null,
+              showPageSizeOptions: false,
+              showPagination: false,
+              useDrillDownTrProps: false,
+            };
+            a.push(
+              <div key={thePlans[0].id}>
+                <h3 className="mb-3 mt-5 page-title">{ACTIVE_FOCUS_INVESTIGATION}</h3>
+                <DrillDownTable {...tableProps} />
+              </div>
+            );
+          }
+        })}
+        {a}
         <h5 className="mt-5">{DEFINITIONS}</h5>
         <Table className="definitions">
           <tbody>{FIClassifications.map(el => renderClassificationRow(el))}</tbody>
@@ -240,15 +257,19 @@ export { ActiveFocusInvestigation };
 
 /** interface to describe props from mapStateToProps */
 interface DispatchedStateProps {
-  plansArray: Plan[];
+  caseTriggeredPlans: Plan[] | null;
+  routinePlans: Plan[] | null;
 }
 
 /** map state to props */
 const mapStateToProps = (state: Partial<Store>): DispatchedStateProps => {
-  const result = {
-    plansArray: getPlansArray(state),
+  const caseTriggeredPlans = getPlansByReason(state, CASE_TRIGGERED);
+  const routinePlans = getPlansByReason(state, ROUTINE);
+
+  return {
+    caseTriggeredPlans,
+    routinePlans,
   };
-  return result;
 };
 
 const mapDispatchToProps = { fetchPlansActionCreator: fetchPlans };
