@@ -49,19 +49,6 @@ export class OpenSRPService {
     this.generalURL = `${this.baseURL}${this.endpoint}`;
   }
 
-  /** Get URL
-   * @param {string} url - the url
-   * @param {paramType} params - the url params object
-   * @returns {string} the final url
-   */
-  public getURL(url: string, params: paramsType = null): string {
-    let result = url;
-    if (params) {
-      result = `${result}?${getURLParams(params)}`;
-    }
-    return result;
-  }
-
   /** list method
    * @param {params} params - the url params object
    * @param {HTTPMethod} method - the HTTP method
@@ -98,5 +85,18 @@ export class OpenSRPService {
     }
 
     return await response.json();
+  }
+
+  /** Get URL
+   * @param {string} url - the url
+   * @param {paramType} params - the url params object
+   * @returns {string} the final url
+   */
+  private getURL(url: string, params: paramsType = null): string {
+    let result = url;
+    if (params) {
+      result = `${result}?${getURLParams(params)}`;
+    }
+    return result;
   }
 }
