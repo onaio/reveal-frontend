@@ -122,10 +122,10 @@ describe('services/OpenSRP', () => {
   });
 
   it('OpenSRPService create method works', async () => {
-    fetch.mockResponseOnce(JSON.stringify(createPlan));
+    fetch.mockResponseOnce(JSON.stringify({}));
     const planService = new OpenSRPService('plans');
     const result = await planService.create(createPlan);
-    expect(result).toEqual(createPlan);
+    expect(result).toEqual({});
     expect(fetch.mock.calls).toEqual([
       [
         'https://test.smartregister.org/opensrp/rest/plans',
