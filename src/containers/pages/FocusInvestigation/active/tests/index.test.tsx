@@ -25,11 +25,12 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
   it('renders without crashing', () => {
     const mock: any = jest.fn();
     const props = {
+      caseTriggeredPlans: [fixtures.plan2],
       fetchPlansActionCreator: jest.fn(),
       history,
       location: mock,
       match: mock,
-      plansArray: fixtures.plans,
+      routinePlans: [fixtures.plan1],
     };
     shallow(
       <Router history={history}>
@@ -42,11 +43,12 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
     const mock: any = jest.fn();
     const allTasks = fixtures.plans.concat([fixtures.plan5 as any, fixtures.plan6 as any]);
     const props = {
+      caseTriggeredPlans: [fixtures.plan2],
       fetchPlansActionCreator: jest.fn(),
       history,
       location: mock,
       match: mock,
-      plansArray: allTasks,
+      routinePlans: [fixtures.plan1],
     };
     shallow(
       <Router history={history}>
@@ -59,11 +61,12 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
     const mock: any = jest.fn();
     mock.mockImplementation(() => Promise.resolve(fixtures.plans));
     const props = {
+      caseTriggeredPlans: [fixtures.plan2],
       fetchPlansActionCreator: jest.fn(),
       history,
       location: mock,
       match: mock,
-      plansArray: fixtures.plans,
+      routinePlans: [fixtures.plan1],
       supersetService: mock,
     };
     const wrapper = mount(
@@ -82,11 +85,12 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
     const mock: any = jest.fn();
     mock.mockImplementation(() => Promise.resolve(fixtures.plans));
     const props = {
+      caseTriggeredPlans: [fixtures.plan2],
       fetchPlansActionCreator: jest.fn(),
       history,
       location: mock,
       match: mock,
-      plansArray: [fixtures.plan5, fixtures.plan6],
+      routinePlans: [fixtures.plan1],
       supersetService: mock,
     };
     const wrapper = mount(
