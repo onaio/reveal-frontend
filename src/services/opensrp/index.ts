@@ -61,7 +61,20 @@ export function getURL(url: string, params: paramsType = null): string {
   return result;
 }
 
-/** The OpenSRP service class */
+/** The OpenSRP service class
+ *
+ * Sample usage:
+ * -------------
+ * const service = new OpenSRPService('the-endpoint');
+ *
+ * **To list all objects**: service.list()
+ *
+ * **To get one object**: service.read('the-object-identifier')
+ *
+ * **To create a new object**: service.create(theObject)
+ *
+ * **To update an object**: service.update(theObject)
+ */
 export class OpenSRPService {
   public baseURL: string;
   public endpoint: string;
