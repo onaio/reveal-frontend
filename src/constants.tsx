@@ -97,6 +97,8 @@ export const START_DATE = 'Start Date';
 export type START_DATE = typeof START_DATE;
 export const END_DATE = 'End Date';
 export type END_DATE = typeof END_DATE;
+export const NAME = 'Name';
+export type NAME = typeof NAME;
 // internal urls
 export const LOGIN_URL = '/login';
 export type LOGIN_URL = typeof LOGIN_URL;
