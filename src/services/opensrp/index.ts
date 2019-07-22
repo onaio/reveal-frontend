@@ -89,12 +89,12 @@ export class OpenSRPService {
   /** create method
    * Send a POST request to the general endpoint containing the new object data
    * Successful requests will result in a HTTP status 201 response with no body
-   * @param {any} data - the data to be POSTed
+   * @param {T} data - the data to be POSTed
    * @param {params} params - the url params object
    * @param {HTTPMethod} method - the HTTP method
    * @returns the object returned by API
    */
-  public async create(data: any, params: paramsType = null, method: HTTPMethod = 'POST') {
+  public async create<T>(data: T, params: paramsType = null, method: HTTPMethod = 'POST') {
     const url = getURL(this.generalURL, params);
     const payload = {
       ...getPayload(method),
@@ -131,12 +131,12 @@ export class OpenSRPService {
 
   /** update method
    * Simply send the updated object as PUT request to the general endpoint URL
-   * @param {any} data - the data to be POSTed
+   * @param {T} data - the data to be POSTed
    * @param {params} params - the url params object
    * @param {HTTPMethod} method - the HTTP method
    * @returns the object returned by API
    */
-  public async update(data: any, params: paramsType = null, method: HTTPMethod = 'PUT') {
+  public async update<T>(data: T, params: paramsType = null, method: HTTPMethod = 'PUT') {
     const url = getURL(this.generalURL, params);
     const payload = {
       ...getPayload(method),
