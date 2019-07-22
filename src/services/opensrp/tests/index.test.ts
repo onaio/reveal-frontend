@@ -122,7 +122,7 @@ describe('services/OpenSRP', () => {
   });
 
   it('OpenSRPService create method works', async () => {
-    fetch.mockResponseOnce(JSON.stringify({}));
+    fetch.mockResponseOnce(JSON.stringify({}), { status: 201 });
     const planService = new OpenSRPService('plans');
     const result = await planService.create(createPlan);
     expect(result).toEqual({});
@@ -145,7 +145,7 @@ describe('services/OpenSRP', () => {
   });
 
   it('OpenSRPService create method params work', async () => {
-    fetch.mockResponseOnce(JSON.stringify({}));
+    fetch.mockResponseOnce(JSON.stringify({}), { status: 201 });
     const service = new OpenSRPService('location');
     await service.create({ foo: 'bar' }, { is_jurisdiction: true });
     expect(fetch.mock.calls[0][0]).toEqual(
