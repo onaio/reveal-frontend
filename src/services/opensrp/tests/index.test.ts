@@ -59,6 +59,15 @@ describe('services/OpenSRP', () => {
     ]);
   });
 
+  it('OpenSRPService list method params work', async () => {
+    fetch.mockResponseOnce(JSON.stringify({}));
+    const service = new OpenSRPService('location');
+    await service.list({ is_jurisdiction: true });
+    expect(fetch.mock.calls[0][0]).toEqual(
+      'https://test.smartregister.org/opensrp/rest/location?is_jurisdiction=true'
+    );
+  });
+
   it('OpenSRPService list method should handle http errors', async () => {
     fetch.mockResponseOnce(JSON.stringify({}), { status: 500 });
     const planService = new OpenSRPService('plans');
@@ -89,6 +98,15 @@ describe('services/OpenSRP', () => {
         },
       ],
     ]);
+  });
+
+  it('OpenSRPService read method params work', async () => {
+    fetch.mockResponseOnce(JSON.stringify({}));
+    const service = new OpenSRPService('location');
+    await service.read('62b2f313', { is_jurisdiction: true });
+    expect(fetch.mock.calls[0][0]).toEqual(
+      'https://test.smartregister.org/opensrp/rest/location/62b2f313?is_jurisdiction=true'
+    );
   });
 
   it('OpenSRPService read method should handle http errors', async () => {
