@@ -9,7 +9,7 @@ type HTTPMethod = 'GET' | 'POST' | 'PUT';
 /** get default HTTP headers for OpenSRP service */
 export function getDefaultHeaders(
   accept: string = 'application/json',
-  authorizationType: string = 'Token',
+  authorizationType: string = 'Bearer',
   contentType: string = 'application/json'
 ): IncomingHttpHeaders {
   return {
