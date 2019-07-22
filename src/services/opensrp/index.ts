@@ -44,4 +44,18 @@ export class OpenSRPService {
 
     return await response.json();
   }
+
+  public async read(id: string | number, method: HTTPMethod = 'GET') {
+    const url = `${this.generalURL}/${id}`;
+    const response = await fetch(url, {
+      headers: getDefaultHeaders() as HeadersInit,
+      method,
+    });
+
+    if (!response.ok) {
+      throw new Error(`OpenSRPService read failed, HTTP status ${response.status}`);
+    }
+
+    return await response.json();
+  }
 }
