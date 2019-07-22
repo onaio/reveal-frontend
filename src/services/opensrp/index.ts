@@ -19,6 +19,21 @@ export function getDefaultHeaders(
   };
 }
 
+/** interface to describe URL params object */
+export interface URLParams {
+  [key: string]: string | number;
+}
+
+/** converts URL params object to string
+ * @param {URLParams} obj - the object representing URL params
+ * @returns {string} URL params as a string
+ */
+export function getURLParams(obj: URLParams): string {
+  return Object.entries(obj)
+    .map(([key, val]) => `${key}=${val}`)
+    .join('&');
+}
+
 /** The OpenSRP service class */
 export class OpenSRPService {
   public baseURL: string;
