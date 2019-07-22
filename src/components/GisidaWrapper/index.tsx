@@ -32,21 +32,23 @@ export interface Handlers {
 }
 
 /** LineLayerObj Interface  */
-interface LineLayerObj {
+export interface LineLayerObj {
   id: string;
   paint: LinePaint;
   source: {
-    data: {
+    data?: {
       data: string;
       type: string;
     };
+    layer?: string;
     type: string;
+    url?: string;
   };
   type: 'line';
   visible: boolean;
 }
 /** PointLayerObj Interface  */
-interface PointLayerObj {
+export interface PointLayerObj {
   id: string;
   layout: {
     'icon-image': string;
@@ -66,7 +68,7 @@ interface PointLayerObj {
   visible: boolean;
 }
 /** FillLayerObj Interface */
-interface FillLayerObj {
+export interface FillLayerObj {
   id: string;
   paint: FillPaint;
   source: {
@@ -91,13 +93,14 @@ interface GisidaState {
   initMapWithStructures: boolean;
 }
 /** GisidaWrapper Props Interface */
-interface GisidaProps {
+export interface GisidaProps {
   currentGoal?: string | null;
   pointFeatureCollection: FeatureCollection<TaskGeoJSON> | null;
   polygonFeatureCollection: FeatureCollection<TaskGeoJSON> | null;
   geoData: Jurisdiction | null;
   goal?: Goal[] | null;
   handlers: Handlers[];
+  layers?: LineLayerObj[] | FillLayerObj[] | PointLayerObj[] | FlexObject[];
   structures: FeatureCollection<StructureGeoJSON> | null;
   minHeight?: string;
   basemapStyle?: string | Style;
@@ -167,7 +170,18 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
       (this.props.pointFeatureCollection && this.props.pointFeatureCollection.features) || [];
     const polygonFeatures: TaskGeoJSON[] =
       (this.props.polygonFeatureCollection && this.props.polygonFeatureCollection.features) || [];
-    if (!this.state.locations) {
+
+    if (this.props.layers && this.props.layers.length) {
+      this.setState(
+        { doInitMap: true, initMapWithoutFC: true, initMapWithStructures: true },
+        () => {
+          // Dirty work around! Arbitrary delay to allow style load before adding layers
+          setTimeout(() => {
+            this.initMap(null, null);
+          }, 3000);
+        }
+      );
+    } else if (!this.state.locations) {
       this.setState(
         {
           doInitMap: true,
@@ -461,35 +475,43 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
         }
       );
     }
-    const { geoData } = this.props;
+    const { geoData, layers: Layers } = this.props;
     const { locations, bounds } = this.state;
-    if (!locations || !geoData) {
+    let layers: LineLayerObj[] | FillLayerObj[] | PointLayerObj[] | FlexObject = [];
+
+    if (geoData) {
+      layers = [
+        {
+          ...lineLayerConfig,
+          id: `${MAIN_PLAN}-${geoData.jurisdiction_id}`,
+          source: {
+            ...lineLayerConfig.source,
+            data: {
+              ...lineLayerConfig.source.data,
+              data: JSON.stringify(locations),
+            },
+          },
+          visible: true,
+        },
+      ];
+      if (builtGeometriesContainer.length) {
+        builtGeometriesContainer.forEach((value: LineLayerObj | FillLayerObj | PointLayerObj) => {
+          layers.push(value);
+        });
+      }
+    } else if (Layers && Layers.length) {
+      layers = [...Layers];
+    } else {
       return false;
     }
-    const layers: LineLayerObj[] | FillLayerObj[] | PointLayerObj[] | FlexObject = [
-      {
-        ...lineLayerConfig,
-        id: `${MAIN_PLAN}-${geoData.jurisdiction_id}`,
-        source: {
-          ...lineLayerConfig.source,
-          data: {
-            ...lineLayerConfig.source.data,
-            data: JSON.stringify(locations),
-          },
-        },
-        visible: true,
-      },
-    ];
-    if (builtGeometriesContainer.length) {
-      builtGeometriesContainer.forEach((value: LineLayerObj | FillLayerObj | PointLayerObj) => {
-        layers.push(value);
-      });
-    }
+
     // Build the site-config object for Gisida
     const config = ConfigStore(
       {
-        appName: locations && locations.properties && locations.properties.jurisdiction_name,
-        bounds,
+        appName:
+          (locations && locations.properties && locations.properties.jurisdiction_name) ||
+          'Reveal Map',
+        bounds: bounds.length && bounds,
         layers,
         style: this.props.basemapStyle,
       },

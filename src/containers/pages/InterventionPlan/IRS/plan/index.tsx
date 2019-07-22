@@ -20,6 +20,7 @@ import DrillDownTable, { DrillDownProps, DropDownCell } from '@onaio/drill-down-
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset from '@onaio/superset-connector';
 
+import { GREY } from '../../.../../../../../colors';
 import {
   SUPERSET_JURISDICTIONS_DATA_SLICE,
   SUPERSET_JURISDICTIONS_SLICE,
@@ -32,6 +33,7 @@ import {
   ADMN0_PCODE,
   CountriesAdmin0,
   JurisdictionsByCountry,
+  lineLayerConfig,
 } from './../../../../../configs/settings';
 
 import supersetFetch from '../../../../../services/superset';
@@ -57,7 +59,7 @@ import plansReducer, {
 
 import { strict } from 'assert';
 import { Helmet } from 'react-helmet';
-import GisidaWrapper, { GisidaProps } from '../../../../../components/GisidaWrapper';
+import GisidaWrapper, { GisidaProps, LineLayerObj } from '../../../../../components/GisidaWrapper';
 import HeaderBreadcrumbs, {
   BreadCrumbProps,
 } from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
@@ -534,6 +536,8 @@ class IrsPlan extends React.Component<
       </ol>
     );
 
+    const gisidaWrapperProps = this.getGisidaWrapperProps();
+
     return (
       <div className="mb-5">
         <Helmet>
@@ -541,7 +545,24 @@ class IrsPlan extends React.Component<
         </Helmet>
         <HeaderBreadcrumbs {...breadCrumbProps} />
         {planHeaderRow}
-        {/* <Row><Col>Map will go here!</Col></Row> */}
+
+        {this.state.isLoadingGeoms && (
+          <Row>
+            <Col>
+              <Loading />
+            </Col>
+          </Row>
+        )}
+
+        {gisidaWrapperProps && (
+          <div className="row no-gutters mb-5">
+            <div className="col-9">
+              <div className="map">
+                <GisidaWrapper {...gisidaWrapperProps} />
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Section for table of jurisdictions */}
         {planTableProps && (
@@ -778,6 +799,12 @@ class IrsPlan extends React.Component<
     );
   }
 
+  private getBaseJurisdictionIds(ids: string[], jurisdictionsArray: Jurisdiction[]): string[] {
+    const parentIds = jurisdictionsArray.map(j => j.parent_id);
+    const childIds = ids.filter(j => parentIds.indexOf(j) === -1);
+    return childIds;
+  }
+
   // Jurisdiction Selection Control
   private onToggleJurisdictionSelection(id: string, isSelected: boolean) {
     const { newPlan: NewPlan, filteredJurisdictions } = this.state;
@@ -874,6 +901,39 @@ class IrsPlan extends React.Component<
     }
 
     return decendantIds;
+  }
+  private getGisidaWrapperProps(): GisidaProps | null {
+    const { country, isLoadingGeoms } = this.state;
+    if (!country || isLoadingGeoms) {
+      return null;
+    }
+    const { ADMN0_EN } = country;
+
+    const ADMIN_0_LINE_LAYER = {
+      ...lineLayerConfig,
+      id: `${ADMN0_EN}-admin-0-line`,
+      paint: {
+        'line-color': 'white',
+        'line-opacity': 1,
+        'line-width': 2,
+      },
+      source: {
+        layer: 'admin',
+        type: 'vector',
+        url: 'mapbox://mapbox.mapbox-streets-v7',
+      },
+      visible: true,
+    };
+
+    const gisidaWrapperProps: GisidaProps = {
+      geoData: null,
+      handlers: [],
+      layers: [ADMIN_0_LINE_LAYER],
+      pointFeatureCollection: null,
+      polygonFeatureCollection: null,
+      structures: null,
+    };
+    return gisidaWrapperProps;
   }
   /** getDrilldownPlanTableProps - getter for hierarchical DrilldownTable props
    * @param props - component props
