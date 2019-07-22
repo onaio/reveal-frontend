@@ -4,6 +4,12 @@ import { faUser } from '@fortawesome/free-regular-svg-icons';
 import { faMap } from '@fortawesome/free-solid-svg-icons';
 import enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
+import { GlobalWithFetchMock } from 'jest-fetch-mock';
+
+const customGlobal: GlobalWithFetchMock = global as GlobalWithFetchMock;
+/* tslint:disable-next-line no-var-requires */
+customGlobal.fetch = require('jest-fetch-mock');
+customGlobal.fetchMock = customGlobal.fetch;
 
 enzyme.configure({ adapter: new Adapter() });
 library.add(faMap);
