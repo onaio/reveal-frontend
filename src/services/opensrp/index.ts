@@ -49,6 +49,11 @@ export class OpenSRPService {
     this.generalURL = `${this.baseURL}${this.endpoint}`;
   }
 
+  /** Get URL
+   * @param {string} url - the url
+   * @param {paramType} params - the url params object
+   * @returns {string} the final url
+   */
   public getURL(url: string, params: paramsType = null): string {
     let result = url;
     if (params) {
