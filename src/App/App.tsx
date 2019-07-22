@@ -1,6 +1,6 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faUser } from '@fortawesome/free-regular-svg-icons';
-import { faMap } from '@fortawesome/free-solid-svg-icons';
+import { faExternalLinkAlt, faMap } from '@fortawesome/free-solid-svg-icons';
 import ConnectedPrivateRoute from '@onaio/connected-private-route';
 import { ConnectedLogout, ConnectedOauthCallback, OauthLogin } from '@onaio/gatekeeper';
 import React, { Component } from 'react';
@@ -32,6 +32,7 @@ import { oAuthUserInfoGetter } from '../helpers/utils';
 
 library.add(faMap);
 library.add(faUser);
+library.add(faExternalLinkAlt);
 
 import './App.css';
 
