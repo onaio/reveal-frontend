@@ -89,6 +89,21 @@ export class OpenSRPService {
     return await response.json();
   }
 
+  public async create(data: any, params: paramsType = null, method: HTTPMethod = 'POST') {
+    const url = getURL(this.generalURL, params);
+    const payload = {
+      ...getPayload(method),
+      body: JSON.stringify(data),
+    };
+    const response = await fetch(url, payload);
+
+    if (!response.ok) {
+      throw new Error(`OpenSRPService create failed, HTTP status ${response.status}`);
+    }
+
+    return await response.json();
+  }
+
   /** read method
    * @param {params} params - the url params object
    * @param {HTTPMethod} method - the HTTP method
