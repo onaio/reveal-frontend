@@ -127,4 +127,32 @@ export class OpenSRPService {
 
     return await response.json();
   }
+
+  /** update method
+   * @param {any} data - the data to be POSTed
+   * @param {params} params - the url params object
+   * @param {HTTPMethod} method - the HTTP method
+   * @returns the object returned by API
+   */
+  public async update(
+    id: string | number,
+    data: any,
+    params: paramsType = null,
+    method: HTTPMethod = 'POST'
+  ) {
+    const url = getURL(`${this.generalURL}/${id}`, params);
+    const payload = {
+      ...getPayload(method),
+      'Cache-Control': 'no-cache',
+      Pragma: 'no-cache',
+      body: JSON.stringify(data),
+    };
+    const response = await fetch(url, payload);
+
+    if (!response.ok) {
+      throw new Error(`OpenSRPService update failed, HTTP status ${response.status}`);
+    }
+
+    return await response.json();
+  }
 }
