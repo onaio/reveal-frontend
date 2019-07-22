@@ -4,7 +4,7 @@ import store from '../../store';
 import { getAccessToken } from '../../store/selectors';
 
 /** allowed http methods */
-type HTTPMethod = 'GET' | 'POST';
+type HTTPMethod = 'GET' | 'POST' | 'PUT';
 
 /** get default HTTP headers for OpenSRP service */
 export function getDefaultHeaders(
@@ -130,19 +130,13 @@ export class OpenSRPService {
   }
 
   /** update method
-   * @param {string|number} id - the identifier of the object
    * @param {any} data - the data to be POSTed
    * @param {params} params - the url params object
    * @param {HTTPMethod} method - the HTTP method
    * @returns the object returned by API
    */
-  public async update(
-    id: string | number,
-    data: any,
-    params: paramsType = null,
-    method: HTTPMethod = 'POST'
-  ) {
-    const url = getURL(`${this.generalURL}/${id}`, params);
+  public async update(data: any, params: paramsType = null, method: HTTPMethod = 'PUT') {
+    const url = getURL(this.generalURL, params);
     const payload = {
       ...getPayload(method),
       'Cache-Control': 'no-cache',
