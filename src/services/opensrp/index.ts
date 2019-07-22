@@ -16,6 +16,7 @@ export function getDefaultHeaders(
   };
 }
 
+/** The OpenSRP service class */
 export class OpenSRPService {
   public baseURL: string;
   public endpoint: string;
