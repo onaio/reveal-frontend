@@ -130,6 +130,8 @@ describe('services/OpenSRP', () => {
       [
         'https://test.smartregister.org/opensrp/rest/plans',
         {
+          'Cache-Control': 'no-cache',
+          Pragma: 'no-cache',
           body: JSON.stringify(createPlan),
           headers: {
             accept: 'application/json',
