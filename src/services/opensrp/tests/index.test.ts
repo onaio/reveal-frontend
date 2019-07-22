@@ -2,7 +2,7 @@ import { getOpenSRPUserInfo } from '@onaio/gatekeeper';
 import { authenticateUser } from '@onaio/session-reducer';
 import store from '../../../store';
 import { getDefaultHeaders, getURLParams, OpenSRPService } from '../index';
-import { plansListResponse } from './fixtures/plans';
+import { createPlan, plansListResponse } from './fixtures/plans';
 import { OpenSRPAPIResponse } from './fixtures/session';
 /* tslint:disable-next-line no-var-requires */
 const fetch = require('jest-fetch-mock');
@@ -119,5 +119,47 @@ describe('services/OpenSRP', () => {
       error = e;
     }
     expect(error).toEqual(new Error('OpenSRPService read failed, HTTP status 500'));
+  });
+
+  it('OpenSRPService create method works', async () => {
+    fetch.mockResponseOnce(JSON.stringify(createPlan));
+    const planService = new OpenSRPService('plans');
+    const result = await planService.create(createPlan);
+    expect(result).toEqual(createPlan);
+    expect(fetch.mock.calls).toEqual([
+      [
+        'https://test.smartregister.org/opensrp/rest/plans',
+        {
+          body: JSON.stringify(createPlan),
+          headers: {
+            accept: 'application/json',
+            authorization: 'Token hunter2',
+            'content-type': 'application/json',
+          },
+          method: 'POST',
+        },
+      ],
+    ]);
+  });
+
+  it('OpenSRPService create method params work', async () => {
+    fetch.mockResponseOnce(JSON.stringify({}));
+    const service = new OpenSRPService('location');
+    await service.create({ foo: 'bar' }, { is_jurisdiction: true });
+    expect(fetch.mock.calls[0][0]).toEqual(
+      'https://test.smartregister.org/opensrp/rest/location?is_jurisdiction=true'
+    );
+  });
+
+  it('OpenSRPService list method should handle http errors', async () => {
+    fetch.mockResponseOnce(JSON.stringify({}), { status: 500 });
+    const planService = new OpenSRPService('plans');
+    let error;
+    try {
+      await planService.create({ foo: 'bar' });
+    } catch (e) {
+      error = e;
+    }
+    expect(error).toEqual(new Error('OpenSRPService create failed, HTTP status 500'));
   });
 });
