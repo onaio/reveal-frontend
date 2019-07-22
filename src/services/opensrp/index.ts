@@ -62,6 +62,11 @@ export class OpenSRPService {
     return result;
   }
 
+  /** list method
+   * @param {params} params - the url params object
+   * @param {HTTPMethod} method - the HTTP method
+   * @returns list of objects returned by API
+   */
   public async list(params: paramsType = null, method: HTTPMethod = 'GET') {
     const url = this.getURL(this.generalURL, params);
     const response = await fetch(url, {
@@ -76,6 +81,11 @@ export class OpenSRPService {
     return await response.json();
   }
 
+  /** read method
+   * @param {params} params - the url params object
+   * @param {HTTPMethod} method - the HTTP method
+   * @returns the object returned by API
+   */
   public async read(id: string | number, params: paramsType = null, method: HTTPMethod = 'GET') {
     const url = this.getURL(`${this.generalURL}/${id}`, params);
     const response = await fetch(url, {
