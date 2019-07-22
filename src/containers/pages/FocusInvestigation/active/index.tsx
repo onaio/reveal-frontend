@@ -10,7 +10,9 @@ import { RouteComponentProps } from 'react-router';
 import { Link } from 'react-router-dom';
 import { CellInfo, Column } from 'react-table';
 import 'react-table/react-table.css';
-import { Table } from 'reactstrap';
+import { Col, Form, FormGroup, Input, Label, Row, Table } from 'reactstrap';
+import Badge from 'reactstrap/lib/Badge';
+import Button from 'reactstrap/lib/Button';
 import { Store } from 'redux';
 import DrillDownTableLinkedCell from '../../../../components/DrillDownTableLinkedCell';
 import HeaderBreadCrumb, {
@@ -19,22 +21,27 @@ import HeaderBreadCrumb, {
 import Loading from '../../../../components/page/Loading';
 import { SUPERSET_PLANS_SLICE } from '../../../../configs/env';
 import { FIClassifications, locationHierarchy } from '../../../../configs/settings';
-import { CASE_TRIGGERED, FI_ACTIVE_TITLE, ROUTINE } from '../../../../constants';
 import {
-  ACTIVE_FOCUS_INVESTIGATION,
+  CASE_TRIGGERED,
+  CURRENT_FOCUS_INVESTIGATION,
+  FI_ACTIVE_TITLE,
+  REACTIVE,
+  ROUTINE,
+} from '../../../../constants';
+import {
   CASE_CLASSIFICATION_HEADER,
   CASE_NOTIF_DATE_HEADER,
   DEFINITIONS,
+  END_DATE,
   FI_PLAN_TYPE,
   FI_SINGLE_MAP_URL,
-  FI_SINGLE_URL,
   FI_URL,
   FOCUS_AREA_HEADER,
   FOCUS_INVESTIGATIONS,
   HOME,
   HOME_URL,
-  INVESTIGATION_NAME_HEADER,
-  REASON_HEADER,
+  NAME,
+  START_DATE,
   STATUS_HEADER,
 } from '../../../../constants';
 import { renderClassificationRow } from '../../../../helpers/indicators';
@@ -52,7 +59,7 @@ import plansReducer, {
   Plan,
   reducerName as plansReducerName,
 } from '../../../../store/ducks/plans';
-
+import './style.css';
 /** register the plans reducer */
 reducerRegistry.register(plansReducerName, plansReducer);
 
@@ -113,7 +120,6 @@ class ActiveFocusInvestigation extends React.Component<
     ) {
       return <Loading />;
     }
-    // debugger;
     const a: any = [];
     return (
       <div>
@@ -121,67 +127,140 @@ class ActiveFocusInvestigation extends React.Component<
           <title>{ACTIVE_FOCUS_INVESTIGATION}</title>
         </Helmet>
         <HeaderBreadCrumb {...breadcrumbProps} />
-        <h3 className="mb-3 mt-5 page-title">{ACTIVE_FOCUS_INVESTIGATION}</h3>
+        <h2 className="mb-3 mt-5 page-title">{CURRENT_FOCUS_INVESTIGATION}</h2>
+        <hr />
+        <Form inline={true}>
+          <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
+            <Input
+              type="text"
+              name="search"
+              id="exampleEmail"
+              placeholder="Search active focus investigations"
+            />
+          </FormGroup>
+          <Button outline={true} color="success">
+            Search
+          </Button>
+        </Form>
         {[caseTriggeredPlans, routinePlans].forEach((plansArray: Plan[] | null) => {
           if (plansArray && plansArray.length) {
             const thePlans = plansArray.map((item: Plan) => {
               let thisItem = extractPlan(item);
               // transform values of this properties if they are null
-              const propertiesToTransform = [
-                'village',
-                'canton',
-                'district',
-                'provice',
-                'jurisdiction_id',
-                'focusArea',
-              ];
+              const propertiesToTransform = ['village', 'canton', 'district', 'province'];
               thisItem = transformValues(thisItem, propertiesToTransform);
               return thisItem;
             });
             const locationColumns: Column[] = getLocationColumns(locationHierarchy, true);
-            const otherColumns: Column[] = [
+            /**  Handle Columns Unique for Routine and Reactive Tables */
+            const columnsBasedOnReason = [];
+            plansArray.every(d => d.plan_fi_reason === CASE_TRIGGERED)
+              ? columnsBasedOnReason.push(
+                  {
+                    Header: CASE_NOTIF_DATE_HEADER,
+                    columns: [
+                      {
+                        Cell: (cell: CellInfo) => {
+                          /** 24 hours ago */
+                          const oneDayAgo = new Date().getTime() + 1 * 24 * 60 * 60;
+                          const newRecordBadge =
+                            Date.parse(cell.original.plan_date) >= oneDayAgo ? (
+                              <Badge color="warning" pill={true}>
+                                Warning
+                              </Badge>
+                            ) : null;
+                          return (
+                            <div>
+                              {cell.value}
+                              {newRecordBadge}
+                            </div>
+                          );
+                        },
+                        Header: '',
+                        accessor: 'caseNotificationDate',
+                        minWidth: 120,
+                      },
+                    ],
+                  },
+                  {
+                    Header: CASE_CLASSIFICATION_HEADER,
+                    columns: [
+                      {
+                        Header: '',
+                        accessor: 'caseClassification',
+                      },
+                    ],
+                  }
+                )
+              : columnsBasedOnReason.push(
+                  {
+                    Header: START_DATE,
+                    columns: [
+                      {
+                        Cell: (cell: CellInfo) => {
+                          return <div>{cell.value}</div>;
+                        },
+                        Header: '',
+                        accessor: 'plan_effective_period_start',
+                        minWidth: 120,
+                      },
+                    ],
+                  },
+                  {
+                    Header: END_DATE,
+                    columns: [
+                      {
+                        Header: '',
+                        accessor: 'plan_effective_period_end',
+                      },
+                    ],
+                  }
+                );
+            const allColumns: Column[] = [
               {
-                Header: FOCUS_AREA_HEADER,
+                Header: NAME,
                 columns: [
                   {
+                    Cell: (cell: CellInfo) => {
+                      return <div>{cell.value}</div>;
+                    },
                     Header: '',
-                    accessor: 'focusArea',
-                    minWidth: 130,
+                    accessor: 'plan_title',
+                    minWidth: 100,
                   },
                 ],
               },
               {
-                Header: INVESTIGATION_NAME_HEADER,
+                Header: 'FI STATUS',
+                columns: [
+                  {
+                    Header: '',
+                    accessor: 'plan_status',
+                    minWidth: 100,
+                  },
+                ],
+              },
+              ...locationColumns,
+              {
+                Header: FOCUS_AREA_HEADER,
                 columns: [
                   {
                     Cell: (cell: CellInfo) => {
                       return (
                         <div>
-                          {cell.original.focusArea.trim() && (
-                            <Link to={`${FI_SINGLE_MAP_URL}/${cell.original.id}`}>
-                              <FontAwesomeIcon icon={['fas', 'map']} />
-                            </Link>
-                          )}
+                          {cell.original.focusArea.trim() && cell.value}
                           &nbsp;&nbsp;
                           {cell.original.focusArea.trim() && (
-                            <Link to={`${FI_SINGLE_URL}/${cell.original.id}`}>{cell.value}</Link>
+                            <Link to="#">
+                              <FontAwesomeIcon icon={['fas', 'external-link-square-alt']} />
+                            </Link>
                           )}
                         </div>
                       );
                     },
                     Header: '',
-                    accessor: 'plan_title',
-                    minWidth: 200,
-                  },
-                ],
-              },
-              {
-                Header: REASON_HEADER,
-                columns: [
-                  {
-                    Header: '',
-                    accessor: 'reason',
-                    minWidth: 100,
+                    accessor: 'focusArea',
+                    minWidth: 120,
                   },
                 ],
               },
@@ -195,31 +274,29 @@ class ActiveFocusInvestigation extends React.Component<
                   },
                 ],
               },
+              ...columnsBasedOnReason,
               {
-                Header: CASE_NOTIF_DATE_HEADER,
+                Header: 'Actions',
                 columns: [
                   {
                     Cell: (cell: CellInfo) => {
-                      return <div>{cell.value}</div>;
+                      const actionLink =
+                        cell.value === 'active' ? (
+                          <Link to={`${FI_SINGLE_MAP_URL}/${cell.original.id}`}>View</Link>
+                        ) : (
+                          <Link to="#">Edit</Link>
+                        );
+                      return <div>{actionLink}</div>;
                     },
                     Header: '',
-                    accessor: 'caseNotificationDate',
-                    minWidth: 120,
-                  },
-                ],
-              },
-              {
-                Header: CASE_CLASSIFICATION_HEADER,
-                columns: [
-                  {
-                    Header: '',
-                    accessor: 'caseClassification',
+                    accessor: 'plan_status',
+                    minWidth: 100,
                   },
                 ],
               },
             ];
-            const allColumns: Column[] = locationColumns.concat(otherColumns);
-
+            // const allColumns: Column[] = locationColumns.concat(otherColumns);
+            // thePlans.map(d => delete d.reason && delete d.plan_fi_reason);
             const tableProps = {
               CellComponent: DrillDownTableLinkedCell,
               columns: allColumns,
@@ -233,9 +310,27 @@ class ActiveFocusInvestigation extends React.Component<
               showPagination: false,
               useDrillDownTrProps: false,
             };
+            const TableHeaderWithOptionalForm = plansArray.every(
+              d => d.plan_fi_reason === CASE_TRIGGERED
+            ) ? (
+              <h3 className="mb-3 mt-5 page-title">{REACTIVE}</h3>
+            ) : (
+              <div className="routine-heading">
+                <Row>
+                  <Col xs="6">
+                    <h3 className="mb-3 mt-5 page-title">{ROUTINE}</h3>
+                  </Col>
+                  <Col xs="6">
+                    <Button className="focus-investigation" color="primary">
+                      Add Focus Investigation
+                    </Button>
+                  </Col>
+                </Row>
+              </div>
+            );
             a.push(
               <div key={thePlans[0].id}>
-                <h3 className="mb-3 mt-5 page-title">{ACTIVE_FOCUS_INVESTIGATION}</h3>
+                {TableHeaderWithOptionalForm}
                 <DrillDownTable {...tableProps} />
               </div>
             );
