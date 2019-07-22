@@ -113,6 +113,7 @@ export class OpenSRPService {
   }
 
   /** read method
+   * @param {string|number} id - the identifier of the object
    * @param {params} params - the url params object
    * @param {HTTPMethod} method - the HTTP method
    * @returns the object returned by API
@@ -129,6 +130,7 @@ export class OpenSRPService {
   }
 
   /** update method
+   * @param {string|number} id - the identifier of the object
    * @param {any} data - the data to be POSTed
    * @param {params} params - the url params object
    * @param {HTTPMethod} method - the HTTP method
