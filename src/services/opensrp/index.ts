@@ -74,6 +74,7 @@ export class OpenSRPService {
   }
 
   /** list method
+   * Send a GET request to the general API endpoint
    * @param {params} params - the url params object
    * @param {HTTPMethod} method - the HTTP method
    * @returns list of objects returned by API
@@ -90,6 +91,8 @@ export class OpenSRPService {
   }
 
   /** create method
+   * Send a POST request to the general endpoint containing the new object data
+   * Successful requests will result in a HTTP status 201 response with no body
    * @param {any} data - the data to be POSTed
    * @param {params} params - the url params object
    * @param {HTTPMethod} method - the HTTP method
@@ -113,6 +116,7 @@ export class OpenSRPService {
   }
 
   /** read method
+   * Send a GET request to the url for the specific object
    * @param {string|number} id - the identifier of the object
    * @param {params} params - the url params object
    * @param {HTTPMethod} method - the HTTP method
@@ -130,6 +134,7 @@ export class OpenSRPService {
   }
 
   /** update method
+   * Simply send the updated object as PUT request to the general endpoint URL
    * @param {any} data - the data to be POSTed
    * @param {params} params - the url params object
    * @param {HTTPMethod} method - the HTTP method
