@@ -37,6 +37,19 @@ describe('services/OpenSRP', () => {
     const planService = new OpenSRPService('plans');
     const result = await planService.list();
     expect(result).toEqual(plansListResponse);
+    expect(fetch.mock.calls).toEqual([
+      [
+        'https://test.smartregister.org/opensrp/rest/plans',
+        {
+          headers: {
+            accept: 'application/json',
+            authorization: 'Token hunter2',
+            'content-type': 'application/json',
+          },
+          method: 'GET',
+        },
+      ],
+    ]);
   });
 
   it('OpenSRPService list method should handle http errors', async () => {
