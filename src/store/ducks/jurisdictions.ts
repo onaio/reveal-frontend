@@ -3,6 +3,7 @@ import { get, keyBy, keys, pickBy, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
 import SeamlessImmutable from 'seamless-immutable';
 import { GeoJSON, Geometry } from '../../helpers/utils';
+import store from '../../store';
 
 export const reducerName = 'jurisdictions';
 
@@ -28,7 +29,7 @@ export interface Jurisdiction {
 export interface AllJurisdictionIds {
   [key: string]: {
     id: string;
-    isLoaded: boolean | undefined;
+    isLoaded: boolean;
   };
 }
 
@@ -129,7 +130,16 @@ export const fetchJurisdictions = (jurisdictionList: Jurisdiction[] = []) => {
 
 /** fetch all Jurisdiction Ids creator */
 export const fetchAllJurisdictionIds = (jurisdictionIds: string[]) => ({
-  allJurisdictionIds: keyBy(jurisdictionIds.map((id: string) => ({ id })), j => j.id),
+  allJurisdictionIds: keyBy(
+    jurisdictionIds.map((id: string) => ({
+      id,
+      isLoaded: !!(
+        getJurisdictionById(store.getState(), id) &&
+        (getJurisdictionById(store.getState(), id) as Jurisdiction).geojson
+      ),
+    })),
+    j => j.id
+  ),
   type: FETCH_ALL_JURISDICTION_IDS,
 });
 
