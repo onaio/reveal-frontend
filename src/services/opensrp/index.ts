@@ -37,6 +37,30 @@ export function getURLParams(obj: URLParams): string {
     .join('&');
 }
 
+/** get payload for fetch
+ * @param {HTTPMethod} method - the HTTP method
+ * @returns the payload
+ */
+export function getPayload(method: HTTPMethod) {
+  return {
+    headers: getDefaultHeaders() as HeadersInit,
+    method,
+  };
+}
+
+/** Get URL
+ * @param {string} url - the url
+ * @param {paramType} params - the url params object
+ * @returns {string} the final url
+ */
+export function getURL(url: string, params: paramsType = null): string {
+  let result = url;
+  if (params) {
+    result = `${result}?${getURLParams(params)}`;
+  }
+  return result;
+}
+
 /** The OpenSRP service class */
 export class OpenSRPService {
   public baseURL: string;
@@ -55,8 +79,8 @@ export class OpenSRPService {
    * @returns list of objects returned by API
    */
   public async list(params: paramsType = null, method: HTTPMethod = 'GET') {
-    const url = this.getURL(this.generalURL, params);
-    const response = await fetch(url, this.getPayload(method));
+    const url = getURL(this.generalURL, params);
+    const response = await fetch(url, getPayload(method));
 
     if (!response.ok) {
       throw new Error(`OpenSRPService list failed, HTTP status ${response.status}`);
@@ -71,37 +95,13 @@ export class OpenSRPService {
    * @returns the object returned by API
    */
   public async read(id: string | number, params: paramsType = null, method: HTTPMethod = 'GET') {
-    const url = this.getURL(`${this.generalURL}/${id}`, params);
-    const response = await fetch(url, this.getPayload(method));
+    const url = getURL(`${this.generalURL}/${id}`, params);
+    const response = await fetch(url, getPayload(method));
 
     if (!response.ok) {
       throw new Error(`OpenSRPService read failed, HTTP status ${response.status}`);
     }
 
     return await response.json();
-  }
-
-  /** get payload for fetch
-   * @param {HTTPMethod} method - the HTTP method
-   * @returns the payload
-   */
-  private getPayload(method: HTTPMethod) {
-    return {
-      headers: getDefaultHeaders() as HeadersInit,
-      method,
-    };
-  }
-
-  /** Get URL
-   * @param {string} url - the url
-   * @param {paramType} params - the url params object
-   * @returns {string} the final url
-   */
-  private getURL(url: string, params: paramsType = null): string {
-    let result = url;
-    if (params) {
-      result = `${result}?${getURLParams(params)}`;
-    }
-    return result;
   }
 }
