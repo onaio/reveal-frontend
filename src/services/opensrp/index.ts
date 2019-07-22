@@ -3,6 +3,9 @@ import { OPENSRP_API_BASE_URL } from '../../configs/env';
 import store from '../../store';
 import { getAccessToken } from '../../store/selectors';
 
+/** allowed http methods */
+type HTTPMethod = 'GET' | 'POST';
+
 /** get default HTTP headers for OpenSRP service */
 export function getDefaultHeaders(
   accept: string = 'application/json',
@@ -26,5 +29,19 @@ export class OpenSRPService {
     this.endpoint = endpoint;
     this.baseURL = baseURL;
     this.generalURL = `${this.baseURL}${this.endpoint}`;
+  }
+
+  public async list(method: HTTPMethod = 'GET') {
+    const url = this.generalURL;
+    const response = await fetch(url, {
+      headers: getDefaultHeaders() as HeadersInit,
+      method,
+    });
+
+    if (!response.ok) {
+      throw new Error('OpenSRPService list failed, HTTP status ${response.status}');
+    }
+
+    return await response.json();
   }
 }
