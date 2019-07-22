@@ -21,7 +21,7 @@ export function getDefaultHeaders(
 
 /** interface to describe URL params object */
 export interface URLParams {
-  [key: string]: string | number;
+  [key: string]: string | number | boolean;
 }
 
 /** params option type */
