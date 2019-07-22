@@ -104,11 +104,11 @@ export class OpenSRPService {
     };
     const response = await fetch(url, payload);
 
-    if (!response.ok) {
+    if (!response.ok || response.status !== 201) {
       throw new Error(`OpenSRPService create failed, HTTP status ${response.status}`);
     }
 
-    return await response.json();
+    return {};
   }
 
   /** read method
@@ -146,11 +146,11 @@ export class OpenSRPService {
     };
     const response = await fetch(url, payload);
 
-    if (!response.ok) {
+    if (!response.ok || response.status !== 200) {
       throw new Error(`OpenSRPService update failed, HTTP status ${response.status}`);
     }
 
-    return await response.json();
+    return {};
   }
 
   /** list method
