@@ -507,3 +507,35 @@ export const plansListResponse = [
     ],
   },
 ];
+
+export const createPlan = {
+  name: 'mosh-test',
+  title: 'A Test By Mosh',
+  status: 'draft',
+  date: '2019-05-19',
+  effectivePeriod: {
+    start: '2019-05-20',
+    end: '2019-08-30',
+  },
+  useContext: [
+    {
+      code: 'interventionType',
+      valueCodableConcept: 'FI',
+    },
+    {
+      code: 'fiStatus',
+      valueCodableConcept: 'A2',
+    },
+    {
+      code: 'fiReason',
+      valueCodableConcept: 'Case-triggered',
+    },
+  ],
+  jurisdiction: [
+    {
+      code: '3952',
+    },
+  ],
+  goal: [],
+  action: [],
+};
