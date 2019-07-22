@@ -509,6 +509,7 @@ export const plansListResponse = [
 ];
 
 export const createPlan = {
+  identifier: '0e85c238-39c1-4cea-a926-3d89f0c98428',
   name: 'mosh-test',
   title: 'A Test By Mosh',
   status: 'draft',
