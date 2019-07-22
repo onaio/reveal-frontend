@@ -153,7 +153,7 @@ describe('services/OpenSRP', () => {
     );
   });
 
-  it('OpenSRPService list method should handle http errors', async () => {
+  it('OpenSRPService create method should handle http errors', async () => {
     fetch.mockResponseOnce(JSON.stringify({}), { status: 500 });
     const planService = new OpenSRPService('plans');
     let error;
