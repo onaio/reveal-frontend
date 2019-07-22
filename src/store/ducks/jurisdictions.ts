@@ -82,6 +82,7 @@ export default function reducer(
       if (action.jurisdictionsById) {
         return SeamlessImmutable({
           ...state,
+          allJurisdictionIds: action.allJurisdictionIds,
           jurisdictionsById: action.jurisdictionsById,
         });
       }

@@ -57,6 +57,7 @@ import plansReducer, {
 
 import { strict } from 'assert';
 import { Helmet } from 'react-helmet';
+import GisidaWrapper, { GisidaProps } from '../../../../../components/GisidaWrapper';
 import HeaderBreadcrumbs, {
   BreadCrumbProps,
 } from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
@@ -107,10 +108,12 @@ interface TableCrumb {
 }
 
 interface IrsPlanState {
+  country: JurisdictionsByCountry | null;
   doRenderTable: boolean;
   filteredJurisdictions: Jurisdiction[];
   focusJurisdictionId: string | null;
   isEditingPlanName: boolean;
+  isLoadingGeoms: boolean;
   isStartingPlan: boolean;
   newPlan: PlanRecord | null;
   planCountry: string;
@@ -127,10 +130,12 @@ class IrsPlan extends React.Component<
   constructor(props: RouteComponentProps<RouteParams> & IrsPlanProps) {
     super(props);
     this.state = {
+      country: null,
       doRenderTable: true,
       filteredJurisdictions: [],
       focusJurisdictionId: null,
       isEditingPlanName: false,
+      isLoadingGeoms: false,
       isStartingPlan: props.isNewPlan || false,
       newPlan: props.isNewPlan
         ? {
@@ -288,6 +293,28 @@ class IrsPlan extends React.Component<
           return fetchJurisdictionsActionCreator(jurisdictions);
         }
       );
+    }
+  }
+
+  public componentWillReceiveProps(nextProps: IrsPlanProps) {
+    const { country, isLoadingGeoms, newPlan } = this.state;
+    const { jurisdictionsArray } = nextProps;
+
+    // const loadedJurisdictionIds
+    if (newPlan && newPlan.plan_jurisdictions_ids && country && isLoadingGeoms) {
+      const { plan_jurisdictions_ids } = newPlan;
+
+      const filteredJurisdictions = jurisdictionsArray.filter(
+        (j: Jurisdiction) => plan_jurisdictions_ids.indexOf(j.jurisdiction_id) !== -1
+      );
+
+      const loadedJurisdictions = filteredJurisdictions.filter((j: Jurisdiction) => j.geojson);
+      if (loadedJurisdictions.length === filteredJurisdictions.length) {
+        this.setState({
+          filteredJurisdictions,
+          isLoadingGeoms: false,
+        });
+      }
     }
   }
 
@@ -707,12 +734,48 @@ class IrsPlan extends React.Component<
       },
     ];
 
-    this.setState({
-      filteredJurisdictions,
-      isStartingPlan: false,
-      newPlan,
-      tableCrumbs,
-    });
+    this.setState(
+      {
+        country,
+        filteredJurisdictions,
+        isLoadingGeoms: true,
+        isStartingPlan: false,
+        newPlan,
+        tableCrumbs,
+      },
+      () => {
+        // Get geoms for jurisdictionsToInclude
+        const { newPlan: theNewPlan, filteredJurisdictions: FilteredJurisdictions } = this.state;
+
+        const loadedJurisdictionIds = FilteredJurisdictions.filter(j => !!j.geojson).map(
+          j => j.jurisdiction_id
+        );
+        const jurisdictionsToLoad =
+          theNewPlan && theNewPlan.plan_jurisdictions_ids
+            ? [...theNewPlan.plan_jurisdictions_ids].filter(
+                j => loadedJurisdictionIds.indexOf(j) === -1
+              )
+            : [];
+        if (jurisdictionsToLoad.length) {
+          let sqlFilterExpression = '';
+          for (let i = 0; i < jurisdictionsToLoad.length; i += 1) {
+            const jurId = jurisdictionsToLoad[i];
+            if (i) {
+              sqlFilterExpression += ' OR ';
+            }
+            sqlFilterExpression += `jurisdiction_id = '${jurId}'`;
+          }
+          const jurisdictionFetchParams = superset.getFormData(3000, [
+            { sqlExpression: sqlFilterExpression },
+          ]);
+          supersetFetch(SUPERSET_JURISDICTIONS_SLICE, jurisdictionFetchParams).then(
+            (result: Jurisdiction[]) => {
+              return this.props.fetchJurisdictionsActionCreator(result);
+            }
+          );
+        }
+      }
+    );
   }
 
   // Jurisdiction Selection Control
