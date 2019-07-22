@@ -39,7 +39,7 @@ export class OpenSRPService {
     });
 
     if (!response.ok) {
-      throw new Error('OpenSRPService list failed, HTTP status ${response.status}');
+      throw new Error(`OpenSRPService list failed, HTTP status ${response.status}`);
     }
 
     return await response.json();
