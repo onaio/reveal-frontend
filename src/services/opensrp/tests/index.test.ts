@@ -63,4 +63,36 @@ describe('services/OpenSRP', () => {
     }
     expect(error).toEqual(new Error('OpenSRPService list failed, HTTP status 500'));
   });
+
+  it('OpenSRPService read method works', async () => {
+    fetch.mockResponseOnce(JSON.stringify(plansListResponse[0]));
+    const planService = new OpenSRPService('plans');
+    const result = await planService.read('0e85c238-39c1-4cea-a926-3d89f0c98427');
+    expect(result).toEqual(plansListResponse[0]);
+    expect(fetch.mock.calls).toEqual([
+      [
+        'https://test.smartregister.org/opensrp/rest/plans/0e85c238-39c1-4cea-a926-3d89f0c98427',
+        {
+          headers: {
+            accept: 'application/json',
+            authorization: 'Token hunter2',
+            'content-type': 'application/json',
+          },
+          method: 'GET',
+        },
+      ],
+    ]);
+  });
+
+  it('OpenSRPService read method should handle http errors', async () => {
+    fetch.mockResponseOnce(JSON.stringify({}), { status: 500 });
+    const planService = new OpenSRPService('plans');
+    let error;
+    try {
+      await planService.read('0e85c238-39c1-4cea-a926-3d89f0c98427');
+    } catch (e) {
+      error = e;
+    }
+    expect(error).toEqual(new Error('OpenSRPService read failed, HTTP status 500'));
+  });
 });
