@@ -20,7 +20,7 @@ describe('services/OpenSRP', () => {
     await store.dispatch(authenticateUser(authenticated, user, extraData));
     expect(getDefaultHeaders()).toEqual({
       accept: 'application/json',
-      authorization: 'Token hunter2',
+      authorization: 'Bearer hunter2',
       'content-type': 'application/json',
     });
   });
@@ -50,7 +50,7 @@ describe('services/OpenSRP', () => {
         {
           headers: {
             accept: 'application/json',
-            authorization: 'Token hunter2',
+            authorization: 'Bearer hunter2',
             'content-type': 'application/json',
           },
           method: 'GET',
@@ -91,7 +91,7 @@ describe('services/OpenSRP', () => {
         {
           headers: {
             accept: 'application/json',
-            authorization: 'Token hunter2',
+            authorization: 'Bearer hunter2',
             'content-type': 'application/json',
           },
           method: 'GET',
@@ -135,7 +135,7 @@ describe('services/OpenSRP', () => {
           body: JSON.stringify(createPlan),
           headers: {
             accept: 'application/json',
-            authorization: 'Token hunter2',
+            authorization: 'Bearer hunter2',
             'content-type': 'application/json',
           },
           method: 'POST',
@@ -183,7 +183,7 @@ describe('services/OpenSRP', () => {
           body: JSON.stringify(obj),
           headers: {
             accept: 'application/json',
-            authorization: 'Token hunter2',
+            authorization: 'Bearer hunter2',
             'content-type': 'application/json',
           },
           method: 'PUT',
