@@ -56,10 +56,7 @@ export class OpenSRPService {
    */
   public async list(params: paramsType = null, method: HTTPMethod = 'GET') {
     const url = this.getURL(this.generalURL, params);
-    const response = await fetch(url, {
-      headers: getDefaultHeaders() as HeadersInit,
-      method,
-    });
+    const response = await fetch(url, this.getPayload(method));
 
     if (!response.ok) {
       throw new Error(`OpenSRPService list failed, HTTP status ${response.status}`);
@@ -75,16 +72,24 @@ export class OpenSRPService {
    */
   public async read(id: string | number, params: paramsType = null, method: HTTPMethod = 'GET') {
     const url = this.getURL(`${this.generalURL}/${id}`, params);
-    const response = await fetch(url, {
-      headers: getDefaultHeaders() as HeadersInit,
-      method,
-    });
+    const response = await fetch(url, this.getPayload(method));
 
     if (!response.ok) {
       throw new Error(`OpenSRPService read failed, HTTP status ${response.status}`);
     }
 
     return await response.json();
+  }
+
+  /** get payload for fetch
+   * @param {HTTPMethod} method - the HTTP method
+   * @returns the payload
+   */
+  private getPayload(method: HTTPMethod) {
+    return {
+      headers: getDefaultHeaders() as HeadersInit,
+      method,
+    };
   }
 
   /** Get URL
