@@ -24,6 +24,9 @@ export interface URLParams {
   [key: string]: string | number;
 }
 
+/** params option type */
+type paramsType = URLParams | null;
+
 /** converts URL params object to string
  * @param {URLParams} obj - the object representing URL params
  * @returns {string} URL params as a string
@@ -46,8 +49,16 @@ export class OpenSRPService {
     this.generalURL = `${this.baseURL}${this.endpoint}`;
   }
 
-  public async list(method: HTTPMethod = 'GET') {
-    const url = this.generalURL;
+  public getURL(url: string, params: paramsType = null): string {
+    let result = url;
+    if (params) {
+      result = `${result}?${getURLParams(params)}`;
+    }
+    return result;
+  }
+
+  public async list(params: paramsType = null, method: HTTPMethod = 'GET') {
+    const url = this.getURL(this.generalURL, params);
     const response = await fetch(url, {
       headers: getDefaultHeaders() as HeadersInit,
       method,
@@ -60,8 +71,8 @@ export class OpenSRPService {
     return await response.json();
   }
 
-  public async read(id: string | number, method: HTTPMethod = 'GET') {
-    const url = `${this.generalURL}/${id}`;
+  public async read(id: string | number, params: paramsType = null, method: HTTPMethod = 'GET') {
+    const url = this.getURL(`${this.generalURL}/${id}`, params);
     const response = await fetch(url, {
       headers: getDefaultHeaders() as HeadersInit,
       method,
