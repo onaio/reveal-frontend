@@ -1,6 +1,7 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
-import { keyBy, keys, pickBy, values } from 'lodash';
+import { cloneDeep, keyBy, keys, pickBy, values } from 'lodash';
 import { FlushThunks } from 'redux-testkit';
+import { REACTIVE, ROUTINE } from '../../../constants';
 import store from '../../index';
 import reducer, {
   fetchPlanRecords,
@@ -12,6 +13,7 @@ import reducer, {
   getPlanRecordsIdArray,
   getPlansArray,
   getPlansById,
+  getPlansByReason,
   getPlansIdArray,
   InterventionType,
   Plan,
@@ -34,6 +36,7 @@ describe('reducers/plans', () => {
     expect(getPlansById(store.getState())).toEqual({});
     expect(getPlansIdArray(store.getState())).toEqual([]);
     expect(getPlansArray(store.getState())).toEqual([]);
+    expect(getPlansByReason(store.getState(), ROUTINE)).toEqual([]);
     expect(getPlanById(store.getState(), 'someId')).toEqual(null);
     expect(getPlanRecordsById(store.getState())).toEqual({});
     expect(getPlanRecordsIdArray(store.getState())).toEqual([]);
@@ -49,6 +52,13 @@ describe('reducers/plans', () => {
       allPlans,
       (e: Plan) => e.plan_intervention_type === InterventionType.IRS
     );
+    const routinePlans = values(cloneDeep(store.getState().plans.plansById)).filter(
+      (plan: Plan) => plan.plan_fi_reason === ROUTINE
+    );
+
+    const reactivePlans = values(cloneDeep(store.getState().plans.plansById)).filter(
+      (plan: Plan) => plan.plan_fi_reason === REACTIVE
+    );
     expect(getPlansById(store.getState())).toEqual(fiPlans);
     expect(getPlansById(store.getState(), InterventionType.IRS)).toEqual(irsPlans);
 
@@ -57,6 +67,9 @@ describe('reducers/plans', () => {
 
     expect(getPlansArray(store.getState())).toEqual(values(fiPlans));
     expect(getPlansArray(store.getState(), InterventionType.IRS)).toEqual(values(irsPlans));
+
+    expect(getPlansByReason(store.getState(), ROUTINE)).toEqual(values(routinePlans));
+    expect(getPlansByReason(store.getState(), REACTIVE)).toEqual(values(reactivePlans));
 
     expect(getPlanById(store.getState(), 'ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f')).toEqual(
       allPlans['ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f']
