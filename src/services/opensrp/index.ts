@@ -73,23 +73,6 @@ export class OpenSRPService {
     this.generalURL = `${this.baseURL}${this.endpoint}`;
   }
 
-  /** list method
-   * Send a GET request to the general API endpoint
-   * @param {params} params - the url params object
-   * @param {HTTPMethod} method - the HTTP method
-   * @returns list of objects returned by API
-   */
-  public async list(params: paramsType = null, method: HTTPMethod = 'GET') {
-    const url = getURL(this.generalURL, params);
-    const response = await fetch(url, getPayload(method));
-
-    if (!response.ok) {
-      throw new Error(`OpenSRPService list failed, HTTP status ${response.status}`);
-    }
-
-    return await response.json();
-  }
-
   /** create method
    * Send a POST request to the general endpoint containing the new object data
    * Successful requests will result in a HTTP status 201 response with no body
@@ -152,6 +135,23 @@ export class OpenSRPService {
 
     if (!response.ok) {
       throw new Error(`OpenSRPService update failed, HTTP status ${response.status}`);
+    }
+
+    return await response.json();
+  }
+
+  /** list method
+   * Send a GET request to the general API endpoint
+   * @param {params} params - the url params object
+   * @param {HTTPMethod} method - the HTTP method
+   * @returns list of objects returned by API
+   */
+  public async list(params: paramsType = null, method: HTTPMethod = 'GET') {
+    const url = getURL(this.generalURL, params);
+    const response = await fetch(url, getPayload(method));
+
+    if (!response.ok) {
+      throw new Error(`OpenSRPService list failed, HTTP status ${response.status}`);
     }
 
     return await response.json();
