@@ -164,4 +164,52 @@ describe('services/OpenSRP', () => {
     }
     expect(error).toEqual(new Error('OpenSRPService create failed, HTTP status 500'));
   });
+
+  it('OpenSRPService update method works', async () => {
+    fetch.mockResponseOnce(JSON.stringify({}));
+    const planService = new OpenSRPService('plans');
+    const obj = {
+      ...createPlan,
+      status: 'retired',
+    };
+    const result = await planService.update(obj);
+    expect(result).toEqual({});
+    expect(fetch.mock.calls).toEqual([
+      [
+        'https://test.smartregister.org/opensrp/rest/plans',
+        {
+          'Cache-Control': 'no-cache',
+          Pragma: 'no-cache',
+          body: JSON.stringify(obj),
+          headers: {
+            accept: 'application/json',
+            authorization: 'Token hunter2',
+            'content-type': 'application/json',
+          },
+          method: 'PUT',
+        },
+      ],
+    ]);
+  });
+
+  it('OpenSRPService update method params work', async () => {
+    fetch.mockResponseOnce(JSON.stringify({}));
+    const service = new OpenSRPService('location');
+    await service.update({ foo: 'bar' }, { is_jurisdiction: true });
+    expect(fetch.mock.calls[0][0]).toEqual(
+      'https://test.smartregister.org/opensrp/rest/location?is_jurisdiction=true'
+    );
+  });
+
+  it('OpenSRPService update method should handle http errors', async () => {
+    fetch.mockResponseOnce(JSON.stringify({}), { status: 500 });
+    const planService = new OpenSRPService('plans');
+    let error;
+    try {
+      await planService.update({ foo: 'bar' });
+    } catch (e) {
+      error = e;
+    }
+    expect(error).toEqual(new Error('OpenSRPService update failed, HTTP status 500'));
+  });
 });
