@@ -99,6 +99,8 @@ export class OpenSRPService {
     const url = getURL(this.generalURL, params);
     const payload = {
       ...getPayload(method),
+      'Cache-Control': 'no-cache',
+      Pragma: 'no-cache',
       body: JSON.stringify(data),
     };
     const response = await fetch(url, payload);
