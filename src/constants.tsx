@@ -93,6 +93,10 @@ export const REACTIVE = 'Reactive';
 export type REACTIVE = typeof REACTIVE;
 export const JURISDICTION_ID = 'jurisdiction_id';
 export type JURISDICTION_ID = typeof JURISDICTION_ID;
+export const START_DATE = 'Start Date';
+export type START_DATE = typeof START_DATE;
+export const END_DATE = 'End Date';
+export type END_DATE = typeof END_DATE;
 // internal urls
 export const LOGIN_URL = '/login';
 export type LOGIN_URL = typeof LOGIN_URL;
