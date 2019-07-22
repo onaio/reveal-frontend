@@ -2,13 +2,17 @@ import { getOpenSRPUserInfo } from '@onaio/gatekeeper';
 import { authenticateUser } from '@onaio/session-reducer';
 import store from '../../../store';
 import { getDefaultHeaders, OpenSRPService } from '../index';
+import { plansListResponse } from './fixtures/plans';
 import { OpenSRPAPIResponse } from './fixtures/session';
+/* tslint:disable-next-line no-var-requires */
+const fetch = require('jest-fetch-mock');
 
 jest.mock('../../../configs/env');
 
 describe('services/OpenSRP', () => {
   beforeEach(() => {
     jest.resetAllMocks();
+    fetch.resetMocks();
   });
 
   it('getDefaultHeaders works', async () => {
@@ -26,5 +30,24 @@ describe('services/OpenSRP', () => {
     expect(planService.baseURL).toEqual('https://test.smartregister.org/opensrp/rest/');
     expect(planService.endpoint).toEqual('plans');
     expect(planService.generalURL).toEqual('https://test.smartregister.org/opensrp/rest/plans');
+  });
+
+  it('OpenSRPService list method works', async () => {
+    fetch.mockResponseOnce(JSON.stringify(plansListResponse));
+    const planService = new OpenSRPService('plans');
+    const result = await planService.list();
+    expect(result).toEqual(plansListResponse);
+  });
+
+  it('OpenSRPService list method should handle http errors', async () => {
+    fetch.mockResponseOnce(JSON.stringify({}), { status: 500 });
+    const planService = new OpenSRPService('plans');
+    let error;
+    try {
+      await planService.list();
+    } catch (e) {
+      error = e;
+    }
+    expect(error).toEqual(new Error('OpenSRPService list failed, HTTP status 500'));
   });
 });
