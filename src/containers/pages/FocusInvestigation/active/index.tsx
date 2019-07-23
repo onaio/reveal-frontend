@@ -19,7 +19,6 @@ import HeaderBreadCrumb, {
 import Loading from '../../../../components/page/Loading';
 import { SUPERSET_PLANS_SLICE } from '../../../../configs/env';
 import { FIClassifications, locationHierarchy } from '../../../../configs/settings';
-import { FI_ACTIVE_TITLE } from '../../../../constants';
 import {
   ACTIVE_FOCUS_INVESTIGATION,
   CASE_CLASSIFICATION_HEADER,
@@ -221,7 +220,7 @@ class ActiveFocusInvestigation extends React.Component<
     return (
       <div>
         <Helmet>
-          <title>{FI_ACTIVE_TITLE}</title>
+          <title>{ACTIVE_FOCUS_INVESTIGATION}</title>
         </Helmet>
         <HeaderBreadCrumb {...breadcrumbProps} />
         <h3 className="mb-3 mt-5 page-title">{ACTIVE_FOCUS_INVESTIGATION}</h3>

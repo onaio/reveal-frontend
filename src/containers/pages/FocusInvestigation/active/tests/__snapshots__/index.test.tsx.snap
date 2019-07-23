@@ -189,13 +189,13 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
         <SideEffect(NullComponent)
           defer={true}
           encodeSpecialCharacters={true}
-          title="Active Focus Investigation"
+          title="Active Focus Investigations"
           titleAttributes={Object {}}
         >
           <NullComponent
             defer={true}
             encodeSpecialCharacters={true}
-            title="Active Focus Investigation"
+            title="Active Focus Investigations"
             titleAttributes={Object {}}
           />
         </SideEffect(NullComponent)>
@@ -3335,13 +3335,13 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
         <SideEffect(NullComponent)
           defer={true}
           encodeSpecialCharacters={true}
-          title="Active Focus Investigation"
+          title="Active Focus Investigations"
           titleAttributes={Object {}}
         >
           <NullComponent
             defer={true}
             encodeSpecialCharacters={true}
-            title="Active Focus Investigation"
+            title="Active Focus Investigations"
             titleAttributes={Object {}}
           />
         </SideEffect(NullComponent)>
