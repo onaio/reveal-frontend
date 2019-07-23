@@ -5,7 +5,8 @@ import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { NavLink } from 'react-router-dom';
-import { Badge, Col, Row } from 'reactstrap';
+import Select from 'react-select';
+import { Badge, Button, Col, Row } from 'reactstrap';
 import { Store } from 'redux';
 import GisidaWrapper from '../../../../../components/GisidaWrapper';
 import HeaderBreadcrumb, {
@@ -20,6 +21,9 @@ import {
   SUPERSET_TASKS_SLICE,
 } from '../../../../../configs/env';
 import {
+  ACTIVE,
+  CASE_TRIGGERED_PLAN,
+  END_DATE,
   FI_SINGLE_MAP_URL,
   FI_SINGLE_URL,
   FI_URL,
@@ -34,7 +38,9 @@ import {
   POINT,
   POLYGON,
   PROGRESS,
-  RESPONSE,
+  REACTIVE,
+  ROUTINE_PLAN,
+  START_DATE,
 } from '../../../../../constants';
 import { popupHandler } from '../../../../../helpers/handlers';
 import { getGoalReport } from '../../../../../helpers/indicators';
@@ -239,22 +245,58 @@ class SingleActiveFIMap extends React.Component<
     };
     const namePaths =
       plan.jurisdiction_name_path instanceof Array ? plan.jurisdiction_name_path : [];
-    const pages = namePaths.map(namePath =>
+    const pages = namePaths.map(namePath => {
       // return a page object for each name path
-      ({
+      return {
         label: namePath,
         url: '',
-      })
-    );
+      };
+    });
     breadCrumbProps.pages = [homePage, basePage, ...pages, secondLastPage];
     const statusBadge =
-      plan && plan.plan_status === 'active' ? (
+      plan && plan.plan_status === ACTIVE ? (
         <Badge color="warning" pill={true}>
           Active
         </Badge>
       ) : (
-        <Badge color="success" pill={true} />
+        <Badge color="success" pill={true}>
+          Complete
+        </Badge>
       );
+    const markCompleteButton =
+      plan && plan.plan_status === ACTIVE ? (
+        <Button color="primary" size="lg" block={true}>
+          Mark as Complete
+        </Button>
+      ) : null;
+
+    const cols: string[] = Object.keys(plan);
+
+    const alias: FlexObject = {
+      plan_effective_period_end: END_DATE,
+      plan_effective_period_start: START_DATE,
+    };
+
+    const container: FlexObject[] = [];
+    if (plan.plan_fi_reason === ROUTINE_PLAN) {
+      cols.forEach((column: string) => {
+        if (column === 'plan_effective_period_end' || column === 'plan_effective_period_start') {
+          container.push(
+            <span key={column} className="detailview">
+              <b>{alias[column]}:</b> &nbsp;
+              {plan && plan[column]}
+            </span>
+          );
+        }
+      });
+    } else {
+      container.push(
+        <span>
+          <b>Case Classification:</b>&nbsp;
+          {plan && plan.plan_intervention_type ? plan.plan_intervention_type : null}
+        </span>
+      );
+    }
     return (
       <div>
         <Helmet>
@@ -263,12 +305,14 @@ class SingleActiveFIMap extends React.Component<
         <HeaderBreadcrumb {...breadCrumbProps} />
         <div>
           <Row>
-            <Col xs="6">
+            <Col xs="8">
               <h2 className="page-title mt-4 mb-4">
-                {plan && plan.plan_title} {INVESTIGATION}
+                {plan && plan.plan_title} {INVESTIGATION} {statusBadge}
               </h2>
             </Col>
-            <Col xs="6">{statusBadge}</Col>
+            <Col xs="4">
+              <Select value="Other area investigations" />
+            </Col>
           </Row>
         </div>
         <div className="row no-gutters mb-5">
@@ -287,7 +331,15 @@ class SingleActiveFIMap extends React.Component<
           </div>
           <div className="col-3">
             <div className="mapSidebar">
-              <h5>{RESPONSE}</h5>
+              <div>
+                <h5>
+                  {plan.plan_fi_reason === CASE_TRIGGERED_PLAN ? REACTIVE : ROUTINE_PLAN}&nbsp;
+                  {INVESTIGATION}
+                </h5>
+                {container}
+              </div>
+              {markCompleteButton}
+              <h6 />
               <hr />
               {goals &&
                 goals.map((item: Goal) => {
