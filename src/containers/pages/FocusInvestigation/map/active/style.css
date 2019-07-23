@@ -23,3 +23,23 @@
 html .mapSidebar .responseItem a.task-link.active h6 {
   color: #57b446;
 }
+
+div h2.page-title.mt-4.mb-4 span.badge.badge-warning.badge-pill {
+  color: #ffffff;
+}
+
+div.mapSidebar span.detailview {
+  display: block;
+}
+
+div.css-2b097c-container div.css-yk16xz-control {
+  margin-top: 1.5em;
+}
+
+div.css-1pahdxg-control {
+  margin-top: 1em;
+}
+
+div.mapSidebar button.btn.btn-primary.btn-lg.btn-block {
+  margin-top: 1em;
+}
