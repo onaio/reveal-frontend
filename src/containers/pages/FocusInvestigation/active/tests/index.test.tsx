@@ -1,3 +1,5 @@
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faExternalLinkSquareAlt } from '@fortawesome/free-solid-svg-icons';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
@@ -14,6 +16,7 @@ import ConnectedActiveFocusInvestigation, { ActiveFocusInvestigation } from '../
 
 reducerRegistry.register(reducerName, reducer);
 
+library.add(faExternalLinkSquareAlt);
 const history = createBrowserHistory();
 jest.mock('../../../../../configs/env');
 
@@ -41,7 +44,6 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
 
   it('renders without crashing for null jurisdictions_name_path', () => {
     const mock: any = jest.fn();
-    const allTasks = fixtures.plans.concat([fixtures.plan5 as any, fixtures.plan6 as any]);
     const props = {
       caseTriggeredPlans: [fixtures.plan2],
       fetchPlansActionCreator: jest.fn(),
