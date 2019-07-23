@@ -135,6 +135,7 @@ export class OpenSRPService {
 
   /** update method
    * Simply send the updated object as PUT request to the general endpoint URL
+   * Successful requests will result in a HTTP status 200/201 response with no body
    * @param {T} data - the data to be POSTed
    * @param {params} params - the url params object
    * @param {HTTPMethod} method - the HTTP method
@@ -150,7 +151,7 @@ export class OpenSRPService {
     };
     const response = await fetch(url, payload);
 
-    if (!response.ok || response.status !== 200) {
+    if (!response.ok) {
       throw new Error(
         `OpenSRPService update on ${this.endpoint} failed, HTTP status ${response.status}`
       );
