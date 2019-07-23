@@ -5,6 +5,7 @@ import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { NavLink } from 'react-router-dom';
+import { Badge, Col, Row } from 'reactstrap';
 import { Store } from 'redux';
 import GisidaWrapper from '../../../../../components/GisidaWrapper';
 import HeaderBreadcrumb, {
@@ -26,6 +27,7 @@ import {
   FOCUS_INVESTIGATIONS,
   HOME,
   HOME_URL,
+  INVESTIGATION,
   MEASURE,
   MULTI_POLYGON,
   OF,
@@ -245,16 +247,30 @@ class SingleActiveFIMap extends React.Component<
       })
     );
     breadCrumbProps.pages = [homePage, basePage, ...pages, secondLastPage];
-
+    const statusBadge =
+      plan && plan.plan_status === 'active' ? (
+        <Badge color="warning" pill={true}>
+          Active
+        </Badge>
+      ) : (
+        <Badge color="success" pill={true} />
+      );
     return (
       <div>
         <Helmet>
           <title>{`${FOCUS_INVESTIGATION}: ${plan && plan.plan_title}`}</title>
         </Helmet>
         <HeaderBreadcrumb {...breadCrumbProps} />
-        <h2 className="page-title mt-4 mb-4">
-          {FOCUS_INVESTIGATION}: {plan && plan.plan_title}
-        </h2>
+        <div>
+          <Row>
+            <Col xs="6">
+              <h2 className="page-title mt-4 mb-4">
+                {plan && plan.plan_title} {INVESTIGATION}
+              </h2>
+            </Col>
+            <Col xs="6">{statusBadge}</Col>
+          </Row>
+        </div>
         <div className="row no-gutters mb-5">
           <div className="col-9">
             <div className="map">
