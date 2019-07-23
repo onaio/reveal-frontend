@@ -2150,10 +2150,10 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                         
                                       <Link
                                         replace={false}
-                                        to="#"
+                                        to="/focus-investigation/view/plan-id-2"
                                       >
                                         <a
-                                          href="/"
+                                          href="/focus-investigation/view/plan-id-2"
                                           onClick={[Function]}
                                         >
                                           <FontAwesomeIcon
@@ -4703,10 +4703,10 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                         
                                       <Link
                                         replace={false}
-                                        to="#"
+                                        to="/focus-investigation/view/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
                                       >
                                         <a
-                                          href="/"
+                                          href="/focus-investigation/view/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
                                           onClick={[Function]}
                                         >
                                           <FontAwesomeIcon
@@ -7630,10 +7630,10 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                         
                                       <Link
                                         replace={false}
-                                        to="#"
+                                        to="/focus-investigation/view/plan-id-2"
                                       >
                                         <a
-                                          href="/"
+                                          href="/focus-investigation/view/plan-id-2"
                                           onClick={[Function]}
                                         >
                                           <FontAwesomeIcon
@@ -10062,10 +10062,10 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                         
                                       <Link
                                         replace={false}
-                                        to="#"
+                                        to="/focus-investigation/view/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
                                       >
                                         <a
-                                          href="/"
+                                          href="/focus-investigation/view/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
                                           onClick={[Function]}
                                         >
                                           <FontAwesomeIcon
@@ -12131,10 +12131,10 @@ Array [
                               
                             <Link
                               replace={false}
-                              to="#"
+                              to="/focus-investigation/view/plan-id-2"
                             >
                               <a
-                                href="/"
+                                href="/focus-investigation/view/plan-id-2"
                                 onClick={[Function]}
                               >
                                 <FontAwesomeIcon
@@ -14031,10 +14031,10 @@ Array [
                               
                             <Link
                               replace={false}
-                              to="#"
+                              to="/focus-investigation/view/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
                             >
                               <a
-                                href="/"
+                                href="/focus-investigation/view/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
                                 onClick={[Function]}
                               >
                                 <FontAwesomeIcon
