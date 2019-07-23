@@ -309,6 +309,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
           </FormGroup>
           <Button
             color="success"
+            onClick={[Function]}
             outline={true}
             tag="button"
           >
@@ -316,6 +317,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
               aria-label={null}
               className="btn btn-outline-success"
               onClick={[Function]}
+              type="button"
             >
               Search
             </button>
@@ -341,17 +343,17 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                     "Cell": [Function],
                     "Header": "",
                     "accessor": "plan_title",
-                    "minWidth": 100,
+                    "minWidth": 160,
                   },
                 ],
               },
               Object {
-                "Header": "FI STATUS",
+                "Header": "FI Status",
                 "columns": Array [
                   Object {
                     "Header": "",
                     "accessor": "plan_status",
-                    "minWidth": 100,
+                    "minWidth": 80,
                   },
                 ],
               },
@@ -398,7 +400,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                     "Cell": [Function],
                     "Header": "",
                     "accessor": "focusArea",
-                    "minWidth": 120,
+                    "minWidth": 140,
                   },
                 ],
               },
@@ -419,7 +421,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                     "Cell": [Function],
                     "Header": "",
                     "accessor": "caseNotificationDate",
-                    "minWidth": 120,
+                    "minWidth": 90,
                   },
                 ],
               },
@@ -439,7 +441,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                     "Cell": [Function],
                     "Header": "",
                     "accessor": "plan_status",
-                    "minWidth": 100,
+                    "minWidth": 80,
                   },
                 ],
               },
@@ -559,17 +561,17 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                       "Cell": [Function],
                       "Header": "",
                       "accessor": "plan_title",
-                      "minWidth": 100,
+                      "minWidth": 160,
                     },
                   ],
                 },
                 Object {
-                  "Header": "FI STATUS",
+                  "Header": "FI Status",
                   "columns": Array [
                     Object {
                       "Header": "",
                       "accessor": "plan_status",
-                      "minWidth": 100,
+                      "minWidth": 80,
                     },
                   ],
                 },
@@ -616,7 +618,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                       "Cell": [Function],
                       "Header": "",
                       "accessor": "focusArea",
-                      "minWidth": 120,
+                      "minWidth": 140,
                     },
                   ],
                 },
@@ -637,7 +639,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                       "Cell": [Function],
                       "Header": "",
                       "accessor": "caseNotificationDate",
-                      "minWidth": 120,
+                      "minWidth": 90,
                     },
                   ],
                 },
@@ -657,7 +659,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                       "Cell": [Function],
                       "Header": "",
                       "accessor": "plan_status",
-                      "minWidth": 100,
+                      "minWidth": 80,
                     },
                   ],
                 },
@@ -805,7 +807,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                     className="-headerGroups"
                     style={
                       Object {
-                        "minWidth": "1100px",
+                        "minWidth": "1110px",
                       }
                     }
                   >
@@ -813,7 +815,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                       className="rt-thead -headerGroups"
                       style={
                         Object {
-                          "minWidth": "1100px",
+                          "minWidth": "1110px",
                         }
                       }
                     >
@@ -827,9 +829,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             key="0-undefined"
                             style={
                               Object {
-                                "flex": "100 0 auto",
+                                "flex": "160 0 auto",
                                 "maxWidth": null,
-                                "width": "100px",
+                                "width": "160px",
                               }
                             }
                           >
@@ -839,9 +841,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               role="columnheader"
                               style={
                                 Object {
-                                  "flex": "100 0 auto",
+                                  "flex": "160 0 auto",
                                   "maxWidth": null,
-                                  "width": "100px",
+                                  "width": "160px",
                                 }
                               }
                               tabIndex="-1"
@@ -854,9 +856,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             key="1-undefined"
                             style={
                               Object {
-                                "flex": "100 0 auto",
+                                "flex": "80 0 auto",
                                 "maxWidth": null,
-                                "width": "100px",
+                                "width": "80px",
                               }
                             }
                           >
@@ -866,14 +868,14 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               role="columnheader"
                               style={
                                 Object {
-                                  "flex": "100 0 auto",
+                                  "flex": "80 0 auto",
                                   "maxWidth": null,
-                                  "width": "100px",
+                                  "width": "80px",
                                 }
                               }
                               tabIndex="-1"
                             >
-                              FI STATUS
+                              FI Status
                             </div>
                           </ThComponent>
                           <ThComponent
@@ -989,9 +991,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             key="6-undefined"
                             style={
                               Object {
-                                "flex": "120 0 auto",
+                                "flex": "140 0 auto",
                                 "maxWidth": null,
-                                "width": "120px",
+                                "width": "140px",
                               }
                             }
                           >
@@ -1001,9 +1003,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               role="columnheader"
                               style={
                                 Object {
-                                  "flex": "120 0 auto",
+                                  "flex": "140 0 auto",
                                   "maxWidth": null,
-                                  "width": "120px",
+                                  "width": "140px",
                                 }
                               }
                               tabIndex="-1"
@@ -1043,9 +1045,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             key="8-undefined"
                             style={
                               Object {
-                                "flex": "120 0 auto",
+                                "flex": "90 0 auto",
                                 "maxWidth": null,
-                                "width": "120px",
+                                "width": "90px",
                               }
                             }
                           >
@@ -1055,9 +1057,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               role="columnheader"
                               style={
                                 Object {
-                                  "flex": "120 0 auto",
+                                  "flex": "90 0 auto",
                                   "maxWidth": null,
-                                  "width": "120px",
+                                  "width": "90px",
                                 }
                               }
                               tabIndex="-1"
@@ -1097,9 +1099,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             key="10-undefined"
                             style={
                               Object {
-                                "flex": "100 0 auto",
+                                "flex": "80 0 auto",
                                 "maxWidth": null,
-                                "width": "100px",
+                                "width": "80px",
                               }
                             }
                           >
@@ -1109,9 +1111,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               role="columnheader"
                               style={
                                 Object {
-                                  "flex": "100 0 auto",
+                                  "flex": "80 0 auto",
                                   "maxWidth": null,
-                                  "width": "100px",
+                                  "width": "80px",
                                 }
                               }
                               tabIndex="-1"
@@ -1127,7 +1129,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                     className="-header"
                     style={
                       Object {
-                        "minWidth": "1100px",
+                        "minWidth": "1110px",
                       }
                     }
                   >
@@ -1135,7 +1137,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                       className="rt-thead -header"
                       style={
                         Object {
-                          "minWidth": "1100px",
+                          "minWidth": "1110px",
                         }
                       }
                     >
@@ -1149,9 +1151,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             key="0-plan_title"
                             style={
                               Object {
-                                "flex": "100 0 auto",
+                                "flex": "160 0 auto",
                                 "maxWidth": null,
-                                "width": "100px",
+                                "width": "160px",
                               }
                             }
                             toggleSort={[Function]}
@@ -1162,9 +1164,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               role="columnheader"
                               style={
                                 Object {
-                                  "flex": "100 0 auto",
+                                  "flex": "160 0 auto",
                                   "maxWidth": null,
-                                  "width": "100px",
+                                  "width": "160px",
                                 }
                               }
                               tabIndex="-1"
@@ -1189,9 +1191,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             key="1-plan_status"
                             style={
                               Object {
-                                "flex": "100 0 auto",
+                                "flex": "80 0 auto",
                                 "maxWidth": null,
-                                "width": "100px",
+                                "width": "80px",
                               }
                             }
                             toggleSort={[Function]}
@@ -1202,9 +1204,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               role="columnheader"
                               style={
                                 Object {
-                                  "flex": "100 0 auto",
+                                  "flex": "80 0 auto",
                                   "maxWidth": null,
-                                  "width": "100px",
+                                  "width": "80px",
                                 }
                               }
                               tabIndex="-1"
@@ -1389,9 +1391,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             key="6-focusArea"
                             style={
                               Object {
-                                "flex": "120 0 auto",
+                                "flex": "140 0 auto",
                                 "maxWidth": null,
-                                "width": "120px",
+                                "width": "140px",
                               }
                             }
                             toggleSort={[Function]}
@@ -1402,9 +1404,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               role="columnheader"
                               style={
                                 Object {
-                                  "flex": "120 0 auto",
+                                  "flex": "140 0 auto",
                                   "maxWidth": null,
-                                  "width": "120px",
+                                  "width": "140px",
                                 }
                               }
                               tabIndex="-1"
@@ -1469,9 +1471,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             key="8-caseNotificationDate"
                             style={
                               Object {
-                                "flex": "120 0 auto",
+                                "flex": "90 0 auto",
                                 "maxWidth": null,
-                                "width": "120px",
+                                "width": "90px",
                               }
                             }
                             toggleSort={[Function]}
@@ -1482,9 +1484,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               role="columnheader"
                               style={
                                 Object {
-                                  "flex": "120 0 auto",
+                                  "flex": "90 0 auto",
                                   "maxWidth": null,
-                                  "width": "120px",
+                                  "width": "90px",
                                 }
                               }
                               tabIndex="-1"
@@ -1549,9 +1551,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             key="10-plan_status"
                             style={
                               Object {
-                                "flex": "100 0 auto",
+                                "flex": "80 0 auto",
                                 "maxWidth": null,
-                                "width": "100px",
+                                "width": "80px",
                               }
                             }
                             toggleSort={[Function]}
@@ -1562,9 +1564,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               role="columnheader"
                               style={
                                 Object {
-                                  "flex": "100 0 auto",
+                                  "flex": "80 0 auto",
                                   "maxWidth": null,
-                                  "width": "100px",
+                                  "width": "80px",
                                 }
                               }
                               tabIndex="-1"
@@ -1592,7 +1594,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                     className=""
                     style={
                       Object {
-                        "minWidth": "1100px",
+                        "minWidth": "1110px",
                       }
                     }
                   >
@@ -1600,7 +1602,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                       className="rt-tbody"
                       style={
                         Object {
-                          "minWidth": "1100px",
+                          "minWidth": "1110px",
                         }
                       }
                     >
@@ -1624,9 +1626,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                 onClick={[Function]}
                                 style={
                                   Object {
-                                    "flex": "100 0 auto",
+                                    "flex": "160 0 auto",
                                     "maxWidth": null,
-                                    "width": "100px",
+                                    "width": "160px",
                                   }
                                 }
                               >
@@ -1636,9 +1638,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                   role="gridcell"
                                   style={
                                     Object {
-                                      "flex": "100 0 auto",
+                                      "flex": "160 0 auto",
                                       "maxWidth": null,
-                                      "width": "100px",
+                                      "width": "160px",
                                     }
                                   }
                                 >
@@ -1676,7 +1678,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                         "headerStyle": Object {},
                                         "id": "plan_title",
                                         "minResizeWidth": 11,
-                                        "minWidth": 100,
+                                        "minWidth": 160,
                                         "parentColumn": Object {
                                           "Header": "Name",
                                           "columns": Array [
@@ -1684,7 +1686,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                               "Cell": [Function],
                                               "Header": "",
                                               "accessor": "plan_title",
-                                              "minWidth": 100,
+                                              "minWidth": 160,
                                             },
                                           ],
                                         },
@@ -1811,7 +1813,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                     }
                                     value="A1-Tha Luang Village 1 Focus 01"
                                     viewIndex={0}
-                                    width={100}
+                                    width={160}
                                   >
                                     <div>
                                       A1-Tha Luang Village 1 Focus 01
@@ -1825,9 +1827,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                 onClick={[Function]}
                                 style={
                                   Object {
-                                    "flex": "100 0 auto",
+                                    "flex": "80 0 auto",
                                     "maxWidth": null,
-                                    "width": "100px",
+                                    "width": "80px",
                                   }
                                 }
                               >
@@ -1837,9 +1839,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                   role="gridcell"
                                   style={
                                     Object {
-                                      "flex": "100 0 auto",
+                                      "flex": "80 0 auto",
                                       "maxWidth": null,
-                                      "width": "100px",
+                                      "width": "80px",
                                     }
                                   }
                                 >
@@ -1956,9 +1958,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                 onClick={[Function]}
                                 style={
                                   Object {
-                                    "flex": "120 0 auto",
+                                    "flex": "140 0 auto",
                                     "maxWidth": null,
-                                    "width": "120px",
+                                    "width": "140px",
                                   }
                                 }
                               >
@@ -1968,9 +1970,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                   role="gridcell"
                                   style={
                                     Object {
-                                      "flex": "120 0 auto",
+                                      "flex": "140 0 auto",
                                       "maxWidth": null,
-                                      "width": "120px",
+                                      "width": "140px",
                                     }
                                   }
                                 >
@@ -2008,7 +2010,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                         "headerStyle": Object {},
                                         "id": "focusArea",
                                         "minResizeWidth": 11,
-                                        "minWidth": 120,
+                                        "minWidth": 140,
                                         "parentColumn": Object {
                                           "Header": "Focus Area",
                                           "columns": Array [
@@ -2016,7 +2018,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                               "Cell": [Function],
                                               "Header": "",
                                               "accessor": "focusArea",
-                                              "minWidth": 120,
+                                              "minWidth": 140,
                                             },
                                           ],
                                         },
@@ -2143,7 +2145,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                     }
                                     value="TLv1_02"
                                     viewIndex={0}
-                                    width={120}
+                                    width={140}
                                   >
                                     <div>
                                       TLv1_02
@@ -2236,9 +2238,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                 onClick={[Function]}
                                 style={
                                   Object {
-                                    "flex": "120 0 auto",
+                                    "flex": "90 0 auto",
                                     "maxWidth": null,
-                                    "width": "120px",
+                                    "width": "90px",
                                   }
                                 }
                               >
@@ -2248,9 +2250,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                   role="gridcell"
                                   style={
                                     Object {
-                                      "flex": "120 0 auto",
+                                      "flex": "90 0 auto",
                                       "maxWidth": null,
-                                      "width": "120px",
+                                      "width": "90px",
                                     }
                                   }
                                 >
@@ -2288,7 +2290,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                         "headerStyle": Object {},
                                         "id": "caseNotificationDate",
                                         "minResizeWidth": 11,
-                                        "minWidth": 120,
+                                        "minWidth": 90,
                                         "parentColumn": Object {
                                           "Header": "Case Notif. Date",
                                           "columns": Array [
@@ -2296,7 +2298,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                               "Cell": [Function],
                                               "Header": "",
                                               "accessor": "caseNotificationDate",
-                                              "minWidth": 120,
+                                              "minWidth": 90,
                                             },
                                           ],
                                         },
@@ -2423,7 +2425,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                     }
                                     value="2019-06-18"
                                     viewIndex={0}
-                                    width={120}
+                                    width={90}
                                   >
                                     <div>
                                       2019-06-18
@@ -2462,9 +2464,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                 onClick={[Function]}
                                 style={
                                   Object {
-                                    "flex": "100 0 auto",
+                                    "flex": "80 0 auto",
                                     "maxWidth": null,
-                                    "width": "100px",
+                                    "width": "80px",
                                   }
                                 }
                               >
@@ -2474,9 +2476,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                   role="gridcell"
                                   style={
                                     Object {
-                                      "flex": "100 0 auto",
+                                      "flex": "80 0 auto",
                                       "maxWidth": null,
-                                      "width": "100px",
+                                      "width": "80px",
                                     }
                                   }
                                 >
@@ -2514,7 +2516,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                         "headerStyle": Object {},
                                         "id": "plan_status",
                                         "minResizeWidth": 11,
-                                        "minWidth": 100,
+                                        "minWidth": 80,
                                         "parentColumn": Object {
                                           "Header": "Actions",
                                           "columns": Array [
@@ -2522,7 +2524,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                               "Cell": [Function],
                                               "Header": "",
                                               "accessor": "plan_status",
-                                              "minWidth": 100,
+                                              "minWidth": 80,
                                             },
                                           ],
                                         },
@@ -2649,7 +2651,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                     }
                                     value="active"
                                     viewIndex={0}
-                                    width={100}
+                                    width={80}
                                   >
                                     <div>
                                       <Link
@@ -2773,17 +2775,17 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                     "Cell": [Function],
                     "Header": "",
                     "accessor": "plan_title",
-                    "minWidth": 100,
+                    "minWidth": 160,
                   },
                 ],
               },
               Object {
-                "Header": "FI STATUS",
+                "Header": "FI Status",
                 "columns": Array [
                   Object {
                     "Header": "",
                     "accessor": "plan_status",
-                    "minWidth": 100,
+                    "minWidth": 80,
                   },
                 ],
               },
@@ -2830,7 +2832,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                     "Cell": [Function],
                     "Header": "",
                     "accessor": "focusArea",
-                    "minWidth": 120,
+                    "minWidth": 140,
                   },
                 ],
               },
@@ -2851,7 +2853,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                     "Cell": [Function],
                     "Header": "",
                     "accessor": "plan_effective_period_start",
-                    "minWidth": 120,
+                    "minWidth": 80,
                   },
                 ],
               },
@@ -2871,7 +2873,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                     "Cell": [Function],
                     "Header": "",
                     "accessor": "plan_status",
-                    "minWidth": 100,
+                    "minWidth": 80,
                   },
                 ],
               },
@@ -2991,17 +2993,17 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                       "Cell": [Function],
                       "Header": "",
                       "accessor": "plan_title",
-                      "minWidth": 100,
+                      "minWidth": 160,
                     },
                   ],
                 },
                 Object {
-                  "Header": "FI STATUS",
+                  "Header": "FI Status",
                   "columns": Array [
                     Object {
                       "Header": "",
                       "accessor": "plan_status",
-                      "minWidth": 100,
+                      "minWidth": 80,
                     },
                   ],
                 },
@@ -3169,7 +3171,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                       "Cell": [Function],
                       "Header": "",
                       "accessor": "focusArea",
-                      "minWidth": 120,
+                      "minWidth": 140,
                     },
                   ],
                 },
@@ -3190,7 +3192,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                       "Cell": [Function],
                       "Header": "",
                       "accessor": "plan_effective_period_start",
-                      "minWidth": 120,
+                      "minWidth": 80,
                     },
                   ],
                 },
@@ -3210,7 +3212,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                       "Cell": [Function],
                       "Header": "",
                       "accessor": "plan_status",
-                      "minWidth": 100,
+                      "minWidth": 80,
                     },
                   ],
                 },
@@ -3380,9 +3382,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             key="0-undefined"
                             style={
                               Object {
-                                "flex": "100 0 auto",
+                                "flex": "160 0 auto",
                                 "maxWidth": null,
-                                "width": "100px",
+                                "width": "160px",
                               }
                             }
                           >
@@ -3392,9 +3394,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               role="columnheader"
                               style={
                                 Object {
-                                  "flex": "100 0 auto",
+                                  "flex": "160 0 auto",
                                   "maxWidth": null,
-                                  "width": "100px",
+                                  "width": "160px",
                                 }
                               }
                               tabIndex="-1"
@@ -3407,9 +3409,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             key="1-undefined"
                             style={
                               Object {
-                                "flex": "100 0 auto",
+                                "flex": "80 0 auto",
                                 "maxWidth": null,
-                                "width": "100px",
+                                "width": "80px",
                               }
                             }
                           >
@@ -3419,14 +3421,14 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               role="columnheader"
                               style={
                                 Object {
-                                  "flex": "100 0 auto",
+                                  "flex": "80 0 auto",
                                   "maxWidth": null,
-                                  "width": "100px",
+                                  "width": "80px",
                                 }
                               }
                               tabIndex="-1"
                             >
-                              FI STATUS
+                              FI Status
                             </div>
                           </ThComponent>
                           <ThComponent
@@ -3527,9 +3529,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               role="columnheader"
                               style={
                                 Object {
-                                  "flex": "100 0 auto",
+                                  "flex": "80 0 auto",
                                   "maxWidth": null,
-                                  "width": "100px",
+                                  "width": "80px",
                                 }
                               }
                               tabIndex="-1"
@@ -3542,9 +3544,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             key="6-undefined"
                             style={
                               Object {
-                                "flex": "120 0 auto",
+                                "flex": "140 0 auto",
                                 "maxWidth": null,
-                                "width": "120px",
+                                "width": "140px",
                               }
                             }
                           >
@@ -3554,9 +3556,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               role="columnheader"
                               style={
                                 Object {
-                                  "flex": "120 0 auto",
+                                  "flex": "140 0 auto",
                                   "maxWidth": null,
-                                  "width": "120px",
+                                  "width": "140px",
                                 }
                               }
                               tabIndex="-1"
@@ -3596,9 +3598,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             key="8-undefined"
                             style={
                               Object {
-                                "flex": "120 0 auto",
+                                "flex": "80 0 auto",
                                 "maxWidth": null,
-                                "width": "120px",
+                                "width": "80px",
                               }
                             }
                           >
@@ -3608,9 +3610,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               role="columnheader"
                               style={
                                 Object {
-                                  "flex": "120 0 auto",
+                                  "flex": "80 0 auto",
                                   "maxWidth": null,
-                                  "width": "120px",
+                                  "width": "80px",
                                 }
                               }
                               tabIndex="-1"
@@ -3635,9 +3637,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               role="columnheader"
                               style={
                                 Object {
-                                  "flex": "100 0 auto",
+                                  "flex": "160 0 auto",
                                   "maxWidth": null,
-                                  "width": "100px",
+                                  "width": "160px",
                                 }
                               }
                               tabIndex="-1"
@@ -3650,9 +3652,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             key="10-undefined"
                             style={
                               Object {
-                                "flex": "100 0 auto",
+                                "flex": "80 0 auto",
                                 "maxWidth": null,
-                                "width": "100px",
+                                "width": "80px",
                               }
                             }
                           >
@@ -3662,9 +3664,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               role="columnheader"
                               style={
                                 Object {
-                                  "flex": "100 0 auto",
+                                  "flex": "80 0 auto",
                                   "maxWidth": null,
-                                  "width": "100px",
+                                  "width": "80px",
                                 }
                               }
                               tabIndex="-1"
@@ -3702,9 +3704,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             key="0-plan_title"
                             style={
                               Object {
-                                "flex": "100 0 auto",
+                                "flex": "160 0 auto",
                                 "maxWidth": null,
-                                "width": "100px",
+                                "width": "160px",
                               }
                             }
                             toggleSort={[Function]}
@@ -3742,9 +3744,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             key="1-plan_status"
                             style={
                               Object {
-                                "flex": "100 0 auto",
+                                "flex": "80 0 auto",
                                 "maxWidth": null,
-                                "width": "100px",
+                                "width": "80px",
                               }
                             }
                             toggleSort={[Function]}
@@ -3915,9 +3917,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               role="columnheader"
                               style={
                                 Object {
-                                  "flex": "100 0 auto",
+                                  "flex": "80 0 auto",
                                   "maxWidth": null,
-                                  "width": "100px",
+                                  "width": "80px",
                                 }
                               }
                               tabIndex="-1"
@@ -3942,9 +3944,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             key="6-focusArea"
                             style={
                               Object {
-                                "flex": "120 0 auto",
+                                "flex": "140 0 auto",
                                 "maxWidth": null,
-                                "width": "120px",
+                                "width": "140px",
                               }
                             }
                             toggleSort={[Function]}
@@ -3955,9 +3957,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               role="columnheader"
                               style={
                                 Object {
-                                  "flex": "120 0 auto",
+                                  "flex": "140 0 auto",
                                   "maxWidth": null,
-                                  "width": "120px",
+                                  "width": "140px",
                                 }
                               }
                               tabIndex="-1"
@@ -4022,9 +4024,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             key="8-plan_effective_period_start"
                             style={
                               Object {
-                                "flex": "120 0 auto",
+                                "flex": "80 0 auto",
                                 "maxWidth": null,
-                                "width": "120px",
+                                "width": "80px",
                               }
                             }
                             toggleSort={[Function]}
@@ -4035,9 +4037,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               role="columnheader"
                               style={
                                 Object {
-                                  "flex": "120 0 auto",
+                                  "flex": "80 0 auto",
                                   "maxWidth": null,
-                                  "width": "120px",
+                                  "width": "80px",
                                 }
                               }
                               tabIndex="-1"
@@ -4102,9 +4104,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             key="10-plan_status"
                             style={
                               Object {
-                                "flex": "100 0 auto",
+                                "flex": "80 0 auto",
                                 "maxWidth": null,
-                                "width": "100px",
+                                "width": "80px",
                               }
                             }
                             toggleSort={[Function]}
@@ -4177,9 +4179,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                 onClick={[Function]}
                                 style={
                                   Object {
-                                    "flex": "100 0 auto",
+                                    "flex": "160 0 auto",
                                     "maxWidth": null,
-                                    "width": "100px",
+                                    "width": "160px",
                                   }
                                 }
                               >
@@ -4189,9 +4191,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                   role="gridcell"
                                   style={
                                     Object {
-                                      "flex": "100 0 auto",
+                                      "flex": "160 0 auto",
                                       "maxWidth": null,
-                                      "width": "100px",
+                                      "width": "160px",
                                     }
                                   }
                                 >
@@ -4229,7 +4231,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                         "headerStyle": Object {},
                                         "id": "plan_title",
                                         "minResizeWidth": 11,
-                                        "minWidth": 100,
+                                        "minWidth": 160,
                                         "parentColumn": Object {
                                           "Header": "Name",
                                           "columns": Array [
@@ -4237,7 +4239,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                               "Cell": [Function],
                                               "Header": "",
                                               "accessor": "plan_title",
-                                              "minWidth": 100,
+                                              "minWidth": 160,
                                             },
                                           ],
                                         },
@@ -4364,7 +4366,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                     }
                                     value="A1-Tha Luang Village 1 Focus 01"
                                     viewIndex={0}
-                                    width={100}
+                                    width={160}
                                   >
                                     <div>
                                       A1-Tha Luang Village 1 Focus 01
@@ -4378,9 +4380,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                 onClick={[Function]}
                                 style={
                                   Object {
-                                    "flex": "100 0 auto",
+                                    "flex": "80 0 auto",
                                     "maxWidth": null,
-                                    "width": "100px",
+                                    "width": "80px",
                                   }
                                 }
                               >
@@ -4390,9 +4392,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                   role="gridcell"
                                   style={
                                     Object {
-                                      "flex": "100 0 auto",
+                                      "flex": "80 0 auto",
                                       "maxWidth": null,
-                                      "width": "100px",
+                                      "width": "80px",
                                     }
                                   }
                                 >
@@ -4509,9 +4511,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                 onClick={[Function]}
                                 style={
                                   Object {
-                                    "flex": "120 0 auto",
+                                    "flex": "140 0 auto",
                                     "maxWidth": null,
-                                    "width": "120px",
+                                    "width": "140px",
                                   }
                                 }
                               >
@@ -4521,9 +4523,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                   role="gridcell"
                                   style={
                                     Object {
-                                      "flex": "120 0 auto",
+                                      "flex": "140 0 auto",
                                       "maxWidth": null,
-                                      "width": "120px",
+                                      "width": "140px",
                                     }
                                   }
                                 >
@@ -4561,7 +4563,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                         "headerStyle": Object {},
                                         "id": "focusArea",
                                         "minResizeWidth": 11,
-                                        "minWidth": 120,
+                                        "minWidth": 140,
                                         "parentColumn": Object {
                                           "Header": "Focus Area",
                                           "columns": Array [
@@ -4569,7 +4571,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                               "Cell": [Function],
                                               "Header": "",
                                               "accessor": "focusArea",
-                                              "minWidth": 120,
+                                              "minWidth": 140,
                                             },
                                           ],
                                         },
@@ -4696,7 +4698,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                     }
                                     value="NVI_439"
                                     viewIndex={0}
-                                    width={120}
+                                    width={140}
                                   >
                                     <div>
                                       NVI_439
@@ -4789,9 +4791,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                 onClick={[Function]}
                                 style={
                                   Object {
-                                    "flex": "120 0 auto",
+                                    "flex": "80 0 auto",
                                     "maxWidth": null,
-                                    "width": "120px",
+                                    "width": "80px",
                                   }
                                 }
                               >
@@ -4801,9 +4803,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                   role="gridcell"
                                   style={
                                     Object {
-                                      "flex": "120 0 auto",
+                                      "flex": "80 0 auto",
                                       "maxWidth": null,
-                                      "width": "120px",
+                                      "width": "80px",
                                     }
                                   }
                                 >
@@ -4841,7 +4843,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                         "headerStyle": Object {},
                                         "id": "plan_effective_period_start",
                                         "minResizeWidth": 11,
-                                        "minWidth": 120,
+                                        "minWidth": 80,
                                         "parentColumn": Object {
                                           "Header": "Start Date",
                                           "columns": Array [
@@ -4849,7 +4851,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                               "Cell": [Function],
                                               "Header": "",
                                               "accessor": "plan_effective_period_start",
-                                              "minWidth": 120,
+                                              "minWidth": 80,
                                             },
                                           ],
                                         },
@@ -4976,7 +4978,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                     }
                                     value="2019-07-31"
                                     viewIndex={0}
-                                    width={120}
+                                    width={80}
                                   >
                                     <div>
                                       2019-07-31
@@ -4990,9 +4992,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                 onClick={[Function]}
                                 style={
                                   Object {
-                                    "flex": "100 0 auto",
+                                    "flex": "80 0 auto",
                                     "maxWidth": null,
-                                    "width": "100px",
+                                    "width": "80px",
                                   }
                                 }
                               >
@@ -5002,9 +5004,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                   role="gridcell"
                                   style={
                                     Object {
-                                      "flex": "100 0 auto",
+                                      "flex": "80 0 auto",
                                       "maxWidth": null,
-                                      "width": "100px",
+                                      "width": "80px",
                                     }
                                   }
                                 >
@@ -5069,7 +5071,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                         "headerStyle": Object {},
                                         "id": "plan_status",
                                         "minResizeWidth": 11,
-                                        "minWidth": 100,
+                                        "minWidth": 80,
                                         "parentColumn": Object {
                                           "Header": "Actions",
                                           "columns": Array [
@@ -5077,7 +5079,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                               "Cell": [Function],
                                               "Header": "",
                                               "accessor": "plan_status",
-                                              "minWidth": 100,
+                                              "minWidth": 80,
                                             },
                                           ],
                                         },
@@ -5204,7 +5206,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                     }
                                     value="active"
                                     viewIndex={0}
-                                    width={100}
+                                    width={80}
                                   >
                                     <div>
                                       <Link
@@ -5789,6 +5791,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
           </FormGroup>
           <Button
             color="success"
+            onClick={[Function]}
             outline={true}
             tag="button"
           >
@@ -5796,6 +5799,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
               aria-label={null}
               className="btn btn-outline-success"
               onClick={[Function]}
+              type="button"
             >
               Search
             </button>
@@ -5821,17 +5825,17 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                     "Cell": [Function],
                     "Header": "",
                     "accessor": "plan_title",
-                    "minWidth": 100,
+                    "minWidth": 160,
                   },
                 ],
               },
               Object {
-                "Header": "FI STATUS",
+                "Header": "FI Status",
                 "columns": Array [
                   Object {
                     "Header": "",
                     "accessor": "plan_status",
-                    "minWidth": 100,
+                    "minWidth": 80,
                   },
                 ],
               },
@@ -5878,7 +5882,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                     "Cell": [Function],
                     "Header": "",
                     "accessor": "focusArea",
-                    "minWidth": 120,
+                    "minWidth": 140,
                   },
                 ],
               },
@@ -5899,7 +5903,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                     "Cell": [Function],
                     "Header": "",
                     "accessor": "caseNotificationDate",
-                    "minWidth": 120,
+                    "minWidth": 90,
                   },
                 ],
               },
@@ -5919,7 +5923,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                     "Cell": [Function],
                     "Header": "",
                     "accessor": "plan_status",
-                    "minWidth": 100,
+                    "minWidth": 80,
                   },
                 ],
               },
@@ -6039,17 +6043,17 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                       "Cell": [Function],
                       "Header": "",
                       "accessor": "plan_title",
-                      "minWidth": 100,
+                      "minWidth": 160,
                     },
                   ],
                 },
                 Object {
-                  "Header": "FI STATUS",
+                  "Header": "FI Status",
                   "columns": Array [
                     Object {
                       "Header": "",
                       "accessor": "plan_status",
-                      "minWidth": 100,
+                      "minWidth": 80,
                     },
                   ],
                 },
@@ -6096,7 +6100,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                       "Cell": [Function],
                       "Header": "",
                       "accessor": "focusArea",
-                      "minWidth": 120,
+                      "minWidth": 140,
                     },
                   ],
                 },
@@ -6117,7 +6121,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                       "Cell": [Function],
                       "Header": "",
                       "accessor": "caseNotificationDate",
-                      "minWidth": 120,
+                      "minWidth": 90,
                     },
                   ],
                 },
@@ -6137,7 +6141,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                       "Cell": [Function],
                       "Header": "",
                       "accessor": "plan_status",
-                      "minWidth": 100,
+                      "minWidth": 80,
                     },
                   ],
                 },
@@ -6285,7 +6289,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                     className="-headerGroups"
                     style={
                       Object {
-                        "minWidth": "1100px",
+                        "minWidth": "1110px",
                       }
                     }
                   >
@@ -6293,7 +6297,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                       className="rt-thead -headerGroups"
                       style={
                         Object {
-                          "minWidth": "1100px",
+                          "minWidth": "1110px",
                         }
                       }
                     >
@@ -6307,9 +6311,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             key="0-undefined"
                             style={
                               Object {
-                                "flex": "100 0 auto",
+                                "flex": "160 0 auto",
                                 "maxWidth": null,
-                                "width": "100px",
+                                "width": "160px",
                               }
                             }
                           >
@@ -6319,9 +6323,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               role="columnheader"
                               style={
                                 Object {
-                                  "flex": "100 0 auto",
+                                  "flex": "160 0 auto",
                                   "maxWidth": null,
-                                  "width": "100px",
+                                  "width": "160px",
                                 }
                               }
                               tabIndex="-1"
@@ -6334,9 +6338,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             key="1-undefined"
                             style={
                               Object {
-                                "flex": "100 0 auto",
+                                "flex": "80 0 auto",
                                 "maxWidth": null,
-                                "width": "100px",
+                                "width": "80px",
                               }
                             }
                           >
@@ -6346,14 +6350,14 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               role="columnheader"
                               style={
                                 Object {
-                                  "flex": "100 0 auto",
+                                  "flex": "80 0 auto",
                                   "maxWidth": null,
-                                  "width": "100px",
+                                  "width": "80px",
                                 }
                               }
                               tabIndex="-1"
                             >
-                              FI STATUS
+                              FI Status
                             </div>
                           </ThComponent>
                           <ThComponent
@@ -6454,9 +6458,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               role="columnheader"
                               style={
                                 Object {
-                                  "flex": "100 0 auto",
+                                  "flex": "80 0 auto",
                                   "maxWidth": null,
-                                  "width": "100px",
+                                  "width": "80px",
                                 }
                               }
                               tabIndex="-1"
@@ -6469,9 +6473,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             key="6-undefined"
                             style={
                               Object {
-                                "flex": "120 0 auto",
+                                "flex": "140 0 auto",
                                 "maxWidth": null,
-                                "width": "120px",
+                                "width": "140px",
                               }
                             }
                           >
@@ -6481,9 +6485,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               role="columnheader"
                               style={
                                 Object {
-                                  "flex": "120 0 auto",
+                                  "flex": "140 0 auto",
                                   "maxWidth": null,
-                                  "width": "120px",
+                                  "width": "140px",
                                 }
                               }
                               tabIndex="-1"
@@ -6523,9 +6527,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             key="8-undefined"
                             style={
                               Object {
-                                "flex": "120 0 auto",
+                                "flex": "90 0 auto",
                                 "maxWidth": null,
-                                "width": "120px",
+                                "width": "90px",
                               }
                             }
                           >
@@ -6535,9 +6539,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               role="columnheader"
                               style={
                                 Object {
-                                  "flex": "120 0 auto",
+                                  "flex": "90 0 auto",
                                   "maxWidth": null,
-                                  "width": "120px",
+                                  "width": "90px",
                                 }
                               }
                               tabIndex="-1"
@@ -6562,9 +6566,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               role="columnheader"
                               style={
                                 Object {
-                                  "flex": "100 0 auto",
+                                  "flex": "160 0 auto",
                                   "maxWidth": null,
-                                  "width": "100px",
+                                  "width": "160px",
                                 }
                               }
                               tabIndex="-1"
@@ -6577,9 +6581,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             key="10-undefined"
                             style={
                               Object {
-                                "flex": "100 0 auto",
+                                "flex": "80 0 auto",
                                 "maxWidth": null,
-                                "width": "100px",
+                                "width": "80px",
                               }
                             }
                           >
@@ -6589,9 +6593,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               role="columnheader"
                               style={
                                 Object {
-                                  "flex": "100 0 auto",
+                                  "flex": "80 0 auto",
                                   "maxWidth": null,
-                                  "width": "100px",
+                                  "width": "80px",
                                 }
                               }
                               tabIndex="-1"
@@ -6607,7 +6611,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                     className="-header"
                     style={
                       Object {
-                        "minWidth": "1100px",
+                        "minWidth": "1110px",
                       }
                     }
                   >
@@ -6615,7 +6619,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                       className="rt-thead -header"
                       style={
                         Object {
-                          "minWidth": "1100px",
+                          "minWidth": "1110px",
                         }
                       }
                     >
@@ -6629,9 +6633,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             key="0-plan_title"
                             style={
                               Object {
-                                "flex": "100 0 auto",
+                                "flex": "160 0 auto",
                                 "maxWidth": null,
-                                "width": "100px",
+                                "width": "160px",
                               }
                             }
                             toggleSort={[Function]}
@@ -6669,9 +6673,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             key="1-plan_status"
                             style={
                               Object {
-                                "flex": "100 0 auto",
+                                "flex": "80 0 auto",
                                 "maxWidth": null,
-                                "width": "100px",
+                                "width": "80px",
                               }
                             }
                             toggleSort={[Function]}
@@ -6842,9 +6846,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               role="columnheader"
                               style={
                                 Object {
-                                  "flex": "100 0 auto",
+                                  "flex": "80 0 auto",
                                   "maxWidth": null,
-                                  "width": "100px",
+                                  "width": "80px",
                                 }
                               }
                               tabIndex="-1"
@@ -6869,9 +6873,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             key="6-focusArea"
                             style={
                               Object {
-                                "flex": "120 0 auto",
+                                "flex": "140 0 auto",
                                 "maxWidth": null,
-                                "width": "120px",
+                                "width": "140px",
                               }
                             }
                             toggleSort={[Function]}
@@ -6882,9 +6886,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               role="columnheader"
                               style={
                                 Object {
-                                  "flex": "120 0 auto",
+                                  "flex": "140 0 auto",
                                   "maxWidth": null,
-                                  "width": "120px",
+                                  "width": "140px",
                                 }
                               }
                               tabIndex="-1"
@@ -6949,9 +6953,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             key="8-caseNotificationDate"
                             style={
                               Object {
-                                "flex": "120 0 auto",
+                                "flex": "90 0 auto",
                                 "maxWidth": null,
-                                "width": "120px",
+                                "width": "90px",
                               }
                             }
                             toggleSort={[Function]}
@@ -6962,9 +6966,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               role="columnheader"
                               style={
                                 Object {
-                                  "flex": "120 0 auto",
+                                  "flex": "90 0 auto",
                                   "maxWidth": null,
-                                  "width": "120px",
+                                  "width": "90px",
                                 }
                               }
                               tabIndex="-1"
@@ -7029,9 +7033,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             key="10-plan_status"
                             style={
                               Object {
-                                "flex": "100 0 auto",
+                                "flex": "80 0 auto",
                                 "maxWidth": null,
-                                "width": "100px",
+                                "width": "80px",
                               }
                             }
                             toggleSort={[Function]}
@@ -7072,7 +7076,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                     className=""
                     style={
                       Object {
-                        "minWidth": "1100px",
+                        "minWidth": "1110px",
                       }
                     }
                   >
@@ -7080,7 +7084,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                       className="rt-tbody"
                       style={
                         Object {
-                          "minWidth": "1100px",
+                          "minWidth": "1110px",
                         }
                       }
                     >
@@ -7104,9 +7108,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                 onClick={[Function]}
                                 style={
                                   Object {
-                                    "flex": "100 0 auto",
+                                    "flex": "160 0 auto",
                                     "maxWidth": null,
-                                    "width": "100px",
+                                    "width": "160px",
                                   }
                                 }
                               >
@@ -7116,9 +7120,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                   role="gridcell"
                                   style={
                                     Object {
-                                      "flex": "100 0 auto",
+                                      "flex": "160 0 auto",
                                       "maxWidth": null,
-                                      "width": "100px",
+                                      "width": "160px",
                                     }
                                   }
                                 >
@@ -7156,7 +7160,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                         "headerStyle": Object {},
                                         "id": "plan_title",
                                         "minResizeWidth": 11,
-                                        "minWidth": 100,
+                                        "minWidth": 160,
                                         "parentColumn": Object {
                                           "Header": "Name",
                                           "columns": Array [
@@ -7164,7 +7168,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                               "Cell": [Function],
                                               "Header": "",
                                               "accessor": "plan_title",
-                                              "minWidth": 100,
+                                              "minWidth": 160,
                                             },
                                           ],
                                         },
@@ -7291,7 +7295,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                     }
                                     value="A1-Tha Luang Village 1 Focus 01"
                                     viewIndex={0}
-                                    width={100}
+                                    width={160}
                                   >
                                     <div>
                                       A1-Tha Luang Village 1 Focus 01
@@ -7305,9 +7309,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                 onClick={[Function]}
                                 style={
                                   Object {
-                                    "flex": "100 0 auto",
+                                    "flex": "80 0 auto",
                                     "maxWidth": null,
-                                    "width": "100px",
+                                    "width": "80px",
                                   }
                                 }
                               >
@@ -7317,9 +7321,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                   role="gridcell"
                                   style={
                                     Object {
-                                      "flex": "100 0 auto",
+                                      "flex": "80 0 auto",
                                       "maxWidth": null,
-                                      "width": "100px",
+                                      "width": "80px",
                                     }
                                   }
                                 >
@@ -7436,9 +7440,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                 onClick={[Function]}
                                 style={
                                   Object {
-                                    "flex": "120 0 auto",
+                                    "flex": "140 0 auto",
                                     "maxWidth": null,
-                                    "width": "120px",
+                                    "width": "140px",
                                   }
                                 }
                               >
@@ -7448,9 +7452,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                   role="gridcell"
                                   style={
                                     Object {
-                                      "flex": "120 0 auto",
+                                      "flex": "140 0 auto",
                                       "maxWidth": null,
-                                      "width": "120px",
+                                      "width": "140px",
                                     }
                                   }
                                 >
@@ -7488,7 +7492,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                         "headerStyle": Object {},
                                         "id": "focusArea",
                                         "minResizeWidth": 11,
-                                        "minWidth": 120,
+                                        "minWidth": 140,
                                         "parentColumn": Object {
                                           "Header": "Focus Area",
                                           "columns": Array [
@@ -7496,7 +7500,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                               "Cell": [Function],
                                               "Header": "",
                                               "accessor": "focusArea",
-                                              "minWidth": 120,
+                                              "minWidth": 140,
                                             },
                                           ],
                                         },
@@ -7623,7 +7627,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                     }
                                     value="TLv1_02"
                                     viewIndex={0}
-                                    width={120}
+                                    width={140}
                                   >
                                     <div>
                                       TLv1_02
@@ -7716,9 +7720,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                 onClick={[Function]}
                                 style={
                                   Object {
-                                    "flex": "120 0 auto",
+                                    "flex": "90 0 auto",
                                     "maxWidth": null,
-                                    "width": "120px",
+                                    "width": "90px",
                                   }
                                 }
                               >
@@ -7728,9 +7732,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                   role="gridcell"
                                   style={
                                     Object {
-                                      "flex": "120 0 auto",
+                                      "flex": "90 0 auto",
                                       "maxWidth": null,
-                                      "width": "120px",
+                                      "width": "90px",
                                     }
                                   }
                                 >
@@ -7768,7 +7772,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                         "headerStyle": Object {},
                                         "id": "caseNotificationDate",
                                         "minResizeWidth": 11,
-                                        "minWidth": 120,
+                                        "minWidth": 90,
                                         "parentColumn": Object {
                                           "Header": "Case Notif. Date",
                                           "columns": Array [
@@ -7776,7 +7780,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                               "Cell": [Function],
                                               "Header": "",
                                               "accessor": "caseNotificationDate",
-                                              "minWidth": 120,
+                                              "minWidth": 90,
                                             },
                                           ],
                                         },
@@ -7903,7 +7907,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                     }
                                     value="2019-06-18"
                                     viewIndex={0}
-                                    width={120}
+                                    width={90}
                                   >
                                     <div>
                                       2019-06-18
@@ -7917,9 +7921,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                 onClick={[Function]}
                                 style={
                                   Object {
-                                    "flex": "100 0 auto",
+                                    "flex": "80 0 auto",
                                     "maxWidth": null,
-                                    "width": "100px",
+                                    "width": "80px",
                                   }
                                 }
                               >
@@ -7954,9 +7958,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                   role="gridcell"
                                   style={
                                     Object {
-                                      "flex": "100 0 auto",
+                                      "flex": "80 0 auto",
                                       "maxWidth": null,
-                                      "width": "100px",
+                                      "width": "80px",
                                     }
                                   }
                                 >
@@ -7994,7 +7998,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                         "headerStyle": Object {},
                                         "id": "plan_status",
                                         "minResizeWidth": 11,
-                                        "minWidth": 100,
+                                        "minWidth": 80,
                                         "parentColumn": Object {
                                           "Header": "Actions",
                                           "columns": Array [
@@ -8002,7 +8006,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                               "Cell": [Function],
                                               "Header": "",
                                               "accessor": "plan_status",
-                                              "minWidth": 100,
+                                              "minWidth": 80,
                                             },
                                           ],
                                         },
@@ -8129,7 +8133,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                     }
                                     value="active"
                                     viewIndex={0}
-                                    width={100}
+                                    width={80}
                                   >
                                     <div>
                                       <Link
@@ -8253,17 +8257,17 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                     "Cell": [Function],
                     "Header": "",
                     "accessor": "plan_title",
-                    "minWidth": 100,
+                    "minWidth": 160,
                   },
                 ],
               },
               Object {
-                "Header": "FI STATUS",
+                "Header": "FI Status",
                 "columns": Array [
                   Object {
                     "Header": "",
                     "accessor": "plan_status",
-                    "minWidth": 100,
+                    "minWidth": 80,
                   },
                 ],
               },
@@ -8310,7 +8314,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                     "Cell": [Function],
                     "Header": "",
                     "accessor": "focusArea",
-                    "minWidth": 120,
+                    "minWidth": 140,
                   },
                 ],
               },
@@ -8331,7 +8335,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                     "Cell": [Function],
                     "Header": "",
                     "accessor": "plan_effective_period_start",
-                    "minWidth": 120,
+                    "minWidth": 80,
                   },
                 ],
               },
@@ -8351,7 +8355,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                     "Cell": [Function],
                     "Header": "",
                     "accessor": "plan_status",
-                    "minWidth": 100,
+                    "minWidth": 80,
                   },
                 ],
               },
@@ -8471,17 +8475,17 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                       "Cell": [Function],
                       "Header": "",
                       "accessor": "plan_title",
-                      "minWidth": 100,
+                      "minWidth": 160,
                     },
                   ],
                 },
                 Object {
-                  "Header": "FI STATUS",
+                  "Header": "FI Status",
                   "columns": Array [
                     Object {
                       "Header": "",
                       "accessor": "plan_status",
-                      "minWidth": 100,
+                      "minWidth": 80,
                     },
                   ],
                 },
@@ -8528,7 +8532,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                       "Cell": [Function],
                       "Header": "",
                       "accessor": "focusArea",
-                      "minWidth": 120,
+                      "minWidth": 140,
                     },
                   ],
                 },
@@ -8549,7 +8553,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                       "Cell": [Function],
                       "Header": "",
                       "accessor": "plan_effective_period_start",
-                      "minWidth": 120,
+                      "minWidth": 80,
                     },
                   ],
                 },
@@ -8569,7 +8573,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                       "Cell": [Function],
                       "Header": "",
                       "accessor": "plan_status",
-                      "minWidth": 100,
+                      "minWidth": 80,
                     },
                   ],
                 },
@@ -8739,9 +8743,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             key="0-undefined"
                             style={
                               Object {
-                                "flex": "100 0 auto",
+                                "flex": "160 0 auto",
                                 "maxWidth": null,
-                                "width": "100px",
+                                "width": "160px",
                               }
                             }
                           >
@@ -8751,9 +8755,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               role="columnheader"
                               style={
                                 Object {
-                                  "flex": "100 0 auto",
+                                  "flex": "160 0 auto",
                                   "maxWidth": null,
-                                  "width": "100px",
+                                  "width": "160px",
                                 }
                               }
                               tabIndex="-1"
@@ -8766,9 +8770,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             key="1-undefined"
                             style={
                               Object {
-                                "flex": "100 0 auto",
+                                "flex": "80 0 auto",
                                 "maxWidth": null,
-                                "width": "100px",
+                                "width": "80px",
                               }
                             }
                           >
@@ -8778,14 +8782,14 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               role="columnheader"
                               style={
                                 Object {
-                                  "flex": "100 0 auto",
+                                  "flex": "80 0 auto",
                                   "maxWidth": null,
-                                  "width": "100px",
+                                  "width": "80px",
                                 }
                               }
                               tabIndex="-1"
                             >
-                              FI STATUS
+                              FI Status
                             </div>
                           </ThComponent>
                           <ThComponent
@@ -8886,9 +8890,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               role="columnheader"
                               style={
                                 Object {
-                                  "flex": "100 0 auto",
+                                  "flex": "80 0 auto",
                                   "maxWidth": null,
-                                  "width": "100px",
+                                  "width": "80px",
                                 }
                               }
                               tabIndex="-1"
@@ -8901,9 +8905,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             key="6-undefined"
                             style={
                               Object {
-                                "flex": "120 0 auto",
+                                "flex": "140 0 auto",
                                 "maxWidth": null,
-                                "width": "120px",
+                                "width": "140px",
                               }
                             }
                           >
@@ -8913,9 +8917,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               role="columnheader"
                               style={
                                 Object {
-                                  "flex": "120 0 auto",
+                                  "flex": "140 0 auto",
                                   "maxWidth": null,
-                                  "width": "120px",
+                                  "width": "140px",
                                 }
                               }
                               tabIndex="-1"
@@ -8955,9 +8959,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             key="8-undefined"
                             style={
                               Object {
-                                "flex": "120 0 auto",
+                                "flex": "80 0 auto",
                                 "maxWidth": null,
-                                "width": "120px",
+                                "width": "80px",
                               }
                             }
                           >
@@ -8967,9 +8971,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               role="columnheader"
                               style={
                                 Object {
-                                  "flex": "120 0 auto",
+                                  "flex": "80 0 auto",
                                   "maxWidth": null,
-                                  "width": "120px",
+                                  "width": "80px",
                                 }
                               }
                               tabIndex="-1"
@@ -8994,9 +8998,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               role="columnheader"
                               style={
                                 Object {
-                                  "flex": "100 0 auto",
+                                  "flex": "160 0 auto",
                                   "maxWidth": null,
-                                  "width": "100px",
+                                  "width": "160px",
                                 }
                               }
                               tabIndex="-1"
@@ -9009,9 +9013,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             key="10-undefined"
                             style={
                               Object {
-                                "flex": "100 0 auto",
+                                "flex": "80 0 auto",
                                 "maxWidth": null,
-                                "width": "100px",
+                                "width": "80px",
                               }
                             }
                           >
@@ -9021,9 +9025,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               role="columnheader"
                               style={
                                 Object {
-                                  "flex": "100 0 auto",
+                                  "flex": "80 0 auto",
                                   "maxWidth": null,
-                                  "width": "100px",
+                                  "width": "80px",
                                 }
                               }
                               tabIndex="-1"
@@ -9061,9 +9065,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             key="0-plan_title"
                             style={
                               Object {
-                                "flex": "100 0 auto",
+                                "flex": "160 0 auto",
                                 "maxWidth": null,
-                                "width": "100px",
+                                "width": "160px",
                               }
                             }
                             toggleSort={[Function]}
@@ -9101,9 +9105,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             key="1-plan_status"
                             style={
                               Object {
-                                "flex": "100 0 auto",
+                                "flex": "80 0 auto",
                                 "maxWidth": null,
-                                "width": "100px",
+                                "width": "80px",
                               }
                             }
                             toggleSort={[Function]}
@@ -9274,9 +9278,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               role="columnheader"
                               style={
                                 Object {
-                                  "flex": "100 0 auto",
+                                  "flex": "80 0 auto",
                                   "maxWidth": null,
-                                  "width": "100px",
+                                  "width": "80px",
                                 }
                               }
                               tabIndex="-1"
@@ -9301,9 +9305,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             key="6-focusArea"
                             style={
                               Object {
-                                "flex": "120 0 auto",
+                                "flex": "140 0 auto",
                                 "maxWidth": null,
-                                "width": "120px",
+                                "width": "140px",
                               }
                             }
                             toggleSort={[Function]}
@@ -9314,9 +9318,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               role="columnheader"
                               style={
                                 Object {
-                                  "flex": "120 0 auto",
+                                  "flex": "140 0 auto",
                                   "maxWidth": null,
-                                  "width": "120px",
+                                  "width": "140px",
                                 }
                               }
                               tabIndex="-1"
@@ -9381,9 +9385,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             key="8-plan_effective_period_start"
                             style={
                               Object {
-                                "flex": "120 0 auto",
+                                "flex": "80 0 auto",
                                 "maxWidth": null,
-                                "width": "120px",
+                                "width": "80px",
                               }
                             }
                             toggleSort={[Function]}
@@ -9394,9 +9398,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               role="columnheader"
                               style={
                                 Object {
-                                  "flex": "120 0 auto",
+                                  "flex": "80 0 auto",
                                   "maxWidth": null,
-                                  "width": "120px",
+                                  "width": "80px",
                                 }
                               }
                               tabIndex="-1"
@@ -9461,9 +9465,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             key="10-plan_status"
                             style={
                               Object {
-                                "flex": "100 0 auto",
+                                "flex": "80 0 auto",
                                 "maxWidth": null,
-                                "width": "100px",
+                                "width": "80px",
                               }
                             }
                             toggleSort={[Function]}
@@ -9536,9 +9540,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                 onClick={[Function]}
                                 style={
                                   Object {
-                                    "flex": "100 0 auto",
+                                    "flex": "160 0 auto",
                                     "maxWidth": null,
-                                    "width": "100px",
+                                    "width": "160px",
                                   }
                                 }
                               >
@@ -9548,9 +9552,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                   role="gridcell"
                                   style={
                                     Object {
-                                      "flex": "100 0 auto",
+                                      "flex": "160 0 auto",
                                       "maxWidth": null,
-                                      "width": "100px",
+                                      "width": "160px",
                                     }
                                   }
                                 >
@@ -9588,7 +9592,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                         "headerStyle": Object {},
                                         "id": "plan_title",
                                         "minResizeWidth": 11,
-                                        "minWidth": 100,
+                                        "minWidth": 160,
                                         "parentColumn": Object {
                                           "Header": "Name",
                                           "columns": Array [
@@ -9596,7 +9600,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                               "Cell": [Function],
                                               "Header": "",
                                               "accessor": "plan_title",
-                                              "minWidth": 100,
+                                              "minWidth": 160,
                                             },
                                           ],
                                         },
@@ -9723,7 +9727,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                     }
                                     value="A1-Tha Luang Village 1 Focus 01"
                                     viewIndex={0}
-                                    width={100}
+                                    width={160}
                                   >
                                     <div>
                                       A1-Tha Luang Village 1 Focus 01
@@ -9737,9 +9741,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                 onClick={[Function]}
                                 style={
                                   Object {
-                                    "flex": "100 0 auto",
+                                    "flex": "80 0 auto",
                                     "maxWidth": null,
-                                    "width": "100px",
+                                    "width": "80px",
                                   }
                                 }
                               >
@@ -9749,9 +9753,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                   role="gridcell"
                                   style={
                                     Object {
-                                      "flex": "100 0 auto",
+                                      "flex": "80 0 auto",
                                       "maxWidth": null,
-                                      "width": "100px",
+                                      "width": "80px",
                                     }
                                   }
                                 >
@@ -9868,9 +9872,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                 onClick={[Function]}
                                 style={
                                   Object {
-                                    "flex": "120 0 auto",
+                                    "flex": "140 0 auto",
                                     "maxWidth": null,
-                                    "width": "120px",
+                                    "width": "140px",
                                   }
                                 }
                               >
@@ -9880,9 +9884,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                   role="gridcell"
                                   style={
                                     Object {
-                                      "flex": "120 0 auto",
+                                      "flex": "140 0 auto",
                                       "maxWidth": null,
-                                      "width": "120px",
+                                      "width": "140px",
                                     }
                                   }
                                 >
@@ -9920,7 +9924,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                         "headerStyle": Object {},
                                         "id": "focusArea",
                                         "minResizeWidth": 11,
-                                        "minWidth": 120,
+                                        "minWidth": 140,
                                         "parentColumn": Object {
                                           "Header": "Focus Area",
                                           "columns": Array [
@@ -9928,7 +9932,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                               "Cell": [Function],
                                               "Header": "",
                                               "accessor": "focusArea",
-                                              "minWidth": 120,
+                                              "minWidth": 140,
                                             },
                                           ],
                                         },
@@ -10055,7 +10059,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                     }
                                     value="NVI_439"
                                     viewIndex={0}
-                                    width={120}
+                                    width={140}
                                   >
                                     <div>
                                       NVI_439
@@ -10148,9 +10152,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                 onClick={[Function]}
                                 style={
                                   Object {
-                                    "flex": "120 0 auto",
+                                    "flex": "80 0 auto",
                                     "maxWidth": null,
-                                    "width": "120px",
+                                    "width": "80px",
                                   }
                                 }
                               >
@@ -10160,9 +10164,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                   role="gridcell"
                                   style={
                                     Object {
-                                      "flex": "120 0 auto",
+                                      "flex": "80 0 auto",
                                       "maxWidth": null,
-                                      "width": "120px",
+                                      "width": "80px",
                                     }
                                   }
                                 >
@@ -10200,7 +10204,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                         "headerStyle": Object {},
                                         "id": "plan_effective_period_start",
                                         "minResizeWidth": 11,
-                                        "minWidth": 120,
+                                        "minWidth": 80,
                                         "parentColumn": Object {
                                           "Header": "Start Date",
                                           "columns": Array [
@@ -10208,7 +10212,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                               "Cell": [Function],
                                               "Header": "",
                                               "accessor": "plan_effective_period_start",
-                                              "minWidth": 120,
+                                              "minWidth": 80,
                                             },
                                           ],
                                         },
@@ -10335,7 +10339,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                     }
                                     value="2019-07-31"
                                     viewIndex={0}
-                                    width={120}
+                                    width={80}
                                   >
                                     <div>
                                       2019-07-31
@@ -10349,9 +10353,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                 onClick={[Function]}
                                 style={
                                   Object {
-                                    "flex": "100 0 auto",
+                                    "flex": "80 0 auto",
                                     "maxWidth": null,
-                                    "width": "100px",
+                                    "width": "80px",
                                   }
                                 }
                               >
@@ -10361,9 +10365,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                   role="gridcell"
                                   style={
                                     Object {
-                                      "flex": "100 0 auto",
+                                      "flex": "80 0 auto",
                                       "maxWidth": null,
-                                      "width": "100px",
+                                      "width": "80px",
                                     }
                                   }
                                 >
@@ -10428,7 +10432,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                         "headerStyle": Object {},
                                         "id": "plan_status",
                                         "minResizeWidth": 11,
-                                        "minWidth": 100,
+                                        "minWidth": 80,
                                         "parentColumn": Object {
                                           "Header": "Actions",
                                           "columns": Array [
@@ -10436,7 +10440,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                               "Cell": [Function],
                                               "Header": "",
                                               "accessor": "plan_status",
-                                              "minWidth": 100,
+                                              "minWidth": 80,
                                             },
                                           ],
                                         },
@@ -10563,7 +10567,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                     }
                                     value="active"
                                     viewIndex={0}
-                                    width={100}
+                                    width={80}
                                   >
                                     <div>
                                       <Link
@@ -10786,7 +10790,7 @@ Array [
           className="-headerGroups"
           style={
             Object {
-              "minWidth": "1100px",
+              "minWidth": "1110px",
             }
           }
         >
@@ -10794,7 +10798,7 @@ Array [
             className="rt-thead -headerGroups"
             style={
               Object {
-                "minWidth": "1100px",
+                "minWidth": "1110px",
               }
             }
           >
@@ -10808,9 +10812,9 @@ Array [
                   key="0-undefined"
                   style={
                     Object {
-                      "flex": "100 0 auto",
+                      "flex": "160 0 auto",
                       "maxWidth": null,
-                      "width": "100px",
+                      "width": "160px",
                     }
                   }
                 >
@@ -10820,9 +10824,9 @@ Array [
                     role="columnheader"
                     style={
                       Object {
-                        "flex": "100 0 auto",
+                        "flex": "160 0 auto",
                         "maxWidth": null,
-                        "width": "100px",
+                        "width": "160px",
                       }
                     }
                     tabIndex="-1"
@@ -10835,9 +10839,9 @@ Array [
                   key="1-undefined"
                   style={
                     Object {
-                      "flex": "100 0 auto",
+                      "flex": "80 0 auto",
                       "maxWidth": null,
-                      "width": "100px",
+                      "width": "80px",
                     }
                   }
                 >
@@ -10847,14 +10851,14 @@ Array [
                     role="columnheader"
                     style={
                       Object {
-                        "flex": "100 0 auto",
+                        "flex": "80 0 auto",
                         "maxWidth": null,
-                        "width": "100px",
+                        "width": "80px",
                       }
                     }
                     tabIndex="-1"
                   >
-                    FI STATUS
+                    FI Status
                   </div>
                 </ThComponent>
                 <ThComponent
@@ -10955,9 +10959,9 @@ Array [
                     role="columnheader"
                     style={
                       Object {
-                        "flex": "100 0 auto",
+                        "flex": "80 0 auto",
                         "maxWidth": null,
-                        "width": "100px",
+                        "width": "80px",
                       }
                     }
                     tabIndex="-1"
@@ -10970,9 +10974,9 @@ Array [
                   key="6-undefined"
                   style={
                     Object {
-                      "flex": "120 0 auto",
+                      "flex": "140 0 auto",
                       "maxWidth": null,
-                      "width": "120px",
+                      "width": "140px",
                     }
                   }
                 >
@@ -10982,9 +10986,9 @@ Array [
                     role="columnheader"
                     style={
                       Object {
-                        "flex": "120 0 auto",
+                        "flex": "140 0 auto",
                         "maxWidth": null,
-                        "width": "120px",
+                        "width": "140px",
                       }
                     }
                     tabIndex="-1"
@@ -11024,9 +11028,9 @@ Array [
                   key="8-undefined"
                   style={
                     Object {
-                      "flex": "120 0 auto",
+                      "flex": "90 0 auto",
                       "maxWidth": null,
-                      "width": "120px",
+                      "width": "90px",
                     }
                   }
                 >
@@ -11036,9 +11040,9 @@ Array [
                     role="columnheader"
                     style={
                       Object {
-                        "flex": "120 0 auto",
+                        "flex": "90 0 auto",
                         "maxWidth": null,
-                        "width": "120px",
+                        "width": "90px",
                       }
                     }
                     tabIndex="-1"
@@ -11063,9 +11067,9 @@ Array [
                     role="columnheader"
                     style={
                       Object {
-                        "flex": "100 0 auto",
+                        "flex": "160 0 auto",
                         "maxWidth": null,
-                        "width": "100px",
+                        "width": "160px",
                       }
                     }
                     tabIndex="-1"
@@ -11078,9 +11082,9 @@ Array [
                   key="10-undefined"
                   style={
                     Object {
-                      "flex": "100 0 auto",
+                      "flex": "80 0 auto",
                       "maxWidth": null,
-                      "width": "100px",
+                      "width": "80px",
                     }
                   }
                 >
@@ -11090,9 +11094,9 @@ Array [
                     role="columnheader"
                     style={
                       Object {
-                        "flex": "100 0 auto",
+                        "flex": "80 0 auto",
                         "maxWidth": null,
-                        "width": "100px",
+                        "width": "80px",
                       }
                     }
                     tabIndex="-1"
@@ -11108,7 +11112,7 @@ Array [
           className="-header"
           style={
             Object {
-              "minWidth": "1100px",
+              "minWidth": "1110px",
             }
           }
         >
@@ -11116,7 +11120,7 @@ Array [
             className="rt-thead -header"
             style={
               Object {
-                "minWidth": "1100px",
+                "minWidth": "1110px",
               }
             }
           >
@@ -11130,9 +11134,9 @@ Array [
                   key="0-plan_title"
                   style={
                     Object {
-                      "flex": "100 0 auto",
+                      "flex": "160 0 auto",
                       "maxWidth": null,
-                      "width": "100px",
+                      "width": "160px",
                     }
                   }
                   toggleSort={[Function]}
@@ -11170,9 +11174,9 @@ Array [
                   key="1-plan_status"
                   style={
                     Object {
-                      "flex": "100 0 auto",
+                      "flex": "80 0 auto",
                       "maxWidth": null,
-                      "width": "100px",
+                      "width": "80px",
                     }
                   }
                   toggleSort={[Function]}
@@ -11343,9 +11347,9 @@ Array [
                     role="columnheader"
                     style={
                       Object {
-                        "flex": "100 0 auto",
+                        "flex": "80 0 auto",
                         "maxWidth": null,
-                        "width": "100px",
+                        "width": "80px",
                       }
                     }
                     tabIndex="-1"
@@ -11370,9 +11374,9 @@ Array [
                   key="6-focusArea"
                   style={
                     Object {
-                      "flex": "120 0 auto",
+                      "flex": "140 0 auto",
                       "maxWidth": null,
-                      "width": "120px",
+                      "width": "140px",
                     }
                   }
                   toggleSort={[Function]}
@@ -11383,9 +11387,9 @@ Array [
                     role="columnheader"
                     style={
                       Object {
-                        "flex": "120 0 auto",
+                        "flex": "140 0 auto",
                         "maxWidth": null,
-                        "width": "120px",
+                        "width": "140px",
                       }
                     }
                     tabIndex="-1"
@@ -11450,9 +11454,9 @@ Array [
                   key="8-caseNotificationDate"
                   style={
                     Object {
-                      "flex": "120 0 auto",
+                      "flex": "90 0 auto",
                       "maxWidth": null,
-                      "width": "120px",
+                      "width": "90px",
                     }
                   }
                   toggleSort={[Function]}
@@ -11463,9 +11467,9 @@ Array [
                     role="columnheader"
                     style={
                       Object {
-                        "flex": "120 0 auto",
+                        "flex": "90 0 auto",
                         "maxWidth": null,
-                        "width": "120px",
+                        "width": "90px",
                       }
                     }
                     tabIndex="-1"
@@ -11530,9 +11534,9 @@ Array [
                   key="10-plan_status"
                   style={
                     Object {
-                      "flex": "100 0 auto",
+                      "flex": "80 0 auto",
                       "maxWidth": null,
-                      "width": "100px",
+                      "width": "80px",
                     }
                   }
                   toggleSort={[Function]}
@@ -11573,7 +11577,7 @@ Array [
           className=""
           style={
             Object {
-              "minWidth": "1100px",
+              "minWidth": "1110px",
             }
           }
         >
@@ -11581,7 +11585,7 @@ Array [
             className="rt-tbody"
             style={
               Object {
-                "minWidth": "1100px",
+                "minWidth": "1110px",
               }
             }
           >
@@ -11605,9 +11609,9 @@ Array [
                       onClick={[Function]}
                       style={
                         Object {
-                          "flex": "100 0 auto",
+                          "flex": "160 0 auto",
                           "maxWidth": null,
-                          "width": "100px",
+                          "width": "160px",
                         }
                       }
                     >
@@ -11617,9 +11621,9 @@ Array [
                         role="gridcell"
                         style={
                           Object {
-                            "flex": "100 0 auto",
+                            "flex": "160 0 auto",
                             "maxWidth": null,
-                            "width": "100px",
+                            "width": "160px",
                           }
                         }
                       >
@@ -11657,7 +11661,7 @@ Array [
                               "headerStyle": Object {},
                               "id": "plan_title",
                               "minResizeWidth": 11,
-                              "minWidth": 100,
+                              "minWidth": 160,
                               "parentColumn": Object {
                                 "Header": "Name",
                                 "columns": Array [
@@ -11665,7 +11669,7 @@ Array [
                                     "Cell": [Function],
                                     "Header": "",
                                     "accessor": "plan_title",
-                                    "minWidth": 100,
+                                    "minWidth": 160,
                                   },
                                 ],
                               },
@@ -11792,7 +11796,7 @@ Array [
                           }
                           value="A1-Tha Luang Village 1 Focus 01"
                           viewIndex={0}
-                          width={100}
+                          width={160}
                         >
                           <div>
                             A1-Tha Luang Village 1 Focus 01
@@ -11806,9 +11810,9 @@ Array [
                       onClick={[Function]}
                       style={
                         Object {
-                          "flex": "100 0 auto",
+                          "flex": "80 0 auto",
                           "maxWidth": null,
-                          "width": "100px",
+                          "width": "80px",
                         }
                       }
                     >
@@ -11818,9 +11822,9 @@ Array [
                         role="gridcell"
                         style={
                           Object {
-                            "flex": "100 0 auto",
+                            "flex": "80 0 auto",
                             "maxWidth": null,
-                            "width": "100px",
+                            "width": "80px",
                           }
                         }
                       >
@@ -11937,9 +11941,9 @@ Array [
                       onClick={[Function]}
                       style={
                         Object {
-                          "flex": "120 0 auto",
+                          "flex": "140 0 auto",
                           "maxWidth": null,
-                          "width": "120px",
+                          "width": "140px",
                         }
                       }
                     >
@@ -11949,9 +11953,9 @@ Array [
                         role="gridcell"
                         style={
                           Object {
-                            "flex": "120 0 auto",
+                            "flex": "140 0 auto",
                             "maxWidth": null,
-                            "width": "120px",
+                            "width": "140px",
                           }
                         }
                       >
@@ -11989,7 +11993,7 @@ Array [
                               "headerStyle": Object {},
                               "id": "focusArea",
                               "minResizeWidth": 11,
-                              "minWidth": 120,
+                              "minWidth": 140,
                               "parentColumn": Object {
                                 "Header": "Focus Area",
                                 "columns": Array [
@@ -11997,7 +12001,7 @@ Array [
                                     "Cell": [Function],
                                     "Header": "",
                                     "accessor": "focusArea",
-                                    "minWidth": 120,
+                                    "minWidth": 140,
                                   },
                                 ],
                               },
@@ -12124,7 +12128,7 @@ Array [
                           }
                           value="TLv1_02"
                           viewIndex={0}
-                          width={120}
+                          width={140}
                         >
                           <div>
                             TLv1_02
@@ -12217,9 +12221,9 @@ Array [
                       onClick={[Function]}
                       style={
                         Object {
-                          "flex": "120 0 auto",
+                          "flex": "90 0 auto",
                           "maxWidth": null,
-                          "width": "120px",
+                          "width": "90px",
                         }
                       }
                     >
@@ -12229,9 +12233,9 @@ Array [
                         role="gridcell"
                         style={
                           Object {
-                            "flex": "120 0 auto",
+                            "flex": "90 0 auto",
                             "maxWidth": null,
-                            "width": "120px",
+                            "width": "90px",
                           }
                         }
                       >
@@ -12269,7 +12273,7 @@ Array [
                               "headerStyle": Object {},
                               "id": "caseNotificationDate",
                               "minResizeWidth": 11,
-                              "minWidth": 120,
+                              "minWidth": 90,
                               "parentColumn": Object {
                                 "Header": "Case Notif. Date",
                                 "columns": Array [
@@ -12277,7 +12281,7 @@ Array [
                                     "Cell": [Function],
                                     "Header": "",
                                     "accessor": "caseNotificationDate",
-                                    "minWidth": 120,
+                                    "minWidth": 90,
                                   },
                                 ],
                               },
@@ -12404,7 +12408,7 @@ Array [
                           }
                           value="2019-06-18"
                           viewIndex={0}
-                          width={120}
+                          width={90}
                         >
                           <div>
                             2019-06-18
@@ -12418,9 +12422,9 @@ Array [
                       onClick={[Function]}
                       style={
                         Object {
-                          "flex": "100 0 auto",
+                          "flex": "80 0 auto",
                           "maxWidth": null,
-                          "width": "100px",
+                          "width": "80px",
                         }
                       }
                     >
@@ -12455,9 +12459,9 @@ Array [
                         role="gridcell"
                         style={
                           Object {
-                            "flex": "100 0 auto",
+                            "flex": "80 0 auto",
                             "maxWidth": null,
-                            "width": "100px",
+                            "width": "80px",
                           }
                         }
                       >
@@ -12495,7 +12499,7 @@ Array [
                               "headerStyle": Object {},
                               "id": "plan_status",
                               "minResizeWidth": 11,
-                              "minWidth": 100,
+                              "minWidth": 80,
                               "parentColumn": Object {
                                 "Header": "Actions",
                                 "columns": Array [
@@ -12503,7 +12507,7 @@ Array [
                                     "Cell": [Function],
                                     "Header": "",
                                     "accessor": "plan_status",
-                                    "minWidth": 100,
+                                    "minWidth": 80,
                                   },
                                 ],
                               },
@@ -12630,7 +12634,7 @@ Array [
                           }
                           value="active"
                           viewIndex={0}
-                          width={100}
+                          width={80}
                         >
                           <div>
                             <Link
@@ -12708,9 +12712,9 @@ Array [
                   key="0-undefined"
                   style={
                     Object {
-                      "flex": "100 0 auto",
+                      "flex": "160 0 auto",
                       "maxWidth": null,
-                      "width": "100px",
+                      "width": "160px",
                     }
                   }
                 >
@@ -12720,9 +12724,9 @@ Array [
                     role="columnheader"
                     style={
                       Object {
-                        "flex": "100 0 auto",
+                        "flex": "160 0 auto",
                         "maxWidth": null,
-                        "width": "100px",
+                        "width": "160px",
                       }
                     }
                     tabIndex="-1"
@@ -12735,9 +12739,9 @@ Array [
                   key="1-undefined"
                   style={
                     Object {
-                      "flex": "100 0 auto",
+                      "flex": "80 0 auto",
                       "maxWidth": null,
-                      "width": "100px",
+                      "width": "80px",
                     }
                   }
                 >
@@ -12747,14 +12751,14 @@ Array [
                     role="columnheader"
                     style={
                       Object {
-                        "flex": "100 0 auto",
+                        "flex": "80 0 auto",
                         "maxWidth": null,
-                        "width": "100px",
+                        "width": "80px",
                       }
                     }
                     tabIndex="-1"
                   >
-                    FI STATUS
+                    FI Status
                   </div>
                 </ThComponent>
                 <ThComponent
@@ -12855,9 +12859,9 @@ Array [
                     role="columnheader"
                     style={
                       Object {
-                        "flex": "100 0 auto",
+                        "flex": "80 0 auto",
                         "maxWidth": null,
-                        "width": "100px",
+                        "width": "80px",
                       }
                     }
                     tabIndex="-1"
@@ -12870,9 +12874,9 @@ Array [
                   key="6-undefined"
                   style={
                     Object {
-                      "flex": "120 0 auto",
+                      "flex": "140 0 auto",
                       "maxWidth": null,
-                      "width": "120px",
+                      "width": "140px",
                     }
                   }
                 >
@@ -12882,9 +12886,9 @@ Array [
                     role="columnheader"
                     style={
                       Object {
-                        "flex": "120 0 auto",
+                        "flex": "140 0 auto",
                         "maxWidth": null,
-                        "width": "120px",
+                        "width": "140px",
                       }
                     }
                     tabIndex="-1"
@@ -12924,9 +12928,9 @@ Array [
                   key="8-undefined"
                   style={
                     Object {
-                      "flex": "120 0 auto",
+                      "flex": "80 0 auto",
                       "maxWidth": null,
-                      "width": "120px",
+                      "width": "80px",
                     }
                   }
                 >
@@ -12936,9 +12940,9 @@ Array [
                     role="columnheader"
                     style={
                       Object {
-                        "flex": "120 0 auto",
+                        "flex": "80 0 auto",
                         "maxWidth": null,
-                        "width": "120px",
+                        "width": "80px",
                       }
                     }
                     tabIndex="-1"
@@ -12963,9 +12967,9 @@ Array [
                     role="columnheader"
                     style={
                       Object {
-                        "flex": "100 0 auto",
+                        "flex": "160 0 auto",
                         "maxWidth": null,
-                        "width": "100px",
+                        "width": "160px",
                       }
                     }
                     tabIndex="-1"
@@ -12978,9 +12982,9 @@ Array [
                   key="10-undefined"
                   style={
                     Object {
-                      "flex": "100 0 auto",
+                      "flex": "80 0 auto",
                       "maxWidth": null,
-                      "width": "100px",
+                      "width": "80px",
                     }
                   }
                 >
@@ -12990,9 +12994,9 @@ Array [
                     role="columnheader"
                     style={
                       Object {
-                        "flex": "100 0 auto",
+                        "flex": "80 0 auto",
                         "maxWidth": null,
-                        "width": "100px",
+                        "width": "80px",
                       }
                     }
                     tabIndex="-1"
@@ -13030,9 +13034,9 @@ Array [
                   key="0-plan_title"
                   style={
                     Object {
-                      "flex": "100 0 auto",
+                      "flex": "160 0 auto",
                       "maxWidth": null,
-                      "width": "100px",
+                      "width": "160px",
                     }
                   }
                   toggleSort={[Function]}
@@ -13070,9 +13074,9 @@ Array [
                   key="1-plan_status"
                   style={
                     Object {
-                      "flex": "100 0 auto",
+                      "flex": "80 0 auto",
                       "maxWidth": null,
-                      "width": "100px",
+                      "width": "80px",
                     }
                   }
                   toggleSort={[Function]}
@@ -13243,9 +13247,9 @@ Array [
                     role="columnheader"
                     style={
                       Object {
-                        "flex": "100 0 auto",
+                        "flex": "80 0 auto",
                         "maxWidth": null,
-                        "width": "100px",
+                        "width": "80px",
                       }
                     }
                     tabIndex="-1"
@@ -13270,9 +13274,9 @@ Array [
                   key="6-focusArea"
                   style={
                     Object {
-                      "flex": "120 0 auto",
+                      "flex": "140 0 auto",
                       "maxWidth": null,
-                      "width": "120px",
+                      "width": "140px",
                     }
                   }
                   toggleSort={[Function]}
@@ -13283,9 +13287,9 @@ Array [
                     role="columnheader"
                     style={
                       Object {
-                        "flex": "120 0 auto",
+                        "flex": "140 0 auto",
                         "maxWidth": null,
-                        "width": "120px",
+                        "width": "140px",
                       }
                     }
                     tabIndex="-1"
@@ -13350,9 +13354,9 @@ Array [
                   key="8-plan_effective_period_start"
                   style={
                     Object {
-                      "flex": "120 0 auto",
+                      "flex": "80 0 auto",
                       "maxWidth": null,
-                      "width": "120px",
+                      "width": "80px",
                     }
                   }
                   toggleSort={[Function]}
@@ -13363,9 +13367,9 @@ Array [
                     role="columnheader"
                     style={
                       Object {
-                        "flex": "120 0 auto",
+                        "flex": "80 0 auto",
                         "maxWidth": null,
-                        "width": "120px",
+                        "width": "80px",
                       }
                     }
                     tabIndex="-1"
@@ -13430,9 +13434,9 @@ Array [
                   key="10-plan_status"
                   style={
                     Object {
-                      "flex": "100 0 auto",
+                      "flex": "80 0 auto",
                       "maxWidth": null,
-                      "width": "100px",
+                      "width": "80px",
                     }
                   }
                   toggleSort={[Function]}
@@ -13505,9 +13509,9 @@ Array [
                       onClick={[Function]}
                       style={
                         Object {
-                          "flex": "100 0 auto",
+                          "flex": "160 0 auto",
                           "maxWidth": null,
-                          "width": "100px",
+                          "width": "160px",
                         }
                       }
                     >
@@ -13517,9 +13521,9 @@ Array [
                         role="gridcell"
                         style={
                           Object {
-                            "flex": "100 0 auto",
+                            "flex": "160 0 auto",
                             "maxWidth": null,
-                            "width": "100px",
+                            "width": "160px",
                           }
                         }
                       >
@@ -13557,7 +13561,7 @@ Array [
                               "headerStyle": Object {},
                               "id": "plan_title",
                               "minResizeWidth": 11,
-                              "minWidth": 100,
+                              "minWidth": 160,
                               "parentColumn": Object {
                                 "Header": "Name",
                                 "columns": Array [
@@ -13565,7 +13569,7 @@ Array [
                                     "Cell": [Function],
                                     "Header": "",
                                     "accessor": "plan_title",
-                                    "minWidth": 100,
+                                    "minWidth": 160,
                                   },
                                 ],
                               },
@@ -13692,7 +13696,7 @@ Array [
                           }
                           value="A1-Tha Luang Village 1 Focus 01"
                           viewIndex={0}
-                          width={100}
+                          width={160}
                         >
                           <div>
                             A1-Tha Luang Village 1 Focus 01
@@ -13706,9 +13710,9 @@ Array [
                       onClick={[Function]}
                       style={
                         Object {
-                          "flex": "100 0 auto",
+                          "flex": "80 0 auto",
                           "maxWidth": null,
-                          "width": "100px",
+                          "width": "80px",
                         }
                       }
                     >
@@ -13718,9 +13722,9 @@ Array [
                         role="gridcell"
                         style={
                           Object {
-                            "flex": "100 0 auto",
+                            "flex": "80 0 auto",
                             "maxWidth": null,
-                            "width": "100px",
+                            "width": "80px",
                           }
                         }
                       >
@@ -13837,9 +13841,9 @@ Array [
                       onClick={[Function]}
                       style={
                         Object {
-                          "flex": "120 0 auto",
+                          "flex": "140 0 auto",
                           "maxWidth": null,
-                          "width": "120px",
+                          "width": "140px",
                         }
                       }
                     >
@@ -13849,9 +13853,9 @@ Array [
                         role="gridcell"
                         style={
                           Object {
-                            "flex": "120 0 auto",
+                            "flex": "140 0 auto",
                             "maxWidth": null,
-                            "width": "120px",
+                            "width": "140px",
                           }
                         }
                       >
@@ -13889,7 +13893,7 @@ Array [
                               "headerStyle": Object {},
                               "id": "focusArea",
                               "minResizeWidth": 11,
-                              "minWidth": 120,
+                              "minWidth": 140,
                               "parentColumn": Object {
                                 "Header": "Focus Area",
                                 "columns": Array [
@@ -13897,7 +13901,7 @@ Array [
                                     "Cell": [Function],
                                     "Header": "",
                                     "accessor": "focusArea",
-                                    "minWidth": 120,
+                                    "minWidth": 140,
                                   },
                                 ],
                               },
@@ -14024,7 +14028,7 @@ Array [
                           }
                           value="NVI_439"
                           viewIndex={0}
-                          width={120}
+                          width={140}
                         >
                           <div>
                             NVI_439
@@ -14117,9 +14121,9 @@ Array [
                       onClick={[Function]}
                       style={
                         Object {
-                          "flex": "120 0 auto",
+                          "flex": "80 0 auto",
                           "maxWidth": null,
-                          "width": "120px",
+                          "width": "80px",
                         }
                       }
                     >
@@ -14129,9 +14133,9 @@ Array [
                         role="gridcell"
                         style={
                           Object {
-                            "flex": "120 0 auto",
+                            "flex": "80 0 auto",
                             "maxWidth": null,
-                            "width": "120px",
+                            "width": "80px",
                           }
                         }
                       >
@@ -14169,7 +14173,7 @@ Array [
                               "headerStyle": Object {},
                               "id": "plan_effective_period_start",
                               "minResizeWidth": 11,
-                              "minWidth": 120,
+                              "minWidth": 80,
                               "parentColumn": Object {
                                 "Header": "Start Date",
                                 "columns": Array [
@@ -14177,7 +14181,7 @@ Array [
                                     "Cell": [Function],
                                     "Header": "",
                                     "accessor": "plan_effective_period_start",
-                                    "minWidth": 120,
+                                    "minWidth": 80,
                                   },
                                 ],
                               },
@@ -14304,7 +14308,7 @@ Array [
                           }
                           value="2019-07-31"
                           viewIndex={0}
-                          width={120}
+                          width={80}
                         >
                           <div>
                             2019-07-31
@@ -14318,9 +14322,9 @@ Array [
                       onClick={[Function]}
                       style={
                         Object {
-                          "flex": "100 0 auto",
+                          "flex": "80 0 auto",
                           "maxWidth": null,
-                          "width": "100px",
+                          "width": "80px",
                         }
                       }
                     >
@@ -14330,9 +14334,9 @@ Array [
                         role="gridcell"
                         style={
                           Object {
-                            "flex": "100 0 auto",
+                            "flex": "80 0 auto",
                             "maxWidth": null,
-                            "width": "100px",
+                            "width": "80px",
                           }
                         }
                       >
@@ -14397,7 +14401,7 @@ Array [
                               "headerStyle": Object {},
                               "id": "plan_status",
                               "minResizeWidth": 11,
-                              "minWidth": 100,
+                              "minWidth": 80,
                               "parentColumn": Object {
                                 "Header": "Actions",
                                 "columns": Array [
@@ -14405,7 +14409,7 @@ Array [
                                     "Cell": [Function],
                                     "Header": "",
                                     "accessor": "plan_status",
-                                    "minWidth": 100,
+                                    "minWidth": 80,
                                   },
                                 ],
                               },
@@ -14532,7 +14536,7 @@ Array [
                           }
                           value="active"
                           viewIndex={0}
-                          width={100}
+                          width={80}
                         >
                           <div>
                             <Link
