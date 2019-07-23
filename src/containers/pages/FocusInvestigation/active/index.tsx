@@ -98,7 +98,7 @@ class ActiveFocusInvestigation extends React.Component<
       fetchPlansActionCreator(result)
     );
   }
-  public handleSubmit(event: React.SyntheticEvent<HTMLButtonElement>) {
+  public handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
   }
   public render() {
@@ -131,7 +131,7 @@ class ActiveFocusInvestigation extends React.Component<
         <HeaderBreadCrumb {...breadcrumbProps} />
         <h2 className="mb-3 mt-5 page-title">{CURRENT_FOCUS_INVESTIGATION}</h2>
         <hr />
-        <Form inline={true}>
+        <Form inline={true} onSubmit={this.handleSubmit}>
           <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
             <Input
               type="text"
@@ -140,7 +140,7 @@ class ActiveFocusInvestigation extends React.Component<
               placeholder="Search active focus investigations"
             />
           </FormGroup>
-          <Button outline={true} color="success" onClick={this.handleSubmit}>
+          <Button outline={true} color="success">
             Search
           </Button>
         </Form>
