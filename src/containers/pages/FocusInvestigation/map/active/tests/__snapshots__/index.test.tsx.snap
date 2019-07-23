@@ -2002,7 +2002,8 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
           >
             <div>
               <h5>
-                Routine 
+                Routine
+                 
                 Investigation
               </h5>
               <span
@@ -4321,7 +4322,8 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store (g
               >
                 <div>
                   <h5>
-                    Routine 
+                    Routine
+                     
                     Investigation
                   </h5>
                   <span
