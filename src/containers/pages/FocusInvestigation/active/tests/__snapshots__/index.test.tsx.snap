@@ -279,10 +279,12 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
       <hr />
       <Form
         inline={true}
+        onSubmit={[Function]}
         tag="form"
       >
         <form
           className="form-inline"
+          onSubmit={[Function]}
         >
           <FormGroup
             className="mb-2 mr-sm-2 mb-sm-0"
@@ -309,7 +311,6 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
           </FormGroup>
           <Button
             color="success"
-            onClick={[Function]}
             outline={true}
             tag="button"
           >
@@ -317,7 +318,6 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
               aria-label={null}
               className="btn btn-outline-success"
               onClick={[Function]}
-              type="button"
             >
               Search
             </button>
@@ -5761,10 +5761,12 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
       <hr />
       <Form
         inline={true}
+        onSubmit={[Function]}
         tag="form"
       >
         <form
           className="form-inline"
+          onSubmit={[Function]}
         >
           <FormGroup
             className="mb-2 mr-sm-2 mb-sm-0"
@@ -5791,7 +5793,6 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
           </FormGroup>
           <Button
             color="success"
-            onClick={[Function]}
             outline={true}
             tag="button"
           >
@@ -5799,7 +5800,6 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
               aria-label={null}
               className="btn btn-outline-success"
               onClick={[Function]}
-              type="button"
             >
               Search
             </button>
