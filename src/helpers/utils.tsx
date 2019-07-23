@@ -409,3 +409,14 @@ export function roundToPrecision(n: number, precision: number = 0): number {
   const factor = Math.pow(10, precision);
   return Math.round(n * factor) / factor;
 }
+
+export function stopPropagation(e: any) {
+  e.stopPropagation();
+}
+export function preventDefault(e: any) {
+  e.preventDefault();
+}
+export function stopPropagationAndPreventDefault(e: any) {
+  preventDefault(e);
+  stopPropagation(e);
+}

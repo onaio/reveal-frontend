@@ -28,7 +28,13 @@ import {
   SUPERSET_PLANS_TABLE_SLICE,
 } from '../../../../../configs/env';
 import { HOME, HOME_URL, INTERVENTION_IRS_URL } from '../../../../../constants';
-import { FlexObject, RouteParams } from '../../../../../helpers/utils';
+import {
+  FlexObject,
+  preventDefault,
+  RouteParams,
+  stopPropagation,
+  stopPropagationAndPreventDefault,
+} from '../../../../../helpers/utils';
 import {
   ADMN0_PCODE,
   CountriesAdmin0,
@@ -114,6 +120,7 @@ interface TableCrumb {
 }
 
 interface IrsPlanState {
+  childlessChildrenIds: string[];
   country: JurisdictionsByCountry | null;
   doRenderTable: boolean;
   filteredJurisdictionIds: string[];
@@ -136,6 +143,7 @@ class IrsPlan extends React.Component<
   constructor(props: RouteComponentProps<RouteParams> & IrsPlanProps) {
     super(props);
     this.state = {
+      childlessChildrenIds: [],
       country: null,
       doRenderTable: true,
       filteredJurisdictionIds: [],
@@ -424,8 +432,8 @@ class IrsPlan extends React.Component<
                 <Button
                   color="primary"
                   disabled={
-                    !newPlan.plan_effective_period_end.length ||
-                    !newPlan.plan_effective_period_start.length ||
+                    // !newPlan.plan_effective_period_end.length ||
+                    // !newPlan.plan_effective_period_start.length ||
                     !planCountry.length
                   }
                   onClick={onStartPlanFormSubmit}
@@ -583,7 +591,7 @@ class IrsPlan extends React.Component<
 
   // Jurisdiction Hierarchy Control
   private onTableBreadCrumbClick = (e: any) => {
-    e.preventDefault();
+    preventDefault(e);
     if (e && e.target && e.target.id) {
       this.onResetDrilldownTableHierarchy(e.target.id);
     }
@@ -637,6 +645,21 @@ class IrsPlan extends React.Component<
       });
     }
   }
+  private getChildlessChildrenIds(filteredJurisdictions: Jurisdiction[]): string[] {
+    const childlessChildrenIds = filteredJurisdictions.map(j => j.jurisdiction_id);
+    let jndex = 0;
+
+    for (const jurisdiction of filteredJurisdictions) {
+      if (jurisdiction && jurisdiction.parent_id) {
+        jndex = childlessChildrenIds.indexOf(jurisdiction.parent_id);
+        if (jndex !== -1) {
+          childlessChildrenIds.splice(jndex, 1);
+        }
+      }
+    }
+
+    return childlessChildrenIds;
+  }
 
   // Plan Title Control
   private getNewPlanDate(): string {
@@ -648,7 +671,7 @@ class IrsPlan extends React.Component<
     return `${InterventionType.IRS}_${date}`;
   }
   private onEditNameButtonClick(e: any) {
-    e.preventDefault();
+    preventDefault(e);
     if (this.state.newPlan) {
       this.setState({
         isEditingPlanName: true,
@@ -667,7 +690,7 @@ class IrsPlan extends React.Component<
     }
   }
   private onCancleEditNameButtonClick(e: any) {
-    e.preventDefault();
+    preventDefault(e);
     const { newPlan: NewPlan, previousPlanName } = this.state;
     if (NewPlan) {
       const newPlan: PlanRecord = {
@@ -743,6 +766,7 @@ class IrsPlan extends React.Component<
     );
 
     const filteredJurisdictionIds = filteredJurisdictions.map(j => j.jurisdiction_id);
+    const childlessChildrenIds = this.getChildlessChildrenIds(filteredJurisdictions);
 
     const { newPlan: NewPlan } = this.state;
     const newPlan: PlanRecord | null = NewPlan
@@ -762,6 +786,7 @@ class IrsPlan extends React.Component<
 
     this.setState(
       {
+        childlessChildrenIds,
         country,
         filteredJurisdictionIds,
         isLoadingGeoms: true,
@@ -1049,13 +1074,14 @@ class IrsPlan extends React.Component<
     const onTableCheckboxChange = (e: any) => {
       this.onTableCheckboxChange(e);
     };
-    const onTableCheckboxClick = (e: any) => {
-      e.stopPropagation();
-    };
 
     const onDrilldownClick = (e: any) => {
       if (e && e.target && e.target.id) {
-        this.onDrilldownClick(e.target.id);
+        if (this.state.childlessChildrenIds.includes(e.target.id)) {
+          stopPropagationAndPreventDefault(e);
+        } else {
+          this.onDrilldownClick(e.target.id);
+        }
       }
     };
 
@@ -1077,7 +1103,7 @@ class IrsPlan extends React.Component<
                 checked={planJurisdictionIds.includes(j.jurisdiction_id)}
                 className="plan-jurisdiction-selection-checkbox"
                 onChange={onTableCheckboxChange}
-                onClick={onTableCheckboxClick}
+                onClick={stopPropagationAndPreventDefault}
                 type="checkbox"
                 value={j.jurisdiction_id}
               />
@@ -1092,9 +1118,15 @@ class IrsPlan extends React.Component<
         columns: [
           {
             Header: '',
-            accessor: (j: Jurisdiction) => (
+            accessor: (j: any) => (
               <span id={j.jurisdiction_id} onClick={onDrilldownClick}>
-                {j.name}
+                {j.isChildless ? (
+                  j.name
+                ) : (
+                  <a href="" onClick={preventDefault}>
+                    {j.name}
+                  </a>
+                )}
               </span>
             ),
             id: 'name',
@@ -1102,11 +1134,18 @@ class IrsPlan extends React.Component<
         ],
       },
       {
-        Header: 'ID',
+        Header: 'Type',
         columns: [
           {
             Header: '',
-            accessor: 'jurisdiction_id',
+            accessor: (j: any) => {
+              return (
+                <span onClick={stopPropagationAndPreventDefault}>
+                  {j.isChildless ? 'Spray Area' : `Admin Level ${j.geographic_level}`}
+                </span>
+              );
+            },
+            id: 'jurisdiction-type',
           },
         ],
       },
@@ -1118,6 +1157,7 @@ class IrsPlan extends React.Component<
       data: filteredJurisdictions.map((j: any) => ({
         ...j,
         id: j.jurisdiction_id,
+        isChildless: this.state.childlessChildrenIds.includes(j.jurisdiction_id),
       })),
       identifierField: 'jurisdiction_id',
       linkerField: 'name',
