@@ -927,6 +927,22 @@ class IrsPlan extends React.Component<
       visible: true,
     };
 
+    const ADMIN_1_LINE_LAYER = {
+      ...lineLayerConfig,
+      id: `${ADMN0_EN}-admin-1-line`,
+      paint: {
+        'line-color': 'white',
+        'line-opacity': 0.45,
+        'line-width': 1,
+      },
+      source: {
+        layer: 'TH_1',
+        type: 'vector',
+        url: 'mapbox://thailandbvbd.91ktth0q',
+      },
+      visible: true,
+    };
+
     const filteredJurisdictionIds = filteredJurisdictions.map(j => j.jurisdiction_id);
     const features = this.props.jurisdictionsArray.map(
       j => filteredJurisdictionIds.indexOf(j.jurisdiction_id) && j.geojson
@@ -939,6 +955,7 @@ class IrsPlan extends React.Component<
 
     const FILTERED_JURISDICTIONS_FILL_LAYER = {
       ...fillLayerConfig,
+      id: `${ADMN0_EN}-filtered-jurisdictions-fill`,
       paint: {
         'fill-color': 'red',
       },
@@ -956,7 +973,7 @@ class IrsPlan extends React.Component<
       bounds,
       geoData: null,
       handlers: [],
-      layers: [ADMIN_0_LINE_LAYER, FILTERED_JURISDICTIONS_FILL_LAYER],
+      layers: [ADMIN_0_LINE_LAYER, ADMIN_1_LINE_LAYER, FILTERED_JURISDICTIONS_FILL_LAYER],
       pointFeatureCollection: null,
       polygonFeatureCollection: null,
       structures: null,
