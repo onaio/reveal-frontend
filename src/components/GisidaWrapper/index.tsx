@@ -94,6 +94,7 @@ interface GisidaState {
 }
 /** GisidaWrapper Props Interface */
 export interface GisidaProps {
+  bounds?: any[];
   currentGoal?: string | null;
   pointFeatureCollection: FeatureCollection<TaskGeoJSON> | null;
   polygonFeatureCollection: FeatureCollection<TaskGeoJSON> | null;
@@ -132,7 +133,7 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
     super(props);
     const initialState = store.getState();
     this.state = {
-      bounds: [],
+      bounds: this.props.bounds || [],
       doInitMap: false,
       doRenderMap: false,
       geoData: this.props.geoData || false,

@@ -32,6 +32,7 @@ import { FlexObject, RouteParams } from '../../../../../helpers/utils';
 import {
   ADMN0_PCODE,
   CountriesAdmin0,
+  fillLayerConfig,
   JurisdictionsByCountry,
   lineLayerConfig,
 } from './../../../../../configs/settings';
@@ -902,32 +903,60 @@ class IrsPlan extends React.Component<
     return decendantIds;
   }
   private getGisidaWrapperProps(): GisidaProps | null {
-    const { country, isLoadingGeoms } = this.state;
+    const { country, isLoadingGeoms, filteredJurisdictions } = this.state;
     if (!country || isLoadingGeoms) {
       return null;
     }
-    const { ADMN0_EN } = country;
-
+    const { ADMN0_EN, tileset, bounds } = country;
+    if (!tileset) {
+      return null;
+    }
     const ADMIN_0_LINE_LAYER = {
       ...lineLayerConfig,
       id: `${ADMN0_EN}-admin-0-line`,
       paint: {
         'line-color': 'white',
         'line-opacity': 1,
-        'line-width': 2,
+        'line-width': 1.5,
       },
       source: {
-        layer: 'admin',
+        layer: tileset.layer,
         type: 'vector',
-        url: 'mapbox://mapbox.mapbox-streets-v7',
+        url: tileset.url,
+      },
+      visible: true,
+    };
+
+    const filteredJurisdictionIds = filteredJurisdictions.map(j => j.jurisdiction_id);
+    const features = this.props.jurisdictionsArray.map(
+      j => filteredJurisdictionIds.indexOf(j.jurisdiction_id) && j.geojson
+    );
+
+    const filteredJurisdictionsFc = {
+      features,
+      type: 'FeatureCollection',
+    };
+
+    const FILTERED_JURISDICTIONS_FILL_LAYER = {
+      ...fillLayerConfig,
+      paint: {
+        'fill-color': 'red',
+      },
+      source: {
+        ...fillLayerConfig.source,
+        data: {
+          ...fillLayerConfig.source.data,
+          data: JSON.stringify(filteredJurisdictionsFc),
+        },
       },
       visible: true,
     };
 
     const gisidaWrapperProps: GisidaProps = {
+      bounds,
       geoData: null,
       handlers: [],
-      layers: [ADMIN_0_LINE_LAYER],
+      layers: [ADMIN_0_LINE_LAYER, FILTERED_JURISDICTIONS_FILL_LAYER],
       pointFeatureCollection: null,
       polygonFeatureCollection: null,
       structures: null,

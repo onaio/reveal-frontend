@@ -234,8 +234,13 @@ export interface ADMN3 extends ADMN2 {
 }
 
 export interface JurisdictionsByCountry extends ADMN0 {
+  bounds?: any[];
   jurisdictionIds: string[];
   id?: string;
+  tileset?: {
+    layer: string;
+    url: string;
+  };
 }
 
 export const ZambiaAdmin0: JurisdictionsByCountry = {
@@ -247,12 +252,17 @@ export const ZambiaAdmin0: JurisdictionsByCountry = {
 export const ThailandAdmin0: JurisdictionsByCountry = {
   ADMN0_EN: 'Thailand',
   ADMN0_PCODE: 'TH',
+  bounds: [[105.63681192, 5.61285098], [97.34380713, 20.46483364]],
   jurisdictionIds: [
     '61707fc2-c6ac-4112-a8d6-2a4861958396',
     '64301afa-e973-447b-a88c-4da20025c76f',
     '7f204867-fab0-4246-a97c-92e0b936cab6',
     '9c3c2db4-bddd-44c5-870a-a0eef539e4da',
   ],
+  tileset: {
+    layer: 'TH_0',
+    url: 'mapbox://thailandbvbd.6o8cg6kd',
+  },
 };
 export type ADMN0_PCODE = 'TH' | 'ZM';
 export const CountriesAdmin0 = {
