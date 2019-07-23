@@ -102,8 +102,8 @@ describe('services/OpenSRP', () => {
 
   it('OpenSRPService read method handles null response', async () => {
     fetch.mockResponseOnce(JSON.stringify(null));
-    const planService = new OpenSRPService('task');
-    const result = await planService.read('079a7fe8-ef46-462f-9c5c-8b2490344e4a');
+    const taskService = new OpenSRPService('task');
+    const result = await taskService.read('079a7fe8-ef46-462f-9c5c-8b2490344e4a');
     expect(result).toEqual(null);
   });
 
