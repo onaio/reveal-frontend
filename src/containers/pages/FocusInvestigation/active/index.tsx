@@ -98,7 +98,9 @@ class ActiveFocusInvestigation extends React.Component<
       fetchPlansActionCreator(result)
     );
   }
-
+  public handleSubmit(event: React.SyntheticEvent<HTMLButtonElement>) {
+    event.preventDefault();
+  }
   public render() {
     const breadcrumbProps: BreadCrumbProps = {
       currentPage: {
@@ -138,7 +140,7 @@ class ActiveFocusInvestigation extends React.Component<
               placeholder="Search active focus investigations"
             />
           </FormGroup>
-          <Button outline={true} color="success">
+          <Button outline={true} color="success" onClick={this.handleSubmit}>
             Search
           </Button>
         </Form>
@@ -161,24 +163,11 @@ class ActiveFocusInvestigation extends React.Component<
                     columns: [
                       {
                         Cell: (cell: CellInfo) => {
-                          /** 24 hours ago */
-                          const oneDayAgo = new Date().getTime() + 1 * 24 * 60 * 60;
-                          const newRecordBadge =
-                            Date.parse(cell.original.plan_date) >= oneDayAgo ? (
-                              <Badge color="warning" pill={true}>
-                                Warning
-                              </Badge>
-                            ) : null;
-                          return (
-                            <div>
-                              {cell.value}
-                              {newRecordBadge}
-                            </div>
-                          );
+                          return <div>{cell.value}</div>;
                         },
                         Header: '',
                         accessor: 'caseNotificationDate',
-                        minWidth: 120,
+                        minWidth: 90,
                       },
                     ],
                   },
@@ -202,7 +191,7 @@ class ActiveFocusInvestigation extends React.Component<
                         },
                         Header: '',
                         accessor: 'plan_effective_period_start',
-                        minWidth: 120,
+                        minWidth: 80,
                       },
                     ],
                   },
@@ -222,21 +211,34 @@ class ActiveFocusInvestigation extends React.Component<
                 columns: [
                   {
                     Cell: (cell: CellInfo) => {
-                      return <div>{cell.value}</div>;
+                      /** 24 hours ago */
+                      const oneDayAgo = new Date().getTime() + 1 * 24 * 60 * 60;
+                      const newRecordBadge =
+                        Date.parse(cell.original.plan_date) >= oneDayAgo ? (
+                          <Badge color="warning" pill={true}>
+                            Warning
+                          </Badge>
+                        ) : null;
+                      return (
+                        <div>
+                          {cell.value}
+                          {newRecordBadge}
+                        </div>
+                      );
                     },
                     Header: '',
                     accessor: 'plan_title',
-                    minWidth: 100,
+                    minWidth: 160,
                   },
                 ],
               },
               {
-                Header: 'FI STATUS',
+                Header: 'FI Status',
                 columns: [
                   {
                     Header: '',
                     accessor: 'plan_status',
-                    minWidth: 100,
+                    minWidth: 80,
                   },
                 ],
               },
@@ -260,7 +262,7 @@ class ActiveFocusInvestigation extends React.Component<
                     },
                     Header: '',
                     accessor: 'focusArea',
-                    minWidth: 120,
+                    minWidth: 140,
                   },
                 ],
               },
@@ -290,7 +292,7 @@ class ActiveFocusInvestigation extends React.Component<
                     },
                     Header: '',
                     accessor: 'plan_status',
-                    minWidth: 100,
+                    minWidth: 80,
                   },
                 ],
               },
