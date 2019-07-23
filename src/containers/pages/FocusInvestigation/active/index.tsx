@@ -24,6 +24,7 @@ import {
   CASE_TRIGGERED,
   CURRENT_FOCUS_INVESTIGATION,
   FI_ACTIVE_TITLE,
+  FI_SINGLE_URL,
   REACTIVE,
   ROUTINE,
 } from '../../../../constants';
@@ -72,9 +73,9 @@ export interface ActiveFIProps {
 
 /** default props for ActiveFI component */
 export const defaultActiveFIProps: ActiveFIProps = {
-  caseTriggeredPlans: [],
+  caseTriggeredPlans: null,
   fetchPlansActionCreator: fetchPlans,
-  routinePlans: [],
+  routinePlans: null,
   supersetService: supersetFetch,
 };
 
@@ -250,7 +251,7 @@ class ActiveFocusInvestigation extends React.Component<
                           {cell.original.focusArea.trim() && cell.value}
                           &nbsp;&nbsp;
                           {cell.original.focusArea.trim() && (
-                            <Link to="#">
+                            <Link to={`${FI_SINGLE_URL}/${cell.original.id}`}>
                               <FontAwesomeIcon icon={['fas', 'external-link-square-alt']} />
                             </Link>
                           )}
