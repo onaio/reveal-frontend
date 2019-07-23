@@ -44,8 +44,8 @@ export interface PlanRecord {
   plan_fi_reason: string;
   plan_fi_status: string;
   plan_id: string;
-  plan_intervention_type: string;
-  plan_status: string;
+  plan_intervention_type: InterventionType;
+  plan_status: PlanStatus;
   plan_title: string;
   plan_version?: string;
 }
@@ -152,9 +152,7 @@ export const fetchPlanRecords = (planList: PlanRecordResponse[] = []): FetchPlan
         plan_fi_reason: plan.fi_reason,
         plan_fi_status: plan.fi_status,
         plan_id: plan.identifier,
-        plan_intervention_type: plan.intervention_type as
-          | InterventionType.FI
-          | InterventionType.IRS,
+        plan_intervention_type: plan.intervention_type as InterventionType,
         plan_status: plan.status as PlanStatus,
         plan_title: plan.title,
         plan_version: plan.version,
