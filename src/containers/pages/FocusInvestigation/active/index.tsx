@@ -1,6 +1,7 @@
 // this is the FocusInvestigation "active" page component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import DrillDownTable from '@onaio/drill-down-table';
+import { FlexObject } from '@onaio/drill-down-table/dist/types/helpers/utils';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset from '@onaio/superset-connector';
 import * as React from 'react';
@@ -10,9 +11,7 @@ import { RouteComponentProps } from 'react-router';
 import { Link } from 'react-router-dom';
 import { CellInfo, Column } from 'react-table';
 import 'react-table/react-table.css';
-import { Col, Form, FormGroup, Input, Label, Row, Table } from 'reactstrap';
-import Badge from 'reactstrap/lib/Badge';
-import Button from 'reactstrap/lib/Button';
+import { Badge, Button, Col, Form, FormGroup, Input, Row, Table } from 'reactstrap';
 import { Store } from 'redux';
 import DrillDownTableLinkedCell from '../../../../components/DrillDownTableLinkedCell';
 import HeaderBreadCrumb, {
@@ -120,7 +119,7 @@ class ActiveFocusInvestigation extends React.Component<
     ) {
       return <Loading />;
     }
-    const a: any = [];
+    const routineReactivePlans: FlexObject[] = [];
     return (
       <div>
         <Helmet>
@@ -295,8 +294,6 @@ class ActiveFocusInvestigation extends React.Component<
                 ],
               },
             ];
-            // const allColumns: Column[] = locationColumns.concat(otherColumns);
-            // thePlans.map(d => delete d.reason && delete d.plan_fi_reason);
             const tableProps = {
               CellComponent: DrillDownTableLinkedCell,
               columns: allColumns,
@@ -328,7 +325,7 @@ class ActiveFocusInvestigation extends React.Component<
                 </Row>
               </div>
             );
-            a.push(
+            routineReactivePlans.push(
               <div key={thePlans[0].id}>
                 {TableHeaderWithOptionalForm}
                 <DrillDownTable {...tableProps} />
@@ -336,7 +333,7 @@ class ActiveFocusInvestigation extends React.Component<
             );
           }
         })}
-        {a}
+        {routineReactivePlans}
         <h5 className="mt-5">{DEFINITIONS}</h5>
         <Table className="definitions">
           <tbody>{FIClassifications.map(el => renderClassificationRow(el))}</tbody>
