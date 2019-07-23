@@ -21,26 +21,24 @@ import Loading from '../../../../components/page/Loading';
 import { SUPERSET_PLANS_SLICE } from '../../../../configs/env';
 import { FIClassifications, locationHierarchy } from '../../../../configs/settings';
 import {
-  CASE_TRIGGERED,
-  CURRENT_FOCUS_INVESTIGATION,
-  FI_ACTIVE_TITLE,
-  FI_SINGLE_URL,
-  REACTIVE,
-  ROUTINE,
-} from '../../../../constants';
-import {
   CASE_CLASSIFICATION_HEADER,
   CASE_NOTIF_DATE_HEADER,
+  CASE_TRIGGERED,
+  CURRENT_FOCUS_INVESTIGATION,
   DEFINITIONS,
   END_DATE,
   FI_PLAN_TYPE,
   FI_SINGLE_MAP_URL,
+  FI_SINGLE_URL,
+  FI_STATUS,
   FI_URL,
   FOCUS_AREA_HEADER,
   FOCUS_INVESTIGATIONS,
   HOME,
   HOME_URL,
   NAME,
+  REACTIVE,
+  ROUTINE,
   START_DATE,
   STATUS_HEADER,
 } from '../../../../constants';
@@ -126,7 +124,7 @@ class ActiveFocusInvestigation extends React.Component<
     return (
       <div>
         <Helmet>
-          <title>{ACTIVE_FOCUS_INVESTIGATION}</title>
+          <title>{CURRENT_FOCUS_INVESTIGATION}</title>
         </Helmet>
         <HeaderBreadCrumb {...breadcrumbProps} />
         <h2 className="mb-3 mt-5 page-title">{CURRENT_FOCUS_INVESTIGATION}</h2>
@@ -233,7 +231,7 @@ class ActiveFocusInvestigation extends React.Component<
                 ],
               },
               {
-                Header: 'FI Status',
+                Header: FI_STATUS,
                 columns: [
                   {
                     Header: '',
