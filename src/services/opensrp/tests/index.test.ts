@@ -77,7 +77,7 @@ describe('services/OpenSRP', () => {
     } catch (e) {
       error = e;
     }
-    expect(error).toEqual(new Error('OpenSRPService list failed, HTTP status 500'));
+    expect(error).toEqual(new Error('OpenSRPService list on plans failed, HTTP status 500'));
   });
 
   it('OpenSRPService read method works', async () => {
@@ -125,7 +125,7 @@ describe('services/OpenSRP', () => {
     } catch (e) {
       error = e;
     }
-    expect(error).toEqual(new Error('OpenSRPService read failed, HTTP status 500'));
+    expect(error).toEqual(new Error('OpenSRPService read on plans failed, HTTP status 500'));
   });
 
   it('OpenSRPService create method works', async () => {
@@ -169,7 +169,7 @@ describe('services/OpenSRP', () => {
     } catch (e) {
       error = e;
     }
-    expect(error).toEqual(new Error('OpenSRPService create failed, HTTP status 500'));
+    expect(error).toEqual(new Error('OpenSRPService create on plans failed, HTTP status 500'));
   });
 
   it('OpenSRPService update method works', async () => {
@@ -217,6 +217,6 @@ describe('services/OpenSRP', () => {
     } catch (e) {
       error = e;
     }
-    expect(error).toEqual(new Error('OpenSRPService update failed, HTTP status 500'));
+    expect(error).toEqual(new Error('OpenSRPService update on plans failed, HTTP status 500'));
   });
 });
