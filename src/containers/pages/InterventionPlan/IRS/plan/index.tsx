@@ -37,6 +37,7 @@ import {
   lineLayerConfig,
 } from './../../../../../configs/settings';
 
+import { OpenSRPService } from '../../../../../services/opensrp';
 import supersetFetch from '../../../../../services/superset';
 
 import jurisdictionReducer, {
@@ -71,6 +72,8 @@ import './style.css';
 /** register the plans reducer */
 reducerRegistry.register(plansReducerName, plansReducer);
 reducerRegistry.register(jurisdictionReducerName, jurisdictionReducer);
+
+const OpenSrpLocationService = new OpenSRPService('location');
 
 /** IrsPlanProps - interface for IRS Plan page */
 export interface IrsPlanProps {
@@ -113,7 +116,7 @@ interface TableCrumb {
 interface IrsPlanState {
   country: JurisdictionsByCountry | null;
   doRenderTable: boolean;
-  filteredJurisdictions: Jurisdiction[];
+  filteredJurisdictionIds: string[];
   focusJurisdictionId: string | null;
   isEditingPlanName: boolean;
   isLoadingGeoms: boolean;
@@ -135,7 +138,7 @@ class IrsPlan extends React.Component<
     this.state = {
       country: null,
       doRenderTable: true,
-      filteredJurisdictions: [],
+      filteredJurisdictionIds: [],
       focusJurisdictionId: null,
       isEditingPlanName: false,
       isLoadingGeoms: false,
@@ -739,6 +742,8 @@ class IrsPlan extends React.Component<
         jurisdictionsToInclude.indexOf(jurisdiction.jurisdiction_id) !== -1
     );
 
+    const filteredJurisdictionIds = filteredJurisdictions.map(j => j.jurisdiction_id);
+
     const { newPlan: NewPlan } = this.state;
     const newPlan: PlanRecord | null = NewPlan
       ? {
@@ -758,7 +763,7 @@ class IrsPlan extends React.Component<
     this.setState(
       {
         country,
-        filteredJurisdictions,
+        filteredJurisdictionIds,
         isLoadingGeoms: true,
         isStartingPlan: false,
         newPlan,
@@ -766,34 +771,51 @@ class IrsPlan extends React.Component<
       },
       () => {
         // Get geoms for jurisdictionsToInclude
-        const { newPlan: theNewPlan, filteredJurisdictions: FilteredJurisdictions } = this.state;
+        const {
+          newPlan: theNewPlan,
+          filteredJurisdictionIds: FilteredJurisdictionIds,
+        } = this.state;
 
-        const loadedJurisdictionIds = FilteredJurisdictions.filter(j => !!j.geojson).map(
-          j => j.jurisdiction_id
-        );
+        const loadedJurisdictionIds = this.props.jurisdictionsArray
+          .filter(j => FilteredJurisdictionIds.includes(j.jurisdiction_id) && !!j.geojson)
+          .map(j => j.jurisdiction_id);
+
         const jurisdictionsToLoad =
           theNewPlan && theNewPlan.plan_jurisdictions_ids
             ? [...theNewPlan.plan_jurisdictions_ids].filter(
                 j => loadedJurisdictionIds.indexOf(j) === -1
               )
             : [];
+
         if (jurisdictionsToLoad.length) {
-          let sqlFilterExpression = '';
-          for (let i = 0; i < jurisdictionsToLoad.length; i += 1) {
-            const jurId = jurisdictionsToLoad[i];
-            if (i) {
-              sqlFilterExpression += ' OR ';
-            }
-            sqlFilterExpression += `jurisdiction_id = '${jurId}'`;
+          const promises = [];
+          for (const j of jurisdictionsToLoad) {
+            promises.push(
+              new Promise((resolve, reject) => {
+                OpenSrpLocationService.read(j, {
+                  is_jurisdiction: true,
+                })
+                  .then(jurisidction => resolve(jurisidction))
+                  .catch(error => reject(error));
+              })
+            );
           }
-          const jurisdictionFetchParams = superset.getFormData(3000, [
-            { sqlExpression: sqlFilterExpression },
-          ]);
-          supersetFetch(SUPERSET_JURISDICTIONS_SLICE, jurisdictionFetchParams).then(
-            (result: Jurisdiction[]) => {
-              return this.props.fetchJurisdictionsActionCreator(result);
+          Promise.all(promises).then((results: any[]) => {
+            const jurisdictions: Jurisdiction[] = [];
+            for (const result of results) {
+              const J = filteredJurisdictions.find(
+                j => j.jurisdiction_id === result.id
+              ) as Jurisdiction;
+              if (J) {
+                const j: Jurisdiction = {
+                  ...J,
+                  geojson: result,
+                };
+                jurisdictions.push(j);
+              }
             }
-          );
+            this.props.fetchJurisdictionsActionCreator(jurisdictions);
+          });
         }
       }
     );
@@ -807,7 +829,10 @@ class IrsPlan extends React.Component<
 
   // Jurisdiction Selection Control
   private onToggleJurisdictionSelection(id: string, isSelected: boolean) {
-    const { newPlan: NewPlan, filteredJurisdictions } = this.state;
+    const { newPlan: NewPlan, filteredJurisdictionIds } = this.state;
+    const filteredJurisdictions = this.props.jurisdictionsArray.filter(j =>
+      filteredJurisdictionIds.includes(j.jurisdiction_id)
+    );
     if (NewPlan && NewPlan.plan_jurisdictions_ids && filteredJurisdictions.length) {
       const newPlanJurisdictionIds = [...NewPlan.plan_jurisdictions_ids];
 
@@ -840,7 +865,10 @@ class IrsPlan extends React.Component<
     }
   }
   private onToggleAllCheckboxChange(e: any) {
-    const { newPlan: NewPlan, filteredJurisdictions } = this.state;
+    const { newPlan: NewPlan, filteredJurisdictionIds } = this.state;
+    const filteredJurisdictions = this.props.jurisdictionsArray.filter(j =>
+      filteredJurisdictionIds.includes(j.jurisdiction_id)
+    );
     if (e && e.target && NewPlan) {
       const { checked: isSelected } = e.target;
       const newPlanJurisdictionIds: string[] = isSelected
@@ -903,7 +931,10 @@ class IrsPlan extends React.Component<
     return decendantIds;
   }
   private getGisidaWrapperProps(): GisidaProps | null {
-    const { country, isLoadingGeoms, filteredJurisdictions } = this.state;
+    const { country, isLoadingGeoms, filteredJurisdictionIds } = this.state;
+    const filteredJurisdictions = this.props.jurisdictionsArray.filter(j =>
+      filteredJurisdictionIds.includes(j.jurisdiction_id)
+    );
     if (!country || isLoadingGeoms) {
       return null;
     }
@@ -943,37 +974,55 @@ class IrsPlan extends React.Component<
       visible: true,
     };
 
-    const filteredJurisdictionIds = filteredJurisdictions.map(j => j.jurisdiction_id);
-    const features = this.props.jurisdictionsArray.map(
-      j => filteredJurisdictionIds.indexOf(j.jurisdiction_id) && j.geojson
-    );
+    function getJurisdictionFillLayers(jurisdictions: Jurisdiction[]) {
+      const layers: FlexObject[] = [];
+      const geoGraphicLevels: number[] = [];
 
-    const filteredJurisdictionsFc = {
-      features,
-      type: 'FeatureCollection',
-    };
+      for (const j of jurisdictions) {
+        const { geographic_level } = j;
+        if (
+          typeof geographic_level !== 'undefined' &&
+          geoGraphicLevels.indexOf(geographic_level) === -1
+        ) {
+          geoGraphicLevels.push(geographic_level);
+        }
+      }
+      geoGraphicLevels.sort().reverse();
+      const colorMap = ['red', 'orange', 'yellow', 'green', 'blue', 'purple'];
 
-    const FILTERED_JURISDICTIONS_FILL_LAYER = {
-      ...fillLayerConfig,
-      id: `${ADMN0_EN}-filtered-jurisdictions-fill`,
-      paint: {
-        'fill-color': 'red',
-      },
-      source: {
-        ...fillLayerConfig.source,
-        data: {
-          ...fillLayerConfig.source.data,
-          data: JSON.stringify(filteredJurisdictionsFc),
-        },
-      },
-      visible: true,
-    };
+      for (const g of geoGraphicLevels) {
+        const featureCollection = {
+          features: jurisdictions.filter(j => j.geographic_level === g).map(j => j.geojson),
+          type: 'FeatureCollection',
+        };
+
+        const layer = {
+          ...fillLayerConfig,
+          id: `${ADMN0_EN}-admin-${g}-jurisdiction-fill`,
+          paint: {
+            'fill-color': colorMap[g],
+          },
+          source: {
+            ...fillLayerConfig.source,
+            data: {
+              ...fillLayerConfig.source.data,
+              data: JSON.stringify(featureCollection),
+            },
+          },
+          visible: true,
+        };
+        layers.push(layer);
+      }
+      return layers;
+    }
+
+    const JURISDICTION_FILL_LAYERS = getJurisdictionFillLayers(filteredJurisdictions);
 
     const gisidaWrapperProps: GisidaProps = {
       bounds,
       geoData: null,
       handlers: [],
-      layers: [ADMIN_0_LINE_LAYER, ADMIN_1_LINE_LAYER, FILTERED_JURISDICTIONS_FILL_LAYER],
+      layers: [ADMIN_0_LINE_LAYER, ADMIN_1_LINE_LAYER, ...JURISDICTION_FILL_LAYERS],
       pointFeatureCollection: null,
       polygonFeatureCollection: null,
       structures: null,
@@ -985,8 +1034,10 @@ class IrsPlan extends React.Component<
    * @returns tableProps|null - compatible object for DrillDownTable props
    */
   private getDrilldownPlanTableProps(state: IrsPlanState) {
-    const { filteredJurisdictions, newPlan } = state;
-
+    const { filteredJurisdictionIds, newPlan } = state;
+    const filteredJurisdictions = this.props.jurisdictionsArray.filter(j =>
+      filteredJurisdictionIds.includes(j.jurisdiction_id)
+    );
     if (!newPlan || !newPlan.plan_jurisdictions_ids) {
       return null;
     }
