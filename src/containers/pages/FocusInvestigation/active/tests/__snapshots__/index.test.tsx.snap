@@ -193,13 +193,13 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
         <SideEffect(NullComponent)
           defer={true}
           encodeSpecialCharacters={true}
-          title="Active Focus Investigations"
+          title="Current Focus Investigations"
           titleAttributes={Object {}}
         >
           <NullComponent
             defer={true}
             encodeSpecialCharacters={true}
-            title="Active Focus Investigations"
+            title="Current Focus Investigations"
             titleAttributes={Object {}}
           />
         </SideEffect(NullComponent)>
@@ -3016,127 +3016,6 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                     },
                   ],
                 },
-              ],
-              "row_limit": 2000,
-            },
-          ],
-        ],
-        "results": Array [
-          Object {
-            "isThrow": false,
-            "value": Promise {},
-          },
-        ],
-      }
-    }
-  >
-    <div>
-      <HelmetWrapper
-        defer={true}
-        encodeSpecialCharacters={true}
-      >
-        <SideEffect(NullComponent)
-          defer={true}
-          encodeSpecialCharacters={true}
-          title="Active Focus Investigations"
-          titleAttributes={Object {}}
-        >
-          <NullComponent
-            defer={true}
-            encodeSpecialCharacters={true}
-            title="Active Focus Investigations"
-            titleAttributes={Object {}}
-          />
-        </SideEffect(NullComponent)>
-      </HelmetWrapper>
-      <HeaderBreadcrumb
-        currentPage={
-          Object {
-            "label": "Focus Investigations",
-            "url": "/focus-investigation",
-          }
-        }
-        pages={
-          Array [
-            Object {
-              "label": "Home",
-              "url": "/",
-            },
-          ]
-        }
-      >
-        <div>
-          <Breadcrumb
-            aria-label="breadcrumb"
-            className="reveal-breadcrumb"
-            listTag="ol"
-            tag="nav"
-          >
-            <nav
-              aria-label="breadcrumb"
-              className="reveal-breadcrumb"
-            >
-              <ol
-                className="breadcrumb"
-              >
-                <BreadcrumbItem
-                  key="0"
-                  tag="li"
-                >
-                  <li
-                    className="breadcrumb-item"
-                  >
-                    <Link
-                      key="0"
-                      replace={false}
-                      to="/"
-                    >
-                      <a
-                        href="/"
-                        onClick={[Function]}
-                      >
-                        Home
-                      </a>
-                    </Link>
-                  </li>
-                </BreadcrumbItem>
-                <BreadcrumbItem
-                  active={true}
-                  tag="li"
-                >
-                  <li
-                    aria-current="page"
-                    className="active breadcrumb-item"
-                  >
-                    Focus Investigations
-                  </li>
-                </BreadcrumbItem>
-              </ol>
-            </nav>
-          </Breadcrumb>
-        </div>
-      </HeaderBreadcrumb>
-      <h3
-        className="mb-3 mt-5 page-title"
-      >
-        Active Focus Investigations
-      </h3>
-      <DrillDownTable
-        CellComponent={[Function]}
-        columns={
-          Array [
-            Object {
-              "Header": "Province",
-              "columns": Array [
-                Object {
-                  "Header": "",
-                  "accessor": "province",
-                },
-              ],
-            },
-            Object {
-              "Header": "District",
-              "columns": Array [
                 Object {
                   "Header": "District",
                   "columns": Array [
@@ -3529,9 +3408,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               role="columnheader"
                               style={
                                 Object {
-                                  "flex": "80 0 auto",
+                                  "flex": "100 0 auto",
                                   "maxWidth": null,
-                                  "width": "80px",
+                                  "width": "100px",
                                 }
                               }
                               tabIndex="-1"
@@ -3637,9 +3516,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               role="columnheader"
                               style={
                                 Object {
-                                  "flex": "160 0 auto",
+                                  "flex": "100 0 auto",
                                   "maxWidth": null,
-                                  "width": "160px",
+                                  "width": "100px",
                                 }
                               }
                               tabIndex="-1"
@@ -3717,9 +3596,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               role="columnheader"
                               style={
                                 Object {
-                                  "flex": "100 0 auto",
+                                  "flex": "160 0 auto",
                                   "maxWidth": null,
-                                  "width": "100px",
+                                  "width": "160px",
                                 }
                               }
                               tabIndex="-1"
@@ -3757,9 +3636,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               role="columnheader"
                               style={
                                 Object {
-                                  "flex": "100 0 auto",
+                                  "flex": "80 0 auto",
                                   "maxWidth": null,
-                                  "width": "100px",
+                                  "width": "80px",
                                 }
                               }
                               tabIndex="-1"
@@ -3917,9 +3796,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               role="columnheader"
                               style={
                                 Object {
-                                  "flex": "80 0 auto",
+                                  "flex": "100 0 auto",
                                   "maxWidth": null,
-                                  "width": "80px",
+                                  "width": "100px",
                                 }
                               }
                               tabIndex="-1"
@@ -4117,9 +3996,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               role="columnheader"
                               style={
                                 Object {
-                                  "flex": "100 0 auto",
+                                  "flex": "80 0 auto",
                                   "maxWidth": null,
-                                  "width": "100px",
+                                  "width": "80px",
                                 }
                               }
                               tabIndex="-1"
@@ -4992,33 +4871,6 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                 onClick={[Function]}
                                 style={
                                   Object {
-                                    "flex": "80 0 auto",
-                                    "maxWidth": null,
-                                    "width": "80px",
-                                  }
-                                }
-                              >
-                                <div
-                                  className="rt-td"
-                                  onClick={[Function]}
-                                  role="gridcell"
-                                  style={
-                                    Object {
-                                      "flex": "80 0 auto",
-                                      "maxWidth": null,
-                                      "width": "80px",
-                                    }
-                                  }
-                                >
-                                  2019-06-18
-                                </div>
-                              </TdComponent>
-                              <TdComponent
-                                className=""
-                                key="10-plan_status"
-                                onClick={[Function]}
-                                style={
-                                  Object {
                                     "flex": "100 0 auto",
                                     "maxWidth": null,
                                     "width": "100px",
@@ -5034,6 +4886,33 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                       "flex": "100 0 auto",
                                       "maxWidth": null,
                                       "width": "100px",
+                                    }
+                                  }
+                                >
+                                  2019-06-18
+                                </div>
+                              </TdComponent>
+                              <TdComponent
+                                className=""
+                                key="10-plan_status"
+                                onClick={[Function]}
+                                style={
+                                  Object {
+                                    "flex": "80 0 auto",
+                                    "maxWidth": null,
+                                    "width": "80px",
+                                  }
+                                }
+                              >
+                                <div
+                                  className="rt-td"
+                                  onClick={[Function]}
+                                  role="gridcell"
+                                  style={
+                                    Object {
+                                      "flex": "80 0 auto",
+                                      "maxWidth": null,
+                                      "width": "80px",
                                     }
                                   }
                                 >
@@ -5675,13 +5554,13 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
         <SideEffect(NullComponent)
           defer={true}
           encodeSpecialCharacters={true}
-          title="Active Focus Investigation"
+          title="Current Focus Investigations"
           titleAttributes={Object {}}
         >
           <NullComponent
             defer={true}
             encodeSpecialCharacters={true}
-            title="Active Focus Investigation"
+            title="Current Focus Investigations"
             titleAttributes={Object {}}
           />
         </SideEffect(NullComponent)>
@@ -6458,9 +6337,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               role="columnheader"
                               style={
                                 Object {
-                                  "flex": "80 0 auto",
+                                  "flex": "100 0 auto",
                                   "maxWidth": null,
-                                  "width": "80px",
+                                  "width": "100px",
                                 }
                               }
                               tabIndex="-1"
@@ -6566,9 +6445,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               role="columnheader"
                               style={
                                 Object {
-                                  "flex": "160 0 auto",
+                                  "flex": "100 0 auto",
                                   "maxWidth": null,
-                                  "width": "160px",
+                                  "width": "100px",
                                 }
                               }
                               tabIndex="-1"
@@ -6646,9 +6525,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               role="columnheader"
                               style={
                                 Object {
-                                  "flex": "100 0 auto",
+                                  "flex": "160 0 auto",
                                   "maxWidth": null,
-                                  "width": "100px",
+                                  "width": "160px",
                                 }
                               }
                               tabIndex="-1"
@@ -6686,9 +6565,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               role="columnheader"
                               style={
                                 Object {
-                                  "flex": "100 0 auto",
+                                  "flex": "80 0 auto",
                                   "maxWidth": null,
-                                  "width": "100px",
+                                  "width": "80px",
                                 }
                               }
                               tabIndex="-1"
@@ -6846,9 +6725,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               role="columnheader"
                               style={
                                 Object {
-                                  "flex": "80 0 auto",
+                                  "flex": "100 0 auto",
                                   "maxWidth": null,
-                                  "width": "80px",
+                                  "width": "100px",
                                 }
                               }
                               tabIndex="-1"
@@ -7046,9 +6925,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               role="columnheader"
                               style={
                                 Object {
-                                  "flex": "100 0 auto",
+                                  "flex": "80 0 auto",
                                   "maxWidth": null,
-                                  "width": "100px",
+                                  "width": "80px",
                                 }
                               }
                               tabIndex="-1"
@@ -7921,9 +7800,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                 onClick={[Function]}
                                 style={
                                   Object {
-                                    "flex": "80 0 auto",
+                                    "flex": "100 0 auto",
                                     "maxWidth": null,
-                                    "width": "80px",
+                                    "width": "100px",
                                   }
                                 }
                               >
@@ -7946,9 +7825,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                 onClick={[Function]}
                                 style={
                                   Object {
-                                    "flex": "100 0 auto",
+                                    "flex": "80 0 auto",
                                     "maxWidth": null,
-                                    "width": "100px",
+                                    "width": "80px",
                                   }
                                 }
                               >
@@ -8890,9 +8769,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               role="columnheader"
                               style={
                                 Object {
-                                  "flex": "80 0 auto",
+                                  "flex": "100 0 auto",
                                   "maxWidth": null,
-                                  "width": "80px",
+                                  "width": "100px",
                                 }
                               }
                               tabIndex="-1"
@@ -8998,9 +8877,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               role="columnheader"
                               style={
                                 Object {
-                                  "flex": "160 0 auto",
+                                  "flex": "100 0 auto",
                                   "maxWidth": null,
-                                  "width": "160px",
+                                  "width": "100px",
                                 }
                               }
                               tabIndex="-1"
@@ -9078,9 +8957,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               role="columnheader"
                               style={
                                 Object {
-                                  "flex": "100 0 auto",
+                                  "flex": "160 0 auto",
                                   "maxWidth": null,
-                                  "width": "100px",
+                                  "width": "160px",
                                 }
                               }
                               tabIndex="-1"
@@ -9118,9 +8997,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               role="columnheader"
                               style={
                                 Object {
-                                  "flex": "100 0 auto",
+                                  "flex": "80 0 auto",
                                   "maxWidth": null,
-                                  "width": "100px",
+                                  "width": "80px",
                                 }
                               }
                               tabIndex="-1"
@@ -9278,9 +9157,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               role="columnheader"
                               style={
                                 Object {
-                                  "flex": "80 0 auto",
+                                  "flex": "100 0 auto",
                                   "maxWidth": null,
-                                  "width": "80px",
+                                  "width": "100px",
                                 }
                               }
                               tabIndex="-1"
@@ -9478,9 +9357,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               role="columnheader"
                               style={
                                 Object {
-                                  "flex": "100 0 auto",
+                                  "flex": "80 0 auto",
                                   "maxWidth": null,
-                                  "width": "100px",
+                                  "width": "80px",
                                 }
                               }
                               tabIndex="-1"
@@ -10353,33 +10232,6 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                 onClick={[Function]}
                                 style={
                                   Object {
-                                    "flex": "80 0 auto",
-                                    "maxWidth": null,
-                                    "width": "80px",
-                                  }
-                                }
-                              >
-                                <div
-                                  className="rt-td"
-                                  onClick={[Function]}
-                                  role="gridcell"
-                                  style={
-                                    Object {
-                                      "flex": "80 0 auto",
-                                      "maxWidth": null,
-                                      "width": "80px",
-                                    }
-                                  }
-                                >
-                                  2019-06-18
-                                </div>
-                              </TdComponent>
-                              <TdComponent
-                                className=""
-                                key="10-plan_status"
-                                onClick={[Function]}
-                                style={
-                                  Object {
                                     "flex": "100 0 auto",
                                     "maxWidth": null,
                                     "width": "100px",
@@ -10395,6 +10247,33 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                       "flex": "100 0 auto",
                                       "maxWidth": null,
                                       "width": "100px",
+                                    }
+                                  }
+                                >
+                                  2019-06-18
+                                </div>
+                              </TdComponent>
+                              <TdComponent
+                                className=""
+                                key="10-plan_status"
+                                onClick={[Function]}
+                                style={
+                                  Object {
+                                    "flex": "80 0 auto",
+                                    "maxWidth": null,
+                                    "width": "80px",
+                                  }
+                                }
+                              >
+                                <div
+                                  className="rt-td"
+                                  onClick={[Function]}
+                                  role="gridcell"
+                                  style={
+                                    Object {
+                                      "flex": "80 0 auto",
+                                      "maxWidth": null,
+                                      "width": "80px",
                                     }
                                   }
                                 >
@@ -10959,9 +10838,9 @@ Array [
                     role="columnheader"
                     style={
                       Object {
-                        "flex": "80 0 auto",
+                        "flex": "100 0 auto",
                         "maxWidth": null,
-                        "width": "80px",
+                        "width": "100px",
                       }
                     }
                     tabIndex="-1"
@@ -11067,9 +10946,9 @@ Array [
                     role="columnheader"
                     style={
                       Object {
-                        "flex": "160 0 auto",
+                        "flex": "100 0 auto",
                         "maxWidth": null,
-                        "width": "160px",
+                        "width": "100px",
                       }
                     }
                     tabIndex="-1"
@@ -11147,9 +11026,9 @@ Array [
                     role="columnheader"
                     style={
                       Object {
-                        "flex": "100 0 auto",
+                        "flex": "160 0 auto",
                         "maxWidth": null,
-                        "width": "100px",
+                        "width": "160px",
                       }
                     }
                     tabIndex="-1"
@@ -11187,9 +11066,9 @@ Array [
                     role="columnheader"
                     style={
                       Object {
-                        "flex": "100 0 auto",
+                        "flex": "80 0 auto",
                         "maxWidth": null,
-                        "width": "100px",
+                        "width": "80px",
                       }
                     }
                     tabIndex="-1"
@@ -11347,9 +11226,9 @@ Array [
                     role="columnheader"
                     style={
                       Object {
-                        "flex": "80 0 auto",
+                        "flex": "100 0 auto",
                         "maxWidth": null,
-                        "width": "80px",
+                        "width": "100px",
                       }
                     }
                     tabIndex="-1"
@@ -11547,9 +11426,9 @@ Array [
                     role="columnheader"
                     style={
                       Object {
-                        "flex": "100 0 auto",
+                        "flex": "80 0 auto",
                         "maxWidth": null,
-                        "width": "100px",
+                        "width": "80px",
                       }
                     }
                     tabIndex="-1"
@@ -12422,9 +12301,9 @@ Array [
                       onClick={[Function]}
                       style={
                         Object {
-                          "flex": "80 0 auto",
+                          "flex": "100 0 auto",
                           "maxWidth": null,
-                          "width": "80px",
+                          "width": "100px",
                         }
                       }
                     >
@@ -12447,9 +12326,9 @@ Array [
                       onClick={[Function]}
                       style={
                         Object {
-                          "flex": "100 0 auto",
+                          "flex": "80 0 auto",
                           "maxWidth": null,
-                          "width": "100px",
+                          "width": "80px",
                         }
                       }
                     >
@@ -12859,9 +12738,9 @@ Array [
                     role="columnheader"
                     style={
                       Object {
-                        "flex": "80 0 auto",
+                        "flex": "100 0 auto",
                         "maxWidth": null,
-                        "width": "80px",
+                        "width": "100px",
                       }
                     }
                     tabIndex="-1"
@@ -12967,9 +12846,9 @@ Array [
                     role="columnheader"
                     style={
                       Object {
-                        "flex": "160 0 auto",
+                        "flex": "100 0 auto",
                         "maxWidth": null,
-                        "width": "160px",
+                        "width": "100px",
                       }
                     }
                     tabIndex="-1"
@@ -13047,9 +12926,9 @@ Array [
                     role="columnheader"
                     style={
                       Object {
-                        "flex": "100 0 auto",
+                        "flex": "160 0 auto",
                         "maxWidth": null,
-                        "width": "100px",
+                        "width": "160px",
                       }
                     }
                     tabIndex="-1"
@@ -13087,9 +12966,9 @@ Array [
                     role="columnheader"
                     style={
                       Object {
-                        "flex": "100 0 auto",
+                        "flex": "80 0 auto",
                         "maxWidth": null,
-                        "width": "100px",
+                        "width": "80px",
                       }
                     }
                     tabIndex="-1"
@@ -13247,9 +13126,9 @@ Array [
                     role="columnheader"
                     style={
                       Object {
-                        "flex": "80 0 auto",
+                        "flex": "100 0 auto",
                         "maxWidth": null,
-                        "width": "80px",
+                        "width": "100px",
                       }
                     }
                     tabIndex="-1"
@@ -13447,9 +13326,9 @@ Array [
                     role="columnheader"
                     style={
                       Object {
-                        "flex": "100 0 auto",
+                        "flex": "80 0 auto",
                         "maxWidth": null,
-                        "width": "100px",
+                        "width": "80px",
                       }
                     }
                     tabIndex="-1"
@@ -14322,33 +14201,6 @@ Array [
                       onClick={[Function]}
                       style={
                         Object {
-                          "flex": "80 0 auto",
-                          "maxWidth": null,
-                          "width": "80px",
-                        }
-                      }
-                    >
-                      <div
-                        className="rt-td"
-                        onClick={[Function]}
-                        role="gridcell"
-                        style={
-                          Object {
-                            "flex": "80 0 auto",
-                            "maxWidth": null,
-                            "width": "80px",
-                          }
-                        }
-                      >
-                        2019-06-18
-                      </div>
-                    </TdComponent>
-                    <TdComponent
-                      className=""
-                      key="10-plan_status"
-                      onClick={[Function]}
-                      style={
-                        Object {
                           "flex": "100 0 auto",
                           "maxWidth": null,
                           "width": "100px",
@@ -14364,6 +14216,33 @@ Array [
                             "flex": "100 0 auto",
                             "maxWidth": null,
                             "width": "100px",
+                          }
+                        }
+                      >
+                        2019-06-18
+                      </div>
+                    </TdComponent>
+                    <TdComponent
+                      className=""
+                      key="10-plan_status"
+                      onClick={[Function]}
+                      style={
+                        Object {
+                          "flex": "80 0 auto",
+                          "maxWidth": null,
+                          "width": "80px",
+                        }
+                      }
+                    >
+                      <div
+                        className="rt-td"
+                        onClick={[Function]}
+                        role="gridcell"
+                        style={
+                          Object {
+                            "flex": "80 0 auto",
+                            "maxWidth": null,
+                            "width": "80px",
                           }
                         }
                       >
