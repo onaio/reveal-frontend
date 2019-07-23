@@ -15,3 +15,6 @@ export type GISIDA_ONADATA_API_TOKEN = typeof GISIDA_ONADATA_API_TOKEN;
 
 export const DIGITAL_GLOBE_CONNECT_ID = 'hunter2';
 export type DIGITAL_GLOBE_CONNECT_ID = typeof DIGITAL_GLOBE_CONNECT_ID;
+
+export const OPENSRP_API_BASE_URL = 'https://test.smartregister.org/opensrp/rest/';
+export type OPENSRP_API_BASE_URL = typeof OPENSRP_API_BASE_URL;

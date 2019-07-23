@@ -89,6 +89,12 @@ export type OPENSRP_USER_URL = typeof OPENSRP_USER_URL;
 export const OPENSRP_OAUTH_STATE = process.env.REACT_APP_OPENSRP_OAUTH_STATE || 'opensrp';
 export type OPENSRP_OAUTH_STATE = typeof OPENSRP_OAUTH_STATE;
 
+// notice the trailing /
+export const OPENSRP_API_BASE_URL =
+  process.env.REACT_APP_OPENSRP_API_BASE_URL ||
+  'https://reveal-stage.smartregister.org/opensrp/rest/';
+export type OPENSRP_API_BASE_URL = typeof OPENSRP_API_BASE_URL;
+
 /** Onadata oAuth2 settings */
 export const ENABLE_ONADATA_OAUTH = process.env.REACT_APP_ENABLE_ONADATA_OAUTH === 'true';
 export type ENABLE_ONADATA_OAUTH = typeof ENABLE_ONADATA_OAUTH;

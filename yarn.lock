@@ -6311,10 +6311,10 @@ getpass@^0.1.1:
   dependencies:
     assert-plus "^1.0.0"
 
-gisida-react@^1.2.3:
-  version "1.2.3"
-  resolved "https://registry.yarnpkg.com/gisida-react/-/gisida-react-1.2.3.tgz#47673be1d9b1f2a24a77b6a0bfd13b14531d890b"
-  integrity sha512-MjMGVy6xfas56+6Rbnv+5XT2MBO2dZPVI18TjnOA/eO47P3L0+0hy720zXJ9RJUKweUUzShs0FUxXo4Nw5eNYQ==
+gisida-react@^1.2.6:
+  version "1.2.6"
+  resolved "https://registry.yarnpkg.com/gisida-react/-/gisida-react-1.2.6.tgz#1bc1ecdcf737ed223eca1a1427fc739c92cdf10d"
+  integrity sha512-nxjfIBY1B1yYQp8zkPqi7gRY4cn3AjA4DQYONzbxxpddkHFzgxxVuNFJqKdgdKzPkSQHkou62O83bj2MzjPQIw==
   dependencies:
     ansi-regex "^3.0.0"
     camelcase "^4.1.0"
@@ -6359,9 +6359,9 @@ gisida@^1.2.5:
     uglifyjs-webpack-plugin "1.1.5"
     webpack "^3.8.1"
 
-"gisida@https://github.com/onaio/gisida.git#master":
+"gisida@git+https://github.com/onaio/gisida.git#master":
   version "1.2.6"
-  resolved "https://github.com/onaio/gisida.git#356eb4546325470f02836a1a9927c2f9ec2e23bd"
+  resolved "git+https://github.com/onaio/gisida.git#356eb4546325470f02836a1a9927c2f9ec2e23bd"
   dependencies:
     "@babel/runtime" "^7.4.3"
     "@onaio/superset-connector" "^0.0.7"
@@ -7766,7 +7766,7 @@ jest-environment-node@^23.4.0:
     jest-mock "^23.2.0"
     jest-util "^23.4.0"
 
-jest-fetch-mock@^2.1.1:
+jest-fetch-mock@^2.1.1, jest-fetch-mock@^2.1.2:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/jest-fetch-mock/-/jest-fetch-mock-2.1.2.tgz#1260b347918e3931c4ec743ceaf60433da661bd0"
   integrity sha512-tcSR4Lh2bWLe1+0w/IwvNxeDocMI/6yIA2bijZ0fyWxC4kQ18lckQ1n7Yd40NKuisGmcGBRFPandRXrW/ti/Bw==
