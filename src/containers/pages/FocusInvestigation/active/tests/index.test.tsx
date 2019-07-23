@@ -6,7 +6,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
-import { FI_ACTIVE_TITLE } from '../../../../../constants';
+import { ACTIVE_FOCUS_INVESTIGATION } from '../../../../../constants';
 import store from '../../../../../store';
 import reducer, { fetchPlans, reducerName } from '../../../../../store/ducks/plans';
 import * as fixtures from '../../../../../store/ducks/tests/fixtures';
@@ -72,7 +72,7 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
       </Router>
     );
     const helmet = Helmet.peek();
-    expect(helmet.title).toEqual(FI_ACTIVE_TITLE);
+    expect(helmet.title).toEqual(ACTIVE_FOCUS_INVESTIGATION);
     expect(toJson(wrapper)).toMatchSnapshot();
     expect(toJson(wrapper.find('HeaderBreadcrumb'))).toMatchSnapshot();
     wrapper.unmount();
