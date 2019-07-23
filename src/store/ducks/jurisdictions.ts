@@ -113,6 +113,7 @@ export const fetchJurisdictions = (jurisdictionList: Jurisdiction[] = []) => {
     ),
     jurisdictionsById: keyBy(
       jurisdictionList.map((item: Jurisdiction) => {
+        const previousItem = getJurisdictionById(store.getState(), item.jurisdiction_id);
         /** ensure geojson is parsed */
         if (typeof item.geojson === 'string') {
           item.geojson = JSON.parse(item.geojson);
@@ -120,6 +121,12 @@ export const fetchJurisdictions = (jurisdictionList: Jurisdiction[] = []) => {
         /** ensure geometry is parsed */
         if (item.geojson && typeof item.geojson.geometry === 'string') {
           item.geojson.geometry = JSON.parse(item.geojson.geometry);
+        }
+        if (previousItem) {
+          return {
+            ...previousItem,
+            ...item,
+          };
         }
         return item;
       }),

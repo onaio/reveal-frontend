@@ -313,7 +313,6 @@ class IrsPlan extends React.Component<
       const loadedJurisdictions = filteredJurisdictions.filter((j: Jurisdiction) => j.geojson);
       if (loadedJurisdictions.length === filteredJurisdictions.length) {
         this.setState({
-          filteredJurisdictions,
           isLoadingGeoms: false,
         });
       }
@@ -555,13 +554,13 @@ class IrsPlan extends React.Component<
         )}
 
         {gisidaWrapperProps && (
-          <div className="row no-gutters mb-5">
-            <div className="col-9">
+          <Row>
+            <Col>
               <div className="map">
                 <GisidaWrapper {...gisidaWrapperProps} />
               </div>
-            </div>
-          </div>
+            </Col>
+          </Row>
         )}
 
         {/* Section for table of jurisdictions */}
