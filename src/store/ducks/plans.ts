@@ -16,10 +16,10 @@ export enum InterventionType {
 /** Enum representing the possible intervention types */
 export enum PlanStatus {
   ACTIVE = 'active',
+  COMPLETE = 'complete',
   DRAFT = 'draft',
   RETIRED = 'retired',
 }
-
 /** PlanRecordResponse - interface for response objects from SUPERSET_PLANS_TABLE_SLICE */
 export interface PlanRecordResponse {
   date: string;
@@ -169,43 +169,58 @@ export const fetchPlanRecords = (planList: PlanRecordResponse[] = []): FetchPlan
 /** getPlansById - get plansById by intervention type
  * @param {Partial<Store>} state - the redux store
  * @param {InterventionType} intervention - the intervention type
+ * @param {string[]} status - the plan status
+ * @param {string} reason - the plan reason
  */
 export function getPlansById(
   state: Partial<Store>,
   intervention: InterventionType = InterventionType.FI,
-  status: PlanStatus = PlanStatus.ACTIVE
+  status: string[] = [PlanStatus.ACTIVE],
+  reason: string | null = null
 ): { [key: string]: Plan } {
   const plansById = (state as any)[reducerName].plansById;
   return pickBy(
     plansById,
-    (plan: Plan) => plan.plan_intervention_type === intervention && plan.plan_status === status
+    (plan: Plan) =>
+      plan.plan_intervention_type === intervention &&
+      (status.length ? status.includes(plan.plan_status) : true) &&
+      (reason ? plan.plan_fi_reason === reason : true)
   );
 }
 
 /** getPlansArray - get an array of Plans by intervention type
  * @param {Partial<Store>} state - the redux store
  * @param {InterventionType} intervention - the intervention type
+ * @param {string[]} status - the plan status
+ * @param {string} reason - the plan reason
  */
 export function getPlansArray(
   state: Partial<Store>,
   intervention: InterventionType = InterventionType.FI,
-  status: PlanStatus = PlanStatus.ACTIVE
+  status: string[],
+  reason: string | null = null
 ): Plan[] {
   return values((state as any)[reducerName].plansById).filter(
-    (plan: Plan) => plan.plan_intervention_type === intervention && plan.plan_status === status
+    (plan: Plan) =>
+      plan.plan_intervention_type === intervention &&
+      (status.length ? status.includes(plan.plan_status) : true) &&
+      (reason ? plan.plan_fi_reason === reason : true)
   );
 }
 
 /** getPlansIdArray - get an array of Plan ids by intervention type
  * @param {Partial<Store>} state - the redux store
  * @param {InterventionType} intervention - the intervention type
+ * @param {string[]} status - the plan status
+ * @param {string} reason - the plan reason
  */
 export function getPlansIdArray(
   state: Partial<Store>,
   intervention: InterventionType = InterventionType.FI,
-  status: PlanStatus = PlanStatus.ACTIVE
+  status: string[] = [PlanStatus.ACTIVE],
+  reason: string | null = null
 ): string[] {
-  return keys(getPlansById(state, intervention, status));
+  return keys(getPlansById(state, intervention, status, reason));
 }
 
 /** getPlanById - get one Plan by id
@@ -219,45 +234,58 @@ export function getPlanById(state: Partial<Store>, id: string): Plan | null {
 /** getPlanRecordsById - get planRecordsById by intervention type
  * @param {Partial<Store>} state - the redux store
  * @param {InterventionType} intervention - the intervention type
+ * @param {string[]} status - the plan status
+ * @param {string} reason - the plan reason
  */
 export function getPlanRecordsById(
   state: Partial<Store>,
   intervention: InterventionType = InterventionType.FI,
-  status: PlanStatus = PlanStatus.ACTIVE
+  status: string[] = [PlanStatus.ACTIVE],
+  reason: string | null = null
 ): { [key: string]: PlanRecord } {
   const planRecordsById = (state as any)[reducerName].planRecordsById;
   return pickBy(
     planRecordsById,
     (plan: PlanRecord) =>
-      plan.plan_intervention_type === intervention && plan.plan_status === status
+      plan.plan_intervention_type === intervention &&
+      (status.length ? status.includes(plan.plan_status) : true) &&
+      (reason ? plan.plan_fi_reason === reason : true)
   );
 }
 
 /** getPlanRecordsArray - get an array of PlanRecords by intervention type
  * @param {Partial<Store>} state - the redux store
  * @param {InterventionType} intervention - the intervention type
+ * @param {string[]} status - the plan status
+ * @param {string} reason - the plan reason
  */
 export function getPlanRecordsArray(
   state: Partial<Store>,
   intervention: InterventionType = InterventionType.FI,
-  status: PlanStatus = PlanStatus.ACTIVE
+  status: string[] = [PlanStatus.ACTIVE],
+  reason: string | null = null
 ): PlanRecord[] {
   return values((state as any)[reducerName].planRecordsById).filter(
     (plan: PlanRecord) =>
-      plan.plan_intervention_type === intervention && plan.plan_status === status
+      plan.plan_intervention_type === intervention &&
+      (status.length ? status.includes(plan.plan_status) : true) &&
+      (reason ? plan.plan_fi_reason === reason : true)
   );
 }
 
 /** getPlanRecordsIdArray - get an array of PlanRecord ids
  * @param {Partial<Store>} state - the redux store
  * @param {InterventionType} intervention - the intervention type
+ * @param {string[]} status - the plan status
+ * @param {string} reason - the plan reason
  */
 export function getPlanRecordsIdArray(
   state: Partial<Store>,
   intervention: InterventionType = InterventionType.FI,
-  status: PlanStatus = PlanStatus.ACTIVE
+  status: string[] = [PlanStatus.ACTIVE],
+  reason: string | null = null
 ): string[] {
-  return keys(getPlanRecordsById(state, intervention, status));
+  return keys(getPlanRecordsById(state, intervention, status, reason));
 }
 
 /** getPlanRecordById - get one PlanRecord by id
