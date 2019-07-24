@@ -54,6 +54,7 @@ import supersetFetch from '../../../../services/superset';
 import plansReducer, {
   fetchPlans,
   getPlansByReason,
+  InterventionType,
   Plan,
   reducerName as plansReducerName,
 } from '../../../../store/ducks/plans';
@@ -342,8 +343,13 @@ interface DispatchedStateProps {
 
 /** map state to props */
 const mapStateToProps = (state: Partial<Store>): DispatchedStateProps => {
-  const caseTriggeredPlans = getPlansByReason(state, CASE_TRIGGERED);
-  const routinePlans = getPlansByReason(state, ROUTINE);
+  const caseTriggeredPlans = getPlansByReason(
+    state,
+    InterventionType.FI,
+    ['active', 'draft'],
+    CASE_TRIGGERED
+  );
+  const routinePlans = getPlansByReason(state, InterventionType.FI, ['active', 'draft'], ROUTINE);
 
   return {
     caseTriggeredPlans,
