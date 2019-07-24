@@ -209,7 +209,7 @@ class ActiveFocusInvestigation extends React.Component<
                 columns: [
                   {
                     Cell: (cell: CellInfo) => {
-                      /** 24 hours ago */
+                      /** if 24 hours ago show badge */
                       const oneDayAgo = new Date().getTime() + 1 * 24 * 60 * 60;
                       const newRecordBadge =
                         Date.parse(cell.original.plan_date) >= oneDayAgo ? (
@@ -219,14 +219,19 @@ class ActiveFocusInvestigation extends React.Component<
                         ) : null;
                       return (
                         <div>
-                          {cell.value}
+                          {cell.original.focusArea.trim() && (
+                            <Link to={`${FI_SINGLE_MAP_URL}/${cell.original.id}`}>
+                              {cell.value}
+                            </Link>
+                          )}
+                          &nbsp;
                           {newRecordBadge}
                         </div>
                       );
                     },
                     Header: '',
                     accessor: 'plan_title',
-                    minWidth: 160,
+                    minWidth: 180,
                   },
                 ],
               },
@@ -260,7 +265,7 @@ class ActiveFocusInvestigation extends React.Component<
                     },
                     Header: '',
                     accessor: 'focusArea',
-                    minWidth: 140,
+                    minWidth: 180,
                   },
                 ],
               },
@@ -275,25 +280,6 @@ class ActiveFocusInvestigation extends React.Component<
                 ],
               },
               ...columnsBasedOnReason,
-              {
-                Header: 'Actions',
-                columns: [
-                  {
-                    Cell: (cell: CellInfo) => {
-                      const actionLink =
-                        cell.value === 'active' ? (
-                          <Link to={`${FI_SINGLE_MAP_URL}/${cell.original.id}`}>View</Link>
-                        ) : (
-                          <Link to="#">Edit</Link>
-                        );
-                      return <div>{actionLink}</div>;
-                    },
-                    Header: '',
-                    accessor: 'plan_status',
-                    minWidth: 80,
-                  },
-                ],
-              },
             ];
             const tableProps = {
               CellComponent: DrillDownTableLinkedCell,
