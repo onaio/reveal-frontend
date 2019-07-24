@@ -1,4 +1,5 @@
 // this is the IRS Plan page component
+import { Actions } from 'gisida';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
@@ -16,6 +17,7 @@ import {
 } from 'reactstrap';
 import { Store } from 'redux';
 
+import GeojsonExtent from '@mapbox/geojson-extent';
 import DrillDownTable, { DrillDownProps, DropDownCell } from '@onaio/drill-down-table';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset from '@onaio/superset-connector';
@@ -27,7 +29,7 @@ import {
   SUPERSET_PLAN_STRUCTURE_PIVOT_SLICE,
   SUPERSET_PLANS_TABLE_SLICE,
 } from '../../../../../configs/env';
-import { HOME, HOME_URL, INTERVENTION_IRS_URL } from '../../../../../constants';
+import { HOME, HOME_URL, INTERVENTION_IRS_URL, MAP_ID } from '../../../../../constants';
 import {
   FlexObject,
   preventDefault,
@@ -46,6 +48,7 @@ import {
 import { OpenSRPService } from '../../../../../services/opensrp';
 import supersetFetch from '../../../../../services/superset';
 
+import store from '../../../../../store';
 import jurisdictionReducer, {
   fetchAllJurisdictionIds,
   fetchJurisdictions,
@@ -67,7 +70,7 @@ import plansReducer, {
 
 import { strict } from 'assert';
 import { Helmet } from 'react-helmet';
-import GisidaWrapper, { GisidaProps, LineLayerObj } from '../../../../../components/GisidaWrapper';
+import GisidaWrapper, { GisidaProps, Handlers } from '../../../../../components/GisidaWrapper';
 import HeaderBreadcrumbs, {
   BreadCrumbProps,
 } from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
@@ -982,6 +985,7 @@ class IrsPlan extends React.Component<
     }
 
     const ADMIN_FILL_LAYERS: any[] = [];
+    const ADMIN_FILL_HANDLERS: Handlers[] = [];
     const adminFillColors: string[] = ['black', 'red', 'orange', 'yellow', 'green'];
     for (let t = 1; t < tilesets.length; t += 1) {
       const adminFillLayer = {
@@ -997,6 +1001,17 @@ class IrsPlan extends React.Component<
         },
         visible: t === 1,
       };
+
+      const handler: Handlers = {
+        layer: [`${ADMN0_EN}-admin-${t}-fill`],
+        method: e => {
+          this.onAdminFillClick(e, country, t);
+        },
+        name: `${ADMN0_EN}-admin-${t}-fill-drilldown`,
+        type: 'click',
+      };
+      ADMIN_FILL_HANDLERS.push(handler);
+
       if (t === 1) {
         const adminFilterExpression: any[] = ['any'];
         for (const jurisdiction of filteredJurisdictions) {
@@ -1065,7 +1080,7 @@ class IrsPlan extends React.Component<
     const gisidaWrapperProps: GisidaProps = {
       bounds,
       geoData: null,
-      handlers: [],
+      handlers: [...ADMIN_FILL_HANDLERS],
       layers: [...ADMIN_LINE_LAYERS, ...ADMIN_FILL_LAYERS, ...JURISDICTION_FILL_LAYERS],
       pointFeatureCollection: null,
       polygonFeatureCollection: null,
@@ -1073,6 +1088,76 @@ class IrsPlan extends React.Component<
     };
     return gisidaWrapperProps;
   }
+
+  private onAdminFillClick(e: any, country: JurisdictionsByCountry, geographicLevel: number) {
+    const { point, target: Map } = e;
+    const features = Map.queryRenderedFeatures(point);
+    const isShiftClick = false;
+    const { filteredJurisdictionIds, childlessChildrenIds } = this.state;
+    const filteredJurisdictions = this.props.jurisdictionsArray.filter(j =>
+      filteredJurisdictionIds.includes(j.jurisdiction_id)
+    );
+
+    // handle Drilldown/up Click
+    if (!isShiftClick && features.length && country.tilesets) {
+      const feature = features[0];
+      const { geometry, layer, properties } = feature;
+      const childlessChildren = filteredJurisdictions.filter(j =>
+        childlessChildrenIds.includes(j.jurisdiction_id)
+      );
+      const clickedFeatureName = properties[country.tilesets[geographicLevel].idField];
+      const clickedFeatureJurisdiction = filteredJurisdictions.find(
+        j => j.name === clickedFeatureName
+      ) as Jurisdiction;
+
+      // todo - this.onDrillDownClick(clickedFeatureJurisdiction.jurisdiction_id)
+
+      // toggle current layer
+      store.dispatch(Actions.toggleLayer(MAP_ID, layer.id));
+      // check for next Admin fill layer
+      if (country.tilesets[geographicLevel + 1]) {
+        // zoom to clicked admin level
+        const newBounds = GeojsonExtent(geometry);
+        Map.fitBounds(newBounds, { padding: 20 });
+        // toggle next admin fill layer
+        const nextLayerId = `${country.ADMN0_EN}-admin-${geographicLevel + 1}-fill`;
+        store.dispatch(Actions.toggleLayer(MAP_ID, nextLayerId));
+        // todo - filter next layer down
+      } else {
+        // define childless decendant jurisdictions
+        const decendantChildlessChildrenIds = this.getDecendantJurisdictionIds(
+          [clickedFeatureJurisdiction.jurisdiction_id],
+          filteredJurisdictions,
+          false
+        );
+        // define geojson of childless decendant jurisdictions
+        const decendantChildlessFeatures = filteredJurisdictions
+          .filter(
+            j =>
+              decendantChildlessChildrenIds.includes(j.jurisdiction_id) &&
+              childlessChildrenIds.includes(j.jurisdiction_id)
+          )
+          .map(j => j.geojson);
+        // zoom to extends of childless decendant jurisdiction geometries
+        const newBounds = GeojsonExtent({
+          features: decendantChildlessFeatures,
+          type: 'FeatureCollection',
+        });
+        Map.fitBounds(newBounds, { padding: 20 });
+      }
+    }
+
+    // Handle selection click
+    if (isShiftClick && features.length && country.tilesets) {
+      const feature = features[0];
+      const { properties } = feature;
+
+      const clickedFeatureId = properties[country.tilesets[geographicLevel].idField];
+      const jurisdiction = filteredJurisdictions.find(j => j.jurisdiction_id === clickedFeatureId);
+      // console.log('shift clicked jurisdiction', jurisdiction);
+    }
+  }
+
   /** getDrilldownPlanTableProps - getter for hierarchical DrilldownTable props
    * @param props - component props
    * @returns tableProps|null - compatible object for DrillDownTable props

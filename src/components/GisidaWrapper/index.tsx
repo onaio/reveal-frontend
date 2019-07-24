@@ -26,6 +26,7 @@ import './gisida.css';
 
 /** handlers Interface */
 export interface Handlers {
+  layer?: string[];
   name: string;
   type: string;
   method: (e: EventData) => void;
