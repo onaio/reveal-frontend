@@ -1077,10 +1077,18 @@ class IrsPlan extends React.Component<
 
     const JURISDICTION_FILL_LAYERS = getJurisdictionFillLayers(filteredJurisdictions);
 
+    const drillUpHandler: Handlers = {
+      method: e => {
+        this.onDrillUpClick(e, country);
+      },
+      name: 'drill-up-handler',
+      type: 'click',
+    };
+
     const gisidaWrapperProps: GisidaProps = {
       bounds,
       geoData: null,
-      handlers: [...ADMIN_FILL_HANDLERS],
+      handlers: [...ADMIN_FILL_HANDLERS, drillUpHandler],
       layers: [...ADMIN_LINE_LAYERS, ...ADMIN_FILL_LAYERS, ...JURISDICTION_FILL_LAYERS],
       pointFeatureCollection: null,
       polygonFeatureCollection: null,
@@ -1098,13 +1106,10 @@ class IrsPlan extends React.Component<
       filteredJurisdictionIds.includes(j.jurisdiction_id)
     );
 
-    // handle Drilldown/up Click
+    // handle Drilldown Click
     if (!isShiftClick && features.length && country.tilesets) {
       const feature = features[0];
       const { geometry, layer, properties } = feature;
-      const childlessChildren = filteredJurisdictions.filter(j =>
-        childlessChildrenIds.includes(j.jurisdiction_id)
-      );
       const clickedFeatureName = properties[country.tilesets[geographicLevel].idField];
       const clickedFeatureJurisdiction = filteredJurisdictions.find(
         j => j.name === clickedFeatureName
@@ -1156,6 +1161,25 @@ class IrsPlan extends React.Component<
       const clickedFeatureId = properties[country.tilesets[geographicLevel].idField];
       const jurisdiction = filteredJurisdictions.find(j => j.jurisdiction_id === clickedFeatureId);
       // console.log('shift clicked jurisdiction', jurisdiction);
+    }
+  }
+
+  private onDrillUpClick(e: any, country: JurisdictionsByCountry) {
+    const { point, target: Map } = e;
+    const features = Map.queryRenderedFeatures(point);
+
+    if (!features.length && country.tilesets && country.bounds) {
+      for (let t = 1; t < country.tilesets.length; t += 1) {
+        const layerId = `${country.ADMN0_EN}-admin-${t}-fill`;
+        if (Map.getLayer(layerId)) {
+          const isLayerVisible = Map.getLayoutProperty(layerId, 'visibility') === 'visible';
+          if ((t !== 1 && isLayerVisible) || (t === 1 && !isLayerVisible)) {
+            store.dispatch(Actions.toggleLayer(MAP_ID, layerId));
+          }
+        }
+      }
+      Map.fitBounds(country.bounds, { padding: 20 });
+      this.onResetDrilldownTableHierarchy(null);
     }
   }
 
