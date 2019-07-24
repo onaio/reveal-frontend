@@ -77,7 +77,7 @@ describe('helpers/indicators', () => {
       goalUnit: PERSONS,
       percentAchieved: 0,
       prettyPercentAchieved: '0%',
-      targetValue: 0,
+      targetValue: 100,
     });
     expect(getGoalReport(fixtures.goal4)).toEqual({
       achievedValue: 3,
