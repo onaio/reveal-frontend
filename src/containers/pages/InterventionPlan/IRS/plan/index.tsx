@@ -1110,7 +1110,8 @@ class IrsPlan extends React.Component<
         j => j.name === clickedFeatureName
       ) as Jurisdiction;
 
-      // todo - this.onDrillDownClick(clickedFeatureJurisdiction.jurisdiction_id)
+      this.onDrilldownClick(clickedFeatureJurisdiction.jurisdiction_id);
+      this.onResetDrilldownTableHierarchy(clickedFeatureJurisdiction.jurisdiction_id);
 
       // toggle current layer
       store.dispatch(Actions.toggleLayer(MAP_ID, layer.id));
