@@ -343,7 +343,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                     "Cell": [Function],
                     "Header": "",
                     "accessor": "plan_title",
-                    "minWidth": 160,
+                    "minWidth": 180,
                   },
                 ],
               },
@@ -400,7 +400,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                     "Cell": [Function],
                     "Header": "",
                     "accessor": "focusArea",
-                    "minWidth": 140,
+                    "minWidth": 180,
                   },
                 ],
               },
@@ -431,17 +431,6 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                   Object {
                     "Header": "",
                     "accessor": "caseClassification",
-                  },
-                ],
-              },
-              Object {
-                "Header": "Actions",
-                "columns": Array [
-                  Object {
-                    "Cell": [Function],
-                    "Header": "",
-                    "accessor": "plan_status",
-                    "minWidth": 80,
                   },
                 ],
               },
@@ -561,7 +550,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                       "Cell": [Function],
                       "Header": "",
                       "accessor": "plan_title",
-                      "minWidth": 160,
+                      "minWidth": 180,
                     },
                   ],
                 },
@@ -618,7 +607,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                       "Cell": [Function],
                       "Header": "",
                       "accessor": "focusArea",
-                      "minWidth": 140,
+                      "minWidth": 180,
                     },
                   ],
                 },
@@ -649,17 +638,6 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                     Object {
                       "Header": "",
                       "accessor": "caseClassification",
-                    },
-                  ],
-                },
-                Object {
-                  "Header": "Actions",
-                  "columns": Array [
-                    Object {
-                      "Cell": [Function],
-                      "Header": "",
-                      "accessor": "plan_status",
-                      "minWidth": 80,
                     },
                   ],
                 },
@@ -807,7 +785,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                     className="-headerGroups"
                     style={
                       Object {
-                        "minWidth": "1110px",
+                        "minWidth": "1090px",
                       }
                     }
                   >
@@ -815,7 +793,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                       className="rt-thead -headerGroups"
                       style={
                         Object {
-                          "minWidth": "1110px",
+                          "minWidth": "1090px",
                         }
                       }
                     >
@@ -829,9 +807,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             key="0-undefined"
                             style={
                               Object {
-                                "flex": "160 0 auto",
+                                "flex": "180 0 auto",
                                 "maxWidth": null,
-                                "width": "160px",
+                                "width": "180px",
                               }
                             }
                           >
@@ -841,9 +819,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               role="columnheader"
                               style={
                                 Object {
-                                  "flex": "160 0 auto",
+                                  "flex": "180 0 auto",
                                   "maxWidth": null,
-                                  "width": "160px",
+                                  "width": "180px",
                                 }
                               }
                               tabIndex="-1"
@@ -991,9 +969,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             key="6-undefined"
                             style={
                               Object {
-                                "flex": "140 0 auto",
+                                "flex": "180 0 auto",
                                 "maxWidth": null,
-                                "width": "140px",
+                                "width": "180px",
                               }
                             }
                           >
@@ -1003,9 +981,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               role="columnheader"
                               style={
                                 Object {
-                                  "flex": "140 0 auto",
+                                  "flex": "180 0 auto",
                                   "maxWidth": null,
-                                  "width": "140px",
+                                  "width": "180px",
                                 }
                               }
                               tabIndex="-1"
@@ -1094,33 +1072,6 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               Case Class.
                             </div>
                           </ThComponent>
-                          <ThComponent
-                            className=""
-                            key="10-undefined"
-                            style={
-                              Object {
-                                "flex": "80 0 auto",
-                                "maxWidth": null,
-                                "width": "80px",
-                              }
-                            }
-                          >
-                            <div
-                              className="rt-th"
-                              onClick={[Function]}
-                              role="columnheader"
-                              style={
-                                Object {
-                                  "flex": "80 0 auto",
-                                  "maxWidth": null,
-                                  "width": "80px",
-                                }
-                              }
-                              tabIndex="-1"
-                            >
-                              Actions
-                            </div>
-                          </ThComponent>
                         </div>
                       </TrComponent>
                     </div>
@@ -1129,7 +1080,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                     className="-header"
                     style={
                       Object {
-                        "minWidth": "1110px",
+                        "minWidth": "1090px",
                       }
                     }
                   >
@@ -1137,7 +1088,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                       className="rt-thead -header"
                       style={
                         Object {
-                          "minWidth": "1110px",
+                          "minWidth": "1090px",
                         }
                       }
                     >
@@ -1151,9 +1102,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             key="0-plan_title"
                             style={
                               Object {
-                                "flex": "160 0 auto",
+                                "flex": "180 0 auto",
                                 "maxWidth": null,
-                                "width": "160px",
+                                "width": "180px",
                               }
                             }
                             toggleSort={[Function]}
@@ -1164,9 +1115,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               role="columnheader"
                               style={
                                 Object {
-                                  "flex": "160 0 auto",
+                                  "flex": "180 0 auto",
                                   "maxWidth": null,
-                                  "width": "160px",
+                                  "width": "180px",
                                 }
                               }
                               tabIndex="-1"
@@ -1391,9 +1342,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             key="6-focusArea"
                             style={
                               Object {
-                                "flex": "140 0 auto",
+                                "flex": "180 0 auto",
                                 "maxWidth": null,
-                                "width": "140px",
+                                "width": "180px",
                               }
                             }
                             toggleSort={[Function]}
@@ -1404,9 +1355,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               role="columnheader"
                               style={
                                 Object {
-                                  "flex": "140 0 auto",
+                                  "flex": "180 0 auto",
                                   "maxWidth": null,
-                                  "width": "140px",
+                                  "width": "180px",
                                 }
                               }
                               tabIndex="-1"
@@ -1546,46 +1497,6 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               </Resizer>
                             </div>
                           </ThComponent>
-                          <ThComponent
-                            className="rt-resizable-header -cursor-pointer"
-                            key="10-plan_status"
-                            style={
-                              Object {
-                                "flex": "80 0 auto",
-                                "maxWidth": null,
-                                "width": "80px",
-                              }
-                            }
-                            toggleSort={[Function]}
-                          >
-                            <div
-                              className="rt-th rt-resizable-header -cursor-pointer"
-                              onClick={[Function]}
-                              role="columnheader"
-                              style={
-                                Object {
-                                  "flex": "80 0 auto",
-                                  "maxWidth": null,
-                                  "width": "80px",
-                                }
-                              }
-                              tabIndex="-1"
-                            >
-                              <div
-                                className="rt-resizable-header-content"
-                              />
-                              <Resizer
-                                onMouseDown={[Function]}
-                                onTouchStart={[Function]}
-                              >
-                                <div
-                                  className="rt-resizer"
-                                  onMouseDown={[Function]}
-                                  onTouchStart={[Function]}
-                                />
-                              </Resizer>
-                            </div>
-                          </ThComponent>
                         </div>
                       </TrComponent>
                     </div>
@@ -1594,7 +1505,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                     className=""
                     style={
                       Object {
-                        "minWidth": "1110px",
+                        "minWidth": "1090px",
                       }
                     }
                   >
@@ -1602,7 +1513,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                       className="rt-tbody"
                       style={
                         Object {
-                          "minWidth": "1110px",
+                          "minWidth": "1090px",
                         }
                       }
                     >
@@ -1626,9 +1537,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                 onClick={[Function]}
                                 style={
                                   Object {
-                                    "flex": "160 0 auto",
+                                    "flex": "180 0 auto",
                                     "maxWidth": null,
-                                    "width": "160px",
+                                    "width": "180px",
                                   }
                                 }
                               >
@@ -1638,9 +1549,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                   role="gridcell"
                                   style={
                                     Object {
-                                      "flex": "160 0 auto",
+                                      "flex": "180 0 auto",
                                       "maxWidth": null,
-                                      "width": "160px",
+                                      "width": "180px",
                                     }
                                   }
                                 >
@@ -1678,7 +1589,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                         "headerStyle": Object {},
                                         "id": "plan_title",
                                         "minResizeWidth": 11,
-                                        "minWidth": 160,
+                                        "minWidth": 180,
                                         "parentColumn": Object {
                                           "Header": "Name",
                                           "columns": Array [
@@ -1686,7 +1597,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                               "Cell": [Function],
                                               "Header": "",
                                               "accessor": "plan_title",
-                                              "minWidth": 160,
+                                              "minWidth": 180,
                                             },
                                           ],
                                         },
@@ -1813,10 +1724,21 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                     }
                                     value="A1-Tha Luang Village 1 Focus 01"
                                     viewIndex={0}
-                                    width={160}
+                                    width={180}
                                   >
                                     <div>
-                                      A1-Tha Luang Village 1 Focus 01
+                                      <Link
+                                        replace={false}
+                                        to="/focus-investigation/map/plan-id-2"
+                                      >
+                                        <a
+                                          href="/focus-investigation/map/plan-id-2"
+                                          onClick={[Function]}
+                                        >
+                                          A1-Tha Luang Village 1 Focus 01
+                                        </a>
+                                      </Link>
+                                       
                                     </div>
                                   </Cell>
                                 </div>
@@ -1958,9 +1880,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                 onClick={[Function]}
                                 style={
                                   Object {
-                                    "flex": "140 0 auto",
+                                    "flex": "180 0 auto",
                                     "maxWidth": null,
-                                    "width": "140px",
+                                    "width": "180px",
                                   }
                                 }
                               >
@@ -1970,9 +1892,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                   role="gridcell"
                                   style={
                                     Object {
-                                      "flex": "140 0 auto",
+                                      "flex": "180 0 auto",
                                       "maxWidth": null,
-                                      "width": "140px",
+                                      "width": "180px",
                                     }
                                   }
                                 >
@@ -2010,7 +1932,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                         "headerStyle": Object {},
                                         "id": "focusArea",
                                         "minResizeWidth": 11,
-                                        "minWidth": 140,
+                                        "minWidth": 180,
                                         "parentColumn": Object {
                                           "Header": "Focus Area",
                                           "columns": Array [
@@ -2018,7 +1940,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                               "Cell": [Function],
                                               "Header": "",
                                               "accessor": "focusArea",
-                                              "minWidth": 140,
+                                              "minWidth": 180,
                                             },
                                           ],
                                         },
@@ -2145,7 +2067,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                     }
                                     value="TLv1_02"
                                     viewIndex={0}
-                                    width={140}
+                                    width={180}
                                   >
                                     <div>
                                       TLv1_02
@@ -2458,217 +2380,6 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                   }
                                 />
                               </TdComponent>
-                              <TdComponent
-                                className=""
-                                key="10-plan_status"
-                                onClick={[Function]}
-                                style={
-                                  Object {
-                                    "flex": "80 0 auto",
-                                    "maxWidth": null,
-                                    "width": "80px",
-                                  }
-                                }
-                              >
-                                <div
-                                  className="rt-td"
-                                  onClick={[Function]}
-                                  role="gridcell"
-                                  style={
-                                    Object {
-                                      "flex": "80 0 auto",
-                                      "maxWidth": null,
-                                      "width": "80px",
-                                    }
-                                  }
-                                >
-                                  <Cell
-                                    classes={
-                                      Array [
-                                        undefined,
-                                        "",
-                                        undefined,
-                                      ]
-                                    }
-                                    column={
-                                      Object {
-                                        "Aggregated": undefined,
-                                        "Cell": [Function],
-                                        "Expander": undefined,
-                                        "Filter": undefined,
-                                        "Footer": undefined,
-                                        "Header": "",
-                                        "Pivot": undefined,
-                                        "PivotValue": undefined,
-                                        "Placeholder": undefined,
-                                        "accessor": [Function],
-                                        "aggregate": undefined,
-                                        "className": "",
-                                        "filterAll": false,
-                                        "filterMethod": undefined,
-                                        "filterable": undefined,
-                                        "footerClassName": "",
-                                        "footerStyle": Object {},
-                                        "getFooterProps": [Function],
-                                        "getHeaderProps": [Function],
-                                        "getProps": [Function],
-                                        "headerClassName": "",
-                                        "headerStyle": Object {},
-                                        "id": "plan_status",
-                                        "minResizeWidth": 11,
-                                        "minWidth": 80,
-                                        "parentColumn": Object {
-                                          "Header": "Actions",
-                                          "columns": Array [
-                                            Object {
-                                              "Cell": [Function],
-                                              "Header": "",
-                                              "accessor": "plan_status",
-                                              "minWidth": 80,
-                                            },
-                                          ],
-                                        },
-                                        "resizable": undefined,
-                                        "show": true,
-                                        "sortMethod": undefined,
-                                        "sortable": undefined,
-                                        "style": Object {},
-                                      }
-                                    }
-                                    columnProps={
-                                      Object {
-                                        "className": undefined,
-                                        "rest": Object {},
-                                        "style": undefined,
-                                      }
-                                    }
-                                    index={0}
-                                    level={0}
-                                    nestingPath={
-                                      Array [
-                                        0,
-                                      ]
-                                    }
-                                    original={
-                                      Object {
-                                        "canton": "Canton Tha Luang",
-                                        "caseClassification": null,
-                                        "caseNotificationDate": "2019-06-18",
-                                        "district": "",
-                                        "focusArea": "TLv1_02",
-                                        "id": "plan-id-2",
-                                        "jurisdiction_depth": 2,
-                                        "jurisdiction_id": "3378",
-                                        "jurisdiction_name": "TLv1_02",
-                                        "jurisdiction_name_path": Array [
-                                          "Canton Tha Luang",
-                                          "Tha Luang Village",
-                                        ],
-                                        "jurisdiction_parent_id": "2977",
-                                        "jurisdiction_path": Array [
-                                          "2989",
-                                          "2977",
-                                        ],
-                                        "plan_date": "2019-06-18",
-                                        "plan_effective_period_end": "2019-06-18",
-                                        "plan_effective_period_start": "2019-07-31",
-                                        "plan_fi_reason": "Case-triggered",
-                                        "plan_fi_status": "A1",
-                                        "plan_id": "plan-id-2",
-                                        "plan_intervention_type": "IRS",
-                                        "plan_status": "active",
-                                        "plan_title": "A1-Tha Luang Village 1 Focus 01",
-                                        "plan_version": "1",
-                                        "province": "",
-                                        "reason": "Case-triggered",
-                                        "status": "A1",
-                                        "village": "Tha Luang Village",
-                                      }
-                                    }
-                                    page={0}
-                                    pageSize={20}
-                                    resized={Array []}
-                                    row={
-                                      Object {
-                                        "_index": 0,
-                                        "_nestingLevel": 0,
-                                        "_original": Object {
-                                          "canton": "Canton Tha Luang",
-                                          "caseClassification": null,
-                                          "caseNotificationDate": "2019-06-18",
-                                          "district": "",
-                                          "focusArea": "TLv1_02",
-                                          "id": "plan-id-2",
-                                          "jurisdiction_depth": 2,
-                                          "jurisdiction_id": "3378",
-                                          "jurisdiction_name": "TLv1_02",
-                                          "jurisdiction_name_path": Array [
-                                            "Canton Tha Luang",
-                                            "Tha Luang Village",
-                                          ],
-                                          "jurisdiction_parent_id": "2977",
-                                          "jurisdiction_path": Array [
-                                            "2989",
-                                            "2977",
-                                          ],
-                                          "plan_date": "2019-06-18",
-                                          "plan_effective_period_end": "2019-06-18",
-                                          "plan_effective_period_start": "2019-07-31",
-                                          "plan_fi_reason": "Case-triggered",
-                                          "plan_fi_status": "A1",
-                                          "plan_id": "plan-id-2",
-                                          "plan_intervention_type": "IRS",
-                                          "plan_status": "active",
-                                          "plan_title": "A1-Tha Luang Village 1 Focus 01",
-                                          "plan_version": "1",
-                                          "province": "",
-                                          "reason": "Case-triggered",
-                                          "status": "A1",
-                                          "village": "Tha Luang Village",
-                                        },
-                                        "_subRows": undefined,
-                                        "_viewIndex": 0,
-                                        "canton": "Canton Tha Luang",
-                                        "caseClassification": null,
-                                        "caseNotificationDate": "2019-06-18",
-                                        "district": "",
-                                        "focusArea": "TLv1_02",
-                                        "plan_status": "active",
-                                        "plan_title": "A1-Tha Luang Village 1 Focus 01",
-                                        "province": "",
-                                        "status": "A1",
-                                        "village": "Tha Luang Village",
-                                      }
-                                    }
-                                    show={true}
-                                    styles={Object {}}
-                                    tdProps={
-                                      Object {
-                                        "className": undefined,
-                                        "rest": Object {},
-                                        "style": undefined,
-                                      }
-                                    }
-                                    value="active"
-                                    viewIndex={0}
-                                    width={80}
-                                  >
-                                    <div>
-                                      <Link
-                                        replace={false}
-                                        to="/focus-investigation/map/plan-id-2"
-                                      >
-                                        <a
-                                          href="/focus-investigation/map/plan-id-2"
-                                          onClick={[Function]}
-                                        >
-                                          View
-                                        </a>
-                                      </Link>
-                                    </div>
-                                  </Cell>
-                                </div>
-                              </TdComponent>
                             </div>
                           </TrComponent>
                         </div>
@@ -2775,7 +2486,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                     "Cell": [Function],
                     "Header": "",
                     "accessor": "plan_title",
-                    "minWidth": 160,
+                    "minWidth": 180,
                   },
                 ],
               },
@@ -2832,7 +2543,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                     "Cell": [Function],
                     "Header": "",
                     "accessor": "focusArea",
-                    "minWidth": 140,
+                    "minWidth": 180,
                   },
                 ],
               },
@@ -2863,17 +2574,6 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                   Object {
                     "Header": "",
                     "accessor": "plan_effective_period_end",
-                  },
-                ],
-              },
-              Object {
-                "Header": "Actions",
-                "columns": Array [
-                  Object {
-                    "Cell": [Function],
-                    "Header": "",
-                    "accessor": "plan_status",
-                    "minWidth": 80,
                   },
                 ],
               },
@@ -2993,7 +2693,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                       "Cell": [Function],
                       "Header": "",
                       "accessor": "plan_title",
-                      "minWidth": 160,
+                      "minWidth": 180,
                     },
                   ],
                 },
@@ -3050,7 +2750,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                       "Cell": [Function],
                       "Header": "",
                       "accessor": "focusArea",
-                      "minWidth": 140,
+                      "minWidth": 180,
                     },
                   ],
                 },
@@ -3081,17 +2781,6 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                     Object {
                       "Header": "",
                       "accessor": "plan_effective_period_end",
-                    },
-                  ],
-                },
-                Object {
-                  "Header": "Actions",
-                  "columns": Array [
-                    Object {
-                      "Cell": [Function],
-                      "Header": "",
-                      "accessor": "plan_status",
-                      "minWidth": 80,
                     },
                   ],
                 },
@@ -3239,7 +2928,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                     className="-headerGroups"
                     style={
                       Object {
-                        "minWidth": "1100px",
+                        "minWidth": "1080px",
                       }
                     }
                   >
@@ -3247,7 +2936,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                       className="rt-thead -headerGroups"
                       style={
                         Object {
-                          "minWidth": "1100px",
+                          "minWidth": "1080px",
                         }
                       }
                     >
@@ -3261,9 +2950,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             key="0-undefined"
                             style={
                               Object {
-                                "flex": "160 0 auto",
+                                "flex": "180 0 auto",
                                 "maxWidth": null,
-                                "width": "160px",
+                                "width": "180px",
                               }
                             }
                           >
@@ -3273,9 +2962,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               role="columnheader"
                               style={
                                 Object {
-                                  "flex": "160 0 auto",
+                                  "flex": "180 0 auto",
                                   "maxWidth": null,
-                                  "width": "160px",
+                                  "width": "180px",
                                 }
                               }
                               tabIndex="-1"
@@ -3423,9 +3112,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             key="6-undefined"
                             style={
                               Object {
-                                "flex": "140 0 auto",
+                                "flex": "180 0 auto",
                                 "maxWidth": null,
-                                "width": "140px",
+                                "width": "180px",
                               }
                             }
                           >
@@ -3435,9 +3124,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               role="columnheader"
                               style={
                                 Object {
-                                  "flex": "140 0 auto",
+                                  "flex": "180 0 auto",
                                   "maxWidth": null,
-                                  "width": "140px",
+                                  "width": "180px",
                                 }
                               }
                               tabIndex="-1"
@@ -3526,33 +3215,6 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               End Date
                             </div>
                           </ThComponent>
-                          <ThComponent
-                            className=""
-                            key="10-undefined"
-                            style={
-                              Object {
-                                "flex": "80 0 auto",
-                                "maxWidth": null,
-                                "width": "80px",
-                              }
-                            }
-                          >
-                            <div
-                              className="rt-th"
-                              onClick={[Function]}
-                              role="columnheader"
-                              style={
-                                Object {
-                                  "flex": "80 0 auto",
-                                  "maxWidth": null,
-                                  "width": "80px",
-                                }
-                              }
-                              tabIndex="-1"
-                            >
-                              Actions
-                            </div>
-                          </ThComponent>
                         </div>
                       </TrComponent>
                     </div>
@@ -3561,7 +3223,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                     className="-header"
                     style={
                       Object {
-                        "minWidth": "1100px",
+                        "minWidth": "1080px",
                       }
                     }
                   >
@@ -3569,7 +3231,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                       className="rt-thead -header"
                       style={
                         Object {
-                          "minWidth": "1100px",
+                          "minWidth": "1080px",
                         }
                       }
                     >
@@ -3583,9 +3245,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             key="0-plan_title"
                             style={
                               Object {
-                                "flex": "160 0 auto",
+                                "flex": "180 0 auto",
                                 "maxWidth": null,
-                                "width": "160px",
+                                "width": "180px",
                               }
                             }
                             toggleSort={[Function]}
@@ -3596,9 +3258,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               role="columnheader"
                               style={
                                 Object {
-                                  "flex": "160 0 auto",
+                                  "flex": "180 0 auto",
                                   "maxWidth": null,
-                                  "width": "160px",
+                                  "width": "180px",
                                 }
                               }
                               tabIndex="-1"
@@ -3823,9 +3485,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             key="6-focusArea"
                             style={
                               Object {
-                                "flex": "140 0 auto",
+                                "flex": "180 0 auto",
                                 "maxWidth": null,
-                                "width": "140px",
+                                "width": "180px",
                               }
                             }
                             toggleSort={[Function]}
@@ -3836,9 +3498,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               role="columnheader"
                               style={
                                 Object {
-                                  "flex": "140 0 auto",
+                                  "flex": "180 0 auto",
                                   "maxWidth": null,
-                                  "width": "140px",
+                                  "width": "180px",
                                 }
                               }
                               tabIndex="-1"
@@ -3978,46 +3640,6 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               </Resizer>
                             </div>
                           </ThComponent>
-                          <ThComponent
-                            className="rt-resizable-header -cursor-pointer"
-                            key="10-plan_status"
-                            style={
-                              Object {
-                                "flex": "80 0 auto",
-                                "maxWidth": null,
-                                "width": "80px",
-                              }
-                            }
-                            toggleSort={[Function]}
-                          >
-                            <div
-                              className="rt-th rt-resizable-header -cursor-pointer"
-                              onClick={[Function]}
-                              role="columnheader"
-                              style={
-                                Object {
-                                  "flex": "80 0 auto",
-                                  "maxWidth": null,
-                                  "width": "80px",
-                                }
-                              }
-                              tabIndex="-1"
-                            >
-                              <div
-                                className="rt-resizable-header-content"
-                              />
-                              <Resizer
-                                onMouseDown={[Function]}
-                                onTouchStart={[Function]}
-                              >
-                                <div
-                                  className="rt-resizer"
-                                  onMouseDown={[Function]}
-                                  onTouchStart={[Function]}
-                                />
-                              </Resizer>
-                            </div>
-                          </ThComponent>
                         </div>
                       </TrComponent>
                     </div>
@@ -4026,7 +3648,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                     className=""
                     style={
                       Object {
-                        "minWidth": "1100px",
+                        "minWidth": "1080px",
                       }
                     }
                   >
@@ -4034,7 +3656,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                       className="rt-tbody"
                       style={
                         Object {
-                          "minWidth": "1100px",
+                          "minWidth": "1080px",
                         }
                       }
                     >
@@ -4058,9 +3680,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                 onClick={[Function]}
                                 style={
                                   Object {
-                                    "flex": "160 0 auto",
+                                    "flex": "180 0 auto",
                                     "maxWidth": null,
-                                    "width": "160px",
+                                    "width": "180px",
                                   }
                                 }
                               >
@@ -4070,9 +3692,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                   role="gridcell"
                                   style={
                                     Object {
-                                      "flex": "160 0 auto",
+                                      "flex": "180 0 auto",
                                       "maxWidth": null,
-                                      "width": "160px",
+                                      "width": "180px",
                                     }
                                   }
                                 >
@@ -4110,7 +3732,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                         "headerStyle": Object {},
                                         "id": "plan_title",
                                         "minResizeWidth": 11,
-                                        "minWidth": 160,
+                                        "minWidth": 180,
                                         "parentColumn": Object {
                                           "Header": "Name",
                                           "columns": Array [
@@ -4118,7 +3740,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                               "Cell": [Function],
                                               "Header": "",
                                               "accessor": "plan_title",
-                                              "minWidth": 160,
+                                              "minWidth": 180,
                                             },
                                           ],
                                         },
@@ -4245,10 +3867,21 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                     }
                                     value="A1-Tha Luang Village 1 Focus 01"
                                     viewIndex={0}
-                                    width={160}
+                                    width={180}
                                   >
                                     <div>
-                                      A1-Tha Luang Village 1 Focus 01
+                                      <Link
+                                        replace={false}
+                                        to="/focus-investigation/map/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
+                                      >
+                                        <a
+                                          href="/focus-investigation/map/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
+                                          onClick={[Function]}
+                                        >
+                                          A1-Tha Luang Village 1 Focus 01
+                                        </a>
+                                      </Link>
+                                       
                                     </div>
                                   </Cell>
                                 </div>
@@ -4390,9 +4023,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                 onClick={[Function]}
                                 style={
                                   Object {
-                                    "flex": "140 0 auto",
+                                    "flex": "180 0 auto",
                                     "maxWidth": null,
-                                    "width": "140px",
+                                    "width": "180px",
                                   }
                                 }
                               >
@@ -4402,9 +4035,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                   role="gridcell"
                                   style={
                                     Object {
-                                      "flex": "140 0 auto",
+                                      "flex": "180 0 auto",
                                       "maxWidth": null,
-                                      "width": "140px",
+                                      "width": "180px",
                                     }
                                   }
                                 >
@@ -4442,7 +4075,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                         "headerStyle": Object {},
                                         "id": "focusArea",
                                         "minResizeWidth": 11,
-                                        "minWidth": 140,
+                                        "minWidth": 180,
                                         "parentColumn": Object {
                                           "Header": "Focus Area",
                                           "columns": Array [
@@ -4450,7 +4083,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                               "Cell": [Function],
                                               "Header": "",
                                               "accessor": "focusArea",
-                                              "minWidth": 140,
+                                              "minWidth": 180,
                                             },
                                           ],
                                         },
@@ -4577,7 +4210,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                     }
                                     value="NVI_439"
                                     viewIndex={0}
-                                    width={140}
+                                    width={180}
                                   >
                                     <div>
                                       NVI_439
@@ -4890,217 +4523,6 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                   }
                                 >
                                   2019-06-18
-                                </div>
-                              </TdComponent>
-                              <TdComponent
-                                className=""
-                                key="10-plan_status"
-                                onClick={[Function]}
-                                style={
-                                  Object {
-                                    "flex": "80 0 auto",
-                                    "maxWidth": null,
-                                    "width": "80px",
-                                  }
-                                }
-                              >
-                                <div
-                                  className="rt-td"
-                                  onClick={[Function]}
-                                  role="gridcell"
-                                  style={
-                                    Object {
-                                      "flex": "80 0 auto",
-                                      "maxWidth": null,
-                                      "width": "80px",
-                                    }
-                                  }
-                                >
-                                  <Cell
-                                    classes={
-                                      Array [
-                                        undefined,
-                                        "",
-                                        undefined,
-                                      ]
-                                    }
-                                    column={
-                                      Object {
-                                        "Aggregated": undefined,
-                                        "Cell": [Function],
-                                        "Expander": undefined,
-                                        "Filter": undefined,
-                                        "Footer": undefined,
-                                        "Header": "",
-                                        "Pivot": undefined,
-                                        "PivotValue": undefined,
-                                        "Placeholder": undefined,
-                                        "accessor": [Function],
-                                        "aggregate": undefined,
-                                        "className": "",
-                                        "filterAll": false,
-                                        "filterMethod": undefined,
-                                        "filterable": undefined,
-                                        "footerClassName": "",
-                                        "footerStyle": Object {},
-                                        "getFooterProps": [Function],
-                                        "getHeaderProps": [Function],
-                                        "getProps": [Function],
-                                        "headerClassName": "",
-                                        "headerStyle": Object {},
-                                        "id": "plan_status",
-                                        "minResizeWidth": 11,
-                                        "minWidth": 80,
-                                        "parentColumn": Object {
-                                          "Header": "Actions",
-                                          "columns": Array [
-                                            Object {
-                                              "Cell": [Function],
-                                              "Header": "",
-                                              "accessor": "plan_status",
-                                              "minWidth": 80,
-                                            },
-                                          ],
-                                        },
-                                        "resizable": undefined,
-                                        "show": true,
-                                        "sortMethod": undefined,
-                                        "sortable": undefined,
-                                        "style": Object {},
-                                      }
-                                    }
-                                    columnProps={
-                                      Object {
-                                        "className": undefined,
-                                        "rest": Object {},
-                                        "style": undefined,
-                                      }
-                                    }
-                                    index={0}
-                                    level={0}
-                                    nestingPath={
-                                      Array [
-                                        0,
-                                      ]
-                                    }
-                                    original={
-                                      Object {
-                                        "canton": "Chadiza",
-                                        "caseClassification": null,
-                                        "caseNotificationDate": null,
-                                        "district": "",
-                                        "focusArea": "NVI_439",
-                                        "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
-                                        "jurisdiction_depth": 2,
-                                        "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
-                                        "jurisdiction_name": "NVI_439",
-                                        "jurisdiction_name_path": Array [
-                                          "Chadiza",
-                                          "Naviluli",
-                                        ],
-                                        "jurisdiction_parent_id": "2944",
-                                        "jurisdiction_path": Array [
-                                          "2939",
-                                          "2944",
-                                        ],
-                                        "plan_date": "2019-06-18",
-                                        "plan_effective_period_end": "2019-06-18",
-                                        "plan_effective_period_start": "2019-07-31",
-                                        "plan_fi_reason": "Routine",
-                                        "plan_fi_status": "A1",
-                                        "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
-                                        "plan_intervention_type": "FI",
-                                        "plan_status": "active",
-                                        "plan_title": "A1-Tha Luang Village 1 Focus 01",
-                                        "plan_version": "1",
-                                        "province": "",
-                                        "reason": "Routine",
-                                        "status": "A1",
-                                        "village": "Naviluli",
-                                      }
-                                    }
-                                    page={0}
-                                    pageSize={20}
-                                    resized={Array []}
-                                    row={
-                                      Object {
-                                        "_index": 0,
-                                        "_nestingLevel": 0,
-                                        "_original": Object {
-                                          "canton": "Chadiza",
-                                          "caseClassification": null,
-                                          "caseNotificationDate": null,
-                                          "district": "",
-                                          "focusArea": "NVI_439",
-                                          "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
-                                          "jurisdiction_depth": 2,
-                                          "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
-                                          "jurisdiction_name": "NVI_439",
-                                          "jurisdiction_name_path": Array [
-                                            "Chadiza",
-                                            "Naviluli",
-                                          ],
-                                          "jurisdiction_parent_id": "2944",
-                                          "jurisdiction_path": Array [
-                                            "2939",
-                                            "2944",
-                                          ],
-                                          "plan_date": "2019-06-18",
-                                          "plan_effective_period_end": "2019-06-18",
-                                          "plan_effective_period_start": "2019-07-31",
-                                          "plan_fi_reason": "Routine",
-                                          "plan_fi_status": "A1",
-                                          "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
-                                          "plan_intervention_type": "FI",
-                                          "plan_status": "active",
-                                          "plan_title": "A1-Tha Luang Village 1 Focus 01",
-                                          "plan_version": "1",
-                                          "province": "",
-                                          "reason": "Routine",
-                                          "status": "A1",
-                                          "village": "Naviluli",
-                                        },
-                                        "_subRows": undefined,
-                                        "_viewIndex": 0,
-                                        "canton": "Chadiza",
-                                        "district": "",
-                                        "focusArea": "NVI_439",
-                                        "plan_effective_period_end": "2019-06-18",
-                                        "plan_effective_period_start": "2019-07-31",
-                                        "plan_status": "active",
-                                        "plan_title": "A1-Tha Luang Village 1 Focus 01",
-                                        "province": "",
-                                        "status": "A1",
-                                        "village": "Naviluli",
-                                      }
-                                    }
-                                    show={true}
-                                    styles={Object {}}
-                                    tdProps={
-                                      Object {
-                                        "className": undefined,
-                                        "rest": Object {},
-                                        "style": undefined,
-                                      }
-                                    }
-                                    value="active"
-                                    viewIndex={0}
-                                    width={80}
-                                  >
-                                    <div>
-                                      <Link
-                                        replace={false}
-                                        to="/focus-investigation/map/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
-                                      >
-                                        <a
-                                          href="/focus-investigation/map/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
-                                          onClick={[Function]}
-                                        >
-                                          View
-                                        </a>
-                                      </Link>
-                                    </div>
-                                  </Cell>
                                 </div>
                               </TdComponent>
                             </div>
@@ -5704,7 +5126,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                     "Cell": [Function],
                     "Header": "",
                     "accessor": "plan_title",
-                    "minWidth": 160,
+                    "minWidth": 180,
                   },
                 ],
               },
@@ -5761,7 +5183,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                     "Cell": [Function],
                     "Header": "",
                     "accessor": "focusArea",
-                    "minWidth": 140,
+                    "minWidth": 180,
                   },
                 ],
               },
@@ -5792,17 +5214,6 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                   Object {
                     "Header": "",
                     "accessor": "caseClassification",
-                  },
-                ],
-              },
-              Object {
-                "Header": "Actions",
-                "columns": Array [
-                  Object {
-                    "Cell": [Function],
-                    "Header": "",
-                    "accessor": "plan_status",
-                    "minWidth": 80,
                   },
                 ],
               },
@@ -5922,7 +5333,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                       "Cell": [Function],
                       "Header": "",
                       "accessor": "plan_title",
-                      "minWidth": 160,
+                      "minWidth": 180,
                     },
                   ],
                 },
@@ -5979,7 +5390,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                       "Cell": [Function],
                       "Header": "",
                       "accessor": "focusArea",
-                      "minWidth": 140,
+                      "minWidth": 180,
                     },
                   ],
                 },
@@ -6010,17 +5421,6 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                     Object {
                       "Header": "",
                       "accessor": "caseClassification",
-                    },
-                  ],
-                },
-                Object {
-                  "Header": "Actions",
-                  "columns": Array [
-                    Object {
-                      "Cell": [Function],
-                      "Header": "",
-                      "accessor": "plan_status",
-                      "minWidth": 80,
                     },
                   ],
                 },
@@ -6168,7 +5568,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                     className="-headerGroups"
                     style={
                       Object {
-                        "minWidth": "1110px",
+                        "minWidth": "1090px",
                       }
                     }
                   >
@@ -6176,7 +5576,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                       className="rt-thead -headerGroups"
                       style={
                         Object {
-                          "minWidth": "1110px",
+                          "minWidth": "1090px",
                         }
                       }
                     >
@@ -6190,9 +5590,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             key="0-undefined"
                             style={
                               Object {
-                                "flex": "160 0 auto",
+                                "flex": "180 0 auto",
                                 "maxWidth": null,
-                                "width": "160px",
+                                "width": "180px",
                               }
                             }
                           >
@@ -6202,9 +5602,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               role="columnheader"
                               style={
                                 Object {
-                                  "flex": "160 0 auto",
+                                  "flex": "180 0 auto",
                                   "maxWidth": null,
-                                  "width": "160px",
+                                  "width": "180px",
                                 }
                               }
                               tabIndex="-1"
@@ -6352,9 +5752,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             key="6-undefined"
                             style={
                               Object {
-                                "flex": "140 0 auto",
+                                "flex": "180 0 auto",
                                 "maxWidth": null,
-                                "width": "140px",
+                                "width": "180px",
                               }
                             }
                           >
@@ -6364,9 +5764,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               role="columnheader"
                               style={
                                 Object {
-                                  "flex": "140 0 auto",
+                                  "flex": "180 0 auto",
                                   "maxWidth": null,
-                                  "width": "140px",
+                                  "width": "180px",
                                 }
                               }
                               tabIndex="-1"
@@ -6455,33 +5855,6 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               Case Class.
                             </div>
                           </ThComponent>
-                          <ThComponent
-                            className=""
-                            key="10-undefined"
-                            style={
-                              Object {
-                                "flex": "80 0 auto",
-                                "maxWidth": null,
-                                "width": "80px",
-                              }
-                            }
-                          >
-                            <div
-                              className="rt-th"
-                              onClick={[Function]}
-                              role="columnheader"
-                              style={
-                                Object {
-                                  "flex": "80 0 auto",
-                                  "maxWidth": null,
-                                  "width": "80px",
-                                }
-                              }
-                              tabIndex="-1"
-                            >
-                              Actions
-                            </div>
-                          </ThComponent>
                         </div>
                       </TrComponent>
                     </div>
@@ -6490,7 +5863,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                     className="-header"
                     style={
                       Object {
-                        "minWidth": "1110px",
+                        "minWidth": "1090px",
                       }
                     }
                   >
@@ -6498,7 +5871,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                       className="rt-thead -header"
                       style={
                         Object {
-                          "minWidth": "1110px",
+                          "minWidth": "1090px",
                         }
                       }
                     >
@@ -6512,9 +5885,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             key="0-plan_title"
                             style={
                               Object {
-                                "flex": "160 0 auto",
+                                "flex": "180 0 auto",
                                 "maxWidth": null,
-                                "width": "160px",
+                                "width": "180px",
                               }
                             }
                             toggleSort={[Function]}
@@ -6525,9 +5898,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               role="columnheader"
                               style={
                                 Object {
-                                  "flex": "160 0 auto",
+                                  "flex": "180 0 auto",
                                   "maxWidth": null,
-                                  "width": "160px",
+                                  "width": "180px",
                                 }
                               }
                               tabIndex="-1"
@@ -6752,9 +6125,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             key="6-focusArea"
                             style={
                               Object {
-                                "flex": "140 0 auto",
+                                "flex": "180 0 auto",
                                 "maxWidth": null,
-                                "width": "140px",
+                                "width": "180px",
                               }
                             }
                             toggleSort={[Function]}
@@ -6765,9 +6138,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               role="columnheader"
                               style={
                                 Object {
-                                  "flex": "140 0 auto",
+                                  "flex": "180 0 auto",
                                   "maxWidth": null,
-                                  "width": "140px",
+                                  "width": "180px",
                                 }
                               }
                               tabIndex="-1"
@@ -6907,46 +6280,6 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               </Resizer>
                             </div>
                           </ThComponent>
-                          <ThComponent
-                            className="rt-resizable-header -cursor-pointer"
-                            key="10-plan_status"
-                            style={
-                              Object {
-                                "flex": "80 0 auto",
-                                "maxWidth": null,
-                                "width": "80px",
-                              }
-                            }
-                            toggleSort={[Function]}
-                          >
-                            <div
-                              className="rt-th rt-resizable-header -cursor-pointer"
-                              onClick={[Function]}
-                              role="columnheader"
-                              style={
-                                Object {
-                                  "flex": "80 0 auto",
-                                  "maxWidth": null,
-                                  "width": "80px",
-                                }
-                              }
-                              tabIndex="-1"
-                            >
-                              <div
-                                className="rt-resizable-header-content"
-                              />
-                              <Resizer
-                                onMouseDown={[Function]}
-                                onTouchStart={[Function]}
-                              >
-                                <div
-                                  className="rt-resizer"
-                                  onMouseDown={[Function]}
-                                  onTouchStart={[Function]}
-                                />
-                              </Resizer>
-                            </div>
-                          </ThComponent>
                         </div>
                       </TrComponent>
                     </div>
@@ -6955,7 +6288,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                     className=""
                     style={
                       Object {
-                        "minWidth": "1110px",
+                        "minWidth": "1090px",
                       }
                     }
                   >
@@ -6963,7 +6296,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                       className="rt-tbody"
                       style={
                         Object {
-                          "minWidth": "1110px",
+                          "minWidth": "1090px",
                         }
                       }
                     >
@@ -6987,9 +6320,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                 onClick={[Function]}
                                 style={
                                   Object {
-                                    "flex": "160 0 auto",
+                                    "flex": "180 0 auto",
                                     "maxWidth": null,
-                                    "width": "160px",
+                                    "width": "180px",
                                   }
                                 }
                               >
@@ -6999,9 +6332,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                   role="gridcell"
                                   style={
                                     Object {
-                                      "flex": "160 0 auto",
+                                      "flex": "180 0 auto",
                                       "maxWidth": null,
-                                      "width": "160px",
+                                      "width": "180px",
                                     }
                                   }
                                 >
@@ -7039,7 +6372,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                         "headerStyle": Object {},
                                         "id": "plan_title",
                                         "minResizeWidth": 11,
-                                        "minWidth": 160,
+                                        "minWidth": 180,
                                         "parentColumn": Object {
                                           "Header": "Name",
                                           "columns": Array [
@@ -7047,7 +6380,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                               "Cell": [Function],
                                               "Header": "",
                                               "accessor": "plan_title",
-                                              "minWidth": 160,
+                                              "minWidth": 180,
                                             },
                                           ],
                                         },
@@ -7174,10 +6507,21 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                     }
                                     value="A1-Tha Luang Village 1 Focus 01"
                                     viewIndex={0}
-                                    width={160}
+                                    width={180}
                                   >
                                     <div>
-                                      A1-Tha Luang Village 1 Focus 01
+                                      <Link
+                                        replace={false}
+                                        to="/focus-investigation/map/plan-id-2"
+                                      >
+                                        <a
+                                          href="/focus-investigation/map/plan-id-2"
+                                          onClick={[Function]}
+                                        >
+                                          A1-Tha Luang Village 1 Focus 01
+                                        </a>
+                                      </Link>
+                                       
                                     </div>
                                   </Cell>
                                 </div>
@@ -7319,9 +6663,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                 onClick={[Function]}
                                 style={
                                   Object {
-                                    "flex": "140 0 auto",
+                                    "flex": "180 0 auto",
                                     "maxWidth": null,
-                                    "width": "140px",
+                                    "width": "180px",
                                   }
                                 }
                               >
@@ -7331,9 +6675,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                   role="gridcell"
                                   style={
                                     Object {
-                                      "flex": "140 0 auto",
+                                      "flex": "180 0 auto",
                                       "maxWidth": null,
-                                      "width": "140px",
+                                      "width": "180px",
                                     }
                                   }
                                 >
@@ -7371,7 +6715,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                         "headerStyle": Object {},
                                         "id": "focusArea",
                                         "minResizeWidth": 11,
-                                        "minWidth": 140,
+                                        "minWidth": 180,
                                         "parentColumn": Object {
                                           "Header": "Focus Area",
                                           "columns": Array [
@@ -7379,7 +6723,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                               "Cell": [Function],
                                               "Header": "",
                                               "accessor": "focusArea",
-                                              "minWidth": 140,
+                                              "minWidth": 180,
                                             },
                                           ],
                                         },
@@ -7506,7 +6850,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                     }
                                     value="TLv1_02"
                                     viewIndex={0}
-                                    width={140}
+                                    width={180}
                                   >
                                     <div>
                                       TLv1_02
@@ -7819,217 +7163,6 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                   }
                                 />
                               </TdComponent>
-                              <TdComponent
-                                className=""
-                                key="10-plan_status"
-                                onClick={[Function]}
-                                style={
-                                  Object {
-                                    "flex": "80 0 auto",
-                                    "maxWidth": null,
-                                    "width": "80px",
-                                  }
-                                }
-                              >
-                                <div
-                                  className="rt-td"
-                                  onClick={[Function]}
-                                  role="gridcell"
-                                  style={
-                                    Object {
-                                      "flex": "80 0 auto",
-                                      "maxWidth": null,
-                                      "width": "80px",
-                                    }
-                                  }
-                                >
-                                  <Cell
-                                    classes={
-                                      Array [
-                                        undefined,
-                                        "",
-                                        undefined,
-                                      ]
-                                    }
-                                    column={
-                                      Object {
-                                        "Aggregated": undefined,
-                                        "Cell": [Function],
-                                        "Expander": undefined,
-                                        "Filter": undefined,
-                                        "Footer": undefined,
-                                        "Header": "",
-                                        "Pivot": undefined,
-                                        "PivotValue": undefined,
-                                        "Placeholder": undefined,
-                                        "accessor": [Function],
-                                        "aggregate": undefined,
-                                        "className": "",
-                                        "filterAll": false,
-                                        "filterMethod": undefined,
-                                        "filterable": undefined,
-                                        "footerClassName": "",
-                                        "footerStyle": Object {},
-                                        "getFooterProps": [Function],
-                                        "getHeaderProps": [Function],
-                                        "getProps": [Function],
-                                        "headerClassName": "",
-                                        "headerStyle": Object {},
-                                        "id": "plan_status",
-                                        "minResizeWidth": 11,
-                                        "minWidth": 80,
-                                        "parentColumn": Object {
-                                          "Header": "Actions",
-                                          "columns": Array [
-                                            Object {
-                                              "Cell": [Function],
-                                              "Header": "",
-                                              "accessor": "plan_status",
-                                              "minWidth": 80,
-                                            },
-                                          ],
-                                        },
-                                        "resizable": undefined,
-                                        "show": true,
-                                        "sortMethod": undefined,
-                                        "sortable": undefined,
-                                        "style": Object {},
-                                      }
-                                    }
-                                    columnProps={
-                                      Object {
-                                        "className": undefined,
-                                        "rest": Object {},
-                                        "style": undefined,
-                                      }
-                                    }
-                                    index={0}
-                                    level={0}
-                                    nestingPath={
-                                      Array [
-                                        0,
-                                      ]
-                                    }
-                                    original={
-                                      Object {
-                                        "canton": "Canton Tha Luang",
-                                        "caseClassification": null,
-                                        "caseNotificationDate": "2019-06-18",
-                                        "district": "",
-                                        "focusArea": "TLv1_02",
-                                        "id": "plan-id-2",
-                                        "jurisdiction_depth": 2,
-                                        "jurisdiction_id": "3378",
-                                        "jurisdiction_name": "TLv1_02",
-                                        "jurisdiction_name_path": Array [
-                                          "Canton Tha Luang",
-                                          "Tha Luang Village",
-                                        ],
-                                        "jurisdiction_parent_id": "2977",
-                                        "jurisdiction_path": Array [
-                                          "2989",
-                                          "2977",
-                                        ],
-                                        "plan_date": "2019-06-18",
-                                        "plan_effective_period_end": "2019-06-18",
-                                        "plan_effective_period_start": "2019-07-31",
-                                        "plan_fi_reason": "Case-triggered",
-                                        "plan_fi_status": "A1",
-                                        "plan_id": "plan-id-2",
-                                        "plan_intervention_type": "IRS",
-                                        "plan_status": "active",
-                                        "plan_title": "A1-Tha Luang Village 1 Focus 01",
-                                        "plan_version": "1",
-                                        "province": "",
-                                        "reason": "Case-triggered",
-                                        "status": "A1",
-                                        "village": "Tha Luang Village",
-                                      }
-                                    }
-                                    page={0}
-                                    pageSize={20}
-                                    resized={Array []}
-                                    row={
-                                      Object {
-                                        "_index": 0,
-                                        "_nestingLevel": 0,
-                                        "_original": Object {
-                                          "canton": "Canton Tha Luang",
-                                          "caseClassification": null,
-                                          "caseNotificationDate": "2019-06-18",
-                                          "district": "",
-                                          "focusArea": "TLv1_02",
-                                          "id": "plan-id-2",
-                                          "jurisdiction_depth": 2,
-                                          "jurisdiction_id": "3378",
-                                          "jurisdiction_name": "TLv1_02",
-                                          "jurisdiction_name_path": Array [
-                                            "Canton Tha Luang",
-                                            "Tha Luang Village",
-                                          ],
-                                          "jurisdiction_parent_id": "2977",
-                                          "jurisdiction_path": Array [
-                                            "2989",
-                                            "2977",
-                                          ],
-                                          "plan_date": "2019-06-18",
-                                          "plan_effective_period_end": "2019-06-18",
-                                          "plan_effective_period_start": "2019-07-31",
-                                          "plan_fi_reason": "Case-triggered",
-                                          "plan_fi_status": "A1",
-                                          "plan_id": "plan-id-2",
-                                          "plan_intervention_type": "IRS",
-                                          "plan_status": "active",
-                                          "plan_title": "A1-Tha Luang Village 1 Focus 01",
-                                          "plan_version": "1",
-                                          "province": "",
-                                          "reason": "Case-triggered",
-                                          "status": "A1",
-                                          "village": "Tha Luang Village",
-                                        },
-                                        "_subRows": undefined,
-                                        "_viewIndex": 0,
-                                        "canton": "Canton Tha Luang",
-                                        "caseClassification": null,
-                                        "caseNotificationDate": "2019-06-18",
-                                        "district": "",
-                                        "focusArea": "TLv1_02",
-                                        "plan_status": "active",
-                                        "plan_title": "A1-Tha Luang Village 1 Focus 01",
-                                        "province": "",
-                                        "status": "A1",
-                                        "village": "Tha Luang Village",
-                                      }
-                                    }
-                                    show={true}
-                                    styles={Object {}}
-                                    tdProps={
-                                      Object {
-                                        "className": undefined,
-                                        "rest": Object {},
-                                        "style": undefined,
-                                      }
-                                    }
-                                    value="active"
-                                    viewIndex={0}
-                                    width={80}
-                                  >
-                                    <div>
-                                      <Link
-                                        replace={false}
-                                        to="/focus-investigation/map/plan-id-2"
-                                      >
-                                        <a
-                                          href="/focus-investigation/map/plan-id-2"
-                                          onClick={[Function]}
-                                        >
-                                          View
-                                        </a>
-                                      </Link>
-                                    </div>
-                                  </Cell>
-                                </div>
-                              </TdComponent>
                             </div>
                           </TrComponent>
                         </div>
@@ -8136,7 +7269,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                     "Cell": [Function],
                     "Header": "",
                     "accessor": "plan_title",
-                    "minWidth": 160,
+                    "minWidth": 180,
                   },
                 ],
               },
@@ -8193,7 +7326,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                     "Cell": [Function],
                     "Header": "",
                     "accessor": "focusArea",
-                    "minWidth": 140,
+                    "minWidth": 180,
                   },
                 ],
               },
@@ -8224,17 +7357,6 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                   Object {
                     "Header": "",
                     "accessor": "plan_effective_period_end",
-                  },
-                ],
-              },
-              Object {
-                "Header": "Actions",
-                "columns": Array [
-                  Object {
-                    "Cell": [Function],
-                    "Header": "",
-                    "accessor": "plan_status",
-                    "minWidth": 80,
                   },
                 ],
               },
@@ -8354,7 +7476,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                       "Cell": [Function],
                       "Header": "",
                       "accessor": "plan_title",
-                      "minWidth": 160,
+                      "minWidth": 180,
                     },
                   ],
                 },
@@ -8411,7 +7533,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                       "Cell": [Function],
                       "Header": "",
                       "accessor": "focusArea",
-                      "minWidth": 140,
+                      "minWidth": 180,
                     },
                   ],
                 },
@@ -8442,17 +7564,6 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                     Object {
                       "Header": "",
                       "accessor": "plan_effective_period_end",
-                    },
-                  ],
-                },
-                Object {
-                  "Header": "Actions",
-                  "columns": Array [
-                    Object {
-                      "Cell": [Function],
-                      "Header": "",
-                      "accessor": "plan_status",
-                      "minWidth": 80,
                     },
                   ],
                 },
@@ -8600,7 +7711,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                     className="-headerGroups"
                     style={
                       Object {
-                        "minWidth": "1100px",
+                        "minWidth": "1080px",
                       }
                     }
                   >
@@ -8608,7 +7719,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                       className="rt-thead -headerGroups"
                       style={
                         Object {
-                          "minWidth": "1100px",
+                          "minWidth": "1080px",
                         }
                       }
                     >
@@ -8622,9 +7733,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             key="0-undefined"
                             style={
                               Object {
-                                "flex": "160 0 auto",
+                                "flex": "180 0 auto",
                                 "maxWidth": null,
-                                "width": "160px",
+                                "width": "180px",
                               }
                             }
                           >
@@ -8634,9 +7745,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               role="columnheader"
                               style={
                                 Object {
-                                  "flex": "160 0 auto",
+                                  "flex": "180 0 auto",
                                   "maxWidth": null,
-                                  "width": "160px",
+                                  "width": "180px",
                                 }
                               }
                               tabIndex="-1"
@@ -8784,9 +7895,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             key="6-undefined"
                             style={
                               Object {
-                                "flex": "140 0 auto",
+                                "flex": "180 0 auto",
                                 "maxWidth": null,
-                                "width": "140px",
+                                "width": "180px",
                               }
                             }
                           >
@@ -8796,9 +7907,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               role="columnheader"
                               style={
                                 Object {
-                                  "flex": "140 0 auto",
+                                  "flex": "180 0 auto",
                                   "maxWidth": null,
-                                  "width": "140px",
+                                  "width": "180px",
                                 }
                               }
                               tabIndex="-1"
@@ -8887,33 +7998,6 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               End Date
                             </div>
                           </ThComponent>
-                          <ThComponent
-                            className=""
-                            key="10-undefined"
-                            style={
-                              Object {
-                                "flex": "80 0 auto",
-                                "maxWidth": null,
-                                "width": "80px",
-                              }
-                            }
-                          >
-                            <div
-                              className="rt-th"
-                              onClick={[Function]}
-                              role="columnheader"
-                              style={
-                                Object {
-                                  "flex": "80 0 auto",
-                                  "maxWidth": null,
-                                  "width": "80px",
-                                }
-                              }
-                              tabIndex="-1"
-                            >
-                              Actions
-                            </div>
-                          </ThComponent>
                         </div>
                       </TrComponent>
                     </div>
@@ -8922,7 +8006,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                     className="-header"
                     style={
                       Object {
-                        "minWidth": "1100px",
+                        "minWidth": "1080px",
                       }
                     }
                   >
@@ -8930,7 +8014,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                       className="rt-thead -header"
                       style={
                         Object {
-                          "minWidth": "1100px",
+                          "minWidth": "1080px",
                         }
                       }
                     >
@@ -8944,9 +8028,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             key="0-plan_title"
                             style={
                               Object {
-                                "flex": "160 0 auto",
+                                "flex": "180 0 auto",
                                 "maxWidth": null,
-                                "width": "160px",
+                                "width": "180px",
                               }
                             }
                             toggleSort={[Function]}
@@ -8957,9 +8041,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               role="columnheader"
                               style={
                                 Object {
-                                  "flex": "160 0 auto",
+                                  "flex": "180 0 auto",
                                   "maxWidth": null,
-                                  "width": "160px",
+                                  "width": "180px",
                                 }
                               }
                               tabIndex="-1"
@@ -9184,9 +8268,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                             key="6-focusArea"
                             style={
                               Object {
-                                "flex": "140 0 auto",
+                                "flex": "180 0 auto",
                                 "maxWidth": null,
-                                "width": "140px",
+                                "width": "180px",
                               }
                             }
                             toggleSort={[Function]}
@@ -9197,9 +8281,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               role="columnheader"
                               style={
                                 Object {
-                                  "flex": "140 0 auto",
+                                  "flex": "180 0 auto",
                                   "maxWidth": null,
-                                  "width": "140px",
+                                  "width": "180px",
                                 }
                               }
                               tabIndex="-1"
@@ -9339,46 +8423,6 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                               </Resizer>
                             </div>
                           </ThComponent>
-                          <ThComponent
-                            className="rt-resizable-header -cursor-pointer"
-                            key="10-plan_status"
-                            style={
-                              Object {
-                                "flex": "80 0 auto",
-                                "maxWidth": null,
-                                "width": "80px",
-                              }
-                            }
-                            toggleSort={[Function]}
-                          >
-                            <div
-                              className="rt-th rt-resizable-header -cursor-pointer"
-                              onClick={[Function]}
-                              role="columnheader"
-                              style={
-                                Object {
-                                  "flex": "80 0 auto",
-                                  "maxWidth": null,
-                                  "width": "80px",
-                                }
-                              }
-                              tabIndex="-1"
-                            >
-                              <div
-                                className="rt-resizable-header-content"
-                              />
-                              <Resizer
-                                onMouseDown={[Function]}
-                                onTouchStart={[Function]}
-                              >
-                                <div
-                                  className="rt-resizer"
-                                  onMouseDown={[Function]}
-                                  onTouchStart={[Function]}
-                                />
-                              </Resizer>
-                            </div>
-                          </ThComponent>
                         </div>
                       </TrComponent>
                     </div>
@@ -9387,7 +8431,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                     className=""
                     style={
                       Object {
-                        "minWidth": "1100px",
+                        "minWidth": "1080px",
                       }
                     }
                   >
@@ -9395,7 +8439,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                       className="rt-tbody"
                       style={
                         Object {
-                          "minWidth": "1100px",
+                          "minWidth": "1080px",
                         }
                       }
                     >
@@ -9419,9 +8463,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                 onClick={[Function]}
                                 style={
                                   Object {
-                                    "flex": "160 0 auto",
+                                    "flex": "180 0 auto",
                                     "maxWidth": null,
-                                    "width": "160px",
+                                    "width": "180px",
                                   }
                                 }
                               >
@@ -9431,9 +8475,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                   role="gridcell"
                                   style={
                                     Object {
-                                      "flex": "160 0 auto",
+                                      "flex": "180 0 auto",
                                       "maxWidth": null,
-                                      "width": "160px",
+                                      "width": "180px",
                                     }
                                   }
                                 >
@@ -9471,7 +8515,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                         "headerStyle": Object {},
                                         "id": "plan_title",
                                         "minResizeWidth": 11,
-                                        "minWidth": 160,
+                                        "minWidth": 180,
                                         "parentColumn": Object {
                                           "Header": "Name",
                                           "columns": Array [
@@ -9479,7 +8523,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                               "Cell": [Function],
                                               "Header": "",
                                               "accessor": "plan_title",
-                                              "minWidth": 160,
+                                              "minWidth": 180,
                                             },
                                           ],
                                         },
@@ -9606,10 +8650,21 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                     }
                                     value="A1-Tha Luang Village 1 Focus 01"
                                     viewIndex={0}
-                                    width={160}
+                                    width={180}
                                   >
                                     <div>
-                                      A1-Tha Luang Village 1 Focus 01
+                                      <Link
+                                        replace={false}
+                                        to="/focus-investigation/map/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
+                                      >
+                                        <a
+                                          href="/focus-investigation/map/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
+                                          onClick={[Function]}
+                                        >
+                                          A1-Tha Luang Village 1 Focus 01
+                                        </a>
+                                      </Link>
+                                       
                                     </div>
                                   </Cell>
                                 </div>
@@ -9751,9 +8806,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                 onClick={[Function]}
                                 style={
                                   Object {
-                                    "flex": "140 0 auto",
+                                    "flex": "180 0 auto",
                                     "maxWidth": null,
-                                    "width": "140px",
+                                    "width": "180px",
                                   }
                                 }
                               >
@@ -9763,9 +8818,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                   role="gridcell"
                                   style={
                                     Object {
-                                      "flex": "140 0 auto",
+                                      "flex": "180 0 auto",
                                       "maxWidth": null,
-                                      "width": "140px",
+                                      "width": "180px",
                                     }
                                   }
                                 >
@@ -9803,7 +8858,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                         "headerStyle": Object {},
                                         "id": "focusArea",
                                         "minResizeWidth": 11,
-                                        "minWidth": 140,
+                                        "minWidth": 180,
                                         "parentColumn": Object {
                                           "Header": "Focus Area",
                                           "columns": Array [
@@ -9811,7 +8866,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                               "Cell": [Function],
                                               "Header": "",
                                               "accessor": "focusArea",
-                                              "minWidth": 140,
+                                              "minWidth": 180,
                                             },
                                           ],
                                         },
@@ -9938,7 +8993,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                     }
                                     value="NVI_439"
                                     viewIndex={0}
-                                    width={140}
+                                    width={180}
                                   >
                                     <div>
                                       NVI_439
@@ -10253,217 +9308,6 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                                   2019-06-18
                                 </div>
                               </TdComponent>
-                              <TdComponent
-                                className=""
-                                key="10-plan_status"
-                                onClick={[Function]}
-                                style={
-                                  Object {
-                                    "flex": "80 0 auto",
-                                    "maxWidth": null,
-                                    "width": "80px",
-                                  }
-                                }
-                              >
-                                <div
-                                  className="rt-td"
-                                  onClick={[Function]}
-                                  role="gridcell"
-                                  style={
-                                    Object {
-                                      "flex": "80 0 auto",
-                                      "maxWidth": null,
-                                      "width": "80px",
-                                    }
-                                  }
-                                >
-                                  <Cell
-                                    classes={
-                                      Array [
-                                        undefined,
-                                        "",
-                                        undefined,
-                                      ]
-                                    }
-                                    column={
-                                      Object {
-                                        "Aggregated": undefined,
-                                        "Cell": [Function],
-                                        "Expander": undefined,
-                                        "Filter": undefined,
-                                        "Footer": undefined,
-                                        "Header": "",
-                                        "Pivot": undefined,
-                                        "PivotValue": undefined,
-                                        "Placeholder": undefined,
-                                        "accessor": [Function],
-                                        "aggregate": undefined,
-                                        "className": "",
-                                        "filterAll": false,
-                                        "filterMethod": undefined,
-                                        "filterable": undefined,
-                                        "footerClassName": "",
-                                        "footerStyle": Object {},
-                                        "getFooterProps": [Function],
-                                        "getHeaderProps": [Function],
-                                        "getProps": [Function],
-                                        "headerClassName": "",
-                                        "headerStyle": Object {},
-                                        "id": "plan_status",
-                                        "minResizeWidth": 11,
-                                        "minWidth": 80,
-                                        "parentColumn": Object {
-                                          "Header": "Actions",
-                                          "columns": Array [
-                                            Object {
-                                              "Cell": [Function],
-                                              "Header": "",
-                                              "accessor": "plan_status",
-                                              "minWidth": 80,
-                                            },
-                                          ],
-                                        },
-                                        "resizable": undefined,
-                                        "show": true,
-                                        "sortMethod": undefined,
-                                        "sortable": undefined,
-                                        "style": Object {},
-                                      }
-                                    }
-                                    columnProps={
-                                      Object {
-                                        "className": undefined,
-                                        "rest": Object {},
-                                        "style": undefined,
-                                      }
-                                    }
-                                    index={0}
-                                    level={0}
-                                    nestingPath={
-                                      Array [
-                                        0,
-                                      ]
-                                    }
-                                    original={
-                                      Object {
-                                        "canton": "Chadiza",
-                                        "caseClassification": null,
-                                        "caseNotificationDate": null,
-                                        "district": "",
-                                        "focusArea": "NVI_439",
-                                        "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
-                                        "jurisdiction_depth": 2,
-                                        "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
-                                        "jurisdiction_name": "NVI_439",
-                                        "jurisdiction_name_path": Array [
-                                          "Chadiza",
-                                          "Naviluli",
-                                        ],
-                                        "jurisdiction_parent_id": "2944",
-                                        "jurisdiction_path": Array [
-                                          "2939",
-                                          "2944",
-                                        ],
-                                        "plan_date": "2019-06-18",
-                                        "plan_effective_period_end": "2019-06-18",
-                                        "plan_effective_period_start": "2019-07-31",
-                                        "plan_fi_reason": "Routine",
-                                        "plan_fi_status": "A1",
-                                        "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
-                                        "plan_intervention_type": "FI",
-                                        "plan_status": "active",
-                                        "plan_title": "A1-Tha Luang Village 1 Focus 01",
-                                        "plan_version": "1",
-                                        "province": "",
-                                        "reason": "Routine",
-                                        "status": "A1",
-                                        "village": "Naviluli",
-                                      }
-                                    }
-                                    page={0}
-                                    pageSize={20}
-                                    resized={Array []}
-                                    row={
-                                      Object {
-                                        "_index": 0,
-                                        "_nestingLevel": 0,
-                                        "_original": Object {
-                                          "canton": "Chadiza",
-                                          "caseClassification": null,
-                                          "caseNotificationDate": null,
-                                          "district": "",
-                                          "focusArea": "NVI_439",
-                                          "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
-                                          "jurisdiction_depth": 2,
-                                          "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
-                                          "jurisdiction_name": "NVI_439",
-                                          "jurisdiction_name_path": Array [
-                                            "Chadiza",
-                                            "Naviluli",
-                                          ],
-                                          "jurisdiction_parent_id": "2944",
-                                          "jurisdiction_path": Array [
-                                            "2939",
-                                            "2944",
-                                          ],
-                                          "plan_date": "2019-06-18",
-                                          "plan_effective_period_end": "2019-06-18",
-                                          "plan_effective_period_start": "2019-07-31",
-                                          "plan_fi_reason": "Routine",
-                                          "plan_fi_status": "A1",
-                                          "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
-                                          "plan_intervention_type": "FI",
-                                          "plan_status": "active",
-                                          "plan_title": "A1-Tha Luang Village 1 Focus 01",
-                                          "plan_version": "1",
-                                          "province": "",
-                                          "reason": "Routine",
-                                          "status": "A1",
-                                          "village": "Naviluli",
-                                        },
-                                        "_subRows": undefined,
-                                        "_viewIndex": 0,
-                                        "canton": "Chadiza",
-                                        "district": "",
-                                        "focusArea": "NVI_439",
-                                        "plan_effective_period_end": "2019-06-18",
-                                        "plan_effective_period_start": "2019-07-31",
-                                        "plan_status": "active",
-                                        "plan_title": "A1-Tha Luang Village 1 Focus 01",
-                                        "province": "",
-                                        "status": "A1",
-                                        "village": "Naviluli",
-                                      }
-                                    }
-                                    show={true}
-                                    styles={Object {}}
-                                    tdProps={
-                                      Object {
-                                        "className": undefined,
-                                        "rest": Object {},
-                                        "style": undefined,
-                                      }
-                                    }
-                                    value="active"
-                                    viewIndex={0}
-                                    width={80}
-                                  >
-                                    <div>
-                                      <Link
-                                        replace={false}
-                                        to="/focus-investigation/map/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
-                                      >
-                                        <a
-                                          href="/focus-investigation/map/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
-                                          onClick={[Function]}
-                                        >
-                                          View
-                                        </a>
-                                      </Link>
-                                    </div>
-                                  </Cell>
-                                </div>
-                              </TdComponent>
                             </div>
                           </TrComponent>
                         </div>
@@ -10669,7 +9513,7 @@ Array [
           className="-headerGroups"
           style={
             Object {
-              "minWidth": "1110px",
+              "minWidth": "1090px",
             }
           }
         >
@@ -10677,7 +9521,7 @@ Array [
             className="rt-thead -headerGroups"
             style={
               Object {
-                "minWidth": "1110px",
+                "minWidth": "1090px",
               }
             }
           >
@@ -10691,9 +9535,9 @@ Array [
                   key="0-undefined"
                   style={
                     Object {
-                      "flex": "160 0 auto",
+                      "flex": "180 0 auto",
                       "maxWidth": null,
-                      "width": "160px",
+                      "width": "180px",
                     }
                   }
                 >
@@ -10703,9 +9547,9 @@ Array [
                     role="columnheader"
                     style={
                       Object {
-                        "flex": "160 0 auto",
+                        "flex": "180 0 auto",
                         "maxWidth": null,
-                        "width": "160px",
+                        "width": "180px",
                       }
                     }
                     tabIndex="-1"
@@ -10853,9 +9697,9 @@ Array [
                   key="6-undefined"
                   style={
                     Object {
-                      "flex": "140 0 auto",
+                      "flex": "180 0 auto",
                       "maxWidth": null,
-                      "width": "140px",
+                      "width": "180px",
                     }
                   }
                 >
@@ -10865,9 +9709,9 @@ Array [
                     role="columnheader"
                     style={
                       Object {
-                        "flex": "140 0 auto",
+                        "flex": "180 0 auto",
                         "maxWidth": null,
-                        "width": "140px",
+                        "width": "180px",
                       }
                     }
                     tabIndex="-1"
@@ -10956,33 +9800,6 @@ Array [
                     Case Class.
                   </div>
                 </ThComponent>
-                <ThComponent
-                  className=""
-                  key="10-undefined"
-                  style={
-                    Object {
-                      "flex": "80 0 auto",
-                      "maxWidth": null,
-                      "width": "80px",
-                    }
-                  }
-                >
-                  <div
-                    className="rt-th"
-                    onClick={[Function]}
-                    role="columnheader"
-                    style={
-                      Object {
-                        "flex": "80 0 auto",
-                        "maxWidth": null,
-                        "width": "80px",
-                      }
-                    }
-                    tabIndex="-1"
-                  >
-                    Actions
-                  </div>
-                </ThComponent>
               </div>
             </TrComponent>
           </div>
@@ -10991,7 +9808,7 @@ Array [
           className="-header"
           style={
             Object {
-              "minWidth": "1110px",
+              "minWidth": "1090px",
             }
           }
         >
@@ -10999,7 +9816,7 @@ Array [
             className="rt-thead -header"
             style={
               Object {
-                "minWidth": "1110px",
+                "minWidth": "1090px",
               }
             }
           >
@@ -11013,9 +9830,9 @@ Array [
                   key="0-plan_title"
                   style={
                     Object {
-                      "flex": "160 0 auto",
+                      "flex": "180 0 auto",
                       "maxWidth": null,
-                      "width": "160px",
+                      "width": "180px",
                     }
                   }
                   toggleSort={[Function]}
@@ -11026,9 +9843,9 @@ Array [
                     role="columnheader"
                     style={
                       Object {
-                        "flex": "160 0 auto",
+                        "flex": "180 0 auto",
                         "maxWidth": null,
-                        "width": "160px",
+                        "width": "180px",
                       }
                     }
                     tabIndex="-1"
@@ -11253,9 +10070,9 @@ Array [
                   key="6-focusArea"
                   style={
                     Object {
-                      "flex": "140 0 auto",
+                      "flex": "180 0 auto",
                       "maxWidth": null,
-                      "width": "140px",
+                      "width": "180px",
                     }
                   }
                   toggleSort={[Function]}
@@ -11266,9 +10083,9 @@ Array [
                     role="columnheader"
                     style={
                       Object {
-                        "flex": "140 0 auto",
+                        "flex": "180 0 auto",
                         "maxWidth": null,
-                        "width": "140px",
+                        "width": "180px",
                       }
                     }
                     tabIndex="-1"
@@ -11408,46 +10225,6 @@ Array [
                     </Resizer>
                   </div>
                 </ThComponent>
-                <ThComponent
-                  className="rt-resizable-header -cursor-pointer"
-                  key="10-plan_status"
-                  style={
-                    Object {
-                      "flex": "80 0 auto",
-                      "maxWidth": null,
-                      "width": "80px",
-                    }
-                  }
-                  toggleSort={[Function]}
-                >
-                  <div
-                    className="rt-th rt-resizable-header -cursor-pointer"
-                    onClick={[Function]}
-                    role="columnheader"
-                    style={
-                      Object {
-                        "flex": "80 0 auto",
-                        "maxWidth": null,
-                        "width": "80px",
-                      }
-                    }
-                    tabIndex="-1"
-                  >
-                    <div
-                      className="rt-resizable-header-content"
-                    />
-                    <Resizer
-                      onMouseDown={[Function]}
-                      onTouchStart={[Function]}
-                    >
-                      <div
-                        className="rt-resizer"
-                        onMouseDown={[Function]}
-                        onTouchStart={[Function]}
-                      />
-                    </Resizer>
-                  </div>
-                </ThComponent>
               </div>
             </TrComponent>
           </div>
@@ -11456,7 +10233,7 @@ Array [
           className=""
           style={
             Object {
-              "minWidth": "1110px",
+              "minWidth": "1090px",
             }
           }
         >
@@ -11464,7 +10241,7 @@ Array [
             className="rt-tbody"
             style={
               Object {
-                "minWidth": "1110px",
+                "minWidth": "1090px",
               }
             }
           >
@@ -11488,9 +10265,9 @@ Array [
                       onClick={[Function]}
                       style={
                         Object {
-                          "flex": "160 0 auto",
+                          "flex": "180 0 auto",
                           "maxWidth": null,
-                          "width": "160px",
+                          "width": "180px",
                         }
                       }
                     >
@@ -11500,9 +10277,9 @@ Array [
                         role="gridcell"
                         style={
                           Object {
-                            "flex": "160 0 auto",
+                            "flex": "180 0 auto",
                             "maxWidth": null,
-                            "width": "160px",
+                            "width": "180px",
                           }
                         }
                       >
@@ -11540,7 +10317,7 @@ Array [
                               "headerStyle": Object {},
                               "id": "plan_title",
                               "minResizeWidth": 11,
-                              "minWidth": 160,
+                              "minWidth": 180,
                               "parentColumn": Object {
                                 "Header": "Name",
                                 "columns": Array [
@@ -11548,7 +10325,7 @@ Array [
                                     "Cell": [Function],
                                     "Header": "",
                                     "accessor": "plan_title",
-                                    "minWidth": 160,
+                                    "minWidth": 180,
                                   },
                                 ],
                               },
@@ -11675,10 +10452,21 @@ Array [
                           }
                           value="A1-Tha Luang Village 1 Focus 01"
                           viewIndex={0}
-                          width={160}
+                          width={180}
                         >
                           <div>
-                            A1-Tha Luang Village 1 Focus 01
+                            <Link
+                              replace={false}
+                              to="/focus-investigation/map/plan-id-2"
+                            >
+                              <a
+                                href="/focus-investigation/map/plan-id-2"
+                                onClick={[Function]}
+                              >
+                                A1-Tha Luang Village 1 Focus 01
+                              </a>
+                            </Link>
+                             
                           </div>
                         </Cell>
                       </div>
@@ -11820,9 +10608,9 @@ Array [
                       onClick={[Function]}
                       style={
                         Object {
-                          "flex": "140 0 auto",
+                          "flex": "180 0 auto",
                           "maxWidth": null,
-                          "width": "140px",
+                          "width": "180px",
                         }
                       }
                     >
@@ -11832,9 +10620,9 @@ Array [
                         role="gridcell"
                         style={
                           Object {
-                            "flex": "140 0 auto",
+                            "flex": "180 0 auto",
                             "maxWidth": null,
-                            "width": "140px",
+                            "width": "180px",
                           }
                         }
                       >
@@ -11872,7 +10660,7 @@ Array [
                               "headerStyle": Object {},
                               "id": "focusArea",
                               "minResizeWidth": 11,
-                              "minWidth": 140,
+                              "minWidth": 180,
                               "parentColumn": Object {
                                 "Header": "Focus Area",
                                 "columns": Array [
@@ -11880,7 +10668,7 @@ Array [
                                     "Cell": [Function],
                                     "Header": "",
                                     "accessor": "focusArea",
-                                    "minWidth": 140,
+                                    "minWidth": 180,
                                   },
                                 ],
                               },
@@ -12007,7 +10795,7 @@ Array [
                           }
                           value="TLv1_02"
                           viewIndex={0}
-                          width={140}
+                          width={180}
                         >
                           <div>
                             TLv1_02
@@ -12320,217 +11108,6 @@ Array [
                         }
                       />
                     </TdComponent>
-                    <TdComponent
-                      className=""
-                      key="10-plan_status"
-                      onClick={[Function]}
-                      style={
-                        Object {
-                          "flex": "80 0 auto",
-                          "maxWidth": null,
-                          "width": "80px",
-                        }
-                      }
-                    >
-                      <div
-                        className="rt-td"
-                        onClick={[Function]}
-                        role="gridcell"
-                        style={
-                          Object {
-                            "flex": "80 0 auto",
-                            "maxWidth": null,
-                            "width": "80px",
-                          }
-                        }
-                      >
-                        <Cell
-                          classes={
-                            Array [
-                              undefined,
-                              "",
-                              undefined,
-                            ]
-                          }
-                          column={
-                            Object {
-                              "Aggregated": undefined,
-                              "Cell": [Function],
-                              "Expander": undefined,
-                              "Filter": undefined,
-                              "Footer": undefined,
-                              "Header": "",
-                              "Pivot": undefined,
-                              "PivotValue": undefined,
-                              "Placeholder": undefined,
-                              "accessor": [Function],
-                              "aggregate": undefined,
-                              "className": "",
-                              "filterAll": false,
-                              "filterMethod": undefined,
-                              "filterable": undefined,
-                              "footerClassName": "",
-                              "footerStyle": Object {},
-                              "getFooterProps": [Function],
-                              "getHeaderProps": [Function],
-                              "getProps": [Function],
-                              "headerClassName": "",
-                              "headerStyle": Object {},
-                              "id": "plan_status",
-                              "minResizeWidth": 11,
-                              "minWidth": 80,
-                              "parentColumn": Object {
-                                "Header": "Actions",
-                                "columns": Array [
-                                  Object {
-                                    "Cell": [Function],
-                                    "Header": "",
-                                    "accessor": "plan_status",
-                                    "minWidth": 80,
-                                  },
-                                ],
-                              },
-                              "resizable": undefined,
-                              "show": true,
-                              "sortMethod": undefined,
-                              "sortable": undefined,
-                              "style": Object {},
-                            }
-                          }
-                          columnProps={
-                            Object {
-                              "className": undefined,
-                              "rest": Object {},
-                              "style": undefined,
-                            }
-                          }
-                          index={0}
-                          level={0}
-                          nestingPath={
-                            Array [
-                              0,
-                            ]
-                          }
-                          original={
-                            Object {
-                              "canton": "Canton Tha Luang",
-                              "caseClassification": null,
-                              "caseNotificationDate": "2019-06-18",
-                              "district": "",
-                              "focusArea": "TLv1_02",
-                              "id": "plan-id-2",
-                              "jurisdiction_depth": 2,
-                              "jurisdiction_id": "3378",
-                              "jurisdiction_name": "TLv1_02",
-                              "jurisdiction_name_path": Array [
-                                "Canton Tha Luang",
-                                "Tha Luang Village",
-                              ],
-                              "jurisdiction_parent_id": "2977",
-                              "jurisdiction_path": Array [
-                                "2989",
-                                "2977",
-                              ],
-                              "plan_date": "2019-06-18",
-                              "plan_effective_period_end": "2019-06-18",
-                              "plan_effective_period_start": "2019-07-31",
-                              "plan_fi_reason": "Case-triggered",
-                              "plan_fi_status": "A1",
-                              "plan_id": "plan-id-2",
-                              "plan_intervention_type": "IRS",
-                              "plan_status": "active",
-                              "plan_title": "A1-Tha Luang Village 1 Focus 01",
-                              "plan_version": "1",
-                              "province": "",
-                              "reason": "Case-triggered",
-                              "status": "A1",
-                              "village": "Tha Luang Village",
-                            }
-                          }
-                          page={0}
-                          pageSize={20}
-                          resized={Array []}
-                          row={
-                            Object {
-                              "_index": 0,
-                              "_nestingLevel": 0,
-                              "_original": Object {
-                                "canton": "Canton Tha Luang",
-                                "caseClassification": null,
-                                "caseNotificationDate": "2019-06-18",
-                                "district": "",
-                                "focusArea": "TLv1_02",
-                                "id": "plan-id-2",
-                                "jurisdiction_depth": 2,
-                                "jurisdiction_id": "3378",
-                                "jurisdiction_name": "TLv1_02",
-                                "jurisdiction_name_path": Array [
-                                  "Canton Tha Luang",
-                                  "Tha Luang Village",
-                                ],
-                                "jurisdiction_parent_id": "2977",
-                                "jurisdiction_path": Array [
-                                  "2989",
-                                  "2977",
-                                ],
-                                "plan_date": "2019-06-18",
-                                "plan_effective_period_end": "2019-06-18",
-                                "plan_effective_period_start": "2019-07-31",
-                                "plan_fi_reason": "Case-triggered",
-                                "plan_fi_status": "A1",
-                                "plan_id": "plan-id-2",
-                                "plan_intervention_type": "IRS",
-                                "plan_status": "active",
-                                "plan_title": "A1-Tha Luang Village 1 Focus 01",
-                                "plan_version": "1",
-                                "province": "",
-                                "reason": "Case-triggered",
-                                "status": "A1",
-                                "village": "Tha Luang Village",
-                              },
-                              "_subRows": undefined,
-                              "_viewIndex": 0,
-                              "canton": "Canton Tha Luang",
-                              "caseClassification": null,
-                              "caseNotificationDate": "2019-06-18",
-                              "district": "",
-                              "focusArea": "TLv1_02",
-                              "plan_status": "active",
-                              "plan_title": "A1-Tha Luang Village 1 Focus 01",
-                              "province": "",
-                              "status": "A1",
-                              "village": "Tha Luang Village",
-                            }
-                          }
-                          show={true}
-                          styles={Object {}}
-                          tdProps={
-                            Object {
-                              "className": undefined,
-                              "rest": Object {},
-                              "style": undefined,
-                            }
-                          }
-                          value="active"
-                          viewIndex={0}
-                          width={80}
-                        >
-                          <div>
-                            <Link
-                              replace={false}
-                              to="/focus-investigation/map/plan-id-2"
-                            >
-                              <a
-                                href="/focus-investigation/map/plan-id-2"
-                                onClick={[Function]}
-                              >
-                                View
-                              </a>
-                            </Link>
-                          </div>
-                        </Cell>
-                      </div>
-                    </TdComponent>
                   </div>
                 </TrComponent>
               </div>
@@ -12569,7 +11146,7 @@ Array [
           className="-headerGroups"
           style={
             Object {
-              "minWidth": "1100px",
+              "minWidth": "1080px",
             }
           }
         >
@@ -12577,7 +11154,7 @@ Array [
             className="rt-thead -headerGroups"
             style={
               Object {
-                "minWidth": "1100px",
+                "minWidth": "1080px",
               }
             }
           >
@@ -12591,9 +11168,9 @@ Array [
                   key="0-undefined"
                   style={
                     Object {
-                      "flex": "160 0 auto",
+                      "flex": "180 0 auto",
                       "maxWidth": null,
-                      "width": "160px",
+                      "width": "180px",
                     }
                   }
                 >
@@ -12603,9 +11180,9 @@ Array [
                     role="columnheader"
                     style={
                       Object {
-                        "flex": "160 0 auto",
+                        "flex": "180 0 auto",
                         "maxWidth": null,
-                        "width": "160px",
+                        "width": "180px",
                       }
                     }
                     tabIndex="-1"
@@ -12753,9 +11330,9 @@ Array [
                   key="6-undefined"
                   style={
                     Object {
-                      "flex": "140 0 auto",
+                      "flex": "180 0 auto",
                       "maxWidth": null,
-                      "width": "140px",
+                      "width": "180px",
                     }
                   }
                 >
@@ -12765,9 +11342,9 @@ Array [
                     role="columnheader"
                     style={
                       Object {
-                        "flex": "140 0 auto",
+                        "flex": "180 0 auto",
                         "maxWidth": null,
-                        "width": "140px",
+                        "width": "180px",
                       }
                     }
                     tabIndex="-1"
@@ -12856,33 +11433,6 @@ Array [
                     End Date
                   </div>
                 </ThComponent>
-                <ThComponent
-                  className=""
-                  key="10-undefined"
-                  style={
-                    Object {
-                      "flex": "80 0 auto",
-                      "maxWidth": null,
-                      "width": "80px",
-                    }
-                  }
-                >
-                  <div
-                    className="rt-th"
-                    onClick={[Function]}
-                    role="columnheader"
-                    style={
-                      Object {
-                        "flex": "80 0 auto",
-                        "maxWidth": null,
-                        "width": "80px",
-                      }
-                    }
-                    tabIndex="-1"
-                  >
-                    Actions
-                  </div>
-                </ThComponent>
               </div>
             </TrComponent>
           </div>
@@ -12891,7 +11441,7 @@ Array [
           className="-header"
           style={
             Object {
-              "minWidth": "1100px",
+              "minWidth": "1080px",
             }
           }
         >
@@ -12899,7 +11449,7 @@ Array [
             className="rt-thead -header"
             style={
               Object {
-                "minWidth": "1100px",
+                "minWidth": "1080px",
               }
             }
           >
@@ -12913,9 +11463,9 @@ Array [
                   key="0-plan_title"
                   style={
                     Object {
-                      "flex": "160 0 auto",
+                      "flex": "180 0 auto",
                       "maxWidth": null,
-                      "width": "160px",
+                      "width": "180px",
                     }
                   }
                   toggleSort={[Function]}
@@ -12926,9 +11476,9 @@ Array [
                     role="columnheader"
                     style={
                       Object {
-                        "flex": "160 0 auto",
+                        "flex": "180 0 auto",
                         "maxWidth": null,
-                        "width": "160px",
+                        "width": "180px",
                       }
                     }
                     tabIndex="-1"
@@ -13153,9 +11703,9 @@ Array [
                   key="6-focusArea"
                   style={
                     Object {
-                      "flex": "140 0 auto",
+                      "flex": "180 0 auto",
                       "maxWidth": null,
-                      "width": "140px",
+                      "width": "180px",
                     }
                   }
                   toggleSort={[Function]}
@@ -13166,9 +11716,9 @@ Array [
                     role="columnheader"
                     style={
                       Object {
-                        "flex": "140 0 auto",
+                        "flex": "180 0 auto",
                         "maxWidth": null,
-                        "width": "140px",
+                        "width": "180px",
                       }
                     }
                     tabIndex="-1"
@@ -13308,46 +11858,6 @@ Array [
                     </Resizer>
                   </div>
                 </ThComponent>
-                <ThComponent
-                  className="rt-resizable-header -cursor-pointer"
-                  key="10-plan_status"
-                  style={
-                    Object {
-                      "flex": "80 0 auto",
-                      "maxWidth": null,
-                      "width": "80px",
-                    }
-                  }
-                  toggleSort={[Function]}
-                >
-                  <div
-                    className="rt-th rt-resizable-header -cursor-pointer"
-                    onClick={[Function]}
-                    role="columnheader"
-                    style={
-                      Object {
-                        "flex": "80 0 auto",
-                        "maxWidth": null,
-                        "width": "80px",
-                      }
-                    }
-                    tabIndex="-1"
-                  >
-                    <div
-                      className="rt-resizable-header-content"
-                    />
-                    <Resizer
-                      onMouseDown={[Function]}
-                      onTouchStart={[Function]}
-                    >
-                      <div
-                        className="rt-resizer"
-                        onMouseDown={[Function]}
-                        onTouchStart={[Function]}
-                      />
-                    </Resizer>
-                  </div>
-                </ThComponent>
               </div>
             </TrComponent>
           </div>
@@ -13356,7 +11866,7 @@ Array [
           className=""
           style={
             Object {
-              "minWidth": "1100px",
+              "minWidth": "1080px",
             }
           }
         >
@@ -13364,7 +11874,7 @@ Array [
             className="rt-tbody"
             style={
               Object {
-                "minWidth": "1100px",
+                "minWidth": "1080px",
               }
             }
           >
@@ -13388,9 +11898,9 @@ Array [
                       onClick={[Function]}
                       style={
                         Object {
-                          "flex": "160 0 auto",
+                          "flex": "180 0 auto",
                           "maxWidth": null,
-                          "width": "160px",
+                          "width": "180px",
                         }
                       }
                     >
@@ -13400,9 +11910,9 @@ Array [
                         role="gridcell"
                         style={
                           Object {
-                            "flex": "160 0 auto",
+                            "flex": "180 0 auto",
                             "maxWidth": null,
-                            "width": "160px",
+                            "width": "180px",
                           }
                         }
                       >
@@ -13440,7 +11950,7 @@ Array [
                               "headerStyle": Object {},
                               "id": "plan_title",
                               "minResizeWidth": 11,
-                              "minWidth": 160,
+                              "minWidth": 180,
                               "parentColumn": Object {
                                 "Header": "Name",
                                 "columns": Array [
@@ -13448,7 +11958,7 @@ Array [
                                     "Cell": [Function],
                                     "Header": "",
                                     "accessor": "plan_title",
-                                    "minWidth": 160,
+                                    "minWidth": 180,
                                   },
                                 ],
                               },
@@ -13575,10 +12085,21 @@ Array [
                           }
                           value="A1-Tha Luang Village 1 Focus 01"
                           viewIndex={0}
-                          width={160}
+                          width={180}
                         >
                           <div>
-                            A1-Tha Luang Village 1 Focus 01
+                            <Link
+                              replace={false}
+                              to="/focus-investigation/map/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
+                            >
+                              <a
+                                href="/focus-investigation/map/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
+                                onClick={[Function]}
+                              >
+                                A1-Tha Luang Village 1 Focus 01
+                              </a>
+                            </Link>
+                             
                           </div>
                         </Cell>
                       </div>
@@ -13720,9 +12241,9 @@ Array [
                       onClick={[Function]}
                       style={
                         Object {
-                          "flex": "140 0 auto",
+                          "flex": "180 0 auto",
                           "maxWidth": null,
-                          "width": "140px",
+                          "width": "180px",
                         }
                       }
                     >
@@ -13732,9 +12253,9 @@ Array [
                         role="gridcell"
                         style={
                           Object {
-                            "flex": "140 0 auto",
+                            "flex": "180 0 auto",
                             "maxWidth": null,
-                            "width": "140px",
+                            "width": "180px",
                           }
                         }
                       >
@@ -13772,7 +12293,7 @@ Array [
                               "headerStyle": Object {},
                               "id": "focusArea",
                               "minResizeWidth": 11,
-                              "minWidth": 140,
+                              "minWidth": 180,
                               "parentColumn": Object {
                                 "Header": "Focus Area",
                                 "columns": Array [
@@ -13780,7 +12301,7 @@ Array [
                                     "Cell": [Function],
                                     "Header": "",
                                     "accessor": "focusArea",
-                                    "minWidth": 140,
+                                    "minWidth": 180,
                                   },
                                 ],
                               },
@@ -13907,7 +12428,7 @@ Array [
                           }
                           value="NVI_439"
                           viewIndex={0}
-                          width={140}
+                          width={180}
                         >
                           <div>
                             NVI_439
@@ -14220,217 +12741,6 @@ Array [
                         }
                       >
                         2019-06-18
-                      </div>
-                    </TdComponent>
-                    <TdComponent
-                      className=""
-                      key="10-plan_status"
-                      onClick={[Function]}
-                      style={
-                        Object {
-                          "flex": "80 0 auto",
-                          "maxWidth": null,
-                          "width": "80px",
-                        }
-                      }
-                    >
-                      <div
-                        className="rt-td"
-                        onClick={[Function]}
-                        role="gridcell"
-                        style={
-                          Object {
-                            "flex": "80 0 auto",
-                            "maxWidth": null,
-                            "width": "80px",
-                          }
-                        }
-                      >
-                        <Cell
-                          classes={
-                            Array [
-                              undefined,
-                              "",
-                              undefined,
-                            ]
-                          }
-                          column={
-                            Object {
-                              "Aggregated": undefined,
-                              "Cell": [Function],
-                              "Expander": undefined,
-                              "Filter": undefined,
-                              "Footer": undefined,
-                              "Header": "",
-                              "Pivot": undefined,
-                              "PivotValue": undefined,
-                              "Placeholder": undefined,
-                              "accessor": [Function],
-                              "aggregate": undefined,
-                              "className": "",
-                              "filterAll": false,
-                              "filterMethod": undefined,
-                              "filterable": undefined,
-                              "footerClassName": "",
-                              "footerStyle": Object {},
-                              "getFooterProps": [Function],
-                              "getHeaderProps": [Function],
-                              "getProps": [Function],
-                              "headerClassName": "",
-                              "headerStyle": Object {},
-                              "id": "plan_status",
-                              "minResizeWidth": 11,
-                              "minWidth": 80,
-                              "parentColumn": Object {
-                                "Header": "Actions",
-                                "columns": Array [
-                                  Object {
-                                    "Cell": [Function],
-                                    "Header": "",
-                                    "accessor": "plan_status",
-                                    "minWidth": 80,
-                                  },
-                                ],
-                              },
-                              "resizable": undefined,
-                              "show": true,
-                              "sortMethod": undefined,
-                              "sortable": undefined,
-                              "style": Object {},
-                            }
-                          }
-                          columnProps={
-                            Object {
-                              "className": undefined,
-                              "rest": Object {},
-                              "style": undefined,
-                            }
-                          }
-                          index={0}
-                          level={0}
-                          nestingPath={
-                            Array [
-                              0,
-                            ]
-                          }
-                          original={
-                            Object {
-                              "canton": "Chadiza",
-                              "caseClassification": null,
-                              "caseNotificationDate": null,
-                              "district": "",
-                              "focusArea": "NVI_439",
-                              "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
-                              "jurisdiction_depth": 2,
-                              "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
-                              "jurisdiction_name": "NVI_439",
-                              "jurisdiction_name_path": Array [
-                                "Chadiza",
-                                "Naviluli",
-                              ],
-                              "jurisdiction_parent_id": "2944",
-                              "jurisdiction_path": Array [
-                                "2939",
-                                "2944",
-                              ],
-                              "plan_date": "2019-06-18",
-                              "plan_effective_period_end": "2019-06-18",
-                              "plan_effective_period_start": "2019-07-31",
-                              "plan_fi_reason": "Routine",
-                              "plan_fi_status": "A1",
-                              "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
-                              "plan_intervention_type": "FI",
-                              "plan_status": "active",
-                              "plan_title": "A1-Tha Luang Village 1 Focus 01",
-                              "plan_version": "1",
-                              "province": "",
-                              "reason": "Routine",
-                              "status": "A1",
-                              "village": "Naviluli",
-                            }
-                          }
-                          page={0}
-                          pageSize={20}
-                          resized={Array []}
-                          row={
-                            Object {
-                              "_index": 0,
-                              "_nestingLevel": 0,
-                              "_original": Object {
-                                "canton": "Chadiza",
-                                "caseClassification": null,
-                                "caseNotificationDate": null,
-                                "district": "",
-                                "focusArea": "NVI_439",
-                                "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
-                                "jurisdiction_depth": 2,
-                                "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
-                                "jurisdiction_name": "NVI_439",
-                                "jurisdiction_name_path": Array [
-                                  "Chadiza",
-                                  "Naviluli",
-                                ],
-                                "jurisdiction_parent_id": "2944",
-                                "jurisdiction_path": Array [
-                                  "2939",
-                                  "2944",
-                                ],
-                                "plan_date": "2019-06-18",
-                                "plan_effective_period_end": "2019-06-18",
-                                "plan_effective_period_start": "2019-07-31",
-                                "plan_fi_reason": "Routine",
-                                "plan_fi_status": "A1",
-                                "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
-                                "plan_intervention_type": "FI",
-                                "plan_status": "active",
-                                "plan_title": "A1-Tha Luang Village 1 Focus 01",
-                                "plan_version": "1",
-                                "province": "",
-                                "reason": "Routine",
-                                "status": "A1",
-                                "village": "Naviluli",
-                              },
-                              "_subRows": undefined,
-                              "_viewIndex": 0,
-                              "canton": "Chadiza",
-                              "district": "",
-                              "focusArea": "NVI_439",
-                              "plan_effective_period_end": "2019-06-18",
-                              "plan_effective_period_start": "2019-07-31",
-                              "plan_status": "active",
-                              "plan_title": "A1-Tha Luang Village 1 Focus 01",
-                              "province": "",
-                              "status": "A1",
-                              "village": "Naviluli",
-                            }
-                          }
-                          show={true}
-                          styles={Object {}}
-                          tdProps={
-                            Object {
-                              "className": undefined,
-                              "rest": Object {},
-                              "style": undefined,
-                            }
-                          }
-                          value="active"
-                          viewIndex={0}
-                          width={80}
-                        >
-                          <div>
-                            <Link
-                              replace={false}
-                              to="/focus-investigation/map/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
-                            >
-                              <a
-                                href="/focus-investigation/map/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
-                                onClick={[Function]}
-                              >
-                                View
-                              </a>
-                            </Link>
-                          </div>
-                        </Cell>
                       </div>
                     </TdComponent>
                   </div>
