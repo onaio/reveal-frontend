@@ -74,6 +74,9 @@ export function getGoalReport(goal: Goal): GoalReport {
         ? PERSONS
         : STRUCTURES;
     targetValue = Math.round((goal.goal_value * goal.task_count) / 100);
+
+    /** Use goal.goal_value as target if unit==='Percent' && goal.task_count === 0 */
+    targetValue = targetValue === 0 ? goal.goal_value : targetValue;
   }
 
   return {
