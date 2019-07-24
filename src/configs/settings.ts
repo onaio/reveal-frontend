@@ -237,10 +237,12 @@ export interface JurisdictionsByCountry extends ADMN0 {
   bounds?: any[];
   jurisdictionIds: string[];
   id?: string;
-  tileset?: {
+  tilesets?: Array<{
+    idField: string;
     layer: string;
+    parentIdField: string;
     url: string;
-  };
+  }>;
 }
 
 export const ZambiaAdmin0: JurisdictionsByCountry = {
@@ -254,18 +256,62 @@ export const ThailandAdmin0: JurisdictionsByCountry = {
   ADMN0_PCODE: 'TH',
   bounds: [[105.63681192, 5.61285098], [97.34380713, 20.46483364]],
   jurisdictionIds: [
-    '61707fc2-c6ac-4112-a8d6-2a4861958396',
+    // '61707fc2-c6ac-4112-a8d6-2a4861958396',
     '64301afa-e973-447b-a88c-4da20025c76f',
     '7f204867-fab0-4246-a97c-92e0b936cab6',
     '9c3c2db4-bddd-44c5-870a-a0eef539e4da',
   ],
-  tileset: {
-    layer: 'TH_0',
-    url: 'mapbox://thailandbvbd.6o8cg6kd',
-  },
+  tilesets: [
+    {
+      idField: 'ADM0_EN',
+      layer: 'TH_0',
+      parentIdField: '',
+      url: 'mapbox://thailandbvbd.6o8cg6kd',
+    },
+    {
+      idField: 'ADM1_EN',
+      layer: 'TH_1',
+      parentIdField: 'ADM0_EN',
+      url: 'mapbox://thailandbvbd.91ktth0q',
+    },
+  ],
 };
-export type ADMN0_PCODE = 'TH' | 'ZM';
+
+const NamibiaAdmin0: JurisdictionsByCountry = {
+  ADMN0_EN: 'Namibia',
+  ADMN0_PCODE: 'NA',
+  jurisdictionIds: [],
+  tilesets: [
+    {
+      idField: '',
+      layer: 'NA_0',
+      parentIdField: '',
+      url: '',
+    },
+    {
+      idField: '',
+      layer: 'NA_1',
+      parentIdField: '',
+      url: 'mapbox://thailandbvbd.cjsljfri',
+    },
+    {
+      idField: '',
+      layer: 'NA_2',
+      parentIdField: '',
+      url: 'mapbox://thailandbvbd.40rp5je6',
+    },
+    {
+      idField: '',
+      layer: 'NA_3',
+      parentIdField: '',
+      url: 'mapbox://thailandbvbd.cutg3mx7',
+    },
+  ],
+};
+
+export type ADMN0_PCODE = 'TH' | 'ZM' | 'NA'; // | 'BW';
 export const CountriesAdmin0 = {
+  NA: NamibiaAdmin0,
   TH: ThailandAdmin0,
   ZM: ZambiaAdmin0,
 };

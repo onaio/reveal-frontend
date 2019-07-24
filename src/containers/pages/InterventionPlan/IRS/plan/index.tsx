@@ -955,41 +955,68 @@ class IrsPlan extends React.Component<
     if (!country || isLoadingGeoms) {
       return null;
     }
-    const { ADMN0_EN, tileset, bounds } = country;
-    if (!tileset) {
+    const { ADMN0_EN, tilesets, bounds } = country;
+    if (!tilesets) {
       return null;
     }
-    const ADMIN_0_LINE_LAYER = {
-      ...lineLayerConfig,
-      id: `${ADMN0_EN}-admin-0-line`,
-      paint: {
-        'line-color': 'white',
-        'line-opacity': 1,
-        'line-width': 1.5,
-      },
-      source: {
-        layer: tileset.layer,
-        type: 'vector',
-        url: tileset.url,
-      },
-      visible: true,
-    };
 
-    const ADMIN_1_LINE_LAYER = {
-      ...lineLayerConfig,
-      id: `${ADMN0_EN}-admin-1-line`,
-      paint: {
-        'line-color': 'white',
-        'line-opacity': 0.45,
-        'line-width': 1,
-      },
-      source: {
-        layer: 'TH_1',
-        type: 'vector',
-        url: 'mapbox://thailandbvbd.91ktth0q',
-      },
-      visible: true,
-    };
+    const ADMIN_LINE_LAYERS: any[] = [];
+    const adminBorderWidths: number[] = [1.5, 1, 0.75, 0.5];
+    for (let t = 0; t < tilesets.length; t += 1) {
+      const adminLineLayer = {
+        ...lineLayerConfig,
+        id: `${ADMN0_EN}-admin-${t}-line`,
+        paint: {
+          'line-color': 'white',
+          'line-opacity': t ? 1 : 0.45,
+          'line-width': adminBorderWidths[t],
+        },
+        source: {
+          layer: tilesets[t].layer,
+          type: 'vector',
+          url: tilesets[t].url,
+        },
+        visible: t < 2,
+      };
+      ADMIN_LINE_LAYERS.push(adminLineLayer);
+    }
+
+    const ADMIN_FILL_LAYERS: any[] = [];
+    const adminFillColors: string[] = ['black', 'red', 'orange', 'yellow', 'green'];
+    for (let t = 1; t < tilesets.length; t += 1) {
+      const adminFillLayer = {
+        ...fillLayerConfig,
+        id: `${ADMN0_EN}-admin-${t}-fill`,
+        paint: {
+          'fill-color': adminFillColors[t],
+        },
+        source: {
+          layer: tilesets[t].layer,
+          type: 'vector',
+          url: tilesets[t].url,
+        },
+        visible: t === 1,
+      };
+      if (t === 1) {
+        const adminFilterExpression: any[] = ['any'];
+        for (const jurisdiction of filteredJurisdictions) {
+          if (jurisdiction.geographic_level === 1) {
+            const filterExpression = [
+              '==',
+              tilesets[t].idField,
+              jurisdiction.name as string,
+            ].filter(e => !!e);
+            if (filterExpression.length === 3) {
+              adminFilterExpression.push(filterExpression);
+            }
+          }
+        }
+        if (adminFilterExpression.length > 1) {
+          (adminFillLayer as any).filter = [...adminFilterExpression];
+        }
+      }
+      ADMIN_FILL_LAYERS.push(adminFillLayer);
+    }
 
     function getJurisdictionFillLayers(jurisdictions: Jurisdiction[]) {
       const layers: FlexObject[] = [];
@@ -1039,7 +1066,7 @@ class IrsPlan extends React.Component<
       bounds,
       geoData: null,
       handlers: [],
-      layers: [ADMIN_0_LINE_LAYER, ADMIN_1_LINE_LAYER, ...JURISDICTION_FILL_LAYERS],
+      layers: [...ADMIN_LINE_LAYERS, ...ADMIN_FILL_LAYERS, ...JURISDICTION_FILL_LAYERS],
       pointFeatureCollection: null,
       polygonFeatureCollection: null,
       structures: null,
@@ -1285,7 +1312,6 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
   const allJurisdictionIds = getAllJurisdictionsIdArray(state);
   const jurisdictionsArray = getJurisdictionsArray(state);
   const loadedJurisdictionIds = getJurisdictionsIdArray(state);
-
   const props = {
     allJurisdictionIds,
     isDraftPlan,
