@@ -549,6 +549,7 @@ Object {
       101.202192306519,
       15.0953281335118,
     ],
+    "boxZoom": true,
     "container": "map",
     "fitBoundsOptions": Object {
       "padding": 20,
@@ -2331,6 +2332,7 @@ Object {
       101.191892623901,
       15.0780906816776,
     ],
+    "boxZoom": true,
     "container": "map",
     "fitBoundsOptions": Object {
       "padding": 20,
@@ -4838,6 +4840,7 @@ Object {
       101.191892623901,
       15.0780906816776,
     ],
+    "boxZoom": true,
     "container": "map",
     "fitBoundsOptions": Object {
       "padding": 20,
@@ -5988,6 +5991,7 @@ Object {
       101.202192306519,
       15.0953281335118,
     ],
+    "boxZoom": true,
     "container": "map",
     "fitBoundsOptions": Object {
       "padding": 20,
