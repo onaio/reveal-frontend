@@ -21,7 +21,13 @@ jest.mock('../../../../../components/GisidaWrapper', () => {
 });
 
 jest.mock('../../../../../configs/env');
-
+jest.mock('@onaio/superset-connector', () => {
+  // tslint:disable-next-line: label-position
+  const superset = {
+    getFormData: () => ({}),
+  };
+  return superset;
+});
 const history = createBrowserHistory();
 library.add(faExternalLinkSquareAlt);
 describe('containers/pages/SingleFI', () => {
@@ -169,6 +175,27 @@ describe('containers/pages/SingleFI', () => {
     );
     expect(toJson(wrapper)).toMatchSnapshot();
     expect(wrapper.find('GisidaWrapperMock').props()).toMatchSnapshot();
+    wrapper.unmount();
+  });
+
+  it('calls superset with the correct params', () => {
+    const mock: any = jest.fn();
+    const supersetMock: any = jest.fn();
+    supersetMock.mockImplementation(() => Promise.resolve(fixtures.plans));
+    const props = {
+      history,
+      location: mock,
+      match: mock,
+      supersetService: supersetMock,
+    };
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedActiveFocusInvestigation {...props} />
+        </Router>
+      </Provider>
+    );
+    expect(supersetMock).toHaveBeenCalledWith(0, {});
     wrapper.unmount();
   });
 });

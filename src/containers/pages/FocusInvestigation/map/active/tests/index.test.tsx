@@ -22,6 +22,13 @@ jest.mock('../../../../../../components/GisidaWrapper', () => {
   return GisidaWrapperMock;
 });
 jest.mock('../../../../../../configs/env');
+jest.mock('@onaio/superset-connector', () => {
+  // tslint:disable-next-line: label-position
+  const superset = {
+    getFormData: () => ({}),
+  };
+  return superset;
+});
 
 const history = createBrowserHistory();
 
@@ -119,6 +126,27 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
     );
     expect(toJson(wrapper)).toMatchSnapshot();
     expect(wrapper.find('GisidaWrapperMock').props()).toMatchSnapshot();
+    wrapper.unmount();
+  });
+
+  it('calls superset with the correct params', () => {
+    const mock: any = jest.fn();
+    const supersetMock: any = jest.fn();
+    supersetMock.mockImplementation(() => Promise.resolve(fixtures.plans));
+    const props = {
+      history,
+      location: mock,
+      match: mock,
+      supersetService: supersetMock,
+    };
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedActiveFocusInvestigation {...props} />
+        </Router>
+      </Provider>
+    );
+    expect(supersetMock).toHaveBeenCalledWith(0, {});
     wrapper.unmount();
   });
 });

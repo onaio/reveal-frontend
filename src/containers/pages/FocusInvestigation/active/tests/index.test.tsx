@@ -1,6 +1,7 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faExternalLinkSquareAlt } from '@fortawesome/free-solid-svg-icons';
 import reducerRegistry from '@onaio/redux-reducer-registry';
+import { getFormData } from '@onaio/superset-connector/dist/types';
 import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import { createBrowserHistory } from 'history';
@@ -19,6 +20,13 @@ reducerRegistry.register(reducerName, reducer);
 library.add(faExternalLinkSquareAlt);
 const history = createBrowserHistory();
 jest.mock('../../../../../configs/env');
+jest.mock('@onaio/superset-connector', () => {
+  // tslint:disable-next-line: label-position
+  const superset = {
+    getFormData: () => ({}),
+  };
+  return superset;
+});
 
 describe('containers/pages/ActiveFocusInvestigation', () => {
   beforeEach(() => {
@@ -124,6 +132,27 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
     );
     wrapper.update();
     expect(toJson(wrapper.find('.ReactTable'))).toMatchSnapshot();
+    wrapper.unmount();
+  });
+
+  it('calls superset with the correct params', () => {
+    const mock: any = jest.fn();
+    const supersetMock: any = jest.fn();
+    supersetMock.mockImplementation(() => Promise.resolve(fixtures.plans));
+    const props = {
+      history,
+      location: mock,
+      match: mock,
+      supersetService: supersetMock,
+    };
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedActiveFocusInvestigation {...props} />
+        </Router>
+      </Provider>
+    );
+    expect(supersetMock).toHaveBeenCalledWith(0, {});
     wrapper.unmount();
   });
 });
