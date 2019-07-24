@@ -99,10 +99,6 @@ export const END_DATE = 'End Date';
 export type END_DATE = typeof END_DATE;
 export const NAME = 'Name';
 export type NAME = typeof NAME;
-export const ACTIVE = 'active';
-export type ACTIVE = typeof ACTIVE;
-export const DRAFT = 'draft';
-export type DRAFT = typeof DRAFT;
 // internal urls
 export const LOGIN_URL = '/login';
 export type LOGIN_URL = typeof LOGIN_URL;

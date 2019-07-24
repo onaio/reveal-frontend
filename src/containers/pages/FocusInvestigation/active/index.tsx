@@ -21,13 +21,11 @@ import Loading from '../../../../components/page/Loading';
 import { SUPERSET_PLANS_SLICE } from '../../../../configs/env';
 import { FIClassifications, locationHierarchy } from '../../../../configs/settings';
 import {
-  ACTIVE,
   CASE_CLASSIFICATION_HEADER,
   CASE_NOTIF_DATE_HEADER,
   CASE_TRIGGERED,
   CURRENT_FOCUS_INVESTIGATION,
   DEFINITIONS,
-  DRAFT,
   END_DATE,
   FI_PLAN_TYPE,
   FI_SINGLE_MAP_URL,
@@ -58,6 +56,7 @@ import plansReducer, {
   getPlansArray,
   InterventionType,
   Plan,
+  PlanStatus,
   reducerName as plansReducerName,
 } from '../../../../store/ducks/plans';
 import './style.css';
@@ -348,10 +347,13 @@ const mapStateToProps = (state: Partial<Store>): DispatchedStateProps => {
   const caseTriggeredPlans = getPlansArray(
     state,
     InterventionType.FI,
-    ['active', 'draft'],
+    [PlanStatus.ACTIVE, PlanStatus.DRAFT],
     CASE_TRIGGERED
   );
-  const routinePlans = getPlansArray(state, InterventionType.FI, [ACTIVE, DRAFT], ROUTINE);
+  const routinePlans = getPlansArray(state, InterventionType.FI, [
+    PlanStatus.ACTIVE,
+    PlanStatus.DRAFT,
+  ]);
 
   return {
     caseTriggeredPlans,

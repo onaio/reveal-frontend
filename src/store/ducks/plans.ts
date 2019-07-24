@@ -16,6 +16,7 @@ export enum InterventionType {
 /** Enum representing the possible intervention types */
 export enum PlanStatus {
   ACTIVE = 'active',
+  COMPLETE = 'complete',
   DRAFT = 'draft',
   RETIRED = 'retired',
 }
