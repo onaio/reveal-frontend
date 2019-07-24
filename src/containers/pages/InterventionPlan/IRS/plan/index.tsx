@@ -311,15 +311,12 @@ class IrsPlan extends React.Component<
   }
 
   public componentWillReceiveProps(nextProps: IrsPlanProps) {
-    const { country, isLoadingGeoms, newPlan } = this.state;
+    const { childlessChildrenIds, country, isLoadingGeoms, newPlan } = this.state;
     const { jurisdictionsArray } = nextProps;
 
-    // const loadedJurisdictionIds
-    if (newPlan && newPlan.plan_jurisdictions_ids && country && isLoadingGeoms) {
-      const { plan_jurisdictions_ids } = newPlan;
-
+    if (newPlan && childlessChildrenIds && country && isLoadingGeoms) {
       const filteredJurisdictions = jurisdictionsArray.filter(
-        (j: Jurisdiction) => plan_jurisdictions_ids.indexOf(j.jurisdiction_id) !== -1
+        (j: Jurisdiction) => childlessChildrenIds.indexOf(j.jurisdiction_id) !== -1
       );
 
       const loadedJurisdictions = filteredJurisdictions.filter((j: Jurisdiction) => j.geojson);
@@ -796,21 +793,15 @@ class IrsPlan extends React.Component<
       },
       () => {
         // Get geoms for jurisdictionsToInclude
-        const {
-          newPlan: theNewPlan,
-          filteredJurisdictionIds: FilteredJurisdictionIds,
-        } = this.state;
+        const { childlessChildrenIds: ChildlessChildrenIds } = this.state;
 
         const loadedJurisdictionIds = this.props.jurisdictionsArray
-          .filter(j => FilteredJurisdictionIds.includes(j.jurisdiction_id) && !!j.geojson)
+          .filter(j => ChildlessChildrenIds.includes(j.jurisdiction_id) && !!j.geojson)
           .map(j => j.jurisdiction_id);
 
-        const jurisdictionsToLoad =
-          theNewPlan && theNewPlan.plan_jurisdictions_ids
-            ? [...theNewPlan.plan_jurisdictions_ids].filter(
-                j => loadedJurisdictionIds.indexOf(j) === -1
-              )
-            : [];
+        const jurisdictionsToLoad = ChildlessChildrenIds.filter(
+          j => !loadedJurisdictionIds.includes(j)
+        );
 
         if (jurisdictionsToLoad.length) {
           const promises = [];
@@ -825,6 +816,7 @@ class IrsPlan extends React.Component<
               })
             );
           }
+
           Promise.all(promises).then((results: any[]) => {
             const jurisdictions: Jurisdiction[] = [];
             for (const result of results) {
