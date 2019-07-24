@@ -514,6 +514,7 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
           (locations && locations.properties && locations.properties.jurisdiction_name) ||
           'Reveal Map',
         bounds: bounds.length && bounds,
+        boxZoom: !!!(this.props.handlers && this.props.handlers.length),
         layers,
         style: this.props.basemapStyle,
       },

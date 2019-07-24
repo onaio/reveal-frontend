@@ -104,6 +104,7 @@ export function oAuthUserInfoGetter(apiResponse: { [key: string]: any }): Sessio
 /** interface to describe Gisida map configuration */
 export interface SiteConfigAppMapconfig {
   bounds?: number[];
+  boxZoom?: boolean;
   center?: number[];
   container: string;
   fitBoundsOptions?: FitBoundsOptions;
@@ -145,9 +146,10 @@ export const ConfigStore = (
   LayerStore: FlexObject
 ) => {
   // Define basic config properties
-  const { accessToken, apiAccessToken, appName, mapConfig: mbConfig, layers } = options;
+  const { accessToken, apiAccessToken, appName, boxZoom, mapConfig: mbConfig, layers } = options;
   // Define flattened APP.mapConfig properties
   const {
+    mapConfigBoxZoom,
     mapConfigCenter,
     mapConfigContainer,
     mapConfigStyle,
@@ -160,6 +162,7 @@ export const ConfigStore = (
 
   // Build options for mapbox-gl-js initialization
   let mapConfig: SiteConfigAppMapconfig = {
+    boxZoom: boxZoom || mapConfigBoxZoom,
     container: container || mapConfigContainer || 'map',
     style:
       style ||

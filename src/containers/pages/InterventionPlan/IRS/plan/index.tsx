@@ -848,7 +848,7 @@ class IrsPlan extends React.Component<
   }
 
   // Jurisdiction Selection Control
-  private onToggleJurisdictionSelection(id: string, isSelected: boolean) {
+  private onToggleJurisdictionSelection(id: string) {
     const { newPlan: NewPlan, filteredJurisdictionIds } = this.state;
     const filteredJurisdictions = this.props.jurisdictionsArray.filter(j =>
       filteredJurisdictionIds.includes(j.jurisdiction_id)
@@ -880,8 +880,8 @@ class IrsPlan extends React.Component<
   }
   private onTableCheckboxChange(e: any) {
     if (e && e.target) {
-      const { value: id, checked: isSelected } = e.target;
-      this.onToggleJurisdictionSelection(id, isSelected);
+      const { value: id } = e.target;
+      this.onToggleJurisdictionSelection(id);
     }
   }
   private onToggleAllCheckboxChange(e: any) {
@@ -993,6 +993,7 @@ class IrsPlan extends React.Component<
         id: `${ADMN0_EN}-admin-${t}-fill`,
         paint: {
           'fill-color': adminFillColors[t],
+          'fill-opacity': 0.75,
         },
         source: {
           layer: tilesets[t].layer,
@@ -1098,9 +1099,9 @@ class IrsPlan extends React.Component<
   }
 
   private onAdminFillClick(e: any, country: JurisdictionsByCountry, geographicLevel: number) {
-    const { point, target: Map } = e;
+    const { point, target: Map, originalEvent } = e;
     const features = Map.queryRenderedFeatures(point);
-    const isShiftClick = false;
+    const isShiftClick = originalEvent.shiftKey;
     const { filteredJurisdictionIds, childlessChildrenIds } = this.state;
     const filteredJurisdictions = this.props.jurisdictionsArray.filter(j =>
       filteredJurisdictionIds.includes(j.jurisdiction_id)
@@ -1158,9 +1159,11 @@ class IrsPlan extends React.Component<
       const feature = features[0];
       const { properties } = feature;
 
-      const clickedFeatureId = properties[country.tilesets[geographicLevel].idField];
-      const jurisdiction = filteredJurisdictions.find(j => j.jurisdiction_id === clickedFeatureId);
-      // console.log('shift clicked jurisdiction', jurisdiction);
+      const clickedFeatureName = properties[country.tilesets[geographicLevel].idField];
+      const clickedFeatureJurisdiction = filteredJurisdictions.find(
+        j => j.name === clickedFeatureName
+      ) as Jurisdiction;
+      this.onToggleJurisdictionSelection(clickedFeatureJurisdiction.jurisdiction_id);
     }
   }
 
