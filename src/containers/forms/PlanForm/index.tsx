@@ -2,14 +2,14 @@ import { ErrorMessage, Field, Form, Formik } from 'formik';
 import React from 'react';
 import { Button, FormGroup, Label } from 'reactstrap';
 import * as Yup from 'yup';
+import { REQUIRED, SAVING } from '../../../constants';
 import { InterventionType } from '../../../store/ducks/plans';
 
 /** Yup validation schema for PlanForm */
 const PlanSchema = Yup.object().shape({
   interventionType: Yup.string()
-    .min(23, 'Too Short!')
-    .max(70, 'Too Long!')
-    .required('Required'),
+    .oneOf(Object.keys(InterventionType))
+    .required(REQUIRED),
 });
 
 /** Plan Form component */
@@ -37,7 +37,7 @@ const PlanForm = () => {
                 id="interventionType"
                 className={errors.interventionType ? 'form-control is-invalid' : 'form-control'}
               >
-                <option value="{InterventionType.FI}">FI</option>
+                <option value="{InterventionType.FI}">Focus Investigation</option>
                 <option value="{InterventionType.IRS}">IRS</option>
               </Field>
               <ErrorMessage
@@ -53,7 +53,7 @@ const PlanForm = () => {
               aria-label="Save Plan"
               disabled={isSubmitting}
             >
-              {isSubmitting ? 'Saving' : 'Save Plan'}
+              {isSubmitting ? SAVING : 'Save Plan'}
             </Button>
           </Form>
         )}
