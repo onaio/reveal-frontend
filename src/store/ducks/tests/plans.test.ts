@@ -13,7 +13,6 @@ import reducer, {
   getPlanRecordsIdArray,
   getPlansArray,
   getPlansById,
-  getPlansByReason,
   getPlansIdArray,
   InterventionType,
   Plan,
@@ -38,7 +37,6 @@ describe('reducers/plans', () => {
     );
     expect(getPlansIdArray(store.getState(), InterventionType.FI, [], null)).toEqual([]);
     expect(getPlansArray(store.getState(), InterventionType.FI, [], null)).toEqual([]);
-    expect(getPlansByReason(store.getState(), InterventionType.FI, [], null)).toEqual([]);
     expect(getPlanById(store.getState(), 'someId')).toEqual(null);
     expect(getPlanRecordsById(store.getState())).toEqual({});
     expect(getPlanRecordsIdArray(store.getState())).toEqual([]);
@@ -75,17 +73,6 @@ describe('reducers/plans', () => {
     expect(getPlansArray(store.getState(), InterventionType.IRS, [], null)).toEqual(
       values(irsPlans)
     );
-
-    expect(getPlansByReason(store.getState(), InterventionType.FI, [], ROUTINE)).toEqual(
-      values(routinePlans)
-    );
-    expect(getPlansByReason(store.getState(), InterventionType.FI, [], REACTIVE)).toEqual(
-      values(reactivePlans)
-    );
-    expect(getPlansByReason(store.getState(), InterventionType.FI, ['draft'], REACTIVE)).toEqual(
-      values(reactiveDraftPlans)
-    );
-
     expect(getPlanById(store.getState(), 'ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f')).toEqual(
       allPlans['ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f']
     );
