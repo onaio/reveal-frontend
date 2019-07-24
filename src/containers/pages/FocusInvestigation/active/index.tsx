@@ -21,11 +21,13 @@ import Loading from '../../../../components/page/Loading';
 import { SUPERSET_PLANS_SLICE } from '../../../../configs/env';
 import { FIClassifications, locationHierarchy } from '../../../../configs/settings';
 import {
+  ACTIVE,
   CASE_CLASSIFICATION_HEADER,
   CASE_NOTIF_DATE_HEADER,
   CASE_TRIGGERED,
   CURRENT_FOCUS_INVESTIGATION,
   DEFINITIONS,
+  DRAFT,
   END_DATE,
   FI_PLAN_TYPE,
   FI_SINGLE_MAP_URL,
@@ -349,7 +351,7 @@ const mapStateToProps = (state: Partial<Store>): DispatchedStateProps => {
     ['active', 'draft'],
     CASE_TRIGGERED
   );
-  const routinePlans = getPlansByReason(state, InterventionType.FI, ['active', 'draft'], ROUTINE);
+  const routinePlans = getPlansByReason(state, InterventionType.FI, [ACTIVE, DRAFT], ROUTINE);
 
   return {
     caseTriggeredPlans,

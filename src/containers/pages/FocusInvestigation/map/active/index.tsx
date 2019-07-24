@@ -19,6 +19,8 @@ import {
   SUPERSET_TASKS_SLICE,
 } from '../../../../../configs/env';
 import {
+  ACTIVE,
+  DRAFT,
   FI_SINGLE_MAP_URL,
   FI_SINGLE_URL,
   FI_URL,
@@ -58,6 +60,7 @@ import plansReducer, {
   getPlanById,
   getPlansArray,
   getPlansIdArray,
+  InterventionType,
   Plan,
   reducerName as plansReducerName,
 } from '../../../../../store/ducks/plans';
@@ -365,8 +368,8 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
     goals,
     jurisdiction,
     plan,
-    plansArray: getPlansArray(state),
-    plansIdArray: getPlansIdArray(state),
+    plansArray: getPlansArray(state, InterventionType.FI, [ACTIVE, DRAFT], null),
+    plansIdArray: getPlansIdArray(state, InterventionType.FI, [], null),
     pointFeatureCollection,
     polygonFeatureCollection,
     structures,
