@@ -1,6 +1,7 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
-import { keyBy, keys, pickBy, values } from 'lodash';
+import { cloneDeep, keyBy, keys, pickBy, values } from 'lodash';
 import { FlushThunks } from 'redux-testkit';
+import { REACTIVE, ROUTINE } from '../../../constants';
 import store from '../../index';
 import reducer, {
   fetchPlanRecords,
@@ -16,6 +17,7 @@ import reducer, {
   InterventionType,
   Plan,
   PlanRecord,
+  PlanStatus,
   reducerName,
 } from '../plans';
 import * as fixtures from './fixtures';
@@ -31,9 +33,11 @@ describe('reducers/plans', () => {
   });
 
   it('should have initial state', () => {
-    expect(getPlansById(store.getState())).toEqual({});
-    expect(getPlansIdArray(store.getState())).toEqual([]);
-    expect(getPlansArray(store.getState())).toEqual([]);
+    expect(getPlansById(store.getState(), InterventionType.FI, ['active', 'draft'], null)).toEqual(
+      {}
+    );
+    expect(getPlansIdArray(store.getState(), InterventionType.FI, [], null)).toEqual([]);
+    expect(getPlansArray(store.getState(), InterventionType.FI, [], null)).toEqual([]);
     expect(getPlanById(store.getState(), 'someId')).toEqual(null);
     expect(getPlanRecordsById(store.getState())).toEqual({});
     expect(getPlanRecordsIdArray(store.getState())).toEqual([]);
@@ -49,15 +53,36 @@ describe('reducers/plans', () => {
       allPlans,
       (e: Plan) => e.plan_intervention_type === InterventionType.IRS
     );
-    expect(getPlansById(store.getState())).toEqual(fiPlans);
-    expect(getPlansById(store.getState(), InterventionType.IRS)).toEqual(irsPlans);
+    const routinePlans = values(cloneDeep(store.getState().plans.plansById)).filter(
+      (plan: Plan) =>
+        plan.plan_intervention_type === InterventionType.FI && plan.plan_fi_reason === ROUTINE
+    );
+
+    const reactivePlans = values(cloneDeep(store.getState().plans.plansById)).filter(
+      (plan: Plan) => plan.plan_fi_reason === REACTIVE
+    );
+    const reactiveDraftPlans = values(cloneDeep(store.getState().plans.plansById)).filter(
+      (plan: Plan) => plan.plan_fi_reason === REACTIVE && plan.plan_status === 'draft'
+    );
+    expect(getPlansById(store.getState(), InterventionType.FI, [], null)).toEqual(fiPlans);
+    expect(getPlansById(store.getState(), InterventionType.IRS, [], null)).toEqual(irsPlans);
 
     expect(getPlansIdArray(store.getState())).toEqual(['ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f']);
     expect(getPlansIdArray(store.getState(), InterventionType.IRS)).toEqual(['plan-id-2']);
 
-    expect(getPlansArray(store.getState())).toEqual(values(fiPlans));
-    expect(getPlansArray(store.getState(), InterventionType.IRS)).toEqual(values(irsPlans));
-
+    expect(getPlansArray(store.getState(), InterventionType.FI, [], null)).toEqual(values(fiPlans));
+    expect(getPlansArray(store.getState(), InterventionType.IRS, [], null)).toEqual(
+      values(irsPlans)
+    );
+    expect(getPlansArray(store.getState(), InterventionType.FI, [], REACTIVE)).toEqual(
+      values(reactivePlans)
+    );
+    expect(getPlansArray(store.getState(), InterventionType.FI, [], ROUTINE)).toEqual(
+      values(routinePlans)
+    );
+    expect(getPlansArray(store.getState(), InterventionType.FI, [PlanStatus.DRAFT], null)).toEqual(
+      values(reactiveDraftPlans)
+    );
     expect(getPlanById(store.getState(), 'ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f')).toEqual(
       allPlans['ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f']
     );

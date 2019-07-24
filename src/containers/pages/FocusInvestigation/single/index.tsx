@@ -40,6 +40,7 @@ import {
   OF,
   PROGRESS,
   RESPONSE,
+  ROUTINE,
 } from '../../../../constants';
 import { getGoalReport } from '../../../../helpers/indicators';
 import ProgressBar from '../../../../helpers/ProgressBar';
@@ -62,6 +63,7 @@ import plansReducer, {
   getPlanById,
   getPlansArray,
   getPlansIdArray,
+  InterventionType,
   Plan,
   reducerName as plansReducerName,
 } from '../../../../store/ducks/plans';
@@ -295,8 +297,8 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
     goalsArray,
     jurisdiction,
     planById: plan,
-    plansArray: getPlansArray(state),
-    plansIdArray: getPlansIdArray(state),
+    plansArray: getPlansArray(state, InterventionType.FI, [], null),
+    plansIdArray: getPlansIdArray(state, InterventionType.FI, [], null),
   };
   return result;
 };

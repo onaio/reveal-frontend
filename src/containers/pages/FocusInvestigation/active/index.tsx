@@ -1,6 +1,7 @@
 // this is the FocusInvestigation "active" page component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import DrillDownTable from '@onaio/drill-down-table';
+import { FlexObject } from '@onaio/drill-down-table/dist/types/helpers/utils';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset from '@onaio/superset-connector';
 import * as React from 'react';
@@ -10,7 +11,7 @@ import { RouteComponentProps } from 'react-router';
 import { Link } from 'react-router-dom';
 import { CellInfo, Column } from 'react-table';
 import 'react-table/react-table.css';
-import { Table } from 'reactstrap';
+import { Badge, Button, Col, Form, FormGroup, Input, Row, Table } from 'reactstrap';
 import { Store } from 'redux';
 import DrillDownTableLinkedCell from '../../../../components/DrillDownTableLinkedCell';
 import HeaderBreadCrumb, {
@@ -20,20 +21,25 @@ import Loading from '../../../../components/page/Loading';
 import { SUPERSET_PLANS_SLICE } from '../../../../configs/env';
 import { FIClassifications, locationHierarchy } from '../../../../configs/settings';
 import {
-  ACTIVE_FOCUS_INVESTIGATION,
   CASE_CLASSIFICATION_HEADER,
   CASE_NOTIF_DATE_HEADER,
+  CASE_TRIGGERED,
+  CURRENT_FOCUS_INVESTIGATION,
   DEFINITIONS,
+  END_DATE,
   FI_PLAN_TYPE,
   FI_SINGLE_MAP_URL,
   FI_SINGLE_URL,
+  FI_STATUS,
   FI_URL,
   FOCUS_AREA_HEADER,
   FOCUS_INVESTIGATIONS,
   HOME,
   HOME_URL,
-  INVESTIGATION_NAME_HEADER,
-  REASON_HEADER,
+  NAME,
+  REACTIVE,
+  ROUTINE,
+  START_DATE,
   STATUS_HEADER,
 } from '../../../../constants';
 import { renderClassificationRow } from '../../../../helpers/indicators';
@@ -48,24 +54,28 @@ import supersetFetch from '../../../../services/superset';
 import plansReducer, {
   fetchPlans,
   getPlansArray,
+  InterventionType,
   Plan,
+  PlanStatus,
   reducerName as plansReducerName,
 } from '../../../../store/ducks/plans';
-
+import './style.css';
 /** register the plans reducer */
 reducerRegistry.register(plansReducerName, plansReducer);
 
 /** interface to describe props for ActiveFI component */
 export interface ActiveFIProps {
+  caseTriggeredPlans: Plan[] | null;
   fetchPlansActionCreator: typeof fetchPlans;
-  plansArray: Plan[];
+  routinePlans: Plan[] | null;
   supersetService: typeof supersetFetch;
 }
 
 /** default props for ActiveFI component */
 export const defaultActiveFIProps: ActiveFIProps = {
+  caseTriggeredPlans: null,
   fetchPlansActionCreator: fetchPlans,
-  plansArray: [],
+  routinePlans: null,
   supersetService: supersetFetch,
 };
 
@@ -88,7 +98,9 @@ class ActiveFocusInvestigation extends React.Component<
       fetchPlansActionCreator(result)
     );
   }
-
+  public handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+  }
   public render() {
     const breadcrumbProps: BreadCrumbProps = {
       currentPage: {
@@ -103,128 +115,214 @@ class ActiveFocusInvestigation extends React.Component<
     };
     breadcrumbProps.pages = [homePage];
 
-    const { plansArray } = this.props;
-    if (plansArray.length === 0) {
+    const { caseTriggeredPlans, routinePlans } = this.props;
+    if (
+      (caseTriggeredPlans && caseTriggeredPlans.length === 0) ||
+      (routinePlans && routinePlans.length === 0)
+    ) {
       return <Loading />;
     }
-    const thePlans = plansArray.map((item: Plan) => {
-      let thisItem = extractPlan(item);
-      // transform values of this properties if they are null
-      const propertiesToTransform = [
-        'village',
-        'canton',
-        'district',
-        'provice',
-        'jurisdiction_id',
-        'focusArea',
-      ];
-      thisItem = transformValues(thisItem, propertiesToTransform);
-      return thisItem;
-    });
-    const locationColumns: Column[] = getLocationColumns(locationHierarchy, true);
-    const otherColumns: Column[] = [
-      {
-        Header: FOCUS_AREA_HEADER,
-        columns: [
-          {
-            Header: '',
-            accessor: 'focusArea',
-            minWidth: 130,
-          },
-        ],
-      },
-      {
-        Header: INVESTIGATION_NAME_HEADER,
-        columns: [
-          {
-            Cell: (cell: CellInfo) => {
-              return (
-                <div>
-                  {cell.original.focusArea.trim() && (
-                    <Link to={`${FI_SINGLE_MAP_URL}/${cell.original.id}`}>
-                      <FontAwesomeIcon icon={['fas', 'map']} />
-                    </Link>
-                  )}
-                  &nbsp;&nbsp;
-                  {cell.original.focusArea.trim() && (
-                    <Link to={`${FI_SINGLE_URL}/${cell.original.id}`}>{cell.value}</Link>
-                  )}
-                </div>
-              );
-            },
-            Header: '',
-            accessor: 'plan_title',
-            minWidth: 200,
-          },
-        ],
-      },
-      {
-        Header: REASON_HEADER,
-        columns: [
-          {
-            Header: '',
-            accessor: 'reason',
-            minWidth: 100,
-          },
-        ],
-      },
-      {
-        Header: STATUS_HEADER,
-        columns: [
-          {
-            Header: '',
-            accessor: 'status',
-            maxWidth: 60,
-          },
-        ],
-      },
-      {
-        Header: CASE_NOTIF_DATE_HEADER,
-        columns: [
-          {
-            Cell: (cell: CellInfo) => {
-              return <div>{cell.value}</div>;
-            },
-            Header: '',
-            accessor: 'caseNotificationDate',
-            minWidth: 120,
-          },
-        ],
-      },
-      {
-        Header: CASE_CLASSIFICATION_HEADER,
-        columns: [
-          {
-            Header: '',
-            accessor: 'caseClassification',
-          },
-        ],
-      },
-    ];
-    const allColumns: Column[] = locationColumns.concat(otherColumns);
-
-    const tableProps = {
-      CellComponent: DrillDownTableLinkedCell,
-      columns: allColumns,
-      data: thePlans,
-      identifierField: 'id',
-      linkerField: 'id',
-      minRows: 0,
-      parentIdentifierField: 'parent',
-      rootParentId: null,
-      showPageSizeOptions: false,
-      showPagination: false,
-      useDrillDownTrProps: false,
-    };
-
+    const routineReactivePlans: FlexObject[] = [];
     return (
       <div>
         <Helmet>
-          <title>{ACTIVE_FOCUS_INVESTIGATION}</title>
+          <title>{CURRENT_FOCUS_INVESTIGATION}</title>
         </Helmet>
         <HeaderBreadCrumb {...breadcrumbProps} />
-        <h3 className="mb-3 mt-5 page-title">{ACTIVE_FOCUS_INVESTIGATION}</h3>
-        <DrillDownTable {...tableProps} />
+        <h2 className="mb-3 mt-5 page-title">{CURRENT_FOCUS_INVESTIGATION}</h2>
+        <hr />
+        <Form inline={true} onSubmit={this.handleSubmit}>
+          <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
+            <Input
+              type="text"
+              name="search"
+              id="exampleEmail"
+              placeholder="Search active focus investigations"
+            />
+          </FormGroup>
+          <Button outline={true} color="success">
+            Search
+          </Button>
+        </Form>
+        {[caseTriggeredPlans, routinePlans].forEach((plansArray: Plan[] | null) => {
+          if (plansArray && plansArray.length) {
+            const thePlans = plansArray.map((item: Plan) => {
+              let thisItem = extractPlan(item);
+              // transform values of this properties if they are null
+              const propertiesToTransform = ['village', 'canton', 'district', 'province'];
+              thisItem = transformValues(thisItem, propertiesToTransform);
+              return thisItem;
+            });
+            const locationColumns: Column[] = getLocationColumns(locationHierarchy, true);
+            /**  Handle Columns Unique for Routine and Reactive Tables */
+            const columnsBasedOnReason = [];
+            plansArray.every(d => d.plan_fi_reason === CASE_TRIGGERED)
+              ? columnsBasedOnReason.push(
+                  {
+                    Header: CASE_NOTIF_DATE_HEADER,
+                    columns: [
+                      {
+                        Cell: (cell: CellInfo) => {
+                          return <div>{cell.value}</div>;
+                        },
+                        Header: '',
+                        accessor: 'caseNotificationDate',
+                        minWidth: 90,
+                      },
+                    ],
+                  },
+                  {
+                    Header: CASE_CLASSIFICATION_HEADER,
+                    columns: [
+                      {
+                        Header: '',
+                        accessor: 'caseClassification',
+                      },
+                    ],
+                  }
+                )
+              : columnsBasedOnReason.push(
+                  {
+                    Header: START_DATE,
+                    columns: [
+                      {
+                        Cell: (cell: CellInfo) => {
+                          return <div>{cell.value}</div>;
+                        },
+                        Header: '',
+                        accessor: 'plan_effective_period_start',
+                        minWidth: 80,
+                      },
+                    ],
+                  },
+                  {
+                    Header: END_DATE,
+                    columns: [
+                      {
+                        Header: '',
+                        accessor: 'plan_effective_period_end',
+                      },
+                    ],
+                  }
+                );
+            const allColumns: Column[] = [
+              {
+                Header: NAME,
+                columns: [
+                  {
+                    Cell: (cell: CellInfo) => {
+                      /** if 24 hours ago show badge */
+                      const oneDayAgo = new Date().getTime() + 1 * 24 * 60 * 60;
+                      const newRecordBadge =
+                        Date.parse(cell.original.plan_date) >= oneDayAgo ? (
+                          <Badge color="warning" pill={true}>
+                            Warning
+                          </Badge>
+                        ) : null;
+                      return (
+                        <div>
+                          {cell.original.focusArea.trim() && (
+                            <Link to={`${FI_SINGLE_MAP_URL}/${cell.original.id}`}>
+                              {cell.value}
+                            </Link>
+                          )}
+                          &nbsp;
+                          {newRecordBadge}
+                        </div>
+                      );
+                    },
+                    Header: '',
+                    accessor: 'plan_title',
+                    minWidth: 180,
+                  },
+                ],
+              },
+              {
+                Header: FI_STATUS,
+                columns: [
+                  {
+                    Header: '',
+                    accessor: 'plan_status',
+                    minWidth: 80,
+                  },
+                ],
+              },
+              ...locationColumns,
+              {
+                Header: FOCUS_AREA_HEADER,
+                columns: [
+                  {
+                    Cell: (cell: CellInfo) => {
+                      return (
+                        <div>
+                          {cell.original.focusArea.trim() && cell.value}
+                          &nbsp;&nbsp;
+                          {cell.original.focusArea.trim() && (
+                            <Link to={`${FI_SINGLE_URL}/${cell.original.id}`}>
+                              <FontAwesomeIcon icon={['fas', 'external-link-square-alt']} />
+                            </Link>
+                          )}
+                        </div>
+                      );
+                    },
+                    Header: '',
+                    accessor: 'focusArea',
+                    minWidth: 180,
+                  },
+                ],
+              },
+              {
+                Header: STATUS_HEADER,
+                columns: [
+                  {
+                    Header: '',
+                    accessor: 'status',
+                    maxWidth: 60,
+                  },
+                ],
+              },
+              ...columnsBasedOnReason,
+            ];
+            const tableProps = {
+              CellComponent: DrillDownTableLinkedCell,
+              columns: allColumns,
+              data: thePlans,
+              identifierField: 'id',
+              linkerField: 'id',
+              minRows: 0,
+              parentIdentifierField: 'parent',
+              rootParentId: null,
+              showPageSizeOptions: false,
+              showPagination: false,
+              useDrillDownTrProps: false,
+            };
+            const TableHeaderWithOptionalForm = plansArray.every(
+              d => d.plan_fi_reason === CASE_TRIGGERED
+            ) ? (
+              <h3 className="mb-3 mt-5 page-title">{REACTIVE}</h3>
+            ) : (
+              <div className="routine-heading">
+                <Row>
+                  <Col xs="6">
+                    <h3 className="mb-3 mt-5 page-title">{ROUTINE}</h3>
+                  </Col>
+                  <Col xs="6">
+                    <Button className="focus-investigation" color="primary">
+                      Add Focus Investigation
+                    </Button>
+                  </Col>
+                </Row>
+              </div>
+            );
+            routineReactivePlans.push(
+              <div key={thePlans[0].id}>
+                {TableHeaderWithOptionalForm}
+                <DrillDownTable {...tableProps} />
+              </div>
+            );
+          }
+        })}
+        {routineReactivePlans}
         <h5 className="mt-5">{DEFINITIONS}</h5>
         <Table className="definitions">
           <tbody>{FIClassifications.map(el => renderClassificationRow(el))}</tbody>
@@ -240,15 +338,28 @@ export { ActiveFocusInvestigation };
 
 /** interface to describe props from mapStateToProps */
 interface DispatchedStateProps {
-  plansArray: Plan[];
+  caseTriggeredPlans: Plan[] | null;
+  routinePlans: Plan[] | null;
 }
 
 /** map state to props */
 const mapStateToProps = (state: Partial<Store>): DispatchedStateProps => {
-  const result = {
-    plansArray: getPlansArray(state),
+  const caseTriggeredPlans = getPlansArray(
+    state,
+    InterventionType.FI,
+    [PlanStatus.ACTIVE, PlanStatus.DRAFT],
+    CASE_TRIGGERED
+  );
+  const routinePlans = getPlansArray(
+    state,
+    InterventionType.FI,
+    [PlanStatus.ACTIVE, PlanStatus.DRAFT],
+    ROUTINE
+  );
+  return {
+    caseTriggeredPlans,
+    routinePlans,
   };
-  return result;
 };
 
 const mapDispatchToProps = { fetchPlansActionCreator: fetchPlans };

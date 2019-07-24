@@ -1,3 +1,5 @@
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faExternalLinkSquareAlt } from '@fortawesome/free-solid-svg-icons';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
@@ -6,7 +8,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
-import { ACTIVE_FOCUS_INVESTIGATION } from '../../../../../constants';
+import { ACTIVE_FOCUS_INVESTIGATION, CURRENT_FOCUS_INVESTIGATION } from '../../../../../constants';
 import store from '../../../../../store';
 import reducer, { fetchPlans, reducerName } from '../../../../../store/ducks/plans';
 import * as fixtures from '../../../../../store/ducks/tests/fixtures';
@@ -14,6 +16,7 @@ import ConnectedActiveFocusInvestigation, { ActiveFocusInvestigation } from '../
 
 reducerRegistry.register(reducerName, reducer);
 
+library.add(faExternalLinkSquareAlt);
 const history = createBrowserHistory();
 jest.mock('../../../../../configs/env');
 
@@ -25,11 +28,12 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
   it('renders without crashing', () => {
     const mock: any = jest.fn();
     const props = {
+      caseTriggeredPlans: [fixtures.plan2],
       fetchPlansActionCreator: jest.fn(),
       history,
       location: mock,
       match: mock,
-      plansArray: fixtures.plans,
+      routinePlans: [fixtures.plan1],
     };
     shallow(
       <Router history={history}>
@@ -40,13 +44,13 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
 
   it('renders without crashing for null jurisdictions_name_path', () => {
     const mock: any = jest.fn();
-    const allTasks = fixtures.plans.concat([fixtures.plan5 as any, fixtures.plan6 as any]);
     const props = {
+      caseTriggeredPlans: [fixtures.plan2],
       fetchPlansActionCreator: jest.fn(),
       history,
       location: mock,
       match: mock,
-      plansArray: allTasks,
+      routinePlans: [fixtures.plan1],
     };
     shallow(
       <Router history={history}>
@@ -59,11 +63,12 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
     const mock: any = jest.fn();
     mock.mockImplementation(() => Promise.resolve(fixtures.plans));
     const props = {
+      caseTriggeredPlans: [fixtures.plan2],
       fetchPlansActionCreator: jest.fn(),
       history,
       location: mock,
       match: mock,
-      plansArray: fixtures.plans,
+      routinePlans: [fixtures.plan1],
       supersetService: mock,
     };
     const wrapper = mount(
@@ -72,7 +77,7 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
       </Router>
     );
     const helmet = Helmet.peek();
-    expect(helmet.title).toEqual(ACTIVE_FOCUS_INVESTIGATION);
+    expect(helmet.title).toEqual(CURRENT_FOCUS_INVESTIGATION);
     expect(toJson(wrapper)).toMatchSnapshot();
     expect(toJson(wrapper.find('HeaderBreadcrumb'))).toMatchSnapshot();
     wrapper.unmount();
@@ -82,11 +87,12 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
     const mock: any = jest.fn();
     mock.mockImplementation(() => Promise.resolve(fixtures.plans));
     const props = {
+      caseTriggeredPlans: [fixtures.plan2],
       fetchPlansActionCreator: jest.fn(),
       history,
       location: mock,
       match: mock,
-      plansArray: [fixtures.plan5, fixtures.plan6],
+      routinePlans: [fixtures.plan1],
       supersetService: mock,
     };
     const wrapper = mount(

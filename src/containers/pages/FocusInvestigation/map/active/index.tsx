@@ -58,7 +58,9 @@ import plansReducer, {
   getPlanById,
   getPlansArray,
   getPlansIdArray,
+  InterventionType,
   Plan,
+  PlanStatus,
   reducerName as plansReducerName,
 } from '../../../../../store/ducks/plans';
 import structuresReducer, {
@@ -365,8 +367,18 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
     goals,
     jurisdiction,
     plan,
-    plansArray: getPlansArray(state),
-    plansIdArray: getPlansIdArray(state),
+    plansArray: getPlansArray(
+      state,
+      InterventionType.FI,
+      [PlanStatus.ACTIVE, PlanStatus.DRAFT],
+      null
+    ),
+    plansIdArray: getPlansIdArray(
+      state,
+      InterventionType.FI,
+      [PlanStatus.ACTIVE, PlanStatus.DRAFT],
+      null
+    ),
     pointFeatureCollection,
     polygonFeatureCollection,
     structures,
