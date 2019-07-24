@@ -17,6 +17,7 @@ import reducer, {
   InterventionType,
   Plan,
   PlanRecord,
+  PlanStatus,
   reducerName,
 } from '../plans';
 import * as fixtures from './fixtures';
@@ -72,6 +73,15 @@ describe('reducers/plans', () => {
     expect(getPlansArray(store.getState(), InterventionType.FI, [], null)).toEqual(values(fiPlans));
     expect(getPlansArray(store.getState(), InterventionType.IRS, [], null)).toEqual(
       values(irsPlans)
+    );
+    expect(getPlansArray(store.getState(), InterventionType.FI, [], REACTIVE)).toEqual(
+      values(reactivePlans)
+    );
+    expect(getPlansArray(store.getState(), InterventionType.FI, [], ROUTINE)).toEqual(
+      values(routinePlans)
+    );
+    expect(getPlansArray(store.getState(), InterventionType.FI, [PlanStatus.DRAFT], null)).toEqual(
+      values(reactiveDraftPlans)
     );
     expect(getPlanById(store.getState(), 'ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f')).toEqual(
       allPlans['ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f']
