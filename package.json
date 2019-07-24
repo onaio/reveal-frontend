@@ -37,6 +37,7 @@
     "client-oauth2": "^4.2.3",
     "connected-react-router": "^6.4.0",
     "fetch-mock": "^7.3.3",
+    "formik": "^1.5.8",
     "gisida": "^1.2.5",
     "gisida-react": "^1.2.8",
     "history": "^4.9.0",
