@@ -18,6 +18,7 @@ const fiStatusCodes = Object.values(FIClassifications).map(e => e.code as FIStat
 /** Yup validation schema for PlanForm */
 const PlanSchema = Yup.object().shape({
   caseNum: Yup.string(),
+  end: Yup.date().required(REQUIRED),
   fiReason: Yup.string().oneOf(FIReasons.map(e => e)),
   fiStatus: Yup.string().oneOf(fiStatusCodes),
   interventionType: Yup.string()
@@ -25,6 +26,7 @@ const PlanSchema = Yup.object().shape({
     .required(REQUIRED),
   name: Yup.string().required(`${NAME} ${IS} ${REQUIRED}`),
   opensrpEventId: Yup.string(),
+  start: Yup.date().required(REQUIRED),
   status: Yup.string()
     .oneOf(Object.values(PlanStatus))
     .required(REQUIRED),
@@ -34,11 +36,13 @@ const PlanSchema = Yup.object().shape({
 /** Plan form fields interface */
 interface PlanFormFields {
   caseNum?: string;
+  end: string;
   fiReason?: FIReasonType;
   fiStatus?: FIStatusType;
   interventionType: InterventionType;
   name: string;
   opensrpEventId?: string;
+  start: string;
   status: PlanStatus;
   title: string;
 }
@@ -46,11 +50,13 @@ interface PlanFormFields {
 /** initial values */
 const initialValues: PlanFormFields = {
   caseNum: undefined,
+  end: '',
   fiReason: undefined,
   fiStatus: undefined,
   interventionType: InterventionType.FI,
   name: '',
   opensrpEventId: undefined,
+  start: '',
   status: PlanStatus.DRAFT,
   title: '',
 };
@@ -165,6 +171,26 @@ const PlanForm = () => {
                 ))}
               </Field>
               <ErrorMessage name="status" component="small" className="form-text text-danger" />
+            </FormGroup>
+            <FormGroup>
+              <Label for="start">Plan Start Date</Label>
+              <Field
+                type="date"
+                name="start"
+                id="start"
+                className={errors.start ? 'form-control is-invalid' : 'form-control'}
+              />
+              <ErrorMessage name="start" component="small" className="form-text text-danger" />
+            </FormGroup>
+            <FormGroup>
+              <Label for="end">Plan End Date</Label>
+              <Field
+                type="date"
+                name="end"
+                id="end"
+                className={errors.end ? 'form-control is-invalid' : 'form-control'}
+              />
+              <ErrorMessage name="end" component="small" className="form-text text-danger" />
             </FormGroup>
             <Button
               type="submit"
