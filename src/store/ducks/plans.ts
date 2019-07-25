@@ -1,7 +1,7 @@
 import { get, keyBy, keys, pickBy, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
 import SeamlessImmutable from 'seamless-immutable';
-import { transformValues } from '../../helpers/utils';
+import { FlexObject, transformValues } from '../../helpers/utils';
 
 /** the reducer name */
 export const reducerName = 'plans';
@@ -62,6 +62,65 @@ export interface Plan extends PlanRecord {
   jurisdiction_name_path: string[];
   jurisdiction_parent_id: string;
   jurisdiction_path: string[];
+}
+
+/** UseContext - interface for PlanPayload.useContext[] items */
+export interface UseContext {
+  code: string;
+  valueCodableConcept: string;
+}
+
+/** PlanPayload - interface for the payload used when creating/updating a plan via OpenSRP plans Endpoint */
+export interface PlanPayload {
+  identifier: string;
+  version: string;
+  name: string;
+  title: string;
+  status: string;
+  date: string;
+  effectivePeriod: {
+    start: string;
+    end: string;
+  };
+  useContext: UseContext[];
+  jurisdiction: Array<{
+    code: string;
+  }>;
+  serverVersion: 0;
+  goal: any[];
+  action: any[];
+}
+
+/** PlanEventType - enum for Plan Event logging */
+export enum PlanEventType {
+  CREATE = 'Create Plan',
+  UPDATE = 'Update Plan',
+}
+
+/** PlanEvent - interface for pload used when logging create/update Plan events */
+export interface PlanEventPayload {
+  baseEntityId: string;
+  dateCreated: string;
+  details: FlexObject;
+  duration: number;
+  entityType: InterventionType;
+  eventDate: string;
+  eventType: PlanEventType;
+  formSubmissionId: string;
+  identifiers: FlexObject;
+  obs: Array<{
+    fieldType: 'concept';
+    fieldDataType: string;
+    fieldCode: string;
+    parentCode: string;
+    values: string[];
+    set: any[];
+    formSubmissionField: string;
+    humanReadableValues: string[];
+  }>;
+  providerId: string;
+  type: 'Event';
+  version: number;
 }
 
 // actions
