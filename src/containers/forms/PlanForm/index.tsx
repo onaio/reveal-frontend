@@ -74,7 +74,12 @@ const PlanForm = () => {
             </FormGroup>
             <FormGroup>
               <Label for="fiStatus">Focus Investigation Status</Label>
-              <Field component="select" name="fiStatus" id="fiStatus" className="form-control">
+              <Field
+                component="select"
+                name="fiStatus"
+                id="fiStatus"
+                className={errors.fiStatus ? 'form-control is-invalid' : 'form-control'}
+              >
                 <option>----</option>
                 {Object.entries(FIClassifications).map(e => (
                   <option key={e[1].code} value={e[1].code}>
@@ -86,7 +91,12 @@ const PlanForm = () => {
             </FormGroup>
             <FormGroup>
               <Label for="fiReason">Focus Investigation Reason</Label>
-              <Field component="select" name="fiReason" id="fiReason" className="form-control">
+              <Field
+                component="select"
+                name="fiReason"
+                id="fiReason"
+                className={errors.fiReason ? 'form-control is-invalid' : 'form-control'}
+              >
                 <option>----</option>
                 {FIReasons.map(e => (
                   <option key={e} value={e}>
