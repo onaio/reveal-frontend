@@ -91,6 +91,46 @@ export interface PlanPayload {
   version: string;
 }
 
+export const extractPlanPayloadFromPlanRecord = (planRecord: PlanRecord): PlanPayload | null => {
+  const {
+    plan_date: date,
+    plan_id: identifier,
+    plan_effective_period_end: end,
+    plan_effective_period_start: start,
+    plan_jurisdictions_ids,
+    plan_status: status,
+    plan_title: title,
+    plan_intervention_type: interventionType,
+    plan_version,
+  } = planRecord;
+  if (plan_jurisdictions_ids) {
+    const planPayload: PlanPayload = {
+      action: [],
+      date,
+      effectivePeriod: {
+        end,
+        start,
+      },
+      goal: [],
+      identifier,
+      jurisdiction: plan_jurisdictions_ids.map(id => ({ code: id })),
+      name: title.trim(),
+      serverVersion: 0,
+      status,
+      title,
+      useContext: [
+        {
+          code: 'interventionType',
+          valueCodableConcept: interventionType,
+        },
+      ],
+      version: plan_version || '1',
+    };
+    return planPayload;
+  }
+  return null;
+};
+
 /** PlanEventType - enum for Plan Event logging */
 export enum PlanEventType {
   CREATE = 'Create Plan',
