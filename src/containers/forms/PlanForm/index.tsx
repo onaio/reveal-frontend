@@ -17,6 +17,7 @@ const fiStatusCodes = Object.values(FIClassifications).map(e => e.code as FIStat
 
 /** Yup validation schema for PlanForm */
 const PlanSchema = Yup.object().shape({
+  caseNum: Yup.string(),
   fiReason: Yup.string().oneOf(FIReasons.map(e => e)),
   fiStatus: Yup.string().oneOf(fiStatusCodes),
   interventionType: Yup.string()
@@ -26,6 +27,7 @@ const PlanSchema = Yup.object().shape({
 
 /** Plan form fields interface */
 interface PlanFormFields {
+  caseNum?: string;
   fiReason?: FIReasonType;
   fiStatus?: FIStatusType;
   interventionType: InterventionType;
@@ -33,6 +35,7 @@ interface PlanFormFields {
 
 /** initial values */
 const initialValues: PlanFormFields = {
+  caseNum: undefined,
   fiReason: undefined,
   fiStatus: undefined,
   interventionType: InterventionType.FI,
@@ -105,6 +108,16 @@ const PlanForm = () => {
                 ))}
               </Field>
               <ErrorMessage name="fiReason" component="small" className="form-text text-danger" />
+            </FormGroup>
+            <FormGroup>
+              <Label for="caseNum">Case Number</Label>
+              <Field
+                type="text"
+                name="caseNum"
+                id="caseNum"
+                className={errors.caseNum ? 'form-control is-invalid' : 'form-control'}
+              />
+              <ErrorMessage name="caseNum" component="small" className="form-text text-danger" />
             </FormGroup>
             <Button
               type="submit"
