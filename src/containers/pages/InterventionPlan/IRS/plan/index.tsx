@@ -380,6 +380,9 @@ class IrsPlan extends React.Component<
       const { plan_effective_period_end, plan_effective_period_start, plan_title } = newPlan;
       return (
         <div className="mb-5">
+          <Helmet>
+            <title>IRS: New Plan</title>
+          </Helmet>
           <HeaderBreadcrumbs {...breadCrumbProps} />
           <Row>
             <Col>
@@ -425,8 +428,9 @@ class IrsPlan extends React.Component<
                     type="select"
                   >
                     <option>...</option>
+                    {/* <option value="BW">Botswana</option> */}
+                    <option value="NA">Namibia</option>
                     <option value="TH">Thailand</option>
-                    <option value="ZM">Zambia</option>
                   </Input>
                 </FormGroup>
                 <Button
@@ -469,12 +473,12 @@ class IrsPlan extends React.Component<
     const planHeaderRow = (
       <Row>
         {isFinalizedPlan && (
-          <Col xs="10" className="page-title-col">
+          <Col xs="9" className="page-title-col">
             <h2 className="page-title">IRS: {pageLabel}</h2>
           </Col>
         )}
         {!isFinalizedPlan && !isEditingPlanName && (
-          <Col xs="10" className="page-title-col">
+          <Col xs="9" className="page-title-col">
             <h2 className="page-title">IRS: {pageLabel}</h2>
             <Button color="link" onClick={onEditNameButtonClick}>
               edit
@@ -482,7 +486,7 @@ class IrsPlan extends React.Component<
           </Col>
         )}
         {!isFinalizedPlan && newPlan && isEditingPlanName && (
-          <Col xs="10" className="page-title-col">
+          <Col xs="9" className="page-title-col">
             <h2 className="page-title edit">IRS:</h2>
             <InputGroup className="edit-plan-title-input-group">
               <Input
@@ -511,7 +515,7 @@ class IrsPlan extends React.Component<
         )}
         {/* <Col>Save / finalize buttons will go here</Col> */}
         {!isFinalizedPlan && (
-          <Col xs="2" className="save-plan-buttons-column">
+          <Col xs="3" className="save-plan-buttons-column">
             <Button color="success" onClick={onSaveAsDraftButtonClick}>
               Save as a Draft
             </Button>
@@ -552,7 +556,7 @@ class IrsPlan extends React.Component<
     return (
       <div className="mb-5">
         <Helmet>
-          <title>IRS: {pageLabel}</title>
+          <title>IRS: {isNewPlan ? 'New Plan' : pageLabel}</title>
         </Helmet>
         <HeaderBreadcrumbs {...breadCrumbProps} />
         {planHeaderRow}
@@ -836,6 +840,8 @@ class IrsPlan extends React.Component<
             }
             this.props.fetchJurisdictionsActionCreator(jurisdictions);
           });
+        } else {
+          this.setState({ isLoadingGeoms: false });
         }
       }
     );
@@ -1251,14 +1257,12 @@ class IrsPlan extends React.Component<
           {
             Header: '',
             accessor: (j: any) => (
-              <span id={j.jurisdiction_id} onClick={onDrilldownClick}>
-                {j.isChildless ? (
-                  j.name
-                ) : (
-                  <a href="" onClick={preventDefault}>
-                    {j.name}
-                  </a>
-                )}
+              <span
+                id={j.jurisdiction_id}
+                onClick={onDrilldownClick}
+                className={`plan-jurisdiction-name${!j.isChildless ? ' btn-link' : ''}`}
+              >
+                {j.name}
               </span>
             ),
             id: 'name',

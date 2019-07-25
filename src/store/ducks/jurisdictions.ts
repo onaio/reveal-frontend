@@ -1,8 +1,7 @@
-import { FlexObject } from '@onaio/drill-down-table/dist/types/helpers/utils';
 import { get, keyBy, keys, pickBy, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
 import SeamlessImmutable from 'seamless-immutable';
-import { GeoJSON, Geometry } from '../../helpers/utils';
+import { FlexObject, GeoJSON, Geometry } from '../../helpers/utils';
 import store from '../../store';
 
 export const reducerName = 'jurisdictions';
