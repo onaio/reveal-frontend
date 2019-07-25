@@ -72,23 +72,23 @@ export interface UseContext {
 
 /** PlanPayload - interface for the payload used when creating/updating a plan via OpenSRP plans Endpoint */
 export interface PlanPayload {
-  identifier: string;
-  version: string;
-  name: string;
-  title: string;
-  status: string;
+  action: any[];
   date: string;
   effectivePeriod: {
     start: string;
     end: string;
   };
-  useContext: UseContext[];
+  goal: any[];
+  identifier: string;
   jurisdiction: Array<{
     code: string;
   }>;
-  serverVersion: 0;
-  goal: any[];
-  action: any[];
+  name: string;
+  serverVersion: number;
+  status: string;
+  title: string;
+  useContext: UseContext[];
+  version: string;
 }
 
 /** PlanEventType - enum for Plan Event logging */
