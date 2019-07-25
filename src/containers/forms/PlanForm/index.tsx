@@ -1,4 +1,5 @@
 import { ErrorMessage, Field, Form, Formik } from 'formik';
+import moment from 'moment';
 import React from 'react';
 import { Button, FormGroup, Label } from 'reactstrap';
 import * as Yup from 'yup';
@@ -38,14 +39,14 @@ const PlanSchema = Yup.object().shape({
 /** Plan form fields interface */
 interface PlanFormFields {
   caseNum?: string;
-  date: string;
-  end: string;
+  date: Date;
+  end: Date;
   fiReason?: FIReasonType;
   fiStatus?: FIStatusType;
   interventionType: InterventionType;
   name: string;
   opensrpEventId?: string;
-  start: string;
+  start: Date;
   status: PlanStatus;
   title: string;
 }
@@ -53,14 +54,16 @@ interface PlanFormFields {
 /** initial values */
 const initialValues: PlanFormFields = {
   caseNum: undefined,
-  date: '',
-  end: '',
+  date: moment().toDate(),
+  end: moment()
+    .add(20, 'days')
+    .toDate(),
   fiReason: undefined,
   fiStatus: undefined,
   interventionType: InterventionType.FI,
   name: '',
   opensrpEventId: undefined,
-  start: '',
+  start: moment().toDate(),
   status: PlanStatus.DRAFT,
   title: '',
 };
