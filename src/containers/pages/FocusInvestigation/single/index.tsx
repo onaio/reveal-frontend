@@ -1,14 +1,18 @@
 // this is the FocusInvestigation "active" page component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import DrillDownTable from '@onaio/drill-down-table';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset from '@onaio/superset-connector';
+import { Actions } from 'gisida';
 import * as React from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { Link } from 'react-router-dom';
-import { Col, Row } from 'reactstrap';
+import { CellInfo, Column } from 'react-table';
+import { Badge, Button, Col, Form, FormGroup, Input, Row } from 'reactstrap';
 import { Store } from 'redux';
+import DrillDownTableLinkedCell from '../../../../components/DrillDownTableLinkedCell';
 import GisidaWrapper from '../../../../components/GisidaWrapper';
 import HeaderBreadcrumbs, {
   BreadCrumbProps,
@@ -19,16 +23,25 @@ import {
   SUPERSET_JURISDICTIONS_SLICE,
   SUPERSET_PLANS_SLICE,
 } from '../../../../configs/env';
+import { locationHierarchy } from '../../../../configs/settings';
 import {
   ACTIVE_INVESTIGATION,
   CANTON,
+  CASE_CLASSIFICATION_HEADER,
+  CASE_NOTIF_DATE_HEADER,
+  CASE_TRIGGERED,
   COMPLETE,
+  COMPLETE_FOCUS_INVESTIGATION,
+  CURRENT_FOCUS_INVESTIGATION,
   DISTRICT,
+  END_DATE,
+  FI_PLAN_TYPE,
   FI_REASON,
   FI_SINGLE_MAP_URL,
   FI_SINGLE_URL,
   FI_STATUS,
   FI_URL,
+  FOCUS_AREA_HEADER,
   FOCUS_AREA_INFO,
   FOCUS_INVESTIGATIONS,
   HOME,
@@ -36,15 +49,26 @@ import {
   IN,
   MARK_AS_COMPLETE,
   MEASURE,
+  NAME,
   NO,
   OF,
   PROGRESS,
+  PROVINCE,
+  REACTIVE,
   RESPONSE,
   ROUTINE,
+  START_DATE,
+  STATUS_HEADER,
 } from '../../../../constants';
 import { getGoalReport } from '../../../../helpers/indicators';
 import ProgressBar from '../../../../helpers/ProgressBar';
-import { extractPlan, RouteParams, transformValues } from '../../../../helpers/utils';
+import {
+  extractPlan,
+  FlexObject,
+  getLocationColumns,
+  RouteParams,
+  transformValues,
+} from '../../../../helpers/utils';
 import supersetFetch from '../../../../services/superset';
 import goalsReducer, {
   fetchGoals,
@@ -65,6 +89,7 @@ import plansReducer, {
   getPlansIdArray,
   InterventionType,
   Plan,
+  PlanStatus,
   reducerName as plansReducerName,
 } from '../../../../store/ducks/plans';
 import './single.css';
@@ -78,6 +103,10 @@ reducerRegistry.register(jurisdictionReducerName, jurisdictionReducer);
 
 /** interface to describe props for ActiveFI component */
 export interface SingleFIProps {
+  completeReactivePlansArray: Plan[];
+  completeRoutinePlansArray: Plan[];
+  currentReactivePlansArray: Plan[];
+  currentRoutinePlansArray: Plan[];
   fetchGoalsActionCreator: typeof fetchGoals;
   fetchJurisdictionsActionCreator: typeof fetchJurisdictions;
   fetchPlansActionCreator: typeof fetchPlans;
@@ -91,6 +120,10 @@ export interface SingleFIProps {
 
 /** default props for ActiveFI component */
 export const defaultSingleFIProps: SingleFIProps = {
+  completeReactivePlansArray: [],
+  completeRoutinePlansArray: [],
+  currentReactivePlansArray: [],
+  currentRoutinePlansArray: [],
   fetchGoalsActionCreator: fetchGoals,
   fetchJurisdictionsActionCreator: fetchJurisdictions,
   fetchPlansActionCreator: fetchPlans,
@@ -120,8 +153,8 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
 
     if (planById && planById.plan_id) {
       /** define superset filter params for plans */
-      const plansParams = superset.getFormData(3000, [
-        { comparator: planById.plan_id, operator: '==', subject: 'plan_id' },
+      const plansParams = superset.getFormData(2000, [
+        { comparator: FI_PLAN_TYPE, operator: '==', subject: 'plan_intervention_type' },
       ]);
       /** define superset params for goals */
       const goalsParams = superset.getFormData(
@@ -144,9 +177,19 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
       );
     }
   }
-
+  public handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+  }
   public render() {
-    const { goalsArray, jurisdiction, planById } = this.props;
+    const {
+      completeReactivePlansArray,
+      completeRoutinePlansArray,
+      currentReactivePlansArray,
+      currentRoutinePlansArray,
+      goalsArray,
+      jurisdiction,
+      planById,
+    } = this.props;
     const theGoals = goalsArray;
 
     if (!planById || !theGoals || !jurisdiction) {
@@ -188,6 +231,513 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
       })
     );
     breadCrumbProps.pages = [homePage, basePage, ...pages];
+    const currentRoutineReactivePlans: FlexObject[] = [];
+    const completeRoutineReactivePlans: FlexObject[] = [];
+    const defaultHeaders: Column[] = [];
+    if (!currentReactivePlansArray.length) {
+      defaultHeaders.push(
+        {
+          Header: NAME,
+        },
+        {
+          Header: FI_STATUS,
+        },
+        {
+          Header: CASE_NOTIF_DATE_HEADER,
+        },
+        {
+          Header: CASE_CLASSIFICATION_HEADER,
+        }
+      );
+    }
+    if (!currentRoutinePlansArray) {
+      defaultHeaders.push(
+        {
+          Header: NAME,
+        },
+        {
+          Header: FI_STATUS,
+        },
+        {
+          Header: PROVINCE,
+        },
+        {
+          Header: DISTRICT,
+        },
+        {
+          Header: CANTON,
+        },
+        {
+          Header: 'Village',
+        },
+        {
+          Header: FOCUS_AREA_HEADER,
+        },
+        {
+          Header: STATUS_HEADER,
+        },
+        {
+          Header: START_DATE,
+        },
+        {
+          Header: END_DATE,
+        },
+        {
+          Header: Actions,
+        }
+      );
+    }
+    if (
+      (currentReactivePlansArray && currentReactivePlansArray.length > 0) ||
+      (currentRoutinePlansArray && currentRoutinePlansArray.length > 0)
+    ) {
+      [currentReactivePlansArray, currentRoutinePlansArray].forEach((plansArray: Plan[] | null) => {
+        if (plansArray && plansArray.length) {
+          const thePlans = plansArray.map((item: Plan) => {
+            let thisItem = extractPlan(item);
+            // transform values of this properties if they are null
+            const columnsToTransform = ['village', 'canton', 'district', 'province'];
+            thisItem = transformValues(thisItem, columnsToTransform);
+            return thisItem;
+          });
+          const locationColumns: Column[] = getLocationColumns(locationHierarchy, true);
+          /**  Handle Columns Unique for Routine and Reactive Tables */
+          const columnsBasedOnReason = [];
+          plansArray.every(d => d.plan_fi_reason === CASE_TRIGGERED)
+            ? columnsBasedOnReason.push(
+                {
+                  Header: CASE_NOTIF_DATE_HEADER,
+                  columns: [
+                    {
+                      Cell: (cell: CellInfo) => {
+                        return <div>{cell.value}</div>;
+                      },
+                      Header: '',
+                      accessor: 'caseNotificationDate',
+                      minWidth: 90,
+                    },
+                  ],
+                },
+                {
+                  Header: CASE_CLASSIFICATION_HEADER,
+                  columns: [
+                    {
+                      Header: '',
+                      accessor: 'caseClassification',
+                    },
+                  ],
+                }
+              )
+            : columnsBasedOnReason.push(
+                ...locationColumns,
+                {
+                  Header: FOCUS_AREA_HEADER,
+                  columns: [
+                    {
+                      Cell: (cell: CellInfo) => {
+                        return (
+                          <div>
+                            {cell.original.focusArea.trim() && cell.value}
+                            &nbsp;&nbsp;
+                            {cell.original.focusArea.trim() && (
+                              <Link to={`${FI_SINGLE_URL}/${cell.original.id}`}>
+                                <FontAwesomeIcon icon={['fas', 'external-link-square-alt']} />
+                              </Link>
+                            )}
+                          </div>
+                        );
+                      },
+                      Header: '',
+                      accessor: 'focusArea',
+                      minWidth: 160,
+                    },
+                  ],
+                },
+                {
+                  Header: STATUS_HEADER,
+                  columns: [
+                    {
+                      Header: '',
+                      accessor: 'status',
+                      maxWidth: 60,
+                    },
+                  ],
+                },
+                {
+                  Header: START_DATE,
+                  columns: [
+                    {
+                      Cell: (cell: CellInfo) => {
+                        return <div>{cell.value}</div>;
+                      },
+                      Header: '',
+                      accessor: 'plan_effective_period_start',
+                      minWidth: 80,
+                    },
+                  ],
+                },
+                {
+                  Header: END_DATE,
+                  columns: [
+                    {
+                      Header: '',
+                      accessor: 'plan_effective_period_end',
+                    },
+                  ],
+                },
+                {
+                  Header: 'Action',
+                  columns: [
+                    {
+                      Cell: (cell: CellInfo) => {
+                        return null;
+                      },
+                      Header: '',
+                      accessor: 'plan_status',
+                      minWidth: 80,
+                    },
+                  ],
+                }
+              );
+          const allColumns: Column[] = [
+            {
+              Header: NAME,
+              columns: [
+                {
+                  Cell: (cell: CellInfo) => {
+                    /** if 24 hours ago show badge */
+                    const oneDayAgo = new Date().getTime() + 1 * 24 * 60 * 60;
+                    const newRecordBadge =
+                      Date.parse(cell.original.plan_date) >= oneDayAgo ? (
+                        <Badge color="warning" pill={true}>
+                          Warning
+                        </Badge>
+                      ) : null;
+                    return (
+                      <div>
+                        {cell.original.focusArea.trim() && (
+                          <Link to={`${FI_SINGLE_MAP_URL}/${cell.original.id}`}>{cell.value}</Link>
+                        )}
+                        &nbsp;
+                        {newRecordBadge}
+                      </div>
+                    );
+                  },
+                  Header: '',
+                  accessor: 'plan_title',
+                  minWidth: 160,
+                },
+              ],
+            },
+            {
+              Header: FI_STATUS,
+              columns: [
+                {
+                  Header: '',
+                  accessor: 'plan_status',
+                  minWidth: 80,
+                },
+              ],
+            },
+            ...columnsBasedOnReason,
+          ];
+          const tableProps = {
+            CellComponent: DrillDownTableLinkedCell,
+            columns: allColumns,
+            data: thePlans,
+            identifierField: 'id',
+            linkerField: 'id',
+            minRows: 0,
+            parentIdentifierField: 'parent',
+            rootParentId: null,
+            showPageSizeOptions: false,
+            showPagination: false,
+            useDrillDownTrProps: false,
+          };
+          const TableHeaderWithOptionalForm = plansArray.every(
+            d => d.plan_fi_reason === CASE_TRIGGERED
+          ) ? (
+            <h3 className="mb-3 mt-5 page-title">{REACTIVE}</h3>
+          ) : (
+            <div className="routine-heading">
+              <Row>
+                <Col xs="6">
+                  <h3 className="mb-3 mt-5 page-title">{ROUTINE}</h3>
+                </Col>
+                <Col xs="6">
+                  <Button className="focus-investigation" color="primary">
+                    Add Focus Investigation
+                  </Button>
+                </Col>
+              </Row>
+            </div>
+          );
+          currentRoutineReactivePlans.push(
+            <div key={thePlans[0].id}>
+              {TableHeaderWithOptionalForm}
+              <DrillDownTable {...tableProps} />
+            </div>
+          );
+        }
+      });
+    }
+    if (!completeReactivePlansArray.length) {
+      const emptyCompleteReactivePlans: Column[] = [];
+      emptyCompleteReactivePlans.push(
+        {
+          Header: NAME,
+          columns: [{}],
+        },
+        {
+          Header: 'Date Completed',
+          columns: [{}],
+        },
+        {
+          Header: CASE_NOTIF_DATE_HEADER,
+          columns: [{}],
+        },
+        {
+          Header: CASE_CLASSIFICATION_HEADER,
+          columns: [{}],
+        }
+      );
+      const tableProps = {
+        CellComponent: DrillDownTableLinkedCell,
+        columns: emptyCompleteReactivePlans,
+        data: [],
+        identifierField: 'id',
+        linkerField: 'id',
+        minRows: 0,
+        parentIdentifierField: 'parent',
+        rootParentId: null,
+        showPageSizeOptions: false,
+        showPagination: false,
+        useDrillDownTrProps: false,
+      };
+      completeRoutineReactivePlans.push(
+        <div key="no-reactive">
+          <h4>Reactive </h4>
+          <DrillDownTable {...tableProps} NoDataComponent={(() => null) as any} />
+          <h3 className="text-muted">No Investigations Found</h3>
+          <hr />
+        </div>
+      );
+    }
+    if (!completeRoutinePlansArray.length) {
+      const emptyCompleteRoutinePlans: Column[] = [];
+      emptyCompleteRoutinePlans.push(
+        {
+          Header: NAME,
+          columns: [{}],
+        },
+        {
+          Header: START_DATE,
+          columns: [{}],
+        },
+        {
+          Header: END_DATE,
+          columns: [{}],
+        },
+        {
+          Header: 'Date Completed',
+          columns: [{}],
+        }
+      );
+      const tableProps = {
+        CellComponent: DrillDownTableLinkedCell,
+        columns: emptyCompleteRoutinePlans,
+        data: [],
+        identifierField: 'id',
+        linkerField: 'id',
+        minRows: 0,
+        parentIdentifierField: 'parent',
+        rootParentId: null,
+        showPageSizeOptions: false,
+        showPagination: false,
+        useDrillDownTrProps: false,
+      };
+      completeRoutineReactivePlans.push(
+        <div key="no-routine">
+          <h4>Routine </h4>
+          <DrillDownTable {...tableProps} NoDataComponent={(() => null) as any} />
+          <h3 className="text-muted">No Investigations Found</h3>
+          <hr />
+        </div>
+      );
+    }
+    if (
+      (completeReactivePlansArray && completeReactivePlansArray.length > 0) ||
+      (completeRoutinePlansArray && completeRoutinePlansArray.length > 0)
+    ) {
+      [completeReactivePlansArray, completeRoutinePlansArray].forEach(
+        (plansArray: Plan[] | null) => {
+          if (plansArray && plansArray.length) {
+            const thePlans = plansArray.map((item: Plan) => {
+              let thisItem = extractPlan(item);
+              // transform values of this properties if they are null
+              const columnsToTransform = ['village', 'canton', 'district', 'province'];
+              thisItem = transformValues(thisItem, columnsToTransform);
+              return thisItem;
+            });
+            const columnsBasedOnReason = [];
+            plansArray.every(d => d.plan_fi_reason === CASE_TRIGGERED)
+              ? columnsBasedOnReason.push(
+                  {
+                    Header: END_DATE,
+                    columns: [
+                      {
+                        Cell: (cell: CellInfo) => {
+                          return cell.value;
+                        },
+                        Header: '',
+                        accessor: 'plan_effective_period_end',
+                      },
+                    ],
+                  },
+                  {
+                    Header: CASE_NOTIF_DATE_HEADER,
+                    columns: [
+                      {
+                        Cell: (cell: CellInfo) => {
+                          return <div>{cell.value}</div>;
+                        },
+                        Header: '',
+                        accessor: 'caseNotificationDate',
+                        minWidth: 90,
+                      },
+                    ],
+                  },
+                  {
+                    Header: CASE_CLASSIFICATION_HEADER,
+                    columns: [
+                      {
+                        Header: '',
+                        accessor: 'caseClassification',
+                      },
+                    ],
+                  }
+                )
+              : columnsBasedOnReason.push(
+                  {
+                    Header: START_DATE,
+                    columns: [
+                      {
+                        Cell: (cell: CellInfo) => {
+                          return <div>{cell.value}</div>;
+                        },
+                        Header: '',
+                        accessor: 'plan_effective_period_start',
+                        minWidth: 80,
+                      },
+                    ],
+                  },
+                  {
+                    Header: END_DATE,
+                    columns: [
+                      {
+                        Header: '',
+                        accessor: 'plan_effective_period_end',
+                      },
+                    ],
+                  },
+                  {
+                    Header: 'Date Completed',
+                    columns: [
+                      {
+                        Cell: (cell: CellInfo) => {
+                          return cell.value;
+                        },
+                        Header: '',
+                        accessor: 'plan_effective_period_end',
+                      },
+                    ],
+                  }
+                );
+            const allColumns: Column[] = [
+              {
+                Header: NAME,
+                columns: [
+                  {
+                    Cell: (cell: CellInfo) => {
+                      /** if 24 hours ago show badge */
+                      const oneDayAgo = new Date().getTime() + 1 * 24 * 60 * 60;
+                      const newRecordBadge =
+                        Date.parse(cell.original.plan_date) >= oneDayAgo ? (
+                          <Badge color="warning" pill={true}>
+                            Warning
+                          </Badge>
+                        ) : null;
+                      return (
+                        <div>
+                          {cell.original.focusArea.trim() && (
+                            <Link to={`${FI_SINGLE_MAP_URL}/${cell.original.id}`}>
+                              {cell.value}
+                            </Link>
+                          )}
+                          &nbsp;
+                          {newRecordBadge}
+                        </div>
+                      );
+                    },
+                    Header: '',
+                    accessor: 'plan_title',
+                    minWidth: 180,
+                  },
+                ],
+              },
+              {
+                Header: FI_STATUS,
+                columns: [
+                  {
+                    Header: '',
+                    accessor: 'plan_status',
+                    minWidth: 80,
+                  },
+                ],
+              },
+              ...columnsBasedOnReason,
+            ];
+            const tableProps = {
+              CellComponent: DrillDownTableLinkedCell,
+              columns: allColumns,
+              data: thePlans,
+              identifierField: 'id',
+              linkerField: 'id',
+              minRows: 0,
+              parentIdentifierField: 'parent',
+              rootParentId: null,
+              showPageSizeOptions: false,
+              showPagination: false,
+              useDrillDownTrProps: false,
+            };
+            const TableHeaderWithOptionalForm = plansArray.every(
+              d => d.plan_fi_reason === CASE_TRIGGERED
+            ) ? (
+              <h3 className="mb-3 mt-5 page-title">{REACTIVE}</h3>
+            ) : (
+              <div className="routine-heading">
+                <Row>
+                  <Col xs="6">
+                    <h3 className="mb-3 mt-5 page-title">{ROUTINE}</h3>
+                  </Col>
+                  <Col xs="6">
+                    <Button className="focus-investigation" color="primary">
+                      Add Focus Investigation
+                    </Button>
+                  </Col>
+                </Row>
+              </div>
+            );
+            completeRoutineReactivePlans.push(
+              <div key={thePlans[0].id}>
+                {TableHeaderWithOptionalForm}
+                <DrillDownTable {...tableProps} />
+              </div>
+            );
+          }
+        }
+      );
+    }
 
     return (
       <div className="mb-5">
@@ -206,70 +756,43 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
                 <GisidaWrapper geoData={jurisdiction} minHeight="200px" />
               </div>
             )}
-            <dl className="row mt-3">
-              <dt className="col-5">{DISTRICT}</dt>
-              <dd className="col-7">{theObject.district}</dd>
-              <dt className="col-5">{CANTON}</dt>
-              <dd className="col-7">{theObject.canton}</dd>
-              <dt className="col-5">{FI_REASON}</dt>
-              <dd className="col-7">{theObject.reason}</dd>
-              <dt className="col-5">{FI_STATUS}</dt>
-              <dd className="col-7">{theObject.status}</dd>
-            </dl>
-            <hr />
           </Col>
           <Col className="col-6">
-            <div className="fi-active">
-              <h5 className="mb-4 mt-1">
-                <Link to={`${FI_SINGLE_MAP_URL}/${theObject.id}`}>
-                  {theObject.jurisdiction_id && (
-                    <span>
-                      <FontAwesomeIcon icon={['fas', 'map']} />
-                      &nbsp;
-                    </span>
-                  )}
-                  {ACTIVE_INVESTIGATION}: {theObject.plan_title}
-                </Link>
-              </h5>
-              <dl className="row mt-3">
-                <dt className="col-5">{COMPLETE}</dt>
-                <dd className="col-7">{NO}</dd>
-              </dl>
-              <hr />
-              <h5 className="mb-4 mt-4">{RESPONSE}</h5>
-              {/** loop through the goals */
-              theGoals.map((item: Goal) => {
-                const goalReport = getGoalReport(item);
-                return (
-                  <div className="responseItem" key={item.goal_id}>
-                    <h6>{item.action_title}</h6>
-                    <div className="targetItem">
-                      <p>
-                        {MEASURE}: {item.measure}
-                      </p>
-                      <p>
-                        {PROGRESS}: {item.completed_task_count} {OF} {goalReport.targetValue}{' '}
-                        {goalReport.goalUnit} ({goalReport.prettyPercentAchieved})
-                      </p>
-                      <ProgressBar value={goalReport.percentAchieved} max={1} />
-                    </div>
-                  </div>
-                );
-              })}
-              <Row className="mt-5">
-                <Col className="col-6 offset-md-3">
-                  <button
-                    type="button"
-                    className="btn btn-outline-primary btn-block"
-                    disabled={true}
-                  >
-                    {MARK_AS_COMPLETE}
-                  </button>
-                </Col>
-              </Row>
-            </div>
+            <dl className="row mt-3">
+              <dt className="col-4">{PROVINCE}</dt>
+              <dd className="col-8">{theObject.province}</dd>
+              <dt className="col-4">{DISTRICT}</dt>
+              <dd className="col-8">{theObject.district}</dd>
+              <dt className="col-4">{CANTON}</dt>
+              <dd className="col-8">{theObject.canton}</dd>
+              <dt className="col-4">{FI_STATUS}</dt>
+              <dd className="col-8">{theObject.status}</dd>
+              <dt className="col-4">{FI_REASON}</dt>
+              <dd className="col-8">{theObject.reason}</dd>
+            </dl>
           </Col>
         </Row>
+        <hr />
+        <Form inline={true} onSubmit={this.handleSubmit}>
+          <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
+            <Input
+              type="text"
+              name="search"
+              id="exampleEmail"
+              placeholder="Search active focus investigations"
+            />
+          </FormGroup>
+          <Button outline={true} color="success">
+            Search
+          </Button>
+        </Form>
+        <h4 className="mb-4">{CURRENT_FOCUS_INVESTIGATION}</h4>
+        <hr />
+        {currentRoutineReactivePlans}
+        <hr />
+        <h4 className="mb-4">{COMPLETE_FOCUS_INVESTIGATION}</h4>
+        <hr />
+        {completeRoutineReactivePlans}
       </div>
     );
   }
@@ -294,6 +817,30 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
     jurisdiction = getJurisdictionById(state, plan.jurisdiction_id);
   }
   const result = {
+    completeReactivePlansArray: getPlansArray(
+      state,
+      InterventionType.FI,
+      [PlanStatus.COMPLETE],
+      CASE_TRIGGERED
+    ),
+    completeRoutinePlansArray: getPlansArray(
+      state,
+      InterventionType.FI,
+      [PlanStatus.COMPLETE],
+      ROUTINE
+    ),
+    currentReactivePlansArray: getPlansArray(
+      state,
+      InterventionType.FI,
+      [PlanStatus.ACTIVE, PlanStatus.DRAFT],
+      CASE_TRIGGERED
+    ),
+    currentRoutinePlansArray: getPlansArray(
+      state,
+      InterventionType.FI,
+      [PlanStatus.ACTIVE, PlanStatus.DRAFT],
+      ROUTINE
+    ),
     goalsArray,
     jurisdiction,
     planById: plan,

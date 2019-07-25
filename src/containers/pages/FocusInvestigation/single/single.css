@@ -12,3 +12,17 @@
   height: 200px;
   min-height: 200px;
 }
+
+div.col div.mb-5 div.row div.col-6.col dl.row.mt-3 {
+  margin-top: 3rem !important;
+  margin-left: 20px;
+}
+
+div.container div#main-page-row.row div.mb-5 h4 {
+  margin-top: 3rem;
+}
+
+h3.text-muted {
+  text-align: center;
+  margin-top: 3rem;
+}
