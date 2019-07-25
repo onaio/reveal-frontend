@@ -4,6 +4,7 @@ import React from 'react';
 import { Button, FormGroup, Label } from 'reactstrap';
 import * as Yup from 'yup';
 import DatePickerWrapper from '../../../components/DatePickerWrapper';
+import { DATE_FORMAT, DEFAULT_PLAN_DURATION_DAYS } from '../../../configs/env';
 import { FIClassifications, FIReasons, FIStatuses } from '../../../configs/settings';
 import { DATE, IS, NAME, REQUIRED, SAVING } from '../../../constants';
 import { InterventionType, PlanStatus } from '../../../store/ducks/plans';
@@ -56,7 +57,7 @@ const initialValues: PlanFormFields = {
   caseNum: undefined,
   date: moment().toDate(),
   end: moment()
-    .add(20, 'days')
+    .add(DEFAULT_PLAN_DURATION_DAYS, 'days')
     .toDate(),
   fiReason: undefined,
   fiStatus: undefined,
@@ -186,6 +187,7 @@ const PlanForm = () => {
                 type="date"
                 name="start"
                 id="start"
+                dateFormat={DATE_FORMAT}
                 className={errors.start ? 'form-control is-invalid' : 'form-control'}
                 component={DatePickerWrapper}
               />
@@ -199,6 +201,7 @@ const PlanForm = () => {
                 type="date"
                 name="end"
                 id="end"
+                dateFormat={DATE_FORMAT}
                 className={errors.end ? 'form-control is-invalid' : 'form-control'}
                 component={DatePickerWrapper}
                 minDate={values.start}
