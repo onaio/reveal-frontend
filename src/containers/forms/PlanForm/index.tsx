@@ -4,7 +4,7 @@ import { Button, FormGroup, Label } from 'reactstrap';
 import * as Yup from 'yup';
 import { FIClassifications, FIReasons, FIStatuses } from '../../../configs/settings';
 import { IS, NAME, REQUIRED, SAVING } from '../../../constants';
-import { InterventionType } from '../../../store/ducks/plans';
+import { InterventionType, PlanStatus } from '../../../store/ducks/plans';
 
 /** Allowed FI Status values */
 type FIStatusType = typeof FIStatuses[number];
@@ -21,10 +21,13 @@ const PlanSchema = Yup.object().shape({
   fiReason: Yup.string().oneOf(FIReasons.map(e => e)),
   fiStatus: Yup.string().oneOf(fiStatusCodes),
   interventionType: Yup.string()
-    .oneOf(Object.keys(InterventionType))
+    .oneOf(Object.values(InterventionType))
     .required(REQUIRED),
   name: Yup.string().required(`${NAME} ${IS} ${REQUIRED}`),
   opensrpEventId: Yup.string(),
+  status: Yup.string()
+    .oneOf(Object.values(PlanStatus))
+    .required(REQUIRED),
   title: Yup.string().required(REQUIRED),
 });
 
@@ -36,6 +39,7 @@ interface PlanFormFields {
   interventionType: InterventionType;
   name: string;
   opensrpEventId?: string;
+  status: PlanStatus;
   title: string;
 }
 
@@ -47,6 +51,7 @@ const initialValues: PlanFormFields = {
   interventionType: InterventionType.FI,
   name: '',
   opensrpEventId: undefined,
+  status: PlanStatus.DRAFT,
   title: '',
 };
 
@@ -144,6 +149,22 @@ const PlanForm = () => {
               <ErrorMessage name="title" component="small" className="form-text text-danger" />
 
               <Field type="hidden" name="name" id="name" />
+            </FormGroup>
+            <FormGroup>
+              <Label for="status">Status</Label>
+              <Field
+                component="select"
+                name="status"
+                id="status"
+                className={errors.status ? 'form-control is-invalid' : 'form-control'}
+              >
+                {Object.entries(PlanStatus).map(e => (
+                  <option key={e[0]} value={e[1]}>
+                    {e[1]}
+                  </option>
+                ))}
+              </Field>
+              <ErrorMessage name="status" component="small" className="form-text text-danger" />
             </FormGroup>
             <Button
               type="submit"
