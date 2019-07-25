@@ -2,6 +2,7 @@ import { ErrorMessage, Field, Form, Formik } from 'formik';
 import React from 'react';
 import { Button, FormGroup, Label } from 'reactstrap';
 import * as Yup from 'yup';
+import DatePickerWrapper from '../../../components/DatePickerWrapper';
 import { FIClassifications, FIReasons, FIStatuses } from '../../../configs/settings';
 import { DATE, IS, NAME, REQUIRED, SAVING } from '../../../constants';
 import { InterventionType, PlanStatus } from '../../../store/ducks/plans';
@@ -79,7 +80,7 @@ const PlanForm = () => {
         }}
         validationSchema={PlanSchema}
       >
-        {({ errors, isSubmitting }) => (
+        {({ errors, isSubmitting, values }) => (
           <Form>
             <FormGroup className="non-field-errors">
               <ErrorMessage name="name" component="p" className="form-text text-danger" />
@@ -183,6 +184,7 @@ const PlanForm = () => {
                 name="start"
                 id="start"
                 className={errors.start ? 'form-control is-invalid' : 'form-control'}
+                component={DatePickerWrapper}
               />
               <ErrorMessage name="start" component="small" className="form-text text-danger" />
 
@@ -195,6 +197,8 @@ const PlanForm = () => {
                 name="end"
                 id="end"
                 className={errors.end ? 'form-control is-invalid' : 'form-control'}
+                component={DatePickerWrapper}
+                minDate={values.start}
               />
               <ErrorMessage name="end" component="small" className="form-text text-danger" />
             </FormGroup>
