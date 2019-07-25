@@ -132,3 +132,9 @@ export const IRS_PLAN_COUNTRIES =
     process.env.REACT_APP_IRS_PLAN_COUNTRIES.split(',')) ||
   [];
 export type IRS_PLAN_COUNTRIES = typeof IRS_PLAN_COUNTRIES;
+
+export const DATE_FORMAT = process.env.REACT_APP_DATE_FORMAT || 'yyyy-MM-dd';
+export type DATE_FORMAT = typeof DATE_FORMAT;
+
+export const DEFAULT_PLAN_DURATION_DAYS = process.env.REACT_APP_DEFAULT_PLAN_DURATION_DAYS || 20;
+export type DEFAULT_PLAN_DURATION_DAYS = typeof DEFAULT_PLAN_DURATION_DAYS;
