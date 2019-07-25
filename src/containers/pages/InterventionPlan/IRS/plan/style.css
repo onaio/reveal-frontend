@@ -39,3 +39,12 @@
 .plan-jurisdiction-name.btn-link {
   cursor: pointer;
 }
+
+#map-1 {
+  height: 90vh;
+  min-height: auto;
+}
+
+.irs-plan-map {
+  margin-bottom: 24px;
+}
