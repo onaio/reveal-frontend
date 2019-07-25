@@ -92,6 +92,7 @@ export const locationHierarchy: LocationItem[] = [
 ];
 
 /** Focus investigation configs */
+export const FIStatuses = ['A1', 'A2', 'B1', 'B2'] as const;
 
 export const goalPriorities = ['low-priority', 'medium-priority', 'high-priority'] as const;
 
