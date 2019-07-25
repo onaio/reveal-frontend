@@ -1244,7 +1244,7 @@ class IrsPlan extends React.Component<
                 checked={planJurisdictionIds.includes(j.jurisdiction_id)}
                 className="plan-jurisdiction-selection-checkbox"
                 onChange={onTableCheckboxChange}
-                onClick={stopPropagationAndPreventDefault}
+                onClick={stopPropagation}
                 type="checkbox"
                 value={j.jurisdiction_id}
               />
