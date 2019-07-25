@@ -3,7 +3,7 @@ import React from 'react';
 import { Button, FormGroup, Label } from 'reactstrap';
 import * as Yup from 'yup';
 import { FIClassifications, FIReasons, FIStatuses } from '../../../configs/settings';
-import { IS, NAME, REQUIRED, SAVING } from '../../../constants';
+import { DATE, IS, NAME, REQUIRED, SAVING } from '../../../constants';
 import { InterventionType, PlanStatus } from '../../../store/ducks/plans';
 
 /** Allowed FI Status values */
@@ -18,6 +18,7 @@ const fiStatusCodes = Object.values(FIClassifications).map(e => e.code as FIStat
 /** Yup validation schema for PlanForm */
 const PlanSchema = Yup.object().shape({
   caseNum: Yup.string(),
+  date: Yup.string().required(`${DATE} ${IS} ${REQUIRED}`),
   end: Yup.date().required(REQUIRED),
   fiReason: Yup.string().oneOf(FIReasons.map(e => e)),
   fiStatus: Yup.string().oneOf(fiStatusCodes),
@@ -36,6 +37,7 @@ const PlanSchema = Yup.object().shape({
 /** Plan form fields interface */
 interface PlanFormFields {
   caseNum?: string;
+  date: string;
   end: string;
   fiReason?: FIReasonType;
   fiStatus?: FIStatusType;
@@ -50,6 +52,7 @@ interface PlanFormFields {
 /** initial values */
 const initialValues: PlanFormFields = {
   caseNum: undefined,
+  date: '',
   end: '',
   fiReason: undefined,
   fiStatus: undefined,
@@ -80,6 +83,7 @@ const PlanForm = () => {
           <Form>
             <FormGroup className="non-field-errors">
               <ErrorMessage name="name" component="p" className="form-text text-danger" />
+              <ErrorMessage name="date" component="p" className="form-text text-danger" />
             </FormGroup>
             <FormGroup>
               <Label for="interventionType">Intervention Type</Label>
@@ -181,6 +185,8 @@ const PlanForm = () => {
                 className={errors.start ? 'form-control is-invalid' : 'form-control'}
               />
               <ErrorMessage name="start" component="small" className="form-text text-danger" />
+
+              <Field type="hidden" name="date" id="date" />
             </FormGroup>
             <FormGroup>
               <Label for="end">Plan End Date</Label>
