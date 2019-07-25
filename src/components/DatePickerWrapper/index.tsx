@@ -7,7 +7,7 @@ import './datepickerwrapper.css';
 
 /** DatePickerWrapper */
 const DatePickerWrapper = (props: ReactDatePickerProps & FieldProps) => {
-  const handleChange = (date: any) => {
+  const handleChange = (date: Date) => {
     props.form.setFieldValue(props.field.name, date);
   };
 
