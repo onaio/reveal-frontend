@@ -24,6 +24,7 @@ const PlanSchema = Yup.object().shape({
     .oneOf(Object.keys(InterventionType))
     .required(REQUIRED),
   opensrpEventId: Yup.string(),
+  title: Yup.string().required(REQUIRED),
 });
 
 /** Plan form fields interface */
@@ -33,6 +34,7 @@ interface PlanFormFields {
   fiStatus?: FIStatusType;
   interventionType: InterventionType;
   opensrpEventId?: string;
+  title: string;
 }
 
 /** initial values */
@@ -42,6 +44,7 @@ const initialValues: PlanFormFields = {
   fiStatus: undefined,
   interventionType: InterventionType.FI,
   opensrpEventId: undefined,
+  title: '',
 };
 
 /** Plan Form component */
@@ -122,6 +125,16 @@ const PlanForm = () => {
               />
               <ErrorMessage name="caseNum" component="small" className="form-text text-danger" />
               <Field type="hidden" name="opensrpEventId" id="opensrpEventId" readOnly={true} />
+            </FormGroup>
+            <FormGroup>
+              <Label for="title">Plan Title</Label>
+              <Field
+                type="text"
+                name="title"
+                id="title"
+                className={errors.title ? 'form-control is-invalid' : 'form-control'}
+              />
+              <ErrorMessage name="title" component="small" className="form-text text-danger" />
             </FormGroup>
             <Button
               type="submit"
