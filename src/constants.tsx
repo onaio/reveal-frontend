@@ -103,6 +103,8 @@ export const REQUIRED = 'Required';
 export type REQUIRED = typeof REQUIRED;
 export const SAVING = 'Saving';
 export type SAVING = typeof SAVING;
+export const DATE = 'Date';
+export type DATE = typeof DATE;
 
 export const JURISDICTION_ID = 'jurisdiction_id';
 export type JURISDICTION_ID = typeof JURISDICTION_ID;
