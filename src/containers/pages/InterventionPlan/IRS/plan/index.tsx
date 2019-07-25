@@ -59,6 +59,7 @@ import jurisdictionReducer, {
   reducerName as jurisdictionReducerName,
 } from '../../../../../store/ducks/jurisdictions';
 import plansReducer, {
+  extractPlanPayloadFromPlanRecord,
   fetchPlanRecords,
   getPlanRecordById,
   InterventionType,
@@ -436,8 +437,8 @@ class IrsPlan extends React.Component<
                 <Button
                   color="primary"
                   disabled={
-                    // !newPlan.plan_effective_period_end.length ||
-                    // !newPlan.plan_effective_period_start.length ||
+                    !newPlan.plan_effective_period_end.length ||
+                    !newPlan.plan_effective_period_start.length ||
                     !planCountry.length
                   }
                   onClick={onStartPlanFormSubmit}
@@ -1391,22 +1392,39 @@ class IrsPlan extends React.Component<
 
   // Service handlers
   private onSaveAsDraftButtonClick(e: any) {
-    const { newPlan } = this.state;
+    const { newPlan, childlessChildrenIds } = this.state;
+    if (newPlan && newPlan.plan_jurisdictions_ids) {
+      const now = new Date();
+      const newPlanDraft: PlanRecord = {
+        ...newPlan,
+        plan_date: `${now.getFullYear()}-${now.getMonth()}-${now.getDate()}`,
+        plan_jurisdictions_ids: newPlan.plan_jurisdictions_ids.filter(j =>
+          childlessChildrenIds.includes(j)
+        ),
+        plan_status: PlanStatus.DRAFT,
+        plan_version: Number.isNaN(Number(newPlan.plan_version))
+          ? '1'
+          : `${Number(newPlan.plan_version) + 1}`,
+      };
 
-    // todo - create PlanRecord to NewPlanSubmission extractor
-    const newPlanDraft = {
-      ...newPlan,
-      plan_status: PlanStatus.DRAFT,
-    };
-
-    // console.log('NEW PLAN!!!!', newPlanDraft)
-
-    // PUSH to OpenSRP endpoint
-    // if res.ok
-    // save to state as new PlanRecord
-    // navigate to `/plan/draft/${newPlan.plan_id}
-    // else
-    // throw error (popup)
+      if (newPlanDraft.plan_jurisdictions_ids && newPlanDraft.plan_jurisdictions_ids.length) {
+        const planPayload = extractPlanPayloadFromPlanRecord(newPlanDraft);
+        if (planPayload) {
+          // PUSH to OpenSRP endpoint
+          // if res.ok
+          // save to state as new PlanRecord
+          // navigate to `/plan/draft/${newPlan.plan_id}
+          // else
+          // throw error (popup)
+        } else {
+          alert('Uh oh, looks like something is (syntactically) wrong with the Plan schema');
+        }
+      } else {
+        alert('Oops, no jurisdictions selected!');
+      }
+    } else if (!childlessChildrenIds.length) {
+      alert('Oops, no jurisdictions selected!');
+    }
   }
 }
 
