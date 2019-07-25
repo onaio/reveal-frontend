@@ -471,6 +471,7 @@ export const planActivities: PlanActivities = {
     },
   },
 };
+export const FIReasons = ['Routine', 'Case Triggered'] as const;
 
 /** Focus Investigation case classifications */
 export const FIClassifications: Classification[] = [
