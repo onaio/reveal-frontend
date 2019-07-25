@@ -114,7 +114,7 @@ export const extractPlanPayloadFromPlanRecord = (planRecord: PlanRecord): PlanPa
       goal: [],
       identifier,
       jurisdiction: plan_jurisdictions_ids.map(id => ({ code: id })),
-      name: title.trim(),
+      name: title.trim().replace(/ /g, '-'),
       serverVersion: 0,
       status,
       title,

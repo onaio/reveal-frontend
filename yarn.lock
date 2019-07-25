@@ -1386,6 +1386,13 @@
   resolved "https://registry.yarnpkg.com/@types/tough-cookie/-/tough-cookie-2.3.5.tgz#9da44ed75571999b65c37b60c9b2b88db54c585d"
   integrity sha512-SCcK7mvGi3+ZNz833RRjFIxrn4gI1PPR3NtuIS+6vMkvmsGjosqTJwRt5bAEFLRz+wtJMWv8+uOnZf2hi2QXTg==
 
+"@types/uuid@^3.4.5":
+  version "3.4.5"
+  resolved "https://registry.yarnpkg.com/@types/uuid/-/uuid-3.4.5.tgz#d4dc10785b497a1474eae0ba7f0cb09c0ddfd6eb"
+  integrity sha512-MNL15wC3EKyw1VLF+RoVO4hJJdk9t/Hlv3rt1OL65Qvuadm4BYo6g9ZJQqoq7X8NBFSsQXgAujWciovh2lpVjA==
+  dependencies:
+    "@types/node" "*"
+
 "@webassemblyjs/ast@1.7.6":
   version "1.7.6"
   resolved "https://registry.yarnpkg.com/@webassemblyjs/ast/-/ast-1.7.6.tgz#3ef8c45b3e5e943a153a05281317474fef63e21e"
@@ -6359,9 +6366,9 @@ gisida@^1.2.5:
     uglifyjs-webpack-plugin "1.1.5"
     webpack "^3.8.1"
 
-"gisida@git+https://github.com/onaio/gisida.git#master":
+"gisida@https://github.com/onaio/gisida.git#master":
   version "1.2.6"
-  resolved "git+https://github.com/onaio/gisida.git#356eb4546325470f02836a1a9927c2f9ec2e23bd"
+  resolved "https://github.com/onaio/gisida.git#356eb4546325470f02836a1a9927c2f9ec2e23bd"
   dependencies:
     "@babel/runtime" "^7.4.3"
     "@onaio/superset-connector" "^0.0.7"

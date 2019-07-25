@@ -16,6 +16,7 @@ import {
   Row,
 } from 'reactstrap';
 import { Store } from 'redux';
+import uuidv4 = require('uuid/v4');
 
 import GeojsonExtent from '@mapbox/geojson-extent';
 import DrillDownTable, { DrillDownProps, DropDownCell } from '@onaio/drill-down-table';
@@ -84,6 +85,7 @@ reducerRegistry.register(plansReducerName, plansReducer);
 reducerRegistry.register(jurisdictionReducerName, jurisdictionReducer);
 
 const OpenSrpLocationService = new OpenSRPService('location');
+const OpenSrpPlanService = new OpenSRPService('plan');
 
 /** IrsPlanProps - interface for IRS Plan page */
 export interface IrsPlanProps {
@@ -157,13 +159,13 @@ class IrsPlan extends React.Component<
       isStartingPlan: props.isNewPlan || false,
       newPlan: props.isNewPlan
         ? {
-            id: '', // todo - generate unique id
+            id: uuidv4(),
             plan_date: this.getNewPlanDate(),
             plan_effective_period_end: '',
             plan_effective_period_start: '',
             plan_fi_reason: '',
             plan_fi_status: '',
-            plan_id: '',
+            plan_id: uuidv4(),
             plan_intervention_type: InterventionType.IRS,
             plan_jurisdictions_ids: [],
             plan_status: PlanStatus.NEW,
