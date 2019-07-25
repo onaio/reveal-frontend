@@ -3,7 +3,7 @@ import React from 'react';
 import { Button, FormGroup, Label } from 'reactstrap';
 import * as Yup from 'yup';
 import { FIClassifications, FIReasons, FIStatuses } from '../../../configs/settings';
-import { REQUIRED, SAVING } from '../../../constants';
+import { IS, NAME, REQUIRED, SAVING } from '../../../constants';
 import { InterventionType } from '../../../store/ducks/plans';
 
 /** Allowed FI Status values */
@@ -23,6 +23,7 @@ const PlanSchema = Yup.object().shape({
   interventionType: Yup.string()
     .oneOf(Object.keys(InterventionType))
     .required(REQUIRED),
+  name: Yup.string().required(`${NAME} ${IS} ${REQUIRED}`),
   opensrpEventId: Yup.string(),
   title: Yup.string().required(REQUIRED),
 });
@@ -33,6 +34,7 @@ interface PlanFormFields {
   fiReason?: FIReasonType;
   fiStatus?: FIStatusType;
   interventionType: InterventionType;
+  name: string;
   opensrpEventId?: string;
   title: string;
 }
@@ -43,6 +45,7 @@ const initialValues: PlanFormFields = {
   fiReason: undefined,
   fiStatus: undefined,
   interventionType: InterventionType.FI,
+  name: '',
   opensrpEventId: undefined,
   title: '',
 };
@@ -64,6 +67,9 @@ const PlanForm = () => {
       >
         {({ errors, isSubmitting }) => (
           <Form>
+            <FormGroup className="non-field-errors">
+              <ErrorMessage name="name" component="p" className="form-text text-danger" />
+            </FormGroup>
             <FormGroup>
               <Label for="interventionType">Intervention Type</Label>
               <Field
@@ -124,6 +130,7 @@ const PlanForm = () => {
                 className={errors.caseNum ? 'form-control is-invalid' : 'form-control'}
               />
               <ErrorMessage name="caseNum" component="small" className="form-text text-danger" />
+
               <Field type="hidden" name="opensrpEventId" id="opensrpEventId" readOnly={true} />
             </FormGroup>
             <FormGroup>
@@ -132,9 +139,11 @@ const PlanForm = () => {
                 type="text"
                 name="title"
                 id="title"
-                className={errors.title ? 'form-control is-invalid' : 'form-control'}
+                className={errors.name || errors.title ? 'form-control is-invalid' : 'form-control'}
               />
               <ErrorMessage name="title" component="small" className="form-text text-danger" />
+
+              <Field type="hidden" name="name" id="name" />
             </FormGroup>
             <Button
               type="submit"
