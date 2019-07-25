@@ -505,11 +505,10 @@ class IrsPlan extends React.Component<
                   save
                 </Button>
               </InputGroupAddon>
-              <InputGroupAddon addonType="append">
-                <Button outline={true} color="secondary" onClick={onEditPlanSettingsButtonClick}>
-                  Plan settings...
-                </Button>
-              </InputGroupAddon>
+
+              <Button color="link" onClick={onEditPlanSettingsButtonClick}>
+                Plan settings...
+              </Button>
             </InputGroup>
           </Col>
         )}
@@ -572,7 +571,7 @@ class IrsPlan extends React.Component<
         {gisidaWrapperProps && (
           <Row>
             <Col>
-              <div className="map">
+              <div className="map irs-plan-map">
                 <GisidaWrapper {...gisidaWrapperProps} />
               </div>
             </Col>
