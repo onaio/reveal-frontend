@@ -16,7 +16,7 @@ import {
   Row,
 } from 'reactstrap';
 import { Store } from 'redux';
-import uuidv4 = require('uuid/v4');
+import uuidv4 from 'uuid/v4';
 
 import GeojsonExtent from '@mapbox/geojson-extent';
 import DrillDownTable, { DrillDownProps, DropDownCell } from '@onaio/drill-down-table';
@@ -85,7 +85,7 @@ reducerRegistry.register(plansReducerName, plansReducer);
 reducerRegistry.register(jurisdictionReducerName, jurisdictionReducer);
 
 const OpenSrpLocationService = new OpenSRPService('location');
-const OpenSrpPlanService = new OpenSRPService('plan');
+const OpenSrpPlanService = new OpenSRPService('plans');
 
 /** IrsPlanProps - interface for IRS Plan page */
 export interface IrsPlanProps {
@@ -133,6 +133,7 @@ interface IrsPlanState {
   focusJurisdictionId: string | null;
   isEditingPlanName: boolean;
   isLoadingGeoms: boolean;
+  isSaveDraftDisabled: boolean;
   isStartingPlan: boolean;
   newPlan: PlanRecord | null;
   planCountry: string;
@@ -156,6 +157,7 @@ class IrsPlan extends React.Component<
       focusJurisdictionId: null,
       isEditingPlanName: false,
       isLoadingGeoms: false,
+      isSaveDraftDisabled: false,
       isStartingPlan: props.isNewPlan || false,
       newPlan: props.isNewPlan
         ? {
@@ -342,6 +344,7 @@ class IrsPlan extends React.Component<
       tableCrumbs,
       newPlan,
       isEditingPlanName,
+      isSaveDraftDisabled,
       isStartingPlan,
     } = this.state;
     if ((planId && !planById) || (isNewPlan && !newPlan)) {
@@ -518,7 +521,11 @@ class IrsPlan extends React.Component<
         {/* <Col>Save / finalize buttons will go here</Col> */}
         {!isFinalizedPlan && (
           <Col xs="3" className="save-plan-buttons-column">
-            <Button color="success" onClick={onSaveAsDraftButtonClick}>
+            <Button
+              color="success"
+              disabled={isSaveDraftDisabled}
+              onClick={onSaveAsDraftButtonClick}
+            >
               Save as a Draft
             </Button>
           </Col>
@@ -1411,6 +1418,16 @@ class IrsPlan extends React.Component<
       if (newPlanDraft.plan_jurisdictions_ids && newPlanDraft.plan_jurisdictions_ids.length) {
         const planPayload = extractPlanPayloadFromPlanRecord(newPlanDraft);
         if (planPayload) {
+          this.setState({ isSaveDraftDisabled: true }, () => {
+            OpenSrpPlanService.create(planPayload)
+              .then(response => {
+                this.props.history.push(`${INTERVENTION_IRS_URL}/draft/${planPayload.identifier}`);
+              })
+              .catch(error => {
+                this.setState({ isSaveDraftDisabled: false });
+              });
+          });
+
           // PUSH to OpenSRP endpoint
           // if res.ok
           // save to state as new PlanRecord
