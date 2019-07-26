@@ -59,7 +59,7 @@ class IrsPlans extends React.Component<IrsPlansProps & RouteComponentProps<Route
   }
 
   public componentDidMount() {
-    const { fetchPlansActionCreator, supersetService } = this.props;
+    const { fetchPlansActionCreator } = this.props;
 
     OpenSrpPlanService.list()
       .then(plans => {
