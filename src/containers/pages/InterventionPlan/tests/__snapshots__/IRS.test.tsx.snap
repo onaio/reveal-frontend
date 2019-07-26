@@ -262,7 +262,6 @@ exports[`containers/pages/IRS renders plans list correctly 1`] = `
             "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
           ]
         }
-        supersetService={[Function]}
       >
         <div
           className="mb-5"
