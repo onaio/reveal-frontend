@@ -155,6 +155,322 @@ export interface PlanActivity {
   goal: PlanGoal;
 }
 
+/** Plan activity title values */
+export const PlanActivityTitles = [
+  'caseConfirmation',
+  'familyRegistration',
+  'bloodScreening',
+  'bednetDistribution',
+  'larvalDipping',
+  'mosquitoCollection',
+  'BCC',
+  'IRS',
+] as const;
+
+export type PlanActivityTitlesType = typeof PlanActivityTitles[number];
+
+/** type to describe plan activities */
+type PlanActivities = { [K in PlanActivityTitlesType]: PlanActivity };
+
+export const planActivities: PlanActivities = {
+  BCC: {
+    action: {
+      code: 'BCC',
+      description: 'Conduct BCC activity',
+      goalId: 'BCC_Focus',
+      identifier: 'c2ea7a84-c5a1-46e3-b4d8-b6dce3599f76',
+      prefix: 7,
+      reason: 'Investigation',
+      subjectCodableConcept: {
+        text: 'Operational_Area',
+      },
+      taskTemplate: 'BCC_Focus',
+      timingPeriod: {
+        end: '2019-07-30',
+        start: '2019-07-10',
+      },
+      title: 'Behaviour Change Communication',
+    },
+    goal: {
+      description: 'Complete at least 1 BCC activity for the operational area',
+      id: 'BCC_Focus',
+      priority: 'medium-priority',
+      target: [
+        {
+          detail: {
+            detailQuantity: {
+              comparator: '>=',
+              unit: 'form(s)',
+              value: 1,
+            },
+          },
+          due: '2019-07-30',
+          measure: 'Number of BCC forms submitted',
+        },
+      ],
+    },
+  },
+  IRS: {
+    action: {
+      code: 'BCC',
+      description: 'Conduct BCC activity',
+      goalId: 'BCC_Focus',
+      identifier: 'c2ea7a84-c5a1-46e3-b4d8-b6dce3599f76',
+      prefix: 7,
+      reason: 'Investigation',
+      subjectCodableConcept: {
+        text: 'Operational_Area',
+      },
+      taskTemplate: 'BCC_Focus',
+      timingPeriod: {
+        end: '2019-07-30',
+        start: '2019-07-10',
+      },
+      title: 'Behaviour Change Communication',
+    },
+    goal: {
+      description: 'Complete at least 1 BCC activity for the operational area',
+      id: 'BCC_Focus',
+      priority: 'medium-priority',
+      target: [
+        {
+          detail: {
+            detailQuantity: {
+              comparator: '>=',
+              unit: 'form(s)',
+              value: 1,
+            },
+          },
+          due: '2019-07-30',
+          measure: 'Number of BCC forms submitted',
+        },
+      ],
+    },
+  },
+  bednetDistribution: {
+    action: {
+      code: 'BCC',
+      description: 'Conduct BCC activity',
+      goalId: 'BCC_Focus',
+      identifier: 'c2ea7a84-c5a1-46e3-b4d8-b6dce3599f76',
+      prefix: 7,
+      reason: 'Investigation',
+      subjectCodableConcept: {
+        text: 'Operational_Area',
+      },
+      taskTemplate: 'BCC_Focus',
+      timingPeriod: {
+        end: '2019-07-30',
+        start: '2019-07-10',
+      },
+      title: 'Behaviour Change Communication',
+    },
+    goal: {
+      description: 'Complete at least 1 BCC activity for the operational area',
+      id: 'BCC_Focus',
+      priority: 'medium-priority',
+      target: [
+        {
+          detail: {
+            detailQuantity: {
+              comparator: '>=',
+              unit: 'form(s)',
+              value: 1,
+            },
+          },
+          due: '2019-07-30',
+          measure: 'Number of BCC forms submitted',
+        },
+      ],
+    },
+  },
+  bloodScreening: {
+    action: {
+      code: 'BCC',
+      description: 'Conduct BCC activity',
+      goalId: 'BCC_Focus',
+      identifier: 'c2ea7a84-c5a1-46e3-b4d8-b6dce3599f76',
+      prefix: 7,
+      reason: 'Investigation',
+      subjectCodableConcept: {
+        text: 'Operational_Area',
+      },
+      taskTemplate: 'BCC_Focus',
+      timingPeriod: {
+        end: '2019-07-30',
+        start: '2019-07-10',
+      },
+      title: 'Behaviour Change Communication',
+    },
+    goal: {
+      description: 'Complete at least 1 BCC activity for the operational area',
+      id: 'BCC_Focus',
+      priority: 'medium-priority',
+      target: [
+        {
+          detail: {
+            detailQuantity: {
+              comparator: '>=',
+              unit: 'form(s)',
+              value: 1,
+            },
+          },
+          due: '2019-07-30',
+          measure: 'Number of BCC forms submitted',
+        },
+      ],
+    },
+  },
+  caseConfirmation: {
+    action: {
+      code: 'BCC',
+      description: 'Conduct BCC activity',
+      goalId: 'BCC_Focus',
+      identifier: 'c2ea7a84-c5a1-46e3-b4d8-b6dce3599f76',
+      prefix: 7,
+      reason: 'Investigation',
+      subjectCodableConcept: {
+        text: 'Operational_Area',
+      },
+      taskTemplate: 'BCC_Focus',
+      timingPeriod: {
+        end: '2019-07-30',
+        start: '2019-07-10',
+      },
+      title: 'Behaviour Change Communication',
+    },
+    goal: {
+      description: 'Complete at least 1 BCC activity for the operational area',
+      id: 'BCC_Focus',
+      priority: 'medium-priority',
+      target: [
+        {
+          detail: {
+            detailQuantity: {
+              comparator: '>=',
+              unit: 'form(s)',
+              value: 1,
+            },
+          },
+          due: '2019-07-30',
+          measure: 'Number of BCC forms submitted',
+        },
+      ],
+    },
+  },
+  familyRegistration: {
+    action: {
+      code: 'BCC',
+      description: 'Conduct BCC activity',
+      goalId: 'BCC_Focus',
+      identifier: 'c2ea7a84-c5a1-46e3-b4d8-b6dce3599f76',
+      prefix: 7,
+      reason: 'Investigation',
+      subjectCodableConcept: {
+        text: 'Operational_Area',
+      },
+      taskTemplate: 'BCC_Focus',
+      timingPeriod: {
+        end: '2019-07-30',
+        start: '2019-07-10',
+      },
+      title: 'Behaviour Change Communication',
+    },
+    goal: {
+      description: 'Complete at least 1 BCC activity for the operational area',
+      id: 'BCC_Focus',
+      priority: 'medium-priority',
+      target: [
+        {
+          detail: {
+            detailQuantity: {
+              comparator: '>=',
+              unit: 'form(s)',
+              value: 1,
+            },
+          },
+          due: '2019-07-30',
+          measure: 'Number of BCC forms submitted',
+        },
+      ],
+    },
+  },
+  larvalDipping: {
+    action: {
+      code: 'BCC',
+      description: 'Conduct BCC activity',
+      goalId: 'BCC_Focus',
+      identifier: 'c2ea7a84-c5a1-46e3-b4d8-b6dce3599f76',
+      prefix: 7,
+      reason: 'Investigation',
+      subjectCodableConcept: {
+        text: 'Operational_Area',
+      },
+      taskTemplate: 'BCC_Focus',
+      timingPeriod: {
+        end: '2019-07-30',
+        start: '2019-07-10',
+      },
+      title: 'Behaviour Change Communication',
+    },
+    goal: {
+      description: 'Complete at least 1 BCC activity for the operational area',
+      id: 'BCC_Focus',
+      priority: 'medium-priority',
+      target: [
+        {
+          detail: {
+            detailQuantity: {
+              comparator: '>=',
+              unit: 'form(s)',
+              value: 1,
+            },
+          },
+          due: '2019-07-30',
+          measure: 'Number of BCC forms submitted',
+        },
+      ],
+    },
+  },
+  mosquitoCollection: {
+    action: {
+      code: 'BCC',
+      description: 'Conduct BCC activity',
+      goalId: 'BCC_Focus',
+      identifier: 'c2ea7a84-c5a1-46e3-b4d8-b6dce3599f76',
+      prefix: 7,
+      reason: 'Investigation',
+      subjectCodableConcept: {
+        text: 'Operational_Area',
+      },
+      taskTemplate: 'BCC_Focus',
+      timingPeriod: {
+        end: '2019-07-30',
+        start: '2019-07-10',
+      },
+      title: 'Behaviour Change Communication',
+    },
+    goal: {
+      description: 'Complete at least 1 BCC activity for the operational area',
+      id: 'BCC_Focus',
+      priority: 'medium-priority',
+      target: [
+        {
+          detail: {
+            detailQuantity: {
+              comparator: '>=',
+              unit: 'form(s)',
+              value: 1,
+            },
+          },
+          due: '2019-07-30',
+          measure: 'Number of BCC forms submitted',
+        },
+      ],
+    },
+  },
+};
+
 /** Focus Investigation case classifications */
 export const FIClassifications: Classification[] = [
   {
