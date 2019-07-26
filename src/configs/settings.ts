@@ -363,37 +363,39 @@ export const planActivities: PlanActivities = {
   },
   familyRegistration: {
     action: {
-      code: 'BCC',
-      description: 'Conduct BCC activity',
-      goalId: 'BCC_Focus',
+      code: 'RACD Register Family',
+      description:
+        'Register all families & family members in all residential structures enumerated (100%) within the operational area',
+      goalId: 'RACD_register_families',
       identifier: '',
       prefix: 0,
       reason: 'Investigation',
       subjectCodableConcept: {
-        text: 'Operational_Area',
+        text: 'Residential_Structure',
       },
-      taskTemplate: 'BCC_Focus',
+      taskTemplate: 'RACD_register_families',
       timingPeriod: {
         end: '',
         start: '',
       },
-      title: 'Behaviour Change Communication',
+      title: 'Family Registration',
     },
     goal: {
-      description: 'Complete at least 1 BCC activity for the operational area',
-      id: 'BCC_Focus',
+      description:
+        'Register all families & family members in all residential structures enumerated (100%) within the operational area',
+      id: 'RACD_register_families',
       priority: 'medium-priority',
       target: [
         {
           detail: {
             detailQuantity: {
               comparator: '>=',
-              unit: 'form(s)',
+              unit: 'Percent',
               value: 0,
             },
           },
           due: '',
-          measure: 'Number of BCC forms submitted',
+          measure: 'Percent of residential structures with full family registration',
         },
       ],
     },
