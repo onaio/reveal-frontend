@@ -1,6 +1,8 @@
 import { get, keyBy, keys, pickBy, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
 import SeamlessImmutable from 'seamless-immutable';
+import uuidv4 from 'uuid/v4';
+import { PlanAction, planActivities, PlanGoal } from '../../configs/settings';
 import { FlexObject, transformValues } from '../../helpers/utils';
 
 /** the reducer name */
@@ -91,6 +93,7 @@ export interface PlanPayload {
   version: string;
 }
 
+/** extractPlanPayloadFromPlanRecord */
 export const extractPlanPayloadFromPlanRecord = (planRecord: PlanRecord): PlanPayload | null => {
   const {
     plan_date: date,
@@ -126,6 +129,33 @@ export const extractPlanPayloadFromPlanRecord = (planRecord: PlanRecord): PlanPa
       ],
       version: plan_version || '1',
     };
+
+    // build PlanActions and PlanGoals
+    let planAction: PlanAction;
+    let planGoal: PlanGoal;
+    if (interventionType === InterventionType.IRS) {
+      const { action, goal } = planActivities[InterventionType.IRS];
+      planAction = {
+        ...action,
+        identifier: uuidv4(),
+        timingPeriod: {
+          end,
+          start,
+        },
+      };
+      planGoal = {
+        ...goal,
+        target: [
+          {
+            ...goal.target[0],
+            due: end,
+          },
+        ],
+      };
+      planPayload.action.push(planAction);
+      planPayload.goal.push(planGoal);
+    }
+
     return planPayload;
   }
   return null;
