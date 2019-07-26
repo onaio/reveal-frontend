@@ -23,7 +23,14 @@ import {
   SUPERSET_JURISDICTIONS_SLICE,
   SUPERSET_PLANS_SLICE,
 } from '../../../../configs/env';
-import { defaultTableProps, locationHierarchy } from '../../../../configs/settings';
+import {
+  defaultTableProps,
+  emptyCompleteReactivePlans,
+  emptyCompleteRoutinePlans,
+  emptyCurrentReactivePlans,
+  emptyCurrentRoutinePlans,
+  locationHierarchy,
+} from '../../../../configs/settings';
 import {
   ACTIVE_INVESTIGATION,
   CANTON,
@@ -33,6 +40,7 @@ import {
   COMPLETE,
   COMPLETE_FOCUS_INVESTIGATION,
   CURRENT_FOCUS_INVESTIGATION,
+  DATE_COMPLETED,
   DISTRICT,
   END_DATE,
   FI_PLAN_TYPE,
@@ -233,73 +241,32 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
     breadCrumbProps.pages = [homePage, basePage, ...pages];
     const currentRoutineReactivePlans: FlexObject[] = [];
     const completeRoutineReactivePlans: FlexObject[] = [];
-    const defaultHeaders: Column[] = [];
     if (!currentReactivePlansArray.length) {
-      defaultHeaders.push(
-        {
-          Header: NAME,
-          columns: [{}],
-        },
-        {
-          Header: FI_STATUS,
-          columns: [{}],
-        },
-        {
-          Header: CASE_NOTIF_DATE_HEADER,
-          columns: [{}],
-        },
-        {
-          Header: CASE_CLASSIFICATION_HEADER,
-          columns: [{}],
-        }
+      const tableProps = {
+        ...defaultTableProps,
+        columns: emptyCurrentReactivePlans,
+      };
+      currentRoutineReactivePlans.push(
+        <div key="no-reactive">
+          <h4>Reactive </h4>
+          <DrillDownTable {...tableProps} NoDataComponent={(() => null) as any} />
+          <h3 className="text-muted">No Investigations Found</h3>
+          <hr />
+        </div>
       );
     }
     if (!currentRoutinePlansArray.length) {
-      defaultHeaders.push(
-        {
-          Header: NAME,
-          columns: [{}],
-        },
-        {
-          Header: FI_STATUS,
-          columns: [{}],
-        },
-        {
-          Header: PROVINCE,
-          columns: [{}],
-        },
-        {
-          Header: DISTRICT,
-          columns: [{}],
-        },
-        {
-          Header: CANTON,
-          columns: [{}],
-        },
-        {
-          Header: 'Village',
-          columns: [{}],
-        },
-        {
-          Header: FOCUS_AREA_HEADER,
-          columns: [{}],
-        },
-        {
-          Header: STATUS_HEADER,
-          columns: [{}],
-        },
-        {
-          Header: START_DATE,
-          columns: [{}],
-        },
-        {
-          Header: END_DATE,
-          columns: [{}],
-        },
-        {
-          Header: Actions,
-          columns: [{}],
-        }
+      const tableProps = {
+        ...defaultTableProps,
+        columns: emptyCurrentRoutinePlans,
+      };
+      currentRoutineReactivePlans.push(
+        <div key="no-reactive">
+          <h4>Routine </h4>
+          <DrillDownTable {...tableProps} NoDataComponent={(() => null) as any} />
+          <h3 className="text-muted">No Investigations Found</h3>
+          <hr />
+        </div>
       );
     }
     if (
@@ -489,25 +456,6 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
       });
     }
     if (!completeReactivePlansArray.length) {
-      const emptyCompleteReactivePlans: Column[] = [];
-      emptyCompleteReactivePlans.push(
-        {
-          Header: NAME,
-          columns: [{}],
-        },
-        {
-          Header: 'Date Completed',
-          columns: [{}],
-        },
-        {
-          Header: CASE_NOTIF_DATE_HEADER,
-          columns: [{}],
-        },
-        {
-          Header: CASE_CLASSIFICATION_HEADER,
-          columns: [{}],
-        }
-      );
       const tableProps = {
         ...defaultTableProps,
         columns: emptyCompleteReactivePlans,
@@ -522,25 +470,6 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
       );
     }
     if (!completeRoutinePlansArray.length) {
-      const emptyCompleteRoutinePlans: Column[] = [];
-      emptyCompleteRoutinePlans.push(
-        {
-          Header: NAME,
-          columns: [{}],
-        },
-        {
-          Header: START_DATE,
-          columns: [{}],
-        },
-        {
-          Header: END_DATE,
-          columns: [{}],
-        },
-        {
-          Header: 'Date Completed',
-          columns: [{}],
-        }
-      );
       const tableProps = {
         ...defaultTableProps,
         columns: emptyCompleteRoutinePlans,
@@ -630,7 +559,7 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
                     ],
                   },
                   {
-                    Header: 'Date Completed',
+                    Header: DATE_COMPLETED,
                     columns: [
                       {
                         Cell: (cell: CellInfo) => {
