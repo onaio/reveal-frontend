@@ -473,6 +473,8 @@ export const planActivities: PlanActivities = {
 };
 export const FIReasons = ['Routine', 'Case Triggered'] as const;
 
+export const goalPriorities = ['low-priority', 'medium-priority', 'high-priority'] as const;
+
 /** Focus Investigation case classifications */
 export const FIClassifications: Classification[] = [
   {
