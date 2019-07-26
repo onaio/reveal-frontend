@@ -14,7 +14,6 @@ import { HOME, HOME_URL, INTERVENTION_IRS_URL } from '../../../../constants';
 
 import { RouteParams } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
-import supersetFetch from '../../../../services/superset';
 import plansReducer, {
   extractPlanRecordResponseFromPlanPayload,
   fetchPlanRecords,
@@ -44,14 +43,12 @@ const OpenSrpPlanService = new OpenSRPService('plans');
 export interface IrsPlansProps {
   fetchPlansActionCreator: typeof fetchPlanRecords;
   plansArray: PlanRecord[];
-  supersetService: typeof supersetFetch;
 }
 
 /** defaultIrsPlansProps - default props for IRS Plans page */
 export const defaultIrsPlansProps: IrsPlansProps = {
   fetchPlansActionCreator: fetchPlanRecords,
   plansArray: [],
-  supersetService: supersetFetch,
 };
 
 /** IrsPlans - component for IRS Plans page */
