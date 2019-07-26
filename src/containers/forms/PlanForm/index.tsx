@@ -164,23 +164,25 @@ const PlanForm = () => {
                 <ErrorMessage name="fiStatus" component="small" className="form-text text-danger" />
               </FormGroup>
             )}
-            <FormGroup>
-              <Label for="fiReason">Focus Investigation Reason</Label>
-              <Field
-                component="select"
-                name="fiReason"
-                id="fiReason"
-                className={errors.fiReason ? 'form-control is-invalid' : 'form-control'}
-              >
-                <option>----</option>
-                {FIReasons.map(e => (
-                  <option key={e} value={e}>
-                    {e}
-                  </option>
-                ))}
-              </Field>
-              <ErrorMessage name="fiReason" component="small" className="form-text text-danger" />
-            </FormGroup>
+            {values.interventionType === InterventionType.FI && (
+              <FormGroup>
+                <Label for="fiReason">Focus Investigation Reason</Label>
+                <Field
+                  component="select"
+                  name="fiReason"
+                  id="fiReason"
+                  className={errors.fiReason ? 'form-control is-invalid' : 'form-control'}
+                >
+                  <option>----</option>
+                  {FIReasons.map(e => (
+                    <option key={e} value={e}>
+                      {e}
+                    </option>
+                  ))}
+                </Field>
+                <ErrorMessage name="fiReason" component="small" className="form-text text-danger" />
+              </FormGroup>
+            )}
             <FormGroup>
               <Label for="caseNum">Case Number</Label>
               <Field
