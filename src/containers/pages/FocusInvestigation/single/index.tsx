@@ -1,18 +1,14 @@
 // this is the FocusInvestigation "active" page component
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import DrillDownTable from '@onaio/drill-down-table';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset from '@onaio/superset-connector';
-import { Actions } from 'gisida';
 import * as React from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
-import { Link } from 'react-router-dom';
-import { CellInfo, Column } from 'react-table';
-import { Badge, Button, Col, Form, FormGroup, Input, Row } from 'reactstrap';
+import { Column } from 'react-table';
+import { Button, Col, Form, FormGroup, Input, Row } from 'reactstrap';
 import { Store } from 'redux';
-import DrillDownTableLinkedCell from '../../../../components/DrillDownTableLinkedCell';
 import GisidaWrapper from '../../../../components/GisidaWrapper';
 import HeaderBreadcrumbs, {
   BreadCrumbProps,
@@ -24,56 +20,46 @@ import {
   SUPERSET_PLANS_SLICE,
 } from '../../../../configs/env';
 import {
+  completeReactivePlansColumn,
+  completeRoutinePlansColumn,
+  currentReactivePlansColumns,
+  currentRoutinePlansColumn,
+  dateCompletedColumn,
   defaultTableProps,
   emptyCompleteReactivePlans,
   emptyCompleteRoutinePlans,
   emptyCurrentReactivePlans,
   emptyCurrentRoutinePlans,
   locationHierarchy,
+  statusColumn,
 } from '../../../../configs/settings';
 import {
-  ACTIVE_INVESTIGATION,
   CANTON,
-  CASE_CLASSIFICATION_HEADER,
-  CASE_NOTIF_DATE_HEADER,
   CASE_TRIGGERED,
-  COMPLETE,
   COMPLETE_FOCUS_INVESTIGATION,
   CURRENT_FOCUS_INVESTIGATION,
-  DATE_COMPLETED,
   DISTRICT,
-  END_DATE,
   FI_PLAN_TYPE,
   FI_REASON,
-  FI_SINGLE_MAP_URL,
   FI_SINGLE_URL,
   FI_STATUS,
   FI_URL,
-  FOCUS_AREA_HEADER,
   FOCUS_AREA_INFO,
   FOCUS_INVESTIGATIONS,
   HOME,
   HOME_URL,
   IN,
-  MARK_AS_COMPLETE,
-  MEASURE,
-  NAME,
-  NO,
-  OF,
-  PROGRESS,
   PROVINCE,
   REACTIVE,
-  RESPONSE,
   ROUTINE,
-  START_DATE,
-  STATUS_HEADER,
 } from '../../../../constants';
-import { getGoalReport } from '../../../../helpers/indicators';
-import ProgressBar from '../../../../helpers/ProgressBar';
 import {
+  buildTableHeader,
+  buildTableWithoutPlanData,
   extractPlan,
   FlexObject,
   getLocationColumns,
+  jsxColumns,
   RouteParams,
   transformValues,
 } from '../../../../helpers/utils';
@@ -111,17 +97,16 @@ reducerRegistry.register(jurisdictionReducerName, jurisdictionReducer);
 
 /** interface to describe props for ActiveFI component */
 export interface SingleFIProps {
-  completeReactivePlansArray: Plan[];
-  completeRoutinePlansArray: Plan[];
-  currentReactivePlansArray: Plan[];
-  currentRoutinePlansArray: Plan[];
+  completeReactivePlansArray: Plan[] | [];
+  completeRoutinePlansArray: Plan[] | [];
+  currentReactivePlansArray: Plan[] | [];
+  currentRoutinePlansArray: Plan[] | [];
   fetchGoalsActionCreator: typeof fetchGoals;
   fetchJurisdictionsActionCreator: typeof fetchJurisdictions;
   fetchPlansActionCreator: typeof fetchPlans;
   goalsArray: Goal[];
   jurisdiction: Jurisdiction | null;
   planById: Plan | null;
-  plansArray: Plan[];
   plansIdArray: string[];
   supersetService: typeof supersetFetch;
 }
@@ -138,7 +123,6 @@ export const defaultSingleFIProps: SingleFIProps = {
   goalsArray: [],
   jurisdiction: null,
   planById: null,
-  plansArray: [],
   plansIdArray: [],
   supersetService: supersetFetch,
 };
@@ -246,34 +230,20 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
         ...defaultTableProps,
         columns: emptyCurrentReactivePlans,
       };
-      currentRoutineReactivePlans.push(
-        <div key="no-reactive">
-          <h4>Reactive </h4>
-          <DrillDownTable {...tableProps} NoDataComponent={(() => null) as any} />
-          <h3 className="text-muted">No Investigations Found</h3>
-          <hr />
-        </div>
-      );
+      currentRoutineReactivePlans.push(buildTableWithoutPlanData(tableProps, REACTIVE, 'current'));
     }
     if (!currentRoutinePlansArray.length) {
       const tableProps = {
         ...defaultTableProps,
         columns: emptyCurrentRoutinePlans,
       };
-      currentRoutineReactivePlans.push(
-        <div key="no-reactive">
-          <h4>Routine </h4>
-          <DrillDownTable {...tableProps} NoDataComponent={(() => null) as any} />
-          <h3 className="text-muted">No Investigations Found</h3>
-          <hr />
-        </div>
-      );
+      currentRoutineReactivePlans.push(buildTableWithoutPlanData(tableProps, ROUTINE, 'current'));
     }
     if (
       (currentReactivePlansArray && currentReactivePlansArray.length > 0) ||
       (currentRoutinePlansArray && currentRoutinePlansArray.length > 0)
     ) {
-      [currentReactivePlansArray, currentRoutinePlansArray].forEach((plansArray: Plan[] | null) => {
+      [currentReactivePlansArray, currentRoutinePlansArray].forEach((plansArray: Plan[]) => {
         if (plansArray && plansArray.length) {
           const thePlans = plansArray.map((item: Plan) => {
             let thisItem = extractPlan(item);
@@ -285,142 +255,20 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
           const locationColumns: Column[] = getLocationColumns(locationHierarchy, true);
           /**  Handle Columns Unique for Routine and Reactive Tables */
           const columnsBasedOnReason = [];
-          plansArray.every(d => d.plan_fi_reason === CASE_TRIGGERED)
-            ? columnsBasedOnReason.push(
-                {
-                  Header: CASE_NOTIF_DATE_HEADER,
-                  columns: [
-                    {
-                      Cell: (cell: CellInfo) => {
-                        return <div>{cell.value}</div>;
-                      },
-                      Header: '',
-                      accessor: 'caseNotificationDate',
-                      minWidth: 90,
-                    },
-                  ],
-                },
-                {
-                  Header: CASE_CLASSIFICATION_HEADER,
-                  columns: [
-                    {
-                      Header: '',
-                      accessor: 'caseClassification',
-                    },
-                  ],
-                }
-              )
-            : columnsBasedOnReason.push(
-                ...locationColumns,
-                {
-                  Header: FOCUS_AREA_HEADER,
-                  columns: [
-                    {
-                      Cell: (cell: CellInfo) => {
-                        return (
-                          <div>
-                            {cell.original.focusArea.trim() && cell.value}
-                            &nbsp;&nbsp;
-                            {cell.original.focusArea.trim() && (
-                              <Link to={`${FI_SINGLE_URL}/${cell.original.id}`}>
-                                <FontAwesomeIcon icon={['fas', 'external-link-square-alt']} />
-                              </Link>
-                            )}
-                          </div>
-                        );
-                      },
-                      Header: '',
-                      accessor: 'focusArea',
-                      minWidth: 160,
-                    },
-                  ],
-                },
-                {
-                  Header: STATUS_HEADER,
-                  columns: [
-                    {
-                      Header: '',
-                      accessor: 'status',
-                      maxWidth: 60,
-                    },
-                  ],
-                },
-                {
-                  Header: START_DATE,
-                  columns: [
-                    {
-                      Cell: (cell: CellInfo) => {
-                        return <div>{cell.value}</div>;
-                      },
-                      Header: '',
-                      accessor: 'plan_effective_period_start',
-                      minWidth: 80,
-                    },
-                  ],
-                },
-                {
-                  Header: END_DATE,
-                  columns: [
-                    {
-                      Header: '',
-                      accessor: 'plan_effective_period_end',
-                    },
-                  ],
-                },
-                {
-                  Header: 'Action',
-                  columns: [
-                    {
-                      Cell: (cell: CellInfo) => {
-                        return null;
-                      },
-                      Header: '',
-                      accessor: 'plan_status',
-                      minWidth: 70,
-                    },
-                  ],
-                }
-              );
+          if (plansArray.every(d => d.plan_fi_reason === CASE_TRIGGERED)) {
+            columnsBasedOnReason.push(...currentReactivePlansColumns);
+          } else {
+            const focusAreaColumn = jsxColumns('focusarea');
+            columnsBasedOnReason.push(
+              ...locationColumns,
+              ...focusAreaColumn,
+              ...currentRoutinePlansColumn,
+              ...jsxColumns('action')
+            );
+          }
           const allColumns: Column[] = [
-            {
-              Header: NAME,
-              columns: [
-                {
-                  Cell: (cell: CellInfo) => {
-                    /** if 24 hours ago show badge */
-                    const oneDayAgo = new Date().getTime() + 1 * 24 * 60 * 60;
-                    const newRecordBadge =
-                      Date.parse(cell.original.plan_date) >= oneDayAgo ? (
-                        <Badge color="warning" pill={true}>
-                          Warning
-                        </Badge>
-                      ) : null;
-                    return (
-                      <div>
-                        {cell.original.focusArea.trim() && (
-                          <Link to={`${FI_SINGLE_MAP_URL}/${cell.original.id}`}>{cell.value}</Link>
-                        )}
-                        &nbsp;
-                        {newRecordBadge}
-                      </div>
-                    );
-                  },
-                  Header: '',
-                  accessor: 'plan_title',
-                  minWidth: 160,
-                },
-              ],
-            },
-            {
-              Header: FI_STATUS,
-              columns: [
-                {
-                  Header: '',
-                  accessor: 'plan_status',
-                  minWidth: 80,
-                },
-              ],
-            },
+            ...jsxColumns('name'),
+            ...statusColumn,
             ...columnsBasedOnReason,
           ];
           const tableProps = {
@@ -428,27 +276,9 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
             columns: allColumns,
             data: thePlans,
           };
-          const TableHeaderWithOptionalForm = plansArray.every(
-            d => d.plan_fi_reason === CASE_TRIGGERED
-          ) ? (
-            <h3 className="mb-3 mt-5 page-title">{REACTIVE}</h3>
-          ) : (
-            <div className="routine-heading">
-              <Row>
-                <Col xs="6">
-                  <h3 className="mb-3 mt-5 page-title">{ROUTINE}</h3>
-                </Col>
-                <Col xs="6">
-                  <Button className="focus-investigation" color="primary">
-                    Add Focus Investigation
-                  </Button>
-                </Col>
-              </Row>
-            </div>
-          );
           currentRoutineReactivePlans.push(
             <div key={thePlans[0].id}>
-              {TableHeaderWithOptionalForm}
+              {buildTableHeader(plansArray)}
               <DrillDownTable {...tableProps} />
             </div>
           );
@@ -461,12 +291,7 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
         columns: emptyCompleteReactivePlans,
       };
       completeRoutineReactivePlans.push(
-        <div key="no-reactive">
-          <h4>Reactive </h4>
-          <DrillDownTable {...tableProps} NoDataComponent={(() => null) as any} />
-          <h3 className="text-muted">No Investigations Found</h3>
-          <hr />
-        </div>
+        buildTableWithoutPlanData(tableProps, REACTIVE, 'complete')
       );
     }
     if (!completeRoutinePlansArray.length) {
@@ -474,181 +299,44 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
         ...defaultTableProps,
         columns: emptyCompleteRoutinePlans,
       };
-      completeRoutineReactivePlans.push(
-        <div key="no-routine">
-          <h4>Routine </h4>
-          <DrillDownTable {...tableProps} NoDataComponent={(() => null) as any} />
-          <h3 className="text-muted">No Investigations Found</h3>
-          <hr />
-        </div>
-      );
+      completeRoutineReactivePlans.push(buildTableWithoutPlanData(tableProps, ROUTINE, 'complete'));
     }
     if (
       (completeReactivePlansArray && completeReactivePlansArray.length > 0) ||
       (completeRoutinePlansArray && completeRoutinePlansArray.length > 0)
     ) {
-      [completeReactivePlansArray, completeRoutinePlansArray].forEach(
-        (plansArray: Plan[] | null) => {
-          if (plansArray && plansArray.length) {
-            const thePlans = plansArray.map((item: Plan) => {
-              let thisItem = extractPlan(item);
-              // transform values of this properties if they are null
-              const columnsToTransform = ['village', 'canton', 'district', 'province'];
-              thisItem = transformValues(thisItem, columnsToTransform);
-              return thisItem;
-            });
-            const columnsBasedOnReason = [];
-            plansArray.every(d => d.plan_fi_reason === CASE_TRIGGERED)
-              ? columnsBasedOnReason.push(
-                  {
-                    Header: END_DATE,
-                    columns: [
-                      {
-                        Cell: (cell: CellInfo) => {
-                          return cell.value;
-                        },
-                        Header: '',
-                        accessor: 'plan_effective_period_end',
-                      },
-                    ],
-                  },
-                  {
-                    Header: CASE_NOTIF_DATE_HEADER,
-                    columns: [
-                      {
-                        Cell: (cell: CellInfo) => {
-                          return <div>{cell.value}</div>;
-                        },
-                        Header: '',
-                        accessor: 'caseNotificationDate',
-                        minWidth: 90,
-                      },
-                    ],
-                  },
-                  {
-                    Header: CASE_CLASSIFICATION_HEADER,
-                    columns: [
-                      {
-                        Header: '',
-                        accessor: 'caseClassification',
-                      },
-                    ],
-                  }
-                )
-              : columnsBasedOnReason.push(
-                  {
-                    Header: START_DATE,
-                    columns: [
-                      {
-                        Cell: (cell: CellInfo) => {
-                          return <div>{cell.value}</div>;
-                        },
-                        Header: '',
-                        accessor: 'plan_effective_period_start',
-                        minWidth: 80,
-                      },
-                    ],
-                  },
-                  {
-                    Header: END_DATE,
-                    columns: [
-                      {
-                        Header: '',
-                        accessor: 'plan_effective_period_end',
-                      },
-                    ],
-                  },
-                  {
-                    Header: DATE_COMPLETED,
-                    columns: [
-                      {
-                        Cell: (cell: CellInfo) => {
-                          return cell.value;
-                        },
-                        Header: '',
-                        accessor: 'plan_effective_period_end',
-                      },
-                    ],
-                  }
-                );
-            const allColumns: Column[] = [
-              {
-                Header: NAME,
-                columns: [
-                  {
-                    Cell: (cell: CellInfo) => {
-                      /** if 24 hours ago show badge */
-                      const oneDayAgo = new Date().getTime() + 1 * 24 * 60 * 60;
-                      const newRecordBadge =
-                        Date.parse(cell.original.plan_date) >= oneDayAgo ? (
-                          <Badge color="warning" pill={true}>
-                            Warning
-                          </Badge>
-                        ) : null;
-                      return (
-                        <div>
-                          {cell.original.focusArea.trim() && (
-                            <Link to={`${FI_SINGLE_MAP_URL}/${cell.original.id}`}>
-                              {cell.value}
-                            </Link>
-                          )}
-                          &nbsp;
-                          {newRecordBadge}
-                        </div>
-                      );
-                    },
-                    Header: '',
-                    accessor: 'plan_title',
-                    minWidth: 180,
-                  },
-                ],
-              },
-              {
-                Header: FI_STATUS,
-                columns: [
-                  {
-                    Header: '',
-                    accessor: 'plan_status',
-                    minWidth: 80,
-                  },
-                ],
-              },
-              ...columnsBasedOnReason,
-            ];
-            const tableProps = {
-              ...defaultTableProps,
-              columns: allColumns,
-              data: thePlans,
-            };
-            const TableHeaderWithOptionalForm = plansArray.every(
-              d => d.plan_fi_reason === CASE_TRIGGERED
-            ) ? (
-              <h3 className="mb-3 mt-5 page-title">{REACTIVE}</h3>
-            ) : (
-              <div className="routine-heading">
-                <Row>
-                  <Col xs="6">
-                    <h3 className="mb-3 mt-5 page-title">{ROUTINE}</h3>
-                  </Col>
-                  <Col xs="6">
-                    <Button className="focus-investigation" color="primary">
-                      Add Focus Investigation
-                    </Button>
-                  </Col>
-                </Row>
-              </div>
-            );
-            completeRoutineReactivePlans.push(
-              <div key={thePlans[0].id}>
-                {TableHeaderWithOptionalForm}
-                <DrillDownTable {...tableProps} />
-              </div>
-            );
-          }
+      [completeReactivePlansArray, completeRoutinePlansArray].forEach((plansArray: Plan[]) => {
+        if (plansArray && plansArray.length) {
+          const thePlans = plansArray.map((item: Plan) => {
+            let thisItem = extractPlan(item);
+            // transform values of this properties if they are null
+            const columnsToTransform = ['village', 'canton', 'district', 'province'];
+            thisItem = transformValues(thisItem, columnsToTransform);
+            return thisItem;
+          });
+          const columnsBasedOnReason = [];
+          plansArray.every(d => d.plan_fi_reason === CASE_TRIGGERED)
+            ? columnsBasedOnReason.push(...completeReactivePlansColumn)
+            : columnsBasedOnReason.push(...completeRoutinePlansColumn);
+          const allColumns: Column[] = [
+            ...jsxColumns('name'),
+            ...dateCompletedColumn,
+            ...columnsBasedOnReason,
+          ];
+          const tableProps = {
+            ...defaultTableProps,
+            columns: allColumns,
+            data: thePlans,
+          };
+          completeRoutineReactivePlans.push(
+            <div key={thePlans[0].id}>
+              {buildTableHeader(plansArray)}
+              <DrillDownTable {...tableProps} />
+            </div>
+          );
         }
-      );
+      });
     }
-
     return (
       <div className="mb-5">
         <Helmet>
@@ -700,7 +388,7 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
         <hr />
         {currentRoutineReactivePlans}
         <hr />
-        <h4 className="mb-4">{COMPLETE_FOCUS_INVESTIGATION}</h4>
+        <h4 className="mb-4 complete">{COMPLETE_FOCUS_INVESTIGATION}</h4>
         <hr />
         {completeRoutineReactivePlans}
       </div>
@@ -714,7 +402,10 @@ export { SingleFI };
 
 /** interface to describe props from mapStateToProps */
 interface DispatchedStateProps {
-  plansArray: Plan[];
+  completeReactivePlansArray: Plan[] | [];
+  completeRoutinePlansArray: Plan[] | [];
+  currentReactivePlansArray: Plan[] | [];
+  currentRoutinePlansArray: Plan[] | [];
 }
 
 /** map state to props */
@@ -754,7 +445,6 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
     goalsArray,
     jurisdiction,
     planById: plan,
-    plansArray: getPlansArray(state, InterventionType.FI, [], null),
     plansIdArray: getPlansIdArray(state, InterventionType.FI, [], null),
   };
   return result;
