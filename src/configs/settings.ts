@@ -1,6 +1,7 @@
 /** This is the main configuration module */
 import { Providers } from '@onaio/gatekeeper';
 import { Expression } from 'mapbox-gl';
+import DrillDownTableLinkedCell from '../components/DrillDownTableLinkedCell';
 import {
   DOMAIN_NAME,
   ENABLE_ONADATA_OAUTH,
