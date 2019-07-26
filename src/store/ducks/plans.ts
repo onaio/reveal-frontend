@@ -1,7 +1,7 @@
 import { get, keyBy, keys, pickBy, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
 import SeamlessImmutable from 'seamless-immutable';
-import { transformValues } from '../../helpers/utils';
+import { FlexObject, transformValues } from '../../helpers/utils';
 
 /** the reducer name */
 export const reducerName = 'plans';
@@ -61,6 +61,117 @@ export interface Plan extends PlanRecord {
   jurisdiction_path: string[];
 }
 
+/** UseContext - interface for PlanPayload.useContext[] items */
+export interface UseContext {
+  code: string;
+  valueCodableConcept: string;
+}
+
+/** PlanPayload - interface for the payload used when creating/updating a plan via OpenSRP plans Endpoint */
+export interface PlanPayload {
+  action: any[];
+  date: string;
+  effectivePeriod: {
+    start: string;
+    end: string;
+  };
+  goal: any[];
+  identifier: string;
+  jurisdiction: Array<{
+    code: string;
+  }>;
+  name: string;
+  serverVersion: number;
+  status: string;
+  title: string;
+  useContext: UseContext[];
+  version: string;
+}
+
+/** PlanEventType - enum for Plan Event logging */
+export enum PlanEventType {
+  CREATE = 'Create Plan',
+  UPDATE = 'Update Plan',
+}
+
+/** PlanEvent - interface for pload used when logging create/update Plan events */
+export interface PlanEventPayload {
+  baseEntityId: string;
+  dateCreated: string;
+  details: FlexObject;
+  duration: number;
+  entityType: InterventionType;
+  eventDate: string;
+  eventType: PlanEventType;
+  formSubmissionId: string;
+  identifiers: FlexObject;
+  obs: Array<{
+    fieldType: 'concept';
+    fieldDataType: string;
+    fieldCode: string;
+    parentCode: string;
+    values: string[];
+    set: any[];
+    formSubmissionField: string;
+    humanReadableValues: string[];
+  }>;
+  providerId: string;
+  type: 'Event';
+  version: number;
+}
+
+/** extractPlanRecordFromPlanPayload - translates PlanPayload to PlanRecord */
+export const extractPlanRecordFromPlanPayload = (planPayload: PlanPayload): PlanRecord | null => {
+  const {
+    date,
+    effectivePeriod,
+    identifier,
+    status,
+    title,
+    useContext,
+    version,
+  } = planPayload as PlanPayload;
+
+  if (useContext && effectivePeriod) {
+    const { end, start } = effectivePeriod;
+    let planInterventionType = '';
+    let planFiReason = '';
+    let planFiStatus = '';
+    for (const context of useContext) {
+      switch (context.code) {
+        case 'interventionType': {
+          planInterventionType = context.valueCodableConcept;
+          break;
+        }
+        case 'fiReason': {
+          planFiReason = context.valueCodableConcept;
+          break;
+        }
+        case 'fiStatus': {
+          planFiStatus = context.valueCodableConcept;
+          break;
+        }
+      }
+    }
+    if (planInterventionType.length) {
+      const planRecord: PlanRecord = {
+        id: identifier,
+        plan_date: date,
+        plan_effective_period_end: end,
+        plan_effective_period_start: start,
+        plan_fi_reason: planFiReason,
+        plan_fi_status: planFiStatus,
+        plan_id: identifier,
+        plan_intervention_type: planInterventionType as InterventionType,
+        plan_status: status as PlanStatus,
+        plan_title: title,
+        plan_version: version,
+      };
+      return planRecord;
+    }
+  }
+  return null;
+};
 // actions
 /** PLANS_FETCHED action type */
 export const PLANS_FETCHED = 'reveal/reducer/plans/PLANS_FETCHED';
