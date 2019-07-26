@@ -21,7 +21,6 @@ import {
   SUPERSET_TASKS_SLICE,
 } from '../../../../../configs/env';
 import {
-  ACTIVE,
   CASE_TRIGGERED_PLAN,
   END_DATE,
   FI_SINGLE_MAP_URL,
@@ -254,7 +253,7 @@ class SingleActiveFIMap extends React.Component<
     });
     breadCrumbProps.pages = [homePage, basePage, ...pages, secondLastPage];
     const statusBadge =
-      plan && plan.plan_status === ACTIVE ? (
+      plan && plan.plan_status === PlanStatus.ACTIVE ? (
         <Badge color="warning" pill={true}>
           Active
         </Badge>
@@ -264,7 +263,7 @@ class SingleActiveFIMap extends React.Component<
         </Badge>
       );
     const markCompleteButton =
-      plan && plan.plan_status === ACTIVE ? (
+      plan && plan.plan_status === PlanStatus.ACTIVE ? (
         <Button color="primary" size="lg" block={true}>
           Mark as Complete
         </Button>
