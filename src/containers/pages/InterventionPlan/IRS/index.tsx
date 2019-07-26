@@ -106,9 +106,12 @@ class IrsPlans extends React.Component<IrsPlansProps & RouteComponentProps<Route
         columns: [
           {
             Cell: (cell: CellInfo) => {
+              const path = cell.original.plan_status === 'draft' ? 'draft' : 'plan';
               return (
                 <div>
-                  <Link to={`${INTERVENTION_IRS_URL}/plan/${cell.original.id}`}>{cell.value}</Link>
+                  <Link to={`${INTERVENTION_IRS_URL}/${path}/${cell.original.id}`}>
+                    {cell.value}
+                  </Link>
                 </div>
               );
             },
