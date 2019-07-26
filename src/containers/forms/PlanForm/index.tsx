@@ -5,7 +5,12 @@ import { Button, FormGroup, Label } from 'reactstrap';
 import * as Yup from 'yup';
 import DatePickerWrapper from '../../../components/DatePickerWrapper';
 import { DATE_FORMAT, DEFAULT_PLAN_DURATION_DAYS } from '../../../configs/env';
-import { FIClassifications, FIReasons, FIStatuses } from '../../../configs/settings';
+import {
+  FIClassifications,
+  FIReasons,
+  FIStatuses,
+  goalPriorities,
+} from '../../../configs/settings';
 import { DATE, IRS_TITLE, IS, NAME, REQUIRED, SAVING } from '../../../constants';
 import { InterventionType, PlanStatus } from '../../../store/ducks/plans';
 
@@ -14,6 +19,9 @@ type FIStatusType = typeof FIStatuses[number];
 
 /** Allowed FI Status values */
 type FIReasonType = typeof FIReasons[number];
+
+/** Allowed FI Status values */
+type GoalPriorityType = typeof goalPriorities[number];
 
 /** Array of FI Statuses */
 const fiStatusCodes = Object.values(FIClassifications).map(e => e.code as FIStatusType);
@@ -252,6 +260,8 @@ const PlanForm = () => {
               />
               <ErrorMessage name="end" component="small" className="form-text text-danger" />
             </FormGroup>
+            <hr />
+            <hr />
             <Button
               type="submit"
               className="btn btn-block"
