@@ -1454,13 +1454,31 @@ class IrsPlan extends React.Component<
         const planPayload = extractPlanPayloadFromPlanRecord(newPlanDraft);
         if (planPayload) {
           this.setState({ isSaveDraftDisabled: true }, () => {
-            OpenSrpPlanService.create(planPayload)
-              .then(response => {
-                this.props.history.push(`${INTERVENTION_IRS_URL}/draft/${planPayload.identifier}`);
-              })
-              .catch(error => {
-                this.setState({ isSaveDraftDisabled: false });
-              });
+            if (this.props.isNewPlan) {
+              OpenSrpPlanService.create(planPayload)
+                .then(() => {
+                  this.props.history.push(
+                    `${INTERVENTION_IRS_URL}/draft/${planPayload.identifier}`
+                  );
+                })
+                .catch(() => {
+                  this.setState({ isSaveDraftDisabled: false });
+                });
+            } else if (this.props.isDraftPlan) {
+              OpenSrpPlanService.update(planPayload)
+                .then(() => {
+                  this.setState({
+                    isSaveDraftDisabled: false,
+                    newPlan: {
+                      ...newPlanDraft,
+                      plan_jurisdictions_ids: [...(newPlan.plan_jurisdictions_ids as string[])],
+                    },
+                  });
+                })
+                .catch(() => {
+                  this.setState({ isSaveDraftDisabled: false });
+                });
+            }
           });
 
           // PUSH to OpenSRP endpoint
