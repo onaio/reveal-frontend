@@ -1,7 +1,22 @@
 /** This is the main configuration module */
 import { Providers } from '@onaio/gatekeeper';
+import { Actions } from 'gisida';
 import { Expression } from 'mapbox-gl';
 import DrillDownTableLinkedCell from '../components/DrillDownTableLinkedCell';
+import {
+  CANTON,
+  CASE_CLASSIFICATION_HEADER,
+  CASE_NOTIF_DATE_HEADER,
+  DATE_COMPLETED,
+  DISTRICT,
+  END_DATE,
+  FI_STATUS,
+  FOCUS_AREA_HEADER,
+  NAME,
+  PROVINCE,
+  START_DATE,
+  STATUS_HEADER,
+} from '../constants';
 import {
   DOMAIN_NAME,
   ENABLE_ONADATA_OAUTH,
