@@ -61,9 +61,12 @@ import jurisdictionReducer, {
 } from '../../../../../store/ducks/jurisdictions';
 import plansReducer, {
   extractPlanPayloadFromPlanRecord,
+  extractPlanRecordFromPlanPayload,
+  extractPlanRecordResponseFromPlanPayload,
   fetchPlanRecords,
   getPlanRecordById,
   InterventionType,
+  PlanPayload,
   PlanRecord,
   PlanRecordResponse,
   PlanStatus,
@@ -133,6 +136,7 @@ interface IrsPlanState {
   focusJurisdictionId: string | null;
   isEditingPlanName: boolean;
   isLoadingGeoms: boolean;
+  isLoadingJurisdictions: boolean;
   isSaveDraftDisabled: boolean;
   isStartingPlan: boolean;
   newPlan: PlanRecord | null;
@@ -157,8 +161,9 @@ class IrsPlan extends React.Component<
       focusJurisdictionId: null,
       isEditingPlanName: false,
       isLoadingGeoms: false,
+      isLoadingJurisdictions: !!!props.jurisdictionsArray.length,
       isSaveDraftDisabled: false,
-      isStartingPlan: props.isNewPlan || false,
+      isStartingPlan: props.isNewPlan || props.isDraftPlan || false,
       newPlan: props.isNewPlan
         ? {
             id: uuidv4(),
@@ -174,7 +179,7 @@ class IrsPlan extends React.Component<
             plan_title: this.getNewPlanTitle(),
             plan_version: '',
           }
-        : null,
+        : props.planById || null,
       planCountry: '',
       previousPlanName: '',
       tableCrumbs: [],
@@ -187,6 +192,7 @@ class IrsPlan extends React.Component<
       fetchAllJurisdictionIdsActionCreator,
       fetchJurisdictionsActionCreator,
       fetchPlansActionCreator,
+      isDraftPlan,
       isFinalizedPlan,
       loadedJurisdictionIds,
       planId,
@@ -215,12 +221,16 @@ class IrsPlan extends React.Component<
 
     // GET PLAN
     if (planId && !planById) {
-      const planSupersetParams = superset.getFormData(10, [
-        { comparator: planId, operator: '==', subject: 'identifier' },
-      ]);
-      await supersetService(SUPERSET_PLANS_TABLE_SLICE, planSupersetParams).then(
-        (planResult: PlanRecordResponse[]) => fetchPlansActionCreator(planResult)
-      );
+      await OpenSrpPlanService.read(planId)
+        .then((plan: PlanPayload) => {
+          const planRecord = extractPlanRecordResponseFromPlanPayload(plan);
+          if (planRecord) {
+            return fetchPlansActionCreator([planRecord]);
+          }
+        })
+        .catch(err => err);
+    } else if (isDraftPlan && planById) {
+      this.setState({ newPlan: planById });
     }
 
     // GET PLAN JURISDICTIONS associated with this plan
@@ -319,8 +329,14 @@ class IrsPlan extends React.Component<
   }
 
   public componentWillReceiveProps(nextProps: IrsPlanProps) {
-    const { childlessChildrenIds, country, isLoadingGeoms, newPlan } = this.state;
-    const { jurisdictionsArray } = nextProps;
+    const {
+      childlessChildrenIds,
+      country,
+      isLoadingGeoms,
+      isLoadingJurisdictions,
+      newPlan,
+    } = this.state;
+    const { isDraftPlan, jurisdictionsArray, planById } = nextProps;
 
     if (newPlan && childlessChildrenIds && country && isLoadingGeoms) {
       const filteredJurisdictions = jurisdictionsArray.filter(
@@ -334,6 +350,20 @@ class IrsPlan extends React.Component<
         });
       }
     }
+
+    if (
+      isLoadingJurisdictions &&
+      jurisdictionsArray.length !== this.props.jurisdictionsArray.length
+    ) {
+      this.setState({ isLoadingJurisdictions: false });
+    }
+
+    if (isDraftPlan && !newPlan && planById) {
+      this.setState({
+        isStartingPlan: !!this.state.country,
+        newPlan: planById,
+      });
+    }
   }
 
   public render() {
@@ -344,10 +374,15 @@ class IrsPlan extends React.Component<
       tableCrumbs,
       newPlan,
       isEditingPlanName,
+      isLoadingJurisdictions,
       isSaveDraftDisabled,
       isStartingPlan,
     } = this.state;
-    if ((planId && !planById) || (isNewPlan && !newPlan)) {
+    if (
+      (planId && !planById) ||
+      (isNewPlan && !newPlan) ||
+      (isDraftPlan && isLoadingJurisdictions)
+    ) {
       return <Loading />;
     }
 
@@ -1465,6 +1500,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
   const allJurisdictionIds = getAllJurisdictionsIdArray(state);
   const jurisdictionsArray = getJurisdictionsArray(state);
   const loadedJurisdictionIds = getJurisdictionsIdArray(state);
+
   const props = {
     allJurisdictionIds,
     isDraftPlan,
