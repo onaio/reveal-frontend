@@ -93,6 +93,8 @@ export const locationHierarchy: LocationItem[] = [
 
 /** Focus investigation configs */
 
+export const goalPriorities = ['low-priority', 'medium-priority', 'high-priority'] as const;
+
 /** Focus Investigation case classifications */
 export const FIClassifications: Classification[] = [
   {
