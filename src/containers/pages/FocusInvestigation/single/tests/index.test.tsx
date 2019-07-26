@@ -1,3 +1,5 @@
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faExternalLinkSquareAlt } from '@fortawesome/free-solid-svg-icons';
 import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import { createBrowserHistory } from 'history';
@@ -21,7 +23,7 @@ jest.mock('../../../../../components/GisidaWrapper', () => {
 jest.mock('../../../../../configs/env');
 
 const history = createBrowserHistory();
-
+library.add(faExternalLinkSquareAlt);
 describe('containers/pages/SingleFI', () => {
   beforeEach(() => {
     jest.resetAllMocks();
@@ -30,6 +32,10 @@ describe('containers/pages/SingleFI', () => {
   it('renders without crashing', () => {
     const mock: any = jest.fn();
     const props = {
+      completeReactivePlansArray: [],
+      completeRoutinePlansArray: [],
+      currentReactivePlansArray: [],
+      currentRoutinePlansArray: [],
       goalsArray: fixtures.plan1Goals,
       history,
       jurisdiction: fixtures.jurisdictions[0],
@@ -56,6 +62,10 @@ describe('containers/pages/SingleFI', () => {
     const supersetMock: any = jest.fn();
     supersetMock.mockImplementation(() => Promise.resolve(fixtures.plans));
     const props = {
+      completeReactivePlansArray: [],
+      completeRoutinePlansArray: [],
+      currentReactivePlansArray: [],
+      currentRoutinePlansArray: [],
       goalsArray: fixtures.plan1Goals,
       history,
       jurisdiction: fixtures.jurisdictions[0],
@@ -83,7 +93,6 @@ describe('containers/pages/SingleFI', () => {
     expect(toJson(wrapper)).toMatchSnapshot();
     expect(wrapper.find('GisidaWrapperMock').props()).toMatchSnapshot();
     expect(wrapper.find('HeaderBreadcrumb').length).toEqual(1);
-    expect(wrapper.find('FontAwesomeIcon').length).toEqual(1);
     wrapper.unmount();
   });
 
@@ -92,6 +101,10 @@ describe('containers/pages/SingleFI', () => {
     const supersetMock: any = jest.fn();
     supersetMock.mockImplementation(() => Promise.resolve(fixtures.plan5));
     const props = {
+      completeReactivePlansArray: [],
+      completeRoutinePlansArray: [],
+      currentReactivePlansArray: [],
+      currentRoutinePlansArray: [],
       goalsArray: [],
       history,
       jurisdiction: fixtures.jurisdictions[0],
@@ -124,6 +137,10 @@ describe('containers/pages/SingleFI', () => {
     store.dispatch(fetchGoals(fixtures.goals));
     store.dispatch(fetchJurisdictions(fixtures.jurisdictions));
     const props = {
+      completeReactivePlansArray: [],
+      completeRoutinePlansArray: [],
+      currentReactivePlansArray: [],
+      currentRoutinePlansArray: [],
       history,
       jurisdiction: fixtures.jurisdictions[0],
       location: mock,
