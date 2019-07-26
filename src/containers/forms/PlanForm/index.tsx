@@ -145,23 +145,25 @@ const PlanForm = () => {
                 className="form-text text-danger"
               />
             </FormGroup>
-            <FormGroup>
-              <Label for="fiStatus">Focus Investigation Status</Label>
-              <Field
-                component="select"
-                name="fiStatus"
-                id="fiStatus"
-                className={errors.fiStatus ? 'form-control is-invalid' : 'form-control'}
-              >
-                <option>----</option>
-                {Object.entries(FIClassifications).map(e => (
-                  <option key={e[1].code} value={e[1].code}>
-                    {e[1].code} - {e[1].name}
-                  </option>
-                ))}
-              </Field>
-              <ErrorMessage name="fiStatus" component="small" className="form-text text-danger" />
-            </FormGroup>
+            {values.interventionType === InterventionType.FI && (
+              <FormGroup>
+                <Label for="fiStatus">Focus Investigation Status</Label>
+                <Field
+                  component="select"
+                  name="fiStatus"
+                  id="fiStatus"
+                  className={errors.fiStatus ? 'form-control is-invalid' : 'form-control'}
+                >
+                  <option>----</option>
+                  {Object.entries(FIClassifications).map(e => (
+                    <option key={e[1].code} value={e[1].code}>
+                      {e[1].code} - {e[1].name}
+                    </option>
+                  ))}
+                </Field>
+                <ErrorMessage name="fiStatus" component="small" className="form-text text-danger" />
+              </FormGroup>
+            )}
             <FormGroup>
               <Label for="fiReason">Focus Investigation Reason</Label>
               <Field
