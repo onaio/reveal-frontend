@@ -202,7 +202,7 @@ export const planActivities: PlanActivities = {
             detailQuantity: {
               comparator: '>=',
               unit: 'activit(y|ies)',
-              value: 0,
+              value: 1,
             },
           },
           due: '',
@@ -276,7 +276,7 @@ export const planActivities: PlanActivities = {
             detailQuantity: {
               comparator: '>=',
               unit: 'Percent',
-              value: 0,
+              value: 100,
             },
           },
           due: '',
@@ -315,7 +315,7 @@ export const planActivities: PlanActivities = {
             detailQuantity: {
               comparator: '>=',
               unit: 'Person(s)',
-              value: 0,
+              value: 100,
             },
           },
           due: '',
@@ -352,7 +352,7 @@ export const planActivities: PlanActivities = {
             detailQuantity: {
               comparator: '>=',
               unit: 'case(s)',
-              value: 0,
+              value: 1,
             },
           },
           due: '',
@@ -391,7 +391,7 @@ export const planActivities: PlanActivities = {
             detailQuantity: {
               comparator: '>=',
               unit: 'Percent',
-              value: 0,
+              value: 100,
             },
           },
           due: '',
