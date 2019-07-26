@@ -69,6 +69,43 @@ const initialValues: PlanFormFields = {
   title: '',
 };
 
+/**
+ * Generate Focus Investigation Plan Name
+ * @param {FIStatusType} planFIStatus - the plan's FI status
+ * @param {string} jurisdictionName - the jurisdiction name
+ * @param {Date} planDate - the plan date
+ * @returns {string} the plan name
+ */
+function getFIPlanName(
+  planFIStatus: FIStatusType,
+  jurisdictionName: string,
+  planDate: Date = new Date()
+): string {
+  return `${planFIStatus}-${jurisdictionName}-${moment(planDate).format(
+    DATE_FORMAT.toUpperCase()
+  )}`;
+}
+
+/**
+ * Generate plan name
+ * @param {InterventionType} planType - the plan intervention type
+ * @param {FIStatusType} planFIStatus - the plan's FI status
+ * @param {string} jurisdictionName - the jurisdiction name
+ * @param {Date} planDate - the plan date
+ * @returns {string} the plan name
+ */
+function getPlanName(
+  planType: InterventionType,
+  planFIStatus: FIStatusType,
+  jurisdictionName: string,
+  planDate: Date = new Date()
+) {
+  if (planType === InterventionType.IRS) {
+    return InterventionType.IRS;
+  }
+  return getFIPlanName(planFIStatus, jurisdictionName, planDate);
+}
+
 /** Plan Form component */
 const PlanForm = () => {
   return (
