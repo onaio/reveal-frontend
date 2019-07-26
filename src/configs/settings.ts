@@ -93,6 +93,384 @@ export const locationHierarchy: LocationItem[] = [
 
 /** Focus investigation configs */
 
+export const goalPriorities = ['low-priority', 'medium-priority', 'high-priority'] as const;
+
+export type GoalPriorityType = typeof goalPriorities[number];
+
+/** Plan Action Timing Period */
+export interface PlanActionTimingPeriod {
+  end: string;
+  start: string;
+}
+
+/** Plan Action subjectCodableConcept */
+export interface PlanActionsubjectCodableConcept {
+  text: string;
+}
+
+/** Plan Action */
+export interface PlanAction {
+  code: string;
+  description: string;
+  goalId: string;
+  identifier: string;
+  prefix: number;
+  reason: string;
+  subjectCodableConcept: PlanActionsubjectCodableConcept;
+  taskTemplate: string;
+  timingPeriod: PlanActionTimingPeriod;
+  title: string;
+}
+
+/** Plan Goal detailQuantity */
+export interface PlanGoaldetailQuantity {
+  comparator: '>=';
+  unit: string;
+  value: number;
+}
+
+/** Plan Goal Detail */
+export interface PlanGoalDetail {
+  detailQuantity: PlanGoaldetailQuantity;
+}
+
+/** Plan Goal Target */
+export interface PlanGoalTarget {
+  due: string;
+  detail: PlanGoalDetail;
+  measure: string;
+}
+
+/** Plan Goal */
+export interface PlanGoal {
+  description: string;
+  id: string;
+  priority: GoalPriorityType;
+  target: PlanGoalTarget[];
+}
+
+/** Plan Activity */
+export interface PlanActivity {
+  action: PlanAction;
+  goal: PlanGoal;
+}
+
+/** Plan activity title values */
+export const PlanActivityTitles = [
+  'caseConfirmation',
+  'familyRegistration',
+  'bloodScreening',
+  'bednetDistribution',
+  'larvalDipping',
+  'mosquitoCollection',
+  'BCC',
+  'IRS',
+] as const;
+
+export type PlanActivityTitlesType = typeof PlanActivityTitles[number];
+
+/** type to describe plan activities */
+type PlanActivities = { [K in PlanActivityTitlesType]: PlanActivity };
+
+export const planActivities: PlanActivities = {
+  BCC: {
+    action: {
+      code: 'BCC',
+      description: 'Conduct BCC activity',
+      goalId: 'BCC_Focus',
+      identifier: '',
+      prefix: 0,
+      reason: 'Investigation',
+      subjectCodableConcept: {
+        text: 'Operational_Area',
+      },
+      taskTemplate: 'BCC_Focus',
+      timingPeriod: {
+        end: '',
+        start: '',
+      },
+      title: 'Behaviour Change Communication',
+    },
+    goal: {
+      description: 'Complete at least 1 BCC activity for the operational area',
+      id: 'BCC_Focus',
+      priority: 'medium-priority',
+      target: [
+        {
+          detail: {
+            detailQuantity: {
+              comparator: '>=',
+              unit: 'activit(y|ies)',
+              value: 0,
+            },
+          },
+          due: '',
+          measure: 'Number of BCC Activities Completed',
+        },
+      ],
+    },
+  },
+  IRS: {
+    action: {
+      code: 'IRS',
+      description: 'Visit each structure in the operational area and attempt to spray',
+      goalId: 'IRS',
+      identifier: '',
+      prefix: 0,
+      reason: 'Routine',
+      subjectCodableConcept: {
+        text: 'Residential_Structure',
+      },
+      taskTemplate: 'Spray_Structures',
+      timingPeriod: {
+        end: '',
+        start: '',
+      },
+      title: 'Spray Structures',
+    },
+    goal: {
+      description: 'Spray structures in the operational area',
+      id: 'IRS',
+      priority: 'medium-priority',
+      target: [
+        {
+          detail: {
+            detailQuantity: {
+              comparator: '>=',
+              unit: 'Percent',
+              value: 90,
+            },
+          },
+          due: '',
+          measure: 'Percent of structures sprayed',
+        },
+      ],
+    },
+  },
+  bednetDistribution: {
+    action: {
+      code: 'Bednet Distribution',
+      description: 'Visit 100% of residential structures in the operational area and provide nets',
+      goalId: 'RACD_bednet_dist_1km_radius',
+      identifier: '',
+      prefix: 0,
+      reason: 'Investigation',
+      subjectCodableConcept: {
+        text: 'Residential_Structure',
+      },
+      taskTemplate: 'Bednet_Distribution',
+      timingPeriod: {
+        end: '',
+        start: '',
+      },
+      title: 'Bednet Distribution',
+    },
+    goal: {
+      description: 'Visit 100% of residential structures in the operational area and provide nets',
+      id: 'RACD_bednet_dist_1km_radius',
+      priority: 'medium-priority',
+      target: [
+        {
+          detail: {
+            detailQuantity: {
+              comparator: '>=',
+              unit: 'Percent',
+              value: 0,
+            },
+          },
+          due: '',
+          measure: 'Percent of residential structures received nets',
+        },
+      ],
+    },
+  },
+  bloodScreening: {
+    action: {
+      code: 'BCC',
+      description: 'Conduct BCC activity',
+      goalId: 'BCC_Focus',
+      identifier: '',
+      prefix: 0,
+      reason: 'Investigation',
+      subjectCodableConcept: {
+        text: 'Operational_Area',
+      },
+      taskTemplate: 'BCC_Focus',
+      timingPeriod: {
+        end: '',
+        start: '',
+      },
+      title: 'Behaviour Change Communication',
+    },
+    goal: {
+      description: 'Complete at least 1 BCC activity for the operational area',
+      id: 'BCC_Focus',
+      priority: 'medium-priority',
+      target: [
+        {
+          detail: {
+            detailQuantity: {
+              comparator: '>=',
+              unit: 'form(s)',
+              value: 0,
+            },
+          },
+          due: '',
+          measure: 'Number of BCC forms submitted',
+        },
+      ],
+    },
+  },
+  caseConfirmation: {
+    action: {
+      code: 'BCC',
+      description: 'Conduct BCC activity',
+      goalId: 'BCC_Focus',
+      identifier: '',
+      prefix: 0,
+      reason: 'Investigation',
+      subjectCodableConcept: {
+        text: 'Operational_Area',
+      },
+      taskTemplate: 'BCC_Focus',
+      timingPeriod: {
+        end: '',
+        start: '',
+      },
+      title: 'Behaviour Change Communication',
+    },
+    goal: {
+      description: 'Complete at least 1 BCC activity for the operational area',
+      id: 'BCC_Focus',
+      priority: 'medium-priority',
+      target: [
+        {
+          detail: {
+            detailQuantity: {
+              comparator: '>=',
+              unit: 'form(s)',
+              value: 0,
+            },
+          },
+          due: '',
+          measure: 'Number of BCC forms submitted',
+        },
+      ],
+    },
+  },
+  familyRegistration: {
+    action: {
+      code: 'BCC',
+      description: 'Conduct BCC activity',
+      goalId: 'BCC_Focus',
+      identifier: '',
+      prefix: 0,
+      reason: 'Investigation',
+      subjectCodableConcept: {
+        text: 'Operational_Area',
+      },
+      taskTemplate: 'BCC_Focus',
+      timingPeriod: {
+        end: '',
+        start: '',
+      },
+      title: 'Behaviour Change Communication',
+    },
+    goal: {
+      description: 'Complete at least 1 BCC activity for the operational area',
+      id: 'BCC_Focus',
+      priority: 'medium-priority',
+      target: [
+        {
+          detail: {
+            detailQuantity: {
+              comparator: '>=',
+              unit: 'form(s)',
+              value: 0,
+            },
+          },
+          due: '',
+          measure: 'Number of BCC forms submitted',
+        },
+      ],
+    },
+  },
+  larvalDipping: {
+    action: {
+      code: 'BCC',
+      description: 'Conduct BCC activity',
+      goalId: 'BCC_Focus',
+      identifier: '',
+      prefix: 0,
+      reason: 'Investigation',
+      subjectCodableConcept: {
+        text: 'Operational_Area',
+      },
+      taskTemplate: 'BCC_Focus',
+      timingPeriod: {
+        end: '',
+        start: '',
+      },
+      title: 'Behaviour Change Communication',
+    },
+    goal: {
+      description: 'Complete at least 1 BCC activity for the operational area',
+      id: 'BCC_Focus',
+      priority: 'medium-priority',
+      target: [
+        {
+          detail: {
+            detailQuantity: {
+              comparator: '>=',
+              unit: 'form(s)',
+              value: 0,
+            },
+          },
+          due: '',
+          measure: 'Number of BCC forms submitted',
+        },
+      ],
+    },
+  },
+  mosquitoCollection: {
+    action: {
+      code: 'BCC',
+      description: 'Conduct BCC activity',
+      goalId: 'BCC_Focus',
+      identifier: '',
+      prefix: 0,
+      reason: 'Investigation',
+      subjectCodableConcept: {
+        text: 'Operational_Area',
+      },
+      taskTemplate: 'BCC_Focus',
+      timingPeriod: {
+        end: '',
+        start: '',
+      },
+      title: 'Behaviour Change Communication',
+    },
+    goal: {
+      description: 'Complete at least 1 BCC activity for the operational area',
+      id: 'BCC_Focus',
+      priority: 'medium-priority',
+      target: [
+        {
+          detail: {
+            detailQuantity: {
+              comparator: '>=',
+              unit: 'form(s)',
+              value: 0,
+            },
+          },
+          due: '',
+          measure: 'Number of BCC forms submitted',
+        },
+      ],
+    },
+  },
+};
+
 /** Focus Investigation case classifications */
 export const FIClassifications: Classification[] = [
   {
