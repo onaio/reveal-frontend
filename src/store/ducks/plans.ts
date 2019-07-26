@@ -163,6 +163,49 @@ export interface PlanEventPayload {
   version: number;
 }
 
+export const extractPlanRecordResponseFromPlanPayload = (
+  planPayload: PlanPayload
+): PlanRecordResponse | null => {
+  const { date, effectivePeriod, identifier, status, title, useContext, version } = planPayload;
+  if (useContext && effectivePeriod) {
+    const { end, start } = effectivePeriod;
+    let planInterventionType = '';
+    let planFiReason = '';
+    let planFiStatus = '';
+    for (const context of useContext) {
+      switch (context.code) {
+        case 'interventionType': {
+          planInterventionType = context.valueCodableConcept;
+          break;
+        }
+        case 'fiReason': {
+          planFiReason = context.valueCodableConcept;
+          break;
+        }
+        case 'fiStatus': {
+          planFiStatus = context.valueCodableConcept;
+          break;
+        }
+      }
+    }
+    const planRecordResponse: PlanRecordResponse = {
+      date,
+      effective_period_end: end,
+      effective_period_start: start,
+      fi_reason: planFiReason,
+      fi_status: planFiStatus,
+      identifier,
+      intervention_type: planInterventionType,
+      name,
+      status,
+      title,
+      version,
+    };
+    return planRecordResponse;
+  }
+  return null;
+};
+
 /** extractPlanRecordFromPlanPayload - translates PlanPayload to PlanRecord */
 export const extractPlanRecordFromPlanPayload = (planPayload: PlanPayload): PlanRecord | null => {
   const {
