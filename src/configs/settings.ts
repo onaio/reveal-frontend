@@ -95,6 +95,66 @@ export const locationHierarchy: LocationItem[] = [
 
 export const goalPriorities = ['low-priority', 'medium-priority', 'high-priority'] as const;
 
+export type GoalPriorityType = typeof goalPriorities[number];
+
+/** Plan Action Timing Period */
+export interface PlanActionTimingPeriod {
+  end: string;
+  start: string;
+}
+
+/** Plan Action subjectCodableConcept */
+export interface PlanActionsubjectCodableConcept {
+  text: string;
+}
+
+/** Plan Action */
+export interface PlanAction {
+  code: string;
+  description: string;
+  goalId: string;
+  identifier: string;
+  prefix: number;
+  reason: string;
+  subjectCodableConcept: PlanActionsubjectCodableConcept;
+  taskTemplate: string;
+  timingPeriod: PlanActionTimingPeriod;
+  title: string;
+}
+
+/** Plan Goal detailQuantity */
+export interface PlanGoaldetailQuantity {
+  comparator: '>=';
+  unit: string;
+  value: number;
+}
+
+/** Plan Goal Detail */
+export interface PlanGoalDetail {
+  detailQuantity: PlanGoaldetailQuantity;
+}
+
+/** Plan Goal Target */
+export interface PlanGoalTarget {
+  due: string;
+  detail: PlanGoalDetail;
+  measure: string;
+}
+
+/** Plan Goal */
+export interface PlanGoal {
+  description: string;
+  id: string;
+  priority: GoalPriorityType;
+  target: PlanGoalTarget[];
+}
+
+/** Plan Activity */
+export interface PlanActivity {
+  action: PlanAction;
+  goal: PlanGoal;
+}
+
 /** Focus Investigation case classifications */
 export const FIClassifications: Classification[] = [
   {
