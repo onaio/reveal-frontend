@@ -104,6 +104,8 @@ export type NAME = typeof NAME;
 export const NEW_PLAN = 'New Plan';
 export type NEW_PLAN = typeof NEW_PLAN;
 
+export const DATE_COMPLETED = 'Date Completed';
+export type DATE_COMPLETED = typeof DATE_COMPLETED;
 // internal urls
 export const LOGIN_URL = '/login';
 export type LOGIN_URL = typeof LOGIN_URL;
