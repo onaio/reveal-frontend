@@ -249,37 +249,37 @@ export const planActivities: PlanActivities = {
   },
   bednetDistribution: {
     action: {
-      code: 'BCC',
-      description: 'Conduct BCC activity',
-      goalId: 'BCC_Focus',
+      code: 'Bednet Distribution',
+      description: 'Visit 100% of residential structures in the operational area and provide nets',
+      goalId: 'RACD_bednet_dist_1km_radius',
       identifier: '',
       prefix: 0,
       reason: 'Investigation',
       subjectCodableConcept: {
-        text: 'Operational_Area',
+        text: 'Residential_Structure',
       },
-      taskTemplate: 'BCC_Focus',
+      taskTemplate: 'Bednet_Distribution',
       timingPeriod: {
         end: '',
         start: '',
       },
-      title: 'Behaviour Change Communication',
+      title: 'Bednet Distribution',
     },
     goal: {
-      description: 'Complete at least 1 BCC activity for the operational area',
-      id: 'BCC_Focus',
+      description: 'Visit 100% of residential structures in the operational area and provide nets',
+      id: 'RACD_bednet_dist_1km_radius',
       priority: 'medium-priority',
       target: [
         {
           detail: {
             detailQuantity: {
               comparator: '>=',
-              unit: 'form(s)',
+              unit: 'Percent',
               value: 0,
             },
           },
           due: '',
-          measure: 'Number of BCC forms submitted',
+          measure: 'Percent of residential structures received nets',
         },
       ],
     },
