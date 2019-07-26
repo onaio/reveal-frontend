@@ -287,37 +287,39 @@ export const planActivities: PlanActivities = {
   },
   bloodScreening: {
     action: {
-      code: 'BCC',
-      description: 'Conduct BCC activity',
-      goalId: 'BCC_Focus',
+      code: 'Blood Screening',
+      description:
+        'Visit all residential structures (100%) within a 1 km radius of a confirmed index case and test each registered person',
+      goalId: 'RACD_Blood_Screening',
       identifier: '',
       prefix: 0,
       reason: 'Investigation',
       subjectCodableConcept: {
-        text: 'Operational_Area',
+        text: 'Person',
       },
-      taskTemplate: 'BCC_Focus',
+      taskTemplate: 'RACD_Blood_Screening',
       timingPeriod: {
         end: '',
         start: '',
       },
-      title: 'Behaviour Change Communication',
+      title: 'Blood screening',
     },
     goal: {
-      description: 'Complete at least 1 BCC activity for the operational area',
-      id: 'BCC_Focus',
+      description:
+        'Visit all residential structures (100%) within a 1 km radius of a confirmed index case and test each registered person',
+      id: 'RACD_Blood_Screening',
       priority: 'medium-priority',
       target: [
         {
           detail: {
             detailQuantity: {
               comparator: '>=',
-              unit: 'form(s)',
+              unit: 'Person(s)',
               value: 0,
             },
           },
           due: '',
-          measure: 'Number of BCC forms submitted',
+          measure: 'Number of registered people tested',
         },
       ],
     },
