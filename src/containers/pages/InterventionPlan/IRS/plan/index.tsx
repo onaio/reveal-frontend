@@ -358,7 +358,7 @@ class IrsPlan extends React.Component<
       this.setState({ isLoadingJurisdictions: false });
     }
 
-    if (isDraftPlan && !newPlan && planById) {
+    if (isDraftPlan && !newPlan && planById && planById.plan_jurisdictions_ids) {
       this.setState({
         isStartingPlan: !!this.state.country,
         newPlan: planById,
@@ -693,21 +693,6 @@ class IrsPlan extends React.Component<
       });
     }
   }
-  private getChildlessChildrenIds(filteredJurisdictions: Jurisdiction[]): string[] {
-    const childlessChildrenIds = filteredJurisdictions.map(j => j.jurisdiction_id);
-    let jndex = 0;
-
-    for (const jurisdiction of filteredJurisdictions) {
-      if (jurisdiction && jurisdiction.parent_id) {
-        jndex = childlessChildrenIds.indexOf(jurisdiction.parent_id);
-        if (jndex !== -1) {
-          childlessChildrenIds.splice(jndex, 1);
-        }
-      }
-    }
-
-    return childlessChildrenIds;
-  }
 
   // Plan Title Control
   private getNewPlanDate(): string {
@@ -799,8 +784,8 @@ class IrsPlan extends React.Component<
     }
   }
   private onStartPlanFormSubmit(e: any) {
-    const { planCountry } = this.state;
-    const { jurisdictionsArray } = this.props;
+    const { newPlan: NewPlan, planCountry } = this.state;
+    const { jurisdictionsArray, isDraftPlan } = this.props;
     const country: JurisdictionsByCountry = CountriesAdmin0[planCountry as ADMN0_PCODE];
 
     const jurisdictionsToInclude = this.getDecendantJurisdictionIds(
@@ -816,11 +801,13 @@ class IrsPlan extends React.Component<
     const filteredJurisdictionIds = filteredJurisdictions.map(j => j.jurisdiction_id);
     const childlessChildrenIds = this.getChildlessChildrenIds(filteredJurisdictions);
 
-    const { newPlan: NewPlan } = this.state;
     const newPlan: PlanRecord | null = NewPlan
       ? {
           ...NewPlan,
-          plan_jurisdictions_ids: [...jurisdictionsToInclude],
+          plan_jurisdictions_ids:
+            isDraftPlan && NewPlan && NewPlan.plan_jurisdictions_ids
+              ? this.getAncestorJurisdictionIds(NewPlan.plan_jurisdictions_ids, jurisdictionsArray)
+              : [...jurisdictionsToInclude],
         }
       : NewPlan;
 
@@ -891,12 +878,6 @@ class IrsPlan extends React.Component<
     );
   }
 
-  private getBaseJurisdictionIds(ids: string[], jurisdictionsArray: Jurisdiction[]): string[] {
-    const parentIds = jurisdictionsArray.map(j => j.parent_id);
-    const childIds = ids.filter(j => parentIds.indexOf(j) === -1);
-    return childIds;
-  }
-
   // Jurisdiction Selection Control
   private onToggleJurisdictionSelection(id: string) {
     const { newPlan: NewPlan, filteredJurisdictionIds } = this.state;
@@ -953,29 +934,20 @@ class IrsPlan extends React.Component<
   }
 
   // Getter methods
-  private getParentJurisdiction(id: string): Jurisdiction | null {
-    const { jurisdictionsArray } = this.props;
-    let childJurisdiction: Jurisdiction | null = null;
+  private getChildlessChildrenIds(filteredJurisdictions: Jurisdiction[]): string[] {
+    const childlessChildrenIds = filteredJurisdictions.map(j => j.jurisdiction_id);
+    let jndex = 0;
 
-    // identify child jurisdiction
-    for (const c of jurisdictionsArray) {
-      if (c.jurisdiction_id === id) {
-        childJurisdiction = { ...c };
-        break;
-      }
-    }
-
-    // return parent jurisidction
-    if (childJurisdiction) {
-      for (const p of jurisdictionsArray) {
-        if (p.jurisdiction_id === childJurisdiction.parent_id) {
-          return { ...p };
+    for (const jurisdiction of filteredJurisdictions) {
+      if (jurisdiction && jurisdiction.parent_id) {
+        jndex = childlessChildrenIds.indexOf(jurisdiction.parent_id);
+        if (jndex !== -1) {
+          childlessChildrenIds.splice(jndex, 1);
         }
       }
     }
 
-    // if no child or parent jurisdiction is found, return null
-    return null;
+    return childlessChildrenIds;
   }
   private getDecendantJurisdictionIds(
     ParentIds: string[],
@@ -1000,6 +972,44 @@ class IrsPlan extends React.Component<
 
     return decendantIds;
   }
+  private getAncestorJurisdictionIds(
+    ChildIds: string[],
+    jurisdictions: Jurisdiction[] | { [key: string]: Jurisdiction },
+    doIncludeChildIds: boolean = true
+  ): string[] {
+    let ancestorIds: string[] = [];
+    const childIds: string[] = [...ChildIds];
+
+    let jurisdictionsById: { [key: string]: Jurisdiction } = {};
+    if (Array.isArray(jurisdictions)) {
+      for (const jurisdiction of jurisdictions) {
+        jurisdictionsById[jurisdiction.jurisdiction_id] = jurisdiction;
+      }
+    } else {
+      jurisdictionsById = { ...jurisdictions };
+    }
+    if (!Object.keys(jurisdictionsById).length) {
+      return doIncludeChildIds ? childIds : [];
+    }
+
+    for (const childId of childIds) {
+      if (doIncludeChildIds) {
+        ancestorIds.push(childId);
+      }
+      const { parent_id: parentId } = jurisdictionsById[childId];
+      if (parentId && parentId !== 'null' && parentId.length) {
+        const parentIds = this.getAncestorJurisdictionIds(
+          [parentId],
+          jurisdictionsById,
+          doIncludeChildIds
+        );
+        ancestorIds = [...ancestorIds, ...parentIds];
+      }
+    }
+
+    return Array.from(new Set(ancestorIds));
+  }
+
   private getGisidaWrapperProps(): GisidaProps | null {
     const { country, isLoadingGeoms, filteredJurisdictionIds } = this.state;
     const filteredJurisdictions = this.props.jurisdictionsArray.filter(j =>
