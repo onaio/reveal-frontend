@@ -847,3 +847,145 @@ export const imgArr = [
       'https://raw.githubusercontent.com/onaio/reveal-frontend/master/src/assets/images/mosquito.png',
   },
 ];
+
+export const currentReactivePlansColumns = [
+  {
+    Header: CASE_NOTIF_DATE_HEADER,
+    columns: [
+      {
+        Header: '',
+        accessor: 'caseNotificationDate',
+        minWidth: 90,
+      },
+    ],
+  },
+  {
+    Header: CASE_CLASSIFICATION_HEADER,
+    columns: [
+      {
+        Header: '',
+        accessor: 'caseClassification',
+      },
+    ],
+  },
+];
+
+export const currentRoutinePlansColumn = [
+  {
+    Header: STATUS_HEADER,
+    columns: [
+      {
+        Header: '',
+        accessor: 'status',
+        maxWidth: 60,
+      },
+    ],
+  },
+  {
+    Header: START_DATE,
+    columns: [
+      {
+        Header: '',
+        accessor: 'plan_effective_period_start',
+        minWidth: 80,
+      },
+    ],
+  },
+  {
+    Header: END_DATE,
+    columns: [
+      {
+        Header: '',
+        accessor: 'plan_effective_period_end',
+      },
+    ],
+  },
+];
+
+export const completeReactivePlansColumn = [
+  {
+    Header: END_DATE,
+    columns: [
+      {
+        Header: '',
+        accessor: 'plan_effective_period_end',
+      },
+    ],
+  },
+  {
+    Header: CASE_NOTIF_DATE_HEADER,
+    columns: [
+      {
+        Header: '',
+        accessor: 'caseNotificationDate',
+        minWidth: 90,
+      },
+    ],
+  },
+  {
+    Header: CASE_CLASSIFICATION_HEADER,
+    columns: [
+      {
+        Header: '',
+        accessor: 'caseClassification',
+      },
+    ],
+  },
+];
+
+export const completeRoutinePlansColumn = [
+  {
+    Header: START_DATE,
+    columns: [
+      {
+        Header: '',
+        accessor: 'plan_effective_period_start',
+        minWidth: 80,
+      },
+    ],
+  },
+  {
+    Header: END_DATE,
+    columns: [
+      {
+        Header: '',
+        accessor: 'plan_effective_period_end',
+      },
+    ],
+  },
+  {
+    Header: DATE_COMPLETED,
+    columns: [
+      {
+        Header: '',
+        accessor: 'plan_effective_period_end',
+      },
+    ],
+  },
+];
+/** Date completed field not there in the current plan  */
+export const dateCompletedColumn = [
+  {
+    Header: DATE_COMPLETED,
+    columns: [
+      {
+        Header: '',
+        accessor: 'date_completed',
+        minWidth: 80,
+      },
+    ],
+  },
+];
+
+export const statusColumn = [
+  {
+    Header: FI_STATUS,
+    columns: [
+      {
+        Header: '',
+        accessor: 'plan_status',
+        minWidth: 80,
+      },
+    ],
+  },
+];
