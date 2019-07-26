@@ -439,37 +439,39 @@ export const planActivities: PlanActivities = {
   },
   mosquitoCollection: {
     action: {
-      code: 'BCC',
-      description: 'Conduct BCC activity',
-      goalId: 'BCC_Focus',
+      code: 'Mosquito Collection',
+      description:
+        'Set a minimum of three mosquito collection traps and complete the mosquito collection process',
+      goalId: 'Mosquito_Collection',
       identifier: '',
       prefix: 0,
       reason: 'Investigation',
       subjectCodableConcept: {
-        text: 'Operational_Area',
+        text: 'Mosquito_Collection_Point',
       },
-      taskTemplate: 'BCC_Focus',
+      taskTemplate: 'Mosquito_Collection_Point',
       timingPeriod: {
         end: '',
         start: '',
       },
-      title: 'Behaviour Change Communication',
+      title: 'Mosquito Collection',
     },
     goal: {
-      description: 'Complete at least 1 BCC activity for the operational area',
-      id: 'BCC_Focus',
+      description:
+        'Set a minimum of three mosquito collection traps and complete the mosquito collection process',
+      id: 'Mosquito_Collection',
       priority: 'medium-priority',
       target: [
         {
           detail: {
             detailQuantity: {
               comparator: '>=',
-              unit: 'form(s)',
-              value: 0,
+              unit: 'activit(y|ies)',
+              value: 3,
             },
           },
           due: '',
-          measure: 'Number of BCC forms submitted',
+          measure: 'Number of mosquito collection activities completed',
         },
       ],
     },
