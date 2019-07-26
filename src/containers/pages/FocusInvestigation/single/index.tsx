@@ -23,7 +23,7 @@ import {
   SUPERSET_JURISDICTIONS_SLICE,
   SUPERSET_PLANS_SLICE,
 } from '../../../../configs/env';
-import { locationHierarchy } from '../../../../configs/settings';
+import { defaultTableProps, locationHierarchy } from '../../../../configs/settings';
 import {
   ACTIVE_INVESTIGATION,
   CANTON,
@@ -238,52 +238,67 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
       defaultHeaders.push(
         {
           Header: NAME,
+          columns: [{}],
         },
         {
           Header: FI_STATUS,
+          columns: [{}],
         },
         {
           Header: CASE_NOTIF_DATE_HEADER,
+          columns: [{}],
         },
         {
           Header: CASE_CLASSIFICATION_HEADER,
+          columns: [{}],
         }
       );
     }
-    if (!currentRoutinePlansArray) {
+    if (!currentRoutinePlansArray.length) {
       defaultHeaders.push(
         {
           Header: NAME,
+          columns: [{}],
         },
         {
           Header: FI_STATUS,
+          columns: [{}],
         },
         {
           Header: PROVINCE,
+          columns: [{}],
         },
         {
           Header: DISTRICT,
+          columns: [{}],
         },
         {
           Header: CANTON,
+          columns: [{}],
         },
         {
           Header: 'Village',
+          columns: [{}],
         },
         {
           Header: FOCUS_AREA_HEADER,
+          columns: [{}],
         },
         {
           Header: STATUS_HEADER,
+          columns: [{}],
         },
         {
           Header: START_DATE,
+          columns: [{}],
         },
         {
           Header: END_DATE,
+          columns: [{}],
         },
         {
           Header: Actions,
+          columns: [{}],
         }
       );
     }
@@ -394,7 +409,7 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
                       },
                       Header: '',
                       accessor: 'plan_status',
-                      minWidth: 80,
+                      minWidth: 70,
                     },
                   ],
                 }
@@ -442,17 +457,9 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
             ...columnsBasedOnReason,
           ];
           const tableProps = {
-            CellComponent: DrillDownTableLinkedCell,
+            ...defaultTableProps,
             columns: allColumns,
             data: thePlans,
-            identifierField: 'id',
-            linkerField: 'id',
-            minRows: 0,
-            parentIdentifierField: 'parent',
-            rootParentId: null,
-            showPageSizeOptions: false,
-            showPagination: false,
-            useDrillDownTrProps: false,
           };
           const TableHeaderWithOptionalForm = plansArray.every(
             d => d.plan_fi_reason === CASE_TRIGGERED
@@ -502,17 +509,8 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
         }
       );
       const tableProps = {
-        CellComponent: DrillDownTableLinkedCell,
+        ...defaultTableProps,
         columns: emptyCompleteReactivePlans,
-        data: [],
-        identifierField: 'id',
-        linkerField: 'id',
-        minRows: 0,
-        parentIdentifierField: 'parent',
-        rootParentId: null,
-        showPageSizeOptions: false,
-        showPagination: false,
-        useDrillDownTrProps: false,
       };
       completeRoutineReactivePlans.push(
         <div key="no-reactive">
@@ -544,17 +542,8 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
         }
       );
       const tableProps = {
-        CellComponent: DrillDownTableLinkedCell,
+        ...defaultTableProps,
         columns: emptyCompleteRoutinePlans,
-        data: [],
-        identifierField: 'id',
-        linkerField: 'id',
-        minRows: 0,
-        parentIdentifierField: 'parent',
-        rootParentId: null,
-        showPageSizeOptions: false,
-        showPagination: false,
-        useDrillDownTrProps: false,
       };
       completeRoutineReactivePlans.push(
         <div key="no-routine">
@@ -698,17 +687,9 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
               ...columnsBasedOnReason,
             ];
             const tableProps = {
-              CellComponent: DrillDownTableLinkedCell,
+              ...defaultTableProps,
               columns: allColumns,
               data: thePlans,
-              identifierField: 'id',
-              linkerField: 'id',
-              minRows: 0,
-              parentIdentifierField: 'parent',
-              rootParentId: null,
-              showPageSizeOptions: false,
-              showPagination: false,
-              useDrillDownTrProps: false,
             };
             const TableHeaderWithOptionalForm = plansArray.every(
               d => d.plan_fi_reason === CASE_TRIGGERED
