@@ -402,37 +402,37 @@ export const planActivities: PlanActivities = {
   },
   larvalDipping: {
     action: {
-      code: 'BCC',
-      description: 'Conduct BCC activity',
-      goalId: 'BCC_Focus',
+      code: 'Larval Dipping',
+      description: 'Perform a minimum of three larval dipping activities in the operational area',
+      goalId: 'Larval_Dipping',
       identifier: '',
       prefix: 0,
       reason: 'Investigation',
       subjectCodableConcept: {
-        text: 'Operational_Area',
+        text: 'Breeding_Site',
       },
-      taskTemplate: 'BCC_Focus',
+      taskTemplate: 'Larval_Dipping',
       timingPeriod: {
         end: '',
         start: '',
       },
-      title: 'Behaviour Change Communication',
+      title: 'Larval Dipping',
     },
     goal: {
-      description: 'Complete at least 1 BCC activity for the operational area',
-      id: 'BCC_Focus',
+      description: 'Perform a minimum of three larval dipping activities in the operational area',
+      id: 'Larval_Dipping',
       priority: 'medium-priority',
       target: [
         {
           detail: {
             detailQuantity: {
               comparator: '>=',
-              unit: 'form(s)',
-              value: 0,
+              unit: 'activit(y|ies)',
+              value: 3,
             },
           },
           due: '',
-          measure: 'Number of BCC forms submitted',
+          measure: 'Number of larval dipping activities completed',
         },
       ],
     },
