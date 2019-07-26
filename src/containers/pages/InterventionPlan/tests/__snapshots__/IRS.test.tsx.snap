@@ -262,7 +262,6 @@ exports[`containers/pages/IRS renders plans list correctly 1`] = `
             "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
           ]
         }
-        supersetService={[Function]}
       >
         <div
           className="mb-5"
@@ -1720,10 +1719,10 @@ exports[`containers/pages/IRS renders plans list correctly 1`] = `
                                       <div>
                                         <Link
                                           replace={false}
-                                          to="/intervention/irs/plan/draftPlan-id-2"
+                                          to="/intervention/irs/draft/draftPlan-id-2"
                                         >
                                           <a
-                                            href="/intervention/irs/plan/draftPlan-id-2"
+                                            href="/intervention/irs/draft/draftPlan-id-2"
                                             onClick={[Function]}
                                           >
                                             A1-Tha Luang Village 1 Focus 01
