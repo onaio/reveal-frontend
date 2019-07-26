@@ -1,9 +1,10 @@
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import moment from 'moment';
-import React from 'react';
+import React, { FormEvent } from 'react';
 import { Button, FormGroup, Label } from 'reactstrap';
 import * as Yup from 'yup';
 import DatePickerWrapper from '../../../components/DatePickerWrapper';
+import FormikObserver from '../../../components/FormikObserver';
 import { DATE_FORMAT, DEFAULT_PLAN_DURATION_DAYS } from '../../../configs/env';
 import { FIClassifications, FIReasons, FIStatuses } from '../../../configs/settings';
 import { DATE, IS, NAME, REQUIRED, SAVING } from '../../../constants';
@@ -54,7 +55,7 @@ interface PlanFormFields {
 
 /** initial values */
 const initialValues: PlanFormFields = {
-  caseNum: undefined,
+  caseNum: '',
   date: moment().toDate(),
   end: moment()
     .add(DEFAULT_PLAN_DURATION_DAYS, 'days')
@@ -67,6 +68,37 @@ const initialValues: PlanFormFields = {
   start: moment().toDate(),
   status: PlanStatus.DRAFT,
   title: '',
+};
+
+/**
+ * Get the plan name and title
+ * @param {any} event - the event object
+ * @param {PlanFormFields} formValues - the form values
+ * @returns {[string, string]} - the plan name and title
+ */
+const getNameTitle = (event: any, formValues: PlanFormFields): [string, string] => {
+  let name = 'IRS';
+  let title = 'IRS';
+  const currentInterventionType =
+    event.target.name === 'interventionType' ? event.target.value : formValues.interventionType;
+  const currentFiStatus =
+    event.target.name === 'fiStatus' ? event.target.value : formValues.fiStatus;
+  const currentJurisdiction = 'Some Jurisdiction';
+  const currentDate = event.target.name === 'date' ? event.target.value : formValues.date;
+  if (currentInterventionType === InterventionType.FI) {
+    const result = [
+      currentFiStatus,
+      currentJurisdiction,
+      moment(currentDate).format(DATE_FORMAT.toUpperCase()),
+    ].map(e => {
+      if (e) {
+        return e;
+      }
+    });
+    name = result.join('-');
+    title = result.join(' ');
+  }
+  return [name, title];
 };
 
 /**
@@ -121,8 +153,15 @@ const PlanForm = () => {
         }}
         validationSchema={PlanSchema}
       >
-        {({ errors, isSubmitting, values }) => (
-          <Form>
+        {({ errors, isSubmitting, setFieldValue, values }) => (
+          <Form
+            /* tslint:disable-next-line jsx-no-lambda */
+            onChange={e => {
+              const nameTitle = getNameTitle(e, values);
+              setFieldValue('name', nameTitle[0]);
+              setFieldValue('title', nameTitle[1]);
+            }}
+          >
             <FormGroup className="non-field-errors">
               <ErrorMessage name="name" component="p" className="form-text text-danger" />
               <ErrorMessage name="date" component="p" className="form-text text-danger" />
