@@ -354,7 +354,7 @@ class IrsPlan extends React.Component<
       this.setState({ isLoadingJurisdictions: false });
     }
 
-    if (isDraftPlan && !newPlan && planById) {
+    if (isDraftPlan && !newPlan && planById && planById.plan_jurisdictions_ids) {
       this.setState({
         isStartingPlan: !!this.state.country,
         newPlan: planById,
@@ -775,8 +775,8 @@ class IrsPlan extends React.Component<
     }
   }
   private onStartPlanFormSubmit(e: any) {
-    const { planCountry } = this.state;
-    const { jurisdictionsArray } = this.props;
+    const { newPlan: NewPlan, planCountry } = this.state;
+    const { jurisdictionsArray, isDraftPlan } = this.props;
     const country: JurisdictionsByCountry = CountriesAdmin0[planCountry as ADMN0_PCODE];
 
     const jurisdictionsToInclude = this.getDecendantJurisdictionIds(
@@ -792,11 +792,13 @@ class IrsPlan extends React.Component<
     const filteredJurisdictionIds = filteredJurisdictions.map(j => j.jurisdiction_id);
     const childlessChildrenIds = this.getChildlessChildrenIds(filteredJurisdictions);
 
-    const { newPlan: NewPlan } = this.state;
     const newPlan: PlanRecord | null = NewPlan
       ? {
           ...NewPlan,
-          plan_jurisdictions_ids: [...jurisdictionsToInclude],
+          plan_jurisdictions_ids:
+            isDraftPlan && NewPlan && NewPlan.plan_jurisdictions_ids
+              ? this.getAncestorJurisdictionIds(NewPlan.plan_jurisdictions_ids, jurisdictionsArray)
+              : [...jurisdictionsToInclude],
         }
       : NewPlan;
 
@@ -961,6 +963,44 @@ class IrsPlan extends React.Component<
 
     return decendantIds;
   }
+  private getAncestorJurisdictionIds(
+    ChildIds: string[],
+    jurisdictions: Jurisdiction[] | { [key: string]: Jurisdiction },
+    doIncludeChildIds: boolean = true
+  ): string[] {
+    let ancestorIds: string[] = [];
+    const childIds: string[] = [...ChildIds];
+
+    let jurisdictionsById: { [key: string]: Jurisdiction } = {};
+    if (Array.isArray(jurisdictions)) {
+      for (const jurisdiction of jurisdictions) {
+        jurisdictionsById[jurisdiction.jurisdiction_id] = jurisdiction;
+      }
+    } else {
+      jurisdictionsById = { ...jurisdictions };
+    }
+    if (!Object.keys(jurisdictionsById).length) {
+      return doIncludeChildIds ? childIds : [];
+    }
+
+    for (const childId of childIds) {
+      if (doIncludeChildIds) {
+        ancestorIds.push(childId);
+      }
+      const { parent_id: parentId } = jurisdictionsById[childId];
+      if (parentId && parentId !== 'null' && parentId.length) {
+        const parentIds = this.getAncestorJurisdictionIds(
+          [parentId],
+          jurisdictionsById,
+          doIncludeChildIds
+        );
+        ancestorIds = [...ancestorIds, ...parentIds];
+      }
+    }
+
+    return Array.from(new Set(ancestorIds));
+  }
+
   private getGisidaWrapperProps(): GisidaProps | null {
     const { country, isLoadingGeoms, filteredJurisdictionIds } = this.state;
     const filteredJurisdictions = this.props.jurisdictionsArray.filter(j =>
