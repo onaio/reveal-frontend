@@ -9,19 +9,21 @@ import { Store } from 'redux';
 
 import DrillDownTable from '@onaio/drill-down-table';
 import reducerRegistry from '@onaio/redux-reducer-registry';
-import superset from '@onaio/superset-connector';
 
-import { SUPERSET_PLANS_TABLE_SLICE } from '../../../../configs/env';
-import { HOME, HOME_URL, INTERVENTION_IRS_URL, IRS_PLAN_TYPE } from '../../../../constants';
+import { HOME, HOME_URL, INTERVENTION_IRS_URL } from '../../../../constants';
 
 import { RouteParams } from '../../../../helpers/utils';
+import { OpenSRPService } from '../../../../services/opensrp';
 import supersetFetch from '../../../../services/superset';
 import plansReducer, {
+  extractPlanRecordResponseFromPlanPayload,
   fetchPlanRecords,
   getPlanRecordsArray,
   InterventionType,
+  PlanPayload,
   PlanRecord,
   PlanRecordResponse,
+  PlanStatus,
   reducerName as plansReducerName,
 } from '../../../../store/ducks/plans';
 
@@ -35,6 +37,8 @@ import { IRS_TITLE } from '../../../../constants';
 
 /** register the plans reducer */
 reducerRegistry.register(plansReducerName, plansReducer);
+
+const OpenSrpPlanService = new OpenSRPService('plans');
 
 /** IrsPlansProps - interface for IRS Plans page */
 export interface IrsPlansProps {
@@ -59,12 +63,26 @@ class IrsPlans extends React.Component<IrsPlansProps & RouteComponentProps<Route
 
   public componentDidMount() {
     const { fetchPlansActionCreator, supersetService } = this.props;
-    const supersetParams = superset.getFormData(1000, [
-      { comparator: IRS_PLAN_TYPE, operator: '==', subject: 'intervention_type' },
-    ]);
-    supersetService(SUPERSET_PLANS_TABLE_SLICE, supersetParams).then(
-      (result: PlanRecordResponse[]) => fetchPlansActionCreator(result)
-    );
+
+    OpenSrpPlanService.list()
+      .then(plans => {
+        // filter for IRS plans
+        const irsPlans = plans.filter(
+          (p: PlanPayload) =>
+            p.useContext &&
+            p.useContext[0] &&
+            p.useContext[0].code === 'interventionType' &&
+            p.useContext[0].valueCodableConcept === 'IRS'
+        );
+        const irsPlanRecords: PlanRecordResponse[] = irsPlans.map(
+          extractPlanRecordResponseFromPlanPayload
+        );
+
+        return fetchPlansActionCreator(irsPlanRecords);
+      })
+      .catch(err => {
+        // console.log('ERR', err)
+      });
   }
 
   public render() {
@@ -162,7 +180,10 @@ interface DispatchedStateProps {
 
 const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateProps => {
   const props = {
-    plansArray: getPlanRecordsArray(state, InterventionType.IRS),
+    plansArray: getPlanRecordsArray(state, InterventionType.IRS, [
+      PlanStatus.ACTIVE,
+      PlanStatus.DRAFT,
+    ]),
     ...ownProps,
   };
   return props;
