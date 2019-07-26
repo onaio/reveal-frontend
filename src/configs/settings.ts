@@ -326,37 +326,37 @@ export const planActivities: PlanActivities = {
   },
   caseConfirmation: {
     action: {
-      code: 'BCC',
-      description: 'Conduct BCC activity',
-      goalId: 'BCC_Focus',
+      code: 'Case Confirmation',
+      description: 'Confirm the index case',
+      goalId: 'Case_Confirmation',
       identifier: '',
       prefix: 0,
       reason: 'Investigation',
       subjectCodableConcept: {
-        text: 'Operational_Area',
+        text: 'Case_Confirmation',
       },
-      taskTemplate: 'BCC_Focus',
+      taskTemplate: 'Case_Confirmation',
       timingPeriod: {
         end: '',
         start: '',
       },
-      title: 'Behaviour Change Communication',
+      title: 'Case Confirmation',
     },
     goal: {
-      description: 'Complete at least 1 BCC activity for the operational area',
-      id: 'BCC_Focus',
+      description: 'Confirm the index case',
+      id: 'Case_Confirmation',
       priority: 'medium-priority',
       target: [
         {
           detail: {
             detailQuantity: {
               comparator: '>=',
-              unit: 'form(s)',
+              unit: 'case(s)',
               value: 0,
             },
           },
           due: '',
-          measure: 'Number of BCC forms submitted',
+          measure: 'Number of cases confirmed',
         },
       ],
     },
