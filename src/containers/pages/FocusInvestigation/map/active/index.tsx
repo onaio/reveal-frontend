@@ -310,7 +310,7 @@ class SingleActiveFIMap extends React.Component<
               </h2>
             </Col>
             <Col xs="4">
-              <Select value="Other area investigations" />
+              <Select placeholder="Other area Investigations" />
             </Col>
           </Row>
         </div>
