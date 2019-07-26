@@ -1,10 +1,9 @@
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import moment from 'moment';
-import React, { FormEvent } from 'react';
+import React from 'react';
 import { Button, FormGroup, Label } from 'reactstrap';
 import * as Yup from 'yup';
 import DatePickerWrapper from '../../../components/DatePickerWrapper';
-import FormikObserver from '../../../components/FormikObserver';
 import { DATE_FORMAT, DEFAULT_PLAN_DURATION_DAYS } from '../../../configs/env';
 import { FIClassifications, FIReasons, FIStatuses } from '../../../configs/settings';
 import { DATE, IS, NAME, REQUIRED, SAVING } from '../../../constants';
@@ -100,43 +99,6 @@ const getNameTitle = (event: any, formValues: PlanFormFields): [string, string] 
   }
   return [name, title];
 };
-
-/**
- * Generate Focus Investigation Plan Name
- * @param {FIStatusType} planFIStatus - the plan's FI status
- * @param {string} jurisdictionName - the jurisdiction name
- * @param {Date} planDate - the plan date
- * @returns {string} the plan name
- */
-function getFIPlanName(
-  planFIStatus: FIStatusType,
-  jurisdictionName: string,
-  planDate: Date = new Date()
-): string {
-  return `${planFIStatus}-${jurisdictionName}-${moment(planDate).format(
-    DATE_FORMAT.toUpperCase()
-  )}`;
-}
-
-/**
- * Generate plan name
- * @param {InterventionType} planType - the plan intervention type
- * @param {FIStatusType} planFIStatus - the plan's FI status
- * @param {string} jurisdictionName - the jurisdiction name
- * @param {Date} planDate - the plan date
- * @returns {string} the plan name
- */
-function getPlanName(
-  planType: InterventionType,
-  planFIStatus: FIStatusType,
-  jurisdictionName: string,
-  planDate: Date = new Date()
-) {
-  if (planType === InterventionType.IRS) {
-    return InterventionType.IRS;
-  }
-  return getFIPlanName(planFIStatus, jurisdictionName, planDate);
-}
 
 /** Plan Form component */
 const PlanForm = () => {
