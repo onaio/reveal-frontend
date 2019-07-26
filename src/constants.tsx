@@ -122,7 +122,7 @@ export const HOME_TITLE = `Home page`;
 export type HOME_TITLE = typeof HOME_TITLE;
 export const FI_HISTORICAL_TITLE = `Historical Focus Investigations`;
 export type FI_HISTORICAL_TITLE = typeof FI_HISTORICAL_TITLE;
-export const IRS_TITLE = `IRS`;
+export const IRS_TITLE = 'IRS';
 export type IRS_TITLE = typeof IRS_TITLE;
 
 // colors
@@ -149,7 +149,7 @@ export type LARVAL_DIPPING_CODE = typeof LARVAL_DIPPING_CODE;
 export const BLOOD_SCREENING_CODE = 'Blood Screening';
 export type BLOOD_SCREENING_CODE = typeof BLOOD_SCREENING_CODE;
 export const IRS_CODE = 'IRS';
-export type IRS = typeof IRS_CODE;
+export type IRS_CODE = typeof IRS_CODE;
 
 // plans
 export const ROUTINE_PLAN = 'Routine';
