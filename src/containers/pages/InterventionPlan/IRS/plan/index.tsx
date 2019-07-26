@@ -684,21 +684,6 @@ class IrsPlan extends React.Component<
       });
     }
   }
-  private getChildlessChildrenIds(filteredJurisdictions: Jurisdiction[]): string[] {
-    const childlessChildrenIds = filteredJurisdictions.map(j => j.jurisdiction_id);
-    let jndex = 0;
-
-    for (const jurisdiction of filteredJurisdictions) {
-      if (jurisdiction && jurisdiction.parent_id) {
-        jndex = childlessChildrenIds.indexOf(jurisdiction.parent_id);
-        if (jndex !== -1) {
-          childlessChildrenIds.splice(jndex, 1);
-        }
-      }
-    }
-
-    return childlessChildrenIds;
-  }
 
   // Plan Title Control
   private getNewPlanDate(): string {
@@ -882,12 +867,6 @@ class IrsPlan extends React.Component<
     );
   }
 
-  private getBaseJurisdictionIds(ids: string[], jurisdictionsArray: Jurisdiction[]): string[] {
-    const parentIds = jurisdictionsArray.map(j => j.parent_id);
-    const childIds = ids.filter(j => parentIds.indexOf(j) === -1);
-    return childIds;
-  }
-
   // Jurisdiction Selection Control
   private onToggleJurisdictionSelection(id: string) {
     const { newPlan: NewPlan, filteredJurisdictionIds } = this.state;
@@ -944,29 +923,20 @@ class IrsPlan extends React.Component<
   }
 
   // Getter methods
-  private getParentJurisdiction(id: string): Jurisdiction | null {
-    const { jurisdictionsArray } = this.props;
-    let childJurisdiction: Jurisdiction | null = null;
+  private getChildlessChildrenIds(filteredJurisdictions: Jurisdiction[]): string[] {
+    const childlessChildrenIds = filteredJurisdictions.map(j => j.jurisdiction_id);
+    let jndex = 0;
 
-    // identify child jurisdiction
-    for (const c of jurisdictionsArray) {
-      if (c.jurisdiction_id === id) {
-        childJurisdiction = { ...c };
-        break;
-      }
-    }
-
-    // return parent jurisidction
-    if (childJurisdiction) {
-      for (const p of jurisdictionsArray) {
-        if (p.jurisdiction_id === childJurisdiction.parent_id) {
-          return { ...p };
+    for (const jurisdiction of filteredJurisdictions) {
+      if (jurisdiction && jurisdiction.parent_id) {
+        jndex = childlessChildrenIds.indexOf(jurisdiction.parent_id);
+        if (jndex !== -1) {
+          childlessChildrenIds.splice(jndex, 1);
         }
       }
     }
 
-    // if no child or parent jurisdiction is found, return null
-    return null;
+    return childlessChildrenIds;
   }
   private getDecendantJurisdictionIds(
     ParentIds: string[],
