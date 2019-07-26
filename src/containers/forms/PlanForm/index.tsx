@@ -183,18 +183,20 @@ const PlanForm = () => {
                 <ErrorMessage name="fiReason" component="small" className="form-text text-danger" />
               </FormGroup>
             )}
-            <FormGroup>
-              <Label for="caseNum">Case Number</Label>
-              <Field
-                type="text"
-                name="caseNum"
-                id="caseNum"
-                className={errors.caseNum ? 'form-control is-invalid' : 'form-control'}
-              />
-              <ErrorMessage name="caseNum" component="small" className="form-text text-danger" />
+            {values.interventionType === InterventionType.FI && values.fiReason === FIReasons[1] && (
+              <FormGroup>
+                <Label for="caseNum">Case Number</Label>
+                <Field
+                  type="text"
+                  name="caseNum"
+                  id="caseNum"
+                  className={errors.caseNum ? 'form-control is-invalid' : 'form-control'}
+                />
+                <ErrorMessage name="caseNum" component="small" className="form-text text-danger" />
 
-              <Field type="hidden" name="opensrpEventId" id="opensrpEventId" readOnly={true} />
-            </FormGroup>
+                <Field type="hidden" name="opensrpEventId" id="opensrpEventId" readOnly={true} />
+              </FormGroup>
+            )}
             <FormGroup>
               <Label for="title">Plan Title</Label>
               <Field
