@@ -593,7 +593,7 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
                   defaultInputValue=""
                   defaultMenuIsOpen={false}
                   defaultValue={null}
-                  value="Other area investigations"
+                  placeholder="Other area Investigations"
                 >
                   <Select
                     backspaceRemovesValue={true}
@@ -632,12 +632,12 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
                     openMenuOnFocus={false}
                     options={Array []}
                     pageSize={5}
-                    placeholder="Select..."
+                    placeholder="Other area Investigations"
                     screenReaderStatus={[Function]}
                     styles={Object {}}
                     tabIndex="0"
                     tabSelectsValue={true}
-                    value="Other area investigations"
+                    value={null}
                   >
                     <SelectContainer
                       clearValue={[Function]}
@@ -695,12 +695,12 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
                           "openMenuOnFocus": false,
                           "options": Array [],
                           "pageSize": 5,
-                          "placeholder": "Select...",
+                          "placeholder": "Other area Investigations",
                           "screenReaderStatus": [Function],
                           "styles": Object {},
                           "tabIndex": "0",
                           "tabSelectsValue": true,
-                          "value": "Other area investigations",
+                          "value": null,
                         }
                       }
                       setValue={[Function]}
@@ -810,12 +810,12 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
                                 "openMenuOnFocus": false,
                                 "options": Array [],
                                 "pageSize": 5,
-                                "placeholder": "Select...",
+                                "placeholder": "Other area Investigations",
                                 "screenReaderStatus": [Function],
                                 "styles": Object {},
                                 "tabIndex": "0",
                                 "tabSelectsValue": true,
-                                "value": "Other area investigations",
+                                "value": null,
                               }
                             }
                             setValue={[Function]}
@@ -933,12 +933,12 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
                                       "openMenuOnFocus": false,
                                       "options": Array [],
                                       "pageSize": 5,
-                                      "placeholder": "Select...",
+                                      "placeholder": "Other area Investigations",
                                       "screenReaderStatus": [Function],
                                       "styles": Object {},
                                       "tabIndex": "0",
                                       "tabSelectsValue": true,
-                                      "value": "Other area investigations",
+                                      "value": null,
                                     }
                                   }
                                   setValue={[Function]}
@@ -1043,12 +1043,12 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
                                             "openMenuOnFocus": false,
                                             "options": Array [],
                                             "pageSize": 5,
-                                            "placeholder": "Select...",
+                                            "placeholder": "Other area Investigations",
                                             "screenReaderStatus": [Function],
                                             "styles": Object {},
                                             "tabIndex": "0",
                                             "tabSelectsValue": true,
-                                            "value": "Other area investigations",
+                                            "value": null,
                                           }
                                         }
                                         setValue={[Function]}
@@ -1101,7 +1101,7 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
                                           <div
                                             className=" css-1wa3eu0-placeholder"
                                           >
-                                            Select...
+                                            Other area Investigations
                                           </div>
                                         </EmotionCssPropInternal>
                                       </Placeholder>
@@ -1157,12 +1157,12 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
                                             "openMenuOnFocus": false,
                                             "options": Array [],
                                             "pageSize": 5,
-                                            "placeholder": "Select...",
+                                            "placeholder": "Other area Investigations",
                                             "screenReaderStatus": [Function],
                                             "styles": Object {},
                                             "tabIndex": "0",
                                             "tabSelectsValue": true,
-                                            "value": "Other area investigations",
+                                            "value": null,
                                           }
                                         }
                                         spellCheck="false"
@@ -1353,12 +1353,12 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
                                       "openMenuOnFocus": false,
                                       "options": Array [],
                                       "pageSize": 5,
-                                      "placeholder": "Select...",
+                                      "placeholder": "Other area Investigations",
                                       "screenReaderStatus": [Function],
                                       "styles": Object {},
                                       "tabIndex": "0",
                                       "tabSelectsValue": true,
-                                      "value": "Other area investigations",
+                                      "value": null,
                                     }
                                   }
                                   setValue={[Function]}
@@ -1458,12 +1458,12 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
                                             "openMenuOnFocus": false,
                                             "options": Array [],
                                             "pageSize": 5,
-                                            "placeholder": "Select...",
+                                            "placeholder": "Other area Investigations",
                                             "screenReaderStatus": [Function],
                                             "styles": Object {},
                                             "tabIndex": "0",
                                             "tabSelectsValue": true,
-                                            "value": "Other area investigations",
+                                            "value": null,
                                           }
                                         }
                                         setValue={[Function]}
@@ -1574,12 +1574,12 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
                                             "openMenuOnFocus": false,
                                             "options": Array [],
                                             "pageSize": 5,
-                                            "placeholder": "Select...",
+                                            "placeholder": "Other area Investigations",
                                             "screenReaderStatus": [Function],
                                             "styles": Object {},
                                             "tabIndex": "0",
                                             "tabSelectsValue": true,
-                                            "value": "Other area investigations",
+                                            "value": null,
                                           }
                                         }
                                         setValue={[Function]}
@@ -3066,7 +3066,7 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store (g
                       defaultInputValue=""
                       defaultMenuIsOpen={false}
                       defaultValue={null}
-                      value="Other area investigations"
+                      placeholder="Other area Investigations"
                     >
                       <Select
                         backspaceRemovesValue={true}
@@ -3105,12 +3105,12 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store (g
                         openMenuOnFocus={false}
                         options={Array []}
                         pageSize={5}
-                        placeholder="Select..."
+                        placeholder="Other area Investigations"
                         screenReaderStatus={[Function]}
                         styles={Object {}}
                         tabIndex="0"
                         tabSelectsValue={true}
-                        value="Other area investigations"
+                        value={null}
                       >
                         <SelectContainer
                           clearValue={[Function]}
@@ -3168,12 +3168,12 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store (g
                               "openMenuOnFocus": false,
                               "options": Array [],
                               "pageSize": 5,
-                              "placeholder": "Select...",
+                              "placeholder": "Other area Investigations",
                               "screenReaderStatus": [Function],
                               "styles": Object {},
                               "tabIndex": "0",
                               "tabSelectsValue": true,
-                              "value": "Other area investigations",
+                              "value": null,
                             }
                           }
                           setValue={[Function]}
@@ -3283,12 +3283,12 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store (g
                                     "openMenuOnFocus": false,
                                     "options": Array [],
                                     "pageSize": 5,
-                                    "placeholder": "Select...",
+                                    "placeholder": "Other area Investigations",
                                     "screenReaderStatus": [Function],
                                     "styles": Object {},
                                     "tabIndex": "0",
                                     "tabSelectsValue": true,
-                                    "value": "Other area investigations",
+                                    "value": null,
                                   }
                                 }
                                 setValue={[Function]}
@@ -3406,12 +3406,12 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store (g
                                           "openMenuOnFocus": false,
                                           "options": Array [],
                                           "pageSize": 5,
-                                          "placeholder": "Select...",
+                                          "placeholder": "Other area Investigations",
                                           "screenReaderStatus": [Function],
                                           "styles": Object {},
                                           "tabIndex": "0",
                                           "tabSelectsValue": true,
-                                          "value": "Other area investigations",
+                                          "value": null,
                                         }
                                       }
                                       setValue={[Function]}
@@ -3516,12 +3516,12 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store (g
                                                 "openMenuOnFocus": false,
                                                 "options": Array [],
                                                 "pageSize": 5,
-                                                "placeholder": "Select...",
+                                                "placeholder": "Other area Investigations",
                                                 "screenReaderStatus": [Function],
                                                 "styles": Object {},
                                                 "tabIndex": "0",
                                                 "tabSelectsValue": true,
-                                                "value": "Other area investigations",
+                                                "value": null,
                                               }
                                             }
                                             setValue={[Function]}
@@ -3574,7 +3574,7 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store (g
                                               <div
                                                 className=" css-1wa3eu0-placeholder"
                                               >
-                                                Select...
+                                                Other area Investigations
                                               </div>
                                             </EmotionCssPropInternal>
                                           </Placeholder>
@@ -3630,12 +3630,12 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store (g
                                                 "openMenuOnFocus": false,
                                                 "options": Array [],
                                                 "pageSize": 5,
-                                                "placeholder": "Select...",
+                                                "placeholder": "Other area Investigations",
                                                 "screenReaderStatus": [Function],
                                                 "styles": Object {},
                                                 "tabIndex": "0",
                                                 "tabSelectsValue": true,
-                                                "value": "Other area investigations",
+                                                "value": null,
                                               }
                                             }
                                             spellCheck="false"
@@ -3826,12 +3826,12 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store (g
                                           "openMenuOnFocus": false,
                                           "options": Array [],
                                           "pageSize": 5,
-                                          "placeholder": "Select...",
+                                          "placeholder": "Other area Investigations",
                                           "screenReaderStatus": [Function],
                                           "styles": Object {},
                                           "tabIndex": "0",
                                           "tabSelectsValue": true,
-                                          "value": "Other area investigations",
+                                          "value": null,
                                         }
                                       }
                                       setValue={[Function]}
@@ -3931,12 +3931,12 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store (g
                                                 "openMenuOnFocus": false,
                                                 "options": Array [],
                                                 "pageSize": 5,
-                                                "placeholder": "Select...",
+                                                "placeholder": "Other area Investigations",
                                                 "screenReaderStatus": [Function],
                                                 "styles": Object {},
                                                 "tabIndex": "0",
                                                 "tabSelectsValue": true,
-                                                "value": "Other area investigations",
+                                                "value": null,
                                               }
                                             }
                                             setValue={[Function]}
@@ -4047,12 +4047,12 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store (g
                                                 "openMenuOnFocus": false,
                                                 "options": Array [],
                                                 "pageSize": 5,
-                                                "placeholder": "Select...",
+                                                "placeholder": "Other area Investigations",
                                                 "screenReaderStatus": [Function],
                                                 "styles": Object {},
                                                 "tabIndex": "0",
                                                 "tabSelectsValue": true,
-                                                "value": "Other area investigations",
+                                                "value": null,
                                               }
                                             }
                                             setValue={[Function]}
