@@ -1,4 +1,4 @@
-import { ErrorMessage, Field, Form, Formik } from 'formik';
+import { ErrorMessage, Field, FieldArray, Form, Formik } from 'formik';
 import moment from 'moment';
 import React, { FormEvent } from 'react';
 import { Button, FormGroup, Label } from 'reactstrap';
@@ -10,6 +10,8 @@ import {
   FIReasons,
   FIStatuses,
   goalPriorities,
+  planActivities,
+  PlanActivity,
 } from '../../../configs/settings';
 import { DATE, IRS_TITLE, IS, NAME, REQUIRED, SAVING } from '../../../constants';
 import { InterventionType, PlanStatus } from '../../../store/ducks/plans';
@@ -19,9 +21,6 @@ type FIStatusType = typeof FIStatuses[number];
 
 /** Allowed FI Status values */
 type FIReasonType = typeof FIReasons[number];
-
-/** Allowed FI Status values */
-type GoalPriorityType = typeof goalPriorities[number];
 
 /** Array of FI Statuses */
 const fiStatusCodes = Object.values(FIClassifications).map(e => e.code as FIStatusType);
@@ -47,6 +46,7 @@ const PlanSchema = Yup.object().shape({
 
 /** Plan form fields interface */
 interface PlanFormFields {
+  activities: PlanActivity[];
   caseNum?: string;
   date: Date;
   end: Date;
@@ -62,6 +62,7 @@ interface PlanFormFields {
 
 /** initial values */
 const initialValues: PlanFormFields = {
+  activities: [planActivities.caseConfirmation],
   caseNum: '',
   date: moment().toDate(),
   end: moment()
@@ -261,6 +262,28 @@ const PlanForm = () => {
               <ErrorMessage name="end" component="small" className="form-text text-danger" />
             </FormGroup>
             <hr />
+            <FieldArray
+              name="activities"
+              /* tslint:disable-next-line jsx-no-lambda */
+              render={arrayHelpers => (
+                <FormGroup>
+                  <Label for="goalPriority">Priority</Label>
+                  <Field
+                    component="select"
+                    name="goalPriority"
+                    id="goalPriority"
+                    className={errors.status ? 'form-control is-invalid' : 'form-control'}
+                  >
+                    {goalPriorities.map(e => (
+                      <option key={e} value={e}>
+                        {e}
+                      </option>
+                    ))}
+                  </Field>
+                  <ErrorMessage name="status" component="small" className="form-text text-danger" />
+                </FormGroup>
+              )}
+            />
             <hr />
             <Button
               type="submit"
