@@ -252,7 +252,7 @@ export const planActivities: PlanActivities = {
     action: {
       code: 'Bednet Distribution',
       description: 'Visit 100% of residential structures in the operational area and provide nets',
-      goalId: 'RACD_bednet_dist_1km_radius',
+      goalId: 'RACD_bednet_distribution',
       identifier: '',
       prefix: 0,
       reason: 'Investigation',
@@ -268,7 +268,7 @@ export const planActivities: PlanActivities = {
     },
     goal: {
       description: 'Visit 100% of residential structures in the operational area and provide nets',
-      id: 'RACD_bednet_dist_1km_radius',
+      id: 'RACD_bednet_distribution',
       priority: 'medium-priority',
       target: [
         {
