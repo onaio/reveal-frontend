@@ -18,11 +18,11 @@ div.col div.mb-5 div.row div.col-6.col dl.row.mt-3 {
   margin-left: 20px;
 }
 
-div.container div#main-page-row.row div.mb-5 h4 {
-  margin-top: 3rem;
+div.container div#main-page-row.row div.col div.mb-5 .form-inline {
+  margin-bottom: 3em;
 }
 
 h3.text-muted {
   text-align: center;
-  margin-top: 3rem;
+  margin-top: 3em;
 }
