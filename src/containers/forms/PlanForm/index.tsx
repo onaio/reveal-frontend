@@ -1,12 +1,12 @@
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import moment from 'moment';
-import React from 'react';
+import React, { FormEvent } from 'react';
 import { Button, FormGroup, Label } from 'reactstrap';
 import * as Yup from 'yup';
 import DatePickerWrapper from '../../../components/DatePickerWrapper';
 import { DATE_FORMAT, DEFAULT_PLAN_DURATION_DAYS } from '../../../configs/env';
 import { FIClassifications, FIReasons, FIStatuses } from '../../../configs/settings';
-import { DATE, IS, NAME, REQUIRED, SAVING } from '../../../constants';
+import { DATE, IRS_TITLE, IS, NAME, REQUIRED, SAVING } from '../../../constants';
 import { InterventionType, PlanStatus } from '../../../store/ducks/plans';
 
 /** Allowed FI Status values */
@@ -75,15 +75,15 @@ const initialValues: PlanFormFields = {
  * @param {PlanFormFields} formValues - the form values
  * @returns {[string, string]} - the plan name and title
  */
-const getNameTitle = (event: any, formValues: PlanFormFields): [string, string] => {
-  let name = 'IRS';
-  let title = 'IRS';
+const getNameTitle = (event: FormEvent, formValues: PlanFormFields): [string, string] => {
+  const target = event.target as HTMLInputElement;
+  let name = IRS_TITLE;
+  let title = IRS_TITLE;
   const currentInterventionType =
-    event.target.name === 'interventionType' ? event.target.value : formValues.interventionType;
-  const currentFiStatus =
-    event.target.name === 'fiStatus' ? event.target.value : formValues.fiStatus;
+    target.name === 'interventionType' ? target.value : formValues.interventionType;
+  const currentFiStatus = target.name === 'fiStatus' ? target.value : formValues.fiStatus;
   const currentJurisdiction = 'Some Jurisdiction';
-  const currentDate = event.target.name === 'date' ? event.target.value : formValues.date;
+  const currentDate = target.name === 'date' ? target.value : formValues.date;
   if (currentInterventionType === InterventionType.FI) {
     const result = [
       currentFiStatus,
@@ -118,7 +118,7 @@ const PlanForm = () => {
         {({ errors, isSubmitting, setFieldValue, values }) => (
           <Form
             /* tslint:disable-next-line jsx-no-lambda */
-            onChange={e => {
+            onChange={(e: FormEvent) => {
               const nameTitle = getNameTitle(e, values);
               setFieldValue('name', nameTitle[0]);
               setFieldValue('title', nameTitle[1]);
