@@ -262,8 +262,9 @@ const PlanForm = () => {
                 name="interventionType"
                 id="interventionType"
                 /* tslint:disable-next-line jsx-no-lambda */
-                onChange={(e: any) => {
-                  if (e.target.value === InterventionType.IRS) {
+                onChange={(e: FormEvent) => {
+                  const target = e.target as HTMLInputElement;
+                  if (target.value === InterventionType.IRS) {
                     setFieldValue('activities', getFormActivities(IRSActivities));
                   } else {
                     setFieldValue('activities', getFormActivities(FIActivities));
