@@ -45,7 +45,7 @@ const initialActivitiesValues: PlanActivityFormFields = {
 };
 
 /** initial values for plan Form */
-export const initialValues: PlanFormFields = {
+export const defaultInitialValues: PlanFormFields = {
   activities: getFormActivities(FIActivities),
   caseNum: '',
   date: moment().toDate(),
@@ -62,8 +62,14 @@ export const initialValues: PlanFormFields = {
   title: '',
 };
 
+/** interface for plan form props */
+interface PlanFormProps {
+  initialValues: PlanFormFields;
+}
+
 /** Plan Form component */
-const PlanForm = () => {
+const PlanForm = (props: PlanFormProps) => {
+  const { initialValues } = props;
   return (
     <div className="form-container">
       <Formik
@@ -431,5 +437,11 @@ const PlanForm = () => {
     </div>
   );
 };
+
+const defaultProps: PlanFormProps = {
+  initialValues: defaultInitialValues,
+};
+
+PlanForm.defaultProps = defaultProps;
 
 export default PlanForm;
