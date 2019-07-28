@@ -342,7 +342,14 @@ const PlanForm = () => {
                           type="text"
                           name={`activities[${index}].actionTitle`}
                           id={`activities[${index}].actionTitle`}
-                          className={errors.title ? 'form-control is-invalid' : 'form-control'}
+                          className={
+                            errors.activities &&
+                            Object.entries(errors.activities[index] || {}).filter(
+                              ([key, val]) => key === 'actionTitle'
+                            ).length > 0
+                              ? 'form-control is-invalid'
+                              : 'form-control'
+                          }
                         />
                         <ErrorMessage
                           name={`activities[${index}].actionTitle`}
