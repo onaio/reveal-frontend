@@ -363,22 +363,26 @@ const PlanForm = () => {
                         />
                       </FormGroup>
                       <FormGroup>
-                        <Label for="timingPeriodEnd">End Date</Label>
+                        <Label for={`activities[${index}].timingPeriodEnd`}>End Date</Label>
                         <Field
                           type="date"
-                          name="timingPeriodEnd"
-                          id="timingPeriodEnd"
+                          name={`activities[${index}].timingPeriodEnd`}
+                          id={`activities[${index}].timingPeriodEnd`}
                           dateFormat={DATE_FORMAT}
                           className={errors.status ? 'form-control is-invalid' : 'form-control'}
                           component={DatePickerWrapper}
                           minDate={values.start}
                         />
                         <ErrorMessage
-                          name="timingPeriodEnd"
+                          name={`activities[${index}].timingPeriodEnd`}
                           component="small"
                           className="form-text text-danger"
                         />
-                        <Field type="hidden" name="goalDue" id="goalDue" />
+                        <Field
+                          type="hidden"
+                          name={`activities[${index}].goalDue`}
+                          id={`activities[${index}].goalDue`}
+                        />
                       </FormGroup>
                       <FormGroup>
                         <Label for="actionReason">Reason</Label>
