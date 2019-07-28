@@ -32,10 +32,10 @@ describe('containers/pages/SingleFI', () => {
   it('renders without crashing', () => {
     const mock: any = jest.fn();
     const props = {
-      completeReactivePlansArray: [],
-      completeRoutinePlansArray: [],
-      currentReactivePlansArray: [],
-      currentRoutinePlansArray: [],
+      completeReactivePlansArray: [fixtures.completeReactivePlan],
+      completeRoutinePlansArray: [fixtures.completeRoutinePlan],
+      currentReactivePlansArray: [fixtures.plan2],
+      currentRoutinePlansArray: [fixtures.plan1],
       goalsArray: fixtures.plan1Goals,
       history,
       jurisdiction: fixtures.jurisdictions[0],
@@ -47,7 +47,6 @@ describe('containers/pages/SingleFI', () => {
         url: `${FI_SINGLE_URL}/13`,
       },
       planById: fixtures.plan1 as Plan,
-      plansArray: fixtures.plans as Plan[],
       plansIdArray: fixtures.plansIdArray,
     };
     shallow(
@@ -62,10 +61,10 @@ describe('containers/pages/SingleFI', () => {
     const supersetMock: any = jest.fn();
     supersetMock.mockImplementation(() => Promise.resolve(fixtures.plans));
     const props = {
-      completeReactivePlansArray: [],
-      completeRoutinePlansArray: [],
-      currentReactivePlansArray: [],
-      currentRoutinePlansArray: [],
+      completeReactivePlansArray: [fixtures.completeReactivePlan],
+      completeRoutinePlansArray: [fixtures.completeRoutinePlan],
+      currentReactivePlansArray: [fixtures.plan2],
+      currentRoutinePlansArray: [fixtures.plan1],
       goalsArray: fixtures.plan1Goals,
       history,
       jurisdiction: fixtures.jurisdictions[0],
@@ -77,7 +76,6 @@ describe('containers/pages/SingleFI', () => {
         url: `${FI_SINGLE_URL}/16`,
       },
       planById: fixtures.plan1 as Plan,
-      plansArray: fixtures.plans as Plan[],
       plansIdArray: fixtures.plansIdArray,
       supersetService: supersetMock,
     };
@@ -127,7 +125,6 @@ describe('containers/pages/SingleFI', () => {
     );
     expect(wrapper.find('GisidaWrapperMock').length).toEqual(0);
     expect(wrapper.find('HeaderBreadcrumb').length).toEqual(1);
-    expect(wrapper.find('FontAwesomeIcon').length).toEqual(0);
     wrapper.unmount();
   });
 
@@ -137,10 +134,10 @@ describe('containers/pages/SingleFI', () => {
     store.dispatch(fetchGoals(fixtures.goals));
     store.dispatch(fetchJurisdictions(fixtures.jurisdictions));
     const props = {
-      completeReactivePlansArray: [],
-      completeRoutinePlansArray: [],
-      currentReactivePlansArray: [],
-      currentRoutinePlansArray: [],
+      completeReactivePlansArray: [fixtures.completeReactivePlan],
+      completeRoutinePlansArray: [fixtures.completeRoutinePlan],
+      currentReactivePlansArray: [fixtures.plan2],
+      currentRoutinePlansArray: [fixtures.plan1],
       history,
       jurisdiction: fixtures.jurisdictions[0],
       location: mock,
