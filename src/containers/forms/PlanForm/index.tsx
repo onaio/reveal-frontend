@@ -381,7 +381,7 @@ const PlanForm = () => {
                           <ul className="list-unstyled">
                             {Object.entries(errors.activities[index] || {}).map(([key, val]) => (
                               <li key={key}>
-                                {key}: {val}
+                                <strong>{key}</strong>: {val}
                               </li>
                             ))}
                           </ul>
