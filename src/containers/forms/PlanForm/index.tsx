@@ -268,26 +268,6 @@ const PlanForm = () => {
               render={arrayHelpers => (
                 <div>
                   <FormGroup>
-                    <Label for="goalPriority">Priority</Label>
-                    <Field
-                      component="select"
-                      name="goalPriority"
-                      id="goalPriority"
-                      className={errors.status ? 'form-control is-invalid' : 'form-control'}
-                    >
-                      {goalPriorities.map(e => (
-                        <option key={e} value={e}>
-                          {e}
-                        </option>
-                      ))}
-                    </Field>
-                    <ErrorMessage
-                      name="goalPriority"
-                      component="small"
-                      className="form-text text-danger"
-                    />
-                  </FormGroup>
-                  <FormGroup>
                     <Label for="timingPeriodStart">Start Date</Label>
                     <Field
                       type="date"
@@ -320,6 +300,26 @@ const PlanForm = () => {
                       className="form-text text-danger"
                     />
                     <Field type="hidden" name="goalDue" id="goalDue" />
+                  </FormGroup>
+                  <FormGroup>
+                    <Label for="goalPriority">Priority</Label>
+                    <Field
+                      component="select"
+                      name="goalPriority"
+                      id="goalPriority"
+                      className={errors.status ? 'form-control is-invalid' : 'form-control'}
+                    >
+                      {goalPriorities.map(e => (
+                        <option key={e} value={e}>
+                          {e}
+                        </option>
+                      ))}
+                    </Field>
+                    <ErrorMessage
+                      name="goalPriority"
+                      component="small"
+                      className="form-text text-danger"
+                    />
                   </FormGroup>
                 </div>
               )}
