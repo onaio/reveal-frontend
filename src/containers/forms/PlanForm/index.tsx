@@ -268,6 +268,20 @@ const PlanForm = () => {
               render={arrayHelpers => (
                 <div>
                   <FormGroup>
+                    <Label for="actionTitle">Action</Label>
+                    <Field
+                      type="text"
+                      name="actionTitle"
+                      id="actionTitle"
+                      className={errors.title ? 'form-control is-invalid' : 'form-control'}
+                    />
+                    <ErrorMessage
+                      name="actionTitle"
+                      component="small"
+                      className="form-text text-danger"
+                    />
+                  </FormGroup>
+                  <FormGroup>
                     <Label for="timingPeriodStart">Start Date</Label>
                     <Field
                       type="date"
