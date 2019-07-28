@@ -266,22 +266,62 @@ const PlanForm = () => {
               name="activities"
               /* tslint:disable-next-line jsx-no-lambda */
               render={arrayHelpers => (
-                <FormGroup>
-                  <Label for="goalPriority">Priority</Label>
-                  <Field
-                    component="select"
-                    name="goalPriority"
-                    id="goalPriority"
-                    className={errors.status ? 'form-control is-invalid' : 'form-control'}
-                  >
-                    {goalPriorities.map(e => (
-                      <option key={e} value={e}>
-                        {e}
-                      </option>
-                    ))}
-                  </Field>
-                  <ErrorMessage name="status" component="small" className="form-text text-danger" />
-                </FormGroup>
+                <div>
+                  <FormGroup>
+                    <Label for="goalPriority">Priority</Label>
+                    <Field
+                      component="select"
+                      name="goalPriority"
+                      id="goalPriority"
+                      className={errors.status ? 'form-control is-invalid' : 'form-control'}
+                    >
+                      {goalPriorities.map(e => (
+                        <option key={e} value={e}>
+                          {e}
+                        </option>
+                      ))}
+                    </Field>
+                    <ErrorMessage
+                      name="goalPriority"
+                      component="small"
+                      className="form-text text-danger"
+                    />
+                  </FormGroup>
+                  <FormGroup>
+                    <Label for="timingPeriodStart">Start Date</Label>
+                    <Field
+                      type="date"
+                      name="timingPeriodStart"
+                      id="timingPeriodStart"
+                      dateFormat={DATE_FORMAT}
+                      className={errors.status ? 'form-control is-invalid' : 'form-control'}
+                      component={DatePickerWrapper}
+                    />
+                    <ErrorMessage
+                      name="timingPeriodStart"
+                      component="small"
+                      className="form-text text-danger"
+                    />
+                  </FormGroup>
+                  <FormGroup>
+                    <Label for="timingPeriodEnd">End Date</Label>
+                    <Field
+                      type="date"
+                      name="timingPeriodEnd"
+                      id="timingPeriodEnd"
+                      dateFormat={DATE_FORMAT}
+                      className={errors.status ? 'form-control is-invalid' : 'form-control'}
+                      component={DatePickerWrapper}
+                      minDate={values.start}
+                    />
+                    <ErrorMessage
+                      name="timingPeriodEnd"
+                      component="small"
+                      className="form-text text-danger"
+                    />
+                    <Field type="hidden" name="goalDue" id="goalDue" />
+                  </FormGroup>
+                </div>
               )}
             />
             <hr />
