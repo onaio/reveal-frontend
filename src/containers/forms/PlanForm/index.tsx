@@ -4,7 +4,11 @@ import React, { FormEvent } from 'react';
 import { Button, FormGroup, Label } from 'reactstrap';
 import * as Yup from 'yup';
 import DatePickerWrapper from '../../../components/DatePickerWrapper';
-import { DATE_FORMAT, DEFAULT_PLAN_DURATION_DAYS } from '../../../configs/env';
+import {
+  DATE_FORMAT,
+  DEFAULT_ACTIVITY_DURATION_DAYS,
+  DEFAULT_PLAN_DURATION_DAYS,
+} from '../../../configs/env';
 import {
   actionReasons,
   FIClassifications,
@@ -81,12 +85,12 @@ const initialActivitiesValues: PlanActivityFormFields = {
   actionTitle: '',
   goalDescription: '',
   goalDue: moment()
-    .add(DEFAULT_PLAN_DURATION_DAYS, 'days')
+    .add(DEFAULT_ACTIVITY_DURATION_DAYS, 'days')
     .toDate(),
   goalPriority: goalPriorities[1],
   goalValue: 0,
   timingPeriodEnd: moment()
-    .add(DEFAULT_PLAN_DURATION_DAYS, 'days')
+    .add(DEFAULT_ACTIVITY_DURATION_DAYS, 'days')
     .toDate(),
   timingPeriodStart: moment().toDate(),
 };
