@@ -329,15 +329,15 @@ const PlanForm = () => {
                         <Field type="hidden" name="goalDescription" id="goalDescription" />
                       </FormGroup>
                       <FormGroup>
-                        <Label for="goalValue">Quantity</Label>
+                        <Label for={`activities[${index}].goalValue`}>Quantity</Label>
                         <Field
                           type="number"
-                          name="goalValue"
-                          id="goalValue"
+                          name={`activities[${index}].goalValue`}
+                          id={`activities[${index}].goalValue`}
                           className={errors.title ? 'form-control is-invalid' : 'form-control'}
                         />
                         <ErrorMessage
-                          name="goalValue"
+                          name={`activities[${index}].goalValue`}
                           component="small"
                           className="form-text text-danger"
                         />
