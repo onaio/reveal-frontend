@@ -405,11 +405,11 @@ const PlanForm = () => {
                         />
                       </FormGroup>
                       <FormGroup>
-                        <Label for="goalPriority">Priority</Label>
+                        <Label for={`activities[${index}].goalPriority`}>Priority</Label>
                         <Field
                           component="select"
-                          name="goalPriority"
-                          id="goalPriority"
+                          name={`activities[${index}].goalPriority`}
+                          id={`activities[${index}].goalPriority`}
                           className={errors.status ? 'form-control is-invalid' : 'form-control'}
                         >
                           {goalPriorities.map(e => (
@@ -419,7 +419,7 @@ const PlanForm = () => {
                           ))}
                         </Field>
                         <ErrorMessage
-                          name="goalPriority"
+                          name={`activities[${index}].goalPriority`}
                           component="small"
                           className="form-text text-danger"
                         />
