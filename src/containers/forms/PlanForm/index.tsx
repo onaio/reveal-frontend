@@ -1,4 +1,5 @@
 import { ErrorMessage, Field, FieldArray, Form, Formik, FormikErrors } from 'formik';
+import { omit } from 'lodash';
 import moment from 'moment';
 import React, { FormEvent } from 'react';
 import { Button, FormGroup, Label } from 'reactstrap';
@@ -20,6 +21,8 @@ import {
 } from '../../../configs/settings';
 import { DATE, IRS_TITLE, IS, NAME, REQUIRED, SAVING } from '../../../constants';
 import { InterventionType, PlanStatus } from '../../../store/ducks/plans';
+
+const FIActivities = omit(planActivities, ['IRS']);
 
 /** Allowed FI Status values */
 type FIStatusType = typeof FIStatuses[number];
@@ -149,7 +152,7 @@ function extractActivityForForm(activityObj: PlanActivity): PlanActivityFormFiel
 
 /** initial values for plan Form */
 const initialValues: PlanFormFields = {
-  activities: Object.values(planActivities)
+  activities: Object.values(FIActivities)
     .sort((a, b) => a.action.prefix - b.action.prefix)
     .map(e => extractActivityForForm(e)),
   caseNum: '',
