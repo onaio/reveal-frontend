@@ -1,5 +1,5 @@
 import { ErrorMessage, Field, FieldArray, Form, Formik, FormikErrors } from 'formik';
-import { omit } from 'lodash';
+import { omit, pick } from 'lodash';
 import moment from 'moment';
 import React, { FormEvent } from 'react';
 import { Button, FormGroup, Label } from 'reactstrap';
@@ -22,7 +22,9 @@ import {
 import { DATE, IRS_TITLE, IS, NAME, REQUIRED, SAVING } from '../../../constants';
 import { InterventionType, PlanStatus } from '../../../store/ducks/plans';
 
+/** separate FI and IRS activities */
 const FIActivities = omit(planActivities, ['IRS']);
+const IRSActivities = pick(planActivities, ['IRS']);
 
 /** Allowed FI Status values */
 type FIStatusType = typeof FIStatuses[number];
