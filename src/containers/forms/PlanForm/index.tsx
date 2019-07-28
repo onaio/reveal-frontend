@@ -326,7 +326,11 @@ const PlanForm = () => {
                           component="small"
                           className="form-text text-danger"
                         />
-                        <Field type="hidden" name="goalDescription" id="goalDescription" />
+                        <Field
+                          type="hidden"
+                          name={`activities[${index}].goalDescription`}
+                          id={`activities[${index}].goalDescription`}
+                        />
                       </FormGroup>
                       <FormGroup>
                         <Label for={`activities[${index}].goalValue`}>Quantity</Label>
