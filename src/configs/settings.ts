@@ -98,6 +98,10 @@ export const goalPriorities = ['low-priority', 'medium-priority', 'high-priority
 
 export type GoalPriorityType = typeof goalPriorities[number];
 
+export const actionReasons = ['Investigation', 'Routine'] as const;
+
+export type ActionReasonType = typeof actionReasons[number];
+
 /** Plan Action Timing Period */
 export interface PlanActionTimingPeriod {
   end: string;
@@ -116,7 +120,7 @@ export interface PlanAction {
   goalId: string;
   identifier: string;
   prefix: number;
-  reason: string;
+  reason: ActionReasonType;
   subjectCodableConcept: PlanActionsubjectCodableConcept;
   taskTemplate: string;
   timingPeriod: PlanActionTimingPeriod;
