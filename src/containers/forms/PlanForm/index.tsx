@@ -45,9 +45,22 @@ const PlanSchema = Yup.object().shape({
   title: Yup.string().required(REQUIRED),
 });
 
+/** Plan activity form fields interface */
+interface PlanActivityFormFields {
+  actionDescription: string;
+  actionReason: string;
+  actionTitle: string;
+  goalDescription: string;
+  goalDue: Date;
+  goalPriority: string;
+  goalValue: number;
+  timingPeriodEnd: Date;
+  timingPeriodStart: Date;
+}
+
 /** Plan form fields interface */
 interface PlanFormFields {
-  activities: PlanActivity[];
+  activities: PlanActivityFormFields[];
   caseNum?: string;
   date: Date;
   end: Date;
@@ -61,9 +74,25 @@ interface PlanFormFields {
   title: string;
 }
 
+const initialActivitiesValues: PlanActivityFormFields = {
+  actionDescription: 'xxx',
+  actionReason: actionReasons[0],
+  actionTitle: 'xxx',
+  goalDescription: 'xxx',
+  goalDue: moment()
+    .add(DEFAULT_PLAN_DURATION_DAYS, 'days')
+    .toDate(),
+  goalPriority: goalPriorities[1],
+  goalValue: 0,
+  timingPeriodEnd: moment()
+    .add(DEFAULT_PLAN_DURATION_DAYS, 'days')
+    .toDate(),
+  timingPeriodStart: moment().toDate(),
+};
+
 /** initial values */
 const initialValues: PlanFormFields = {
-  activities: [planActivities.caseConfirmation],
+  activities: [initialActivitiesValues],
   caseNum: '',
   date: moment().toDate(),
   end: moment()
@@ -268,123 +297,127 @@ const PlanForm = () => {
               /* tslint:disable-next-line jsx-no-lambda */
               render={arrayHelpers => (
                 <div>
-                  <FormGroup>
-                    <Label for="actionTitle">Action</Label>
-                    <Field
-                      type="text"
-                      name="actionTitle"
-                      id="actionTitle"
-                      className={errors.title ? 'form-control is-invalid' : 'form-control'}
-                    />
-                    <ErrorMessage
-                      name="actionTitle"
-                      component="small"
-                      className="form-text text-danger"
-                    />
-                  </FormGroup>
-                  <FormGroup>
-                    <Label for="actionDescription">Description</Label>
-                    <Field
-                      component="textarea"
-                      name="actionDescription"
-                      id="actionDescription"
-                      className={errors.title ? 'form-control is-invalid' : 'form-control'}
-                    />
-                    <ErrorMessage
-                      name="actionDescription"
-                      component="small"
-                      className="form-text text-danger"
-                    />
-                    <Field type="hidden" name="goalDescription" id="goalDescription" />
-                  </FormGroup>
-                  <FormGroup>
-                    <Label for="goalValue">Quantity</Label>
-                    <Field
-                      type="number"
-                      name="goalValue"
-                      id="goalValue"
-                      className={errors.title ? 'form-control is-invalid' : 'form-control'}
-                    />
-                    <ErrorMessage
-                      name="goalValue"
-                      component="small"
-                      className="form-text text-danger"
-                    />
-                  </FormGroup>
-                  <FormGroup>
-                    <Label for="timingPeriodStart">Start Date</Label>
-                    <Field
-                      type="date"
-                      name="timingPeriodStart"
-                      id="timingPeriodStart"
-                      dateFormat={DATE_FORMAT}
-                      className={errors.status ? 'form-control is-invalid' : 'form-control'}
-                      component={DatePickerWrapper}
-                    />
-                    <ErrorMessage
-                      name="timingPeriodStart"
-                      component="small"
-                      className="form-text text-danger"
-                    />
-                  </FormGroup>
-                  <FormGroup>
-                    <Label for="timingPeriodEnd">End Date</Label>
-                    <Field
-                      type="date"
-                      name="timingPeriodEnd"
-                      id="timingPeriodEnd"
-                      dateFormat={DATE_FORMAT}
-                      className={errors.status ? 'form-control is-invalid' : 'form-control'}
-                      component={DatePickerWrapper}
-                      minDate={values.start}
-                    />
-                    <ErrorMessage
-                      name="timingPeriodEnd"
-                      component="small"
-                      className="form-text text-danger"
-                    />
-                    <Field type="hidden" name="goalDue" id="goalDue" />
-                  </FormGroup>
-                  <FormGroup>
-                    <Label for="actionReason">Reason</Label>
-                    <Field
-                      component="select"
-                      name="actionReason"
-                      id="actionReason"
-                      className={errors.status ? 'form-control is-invalid' : 'form-control'}
-                    >
-                      {actionReasons.map(e => (
-                        <option key={e} value={e}>
-                          {e}
-                        </option>
-                      ))}
-                    </Field>
-                    <ErrorMessage
-                      name="actionReason"
-                      component="small"
-                      className="form-text text-danger"
-                    />
-                  </FormGroup>
-                  <FormGroup>
-                    <Label for="goalPriority">Priority</Label>
-                    <Field
-                      component="select"
-                      name="goalPriority"
-                      id="goalPriority"
-                      className={errors.status ? 'form-control is-invalid' : 'form-control'}
-                    >
-                      {goalPriorities.map(e => (
-                        <option key={e} value={e}>
-                          {e}
-                        </option>
-                      ))}
-                    </Field>
-                    <ErrorMessage
-                      name="goalPriority"
-                      component="small"
-                      className="form-text text-danger"
-                    />
-                  </FormGroup>
+                  {values.activities.map((activity, index) => (
+                    <div key={index}>
+                      <FormGroup>
+                        <Label for={`activities[${index}].actionTitle`}>Action</Label>
+                        <Field
+                          type="text"
+                          name={`activities[${index}].actionTitle`}
+                          id={`activities[${index}].actionTitle`}
+                          className={errors.title ? 'form-control is-invalid' : 'form-control'}
+                        />
+                        <ErrorMessage
+                          name={`activities[${index}].actionTitle`}
+                          component="small"
+                          className="form-text text-danger"
+                        />
+                      </FormGroup>
+                      <FormGroup>
+                        <Label for={`activities[${index}].actionDescription`}>Description</Label>
+                        <Field
+                          component="textarea"
+                          name={`activities[${index}].actionDescription`}
+                          id={`activities[${index}].actionDescription`}
+                          className={errors.title ? 'form-control is-invalid' : 'form-control'}
+                        />
+                        <ErrorMessage
+                          name={`activities[${index}].actionDescription`}
+                          component="small"
+                          className="form-text text-danger"
+                        />
+                        <Field type="hidden" name="goalDescription" id="goalDescription" />
+                      </FormGroup>
+                      <FormGroup>
+                        <Label for="goalValue">Quantity</Label>
+                        <Field
+                          type="number"
+                          name="goalValue"
+                          id="goalValue"
+                          className={errors.title ? 'form-control is-invalid' : 'form-control'}
+                        />
+                        <ErrorMessage
+                          name="goalValue"
+                          component="small"
+                          className="form-text text-danger"
+                        />
+                      </FormGroup>
+                      <FormGroup>
+                        <Label for="timingPeriodStart">Start Date</Label>
+                        <Field
+                          type="date"
+                          name="timingPeriodStart"
+                          id="timingPeriodStart"
+                          dateFormat={DATE_FORMAT}
+                          className={errors.status ? 'form-control is-invalid' : 'form-control'}
+                          component={DatePickerWrapper}
+                        />
+                        <ErrorMessage
+                          name="timingPeriodStart"
+                          component="small"
+                          className="form-text text-danger"
+                        />
+                      </FormGroup>
+                      <FormGroup>
+                        <Label for="timingPeriodEnd">End Date</Label>
+                        <Field
+                          type="date"
+                          name="timingPeriodEnd"
+                          id="timingPeriodEnd"
+                          dateFormat={DATE_FORMAT}
+                          className={errors.status ? 'form-control is-invalid' : 'form-control'}
+                          component={DatePickerWrapper}
+                          minDate={values.start}
+                        />
+                        <ErrorMessage
+                          name="timingPeriodEnd"
+                          component="small"
+                          className="form-text text-danger"
+                        />
+                        <Field type="hidden" name="goalDue" id="goalDue" />
+                      </FormGroup>
+                      <FormGroup>
+                        <Label for="actionReason">Reason</Label>
+                        <Field
+                          component="select"
+                          name="actionReason"
+                          id="actionReason"
+                          className={errors.status ? 'form-control is-invalid' : 'form-control'}
+                        >
+                          {actionReasons.map(e => (
+                            <option key={e} value={e}>
+                              {e}
+                            </option>
+                          ))}
+                        </Field>
+                        <ErrorMessage
+                          name="actionReason"
+                          component="small"
+                          className="form-text text-danger"
+                        />
+                      </FormGroup>
+                      <FormGroup>
+                        <Label for="goalPriority">Priority</Label>
+                        <Field
+                          component="select"
+                          name="goalPriority"
+                          id="goalPriority"
+                          className={errors.status ? 'form-control is-invalid' : 'form-control'}
+                        >
+                          {goalPriorities.map(e => (
+                            <option key={e} value={e}>
+                              {e}
+                            </option>
+                          ))}
+                        </Field>
+                        <ErrorMessage
+                          name="goalPriority"
+                          component="small"
+                          className="form-text text-danger"
+                        />
+                      </FormGroup>
+                    </div>
+                  ))}
                 </div>
               )}
             />
