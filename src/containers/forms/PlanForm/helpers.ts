@@ -1,15 +1,9 @@
-import { ErrorMessage, Field, FieldArray, Form, Formik, FormikErrors } from 'formik';
+import { FormikErrors } from 'formik';
 import { omit, pick } from 'lodash';
 import moment from 'moment';
-import React, { FormEvent } from 'react';
-import { Button, FormGroup, Label } from 'reactstrap';
+import { FormEvent } from 'react';
 import * as Yup from 'yup';
-import DatePickerWrapper from '../../../components/DatePickerWrapper';
-import {
-  DATE_FORMAT,
-  DEFAULT_ACTIVITY_DURATION_DAYS,
-  DEFAULT_PLAN_DURATION_DAYS,
-} from '../../../configs/env';
+import { DATE_FORMAT, DEFAULT_ACTIVITY_DURATION_DAYS } from '../../../configs/env';
 import {
   actionReasons,
   FIClassifications,
@@ -19,7 +13,7 @@ import {
   planActivities,
   PlanActivity,
 } from '../../../configs/settings';
-import { DATE, IRS_TITLE, IS, NAME, REQUIRED, SAVING } from '../../../constants';
+import { DATE, IRS_TITLE, IS, NAME, REQUIRED } from '../../../constants';
 import { InterventionType, PlanStatus } from '../../../store/ducks/plans';
 
 /** separate FI and IRS activities */
