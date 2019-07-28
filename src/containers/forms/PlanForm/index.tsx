@@ -6,6 +6,7 @@ import * as Yup from 'yup';
 import DatePickerWrapper from '../../../components/DatePickerWrapper';
 import { DATE_FORMAT, DEFAULT_PLAN_DURATION_DAYS } from '../../../configs/env';
 import {
+  actionReasons,
   FIClassifications,
   FIReasons,
   FIStatuses,
@@ -343,6 +344,26 @@ const PlanForm = () => {
                       className="form-text text-danger"
                     />
                     <Field type="hidden" name="goalDue" id="goalDue" />
+                  </FormGroup>
+                  <FormGroup>
+                    <Label for="actionReason">Reason</Label>
+                    <Field
+                      component="select"
+                      name="actionReason"
+                      id="actionReason"
+                      className={errors.status ? 'form-control is-invalid' : 'form-control'}
+                    >
+                      {actionReasons.map(e => (
+                        <option key={e} value={e}>
+                          {e}
+                        </option>
+                      ))}
+                    </Field>
+                    <ErrorMessage
+                      name="actionReason"
+                      component="small"
+                      className="form-text text-danger"
+                    />
                   </FormGroup>
                   <FormGroup>
                     <Label for="goalPriority">Priority</Label>
