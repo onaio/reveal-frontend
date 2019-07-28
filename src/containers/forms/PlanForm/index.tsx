@@ -1,4 +1,4 @@
-import { ErrorMessage, Field, FieldArray, Form, Formik } from 'formik';
+import { ErrorMessage, Field, FieldArray, Form, Formik, FormikErrors } from 'formik';
 import moment from 'moment';
 import React, { FormEvent } from 'react';
 import { Button, FormGroup, Label } from 'reactstrap';
@@ -163,6 +163,15 @@ const getNameTitle = (event: FormEvent, formValues: PlanFormFields): [string, st
   return [name, title];
 };
 
+// function getActivityErrors(index: number, errors: (FormikErrors<PlanActivityFormFields> | undefined)[]): string[] {
+//   const result: string[] = [];
+//   const x = errors[index] || {};
+//   if (errors[index]) {
+//     Object.entries(errors[index] || {}).map((e) => )
+//   }
+//   return result;
+// }
+
 /** Plan Form component */
 const PlanForm = () => {
   return (
@@ -315,14 +324,27 @@ const PlanForm = () => {
               />
               <ErrorMessage name="end" component="small" className="form-text text-danger" />
             </FormGroup>
-            <hr />
+            <h4 className="mt-5">Activities</h4>
             <FieldArray
               name="activities"
               /* tslint:disable-next-line jsx-no-lambda */
               render={arrayHelpers => (
                 <div>
                   {values.activities.map((activity, index) => (
-                    <div key={index}>
+                    <fieldset key={index}>
+                      <legend>{values.activities[index].actionTitle}</legend>
+                      {errors.activities && errors.activities[index] && (
+                        <div className="alert alert-danger" role="alert">
+                          <h5 className="alert-heading">Please fix these errors</h5>
+                          <ul className="list-unstyled">
+                            {Object.entries(errors.activities[index] || {}).map(([key, val]) => (
+                              <li key={key}>
+                                {key}: {val}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
                       <FormGroup>
                         <Label for={`activities[${index}].actionTitle`}>Action</Label>
                         <Field
@@ -450,12 +472,15 @@ const PlanForm = () => {
                           className="form-text text-danger"
                         />
                       </FormGroup>
-                    </div>
+                    </fieldset>
                   ))}
+                  <button type="button" onClick={() => arrayHelpers.push(initialActivitiesValues)}>
+                    +
+                  </button>
                 </div>
               )}
             />
-            <hr />
+            <hr className="mb-2" />
             <Button
               type="submit"
               className="btn btn-block"
