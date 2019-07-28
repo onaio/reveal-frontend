@@ -184,7 +184,7 @@ export const planActivities: PlanActivities = {
       description: 'Conduct BCC activity',
       goalId: 'BCC_Focus',
       identifier: '',
-      prefix: 0,
+      prefix: 99,
       reason: 'Investigation',
       subjectCodableConcept: {
         text: 'Operational_Area',
@@ -221,7 +221,7 @@ export const planActivities: PlanActivities = {
       description: 'Visit each structure in the operational area and attempt to spray',
       goalId: 'IRS',
       identifier: '',
-      prefix: 0,
+      prefix: 7,
       reason: 'Routine',
       subjectCodableConcept: {
         text: 'Residential_Structure',
@@ -258,7 +258,7 @@ export const planActivities: PlanActivities = {
       description: 'Visit 100% of residential structures in the operational area and provide nets',
       goalId: 'RACD_bednet_distribution',
       identifier: '',
-      prefix: 0,
+      prefix: 4,
       reason: 'Investigation',
       subjectCodableConcept: {
         text: 'Residential_Structure',
@@ -296,7 +296,7 @@ export const planActivities: PlanActivities = {
         'Visit all residential structures (100%) within a 1 km radius of a confirmed index case and test each registered person',
       goalId: 'RACD_Blood_Screening',
       identifier: '',
-      prefix: 0,
+      prefix: 3,
       reason: 'Investigation',
       subjectCodableConcept: {
         text: 'Person',
@@ -334,7 +334,7 @@ export const planActivities: PlanActivities = {
       description: 'Confirm the index case',
       goalId: 'Case_Confirmation',
       identifier: '',
-      prefix: 0,
+      prefix: 1,
       reason: 'Investigation',
       subjectCodableConcept: {
         text: 'Case_Confirmation',
@@ -372,7 +372,7 @@ export const planActivities: PlanActivities = {
         'Register all families & family members in all residential structures enumerated (100%) within the operational area',
       goalId: 'RACD_register_families',
       identifier: '',
-      prefix: 0,
+      prefix: 2,
       reason: 'Investigation',
       subjectCodableConcept: {
         text: 'Residential_Structure',
@@ -410,7 +410,7 @@ export const planActivities: PlanActivities = {
       description: 'Perform a minimum of three larval dipping activities in the operational area',
       goalId: 'Larval_Dipping',
       identifier: '',
-      prefix: 0,
+      prefix: 5,
       reason: 'Investigation',
       subjectCodableConcept: {
         text: 'Breeding_Site',
@@ -448,7 +448,7 @@ export const planActivities: PlanActivities = {
         'Set a minimum of three mosquito collection traps and complete the mosquito collection process',
       goalId: 'Mosquito_Collection',
       identifier: '',
-      prefix: 0,
+      prefix: 6,
       reason: 'Investigation',
       subjectCodableConcept: {
         text: 'Mosquito_Collection_Point',
