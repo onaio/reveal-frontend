@@ -32,6 +32,25 @@ const fiStatusCodes = Object.values(FIClassifications).map(e => e.code as FIStat
 
 /** Yup validation schema for PlanForm */
 const PlanSchema = Yup.object().shape({
+  activities: Yup.array().of(
+    Yup.object().shape({
+      actionDescription: Yup.string().required(REQUIRED),
+      actionReason: Yup.string()
+        .oneOf(Object.values(actionReasons))
+        .required(REQUIRED),
+      actionTitle: Yup.string().required(REQUIRED),
+      goalDescription: Yup.string().required(REQUIRED),
+      goalDue: Yup.date().required(`${DATE} ${IS} ${REQUIRED}`),
+      goalPriority: Yup.string()
+        .oneOf(Object.values(goalPriorities))
+        .required(REQUIRED),
+      goalvalue: Yup.number()
+        .min(1)
+        .required(REQUIRED),
+      timingPeriodEnd: Yup.date().required(REQUIRED),
+      timingPeriodStart: Yup.date().required(REQUIRED),
+    })
+  ),
   caseNum: Yup.string(),
   date: Yup.string().required(`${DATE} ${IS} ${REQUIRED}`),
   end: Yup.date().required(REQUIRED),
