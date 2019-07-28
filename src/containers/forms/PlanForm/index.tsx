@@ -114,6 +114,39 @@ const initialActivitiesValues: PlanActivityFormFields = {
   timingPeriodStart: moment().toDate(),
 };
 
+/**
+ * Convert a plan activity object to an object that can be used in the PlanForm
+ * activities section
+ * @param activityObj - the plan activity object
+ */
+function extractActivityForForm(activityObj: PlanActivity): PlanActivityFormFields {
+  const initialGoalDue = activityObj.goal.target[0].due;
+  return {
+    actionDescription: activityObj.action.description || '',
+    actionReason: activityObj.action.reason || '',
+    actionTitle: activityObj.action.title || '',
+    goalDescription: activityObj.goal.description || '',
+    goalDue:
+      initialGoalDue && initialGoalDue !== ''
+        ? moment(initialGoalDue).toDate()
+        : moment()
+            .add(DEFAULT_ACTIVITY_DURATION_DAYS, 'days')
+            .toDate(),
+    goalPriority: activityObj.goal.priority || goalPriorities[1],
+    goalValue: activityObj.goal.target[0].detail.detailQuantity.value || 0,
+    timingPeriodEnd:
+      activityObj.action.timingPeriod.end && activityObj.action.timingPeriod.end !== ''
+        ? moment(activityObj.action.timingPeriod.end).toDate()
+        : moment()
+            .add(DEFAULT_ACTIVITY_DURATION_DAYS, 'days')
+            .toDate(),
+    timingPeriodStart:
+      activityObj.action.timingPeriod.start && activityObj.action.timingPeriod.start !== ''
+        ? moment(activityObj.action.timingPeriod.start).toDate()
+        : moment().toDate(),
+  };
+}
+
 /** initial values for plan Form */
 const initialValues: PlanFormFields = {
   activities: [initialActivitiesValues],
