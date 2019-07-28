@@ -163,6 +163,22 @@ const getNameTitle = (event: FormEvent, formValues: PlanFormFields): [string, st
   return [name, title];
 };
 
+/**
+ * Check if field in field array has an error
+ * @param field - the form field
+ * @param index - the index in the field array
+ * @param errors - the list of error objects
+ */
+function doesFieldHaveErrors(
+  field: string,
+  index: number,
+  errors: Array<FormikErrors<PlanActivityFormFields> | undefined>
+) {
+  return (
+    errors && Object.entries(errors[index] || {}).filter(([key, val]) => key === field).length > 0
+  );
+}
+
 /** Plan Form component */
 const PlanForm = () => {
   return (
@@ -344,9 +360,7 @@ const PlanForm = () => {
                           id={`activities[${index}].actionTitle`}
                           className={
                             errors.activities &&
-                            Object.entries(errors.activities[index] || {}).filter(
-                              ([key, val]) => key === 'actionTitle'
-                            ).length > 0
+                            doesFieldHaveErrors('actionTitle', index, errors.activities)
                               ? 'form-control is-invalid'
                               : 'form-control'
                           }
@@ -363,7 +377,12 @@ const PlanForm = () => {
                           component="textarea"
                           name={`activities[${index}].actionDescription`}
                           id={`activities[${index}].actionDescription`}
-                          className={errors.title ? 'form-control is-invalid' : 'form-control'}
+                          className={
+                            errors.activities &&
+                            doesFieldHaveErrors('actionDescription', index, errors.activities)
+                              ? 'form-control is-invalid'
+                              : 'form-control'
+                          }
                         />
                         <ErrorMessage
                           name={`activities[${index}].actionDescription`}
@@ -383,7 +402,12 @@ const PlanForm = () => {
                           type="number"
                           name={`activities[${index}].goalValue`}
                           id={`activities[${index}].goalValue`}
-                          className={errors.title ? 'form-control is-invalid' : 'form-control'}
+                          className={
+                            errors.activities &&
+                            doesFieldHaveErrors('goalValue', index, errors.activities)
+                              ? 'form-control is-invalid'
+                              : 'form-control'
+                          }
                         />
                         <ErrorMessage
                           name={`activities[${index}].goalValue`}
@@ -398,7 +422,12 @@ const PlanForm = () => {
                           name={`activities[${index}].timingPeriodStart`}
                           id={`activities[${index}].timingPeriodStart`}
                           dateFormat={DATE_FORMAT}
-                          className={errors.status ? 'form-control is-invalid' : 'form-control'}
+                          className={
+                            errors.activities &&
+                            doesFieldHaveErrors('timingPeriodStart', index, errors.activities)
+                              ? 'form-control is-invalid'
+                              : 'form-control'
+                          }
                           component={DatePickerWrapper}
                         />
                         <ErrorMessage
@@ -414,7 +443,12 @@ const PlanForm = () => {
                           name={`activities[${index}].timingPeriodEnd`}
                           id={`activities[${index}].timingPeriodEnd`}
                           dateFormat={DATE_FORMAT}
-                          className={errors.status ? 'form-control is-invalid' : 'form-control'}
+                          className={
+                            errors.activities &&
+                            doesFieldHaveErrors('timingPeriodEnd', index, errors.activities)
+                              ? 'form-control is-invalid'
+                              : 'form-control'
+                          }
                           component={DatePickerWrapper}
                           minDate={values.activities[index].timingPeriodStart}
                         />
@@ -436,7 +470,12 @@ const PlanForm = () => {
                           component="select"
                           name={`activities[${index}].actionReason`}
                           id={`activities[${index}].actionReason`}
-                          className={errors.status ? 'form-control is-invalid' : 'form-control'}
+                          className={
+                            errors.activities &&
+                            doesFieldHaveErrors('actionReason', index, errors.activities)
+                              ? 'form-control is-invalid'
+                              : 'form-control'
+                          }
                         >
                           {actionReasons.map(e => (
                             <option key={e} value={e}>
@@ -456,7 +495,12 @@ const PlanForm = () => {
                           component="select"
                           name={`activities[${index}].goalPriority`}
                           id={`activities[${index}].goalPriority`}
-                          className={errors.status ? 'form-control is-invalid' : 'form-control'}
+                          className={
+                            errors.activities &&
+                            doesFieldHaveErrors('goalPriority', index, errors.activities)
+                              ? 'form-control is-invalid'
+                              : 'form-control'
+                          }
                         >
                           {goalPriorities.map(e => (
                             <option key={e} value={e}>
