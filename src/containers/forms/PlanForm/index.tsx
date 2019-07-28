@@ -343,17 +343,17 @@ const PlanForm = () => {
                         />
                       </FormGroup>
                       <FormGroup>
-                        <Label for="timingPeriodStart">Start Date</Label>
+                        <Label for={`activities[${index}].timingPeriodStart`}>Start Date</Label>
                         <Field
                           type="date"
-                          name="timingPeriodStart"
-                          id="timingPeriodStart"
+                          name={`activities[${index}].timingPeriodStart`}
+                          id={`activities[${index}].timingPeriodStart`}
                           dateFormat={DATE_FORMAT}
                           className={errors.status ? 'form-control is-invalid' : 'form-control'}
                           component={DatePickerWrapper}
                         />
                         <ErrorMessage
-                          name="timingPeriodStart"
+                          name={`activities[${index}].timingPeriodStart`}
                           component="small"
                           className="form-text text-danger"
                         />
