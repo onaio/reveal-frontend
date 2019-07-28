@@ -371,7 +371,7 @@ const PlanForm = () => {
                           dateFormat={DATE_FORMAT}
                           className={errors.status ? 'form-control is-invalid' : 'form-control'}
                           component={DatePickerWrapper}
-                          minDate={values.start}
+                          minDate={values.activities[index].timingPeriodStart}
                         />
                         <ErrorMessage
                           name={`activities[${index}].timingPeriodEnd`}
