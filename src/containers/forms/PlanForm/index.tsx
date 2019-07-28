@@ -40,11 +40,11 @@ const PlanSchema = Yup.object().shape({
         .required(REQUIRED),
       actionTitle: Yup.string().required(REQUIRED),
       goalDescription: Yup.string().required(REQUIRED),
-      goalDue: Yup.date().required(`${DATE} ${IS} ${REQUIRED}`),
+      goalDue: Yup.date().required(REQUIRED),
       goalPriority: Yup.string()
         .oneOf(Object.values(goalPriorities))
         .required(REQUIRED),
-      goalvalue: Yup.number()
+      goalValue: Yup.number()
         .min(1)
         .required(REQUIRED),
       timingPeriodEnd: Yup.date().required(REQUIRED),
