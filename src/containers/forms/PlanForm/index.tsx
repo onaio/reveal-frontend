@@ -152,11 +152,19 @@ function extractActivityForForm(activityObj: PlanActivity): PlanActivityFormFiel
   };
 }
 
+/**
+ * Converts a plan activities objects to a list of activities for use on PlanForm
+ * @param items - plan activities
+ */
+function getFormActivities(items: typeof FIActivities | typeof IRSActivities) {
+  return Object.values(items)
+    .sort((a, b) => a.action.prefix - b.action.prefix)
+    .map(e => extractActivityForForm(e));
+}
+
 /** initial values for plan Form */
 const initialValues: PlanFormFields = {
-  activities: Object.values(FIActivities)
-    .sort((a, b) => a.action.prefix - b.action.prefix)
-    .map(e => extractActivityForForm(e)),
+  activities: getFormActivities(FIActivities),
   caseNum: '',
   date: moment().toDate(),
   end: moment()
@@ -234,7 +242,7 @@ const PlanForm = () => {
         }}
         validationSchema={PlanSchema}
       >
-        {({ errors, isSubmitting, setFieldValue, values }) => (
+        {({ errors, handleChange, isSubmitting, setFieldValue, values }) => (
           <Form
             /* tslint:disable-next-line jsx-no-lambda */
             onChange={(e: FormEvent) => {
@@ -253,6 +261,15 @@ const PlanForm = () => {
                 component="select"
                 name="interventionType"
                 id="interventionType"
+                /* tslint:disable-next-line jsx-no-lambda */
+                onChange={(e: any) => {
+                  if (e.target.value === InterventionType.IRS) {
+                    setFieldValue('activities', getFormActivities(IRSActivities));
+                  } else {
+                    setFieldValue('activities', getFormActivities(FIActivities));
+                  }
+                  handleChange(e);
+                }}
                 className={errors.interventionType ? 'form-control is-invalid' : 'form-control'}
               >
                 <option value={InterventionType.FI}>Focus Investigation</option>
