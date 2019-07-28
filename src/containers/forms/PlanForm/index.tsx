@@ -74,11 +74,12 @@ interface PlanFormFields {
   title: string;
 }
 
+/** initial values for plan activity forms */
 const initialActivitiesValues: PlanActivityFormFields = {
-  actionDescription: 'xxx',
+  actionDescription: '',
   actionReason: actionReasons[0],
-  actionTitle: 'xxx',
-  goalDescription: 'xxx',
+  actionTitle: '',
+  goalDescription: '',
   goalDue: moment()
     .add(DEFAULT_PLAN_DURATION_DAYS, 'days')
     .toDate(),
@@ -90,7 +91,7 @@ const initialActivitiesValues: PlanActivityFormFields = {
   timingPeriodStart: moment().toDate(),
 };
 
-/** initial values */
+/** initial values for plan Form */
 const initialValues: PlanFormFields = {
   activities: [initialActivitiesValues],
   caseNum: '',
