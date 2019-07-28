@@ -163,15 +163,6 @@ const getNameTitle = (event: FormEvent, formValues: PlanFormFields): [string, st
   return [name, title];
 };
 
-// function getActivityErrors(index: number, errors: (FormikErrors<PlanActivityFormFields> | undefined)[]): string[] {
-//   const result: string[] = [];
-//   const x = errors[index] || {};
-//   if (errors[index]) {
-//     Object.entries(errors[index] || {}).map((e) => )
-//   }
-//   return result;
-// }
-
 /** Plan Form component */
 const PlanForm = () => {
   return (
