@@ -297,6 +297,20 @@ const PlanForm = () => {
                     <Field type="hidden" name="goalDescription" id="goalDescription" />
                   </FormGroup>
                   <FormGroup>
+                    <Label for="goalValue">Quantity</Label>
+                    <Field
+                      type="number"
+                      name="goalValue"
+                      id="goalValue"
+                      className={errors.title ? 'form-control is-invalid' : 'form-control'}
+                    />
+                    <ErrorMessage
+                      name="goalValue"
+                      component="small"
+                      className="form-text text-danger"
+                    />
+                  </FormGroup>
+                  <FormGroup>
                     <Label for="timingPeriodStart">Start Date</Label>
                     <Field
                       type="date"
