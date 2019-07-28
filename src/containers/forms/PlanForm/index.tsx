@@ -149,7 +149,9 @@ function extractActivityForForm(activityObj: PlanActivity): PlanActivityFormFiel
 
 /** initial values for plan Form */
 const initialValues: PlanFormFields = {
-  activities: [initialActivitiesValues],
+  activities: Object.values(planActivities)
+    .sort((a, b) => a.action.prefix - b.action.prefix)
+    .map(e => extractActivityForForm(e)),
   caseNum: '',
   date: moment().toDate(),
   end: moment()
