@@ -385,11 +385,11 @@ const PlanForm = () => {
                         />
                       </FormGroup>
                       <FormGroup>
-                        <Label for="actionReason">Reason</Label>
+                        <Label for={`activities[${index}].actionReason`}>Reason</Label>
                         <Field
                           component="select"
-                          name="actionReason"
-                          id="actionReason"
+                          name={`activities[${index}].actionReason`}
+                          id={`activities[${index}].actionReason`}
                           className={errors.status ? 'form-control is-invalid' : 'form-control'}
                         >
                           {actionReasons.map(e => (
@@ -399,7 +399,7 @@ const PlanForm = () => {
                           ))}
                         </Field>
                         <ErrorMessage
-                          name="actionReason"
+                          name={`activities[${index}].actionReason`}
                           component="small"
                           className="form-text text-danger"
                         />
