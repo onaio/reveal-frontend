@@ -335,6 +335,7 @@ const PlanForm = () => {
                           type="hidden"
                           name={`activities[${index}].goalDescription`}
                           id={`activities[${index}].goalDescription`}
+                          value={values.activities[index].actionDescription}
                         />
                       </FormGroup>
                       <FormGroup>
