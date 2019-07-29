@@ -11,6 +11,7 @@ import {
   FIReasonType,
   FIStatusType,
   goalPriorities,
+  PlanActionCodes,
   planActivities,
   PlanActivity,
   PlanDefinition,
@@ -29,6 +30,7 @@ export const fiStatusCodes = Object.values(FIClassifications).map(e => e.code as
 export const PlanSchema = Yup.object().shape({
   activities: Yup.array().of(
     Yup.object().shape({
+      actionCode: Yup.string().oneOf(PlanActionCodes.map(e => e)),
       actionDescription: Yup.string().required(REQUIRED),
       actionReason: Yup.string()
         .oneOf(Object.values(actionReasons))
@@ -65,6 +67,7 @@ export const PlanSchema = Yup.object().shape({
 
 /** Plan activity form fields interface */
 export interface PlanActivityFormFields {
+  actionCode: string;
   actionDescription: string;
   actionReason: string;
   actionTitle: string;
@@ -100,6 +103,7 @@ export interface PlanFormFields {
 export function extractActivityForForm(activityObj: PlanActivity): PlanActivityFormFields {
   const initialGoalDue = activityObj.goal.target[0].due;
   return {
+    actionCode: activityObj.action.code,
     actionDescription: activityObj.action.description || '',
     actionReason: activityObj.action.reason || '',
     actionTitle: activityObj.action.title || '',
