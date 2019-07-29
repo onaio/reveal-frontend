@@ -92,16 +92,23 @@ export const locationHierarchy: LocationItem[] = [
 ];
 
 /** Focus investigation configs */
+/** Allowed FI Status values */
 export const FIStatuses = ['A1', 'A2', 'B1', 'B2'] as const;
+export type FIStatusType = typeof FIStatuses[number];
 
+/** Allowed FI Status values */
+export const FIReasons = ['Routine', 'Case Triggered'] as const;
+export type FIReasonType = typeof FIReasons[number];
+
+/** Allowed goal priority values */
 export const goalPriorities = ['low-priority', 'medium-priority', 'high-priority'] as const;
-
 export type GoalPriorityType = typeof goalPriorities[number];
 
+/** Allowed action Reason values */
 export const actionReasons = ['Investigation', 'Routine'] as const;
-
 export type ActionReasonType = typeof actionReasons[number];
 
+/** Allowed useContext Code values */
 export const useContextCodes = [
   'interventionType',
   'fiStatus',
@@ -109,7 +116,6 @@ export const useContextCodes = [
   'opensrpEventId',
   'caseNum',
 ] as const;
-
 export type UseContextCodesType = typeof useContextCodes[number];
 
 /** Plan Action Timing Period */
@@ -492,9 +498,6 @@ export const planActivities: PlanActivities = {
     },
   },
 };
-export const FIReasons = ['Routine', 'Case Triggered'] as const;
-
-export const goalPriorities = ['low-priority', 'medium-priority', 'high-priority'] as const;
 
 /** UseContext - interface for PlanPayload.useContext[] items */
 export interface UseContext {
