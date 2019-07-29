@@ -102,6 +102,16 @@ export const actionReasons = ['Investigation', 'Routine'] as const;
 
 export type ActionReasonType = typeof actionReasons[number];
 
+export const useContextCodes = [
+  'interventionType',
+  'fiStatus',
+  'fiReason',
+  'opensrpEventId',
+  'caseNum',
+] as const;
+
+export type UseContextCodesType = typeof useContextCodes[number];
+
 /** Plan Action Timing Period */
 export interface PlanActionTimingPeriod {
   end: string;
@@ -488,7 +498,7 @@ export const goalPriorities = ['low-priority', 'medium-priority', 'high-priority
 
 /** UseContext - interface for PlanPayload.useContext[] items */
 export interface UseContext {
-  code: string;
+  code: UseContextCodesType;
   valueCodableConcept: string;
 }
 
