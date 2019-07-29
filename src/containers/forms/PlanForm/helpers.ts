@@ -13,6 +13,7 @@ import {
   goalPriorities,
   planActivities,
   PlanActivity,
+  PlanDefinition,
 } from '../../../configs/settings';
 import { DATE, IRS_TITLE, IS, NAME, REQUIRED } from '../../../constants';
 import { InterventionType, PlanStatus } from '../../../store/ducks/plans';
@@ -179,4 +180,28 @@ export function doesFieldHaveErrors(
   return (
     errors && Object.entries(errors[index] || {}).filter(([key, val]) => key === field).length > 0
   );
+}
+
+/**
+ * Generate an OpenSRP plan definition object from the PlanForm
+ * @param formValue - the value gotten from the PlanForm
+ * @returns {PlanDefinition} - the plan definition object
+ */
+export function generatePlanDefinition(formValue: PlanFormFields): PlanDefinition {
+  return {
+    action: [],
+    date: moment(formValue.date).format(DATE_FORMAT.toUpperCase()),
+    effectivePeriod: {
+      end: moment(formValue.end).format(DATE_FORMAT.toUpperCase()),
+      start: moment(formValue.start).format(DATE_FORMAT.toUpperCase()),
+    },
+    goal: [],
+    identifier: '',
+    jurisdiction: [],
+    name: formValue.name,
+    status: formValue.status,
+    title: formValue.title,
+    useContext: [],
+    version: '1',
+  };
 }
