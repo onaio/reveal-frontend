@@ -6,17 +6,22 @@ import * as Yup from 'yup';
 import { DATE_FORMAT, DEFAULT_ACTIVITY_DURATION_DAYS } from '../../../configs/env';
 import {
   actionReasons,
+  ActionReasonType,
   FIClassifications,
   FIReasons,
   FIReasonType,
   FIStatusType,
   goalPriorities,
+  GoalPriorityType,
   PlanAction,
   PlanActionCodes,
   planActivities,
   PlanActivity,
   PlanDefinition,
   PlanGoal,
+  PlanGoalDetail,
+  PlanGoaldetailQuantity,
+  PlanGoalTarget,
 } from '../../../configs/settings';
 import { DATE, IRS_TITLE, IS, NAME, REQUIRED } from '../../../constants';
 import { InterventionType, PlanStatus } from '../../../store/ducks/plans';
@@ -182,29 +187,41 @@ export function extractActivitiesFromPlanForm(activities: PlanActivityFormFields
           thisGoal = planActivities.mosquitoCollection.goal;
       }
       // next put in values from the form
-      thisAction = Object.assign(thisAction, {
+      const actionFields: Partial<PlanAction> = {
         description: element.actionDescription,
-        reason: element.actionReason,
+        reason: element.actionReason as ActionReasonType,
         timingPeriod: {
           end: moment(element.timingPeriodEnd).format(DATE_FORMAT.toUpperCase()),
           start: moment(element.timingPeriodStart).format(DATE_FORMAT.toUpperCase()),
         },
         title: element.actionTitle,
-      });
-      thisGoal = Object.assign(thisGoal, {
-        description: element.goalDescription,
-        priority: element.goalPriority,
-        target: [
-          Object.assign(thisGoal.target, {
-            detail: {
-              detailQuantity: Object.assign(thisGoal.target[0].detail.detailQuantity, {
-                value: element.goalValue,
-              }),
-            },
-            due: moment(element.goalDue).format(DATE_FORMAT.toUpperCase()),
-          }),
-        ],
-      });
+      };
+
+      thisAction = Object.assign(thisAction, actionFields);
+
+      if (thisGoal.target[0]) {
+        const goalDetailQty: Partial<PlanGoaldetailQuantity> = {
+          value: element.goalValue,
+        };
+
+        const goalDetail: Partial<PlanGoalDetail> = {
+          detailQuantity: Object.assign(thisGoal.target[0].detail.detailQuantity, goalDetailQty),
+        };
+
+        const goalTarget: PlanGoalTarget = Object.assign(thisGoal.target[0], {
+          detail: goalDetail,
+          due: moment(element.goalDue).format(DATE_FORMAT.toUpperCase()),
+        });
+
+        const goalFields: Partial<PlanGoal> = {
+          description: element.goalDescription,
+          priority: element.goalPriority as GoalPriorityType,
+          target: [goalTarget],
+        };
+
+        thisGoal = Object.assign(thisGoal, goalFields);
+      }
+
       actions.push(thisAction);
       goals.push(thisGoal);
     }
