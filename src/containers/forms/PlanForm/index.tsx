@@ -29,6 +29,7 @@ import {
 
 /** initial values for plan activity forms */
 const initialActivitiesValues: PlanActivityFormFields = {
+  actionCode: '',
   actionDescription: '',
   actionReason: actionReasons[0],
   actionTitle: '',
@@ -269,6 +270,13 @@ const PlanForm = (props: PlanFormProps) => {
                           name={`activities[${index}].actionTitle`}
                           component="small"
                           className="form-text text-danger"
+                        />
+
+                        <Field
+                          type="hidden"
+                          name={`activities[${index}].actionCode`}
+                          id={`activities[${index}].actionCode`}
+                          value={values.activities[index].actionCode}
                         />
                       </FormGroup>
                       <FormGroup>
