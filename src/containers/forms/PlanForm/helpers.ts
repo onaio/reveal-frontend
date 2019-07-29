@@ -189,6 +189,7 @@ export function extractActivitiesFromPlanForm(activities: PlanActivityFormFields
       // next put in values from the form
       const actionFields: Partial<PlanAction> = {
         description: element.actionDescription,
+        identifier: '',
         reason: element.actionReason as ActionReasonType,
         timingPeriod: {
           end: moment(element.timingPeriodEnd).format(DATE_FORMAT.toUpperCase()),
@@ -287,13 +288,12 @@ export function doesFieldHaveErrors(
  */
 export function generatePlanDefinition(formValue: PlanFormFields): PlanDefinition {
   return {
-    action: [],
+    ...extractActivitiesFromPlanForm(formValue.activities), // action and goal
     date: moment(formValue.date).format(DATE_FORMAT.toUpperCase()),
     effectivePeriod: {
       end: moment(formValue.end).format(DATE_FORMAT.toUpperCase()),
       start: moment(formValue.start).format(DATE_FORMAT.toUpperCase()),
     },
-    goal: [],
     identifier: '',
     jurisdiction: [],
     name: formValue.name,
