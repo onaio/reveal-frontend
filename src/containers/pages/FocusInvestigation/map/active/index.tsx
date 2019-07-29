@@ -293,7 +293,7 @@ class SingleActiveFIMap extends React.Component<
       });
     } else {
       detailViewPlanInvestigationContainer.push(
-        <span>
+        <span key={plan && plan.plan_id}>
           <b>Case Classification:</b>&nbsp;
           {plan && plan.plan_intervention_type ? plan.plan_intervention_type : null}
         </span>
