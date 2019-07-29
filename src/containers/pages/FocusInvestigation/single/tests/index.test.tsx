@@ -22,7 +22,6 @@ jest.mock('../../../../../components/GisidaWrapper', () => {
 
 jest.mock('../../../../../configs/env');
 jest.mock('@onaio/superset-connector', () => {
-  // tslint:disable-next-line: label-position
   const superset = {
     getFormData: () => ({}),
   };
@@ -178,24 +177,39 @@ describe('containers/pages/SingleFI', () => {
     wrapper.unmount();
   });
 
-  it('calls superset with the correct params', () => {
+  it('calls superset with the correct params', async () => {
     const mock: any = jest.fn();
     const supersetMock: any = jest.fn();
-    supersetMock.mockImplementation(() => Promise.resolve(fixtures.plans));
+    supersetMock.mockImplementation(() => Promise.resolve([]));
+    store.dispatch(fetchPlans(fixtures.plans as Plan[]));
+    store.dispatch(fetchGoals(fixtures.goals));
+    store.dispatch(fetchJurisdictions(fixtures.jurisdictions));
     const props = {
       history,
+      jurisdiction: fixtures.jurisdictions[0],
       location: mock,
-      match: mock,
+      match: {
+        isExact: true,
+        params: { id: fixtures.plan1.id },
+        path: `${FI_SINGLE_URL}/:id`,
+        url: `${FI_SINGLE_URL}/16`,
+      },
       supersetService: supersetMock,
     };
     const wrapper = mount(
       <Provider store={store}>
         <Router history={history}>
-          <ConnectedActiveFocusInvestigation {...props} />
+          <ConnectedSingleFI {...props} />
         </Router>
       </Provider>
     );
-    expect(supersetMock).toHaveBeenCalledWith(0, {});
+    // HACK: HACK: Force async code in componentDidMount to resolve
+    await Promise.resolve();
+    await Promise.resolve();
+    await Promise.resolve();
+    const callList = [[0, {}], [3, {}], [1, {}]];
+    expect(supersetMock).toHaveBeenCalledTimes(3);
+    expect(supersetMock.mock.calls).toEqual(callList);
     wrapper.unmount();
   });
 });
