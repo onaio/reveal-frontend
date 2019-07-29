@@ -3,6 +3,7 @@ import { SessionState } from '@onaio/session-reducer';
 import { Color } from 'csstype';
 import { findKey, uniq } from 'lodash';
 import { FitBoundsOptions, Layer, Style } from 'mapbox-gl';
+import { MouseEvent } from 'react';
 import { Column } from 'react-table';
 import SeamlessImmutable from 'seamless-immutable';
 import { TASK_YELLOW } from '../colors';
@@ -413,13 +414,13 @@ export function roundToPrecision(n: number, precision: number = 0): number {
   return Math.round(n * factor) / factor;
 }
 
-export function stopPropagation(e: any) {
+export function stopPropagation(e: Event | MouseEvent | any) {
   e.stopPropagation();
 }
-export function preventDefault(e: any) {
+export function preventDefault(e: Event | MouseEvent | any) {
   e.preventDefault();
 }
-export function stopPropagationAndPreventDefault(e: any) {
+export function stopPropagationAndPreventDefault(e: Event | MouseEvent | any) {
   preventDefault(e);
   stopPropagation(e);
 }

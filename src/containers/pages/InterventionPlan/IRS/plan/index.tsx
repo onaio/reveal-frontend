@@ -1,6 +1,8 @@
 // this is the IRS Plan page component
 import { Actions } from 'gisida';
+import { EventData, LngLatBoundsLike } from 'mapbox-gl';
 import * as React from 'react';
+import { MouseEvent } from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { Column } from 'react-table';
@@ -23,14 +25,12 @@ import DrillDownTable, { DrillDownProps, DropDownCell } from '@onaio/drill-down-
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset from '@onaio/superset-connector';
 
-import { GREY } from '../../.../../../../../colors';
 import {
   SUPERSET_JURISDICTIONS_DATA_SLICE,
   SUPERSET_JURISDICTIONS_SLICE,
   SUPERSET_PLAN_STRUCTURE_PIVOT_SLICE,
-  SUPERSET_PLANS_TABLE_SLICE,
 } from '../../../../../configs/env';
-import { HOME, HOME_URL, INTERVENTION_IRS_URL, MAP_ID } from '../../../../../constants';
+import { HOME, HOME_URL, INTERVENTION_IRS_URL, MAP_ID, NEW_PLAN } from '../../../../../constants';
 import {
   FlexObject,
   preventDefault,
@@ -39,6 +39,7 @@ import {
   stopPropagationAndPreventDefault,
 } from '../../../../../helpers/utils';
 import {
+  adminLayerColors,
   ADMN0_PCODE,
   CountriesAdmin0,
   fillLayerConfig,
@@ -61,14 +62,12 @@ import jurisdictionReducer, {
 } from '../../../../../store/ducks/jurisdictions';
 import plansReducer, {
   extractPlanPayloadFromPlanRecord,
-  extractPlanRecordFromPlanPayload,
   extractPlanRecordResponseFromPlanPayload,
   fetchPlanRecords,
   getPlanRecordById,
   InterventionType,
   PlanPayload,
   PlanRecord,
-  PlanRecordResponse,
   PlanStatus,
   reducerName as plansReducerName,
 } from '../../../../../store/ducks/plans';
@@ -87,6 +86,7 @@ import './style.css';
 reducerRegistry.register(plansReducerName, plansReducer);
 reducerRegistry.register(jurisdictionReducerName, jurisdictionReducer);
 
+/** initialize OpenSRP API services */
 const OpenSrpLocationService = new OpenSRPService('location');
 const OpenSrpPlanService = new OpenSRPService('plans');
 
@@ -122,12 +122,14 @@ export const defaultIrsPlanProps: IrsPlanProps = {
   supersetService: supersetFetch,
 };
 
+/** Interface for breadcrumb item */
 interface TableCrumb {
   label: string;
   id: string | null;
   active: boolean;
 }
 
+/** Interface to describe props for the IrsPlan component */
 interface IrsPlanState {
   childlessChildrenIds: string[];
   country: JurisdictionsByCountry | null;
@@ -257,7 +259,7 @@ class IrsPlan extends React.Component<
             return new Promise(resolve => resolve());
           }
 
-          // build superset adhoc filter expression
+          // build superset sql filter expression
           let sqlFilterExpression = '';
           for (let i = 0; i < planJurisdictionIdsToGet.length; i += 1) {
             const jurId = planJurisdictionIdsToGet[i];
@@ -390,7 +392,7 @@ class IrsPlan extends React.Component<
       (isFinalizedPlan && planById && planById.plan_title) ||
       (isDraftPlan && planById && `${planById.plan_title} (draft)`) ||
       (newPlan && newPlan.plan_title) ||
-      'New Plan';
+      NEW_PLAN;
 
     const breadCrumbProps = this.getBreadCrumbProps(this.props, pageLabel);
 
@@ -492,22 +494,22 @@ class IrsPlan extends React.Component<
       );
     }
 
-    const onEditNameButtonClick = (e: any) => {
+    const onEditNameButtonClick = (e: MouseEvent) => {
       this.onEditNameButtonClick(e);
     };
-    const onCancleEditNameButtonClick = (e: any) => {
+    const onCancleEditNameButtonClick = (e: MouseEvent) => {
       this.onCancleEditNameButtonClick(e);
     };
     const onEditNameInputChange = (e: any) => {
       this.onEditNameInputChange(e);
     };
-    const onSaveEditNameButtonClick = (e: any) => {
+    const onSaveEditNameButtonClick = (e: MouseEvent) => {
       this.onSaveEditNameButtonClick(e);
     };
-    const onEditPlanSettingsButtonClick = (e: any) => {
+    const onEditPlanSettingsButtonClick = (e: MouseEvent) => {
       this.onEditPlanSettingsButtonClick(e);
     };
-    const onSaveAsDraftButtonClick = (e: any) => {
+    const onSaveAsDraftButtonClick = (e: MouseEvent) => {
       this.onSaveAsDraftButtonClick(e);
     };
 
@@ -568,7 +570,7 @@ class IrsPlan extends React.Component<
       </Row>
     );
 
-    const onTableBreadCrumbClick = (e: any) => {
+    const onTableBreadCrumbClick = (e: MouseEvent) => {
       this.onTableBreadCrumbClick(e);
     };
     const tableBreadCrumbs = (
@@ -638,12 +640,16 @@ class IrsPlan extends React.Component<
   }
 
   // Jurisdiction Hierarchy Control
-  private onTableBreadCrumbClick = (e: any) => {
+  /** onTableBreadCrumbClick - handler for drilldown table breadcrumb clicks to reset the table hierarchy */
+  private onTableBreadCrumbClick = (e: MouseEvent) => {
     preventDefault(e);
-    if (e && e.target && e.target.id) {
-      this.onResetDrilldownTableHierarchy(e.target.id);
+    if (e && e.currentTarget && e.currentTarget.id) {
+      this.onResetDrilldownTableHierarchy(e.currentTarget.id);
     }
   };
+  /** onResetDrilldownTableHierarchy - function for resetting drilldown table hierachy baseline
+   * @param Id - the id of the highest level parent_idto show in the table, or null to reset completely
+   */
   private onResetDrilldownTableHierarchy(Id: string | null) {
     const id = Id !== 'null' ? Id : null;
     const { tableCrumbs } = this.state;
@@ -665,6 +671,9 @@ class IrsPlan extends React.Component<
       }
     );
   }
+  /** onDrilldownClick - function to update the drilldown breadcrumbs when drilling down into the hierarchy
+   * @param id - the jurisidction_id of the Jurisdiction clicked
+   */
   private onDrilldownClick(id: string) {
     const { tableCrumbs } = this.state;
     const { jurisdictionsArray } = this.props;
@@ -695,15 +704,22 @@ class IrsPlan extends React.Component<
   }
 
   // Plan Title Control
+  /** getNewPlanDate - getter function for today's date (YYYY-MM-DD)
+   * @returns string of today's date
+   */
   private getNewPlanDate(): string {
     const date = new Date();
     return `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
   }
+  /** getNewPlanTitle - getter function generating new plan title
+   * @returns string of default auto-generated plan title
+   */
   private getNewPlanTitle(): string {
     const date = this.getNewPlanDate();
     return `${InterventionType.IRS}_${date}`;
   }
-  private onEditNameButtonClick(e: any) {
+  /** onEditNameButtonClick - handler enabling inline-editing the plan name */
+  private onEditNameButtonClick(e: MouseEvent) {
     preventDefault(e);
     if (this.state.newPlan) {
       this.setState({
@@ -712,6 +728,7 @@ class IrsPlan extends React.Component<
       });
     }
   }
+  /** onEditNameInputChange - handler updating component state when plan title is changed */
   private onEditNameInputChange(e: any) {
     const { newPlan: NewPlan } = this.state;
     if (NewPlan) {
@@ -722,7 +739,8 @@ class IrsPlan extends React.Component<
       this.setState({ newPlan });
     }
   }
-  private onCancleEditNameButtonClick(e: any) {
+  /** onCancleEditNameButtonClick - handler disabling inline-editing and restoring previous plan title */
+  private onCancleEditNameButtonClick(e: MouseEvent) {
     preventDefault(e);
     const { newPlan: NewPlan, previousPlanName } = this.state;
     if (NewPlan) {
@@ -737,20 +755,23 @@ class IrsPlan extends React.Component<
       });
     }
   }
-  private onSaveEditNameButtonClick(e: any) {
+  /** onSaveEditNameButtonClick - handler disabling inline-editing */
+  private onSaveEditNameButtonClick(e: MouseEvent) {
     e.preventDefault();
     this.setState({
       isEditingPlanName: false,
       previousPlanName: '',
     });
   }
-  private onEditPlanSettingsButtonClick(e: any) {
+  /** onEditPlanSettingsButtonClick - handler updating component state to render new plan form */
+  private onEditPlanSettingsButtonClick(e: MouseEvent) {
     if (!this.props.isFinalizedPlan) {
       this.setState({ isStartingPlan: true });
     }
   }
 
-  // new Plan form handlers
+  // New Plan form handlers
+  /** onSetPlanNameChange - handler updating plan title in component state */
   private onSetPlanNameChange(e: any) {
     if (e && e.target && e.target.value) {
       const newPlan: PlanRecord = {
@@ -760,6 +781,7 @@ class IrsPlan extends React.Component<
       this.setState({ newPlan });
     }
   }
+  /** onSetPlanStartDateChange - handler updatint plan_effective_period_start in component state */
   private onSetPlanStartDateChange(e: any) {
     if (e && e.target && e.target.value) {
       const newPlan: PlanRecord = {
@@ -769,6 +791,7 @@ class IrsPlan extends React.Component<
       this.setState({ newPlan });
     }
   }
+  /** onSetPlanEndDateChange - handler updatint plan_effective_period_end in component state */
   private onSetPlanEndDateChange(e: any) {
     if (e && e.target && e.target.value) {
       const newPlan: PlanRecord = {
@@ -778,12 +801,19 @@ class IrsPlan extends React.Component<
       this.setState({ newPlan });
     }
   }
+  /** onSelectCountryChange - handler updating country in component state */
   private onSelectCountryChange(e: any) {
     if (e && e.target && (e.target.value as ADMN0_PCODE)) {
       this.setState({ planCountry: e.target.value });
     }
   }
-  private onStartPlanFormSubmit(e: any) {
+  /** onStartPlanFormSubmit - handler which:
+   * Updates component state with relative Jurisdictions
+   * Identifies childless children Jurisdictions
+   * Sets the first drilldown table breadcrumb
+   * Requests unloaded geojson for childless children
+   */
+  private onStartPlanFormSubmit(e: MouseEvent) {
     const { newPlan: NewPlan, planCountry } = this.state;
     const { jurisdictionsArray, isDraftPlan } = this.props;
     const country: JurisdictionsByCountry = CountriesAdmin0[planCountry as ADMN0_PCODE];
@@ -878,7 +908,10 @@ class IrsPlan extends React.Component<
     );
   }
 
-  // Jurisdiction Selection Control
+  // Jurisdiction Selection Control (which jurisidcitions should be included in the plan)
+  /** onToggleJurisdictionSelection - toggles selection of clicked Jurisdiction and all decendants
+   * @param id - the jurisdiction_id of the Jurisdiction being toggled
+   */
   private onToggleJurisdictionSelection(id: string) {
     const { newPlan: NewPlan, filteredJurisdictionIds } = this.state;
     const filteredJurisdictions = this.props.jurisdictionsArray.filter(j =>
@@ -909,12 +942,14 @@ class IrsPlan extends React.Component<
       this.setState({ newPlan });
     }
   }
+  /** onTableCheckboxChange - handler for drilldown table checkbox click which calls this.onToggleJurisdictionSelection */
   private onTableCheckboxChange(e: any) {
     if (e && e.target) {
       const { value: id } = e.target;
       this.onToggleJurisdictionSelection(id);
     }
   }
+  /** onToggleAllCheckboxChange - handler for de/select all Jurisdictions checkbox which updates component state */
   private onToggleAllCheckboxChange(e: any) {
     const { newPlan: NewPlan, filteredJurisdictionIds } = this.state;
     const filteredJurisdictions = this.props.jurisdictionsArray.filter(j =>
@@ -934,6 +969,10 @@ class IrsPlan extends React.Component<
   }
 
   // Getter methods
+  /** getChildlessChildrenIds - hierarchy util to get all childless decendants of certain Jurisdictions
+   * @param filteredJurisdictions - list of Jurisdictions of which to find the childless decendants
+   * @returns list of jurisdiction_ids of childless decendants
+   */
   private getChildlessChildrenIds(filteredJurisdictions: Jurisdiction[]): string[] {
     const childlessChildrenIds = filteredJurisdictions.map(j => j.jurisdiction_id);
     let jndex = 0;
@@ -949,6 +988,12 @@ class IrsPlan extends React.Component<
 
     return childlessChildrenIds;
   }
+  /** getDecendantJurisdictionIds - hierarchy util to get all decendants of certain Jurisdictions
+   * @param ParentIds - jurisdiction_ids of the parent jurisdictions for which to find decendants
+   * @param jurisdictionsArray - list Jurisdictions through which to search for decendants
+   * @param doIncludeParentIds - boolean to determine whether or not to include ParentId strings in returned list
+   * @returns list of jurisdiction_ids of all decendants
+   */
   private getDecendantJurisdictionIds(
     ParentIds: string[],
     jurisdictionsArray: Jurisdiction[],
@@ -972,6 +1017,13 @@ class IrsPlan extends React.Component<
 
     return decendantIds;
   }
+  /** getDecendantJurisdictionIds - recursive hierarchy util to get all ancestors of certain Jurisdictions
+   * @param ChildIds - jurisdiction_ids of the child jurisdictions for which to find ancestors
+   * @param jurisdictions [array] - list Jurisdictions through which to search for decendants
+   * @param jurisdictions [object] - key/value map of jurisdictionsById
+   * @param doIncludeChildIds - boolean to determine whether or not to include ChildId strings in returned list
+   * @returns list of jurisdiction_ids of all ancestors
+   */
   private getAncestorJurisdictionIds(
     ChildIds: string[],
     jurisdictions: Jurisdiction[] | { [key: string]: Jurisdiction },
@@ -1010,6 +1062,7 @@ class IrsPlan extends React.Component<
     return Array.from(new Set(ancestorIds));
   }
 
+  /** getGisidaWrapperProps - GisidaWrapper prop builder building out layers and handlers for Gisida */
   private getGisidaWrapperProps(): GisidaProps | null {
     const { country, isLoadingGeoms, filteredJurisdictionIds } = this.state;
     const filteredJurisdictions = this.props.jurisdictionsArray.filter(j =>
@@ -1107,8 +1160,7 @@ class IrsPlan extends React.Component<
           geoGraphicLevels.push(geographic_level);
         }
       }
-      geoGraphicLevels.sort().reverse();
-      const colorMap = ['red', 'orange', 'yellow', 'green', 'blue', 'purple'];
+      geoGraphicLevels.sort();
 
       for (const g of geoGraphicLevels) {
         const featureCollection = {
@@ -1120,7 +1172,7 @@ class IrsPlan extends React.Component<
           ...fillLayerConfig,
           id: `${ADMN0_EN}-admin-${g}-jurisdiction-fill`,
           paint: {
-            'fill-color': colorMap[g],
+            'fill-color': adminLayerColors[g],
           },
           source: {
             ...fillLayerConfig.source,
@@ -1158,7 +1210,12 @@ class IrsPlan extends React.Component<
     return gisidaWrapperProps;
   }
 
-  private onAdminFillClick(e: any, country: JurisdictionsByCountry, geographicLevel: number) {
+  /** onAdminFillClick - map click handler passed into Gisida for map drill down functionality
+   * @param e - Mapbox Event object
+   * @param country - JurisdictionsByCountry object containing basic hierarchy information per country
+   * @param geographicLevel - The hierarchical level of the feature being clicked
+   */
+  private onAdminFillClick(e: EventData, country: JurisdictionsByCountry, geographicLevel: number) {
     const { point, target: Map, originalEvent } = e;
     const features = Map.queryRenderedFeatures(point);
     const isShiftClick = originalEvent.shiftKey;
@@ -1184,7 +1241,7 @@ class IrsPlan extends React.Component<
       // check for next Admin fill layer
       if (country.tilesets[geographicLevel + 1]) {
         // zoom to clicked admin level
-        const newBounds = GeojsonExtent(geometry);
+        const newBounds: LngLatBoundsLike = GeojsonExtent(geometry);
         Map.fitBounds(newBounds, { padding: 20 });
         // toggle next admin fill layer
         const nextLayerId = `${country.ADMN0_EN}-admin-${geographicLevel + 1}-fill`;
@@ -1226,8 +1283,11 @@ class IrsPlan extends React.Component<
       this.onToggleJurisdictionSelection(clickedFeatureJurisdiction.jurisdiction_id);
     }
   }
-
-  private onDrillUpClick(e: any, country: JurisdictionsByCountry) {
+  /** onDrillUpClick - map click handler passed into Gisida for resetting the drilldown hierarchy
+   * @param e - Mapbox Event object
+   * @param country - JurisdictionsByCountry object containing basic hierarchy information per country
+   */
+  private onDrillUpClick(e: EventData, country: JurisdictionsByCountry) {
     const { point, target: Map } = e;
     const features = Map.queryRenderedFeatures(point);
 
@@ -1241,7 +1301,7 @@ class IrsPlan extends React.Component<
           }
         }
       }
-      Map.fitBounds(country.bounds, { padding: 20 });
+      Map.fitBounds(country.bounds as LngLatBoundsLike, { padding: 20 });
       this.onResetDrilldownTableHierarchy(null);
     }
   }
@@ -1267,12 +1327,12 @@ class IrsPlan extends React.Component<
       this.onTableCheckboxChange(e);
     };
 
-    const onDrilldownClick = (e: any) => {
-      if (e && e.target && e.target.id) {
-        if (this.state.childlessChildrenIds.includes(e.target.id)) {
+    const onDrilldownClick = (e: MouseEvent) => {
+      if (e && e.currentTarget && e.currentTarget.id) {
+        if (this.state.childlessChildrenIds.includes(e.currentTarget.id)) {
           stopPropagationAndPreventDefault(e);
         } else {
-          this.onDrilldownClick(e.target.id);
+          this.onDrilldownClick(e.currentTarget.id);
         }
       }
     };
@@ -1444,7 +1504,7 @@ class IrsPlan extends React.Component<
   }
 
   // Service handlers
-  private onSaveAsDraftButtonClick(e: any) {
+  private onSaveAsDraftButtonClick(e: MouseEvent) {
     const { newPlan, childlessChildrenIds } = this.state;
     if (newPlan && newPlan.plan_jurisdictions_ids) {
       const now = new Date();
@@ -1518,6 +1578,10 @@ interface DispatchedStateProps {
 
 export { IrsPlan };
 
+/** map state to props
+ * @param {partial<store>} - the redux store
+ * @param {any} ownProps - the props
+ */
 const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateProps => {
   const planId = ownProps.match.params.id || null;
   const plan = getPlanRecordById(state, planId);
@@ -1543,12 +1607,14 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
   return props;
 };
 
+/** map props to actions that may be dispatched by component */
 const mapDispatchToProps = {
   fetchAllJurisdictionIdsActionCreator: fetchAllJurisdictionIds,
   fetchJurisdictionsActionCreator: fetchJurisdictions,
   fetchPlansActionCreator: fetchPlanRecords,
 };
 
+/** Create connected IrsPlan */
 const ConnectedIrsPlan = connect(
   mapStateToProps,
   mapDispatchToProps

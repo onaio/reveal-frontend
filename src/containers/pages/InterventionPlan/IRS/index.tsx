@@ -37,6 +37,7 @@ import { IRS_TITLE } from '../../../../constants';
 /** register the plans reducer */
 reducerRegistry.register(plansReducerName, plansReducer);
 
+/** initialize OpenSRP API services */
 const OpenSrpPlanService = new OpenSRPService('plans');
 
 /** IrsPlansProps - interface for IRS Plans page */

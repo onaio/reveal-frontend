@@ -325,7 +325,6 @@ export type ImmutablePlanState = PlanState & SeamlessImmutable.ImmutableObject<P
 const initialState: ImmutablePlanState = SeamlessImmutable({
   planRecordsById: {},
   plansById: {},
-  plansByPlanId: {},
 });
 
 /** the Plan reducer function */
@@ -335,7 +334,6 @@ export default function reducer(state = initialState, action: PlanActionTypes): 
       return SeamlessImmutable({
         ...state,
         plansById: action.plansById,
-        plansByPlanId: action.plansByPlanId,
       });
     case PLAN_RECORDS_FETCHED:
       return SeamlessImmutable({
