@@ -2,6 +2,7 @@
 import { Actions } from 'gisida';
 import { EventData, LngLatBoundsLike } from 'mapbox-gl';
 import * as React from 'react';
+import { MouseEvent } from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { Column } from 'react-table';
@@ -487,22 +488,22 @@ class IrsPlan extends React.Component<
       );
     }
 
-    const onEditNameButtonClick = (e: any) => {
+    const onEditNameButtonClick = (e: MouseEvent) => {
       this.onEditNameButtonClick(e);
     };
-    const onCancleEditNameButtonClick = (e: any) => {
+    const onCancleEditNameButtonClick = (e: MouseEvent) => {
       this.onCancleEditNameButtonClick(e);
     };
     const onEditNameInputChange = (e: any) => {
       this.onEditNameInputChange(e);
     };
-    const onSaveEditNameButtonClick = (e: any) => {
+    const onSaveEditNameButtonClick = (e: MouseEvent) => {
       this.onSaveEditNameButtonClick(e);
     };
-    const onEditPlanSettingsButtonClick = (e: any) => {
+    const onEditPlanSettingsButtonClick = (e: MouseEvent) => {
       this.onEditPlanSettingsButtonClick(e);
     };
-    const onSaveAsDraftButtonClick = (e: any) => {
+    const onSaveAsDraftButtonClick = (e: MouseEvent) => {
       this.onSaveAsDraftButtonClick(e);
     };
 
@@ -559,7 +560,7 @@ class IrsPlan extends React.Component<
       </Row>
     );
 
-    const onTableBreadCrumbClick = (e: any) => {
+    const onTableBreadCrumbClick = (e: MouseEvent) => {
       this.onTableBreadCrumbClick(e);
     };
     const tableBreadCrumbs = (
@@ -630,10 +631,10 @@ class IrsPlan extends React.Component<
 
   // Jurisdiction Hierarchy Control
   /** onTableBreadCrumbClick - handler for drilldown table breadcrumb clicks to reset the table hierarchy */
-  private onTableBreadCrumbClick = (e: any) => {
+  private onTableBreadCrumbClick = (e: MouseEvent) => {
     preventDefault(e);
-    if (e && e.target && e.target.id) {
-      this.onResetDrilldownTableHierarchy(e.target.id);
+    if (e && e.currentTarget && e.currentTarget.id) {
+      this.onResetDrilldownTableHierarchy(e.currentTarget.id);
     }
   };
   /** onResetDrilldownTableHierarchy - function for resetting drilldown table hierachy baseline
@@ -708,7 +709,7 @@ class IrsPlan extends React.Component<
     return `${InterventionType.IRS}_${date}`;
   }
   /** onEditNameButtonClick - handler enabling inline-editing the plan name */
-  private onEditNameButtonClick(e: any) {
+  private onEditNameButtonClick(e: MouseEvent) {
     preventDefault(e);
     if (this.state.newPlan) {
       this.setState({
@@ -729,7 +730,7 @@ class IrsPlan extends React.Component<
     }
   }
   /** onCancleEditNameButtonClick - handler disabling inline-editing and restoring previous plan title */
-  private onCancleEditNameButtonClick(e: any) {
+  private onCancleEditNameButtonClick(e: MouseEvent) {
     preventDefault(e);
     const { newPlan: NewPlan, previousPlanName } = this.state;
     if (NewPlan) {
@@ -745,7 +746,7 @@ class IrsPlan extends React.Component<
     }
   }
   /** onSaveEditNameButtonClick - handler disabling inline-editing */
-  private onSaveEditNameButtonClick(e: any) {
+  private onSaveEditNameButtonClick(e: MouseEvent) {
     e.preventDefault();
     this.setState({
       isEditingPlanName: false,
@@ -753,7 +754,7 @@ class IrsPlan extends React.Component<
     });
   }
   /** onEditPlanSettingsButtonClick - handler updating component state to render new plan form */
-  private onEditPlanSettingsButtonClick(e: any) {
+  private onEditPlanSettingsButtonClick(e: MouseEvent) {
     if (!this.props.isFinalizedPlan) {
       this.setState({ isStartingPlan: true });
     }
@@ -802,7 +803,7 @@ class IrsPlan extends React.Component<
    * Sets the first drilldown table breadcrumb
    * Requests unloaded geojson for childless children
    */
-  private onStartPlanFormSubmit(e: any) {
+  private onStartPlanFormSubmit(e: MouseEvent) {
     const { newPlan: NewPlan, planCountry } = this.state;
     const { jurisdictionsArray, isDraftPlan } = this.props;
     const country: JurisdictionsByCountry = CountriesAdmin0[planCountry as ADMN0_PCODE];
@@ -1317,12 +1318,12 @@ class IrsPlan extends React.Component<
       this.onTableCheckboxChange(e);
     };
 
-    const onDrilldownClick = (e: any) => {
-      if (e && e.target && e.target.id) {
-        if (this.state.childlessChildrenIds.includes(e.target.id)) {
+    const onDrilldownClick = (e: MouseEvent) => {
+      if (e && e.currentTarget && e.currentTarget.id) {
+        if (this.state.childlessChildrenIds.includes(e.currentTarget.id)) {
           stopPropagationAndPreventDefault(e);
         } else {
-          this.onDrilldownClick(e.target.id);
+          this.onDrilldownClick(e.currentTarget.id);
         }
       }
     };
@@ -1495,7 +1496,7 @@ class IrsPlan extends React.Component<
 
   // Service handlers
   /** onSaveAsDraftButtonClick - placeholder function for saving new plan as a draft plan */
-  private onSaveAsDraftButtonClick(e: any) {
+  private onSaveAsDraftButtonClick(e: MouseEvent) {
     const { newPlan } = this.state;
 
     // todo - create PlanRecord to NewPlanSubmission extractor
