@@ -25,6 +25,7 @@ export interface Jurisdiction {
   parent_id?: string | null;
 }
 
+/** Interface describing a list of loaded Jurisdictions */
 export interface AllJurisdictionIds {
   [key: string]: {
     id: string;
@@ -43,6 +44,7 @@ interface FetchJurisdictionAction extends AnyAction {
   type: typeof FETCH_JURISDICTION;
 }
 
+/** fetch allJurisdictionIds action */
 interface FetchAllJurisdictionIdsAction extends AnyAction {
   allJurisdictionIds: AllJurisdictionIds;
   type: typeof FETCH_ALL_JURISDICTION_IDS;
@@ -186,6 +188,7 @@ export function getJurisdictionsIdArray(state: Partial<Store>): string[] {
   return keys((state as any)[reducerName].jurisdictionsById);
 }
 
+/** get all JurisdictionIds in the system */
 export function getAllJurisdictionsIds(state: Partial<Store>): string[] {
   return (state as any)[reducerName].allJurisdictionIds;
 }
