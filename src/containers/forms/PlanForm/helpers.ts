@@ -15,6 +15,7 @@ import {
   GoalPriorityType,
   PlanAction,
   PlanActionCodes,
+  PlanActionCodesType,
   planActivities,
   PlanActivity,
   PlanDefinition,
@@ -154,42 +155,51 @@ export function extractActivitiesFromPlanForm(activities: PlanActivityFormFields
   const actions: PlanAction[] = [];
   const goals: PlanGoal[] = [];
 
-  activities.forEach(element => {
-    if (element.actionCode in PlanActionCodes) {
+  activities.forEach((element, index) => {
+    const prefix = index + 1;
+    if (PlanActionCodes.includes(element.actionCode as PlanActionCodesType)) {
       // we must declare them with some value. BCC chosen randomly here
       let thisAction: PlanAction = planActivities.BCC.action;
       let thisGoal: PlanGoal = planActivities.BCC.goal;
       // first populate with default values
-      switch (element.actionCode) {
-        case 'BCC':
-          thisAction = planActivities.BCC.action;
-          thisGoal = planActivities.BCC.goal;
-        case 'IRS':
-          thisAction = planActivities.IRS.action;
-          thisGoal = planActivities.IRS.goal;
-        case 'Bednet Distribution':
-          thisAction = planActivities.bednetDistribution.action;
-          thisGoal = planActivities.bednetDistribution.goal;
-        case 'Blood Screening':
-          thisAction = planActivities.bloodScreening.action;
-          thisGoal = planActivities.bloodScreening.goal;
-        case 'Case Confirmation':
-          thisAction = planActivities.caseConfirmation.action;
-          thisGoal = planActivities.caseConfirmation.goal;
-        case 'RACD Register Family':
-          thisAction = planActivities.familyRegistration.action;
-          thisGoal = planActivities.familyRegistration.goal;
-        case 'Larval Dipping':
-          thisAction = planActivities.larvalDipping.action;
-          thisGoal = planActivities.larvalDipping.goal;
-        case 'Mosquito Collection':
-          thisAction = planActivities.mosquitoCollection.action;
-          thisGoal = planActivities.mosquitoCollection.goal;
+      if (element.actionCode === 'BCC') {
+        thisAction = planActivities.BCC.action;
+        thisGoal = planActivities.BCC.goal;
       }
+      if (element.actionCode === 'IRS') {
+        thisAction = planActivities.IRS.action;
+        thisGoal = planActivities.IRS.goal;
+      }
+      if (element.actionCode === 'Bednet Distribution') {
+        thisAction = planActivities.bednetDistribution.action;
+        thisGoal = planActivities.bednetDistribution.goal;
+      }
+      if (element.actionCode === 'Blood Screening') {
+        thisAction = planActivities.bloodScreening.action;
+        thisGoal = planActivities.bloodScreening.goal;
+      }
+      if (element.actionCode === 'Case Confirmation') {
+        thisAction = planActivities.caseConfirmation.action;
+        thisGoal = planActivities.caseConfirmation.goal;
+      }
+      if (element.actionCode === 'RACD Register Family') {
+        thisAction = planActivities.familyRegistration.action;
+        thisGoal = planActivities.familyRegistration.goal;
+      }
+      if (element.actionCode === 'Larval Dipping') {
+        thisAction = planActivities.larvalDipping.action;
+        thisGoal = planActivities.larvalDipping.goal;
+      }
+      if (element.actionCode === 'Mosquito Collection') {
+        thisAction = planActivities.mosquitoCollection.action;
+        thisGoal = planActivities.mosquitoCollection.goal;
+      }
+
       // next put in values from the form
       const actionFields: Partial<PlanAction> = {
         description: element.actionDescription,
         identifier: '',
+        prefix,
         reason: element.actionReason as ActionReasonType,
         timingPeriod: {
           end: moment(element.timingPeriodEnd).format(DATE_FORMAT.toUpperCase()),
