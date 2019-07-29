@@ -25,7 +25,9 @@ jest.mock('../../../../../../configs/env');
 jest.mock('@onaio/superset-connector', () => {
   // tslint:disable-next-line: label-position
   const superset = {
-    getFormData: () => ({}),
+    getFormData: () => {
+      return {};
+    },
   };
   return superset;
 });
@@ -129,24 +131,44 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
     wrapper.unmount();
   });
 
-  it('calls superset with the correct params', () => {
+  it('calls superset with the correct params', async () => {
     const mock: any = jest.fn();
     const supersetMock: any = jest.fn();
-    supersetMock.mockImplementation(() => Promise.resolve(fixtures.plans));
+    supersetMock.mockImplementation(async () => []);
+    store.dispatch(fetchGoals([fixtures.goal3]));
+    store.dispatch(fetchJurisdictions([fixtures.jurisdictions[0]]));
+    store.dispatch(fetchPlans([fixtures.plan1 as Plan]));
+    store.dispatch(fetchTasks(fixtures.tasks));
     const props = {
+      currentGoal: fixtures.goal3,
       history,
       location: mock,
-      match: mock,
+      match: {
+        isExact: true,
+        params: { id: fixtures.plan1.id },
+        path: `${FI_SINGLE_URL}/:id`,
+        url: `${FI_SINGLE_URL}/13`,
+      },
+      pointFeatureCollection: wrapFeatureCollection([fixtures.coloredTasks.task3.geojson]),
+      polygonFeatureCollection: wrapFeatureCollection([fixtures.coloredTasks.task2.geojson]),
       supersetService: supersetMock,
     };
     const wrapper = mount(
       <Provider store={store}>
         <Router history={history}>
-          <ConnectedActiveFocusInvestigation {...props} />
+          <ConnectedMapSingleFI {...props} />
         </Router>
       </Provider>
     );
-    expect(supersetMock).toHaveBeenCalledWith(0, {});
+    // HACK: HACK: to force for asynchronous code in component to execute.
+    await Promise.resolve();
+    await Promise.resolve();
+    await Promise.resolve();
+    await Promise.resolve();
+    await Promise.resolve();
+    expect(supersetMock).toHaveBeenCalledTimes(5);
+    const callList = [[1, {}], [2, {}], [0, {}], [3, {}], [4, {}]];
+    expect(supersetMock.mock.calls).toEqual(callList);
     wrapper.unmount();
   });
 });
