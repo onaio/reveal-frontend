@@ -19,6 +19,7 @@ import { InterventionType, PlanStatus } from '../../../store/ducks/plans';
 import {
   doesFieldHaveErrors,
   FIActivities,
+  generatePlanDefinition,
   getFormActivities,
   getNameTitle,
   IRSActivities,
@@ -78,7 +79,7 @@ const PlanForm = (props: PlanFormProps) => {
         /* tslint:disable-next-line jsx-no-lambda */
         onSubmit={(values, { setSubmitting }) => {
           setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
+            alert(JSON.stringify(generatePlanDefinition(values), null, 2));
             setSubmitting(false);
           }, 400);
         }}
