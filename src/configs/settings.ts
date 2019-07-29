@@ -486,6 +486,33 @@ export const FIReasons = ['Routine', 'Case Triggered'] as const;
 
 export const goalPriorities = ['low-priority', 'medium-priority', 'high-priority'] as const;
 
+/** UseContext - interface for PlanPayload.useContext[] items */
+export interface UseContext {
+  code: string;
+  valueCodableConcept: string;
+}
+
+/** interface that describes plan definition objects from OpenSRP */
+export interface PlanDefinition {
+  action: PlanAction[];
+  date: string;
+  effectivePeriod: {
+    end: string;
+    start: string;
+  };
+  goal: PlanGoal[];
+  identifier: string;
+  jurisdiction: Array<{
+    code: string;
+  }>;
+  name: string;
+  serverVersion?: number;
+  status: string;
+  title: string;
+  useContext: UseContext[];
+  version: string;
+}
+
 /** Focus Investigation case classifications */
 export const FIClassifications: Classification[] = [
   {
