@@ -8,7 +8,8 @@ import {
   actionReasons,
   FIClassifications,
   FIReasons,
-  FIStatuses,
+  FIReasonType,
+  FIStatusType,
   goalPriorities,
   planActivities,
   PlanActivity,
@@ -19,12 +20,6 @@ import { InterventionType, PlanStatus } from '../../../store/ducks/plans';
 /** separate FI and IRS activities */
 export const FIActivities = omit(planActivities, ['IRS']);
 export const IRSActivities = pick(planActivities, ['IRS']);
-
-/** Allowed FI Status values */
-export type FIStatusType = typeof FIStatuses[number];
-
-/** Allowed FI Status values */
-export type FIReasonType = typeof FIReasons[number];
 
 /** Array of FI Statuses */
 export const fiStatusCodes = Object.values(FIClassifications).map(e => e.code as FIStatusType);
