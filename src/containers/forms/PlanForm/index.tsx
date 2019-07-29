@@ -91,6 +91,7 @@ const PlanForm = (props: PlanFormProps) => {
               setFieldValue('name', nameTitle[0]);
               setFieldValue('title', nameTitle[1]);
             }}
+            className="mb-5"
           >
             <FormGroup className="non-field-errors">
               <ErrorMessage name="name" component="p" className="form-text text-danger" />
@@ -427,7 +428,7 @@ const PlanForm = (props: PlanFormProps) => {
               className="btn btn-block"
               color="primary"
               aria-label="Save Plan"
-              disabled={isSubmitting}
+              disabled={isSubmitting || Object.keys(errors).length > 0}
             >
               {isSubmitting ? SAVING : 'Save Plan'}
             </Button>
