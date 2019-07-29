@@ -1,5 +1,6 @@
 // this is the IRS Plan page component
 import { Actions } from 'gisida';
+import { EventData, LngLatBoundsLike } from 'mapbox-gl';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
@@ -1200,11 +1201,11 @@ class IrsPlan extends React.Component<
   }
 
   /** onAdminFillClick - map click handler passed into Gisida for map drill down functionality
-   * @param e - Mapbox Event (todo: correclty type this with Mapbox's types)
+   * @param e - Mapbox Event object
    * @param country - JurisdictionsByCountry object containing basic hierarchy information per country
    * @param geographicLevel - The hierarchical level of the feature being clicked
    */
-  private onAdminFillClick(e: any, country: JurisdictionsByCountry, geographicLevel: number) {
+  private onAdminFillClick(e: EventData, country: JurisdictionsByCountry, geographicLevel: number) {
     const { point, target: Map, originalEvent } = e;
     const features = Map.queryRenderedFeatures(point);
     const isShiftClick = originalEvent.shiftKey;
@@ -1230,7 +1231,7 @@ class IrsPlan extends React.Component<
       // check for next Admin fill layer
       if (country.tilesets[geographicLevel + 1]) {
         // zoom to clicked admin level
-        const newBounds = GeojsonExtent(geometry);
+        const newBounds: LngLatBoundsLike = GeojsonExtent(geometry);
         Map.fitBounds(newBounds, { padding: 20 });
         // toggle next admin fill layer
         const nextLayerId = `${country.ADMN0_EN}-admin-${geographicLevel + 1}-fill`;
@@ -1273,10 +1274,10 @@ class IrsPlan extends React.Component<
     }
   }
   /** onDrillUpClick - map click handler passed into Gisida for resetting the drilldown hierarchy
-   * @param e - Mapbox Event (todo: correclty type this with Mapbox's types)
+   * @param e - Mapbox Event object
    * @param country - JurisdictionsByCountry object containing basic hierarchy information per country
    */
-  private onDrillUpClick(e: any, country: JurisdictionsByCountry) {
+  private onDrillUpClick(e: EventData, country: JurisdictionsByCountry) {
     const { point, target: Map } = e;
     const features = Map.queryRenderedFeatures(point);
 
@@ -1290,7 +1291,7 @@ class IrsPlan extends React.Component<
           }
         }
       }
-      Map.fitBounds(country.bounds, { padding: 20 });
+      Map.fitBounds(country.bounds as LngLatBoundsLike, { padding: 20 });
       this.onResetDrilldownTableHierarchy(null);
     }
   }
