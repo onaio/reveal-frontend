@@ -99,6 +99,9 @@ export const END_DATE = 'End Date';
 export type END_DATE = typeof END_DATE;
 export const NAME = 'Name';
 export type NAME = typeof NAME;
+export const NEW_PLAN = 'New Plan';
+export type NEW_PLAN = typeof NEW_PLAN;
+
 // internal urls
 export const LOGIN_URL = '/login';
 export type LOGIN_URL = typeof LOGIN_URL;
