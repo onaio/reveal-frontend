@@ -22,12 +22,10 @@ import DrillDownTable, { DrillDownProps, DropDownCell } from '@onaio/drill-down-
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset from '@onaio/superset-connector';
 
-import { GREY } from '../../.../../../../../colors';
 import {
   SUPERSET_JURISDICTIONS_DATA_SLICE,
   SUPERSET_JURISDICTIONS_SLICE,
   SUPERSET_PLAN_STRUCTURE_PIVOT_SLICE,
-  SUPERSET_PLANS_TABLE_SLICE,
 } from '../../../../../configs/env';
 import { HOME, HOME_URL, INTERVENTION_IRS_URL, MAP_ID } from '../../../../../constants';
 import {
@@ -59,14 +57,12 @@ import jurisdictionReducer, {
   reducerName as jurisdictionReducerName,
 } from '../../../../../store/ducks/jurisdictions';
 import plansReducer, {
-  extractPlanRecordFromPlanPayload,
   extractPlanRecordResponseFromPlanPayload,
   fetchPlanRecords,
   getPlanRecordById,
   InterventionType,
   PlanPayload,
   PlanRecord,
-  PlanRecordResponse,
   PlanStatus,
   reducerName as plansReducerName,
 } from '../../../../../store/ducks/plans';
