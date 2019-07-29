@@ -23,6 +23,7 @@ import {
   PlanGoalDetail,
   PlanGoaldetailQuantity,
   PlanGoalTarget,
+  UseContext,
 } from '../../../configs/settings';
 import { DATE, IRS_TITLE, IS, NAME, REQUIRED } from '../../../constants';
 import { InterventionType, PlanStatus } from '../../../store/ducks/plans';
@@ -297,6 +298,29 @@ export function doesFieldHaveErrors(
  * @returns {PlanDefinition} - the plan definition object
  */
 export function generatePlanDefinition(formValue: PlanFormFields): PlanDefinition {
+  const useContext: UseContext[] = [
+    {
+      code: 'interventionType',
+      valueCodableConcept: formValue.interventionType,
+    },
+  ];
+
+  if (formValue.fiReason) {
+    useContext.push({ code: 'fiReason', valueCodableConcept: formValue.fiReason });
+  }
+
+  if (formValue.fiStatus) {
+    useContext.push({ code: 'fiStatus', valueCodableConcept: formValue.fiStatus });
+  }
+
+  if (formValue.caseNum) {
+    useContext.push({ code: 'caseNum', valueCodableConcept: formValue.caseNum });
+  }
+
+  if (formValue.opensrpEventId) {
+    useContext.push({ code: 'opensrpEventId', valueCodableConcept: formValue.opensrpEventId });
+  }
+
   return {
     ...extractActivitiesFromPlanForm(formValue.activities), // action and goal
     date: moment(formValue.date).format(DATE_FORMAT.toUpperCase()),
@@ -309,7 +333,7 @@ export function generatePlanDefinition(formValue: PlanFormFields): PlanDefinitio
     name: formValue.name,
     status: formValue.status,
     title: formValue.title,
-    useContext: [],
+    useContext,
     version: '1',
   };
 }
