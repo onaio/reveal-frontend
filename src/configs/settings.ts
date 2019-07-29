@@ -118,6 +118,19 @@ export const useContextCodes = [
 ] as const;
 export type UseContextCodesType = typeof useContextCodes[number];
 
+/** Plan activity code values */
+export const PlanActionCodes = [
+  'BCC',
+  'IRS',
+  'Bednet Distribution',
+  'Blood Screening',
+  'Case Confirmation',
+  'RACD Register Family',
+  'Larval Dipping',
+  'Mosquito Collection',
+] as const;
+export type PlanActionCodesType = typeof PlanActionCodes[number];
+
 /** Plan Action Timing Period */
 export interface PlanActionTimingPeriod {
   end: string;
@@ -131,7 +144,7 @@ export interface PlanActionsubjectCodableConcept {
 
 /** Plan Action */
 export interface PlanAction {
-  code: string;
+  code: PlanActionCodesType;
   description: string;
   goalId: string;
   identifier: string;
@@ -187,7 +200,6 @@ export const PlanActivityTitles = [
   'BCC',
   'IRS',
 ] as const;
-
 export type PlanActivityTitlesType = typeof PlanActivityTitles[number];
 
 /** type to describe plan activities */
