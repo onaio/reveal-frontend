@@ -5,7 +5,6 @@ import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { NavLink } from 'react-router-dom';
-import Select from 'react-select';
 import { Badge, Button, Col, Row } from 'reactstrap';
 import { Store } from 'redux';
 import GisidaWrapper from '../../../../../components/GisidaWrapper';
@@ -13,6 +12,7 @@ import HeaderBreadcrumb, {
   BreadCrumbProps,
 } from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../../components/page/Loading';
+import SelectPlan from '../../../../../components/SelectPlan/';
 import {
   SUPERSET_GOALS_SLICE,
   SUPERSET_JURISDICTIONS_SLICE,
@@ -85,7 +85,6 @@ import tasksReducer, {
   TaskGeoJSON,
 } from '../../../../../store/ducks/tasks';
 import './style.css';
-
 /** register reducers */
 reducerRegistry.register(jurisdictionReducerName, jurisdictionReducer);
 reducerRegistry.register(goalsReducerName, goalsReducer);
@@ -253,13 +252,13 @@ class SingleActiveFIMap extends React.Component<
     });
     breadCrumbProps.pages = [homePage, basePage, ...pages, secondLastPage];
     const statusBadge =
-      plan && plan.plan_status === PlanStatus.ACTIVE ? (
+      plan && plan.plan_status === (PlanStatus.ACTIVE || PlanStatus.DRAFT) ? (
         <Badge color="warning" pill={true}>
-          Active
+          {plan.plan_status}
         </Badge>
       ) : (
         <Badge color="success" pill={true}>
-          Complete
+          {plan.plan_status}
         </Badge>
       );
     const markCompleteButton =
@@ -268,19 +267,23 @@ class SingleActiveFIMap extends React.Component<
           Mark as Complete
         </Button>
       ) : null;
+    /** Array that holds keys of a plan object
+     * Will be used to check plan_effective_period_end or plan_effective_period_start to build the detailview
+     */
+    const planKeysArray: string[] = Object.keys(plan);
 
-    const cols: string[] = Object.keys(plan);
+    /** alias enables asigning keys dynamically used to populate the detailview  */
 
-    const alias: FlexObject = {
+    const alias = {
       plan_effective_period_end: END_DATE,
       plan_effective_period_start: START_DATE,
     };
 
-    const container: FlexObject[] = [];
+    const detailViewPlanInvestigationContainer: React.ReactElement[] = [];
     if (plan.plan_fi_reason === ROUTINE_PLAN) {
-      cols.forEach((column: string) => {
+      planKeysArray.forEach((column: string) => {
         if (column === 'plan_effective_period_end' || column === 'plan_effective_period_start') {
-          container.push(
+          detailViewPlanInvestigationContainer.push(
             <span key={column} className="detailview">
               <b>{alias[column]}:</b> &nbsp;
               {plan && plan[column]}
@@ -289,7 +292,7 @@ class SingleActiveFIMap extends React.Component<
         }
       });
     } else {
-      container.push(
+      detailViewPlanInvestigationContainer.push(
         <span>
           <b>Case Classification:</b>&nbsp;
           {plan && plan.plan_intervention_type ? plan.plan_intervention_type : null}
@@ -310,7 +313,7 @@ class SingleActiveFIMap extends React.Component<
               </h2>
             </Col>
             <Col xs="4">
-              <Select placeholder="Other area Investigations" />
+              <SelectPlan />
             </Col>
           </Row>
         </div>
@@ -335,7 +338,7 @@ class SingleActiveFIMap extends React.Component<
                   {plan.plan_fi_reason === CASE_TRIGGERED_PLAN ? REACTIVE : ROUTINE_PLAN}&nbsp;
                   {INVESTIGATION}
                 </h5>
-                {container}
+                {detailViewPlanInvestigationContainer}
               </div>
               {markCompleteButton}
               <h6 />
