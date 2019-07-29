@@ -11,10 +11,12 @@ import {
   FIReasonType,
   FIStatusType,
   goalPriorities,
+  PlanAction,
   PlanActionCodes,
   planActivities,
   PlanActivity,
   PlanDefinition,
+  PlanGoal,
 } from '../../../configs/settings';
 import { DATE, IRS_TITLE, IS, NAME, REQUIRED } from '../../../constants';
 import { InterventionType, PlanStatus } from '../../../store/ducks/plans';
@@ -137,6 +139,81 @@ export function getFormActivities(items: typeof FIActivities | typeof IRSActivit
   return Object.values(items)
     .sort((a, b) => a.action.prefix - b.action.prefix)
     .map(e => extractActivityForForm(e));
+}
+
+/**
+ * Get action and plans from PlanForm activities
+ * @param {PlanActivityFormFields[]} activities - this of activities from PlanForm
+ */
+export function extractActivitiesFromPlanForm(activities: PlanActivityFormFields[]) {
+  const actions: PlanAction[] = [];
+  const goals: PlanGoal[] = [];
+
+  activities.forEach(element => {
+    if (element.actionCode in PlanActionCodes) {
+      // we must declare them with some value. BCC chosen randomly here
+      let thisAction: PlanAction = planActivities.BCC.action;
+      let thisGoal: PlanGoal = planActivities.BCC.goal;
+      // first populate with default values
+      switch (element.actionCode) {
+        case 'BCC':
+          thisAction = planActivities.BCC.action;
+          thisGoal = planActivities.BCC.goal;
+        case 'IRS':
+          thisAction = planActivities.IRS.action;
+          thisGoal = planActivities.IRS.goal;
+        case 'Bednet Distribution':
+          thisAction = planActivities.bednetDistribution.action;
+          thisGoal = planActivities.bednetDistribution.goal;
+        case 'Blood Screening':
+          thisAction = planActivities.bloodScreening.action;
+          thisGoal = planActivities.bloodScreening.goal;
+        case 'Case Confirmation':
+          thisAction = planActivities.caseConfirmation.action;
+          thisGoal = planActivities.caseConfirmation.goal;
+        case 'RACD Register Family':
+          thisAction = planActivities.familyRegistration.action;
+          thisGoal = planActivities.familyRegistration.goal;
+        case 'Larval Dipping':
+          thisAction = planActivities.larvalDipping.action;
+          thisGoal = planActivities.larvalDipping.goal;
+        case 'Mosquito Collection':
+          thisAction = planActivities.mosquitoCollection.action;
+          thisGoal = planActivities.mosquitoCollection.goal;
+      }
+      // next put in values from the form
+      thisAction = Object.assign(thisAction, {
+        description: element.actionDescription,
+        reason: element.actionReason,
+        timingPeriod: {
+          end: moment(element.timingPeriodEnd).format(DATE_FORMAT.toUpperCase()),
+          start: moment(element.timingPeriodStart).format(DATE_FORMAT.toUpperCase()),
+        },
+        title: element.actionTitle,
+      });
+      thisGoal = Object.assign(thisGoal, {
+        description: element.goalDescription,
+        priority: element.goalPriority,
+        target: [
+          Object.assign(thisGoal.target, {
+            detail: {
+              detailQuantity: Object.assign(thisGoal.target[0].detail.detailQuantity, {
+                value: element.goalValue,
+              }),
+            },
+            due: moment(element.goalDue).format(DATE_FORMAT.toUpperCase()),
+          }),
+        ],
+      });
+      actions.push(thisAction);
+      goals.push(thisGoal);
+    }
+  });
+
+  return {
+    action: actions,
+    goal: goals,
+  };
 }
 
 /**
