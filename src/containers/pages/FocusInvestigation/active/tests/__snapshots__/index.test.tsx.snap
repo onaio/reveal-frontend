@@ -79,18 +79,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
         "calls": Array [
           Array [
             0,
-            Object {
-              "adhoc_filters": Array [
-                Object {
-                  "clause": "WHERE",
-                  "comparator": "FI",
-                  "expressionType": "SIMPLE",
-                  "operator": "==",
-                  "subject": "plan_intervention_type",
-                },
-              ],
-              "row_limit": 2000,
-            },
+            Object {},
           ],
         ],
         "results": Array [
@@ -106,18 +95,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
         "calls": Array [
           Array [
             0,
-            Object {
-              "adhoc_filters": Array [
-                Object {
-                  "clause": "WHERE",
-                  "comparator": "FI",
-                  "expressionType": "SIMPLE",
-                  "operator": "==",
-                  "subject": "plan_intervention_type",
-                },
-              ],
-              "row_limit": 2000,
-            },
+            Object {},
           ],
         ],
         "results": Array [
@@ -162,18 +140,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
         "calls": Array [
           Array [
             0,
-            Object {
-              "adhoc_filters": Array [
-                Object {
-                  "clause": "WHERE",
-                  "comparator": "FI",
-                  "expressionType": "SIMPLE",
-                  "operator": "==",
-                  "subject": "plan_intervention_type",
-                },
-              ],
-              "row_limit": 2000,
-            },
+            Object {},
           ],
         ],
         "results": Array [
@@ -4862,18 +4829,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
         "calls": Array [
           Array [
             0,
-            Object {
-              "adhoc_filters": Array [
-                Object {
-                  "clause": "WHERE",
-                  "comparator": "FI",
-                  "expressionType": "SIMPLE",
-                  "operator": "==",
-                  "subject": "plan_intervention_type",
-                },
-              ],
-              "row_limit": 2000,
-            },
+            Object {},
           ],
         ],
         "results": Array [
@@ -4889,18 +4845,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
         "calls": Array [
           Array [
             0,
-            Object {
-              "adhoc_filters": Array [
-                Object {
-                  "clause": "WHERE",
-                  "comparator": "FI",
-                  "expressionType": "SIMPLE",
-                  "operator": "==",
-                  "subject": "plan_intervention_type",
-                },
-              ],
-              "row_limit": 2000,
-            },
+            Object {},
           ],
         ],
         "results": Array [
@@ -4945,18 +4890,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
         "calls": Array [
           Array [
             0,
-            Object {
-              "adhoc_filters": Array [
-                Object {
-                  "clause": "WHERE",
-                  "comparator": "FI",
-                  "expressionType": "SIMPLE",
-                  "operator": "==",
-                  "subject": "plan_intervention_type",
-                },
-              ],
-              "row_limit": 2000,
-            },
+            Object {},
           ],
         ],
         "results": Array [
