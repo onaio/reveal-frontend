@@ -177,6 +177,7 @@ export type PlanActivityTitlesType = typeof PlanActivityTitles[number];
 /** type to describe plan activities */
 type PlanActivities = { [K in PlanActivityTitlesType]: PlanActivity };
 
+/** default plan activities */
 export const planActivities: PlanActivities = {
   BCC: {
     action: {
