@@ -29,7 +29,7 @@ import {
   SUPERSET_JURISDICTIONS_SLICE,
   SUPERSET_PLAN_STRUCTURE_PIVOT_SLICE,
 } from '../../../../../configs/env';
-import { HOME, HOME_URL, INTERVENTION_IRS_URL, MAP_ID } from '../../../../../constants';
+import { HOME, HOME_URL, INTERVENTION_IRS_URL, MAP_ID, NEW_PLAN } from '../../../../../constants';
 import {
   FlexObject,
   preventDefault,
@@ -387,7 +387,7 @@ class IrsPlan extends React.Component<
       (isFinalizedPlan && planById && planById.plan_title) ||
       (isDraftPlan && planById && `${planById.plan_title} (draft)`) ||
       (newPlan && newPlan.plan_title) ||
-      'New Plan';
+      NEW_PLAN;
 
     const breadCrumbProps = this.getBreadCrumbProps(this.props, pageLabel);
 
