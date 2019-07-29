@@ -38,6 +38,7 @@ import {
   stopPropagationAndPreventDefault,
 } from '../../../../../helpers/utils';
 import {
+  adminLayerColors,
   ADMN0_PCODE,
   CountriesAdmin0,
   fillLayerConfig,
@@ -254,7 +255,7 @@ class IrsPlan extends React.Component<
             return new Promise(resolve => resolve());
           }
 
-          // build superset adhoc filter expression
+          // build superset sql filter expression
           let sqlFilterExpression = '';
           for (let i = 0; i < planJurisdictionIdsToGet.length; i += 1) {
             const jurId = planJurisdictionIdsToGet[i];
@@ -1150,8 +1151,7 @@ class IrsPlan extends React.Component<
           geoGraphicLevels.push(geographic_level);
         }
       }
-      geoGraphicLevels.sort().reverse();
-      const colorMap = ['red', 'orange', 'yellow', 'green', 'blue', 'purple'];
+      geoGraphicLevels.sort();
 
       for (const g of geoGraphicLevels) {
         const featureCollection = {
@@ -1163,7 +1163,7 @@ class IrsPlan extends React.Component<
           ...fillLayerConfig,
           id: `${ADMN0_EN}-admin-${g}-jurisdiction-fill`,
           paint: {
-            'fill-color': colorMap[g],
+            'fill-color': adminLayerColors[g],
           },
           source: {
             ...fillLayerConfig.source,
