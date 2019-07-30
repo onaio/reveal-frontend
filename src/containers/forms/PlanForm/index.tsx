@@ -7,6 +7,7 @@ import {
   DATE_FORMAT,
   DEFAULT_ACTIVITY_DURATION_DAYS,
   DEFAULT_PLAN_DURATION_DAYS,
+  DEFAULT_PLAN_VERSION,
 } from '../../../configs/env';
 import {
   actionReasons,
@@ -64,6 +65,7 @@ export const defaultInitialValues: PlanFormFields = {
   start: moment().toDate(),
   status: PlanStatus.DRAFT,
   title: '',
+  version: DEFAULT_PLAN_VERSION,
 };
 
 /** interface for plan form props */
@@ -192,6 +194,7 @@ const PlanForm = (props: PlanFormProps) => {
 
               <Field type="hidden" name="name" id="name" />
               <Field type="hidden" name="identifier" id="identifier" readOnly={true} />
+              <Field type="hidden" name="version" id="version" readOnly={true} />
             </FormGroup>
             <FormGroup>
               <Label for="status">Status</Label>
