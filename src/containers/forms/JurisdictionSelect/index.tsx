@@ -1,4 +1,5 @@
 import React from 'react';
+import makeAnimated from 'react-select/animated';
 import AsyncSelect from 'react-select/async';
 import { OpenSRPService, URLParams } from '../../../services/opensrp';
 
@@ -50,7 +51,32 @@ const JurisdictionSelect = (props: JurisdictionSelectProps) => {
   };
   params.properties_filter = getFilterParams(propertiesToFilter);
 
-  return <p>i lov oov</p>;
+  const promiseOptions = () =>
+    new Promise(resolve =>
+      resolve(
+        service.list(params).then((e: JurisdictionOption[]) => {
+          return e.map(item => {
+            return { label: item.properties.name, value: item.id };
+          });
+        })
+      )
+    );
+
+  return (
+    <div>
+      <AsyncSelect
+        name="form"
+        bsSize="lg"
+        components={makeAnimated()}
+        placeholder="Select Focus Area"
+        aria-label="Select Focus Area"
+        defaultOptions={true}
+        loadOptions={promiseOptions}
+        isClearable={true}
+        cacheOptions={true}
+      />
+    </div>
+  );
 };
 
 JurisdictionSelect.defaultProps = defaultProps;
