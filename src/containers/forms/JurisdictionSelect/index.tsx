@@ -45,6 +45,12 @@ interface JurisdictionOption {
   type: 'Feature';
 }
 
+/** react-select Option */
+interface SelectOption {
+  label: string;
+  value: string;
+}
+
 /**
  * JurisdictionSelect - a cascading select for Jurisdictions
  * Allows you to drill-down Jurisdictions until you select a Focus Area
@@ -52,6 +58,7 @@ interface JurisdictionOption {
 const JurisdictionSelect = (props: JurisdictionSelectProps) => {
   const { apiEndpoint, params, serviceClass } = props;
   const [parentId, setParentId] = useState('');
+  const [hierarchy, setHierarchy] = useState<SelectOption[]>([]);
 
   const service = new serviceClass(apiEndpoint);
   const propertiesToFilter = {
@@ -86,6 +93,9 @@ const JurisdictionSelect = (props: JurisdictionSelectProps) => {
     const optionVal = option as { label: string; value: string };
     if (optionVal && optionVal.value) {
       setParentId(optionVal.value);
+
+      hierarchy.push(optionVal);
+      setHierarchy(hierarchy);
     } else {
       setParentId('');
     }
