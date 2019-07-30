@@ -80,6 +80,7 @@ export const PlanSchema = Yup.object().shape({
     .oneOf(Object.values(PlanStatus))
     .required(REQUIRED),
   title: Yup.string().required(REQUIRED),
+  version: Yup.string(),
 });
 
 /** Plan activity form fields interface */
@@ -112,6 +113,7 @@ export interface PlanFormFields {
   start: Date;
   status: PlanStatus;
   title: string;
+  version: string;
 }
 
 /**
