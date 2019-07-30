@@ -1,4 +1,4 @@
-import superset from '@onaio/superset-connector/dist/types';
+import superset from '@onaio/superset-connector';
 import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import { createBrowserHistory } from 'history';
@@ -22,16 +22,6 @@ jest.mock('../../../../../../components/GisidaWrapper', () => {
   return GisidaWrapperMock;
 });
 jest.mock('../../../../../../configs/env');
-jest.mock('@onaio/superset-connector', () => {
-  // tslint:disable-next-line: label-position
-  const superset = {
-    getFormData: () => {
-      return {};
-    },
-  };
-  return superset;
-});
-
 const history = createBrowserHistory();
 
 describe('containers/pages/FocusInvestigation/activeMap', () => {
@@ -132,6 +122,11 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
   });
 
   it('calls superset with the correct params', async () => {
+    const getFormDataMock: any = jest.fn();
+    getFormDataMock.mockImplementation(() => {
+      return {};
+    });
+    superset.getFormData = getFormDataMock;
     const mock: any = jest.fn();
     const supersetMock: any = jest.fn();
     supersetMock.mockImplementation(async () => []);
@@ -167,7 +162,27 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
     await Promise.resolve();
     await Promise.resolve();
     expect(supersetMock).toHaveBeenCalledTimes(5);
+    const getformDataCallList = [
+      [
+        3000,
+        [
+          {
+            comparator: fixtures.plan1.jurisdiction_id,
+            operator: '==',
+            subject: 'jurisdiction_id',
+          },
+        ],
+      ],
+      [3000, [{ comparator: fixtures.plan1.plan_id, operator: '==', subject: 'plan_id' }]],
+      [
+        3000,
+        [{ comparator: fixtures.plan1.plan_id, operator: '==', subject: 'plan_id' }],
+        { action_prefix: true },
+      ],
+    ];
     const callList = [[1, {}], [2, {}], [0, {}], [3, {}], [4, {}]];
+
+    expect((superset.getFormData as any).mock.calls).toEqual(getformDataCallList);
     expect(supersetMock.mock.calls).toEqual(callList);
     wrapper.unmount();
   });
