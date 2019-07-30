@@ -7,6 +7,7 @@ import {
   ACTION_UUID_NAMESPACE,
   DATE_FORMAT,
   DEFAULT_ACTIVITY_DURATION_DAYS,
+  DEFAULT_PLAN_VERSION,
   PLAN_UUID_NAMESPACE,
 } from '../../../configs/env';
 import {
@@ -331,6 +332,13 @@ export function generatePlanDefinition(formValue: PlanFormFields): PlanDefinitio
       ? generateNameSpacedUUID(moment().toString(), PLAN_UUID_NAMESPACE)
       : formValue.identifier;
 
+  const planVersion =
+    !formValue.identifier || formValue.identifier === '' // is this a new plan?
+      ? formValue.version
+      : isNaN(parseInt(formValue.version, 10))
+      ? parseInt(DEFAULT_PLAN_VERSION, 10) + 1
+      : parseInt(formValue.version, 10) + 1;
+
   const useContext: UseContext[] = [
     {
       code: 'interventionType',
@@ -367,6 +375,6 @@ export function generatePlanDefinition(formValue: PlanFormFields): PlanDefinitio
     status: formValue.status,
     title: formValue.title,
     useContext,
-    version: '1',
+    version: planVersion as string,
   };
 }
