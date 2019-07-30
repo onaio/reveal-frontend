@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom';
 import { CellInfo, Column } from 'react-table';
 import { Badge } from 'reactstrap';
 import SeamlessImmutable from 'seamless-immutable';
+import uuidv5 from 'uuid/v5';
 import { TASK_YELLOW } from '../colors';
 import DrillDownTableLinkedCell from '../components/DrillDownTableLinkedCell';
 import { DIGITAL_GLOBE_CONNECT_ID, ONADATA_OAUTH_STATE, OPENSRP_OAUTH_STATE } from '../configs/env';
@@ -400,13 +401,16 @@ export function roundToPrecision(n: number, precision: number = 0): number {
 export function stopPropagation(e: Event | MouseEvent | any) {
   e.stopPropagation();
 }
+
 export function preventDefault(e: Event | MouseEvent | any) {
   e.preventDefault();
 }
+
 export function stopPropagationAndPreventDefault(e: Event | MouseEvent | any) {
   preventDefault(e);
   stopPropagation(e);
 }
+
 /** Returns Table columns Which require external dependencies (Cell, Link, CellInfo)
  * the columns being built include focusarea, name and action
  * @param {colType} accessor column
@@ -491,6 +495,7 @@ export const jsxColumns = (colType: string): Column[] | [] => {
     return [];
   }
 };
+
 /** Default table props config */
 export const defaultTableProps = {
   CellComponent: DrillDownTableLinkedCell,
@@ -505,3 +510,14 @@ export const defaultTableProps = {
   showPagination: false,
   useDrillDownTrProps: false,
 };
+
+/**
+ * Generate a namespaced uuid using uuidv5
+ * @param {string} seedString - the string to be used to generate the uuid. It should
+ * be unique per namespace
+ * @param {string} namespace - the namespace
+ * @returns {string} - the uuid
+ */
+export function generateNameSpacedUUID(seedString: string, namespace: string) {
+  return uuidv5(seedString, namespace);
+}
