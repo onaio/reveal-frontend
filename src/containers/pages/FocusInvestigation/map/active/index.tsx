@@ -104,6 +104,7 @@ export interface MapSingleFIProps {
   goals: Goal[] | null;
   jurisdiction: Jurisdiction | null;
   plan: Plan | null;
+  plansArray: Plan[];
   pointFeatureCollection: FeatureCollection<TaskGeoJSON>;
   polygonFeatureCollection: FeatureCollection<TaskGeoJSON>;
   structures: FeatureCollection<StructureGeoJSON> | null /** we use this to get all structures */;
@@ -138,6 +139,7 @@ export const defaultMapSingleFIProps: MapSingleFIProps = {
   goals: null,
   jurisdiction: null,
   plan: null,
+  plansArray: [],
   pointFeatureCollection: defaultFeatureCollection,
   polygonFeatureCollection: defaultFeatureCollection,
   setCurrentGoalActionCreator: setCurrentGoal,
@@ -188,7 +190,7 @@ class SingleActiveFIMap extends React.Component<
           fetchStructuresActionCreator(structuresResults);
         }
       );
-      await supersetFetch(SUPERSET_PLANS_SLICE, supersetParams).then((result2: Plan[]) => {
+      await supersetFetch(SUPERSET_PLANS_SLICE).then((result2: Plan[]) => {
         fetchPlansActionCreator(result2);
       });
       await supersetFetch(SUPERSET_GOALS_SLICE, goalsParams).then((result3: Goal[]) => {
@@ -215,6 +217,7 @@ class SingleActiveFIMap extends React.Component<
       plan,
       goals,
       currentGoal,
+      plansArray,
       pointFeatureCollection,
       polygonFeatureCollection,
       structures,
@@ -313,7 +316,7 @@ class SingleActiveFIMap extends React.Component<
               </h2>
             </Col>
             <Col xs="4">
-              <SelectPlan />
+              <SelectPlan plansArray={plansArray} />
             </Col>
           </Row>
         </div>
@@ -440,7 +443,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
     plansArray: getPlansArray(
       state,
       InterventionType.FI,
-      [PlanStatus.ACTIVE, PlanStatus.DRAFT],
+      [PlanStatus.ACTIVE, PlanStatus.COMPLETE],
       null
     ),
     plansIdArray: getPlansIdArray(
