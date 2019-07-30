@@ -36,7 +36,7 @@
     "connected-react-router": "^6.4.0",
     "fetch-mock": "^7.3.3",
     "gisida": "^1.2.5",
-    "gisida-react": "^1.2.6",
+    "gisida-react": "^1.2.8",
     "history": "^4.9.0",
     "lodash": "^4.17.11",
     "mapbox-gl": "0.53.1",
