@@ -333,11 +333,11 @@ export function generatePlanDefinition(formValue: PlanFormFields): PlanDefinitio
       : formValue.identifier;
 
   const planVersion =
-    !formValue.identifier || formValue.identifier === '' // is this a new plan?
-      ? formValue.version
-      : isNaN(parseInt(formValue.version, 10))
-      ? parseInt(DEFAULT_PLAN_VERSION, 10) + 1
-      : parseInt(formValue.version, 10) + 1;
+    formValue.identifier && formValue.identifier !== '' // is this an existing plan?
+      ? isNaN(parseInt(formValue.version, 10))
+        ? parseInt(DEFAULT_PLAN_VERSION, 10) + 1
+        : parseInt(formValue.version, 10) + 1
+      : formValue.version;
 
   const useContext: UseContext[] = [
     {
