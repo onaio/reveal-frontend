@@ -423,7 +423,7 @@ export function stopPropagationAndPreventDefault(e: Event | MouseEvent | any) {
  * @param {colType} accessor column
  */
 
-export function jsxColumns(colType: string): FlexObject[] | [] {
+export const jsxColumns = (colType: string): FlexObject[] | [] => {
   if (colType === 'focusarea') {
     return [
       {
@@ -502,7 +502,7 @@ export function jsxColumns(colType: string): FlexObject[] | [] {
   } else {
     return [];
   }
-}
+};
 /** Default table props config */
 export const defaultTableProps = {
   CellComponent: DrillDownTableLinkedCell,
