@@ -70,12 +70,13 @@ export const defaultInitialValues: PlanFormFields = {
 
 /** interface for plan form props */
 interface PlanFormProps {
+  disabledFields: string[];
   initialValues: PlanFormFields;
 }
 
 /** Plan Form component */
 const PlanForm = (props: PlanFormProps) => {
-  const { initialValues } = props;
+  const { disabledFields, initialValues } = props;
   return (
     <div className="form-container">
       <Formik
@@ -109,6 +110,7 @@ const PlanForm = (props: PlanFormProps) => {
                 component="select"
                 name="interventionType"
                 id="interventionType"
+                disabled={disabledFields.includes('interventionType')}
                 /* tslint:disable-next-line jsx-no-lambda */
                 onChange={(e: FormEvent) => {
                   const target = e.target as HTMLInputElement;
@@ -137,6 +139,7 @@ const PlanForm = (props: PlanFormProps) => {
                   component="select"
                   name="fiStatus"
                   id="fiStatus"
+                  disabled={disabledFields.includes('fiStatus')}
                   className={errors.fiStatus ? 'form-control is-invalid' : 'form-control'}
                 >
                   <option>----</option>
@@ -156,6 +159,7 @@ const PlanForm = (props: PlanFormProps) => {
                   component="select"
                   name="fiReason"
                   id="fiReason"
+                  disabled={disabledFields.includes('fiReason')}
                   className={errors.fiReason ? 'form-control is-invalid' : 'form-control'}
                 >
                   <option>----</option>
@@ -175,6 +179,7 @@ const PlanForm = (props: PlanFormProps) => {
                   type="text"
                   name="caseNum"
                   id="caseNum"
+                  disabled={disabledFields.includes('caseNum')}
                   className={errors.caseNum ? 'form-control is-invalid' : 'form-control'}
                 />
                 <ErrorMessage name="caseNum" component="small" className="form-text text-danger" />
@@ -188,6 +193,7 @@ const PlanForm = (props: PlanFormProps) => {
                 type="text"
                 name="title"
                 id="title"
+                disabled={disabledFields.includes('title')}
                 className={errors.name || errors.title ? 'form-control is-invalid' : 'form-control'}
               />
               <ErrorMessage name="title" component="small" className="form-text text-danger" />
@@ -202,6 +208,7 @@ const PlanForm = (props: PlanFormProps) => {
                 component="select"
                 name="status"
                 id="status"
+                disabled={disabledFields.includes('status')}
                 className={errors.status ? 'form-control is-invalid' : 'form-control'}
               >
                 {Object.entries(PlanStatus).map(e => (
@@ -218,6 +225,7 @@ const PlanForm = (props: PlanFormProps) => {
                 type="date"
                 name="start"
                 id="start"
+                disabled={disabledFields.includes('start')}
                 dateFormat={DATE_FORMAT}
                 className={errors.start ? 'form-control is-invalid' : 'form-control'}
                 component={DatePickerWrapper}
@@ -232,6 +240,7 @@ const PlanForm = (props: PlanFormProps) => {
                 type="date"
                 name="end"
                 id="end"
+                disabled={disabledFields.includes('end')}
                 dateFormat={DATE_FORMAT}
                 className={errors.end ? 'form-control is-invalid' : 'form-control'}
                 component={DatePickerWrapper}
@@ -463,6 +472,7 @@ const PlanForm = (props: PlanFormProps) => {
 };
 
 const defaultProps: PlanFormProps = {
+  disabledFields: [],
   initialValues: defaultInitialValues,
 };
 
