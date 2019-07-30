@@ -56,6 +56,7 @@ export const defaultInitialValues: PlanFormFields = {
     .toDate(),
   fiReason: undefined,
   fiStatus: undefined,
+  identifier: '',
   interventionType: InterventionType.FI,
   name: '',
   opensrpEventId: undefined,
@@ -189,6 +190,7 @@ const PlanForm = (props: PlanFormProps) => {
               <ErrorMessage name="title" component="small" className="form-text text-danger" />
 
               <Field type="hidden" name="name" id="name" />
+              <Field type="hidden" name="identifier" id="identifier" readOnly={true} />
             </FormGroup>
             <FormGroup>
               <Label for="status">Status</Label>
