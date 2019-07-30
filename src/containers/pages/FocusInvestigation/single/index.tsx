@@ -14,6 +14,8 @@ import HeaderBreadcrumbs, {
   BreadCrumbProps,
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
+import NullDataTable from '../../../../components/Table/NullDataTable/nulldatatable';
+import TableHeader from '../../../../components/Table/TableHeaders/tableheaders';
 import {
   SUPERSET_GOALS_SLICE,
   SUPERSET_JURISDICTIONS_SLICE,
@@ -25,7 +27,6 @@ import {
   currentReactivePlansColumns,
   currentRoutinePlansColumn,
   dateCompletedColumn,
-  defaultTableProps,
   emptyCompleteReactivePlans,
   emptyCompleteRoutinePlans,
   emptyCurrentReactivePlans,
@@ -39,7 +40,6 @@ import {
   COMPLETE_FOCUS_INVESTIGATION,
   CURRENT_FOCUS_INVESTIGATION,
   DISTRICT,
-  FI_PLAN_TYPE,
   FI_REASON,
   FI_SINGLE_URL,
   FI_STATUS,
@@ -54,8 +54,7 @@ import {
   ROUTINE,
 } from '../../../../constants';
 import {
-  buildTableHeader,
-  buildTableWithoutPlanData,
+  defaultTableProps,
   extractPlan,
   FlexObject,
   getLocationColumns,
@@ -145,8 +144,8 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
 
     if (planById && planById.plan_id) {
       /** define superset filter params for plans */
-      const plansParams = superset.getFormData(2000, [
-        { comparator: FI_PLAN_TYPE, operator: '==', subject: 'plan_intervention_type' },
+      const plansParams = superset.getFormData(3000, [
+        { comparator: planById.plan_id, operator: '==', subject: 'plan_id' },
       ]);
       /** define superset params for goals */
       const goalsParams = superset.getFormData(
@@ -230,14 +229,9 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
         ...defaultTableProps,
         columns: emptyCurrentReactivePlans,
       };
-      currentRoutineReactivePlans.push(buildTableWithoutPlanData(tableProps, REACTIVE, 'current'));
-    }
-    if (!currentRoutinePlansArray.length) {
-      const tableProps = {
-        ...defaultTableProps,
-        columns: emptyCurrentRoutinePlans,
-      };
-      currentRoutineReactivePlans.push(buildTableWithoutPlanData(tableProps, ROUTINE, 'current'));
+      currentRoutineReactivePlans.push(
+        <NullDataTable tableProps={tableProps} reasonType={REACTIVE} planType="current" />
+      );
     }
     if (
       (currentReactivePlansArray && currentReactivePlansArray.length > 0) ||
@@ -278,12 +272,21 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
           };
           currentRoutineReactivePlans.push(
             <div key={thePlans[0].id}>
-              {buildTableHeader(plansArray)}
+              <TableHeader plansArray={plansArray} />
               <DrillDownTable {...tableProps} />
             </div>
           );
         }
       });
+    }
+    if (!currentRoutinePlansArray.length) {
+      const tableProps = {
+        ...defaultTableProps,
+        columns: emptyCurrentRoutinePlans,
+      };
+      currentRoutineReactivePlans.push(
+        <NullDataTable tableProps={tableProps} reasonType={REACTIVE} planType="current" />
+      );
     }
     if (!completeReactivePlansArray.length) {
       const tableProps = {
@@ -291,16 +294,10 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
         columns: emptyCompleteReactivePlans,
       };
       completeRoutineReactivePlans.push(
-        buildTableWithoutPlanData(tableProps, REACTIVE, 'complete')
+        <NullDataTable tableProps={tableProps} reasonType={REACTIVE} planType="current" />
       );
     }
-    if (!completeRoutinePlansArray.length) {
-      const tableProps = {
-        ...defaultTableProps,
-        columns: emptyCompleteRoutinePlans,
-      };
-      completeRoutineReactivePlans.push(buildTableWithoutPlanData(tableProps, ROUTINE, 'complete'));
-    }
+
     if (
       (completeReactivePlansArray && completeReactivePlansArray.length > 0) ||
       (completeRoutinePlansArray && completeRoutinePlansArray.length > 0)
@@ -330,12 +327,21 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
           };
           completeRoutineReactivePlans.push(
             <div key={thePlans[0].id}>
-              {buildTableHeader(plansArray)}
+              <TableHeader plansArray={plansArray} />
               <DrillDownTable {...tableProps} />
             </div>
           );
         }
       });
+    }
+    if (!completeRoutinePlansArray.length) {
+      const tableProps = {
+        ...defaultTableProps,
+        columns: emptyCompleteRoutinePlans,
+      };
+      completeRoutineReactivePlans.push(
+        <NullDataTable tableProps={tableProps} reasonType={REACTIVE} planType="current" />
+      );
     }
     return (
       <div className="mb-5">
@@ -387,7 +393,6 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
         <h4 className="mb-4">{CURRENT_FOCUS_INVESTIGATION}</h4>
         <hr />
         {currentRoutineReactivePlans}
-        <hr />
         <h4 className="mb-4 complete">{COMPLETE_FOCUS_INVESTIGATION}</h4>
         <hr />
         {completeRoutineReactivePlans}
