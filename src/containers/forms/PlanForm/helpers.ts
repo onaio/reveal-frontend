@@ -110,7 +110,6 @@ export interface PlanFormFields {
  * @param activityObj - the plan activity object
  */
 export function extractActivityForForm(activityObj: PlanActivity): PlanActivityFormFields {
-  const initialGoalDue = activityObj.goal.target[0].due;
   return {
     actionCode: activityObj.action.code,
     actionDescription: activityObj.action.description || '',
@@ -118,8 +117,8 @@ export function extractActivityForForm(activityObj: PlanActivity): PlanActivityF
     actionTitle: activityObj.action.title || '',
     goalDescription: activityObj.goal.description || '',
     goalDue:
-      initialGoalDue && initialGoalDue !== ''
-        ? moment(initialGoalDue).toDate()
+      activityObj.goal.target[0].due && activityObj.goal.target[0].due !== ''
+        ? moment(activityObj.goal.target[0].due).toDate()
         : moment()
             .add(DEFAULT_ACTIVITY_DURATION_DAYS, 'days')
             .toDate(),
