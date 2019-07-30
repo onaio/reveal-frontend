@@ -7,7 +7,7 @@ import { Column } from 'react-table';
 import SeamlessImmutable from 'seamless-immutable';
 import { TASK_YELLOW } from '../colors';
 import { DIGITAL_GLOBE_CONNECT_ID, ONADATA_OAUTH_STATE, OPENSRP_OAUTH_STATE } from '../configs/env';
-import { locationHierarchy, LocationItem } from '../configs/settings';
+import { imgArr, locationHierarchy, LocationItem } from '../configs/settings';
 import {
   BEDNET_DISTRIBUTION_CODE,
   BLOOD_SCREENING_CODE,
@@ -202,24 +202,7 @@ export const ConfigStore = (
       zoom: zoom || mapConfigZoom || 0,
     };
   }
-  // icons to add to map
-  const imgArr = [
-    {
-      id: 'case-confirmation',
-      imageUrl:
-        'https://raw.githubusercontent.com/onaio/reveal-frontend/master/src/assets/images/case-confirmation.png',
-    },
-    {
-      id: 'larval',
-      imageUrl:
-        'https://raw.githubusercontent.com/onaio/reveal-frontend/master/src/assets/images/larval.png',
-    },
-    {
-      id: 'mosquito',
-      imageUrl:
-        'https://raw.githubusercontent.com/onaio/reveal-frontend/master/src/assets/images/mosquito.png',
-    },
-  ];
+
   // Build APP options for Gisida
   const APP: SiteConfigApp = {
     accessToken: accessToken || GISIDA_MAPBOX_TOKEN,
