@@ -328,9 +328,9 @@ export function doesFieldHaveErrors(
  */
 export function generatePlanDefinition(formValue: PlanFormFields): PlanDefinition {
   const planIdentifier =
-    !formValue.identifier || formValue.identifier === ''
-      ? generateNameSpacedUUID(moment().toString(), PLAN_UUID_NAMESPACE)
-      : formValue.identifier;
+    formValue.identifier && formValue.identifier !== '' // is this an existing plan?
+      ? formValue.identifier
+      : generateNameSpacedUUID(moment().toString(), PLAN_UUID_NAMESPACE);
 
   const planVersion =
     formValue.identifier && formValue.identifier !== '' // is this an existing plan?
