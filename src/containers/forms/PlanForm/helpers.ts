@@ -46,6 +46,7 @@ export const PlanSchema = Yup.object().shape({
     Yup.object().shape({
       actionCode: Yup.string().oneOf(PlanActionCodes.map(e => e)),
       actionDescription: Yup.string().required(REQUIRED),
+      actionIdentifier: Yup.string(),
       actionReason: Yup.string()
         .oneOf(Object.values(actionReasons))
         .required(REQUIRED),
@@ -84,6 +85,7 @@ export const PlanSchema = Yup.object().shape({
 export interface PlanActivityFormFields {
   actionCode: string;
   actionDescription: string;
+  actionIdentifier: string;
   actionReason: string;
   actionTitle: string;
   goalDescription: string;
@@ -120,6 +122,7 @@ export function extractActivityForForm(activityObj: PlanActivity): PlanActivityF
   return {
     actionCode: activityObj.action.code,
     actionDescription: activityObj.action.description || '',
+    actionIdentifier: activityObj.action.identifier || '',
     actionReason: activityObj.action.reason || '',
     actionTitle: activityObj.action.title || '',
     goalDescription: activityObj.goal.description || '',
