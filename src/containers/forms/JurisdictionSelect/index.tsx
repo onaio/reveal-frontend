@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import makeAnimated from 'react-select/animated';
 import AsyncSelect from 'react-select/async';
 import { OpenSRPService, URLParams } from '../../../services/opensrp';
@@ -24,7 +24,7 @@ const defaultProps: JurisdictionSelectProps = {
  * @param {URLParams} obj - the object representing filter params
  * @returns {string} filter params as a string
  */
-export function getFilterParams(obj: URLParams): string {
+export function getFilterParams(obj: URLParams | {}): string {
   return Object.entries(obj)
     .map(([key, val]) => `${key}:${val}`)
     .join(',');
@@ -51,17 +51,26 @@ interface JurisdictionOption {
  */
 const JurisdictionSelect = (props: JurisdictionSelectProps) => {
   const { apiEndpoint, params, serviceClass } = props;
+  const [parentId, setParentId] = useState('');
+
   const service = new serviceClass(apiEndpoint);
   const propertiesToFilter = {
-    geographicLevel: 0,
+    ...(parentId === '' && { geographicLevel: 0 }),
+    ...(parentId !== '' && { parentId }),
   };
+  const paramsToUse = {
+    ...params,
+    ...(Object.keys(propertiesToFilter).length > 0 && {
+      properties_filter: getFilterParams(propertiesToFilter),
+    }),
+  };
+
   const animatedComponents = makeAnimated();
-  params.properties_filter = getFilterParams(propertiesToFilter);
 
   const promiseOptions = () =>
     new Promise(resolve =>
       resolve(
-        service.list(params).then((e: JurisdictionOption[]) => {
+        service.list(paramsToUse).then((e: JurisdictionOption[]) => {
           return e.map(item => {
             return { label: item.properties.name, value: item.id };
           });
@@ -69,14 +78,30 @@ const JurisdictionSelect = (props: JurisdictionSelectProps) => {
       )
     );
 
+  /**
+   * onChange callback
+   * unfortunately we have to set the type of option as any (for now)
+   */
+  const handleChange = () => (option: any) => {
+    const optionVal = option as { label: string; value: string };
+    if (optionVal && optionVal.value) {
+      setParentId(optionVal.value);
+    } else {
+      setParentId('');
+    }
+  };
+
   return (
     <div>
       <AsyncSelect
+        /** we are using the key as hack to reload the component when the parentId changes */
+        key={parentId}
         name="form"
         bsSize="lg"
         components={animatedComponents}
         placeholder="Select Focus Area"
         aria-label="Select Focus Area"
+        onChange={handleChange()}
         defaultOptions={true}
         loadOptions={promiseOptions}
         isClearable={true}
