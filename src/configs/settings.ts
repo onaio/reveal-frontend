@@ -1,8 +1,6 @@
 /** This is the main configuration module */
 import { Providers } from '@onaio/gatekeeper';
-import { Actions } from 'gisida';
 import { Expression } from 'mapbox-gl';
-import DrillDownTableLinkedCell from '../components/DrillDownTableLinkedCell';
 import {
   CANTON,
   CASE_CLASSIFICATION_HEADER,
@@ -829,6 +827,64 @@ export const CountriesAdmin0 = {
   TH: ThailandAdmin0,
   ZM: ZambiaAdmin0,
 };
+/** Columns for various Plans */
+export const emptyCompleteReactivePlans = [
+  {
+    Header: NAME,
+    columns: [{}],
+  },
+  {
+    Header: DATE_COMPLETED,
+    columns: [{}],
+  },
+  {
+    Header: CASE_NOTIF_DATE_HEADER,
+    columns: [{}],
+  },
+  {
+    Header: CASE_CLASSIFICATION_HEADER,
+    columns: [{}],
+  },
+];
+
+export const emptyCompleteRoutinePlans = [
+  {
+    Header: NAME,
+    columns: [{}],
+  },
+  {
+    Header: START_DATE,
+    columns: [{}],
+  },
+  {
+    Header: END_DATE,
+    columns: [{}],
+  },
+  {
+    Header: DATE_COMPLETED,
+    columns: [{}],
+  },
+];
+
+export const emptyCurrentReactivePlans = [
+  {
+    Header: NAME,
+    columns: [{}],
+  },
+  {
+    Header: FI_STATUS,
+    columns: [{}],
+  },
+  {
+    Header: CASE_NOTIF_DATE_HEADER,
+    columns: [{}],
+  },
+  {
+    Header: CASE_CLASSIFICATION_HEADER,
+    columns: [{}],
+  },
+];
+
 // icons to add to map
 export const imgArr = [
   {
