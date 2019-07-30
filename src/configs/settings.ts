@@ -885,23 +885,51 @@ export const emptyCurrentReactivePlans = [
     columns: [{}],
   },
 ];
-
-// icons to add to map
-export const imgArr = [
+/** current routine columns with no data */
+export const emptyCurrentRoutinePlans = [
   {
-    id: 'case-confirmation',
-    imageUrl:
-      'https://raw.githubusercontent.com/onaio/reveal-frontend/master/src/assets/images/case-confirmation.png',
+    Header: NAME,
+    columns: [{}],
   },
   {
-    id: 'larval',
-    imageUrl:
-      'https://raw.githubusercontent.com/onaio/reveal-frontend/master/src/assets/images/larval.png',
+    Header: FI_STATUS,
+    columns: [{}],
   },
   {
-    id: 'mosquito',
-    imageUrl:
-      'https://raw.githubusercontent.com/onaio/reveal-frontend/master/src/assets/images/mosquito.png',
+    Header: PROVINCE,
+    columns: [{}],
+  },
+  {
+    Header: DISTRICT,
+    columns: [{}],
+  },
+  {
+    Header: CANTON,
+    columns: [{}],
+  },
+  {
+    Header: 'Village',
+    columns: [{}],
+  },
+  {
+    Header: FOCUS_AREA_HEADER,
+    columns: [{}],
+  },
+  {
+    Header: STATUS_HEADER,
+    columns: [{}],
+  },
+  {
+    Header: START_DATE,
+    columns: [{}],
+  },
+  {
+    Header: END_DATE,
+    columns: [{}],
+  },
+  {
+    Header: 'Actions',
+    columns: [{}],
   },
 ];
 /** current reactive columns with data */
@@ -1044,5 +1072,24 @@ export const statusColumn = [
         minWidth: 80,
       },
     ],
+  },
+];
+
+// icons to add to map
+export const imgArr = [
+  {
+    id: 'case-confirmation',
+    imageUrl:
+      'https://raw.githubusercontent.com/onaio/reveal-frontend/master/src/assets/images/case-confirmation.png',
+  },
+  {
+    id: 'larval',
+    imageUrl:
+      'https://raw.githubusercontent.com/onaio/reveal-frontend/master/src/assets/images/larval.png',
+  },
+  {
+    id: 'mosquito',
+    imageUrl:
+      'https://raw.githubusercontent.com/onaio/reveal-frontend/master/src/assets/images/mosquito.png',
   },
 ];
