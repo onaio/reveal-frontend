@@ -10,7 +10,6 @@ describe('components/Table/NullDateTable', () => {
   });
   it('renders without crashing', () => {
     const props = {
-      planType: 'current',
       reasonType: 'Routine',
       tableProps: fixtures.CurrentRoutineTableProps,
     };
@@ -19,7 +18,6 @@ describe('components/Table/NullDateTable', () => {
 
   it('renders currentRoutinePlans with no data correctly', () => {
     const props = {
-      planType: 'current',
       reasonType: 'Routine',
       tableProps: fixtures.CurrentRoutineTableProps,
     };
@@ -30,7 +28,6 @@ describe('components/Table/NullDateTable', () => {
 
   it('renders currentReactivePlans correctly', () => {
     const props = {
-      planType: 'current',
       reasonType: 'Reactive',
       tableProps: fixtures.CurrentReactiveTableProps,
     };
@@ -41,7 +38,6 @@ describe('components/Table/NullDateTable', () => {
 
   it('renders completeRoutinePlans with no data correctly', () => {
     const props = {
-      planType: 'complete',
       reasonType: 'Routine',
       tableProps: fixtures.CompleteRoutineTableProps,
     };
@@ -52,7 +48,6 @@ describe('components/Table/NullDateTable', () => {
 
   it('renders completeReactivePlans correctly', () => {
     const props = {
-      planType: 'complete',
       reasonType: 'Reactive',
       tableProps: fixtures.CompleteReactiveTableProps,
     };
