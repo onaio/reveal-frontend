@@ -138,7 +138,7 @@ const JurisdictionSelect = (props: JurisdictionSelectProps) => {
       <AsyncSelect
         /** we are using the key as hack to reload the component when the parentId changes */
         key={parentId}
-        name="form"
+        name="jurisdiction"
         bsSize="lg"
         menuIsOpen={menuIsOpen}
         closeMenuOnSelect={closeMenuOnSelect}
