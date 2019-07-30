@@ -2,6 +2,14 @@
 import { Providers } from '@onaio/gatekeeper';
 import { Expression } from 'mapbox-gl';
 import {
+  CASE_CONFIRMATION_MAP_ICON_ID,
+  CASE_CONFIRMATION_MAP_ICON_URL,
+  LARVAL_MAP_ICON_ID,
+  LARVAL_MAP_ICON_URL,
+  MOSQUITO_MAP_ICON_ID,
+  MOSQUITO_MAP_ICON_URL,
+} from '../constants';
+import {
   DOMAIN_NAME,
   ENABLE_ONADATA_OAUTH,
   ENABLE_OPENSRP_OAUTH,
@@ -623,18 +631,15 @@ export const symbolLayerConfig = {
 // icons to add to map
 export const imgArr = [
   {
-    id: 'case-confirmation',
-    imageUrl:
-      'https://raw.githubusercontent.com/onaio/reveal-frontend/master/src/assets/images/case-confirmation.png',
+    id: CASE_CONFIRMATION_MAP_ICON_ID,
+    imageUrl: CASE_CONFIRMATION_MAP_ICON_URL,
   },
   {
-    id: 'larval',
-    imageUrl:
-      'https://raw.githubusercontent.com/onaio/reveal-frontend/master/src/assets/images/larval.png',
+    id: LARVAL_MAP_ICON_ID,
+    imageUrl: LARVAL_MAP_ICON_URL,
   },
   {
-    id: 'mosquito',
-    imageUrl:
-      'https://raw.githubusercontent.com/onaio/reveal-frontend/master/src/assets/images/mosquito.png',
+    id: MOSQUITO_MAP_ICON_ID,
+    imageUrl: MOSQUITO_MAP_ICON_URL,
   },
 ];
