@@ -1,0 +1,63 @@
+import { mount, shallow } from 'enzyme';
+import toJson from 'enzyme-to-json';
+import React from 'react';
+import * as fixtures from '../../../../store/ducks/tests/fixtures';
+import NullDataTable from '../nulldatatable';
+
+describe('components/Table/NullDateTable', () => {
+  beforeEach(() => {
+    jest.resetAllMocks();
+  });
+  it('renders without crashing', () => {
+    const props = {
+      planType: 'current',
+      reasonType: 'Routine',
+      tableProps: fixtures.CurrentRoutineTableProps,
+    };
+    shallow(<NullDataTable {...props} />);
+  });
+
+  it('renders currentRoutinePlans with no data correctly', () => {
+    const props = {
+      planType: 'current',
+      reasonType: 'Routine',
+      tableProps: fixtures.CurrentRoutineTableProps,
+    };
+    const wrapper = mount(<NullDataTable {...props} />);
+    expect(toJson(wrapper)).toMatchSnapshot();
+    wrapper.unmount();
+  });
+
+  it('renders currentReactivePlans correctly', () => {
+    const props = {
+      planType: 'current',
+      reasonType: 'Reactive',
+      tableProps: fixtures.CurrentReactiveTableProps,
+    };
+    const wrapper = mount(<NullDataTable {...props} />);
+    expect(toJson(wrapper)).toMatchSnapshot();
+    wrapper.unmount();
+  });
+
+  it('renders completeRoutinePlans with no data correctly', () => {
+    const props = {
+      planType: 'complete',
+      reasonType: 'Routine',
+      tableProps: fixtures.CompleteRoutineTableProps,
+    };
+    const wrapper = mount(<NullDataTable {...props} />);
+    expect(toJson(wrapper)).toMatchSnapshot();
+    wrapper.unmount();
+  });
+
+  it('renders completeReactivePlans correctly', () => {
+    const props = {
+      planType: 'complete',
+      reasonType: 'Reactive',
+      tableProps: fixtures.CompleteReactiveTableProps,
+    };
+    const wrapper = mount(<NullDataTable {...props} />);
+    expect(toJson(wrapper)).toMatchSnapshot();
+    wrapper.unmount();
+  });
+});
