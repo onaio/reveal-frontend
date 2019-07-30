@@ -59,7 +59,7 @@ const JurisdictionSelect = (props: JurisdictionSelectProps) => {
   const { apiEndpoint, params, serviceClass } = props;
   const [parentId, setParentId] = useState<string>('');
   const [hierarchy, setHierarchy] = useState<SelectOption[]>([]);
-  const [menuIsOpen, setMenuIsOpen] = useState<boolean>(true);
+  const [shouldMenuOpen, setShouldMenuOpen] = useState<boolean>(false);
   const [closeMenuOnSelect, setCloseMenuOnSelect] = useState<boolean>(false);
 
   const service = new serviceClass(apiEndpoint);
@@ -112,6 +112,7 @@ const JurisdictionSelect = (props: JurisdictionSelectProps) => {
         properties_filter: getFilterParams({ parentId: optionVal.value }),
       };
       service.list(newParamsToUse).then(e => {
+        setShouldMenuOpen(true);
         if (e.length > 0) {
           setParentId(optionVal.value);
 
@@ -121,14 +122,14 @@ const JurisdictionSelect = (props: JurisdictionSelectProps) => {
           setCloseMenuOnSelect(false);
         } else {
           setCloseMenuOnSelect(true);
-          setMenuIsOpen(false);
+          setShouldMenuOpen(false);
         }
       });
     } else {
       // most probably the select element was reset
       setParentId('');
       setHierarchy([]);
-      setMenuIsOpen(true);
+      setShouldMenuOpen(false);
       setCloseMenuOnSelect(false);
     }
   };
@@ -140,7 +141,7 @@ const JurisdictionSelect = (props: JurisdictionSelectProps) => {
         key={parentId}
         name="jurisdiction"
         bsSize="lg"
-        menuIsOpen={menuIsOpen}
+        defaultMenuIsOpen={shouldMenuOpen}
         closeMenuOnSelect={closeMenuOnSelect}
         components={animatedComponents}
         placeholder="Select Focus Area"
