@@ -170,7 +170,7 @@ class IrsPlan extends React.Component<
       focusJurisdictionId: null,
       isEditingPlanName: false,
       isLoadingGeoms: false,
-      isLoadingJurisdictions: !!!props.jurisdictionsArray.length,
+      isLoadingJurisdictions: true,
       isStartingPlan: props.isNewPlan || props.isDraftPlan || false,
       newPlan: props.isNewPlan
         ? {
@@ -318,21 +318,23 @@ class IrsPlan extends React.Component<
         ? superset.getFormData(10000, [{ sqlExpression: sqlFilterExpression }])
         : { row_limit: 10000 };
 
-      supersetService(SUPERSET_JURISDICTIONS_DATA_SLICE, otherJurisdictionSupersetParams).then(
-        (jurisdictionResults: FlexObject[] = []) => {
-          const jurisdictions = jurisdictionResults.map(j => {
-            const { id, parent_id, name, geographic_level } = j;
-            const jurisdiction: Jurisdiction = {
-              geographic_level: geographic_level || 0,
-              jurisdiction_id: id,
-              name: name || null,
-              parent_id: parent_id || null,
-            };
-            return jurisdiction;
-          });
-          return fetchJurisdictionsActionCreator(jurisdictions);
-        }
-      );
+      await supersetService(
+        SUPERSET_JURISDICTIONS_DATA_SLICE,
+        otherJurisdictionSupersetParams
+      ).then((jurisdictionResults: FlexObject[] = []) => {
+        const jurisdictions = jurisdictionResults.map(j => {
+          const { id, parent_id, name, geographic_level } = j;
+          const jurisdiction: Jurisdiction = {
+            geographic_level: geographic_level || 0,
+            jurisdiction_id: id,
+            name: name || null,
+            parent_id: parent_id || null,
+          };
+          return jurisdiction;
+        });
+        return fetchJurisdictionsActionCreator(jurisdictions);
+      });
+      this.setState({ isLoadingJurisdictions: false });
     }
   }
 
@@ -385,11 +387,7 @@ class IrsPlan extends React.Component<
       isLoadingJurisdictions,
       isStartingPlan,
     } = this.state;
-    if (
-      (planId && !planById) ||
-      (isNewPlan && !newPlan) ||
-      (isDraftPlan && isLoadingJurisdictions)
-    ) {
+    if ((planId && !planById) || (isNewPlan && !newPlan) || isLoadingJurisdictions) {
       return <Loading />;
     }
 
