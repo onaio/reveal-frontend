@@ -3,12 +3,14 @@ import makeAnimated from 'react-select/animated';
 import AsyncSelect from 'react-select/async';
 import { OpenSRPService, URLParams } from '../../../services/opensrp';
 
+/** JurisdictionSelect props */
 export interface JurisdictionSelectProps {
   apiEndpoint: string;
   params: URLParams;
   serviceClass: typeof OpenSRPService;
 }
 
+/** default props for JurisdictionSelect */
 const defaultProps: JurisdictionSelectProps = {
   apiEndpoint: 'location/findByProperties',
   params: {
@@ -43,6 +45,10 @@ interface JurisdictionOption {
   type: 'Feature';
 }
 
+/**
+ * JurisdictionSelect - a cascading select for Jurisdictions
+ * Allows you to drill-down Jurisdictions until you select a Focus Area
+ */
 const JurisdictionSelect = (props: JurisdictionSelectProps) => {
   const { apiEndpoint, params, serviceClass } = props;
   const service = new serviceClass(apiEndpoint);
