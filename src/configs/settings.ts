@@ -727,12 +727,12 @@ const NamibiaAdmin0: JurisdictionsByCountry = {
       parentIdField: 'Region',
       url: 'mapbox://thailandbvbd.40rp5je6',
     },
-    {
-      idField: 'RDHVC',
-      layer: 'NA_3',
-      parentIdField: 'District',
-      url: 'mapbox://thailandbvbd.cutg3mx7',
-    },
+    // {
+    //   idField: 'RDHVC',
+    //   layer: 'NA_3',
+    //   parentIdField: 'District',
+    //   url: 'mapbox://thailandbvbd.cutg3mx7',
+    // },
   ],
 };
 

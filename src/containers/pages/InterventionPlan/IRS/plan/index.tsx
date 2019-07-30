@@ -1133,7 +1133,7 @@ class IrsPlan extends React.Component<
           type: 'vector',
           url: tilesets[t].url,
         },
-        visible: t < 2,
+        visible: true,
       };
       ADMIN_LINE_LAYERS.push(adminLineLayer);
     }
@@ -1156,7 +1156,7 @@ class IrsPlan extends React.Component<
           type: 'vector',
           url: tilesets[t].url,
         },
-        visible: t === 1,
+        visible: true,
       };
 
       if (t === 1) {
@@ -1176,6 +1176,8 @@ class IrsPlan extends React.Component<
         if (adminFilterExpression.length > 1) {
           (adminFillLayer as any).filter = [...adminFilterExpression];
         }
+      } else {
+        (adminFillLayer as any).filter = ['==', tilesets[t].parentIdField, ''];
       }
 
       ADMIN_FILL_LAYERS.unshift(adminFillLayer);
@@ -1204,6 +1206,7 @@ class IrsPlan extends React.Component<
 
         const layer = {
           ...fillLayerConfig,
+          filter: ['==', 'parentId', ''],
           id: `${ADMN0_EN}-admin-${g}-jurisdiction-fill`,
           paint: {
             'fill-color': adminLayerColors[g],
@@ -1288,8 +1291,15 @@ class IrsPlan extends React.Component<
         this.onDrilldownClick(clickedFeatureJurisdiction.jurisdiction_id);
         this.onResetDrilldownTableHierarchy(clickedFeatureJurisdiction.jurisdiction_id);
 
-        // toggle current layer
-        store.dispatch(Actions.toggleLayer(MAP_ID, layer.id));
+        // toggle current layer / filter current layer
+        if (geographicLevel === 1) {
+          store.dispatch(Actions.toggleLayer(MAP_ID, layer.id));
+        } else {
+          const layerFilter = Map.getFilter(layer.id);
+          layerFilter[2] = '';
+          Map.setFilter(layer.id, layerFilter);
+        }
+
         // check for next Admin fill layer
         if (country.tilesets[geographicLevel + 1]) {
           // zoom to clicked admin level
@@ -1297,15 +1307,30 @@ class IrsPlan extends React.Component<
           Map.fitBounds(newBounds, { padding: 20 });
           // toggle next admin fill layer
           const nextLayerId = `${country.ADMN0_EN}-admin-${geographicLevel + 1}-fill`;
-          store.dispatch(Actions.toggleLayer(MAP_ID, nextLayerId));
-          // todo - filter next layer down
+          // update layer filter of next admin level fill layer
+          if (Map.getLayer(nextLayerId)) {
+            const nextLayerFilter = Map.getFilter(nextLayerId);
+            if (nextLayerFilter && country.tilesets && country.tilesets[geographicLevel]) {
+              nextLayerFilter[2] = properties[country.tilesets[geographicLevel].idField];
+              Map.setFilter(nextLayerId, nextLayerFilter);
+            }
+          }
         } else {
+          const decendantLayerId = `${country.ADMN0_EN}-admin-${geographicLevel +
+            1}-jurisdiction-fill`;
           // define childless decendant jurisdictions
           const decendantChildlessChildrenIds = this.getDecendantJurisdictionIds(
             [clickedFeatureJurisdiction.jurisdiction_id],
             filteredJurisdictions,
             false
           );
+          // update jurisdictions layer filter
+          if (Map.getLayer(decendantLayerId)) {
+            const nextLayerFilter = Map.getFilter(decendantLayerId);
+            nextLayerFilter[2] = clickedFeatureJurisdiction.jurisdiction_id;
+            Map.setFilter(decendantLayerId, nextLayerFilter);
+          }
+
           // define geojson of childless decendant jurisdictions
           const decendantChildlessFeatures = filteredJurisdictions
             .filter(
@@ -1319,7 +1344,9 @@ class IrsPlan extends React.Component<
             features: decendantChildlessFeatures,
             type: 'FeatureCollection',
           });
-          Map.fitBounds(newBounds, { padding: 20 });
+          if (newBounds) {
+            Map.fitBounds(newBounds, { padding: 20 });
+          }
         }
       } else if (clickedFeatureJurisdiction) {
         // Handle selection click
@@ -1336,15 +1363,31 @@ class IrsPlan extends React.Component<
     const features = Map.queryRenderedFeatures(point);
     const { ADMN0_EN, bounds, jurisdictionId, tilesets } = country;
     if (!features.length && tilesets && bounds) {
-      for (let t = 1; t < tilesets.length; t += 1) {
+      let t = 1;
+      for (t; t < tilesets.length; t += 1) {
         const layerId = `${ADMN0_EN}-admin-${t}-fill`;
         if (Map.getLayer(layerId)) {
-          const isLayerVisible = Map.getLayoutProperty(layerId, 'visibility') === 'visible';
-          if ((t !== 1 && isLayerVisible) || (t === 1 && !isLayerVisible)) {
-            store.dispatch(Actions.toggleLayer(MAP_ID, layerId));
+          // Reset layers to default visibility
+          if (t === 1) {
+            const isLayerVisible = Map.getLayoutProperty(layerId, 'visibility') === 'visible';
+            if (!isLayerVisible) {
+              store.dispatch(Actions.toggleLayer(MAP_ID, layerId));
+            }
+          } else {
+            const layerFilter = Map.getFilter(layerId);
+            layerFilter[2] = '';
+            Map.setFilter(layerId, layerFilter);
           }
         }
       }
+      // Reset layer filter for Jurisdiction fill layer
+      const jurisdictionsLayerId = `${country.ADMN0_EN}-admin-${t}-jurisdiction-fill`;
+      if (Map.getLayer(jurisdictionsLayerId)) {
+        const jurisdicitonLayerFilter = Map.getFilter(jurisdictionsLayerId);
+        jurisdicitonLayerFilter[2] = '';
+        Map.setFilter(jurisdictionsLayerId, jurisdicitonLayerFilter);
+      }
+
       Map.fitBounds(bounds as LngLatBoundsLike, { padding: 20 });
       this.onResetDrilldownTableHierarchy(jurisdictionId.length ? jurisdictionId : null);
     }
