@@ -120,6 +120,16 @@ export type FI_SINGLE_MAP_URL = typeof FI_SINGLE_MAP_URL;
 export const FI_HISTORICAL_URL = '/focus-investigation/historical';
 export type FI_HISTORICAL_URL = typeof FI_HISTORICAL_URL;
 
+// OpenSRP API strings
+export const OPENSRP_FIND_BY_PROPERTIES = 'findByProperties';
+export type OPENSRP_FIND_BY_PROPERTIES = typeof OPENSRP_FIND_BY_PROPERTIES;
+export const OPENSRP_LOCATION = 'location';
+export type OPENSRP_LOCATION = typeof OPENSRP_LOCATION;
+export const OPENSRP_PLANS = 'plans';
+export type OPENSRP_PLANS = typeof OPENSRP_PLANS;
+export const OPENSRP_PARENT_ID = 'parent_id';
+export type OPENSRP_PARENT_ID = typeof OPENSRP_PARENT_ID;
+
 // container pages title names
 export const HOME_TITLE = `Home page`;
 export type HOME_TITLE = typeof HOME_TITLE;

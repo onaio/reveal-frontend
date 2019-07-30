@@ -30,7 +30,17 @@ import {
   SUPERSET_JURISDICTIONS_SLICE,
   SUPERSET_PLAN_STRUCTURE_PIVOT_SLICE,
 } from '../../../../../configs/env';
-import { HOME, HOME_URL, INTERVENTION_IRS_URL, MAP_ID, NEW_PLAN } from '../../../../../constants';
+import {
+  HOME,
+  HOME_URL,
+  INTERVENTION_IRS_URL,
+  MAP_ID,
+  NEW_PLAN,
+  OPENSRP_FIND_BY_PROPERTIES,
+  OPENSRP_LOCATION,
+  OPENSRP_PARENT_ID,
+  OPENSRP_PLANS,
+} from '../../../../../constants';
 import {
   FlexObject,
   preventDefault,
@@ -87,8 +97,8 @@ reducerRegistry.register(plansReducerName, plansReducer);
 reducerRegistry.register(jurisdictionReducerName, jurisdictionReducer);
 
 /** initialize OpenSRP API services */
-const OpenSrpLocationService = new OpenSRPService('location');
-const OpenSrpPlanService = new OpenSRPService('plans');
+const OpenSrpLocationService = new OpenSRPService(OPENSRP_LOCATION);
+const OpenSrpPlanService = new OpenSRPService(OPENSRP_PLANS);
 
 /** IrsPlanProps - interface for IRS Plan page */
 export interface IrsPlanProps {
@@ -163,7 +173,7 @@ class IrsPlan extends React.Component<
       focusJurisdictionId: null,
       isEditingPlanName: false,
       isLoadingGeoms: false,
-      isLoadingJurisdictions: !!!props.jurisdictionsArray.length,
+      isLoadingJurisdictions: true,
       isSaveDraftDisabled: false,
       isStartingPlan: props.isNewPlan || props.isDraftPlan || false,
       newPlan: props.isNewPlan
@@ -206,7 +216,7 @@ class IrsPlan extends React.Component<
     let allJurIds: string[] = [];
     if (!allJurisdictionIds.length || allJurisdictionIds.length === loadedJurisdictionIds.length) {
       // todo - is there a better way to fetch a list of ALL jurisdiction ids?
-      await supersetFetch(SUPERSET_JURISDICTIONS_DATA_SLICE, { row_limit: 3000 }).then(result => {
+      await supersetFetch(SUPERSET_JURISDICTIONS_DATA_SLICE, { row_limit: 10000 }).then(result => {
         // populate array of unique `id`s
         if (result && result.length) {
           for (const j of result) {
@@ -309,24 +319,26 @@ class IrsPlan extends React.Component<
       }
 
       const otherJurisdictionSupersetParams = sqlFilterExpression.length
-        ? superset.getFormData(3000, [{ sqlExpression: sqlFilterExpression }])
-        : { row_limit: 3000 };
+        ? superset.getFormData(10000, [{ sqlExpression: sqlFilterExpression }])
+        : { row_limit: 10000 };
 
-      supersetService(SUPERSET_JURISDICTIONS_DATA_SLICE, otherJurisdictionSupersetParams).then(
-        (jurisdictionResults: FlexObject[] = []) => {
-          const jurisdictions = jurisdictionResults.map(j => {
-            const { id, parent_id, name, geographic_level } = j;
-            const jurisdiction: Jurisdiction = {
-              geographic_level: geographic_level || 0,
-              jurisdiction_id: id,
-              name: name || null,
-              parent_id: parent_id || null,
-            };
-            return jurisdiction;
-          });
-          return fetchJurisdictionsActionCreator(jurisdictions);
-        }
-      );
+      await supersetService(
+        SUPERSET_JURISDICTIONS_DATA_SLICE,
+        otherJurisdictionSupersetParams
+      ).then((jurisdictionResults: FlexObject[] = []) => {
+        const jurisdictions = jurisdictionResults.map(j => {
+          const { id, parent_id, name, geographic_level } = j;
+          const jurisdiction: Jurisdiction = {
+            geographic_level: geographic_level || 0,
+            jurisdiction_id: id,
+            name: name || null,
+            parent_id: parent_id || null,
+          };
+          return jurisdiction;
+        });
+        return fetchJurisdictionsActionCreator(jurisdictions);
+      });
+      this.setState({ isLoadingJurisdictions: false });
     }
   }
 
@@ -380,11 +392,7 @@ class IrsPlan extends React.Component<
       isSaveDraftDisabled,
       isStartingPlan,
     } = this.state;
-    if (
-      (planId && !planById) ||
-      (isNewPlan && !newPlan) ||
-      (isDraftPlan && isLoadingJurisdictions)
-    ) {
+    if ((planId && !planById) || (isNewPlan && !newPlan) || isLoadingJurisdictions) {
       return <Loading />;
     }
 
@@ -813,13 +821,21 @@ class IrsPlan extends React.Component<
    * Sets the first drilldown table breadcrumb
    * Requests unloaded geojson for childless children
    */
-  private onStartPlanFormSubmit(e: MouseEvent) {
+  private async onStartPlanFormSubmit(e: MouseEvent) {
     const { newPlan: NewPlan, planCountry } = this.state;
     const { jurisdictionsArray, isDraftPlan } = this.props;
     const country: JurisdictionsByCountry = CountriesAdmin0[planCountry as ADMN0_PCODE];
 
+    if (!country || (!country.jurisdictionIds.length && !country.jurisdictionId.length)) {
+      return false;
+    }
+
+    const jurisdictionIds = country.jurisdictionIds.length
+      ? [...country.jurisdictionIds]
+      : [country.jurisdictionId];
+
     const jurisdictionsToInclude = this.getDecendantJurisdictionIds(
-      country.jurisdictionIds,
+      jurisdictionIds,
       jurisdictionsArray
     );
 
@@ -830,6 +846,9 @@ class IrsPlan extends React.Component<
 
     const filteredJurisdictionIds = filteredJurisdictions.map(j => j.jurisdiction_id);
     const childlessChildrenIds = this.getChildlessChildrenIds(filteredJurisdictions);
+    const childlessChildren = filteredJurisdictions.filter(j =>
+      childlessChildrenIds.includes(j.jurisdiction_id)
+    );
 
     const newPlan: PlanRecord | null = NewPlan
       ? {
@@ -844,7 +863,7 @@ class IrsPlan extends React.Component<
     const tableCrumbs: TableCrumb[] = [
       {
         active: true,
-        id: null,
+        id: country.jurisdictionId.length ? country.jurisdictionId : null,
         label: country.ADMN0_EN,
       },
     ];
@@ -854,6 +873,9 @@ class IrsPlan extends React.Component<
         childlessChildrenIds,
         country,
         filteredJurisdictionIds,
+        focusJurisdictionId: country.jurisdictionId.length
+          ? country.jurisdictionId
+          : this.state.focusJurisdictionId,
         isLoadingGeoms: true,
         isStartingPlan: false,
         newPlan,
@@ -863,21 +885,37 @@ class IrsPlan extends React.Component<
         // Get geoms for jurisdictionsToInclude
         const { childlessChildrenIds: ChildlessChildrenIds } = this.state;
 
+        // Determine which Jurisdictions will need to be updated in state
         const loadedJurisdictionIds = this.props.jurisdictionsArray
           .filter(j => ChildlessChildrenIds.includes(j.jurisdiction_id) && !!j.geojson)
           .map(j => j.jurisdiction_id);
-
-        const jurisdictionsToLoad = ChildlessChildrenIds.filter(
+        const jurisdictionIdsToLoad = ChildlessChildrenIds.filter(
           j => !loadedJurisdictionIds.includes(j)
         );
 
-        if (jurisdictionsToLoad.length) {
+        // Determine all parent_ids of childless children jurisdictions
+        const parentIdsToCall: string[] = [];
+        for (const child of childlessChildren) {
+          if (
+            child.parent_id &&
+            child.parent_id.length &&
+            child.parent_id !== 'null' &&
+            !parentIdsToCall.includes(child.parent_id)
+          ) {
+            parentIdsToCall.push(child.parent_id);
+          }
+        }
+
+        // Build a list of OpenSRP API calls to make (fetch by parent_id to reduce number of calls)
+        if (parentIdsToCall.length) {
           const promises = [];
-          for (const j of jurisdictionsToLoad) {
+          for (const parent of parentIdsToCall) {
             promises.push(
               new Promise((resolve, reject) => {
-                OpenSrpLocationService.read(j, {
+                OpenSrpLocationService.read(OPENSRP_FIND_BY_PROPERTIES, {
                   is_jurisdiction: true,
+                  properties_filter: `${OPENSRP_PARENT_ID}:${parent}`,
+                  return_geometry: true,
                 })
                   .then(jurisidction => resolve(jurisidction))
                   .catch(error => reject(error));
@@ -885,20 +923,30 @@ class IrsPlan extends React.Component<
             );
           }
 
+          // Make all calls to OpenSRP API
           Promise.all(promises).then((results: any[]) => {
             const jurisdictions: Jurisdiction[] = [];
+            // Loop through all parent_id results
             for (const result of results) {
-              const J = filteredJurisdictions.find(
-                j => j.jurisdiction_id === result.id
-              ) as Jurisdiction;
-              if (J) {
-                const j: Jurisdiction = {
-                  ...J,
-                  geojson: result,
-                };
-                jurisdictions.push(j);
+              // Loop through all children of parent
+              for (const geojson of result) {
+                // If the child geojson needs to be loaded into state, do so
+                if (jurisdictionIdsToLoad.includes(geojson.id)) {
+                  const J = filteredJurisdictions.find(
+                    j => j.jurisdiction_id === geojson.id
+                  ) as Jurisdiction;
+                  if (J) {
+                    const j: Jurisdiction = {
+                      ...J,
+                      geojson,
+                    };
+                    jurisdictions.push(j);
+                  }
+                }
               }
             }
+
+            // Update the store with newly loaded jurisdictions with geojson
             this.props.fetchJurisdictionsActionCreator(jurisdictions);
           });
         } else {
@@ -1092,18 +1140,20 @@ class IrsPlan extends React.Component<
           type: 'vector',
           url: tilesets[t].url,
         },
-        visible: t < 2,
+        visible: true,
       };
       ADMIN_LINE_LAYERS.push(adminLineLayer);
     }
 
+    const ADMIN_FILL_LAYER_IDS: string[] = [];
     const ADMIN_FILL_LAYERS: any[] = [];
-    const ADMIN_FILL_HANDLERS: Handlers[] = [];
     const adminFillColors: string[] = ['black', 'red', 'orange', 'yellow', 'green'];
     for (let t = 1; t < tilesets.length; t += 1) {
+      const adminFillLayerId = `${ADMN0_EN}-admin-${t}-fill`;
+      ADMIN_FILL_LAYER_IDS.unshift(adminFillLayerId);
       const adminFillLayer = {
         ...fillLayerConfig,
-        id: `${ADMN0_EN}-admin-${t}-fill`,
+        id: adminFillLayerId,
         paint: {
           'fill-color': adminFillColors[t],
           'fill-opacity': 0.75,
@@ -1113,18 +1163,8 @@ class IrsPlan extends React.Component<
           type: 'vector',
           url: tilesets[t].url,
         },
-        visible: t === 1,
+        visible: true,
       };
-
-      const handler: Handlers = {
-        layer: [`${ADMN0_EN}-admin-${t}-fill`],
-        method: e => {
-          this.onAdminFillClick(e, country, t);
-        },
-        name: `${ADMN0_EN}-admin-${t}-fill-drilldown`,
-        type: 'click',
-      };
-      ADMIN_FILL_HANDLERS.push(handler);
 
       if (t === 1) {
         const adminFilterExpression: any[] = ['any'];
@@ -1143,8 +1183,11 @@ class IrsPlan extends React.Component<
         if (adminFilterExpression.length > 1) {
           (adminFillLayer as any).filter = [...adminFilterExpression];
         }
+      } else {
+        (adminFillLayer as any).filter = ['==', tilesets[t].parentIdField, ''];
       }
-      ADMIN_FILL_LAYERS.push(adminFillLayer);
+
+      ADMIN_FILL_LAYERS.unshift(adminFillLayer);
     }
 
     function getJurisdictionFillLayers(jurisdictions: Jurisdiction[]) {
@@ -1170,6 +1213,7 @@ class IrsPlan extends React.Component<
 
         const layer = {
           ...fillLayerConfig,
+          filter: ['==', 'parentId', ''],
           id: `${ADMN0_EN}-admin-${g}-jurisdiction-fill`,
           paint: {
             'fill-color': adminLayerColors[g],
@@ -1190,6 +1234,14 @@ class IrsPlan extends React.Component<
 
     const JURISDICTION_FILL_LAYERS = getJurisdictionFillLayers(filteredJurisdictions);
 
+    const onAdminFillClickHandler: Handlers = {
+      method: e => {
+        this.onAdminFillClick(e, country, [...ADMIN_FILL_LAYER_IDS].reverse());
+      },
+      name: `${ADMN0_EN}-fill-drilldown`,
+      type: 'click',
+    };
+
     const drillUpHandler: Handlers = {
       method: e => {
         this.onDrillUpClick(e, country);
@@ -1201,8 +1253,8 @@ class IrsPlan extends React.Component<
     const gisidaWrapperProps: GisidaProps = {
       bounds,
       geoData: null,
-      handlers: [...ADMIN_FILL_HANDLERS, drillUpHandler],
-      layers: [...ADMIN_LINE_LAYERS, ...ADMIN_FILL_LAYERS, ...JURISDICTION_FILL_LAYERS],
+      handlers: [onAdminFillClickHandler, drillUpHandler],
+      layers: [...ADMIN_LINE_LAYERS, ...JURISDICTION_FILL_LAYERS, ...ADMIN_FILL_LAYERS],
       pointFeatureCollection: null,
       polygonFeatureCollection: null,
       structures: null,
@@ -1215,72 +1267,98 @@ class IrsPlan extends React.Component<
    * @param country - JurisdictionsByCountry object containing basic hierarchy information per country
    * @param geographicLevel - The hierarchical level of the feature being clicked
    */
-  private onAdminFillClick(e: EventData, country: JurisdictionsByCountry, geographicLevel: number) {
+  private onAdminFillClick(e: EventData, country: JurisdictionsByCountry, adminLayerIds: string[]) {
     const { point, target: Map, originalEvent } = e;
     const features = Map.queryRenderedFeatures(point);
+    const feature = features[0];
+    if (
+      !feature ||
+      !feature.layer ||
+      !feature.layer.id ||
+      !adminLayerIds.includes(feature.layer.id)
+    ) {
+      return false;
+    }
+    const geographicLevel = [...adminLayerIds].indexOf(feature.layer.id) + 1;
     const isShiftClick = originalEvent.shiftKey;
     const { filteredJurisdictionIds, childlessChildrenIds } = this.state;
     const filteredJurisdictions = this.props.jurisdictionsArray.filter(j =>
       filteredJurisdictionIds.includes(j.jurisdiction_id)
     );
 
-    // handle Drilldown Click
-    if (!isShiftClick && features.length && country.tilesets) {
-      const feature = features[0];
+    if (feature && country.tilesets) {
       const { geometry, layer, properties } = feature;
       const clickedFeatureName = properties[country.tilesets[geographicLevel].idField];
       const clickedFeatureJurisdiction = filteredJurisdictions.find(
         j => j.name === clickedFeatureName
       ) as Jurisdiction;
 
-      this.onDrilldownClick(clickedFeatureJurisdiction.jurisdiction_id);
-      this.onResetDrilldownTableHierarchy(clickedFeatureJurisdiction.jurisdiction_id);
+      if (clickedFeatureJurisdiction && !isShiftClick) {
+        // handle Drilldown Click
+        this.onDrilldownClick(clickedFeatureJurisdiction.jurisdiction_id);
+        this.onResetDrilldownTableHierarchy(clickedFeatureJurisdiction.jurisdiction_id);
 
-      // toggle current layer
-      store.dispatch(Actions.toggleLayer(MAP_ID, layer.id));
-      // check for next Admin fill layer
-      if (country.tilesets[geographicLevel + 1]) {
-        // zoom to clicked admin level
-        const newBounds: LngLatBoundsLike = GeojsonExtent(geometry);
-        Map.fitBounds(newBounds, { padding: 20 });
-        // toggle next admin fill layer
-        const nextLayerId = `${country.ADMN0_EN}-admin-${geographicLevel + 1}-fill`;
-        store.dispatch(Actions.toggleLayer(MAP_ID, nextLayerId));
-        // todo - filter next layer down
-      } else {
-        // define childless decendant jurisdictions
-        const decendantChildlessChildrenIds = this.getDecendantJurisdictionIds(
-          [clickedFeatureJurisdiction.jurisdiction_id],
-          filteredJurisdictions,
-          false
-        );
-        // define geojson of childless decendant jurisdictions
-        const decendantChildlessFeatures = filteredJurisdictions
-          .filter(
-            j =>
-              decendantChildlessChildrenIds.includes(j.jurisdiction_id) &&
-              childlessChildrenIds.includes(j.jurisdiction_id)
-          )
-          .map(j => j.geojson);
-        // zoom to extends of childless decendant jurisdiction geometries
-        const newBounds = GeojsonExtent({
-          features: decendantChildlessFeatures,
-          type: 'FeatureCollection',
-        });
-        Map.fitBounds(newBounds, { padding: 20 });
+        // toggle current layer / filter current layer
+        if (geographicLevel === 1) {
+          store.dispatch(Actions.toggleLayer(MAP_ID, layer.id));
+        } else {
+          const layerFilter = Map.getFilter(layer.id);
+          layerFilter[2] = '';
+          Map.setFilter(layer.id, layerFilter);
+        }
+
+        // check for next Admin fill layer
+        if (country.tilesets[geographicLevel + 1]) {
+          // zoom to clicked admin level
+          const newBounds: LngLatBoundsLike = GeojsonExtent(geometry);
+          Map.fitBounds(newBounds, { padding: 20 });
+          // toggle next admin fill layer
+          const nextLayerId = `${country.ADMN0_EN}-admin-${geographicLevel + 1}-fill`;
+          // update layer filter of next admin level fill layer
+          if (Map.getLayer(nextLayerId)) {
+            const nextLayerFilter = Map.getFilter(nextLayerId);
+            if (nextLayerFilter && country.tilesets && country.tilesets[geographicLevel]) {
+              nextLayerFilter[2] = properties[country.tilesets[geographicLevel].idField];
+              Map.setFilter(nextLayerId, nextLayerFilter);
+            }
+          }
+        } else {
+          const decendantLayerId = `${country.ADMN0_EN}-admin-${geographicLevel +
+            1}-jurisdiction-fill`;
+          // define childless decendant jurisdictions
+          const decendantChildlessChildrenIds = this.getDecendantJurisdictionIds(
+            [clickedFeatureJurisdiction.jurisdiction_id],
+            filteredJurisdictions,
+            false
+          );
+          // update jurisdictions layer filter
+          if (Map.getLayer(decendantLayerId)) {
+            const nextLayerFilter = Map.getFilter(decendantLayerId);
+            nextLayerFilter[2] = clickedFeatureJurisdiction.jurisdiction_id;
+            Map.setFilter(decendantLayerId, nextLayerFilter);
+          }
+
+          // define geojson of childless decendant jurisdictions
+          const decendantChildlessFeatures = filteredJurisdictions
+            .filter(
+              j =>
+                decendantChildlessChildrenIds.includes(j.jurisdiction_id) &&
+                childlessChildrenIds.includes(j.jurisdiction_id)
+            )
+            .map(j => j.geojson);
+          // zoom to extends of childless decendant jurisdiction geometries
+          const newBounds = GeojsonExtent({
+            features: decendantChildlessFeatures,
+            type: 'FeatureCollection',
+          });
+          if (newBounds) {
+            Map.fitBounds(newBounds, { padding: 20 });
+          }
+        }
+      } else if (clickedFeatureJurisdiction) {
+        // Handle selection click
+        this.onToggleJurisdictionSelection(clickedFeatureJurisdiction.jurisdiction_id);
       }
-    }
-
-    // Handle selection click
-    if (isShiftClick && features.length && country.tilesets) {
-      const feature = features[0];
-      const { properties } = feature;
-
-      const clickedFeatureName = properties[country.tilesets[geographicLevel].idField];
-      const clickedFeatureJurisdiction = filteredJurisdictions.find(
-        j => j.name === clickedFeatureName
-      ) as Jurisdiction;
-      this.onToggleJurisdictionSelection(clickedFeatureJurisdiction.jurisdiction_id);
     }
   }
   /** onDrillUpClick - map click handler passed into Gisida for resetting the drilldown hierarchy
@@ -1290,19 +1368,35 @@ class IrsPlan extends React.Component<
   private onDrillUpClick(e: EventData, country: JurisdictionsByCountry) {
     const { point, target: Map } = e;
     const features = Map.queryRenderedFeatures(point);
-
-    if (!features.length && country.tilesets && country.bounds) {
-      for (let t = 1; t < country.tilesets.length; t += 1) {
-        const layerId = `${country.ADMN0_EN}-admin-${t}-fill`;
+    const { ADMN0_EN, bounds, jurisdictionId, tilesets } = country;
+    if (!features.length && tilesets && bounds) {
+      let t = 1;
+      for (t; t < tilesets.length; t += 1) {
+        const layerId = `${ADMN0_EN}-admin-${t}-fill`;
         if (Map.getLayer(layerId)) {
-          const isLayerVisible = Map.getLayoutProperty(layerId, 'visibility') === 'visible';
-          if ((t !== 1 && isLayerVisible) || (t === 1 && !isLayerVisible)) {
-            store.dispatch(Actions.toggleLayer(MAP_ID, layerId));
+          // Reset layers to default visibility
+          if (t === 1) {
+            const isLayerVisible = Map.getLayoutProperty(layerId, 'visibility') === 'visible';
+            if (!isLayerVisible) {
+              store.dispatch(Actions.toggleLayer(MAP_ID, layerId));
+            }
+          } else {
+            const layerFilter = Map.getFilter(layerId);
+            layerFilter[2] = '';
+            Map.setFilter(layerId, layerFilter);
           }
         }
       }
-      Map.fitBounds(country.bounds as LngLatBoundsLike, { padding: 20 });
-      this.onResetDrilldownTableHierarchy(null);
+      // Reset layer filter for Jurisdiction fill layer
+      const jurisdictionsLayerId = `${country.ADMN0_EN}-admin-${t}-jurisdiction-fill`;
+      if (Map.getLayer(jurisdictionsLayerId)) {
+        const jurisdicitonLayerFilter = Map.getFilter(jurisdictionsLayerId);
+        jurisdicitonLayerFilter[2] = '';
+        Map.setFilter(jurisdictionsLayerId, jurisdicitonLayerFilter);
+      }
+
+      Map.fitBounds(bounds as LngLatBoundsLike, { padding: 20 });
+      this.onResetDrilldownTableHierarchy(jurisdictionId.length ? jurisdictionId : null);
     }
   }
 

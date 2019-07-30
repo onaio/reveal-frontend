@@ -652,6 +652,9 @@ export interface JurisdictionsByCountry extends ADMN0 {
   // this is most useful for instances where tilesets DO NOT match the OpenSRP hierarchy
   jurisdictionIds: string[];
 
+  // the top level jurisdiction_id of the country
+  jurisdictionId: string;
+
   // the UUID of the Jurisdiction from the
   id?: string;
 
@@ -667,6 +670,7 @@ export interface JurisdictionsByCountry extends ADMN0 {
 export const ZambiaAdmin0: JurisdictionsByCountry = {
   ADMN0_EN: 'Zambia',
   ADMN0_PCODE: 'ZM',
+  jurisdictionId: '',
   jurisdictionIds: ['2939', '2940', '2942', '2942', '2953', '2954'],
 };
 
@@ -675,6 +679,7 @@ export const ThailandAdmin0: JurisdictionsByCountry = {
   ADMN0_EN: 'Thailand',
   ADMN0_PCODE: 'TH',
   bounds: [[105.63681192, 5.61285098], [97.34380713, 20.46483364]],
+  jurisdictionId: '',
   jurisdictionIds: [
     '64301afa-e973-447b-a88c-4da20025c76f',
     '7f204867-fab0-4246-a97c-92e0b936cab6',
@@ -700,6 +705,8 @@ export const ThailandAdmin0: JurisdictionsByCountry = {
 const NamibiaAdmin0: JurisdictionsByCountry = {
   ADMN0_EN: 'Namibia',
   ADMN0_PCODE: 'NA',
+  bounds: [[11.76, -28.97], [25.26, -16.95]],
+  jurisdictionId: 'f45b9380-c970-4dd1-8533-9e95ab12f128',
   jurisdictionIds: [],
   tilesets: [
     {
@@ -720,12 +727,12 @@ const NamibiaAdmin0: JurisdictionsByCountry = {
       parentIdField: 'Region',
       url: 'mapbox://thailandbvbd.40rp5je6',
     },
-    {
-      idField: 'RDHVC',
-      layer: 'NA_3',
-      parentIdField: 'District',
-      url: 'mapbox://thailandbvbd.cutg3mx7',
-    },
+    // {
+    //   idField: 'RDHVC',
+    //   layer: 'NA_3',
+    //   parentIdField: 'District',
+    //   url: 'mapbox://thailandbvbd.cutg3mx7',
+    // },
   ],
 };
 
@@ -738,3 +745,21 @@ export const CountriesAdmin0 = {
   TH: ThailandAdmin0,
   ZM: ZambiaAdmin0,
 };
+// icons to add to map
+export const imgArr = [
+  {
+    id: 'case-confirmation',
+    imageUrl:
+      'https://raw.githubusercontent.com/onaio/reveal-frontend/master/src/assets/images/case-confirmation.png',
+  },
+  {
+    id: 'larval',
+    imageUrl:
+      'https://raw.githubusercontent.com/onaio/reveal-frontend/master/src/assets/images/larval.png',
+  },
+  {
+    id: 'mosquito',
+    imageUrl:
+      'https://raw.githubusercontent.com/onaio/reveal-frontend/master/src/assets/images/mosquito.png',
+  },
+];
