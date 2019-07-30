@@ -4,6 +4,7 @@ import moment from 'moment';
 import { FormEvent } from 'react';
 import * as Yup from 'yup';
 import {
+  ACTION_UUID_NAMESPACE,
   DATE_FORMAT,
   DEFAULT_ACTIVITY_DURATION_DAYS,
   PLAN_UUID_NAMESPACE,
@@ -161,7 +162,10 @@ export function getFormActivities(items: typeof FIActivities | typeof IRSActivit
  * Get action and plans from PlanForm activities
  * @param {PlanActivityFormFields[]} activities - this of activities from PlanForm
  */
-export function extractActivitiesFromPlanForm(activities: PlanActivityFormFields[]) {
+export function extractActivitiesFromPlanForm(
+  activities: PlanActivityFormFields[],
+  planIdentifier: string = ''
+) {
   const actions: PlanAction[] = [];
   const goals: PlanGoal[] = [];
 
@@ -205,10 +209,23 @@ export function extractActivitiesFromPlanForm(activities: PlanActivityFormFields
         thisGoal = planActivities.mosquitoCollection.goal;
       }
 
+      const thisActionIdentifier =
+        !element.actionIdentifier || element.actionIdentifier === ''
+          ? planIdentifier === ''
+            ? generateNameSpacedUUID(
+                `${moment().toString()}-${thisAction.goalId}`,
+                ACTION_UUID_NAMESPACE
+              )
+            : generateNameSpacedUUID(
+                `${moment().toString()}-${planIdentifier}-${thisAction.goalId}`,
+                ACTION_UUID_NAMESPACE
+              )
+          : element.actionIdentifier;
+
       // next put in values from the form
       const actionFields: Partial<PlanAction> = {
         description: element.actionDescription,
-        identifier: '',
+        identifier: thisActionIdentifier,
         prefix,
         reason: element.actionReason as ActionReasonType,
         timingPeriod: {
@@ -307,6 +324,11 @@ export function doesFieldHaveErrors(
  * @returns {PlanDefinition} - the plan definition object
  */
 export function generatePlanDefinition(formValue: PlanFormFields): PlanDefinition {
+  const planIdentifier =
+    !formValue.identifier || formValue.identifier === ''
+      ? generateNameSpacedUUID(moment().toString(), PLAN_UUID_NAMESPACE)
+      : formValue.identifier;
+
   const useContext: UseContext[] = [
     {
       code: 'interventionType',
@@ -337,10 +359,7 @@ export function generatePlanDefinition(formValue: PlanFormFields): PlanDefinitio
       end: moment(formValue.end).format(DATE_FORMAT.toUpperCase()),
       start: moment(formValue.start).format(DATE_FORMAT.toUpperCase()),
     },
-    identifier:
-      !formValue.identifier || formValue.identifier === ''
-        ? generateNameSpacedUUID(moment().toString(), PLAN_UUID_NAMESPACE)
-        : formValue.identifier,
+    identifier: planIdentifier,
     jurisdiction: [],
     name: formValue.name,
     status: formValue.status,
