@@ -334,7 +334,7 @@ export function generatePlanDefinition(formValue: PlanFormFields): PlanDefinitio
 
   const planVersion =
     formValue.identifier && formValue.identifier !== '' // is this an existing plan?
-      ? isNaN(parseInt(formValue.version, 10))
+      ? isNaN(parseInt(formValue.version, 10)) // is the existing version valid?
         ? parseInt(DEFAULT_PLAN_VERSION, 10) + 1
         : parseInt(formValue.version, 10) + 1
       : formValue.version;
