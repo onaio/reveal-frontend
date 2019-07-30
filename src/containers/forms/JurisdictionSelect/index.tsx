@@ -59,6 +59,7 @@ const JurisdictionSelect = (props: JurisdictionSelectProps) => {
   const { apiEndpoint, params, serviceClass } = props;
   const [parentId, setParentId] = useState<string>('');
   const [hierarchy, setHierarchy] = useState<SelectOption[]>([]);
+  const [menuIsOpen, setMenuIsOpen] = useState<boolean>(true);
   const [closeMenuOnSelect, setCloseMenuOnSelect] = useState<boolean>(false);
 
   const service = new serviceClass(apiEndpoint);
@@ -120,12 +121,14 @@ const JurisdictionSelect = (props: JurisdictionSelectProps) => {
           setCloseMenuOnSelect(false);
         } else {
           setCloseMenuOnSelect(true);
+          setMenuIsOpen(false);
         }
       });
     } else {
       // most probably the select element was reset
       setParentId('');
       setHierarchy([]);
+      setMenuIsOpen(true);
       setCloseMenuOnSelect(false);
     }
   };
@@ -137,6 +140,7 @@ const JurisdictionSelect = (props: JurisdictionSelectProps) => {
         key={parentId}
         name="form"
         bsSize="lg"
+        menuIsOpen={menuIsOpen}
         closeMenuOnSelect={closeMenuOnSelect}
         components={animatedComponents}
         placeholder="Select Focus Area"
