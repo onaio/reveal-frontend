@@ -828,6 +828,7 @@ export const CountriesAdmin0 = {
   ZM: ZambiaAdmin0,
 };
 /** Columns for various Plans */
+/** complete reactive columns with no data */
 export const emptyCompleteReactivePlans = [
   {
     Header: NAME,
@@ -846,7 +847,7 @@ export const emptyCompleteReactivePlans = [
     columns: [{}],
   },
 ];
-
+/** complete routine columns with no data */
 export const emptyCompleteRoutinePlans = [
   {
     Header: NAME,
@@ -865,7 +866,7 @@ export const emptyCompleteRoutinePlans = [
     columns: [{}],
   },
 ];
-
+/** current reactive columns with no data */
 export const emptyCurrentReactivePlans = [
   {
     Header: NAME,
@@ -903,7 +904,7 @@ export const imgArr = [
       'https://raw.githubusercontent.com/onaio/reveal-frontend/master/src/assets/images/mosquito.png',
   },
 ];
-
+/** current reactive columns with data */
 export const currentReactivePlansColumns = [
   {
     Header: CASE_NOTIF_DATE_HEADER,
@@ -925,7 +926,7 @@ export const currentReactivePlansColumns = [
     ],
   },
 ];
-
+/** current routine columns with data */
 export const currentRoutinePlansColumn = [
   {
     Header: STATUS_HEADER,
@@ -957,7 +958,7 @@ export const currentRoutinePlansColumn = [
     ],
   },
 ];
-
+/** complete reactive columns with data */
 export const completeReactivePlansColumn = [
   {
     Header: END_DATE,
@@ -988,7 +989,7 @@ export const completeReactivePlansColumn = [
     ],
   },
 ];
-
+/** complete routine columns with data */
 export const completeRoutinePlansColumn = [
   {
     Header: START_DATE,
@@ -1032,7 +1033,7 @@ export const dateCompletedColumn = [
     ],
   },
 ];
-
+// status column
 export const statusColumn = [
   {
     Header: FI_STATUS,

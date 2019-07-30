@@ -168,6 +168,7 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
       );
     }
   }
+  /** Handles form submission event */
   public handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
   }
@@ -186,7 +187,7 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
     if (!planById || !theGoals || !jurisdiction) {
       return <Loading />;
     }
-
+    /** theObject holds extracted plans from superset response */
     let theObject = extractPlan(planById);
     const propertiesToTransform = [
       'village',
@@ -222,8 +223,13 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
       })
     );
     breadCrumbProps.pages = [homePage, basePage, ...pages];
+    /** currentRoutineReactivePlans array that holds current routine and reactive tables  */
     const currentRoutineReactivePlans: FlexObject[] = [];
+    /** completeRoutineReactivePlans array that holds complete routine and reactive tables  */
     const completeRoutineReactivePlans: FlexObject[] = [];
+    /** Check if either currentReactivePlansArray or currentRoutinePlansArray length is greater than  zero
+     * to build current section tables i.e (routine & reactive) with data
+     */
     if (
       (currentReactivePlansArray && currentReactivePlansArray.length > 0) ||
       (currentRoutinePlansArray && currentRoutinePlansArray.length > 0)
@@ -240,9 +246,11 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
           const locationColumns: Column[] = getLocationColumns(locationHierarchy, true);
           /**  Handle Columns Unique for Routine and Reactive Tables */
           const columnsBasedOnReason = [];
+          /** If plan_fi_reason is case-triggered then add currentReactivePlansColumns from settings */
           if (plansArray.every(d => d.plan_fi_reason === CASE_TRIGGERED)) {
             columnsBasedOnReason.push(...currentReactivePlansColumns);
           } else {
+            /** Else build routine columns i.e (focusarea, locationcolumns, action and currentRoutinePlansColumn) */
             const focusAreaColumn = jsxColumns('focusarea');
             columnsBasedOnReason.push(
               ...locationColumns,
@@ -251,16 +259,19 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
               ...jsxColumns('action')
             );
           }
+          /** Handle all Columns i.e columns unique for reactive and routine (once handled above) plus columns common on both (name)  */
           const allColumns: Column[] = [
             ...jsxColumns('name'),
             ...statusColumn,
             ...columnsBasedOnReason,
           ];
+          /** Contains columns and data that will build the table */
           const tableProps = {
             ...defaultTableProps,
             columns: allColumns,
             data: thePlans,
           };
+          /** Push current tables and respective headers with data to be rendered */
           currentRoutineReactivePlans.push(
             <div key={thePlans[0].id}>
               <TableHeader plansArray={plansArray} />
@@ -270,6 +281,7 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
         }
       });
     }
+    /** if current reactive plans array is empty build table with no data  */
     if (!currentReactivePlansArray.length) {
       const tableProps = {
         ...defaultTableProps,
@@ -283,6 +295,7 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
         />
       );
     }
+    /** if current routine plans array is empty build table with no data  */
     if (!currentRoutinePlansArray.length) {
       const tableProps = {
         ...defaultTableProps,
@@ -297,6 +310,9 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
       );
     }
 
+    /** Check if either completeReactivePlansArray or completeRoutinePlansArray length is greater than  zero
+     * to build complete section tables i.e (routine & reactive) with data
+     */
     if (
       (completeReactivePlansArray && completeReactivePlansArray.length > 0) ||
       (completeRoutinePlansArray && completeRoutinePlansArray.length > 0)
@@ -310,20 +326,24 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
             thisItem = transformValues(thisItem, columnsToTransform);
             return thisItem;
           });
+          /**  Handle Columns Unique for Routine and Reactive Tables */
           const columnsBasedOnReason = [];
           plansArray.every(d => d.plan_fi_reason === CASE_TRIGGERED)
             ? columnsBasedOnReason.push(...completeReactivePlansColumn)
             : columnsBasedOnReason.push(...completeRoutinePlansColumn);
+          /** Handle all Columns i.e columns unique for reactive and routine (once handled above) plus columns common on both (name)  */
           const allColumns: Column[] = [
             ...jsxColumns('name'),
             ...dateCompletedColumn,
             ...columnsBasedOnReason,
           ];
+          /** Contains columns and data that will build the table */
           const tableProps = {
             ...defaultTableProps,
             columns: allColumns,
             data: thePlans,
           };
+          /** Push complete tables and respective headers with data to be rendered */
           completeRoutineReactivePlans.push(
             <div key={thePlans[0].id}>
               <TableHeader plansArray={plansArray} />
@@ -333,6 +353,7 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
         }
       });
     }
+    /** if complete reactive plans array is empty build table with no data  */
     if (!completeReactivePlansArray.length) {
       const tableProps = {
         ...defaultTableProps,
@@ -346,6 +367,7 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
         />
       );
     }
+    /** if complete routine plans array is empty build table with no data  */
     if (!completeRoutinePlansArray.length) {
       const tableProps = {
         ...defaultTableProps,

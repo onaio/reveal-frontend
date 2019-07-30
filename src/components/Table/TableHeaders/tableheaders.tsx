@@ -2,10 +2,11 @@ import * as React from 'react';
 import { Button, Col, Row } from 'reactstrap';
 import { CASE_TRIGGERED, REACTIVE, ROUTINE } from '../../../constants';
 import { Plan } from '../../../store/ducks/plans';
-
+/** Interface to describe props for TableHeader components  */
 export interface TableHeaderProps {
   plansArray: Plan[];
 }
+/** Component returns header based on plan reason i.e reactive or routine */
 class TableHeader extends React.Component<TableHeaderProps, {}> {
   constructor(props: TableHeaderProps) {
     super(props);
