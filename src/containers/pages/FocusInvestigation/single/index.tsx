@@ -224,15 +224,6 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
     breadCrumbProps.pages = [homePage, basePage, ...pages];
     const currentRoutineReactivePlans: FlexObject[] = [];
     const completeRoutineReactivePlans: FlexObject[] = [];
-    if (!currentReactivePlansArray.length) {
-      const tableProps = {
-        ...defaultTableProps,
-        columns: emptyCurrentReactivePlans,
-      };
-      currentRoutineReactivePlans.push(
-        <NullDataTable tableProps={tableProps} reasonType={REACTIVE} planType="current" />
-      );
-    }
     if (
       (currentReactivePlansArray && currentReactivePlansArray.length > 0) ||
       (currentRoutinePlansArray && currentRoutinePlansArray.length > 0)
@@ -279,22 +270,30 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
         }
       });
     }
+    if (!currentReactivePlansArray.length) {
+      const tableProps = {
+        ...defaultTableProps,
+        columns: emptyCurrentReactivePlans,
+      };
+      currentRoutineReactivePlans.push(
+        <NullDataTable
+          key={`${'current'}-${REACTIVE}`}
+          tableProps={tableProps}
+          reasonType={REACTIVE}
+        />
+      );
+    }
     if (!currentRoutinePlansArray.length) {
       const tableProps = {
         ...defaultTableProps,
         columns: emptyCurrentRoutinePlans,
       };
       currentRoutineReactivePlans.push(
-        <NullDataTable tableProps={tableProps} reasonType={REACTIVE} planType="current" />
-      );
-    }
-    if (!completeReactivePlansArray.length) {
-      const tableProps = {
-        ...defaultTableProps,
-        columns: emptyCompleteReactivePlans,
-      };
-      completeRoutineReactivePlans.push(
-        <NullDataTable tableProps={tableProps} reasonType={REACTIVE} planType="current" />
+        <NullDataTable
+          key={`${'current'}-${ROUTINE}`}
+          tableProps={tableProps}
+          reasonType={ROUTINE}
+        />
       );
     }
 
@@ -334,13 +333,30 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
         }
       });
     }
+    if (!completeReactivePlansArray.length) {
+      const tableProps = {
+        ...defaultTableProps,
+        columns: emptyCompleteReactivePlans,
+      };
+      completeRoutineReactivePlans.push(
+        <NullDataTable
+          key={`${'complete'}-${REACTIVE}`}
+          tableProps={tableProps}
+          reasonType={REACTIVE}
+        />
+      );
+    }
     if (!completeRoutinePlansArray.length) {
       const tableProps = {
         ...defaultTableProps,
         columns: emptyCompleteRoutinePlans,
       };
       completeRoutineReactivePlans.push(
-        <NullDataTable tableProps={tableProps} reasonType={REACTIVE} planType="current" />
+        <NullDataTable
+          key={`${'complete'}-${ROUTINE}`}
+          tableProps={tableProps}
+          reasonType={ROUTINE}
+        />
       );
     }
     return (
