@@ -652,6 +652,9 @@ export interface JurisdictionsByCountry extends ADMN0 {
   // this is most useful for instances where tilesets DO NOT match the OpenSRP hierarchy
   jurisdictionIds: string[];
 
+  // the top level jurisdiction_id of the country
+  jurisdictionId: string;
+
   // the UUID of the Jurisdiction from the
   id?: string;
 
@@ -667,6 +670,7 @@ export interface JurisdictionsByCountry extends ADMN0 {
 export const ZambiaAdmin0: JurisdictionsByCountry = {
   ADMN0_EN: 'Zambia',
   ADMN0_PCODE: 'ZM',
+  jurisdictionId: '',
   jurisdictionIds: ['2939', '2940', '2942', '2942', '2953', '2954'],
 };
 
@@ -675,6 +679,7 @@ export const ThailandAdmin0: JurisdictionsByCountry = {
   ADMN0_EN: 'Thailand',
   ADMN0_PCODE: 'TH',
   bounds: [[105.63681192, 5.61285098], [97.34380713, 20.46483364]],
+  jurisdictionId: '',
   jurisdictionIds: [
     '64301afa-e973-447b-a88c-4da20025c76f',
     '7f204867-fab0-4246-a97c-92e0b936cab6',
@@ -700,6 +705,8 @@ export const ThailandAdmin0: JurisdictionsByCountry = {
 const NamibiaAdmin0: JurisdictionsByCountry = {
   ADMN0_EN: 'Namibia',
   ADMN0_PCODE: 'NA',
+  bounds: [[11.76, -28.97], [25.26, -16.95]],
+  jurisdictionId: 'f45b9380-c970-4dd1-8533-9e95ab12f128',
   jurisdictionIds: [],
   tilesets: [
     {

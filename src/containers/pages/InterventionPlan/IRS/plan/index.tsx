@@ -29,7 +29,17 @@ import {
   SUPERSET_JURISDICTIONS_SLICE,
   SUPERSET_PLAN_STRUCTURE_PIVOT_SLICE,
 } from '../../../../../configs/env';
-import { HOME, HOME_URL, INTERVENTION_IRS_URL, MAP_ID, NEW_PLAN } from '../../../../../constants';
+import {
+  HOME,
+  HOME_URL,
+  INTERVENTION_IRS_URL,
+  MAP_ID,
+  NEW_PLAN,
+  OPENSRP_FIND_BY_PROPERTIES,
+  OPENSRP_LOCATION,
+  OPENSRP_PARENT_ID,
+  OPENSRP_PLANS,
+} from '../../../../../constants';
 import {
   FlexObject,
   preventDefault,
@@ -85,8 +95,8 @@ reducerRegistry.register(plansReducerName, plansReducer);
 reducerRegistry.register(jurisdictionReducerName, jurisdictionReducer);
 
 /** initialize OpenSRP API services */
-const OpenSrpLocationService = new OpenSRPService('location');
-const OpenSrpPlanService = new OpenSRPService('plans');
+const OpenSrpLocationService = new OpenSRPService(OPENSRP_LOCATION);
+const OpenSrpPlanService = new OpenSRPService(OPENSRP_PLANS);
 
 /** IrsPlanProps - interface for IRS Plan page */
 export interface IrsPlanProps {
@@ -202,7 +212,7 @@ class IrsPlan extends React.Component<
     let allJurIds: string[] = [];
     if (!allJurisdictionIds.length || allJurisdictionIds.length === loadedJurisdictionIds.length) {
       // todo - is there a better way to fetch a list of ALL jurisdiction ids?
-      await supersetFetch(SUPERSET_JURISDICTIONS_DATA_SLICE, { row_limit: 3000 }).then(result => {
+      await supersetFetch(SUPERSET_JURISDICTIONS_DATA_SLICE, { row_limit: 10000 }).then(result => {
         // populate array of unique `id`s
         if (result && result.length) {
           for (const j of result) {
@@ -305,8 +315,8 @@ class IrsPlan extends React.Component<
       }
 
       const otherJurisdictionSupersetParams = sqlFilterExpression.length
-        ? superset.getFormData(3000, [{ sqlExpression: sqlFilterExpression }])
-        : { row_limit: 3000 };
+        ? superset.getFormData(10000, [{ sqlExpression: sqlFilterExpression }])
+        : { row_limit: 10000 };
 
       supersetService(SUPERSET_JURISDICTIONS_DATA_SLICE, otherJurisdictionSupersetParams).then(
         (jurisdictionResults: FlexObject[] = []) => {
@@ -804,13 +814,21 @@ class IrsPlan extends React.Component<
    * Sets the first drilldown table breadcrumb
    * Requests unloaded geojson for childless children
    */
-  private onStartPlanFormSubmit(e: MouseEvent) {
+  private async onStartPlanFormSubmit(e: MouseEvent) {
     const { newPlan: NewPlan, planCountry } = this.state;
     const { jurisdictionsArray, isDraftPlan } = this.props;
     const country: JurisdictionsByCountry = CountriesAdmin0[planCountry as ADMN0_PCODE];
 
+    if (!country || (!country.jurisdictionIds.length && !country.jurisdictionId.length)) {
+      return false;
+    }
+
+    const jurisdictionIds = country.jurisdictionIds.length
+      ? [...country.jurisdictionIds]
+      : [country.jurisdictionId];
+
     const jurisdictionsToInclude = this.getDecendantJurisdictionIds(
-      country.jurisdictionIds,
+      jurisdictionIds,
       jurisdictionsArray
     );
 
@@ -821,6 +839,9 @@ class IrsPlan extends React.Component<
 
     const filteredJurisdictionIds = filteredJurisdictions.map(j => j.jurisdiction_id);
     const childlessChildrenIds = this.getChildlessChildrenIds(filteredJurisdictions);
+    const childlessChildren = filteredJurisdictions.filter(j =>
+      childlessChildrenIds.includes(j.jurisdiction_id)
+    );
 
     const newPlan: PlanRecord | null = NewPlan
       ? {
@@ -845,6 +866,9 @@ class IrsPlan extends React.Component<
         childlessChildrenIds,
         country,
         filteredJurisdictionIds,
+        focusJurisdictionId: country.jurisdictionId.length
+          ? country.jurisdictionId
+          : this.state.focusJurisdictionId,
         isLoadingGeoms: true,
         isStartingPlan: false,
         newPlan,
@@ -854,21 +878,37 @@ class IrsPlan extends React.Component<
         // Get geoms for jurisdictionsToInclude
         const { childlessChildrenIds: ChildlessChildrenIds } = this.state;
 
+        // Determine which Jurisdictions will need to be updated in state
         const loadedJurisdictionIds = this.props.jurisdictionsArray
           .filter(j => ChildlessChildrenIds.includes(j.jurisdiction_id) && !!j.geojson)
           .map(j => j.jurisdiction_id);
-
-        const jurisdictionsToLoad = ChildlessChildrenIds.filter(
+        const jurisdictionIdsToLoad = ChildlessChildrenIds.filter(
           j => !loadedJurisdictionIds.includes(j)
         );
 
-        if (jurisdictionsToLoad.length) {
+        // Determine all parent_ids of childless children jurisdictions
+        const parentIdsToCall: string[] = [];
+        for (const child of childlessChildren) {
+          if (
+            child.parent_id &&
+            child.parent_id.length &&
+            child.parent_id !== 'null' &&
+            !parentIdsToCall.includes(child.parent_id)
+          ) {
+            parentIdsToCall.push(child.parent_id);
+          }
+        }
+
+        // Build a list of OpenSRP API calls to make (fetch by parent_id to reduce number of calls)
+        if (parentIdsToCall.length) {
           const promises = [];
-          for (const j of jurisdictionsToLoad) {
+          for (const parent of parentIdsToCall) {
             promises.push(
               new Promise((resolve, reject) => {
-                OpenSrpLocationService.read(j, {
+                OpenSrpLocationService.read(OPENSRP_FIND_BY_PROPERTIES, {
                   is_jurisdiction: true,
+                  properties_filter: `${OPENSRP_PARENT_ID}:${parent}`,
+                  return_geometry: true,
                 })
                   .then(jurisidction => resolve(jurisidction))
                   .catch(error => reject(error));
@@ -876,20 +916,30 @@ class IrsPlan extends React.Component<
             );
           }
 
+          // Make all calls to OpenSRP API
           Promise.all(promises).then((results: any[]) => {
             const jurisdictions: Jurisdiction[] = [];
+            // Loop through all parent_id results
             for (const result of results) {
-              const J = filteredJurisdictions.find(
-                j => j.jurisdiction_id === result.id
-              ) as Jurisdiction;
-              if (J) {
-                const j: Jurisdiction = {
-                  ...J,
-                  geojson: result,
-                };
-                jurisdictions.push(j);
+              // Loop through all children of parent
+              for (const geojson of result) {
+                // If the child geojson needs to be loaded into state, do so
+                if (jurisdictionIdsToLoad.includes(geojson.id)) {
+                  const J = filteredJurisdictions.find(
+                    j => j.jurisdiction_id === geojson.id
+                  ) as Jurisdiction;
+                  if (J) {
+                    const j: Jurisdiction = {
+                      ...J,
+                      geojson,
+                    };
+                    jurisdictions.push(j);
+                  }
+                }
               }
             }
+
+            // Update the store with newly loaded jurisdictions with geojson
             this.props.fetchJurisdictionsActionCreator(jurisdictions);
           });
         } else {
