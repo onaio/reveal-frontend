@@ -12,6 +12,7 @@ import { CellInfo, Column } from 'react-table';
 import { Badge, Button, Col, Row } from 'reactstrap';
 import SeamlessImmutable from 'seamless-immutable';
 import { TASK_YELLOW } from '../colors';
+import DrillDownTableLinkedCell from '../components/DrillDownTableLinkedCell';
 import { DIGITAL_GLOBE_CONNECT_ID, ONADATA_OAUTH_STATE, OPENSRP_OAUTH_STATE } from '../configs/env';
 import { imgArr, locationHierarchy, LocationItem } from '../configs/settings';
 import {
@@ -418,6 +419,9 @@ export function stopPropagationAndPreventDefault(e: Event | MouseEvent | any) {
   preventDefault(e);
   stopPropagation(e);
 /** Return columns with jsx implementations */
+/** Returns Table columns Which require additional dependencies
+ * @param {colType} accessor column
+ */
 
 export function jsxColumns(colType: string): FlexObject[] | [] {
   if (colType === 'focusarea') {
@@ -499,39 +503,17 @@ export function jsxColumns(colType: string): FlexObject[] | [] {
     return [];
   }
 }
-
-export function buildTableHeader(plansArray: FlexObject[]) {
-  if (plansArray.every(d => d.plan_fi_reason === CASE_TRIGGERED)) {
-    return <h3 className="mb-3 mt-5 page-title">{REACTIVE}</h3>;
-  } else {
-    return (
-      <div className="routine-heading">
-        <Row>
-          <Col xs="6">
-            <h3 className="mb-3 mt-5 page-title">{ROUTINE}</h3>
-          </Col>
-          <Col xs="6">
-            <Button className="focus-investigation" color="primary">
-              Add Focus Investigation
-            </Button>
-          </Col>
-        </Row>
-      </div>
-    );
-  }
-}
-
-export function buildTableWithoutPlanData(
-  tableProps: FlexObject,
-  reasonType: string,
-  planType: string
-) {
-  return (
-    <div key={`${planType}-${reasonType}`}>
-      <h3 className="mb-3 mt-5 page-title">{reasonType}</h3>
-      <DrillDownTable {...tableProps} NoDataComponent={(() => null) as any} />
-      <h3 className="text-muted">No Investigations Found</h3>
-      <hr />
-    </div>
-  );
-}
+/** Default table props config */
+export const defaultTableProps = {
+  CellComponent: DrillDownTableLinkedCell,
+  columns: [],
+  data: [],
+  identifierField: 'id',
+  linkerField: 'id',
+  minRows: 0,
+  parentIdentifierField: 'parent',
+  rootParentId: null,
+  showPageSizeOptions: false,
+  showPagination: false,
+  useDrillDownTrProps: false,
+};
