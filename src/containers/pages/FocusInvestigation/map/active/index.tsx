@@ -110,18 +110,6 @@ export interface MapSingleFIProps {
   structures: FeatureCollection<StructureGeoJSON> | null /** we use this to get all structures */;
 }
 
-export interface Jurisdictions {
-  id: string;
-  jurisdiction_id: string;
-  plan_id: string;
-}
-
-export interface Jurisdictions {
-  id: string;
-  jurisdiction_id: string;
-  plan_id: string;
-}
-
 /** default value for feature Collection */
 const defaultFeatureCollection: FeatureCollection<TaskGeoJSON> = {
   features: [],
