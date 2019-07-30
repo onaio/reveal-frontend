@@ -1,5 +1,6 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faExternalLinkSquareAlt } from '@fortawesome/free-solid-svg-icons';
+import superset from '@onaio/superset-connector';
 import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import { createBrowserHistory } from 'history';
@@ -21,12 +22,6 @@ jest.mock('../../../../../components/GisidaWrapper', () => {
 });
 
 jest.mock('../../../../../configs/env');
-jest.mock('@onaio/superset-connector', () => {
-  const superset = {
-    getFormData: () => ({}),
-  };
-  return superset;
-});
 const history = createBrowserHistory();
 library.add(faExternalLinkSquareAlt);
 describe('containers/pages/SingleFI', () => {
@@ -178,6 +173,11 @@ describe('containers/pages/SingleFI', () => {
   });
 
   it('calls superset with the correct params', async () => {
+    const getFormDataMock: any = jest.fn();
+    getFormDataMock.mockImplementation(() => {
+      return {};
+    });
+    superset.getFormData = getFormDataMock;
     const mock: any = jest.fn();
     const supersetMock: any = jest.fn();
     supersetMock.mockImplementation(() => Promise.resolve([]));
@@ -207,6 +207,25 @@ describe('containers/pages/SingleFI', () => {
     await Promise.resolve();
     await Promise.resolve();
     await Promise.resolve();
+    const getFormDataCallList = [
+      [3000, [{ comparator: fixtures.plan1.plan_id, operator: '==', subject: 'plan_id' }]],
+      [
+        3000,
+        [{ comparator: fixtures.plan1.plan_id, operator: '==', subject: 'plan_id' }],
+        { action_prefix: true },
+      ],
+      [
+        3000,
+        [
+          {
+            comparator: fixtures.plan1.jurisdiction_id,
+            operator: '==',
+            subject: 'jurisdiction_id',
+          },
+        ],
+      ],
+    ];
+    expect((superset.getFormData as any).mock.calls).toEqual(getFormDataCallList);
     const callList = [[0, {}], [3, {}], [1, {}]];
     expect(supersetMock).toHaveBeenCalledTimes(3);
     expect(supersetMock.mock.calls).toEqual(callList);
