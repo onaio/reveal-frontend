@@ -423,7 +423,7 @@ export function stopPropagationAndPreventDefault(e: Event | MouseEvent | any) {
  * @param {colType} accessor column
  */
 
-export const jsxColumns = (colType: string): FlexObject[] | [] => {
+export const jsxColumns = (colType: string): Column[] | [] => {
   if (colType === 'focusarea') {
     return [
       {
