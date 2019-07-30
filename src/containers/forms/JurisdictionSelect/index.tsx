@@ -79,9 +79,19 @@ const JurisdictionSelect = (props: JurisdictionSelectProps) => {
     new Promise(resolve =>
       resolve(
         service.list(paramsToUse).then((e: JurisdictionOption[]) => {
-          return e.map(item => {
+          const options = e.map(item => {
             return { label: item.properties.name, value: item.id };
           });
+          if (hierarchy.length > 0) {
+            const labels = hierarchy.map(j => j.label).join(' > ');
+            return [
+              {
+                label: labels,
+                options,
+              },
+            ];
+          }
+          return options;
         })
       )
     );
