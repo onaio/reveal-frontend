@@ -12,16 +12,15 @@ export interface TableProps {
 export interface NullDataTableProps {
   tableProps: TableProps;
   reasonType: string;
-  planType: string;
 }
 class NullDataTable extends React.Component<NullDataTableProps, {}> {
   constructor(props: NullDataTableProps) {
     super(props);
   }
   public render() {
-    const { planType, reasonType, tableProps } = this.props;
+    const { reasonType, tableProps } = this.props;
     return (
-      <div key={`${planType}-${reasonType}`}>
+      <div>
         <h3 className="mb-3 mt-5 page-title">{reasonType}</h3>
         <DrillDownTable {...tableProps} NoDataComponent={(() => null) as any} />
         <h3 className="text-muted">No Investigations Found</h3>
