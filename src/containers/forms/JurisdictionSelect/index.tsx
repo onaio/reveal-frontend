@@ -57,8 +57,9 @@ interface SelectOption {
  */
 const JurisdictionSelect = (props: JurisdictionSelectProps) => {
   const { apiEndpoint, params, serviceClass } = props;
-  const [parentId, setParentId] = useState('');
+  const [parentId, setParentId] = useState<string>('');
   const [hierarchy, setHierarchy] = useState<SelectOption[]>([]);
+  const [closeMenuOnSelect, setCloseMenuOnSelect] = useState<boolean>(false);
 
   const service = new serviceClass(apiEndpoint);
   const propertiesToFilter = {
@@ -105,12 +106,17 @@ const JurisdictionSelect = (props: JurisdictionSelectProps) => {
 
           hierarchy.push(optionVal);
           setHierarchy(hierarchy);
+
+          setCloseMenuOnSelect(false);
+        } else {
+          setCloseMenuOnSelect(true);
         }
       });
     } else {
       // most probably the select element was reset
       setParentId('');
       setHierarchy([]);
+      setCloseMenuOnSelect(false);
     }
   };
 
@@ -121,6 +127,7 @@ const JurisdictionSelect = (props: JurisdictionSelectProps) => {
         key={parentId}
         name="form"
         bsSize="lg"
+        closeMenuOnSelect={closeMenuOnSelect}
         components={animatedComponents}
         placeholder="Select Focus Area"
         aria-label="Select Focus Area"
