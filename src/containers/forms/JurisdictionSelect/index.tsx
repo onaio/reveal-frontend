@@ -55,6 +55,7 @@ const JurisdictionSelect = (props: JurisdictionSelectProps) => {
   const propertiesToFilter = {
     geographicLevel: 0,
   };
+  const animatedComponents = makeAnimated();
   params.properties_filter = getFilterParams(propertiesToFilter);
 
   const promiseOptions = () =>
@@ -73,7 +74,7 @@ const JurisdictionSelect = (props: JurisdictionSelectProps) => {
       <AsyncSelect
         name="form"
         bsSize="lg"
-        components={makeAnimated()}
+        components={animatedComponents}
         placeholder="Select Focus Area"
         aria-label="Select Focus Area"
         defaultOptions={true}
