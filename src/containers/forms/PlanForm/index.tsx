@@ -281,6 +281,7 @@ const PlanForm = (props: PlanFormProps) => {
                           name={`activities[${index}].actionCode`}
                           id={`activities[${index}].actionCode`}
                           value={values.activities[index].actionCode}
+                          readOnly={true}
                         />
                         <Field
                           type="hidden"
