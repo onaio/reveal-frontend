@@ -418,8 +418,8 @@ export function preventDefault(e: Event | MouseEvent | any) {
 export function stopPropagationAndPreventDefault(e: Event | MouseEvent | any) {
   preventDefault(e);
   stopPropagation(e);
-/** Return columns with jsx implementations */
-/** Returns Table columns Which require additional dependencies
+/** Returns Table columns Which require external dependencies (Cell, Link, CellInfo)
+ * the columns being built include focusarea, name and action
  * @param {colType} accessor column
  */
 
