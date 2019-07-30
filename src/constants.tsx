@@ -160,20 +160,3 @@ export const FI_PLAN_TYPE = 'FI';
 export type FI_PLAN_TYPE = typeof FI_PLAN_TYPE;
 export const IRS_PLAN_TYPE = 'IRS';
 export type IRS_PLAN_TYPE = typeof IRS_PLAN_TYPE;
-
-// map icons
-export const CASE_CONFIRMATION_MAP_ICON_ID = 'case-confirmation';
-export type CASE_CONFIRMATION_MAP_ICON_ID = typeof CASE_CONFIRMATION_MAP_ICON_ID;
-export const LARVAL_MAP_ICON_ID = 'larval';
-export type LARVAL_MAP_ICON_ID = typeof LARVAL_MAP_ICON_ID;
-export const MOSQUITO_MAP_ICON_ID = 'mosquito';
-export type MOSQUITO_MAP_ICON_ID = typeof MOSQUITO_MAP_ICON_ID;
-export const CASE_CONFIRMATION_MAP_ICON_URL =
-  'https://raw.githubusercontent.com/onaio/reveal-frontend/master/src/assets/images/case-confirmation.png';
-export type CASE_CONFIRMATION_MAP_ICON_URL = typeof CASE_CONFIRMATION_MAP_ICON_URL;
-export const LARVAL_MAP_ICON_URL =
-  'https://raw.githubusercontent.com/onaio/reveal-frontend/master/src/assets/images/larval.png';
-export type LARVAL_MAP_ICON_URL = typeof LARVAL_MAP_ICON_URL;
-export const MOSQUITO_MAP_ICON_URL =
-  'https://raw.githubusercontent.com/onaio/reveal-frontend/master/src/assets/images/mosquito.png';
-export type MOSQUITO_MAP_ICON_URL = typeof MOSQUITO_MAP_ICON_URL;
