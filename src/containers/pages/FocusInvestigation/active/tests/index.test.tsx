@@ -1,7 +1,7 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faExternalLinkSquareAlt } from '@fortawesome/free-solid-svg-icons';
 import reducerRegistry from '@onaio/redux-reducer-registry';
-import { getFormData } from '@onaio/superset-connector/dist/types';
+import superset from '@onaio/superset-connector';
 import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import { createBrowserHistory } from 'history';
@@ -9,24 +9,17 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
-import { ACTIVE_FOCUS_INVESTIGATION, CURRENT_FOCUS_INVESTIGATION } from '../../../../../constants';
+import { CURRENT_FOCUS_INVESTIGATION } from '../../../../../constants';
+import { FI_PLAN_TYPE } from '../../../../../constants';
 import store from '../../../../../store';
 import reducer, { fetchPlans, reducerName } from '../../../../../store/ducks/plans';
 import * as fixtures from '../../../../../store/ducks/tests/fixtures';
 import ConnectedActiveFocusInvestigation, { ActiveFocusInvestigation } from '../../active';
-
 reducerRegistry.register(reducerName, reducer);
 
 library.add(faExternalLinkSquareAlt);
 const history = createBrowserHistory();
 jest.mock('../../../../../configs/env');
-jest.mock('@onaio/superset-connector', () => {
-  // tslint:disable-next-line: label-position
-  const superset = {
-    getFormData: () => ({}),
-  };
-  return superset;
-});
 
 describe('containers/pages/ActiveFocusInvestigation', () => {
   beforeEach(() => {
@@ -136,6 +129,11 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
   });
 
   it('calls superset with the correct params', () => {
+    const getFormDataMock: any = jest.fn();
+    getFormDataMock.mockImplementation(() => {
+      return {};
+    });
+    superset.getFormData = getFormDataMock;
     const mock: any = jest.fn();
     const supersetMock: any = jest.fn();
     supersetMock.mockImplementation(() => Promise.resolve(fixtures.plans));
@@ -152,6 +150,10 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
         </Router>
       </Provider>
     );
+    const supersetCallList = [
+      [2000, [{ comparator: FI_PLAN_TYPE, operator: '==', subject: 'plan_intervention_type' }]],
+    ];
+    expect((superset.getFormData as any).mock.calls).toEqual(supersetCallList);
     expect(supersetMock).toHaveBeenCalledWith(0, {});
     wrapper.unmount();
   });
