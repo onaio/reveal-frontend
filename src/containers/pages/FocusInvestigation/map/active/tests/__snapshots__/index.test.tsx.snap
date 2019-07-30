@@ -218,6 +218,7 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
         "plan_version": "1",
       }
     }
+    plansArray={Array []}
     pointFeatureCollection={
       Object {
         "features": Array [
@@ -589,12 +590,15 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
               <div
                 className="col-4"
               >
-                <SelectPlan>
+                <SelectPlan
+                  plansArray={Array []}
+                >
                   <StateManager
                     defaultInputValue=""
                     defaultMenuIsOpen={false}
+                    defaultOptions={true}
                     defaultValue={null}
-                    placeholder="Other area Investigations"
+                    options={Array []}
                   >
                     <Select
                       backspaceRemovesValue={true}
@@ -604,6 +608,7 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
                       closeMenuOnSelect={true}
                       components={Object {}}
                       controlShouldRenderValue={true}
+                      defaultOptions={true}
                       escapeClearsValue={false}
                       filterOption={[Function]}
                       formatGroupLabel={[Function]}
@@ -633,7 +638,7 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
                       openMenuOnFocus={false}
                       options={Array []}
                       pageSize={5}
-                      placeholder="Other area Investigations"
+                      placeholder="Select..."
                       screenReaderStatus={[Function]}
                       styles={Object {}}
                       tabIndex="0"
@@ -667,6 +672,7 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
                             "closeMenuOnSelect": true,
                             "components": Object {},
                             "controlShouldRenderValue": true,
+                            "defaultOptions": true,
                             "escapeClearsValue": false,
                             "filterOption": [Function],
                             "formatGroupLabel": [Function],
@@ -696,7 +702,7 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
                             "openMenuOnFocus": false,
                             "options": Array [],
                             "pageSize": 5,
-                            "placeholder": "Other area Investigations",
+                            "placeholder": "Select...",
                             "screenReaderStatus": [Function],
                             "styles": Object {},
                             "tabIndex": "0",
@@ -782,6 +788,7 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
                                   "closeMenuOnSelect": true,
                                   "components": Object {},
                                   "controlShouldRenderValue": true,
+                                  "defaultOptions": true,
                                   "escapeClearsValue": false,
                                   "filterOption": [Function],
                                   "formatGroupLabel": [Function],
@@ -811,7 +818,7 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
                                   "openMenuOnFocus": false,
                                   "options": Array [],
                                   "pageSize": 5,
-                                  "placeholder": "Other area Investigations",
+                                  "placeholder": "Select...",
                                   "screenReaderStatus": [Function],
                                   "styles": Object {},
                                   "tabIndex": "0",
@@ -905,6 +912,7 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
                                         "closeMenuOnSelect": true,
                                         "components": Object {},
                                         "controlShouldRenderValue": true,
+                                        "defaultOptions": true,
                                         "escapeClearsValue": false,
                                         "filterOption": [Function],
                                         "formatGroupLabel": [Function],
@@ -934,7 +942,7 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
                                         "openMenuOnFocus": false,
                                         "options": Array [],
                                         "pageSize": 5,
-                                        "placeholder": "Other area Investigations",
+                                        "placeholder": "Select...",
                                         "screenReaderStatus": [Function],
                                         "styles": Object {},
                                         "tabIndex": "0",
@@ -1015,6 +1023,7 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
                                               "closeMenuOnSelect": true,
                                               "components": Object {},
                                               "controlShouldRenderValue": true,
+                                              "defaultOptions": true,
                                               "escapeClearsValue": false,
                                               "filterOption": [Function],
                                               "formatGroupLabel": [Function],
@@ -1044,7 +1053,7 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
                                               "openMenuOnFocus": false,
                                               "options": Array [],
                                               "pageSize": 5,
-                                              "placeholder": "Other area Investigations",
+                                              "placeholder": "Select...",
                                               "screenReaderStatus": [Function],
                                               "styles": Object {},
                                               "tabIndex": "0",
@@ -1102,7 +1111,7 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
                                             <div
                                               className=" css-1wa3eu0-placeholder"
                                             >
-                                              Other area Investigations
+                                              Select...
                                             </div>
                                           </EmotionCssPropInternal>
                                         </Placeholder>
@@ -1129,6 +1138,7 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
                                               "closeMenuOnSelect": true,
                                               "components": Object {},
                                               "controlShouldRenderValue": true,
+                                              "defaultOptions": true,
                                               "escapeClearsValue": false,
                                               "filterOption": [Function],
                                               "formatGroupLabel": [Function],
@@ -1158,7 +1168,7 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
                                               "openMenuOnFocus": false,
                                               "options": Array [],
                                               "pageSize": 5,
-                                              "placeholder": "Other area Investigations",
+                                              "placeholder": "Select...",
                                               "screenReaderStatus": [Function],
                                               "styles": Object {},
                                               "tabIndex": "0",
@@ -1325,6 +1335,7 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
                                         "closeMenuOnSelect": true,
                                         "components": Object {},
                                         "controlShouldRenderValue": true,
+                                        "defaultOptions": true,
                                         "escapeClearsValue": false,
                                         "filterOption": [Function],
                                         "formatGroupLabel": [Function],
@@ -1354,7 +1365,7 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
                                         "openMenuOnFocus": false,
                                         "options": Array [],
                                         "pageSize": 5,
-                                        "placeholder": "Other area Investigations",
+                                        "placeholder": "Select...",
                                         "screenReaderStatus": [Function],
                                         "styles": Object {},
                                         "tabIndex": "0",
@@ -1430,6 +1441,7 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
                                               "closeMenuOnSelect": true,
                                               "components": Object {},
                                               "controlShouldRenderValue": true,
+                                              "defaultOptions": true,
                                               "escapeClearsValue": false,
                                               "filterOption": [Function],
                                               "formatGroupLabel": [Function],
@@ -1459,7 +1471,7 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
                                               "openMenuOnFocus": false,
                                               "options": Array [],
                                               "pageSize": 5,
-                                              "placeholder": "Other area Investigations",
+                                              "placeholder": "Select...",
                                               "screenReaderStatus": [Function],
                                               "styles": Object {},
                                               "tabIndex": "0",
@@ -1546,6 +1558,7 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
                                               "closeMenuOnSelect": true,
                                               "components": Object {},
                                               "controlShouldRenderValue": true,
+                                              "defaultOptions": true,
                                               "escapeClearsValue": false,
                                               "filterOption": [Function],
                                               "formatGroupLabel": [Function],
@@ -1575,7 +1588,7 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
                                               "openMenuOnFocus": false,
                                               "options": Array [],
                                               "pageSize": 5,
-                                              "placeholder": "Other area Investigations",
+                                              "placeholder": "Select...",
                                               "screenReaderStatus": [Function],
                                               "styles": Object {},
                                               "tabIndex": "0",
@@ -3064,12 +3077,50 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store (g
                   <div
                     className="col-4"
                   >
-                    <SelectPlan>
+                    <SelectPlan
+                      plansArray={
+                        Array [
+                          Object {
+                            "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
+                            "jurisdiction_depth": 2,
+                            "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
+                            "jurisdiction_name": "NVI_439",
+                            "jurisdiction_name_path": Array [
+                              "Chadiza",
+                              "Naviluli",
+                            ],
+                            "jurisdiction_parent_id": "2944",
+                            "jurisdiction_path": Array [
+                              "2939",
+                              "2944",
+                            ],
+                            "plan_date": "2019-06-18",
+                            "plan_effective_period_end": "2019-06-18",
+                            "plan_effective_period_start": "2019-07-31",
+                            "plan_fi_reason": "Routine",
+                            "plan_fi_status": "A1",
+                            "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+                            "plan_intervention_type": "FI",
+                            "plan_status": "active",
+                            "plan_title": "A1-Tha Luang Village 1 Focus 01",
+                            "plan_version": "1",
+                          },
+                        ]
+                      }
+                    >
                       <StateManager
                         defaultInputValue=""
                         defaultMenuIsOpen={false}
+                        defaultOptions={true}
                         defaultValue={null}
-                        placeholder="Other area Investigations"
+                        options={
+                          Array [
+                            Object {
+                              "label": "A1-Tha Luang Village 1 Focus 01",
+                              "value": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+                            },
+                          ]
+                        }
                       >
                         <Select
                           backspaceRemovesValue={true}
@@ -3079,6 +3130,7 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store (g
                           closeMenuOnSelect={true}
                           components={Object {}}
                           controlShouldRenderValue={true}
+                          defaultOptions={true}
                           escapeClearsValue={false}
                           filterOption={[Function]}
                           formatGroupLabel={[Function]}
@@ -3106,9 +3158,16 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store (g
                           onMenuOpen={[Function]}
                           openMenuOnClick={true}
                           openMenuOnFocus={false}
-                          options={Array []}
+                          options={
+                            Array [
+                              Object {
+                                "label": "A1-Tha Luang Village 1 Focus 01",
+                                "value": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+                              },
+                            ]
+                          }
                           pageSize={5}
-                          placeholder="Other area Investigations"
+                          placeholder="Select..."
                           screenReaderStatus={[Function]}
                           styles={Object {}}
                           tabIndex="0"
@@ -3131,7 +3190,14 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store (g
                             isFocused={false}
                             isMulti={false}
                             isRtl={false}
-                            options={Array []}
+                            options={
+                              Array [
+                                Object {
+                                  "label": "A1-Tha Luang Village 1 Focus 01",
+                                  "value": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+                                },
+                              ]
+                            }
                             selectOption={[Function]}
                             selectProps={
                               Object {
@@ -3142,6 +3208,7 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store (g
                                 "closeMenuOnSelect": true,
                                 "components": Object {},
                                 "controlShouldRenderValue": true,
+                                "defaultOptions": true,
                                 "escapeClearsValue": false,
                                 "filterOption": [Function],
                                 "formatGroupLabel": [Function],
@@ -3169,9 +3236,14 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store (g
                                 "onMenuOpen": [Function],
                                 "openMenuOnClick": true,
                                 "openMenuOnFocus": false,
-                                "options": Array [],
+                                "options": Array [
+                                  Object {
+                                    "label": "A1-Tha Luang Village 1 Focus 01",
+                                    "value": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+                                  },
+                                ],
                                 "pageSize": 5,
-                                "placeholder": "Other area Investigations",
+                                "placeholder": "Select...",
                                 "screenReaderStatus": [Function],
                                 "styles": Object {},
                                 "tabIndex": "0",
@@ -3246,7 +3318,14 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store (g
                                   isMulti={false}
                                   isRtl={false}
                                   menuIsOpen={false}
-                                  options={Array []}
+                                  options={
+                                    Array [
+                                      Object {
+                                        "label": "A1-Tha Luang Village 1 Focus 01",
+                                        "value": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+                                      },
+                                    ]
+                                  }
                                   selectOption={[Function]}
                                   selectProps={
                                     Object {
@@ -3257,6 +3336,7 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store (g
                                       "closeMenuOnSelect": true,
                                       "components": Object {},
                                       "controlShouldRenderValue": true,
+                                      "defaultOptions": true,
                                       "escapeClearsValue": false,
                                       "filterOption": [Function],
                                       "formatGroupLabel": [Function],
@@ -3284,9 +3364,14 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store (g
                                       "onMenuOpen": [Function],
                                       "openMenuOnClick": true,
                                       "openMenuOnFocus": false,
-                                      "options": Array [],
+                                      "options": Array [
+                                        Object {
+                                          "label": "A1-Tha Luang Village 1 Focus 01",
+                                          "value": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+                                        },
+                                      ],
                                       "pageSize": 5,
-                                      "placeholder": "Other area Investigations",
+                                      "placeholder": "Select...",
                                       "screenReaderStatus": [Function],
                                       "styles": Object {},
                                       "tabIndex": "0",
@@ -3369,7 +3454,14 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store (g
                                         isDisabled={false}
                                         isMulti={false}
                                         isRtl={false}
-                                        options={Array []}
+                                        options={
+                                          Array [
+                                            Object {
+                                              "label": "A1-Tha Luang Village 1 Focus 01",
+                                              "value": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+                                            },
+                                          ]
+                                        }
                                         selectOption={[Function]}
                                         selectProps={
                                           Object {
@@ -3380,6 +3472,7 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store (g
                                             "closeMenuOnSelect": true,
                                             "components": Object {},
                                             "controlShouldRenderValue": true,
+                                            "defaultOptions": true,
                                             "escapeClearsValue": false,
                                             "filterOption": [Function],
                                             "formatGroupLabel": [Function],
@@ -3407,9 +3500,14 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store (g
                                             "onMenuOpen": [Function],
                                             "openMenuOnClick": true,
                                             "openMenuOnFocus": false,
-                                            "options": Array [],
+                                            "options": Array [
+                                              Object {
+                                                "label": "A1-Tha Luang Village 1 Focus 01",
+                                                "value": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+                                              },
+                                            ],
                                             "pageSize": 5,
-                                            "placeholder": "Other area Investigations",
+                                            "placeholder": "Select...",
                                             "screenReaderStatus": [Function],
                                             "styles": Object {},
                                             "tabIndex": "0",
@@ -3479,7 +3577,14 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store (g
                                               isMulti={false}
                                               isRtl={false}
                                               key="placeholder"
-                                              options={Array []}
+                                              options={
+                                                Array [
+                                                  Object {
+                                                    "label": "A1-Tha Luang Village 1 Focus 01",
+                                                    "value": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+                                                  },
+                                                ]
+                                              }
                                               selectOption={[Function]}
                                               selectProps={
                                                 Object {
@@ -3490,6 +3595,7 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store (g
                                                   "closeMenuOnSelect": true,
                                                   "components": Object {},
                                                   "controlShouldRenderValue": true,
+                                                  "defaultOptions": true,
                                                   "escapeClearsValue": false,
                                                   "filterOption": [Function],
                                                   "formatGroupLabel": [Function],
@@ -3517,9 +3623,14 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store (g
                                                   "onMenuOpen": [Function],
                                                   "openMenuOnClick": true,
                                                   "openMenuOnFocus": false,
-                                                  "options": Array [],
+                                                  "options": Array [
+                                                    Object {
+                                                      "label": "A1-Tha Luang Village 1 Focus 01",
+                                                      "value": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+                                                    },
+                                                  ],
                                                   "pageSize": 5,
-                                                  "placeholder": "Other area Investigations",
+                                                  "placeholder": "Select...",
                                                   "screenReaderStatus": [Function],
                                                   "styles": Object {},
                                                   "tabIndex": "0",
@@ -3577,7 +3688,7 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store (g
                                                 <div
                                                   className=" css-1wa3eu0-placeholder"
                                                 >
-                                                  Other area Investigations
+                                                  Select...
                                                 </div>
                                               </EmotionCssPropInternal>
                                             </Placeholder>
@@ -3604,6 +3715,7 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store (g
                                                   "closeMenuOnSelect": true,
                                                   "components": Object {},
                                                   "controlShouldRenderValue": true,
+                                                  "defaultOptions": true,
                                                   "escapeClearsValue": false,
                                                   "filterOption": [Function],
                                                   "formatGroupLabel": [Function],
@@ -3631,9 +3743,14 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store (g
                                                   "onMenuOpen": [Function],
                                                   "openMenuOnClick": true,
                                                   "openMenuOnFocus": false,
-                                                  "options": Array [],
+                                                  "options": Array [
+                                                    Object {
+                                                      "label": "A1-Tha Luang Village 1 Focus 01",
+                                                      "value": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+                                                    },
+                                                  ],
                                                   "pageSize": 5,
-                                                  "placeholder": "Other area Investigations",
+                                                  "placeholder": "Select...",
                                                   "screenReaderStatus": [Function],
                                                   "styles": Object {},
                                                   "tabIndex": "0",
@@ -3789,7 +3906,14 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store (g
                                         isDisabled={false}
                                         isMulti={false}
                                         isRtl={false}
-                                        options={Array []}
+                                        options={
+                                          Array [
+                                            Object {
+                                              "label": "A1-Tha Luang Village 1 Focus 01",
+                                              "value": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+                                            },
+                                          ]
+                                        }
                                         selectOption={[Function]}
                                         selectProps={
                                           Object {
@@ -3800,6 +3924,7 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store (g
                                             "closeMenuOnSelect": true,
                                             "components": Object {},
                                             "controlShouldRenderValue": true,
+                                            "defaultOptions": true,
                                             "escapeClearsValue": false,
                                             "filterOption": [Function],
                                             "formatGroupLabel": [Function],
@@ -3827,9 +3952,14 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store (g
                                             "onMenuOpen": [Function],
                                             "openMenuOnClick": true,
                                             "openMenuOnFocus": false,
-                                            "options": Array [],
+                                            "options": Array [
+                                              Object {
+                                                "label": "A1-Tha Luang Village 1 Focus 01",
+                                                "value": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+                                              },
+                                            ],
                                             "pageSize": 5,
-                                            "placeholder": "Other area Investigations",
+                                            "placeholder": "Select...",
                                             "screenReaderStatus": [Function],
                                             "styles": Object {},
                                             "tabIndex": "0",
@@ -3894,7 +4024,14 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store (g
                                               isFocused={false}
                                               isMulti={false}
                                               isRtl={false}
-                                              options={Array []}
+                                              options={
+                                                Array [
+                                                  Object {
+                                                    "label": "A1-Tha Luang Village 1 Focus 01",
+                                                    "value": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+                                                  },
+                                                ]
+                                              }
                                               selectOption={[Function]}
                                               selectProps={
                                                 Object {
@@ -3905,6 +4042,7 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store (g
                                                   "closeMenuOnSelect": true,
                                                   "components": Object {},
                                                   "controlShouldRenderValue": true,
+                                                  "defaultOptions": true,
                                                   "escapeClearsValue": false,
                                                   "filterOption": [Function],
                                                   "formatGroupLabel": [Function],
@@ -3932,9 +4070,14 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store (g
                                                   "onMenuOpen": [Function],
                                                   "openMenuOnClick": true,
                                                   "openMenuOnFocus": false,
-                                                  "options": Array [],
+                                                  "options": Array [
+                                                    Object {
+                                                      "label": "A1-Tha Luang Village 1 Focus 01",
+                                                      "value": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+                                                    },
+                                                  ],
                                                   "pageSize": 5,
-                                                  "placeholder": "Other area Investigations",
+                                                  "placeholder": "Select...",
                                                   "screenReaderStatus": [Function],
                                                   "styles": Object {},
                                                   "tabIndex": "0",
@@ -4010,7 +4153,14 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store (g
                                               isFocused={false}
                                               isMulti={false}
                                               isRtl={false}
-                                              options={Array []}
+                                              options={
+                                                Array [
+                                                  Object {
+                                                    "label": "A1-Tha Luang Village 1 Focus 01",
+                                                    "value": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+                                                  },
+                                                ]
+                                              }
                                               selectOption={[Function]}
                                               selectProps={
                                                 Object {
@@ -4021,6 +4171,7 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store (g
                                                   "closeMenuOnSelect": true,
                                                   "components": Object {},
                                                   "controlShouldRenderValue": true,
+                                                  "defaultOptions": true,
                                                   "escapeClearsValue": false,
                                                   "filterOption": [Function],
                                                   "formatGroupLabel": [Function],
@@ -4048,9 +4199,14 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store (g
                                                   "onMenuOpen": [Function],
                                                   "openMenuOnClick": true,
                                                   "openMenuOnFocus": false,
-                                                  "options": Array [],
+                                                  "options": Array [
+                                                    Object {
+                                                      "label": "A1-Tha Luang Village 1 Focus 01",
+                                                      "value": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+                                                    },
+                                                  ],
                                                   "pageSize": 5,
-                                                  "placeholder": "Other area Investigations",
+                                                  "placeholder": "Select...",
                                                   "screenReaderStatus": [Function],
                                                   "styles": Object {},
                                                   "tabIndex": "0",
