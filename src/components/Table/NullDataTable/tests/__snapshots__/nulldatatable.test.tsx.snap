@@ -2,7 +2,6 @@
 
 exports[`components/Table/NullDateTable renders completeReactivePlans correctly 1`] = `
 <NullDataTable
-  planType="complete"
   reasonType="Reactive"
   tableProps={
     Object {
@@ -44,9 +43,7 @@ exports[`components/Table/NullDateTable renders completeReactivePlans correctly 
     }
   }
 >
-  <div
-    key="complete-Reactive"
-  >
+  <div>
     <h3
       className="mb-3 mt-5 page-title"
     >
@@ -647,7 +644,6 @@ exports[`components/Table/NullDateTable renders completeReactivePlans correctly 
 
 exports[`components/Table/NullDateTable renders completeRoutinePlans with no data correctly 1`] = `
 <NullDataTable
-  planType="complete"
   reasonType="Routine"
   tableProps={
     Object {
@@ -689,9 +685,7 @@ exports[`components/Table/NullDateTable renders completeRoutinePlans with no dat
     }
   }
 >
-  <div
-    key="complete-Routine"
-  >
+  <div>
     <h3
       className="mb-3 mt-5 page-title"
     >
@@ -1292,7 +1286,6 @@ exports[`components/Table/NullDateTable renders completeRoutinePlans with no dat
 
 exports[`components/Table/NullDateTable renders currentReactivePlans correctly 1`] = `
 <NullDataTable
-  planType="current"
   reasonType="Reactive"
   tableProps={
     Object {
@@ -1334,9 +1327,7 @@ exports[`components/Table/NullDateTable renders currentReactivePlans correctly 1
     }
   }
 >
-  <div
-    key="current-Reactive"
-  >
+  <div>
     <h3
       className="mb-3 mt-5 page-title"
     >
@@ -1937,7 +1928,6 @@ exports[`components/Table/NullDateTable renders currentReactivePlans correctly 1
 
 exports[`components/Table/NullDateTable renders currentRoutinePlans with no data correctly 1`] = `
 <NullDataTable
-  planType="current"
   reasonType="Routine"
   tableProps={
     Object {
@@ -2021,9 +2011,7 @@ exports[`components/Table/NullDateTable renders currentRoutinePlans with no data
     }
   }
 >
-  <div
-    key="current-Routine"
-  >
+  <div>
     <h3
       className="mb-3 mt-5 page-title"
     >

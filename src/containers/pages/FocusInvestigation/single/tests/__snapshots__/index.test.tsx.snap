@@ -989,672 +989,106 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
           </h4>
           <hr />
           <div
-            key="current-Reactive"
+            key="ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
           >
-            <h3
-              className="mb-3 mt-5 page-title"
-            >
-              Reactive
-            </h3>
-            <DrillDownTable
-              CellComponent={[Function]}
-              NoDataComponent={[Function]}
-              columns={
+            <TableHeader
+              plansArray={
                 Array [
                   Object {
-                    "Header": "Name",
-                    "columns": Array [
-                      Object {},
+                    "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
+                    "jurisdiction_depth": 2,
+                    "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
+                    "jurisdiction_name": "NVI_439",
+                    "jurisdiction_name_path": Array [
+                      "Chadiza",
+                      "Naviluli",
                     ],
-                  },
-                  Object {
-                    "Header": "FI Status",
-                    "columns": Array [
-                      Object {},
+                    "jurisdiction_parent_id": "2944",
+                    "jurisdiction_path": Array [
+                      "2939",
+                      "2944",
                     ],
-                  },
-                  Object {
-                    "Header": "Case Notif. Date",
-                    "columns": Array [
-                      Object {},
-                    ],
-                  },
-                  Object {
-                    "Header": "Case Class.",
-                    "columns": Array [
-                      Object {},
-                    ],
+                    "plan_date": "2019-06-18",
+                    "plan_effective_period_end": "2019-06-18",
+                    "plan_effective_period_start": "2019-07-31",
+                    "plan_fi_reason": "Routine",
+                    "plan_fi_status": "A1",
+                    "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+                    "plan_intervention_type": "FI",
+                    "plan_status": "active",
+                    "plan_title": "A1-Tha Luang Village 1 Focus 01",
+                    "plan_version": "1",
                   },
                 ]
               }
-              data={Array []}
-              hasChildren={[Function]}
-              identifierField="id"
-              linkerField="id"
-              minRows={0}
-              parentIdentifierField="parent"
-              rootParentId={null}
-              shouldUseEffect={false}
-              showPageSizeOptions={false}
-              showPagination={false}
-              useDrillDownTrProps={false}
             >
-              <ReactTable
-                AggregatedComponent={[Function]}
-                CellComponent={[Function]}
-                ExpanderComponent={[Function]}
-                FilterComponent={[Function]}
-                LoadingComponent={[Function]}
-                NoDataComponent={[Function]}
-                PadRowComponent={[Function]}
-                PaginationComponent={[Function]}
-                PivotValueComponent={[Function]}
-                ResizerComponent={[Function]}
-                TableComponent={[Function]}
-                TbodyComponent={[Function]}
-                TdComponent={[Function]}
-                TfootComponent={[Function]}
-                ThComponent={[Function]}
-                TheadComponent={[Function]}
-                TrComponent={[Function]}
-                TrGroupComponent={[Function]}
-                aggregatedKey="_aggregated"
-                className=""
-                collapseOnDataChange={true}
-                collapseOnPageChange={true}
-                collapseOnSortingChange={true}
-                column={
-                  Object {
-                    "Aggregated": undefined,
-                    "Cell": undefined,
-                    "Expander": undefined,
-                    "Filter": undefined,
-                    "Footer": undefined,
-                    "Header": undefined,
-                    "Pivot": undefined,
-                    "PivotValue": undefined,
-                    "Placeholder": undefined,
-                    "aggregate": undefined,
-                    "className": "",
-                    "filterAll": false,
-                    "filterMethod": undefined,
-                    "filterable": undefined,
-                    "footerClassName": "",
-                    "footerStyle": Object {},
-                    "getFooterProps": [Function],
-                    "getHeaderProps": [Function],
-                    "getProps": [Function],
-                    "headerClassName": "",
-                    "headerStyle": Object {},
-                    "minResizeWidth": 11,
-                    "minWidth": 100,
-                    "resizable": undefined,
-                    "show": true,
-                    "sortMethod": undefined,
-                    "sortable": undefined,
-                    "style": Object {},
-                  }
-                }
-                columns={
-                  Array [
-                    Object {
-                      "Header": "Name",
-                      "columns": Array [
-                        Object {},
-                      ],
-                    },
-                    Object {
-                      "Header": "FI Status",
-                      "columns": Array [
-                        Object {},
-                      ],
-                    },
-                    Object {
-                      "Header": "Case Notif. Date",
-                      "columns": Array [
-                        Object {},
-                      ],
-                    },
-                    Object {
-                      "Header": "Case Class.",
-                      "columns": Array [
-                        Object {},
-                      ],
-                    },
-                  ]
-                }
-                data={Array []}
-                defaultExpanded={Object {}}
-                defaultFilterMethod={[Function]}
-                defaultFiltered={Array []}
-                defaultPage={0}
-                defaultPageSize={20}
-                defaultResized={Array []}
-                defaultSortDesc={false}
-                defaultSortMethod={[Function]}
-                defaultSorted={Array []}
-                expanderDefaults={
-                  Object {
-                    "filterable": false,
-                    "resizable": false,
-                    "sortable": false,
-                    "width": 35,
-                  }
-                }
-                filterable={false}
-                freezeWhenExpanded={false}
-                getLoadingProps={[Function]}
-                getNoDataProps={[Function]}
-                getPaginationProps={[Function]}
-                getProps={[Function]}
-                getResizerProps={[Function]}
-                getTableProps={[Function]}
-                getTbodyProps={[Function]}
-                getTdProps={[Function]}
-                getTfootProps={[Function]}
-                getTfootTdProps={[Function]}
-                getTfootTrProps={[Function]}
-                getTheadFilterProps={[Function]}
-                getTheadFilterThProps={[Function]}
-                getTheadFilterTrProps={[Function]}
-                getTheadGroupProps={[Function]}
-                getTheadGroupThProps={[Function]}
-                getTheadGroupTrProps={[Function]}
-                getTheadProps={[Function]}
-                getTheadThProps={[Function]}
-                getTheadTrProps={[Function]}
-                getTrGroupProps={[Function]}
-                getTrProps={[Function]}
-                groupedByPivotKey="_groupedByPivot"
-                hasChildren={[Function]}
-                identifierField="id"
-                indexKey="_index"
-                linkerField="id"
-                loading={false}
-                loadingText="Loading..."
-                minRows={0}
-                multiSort={true}
-                nestingLevelKey="_nestingLevel"
-                nextText="Next"
-                noDataText="No rows found"
-                ofText="of"
-                onFetchData={[Function]}
-                originalKey="_original"
-                pageJumpText="jump to page"
-                pageSizeOptions={
-                  Array [
-                    5,
-                    10,
-                    20,
-                    25,
-                    50,
-                    100,
-                  ]
-                }
-                pageText="Page"
-                parentIdentifierField="parent"
-                pivotDefaults={Object {}}
-                pivotIDKey="_pivotID"
-                pivotValKey="_pivotVal"
-                previousText="Previous"
-                resizable={true}
-                resolveData={[Function]}
-                rootParentId={null}
-                rowsSelectorText="rows per page"
-                rowsText="rows"
-                shouldUseEffect={false}
-                showPageJump={true}
-                showPageSizeOptions={false}
-                showPagination={false}
-                showPaginationBottom={true}
-                showPaginationTop={false}
-                sortable={true}
-                style={Object {}}
-                subRowsKey="_subRows"
-                useDrillDownTrProps={false}
+              <div
+                className="routine-heading"
               >
-                <div
-                  className="ReactTable"
-                  style={Object {}}
+                <Row
+                  tag="div"
                 >
-                  <TableComponent
-                    className=""
+                  <div
+                    className="row"
                   >
-                    <div
-                      className="rt-table"
-                      role="grid"
-                    >
-                      <Thead
-                        className="-headerGroups"
-                        style={
-                          Object {
-                            "minWidth": "400px",
-                          }
-                        }
-                      >
-                        <div
-                          className="rt-thead -headerGroups"
-                          style={
-                            Object {
-                              "minWidth": "400px",
-                            }
-                          }
-                        >
-                          <TrComponent>
-                            <div
-                              className="rt-tr"
-                              role="row"
-                            >
-                              <ThComponent
-                                className=""
-                                key="0-undefined"
-                                style={
-                                  Object {
-                                    "flex": "100 0 auto",
-                                    "maxWidth": null,
-                                    "width": "100px",
-                                  }
-                                }
-                              >
-                                <div
-                                  className="rt-th"
-                                  onClick={[Function]}
-                                  role="columnheader"
-                                  style={
-                                    Object {
-                                      "flex": "100 0 auto",
-                                      "maxWidth": null,
-                                      "width": "100px",
-                                    }
-                                  }
-                                  tabIndex="-1"
-                                >
-                                  Name
-                                </div>
-                              </ThComponent>
-                              <ThComponent
-                                className=""
-                                key="1-undefined"
-                                style={
-                                  Object {
-                                    "flex": "100 0 auto",
-                                    "maxWidth": null,
-                                    "width": "100px",
-                                  }
-                                }
-                              >
-                                <div
-                                  className="rt-th"
-                                  onClick={[Function]}
-                                  role="columnheader"
-                                  style={
-                                    Object {
-                                      "flex": "100 0 auto",
-                                      "maxWidth": null,
-                                      "width": "100px",
-                                    }
-                                  }
-                                  tabIndex="-1"
-                                >
-                                  FI Status
-                                </div>
-                              </ThComponent>
-                              <ThComponent
-                                className=""
-                                key="2-undefined"
-                                style={
-                                  Object {
-                                    "flex": "100 0 auto",
-                                    "maxWidth": null,
-                                    "width": "100px",
-                                  }
-                                }
-                              >
-                                <div
-                                  className="rt-th"
-                                  onClick={[Function]}
-                                  role="columnheader"
-                                  style={
-                                    Object {
-                                      "flex": "100 0 auto",
-                                      "maxWidth": null,
-                                      "width": "100px",
-                                    }
-                                  }
-                                  tabIndex="-1"
-                                >
-                                  Case Notif. Date
-                                </div>
-                              </ThComponent>
-                              <ThComponent
-                                className=""
-                                key="3-undefined"
-                                style={
-                                  Object {
-                                    "flex": "100 0 auto",
-                                    "maxWidth": null,
-                                    "width": "100px",
-                                  }
-                                }
-                              >
-                                <div
-                                  className="rt-th"
-                                  onClick={[Function]}
-                                  role="columnheader"
-                                  style={
-                                    Object {
-                                      "flex": "100 0 auto",
-                                      "maxWidth": null,
-                                      "width": "100px",
-                                    }
-                                  }
-                                  tabIndex="-1"
-                                >
-                                  Case Class.
-                                </div>
-                              </ThComponent>
-                            </div>
-                          </TrComponent>
-                        </div>
-                      </Thead>
-                      <Thead
-                        className="-header"
-                        style={
-                          Object {
-                            "minWidth": "400px",
-                          }
-                        }
-                      >
-                        <div
-                          className="rt-thead -header"
-                          style={
-                            Object {
-                              "minWidth": "400px",
-                            }
-                          }
-                        >
-                          <TrComponent>
-                            <div
-                              className="rt-tr"
-                              role="row"
-                            >
-                              <ThComponent
-                                className="rt-resizable-header -cursor-pointer"
-                                key="0-undefined"
-                                style={
-                                  Object {
-                                    "flex": "100 0 auto",
-                                    "maxWidth": null,
-                                    "width": "100px",
-                                  }
-                                }
-                                toggleSort={[Function]}
-                              >
-                                <div
-                                  className="rt-th rt-resizable-header -cursor-pointer"
-                                  onClick={[Function]}
-                                  role="columnheader"
-                                  style={
-                                    Object {
-                                      "flex": "100 0 auto",
-                                      "maxWidth": null,
-                                      "width": "100px",
-                                    }
-                                  }
-                                  tabIndex="-1"
-                                >
-                                  <div
-                                    className="rt-resizable-header-content"
-                                  />
-                                  <Resizer
-                                    onMouseDown={[Function]}
-                                    onTouchStart={[Function]}
-                                  >
-                                    <div
-                                      className="rt-resizer"
-                                      onMouseDown={[Function]}
-                                      onTouchStart={[Function]}
-                                    />
-                                  </Resizer>
-                                </div>
-                              </ThComponent>
-                              <ThComponent
-                                className="rt-resizable-header -cursor-pointer"
-                                key="1-undefined"
-                                style={
-                                  Object {
-                                    "flex": "100 0 auto",
-                                    "maxWidth": null,
-                                    "width": "100px",
-                                  }
-                                }
-                                toggleSort={[Function]}
-                              >
-                                <div
-                                  className="rt-th rt-resizable-header -cursor-pointer"
-                                  onClick={[Function]}
-                                  role="columnheader"
-                                  style={
-                                    Object {
-                                      "flex": "100 0 auto",
-                                      "maxWidth": null,
-                                      "width": "100px",
-                                    }
-                                  }
-                                  tabIndex="-1"
-                                >
-                                  <div
-                                    className="rt-resizable-header-content"
-                                  />
-                                  <Resizer
-                                    onMouseDown={[Function]}
-                                    onTouchStart={[Function]}
-                                  >
-                                    <div
-                                      className="rt-resizer"
-                                      onMouseDown={[Function]}
-                                      onTouchStart={[Function]}
-                                    />
-                                  </Resizer>
-                                </div>
-                              </ThComponent>
-                              <ThComponent
-                                className="rt-resizable-header -cursor-pointer"
-                                key="2-undefined"
-                                style={
-                                  Object {
-                                    "flex": "100 0 auto",
-                                    "maxWidth": null,
-                                    "width": "100px",
-                                  }
-                                }
-                                toggleSort={[Function]}
-                              >
-                                <div
-                                  className="rt-th rt-resizable-header -cursor-pointer"
-                                  onClick={[Function]}
-                                  role="columnheader"
-                                  style={
-                                    Object {
-                                      "flex": "100 0 auto",
-                                      "maxWidth": null,
-                                      "width": "100px",
-                                    }
-                                  }
-                                  tabIndex="-1"
-                                >
-                                  <div
-                                    className="rt-resizable-header-content"
-                                  />
-                                  <Resizer
-                                    onMouseDown={[Function]}
-                                    onTouchStart={[Function]}
-                                  >
-                                    <div
-                                      className="rt-resizer"
-                                      onMouseDown={[Function]}
-                                      onTouchStart={[Function]}
-                                    />
-                                  </Resizer>
-                                </div>
-                              </ThComponent>
-                              <ThComponent
-                                className="rt-resizable-header -cursor-pointer"
-                                key="3-undefined"
-                                style={
-                                  Object {
-                                    "flex": "100 0 auto",
-                                    "maxWidth": null,
-                                    "width": "100px",
-                                  }
-                                }
-                                toggleSort={[Function]}
-                              >
-                                <div
-                                  className="rt-th rt-resizable-header -cursor-pointer"
-                                  onClick={[Function]}
-                                  role="columnheader"
-                                  style={
-                                    Object {
-                                      "flex": "100 0 auto",
-                                      "maxWidth": null,
-                                      "width": "100px",
-                                    }
-                                  }
-                                  tabIndex="-1"
-                                >
-                                  <div
-                                    className="rt-resizable-header-content"
-                                  />
-                                  <Resizer
-                                    onMouseDown={[Function]}
-                                    onTouchStart={[Function]}
-                                  >
-                                    <div
-                                      className="rt-resizer"
-                                      onMouseDown={[Function]}
-                                      onTouchStart={[Function]}
-                                    />
-                                  </Resizer>
-                                </div>
-                              </ThComponent>
-                            </div>
-                          </TrComponent>
-                        </div>
-                      </Thead>
-                      <Tbody
-                        className=""
-                        style={
-                          Object {
-                            "minWidth": "400px",
-                          }
-                        }
-                      >
-                        <div
-                          className="rt-tbody"
-                          style={
-                            Object {
-                              "minWidth": "400px",
-                            }
-                          }
-                        />
-                      </Tbody>
-                    </div>
-                  </TableComponent>
-                  <NoDataComponent />
-                  <LoadingComponent
-                    loading={false}
-                    loadingText="Loading..."
-                  >
-                    <div
-                      className="-loading"
+                    <Col
+                      tag="div"
+                      widths={
+                        Array [
+                          "xs",
+                          "sm",
+                          "md",
+                          "lg",
+                          "xl",
+                        ]
+                      }
+                      xs="6"
                     >
                       <div
-                        className="-loading-inner"
+                        className="col-6"
                       >
-                        Loading...
-                      </div>
-                    </div>
-                  </LoadingComponent>
-                </div>
-              </ReactTable>
-            </DrillDownTable>
-            <h3
-              className="text-muted"
-            >
-              No Investigations Found
-            </h3>
-            <hr />
-          </div>
-          <div
-            key="ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
-          >
-            <div
-              className="routine-heading"
-            >
-              <Row
-                tag="div"
-              >
-                <div
-                  className="row"
-                >
-                  <Col
-                    tag="div"
-                    widths={
-                      Array [
-                        "xs",
-                        "sm",
-                        "md",
-                        "lg",
-                        "xl",
-                      ]
-                    }
-                    xs="6"
-                  >
-                    <div
-                      className="col-6"
-                    >
-                      <h3
-                        className="mb-3 mt-5 page-title"
-                      >
-                        Routine
-                      </h3>
-                    </div>
-                  </Col>
-                  <Col
-                    tag="div"
-                    widths={
-                      Array [
-                        "xs",
-                        "sm",
-                        "md",
-                        "lg",
-                        "xl",
-                      ]
-                    }
-                    xs="6"
-                  >
-                    <div
-                      className="col-6"
-                    >
-                      <Button
-                        className="focus-investigation"
-                        color="primary"
-                        tag="button"
-                      >
-                        <button
-                          aria-label={null}
-                          className="focus-investigation btn btn-primary"
-                          onClick={[Function]}
+                        <h3
+                          className="mb-3 mt-5 page-title"
                         >
-                          Add Focus Investigation
-                        </button>
-                      </Button>
-                    </div>
-                  </Col>
-                </div>
-              </Row>
-            </div>
+                          Routine
+                        </h3>
+                      </div>
+                    </Col>
+                    <Col
+                      tag="div"
+                      widths={
+                        Array [
+                          "xs",
+                          "sm",
+                          "md",
+                          "lg",
+                          "xl",
+                        ]
+                      }
+                      xs="6"
+                    >
+                      <div
+                        className="col-6"
+                      >
+                        <Button
+                          className="focus-investigation"
+                          color="primary"
+                          tag="button"
+                        >
+                          <button
+                            aria-label={null}
+                            className="focus-investigation btn btn-primary"
+                            onClick={[Function]}
+                          >
+                            Add Focus Investigation
+                          </button>
+                        </Button>
+                      </div>
+                    </Col>
+                  </div>
+                </Row>
+              </div>
+            </TableHeader>
             <DrillDownTable
               CellComponent={[Function]}
               columns={
@@ -3841,25 +3275,660 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
               </ReactTable>
             </DrillDownTable>
           </div>
+          <NullDataTable
+            key="current-Reactive"
+            reasonType="Reactive"
+            tableProps={
+              Object {
+                "CellComponent": [Function],
+                "columns": Array [
+                  Object {
+                    "Header": "Name",
+                    "columns": Array [
+                      Object {},
+                    ],
+                  },
+                  Object {
+                    "Header": "FI Status",
+                    "columns": Array [
+                      Object {},
+                    ],
+                  },
+                  Object {
+                    "Header": "Case Notif. Date",
+                    "columns": Array [
+                      Object {},
+                    ],
+                  },
+                  Object {
+                    "Header": "Case Class.",
+                    "columns": Array [
+                      Object {},
+                    ],
+                  },
+                ],
+                "data": Array [],
+                "identifierField": "id",
+                "linkerField": "id",
+                "minRows": 0,
+                "parentIdentifierField": "parent",
+                "rootParentId": null,
+                "showPageSizeOptions": false,
+                "showPagination": false,
+                "useDrillDownTrProps": false,
+              }
+            }
+          >
+            <div>
+              <h3
+                className="mb-3 mt-5 page-title"
+              >
+                Reactive
+              </h3>
+              <DrillDownTable
+                CellComponent={[Function]}
+                NoDataComponent={[Function]}
+                columns={
+                  Array [
+                    Object {
+                      "Header": "Name",
+                      "columns": Array [
+                        Object {},
+                      ],
+                    },
+                    Object {
+                      "Header": "FI Status",
+                      "columns": Array [
+                        Object {},
+                      ],
+                    },
+                    Object {
+                      "Header": "Case Notif. Date",
+                      "columns": Array [
+                        Object {},
+                      ],
+                    },
+                    Object {
+                      "Header": "Case Class.",
+                      "columns": Array [
+                        Object {},
+                      ],
+                    },
+                  ]
+                }
+                data={Array []}
+                hasChildren={[Function]}
+                identifierField="id"
+                linkerField="id"
+                minRows={0}
+                parentIdentifierField="parent"
+                rootParentId={null}
+                shouldUseEffect={false}
+                showPageSizeOptions={false}
+                showPagination={false}
+                useDrillDownTrProps={false}
+              >
+                <ReactTable
+                  AggregatedComponent={[Function]}
+                  CellComponent={[Function]}
+                  ExpanderComponent={[Function]}
+                  FilterComponent={[Function]}
+                  LoadingComponent={[Function]}
+                  NoDataComponent={[Function]}
+                  PadRowComponent={[Function]}
+                  PaginationComponent={[Function]}
+                  PivotValueComponent={[Function]}
+                  ResizerComponent={[Function]}
+                  TableComponent={[Function]}
+                  TbodyComponent={[Function]}
+                  TdComponent={[Function]}
+                  TfootComponent={[Function]}
+                  ThComponent={[Function]}
+                  TheadComponent={[Function]}
+                  TrComponent={[Function]}
+                  TrGroupComponent={[Function]}
+                  aggregatedKey="_aggregated"
+                  className=""
+                  collapseOnDataChange={true}
+                  collapseOnPageChange={true}
+                  collapseOnSortingChange={true}
+                  column={
+                    Object {
+                      "Aggregated": undefined,
+                      "Cell": undefined,
+                      "Expander": undefined,
+                      "Filter": undefined,
+                      "Footer": undefined,
+                      "Header": undefined,
+                      "Pivot": undefined,
+                      "PivotValue": undefined,
+                      "Placeholder": undefined,
+                      "aggregate": undefined,
+                      "className": "",
+                      "filterAll": false,
+                      "filterMethod": undefined,
+                      "filterable": undefined,
+                      "footerClassName": "",
+                      "footerStyle": Object {},
+                      "getFooterProps": [Function],
+                      "getHeaderProps": [Function],
+                      "getProps": [Function],
+                      "headerClassName": "",
+                      "headerStyle": Object {},
+                      "minResizeWidth": 11,
+                      "minWidth": 100,
+                      "resizable": undefined,
+                      "show": true,
+                      "sortMethod": undefined,
+                      "sortable": undefined,
+                      "style": Object {},
+                    }
+                  }
+                  columns={
+                    Array [
+                      Object {
+                        "Header": "Name",
+                        "columns": Array [
+                          Object {},
+                        ],
+                      },
+                      Object {
+                        "Header": "FI Status",
+                        "columns": Array [
+                          Object {},
+                        ],
+                      },
+                      Object {
+                        "Header": "Case Notif. Date",
+                        "columns": Array [
+                          Object {},
+                        ],
+                      },
+                      Object {
+                        "Header": "Case Class.",
+                        "columns": Array [
+                          Object {},
+                        ],
+                      },
+                    ]
+                  }
+                  data={Array []}
+                  defaultExpanded={Object {}}
+                  defaultFilterMethod={[Function]}
+                  defaultFiltered={Array []}
+                  defaultPage={0}
+                  defaultPageSize={20}
+                  defaultResized={Array []}
+                  defaultSortDesc={false}
+                  defaultSortMethod={[Function]}
+                  defaultSorted={Array []}
+                  expanderDefaults={
+                    Object {
+                      "filterable": false,
+                      "resizable": false,
+                      "sortable": false,
+                      "width": 35,
+                    }
+                  }
+                  filterable={false}
+                  freezeWhenExpanded={false}
+                  getLoadingProps={[Function]}
+                  getNoDataProps={[Function]}
+                  getPaginationProps={[Function]}
+                  getProps={[Function]}
+                  getResizerProps={[Function]}
+                  getTableProps={[Function]}
+                  getTbodyProps={[Function]}
+                  getTdProps={[Function]}
+                  getTfootProps={[Function]}
+                  getTfootTdProps={[Function]}
+                  getTfootTrProps={[Function]}
+                  getTheadFilterProps={[Function]}
+                  getTheadFilterThProps={[Function]}
+                  getTheadFilterTrProps={[Function]}
+                  getTheadGroupProps={[Function]}
+                  getTheadGroupThProps={[Function]}
+                  getTheadGroupTrProps={[Function]}
+                  getTheadProps={[Function]}
+                  getTheadThProps={[Function]}
+                  getTheadTrProps={[Function]}
+                  getTrGroupProps={[Function]}
+                  getTrProps={[Function]}
+                  groupedByPivotKey="_groupedByPivot"
+                  hasChildren={[Function]}
+                  identifierField="id"
+                  indexKey="_index"
+                  linkerField="id"
+                  loading={false}
+                  loadingText="Loading..."
+                  minRows={0}
+                  multiSort={true}
+                  nestingLevelKey="_nestingLevel"
+                  nextText="Next"
+                  noDataText="No rows found"
+                  ofText="of"
+                  onFetchData={[Function]}
+                  originalKey="_original"
+                  pageJumpText="jump to page"
+                  pageSizeOptions={
+                    Array [
+                      5,
+                      10,
+                      20,
+                      25,
+                      50,
+                      100,
+                    ]
+                  }
+                  pageText="Page"
+                  parentIdentifierField="parent"
+                  pivotDefaults={Object {}}
+                  pivotIDKey="_pivotID"
+                  pivotValKey="_pivotVal"
+                  previousText="Previous"
+                  resizable={true}
+                  resolveData={[Function]}
+                  rootParentId={null}
+                  rowsSelectorText="rows per page"
+                  rowsText="rows"
+                  shouldUseEffect={false}
+                  showPageJump={true}
+                  showPageSizeOptions={false}
+                  showPagination={false}
+                  showPaginationBottom={true}
+                  showPaginationTop={false}
+                  sortable={true}
+                  style={Object {}}
+                  subRowsKey="_subRows"
+                  useDrillDownTrProps={false}
+                >
+                  <div
+                    className="ReactTable"
+                    style={Object {}}
+                  >
+                    <TableComponent
+                      className=""
+                    >
+                      <div
+                        className="rt-table"
+                        role="grid"
+                      >
+                        <Thead
+                          className="-headerGroups"
+                          style={
+                            Object {
+                              "minWidth": "400px",
+                            }
+                          }
+                        >
+                          <div
+                            className="rt-thead -headerGroups"
+                            style={
+                              Object {
+                                "minWidth": "400px",
+                              }
+                            }
+                          >
+                            <TrComponent>
+                              <div
+                                className="rt-tr"
+                                role="row"
+                              >
+                                <ThComponent
+                                  className=""
+                                  key="0-undefined"
+                                  style={
+                                    Object {
+                                      "flex": "100 0 auto",
+                                      "maxWidth": null,
+                                      "width": "100px",
+                                    }
+                                  }
+                                >
+                                  <div
+                                    className="rt-th"
+                                    onClick={[Function]}
+                                    role="columnheader"
+                                    style={
+                                      Object {
+                                        "flex": "100 0 auto",
+                                        "maxWidth": null,
+                                        "width": "100px",
+                                      }
+                                    }
+                                    tabIndex="-1"
+                                  >
+                                    Name
+                                  </div>
+                                </ThComponent>
+                                <ThComponent
+                                  className=""
+                                  key="1-undefined"
+                                  style={
+                                    Object {
+                                      "flex": "100 0 auto",
+                                      "maxWidth": null,
+                                      "width": "100px",
+                                    }
+                                  }
+                                >
+                                  <div
+                                    className="rt-th"
+                                    onClick={[Function]}
+                                    role="columnheader"
+                                    style={
+                                      Object {
+                                        "flex": "100 0 auto",
+                                        "maxWidth": null,
+                                        "width": "100px",
+                                      }
+                                    }
+                                    tabIndex="-1"
+                                  >
+                                    FI Status
+                                  </div>
+                                </ThComponent>
+                                <ThComponent
+                                  className=""
+                                  key="2-undefined"
+                                  style={
+                                    Object {
+                                      "flex": "100 0 auto",
+                                      "maxWidth": null,
+                                      "width": "100px",
+                                    }
+                                  }
+                                >
+                                  <div
+                                    className="rt-th"
+                                    onClick={[Function]}
+                                    role="columnheader"
+                                    style={
+                                      Object {
+                                        "flex": "100 0 auto",
+                                        "maxWidth": null,
+                                        "width": "100px",
+                                      }
+                                    }
+                                    tabIndex="-1"
+                                  >
+                                    Case Notif. Date
+                                  </div>
+                                </ThComponent>
+                                <ThComponent
+                                  className=""
+                                  key="3-undefined"
+                                  style={
+                                    Object {
+                                      "flex": "100 0 auto",
+                                      "maxWidth": null,
+                                      "width": "100px",
+                                    }
+                                  }
+                                >
+                                  <div
+                                    className="rt-th"
+                                    onClick={[Function]}
+                                    role="columnheader"
+                                    style={
+                                      Object {
+                                        "flex": "100 0 auto",
+                                        "maxWidth": null,
+                                        "width": "100px",
+                                      }
+                                    }
+                                    tabIndex="-1"
+                                  >
+                                    Case Class.
+                                  </div>
+                                </ThComponent>
+                              </div>
+                            </TrComponent>
+                          </div>
+                        </Thead>
+                        <Thead
+                          className="-header"
+                          style={
+                            Object {
+                              "minWidth": "400px",
+                            }
+                          }
+                        >
+                          <div
+                            className="rt-thead -header"
+                            style={
+                              Object {
+                                "minWidth": "400px",
+                              }
+                            }
+                          >
+                            <TrComponent>
+                              <div
+                                className="rt-tr"
+                                role="row"
+                              >
+                                <ThComponent
+                                  className="rt-resizable-header -cursor-pointer"
+                                  key="0-undefined"
+                                  style={
+                                    Object {
+                                      "flex": "100 0 auto",
+                                      "maxWidth": null,
+                                      "width": "100px",
+                                    }
+                                  }
+                                  toggleSort={[Function]}
+                                >
+                                  <div
+                                    className="rt-th rt-resizable-header -cursor-pointer"
+                                    onClick={[Function]}
+                                    role="columnheader"
+                                    style={
+                                      Object {
+                                        "flex": "100 0 auto",
+                                        "maxWidth": null,
+                                        "width": "100px",
+                                      }
+                                    }
+                                    tabIndex="-1"
+                                  >
+                                    <div
+                                      className="rt-resizable-header-content"
+                                    />
+                                    <Resizer
+                                      onMouseDown={[Function]}
+                                      onTouchStart={[Function]}
+                                    >
+                                      <div
+                                        className="rt-resizer"
+                                        onMouseDown={[Function]}
+                                        onTouchStart={[Function]}
+                                      />
+                                    </Resizer>
+                                  </div>
+                                </ThComponent>
+                                <ThComponent
+                                  className="rt-resizable-header -cursor-pointer"
+                                  key="1-undefined"
+                                  style={
+                                    Object {
+                                      "flex": "100 0 auto",
+                                      "maxWidth": null,
+                                      "width": "100px",
+                                    }
+                                  }
+                                  toggleSort={[Function]}
+                                >
+                                  <div
+                                    className="rt-th rt-resizable-header -cursor-pointer"
+                                    onClick={[Function]}
+                                    role="columnheader"
+                                    style={
+                                      Object {
+                                        "flex": "100 0 auto",
+                                        "maxWidth": null,
+                                        "width": "100px",
+                                      }
+                                    }
+                                    tabIndex="-1"
+                                  >
+                                    <div
+                                      className="rt-resizable-header-content"
+                                    />
+                                    <Resizer
+                                      onMouseDown={[Function]}
+                                      onTouchStart={[Function]}
+                                    >
+                                      <div
+                                        className="rt-resizer"
+                                        onMouseDown={[Function]}
+                                        onTouchStart={[Function]}
+                                      />
+                                    </Resizer>
+                                  </div>
+                                </ThComponent>
+                                <ThComponent
+                                  className="rt-resizable-header -cursor-pointer"
+                                  key="2-undefined"
+                                  style={
+                                    Object {
+                                      "flex": "100 0 auto",
+                                      "maxWidth": null,
+                                      "width": "100px",
+                                    }
+                                  }
+                                  toggleSort={[Function]}
+                                >
+                                  <div
+                                    className="rt-th rt-resizable-header -cursor-pointer"
+                                    onClick={[Function]}
+                                    role="columnheader"
+                                    style={
+                                      Object {
+                                        "flex": "100 0 auto",
+                                        "maxWidth": null,
+                                        "width": "100px",
+                                      }
+                                    }
+                                    tabIndex="-1"
+                                  >
+                                    <div
+                                      className="rt-resizable-header-content"
+                                    />
+                                    <Resizer
+                                      onMouseDown={[Function]}
+                                      onTouchStart={[Function]}
+                                    >
+                                      <div
+                                        className="rt-resizer"
+                                        onMouseDown={[Function]}
+                                        onTouchStart={[Function]}
+                                      />
+                                    </Resizer>
+                                  </div>
+                                </ThComponent>
+                                <ThComponent
+                                  className="rt-resizable-header -cursor-pointer"
+                                  key="3-undefined"
+                                  style={
+                                    Object {
+                                      "flex": "100 0 auto",
+                                      "maxWidth": null,
+                                      "width": "100px",
+                                    }
+                                  }
+                                  toggleSort={[Function]}
+                                >
+                                  <div
+                                    className="rt-th rt-resizable-header -cursor-pointer"
+                                    onClick={[Function]}
+                                    role="columnheader"
+                                    style={
+                                      Object {
+                                        "flex": "100 0 auto",
+                                        "maxWidth": null,
+                                        "width": "100px",
+                                      }
+                                    }
+                                    tabIndex="-1"
+                                  >
+                                    <div
+                                      className="rt-resizable-header-content"
+                                    />
+                                    <Resizer
+                                      onMouseDown={[Function]}
+                                      onTouchStart={[Function]}
+                                    >
+                                      <div
+                                        className="rt-resizer"
+                                        onMouseDown={[Function]}
+                                        onTouchStart={[Function]}
+                                      />
+                                    </Resizer>
+                                  </div>
+                                </ThComponent>
+                              </div>
+                            </TrComponent>
+                          </div>
+                        </Thead>
+                        <Tbody
+                          className=""
+                          style={
+                            Object {
+                              "minWidth": "400px",
+                            }
+                          }
+                        >
+                          <div
+                            className="rt-tbody"
+                            style={
+                              Object {
+                                "minWidth": "400px",
+                              }
+                            }
+                          />
+                        </Tbody>
+                      </div>
+                    </TableComponent>
+                    <NoDataComponent />
+                    <LoadingComponent
+                      loading={false}
+                      loadingText="Loading..."
+                    >
+                      <div
+                        className="-loading"
+                      >
+                        <div
+                          className="-loading-inner"
+                        >
+                          Loading...
+                        </div>
+                      </div>
+                    </LoadingComponent>
+                  </div>
+                </ReactTable>
+              </DrillDownTable>
+              <h3
+                className="text-muted"
+              >
+                No Investigations Found
+              </h3>
+              <hr />
+            </div>
+          </NullDataTable>
           <h4
             className="mb-4 complete"
           >
             Complete Focus Investigations
           </h4>
           <hr />
-          <div
+          <NullDataTable
             key="complete-Reactive"
-          >
-            <h3
-              className="mb-3 mt-5 page-title"
-            >
-              Reactive
-            </h3>
-            <DrillDownTable
-              CellComponent={[Function]}
-              NoDataComponent={[Function]}
-              columns={
-                Array [
+            reasonType="Reactive"
+            tableProps={
+              Object {
+                "CellComponent": [Function],
+                "columns": Array [
                   Object {
                     "Header": "Name",
                     "columns": Array [
@@ -3884,76 +3953,28 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
                       Object {},
                     ],
                   },
-                ]
+                ],
+                "data": Array [],
+                "identifierField": "id",
+                "linkerField": "id",
+                "minRows": 0,
+                "parentIdentifierField": "parent",
+                "rootParentId": null,
+                "showPageSizeOptions": false,
+                "showPagination": false,
+                "useDrillDownTrProps": false,
               }
-              data={Array []}
-              hasChildren={[Function]}
-              identifierField="id"
-              linkerField="id"
-              minRows={0}
-              parentIdentifierField="parent"
-              rootParentId={null}
-              shouldUseEffect={false}
-              showPageSizeOptions={false}
-              showPagination={false}
-              useDrillDownTrProps={false}
-            >
-              <ReactTable
-                AggregatedComponent={[Function]}
+            }
+          >
+            <div>
+              <h3
+                className="mb-3 mt-5 page-title"
+              >
+                Reactive
+              </h3>
+              <DrillDownTable
                 CellComponent={[Function]}
-                ExpanderComponent={[Function]}
-                FilterComponent={[Function]}
-                LoadingComponent={[Function]}
                 NoDataComponent={[Function]}
-                PadRowComponent={[Function]}
-                PaginationComponent={[Function]}
-                PivotValueComponent={[Function]}
-                ResizerComponent={[Function]}
-                TableComponent={[Function]}
-                TbodyComponent={[Function]}
-                TdComponent={[Function]}
-                TfootComponent={[Function]}
-                ThComponent={[Function]}
-                TheadComponent={[Function]}
-                TrComponent={[Function]}
-                TrGroupComponent={[Function]}
-                aggregatedKey="_aggregated"
-                className=""
-                collapseOnDataChange={true}
-                collapseOnPageChange={true}
-                collapseOnSortingChange={true}
-                column={
-                  Object {
-                    "Aggregated": undefined,
-                    "Cell": undefined,
-                    "Expander": undefined,
-                    "Filter": undefined,
-                    "Footer": undefined,
-                    "Header": undefined,
-                    "Pivot": undefined,
-                    "PivotValue": undefined,
-                    "Placeholder": undefined,
-                    "aggregate": undefined,
-                    "className": "",
-                    "filterAll": false,
-                    "filterMethod": undefined,
-                    "filterable": undefined,
-                    "footerClassName": "",
-                    "footerStyle": Object {},
-                    "getFooterProps": [Function],
-                    "getHeaderProps": [Function],
-                    "getProps": [Function],
-                    "headerClassName": "",
-                    "headerStyle": Object {},
-                    "minResizeWidth": 11,
-                    "minWidth": 100,
-                    "resizable": undefined,
-                    "show": true,
-                    "sortMethod": undefined,
-                    "sortable": undefined,
-                    "style": Object {},
-                  }
-                }
                 columns={
                   Array [
                     Object {
@@ -3983,481 +4004,572 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
                   ]
                 }
                 data={Array []}
-                defaultExpanded={Object {}}
-                defaultFilterMethod={[Function]}
-                defaultFiltered={Array []}
-                defaultPage={0}
-                defaultPageSize={20}
-                defaultResized={Array []}
-                defaultSortDesc={false}
-                defaultSortMethod={[Function]}
-                defaultSorted={Array []}
-                expanderDefaults={
-                  Object {
-                    "filterable": false,
-                    "resizable": false,
-                    "sortable": false,
-                    "width": 35,
-                  }
-                }
-                filterable={false}
-                freezeWhenExpanded={false}
-                getLoadingProps={[Function]}
-                getNoDataProps={[Function]}
-                getPaginationProps={[Function]}
-                getProps={[Function]}
-                getResizerProps={[Function]}
-                getTableProps={[Function]}
-                getTbodyProps={[Function]}
-                getTdProps={[Function]}
-                getTfootProps={[Function]}
-                getTfootTdProps={[Function]}
-                getTfootTrProps={[Function]}
-                getTheadFilterProps={[Function]}
-                getTheadFilterThProps={[Function]}
-                getTheadFilterTrProps={[Function]}
-                getTheadGroupProps={[Function]}
-                getTheadGroupThProps={[Function]}
-                getTheadGroupTrProps={[Function]}
-                getTheadProps={[Function]}
-                getTheadThProps={[Function]}
-                getTheadTrProps={[Function]}
-                getTrGroupProps={[Function]}
-                getTrProps={[Function]}
-                groupedByPivotKey="_groupedByPivot"
                 hasChildren={[Function]}
                 identifierField="id"
-                indexKey="_index"
                 linkerField="id"
-                loading={false}
-                loadingText="Loading..."
                 minRows={0}
-                multiSort={true}
-                nestingLevelKey="_nestingLevel"
-                nextText="Next"
-                noDataText="No rows found"
-                ofText="of"
-                onFetchData={[Function]}
-                originalKey="_original"
-                pageJumpText="jump to page"
-                pageSizeOptions={
-                  Array [
-                    5,
-                    10,
-                    20,
-                    25,
-                    50,
-                    100,
-                  ]
-                }
-                pageText="Page"
                 parentIdentifierField="parent"
-                pivotDefaults={Object {}}
-                pivotIDKey="_pivotID"
-                pivotValKey="_pivotVal"
-                previousText="Previous"
-                resizable={true}
-                resolveData={[Function]}
                 rootParentId={null}
-                rowsSelectorText="rows per page"
-                rowsText="rows"
                 shouldUseEffect={false}
-                showPageJump={true}
                 showPageSizeOptions={false}
                 showPagination={false}
-                showPaginationBottom={true}
-                showPaginationTop={false}
-                sortable={true}
-                style={Object {}}
-                subRowsKey="_subRows"
                 useDrillDownTrProps={false}
               >
-                <div
-                  className="ReactTable"
+                <ReactTable
+                  AggregatedComponent={[Function]}
+                  CellComponent={[Function]}
+                  ExpanderComponent={[Function]}
+                  FilterComponent={[Function]}
+                  LoadingComponent={[Function]}
+                  NoDataComponent={[Function]}
+                  PadRowComponent={[Function]}
+                  PaginationComponent={[Function]}
+                  PivotValueComponent={[Function]}
+                  ResizerComponent={[Function]}
+                  TableComponent={[Function]}
+                  TbodyComponent={[Function]}
+                  TdComponent={[Function]}
+                  TfootComponent={[Function]}
+                  ThComponent={[Function]}
+                  TheadComponent={[Function]}
+                  TrComponent={[Function]}
+                  TrGroupComponent={[Function]}
+                  aggregatedKey="_aggregated"
+                  className=""
+                  collapseOnDataChange={true}
+                  collapseOnPageChange={true}
+                  collapseOnSortingChange={true}
+                  column={
+                    Object {
+                      "Aggregated": undefined,
+                      "Cell": undefined,
+                      "Expander": undefined,
+                      "Filter": undefined,
+                      "Footer": undefined,
+                      "Header": undefined,
+                      "Pivot": undefined,
+                      "PivotValue": undefined,
+                      "Placeholder": undefined,
+                      "aggregate": undefined,
+                      "className": "",
+                      "filterAll": false,
+                      "filterMethod": undefined,
+                      "filterable": undefined,
+                      "footerClassName": "",
+                      "footerStyle": Object {},
+                      "getFooterProps": [Function],
+                      "getHeaderProps": [Function],
+                      "getProps": [Function],
+                      "headerClassName": "",
+                      "headerStyle": Object {},
+                      "minResizeWidth": 11,
+                      "minWidth": 100,
+                      "resizable": undefined,
+                      "show": true,
+                      "sortMethod": undefined,
+                      "sortable": undefined,
+                      "style": Object {},
+                    }
+                  }
+                  columns={
+                    Array [
+                      Object {
+                        "Header": "Name",
+                        "columns": Array [
+                          Object {},
+                        ],
+                      },
+                      Object {
+                        "Header": "Date Completed",
+                        "columns": Array [
+                          Object {},
+                        ],
+                      },
+                      Object {
+                        "Header": "Case Notif. Date",
+                        "columns": Array [
+                          Object {},
+                        ],
+                      },
+                      Object {
+                        "Header": "Case Class.",
+                        "columns": Array [
+                          Object {},
+                        ],
+                      },
+                    ]
+                  }
+                  data={Array []}
+                  defaultExpanded={Object {}}
+                  defaultFilterMethod={[Function]}
+                  defaultFiltered={Array []}
+                  defaultPage={0}
+                  defaultPageSize={20}
+                  defaultResized={Array []}
+                  defaultSortDesc={false}
+                  defaultSortMethod={[Function]}
+                  defaultSorted={Array []}
+                  expanderDefaults={
+                    Object {
+                      "filterable": false,
+                      "resizable": false,
+                      "sortable": false,
+                      "width": 35,
+                    }
+                  }
+                  filterable={false}
+                  freezeWhenExpanded={false}
+                  getLoadingProps={[Function]}
+                  getNoDataProps={[Function]}
+                  getPaginationProps={[Function]}
+                  getProps={[Function]}
+                  getResizerProps={[Function]}
+                  getTableProps={[Function]}
+                  getTbodyProps={[Function]}
+                  getTdProps={[Function]}
+                  getTfootProps={[Function]}
+                  getTfootTdProps={[Function]}
+                  getTfootTrProps={[Function]}
+                  getTheadFilterProps={[Function]}
+                  getTheadFilterThProps={[Function]}
+                  getTheadFilterTrProps={[Function]}
+                  getTheadGroupProps={[Function]}
+                  getTheadGroupThProps={[Function]}
+                  getTheadGroupTrProps={[Function]}
+                  getTheadProps={[Function]}
+                  getTheadThProps={[Function]}
+                  getTheadTrProps={[Function]}
+                  getTrGroupProps={[Function]}
+                  getTrProps={[Function]}
+                  groupedByPivotKey="_groupedByPivot"
+                  hasChildren={[Function]}
+                  identifierField="id"
+                  indexKey="_index"
+                  linkerField="id"
+                  loading={false}
+                  loadingText="Loading..."
+                  minRows={0}
+                  multiSort={true}
+                  nestingLevelKey="_nestingLevel"
+                  nextText="Next"
+                  noDataText="No rows found"
+                  ofText="of"
+                  onFetchData={[Function]}
+                  originalKey="_original"
+                  pageJumpText="jump to page"
+                  pageSizeOptions={
+                    Array [
+                      5,
+                      10,
+                      20,
+                      25,
+                      50,
+                      100,
+                    ]
+                  }
+                  pageText="Page"
+                  parentIdentifierField="parent"
+                  pivotDefaults={Object {}}
+                  pivotIDKey="_pivotID"
+                  pivotValKey="_pivotVal"
+                  previousText="Previous"
+                  resizable={true}
+                  resolveData={[Function]}
+                  rootParentId={null}
+                  rowsSelectorText="rows per page"
+                  rowsText="rows"
+                  shouldUseEffect={false}
+                  showPageJump={true}
+                  showPageSizeOptions={false}
+                  showPagination={false}
+                  showPaginationBottom={true}
+                  showPaginationTop={false}
+                  sortable={true}
                   style={Object {}}
+                  subRowsKey="_subRows"
+                  useDrillDownTrProps={false}
                 >
-                  <TableComponent
-                    className=""
+                  <div
+                    className="ReactTable"
+                    style={Object {}}
                   >
-                    <div
-                      className="rt-table"
-                      role="grid"
-                    >
-                      <Thead
-                        className="-headerGroups"
-                        style={
-                          Object {
-                            "minWidth": "400px",
-                          }
-                        }
-                      >
-                        <div
-                          className="rt-thead -headerGroups"
-                          style={
-                            Object {
-                              "minWidth": "400px",
-                            }
-                          }
-                        >
-                          <TrComponent>
-                            <div
-                              className="rt-tr"
-                              role="row"
-                            >
-                              <ThComponent
-                                className=""
-                                key="0-undefined"
-                                style={
-                                  Object {
-                                    "flex": "100 0 auto",
-                                    "maxWidth": null,
-                                    "width": "100px",
-                                  }
-                                }
-                              >
-                                <div
-                                  className="rt-th"
-                                  onClick={[Function]}
-                                  role="columnheader"
-                                  style={
-                                    Object {
-                                      "flex": "100 0 auto",
-                                      "maxWidth": null,
-                                      "width": "100px",
-                                    }
-                                  }
-                                  tabIndex="-1"
-                                >
-                                  Name
-                                </div>
-                              </ThComponent>
-                              <ThComponent
-                                className=""
-                                key="1-undefined"
-                                style={
-                                  Object {
-                                    "flex": "100 0 auto",
-                                    "maxWidth": null,
-                                    "width": "100px",
-                                  }
-                                }
-                              >
-                                <div
-                                  className="rt-th"
-                                  onClick={[Function]}
-                                  role="columnheader"
-                                  style={
-                                    Object {
-                                      "flex": "100 0 auto",
-                                      "maxWidth": null,
-                                      "width": "100px",
-                                    }
-                                  }
-                                  tabIndex="-1"
-                                >
-                                  Date Completed
-                                </div>
-                              </ThComponent>
-                              <ThComponent
-                                className=""
-                                key="2-undefined"
-                                style={
-                                  Object {
-                                    "flex": "100 0 auto",
-                                    "maxWidth": null,
-                                    "width": "100px",
-                                  }
-                                }
-                              >
-                                <div
-                                  className="rt-th"
-                                  onClick={[Function]}
-                                  role="columnheader"
-                                  style={
-                                    Object {
-                                      "flex": "100 0 auto",
-                                      "maxWidth": null,
-                                      "width": "100px",
-                                    }
-                                  }
-                                  tabIndex="-1"
-                                >
-                                  Case Notif. Date
-                                </div>
-                              </ThComponent>
-                              <ThComponent
-                                className=""
-                                key="3-undefined"
-                                style={
-                                  Object {
-                                    "flex": "100 0 auto",
-                                    "maxWidth": null,
-                                    "width": "100px",
-                                  }
-                                }
-                              >
-                                <div
-                                  className="rt-th"
-                                  onClick={[Function]}
-                                  role="columnheader"
-                                  style={
-                                    Object {
-                                      "flex": "100 0 auto",
-                                      "maxWidth": null,
-                                      "width": "100px",
-                                    }
-                                  }
-                                  tabIndex="-1"
-                                >
-                                  Case Class.
-                                </div>
-                              </ThComponent>
-                            </div>
-                          </TrComponent>
-                        </div>
-                      </Thead>
-                      <Thead
-                        className="-header"
-                        style={
-                          Object {
-                            "minWidth": "400px",
-                          }
-                        }
-                      >
-                        <div
-                          className="rt-thead -header"
-                          style={
-                            Object {
-                              "minWidth": "400px",
-                            }
-                          }
-                        >
-                          <TrComponent>
-                            <div
-                              className="rt-tr"
-                              role="row"
-                            >
-                              <ThComponent
-                                className="rt-resizable-header -cursor-pointer"
-                                key="0-undefined"
-                                style={
-                                  Object {
-                                    "flex": "100 0 auto",
-                                    "maxWidth": null,
-                                    "width": "100px",
-                                  }
-                                }
-                                toggleSort={[Function]}
-                              >
-                                <div
-                                  className="rt-th rt-resizable-header -cursor-pointer"
-                                  onClick={[Function]}
-                                  role="columnheader"
-                                  style={
-                                    Object {
-                                      "flex": "100 0 auto",
-                                      "maxWidth": null,
-                                      "width": "100px",
-                                    }
-                                  }
-                                  tabIndex="-1"
-                                >
-                                  <div
-                                    className="rt-resizable-header-content"
-                                  />
-                                  <Resizer
-                                    onMouseDown={[Function]}
-                                    onTouchStart={[Function]}
-                                  >
-                                    <div
-                                      className="rt-resizer"
-                                      onMouseDown={[Function]}
-                                      onTouchStart={[Function]}
-                                    />
-                                  </Resizer>
-                                </div>
-                              </ThComponent>
-                              <ThComponent
-                                className="rt-resizable-header -cursor-pointer"
-                                key="1-undefined"
-                                style={
-                                  Object {
-                                    "flex": "100 0 auto",
-                                    "maxWidth": null,
-                                    "width": "100px",
-                                  }
-                                }
-                                toggleSort={[Function]}
-                              >
-                                <div
-                                  className="rt-th rt-resizable-header -cursor-pointer"
-                                  onClick={[Function]}
-                                  role="columnheader"
-                                  style={
-                                    Object {
-                                      "flex": "100 0 auto",
-                                      "maxWidth": null,
-                                      "width": "100px",
-                                    }
-                                  }
-                                  tabIndex="-1"
-                                >
-                                  <div
-                                    className="rt-resizable-header-content"
-                                  />
-                                  <Resizer
-                                    onMouseDown={[Function]}
-                                    onTouchStart={[Function]}
-                                  >
-                                    <div
-                                      className="rt-resizer"
-                                      onMouseDown={[Function]}
-                                      onTouchStart={[Function]}
-                                    />
-                                  </Resizer>
-                                </div>
-                              </ThComponent>
-                              <ThComponent
-                                className="rt-resizable-header -cursor-pointer"
-                                key="2-undefined"
-                                style={
-                                  Object {
-                                    "flex": "100 0 auto",
-                                    "maxWidth": null,
-                                    "width": "100px",
-                                  }
-                                }
-                                toggleSort={[Function]}
-                              >
-                                <div
-                                  className="rt-th rt-resizable-header -cursor-pointer"
-                                  onClick={[Function]}
-                                  role="columnheader"
-                                  style={
-                                    Object {
-                                      "flex": "100 0 auto",
-                                      "maxWidth": null,
-                                      "width": "100px",
-                                    }
-                                  }
-                                  tabIndex="-1"
-                                >
-                                  <div
-                                    className="rt-resizable-header-content"
-                                  />
-                                  <Resizer
-                                    onMouseDown={[Function]}
-                                    onTouchStart={[Function]}
-                                  >
-                                    <div
-                                      className="rt-resizer"
-                                      onMouseDown={[Function]}
-                                      onTouchStart={[Function]}
-                                    />
-                                  </Resizer>
-                                </div>
-                              </ThComponent>
-                              <ThComponent
-                                className="rt-resizable-header -cursor-pointer"
-                                key="3-undefined"
-                                style={
-                                  Object {
-                                    "flex": "100 0 auto",
-                                    "maxWidth": null,
-                                    "width": "100px",
-                                  }
-                                }
-                                toggleSort={[Function]}
-                              >
-                                <div
-                                  className="rt-th rt-resizable-header -cursor-pointer"
-                                  onClick={[Function]}
-                                  role="columnheader"
-                                  style={
-                                    Object {
-                                      "flex": "100 0 auto",
-                                      "maxWidth": null,
-                                      "width": "100px",
-                                    }
-                                  }
-                                  tabIndex="-1"
-                                >
-                                  <div
-                                    className="rt-resizable-header-content"
-                                  />
-                                  <Resizer
-                                    onMouseDown={[Function]}
-                                    onTouchStart={[Function]}
-                                  >
-                                    <div
-                                      className="rt-resizer"
-                                      onMouseDown={[Function]}
-                                      onTouchStart={[Function]}
-                                    />
-                                  </Resizer>
-                                </div>
-                              </ThComponent>
-                            </div>
-                          </TrComponent>
-                        </div>
-                      </Thead>
-                      <Tbody
-                        className=""
-                        style={
-                          Object {
-                            "minWidth": "400px",
-                          }
-                        }
-                      >
-                        <div
-                          className="rt-tbody"
-                          style={
-                            Object {
-                              "minWidth": "400px",
-                            }
-                          }
-                        />
-                      </Tbody>
-                    </div>
-                  </TableComponent>
-                  <NoDataComponent />
-                  <LoadingComponent
-                    loading={false}
-                    loadingText="Loading..."
-                  >
-                    <div
-                      className="-loading"
+                    <TableComponent
+                      className=""
                     >
                       <div
-                        className="-loading-inner"
+                        className="rt-table"
+                        role="grid"
                       >
-                        Loading...
+                        <Thead
+                          className="-headerGroups"
+                          style={
+                            Object {
+                              "minWidth": "400px",
+                            }
+                          }
+                        >
+                          <div
+                            className="rt-thead -headerGroups"
+                            style={
+                              Object {
+                                "minWidth": "400px",
+                              }
+                            }
+                          >
+                            <TrComponent>
+                              <div
+                                className="rt-tr"
+                                role="row"
+                              >
+                                <ThComponent
+                                  className=""
+                                  key="0-undefined"
+                                  style={
+                                    Object {
+                                      "flex": "100 0 auto",
+                                      "maxWidth": null,
+                                      "width": "100px",
+                                    }
+                                  }
+                                >
+                                  <div
+                                    className="rt-th"
+                                    onClick={[Function]}
+                                    role="columnheader"
+                                    style={
+                                      Object {
+                                        "flex": "100 0 auto",
+                                        "maxWidth": null,
+                                        "width": "100px",
+                                      }
+                                    }
+                                    tabIndex="-1"
+                                  >
+                                    Name
+                                  </div>
+                                </ThComponent>
+                                <ThComponent
+                                  className=""
+                                  key="1-undefined"
+                                  style={
+                                    Object {
+                                      "flex": "100 0 auto",
+                                      "maxWidth": null,
+                                      "width": "100px",
+                                    }
+                                  }
+                                >
+                                  <div
+                                    className="rt-th"
+                                    onClick={[Function]}
+                                    role="columnheader"
+                                    style={
+                                      Object {
+                                        "flex": "100 0 auto",
+                                        "maxWidth": null,
+                                        "width": "100px",
+                                      }
+                                    }
+                                    tabIndex="-1"
+                                  >
+                                    Date Completed
+                                  </div>
+                                </ThComponent>
+                                <ThComponent
+                                  className=""
+                                  key="2-undefined"
+                                  style={
+                                    Object {
+                                      "flex": "100 0 auto",
+                                      "maxWidth": null,
+                                      "width": "100px",
+                                    }
+                                  }
+                                >
+                                  <div
+                                    className="rt-th"
+                                    onClick={[Function]}
+                                    role="columnheader"
+                                    style={
+                                      Object {
+                                        "flex": "100 0 auto",
+                                        "maxWidth": null,
+                                        "width": "100px",
+                                      }
+                                    }
+                                    tabIndex="-1"
+                                  >
+                                    Case Notif. Date
+                                  </div>
+                                </ThComponent>
+                                <ThComponent
+                                  className=""
+                                  key="3-undefined"
+                                  style={
+                                    Object {
+                                      "flex": "100 0 auto",
+                                      "maxWidth": null,
+                                      "width": "100px",
+                                    }
+                                  }
+                                >
+                                  <div
+                                    className="rt-th"
+                                    onClick={[Function]}
+                                    role="columnheader"
+                                    style={
+                                      Object {
+                                        "flex": "100 0 auto",
+                                        "maxWidth": null,
+                                        "width": "100px",
+                                      }
+                                    }
+                                    tabIndex="-1"
+                                  >
+                                    Case Class.
+                                  </div>
+                                </ThComponent>
+                              </div>
+                            </TrComponent>
+                          </div>
+                        </Thead>
+                        <Thead
+                          className="-header"
+                          style={
+                            Object {
+                              "minWidth": "400px",
+                            }
+                          }
+                        >
+                          <div
+                            className="rt-thead -header"
+                            style={
+                              Object {
+                                "minWidth": "400px",
+                              }
+                            }
+                          >
+                            <TrComponent>
+                              <div
+                                className="rt-tr"
+                                role="row"
+                              >
+                                <ThComponent
+                                  className="rt-resizable-header -cursor-pointer"
+                                  key="0-undefined"
+                                  style={
+                                    Object {
+                                      "flex": "100 0 auto",
+                                      "maxWidth": null,
+                                      "width": "100px",
+                                    }
+                                  }
+                                  toggleSort={[Function]}
+                                >
+                                  <div
+                                    className="rt-th rt-resizable-header -cursor-pointer"
+                                    onClick={[Function]}
+                                    role="columnheader"
+                                    style={
+                                      Object {
+                                        "flex": "100 0 auto",
+                                        "maxWidth": null,
+                                        "width": "100px",
+                                      }
+                                    }
+                                    tabIndex="-1"
+                                  >
+                                    <div
+                                      className="rt-resizable-header-content"
+                                    />
+                                    <Resizer
+                                      onMouseDown={[Function]}
+                                      onTouchStart={[Function]}
+                                    >
+                                      <div
+                                        className="rt-resizer"
+                                        onMouseDown={[Function]}
+                                        onTouchStart={[Function]}
+                                      />
+                                    </Resizer>
+                                  </div>
+                                </ThComponent>
+                                <ThComponent
+                                  className="rt-resizable-header -cursor-pointer"
+                                  key="1-undefined"
+                                  style={
+                                    Object {
+                                      "flex": "100 0 auto",
+                                      "maxWidth": null,
+                                      "width": "100px",
+                                    }
+                                  }
+                                  toggleSort={[Function]}
+                                >
+                                  <div
+                                    className="rt-th rt-resizable-header -cursor-pointer"
+                                    onClick={[Function]}
+                                    role="columnheader"
+                                    style={
+                                      Object {
+                                        "flex": "100 0 auto",
+                                        "maxWidth": null,
+                                        "width": "100px",
+                                      }
+                                    }
+                                    tabIndex="-1"
+                                  >
+                                    <div
+                                      className="rt-resizable-header-content"
+                                    />
+                                    <Resizer
+                                      onMouseDown={[Function]}
+                                      onTouchStart={[Function]}
+                                    >
+                                      <div
+                                        className="rt-resizer"
+                                        onMouseDown={[Function]}
+                                        onTouchStart={[Function]}
+                                      />
+                                    </Resizer>
+                                  </div>
+                                </ThComponent>
+                                <ThComponent
+                                  className="rt-resizable-header -cursor-pointer"
+                                  key="2-undefined"
+                                  style={
+                                    Object {
+                                      "flex": "100 0 auto",
+                                      "maxWidth": null,
+                                      "width": "100px",
+                                    }
+                                  }
+                                  toggleSort={[Function]}
+                                >
+                                  <div
+                                    className="rt-th rt-resizable-header -cursor-pointer"
+                                    onClick={[Function]}
+                                    role="columnheader"
+                                    style={
+                                      Object {
+                                        "flex": "100 0 auto",
+                                        "maxWidth": null,
+                                        "width": "100px",
+                                      }
+                                    }
+                                    tabIndex="-1"
+                                  >
+                                    <div
+                                      className="rt-resizable-header-content"
+                                    />
+                                    <Resizer
+                                      onMouseDown={[Function]}
+                                      onTouchStart={[Function]}
+                                    >
+                                      <div
+                                        className="rt-resizer"
+                                        onMouseDown={[Function]}
+                                        onTouchStart={[Function]}
+                                      />
+                                    </Resizer>
+                                  </div>
+                                </ThComponent>
+                                <ThComponent
+                                  className="rt-resizable-header -cursor-pointer"
+                                  key="3-undefined"
+                                  style={
+                                    Object {
+                                      "flex": "100 0 auto",
+                                      "maxWidth": null,
+                                      "width": "100px",
+                                    }
+                                  }
+                                  toggleSort={[Function]}
+                                >
+                                  <div
+                                    className="rt-th rt-resizable-header -cursor-pointer"
+                                    onClick={[Function]}
+                                    role="columnheader"
+                                    style={
+                                      Object {
+                                        "flex": "100 0 auto",
+                                        "maxWidth": null,
+                                        "width": "100px",
+                                      }
+                                    }
+                                    tabIndex="-1"
+                                  >
+                                    <div
+                                      className="rt-resizable-header-content"
+                                    />
+                                    <Resizer
+                                      onMouseDown={[Function]}
+                                      onTouchStart={[Function]}
+                                    >
+                                      <div
+                                        className="rt-resizer"
+                                        onMouseDown={[Function]}
+                                        onTouchStart={[Function]}
+                                      />
+                                    </Resizer>
+                                  </div>
+                                </ThComponent>
+                              </div>
+                            </TrComponent>
+                          </div>
+                        </Thead>
+                        <Tbody
+                          className=""
+                          style={
+                            Object {
+                              "minWidth": "400px",
+                            }
+                          }
+                        >
+                          <div
+                            className="rt-tbody"
+                            style={
+                              Object {
+                                "minWidth": "400px",
+                              }
+                            }
+                          />
+                        </Tbody>
                       </div>
-                    </div>
-                  </LoadingComponent>
-                </div>
-              </ReactTable>
-            </DrillDownTable>
-            <h3
-              className="text-muted"
-            >
-              No Investigations Found
-            </h3>
-            <hr />
-          </div>
-          <div
+                    </TableComponent>
+                    <NoDataComponent />
+                    <LoadingComponent
+                      loading={false}
+                      loadingText="Loading..."
+                    >
+                      <div
+                        className="-loading"
+                      >
+                        <div
+                          className="-loading-inner"
+                        >
+                          Loading...
+                        </div>
+                      </div>
+                    </LoadingComponent>
+                  </div>
+                </ReactTable>
+              </DrillDownTable>
+              <h3
+                className="text-muted"
+              >
+                No Investigations Found
+              </h3>
+              <hr />
+            </div>
+          </NullDataTable>
+          <NullDataTable
             key="complete-Routine"
-          >
-            <h3
-              className="mb-3 mt-5 page-title"
-            >
-              Routine
-            </h3>
-            <DrillDownTable
-              CellComponent={[Function]}
-              NoDataComponent={[Function]}
-              columns={
-                Array [
+            reasonType="Routine"
+            tableProps={
+              Object {
+                "CellComponent": [Function],
+                "columns": Array [
                   Object {
                     "Header": "Name",
                     "columns": Array [
@@ -4482,76 +4594,28 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
                       Object {},
                     ],
                   },
-                ]
+                ],
+                "data": Array [],
+                "identifierField": "id",
+                "linkerField": "id",
+                "minRows": 0,
+                "parentIdentifierField": "parent",
+                "rootParentId": null,
+                "showPageSizeOptions": false,
+                "showPagination": false,
+                "useDrillDownTrProps": false,
               }
-              data={Array []}
-              hasChildren={[Function]}
-              identifierField="id"
-              linkerField="id"
-              minRows={0}
-              parentIdentifierField="parent"
-              rootParentId={null}
-              shouldUseEffect={false}
-              showPageSizeOptions={false}
-              showPagination={false}
-              useDrillDownTrProps={false}
-            >
-              <ReactTable
-                AggregatedComponent={[Function]}
+            }
+          >
+            <div>
+              <h3
+                className="mb-3 mt-5 page-title"
+              >
+                Routine
+              </h3>
+              <DrillDownTable
                 CellComponent={[Function]}
-                ExpanderComponent={[Function]}
-                FilterComponent={[Function]}
-                LoadingComponent={[Function]}
                 NoDataComponent={[Function]}
-                PadRowComponent={[Function]}
-                PaginationComponent={[Function]}
-                PivotValueComponent={[Function]}
-                ResizerComponent={[Function]}
-                TableComponent={[Function]}
-                TbodyComponent={[Function]}
-                TdComponent={[Function]}
-                TfootComponent={[Function]}
-                ThComponent={[Function]}
-                TheadComponent={[Function]}
-                TrComponent={[Function]}
-                TrGroupComponent={[Function]}
-                aggregatedKey="_aggregated"
-                className=""
-                collapseOnDataChange={true}
-                collapseOnPageChange={true}
-                collapseOnSortingChange={true}
-                column={
-                  Object {
-                    "Aggregated": undefined,
-                    "Cell": undefined,
-                    "Expander": undefined,
-                    "Filter": undefined,
-                    "Footer": undefined,
-                    "Header": undefined,
-                    "Pivot": undefined,
-                    "PivotValue": undefined,
-                    "Placeholder": undefined,
-                    "aggregate": undefined,
-                    "className": "",
-                    "filterAll": false,
-                    "filterMethod": undefined,
-                    "filterable": undefined,
-                    "footerClassName": "",
-                    "footerStyle": Object {},
-                    "getFooterProps": [Function],
-                    "getHeaderProps": [Function],
-                    "getProps": [Function],
-                    "headerClassName": "",
-                    "headerStyle": Object {},
-                    "minResizeWidth": 11,
-                    "minWidth": 100,
-                    "resizable": undefined,
-                    "show": true,
-                    "sortMethod": undefined,
-                    "sortable": undefined,
-                    "style": Object {},
-                  }
-                }
                 columns={
                   Array [
                     Object {
@@ -4581,468 +4645,565 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
                   ]
                 }
                 data={Array []}
-                defaultExpanded={Object {}}
-                defaultFilterMethod={[Function]}
-                defaultFiltered={Array []}
-                defaultPage={0}
-                defaultPageSize={20}
-                defaultResized={Array []}
-                defaultSortDesc={false}
-                defaultSortMethod={[Function]}
-                defaultSorted={Array []}
-                expanderDefaults={
-                  Object {
-                    "filterable": false,
-                    "resizable": false,
-                    "sortable": false,
-                    "width": 35,
-                  }
-                }
-                filterable={false}
-                freezeWhenExpanded={false}
-                getLoadingProps={[Function]}
-                getNoDataProps={[Function]}
-                getPaginationProps={[Function]}
-                getProps={[Function]}
-                getResizerProps={[Function]}
-                getTableProps={[Function]}
-                getTbodyProps={[Function]}
-                getTdProps={[Function]}
-                getTfootProps={[Function]}
-                getTfootTdProps={[Function]}
-                getTfootTrProps={[Function]}
-                getTheadFilterProps={[Function]}
-                getTheadFilterThProps={[Function]}
-                getTheadFilterTrProps={[Function]}
-                getTheadGroupProps={[Function]}
-                getTheadGroupThProps={[Function]}
-                getTheadGroupTrProps={[Function]}
-                getTheadProps={[Function]}
-                getTheadThProps={[Function]}
-                getTheadTrProps={[Function]}
-                getTrGroupProps={[Function]}
-                getTrProps={[Function]}
-                groupedByPivotKey="_groupedByPivot"
                 hasChildren={[Function]}
                 identifierField="id"
-                indexKey="_index"
                 linkerField="id"
-                loading={false}
-                loadingText="Loading..."
                 minRows={0}
-                multiSort={true}
-                nestingLevelKey="_nestingLevel"
-                nextText="Next"
-                noDataText="No rows found"
-                ofText="of"
-                onFetchData={[Function]}
-                originalKey="_original"
-                pageJumpText="jump to page"
-                pageSizeOptions={
-                  Array [
-                    5,
-                    10,
-                    20,
-                    25,
-                    50,
-                    100,
-                  ]
-                }
-                pageText="Page"
                 parentIdentifierField="parent"
-                pivotDefaults={Object {}}
-                pivotIDKey="_pivotID"
-                pivotValKey="_pivotVal"
-                previousText="Previous"
-                resizable={true}
-                resolveData={[Function]}
                 rootParentId={null}
-                rowsSelectorText="rows per page"
-                rowsText="rows"
                 shouldUseEffect={false}
-                showPageJump={true}
                 showPageSizeOptions={false}
                 showPagination={false}
-                showPaginationBottom={true}
-                showPaginationTop={false}
-                sortable={true}
-                style={Object {}}
-                subRowsKey="_subRows"
                 useDrillDownTrProps={false}
               >
-                <div
-                  className="ReactTable"
+                <ReactTable
+                  AggregatedComponent={[Function]}
+                  CellComponent={[Function]}
+                  ExpanderComponent={[Function]}
+                  FilterComponent={[Function]}
+                  LoadingComponent={[Function]}
+                  NoDataComponent={[Function]}
+                  PadRowComponent={[Function]}
+                  PaginationComponent={[Function]}
+                  PivotValueComponent={[Function]}
+                  ResizerComponent={[Function]}
+                  TableComponent={[Function]}
+                  TbodyComponent={[Function]}
+                  TdComponent={[Function]}
+                  TfootComponent={[Function]}
+                  ThComponent={[Function]}
+                  TheadComponent={[Function]}
+                  TrComponent={[Function]}
+                  TrGroupComponent={[Function]}
+                  aggregatedKey="_aggregated"
+                  className=""
+                  collapseOnDataChange={true}
+                  collapseOnPageChange={true}
+                  collapseOnSortingChange={true}
+                  column={
+                    Object {
+                      "Aggregated": undefined,
+                      "Cell": undefined,
+                      "Expander": undefined,
+                      "Filter": undefined,
+                      "Footer": undefined,
+                      "Header": undefined,
+                      "Pivot": undefined,
+                      "PivotValue": undefined,
+                      "Placeholder": undefined,
+                      "aggregate": undefined,
+                      "className": "",
+                      "filterAll": false,
+                      "filterMethod": undefined,
+                      "filterable": undefined,
+                      "footerClassName": "",
+                      "footerStyle": Object {},
+                      "getFooterProps": [Function],
+                      "getHeaderProps": [Function],
+                      "getProps": [Function],
+                      "headerClassName": "",
+                      "headerStyle": Object {},
+                      "minResizeWidth": 11,
+                      "minWidth": 100,
+                      "resizable": undefined,
+                      "show": true,
+                      "sortMethod": undefined,
+                      "sortable": undefined,
+                      "style": Object {},
+                    }
+                  }
+                  columns={
+                    Array [
+                      Object {
+                        "Header": "Name",
+                        "columns": Array [
+                          Object {},
+                        ],
+                      },
+                      Object {
+                        "Header": "Start Date",
+                        "columns": Array [
+                          Object {},
+                        ],
+                      },
+                      Object {
+                        "Header": "End Date",
+                        "columns": Array [
+                          Object {},
+                        ],
+                      },
+                      Object {
+                        "Header": "Date Completed",
+                        "columns": Array [
+                          Object {},
+                        ],
+                      },
+                    ]
+                  }
+                  data={Array []}
+                  defaultExpanded={Object {}}
+                  defaultFilterMethod={[Function]}
+                  defaultFiltered={Array []}
+                  defaultPage={0}
+                  defaultPageSize={20}
+                  defaultResized={Array []}
+                  defaultSortDesc={false}
+                  defaultSortMethod={[Function]}
+                  defaultSorted={Array []}
+                  expanderDefaults={
+                    Object {
+                      "filterable": false,
+                      "resizable": false,
+                      "sortable": false,
+                      "width": 35,
+                    }
+                  }
+                  filterable={false}
+                  freezeWhenExpanded={false}
+                  getLoadingProps={[Function]}
+                  getNoDataProps={[Function]}
+                  getPaginationProps={[Function]}
+                  getProps={[Function]}
+                  getResizerProps={[Function]}
+                  getTableProps={[Function]}
+                  getTbodyProps={[Function]}
+                  getTdProps={[Function]}
+                  getTfootProps={[Function]}
+                  getTfootTdProps={[Function]}
+                  getTfootTrProps={[Function]}
+                  getTheadFilterProps={[Function]}
+                  getTheadFilterThProps={[Function]}
+                  getTheadFilterTrProps={[Function]}
+                  getTheadGroupProps={[Function]}
+                  getTheadGroupThProps={[Function]}
+                  getTheadGroupTrProps={[Function]}
+                  getTheadProps={[Function]}
+                  getTheadThProps={[Function]}
+                  getTheadTrProps={[Function]}
+                  getTrGroupProps={[Function]}
+                  getTrProps={[Function]}
+                  groupedByPivotKey="_groupedByPivot"
+                  hasChildren={[Function]}
+                  identifierField="id"
+                  indexKey="_index"
+                  linkerField="id"
+                  loading={false}
+                  loadingText="Loading..."
+                  minRows={0}
+                  multiSort={true}
+                  nestingLevelKey="_nestingLevel"
+                  nextText="Next"
+                  noDataText="No rows found"
+                  ofText="of"
+                  onFetchData={[Function]}
+                  originalKey="_original"
+                  pageJumpText="jump to page"
+                  pageSizeOptions={
+                    Array [
+                      5,
+                      10,
+                      20,
+                      25,
+                      50,
+                      100,
+                    ]
+                  }
+                  pageText="Page"
+                  parentIdentifierField="parent"
+                  pivotDefaults={Object {}}
+                  pivotIDKey="_pivotID"
+                  pivotValKey="_pivotVal"
+                  previousText="Previous"
+                  resizable={true}
+                  resolveData={[Function]}
+                  rootParentId={null}
+                  rowsSelectorText="rows per page"
+                  rowsText="rows"
+                  shouldUseEffect={false}
+                  showPageJump={true}
+                  showPageSizeOptions={false}
+                  showPagination={false}
+                  showPaginationBottom={true}
+                  showPaginationTop={false}
+                  sortable={true}
                   style={Object {}}
+                  subRowsKey="_subRows"
+                  useDrillDownTrProps={false}
                 >
-                  <TableComponent
-                    className=""
+                  <div
+                    className="ReactTable"
+                    style={Object {}}
                   >
-                    <div
-                      className="rt-table"
-                      role="grid"
-                    >
-                      <Thead
-                        className="-headerGroups"
-                        style={
-                          Object {
-                            "minWidth": "400px",
-                          }
-                        }
-                      >
-                        <div
-                          className="rt-thead -headerGroups"
-                          style={
-                            Object {
-                              "minWidth": "400px",
-                            }
-                          }
-                        >
-                          <TrComponent>
-                            <div
-                              className="rt-tr"
-                              role="row"
-                            >
-                              <ThComponent
-                                className=""
-                                key="0-undefined"
-                                style={
-                                  Object {
-                                    "flex": "100 0 auto",
-                                    "maxWidth": null,
-                                    "width": "100px",
-                                  }
-                                }
-                              >
-                                <div
-                                  className="rt-th"
-                                  onClick={[Function]}
-                                  role="columnheader"
-                                  style={
-                                    Object {
-                                      "flex": "100 0 auto",
-                                      "maxWidth": null,
-                                      "width": "100px",
-                                    }
-                                  }
-                                  tabIndex="-1"
-                                >
-                                  Name
-                                </div>
-                              </ThComponent>
-                              <ThComponent
-                                className=""
-                                key="1-undefined"
-                                style={
-                                  Object {
-                                    "flex": "100 0 auto",
-                                    "maxWidth": null,
-                                    "width": "100px",
-                                  }
-                                }
-                              >
-                                <div
-                                  className="rt-th"
-                                  onClick={[Function]}
-                                  role="columnheader"
-                                  style={
-                                    Object {
-                                      "flex": "100 0 auto",
-                                      "maxWidth": null,
-                                      "width": "100px",
-                                    }
-                                  }
-                                  tabIndex="-1"
-                                >
-                                  Start Date
-                                </div>
-                              </ThComponent>
-                              <ThComponent
-                                className=""
-                                key="2-undefined"
-                                style={
-                                  Object {
-                                    "flex": "100 0 auto",
-                                    "maxWidth": null,
-                                    "width": "100px",
-                                  }
-                                }
-                              >
-                                <div
-                                  className="rt-th"
-                                  onClick={[Function]}
-                                  role="columnheader"
-                                  style={
-                                    Object {
-                                      "flex": "100 0 auto",
-                                      "maxWidth": null,
-                                      "width": "100px",
-                                    }
-                                  }
-                                  tabIndex="-1"
-                                >
-                                  End Date
-                                </div>
-                              </ThComponent>
-                              <ThComponent
-                                className=""
-                                key="3-undefined"
-                                style={
-                                  Object {
-                                    "flex": "100 0 auto",
-                                    "maxWidth": null,
-                                    "width": "100px",
-                                  }
-                                }
-                              >
-                                <div
-                                  className="rt-th"
-                                  onClick={[Function]}
-                                  role="columnheader"
-                                  style={
-                                    Object {
-                                      "flex": "100 0 auto",
-                                      "maxWidth": null,
-                                      "width": "100px",
-                                    }
-                                  }
-                                  tabIndex="-1"
-                                >
-                                  Date Completed
-                                </div>
-                              </ThComponent>
-                            </div>
-                          </TrComponent>
-                        </div>
-                      </Thead>
-                      <Thead
-                        className="-header"
-                        style={
-                          Object {
-                            "minWidth": "400px",
-                          }
-                        }
-                      >
-                        <div
-                          className="rt-thead -header"
-                          style={
-                            Object {
-                              "minWidth": "400px",
-                            }
-                          }
-                        >
-                          <TrComponent>
-                            <div
-                              className="rt-tr"
-                              role="row"
-                            >
-                              <ThComponent
-                                className="rt-resizable-header -cursor-pointer"
-                                key="0-undefined"
-                                style={
-                                  Object {
-                                    "flex": "100 0 auto",
-                                    "maxWidth": null,
-                                    "width": "100px",
-                                  }
-                                }
-                                toggleSort={[Function]}
-                              >
-                                <div
-                                  className="rt-th rt-resizable-header -cursor-pointer"
-                                  onClick={[Function]}
-                                  role="columnheader"
-                                  style={
-                                    Object {
-                                      "flex": "100 0 auto",
-                                      "maxWidth": null,
-                                      "width": "100px",
-                                    }
-                                  }
-                                  tabIndex="-1"
-                                >
-                                  <div
-                                    className="rt-resizable-header-content"
-                                  />
-                                  <Resizer
-                                    onMouseDown={[Function]}
-                                    onTouchStart={[Function]}
-                                  >
-                                    <div
-                                      className="rt-resizer"
-                                      onMouseDown={[Function]}
-                                      onTouchStart={[Function]}
-                                    />
-                                  </Resizer>
-                                </div>
-                              </ThComponent>
-                              <ThComponent
-                                className="rt-resizable-header -cursor-pointer"
-                                key="1-undefined"
-                                style={
-                                  Object {
-                                    "flex": "100 0 auto",
-                                    "maxWidth": null,
-                                    "width": "100px",
-                                  }
-                                }
-                                toggleSort={[Function]}
-                              >
-                                <div
-                                  className="rt-th rt-resizable-header -cursor-pointer"
-                                  onClick={[Function]}
-                                  role="columnheader"
-                                  style={
-                                    Object {
-                                      "flex": "100 0 auto",
-                                      "maxWidth": null,
-                                      "width": "100px",
-                                    }
-                                  }
-                                  tabIndex="-1"
-                                >
-                                  <div
-                                    className="rt-resizable-header-content"
-                                  />
-                                  <Resizer
-                                    onMouseDown={[Function]}
-                                    onTouchStart={[Function]}
-                                  >
-                                    <div
-                                      className="rt-resizer"
-                                      onMouseDown={[Function]}
-                                      onTouchStart={[Function]}
-                                    />
-                                  </Resizer>
-                                </div>
-                              </ThComponent>
-                              <ThComponent
-                                className="rt-resizable-header -cursor-pointer"
-                                key="2-undefined"
-                                style={
-                                  Object {
-                                    "flex": "100 0 auto",
-                                    "maxWidth": null,
-                                    "width": "100px",
-                                  }
-                                }
-                                toggleSort={[Function]}
-                              >
-                                <div
-                                  className="rt-th rt-resizable-header -cursor-pointer"
-                                  onClick={[Function]}
-                                  role="columnheader"
-                                  style={
-                                    Object {
-                                      "flex": "100 0 auto",
-                                      "maxWidth": null,
-                                      "width": "100px",
-                                    }
-                                  }
-                                  tabIndex="-1"
-                                >
-                                  <div
-                                    className="rt-resizable-header-content"
-                                  />
-                                  <Resizer
-                                    onMouseDown={[Function]}
-                                    onTouchStart={[Function]}
-                                  >
-                                    <div
-                                      className="rt-resizer"
-                                      onMouseDown={[Function]}
-                                      onTouchStart={[Function]}
-                                    />
-                                  </Resizer>
-                                </div>
-                              </ThComponent>
-                              <ThComponent
-                                className="rt-resizable-header -cursor-pointer"
-                                key="3-undefined"
-                                style={
-                                  Object {
-                                    "flex": "100 0 auto",
-                                    "maxWidth": null,
-                                    "width": "100px",
-                                  }
-                                }
-                                toggleSort={[Function]}
-                              >
-                                <div
-                                  className="rt-th rt-resizable-header -cursor-pointer"
-                                  onClick={[Function]}
-                                  role="columnheader"
-                                  style={
-                                    Object {
-                                      "flex": "100 0 auto",
-                                      "maxWidth": null,
-                                      "width": "100px",
-                                    }
-                                  }
-                                  tabIndex="-1"
-                                >
-                                  <div
-                                    className="rt-resizable-header-content"
-                                  />
-                                  <Resizer
-                                    onMouseDown={[Function]}
-                                    onTouchStart={[Function]}
-                                  >
-                                    <div
-                                      className="rt-resizer"
-                                      onMouseDown={[Function]}
-                                      onTouchStart={[Function]}
-                                    />
-                                  </Resizer>
-                                </div>
-                              </ThComponent>
-                            </div>
-                          </TrComponent>
-                        </div>
-                      </Thead>
-                      <Tbody
-                        className=""
-                        style={
-                          Object {
-                            "minWidth": "400px",
-                          }
-                        }
-                      >
-                        <div
-                          className="rt-tbody"
-                          style={
-                            Object {
-                              "minWidth": "400px",
-                            }
-                          }
-                        />
-                      </Tbody>
-                    </div>
-                  </TableComponent>
-                  <NoDataComponent />
-                  <LoadingComponent
-                    loading={false}
-                    loadingText="Loading..."
-                  >
-                    <div
-                      className="-loading"
+                    <TableComponent
+                      className=""
                     >
                       <div
-                        className="-loading-inner"
+                        className="rt-table"
+                        role="grid"
                       >
-                        Loading...
+                        <Thead
+                          className="-headerGroups"
+                          style={
+                            Object {
+                              "minWidth": "400px",
+                            }
+                          }
+                        >
+                          <div
+                            className="rt-thead -headerGroups"
+                            style={
+                              Object {
+                                "minWidth": "400px",
+                              }
+                            }
+                          >
+                            <TrComponent>
+                              <div
+                                className="rt-tr"
+                                role="row"
+                              >
+                                <ThComponent
+                                  className=""
+                                  key="0-undefined"
+                                  style={
+                                    Object {
+                                      "flex": "100 0 auto",
+                                      "maxWidth": null,
+                                      "width": "100px",
+                                    }
+                                  }
+                                >
+                                  <div
+                                    className="rt-th"
+                                    onClick={[Function]}
+                                    role="columnheader"
+                                    style={
+                                      Object {
+                                        "flex": "100 0 auto",
+                                        "maxWidth": null,
+                                        "width": "100px",
+                                      }
+                                    }
+                                    tabIndex="-1"
+                                  >
+                                    Name
+                                  </div>
+                                </ThComponent>
+                                <ThComponent
+                                  className=""
+                                  key="1-undefined"
+                                  style={
+                                    Object {
+                                      "flex": "100 0 auto",
+                                      "maxWidth": null,
+                                      "width": "100px",
+                                    }
+                                  }
+                                >
+                                  <div
+                                    className="rt-th"
+                                    onClick={[Function]}
+                                    role="columnheader"
+                                    style={
+                                      Object {
+                                        "flex": "100 0 auto",
+                                        "maxWidth": null,
+                                        "width": "100px",
+                                      }
+                                    }
+                                    tabIndex="-1"
+                                  >
+                                    Start Date
+                                  </div>
+                                </ThComponent>
+                                <ThComponent
+                                  className=""
+                                  key="2-undefined"
+                                  style={
+                                    Object {
+                                      "flex": "100 0 auto",
+                                      "maxWidth": null,
+                                      "width": "100px",
+                                    }
+                                  }
+                                >
+                                  <div
+                                    className="rt-th"
+                                    onClick={[Function]}
+                                    role="columnheader"
+                                    style={
+                                      Object {
+                                        "flex": "100 0 auto",
+                                        "maxWidth": null,
+                                        "width": "100px",
+                                      }
+                                    }
+                                    tabIndex="-1"
+                                  >
+                                    End Date
+                                  </div>
+                                </ThComponent>
+                                <ThComponent
+                                  className=""
+                                  key="3-undefined"
+                                  style={
+                                    Object {
+                                      "flex": "100 0 auto",
+                                      "maxWidth": null,
+                                      "width": "100px",
+                                    }
+                                  }
+                                >
+                                  <div
+                                    className="rt-th"
+                                    onClick={[Function]}
+                                    role="columnheader"
+                                    style={
+                                      Object {
+                                        "flex": "100 0 auto",
+                                        "maxWidth": null,
+                                        "width": "100px",
+                                      }
+                                    }
+                                    tabIndex="-1"
+                                  >
+                                    Date Completed
+                                  </div>
+                                </ThComponent>
+                              </div>
+                            </TrComponent>
+                          </div>
+                        </Thead>
+                        <Thead
+                          className="-header"
+                          style={
+                            Object {
+                              "minWidth": "400px",
+                            }
+                          }
+                        >
+                          <div
+                            className="rt-thead -header"
+                            style={
+                              Object {
+                                "minWidth": "400px",
+                              }
+                            }
+                          >
+                            <TrComponent>
+                              <div
+                                className="rt-tr"
+                                role="row"
+                              >
+                                <ThComponent
+                                  className="rt-resizable-header -cursor-pointer"
+                                  key="0-undefined"
+                                  style={
+                                    Object {
+                                      "flex": "100 0 auto",
+                                      "maxWidth": null,
+                                      "width": "100px",
+                                    }
+                                  }
+                                  toggleSort={[Function]}
+                                >
+                                  <div
+                                    className="rt-th rt-resizable-header -cursor-pointer"
+                                    onClick={[Function]}
+                                    role="columnheader"
+                                    style={
+                                      Object {
+                                        "flex": "100 0 auto",
+                                        "maxWidth": null,
+                                        "width": "100px",
+                                      }
+                                    }
+                                    tabIndex="-1"
+                                  >
+                                    <div
+                                      className="rt-resizable-header-content"
+                                    />
+                                    <Resizer
+                                      onMouseDown={[Function]}
+                                      onTouchStart={[Function]}
+                                    >
+                                      <div
+                                        className="rt-resizer"
+                                        onMouseDown={[Function]}
+                                        onTouchStart={[Function]}
+                                      />
+                                    </Resizer>
+                                  </div>
+                                </ThComponent>
+                                <ThComponent
+                                  className="rt-resizable-header -cursor-pointer"
+                                  key="1-undefined"
+                                  style={
+                                    Object {
+                                      "flex": "100 0 auto",
+                                      "maxWidth": null,
+                                      "width": "100px",
+                                    }
+                                  }
+                                  toggleSort={[Function]}
+                                >
+                                  <div
+                                    className="rt-th rt-resizable-header -cursor-pointer"
+                                    onClick={[Function]}
+                                    role="columnheader"
+                                    style={
+                                      Object {
+                                        "flex": "100 0 auto",
+                                        "maxWidth": null,
+                                        "width": "100px",
+                                      }
+                                    }
+                                    tabIndex="-1"
+                                  >
+                                    <div
+                                      className="rt-resizable-header-content"
+                                    />
+                                    <Resizer
+                                      onMouseDown={[Function]}
+                                      onTouchStart={[Function]}
+                                    >
+                                      <div
+                                        className="rt-resizer"
+                                        onMouseDown={[Function]}
+                                        onTouchStart={[Function]}
+                                      />
+                                    </Resizer>
+                                  </div>
+                                </ThComponent>
+                                <ThComponent
+                                  className="rt-resizable-header -cursor-pointer"
+                                  key="2-undefined"
+                                  style={
+                                    Object {
+                                      "flex": "100 0 auto",
+                                      "maxWidth": null,
+                                      "width": "100px",
+                                    }
+                                  }
+                                  toggleSort={[Function]}
+                                >
+                                  <div
+                                    className="rt-th rt-resizable-header -cursor-pointer"
+                                    onClick={[Function]}
+                                    role="columnheader"
+                                    style={
+                                      Object {
+                                        "flex": "100 0 auto",
+                                        "maxWidth": null,
+                                        "width": "100px",
+                                      }
+                                    }
+                                    tabIndex="-1"
+                                  >
+                                    <div
+                                      className="rt-resizable-header-content"
+                                    />
+                                    <Resizer
+                                      onMouseDown={[Function]}
+                                      onTouchStart={[Function]}
+                                    >
+                                      <div
+                                        className="rt-resizer"
+                                        onMouseDown={[Function]}
+                                        onTouchStart={[Function]}
+                                      />
+                                    </Resizer>
+                                  </div>
+                                </ThComponent>
+                                <ThComponent
+                                  className="rt-resizable-header -cursor-pointer"
+                                  key="3-undefined"
+                                  style={
+                                    Object {
+                                      "flex": "100 0 auto",
+                                      "maxWidth": null,
+                                      "width": "100px",
+                                    }
+                                  }
+                                  toggleSort={[Function]}
+                                >
+                                  <div
+                                    className="rt-th rt-resizable-header -cursor-pointer"
+                                    onClick={[Function]}
+                                    role="columnheader"
+                                    style={
+                                      Object {
+                                        "flex": "100 0 auto",
+                                        "maxWidth": null,
+                                        "width": "100px",
+                                      }
+                                    }
+                                    tabIndex="-1"
+                                  >
+                                    <div
+                                      className="rt-resizable-header-content"
+                                    />
+                                    <Resizer
+                                      onMouseDown={[Function]}
+                                      onTouchStart={[Function]}
+                                    >
+                                      <div
+                                        className="rt-resizer"
+                                        onMouseDown={[Function]}
+                                        onTouchStart={[Function]}
+                                      />
+                                    </Resizer>
+                                  </div>
+                                </ThComponent>
+                              </div>
+                            </TrComponent>
+                          </div>
+                        </Thead>
+                        <Tbody
+                          className=""
+                          style={
+                            Object {
+                              "minWidth": "400px",
+                            }
+                          }
+                        >
+                          <div
+                            className="rt-tbody"
+                            style={
+                              Object {
+                                "minWidth": "400px",
+                              }
+                            }
+                          />
+                        </Tbody>
                       </div>
-                    </div>
-                  </LoadingComponent>
-                </div>
-              </ReactTable>
-            </DrillDownTable>
-            <h3
-              className="text-muted"
-            >
-              No Investigations Found
-            </h3>
-            <hr />
-          </div>
+                    </TableComponent>
+                    <NoDataComponent />
+                    <LoadingComponent
+                      loading={false}
+                      loadingText="Loading..."
+                    >
+                      <div
+                        className="-loading"
+                      >
+                        <div
+                          className="-loading-inner"
+                        >
+                          Loading...
+                        </div>
+                      </div>
+                    </LoadingComponent>
+                  </div>
+                </ReactTable>
+              </DrillDownTable>
+              <h3
+                className="text-muted"
+              >
+                No Investigations Found
+              </h3>
+              <hr />
+            </div>
+          </NullDataTable>
         </div>
       </SingleFI>
     </Connect(SingleFI)>
@@ -5971,11 +6132,43 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
       <div
         key="plan-id-2"
       >
-        <h3
-          className="mb-3 mt-5 page-title"
+        <TableHeader
+          plansArray={
+            Array [
+              Object {
+                "id": "plan-id-2",
+                "jurisdiction_depth": 2,
+                "jurisdiction_id": "3378",
+                "jurisdiction_name": "TLv1_02",
+                "jurisdiction_name_path": Array [
+                  "Canton Tha Luang",
+                  "Tha Luang Village",
+                ],
+                "jurisdiction_parent_id": "2977",
+                "jurisdiction_path": Array [
+                  "2989",
+                  "2977",
+                ],
+                "plan_date": "2019-06-18",
+                "plan_effective_period_end": "2019-06-18",
+                "plan_effective_period_start": "2019-07-31",
+                "plan_fi_reason": "Case-triggered",
+                "plan_fi_status": "A1",
+                "plan_id": "plan-id-2",
+                "plan_intervention_type": "IRS",
+                "plan_status": "active",
+                "plan_title": "A1-Tha Luang Village 1 Focus 01",
+                "plan_version": "1",
+              },
+            ]
+          }
         >
-          Reactive
-        </h3>
+          <h3
+            className="mb-3 mt-5 page-title"
+          >
+            Reactive
+          </h3>
+        </TableHeader>
         <DrillDownTable
           CellComponent={[Function]}
           columns={
@@ -6971,72 +7164,104 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
       <div
         key="ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
       >
-        <div
-          className="routine-heading"
+        <TableHeader
+          plansArray={
+            Array [
+              Object {
+                "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
+                "jurisdiction_depth": 2,
+                "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
+                "jurisdiction_name": "NVI_439",
+                "jurisdiction_name_path": Array [
+                  "Chadiza",
+                  "Naviluli",
+                ],
+                "jurisdiction_parent_id": "2944",
+                "jurisdiction_path": Array [
+                  "2939",
+                  "2944",
+                ],
+                "plan_date": "2019-06-18",
+                "plan_effective_period_end": "2019-06-18",
+                "plan_effective_period_start": "2019-07-31",
+                "plan_fi_reason": "Routine",
+                "plan_fi_status": "A1",
+                "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+                "plan_intervention_type": "FI",
+                "plan_status": "active",
+                "plan_title": "A1-Tha Luang Village 1 Focus 01",
+                "plan_version": "1",
+              },
+            ]
+          }
         >
-          <Row
-            tag="div"
+          <div
+            className="routine-heading"
           >
-            <div
-              className="row"
+            <Row
+              tag="div"
             >
-              <Col
-                tag="div"
-                widths={
-                  Array [
-                    "xs",
-                    "sm",
-                    "md",
-                    "lg",
-                    "xl",
-                  ]
-                }
-                xs="6"
+              <div
+                className="row"
               >
-                <div
-                  className="col-6"
+                <Col
+                  tag="div"
+                  widths={
+                    Array [
+                      "xs",
+                      "sm",
+                      "md",
+                      "lg",
+                      "xl",
+                    ]
+                  }
+                  xs="6"
                 >
-                  <h3
-                    className="mb-3 mt-5 page-title"
+                  <div
+                    className="col-6"
                   >
-                    Routine
-                  </h3>
-                </div>
-              </Col>
-              <Col
-                tag="div"
-                widths={
-                  Array [
-                    "xs",
-                    "sm",
-                    "md",
-                    "lg",
-                    "xl",
-                  ]
-                }
-                xs="6"
-              >
-                <div
-                  className="col-6"
-                >
-                  <Button
-                    className="focus-investigation"
-                    color="primary"
-                    tag="button"
-                  >
-                    <button
-                      aria-label={null}
-                      className="focus-investigation btn btn-primary"
-                      onClick={[Function]}
+                    <h3
+                      className="mb-3 mt-5 page-title"
                     >
-                      Add Focus Investigation
-                    </button>
-                  </Button>
-                </div>
-              </Col>
-            </div>
-          </Row>
-        </div>
+                      Routine
+                    </h3>
+                  </div>
+                </Col>
+                <Col
+                  tag="div"
+                  widths={
+                    Array [
+                      "xs",
+                      "sm",
+                      "md",
+                      "lg",
+                      "xl",
+                    ]
+                  }
+                  xs="6"
+                >
+                  <div
+                    className="col-6"
+                  >
+                    <Button
+                      className="focus-investigation"
+                      color="primary"
+                      tag="button"
+                    >
+                      <button
+                        aria-label={null}
+                        className="focus-investigation btn btn-primary"
+                        onClick={[Function]}
+                      >
+                        Add Focus Investigation
+                      </button>
+                    </Button>
+                  </div>
+                </Col>
+              </div>
+            </Row>
+          </div>
+        </TableHeader>
         <DrillDownTable
           CellComponent={[Function]}
           columns={
@@ -9232,11 +9457,43 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
       <div
         key="draftPlan-id-2"
       >
-        <h3
-          className="mb-3 mt-5 page-title"
+        <TableHeader
+          plansArray={
+            Array [
+              Object {
+                "id": "draftPlan-id-2",
+                "jurisdiction_depth": 43,
+                "jurisdiction_id": "339956",
+                "jurisdiction_name": "TLv1_02",
+                "jurisdiction_name_path": Array [
+                  "Canton Tha Luang",
+                  "Tha Luang Village",
+                ],
+                "jurisdiction_parent_id": "2977",
+                "jurisdiction_path": Array [
+                  "2989",
+                  "2977",
+                ],
+                "plan_date": "2019-06-18",
+                "plan_effective_period_end": "2019-06-18",
+                "plan_effective_period_start": "2019-07-31",
+                "plan_fi_reason": "Case-triggered",
+                "plan_fi_status": "A1",
+                "plan_id": "plan-id-2",
+                "plan_intervention_type": "IRS",
+                "plan_status": "complete",
+                "plan_title": "A1-Tha Luang Village 1 Focus 01",
+                "plan_version": "1",
+              },
+            ]
+          }
         >
-          Reactive
-        </h3>
+          <h3
+            className="mb-3 mt-5 page-title"
+          >
+            Reactive
+          </h3>
+        </TableHeader>
         <DrillDownTable
           CellComponent={[Function]}
           columns={
@@ -10343,72 +10600,104 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
       <div
         key="completedRoutinePlan-id-2"
       >
-        <div
-          className="routine-heading"
+        <TableHeader
+          plansArray={
+            Array [
+              Object {
+                "id": "completedRoutinePlan-id-2",
+                "jurisdiction_depth": 51,
+                "jurisdiction_id": "3378",
+                "jurisdiction_name": "TLv1_02",
+                "jurisdiction_name_path": Array [
+                  "Canton Tha Luang",
+                  "Tha Luang Village",
+                ],
+                "jurisdiction_parent_id": "2977",
+                "jurisdiction_path": Array [
+                  "2989",
+                  "2977",
+                ],
+                "plan_date": "2019-06-18",
+                "plan_effective_period_end": "2019-06-18",
+                "plan_effective_period_start": "2019-07-31",
+                "plan_fi_reason": "Routine",
+                "plan_fi_status": "A1",
+                "plan_id": "plan-id-2",
+                "plan_intervention_type": "IRS",
+                "plan_status": "complete",
+                "plan_title": "A1-Tha Luang Village 1 Focus 01",
+                "plan_version": "1",
+              },
+            ]
+          }
         >
-          <Row
-            tag="div"
+          <div
+            className="routine-heading"
           >
-            <div
-              className="row"
+            <Row
+              tag="div"
             >
-              <Col
-                tag="div"
-                widths={
-                  Array [
-                    "xs",
-                    "sm",
-                    "md",
-                    "lg",
-                    "xl",
-                  ]
-                }
-                xs="6"
+              <div
+                className="row"
               >
-                <div
-                  className="col-6"
+                <Col
+                  tag="div"
+                  widths={
+                    Array [
+                      "xs",
+                      "sm",
+                      "md",
+                      "lg",
+                      "xl",
+                    ]
+                  }
+                  xs="6"
                 >
-                  <h3
-                    className="mb-3 mt-5 page-title"
+                  <div
+                    className="col-6"
                   >
-                    Routine
-                  </h3>
-                </div>
-              </Col>
-              <Col
-                tag="div"
-                widths={
-                  Array [
-                    "xs",
-                    "sm",
-                    "md",
-                    "lg",
-                    "xl",
-                  ]
-                }
-                xs="6"
-              >
-                <div
-                  className="col-6"
-                >
-                  <Button
-                    className="focus-investigation"
-                    color="primary"
-                    tag="button"
-                  >
-                    <button
-                      aria-label={null}
-                      className="focus-investigation btn btn-primary"
-                      onClick={[Function]}
+                    <h3
+                      className="mb-3 mt-5 page-title"
                     >
-                      Add Focus Investigation
-                    </button>
-                  </Button>
-                </div>
-              </Col>
-            </div>
-          </Row>
-        </div>
+                      Routine
+                    </h3>
+                  </div>
+                </Col>
+                <Col
+                  tag="div"
+                  widths={
+                    Array [
+                      "xs",
+                      "sm",
+                      "md",
+                      "lg",
+                      "xl",
+                    ]
+                  }
+                  xs="6"
+                >
+                  <div
+                    className="col-6"
+                  >
+                    <Button
+                      className="focus-investigation"
+                      color="primary"
+                      tag="button"
+                    >
+                      <button
+                        aria-label={null}
+                        className="focus-investigation btn btn-primary"
+                        onClick={[Function]}
+                      >
+                        Add Focus Investigation
+                      </button>
+                    </Button>
+                  </div>
+                </Col>
+              </div>
+            </Row>
+          </div>
+        </TableHeader>
         <DrillDownTable
           CellComponent={[Function]}
           columns={
