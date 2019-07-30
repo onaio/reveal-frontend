@@ -32,6 +32,7 @@ import {
 const initialActivitiesValues: PlanActivityFormFields = {
   actionCode: '',
   actionDescription: '',
+  actionIdentifier: '',
   actionReason: actionReasons[0],
   actionTitle: '',
   goalDescription: '',
@@ -280,6 +281,13 @@ const PlanForm = (props: PlanFormProps) => {
                           name={`activities[${index}].actionCode`}
                           id={`activities[${index}].actionCode`}
                           value={values.activities[index].actionCode}
+                        />
+                        <Field
+                          type="hidden"
+                          name={`activities[${index}].actionIdentifier`}
+                          id={`activities[${index}].actionIdentifier`}
+                          value={values.activities[index].actionIdentifier}
+                          readOnly={true}
                         />
                       </FormGroup>
                       <FormGroup>
