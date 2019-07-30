@@ -1025,3 +1025,151 @@ export { jurisdiction3 };
 export const jurisdictionsIdsArray = jurisdictions.map((e: any) => e.jurisdiction_id);
 export const currentGoal = 'RACD_register_all_families';
 export const nextGoal = 'Bednet Distribution';
+
+export const CurrentReactiveTableProps = {
+  columns: [
+    {
+      Header: 'Name',
+      columns: [{}],
+    },
+    {
+      Header: 'FI Status',
+      columns: [{}],
+    },
+    {
+      Header: 'Case Notif. Date',
+      columns: [{}],
+    },
+    {
+      Header: 'Case Class.',
+      columns: [{}],
+    },
+  ],
+  data: [],
+  identifierField: 'id',
+  linkerField: 'id',
+  minRows: 0,
+  parentIdentifierField: 'parent',
+  rootParentId: null,
+  showPageSizeOptions: false,
+  showPagination: false,
+  useDrillDownTrProps: false,
+};
+
+export const CurrentRoutineTableProps = {
+  columns: [
+    {
+      Header: 'Name',
+      columns: [{}],
+    },
+    {
+      Header: 'FI Status',
+      columns: [{}],
+    },
+    {
+      Header: 'Province',
+      columns: [{}],
+    },
+    {
+      Header: 'District',
+      columns: [{}],
+    },
+    {
+      Header: 'Canton',
+      columns: [{}],
+    },
+    {
+      Header: 'Village',
+      columns: [{}],
+    },
+    {
+      Header: 'Focus Area',
+      columns: [{}],
+    },
+    {
+      Header: 'Status',
+      columns: [{}],
+    },
+    {
+      Header: 'Start Date',
+      columns: [{}],
+    },
+    {
+      Header: 'End Date',
+      columns: [{}],
+    },
+    {
+      Header: 'Actions',
+      columns: [{}],
+    },
+  ],
+  data: [],
+  identifierField: 'id',
+  linkerField: 'id',
+  minRows: 0,
+  parentIdentifierField: 'parent',
+  rootParentId: null,
+  showPageSizeOptions: false,
+  showPagination: false,
+  useDrillDownTrProps: false,
+};
+
+export const CompleteReactiveTableProps = {
+  columns: [
+    {
+      Header: 'Name',
+      columns: [{}],
+    },
+    {
+      Header: 'Date Completed',
+      columns: [{}],
+    },
+    {
+      Header: 'Case Notif. Date',
+      columns: [{}],
+    },
+    {
+      Header: 'Case Class.',
+      columns: [{}],
+    },
+  ],
+  data: [],
+  identifierField: 'id',
+  linkerField: 'id',
+  minRows: 0,
+  parentIdentifierField: 'parent',
+  rootParentId: null,
+  showPageSizeOptions: false,
+  showPagination: false,
+  useDrillDownTrProps: false,
+};
+
+export const CompleteRoutineTableProps = {
+  columns: [
+    {
+      Header: 'Name',
+      columns: [{}],
+    },
+    {
+      Header: 'Start Date',
+      columns: [{}],
+    },
+    {
+      Header: 'End Date',
+      columns: [{}],
+    },
+    {
+      Header: 'Date Completed',
+      columns: [{}],
+    },
+  ],
+  data: [],
+  identifierField: 'id',
+  linkerField: 'id',
+  minRows: 0,
+  parentIdentifierField: 'parent',
+  rootParentId: null,
+  showPageSizeOptions: false,
+  showPagination: false,
+  useDrillDownTrProps: false,
+};
