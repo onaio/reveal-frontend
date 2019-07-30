@@ -1,5 +1,7 @@
 import * as gatekeeper from '@onaio/gatekeeper';
 import { cloneDeep, map } from 'lodash';
+import MockDate from 'mockdate';
+import moment from 'moment';
 import {
   BLACK,
   TASK_BLUE as BLUE,
@@ -311,11 +313,15 @@ describe('helpers/utils', () => {
   });
 
   it('generates name spaced uuids', () => {
+    MockDate.set('7-13-17 19:31'); // Mersenne primes :)
     expect(generateNameSpacedUUID('plan 1', PLAN_UUID_NAMESPACE)).toEqual(
       '1b3714e5-4fef-5e41-bb81-3800003e3b83'
     );
     expect(generateNameSpacedUUID('A2 Akros_2 2019-07-30', PLAN_UUID_NAMESPACE)).toEqual(
       'b3debab9-1da3-5a24-ad81-c5eb8dd0cbd2'
+    );
+    expect(generateNameSpacedUUID(moment().toString(), PLAN_UUID_NAMESPACE)).toEqual(
+      '94a59b2f-8225-539c-94fa-9ce91a6e9b3f'
     );
   });
 });
