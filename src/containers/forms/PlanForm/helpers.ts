@@ -3,7 +3,11 @@ import { omit, pick } from 'lodash';
 import moment from 'moment';
 import { FormEvent } from 'react';
 import * as Yup from 'yup';
-import { DATE_FORMAT, DEFAULT_ACTIVITY_DURATION_DAYS } from '../../../configs/env';
+import {
+  DATE_FORMAT,
+  DEFAULT_ACTIVITY_DURATION_DAYS,
+  PLAN_UUID_NAMESPACE,
+} from '../../../configs/env';
 import {
   actionReasons,
   ActionReasonType,
@@ -26,6 +30,7 @@ import {
   UseContext,
 } from '../../../configs/settings';
 import { DATE, IRS_TITLE, IS, NAME, REQUIRED } from '../../../constants';
+import { generateNameSpacedUUID } from '../../../helpers/utils';
 import { InterventionType, PlanStatus } from '../../../store/ducks/plans';
 
 /** separate FI and IRS activities */
@@ -329,7 +334,10 @@ export function generatePlanDefinition(formValue: PlanFormFields): PlanDefinitio
       end: moment(formValue.end).format(DATE_FORMAT.toUpperCase()),
       start: moment(formValue.start).format(DATE_FORMAT.toUpperCase()),
     },
-    identifier: '',
+    identifier:
+      !formValue.identifier || formValue.identifier === ''
+        ? generateNameSpacedUUID(moment().toString(), PLAN_UUID_NAMESPACE)
+        : formValue.identifier,
     jurisdiction: [],
     name: formValue.name,
     status: formValue.status,
