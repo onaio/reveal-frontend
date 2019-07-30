@@ -92,12 +92,25 @@ const JurisdictionSelect = (props: JurisdictionSelectProps) => {
   const handleChange = () => (option: any) => {
     const optionVal = option as { label: string; value: string };
     if (optionVal && optionVal.value) {
-      setParentId(optionVal.value);
+      // we are going to check if the current option has children
+      // and if it does, we set it as the new parentId
 
-      hierarchy.push(optionVal);
-      setHierarchy(hierarchy);
+      const newParamsToUse = {
+        ...params,
+        properties_filter: getFilterParams({ parentId: optionVal.value }),
+      };
+      service.list(newParamsToUse).then(e => {
+        if (e.length > 0) {
+          setParentId(optionVal.value);
+
+          hierarchy.push(optionVal);
+          setHierarchy(hierarchy);
+        }
+      });
     } else {
+      // most probably the select element was reset
       setParentId('');
+      setHierarchy([]);
     }
   };
 
