@@ -247,7 +247,7 @@ export function extractActivitiesFromPlanForm(activities: PlanActivityFormFields
 
 /**
  * Get the plan name and title
- * @param {any} event - the event object
+ * @param {FormEvent} event - the event object
  * @param {PlanFormFields} formValues - the form values
  * @returns {[string, string]} - the plan name and title
  */
