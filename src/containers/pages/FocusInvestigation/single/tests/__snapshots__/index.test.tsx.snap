@@ -3841,7 +3841,6 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
               </ReactTable>
             </DrillDownTable>
           </div>
-          <hr />
           <h4
             className="mb-4 complete"
           >
@@ -5528,13 +5527,13 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
               "adhoc_filters": Array [
                 Object {
                   "clause": "WHERE",
-                  "comparator": "FI",
+                  "comparator": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
                   "expressionType": "SIMPLE",
                   "operator": "==",
-                  "subject": "plan_intervention_type",
+                  "subject": "plan_id",
                 },
               ],
-              "row_limit": 2000,
+              "row_limit": 3000,
             },
           ],
         ],
@@ -9224,7 +9223,6 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
           </ReactTable>
         </DrillDownTable>
       </div>
-      <hr />
       <h4
         className="mb-4 complete"
       >
