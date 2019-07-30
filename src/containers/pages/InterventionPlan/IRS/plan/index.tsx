@@ -173,7 +173,7 @@ class IrsPlan extends React.Component<
       focusJurisdictionId: null,
       isEditingPlanName: false,
       isLoadingGeoms: false,
-      isLoadingJurisdictions: true,
+      isLoadingJurisdictions: !!!props.isFinalizedPlan,
       isSaveDraftDisabled: false,
       isStartingPlan: props.isNewPlan || props.isDraftPlan || false,
       newPlan: props.isNewPlan
@@ -518,26 +518,29 @@ class IrsPlan extends React.Component<
       this.onEditPlanSettingsButtonClick(e);
     };
     const onSaveAsDraftButtonClick = (e: MouseEvent) => {
-      this.onSaveAsDraftButtonClick(e);
+      this.onSavePlanButtonClick(e);
+    };
+    const onSaveFinalizedPlanButtonClick = (e: MouseEvent) => {
+      this.onSavePlanButtonClick(e, true);
     };
 
     const planHeaderRow = (
       <Row>
         {isFinalizedPlan && (
-          <Col xs="9" className="page-title-col">
+          <Col xs="8" className="page-title-col">
             <h2 className="page-title">IRS: {pageLabel}</h2>
           </Col>
         )}
         {!isFinalizedPlan && !isEditingPlanName && (
-          <Col xs="9" className="page-title-col">
+          <Col xs="8" className="page-title-col">
             <h2 className="page-title">IRS: {pageLabel}</h2>
-            <Button color="link" onClick={onEditNameButtonClick}>
+            <Button color="link" onClick={onEditNameButtonClick} size="sm">
               edit
             </Button>
           </Col>
         )}
         {!isFinalizedPlan && newPlan && isEditingPlanName && (
-          <Col xs="9" className="page-title-col">
+          <Col xs="8" className="page-title-col">
             <h2 className="page-title edit">IRS:</h2>
             <InputGroup className="edit-plan-title-input-group">
               <Input
@@ -547,17 +550,17 @@ class IrsPlan extends React.Component<
                 placeholder={newPlan.plan_title}
               />
               <InputGroupAddon addonType="append">
-                <Button color="secondary" onClick={onCancleEditNameButtonClick}>
+                <Button color="secondary" onClick={onCancleEditNameButtonClick} size="sm">
                   cancel
                 </Button>
               </InputGroupAddon>
               <InputGroupAddon addonType="append">
-                <Button color="primary" onClick={onSaveEditNameButtonClick}>
+                <Button color="primary" onClick={onSaveEditNameButtonClick} size="sm">
                   save
                 </Button>
               </InputGroupAddon>
 
-              <Button color="link" onClick={onEditPlanSettingsButtonClick}>
+              <Button color="link" onClick={onEditPlanSettingsButtonClick} size="sm">
                 Plan settings...
               </Button>
             </InputGroup>
@@ -565,14 +568,28 @@ class IrsPlan extends React.Component<
         )}
         {/* <Col>Save / finalize buttons will go here</Col> */}
         {!isFinalizedPlan && (
-          <Col xs="3" className="save-plan-buttons-column">
+          <Col xs="4" className="save-plan-buttons-column">
             <Button
+              className="save-plan-as-draft-btn"
               color="success"
               disabled={isSaveDraftDisabled}
               onClick={onSaveAsDraftButtonClick}
+              outline={isDraftPlan}
+              size="sm"
             >
               Save as a Draft
             </Button>
+            {!isNewPlan && (
+              <Button
+                className="save-as-finalized-plan-btn"
+                color="primary"
+                disabled={isSaveDraftDisabled}
+                onClick={onSaveFinalizedPlanButtonClick}
+                size="sm"
+              >
+                Save Finalized Plan
+              </Button>
+            )}
           </Col>
         )}
       </Row>
@@ -1598,7 +1615,7 @@ class IrsPlan extends React.Component<
   }
 
   // Service handlers
-  private onSaveAsDraftButtonClick(e: MouseEvent) {
+  private onSavePlanButtonClick(e: MouseEvent, isFinal: boolean = false) {
     const { newPlan, childlessChildrenIds } = this.state;
     if (newPlan && newPlan.plan_jurisdictions_ids) {
       const now = new Date();
@@ -1608,7 +1625,7 @@ class IrsPlan extends React.Component<
         plan_jurisdictions_ids: newPlan.plan_jurisdictions_ids.filter(j =>
           childlessChildrenIds.includes(j)
         ),
-        plan_status: PlanStatus.DRAFT,
+        plan_status: isFinal ? PlanStatus.ACTIVE : PlanStatus.DRAFT,
         plan_version: Number.isNaN(Number(newPlan.plan_version))
           ? '1'
           : `${Number(newPlan.plan_version) + 1}`,
@@ -1631,26 +1648,25 @@ class IrsPlan extends React.Component<
             } else if (this.props.isDraftPlan) {
               OpenSrpPlanService.update(planPayload)
                 .then(() => {
-                  this.setState({
-                    isSaveDraftDisabled: false,
-                    newPlan: {
-                      ...newPlanDraft,
-                      plan_jurisdictions_ids: [...(newPlan.plan_jurisdictions_ids as string[])],
-                    },
-                  });
+                  if (isFinal) {
+                    this.props.history.push(
+                      `${INTERVENTION_IRS_URL}/plan/${planPayload.identifier}`
+                    );
+                  } else {
+                    this.setState({
+                      isSaveDraftDisabled: false,
+                      newPlan: {
+                        ...newPlanDraft,
+                        plan_jurisdictions_ids: [...(newPlan.plan_jurisdictions_ids as string[])],
+                      },
+                    });
+                  }
                 })
                 .catch(() => {
                   this.setState({ isSaveDraftDisabled: false });
                 });
             }
           });
-
-          // PUSH to OpenSRP endpoint
-          // if res.ok
-          // save to state as new PlanRecord
-          // navigate to `/plan/draft/${newPlan.plan_id}
-          // else
-          // throw error (popup)
         } else {
           alert('Uh oh, looks like something is (syntactically) wrong with the Plan schema');
         }
