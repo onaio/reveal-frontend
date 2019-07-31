@@ -1,18 +1,19 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
+import { Col, Row } from 'reactstrap';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
-import { FI_HISTORICAL_URL, FOCUS_INVESTIGATIONS, HOME, HOME_URL } from '../../../../constants';
+import { HOME, HOME_URL, NEW_PLAN_URL } from '../../../../constants';
 import PlanForm from '../../../forms/PlanForm';
 
 /** Simple component that loads the new plan form and allows you to create a new plan */
 const NewPlan = () => {
   const pageTitle: string = 'Create New Plan';
-  const baseFIPage = {
-    label: FOCUS_INVESTIGATIONS,
-    url: `${FI_HISTORICAL_URL}`,
-  };
+
   const breadcrumbProps = {
-    currentPage: baseFIPage,
+    currentPage: {
+      label: pageTitle,
+      url: `${NEW_PLAN_URL}`,
+    },
     pages: [
       {
         label: HOME,
@@ -28,7 +29,11 @@ const NewPlan = () => {
       </Helmet>
       <HeaderBreadcrumb {...breadcrumbProps} />
       <h3 className="mb-3 page-title">{pageTitle}</h3>
-      <PlanForm disabledFields={['status']} />
+      <Row>
+        <Col md={8}>
+          <PlanForm disabledFields={['status']} />
+        </Col>
+      </Row>
     </div>
   );
 };
