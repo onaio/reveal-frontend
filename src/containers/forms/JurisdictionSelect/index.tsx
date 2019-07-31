@@ -54,6 +54,7 @@ interface SelectOption {
 /**
  * JurisdictionSelect - a cascading select for Jurisdictions
  * Allows you to drill-down Jurisdictions until you select a Focus Area
+ * This is simply a Higher Order Component that wraps around AsyncSelect
  */
 const JurisdictionSelect = (props: JurisdictionSelectProps) => {
   const { apiEndpoint, params, serviceClass } = props;
@@ -76,6 +77,7 @@ const JurisdictionSelect = (props: JurisdictionSelectProps) => {
 
   const animatedComponents = makeAnimated();
 
+  /** Get select options from OpenSRP as a promise */
   const promiseOptions = () =>
     new Promise(resolve =>
       resolve(
@@ -126,7 +128,7 @@ const JurisdictionSelect = (props: JurisdictionSelectProps) => {
         }
       });
     } else {
-      // most probably the select element was reset
+      // most probably the select element was reset, so we reset the state vars
       setParentId('');
       setHierarchy([]);
       setShouldMenuOpen(false);
