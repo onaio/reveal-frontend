@@ -591,9 +591,6 @@ const PlanForm = (props: PlanFormProps) => {
                       </FormGroup>
                     </fieldset>
                   ))}
-                  <button type="button" onClick={() => arrayHelpers.push(initialActivitiesValues)}>
-                    +
-                  </button>
                 </div>
               )}
             />
