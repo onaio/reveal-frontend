@@ -19,6 +19,7 @@ import {
   INTERVENTION_IRS_URL,
   LOGIN_URL,
   LOGOUT_URL,
+  NEW_PLAN_URL,
 } from '../constants';
 import ConnectedHeader from '../containers/ConnectedHeader';
 import ActiveFocusInvestigation from '../containers/pages/FocusInvestigation/active';
@@ -28,6 +29,7 @@ import SingleFI from '../containers/pages/FocusInvestigation/single';
 import Home from '../containers/pages/Home/Home';
 import IrsPlans from '../containers/pages/InterventionPlan/IRS';
 import IrsPlan from '../containers/pages/InterventionPlan/IRS/plan';
+import NewPlan from '../containers/pages/InterventionPlan/NewPlan';
 import { oAuthUserInfoGetter } from '../helpers/utils';
 
 library.add(faMap);
@@ -115,6 +117,12 @@ class App extends Component {
                 exact={true}
                 path={`${FI_HISTORICAL_URL}/:id`}
                 component={HistoricalFocusInvestigation}
+              />
+              <ConnectedPrivateRoute
+                disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                exact={true}
+                path={NEW_PLAN_URL}
+                component={NewPlan}
               />
               {/* tslint:disable jsx-no-lambda */}
               <Route
