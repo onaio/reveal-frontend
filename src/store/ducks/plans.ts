@@ -1,6 +1,8 @@
 import { get, keyBy, keys, pickBy, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
 import SeamlessImmutable from 'seamless-immutable';
+import uuidv4 from 'uuid/v4';
+import { PlanAction, planActivities, PlanGoal } from '../../configs/settings';
 import { FlexObject, transformValues } from '../../helpers/utils';
 
 /** the reducer name */
@@ -91,6 +93,74 @@ export interface PlanPayload {
   useContext: UseContext[];
   version: string;
 }
+
+/** extractPlanPayloadFromPlanRecord */
+export const extractPlanPayloadFromPlanRecord = (planRecord: PlanRecord): PlanPayload | null => {
+  const {
+    plan_date: date,
+    plan_id: identifier,
+    plan_effective_period_end: end,
+    plan_effective_period_start: start,
+    plan_jurisdictions_ids,
+    plan_status: status,
+    plan_title: title,
+    plan_intervention_type: interventionType,
+    plan_version,
+  } = planRecord;
+  if (plan_jurisdictions_ids) {
+    const planPayload: PlanPayload = {
+      action: [],
+      date,
+      effectivePeriod: {
+        end,
+        start,
+      },
+      goal: [],
+      identifier,
+      jurisdiction: plan_jurisdictions_ids.map(id => ({ code: id })),
+      name: title.trim().replace(/ /g, '-'),
+      serverVersion: 0,
+      status,
+      title,
+      useContext: [
+        {
+          code: 'interventionType',
+          valueCodableConcept: interventionType,
+        },
+      ],
+      version: plan_version || '1',
+    };
+
+    // build PlanActions and PlanGoals
+    let planAction: PlanAction;
+    let planGoal: PlanGoal;
+    if (interventionType === InterventionType.IRS) {
+      const { action, goal } = planActivities[InterventionType.IRS];
+      planAction = {
+        ...action,
+        identifier: uuidv4(),
+        timingPeriod: {
+          end,
+          start,
+        },
+      };
+      planGoal = {
+        ...goal,
+        target: [
+          {
+            ...goal.target[0],
+            due: end,
+          },
+        ],
+      };
+      planPayload.action.push(planAction);
+      planPayload.goal.push(planGoal);
+    }
+
+    return planPayload;
+  }
+  return null;
+};
 
 /** PlanEventType - enum for Plan Event logging */
 export enum PlanEventType {

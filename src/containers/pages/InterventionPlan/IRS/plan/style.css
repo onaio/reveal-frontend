@@ -5,6 +5,11 @@
 
 .save-plan-buttons-column {
   text-align: right;
+  padding-top: 6px;
+}
+
+.save-as-finalized-plan-btn {
+  margin-left: 12px;
 }
 
 .page-title-col hr {
@@ -23,7 +28,7 @@
 
 .edit-plan-title-input-group {
   display: inline-flex;
-  max-width: 50%;
+  max-width: 75%;
   top: -4px;
 }
 
@@ -47,6 +52,7 @@
 
 .irs-plan-map {
   margin-bottom: 24px;
+  margin-top: 6px;
 }
 
 .select-jurisdictin-tooltip {

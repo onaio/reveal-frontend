@@ -18,6 +18,7 @@ import {
   Row,
 } from 'reactstrap';
 import { Store } from 'redux';
+import uuidv4 from 'uuid/v4';
 
 import GeojsonExtent from '@mapbox/geojson-extent';
 import DrillDownTable, { DrillDownProps, DropDownCell } from '@onaio/drill-down-table';
@@ -71,6 +72,7 @@ import jurisdictionReducer, {
   reducerName as jurisdictionReducerName,
 } from '../../../../../store/ducks/jurisdictions';
 import plansReducer, {
+  extractPlanPayloadFromPlanRecord,
   extractPlanRecordResponseFromPlanPayload,
   fetchPlanRecords,
   getPlanRecordById,
@@ -148,6 +150,7 @@ interface IrsPlanState {
   isEditingPlanName: boolean;
   isLoadingGeoms: boolean;
   isLoadingJurisdictions: boolean;
+  isSaveDraftDisabled: boolean;
   isStartingPlan: boolean;
   newPlan: PlanRecord | null;
   planCountry: string;
@@ -172,23 +175,24 @@ class IrsPlan extends React.Component<
       isEditingPlanName: false,
       isLoadingGeoms: false,
       isLoadingJurisdictions: true,
+      isSaveDraftDisabled: false,
       isStartingPlan: props.isNewPlan || props.isDraftPlan || false,
       newPlan: props.isNewPlan
         ? {
-            id: '', // todo - generate unique id
+            id: uuidv4(),
             plan_date: this.getNewPlanDate(),
             plan_effective_period_end: '',
             plan_effective_period_start: '',
             plan_fi_reason: '',
             plan_fi_status: '',
-            plan_id: '',
+            plan_id: uuidv4(),
             plan_intervention_type: InterventionType.IRS,
             plan_jurisdictions_ids: [],
             plan_status: PlanStatus.NEW,
             plan_title: this.getNewPlanTitle(),
             plan_version: '',
           }
-        : props.planById || null,
+        : (props.planById as PlanRecord) || null,
       planCountry: '',
       previousPlanName: '',
       tableCrumbs: [],
@@ -243,87 +247,41 @@ class IrsPlan extends React.Component<
     }
 
     // GET PLAN JURISDICTIONS associated with this plan
-    let planJurisdictionIdsToGet: string[] = [];
+    const planJurisdictionIdsToGet: string[] = [];
     let otherJurisdictionIdsToGet: string[] = [];
-    if (planId && isFinalizedPlan) {
-      const pivotParams = superset.getFormData(500, [
-        { comparator: planId, operator: '==', subject: 'plan_id' },
-      ]);
-      await supersetService(SUPERSET_PLAN_STRUCTURE_PIVOT_SLICE, pivotParams).then(
-        relevantJuridictions => {
-          if (!relevantJuridictions) {
-            return new Promise((resolve, reject) => reject());
-          }
-
-          // define jurisdictions not in the store
-          planJurisdictionIdsToGet = relevantJuridictions
-            .map((j: any) =>
-              !loadedJurisdictionIds.includes(j.jurisdiction_id) ? j.jurisdiction_id : null
-            )
-            .filter((j: string | null) => j && strict.length);
-
-          if (!planJurisdictionIdsToGet.length) {
-            return new Promise(resolve => resolve());
-          }
-
-          // build superset sql filter expression
-          let sqlFilterExpression = '';
-          for (let i = 0; i < planJurisdictionIdsToGet.length; i += 1) {
-            const jurId = planJurisdictionIdsToGet[i];
-            if (i) {
-              sqlFilterExpression += ' OR ';
-            }
-            sqlFilterExpression += `jurisdiction_id = '${jurId}'`;
-          }
-
-          // define superset params for
-          const planJurisdictionSupersetParams = superset.getFormData(1000, [
-            { sqlExpression: sqlFilterExpression },
-          ]);
-
-          return supersetService(SUPERSET_JURISDICTIONS_SLICE, planJurisdictionSupersetParams).then(
-            (jurisdictionResults: Jurisdiction[]) =>
-              fetchJurisdictionsActionCreator(jurisdictionResults)
-          );
-        }
-      );
-    }
 
     // GET REMAINING JURISDICTIONS
-    if (!isFinalizedPlan) {
-      let sqlFilterExpression = '';
-      let idsToUse: string[] = [];
-      if (loadedJurisdictionIds.length || planJurisdictionIdsToGet.length) {
-        otherJurisdictionIdsToGet = allJurIds.filter((j: string) => {
-          return !loadedJurisdictionIds.includes(j) && !planJurisdictionIdsToGet.includes(j);
-        });
+    let sqlFilterExpression = '';
+    let idsToUse: string[] = [];
+    if (loadedJurisdictionIds.length || planJurisdictionIdsToGet.length) {
+      otherJurisdictionIdsToGet = allJurIds.filter((j: string) => {
+        return !loadedJurisdictionIds.includes(j) && !planJurisdictionIdsToGet.includes(j);
+      });
 
-        const otherJurisdictionIdsNotToGet = Array.from(
-          new Set([...planJurisdictionIdsToGet, ...loadedJurisdictionIds])
-        );
+      const otherJurisdictionIdsNotToGet = Array.from(
+        new Set([...planJurisdictionIdsToGet, ...loadedJurisdictionIds])
+      );
 
-        const doInclude = otherJurisdictionIdsToGet.length < otherJurisdictionIdsNotToGet.length;
-        idsToUse = doInclude ? otherJurisdictionIdsToGet : otherJurisdictionIdsNotToGet;
+      const doInclude = otherJurisdictionIdsToGet.length < otherJurisdictionIdsNotToGet.length;
+      idsToUse = doInclude ? otherJurisdictionIdsToGet : otherJurisdictionIdsNotToGet;
 
-        // build query params
-        for (let i = 0; i < idsToUse.length; i += 1) {
-          const jurId = idsToUse[i];
-          if (i) {
-            sqlFilterExpression += doInclude ? ' OR ' : ' AND ';
-          }
-          sqlFilterExpression += `id ${doInclude ? '=' : '!='} '${jurId}'`;
+      // build query params
+      for (let i = 0; i < idsToUse.length; i += 1) {
+        const jurId = idsToUse[i];
+        if (i) {
+          sqlFilterExpression += doInclude ? ' OR ' : ' AND ';
         }
+        sqlFilterExpression += `id ${doInclude ? '=' : '!='} '${jurId}'`;
       }
+    }
 
-      const otherJurisdictionSupersetParams = sqlFilterExpression.length
-        ? superset.getFormData(10000, [{ sqlExpression: sqlFilterExpression }])
-        : { row_limit: 10000 };
+    const otherJurisdictionSupersetParams = sqlFilterExpression.length
+      ? superset.getFormData(10000, [{ sqlExpression: sqlFilterExpression }])
+      : { row_limit: 10000 };
 
-      await supersetService(
-        SUPERSET_JURISDICTIONS_DATA_SLICE,
-        otherJurisdictionSupersetParams
-      ).then((jurisdictionResults: FlexObject[] = []) => {
-        const jurisdictions = jurisdictionResults.map(j => {
+    await supersetService(SUPERSET_JURISDICTIONS_DATA_SLICE, otherJurisdictionSupersetParams).then(
+      (jurisdictionResults: FlexObject[] = []) => {
+        const jurisdictions: Jurisdiction[] = jurisdictionResults.map(j => {
           const { id, parent_id, name, geographic_level } = j;
           const jurisdiction: Jurisdiction = {
             geographic_level: geographic_level || 0,
@@ -333,10 +291,76 @@ class IrsPlan extends React.Component<
           };
           return jurisdiction;
         });
+        // initialize Finalized Plan
+        if (
+          isFinalizedPlan &&
+          this.props.planById &&
+          this.props.planById.plan_jurisdictions_ids &&
+          this.props.planById.plan_jurisdictions_ids.length
+        ) {
+          const jurisdictionsById: { [key: string]: Jurisdiction } = {};
+          for (const j of jurisdictions) {
+            jurisdictionsById[j.jurisdiction_id] = j;
+          }
+
+          const ancestorIds = this.getAncestorJurisdictionIds(
+            [...this.props.planById.plan_jurisdictions_ids],
+            jurisdictions
+          );
+          const parentlessParent = ancestorIds.find(
+            a => jurisdictionsById[a] && !jurisdictionsById[a].parent_id
+          );
+          if (parentlessParent) {
+            OpenSrpLocationService.read(parentlessParent, {
+              is_jurisdiction: true,
+              return_geometry: false,
+            }).then(result => {
+              if (result && result.properties) {
+                const country: JurisdictionsByCountry =
+                  CountriesAdmin0[
+                    (result.properties.ADM0_PCODE || result.properties.name) as ADMN0_PCODE
+                  ];
+
+                if (country) {
+                  const filteredJurisdictions = ancestorIds.map(j => jurisdictionsById[j]);
+                  const childlessChildrenIds = this.getChildlessChildrenIds(filteredJurisdictions);
+
+                  const newPlan: PlanRecord = {
+                    ...(this.props.planById as PlanRecord),
+                    plan_jurisdictions_ids: [...ancestorIds],
+                  };
+
+                  const tableCrumbs: TableCrumb[] = [
+                    {
+                      active: true,
+                      id: country.jurisdictionId.length ? country.jurisdictionId : null,
+                      label: country.ADMN0_EN,
+                    },
+                  ];
+
+                  this.setState({
+                    childlessChildrenIds,
+                    country,
+                    filteredJurisdictionIds: ancestorIds,
+                    focusJurisdictionId: country.jurisdictionId.length
+                      ? country.jurisdictionId
+                      : this.state.focusJurisdictionId,
+                    isLoadingJurisdictions: false,
+                    isStartingPlan: false,
+                    newPlan,
+                    planCountry: result.properties.ADM0_PCODE,
+                    tableCrumbs,
+                  });
+                }
+              }
+            });
+          }
+        } else {
+          this.setState({ isLoadingJurisdictions: false });
+        }
         return fetchJurisdictionsActionCreator(jurisdictions);
-      });
-      this.setState({ isLoadingJurisdictions: false });
-    }
+      }
+    );
   }
 
   public componentWillReceiveProps(nextProps: IrsPlanProps) {
@@ -347,7 +371,7 @@ class IrsPlan extends React.Component<
       isLoadingJurisdictions,
       newPlan,
     } = this.state;
-    const { isDraftPlan, jurisdictionsArray, planById } = nextProps;
+    const { isDraftPlan, isFinalizedPlan, jurisdictionsArray, planById } = nextProps;
 
     if (newPlan && childlessChildrenIds && country && isLoadingGeoms) {
       const filteredJurisdictions = jurisdictionsArray.filter(
@@ -363,6 +387,7 @@ class IrsPlan extends React.Component<
     }
 
     if (
+      !isFinalizedPlan &&
       isLoadingJurisdictions &&
       jurisdictionsArray.length !== this.props.jurisdictionsArray.length
     ) {
@@ -386,6 +411,7 @@ class IrsPlan extends React.Component<
       newPlan,
       isEditingPlanName,
       isLoadingJurisdictions,
+      isSaveDraftDisabled,
       isStartingPlan,
     } = this.state;
     if ((planId && !planById) || (isNewPlan && !newPlan) || isLoadingJurisdictions) {
@@ -400,12 +426,7 @@ class IrsPlan extends React.Component<
 
     const breadCrumbProps = this.getBreadCrumbProps(this.props, pageLabel);
 
-    let planTableProps: DrillDownProps<any> | null; // todo - type with DrillDownProps
-    if (isFinalizedPlan) {
-      planTableProps = this.getFinalizedPlanTableProps(this.props);
-    } else {
-      planTableProps = this.getDrilldownPlanTableProps(this.state);
-    }
+    const planTableProps = this.getDrilldownPlanTableProps(this.state);
 
     const onSetPlanNameChange = (e: any) => {
       this.onSetPlanNameChange(e);
@@ -493,8 +514,8 @@ class IrsPlan extends React.Component<
                 <Button
                   color="primary"
                   disabled={
-                    // !newPlan.plan_effective_period_end.length ||
-                    // !newPlan.plan_effective_period_start.length ||
+                    !newPlan.plan_effective_period_end.length ||
+                    !newPlan.plan_effective_period_start.length ||
                     !planCountry.length
                   }
                   onClick={onStartPlanFormSubmit}
@@ -524,26 +545,29 @@ class IrsPlan extends React.Component<
       this.onEditPlanSettingsButtonClick(e);
     };
     const onSaveAsDraftButtonClick = (e: MouseEvent) => {
-      this.onSaveAsDraftButtonClick(e);
+      this.onSavePlanButtonClick(e);
+    };
+    const onSaveFinalizedPlanButtonClick = (e: MouseEvent) => {
+      this.onSavePlanButtonClick(e, true);
     };
 
     const planHeaderRow = (
       <Row>
         {isFinalizedPlan && (
-          <Col xs="9" className="page-title-col">
+          <Col xs="8" className="page-title-col">
             <h2 className="page-title">IRS: {pageLabel}</h2>
           </Col>
         )}
         {!isFinalizedPlan && !isEditingPlanName && (
-          <Col xs="9" className="page-title-col">
+          <Col xs="8" className="page-title-col">
             <h2 className="page-title">IRS: {pageLabel}</h2>
-            <Button color="link" onClick={onEditNameButtonClick}>
+            <Button color="link" onClick={onEditNameButtonClick} size="sm">
               edit
             </Button>
           </Col>
         )}
         {!isFinalizedPlan && newPlan && isEditingPlanName && (
-          <Col xs="9" className="page-title-col">
+          <Col xs="8" className="page-title-col">
             <h2 className="page-title edit">IRS:</h2>
             <InputGroup className="edit-plan-title-input-group">
               <Input
@@ -553,17 +577,17 @@ class IrsPlan extends React.Component<
                 placeholder={newPlan.plan_title}
               />
               <InputGroupAddon addonType="append">
-                <Button color="secondary" onClick={onCancleEditNameButtonClick}>
+                <Button color="secondary" onClick={onCancleEditNameButtonClick} size="sm">
                   cancel
                 </Button>
               </InputGroupAddon>
               <InputGroupAddon addonType="append">
-                <Button color="primary" onClick={onSaveEditNameButtonClick}>
+                <Button color="primary" onClick={onSaveEditNameButtonClick} size="sm">
                   save
                 </Button>
               </InputGroupAddon>
 
-              <Button color="link" onClick={onEditPlanSettingsButtonClick}>
+              <Button color="link" onClick={onEditPlanSettingsButtonClick} size="sm">
                 Plan settings...
               </Button>
             </InputGroup>
@@ -571,10 +595,28 @@ class IrsPlan extends React.Component<
         )}
         {/* <Col>Save / finalize buttons will go here</Col> */}
         {!isFinalizedPlan && (
-          <Col xs="3" className="save-plan-buttons-column">
-            <Button color="success" onClick={onSaveAsDraftButtonClick}>
+          <Col xs="4" className="save-plan-buttons-column">
+            <Button
+              className="save-plan-as-draft-btn"
+              color="success"
+              disabled={isSaveDraftDisabled}
+              onClick={onSaveAsDraftButtonClick}
+              outline={isDraftPlan}
+              size="sm"
+            >
               Save as a Draft
             </Button>
+            {!isNewPlan && (
+              <Button
+                className="save-as-finalized-plan-btn"
+                color="primary"
+                disabled={isSaveDraftDisabled}
+                onClick={onSaveFinalizedPlanButtonClick}
+                size="sm"
+              >
+                Save Finalized Plan
+              </Button>
+            )}
           </Col>
         )}
       </Row>
@@ -607,7 +649,7 @@ class IrsPlan extends React.Component<
       </ol>
     );
 
-    const gisidaWrapperProps = this.getGisidaWrapperProps();
+    const gisidaWrapperProps = !isFinalizedPlan && this.getGisidaWrapperProps();
 
     return (
       <div className="mb-5">
@@ -639,7 +681,9 @@ class IrsPlan extends React.Component<
         {planTableProps && (
           <Row>
             <Col>
-              <h3 className="table-title">Jurisdictions</h3>
+              <h3 className="table-title">{`${
+                isFinalizedPlan ? 'Assign' : 'Select'
+              } Jurisdictions`}</h3>
               {tableCrumbs.length && tableBreadCrumbs}
               {doRenderTable && <DrillDownTable {...planTableProps} />}
             </Col>
@@ -1544,6 +1588,20 @@ class IrsPlan extends React.Component<
       },
     ];
 
+    if (this.props.isFinalizedPlan) {
+      columns.shift();
+      columns.push({
+        Header: 'Teams Assigned',
+        columns: [
+          {
+            Header: '',
+            accessor: () => <span className="text-info">X Teams Assigned to Y Jurisdictions</span>,
+            id: 'teams_assigned',
+          },
+        ],
+      });
+    }
+
     const tableProps: DrillDownProps<any> = {
       CellComponent: DropDownCell,
       columns,
@@ -1562,63 +1620,7 @@ class IrsPlan extends React.Component<
     };
     return tableProps;
   }
-  /** getFinalizedPlanTableProps - getter for (flat) DrilldownTable props
-   * @param props - component props
-   * @returns tableProps|null - compatible object for DrillDownTable props
-   */
-  private getFinalizedPlanTableProps(props: IrsPlanProps) {
-    const { jurisdictionsArray } = props;
-    if (!jurisdictionsArray.length) {
-      return null;
-    }
-    const jurisdictionData = jurisdictionsArray.map((j: Jurisdiction) =>
-      j.geojson
-        ? {
-            ...j.geojson.properties,
-          }
-        : {
-            id: j.jurisdiction_id,
-            jurisdiction_name: j.name,
-            parent_id: '',
-          }
-    );
-    const columns: Column[] = [
-      {
-        Header: 'Name',
-        columns: [
-          {
-            Header: '',
-            accessor: 'jurisdiction_name',
-          },
-        ],
-      },
-      {
-        Header: 'Teams Assigned',
-        columns: [
-          {
-            Header: '',
-            accessor: () => <span className="text-info">None assigned</span>,
-            id: 'teams_assigned',
-          },
-        ],
-      },
-    ];
 
-    const tableProps: DrillDownProps<any> = {
-      CellComponent: DropDownCell,
-      columns,
-      data: [...jurisdictionData],
-      identifierField: 'jurisdiction_id',
-      linkerField: 'jurisdiction_name',
-      minRows: 0,
-      parentIdentifierField: 'parent_id',
-      rootParentId: null,
-      showPageSizeOptions: false,
-      showPagination: false,
-      useDrillDownTrProps: true,
-    };
-    return tableProps;
-  }
   /** getBreadCrumbProps - get properties for HeaderBreadcrumbs component
    * @param props - component props
    * @param pageLabel - string for the current page lable
@@ -1646,25 +1648,75 @@ class IrsPlan extends React.Component<
     return breadCrumbProps;
   }
 
-  // Service handlers
-  /** onSaveAsDraftButtonClick - placeholder function for saving new plan as a draft plan */
-  private onSaveAsDraftButtonClick(e: MouseEvent) {
-    const { newPlan } = this.state;
+  /** onSavePlanButtonClick - extracts PlanPayload from newPlan and PUSHs or PUTs to OpenSRP
+   * @param e - MouseEvent
+   * @param isFinal - determines if the Plan should be saved as a draft or as a finalized plan
+   */
+  private onSavePlanButtonClick(e: MouseEvent, isFinal: boolean = false) {
+    const { newPlan, childlessChildrenIds } = this.state;
+    if (newPlan && newPlan.plan_jurisdictions_ids) {
+      const now = new Date();
+      const newPlanDraft: PlanRecord = {
+        ...newPlan,
+        plan_date: `${now.getFullYear()}-${now.getMonth()}-${now.getDate()}`,
+        plan_jurisdictions_ids: newPlan.plan_jurisdictions_ids.filter(j =>
+          childlessChildrenIds.includes(j)
+        ),
+        plan_status: isFinal ? PlanStatus.ACTIVE : PlanStatus.DRAFT,
+        plan_version: Number.isNaN(Number(newPlan.plan_version))
+          ? '1'
+          : `${Number(newPlan.plan_version) + 1}`,
+      };
 
-    // todo - create PlanRecord to NewPlanSubmission extractor
-    const newPlanDraft = {
-      ...newPlan,
-      plan_status: PlanStatus.DRAFT,
-    };
-
-    // console.log('NEW PLAN!!!!', newPlanDraft)
-
-    // PUSH to OpenSRP endpoint
-    // if res.ok
-    // save to state as new PlanRecord
-    // navigate to `/plan/draft/${newPlan.plan_id}
-    // else
-    // throw error (popup)
+      if (newPlanDraft.plan_jurisdictions_ids && newPlanDraft.plan_jurisdictions_ids.length) {
+        const planPayload = extractPlanPayloadFromPlanRecord(newPlanDraft);
+        if (planPayload) {
+          this.setState({ isSaveDraftDisabled: true }, () => {
+            if (this.props.isNewPlan) {
+              OpenSrpPlanService.create(planPayload)
+                .then(() => {
+                  // todo - force remounting of component by breaking this page into several
+                  // this.props.history.push(
+                  //   `${INTERVENTION_IRS_URL}/draft/${planPayload.identifier}`
+                  // );
+                  this.props.history.push(INTERVENTION_IRS_URL);
+                })
+                .catch(() => {
+                  this.setState({ isSaveDraftDisabled: false });
+                });
+            } else if (this.props.isDraftPlan) {
+              OpenSrpPlanService.update(planPayload)
+                .then(() => {
+                  if (isFinal) {
+                    // todo - force remounting of component by breaking this page into several
+                    // this.props.history.push(
+                    //   `${INTERVENTION_IRS_URL}/plan/${planPayload.identifier}`
+                    // );
+                    this.props.history.push(INTERVENTION_IRS_URL);
+                  } else {
+                    this.setState({
+                      isSaveDraftDisabled: false,
+                      newPlan: {
+                        ...newPlanDraft,
+                        plan_jurisdictions_ids: [...(newPlan.plan_jurisdictions_ids as string[])],
+                      },
+                    });
+                  }
+                })
+                .catch(() => {
+                  this.setState({ isSaveDraftDisabled: false });
+                });
+            }
+          });
+        } else {
+          alert('Uh oh, looks like something is (syntactically) wrong with the Plan schema');
+        }
+      } else {
+        alert('Oops, no jurisdictions selected!');
+      }
+    } else if (!childlessChildrenIds.length) {
+      alert('Oops, no jurisdictions selected!');
+    }
   }
 }
 
