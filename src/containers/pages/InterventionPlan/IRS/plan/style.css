@@ -1,0 +1,54 @@
+.page-title {
+  display: inline-block;
+  margin-right: 6px;
+}
+
+.save-plan-buttons-column {
+  text-align: right;
+}
+
+.page-title-col hr {
+  display: block;
+  margin-top: 6px;
+}
+
+.table-title {
+  font-weight: 200;
+}
+
+.table-bread-crumbs {
+  padding-left: 0;
+  background: transparent;
+}
+
+.edit-plan-title-input-group {
+  display: inline-flex;
+  max-width: 50%;
+  top: -4px;
+}
+
+.plan-jurisdiction-selection-checkbox {
+  margin-left: 0px;
+}
+
+.plan-jurisdiction-select-all-checkbox {
+  margin-left: 0px;
+  margin-top: 0.075rem;
+}
+
+.plan-jurisdiction-name.btn-link {
+  cursor: pointer;
+}
+
+#map-1 {
+  height: 90vh;
+  min-height: auto;
+}
+
+.irs-plan-map {
+  margin-bottom: 24px;
+}
+
+.select-jurisdictin-tooltip {
+  padding: 6px 8px !important;
+}

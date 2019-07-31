@@ -594,6 +594,7 @@ export const circleLayerConfig = {
   visible: false,
 };
 
+/** Symbol layer configuration */
 export const symbolLayerConfig = {
   id: 'symbollayers',
   layout: {
@@ -620,6 +621,130 @@ export const symbolLayerConfig = {
   type: 'symbol',
 };
 
+/** Default colors layer fill colors per administrative level */
+export const adminLayerColors = ['purple', 'blue', 'green', 'yellow', 'orange', 'red'];
+export type adminLayerColorsType = typeof adminLayerColors[number];
+
+/** Interfaces describing administrative hierarchy via ISO 3166 admin codes */
+export interface ADMN0 {
+  ADMN0_PCODE: string;
+  ADMN0_EN: string;
+}
+export interface ADMN1 extends ADMN0 {
+  ADMN1_PCODE: string;
+  ADMN1_EN: string;
+}
+export interface ADMN2 extends ADMN1 {
+  ADMN2_PCODE: string;
+  ADMN2_EN: string;
+}
+export interface ADMN3 extends ADMN2 {
+  ADMN3_PCODE: string;
+  ADMN3_EN: string;
+}
+
+/** interface descbribing basic country level information */
+export interface JurisdictionsByCountry extends ADMN0 {
+  // the GPS extents of given geometry(s)
+  bounds?: any[];
+
+  // the top level jurisdiction_Ids from OpenSRP
+  // this is most useful for instances where tilesets DO NOT match the OpenSRP hierarchy
+  jurisdictionIds: string[];
+
+  // the top level jurisdiction_id of the country
+  jurisdictionId: string;
+
+  // the UUID of the Jurisdiction from the
+  id?: string;
+
+  // list of tilesets used for administrative boundaries
+  tilesets?: Array<{
+    idField: string; // the feature property cooresponding with jurisdiction_id (for joining)
+    layer: string; // the Mapbox tileset-layer name
+    parentIdField: string; // the feature property cooresponding with parent_id (for joining)
+    url: string; // the Mapbox tileset url
+  }>;
+}
+/** Country Jurisdictions definition for Zambia */
+export const ZambiaAdmin0: JurisdictionsByCountry = {
+  ADMN0_EN: 'Zambia',
+  ADMN0_PCODE: 'ZM',
+  jurisdictionId: '',
+  jurisdictionIds: ['2939', '2940', '2942', '2942', '2953', '2954'],
+};
+
+/** Country Jurisdictions definition for Thailand */
+export const ThailandAdmin0: JurisdictionsByCountry = {
+  ADMN0_EN: 'Thailand',
+  ADMN0_PCODE: 'TH',
+  bounds: [[105.63681192, 5.61285098], [97.34380713, 20.46483364]],
+  jurisdictionId: '',
+  jurisdictionIds: [
+    '64301afa-e973-447b-a88c-4da20025c76f',
+    '7f204867-fab0-4246-a97c-92e0b936cab6',
+    '9c3c2db4-bddd-44c5-870a-a0eef539e4da',
+  ],
+  tilesets: [
+    {
+      idField: 'ADM0_EN',
+      layer: 'TH_0',
+      parentIdField: '',
+      url: 'mapbox://thailandbvbd.6o8cg6kd',
+    },
+    {
+      idField: 'ADM1_EN',
+      layer: 'TH_1',
+      parentIdField: 'ADM0_EN',
+      url: 'mapbox://thailandbvbd.91ktth0q',
+    },
+  ],
+};
+
+/** Country Jurisdictions definition for Namibia - WIP */
+const NamibiaAdmin0: JurisdictionsByCountry = {
+  ADMN0_EN: 'Namibia',
+  ADMN0_PCODE: 'NA',
+  bounds: [[11.76, -28.97], [25.26, -16.95]],
+  jurisdictionId: 'f45b9380-c970-4dd1-8533-9e95ab12f128',
+  jurisdictionIds: [],
+  tilesets: [
+    {
+      idField: '',
+      layer: 'NA_0',
+      parentIdField: '',
+      url: 'mapbox://thailandbvbd.5van29qd',
+    },
+    {
+      idField: 'ADM1_NAME',
+      layer: 'NA_1',
+      parentIdField: '',
+      url: 'mapbox://thailandbvbd.cjsljfri',
+    },
+    {
+      idField: 'District',
+      layer: 'NA_2',
+      parentIdField: 'Region',
+      url: 'mapbox://thailandbvbd.40rp5je6',
+    },
+    // {
+    //   idField: 'RDHVC',
+    //   layer: 'NA_3',
+    //   parentIdField: 'District',
+    //   url: 'mapbox://thailandbvbd.cutg3mx7',
+    // },
+  ],
+};
+
+/** ISO 3166-alpha-2 admin codes */
+export type ADMN0_PCODE = 'TH' | 'ZM' | 'NA'; // | 'BW';
+
+/** dictionary of JurisdictionsByCountry by country code */
+export const CountriesAdmin0 = {
+  NA: NamibiaAdmin0,
+  TH: ThailandAdmin0,
+  ZM: ZambiaAdmin0,
+};
 // icons to add to map
 export const imgArr = [
   {

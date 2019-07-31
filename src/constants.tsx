@@ -99,6 +99,9 @@ export const END_DATE = 'End Date';
 export type END_DATE = typeof END_DATE;
 export const NAME = 'Name';
 export type NAME = typeof NAME;
+export const NEW_PLAN = 'New Plan';
+export type NEW_PLAN = typeof NEW_PLAN;
+
 // internal urls
 export const LOGIN_URL = '/login';
 export type LOGIN_URL = typeof LOGIN_URL;
@@ -116,6 +119,16 @@ export const FI_SINGLE_MAP_URL = '/focus-investigation/map';
 export type FI_SINGLE_MAP_URL = typeof FI_SINGLE_MAP_URL;
 export const FI_HISTORICAL_URL = '/focus-investigation/historical';
 export type FI_HISTORICAL_URL = typeof FI_HISTORICAL_URL;
+
+// OpenSRP API strings
+export const OPENSRP_FIND_BY_PROPERTIES = 'findByProperties';
+export type OPENSRP_FIND_BY_PROPERTIES = typeof OPENSRP_FIND_BY_PROPERTIES;
+export const OPENSRP_LOCATION = 'location';
+export type OPENSRP_LOCATION = typeof OPENSRP_LOCATION;
+export const OPENSRP_PLANS = 'plans';
+export type OPENSRP_PLANS = typeof OPENSRP_PLANS;
+export const OPENSRP_PARENT_ID = 'parent_id';
+export type OPENSRP_PARENT_ID = typeof OPENSRP_PARENT_ID;
 
 // container pages title names
 export const HOME_TITLE = `Home page`;

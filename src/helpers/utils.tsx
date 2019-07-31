@@ -3,6 +3,7 @@ import { SessionState } from '@onaio/session-reducer';
 import { Color } from 'csstype';
 import { findKey, uniq } from 'lodash';
 import { FitBoundsOptions, Layer, Style } from 'mapbox-gl';
+import { MouseEvent } from 'react';
 import { Column } from 'react-table';
 import SeamlessImmutable from 'seamless-immutable';
 import { TASK_YELLOW } from '../colors';
@@ -104,6 +105,7 @@ export function oAuthUserInfoGetter(apiResponse: { [key: string]: any }): Sessio
 /** interface to describe Gisida map configuration */
 export interface SiteConfigAppMapconfig {
   bounds?: number[];
+  boxZoom?: boolean;
   center?: number[];
   container: string;
   fitBoundsOptions?: FitBoundsOptions;
@@ -145,9 +147,10 @@ export const ConfigStore = (
   LayerStore: FlexObject
 ) => {
   // Define basic config properties
-  const { accessToken, apiAccessToken, appName, mapConfig: mbConfig, layers } = options;
+  const { accessToken, apiAccessToken, appName, boxZoom, mapConfig: mbConfig, layers } = options;
   // Define flattened APP.mapConfig properties
   const {
+    mapConfigBoxZoom,
     mapConfigCenter,
     mapConfigContainer,
     mapConfigStyle,
@@ -160,6 +163,7 @@ export const ConfigStore = (
 
   // Build options for mapbox-gl-js initialization
   let mapConfig: SiteConfigAppMapconfig = {
+    boxZoom: boxZoom || mapConfigBoxZoom,
     container: container || mapConfigContainer || 'map',
     style:
       style ||
@@ -391,4 +395,15 @@ export function toggleLayer(allLayers: FlexObject, currentGoal: string, store: a
 export function roundToPrecision(n: number, precision: number = 0): number {
   const factor = Math.pow(10, precision);
   return Math.round(n * factor) / factor;
+}
+
+export function stopPropagation(e: Event | MouseEvent | any) {
+  e.stopPropagation();
+}
+export function preventDefault(e: Event | MouseEvent | any) {
+  e.preventDefault();
+}
+export function stopPropagationAndPreventDefault(e: Event | MouseEvent | any) {
+  preventDefault(e);
+  stopPropagation(e);
 }

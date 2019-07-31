@@ -13,11 +13,13 @@ export enum InterventionType {
   IRS = 'IRS',
 }
 
+/** interface for plan Objects */
 /** Enum representing the possible intervention types */
 export enum PlanStatus {
   ACTIVE = 'active',
   COMPLETE = 'complete',
   DRAFT = 'draft',
+  NEW = 'new',
   RETIRED = 'retired',
 }
 /** PlanRecordResponse - interface for response objects from SUPERSET_PLANS_TABLE_SLICE */
@@ -27,6 +29,7 @@ export interface PlanRecordResponse {
   effective_period_start: string;
   identifier: string;
   intervention_type: string;
+  jurisdictions?: string[];
   fi_reason: string;
   fi_status: string;
   name: string;
@@ -48,6 +51,7 @@ export interface PlanRecord {
   plan_status: PlanStatus;
   plan_title: string;
   plan_version?: string;
+  plan_jurisdictions_ids?: string[];
 }
 
 // todo - Rename?
@@ -158,6 +162,9 @@ export const extractPlanRecordResponseFromPlanPayload = (
       title,
       version,
     };
+    if (planPayload.jurisdiction) {
+      planRecordResponse.jurisdictions = planPayload.jurisdiction.map(j => j.code);
+    }
     return planRecordResponse;
   }
   return null;
@@ -298,7 +305,7 @@ export const fetchPlans = (plansList: Plan[] = []): FetchPlansAction => ({
 export const fetchPlanRecords = (planList: PlanRecordResponse[] = []): FetchPlanRecordsAction => ({
   planRecordsById: keyBy(
     planList.map((plan: PlanRecordResponse) => {
-      const thePlan = {
+      const thePlan: PlanRecord = {
         id: plan.identifier,
         plan_date: plan.date,
         plan_effective_period_end: plan.effective_period_end,
@@ -311,6 +318,9 @@ export const fetchPlanRecords = (planList: PlanRecordResponse[] = []): FetchPlan
         plan_title: plan.title,
         plan_version: plan.version,
       };
+      if (plan.jurisdictions) {
+        thePlan.plan_jurisdictions_ids = [...plan.jurisdictions];
+      }
       return transformValues<PlanRecord>(thePlan, ['plan_fi_reason', 'plan_fi_status']);
     }),
     plan => plan.id
