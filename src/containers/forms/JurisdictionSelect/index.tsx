@@ -1,7 +1,9 @@
+import { FieldProps } from 'formik';
 import React, { useState } from 'react';
-import makeAnimated from 'react-select/animated';
 import AsyncSelect, { Props as AsyncSelectProps } from 'react-select/async';
 import { getFilterParams, OpenSRPService, URLParams } from '../../../services/opensrp';
+
+import './style.css';
 
 /** interface for jurisdiction options
  * These are received from the OpenSRP API
@@ -46,8 +48,9 @@ const defaultProps: Partial<JurisdictionSelectProps> = {
  * Allows you to drill-down Jurisdictions until you select a Focus Area
  * This is simply a Higher Order Component that wraps around AsyncSelect
  */
-const JurisdictionSelect = (props: JurisdictionSelectProps) => {
-  const { apiEndpoint, params, serviceClass } = props;
+const JurisdictionSelect = (props: JurisdictionSelectProps & FieldProps) => {
+  const { apiEndpoint, field, form, params, serviceClass } = props;
+
   const [parentId, setParentId] = useState<string>('');
   const [hierarchy, setHierarchy] = useState<SelectOption[]>([]);
   const [shouldMenuOpen, setShouldMenuOpen] = useState<boolean>(false);
@@ -64,8 +67,6 @@ const JurisdictionSelect = (props: JurisdictionSelectProps) => {
       properties_filter: getFilterParams(propertiesToFilter),
     }),
   };
-
-  const animatedComponents = makeAnimated();
 
   /** Get select options from OpenSRP as a promise */
   const promiseOptions = () =>
@@ -113,6 +114,11 @@ const JurisdictionSelect = (props: JurisdictionSelectProps) => {
 
           setCloseMenuOnSelect(false);
         } else {
+          // set the formik field value
+          if (form && field) {
+            form.setFieldValue(field.name, optionVal.value);
+          }
+
           setCloseMenuOnSelect(true);
           setShouldMenuOpen(false);
         }
@@ -123,6 +129,10 @@ const JurisdictionSelect = (props: JurisdictionSelectProps) => {
       setHierarchy([]);
       setShouldMenuOpen(false);
       setCloseMenuOnSelect(false);
+      // set the formik field value
+      if (form && field) {
+        form.setFieldValue(field.name, '');
+      }
     }
   };
 
@@ -130,18 +140,18 @@ const JurisdictionSelect = (props: JurisdictionSelectProps) => {
     <AsyncSelect
       /** we are using the key as hack to reload the component when the parentId changes */
       key={parentId}
-      name="jurisdiction"
+      name={field ? field.name : 'jurisdiction'}
       bsSize="lg"
       defaultMenuIsOpen={shouldMenuOpen}
       closeMenuOnSelect={closeMenuOnSelect}
-      components={animatedComponents}
-      placeholder="Select Focus Area"
-      aria-label="Select Focus Area"
+      placeholder={props.placeholder ? props.placeholder : 'Select'}
+      aria-label={props['aria-label'] ? props['aria-label'] : 'Select'}
       onChange={handleChange()}
       defaultOptions={true}
       loadOptions={promiseOptions}
       isClearable={true}
       cacheOptions={true}
+      {...props}
     />
   );
 };
