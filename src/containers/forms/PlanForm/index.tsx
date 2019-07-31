@@ -1,6 +1,7 @@
 import { ErrorMessage, Field, FieldArray, Form, Formik } from 'formik';
 import moment from 'moment';
 import React, { FormEvent, useState } from 'react';
+import { Redirect } from 'react-router-dom';
 import { Button, FormGroup, Label } from 'reactstrap';
 import DatePickerWrapper from '../../../components/DatePickerWrapper';
 import {
@@ -15,7 +16,7 @@ import {
   FIReasons,
   goalPriorities,
 } from '../../../configs/settings';
-import { SAVING } from '../../../constants';
+import { HOME_URL, SAVING } from '../../../constants';
 import { OpenSRPService } from '../../../services/opensrp';
 import { InterventionType, PlanStatus } from '../../../store/ducks/plans';
 import JurisdictionSelect from '../JurisdictionSelect';
@@ -82,15 +83,18 @@ export const defaultInitialValues: PlanFormFields = {
 interface PlanFormProps {
   disabledFields: string[];
   initialValues: PlanFormFields;
+  redirectAfterAction: string;
 }
 
 /** Plan Form component */
 const PlanForm = (props: PlanFormProps) => {
   const [globalError, setGlobalError] = useState<string>('');
+  const [areWeDoneHere, setAreWeDoneHere] = useState<boolean>(false);
 
-  const { disabledFields, initialValues } = props;
+  const { disabledFields, initialValues, redirectAfterAction } = props;
   return (
     <div className="form-container">
+      {areWeDoneHere === true && <Redirect to={redirectAfterAction} />}
       <Formik
         initialValues={initialValues}
         /* tslint:disable-next-line jsx-no-lambda */
@@ -102,6 +106,7 @@ const PlanForm = (props: PlanFormProps) => {
             .create(payload)
             .then(() => {
               setSubmitting(false);
+              setAreWeDoneHere(true);
             })
             .catch((e: Error) => {
               setGlobalError(e.message);
@@ -612,6 +617,7 @@ const PlanForm = (props: PlanFormProps) => {
 const defaultProps: PlanFormProps = {
   disabledFields: [],
   initialValues: defaultInitialValues,
+  redirectAfterAction: HOME_URL,
 };
 
 PlanForm.defaultProps = defaultProps;
