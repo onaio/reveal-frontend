@@ -49,7 +49,7 @@ const defaultProps: Partial<JurisdictionSelectProps> = {
  * This is simply a Higher Order Component that wraps around AsyncSelect
  */
 const JurisdictionSelect = (props: JurisdictionSelectProps & FieldProps) => {
-  const { apiEndpoint, field, form, params, serviceClass } = props;
+  const { apiEndpoint, field, form, labelFieldName, params, serviceClass } = props;
 
   const [parentId, setParentId] = useState<string>('');
   const [hierarchy, setHierarchy] = useState<SelectOption[]>([]);
@@ -117,6 +117,9 @@ const JurisdictionSelect = (props: JurisdictionSelectProps & FieldProps) => {
           // set the formik field value
           if (form && field) {
             form.setFieldValue(field.name, optionVal.value);
+            if (labelFieldName) {
+              form.setFieldValue(labelFieldName, optionVal.label); /** dirty hack */
+            }
           }
 
           setCloseMenuOnSelect(true);
