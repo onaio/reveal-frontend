@@ -41,7 +41,11 @@ describe('components/page/Header', () => {
     const props = {
       plansArray: [fixtures.plan1, fixtures.plan2],
     };
-    const wrapper = mount(<SelectPlan {...props} />);
+    const wrapper = mount(
+      <Router history={history}>
+        <SelectPlan {...props} />
+      </Router>
+    );
     expect(toJson(wrapper)).toMatchSnapshot();
     wrapper.unmount();
   });
