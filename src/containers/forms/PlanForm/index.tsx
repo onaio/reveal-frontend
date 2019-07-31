@@ -27,6 +27,7 @@ import {
   IRSActivities,
   PlanActivityFormFields,
   PlanFormFields,
+  PlanJurisdictionFormFields,
   PlanSchema,
 } from './helpers';
 
@@ -49,6 +50,11 @@ const initialActivitiesValues: PlanActivityFormFields = {
   timingPeriodStart: moment().toDate(),
 };
 
+/** initial values for plan jurisdiction forms */
+const initialJurisdictionValues: PlanJurisdictionFormFields = {
+  id: '',
+};
+
 /** initial values for plan Form */
 export const defaultInitialValues: PlanFormFields = {
   activities: getFormActivities(FIActivities),
@@ -61,7 +67,7 @@ export const defaultInitialValues: PlanFormFields = {
   fiStatus: undefined,
   identifier: '',
   interventionType: InterventionType.FI,
-  jurisdiction: '',
+  jurisdictions: [initialJurisdictionValues],
   name: '',
   opensrpEventId: undefined,
   start: moment().toDate(),
@@ -134,25 +140,73 @@ const PlanForm = (props: PlanFormProps) => {
                 className="form-text text-danger"
               />
             </FormGroup>
-            <FormGroup
-              className={
-                errors.jurisdiction ? 'is-invalid async-select-container' : 'async-select-container'
-              }
-            >
-              <Label for="jurisdiction">Focus Area</Label>
-              <Field
-                component={JurisdictionSelect}
-                name="jurisdiction"
-                id="jurisdiction"
-                placeholder="Select Focus Area"
-                aria-label="Select Focus Area"
-                disabled={disabledFields.includes('jurisdiction')}
-                className={errors.jurisdiction ? 'is-invalid async-select' : 'async-select'}
-              />
-              {errors.jurisdiction && (
-                <small className="form-text text-danger">{errors.jurisdiction}</small>
+
+            <h4 className="mt-5">Focus Area</h4>
+            <FieldArray
+              name="jurisdictions"
+              /* tslint:disable-next-line jsx-no-lambda */
+              render={arrayHelpers => (
+                <div>
+                  {values.jurisdictions.map((jurisdiction, index) => (
+                    <fieldset key={index}>
+                      {errors.jurisdictions && errors.jurisdictions[index] && (
+                        <div className="alert alert-danger" role="alert">
+                          <h6 className="alert-heading">Please fix these errors</h6>
+                          <ul className="list-unstyled">
+                            {Object.entries(errors.jurisdictions[index] || {}).map(([key, val]) => (
+                              <li key={key}>
+                                <strong>Focus Area</strong>: {val}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                      <FormGroup
+                        className={
+                          errors.jurisdictions &&
+                          doesFieldHaveErrors('id', index, errors.jurisdictions)
+                            ? 'is-invalid async-select-container'
+                            : 'async-select-container'
+                        }
+                      >
+                        <Label for={`jurisdictions[${index}].id`}>Focus Area</Label>
+                        <Field
+                          component={JurisdictionSelect}
+                          name={`jurisdictions[${index}].id`}
+                          id={`jurisdictions[${index}].id`}
+                          placeholder="Select Focus Area"
+                          aria-label="Select Focus Area"
+                          disabled={disabledFields.includes('jurisdictions')}
+                          className={
+                            errors.jurisdictions &&
+                            doesFieldHaveErrors('id', index, errors.jurisdictions)
+                              ? 'is-invalid async-select'
+                              : 'async-select'
+                          }
+                        />
+
+                        {errors.jurisdictions && errors.jurisdictions[index] && (
+                          <small className="form-text text-danger">An Error Ocurred</small>
+                        )}
+
+                        <ErrorMessage
+                          name={`jurisdictions[${index}].id`}
+                          component="small"
+                          className="form-text text-danger"
+                        />
+                      </FormGroup>
+                    </fieldset>
+                  ))}
+                  <button
+                    type="button"
+                    onClick={() => arrayHelpers.push(initialJurisdictionValues)}
+                  >
+                    +
+                  </button>
+                </div>
               )}
-            </FormGroup>
+            />
+
             {values.interventionType === InterventionType.FI && (
               <FormGroup>
                 <Label for="fiStatus">Focus Investigation Status</Label>
