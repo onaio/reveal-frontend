@@ -127,6 +127,7 @@ const PlanForm = (props: PlanFormProps) => {
                   } else {
                     setFieldValue('activities', getFormActivities(FIActivities));
                   }
+                  setFieldValue('jurisdictions', [initialJurisdictionValues]);
                   handleChange(e);
                 }}
                 className={errors.interventionType ? 'form-control is-invalid' : 'form-control'}
@@ -141,12 +142,12 @@ const PlanForm = (props: PlanFormProps) => {
               />
             </FormGroup>
 
-            <h4 className="mt-5">Focus Area</h4>
+            <h5 className="mt-5">Locations</h5>
             <FieldArray
               name="jurisdictions"
               /* tslint:disable-next-line jsx-no-lambda */
               render={arrayHelpers => (
-                <div>
+                <div className="mb-5">
                   {values.jurisdictions.map((jurisdiction, index) => (
                     <fieldset key={index}>
                       {errors.jurisdictions && errors.jurisdictions[index] && (
@@ -197,12 +198,15 @@ const PlanForm = (props: PlanFormProps) => {
                       </FormGroup>
                     </fieldset>
                   ))}
-                  <button
-                    type="button"
-                    onClick={() => arrayHelpers.push(initialJurisdictionValues)}
-                  >
-                    +
-                  </button>
+                  {values.interventionType === InterventionType.IRS && (
+                    <button
+                      type="button"
+                      className="btn btn-primary btn-sm mb-5"
+                      onClick={() => arrayHelpers.push(initialJurisdictionValues)}
+                    >
+                      Add Focus Area
+                    </button>
+                  )}
                 </div>
               )}
             />
