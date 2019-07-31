@@ -315,38 +315,43 @@ class IrsPlan extends React.Component<
               is_jurisdiction: true,
               return_geometry: false,
             }).then(result => {
-              if (result && result.properties && result.properties.ADM0_PCODE) {
+              if (result && result.properties) {
                 const country: JurisdictionsByCountry =
-                  CountriesAdmin0[result.properties.ADM0_PCODE as ADMN0_PCODE];
-                const filteredJurisdictions = ancestorIds.map(j => jurisdictionsById[j]);
-                const childlessChildrenIds = this.getChildlessChildrenIds(filteredJurisdictions);
+                  CountriesAdmin0[
+                    (result.properties.ADM0_PCODE || result.properties.name) as ADMN0_PCODE
+                  ];
 
-                const newPlan: PlanRecord = {
-                  ...(this.props.planById as PlanRecord),
-                  plan_jurisdictions_ids: [...ancestorIds],
-                };
+                if (country) {
+                  const filteredJurisdictions = ancestorIds.map(j => jurisdictionsById[j]);
+                  const childlessChildrenIds = this.getChildlessChildrenIds(filteredJurisdictions);
 
-                const tableCrumbs: TableCrumb[] = [
-                  {
-                    active: true,
-                    id: country.jurisdictionId.length ? country.jurisdictionId : null,
-                    label: country.ADMN0_EN,
-                  },
-                ];
+                  const newPlan: PlanRecord = {
+                    ...(this.props.planById as PlanRecord),
+                    plan_jurisdictions_ids: [...ancestorIds],
+                  };
 
-                this.setState({
-                  childlessChildrenIds,
-                  country,
-                  filteredJurisdictionIds: ancestorIds,
-                  focusJurisdictionId: country.jurisdictionId.length
-                    ? country.jurisdictionId
-                    : this.state.focusJurisdictionId,
-                  isLoadingJurisdictions: false,
-                  isStartingPlan: false,
-                  newPlan,
-                  planCountry: result.properties.ADM0_PCODE,
-                  tableCrumbs,
-                });
+                  const tableCrumbs: TableCrumb[] = [
+                    {
+                      active: true,
+                      id: country.jurisdictionId.length ? country.jurisdictionId : null,
+                      label: country.ADMN0_EN,
+                    },
+                  ];
+
+                  this.setState({
+                    childlessChildrenIds,
+                    country,
+                    filteredJurisdictionIds: ancestorIds,
+                    focusJurisdictionId: country.jurisdictionId.length
+                      ? country.jurisdictionId
+                      : this.state.focusJurisdictionId,
+                    isLoadingJurisdictions: false,
+                    isStartingPlan: false,
+                    newPlan,
+                    planCountry: result.properties.ADM0_PCODE,
+                    tableCrumbs,
+                  });
+                }
               }
             });
           }

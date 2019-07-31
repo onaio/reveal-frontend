@@ -736,12 +736,80 @@ const NamibiaAdmin0: JurisdictionsByCountry = {
   ],
 };
 
+export const BotswanaAdmin0: JurisdictionsByCountry = {
+  ADMN0_EN: 'Botswana',
+  ADMN0_PCODE: 'BW',
+  jurisdictionId: '16a77bba-8777-4bc4-8566-d193cb04af4c',
+  jurisdictionIds: [],
+};
+export const ChadizaAdmin0: JurisdictionsByCountry = {
+  ADMN0_EN: 'Chadiza',
+  ADMN0_PCODE: 'Chadiza',
+  jurisdictionId: '2939',
+  jurisdictionIds: [],
+};
+export const SindaAdmin0: JurisdictionsByCountry = {
+  ADMN0_EN: 'Sinda',
+  ADMN0_PCODE: 'Sinda',
+  jurisdictionId: '2941',
+  jurisdictionIds: [],
+};
+export const KateteAdmin0: JurisdictionsByCountry = {
+  ADMN0_EN: 'Katete',
+  ADMN0_PCODE: 'Katete',
+  jurisdictionId: '2940',
+  jurisdictionIds: [],
+};
+export const SiavongaAdmin0: JurisdictionsByCountry = {
+  ADMN0_EN: 'Siavonga',
+  ADMN0_PCODE: 'Siavonga',
+  jurisdictionId: '3954',
+  jurisdictionIds: [],
+};
+export const LopBuriAdmin0: JurisdictionsByCountry = {
+  ADMN0_EN: 'Lop Buri',
+  ADMN0_PCODE: 'Lop Buri',
+  jurisdictionId: '9c3c2db4-bddd-44c5-870a-a0eef539e4da',
+  jurisdictionIds: [],
+};
+export const OddarMeancheyProvinceAdmin0: JurisdictionsByCountry = {
+  ADMN0_EN: 'Oddar Meanchey Province',
+  ADMN0_PCODE: 'Oddar Meanchey Province',
+  jurisdictionId: 'f8863022-ff88-4c22-b2d1-83f59f31b874',
+  jurisdictionIds: [],
+};
+export const LusakaAdmin0: JurisdictionsByCountry = {
+  ADMN0_EN: 'Lusaka',
+  ADMN0_PCODE: 'Lusaka',
+  jurisdictionId: '2942',
+  jurisdictionIds: [],
+};
+
 /** ISO 3166-alpha-2 admin codes */
-export type ADMN0_PCODE = 'TH' | 'ZM' | 'NA'; // | 'BW';
+export type ADMN0_PCODE =
+  | 'TH'
+  | 'ZM'
+  | 'NA'
+  | 'BW'
+  | 'Chadiza'
+  | 'Sinda'
+  | 'Katete'
+  | 'Siavonga'
+  | 'Lop Buri'
+  | 'Oddar Meanchey Province'
+  | 'Lusaka';
 
 /** dictionary of JurisdictionsByCountry by country code */
 export const CountriesAdmin0 = {
+  BW: BotswanaAdmin0,
+  Chadiza: ChadizaAdmin0,
+  Katete: KateteAdmin0,
+  ['Lop Buri']: LopBuriAdmin0,
+  Lusaka: LusakaAdmin0,
   NA: NamibiaAdmin0,
+  ['Oddar Meanchey Province']: OddarMeancheyProvinceAdmin0,
+  Siavonga: SiavongaAdmin0,
+  Sinda: SindaAdmin0,
   TH: ThailandAdmin0,
   ZM: ZambiaAdmin0,
 };
