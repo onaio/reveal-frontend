@@ -2689,6 +2689,7 @@ Object {
       101.191892623901,
       15.0780906816776,
     ],
+    "boxZoom": true,
     "container": "map",
     "fitBoundsOptions": Object {
       "padding": 20,
@@ -4018,80 +4019,7 @@ Object {
           },
           "type": "geojson",
         },
-        "type": "line",
-        "visible": true,
-      },
-      "type": "line",
-      "visible": true,
-    },
-  },
-  "mapId": "map-1",
-  "menuIsOpen": true,
-  "oldLayerObjs": Object {},
-  "openCategories": Array [],
-  "primaryLayer": "RACD_bednet_dist_1km_radius-fill-line",
-  "primarySubLayer": undefined,
-  "reloadLayerId": null,
-  "reloadLayers": Any<Number>,
-  "showFilterPanel": false,
-  "showProfile": false,
-  "showSpinner": false,
-  "timeseries": Object {},
-  "visibleLayerId": "RACD_bednet_dist_1km_radius-fill-line",
-}
-`;
-
-exports[`components/GisidaWrapper renders map component with structures 1`] = `
-Object {
-  "handlers": Array [],
-  "mapId": "map-1",
-  "store": Object {
-    "dispatch": [Function],
-    "getState": [Function],
-    "replaceReducer": [Function],
-    "subscribe": [Function],
-    Symbol(observable): [Function],
-  },
-}
-`;
-
-exports[`components/GisidaWrapper renders map component with structures 2`] = `
-Object {
-  "accessToken": Any<String>,
-  "apiAccessToken": Any<String>,
-  "appName": "TLv1_01",
-  "loaded": true,
-  "mapConfig": Object {
-    "bounds": Array [
-      101.164855957031,
-      15.0577022766384,
-      101.191892623901,
-      15.0780906816776,
-    ],
-    "boxZoom": true,
-    "container": "map",
-    "fitBoundsOptions": Object {
-      "padding": 20,
-    },
-    "style": Object {
-      "layers": Array [
-        Object {
-          "id": "earthwatch-basemap",
-          "maxzoom": 22,
-          "minzoom": 0,
-          "source": "diimagery",
-          "type": "raster",
-        },
-      ],
-      "sources": Object {
-        "diimagery": Object {
-          "scheme": "tms",
-          "tileSize": 256,
-          "tiles": Array [
-            Any<String>,
-          ],
-          "type": "raster",
-        },
+        "type": "symbol",
       },
       "type": "symbol",
       "visible": false,
