@@ -1152,6 +1152,7 @@ class IrsPlan extends React.Component<
     const adminFillColors: string[] = ['black', 'red', 'orange', 'yellow', 'green'];
     for (let t = 1; t < tilesets.length; t += 1) {
       const adminFillLayerId = `${ADMN0_EN}-admin-${t}-fill`;
+
       ADMIN_FILL_LAYER_IDS.unshift(adminFillLayerId);
       const adminFillLayer = {
         ...fillLayerConfig,
@@ -1167,6 +1168,13 @@ class IrsPlan extends React.Component<
         },
         visible: true,
       };
+
+      const tooltipVal = tilesets[t].idField;
+      if (tooltipVal && tooltipVal.length) {
+        (adminFillLayer as any).popup = {
+          body: `<p class="select-jurisdictin-tooltip">{{${tooltipVal}}}</p>`,
+        };
+      }
 
       if (t === 1) {
         const adminFilterExpression: any[] = ['any'];
@@ -1195,7 +1203,7 @@ class IrsPlan extends React.Component<
     function getJurisdictionFillLayers(jurisdictions: Jurisdiction[]) {
       const layers: FlexObject[] = [];
       const geoGraphicLevels: number[] = [];
-
+      const layerIds: string[] = [];
       for (const j of jurisdictions) {
         const { geographic_level } = j;
         if (
@@ -1209,16 +1217,35 @@ class IrsPlan extends React.Component<
 
       for (const g of geoGraphicLevels) {
         const featureCollection = {
-          features: jurisdictions.filter(j => j.geographic_level === g).map(j => j.geojson),
+          features: jurisdictions
+            .filter(j => j.geographic_level === g)
+            .map(j => {
+              if (j.geojson) {
+                return {
+                  ...j.geojson,
+                  properties: {
+                    ...j.geojson.properties,
+                    jurisdiction_id: j.jurisdiction_id,
+                    selected: true,
+                  },
+                };
+              }
+              return false;
+            })
+            .filter(geojson => geojson),
           type: 'FeatureCollection',
         };
-
+        const layerId = `${ADMN0_EN}-admin-${g}-jurisdiction-fill`;
         const layer = {
           ...fillLayerConfig,
           filter: ['==', 'parentId', ''],
-          id: `${ADMN0_EN}-admin-${g}-jurisdiction-fill`,
+          id: layerId,
           paint: {
             'fill-color': adminLayerColors[g],
+          },
+          popup: {
+            body: '<p class="select-jurisdictin-tooltip">{{name}}</p>',
+            join: [],
           },
           source: {
             ...fillLayerConfig.source,
@@ -1229,16 +1256,25 @@ class IrsPlan extends React.Component<
           },
           visible: true,
         };
+
+        layerIds.push(layerId);
         layers.push(layer);
       }
-      return layers;
+      return {
+        JURISDICTION_FILL_LAYERS: layers,
+        JURISDICTION_LAYER_IDS: layerIds,
+      };
     }
 
-    const JURISDICTION_FILL_LAYERS = getJurisdictionFillLayers(filteredJurisdictions);
+    const { JURISDICTION_FILL_LAYERS, JURISDICTION_LAYER_IDS } = getJurisdictionFillLayers(
+      filteredJurisdictions
+    );
 
     const onAdminFillClickHandler: Handlers = {
       method: e => {
-        this.onAdminFillClick(e, country, [...ADMIN_FILL_LAYER_IDS].reverse());
+        this.onAdminFillClick(e, country, [...ADMIN_FILL_LAYER_IDS].reverse(), [
+          ...JURISDICTION_LAYER_IDS,
+        ]);
       },
       name: `${ADMN0_EN}-fill-drilldown`,
       type: 'click',
@@ -1269,20 +1305,28 @@ class IrsPlan extends React.Component<
    * @param country - JurisdictionsByCountry object containing basic hierarchy information per country
    * @param geographicLevel - The hierarchical level of the feature being clicked
    */
-  private onAdminFillClick(e: EventData, country: JurisdictionsByCountry, adminLayerIds: string[]) {
+  private onAdminFillClick(
+    e: EventData,
+    country: JurisdictionsByCountry,
+    adminLayerIds: string[],
+    jurisdictionLayerIds: string[]
+  ) {
     const { point, target: Map, originalEvent } = e;
     const features = Map.queryRenderedFeatures(point);
     const feature = features[0];
+
     if (
       !feature ||
       !feature.layer ||
       !feature.layer.id ||
-      !adminLayerIds.includes(feature.layer.id)
+      (!adminLayerIds.includes(feature.layer.id) &&
+        !jurisdictionLayerIds.includes(feature.layer.id))
     ) {
       return false;
     }
     const geographicLevel = [...adminLayerIds].indexOf(feature.layer.id) + 1;
     const isShiftClick = originalEvent.shiftKey;
+    const isJurisdictionLayer = jurisdictionLayerIds.includes(feature.layer.id);
     const { filteredJurisdictionIds, childlessChildrenIds } = this.state;
     const filteredJurisdictions = this.props.jurisdictionsArray.filter(j =>
       filteredJurisdictionIds.includes(j.jurisdiction_id)
@@ -1290,12 +1334,15 @@ class IrsPlan extends React.Component<
 
     if (feature && country.tilesets) {
       const { geometry, layer, properties } = feature;
-      const clickedFeatureName = properties[country.tilesets[geographicLevel].idField];
+
+      const clickedFeatureId = isJurisdictionLayer
+        ? properties.jurisdiction_id
+        : properties[country.tilesets[geographicLevel].idField];
       const clickedFeatureJurisdiction = filteredJurisdictions.find(
-        j => j.name === clickedFeatureName
+        j => j[isJurisdictionLayer ? 'jurisdiction_id' : 'name'] === clickedFeatureId
       ) as Jurisdiction;
 
-      if (clickedFeatureJurisdiction && !isShiftClick) {
+      if (clickedFeatureJurisdiction && !isShiftClick && !isJurisdictionLayer) {
         // handle Drilldown Click
         this.onDrilldownClick(clickedFeatureJurisdiction.jurisdiction_id);
         this.onResetDrilldownTableHierarchy(clickedFeatureJurisdiction.jurisdiction_id);
@@ -1357,7 +1404,7 @@ class IrsPlan extends React.Component<
             Map.fitBounds(newBounds, { padding: 20 });
           }
         }
-      } else if (clickedFeatureJurisdiction) {
+      } else if (isShiftClick && clickedFeatureJurisdiction) {
         // Handle selection click
         this.onToggleJurisdictionSelection(clickedFeatureJurisdiction.jurisdiction_id);
       }
