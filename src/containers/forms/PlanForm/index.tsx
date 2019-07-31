@@ -134,20 +134,24 @@ const PlanForm = (props: PlanFormProps) => {
                 className="form-text text-danger"
               />
             </FormGroup>
-            <FormGroup>
+            <FormGroup
+              className={
+                errors.jurisdiction ? 'is-invalid async-select-container' : 'async-select-container'
+              }
+            >
               <Label for="jurisdiction">Focus Area</Label>
               <Field
                 component={JurisdictionSelect}
                 name="jurisdiction"
                 id="jurisdiction"
+                placeholder="Select Focus Area"
+                aria-label="Select Focus Area"
                 disabled={disabledFields.includes('jurisdiction')}
-                className={errors.jurisdiction ? 'form-control is-invalid' : 'form-control'}
+                className={errors.jurisdiction ? 'is-invalid async-select' : 'async-select'}
               />
-              <ErrorMessage
-                name="jurisdiction"
-                component="small"
-                className="form-text text-danger"
-              />
+              {errors.jurisdiction && (
+                <small className="form-text text-danger">{errors.jurisdiction}</small>
+              )}
             </FormGroup>
             {values.interventionType === InterventionType.FI && (
               <FormGroup>
