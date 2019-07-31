@@ -3,7 +3,7 @@ import toJson from 'enzyme-to-json';
 import { createBrowserHistory } from 'history';
 import React from 'react';
 import { Router } from 'react-router';
-import SelectPlan from '../';
+import SelectComponent from '../';
 import * as fixtures from '../../../store/ducks/tests/fixtures';
 
 const history = createBrowserHistory();
@@ -19,7 +19,7 @@ describe('components/page/Header', () => {
     };
     shallow(
       <Router history={history}>
-        <SelectPlan {...props} />
+        <SelectComponent {...props} />
       </Router>
     );
   });
@@ -30,7 +30,7 @@ describe('components/page/Header', () => {
     };
     const wrapper = mount(
       <Router history={history}>
-        <SelectPlan {...props} />
+        <SelectComponent {...props} />
       </Router>
     );
     expect(toJson(wrapper)).toMatchSnapshot();
@@ -43,7 +43,7 @@ describe('components/page/Header', () => {
     };
     const wrapper = mount(
       <Router history={history}>
-        <SelectPlan {...props} />
+        <SelectComponent {...props} />
       </Router>
     );
     expect(toJson(wrapper)).toMatchSnapshot();
