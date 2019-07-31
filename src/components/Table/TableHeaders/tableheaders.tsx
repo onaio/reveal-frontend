@@ -1,6 +1,7 @@
 import * as React from 'react';
+import { Link } from 'react-router-dom';
 import { Button, Col, Row } from 'reactstrap';
-import { CASE_TRIGGERED, REACTIVE, ROUTINE } from '../../../constants';
+import { CASE_TRIGGERED, NEW_PLAN_URL, REACTIVE, ROUTINE } from '../../../constants';
 import { Plan } from '../../../store/ducks/plans';
 /** Interface to describe props for TableHeader components  */
 export interface TableHeaderProps {
@@ -23,9 +24,12 @@ class TableHeader extends React.Component<TableHeaderProps, {}> {
               <h3 className="mb-3 mt-5 page-title">{ROUTINE}</h3>
             </Col>
             <Col xs="6">
-              <Button className="focus-investigation" color="primary">
+              <Link
+                to={NEW_PLAN_URL}
+                className="focus-investigation btn btn-primary float-right mt-5"
+              >
                 Add Focus Investigation
-              </Button>
+              </Link>
             </Col>
           </Row>
         </div>
