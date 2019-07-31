@@ -377,7 +377,11 @@ export function generatePlanDefinition(formValue: PlanFormFields): PlanDefinitio
       start: moment(formValue.start).format(DATE_FORMAT.toUpperCase()),
     },
     identifier: planIdentifier,
-    jurisdiction: [],
+    jurisdiction: formValue.jurisdictions
+      ? formValue.jurisdictions.map(e => {
+          return { code: e.id };
+        })
+      : [],
     name: formValue.name,
     status: formValue.status,
     title: formValue.title,
