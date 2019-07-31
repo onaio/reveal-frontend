@@ -176,7 +176,7 @@ class IrsPlan extends React.Component<
       isLoadingGeoms: false,
       isLoadingJurisdictions: true,
       isSaveDraftDisabled: false,
-      isStartingPlan: props.isNewPlan || props.isDraftPlan || false,
+      isStartingPlan: props.isNewPlan || false,
       newPlan: props.isNewPlan
         ? {
             id: uuidv4(),
@@ -206,7 +206,7 @@ class IrsPlan extends React.Component<
       fetchJurisdictionsActionCreator,
       fetchPlansActionCreator,
       isDraftPlan,
-      isFinalizedPlan,
+      isNewPlan,
       loadedJurisdictionIds,
       planId,
       planById,
@@ -293,7 +293,7 @@ class IrsPlan extends React.Component<
         });
         // initialize Finalized Plan
         if (
-          isFinalizedPlan &&
+          !isNewPlan &&
           this.props.planById &&
           this.props.planById.plan_jurisdictions_ids &&
           this.props.planById.plan_jurisdictions_ids.length
@@ -322,7 +322,14 @@ class IrsPlan extends React.Component<
                   ];
 
                 if (country) {
-                  const filteredJurisdictions = ancestorIds.map(j => jurisdictionsById[j]);
+                  const countryIds = country.jurisdictionId.length
+                    ? [country.jurisdictionId]
+                    : [...country.jurisdictionIds];
+                  const filteredJurisdictions = isDraftPlan
+                    ? this.getDecendantJurisdictionIds(countryIds, jurisdictions).map(
+                        j => jurisdictionsById[j]
+                      )
+                    : ancestorIds.map(j => jurisdictionsById[j]);
                   const childlessChildrenIds = this.getChildlessChildrenIds(filteredJurisdictions);
 
                   const newPlan: PlanRecord = {
@@ -338,19 +345,29 @@ class IrsPlan extends React.Component<
                     },
                   ];
 
-                  this.setState({
-                    childlessChildrenIds,
-                    country,
-                    filteredJurisdictionIds: ancestorIds,
-                    focusJurisdictionId: country.jurisdictionId.length
-                      ? country.jurisdictionId
-                      : this.state.focusJurisdictionId,
-                    isLoadingJurisdictions: false,
-                    isStartingPlan: false,
-                    newPlan,
-                    planCountry: result.properties.ADM0_PCODE,
-                    tableCrumbs,
-                  });
+                  this.setState(
+                    {
+                      childlessChildrenIds,
+                      country,
+                      filteredJurisdictionIds: isDraftPlan
+                        ? filteredJurisdictions.map(j => j.jurisdiction_id)
+                        : ancestorIds,
+                      focusJurisdictionId: country.jurisdictionId.length
+                        ? country.jurisdictionId
+                        : this.state.focusJurisdictionId,
+                      isLoadingGeoms: !!isDraftPlan,
+                      isLoadingJurisdictions: false,
+                      isStartingPlan: false,
+                      newPlan,
+                      planCountry: result.properties.ADM0_PCODE,
+                      tableCrumbs,
+                    },
+                    () => {
+                      if (isDraftPlan) {
+                        this.loadJurisdictionGeometries();
+                      }
+                    }
+                  );
                 }
               }
             });
@@ -371,7 +388,7 @@ class IrsPlan extends React.Component<
       isLoadingJurisdictions,
       newPlan,
     } = this.state;
-    const { isDraftPlan, isFinalizedPlan, jurisdictionsArray, planById } = nextProps;
+    const { isNewPlan, isFinalizedPlan, jurisdictionsArray, planById } = nextProps;
 
     if (newPlan && childlessChildrenIds && country && isLoadingGeoms) {
       const filteredJurisdictions = jurisdictionsArray.filter(
@@ -394,7 +411,7 @@ class IrsPlan extends React.Component<
       this.setState({ isLoadingJurisdictions: false });
     }
 
-    if (isDraftPlan && !newPlan && planById && planById.plan_jurisdictions_ids) {
+    if (isNewPlan && !newPlan && planById && planById.plan_jurisdictions_ids) {
       this.setState({
         isStartingPlan: !!this.state.country,
         newPlan: planById,
@@ -892,9 +909,6 @@ class IrsPlan extends React.Component<
 
     const filteredJurisdictionIds = filteredJurisdictions.map(j => j.jurisdiction_id);
     const childlessChildrenIds = this.getChildlessChildrenIds(filteredJurisdictions);
-    const childlessChildren = filteredJurisdictions.filter(j =>
-      childlessChildrenIds.includes(j.jurisdiction_id)
-    );
 
     const newPlan: PlanRecord | null = NewPlan
       ? {
@@ -927,79 +941,87 @@ class IrsPlan extends React.Component<
         newPlan,
         tableCrumbs,
       },
-      () => {
-        // Get geoms for jurisdictionsToInclude
-        const { childlessChildrenIds: ChildlessChildrenIds } = this.state;
+      this.loadJurisdictionGeometries
+    );
+  }
 
-        // Determine which Jurisdictions will need to be updated in state
-        const loadedJurisdictionIds = this.props.jurisdictionsArray
-          .filter(j => ChildlessChildrenIds.includes(j.jurisdiction_id) && !!j.geojson)
-          .map(j => j.jurisdiction_id);
-        const jurisdictionIdsToLoad = ChildlessChildrenIds.filter(
-          j => !loadedJurisdictionIds.includes(j)
+  private loadJurisdictionGeometries() {
+    // Get geoms for jurisdictionsToInclude
+    const { childlessChildrenIds: ChildlessChildrenIds, filteredJurisdictionIds } = this.state;
+
+    // Determine which Jurisdictions will need to be updated in state
+    const filteredJurisdictions = this.props.jurisdictionsArray.filter(j =>
+      filteredJurisdictionIds.includes(j.jurisdiction_id)
+    );
+    const childlessChildren = filteredJurisdictions.filter(j =>
+      ChildlessChildrenIds.includes(j.jurisdiction_id)
+    );
+    const loadedJurisdictionIds = childlessChildren
+      .filter(j => !!j.geojson)
+      .map(j => j.jurisdiction_id);
+    const jurisdictionIdsToLoad = ChildlessChildrenIds.filter(
+      j => !loadedJurisdictionIds.includes(j)
+    );
+
+    // Determine all parent_ids of childless children jurisdictions
+    const parentIdsToCall: string[] = [];
+    for (const child of childlessChildren) {
+      if (
+        child.parent_id &&
+        child.parent_id.length &&
+        child.parent_id !== 'null' &&
+        !parentIdsToCall.includes(child.parent_id)
+      ) {
+        parentIdsToCall.push(child.parent_id);
+      }
+    }
+
+    // Build a list of OpenSRP API calls to make (fetch by parent_id to reduce number of calls)
+    if (parentIdsToCall.length) {
+      const promises = [];
+      for (const parent of parentIdsToCall) {
+        promises.push(
+          new Promise((resolve, reject) => {
+            OpenSrpLocationService.read(OPENSRP_FIND_BY_PROPERTIES, {
+              is_jurisdiction: true,
+              properties_filter: `${OPENSRP_PARENT_ID}:${parent}`,
+              return_geometry: true,
+            })
+              .then(jurisidction => resolve(jurisidction))
+              .catch(error => reject(error));
+          })
         );
+      }
 
-        // Determine all parent_ids of childless children jurisdictions
-        const parentIdsToCall: string[] = [];
-        for (const child of childlessChildren) {
-          if (
-            child.parent_id &&
-            child.parent_id.length &&
-            child.parent_id !== 'null' &&
-            !parentIdsToCall.includes(child.parent_id)
-          ) {
-            parentIdsToCall.push(child.parent_id);
-          }
-        }
-
-        // Build a list of OpenSRP API calls to make (fetch by parent_id to reduce number of calls)
-        if (parentIdsToCall.length) {
-          const promises = [];
-          for (const parent of parentIdsToCall) {
-            promises.push(
-              new Promise((resolve, reject) => {
-                OpenSrpLocationService.read(OPENSRP_FIND_BY_PROPERTIES, {
-                  is_jurisdiction: true,
-                  properties_filter: `${OPENSRP_PARENT_ID}:${parent}`,
-                  return_geometry: true,
-                })
-                  .then(jurisidction => resolve(jurisidction))
-                  .catch(error => reject(error));
-              })
-            );
-          }
-
-          // Make all calls to OpenSRP API
-          Promise.all(promises).then((results: any[]) => {
-            const jurisdictions: Jurisdiction[] = [];
-            // Loop through all parent_id results
-            for (const result of results) {
-              // Loop through all children of parent
-              for (const geojson of result) {
-                // If the child geojson needs to be loaded into state, do so
-                if (jurisdictionIdsToLoad.includes(geojson.id)) {
-                  const J = filteredJurisdictions.find(
-                    j => j.jurisdiction_id === geojson.id
-                  ) as Jurisdiction;
-                  if (J) {
-                    const j: Jurisdiction = {
-                      ...J,
-                      geojson,
-                    };
-                    jurisdictions.push(j);
-                  }
-                }
+      // Make all calls to OpenSRP API
+      Promise.all(promises).then((results: any[]) => {
+        const jurisdictions: Jurisdiction[] = [];
+        // Loop through all parent_id results
+        for (const result of results) {
+          // Loop through all children of parent
+          for (const geojson of result) {
+            // If the child geojson needs to be loaded into state, do so
+            if (jurisdictionIdsToLoad.includes(geojson.id)) {
+              const J = filteredJurisdictions.find(
+                j => j.jurisdiction_id === geojson.id
+              ) as Jurisdiction;
+              if (J) {
+                const j: Jurisdiction = {
+                  ...J,
+                  geojson,
+                };
+                jurisdictions.push(j);
               }
             }
-
-            // Update the store with newly loaded jurisdictions with geojson
-            this.props.fetchJurisdictionsActionCreator(jurisdictions);
-          });
-        } else {
-          this.setState({ isLoadingGeoms: false });
+          }
         }
-      }
-    );
+
+        // Update the store with newly loaded jurisdictions with geojson
+        this.props.fetchJurisdictionsActionCreator(jurisdictions);
+      });
+    } else {
+      this.setState({ isLoadingGeoms: false });
+    }
   }
 
   // Jurisdiction Selection Control (which jurisidcitions should be included in the plan)
