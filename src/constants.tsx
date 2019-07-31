@@ -136,6 +136,8 @@ export const FI_SINGLE_MAP_URL = '/focus-investigation/map';
 export type FI_SINGLE_MAP_URL = typeof FI_SINGLE_MAP_URL;
 export const FI_HISTORICAL_URL = '/focus-investigation/historical';
 export type FI_HISTORICAL_URL = typeof FI_HISTORICAL_URL;
+export const NEW_PLAN_URL = '/plans/new';
+export type NEW_PLAN_URL = typeof NEW_PLAN_URL;
 
 // OpenSRP API strings
 export const OPENSRP_FIND_BY_PROPERTIES = 'findByProperties';
