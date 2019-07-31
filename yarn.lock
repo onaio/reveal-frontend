@@ -6318,16 +6318,16 @@ getpass@^0.1.1:
   dependencies:
     assert-plus "^1.0.0"
 
-gisida-react@^1.2.6:
-  version "1.2.6"
-  resolved "https://registry.yarnpkg.com/gisida-react/-/gisida-react-1.2.6.tgz#1bc1ecdcf737ed223eca1a1427fc739c92cdf10d"
-  integrity sha512-nxjfIBY1B1yYQp8zkPqi7gRY4cn3AjA4DQYONzbxxpddkHFzgxxVuNFJqKdgdKzPkSQHkou62O83bj2MzjPQIw==
+gisida-react@^1.2.8:
+  version "1.2.8"
+  resolved "https://registry.yarnpkg.com/gisida-react/-/gisida-react-1.2.8.tgz#bf8d3ee57590216afa698f68d28e310cef5a3681"
+  integrity sha512-yMRXOVzebSmSarv18g/7wZduk2Ax7HfCM2ohd5zsZ/Qv0NOpS5Uv7Aqoa/4YCMwe82Lklm4pO5LD9Hzp5yM16w==
   dependencies:
     ansi-regex "^3.0.0"
+    babel-plugin-transform-class-properties "^6.24.1"
     camelcase "^4.1.0"
     colorbrewer "^1.1.0"
     enzyme-adapter-react-16 "^1.1.1"
-    gisida "https://github.com/onaio/gisida.git#master"
     highcharts "^6.0.6"
     html-react-parser "^0.4.2"
     jquery "^3.3.1"
@@ -6340,35 +6340,6 @@ gisida@^1.2.5:
   version "1.2.5"
   resolved "https://registry.yarnpkg.com/gisida/-/gisida-1.2.5.tgz#6e4e03d13b97f7340dc91b829979de23621ef461"
   integrity sha512-++scGzOUEwi71S3H0LZtuQyoM4BGHcsOiGYminqCbkI4AOKYTTeLwPQIRbbW6tIK1pR9fcfe3ThzQsD8wtBwKA==
-  dependencies:
-    "@babel/runtime" "^7.4.3"
-    "@onaio/superset-connector" "^0.0.7"
-    babel-core v6.25.0
-    babel-loader "^7.1.2"
-    babel-polyfill "^6.26.0"
-    babel-preset-es2015 "^6.24.0"
-    babel-preset-es2016 "^6.24.1"
-    babel-preset-stage-0 "^6.24.1"
-    colorbrewer "^1.0.0"
-    d3 "^4.13.0"
-    highcharts "^6.0.4"
-    js-cookie "^2.2.0"
-    jsx-loader "^0.13.2"
-    lodash.clonedeep "^4.5.0"
-    lodash.omit "^4.5.0"
-    moment "^2.22.1"
-    mustache "^2.3.0"
-    neo-async "^2.5.1"
-    papaparse "^4.3.6"
-    redux "^3.7.2"
-    redux-thunk "^2.2.0"
-    simple-statistics "^5.2.0"
-    uglifyjs-webpack-plugin "1.1.5"
-    webpack "^3.8.1"
-
-"gisida@https://github.com/onaio/gisida.git#master":
-  version "1.2.6"
-  resolved "https://github.com/onaio/gisida.git#356eb4546325470f02836a1a9927c2f9ec2e23bd"
   dependencies:
     "@babel/runtime" "^7.4.3"
     "@onaio/superset-connector" "^0.0.7"
