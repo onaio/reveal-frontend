@@ -117,8 +117,10 @@ const JurisdictionSelect = (props: JurisdictionSelectProps & FieldProps) => {
           // set the formik field value
           if (form && field) {
             form.setFieldValue(field.name, optionVal.value);
+            form.setFieldTouched(field.name, true);
             if (labelFieldName) {
               form.setFieldValue(labelFieldName, optionVal.label); /** dirty hack */
+              form.setFieldTouched(labelFieldName, true); /** dirty hack */
             }
           }
 
