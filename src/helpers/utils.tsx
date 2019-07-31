@@ -1,12 +1,17 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { getOnadataUserInfo, getOpenSRPUserInfo } from '@onaio/gatekeeper';
 import { SessionState } from '@onaio/session-reducer';
 import { Color } from 'csstype';
 import { findKey, uniq } from 'lodash';
 import { FitBoundsOptions, Layer, Style } from 'mapbox-gl';
 import { MouseEvent } from 'react';
-import { Column } from 'react-table';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { CellInfo, Column } from 'react-table';
+import { Badge } from 'reactstrap';
 import SeamlessImmutable from 'seamless-immutable';
 import { TASK_YELLOW } from '../colors';
+import DrillDownTableLinkedCell from '../components/DrillDownTableLinkedCell';
 import { DIGITAL_GLOBE_CONNECT_ID, ONADATA_OAUTH_STATE, OPENSRP_OAUTH_STATE } from '../configs/env';
 import { imgArr, locationHierarchy, LocationItem } from '../configs/settings';
 import {
@@ -15,16 +20,19 @@ import {
   CASE_CONFIRMATION_CODE,
   CASE_TRIGGERED_PLAN,
   FEATURE_COLLECTION,
+  FI_SINGLE_MAP_URL,
+  FI_SINGLE_URL,
+  FOCUS_AREA_HEADER,
   IRS_CODE,
   LARVAL_DIPPING_CODE,
   MAP_ID,
   MOSQUITO_COLLECTION_CODE,
+  NAME,
   RACD_REGISTER_FAMILY_CODE,
 } from '../constants';
 import { Plan } from '../store/ducks/plans';
 import { InitialTask } from '../store/ducks/tasks';
 import { colorMaps, ColorMapsTypes } from './structureColorMaps';
-
 /** Interface for an object that is allowed to have any property */
 export interface FlexObject {
   [key: string]: any;
@@ -223,7 +231,6 @@ export const ConfigStore = (
   };
   return config;
 };
-
 /** utility method to extract plan from superset response object */
 export function extractPlan(plan: Plan) {
   const result: { [key: string]: any } = {
@@ -275,7 +282,6 @@ export function extractPlan(plan: Plan) {
 
   return result;
 }
-
 /**gets the key whose value contains the string in code
  * @param {ColorMapsTypes} obj - the object to search the key in
  * @param {string} status - task business status to filter, used as predicate filter
@@ -286,7 +292,6 @@ export function getColorByValue(obj: ColorMapsTypes, status: string): Color {
   const key = findKey(obj, o => o.indexOf(status) >= 0);
   return key ? key : TASK_YELLOW;
 }
-
 /** Given a task object , retrieves the contextual coloring
  * of structures based on two tasks' geojson properties i.e.
  * the action code and the task_business_status_code
@@ -322,7 +327,6 @@ export function getColor(taskObject: InitialTask): Color {
     }
   }
 }
-
 /** Transforms values of certain keys to the specified value
  * {T} obj - object where changes will be made
  * {string[]} propertyNames - list of property names in obj whose values will change
@@ -348,7 +352,6 @@ export function transformValues<T>(
   });
   return thisObj;
 }
-
 /** Generic Type for any object to be updated
  *  where T is the base interface and Y is the interface
  * to extend the base
@@ -360,7 +363,6 @@ export interface FeatureCollection<T> {
   type: FEATURE_COLLECTION;
   features: T[];
 }
-
 /** creates an object that wraps geojson features around
  * a standard FeatureCollection format and returns it as the FeatureCollection
  * @param {T[]} objFeatureCollection - a list of features objects
@@ -372,7 +374,6 @@ export function wrapFeatureCollection<T>(objFeatureCollection: T[]): FeatureColl
     type: FEATURE_COLLECTION,
   };
 }
-
 export function toggleLayer(allLayers: FlexObject, currentGoal: string, store: any, Actions: any) {
   let layer;
   let eachLayer: string;
@@ -384,7 +385,6 @@ export function toggleLayer(allLayers: FlexObject, currentGoal: string, store: a
     }
   }
 }
-
 /** Rounds a floating point number to a given precision
  *
  * @param n - A number of type double to be rounded of
@@ -407,3 +407,101 @@ export function stopPropagationAndPreventDefault(e: Event | MouseEvent | any) {
   preventDefault(e);
   stopPropagation(e);
 }
+/** Returns Table columns Which require external dependencies (Cell, Link, CellInfo)
+ * the columns being built include focusarea, name and action
+ * @param {colType} accessor column
+ */
+export const jsxColumns = (colType: string): Column[] | [] => {
+  if (colType === 'focusarea') {
+    return [
+      {
+        Header: FOCUS_AREA_HEADER,
+        columns: [
+          {
+            Cell: (cell: CellInfo) => {
+              return (
+                <div>
+                  {cell.original.focusArea.trim() && cell.value}
+                  &nbsp;&nbsp;
+                  {cell.original.focusArea.trim() && (
+                    <Link to={`${FI_SINGLE_URL}/${cell.original.id}`}>
+                      <FontAwesomeIcon icon={['fas', 'external-link-square-alt']} />
+                    </Link>
+                  )}
+                </div>
+              );
+            },
+            Header: '',
+            accessor: 'focusArea',
+            minWidth: 150,
+          },
+        ],
+      },
+    ];
+  } else if (colType === 'name') {
+    return [
+      {
+        Header: NAME,
+        columns: [
+          {
+            Cell: (cell: CellInfo) => {
+              /** if 24 hours ago show badge */
+              const oneDayAgo = new Date().getTime() + 1 * 24 * 60 * 60;
+              const newRecordBadge =
+                Date.parse(cell.original.plan_date) >= oneDayAgo ? (
+                  <Badge color="warning" pill={true}>
+                    Warning
+                  </Badge>
+                ) : null;
+              return (
+                <div>
+                  {cell.original.focusArea.trim() && (
+                    <Link to={`${FI_SINGLE_MAP_URL}/${cell.original.id}`}>{cell.value}</Link>
+                  )}
+                  &nbsp;
+                  {newRecordBadge}
+                </div>
+              );
+            },
+            Header: '',
+            accessor: 'plan_title',
+            minWidth: 160,
+          },
+        ],
+      },
+    ];
+  } else if ('action') {
+    return [
+      {
+        // Not clear on what it should show
+        Header: 'Action',
+        columns: [
+          {
+            Cell: (cell: CellInfo) => {
+              return null;
+            },
+            Header: '',
+            accessor: 'plan_status',
+            minWidth: 70,
+          },
+        ],
+      },
+    ];
+  } else {
+    return [];
+  }
+};
+/** Default table props config */
+export const defaultTableProps = {
+  CellComponent: DrillDownTableLinkedCell,
+  columns: [],
+  data: [],
+  identifierField: 'id',
+  linkerField: 'id',
+  minRows: 0,
+  parentIdentifierField: 'parent',
+  rootParentId: null,
+  showPageSizeOptions: false,
+  showPagination: false,
+  useDrillDownTrProps: false,
+};

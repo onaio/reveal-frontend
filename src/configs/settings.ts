@@ -813,6 +813,254 @@ export const CountriesAdmin0 = {
   TH: ThailandAdmin0,
   ZM: ZambiaAdmin0,
 };
+/** Columns for various Plans */
+/** complete reactive columns with no data */
+export const emptyCompleteReactivePlans = [
+  {
+    Header: 'Name',
+    columns: [{}],
+  },
+  {
+    Header: 'Date Completed',
+    columns: [{}],
+  },
+  {
+    Header: 'Case Notif. Date',
+    columns: [{}],
+  },
+  {
+    Header: 'Case Class.',
+    columns: [{}],
+  },
+];
+/** complete routine columns with no data */
+export const emptyCompleteRoutinePlans = [
+  {
+    Header: 'Name',
+    columns: [{}],
+  },
+  {
+    Header: 'Start Date',
+    columns: [{}],
+  },
+  {
+    Header: 'End Date',
+    columns: [{}],
+  },
+  {
+    Header: 'Date Completed',
+    columns: [{}],
+  },
+];
+/** current reactive columns with no data */
+export const emptyCurrentReactivePlans = [
+  {
+    Header: 'Name',
+    columns: [{}],
+  },
+  {
+    Header: 'FI Status',
+    columns: [{}],
+  },
+  {
+    Header: 'Case Notif. Date',
+    columns: [{}],
+  },
+  {
+    Header: 'Case Class.',
+    columns: [{}],
+  },
+];
+/** current routine columns with no data */
+export const emptyCurrentRoutinePlans = [
+  {
+    Header: 'Name',
+    columns: [{}],
+  },
+  {
+    Header: 'FI Status',
+    columns: [{}],
+  },
+  {
+    Header: 'Province',
+    columns: [{}],
+  },
+  {
+    Header: 'District',
+    columns: [{}],
+  },
+  {
+    Header: 'Canton',
+    columns: [{}],
+  },
+  {
+    Header: 'Village',
+    columns: [{}],
+  },
+  {
+    Header: 'Focus Area',
+    columns: [{}],
+  },
+  {
+    Header: 'Status',
+    columns: [{}],
+  },
+  {
+    Header: 'Start Date',
+    columns: [{}],
+  },
+  {
+    Header: 'End Date',
+    columns: [{}],
+  },
+  {
+    Header: 'Actions',
+    columns: [{}],
+  },
+];
+/** current reactive columns with data */
+export const currentReactivePlansColumns = [
+  {
+    Header: 'Case Notif. Date',
+    columns: [
+      {
+        Header: '',
+        accessor: 'caseNotificationDate',
+        minWidth: 90,
+      },
+    ],
+  },
+  {
+    Header: 'Case Class.',
+    columns: [
+      {
+        Header: '',
+        accessor: 'caseClassification',
+      },
+    ],
+  },
+];
+/** current routine columns with data */
+export const currentRoutinePlansColumn = [
+  {
+    Header: 'Status',
+    columns: [
+      {
+        Header: '',
+        accessor: 'status',
+        maxWidth: 60,
+      },
+    ],
+  },
+  {
+    Header: 'Start Date',
+    columns: [
+      {
+        Header: '',
+        accessor: 'plan_effective_period_start',
+        minWidth: 80,
+      },
+    ],
+  },
+  {
+    Header: 'End Date',
+    columns: [
+      {
+        Header: '',
+        accessor: 'plan_effective_period_end',
+      },
+    ],
+  },
+];
+/** complete reactive columns with data */
+export const completeReactivePlansColumn = [
+  {
+    Header: 'End Date',
+    columns: [
+      {
+        Header: '',
+        accessor: 'plan_effective_period_end',
+      },
+    ],
+  },
+  {
+    Header: 'Case Notif. Date',
+    columns: [
+      {
+        Header: '',
+        accessor: 'caseNotificationDate',
+        minWidth: 90,
+      },
+    ],
+  },
+  {
+    Header: 'Case Class.',
+    columns: [
+      {
+        Header: '',
+        accessor: 'caseClassification',
+      },
+    ],
+  },
+];
+/** complete routine columns with data */
+export const completeRoutinePlansColumn = [
+  {
+    Header: 'Start Date',
+    columns: [
+      {
+        Header: '',
+        accessor: 'plan_effective_period_start',
+        minWidth: 80,
+      },
+    ],
+  },
+  {
+    Header: 'End Date',
+    columns: [
+      {
+        Header: '',
+        accessor: 'plan_effective_period_end',
+      },
+    ],
+  },
+  {
+    Header: 'Date Completed',
+    columns: [
+      {
+        Header: '',
+        accessor: 'plan_effective_period_end',
+      },
+    ],
+  },
+];
+/** Date completed field not there in the current plan  */
+export const dateCompletedColumn = [
+  {
+    Header: 'Date Completed',
+    columns: [
+      {
+        Header: '',
+        accessor: 'date_completed',
+        minWidth: 80,
+      },
+    ],
+  },
+];
+// status column
+export const statusColumn = [
+  {
+    Header: 'FI Status',
+    columns: [
+      {
+        Header: '',
+        accessor: 'plan_status',
+        minWidth: 80,
+      },
+    ],
+  },
+];
+
 // icons to add to map
 export const imgArr = [
   {
