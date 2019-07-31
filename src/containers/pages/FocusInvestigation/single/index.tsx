@@ -157,7 +157,7 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
       const jurisdictionsParams = superset.getFormData(3000, [
         { comparator: planById.jurisdiction_id, operator: '==', subject: 'jurisdiction_id' },
       ]);
-      await supersetService(SUPERSET_PLANS_SLICE, plansParams).then((result: Plan[]) =>
+      await supersetService(SUPERSET_PLANS_SLICE, jurisdictionsParams).then((result: Plan[]) =>
         fetchPlansActionCreator(result)
       );
       await supersetService(SUPERSET_GOALS_SLICE, goalsParams).then((result2: Goal[]) =>
