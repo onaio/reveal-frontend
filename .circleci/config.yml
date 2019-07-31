@@ -34,6 +34,7 @@ jobs:
           REACT_APP_ONADATA_USER_URL: "https://stage-api.ona.io/api/v1/user.json"
           REACT_APP_ONADATA_OAUTH_STATE: "onadata"
           REACT_APP_ONADATA_CLIENT_ID: "hunter2"
+          REACT_APP_IRS_PLAN_COUNTRIES: "NA,TH"
 
     working_directory: ~/repo
 
