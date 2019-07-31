@@ -74,7 +74,7 @@ export const PlanSchema = Yup.object().shape({
   interventionType: Yup.string()
     .oneOf(Object.values(InterventionType))
     .required(REQUIRED),
-  jurisdiction: Yup.string().required(REQUIRED),
+  jurisdictions: Yup.array().of(Yup.object().shape({ id: Yup.string().required(REQUIRED) })),
   name: Yup.string().required(`${NAME} ${IS} ${REQUIRED}`),
   opensrpEventId: Yup.string(),
   start: Yup.date().required(REQUIRED),
@@ -100,6 +100,11 @@ export interface PlanActivityFormFields {
   timingPeriodStart: Date;
 }
 
+/** Plan jurisdictions form fields interface */
+export interface PlanJurisdictionFormFields {
+  id: string;
+}
+
 /** Plan form fields interface */
 export interface PlanFormFields {
   activities: PlanActivityFormFields[];
@@ -110,7 +115,7 @@ export interface PlanFormFields {
   fiStatus?: FIStatusType;
   identifier: string;
   interventionType: InterventionType;
-  jurisdiction: string;
+  jurisdictions: PlanJurisdictionFormFields[];
   name: string;
   opensrpEventId?: string;
   start: Date;
@@ -316,7 +321,7 @@ export const getNameTitle = (event: FormEvent, formValues: PlanFormFields): [str
 export function doesFieldHaveErrors(
   field: string,
   index: number,
-  errors: Array<FormikErrors<PlanActivityFormFields> | undefined>
+  errors: Array<FormikErrors<PlanActivityFormFields | PlanJurisdictionFormFields> | undefined>
 ) {
   return (
     errors && Object.entries(errors[index] || {}).filter(([key, val]) => key === field).length > 0
