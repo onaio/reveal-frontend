@@ -102,8 +102,18 @@ const PlanForm = (props: PlanFormProps) => {
           <Form
             /* tslint:disable-next-line jsx-no-lambda */
             onChange={(e: FormEvent) => {
+              const target = e.target as HTMLInputElement;
+              const fieldsThatChangePlanTitle = [
+                'interventionType',
+                'fiStatus',
+                'date',
+                'jurisdictions[0].id',
+              ];
               const nameTitle = getNameTitle(e, values);
-              if (!values.title || values.title === '') {
+              if (
+                fieldsThatChangePlanTitle.includes(target.name) ||
+                (!values.title || values.title === '')
+              ) {
                 setFieldValue('title', nameTitle[1]);
               }
               setFieldValue('name', nameTitle[0]);
