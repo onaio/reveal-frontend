@@ -1,0 +1,7 @@
+.async-select-container.is-invalid .invalid-feedback {
+  display: block;
+}
+
+.async-select-container.is-invalid .async-select > div {
+  border-color: red;
+}
