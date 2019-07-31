@@ -17,6 +17,7 @@ import {
 } from '../../../configs/settings';
 import { SAVING } from '../../../constants';
 import { InterventionType, PlanStatus } from '../../../store/ducks/plans';
+import JurisdictionSelect from '../JurisdictionSelect';
 import {
   doesFieldHaveErrors,
   FIActivities,
@@ -60,6 +61,7 @@ export const defaultInitialValues: PlanFormFields = {
   fiStatus: undefined,
   identifier: '',
   interventionType: InterventionType.FI,
+  jurisdiction: '',
   name: '',
   opensrpEventId: undefined,
   start: moment().toDate(),
@@ -128,6 +130,21 @@ const PlanForm = (props: PlanFormProps) => {
               </Field>
               <ErrorMessage
                 name="interventionType"
+                component="small"
+                className="form-text text-danger"
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label for="jurisdiction">Focus Area</Label>
+              <Field
+                component={JurisdictionSelect}
+                name="jurisdiction"
+                id="jurisdiction"
+                disabled={disabledFields.includes('jurisdiction')}
+                className={errors.jurisdiction ? 'form-control is-invalid' : 'form-control'}
+              />
+              <ErrorMessage
+                name="jurisdiction"
                 component="small"
                 className="form-text text-danger"
               />
