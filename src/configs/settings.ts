@@ -2,20 +2,6 @@
 import { Providers } from '@onaio/gatekeeper';
 import { Expression } from 'mapbox-gl';
 import {
-  CANTON,
-  CASE_CLASSIFICATION_HEADER,
-  CASE_NOTIF_DATE_HEADER,
-  DATE_COMPLETED,
-  DISTRICT,
-  END_DATE,
-  FI_STATUS,
-  FOCUS_AREA_HEADER,
-  NAME,
-  PROVINCE,
-  START_DATE,
-  STATUS_HEADER,
-} from '../constants';
-import {
   DOMAIN_NAME,
   ENABLE_ONADATA_OAUTH,
   ENABLE_OPENSRP_OAUTH,
@@ -831,80 +817,80 @@ export const CountriesAdmin0 = {
 /** complete reactive columns with no data */
 export const emptyCompleteReactivePlans = [
   {
-    Header: NAME,
+    Header: 'Name',
     columns: [{}],
   },
   {
-    Header: DATE_COMPLETED,
+    Header: 'Date Completed',
     columns: [{}],
   },
   {
-    Header: CASE_NOTIF_DATE_HEADER,
+    Header: 'Case Notif. Date',
     columns: [{}],
   },
   {
-    Header: CASE_CLASSIFICATION_HEADER,
+    Header: 'Case Class.',
     columns: [{}],
   },
 ];
 /** complete routine columns with no data */
 export const emptyCompleteRoutinePlans = [
   {
-    Header: NAME,
+    Header: 'Name',
     columns: [{}],
   },
   {
-    Header: START_DATE,
+    Header: 'Start Date',
     columns: [{}],
   },
   {
-    Header: END_DATE,
+    Header: 'End Date',
     columns: [{}],
   },
   {
-    Header: DATE_COMPLETED,
+    Header: 'Date Completed',
     columns: [{}],
   },
 ];
 /** current reactive columns with no data */
 export const emptyCurrentReactivePlans = [
   {
-    Header: NAME,
+    Header: 'Name',
     columns: [{}],
   },
   {
-    Header: FI_STATUS,
+    Header: 'FI Status',
     columns: [{}],
   },
   {
-    Header: CASE_NOTIF_DATE_HEADER,
+    Header: 'Case Notif. Date',
     columns: [{}],
   },
   {
-    Header: CASE_CLASSIFICATION_HEADER,
+    Header: 'Case Class.',
     columns: [{}],
   },
 ];
 /** current routine columns with no data */
 export const emptyCurrentRoutinePlans = [
   {
-    Header: NAME,
+    Header: 'Name',
     columns: [{}],
   },
   {
-    Header: FI_STATUS,
+    Header: 'FI Status',
     columns: [{}],
   },
   {
-    Header: PROVINCE,
+    Header: 'Province',
     columns: [{}],
   },
   {
-    Header: DISTRICT,
+    Header: 'District',
     columns: [{}],
   },
   {
-    Header: CANTON,
+    Header: 'Canton',
     columns: [{}],
   },
   {
@@ -912,19 +898,19 @@ export const emptyCurrentRoutinePlans = [
     columns: [{}],
   },
   {
-    Header: FOCUS_AREA_HEADER,
+    Header: 'Focus Area',
     columns: [{}],
   },
   {
-    Header: STATUS_HEADER,
+    Header: 'Status',
     columns: [{}],
   },
   {
-    Header: START_DATE,
+    Header: 'Start Date',
     columns: [{}],
   },
   {
-    Header: END_DATE,
+    Header: 'End Date',
     columns: [{}],
   },
   {
@@ -935,7 +921,7 @@ export const emptyCurrentRoutinePlans = [
 /** current reactive columns with data */
 export const currentReactivePlansColumns = [
   {
-    Header: CASE_NOTIF_DATE_HEADER,
+    Header: 'Case Notif. Date',
     columns: [
       {
         Header: '',
@@ -945,7 +931,7 @@ export const currentReactivePlansColumns = [
     ],
   },
   {
-    Header: CASE_CLASSIFICATION_HEADER,
+    Header: 'Case Class.',
     columns: [
       {
         Header: '',
@@ -957,7 +943,7 @@ export const currentReactivePlansColumns = [
 /** current routine columns with data */
 export const currentRoutinePlansColumn = [
   {
-    Header: STATUS_HEADER,
+    Header: 'Status',
     columns: [
       {
         Header: '',
@@ -967,7 +953,7 @@ export const currentRoutinePlansColumn = [
     ],
   },
   {
-    Header: START_DATE,
+    Header: 'Start Date',
     columns: [
       {
         Header: '',
@@ -977,7 +963,7 @@ export const currentRoutinePlansColumn = [
     ],
   },
   {
-    Header: END_DATE,
+    Header: 'End Date',
     columns: [
       {
         Header: '',
@@ -989,7 +975,7 @@ export const currentRoutinePlansColumn = [
 /** complete reactive columns with data */
 export const completeReactivePlansColumn = [
   {
-    Header: END_DATE,
+    Header: 'End Date',
     columns: [
       {
         Header: '',
@@ -998,7 +984,7 @@ export const completeReactivePlansColumn = [
     ],
   },
   {
-    Header: CASE_NOTIF_DATE_HEADER,
+    Header: 'Case Notif. Date',
     columns: [
       {
         Header: '',
@@ -1008,7 +994,7 @@ export const completeReactivePlansColumn = [
     ],
   },
   {
-    Header: CASE_CLASSIFICATION_HEADER,
+    Header: 'Case Class.',
     columns: [
       {
         Header: '',
@@ -1020,7 +1006,7 @@ export const completeReactivePlansColumn = [
 /** complete routine columns with data */
 export const completeRoutinePlansColumn = [
   {
-    Header: START_DATE,
+    Header: 'Start Date',
     columns: [
       {
         Header: '',
@@ -1030,7 +1016,7 @@ export const completeRoutinePlansColumn = [
     ],
   },
   {
-    Header: END_DATE,
+    Header: 'End Date',
     columns: [
       {
         Header: '',
@@ -1039,7 +1025,7 @@ export const completeRoutinePlansColumn = [
     ],
   },
   {
-    Header: DATE_COMPLETED,
+    Header: 'Date Completed',
     columns: [
       {
         Header: '',
@@ -1051,7 +1037,7 @@ export const completeRoutinePlansColumn = [
 /** Date completed field not there in the current plan  */
 export const dateCompletedColumn = [
   {
-    Header: DATE_COMPLETED,
+    Header: 'Date Completed',
     columns: [
       {
         Header: '',
@@ -1064,7 +1050,7 @@ export const dateCompletedColumn = [
 // status column
 export const statusColumn = [
   {
-    Header: FI_STATUS,
+    Header: 'FI Status',
     columns: [
       {
         Header: '',
