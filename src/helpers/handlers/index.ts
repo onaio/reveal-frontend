@@ -27,7 +27,9 @@ export function popupHandler(event: EventData) {
       feature.layer.type !== 'line' &&
       feature.layer.id
     ) {
-      description += `<p class="heading"> ${feature.properties.action_code}</b></p> <p> ${feature.properties.task_business_status}</p><br/><br/>`;
+      description += `<p class="heading"> ${feature.properties.action_code}</b></p> <p> ${
+        feature.properties.task_business_status
+      }</p><br/><br/>`;
     }
   });
   if (description.length) {
