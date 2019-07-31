@@ -741,48 +741,56 @@ export const BotswanaAdmin0: JurisdictionsByCountry = {
   ADMN0_PCODE: 'BW',
   jurisdictionId: '16a77bba-8777-4bc4-8566-d193cb04af4c',
   jurisdictionIds: [],
+  tilesets: [],
 };
 export const ChadizaAdmin0: JurisdictionsByCountry = {
   ADMN0_EN: 'Chadiza',
   ADMN0_PCODE: 'Chadiza',
   jurisdictionId: '2939',
   jurisdictionIds: [],
+  tilesets: [],
 };
 export const SindaAdmin0: JurisdictionsByCountry = {
   ADMN0_EN: 'Sinda',
   ADMN0_PCODE: 'Sinda',
   jurisdictionId: '2941',
   jurisdictionIds: [],
+  tilesets: [],
 };
 export const KateteAdmin0: JurisdictionsByCountry = {
   ADMN0_EN: 'Katete',
   ADMN0_PCODE: 'Katete',
   jurisdictionId: '2940',
   jurisdictionIds: [],
+  tilesets: [],
 };
 export const SiavongaAdmin0: JurisdictionsByCountry = {
   ADMN0_EN: 'Siavonga',
   ADMN0_PCODE: 'Siavonga',
   jurisdictionId: '3954',
   jurisdictionIds: [],
+  tilesets: [],
 };
 export const LopBuriAdmin0: JurisdictionsByCountry = {
   ADMN0_EN: 'Lop Buri',
   ADMN0_PCODE: 'Lop Buri',
   jurisdictionId: '9c3c2db4-bddd-44c5-870a-a0eef539e4da',
   jurisdictionIds: [],
+  tilesets: [],
 };
 export const OddarMeancheyProvinceAdmin0: JurisdictionsByCountry = {
   ADMN0_EN: 'Oddar Meanchey Province',
   ADMN0_PCODE: 'Oddar Meanchey Province',
   jurisdictionId: 'f8863022-ff88-4c22-b2d1-83f59f31b874',
   jurisdictionIds: [],
+  tilesets: [],
 };
 export const LusakaAdmin0: JurisdictionsByCountry = {
   ADMN0_EN: 'Lusaka',
   ADMN0_PCODE: 'Lusaka',
   jurisdictionId: '2942',
   jurisdictionIds: [],
+  tilesets: [],
 };
 
 /** ISO 3166-alpha-2 admin codes */
