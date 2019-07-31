@@ -74,7 +74,12 @@ export const PlanSchema = Yup.object().shape({
   interventionType: Yup.string()
     .oneOf(Object.values(InterventionType))
     .required(REQUIRED),
-  jurisdictions: Yup.array().of(Yup.object().shape({ id: Yup.string().required(REQUIRED) })),
+  jurisdictions: Yup.array().of(
+    Yup.object().shape({
+      id: Yup.string().required(REQUIRED),
+      name: Yup.string(),
+    })
+  ),
   name: Yup.string().required(`${NAME} ${IS} ${REQUIRED}`),
   opensrpEventId: Yup.string(),
   start: Yup.date().required(REQUIRED),
@@ -103,6 +108,7 @@ export interface PlanActivityFormFields {
 /** Plan jurisdictions form fields interface */
 export interface PlanJurisdictionFormFields {
   id: string;
+  name: string;
 }
 
 /** Plan form fields interface */
