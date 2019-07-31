@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import makeAnimated from 'react-select/animated';
-import AsyncSelect from 'react-select/async';
+import AsyncSelect, { Props as AsyncSelectProps } from 'react-select/async';
 import { getFilterParams, OpenSRPService, URLParams } from '../../../services/opensrp';
 
 /** interface for jurisdiction options
@@ -25,14 +25,14 @@ interface SelectOption {
 }
 
 /** JurisdictionSelect props */
-export interface JurisdictionSelectProps {
+export interface JurisdictionSelectProps<T = SelectOption> extends AsyncSelectProps<T> {
   apiEndpoint: string;
   params: URLParams;
   serviceClass: typeof OpenSRPService;
 }
 
 /** default props for JurisdictionSelect */
-const defaultProps: JurisdictionSelectProps = {
+const defaultProps: Partial<JurisdictionSelectProps> = {
   apiEndpoint: 'location/findByProperties',
   params: {
     is_jurisdiction: true,
