@@ -31,10 +31,20 @@ type paramsType = URLParams | null;
  * @param {URLParams} obj - the object representing URL params
  * @returns {string} URL params as a string
  */
-export function getURLParams(obj: URLParams): string {
+export function getURLParams(obj: URLParams | {}): string {
   return Object.entries(obj)
     .map(([key, val]) => `${key}=${val}`)
     .join('&');
+}
+
+/** converts filter params object to string
+ * @param {URLParams} obj - the object representing filter params
+ * @returns {string} filter params as a string
+ */
+export function getFilterParams(obj: URLParams | {}): string {
+  return Object.entries(obj)
+    .map(([key, val]) => `${key}:${val}`)
+    .join(',');
 }
 
 /** get payload for fetch

@@ -18,3 +18,12 @@ export type DIGITAL_GLOBE_CONNECT_ID = typeof DIGITAL_GLOBE_CONNECT_ID;
 
 export const OPENSRP_API_BASE_URL = 'https://test.smartregister.org/opensrp/rest/';
 export type OPENSRP_API_BASE_URL = typeof OPENSRP_API_BASE_URL;
+
+export const PLAN_UUID_NAMESPACE = '1bb3c217-af1c-4749-b3df-4f6108582e3c';
+export type PLAN_UUID_NAMESPACE = typeof PLAN_UUID_NAMESPACE;
+
+export const ACTION_UUID_NAMESPACE = '1bb3c217-af1c-4749-b3df-4f6108582e3c';
+export type ACTION_UUID_NAMESPACE = typeof ACTION_UUID_NAMESPACE;
+
+export const DEFAULT_PLAN_VERSION = '2';
+export type DEFAULT_PLAN_VERSION = typeof DEFAULT_PLAN_VERSION;

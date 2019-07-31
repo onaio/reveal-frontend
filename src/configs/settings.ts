@@ -92,10 +92,44 @@ export const locationHierarchy: LocationItem[] = [
 ];
 
 /** Focus investigation configs */
+/** Allowed FI Status values */
+export const FIStatuses = ['A1', 'A2', 'B1', 'B2'] as const;
+export type FIStatusType = typeof FIStatuses[number];
 
+/** Allowed FI Status values */
+export const FIReasons = ['Routine', 'Case Triggered'] as const;
+export type FIReasonType = typeof FIReasons[number];
+
+/** Allowed goal priority values */
 export const goalPriorities = ['low-priority', 'medium-priority', 'high-priority'] as const;
-
 export type GoalPriorityType = typeof goalPriorities[number];
+
+/** Allowed action Reason values */
+export const actionReasons = ['Investigation', 'Routine'] as const;
+export type ActionReasonType = typeof actionReasons[number];
+
+/** Allowed useContext Code values */
+export const useContextCodes = [
+  'interventionType',
+  'fiStatus',
+  'fiReason',
+  'opensrpEventId',
+  'caseNum',
+] as const;
+export type UseContextCodesType = typeof useContextCodes[number];
+
+/** Plan activity code values */
+export const PlanActionCodes = [
+  'BCC',
+  'IRS',
+  'Bednet Distribution',
+  'Blood Screening',
+  'Case Confirmation',
+  'RACD Register Family',
+  'Larval Dipping',
+  'Mosquito Collection',
+] as const;
+export type PlanActionCodesType = typeof PlanActionCodes[number];
 
 /** Plan Action Timing Period */
 export interface PlanActionTimingPeriod {
@@ -110,12 +144,12 @@ export interface PlanActionsubjectCodableConcept {
 
 /** Plan Action */
 export interface PlanAction {
-  code: string;
+  code: PlanActionCodesType;
   description: string;
   goalId: string;
   identifier: string;
   prefix: number;
-  reason: string;
+  reason: ActionReasonType;
   subjectCodableConcept: PlanActionsubjectCodableConcept;
   taskTemplate: string;
   timingPeriod: PlanActionTimingPeriod;
@@ -166,12 +200,12 @@ export const PlanActivityTitles = [
   'BCC',
   'IRS',
 ] as const;
-
 export type PlanActivityTitlesType = typeof PlanActivityTitles[number];
 
 /** type to describe plan activities */
 type PlanActivities = { [K in PlanActivityTitlesType]: PlanActivity };
 
+/** default plan activities */
 export const planActivities: PlanActivities = {
   BCC: {
     action: {
@@ -179,7 +213,7 @@ export const planActivities: PlanActivities = {
       description: 'Conduct BCC activity',
       goalId: 'BCC_Focus',
       identifier: '',
-      prefix: 0,
+      prefix: 99,
       reason: 'Investigation',
       subjectCodableConcept: {
         text: 'Operational_Area',
@@ -201,7 +235,7 @@ export const planActivities: PlanActivities = {
             detailQuantity: {
               comparator: '>=',
               unit: 'activit(y|ies)',
-              value: 0,
+              value: 1,
             },
           },
           due: '',
@@ -216,7 +250,7 @@ export const planActivities: PlanActivities = {
       description: 'Visit each structure in the operational area and attempt to spray',
       goalId: 'IRS',
       identifier: '',
-      prefix: 0,
+      prefix: 7,
       reason: 'Routine',
       subjectCodableConcept: {
         text: 'Residential_Structure',
@@ -251,9 +285,9 @@ export const planActivities: PlanActivities = {
     action: {
       code: 'Bednet Distribution',
       description: 'Visit 100% of residential structures in the operational area and provide nets',
-      goalId: 'RACD_bednet_dist_1km_radius',
+      goalId: 'RACD_bednet_distribution',
       identifier: '',
-      prefix: 0,
+      prefix: 4,
       reason: 'Investigation',
       subjectCodableConcept: {
         text: 'Residential_Structure',
@@ -267,7 +301,7 @@ export const planActivities: PlanActivities = {
     },
     goal: {
       description: 'Visit 100% of residential structures in the operational area and provide nets',
-      id: 'RACD_bednet_dist_1km_radius',
+      id: 'RACD_bednet_distribution',
       priority: 'medium-priority',
       target: [
         {
@@ -275,7 +309,7 @@ export const planActivities: PlanActivities = {
             detailQuantity: {
               comparator: '>=',
               unit: 'Percent',
-              value: 0,
+              value: 100,
             },
           },
           due: '',
@@ -286,190 +320,223 @@ export const planActivities: PlanActivities = {
   },
   bloodScreening: {
     action: {
-      code: 'BCC',
-      description: 'Conduct BCC activity',
-      goalId: 'BCC_Focus',
+      code: 'Blood Screening',
+      description:
+        'Visit all residential structures (100%) within a 1 km radius of a confirmed index case and test each registered person',
+      goalId: 'RACD_Blood_Screening',
       identifier: '',
-      prefix: 0,
+      prefix: 3,
       reason: 'Investigation',
       subjectCodableConcept: {
-        text: 'Operational_Area',
+        text: 'Person',
       },
-      taskTemplate: 'BCC_Focus',
+      taskTemplate: 'RACD_Blood_Screening',
       timingPeriod: {
         end: '',
         start: '',
       },
-      title: 'Behaviour Change Communication',
+      title: 'Blood screening',
     },
     goal: {
-      description: 'Complete at least 1 BCC activity for the operational area',
-      id: 'BCC_Focus',
+      description:
+        'Visit all residential structures (100%) within a 1 km radius of a confirmed index case and test each registered person',
+      id: 'RACD_Blood_Screening',
       priority: 'medium-priority',
       target: [
         {
           detail: {
             detailQuantity: {
               comparator: '>=',
-              unit: 'form(s)',
-              value: 0,
+              unit: 'Person(s)',
+              value: 100,
             },
           },
           due: '',
-          measure: 'Number of BCC forms submitted',
+          measure: 'Number of registered people tested',
         },
       ],
     },
   },
   caseConfirmation: {
     action: {
-      code: 'BCC',
-      description: 'Conduct BCC activity',
-      goalId: 'BCC_Focus',
+      code: 'Case Confirmation',
+      description: 'Confirm the index case',
+      goalId: 'Case_Confirmation',
       identifier: '',
-      prefix: 0,
+      prefix: 1,
       reason: 'Investigation',
       subjectCodableConcept: {
-        text: 'Operational_Area',
+        text: 'Case_Confirmation',
       },
-      taskTemplate: 'BCC_Focus',
+      taskTemplate: 'Case_Confirmation',
       timingPeriod: {
         end: '',
         start: '',
       },
-      title: 'Behaviour Change Communication',
+      title: 'Case Confirmation',
     },
     goal: {
-      description: 'Complete at least 1 BCC activity for the operational area',
-      id: 'BCC_Focus',
+      description: 'Confirm the index case',
+      id: 'Case_Confirmation',
       priority: 'medium-priority',
       target: [
         {
           detail: {
             detailQuantity: {
               comparator: '>=',
-              unit: 'form(s)',
-              value: 0,
+              unit: 'case(s)',
+              value: 1,
             },
           },
           due: '',
-          measure: 'Number of BCC forms submitted',
+          measure: 'Number of cases confirmed',
         },
       ],
     },
   },
   familyRegistration: {
     action: {
-      code: 'BCC',
-      description: 'Conduct BCC activity',
-      goalId: 'BCC_Focus',
+      code: 'RACD Register Family',
+      description:
+        'Register all families & family members in all residential structures enumerated (100%) within the operational area',
+      goalId: 'RACD_register_families',
       identifier: '',
-      prefix: 0,
+      prefix: 2,
       reason: 'Investigation',
       subjectCodableConcept: {
-        text: 'Operational_Area',
+        text: 'Residential_Structure',
       },
-      taskTemplate: 'BCC_Focus',
+      taskTemplate: 'RACD_register_families',
       timingPeriod: {
         end: '',
         start: '',
       },
-      title: 'Behaviour Change Communication',
+      title: 'Family Registration',
     },
     goal: {
-      description: 'Complete at least 1 BCC activity for the operational area',
-      id: 'BCC_Focus',
+      description:
+        'Register all families & family members in all residential structures enumerated (100%) within the operational area',
+      id: 'RACD_register_families',
       priority: 'medium-priority',
       target: [
         {
           detail: {
             detailQuantity: {
               comparator: '>=',
-              unit: 'form(s)',
-              value: 0,
+              unit: 'Percent',
+              value: 100,
             },
           },
           due: '',
-          measure: 'Number of BCC forms submitted',
+          measure: 'Percent of residential structures with full family registration',
         },
       ],
     },
   },
   larvalDipping: {
     action: {
-      code: 'BCC',
-      description: 'Conduct BCC activity',
-      goalId: 'BCC_Focus',
+      code: 'Larval Dipping',
+      description: 'Perform a minimum of three larval dipping activities in the operational area',
+      goalId: 'Larval_Dipping',
       identifier: '',
-      prefix: 0,
+      prefix: 5,
       reason: 'Investigation',
       subjectCodableConcept: {
-        text: 'Operational_Area',
+        text: 'Breeding_Site',
       },
-      taskTemplate: 'BCC_Focus',
+      taskTemplate: 'Larval_Dipping',
       timingPeriod: {
         end: '',
         start: '',
       },
-      title: 'Behaviour Change Communication',
+      title: 'Larval Dipping',
     },
     goal: {
-      description: 'Complete at least 1 BCC activity for the operational area',
-      id: 'BCC_Focus',
+      description: 'Perform a minimum of three larval dipping activities in the operational area',
+      id: 'Larval_Dipping',
       priority: 'medium-priority',
       target: [
         {
           detail: {
             detailQuantity: {
               comparator: '>=',
-              unit: 'form(s)',
-              value: 0,
+              unit: 'activit(y|ies)',
+              value: 3,
             },
           },
           due: '',
-          measure: 'Number of BCC forms submitted',
+          measure: 'Number of larval dipping activities completed',
         },
       ],
     },
   },
   mosquitoCollection: {
     action: {
-      code: 'BCC',
-      description: 'Conduct BCC activity',
-      goalId: 'BCC_Focus',
+      code: 'Mosquito Collection',
+      description:
+        'Set a minimum of three mosquito collection traps and complete the mosquito collection process',
+      goalId: 'Mosquito_Collection',
       identifier: '',
-      prefix: 0,
+      prefix: 6,
       reason: 'Investigation',
       subjectCodableConcept: {
-        text: 'Operational_Area',
+        text: 'Mosquito_Collection_Point',
       },
-      taskTemplate: 'BCC_Focus',
+      taskTemplate: 'Mosquito_Collection_Point',
       timingPeriod: {
         end: '',
         start: '',
       },
-      title: 'Behaviour Change Communication',
+      title: 'Mosquito Collection',
     },
     goal: {
-      description: 'Complete at least 1 BCC activity for the operational area',
-      id: 'BCC_Focus',
+      description:
+        'Set a minimum of three mosquito collection traps and complete the mosquito collection process',
+      id: 'Mosquito_Collection',
       priority: 'medium-priority',
       target: [
         {
           detail: {
             detailQuantity: {
               comparator: '>=',
-              unit: 'form(s)',
-              value: 0,
+              unit: 'activit(y|ies)',
+              value: 3,
             },
           },
           due: '',
-          measure: 'Number of BCC forms submitted',
+          measure: 'Number of mosquito collection activities completed',
         },
       ],
     },
   },
 };
+
+/** UseContext - interface for PlanPayload.useContext[] items */
+export interface UseContext {
+  code: UseContextCodesType;
+  valueCodableConcept: string;
+}
+
+/** interface that describes plan definition objects from OpenSRP */
+export interface PlanDefinition {
+  action: PlanAction[];
+  date: string;
+  effectivePeriod: {
+    end: string;
+    start: string;
+  };
+  goal: PlanGoal[];
+  identifier: string;
+  jurisdiction: Array<{
+    code: string;
+  }>;
+  name: string;
+  serverVersion?: number;
+  status: string;
+  title: string;
+  useContext: UseContext[];
+  version: string;
+}
 
 /** Focus Investigation case classifications */
 export const FIClassifications: Classification[] = [

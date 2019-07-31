@@ -63,6 +63,8 @@ export const MEASURE = 'Measure';
 export type MEASURE = typeof MEASURE;
 export const OF = 'of';
 export type OF = typeof OF;
+export const IS = 'is';
+export type IS = typeof IS;
 export const MARK_AS_COMPLETE = 'Mark as complete';
 export type MARK_AS_COMPLETE = typeof MARK_AS_COMPLETE;
 export const TARGET = 'Target';
@@ -95,6 +97,15 @@ export const CASE_TRIGGERED = 'Case-triggered';
 export type CASE_TRIGGERED = typeof CASE_TRIGGERED;
 export const ROUTINE = 'Routine';
 export type ROUTINE = typeof ROUTINE;
+export const REACTIVE = 'Reactive';
+export type REACTIVE = typeof REACTIVE;
+export const REQUIRED = 'Required';
+export type REQUIRED = typeof REQUIRED;
+export const SAVING = 'Saving';
+export type SAVING = typeof SAVING;
+export const DATE = 'Date';
+export type DATE = typeof DATE;
+
 export const JURISDICTION_ID = 'jurisdiction_id';
 export type JURISDICTION_ID = typeof JURISDICTION_ID;
 export const START_DATE = 'Start Date';
@@ -125,6 +136,8 @@ export const FI_SINGLE_MAP_URL = '/focus-investigation/map';
 export type FI_SINGLE_MAP_URL = typeof FI_SINGLE_MAP_URL;
 export const FI_HISTORICAL_URL = '/focus-investigation/historical';
 export type FI_HISTORICAL_URL = typeof FI_HISTORICAL_URL;
+export const NEW_PLAN_URL = '/plans/new';
+export type NEW_PLAN_URL = typeof NEW_PLAN_URL;
 
 // OpenSRP API strings
 export const OPENSRP_FIND_BY_PROPERTIES = 'findByProperties';
@@ -173,8 +186,6 @@ export type IRS_CODE = typeof IRS_CODE;
 // plans
 export const ROUTINE_PLAN = 'Routine';
 export type ROUTINE_PLAN = typeof ROUTINE_PLAN;
-export const REACTIVE = 'Reactive';
-export type REACTIVE = typeof REACTIVE;
 export const CASE_TRIGGERED_PLAN = 'Case-triggered';
 export type CASE_TRIGGERED_PLAN = typeof CASE_TRIGGERED_PLAN;
 export const FI_PLAN_TYPE = 'FI';

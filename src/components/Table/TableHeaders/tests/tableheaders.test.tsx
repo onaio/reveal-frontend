@@ -1,8 +1,12 @@
 import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
+import { createBrowserHistory } from 'history';
 import React from 'react';
+import { Router } from 'react-router';
 import * as fixtures from '../../../../store/ducks/tests/fixtures';
 import TableHeader from '../tableheaders';
+
+const history = createBrowserHistory();
 
 describe('components/page/Header', () => {
   beforeEach(() => {
@@ -12,14 +16,22 @@ describe('components/page/Header', () => {
     const props = {
       plansArray: [fixtures.plan1],
     };
-    shallow(<TableHeader {...props} />);
+    shallow(
+      <Router history={history}>
+        <TableHeader {...props} />
+      </Router>
+    );
   });
 
   it('renders reactive headers correctly', () => {
     const props = {
       plansArray: [fixtures.plan2],
     };
-    const wrapper = mount(<TableHeader {...props} />);
+    const wrapper = mount(
+      <Router history={history}>
+        <TableHeader {...props} />
+      </Router>
+    );
     expect(toJson(wrapper)).toMatchSnapshot();
     wrapper.unmount();
   });
@@ -28,7 +40,11 @@ describe('components/page/Header', () => {
     const props = {
       plansArray: [fixtures.plan1],
     };
-    const wrapper = mount(<TableHeader {...props} />);
+    const wrapper = mount(
+      <Router history={history}>
+        <TableHeader {...props} />
+      </Router>
+    );
     expect(toJson(wrapper)).toMatchSnapshot();
     wrapper.unmount();
   });

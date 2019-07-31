@@ -1,5 +1,7 @@
 import * as gatekeeper from '@onaio/gatekeeper';
 import { cloneDeep, map } from 'lodash';
+import MockDate from 'mockdate';
+import moment from 'moment';
 import {
   BLACK,
   TASK_BLUE as BLUE,
@@ -9,13 +11,14 @@ import {
   TASK_RED as RED,
   TASK_YELLOW as YELLOW,
 } from '../../colors';
-import { ONADATA_OAUTH_STATE, OPENSRP_OAUTH_STATE } from '../../configs/env';
+import { ONADATA_OAUTH_STATE, OPENSRP_OAUTH_STATE, PLAN_UUID_NAMESPACE } from '../../configs/env';
 import { Plan } from '../../store/ducks/plans';
 import { InitialTask } from '../../store/ducks/tasks';
 import * as fixtures from '../../store/ducks/tests/fixtures';
 import { colorMaps } from '../structureColorMaps';
 import {
   extractPlan,
+  generateNameSpacedUUID,
   getColor,
   getColorByValue,
   getLocationColumns,
@@ -307,5 +310,18 @@ describe('helpers/utils', () => {
     const expected = [1, 1.24, 1.5, 0, 0, 2431, 10];
     const got = map(values, (value, index) => roundToPrecision(value, precisions[index]));
     expect(got).toEqual(expected);
+  });
+
+  it('generates name spaced uuids', () => {
+    MockDate.set('7-13-17 19:31', 3); // Mersenne primes :)
+    expect(generateNameSpacedUUID('plan 1', PLAN_UUID_NAMESPACE)).toEqual(
+      '1b3714e5-4fef-5e41-bb81-3800003e3b83'
+    );
+    expect(generateNameSpacedUUID('A2 Akros_2 2019-07-30', PLAN_UUID_NAMESPACE)).toEqual(
+      'b3debab9-1da3-5a24-ad81-c5eb8dd0cbd2'
+    );
+    expect(generateNameSpacedUUID(moment().toString(), PLAN_UUID_NAMESPACE)).toEqual(
+      `cd9a43dd-e408-5a4d-a360-ef59c6e7c2a6`
+    );
   });
 });
