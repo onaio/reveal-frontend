@@ -300,7 +300,12 @@ export const getNameTitle = (event: FormEvent, formValues: PlanFormFields): [str
   const currentInterventionType =
     target.name === 'interventionType' ? target.value : formValues.interventionType;
   const currentFiStatus = target.name === 'fiStatus' ? target.value : formValues.fiStatus;
-  const currentJurisdiction = 'Some Jurisdiction';
+
+  let currentJurisdiction = '';
+  if (formValues.jurisdictions.length > 0) {
+    currentJurisdiction = formValues.jurisdictions[0].name;
+  }
+
   const currentDate = target.name === 'date' ? target.value : formValues.date;
   if (currentInterventionType === InterventionType.FI) {
     const result = [
