@@ -11,6 +11,8 @@ export const FOCUS_INVESTIGATION = 'Focus Investigation';
 export type FOCUS_INVESTIGATION = typeof FOCUS_INVESTIGATION;
 export const CURRENT_FOCUS_INVESTIGATION = 'Current Focus Investigations';
 export type CURRENT_FOCUS_INVESTIGATION = typeof CURRENT_FOCUS_INVESTIGATION;
+export const COMPLETE_FOCUS_INVESTIGATION = 'Complete Focus Investigations';
+export type COMPLETE_FOCUS_INVESTIGATION = typeof COMPLETE_FOCUS_INVESTIGATION;
 export const FOCUS_AREA_INFO = 'Focus Area Information';
 export type FOCUS_AREA_INFO = typeof FOCUS_AREA_INFO;
 export const FOCUS_INVESTIGATIONS = 'Focus Investigations';
@@ -102,6 +104,8 @@ export type NAME = typeof NAME;
 export const NEW_PLAN = 'New Plan';
 export type NEW_PLAN = typeof NEW_PLAN;
 
+export const DATE_COMPLETED = 'Date Completed';
+export type DATE_COMPLETED = typeof DATE_COMPLETED;
 // internal urls
 export const LOGIN_URL = '/login';
 export type LOGIN_URL = typeof LOGIN_URL;

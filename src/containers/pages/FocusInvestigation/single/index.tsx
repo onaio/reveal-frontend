@@ -1,31 +1,46 @@
 // this is the FocusInvestigation "active" page component
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import DrillDownTable from '@onaio/drill-down-table';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset from '@onaio/superset-connector';
 import * as React from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
-import { Link } from 'react-router-dom';
-import { Col, Row } from 'reactstrap';
+import { Column } from 'react-table';
+import { Button, Col, Form, FormGroup, Input, Row } from 'reactstrap';
 import { Store } from 'redux';
 import GisidaWrapper from '../../../../components/GisidaWrapper';
 import HeaderBreadcrumbs, {
   BreadCrumbProps,
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
+import NullDataTable from '../../../../components/Table/NullDataTable/nulldatatable';
+import TableHeader from '../../../../components/Table/TableHeaders/tableheaders';
 import {
   SUPERSET_GOALS_SLICE,
   SUPERSET_JURISDICTIONS_SLICE,
   SUPERSET_PLANS_SLICE,
 } from '../../../../configs/env';
 import {
-  ACTIVE_INVESTIGATION,
+  completeReactivePlansColumn,
+  completeRoutinePlansColumn,
+  currentReactivePlansColumns,
+  currentRoutinePlansColumn,
+  dateCompletedColumn,
+  emptyCompleteReactivePlans,
+  emptyCompleteRoutinePlans,
+  emptyCurrentReactivePlans,
+  emptyCurrentRoutinePlans,
+  locationHierarchy,
+  statusColumn,
+} from '../../../../configs/settings';
+import {
   CANTON,
-  COMPLETE,
+  CASE_TRIGGERED,
+  COMPLETE_FOCUS_INVESTIGATION,
+  CURRENT_FOCUS_INVESTIGATION,
   DISTRICT,
   FI_REASON,
-  FI_SINGLE_MAP_URL,
   FI_SINGLE_URL,
   FI_STATUS,
   FI_URL,
@@ -34,17 +49,19 @@ import {
   HOME,
   HOME_URL,
   IN,
-  MARK_AS_COMPLETE,
-  MEASURE,
-  NO,
-  OF,
-  PROGRESS,
-  RESPONSE,
+  PROVINCE,
+  REACTIVE,
   ROUTINE,
 } from '../../../../constants';
-import { getGoalReport } from '../../../../helpers/indicators';
-import ProgressBar from '../../../../helpers/ProgressBar';
-import { extractPlan, RouteParams, transformValues } from '../../../../helpers/utils';
+import {
+  defaultTableProps,
+  extractPlan,
+  FlexObject,
+  getLocationColumns,
+  jsxColumns,
+  RouteParams,
+  transformValues,
+} from '../../../../helpers/utils';
 import supersetFetch from '../../../../services/superset';
 import goalsReducer, {
   fetchGoals,
@@ -65,6 +82,7 @@ import plansReducer, {
   getPlansIdArray,
   InterventionType,
   Plan,
+  PlanStatus,
   reducerName as plansReducerName,
 } from '../../../../store/ducks/plans';
 import './single.css';
@@ -78,26 +96,32 @@ reducerRegistry.register(jurisdictionReducerName, jurisdictionReducer);
 
 /** interface to describe props for ActiveFI component */
 export interface SingleFIProps {
+  completeReactivePlansArray: Plan[] | [];
+  completeRoutinePlansArray: Plan[] | [];
+  currentReactivePlansArray: Plan[] | [];
+  currentRoutinePlansArray: Plan[] | [];
   fetchGoalsActionCreator: typeof fetchGoals;
   fetchJurisdictionsActionCreator: typeof fetchJurisdictions;
   fetchPlansActionCreator: typeof fetchPlans;
   goalsArray: Goal[];
   jurisdiction: Jurisdiction | null;
   planById: Plan | null;
-  plansArray: Plan[];
   plansIdArray: string[];
   supersetService: typeof supersetFetch;
 }
 
 /** default props for ActiveFI component */
 export const defaultSingleFIProps: SingleFIProps = {
+  completeReactivePlansArray: [],
+  completeRoutinePlansArray: [],
+  currentReactivePlansArray: [],
+  currentRoutinePlansArray: [],
   fetchGoalsActionCreator: fetchGoals,
   fetchJurisdictionsActionCreator: fetchJurisdictions,
   fetchPlansActionCreator: fetchPlans,
   goalsArray: [],
   jurisdiction: null,
   planById: null,
-  plansArray: [],
   plansIdArray: [],
   supersetService: supersetFetch,
 };
@@ -133,7 +157,7 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
       const jurisdictionsParams = superset.getFormData(3000, [
         { comparator: planById.jurisdiction_id, operator: '==', subject: 'jurisdiction_id' },
       ]);
-      await supersetService(SUPERSET_PLANS_SLICE, plansParams).then((result: Plan[]) =>
+      await supersetService(SUPERSET_PLANS_SLICE, jurisdictionsParams).then((result: Plan[]) =>
         fetchPlansActionCreator(result)
       );
       await supersetService(SUPERSET_GOALS_SLICE, goalsParams).then((result2: Goal[]) =>
@@ -144,15 +168,26 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
       );
     }
   }
-
+  /** Handles form submission event */
+  public handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+  }
   public render() {
-    const { goalsArray, jurisdiction, planById } = this.props;
+    const {
+      completeReactivePlansArray,
+      completeRoutinePlansArray,
+      currentReactivePlansArray,
+      currentRoutinePlansArray,
+      goalsArray,
+      jurisdiction,
+      planById,
+    } = this.props;
     const theGoals = goalsArray;
 
     if (!planById || !theGoals || !jurisdiction) {
       return <Loading />;
     }
-
+    /** theObject holds extracted plans from superset response */
     let theObject = extractPlan(planById);
     const propertiesToTransform = [
       'village',
@@ -188,7 +223,164 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
       })
     );
     breadCrumbProps.pages = [homePage, basePage, ...pages];
+    /** currentRoutineReactivePlans array that holds current routine and reactive tables  */
+    const currentRoutineReactivePlans: FlexObject[] = [];
+    /** completeRoutineReactivePlans array that holds complete routine and reactive tables  */
+    const completeRoutineReactivePlans: FlexObject[] = [];
+    /** Check if either currentReactivePlansArray or currentRoutinePlansArray length is greater than  zero
+     * to build current section tables i.e (routine & reactive) with data
+     */
+    if (
+      (currentReactivePlansArray && currentReactivePlansArray.length > 0) ||
+      (currentRoutinePlansArray && currentRoutinePlansArray.length > 0)
+    ) {
+      [currentReactivePlansArray, currentRoutinePlansArray].forEach((plansArray: Plan[]) => {
+        if (plansArray && plansArray.length) {
+          const thePlans = plansArray.map((item: Plan) => {
+            let thisItem = extractPlan(item);
+            // transform values of this properties if they are null
+            const columnsToTransform = ['village', 'canton', 'district', 'province'];
+            thisItem = transformValues(thisItem, columnsToTransform);
+            return thisItem;
+          });
+          const locationColumns: Column[] = getLocationColumns(locationHierarchy, true);
+          /**  Handle Columns Unique for Routine and Reactive Tables */
+          const columnsBasedOnReason = [];
+          /** If plan_fi_reason is case-triggered then add currentReactivePlansColumns from settings */
+          if (plansArray.every(d => d.plan_fi_reason === CASE_TRIGGERED)) {
+            columnsBasedOnReason.push(...currentReactivePlansColumns);
+          } else {
+            /** Else build routine columns i.e (focusarea, locationcolumns, action and currentRoutinePlansColumn) */
+            const focusAreaColumn = jsxColumns('focusarea');
+            columnsBasedOnReason.push(
+              ...locationColumns,
+              ...focusAreaColumn,
+              ...currentRoutinePlansColumn,
+              ...jsxColumns('action')
+            );
+          }
+          /** Handle all Columns i.e columns unique for reactive and routine (once handled above) plus columns common on both (name)  */
+          const allColumns: Column[] = [
+            ...jsxColumns('name'),
+            ...statusColumn,
+            ...columnsBasedOnReason,
+          ];
+          /** Contains columns and data that will build the table */
+          const tableProps = {
+            ...defaultTableProps,
+            columns: allColumns,
+            data: thePlans,
+          };
+          /** Push current tables and respective headers with data to be rendered */
+          currentRoutineReactivePlans.push(
+            <div key={thePlans[0].id}>
+              <TableHeader plansArray={plansArray} />
+              <DrillDownTable {...tableProps} />
+            </div>
+          );
+        }
+      });
+    }
+    /** if current reactive plans array is empty build table with no data  */
+    if (!currentReactivePlansArray.length) {
+      const tableProps = {
+        ...defaultTableProps,
+        columns: emptyCurrentReactivePlans,
+      };
+      currentRoutineReactivePlans.push(
+        <NullDataTable
+          key={`${'current'}-${REACTIVE}`}
+          tableProps={tableProps}
+          reasonType={REACTIVE}
+        />
+      );
+    }
+    /** if current routine plans array is empty build table with no data  */
+    if (!currentRoutinePlansArray.length) {
+      const tableProps = {
+        ...defaultTableProps,
+        columns: emptyCurrentRoutinePlans,
+      };
+      currentRoutineReactivePlans.push(
+        <NullDataTable
+          key={`${'current'}-${ROUTINE}`}
+          tableProps={tableProps}
+          reasonType={ROUTINE}
+        />
+      );
+    }
 
+    /** Check if either completeReactivePlansArray or completeRoutinePlansArray length is greater than  zero
+     * to build complete section tables i.e (routine & reactive) with data
+     */
+    if (
+      (completeReactivePlansArray && completeReactivePlansArray.length > 0) ||
+      (completeRoutinePlansArray && completeRoutinePlansArray.length > 0)
+    ) {
+      [completeReactivePlansArray, completeRoutinePlansArray].forEach((plansArray: Plan[]) => {
+        if (plansArray && plansArray.length) {
+          const thePlans = plansArray.map((item: Plan) => {
+            let thisItem = extractPlan(item);
+            // transform values of this properties if they are null
+            const columnsToTransform = ['village', 'canton', 'district', 'province'];
+            thisItem = transformValues(thisItem, columnsToTransform);
+            return thisItem;
+          });
+          /**  Handle Columns Unique for Routine and Reactive Tables */
+          const columnsBasedOnReason = [];
+          plansArray.every(d => d.plan_fi_reason === CASE_TRIGGERED)
+            ? columnsBasedOnReason.push(...completeReactivePlansColumn)
+            : columnsBasedOnReason.push(...completeRoutinePlansColumn);
+          /** Handle all Columns i.e columns unique for reactive and routine (once handled above) plus columns common on both (name)  */
+          const allColumns: Column[] = [
+            ...jsxColumns('name'),
+            ...dateCompletedColumn,
+            ...columnsBasedOnReason,
+          ];
+          /** Contains columns and data that will build the table */
+          const tableProps = {
+            ...defaultTableProps,
+            columns: allColumns,
+            data: thePlans,
+          };
+          /** Push complete tables and respective headers with data to be rendered */
+          completeRoutineReactivePlans.push(
+            <div key={thePlans[0].id}>
+              <TableHeader plansArray={plansArray} />
+              <DrillDownTable {...tableProps} />
+            </div>
+          );
+        }
+      });
+    }
+    /** if complete reactive plans array is empty build table with no data  */
+    if (!completeReactivePlansArray.length) {
+      const tableProps = {
+        ...defaultTableProps,
+        columns: emptyCompleteReactivePlans,
+      };
+      completeRoutineReactivePlans.push(
+        <NullDataTable
+          key={`${'complete'}-${REACTIVE}`}
+          tableProps={tableProps}
+          reasonType={REACTIVE}
+        />
+      );
+    }
+    /** if complete routine plans array is empty build table with no data  */
+    if (!completeRoutinePlansArray.length) {
+      const tableProps = {
+        ...defaultTableProps,
+        columns: emptyCompleteRoutinePlans,
+      };
+      completeRoutineReactivePlans.push(
+        <NullDataTable
+          key={`${'complete'}-${ROUTINE}`}
+          tableProps={tableProps}
+          reasonType={ROUTINE}
+        />
+      );
+    }
     return (
       <div className="mb-5">
         <Helmet>
@@ -206,70 +398,42 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
                 <GisidaWrapper geoData={jurisdiction} minHeight="200px" />
               </div>
             )}
-            <dl className="row mt-3">
-              <dt className="col-5">{DISTRICT}</dt>
-              <dd className="col-7">{theObject.district}</dd>
-              <dt className="col-5">{CANTON}</dt>
-              <dd className="col-7">{theObject.canton}</dd>
-              <dt className="col-5">{FI_REASON}</dt>
-              <dd className="col-7">{theObject.reason}</dd>
-              <dt className="col-5">{FI_STATUS}</dt>
-              <dd className="col-7">{theObject.status}</dd>
-            </dl>
-            <hr />
           </Col>
           <Col className="col-6">
-            <div className="fi-active">
-              <h5 className="mb-4 mt-1">
-                <Link to={`${FI_SINGLE_MAP_URL}/${theObject.id}`}>
-                  {theObject.jurisdiction_id && (
-                    <span>
-                      <FontAwesomeIcon icon={['fas', 'map']} />
-                      &nbsp;
-                    </span>
-                  )}
-                  {ACTIVE_INVESTIGATION}: {theObject.plan_title}
-                </Link>
-              </h5>
-              <dl className="row mt-3">
-                <dt className="col-5">{COMPLETE}</dt>
-                <dd className="col-7">{NO}</dd>
-              </dl>
-              <hr />
-              <h5 className="mb-4 mt-4">{RESPONSE}</h5>
-              {/** loop through the goals */
-              theGoals.map((item: Goal) => {
-                const goalReport = getGoalReport(item);
-                return (
-                  <div className="responseItem" key={item.goal_id}>
-                    <h6>{item.action_title}</h6>
-                    <div className="targetItem">
-                      <p>
-                        {MEASURE}: {item.measure}
-                      </p>
-                      <p>
-                        {PROGRESS}: {item.completed_task_count} {OF} {goalReport.targetValue}{' '}
-                        {goalReport.goalUnit} ({goalReport.prettyPercentAchieved})
-                      </p>
-                      <ProgressBar value={goalReport.percentAchieved} max={1} />
-                    </div>
-                  </div>
-                );
-              })}
-              <Row className="mt-5">
-                <Col className="col-6 offset-md-3">
-                  <button
-                    type="button"
-                    className="btn btn-outline-primary btn-block"
-                    disabled={true}
-                  >
-                    {MARK_AS_COMPLETE}
-                  </button>
-                </Col>
-              </Row>
-            </div>
+            <dl className="row mt-3">
+              <dt className="col-4">{PROVINCE}</dt>
+              <dd className="col-8">{theObject.province}</dd>
+              <dt className="col-4">{DISTRICT}</dt>
+              <dd className="col-8">{theObject.district}</dd>
+              <dt className="col-4">{CANTON}</dt>
+              <dd className="col-8">{theObject.canton}</dd>
+              <dt className="col-4">{FI_STATUS}</dt>
+              <dd className="col-8">{theObject.status}</dd>
+              <dt className="col-4">{FI_REASON}</dt>
+              <dd className="col-8">{theObject.reason}</dd>
+            </dl>
           </Col>
         </Row>
+        <hr />
+        <Form inline={true} onSubmit={this.handleSubmit}>
+          <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
+            <Input
+              type="text"
+              name="search"
+              id="exampleEmail"
+              placeholder="Search active focus investigations"
+            />
+          </FormGroup>
+          <Button outline={true} color="success">
+            Search
+          </Button>
+        </Form>
+        <h4 className="mb-4">{CURRENT_FOCUS_INVESTIGATION}</h4>
+        <hr />
+        {currentRoutineReactivePlans}
+        <h4 className="mb-4 complete">{COMPLETE_FOCUS_INVESTIGATION}</h4>
+        <hr />
+        {completeRoutineReactivePlans}
       </div>
     );
   }
@@ -281,7 +445,10 @@ export { SingleFI };
 
 /** interface to describe props from mapStateToProps */
 interface DispatchedStateProps {
-  plansArray: Plan[];
+  completeReactivePlansArray: Plan[] | [];
+  completeRoutinePlansArray: Plan[] | [];
+  currentReactivePlansArray: Plan[] | [];
+  currentRoutinePlansArray: Plan[] | [];
 }
 
 /** map state to props */
@@ -294,10 +461,33 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
     jurisdiction = getJurisdictionById(state, plan.jurisdiction_id);
   }
   const result = {
+    completeReactivePlansArray: getPlansArray(
+      state,
+      InterventionType.FI,
+      [PlanStatus.COMPLETE],
+      CASE_TRIGGERED
+    ),
+    completeRoutinePlansArray: getPlansArray(
+      state,
+      InterventionType.FI,
+      [PlanStatus.COMPLETE],
+      ROUTINE
+    ),
+    currentReactivePlansArray: getPlansArray(
+      state,
+      InterventionType.FI,
+      [PlanStatus.ACTIVE, PlanStatus.DRAFT],
+      CASE_TRIGGERED
+    ),
+    currentRoutinePlansArray: getPlansArray(
+      state,
+      InterventionType.FI,
+      [PlanStatus.ACTIVE, PlanStatus.DRAFT],
+      ROUTINE
+    ),
     goalsArray,
     jurisdiction,
     planById: plan,
-    plansArray: getPlansArray(state, InterventionType.FI, [], null),
     plansIdArray: getPlansIdArray(state, InterventionType.FI, [], null),
   };
   return result;

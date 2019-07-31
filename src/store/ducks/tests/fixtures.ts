@@ -43,7 +43,7 @@ export const plan2 = {
 export const draftPlan = {
   id: 'draftPlan-id-2',
   jurisdiction_depth: 41,
-  jurisdiction_id: '3378',
+  jurisdiction_id: '3380',
   jurisdiction_name: 'TLv1_02',
   jurisdiction_name_path: ['Canton Tha Luang', 'Tha Luang Village'],
   jurisdiction_parent_id: '2977',
@@ -59,14 +59,55 @@ export const draftPlan = {
   plan_title: 'A1-Tha Luang Village 1 Focus 01',
   plan_version: '1',
 };
+export const completeRoutinePlan = {
+  id: 'completedRoutinePlan-id-2',
+  jurisdiction_depth: 51,
+  jurisdiction_id: '3381',
+  jurisdiction_name: 'TLv1_02',
+  jurisdiction_name_path: ['Canton Tha Luang', 'Tha Luang Village'],
+  jurisdiction_parent_id: '2977',
+  jurisdiction_path: ['2989', '2977'],
+  plan_date: '2019-06-18',
+  plan_effective_period_end: '2019-06-18',
+  plan_effective_period_start: '2019-07-31',
+  plan_fi_reason: 'Routine',
+  plan_fi_status: 'A1',
+  plan_id: 'plan-id-2',
+  plan_intervention_type: 'IRS',
+  plan_status: 'complete',
+  plan_title: 'A1-Tha Luang Village 1 Focus 01',
+  plan_version: '1',
+};
+export const completeReactivePlan = {
+  id: 'draftPlan-id-2',
+  jurisdiction_depth: 43,
+  jurisdiction_id: '3391',
+  jurisdiction_name: 'TLv1_02',
+  jurisdiction_name_path: ['Canton Tha Luang', 'Tha Luang Village'],
+  jurisdiction_parent_id: '2977',
+  jurisdiction_path: ['2989', '2977'],
+  plan_date: '2019-06-18',
+  plan_effective_period_end: '2019-06-18',
+  plan_effective_period_start: '2019-07-31',
+  plan_fi_reason: 'Case-triggered',
+  plan_fi_status: 'A1',
+  plan_id: 'plan-id-2',
+  plan_intervention_type: 'IRS',
+  plan_status: 'complete',
+  plan_title: 'A1-Tha Luang Village 1 Focus 01',
+  plan_version: '1',
+};
 export const plan5 = {
   id: '93d3a80e-714c-51c7-a382-7633f1eb1f1b',
   jurisdiction_depth: 0,
   jurisdiction_id: ' NULL',
   jurisdiction_name: ' NULL',
-  jurisdiction_name_path: 'null',
+  jurisdiction_name_path: ['Trat 2', 'Mueng Trat District 2'],
   jurisdiction_parent_id: ' NULL',
-  jurisdiction_path: 'null',
+  jurisdiction_path: [
+    '61707fc2-c6ac-4112-a8d6-2a4861958396',
+    '8a8e4987-95a9-4b2e-b746-3c9c3eec15c5',
+  ],
   plan_date: '2019-06-18',
   plan_effective_period_end: '2019-06-18',
   plan_effective_period_start: '2019-07-31',
@@ -984,3 +1025,151 @@ export { jurisdiction3 };
 export const jurisdictionsIdsArray = jurisdictions.map((e: any) => e.jurisdiction_id);
 export const currentGoal = 'RACD_register_all_families';
 export const nextGoal = 'Bednet Distribution';
+
+export const CurrentReactiveTableProps = {
+  columns: [
+    {
+      Header: 'Name',
+      columns: [{}],
+    },
+    {
+      Header: 'FI Status',
+      columns: [{}],
+    },
+    {
+      Header: 'Case Notif. Date',
+      columns: [{}],
+    },
+    {
+      Header: 'Case Class.',
+      columns: [{}],
+    },
+  ],
+  data: [],
+  identifierField: 'id',
+  linkerField: 'id',
+  minRows: 0,
+  parentIdentifierField: 'parent',
+  rootParentId: null,
+  showPageSizeOptions: false,
+  showPagination: false,
+  useDrillDownTrProps: false,
+};
+
+export const CurrentRoutineTableProps = {
+  columns: [
+    {
+      Header: 'Name',
+      columns: [{}],
+    },
+    {
+      Header: 'FI Status',
+      columns: [{}],
+    },
+    {
+      Header: 'Province',
+      columns: [{}],
+    },
+    {
+      Header: 'District',
+      columns: [{}],
+    },
+    {
+      Header: 'Canton',
+      columns: [{}],
+    },
+    {
+      Header: 'Village',
+      columns: [{}],
+    },
+    {
+      Header: 'Focus Area',
+      columns: [{}],
+    },
+    {
+      Header: 'Status',
+      columns: [{}],
+    },
+    {
+      Header: 'Start Date',
+      columns: [{}],
+    },
+    {
+      Header: 'End Date',
+      columns: [{}],
+    },
+    {
+      Header: 'Actions',
+      columns: [{}],
+    },
+  ],
+  data: [],
+  identifierField: 'id',
+  linkerField: 'id',
+  minRows: 0,
+  parentIdentifierField: 'parent',
+  rootParentId: null,
+  showPageSizeOptions: false,
+  showPagination: false,
+  useDrillDownTrProps: false,
+};
+
+export const CompleteReactiveTableProps = {
+  columns: [
+    {
+      Header: 'Name',
+      columns: [{}],
+    },
+    {
+      Header: 'Date Completed',
+      columns: [{}],
+    },
+    {
+      Header: 'Case Notif. Date',
+      columns: [{}],
+    },
+    {
+      Header: 'Case Class.',
+      columns: [{}],
+    },
+  ],
+  data: [],
+  identifierField: 'id',
+  linkerField: 'id',
+  minRows: 0,
+  parentIdentifierField: 'parent',
+  rootParentId: null,
+  showPageSizeOptions: false,
+  showPagination: false,
+  useDrillDownTrProps: false,
+};
+
+export const CompleteRoutineTableProps = {
+  columns: [
+    {
+      Header: 'Name',
+      columns: [{}],
+    },
+    {
+      Header: 'Start Date',
+      columns: [{}],
+    },
+    {
+      Header: 'End Date',
+      columns: [{}],
+    },
+    {
+      Header: 'Date Completed',
+      columns: [{}],
+    },
+  ],
+  data: [],
+  identifierField: 'id',
+  linkerField: 'id',
+  minRows: 0,
+  parentIdentifierField: 'parent',
+  rootParentId: null,
+  showPageSizeOptions: false,
+  showPagination: false,
+  useDrillDownTrProps: false,
+};
