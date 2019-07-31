@@ -36,6 +36,10 @@ div.css-2b097c-container div.css-yk16xz-control {
   margin-top: 1.5em;
 }
 
+div.css-2b097c-container {
+  z-index: 9999;
+}
+
 div.css-1pahdxg-control {
   margin-top: 1.5em;
 }

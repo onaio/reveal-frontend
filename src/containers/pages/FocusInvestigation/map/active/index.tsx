@@ -12,7 +12,7 @@ import HeaderBreadcrumb, {
   BreadCrumbProps,
 } from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../../components/page/Loading';
-import SelectPlan from '../../../../../components/SelectPlan/';
+import SelectComponent from '../../../../../components/SelectPlan/';
 import {
   SUPERSET_GOALS_SLICE,
   SUPERSET_JURISDICTIONS_SLICE,
@@ -304,7 +304,7 @@ class SingleActiveFIMap extends React.Component<
               </h2>
             </Col>
             <Col xs="4">
-              <SelectPlan plansArray={plansArray} />
+              <SelectComponent plansArray={plansArray} />
             </Col>
           </Row>
         </div>
