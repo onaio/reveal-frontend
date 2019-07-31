@@ -45,7 +45,7 @@
   cursor: pointer;
 }
 
-#map-1 {
+.irs-plan-map #map-1 {
   height: 90vh !important;
   min-height: auto;
 }
