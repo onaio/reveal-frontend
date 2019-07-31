@@ -93,7 +93,7 @@ describe('components/GisidaWrapper', () => {
       structures: wrapFeatureCollection([fixtures.structure1.geojson]),
     };
     const props = {
-      currentGoal: fixtures.task6.goal_id,
+      currentGoal: fixtures.task3.goal_id,
       geoData: fixtures.jurisdictions[2],
       goal: fixtures.goals,
       handlers: [],
