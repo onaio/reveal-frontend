@@ -6,7 +6,8 @@
   border-color: red;
 }
 
-.removeArrItem {
+.removeArrItem,
+.close.removeArrItem {
   top: -3px;
   right: -3px;
   color: #6c757d !important;
