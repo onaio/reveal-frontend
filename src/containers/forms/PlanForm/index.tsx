@@ -103,8 +103,10 @@ const PlanForm = (props: PlanFormProps) => {
             /* tslint:disable-next-line jsx-no-lambda */
             onChange={(e: FormEvent) => {
               const nameTitle = getNameTitle(e, values);
+              if (!values.title || values.title === '') {
+                setFieldValue('title', nameTitle[1]);
+              }
               setFieldValue('name', nameTitle[0]);
-              setFieldValue('title', nameTitle[1]);
             }}
             className="mb-5"
           >
