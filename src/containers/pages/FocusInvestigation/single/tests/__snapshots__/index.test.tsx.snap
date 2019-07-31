@@ -1070,19 +1070,19 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
                       <div
                         className="col-6"
                       >
-                        <Button
-                          className="focus-investigation"
-                          color="primary"
-                          tag="button"
+                        <Link
+                          className="focus-investigation btn btn-primary float-right mt-5"
+                          replace={false}
+                          to="/plans/new"
                         >
-                          <button
-                            aria-label={null}
-                            className="focus-investigation btn btn-primary"
+                          <a
+                            className="focus-investigation btn btn-primary float-right mt-5"
+                            href="/plans/new"
                             onClick={[Function]}
                           >
                             Add Focus Investigation
-                          </button>
-                        </Button>
+                          </a>
+                        </Link>
                       </div>
                     </Col>
                   </div>
@@ -7243,19 +7243,19 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
                   <div
                     className="col-6"
                   >
-                    <Button
-                      className="focus-investigation"
-                      color="primary"
-                      tag="button"
+                    <Link
+                      className="focus-investigation btn btn-primary float-right mt-5"
+                      replace={false}
+                      to="/plans/new"
                     >
-                      <button
-                        aria-label={null}
-                        className="focus-investigation btn btn-primary"
+                      <a
+                        className="focus-investigation btn btn-primary float-right mt-5"
+                        href="/plans/new"
                         onClick={[Function]}
                       >
                         Add Focus Investigation
-                      </button>
-                    </Button>
+                      </a>
+                    </Link>
                   </div>
                 </Col>
               </div>
@@ -10679,19 +10679,19 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
                   <div
                     className="col-6"
                   >
-                    <Button
-                      className="focus-investigation"
-                      color="primary"
-                      tag="button"
+                    <Link
+                      className="focus-investigation btn btn-primary float-right mt-5"
+                      replace={false}
+                      to="/plans/new"
                     >
-                      <button
-                        aria-label={null}
-                        className="focus-investigation btn btn-primary"
+                      <a
+                        className="focus-investigation btn btn-primary float-right mt-5"
+                        href="/plans/new"
                         onClick={[Function]}
                       >
                         Add Focus Investigation
-                      </button>
-                    </Button>
+                      </a>
+                    </Link>
                   </div>
                 </Col>
               </div>
