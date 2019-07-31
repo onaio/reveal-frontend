@@ -385,7 +385,7 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
             id: `${this.props.currentGoal}-symbol`,
             layout: {
               'icon-image': iconGoal,
-              'icon-size': 0.03,
+              'icon-size': this.props.currentGoal.includes('Case_Confirmation') ? 0.045 : 0.03,
             },
             source: {
               ...symbolLayerConfig.source,
@@ -430,7 +430,7 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
             id: `${this.props.currentGoal}-symbol`,
             layout: {
               'icon-image': iconGoal,
-              'icon-size': 0.03,
+              'icon-size': this.props.currentGoal.includes('Case_Confirmation') ? 0.045 : 0.03,
             },
             source: {
               ...symbolLayerConfig.source,

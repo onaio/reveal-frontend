@@ -54,3 +54,7 @@
   margin-bottom: 24px;
   margin-top: 6px;
 }
+
+.select-jurisdictin-tooltip {
+  padding: 6px 8px !important;
+}
