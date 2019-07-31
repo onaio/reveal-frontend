@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import makeAnimated from 'react-select/animated';
 import AsyncSelect from 'react-select/async';
 import { OpenSRPService, URLParams } from '../../../services/opensrp';
