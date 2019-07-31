@@ -5,12 +5,14 @@ import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { NavLink } from 'react-router-dom';
+import { Badge, Button, Col, Row } from 'reactstrap';
 import { Store } from 'redux';
 import GisidaWrapper from '../../../../../components/GisidaWrapper';
 import HeaderBreadcrumb, {
   BreadCrumbProps,
 } from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../../components/page/Loading';
+import SelectComponent from '../../../../../components/SelectPlan/';
 import {
   SUPERSET_GOALS_SLICE,
   SUPERSET_JURISDICTIONS_SLICE,
@@ -19,6 +21,8 @@ import {
   SUPERSET_TASKS_SLICE,
 } from '../../../../../configs/env';
 import {
+  CASE_TRIGGERED_PLAN,
+  END_DATE,
   FI_SINGLE_MAP_URL,
   FI_SINGLE_URL,
   FI_URL,
@@ -26,13 +30,16 @@ import {
   FOCUS_INVESTIGATIONS,
   HOME,
   HOME_URL,
+  INVESTIGATION,
   MEASURE,
   MULTI_POLYGON,
   OF,
   POINT,
   POLYGON,
   PROGRESS,
-  RESPONSE,
+  REACTIVE,
+  ROUTINE_PLAN,
+  START_DATE,
 } from '../../../../../constants';
 import { popupHandler } from '../../../../../helpers/handlers';
 import { getGoalReport } from '../../../../../helpers/indicators';
@@ -78,7 +85,6 @@ import tasksReducer, {
   TaskGeoJSON,
 } from '../../../../../store/ducks/tasks';
 import './style.css';
-
 /** register reducers */
 reducerRegistry.register(jurisdictionReducerName, jurisdictionReducer);
 reducerRegistry.register(goalsReducerName, goalsReducer);
@@ -98,21 +104,10 @@ export interface MapSingleFIProps {
   goals: Goal[] | null;
   jurisdiction: Jurisdiction | null;
   plan: Plan | null;
+  plansArray: Plan[];
   pointFeatureCollection: FeatureCollection<TaskGeoJSON>;
   polygonFeatureCollection: FeatureCollection<TaskGeoJSON>;
   structures: FeatureCollection<StructureGeoJSON> | null /** we use this to get all structures */;
-}
-
-export interface Jurisdictions {
-  id: string;
-  jurisdiction_id: string;
-  plan_id: string;
-}
-
-export interface Jurisdictions {
-  id: string;
-  jurisdiction_id: string;
-  plan_id: string;
 }
 
 /** default value for feature Collection */
@@ -132,6 +127,7 @@ export const defaultMapSingleFIProps: MapSingleFIProps = {
   goals: null,
   jurisdiction: null,
   plan: null,
+  plansArray: [],
   pointFeatureCollection: defaultFeatureCollection,
   polygonFeatureCollection: defaultFeatureCollection,
   setCurrentGoalActionCreator: setCurrentGoal,
@@ -182,7 +178,7 @@ class SingleActiveFIMap extends React.Component<
           fetchStructuresActionCreator(structuresResults);
         }
       );
-      await supersetFetch(SUPERSET_PLANS_SLICE, supersetParams).then((result2: Plan[]) => {
+      await supersetFetch(SUPERSET_PLANS_SLICE, jurisdictionsParams).then((result2: Plan[]) => {
         fetchPlansActionCreator(result2);
       });
       await supersetFetch(SUPERSET_GOALS_SLICE, goalsParams).then((result3: Goal[]) => {
@@ -209,6 +205,7 @@ class SingleActiveFIMap extends React.Component<
       plan,
       goals,
       currentGoal,
+      plansArray,
       pointFeatureCollection,
       polygonFeatureCollection,
       structures,
@@ -237,24 +234,80 @@ class SingleActiveFIMap extends React.Component<
     };
     const namePaths =
       plan.jurisdiction_name_path instanceof Array ? plan.jurisdiction_name_path : [];
-    const pages = namePaths.map(namePath =>
+    const pages = namePaths.map(namePath => {
       // return a page object for each name path
-      ({
+      return {
         label: namePath,
         url: '',
-      })
-    );
+      };
+    });
     breadCrumbProps.pages = [homePage, basePage, ...pages, secondLastPage];
+    const statusBadge =
+      plan && plan.plan_status === (PlanStatus.ACTIVE || PlanStatus.DRAFT) ? (
+        <Badge color="warning" pill={true}>
+          {plan.plan_status}
+        </Badge>
+      ) : (
+        <Badge color="success" pill={true}>
+          {plan.plan_status}
+        </Badge>
+      );
+    const markCompleteButton =
+      plan && plan.plan_status === PlanStatus.ACTIVE ? (
+        <Button color="primary" size="lg" block={true}>
+          Mark as Complete
+        </Button>
+      ) : null;
+    /** Array that holds keys of a plan object
+     * Will be used to check plan_effective_period_end or plan_effective_period_start to build the detailview
+     */
+    const planKeysArray: string[] = Object.keys(plan);
 
+    /** alias enables asigning keys dynamically used to populate the detailview  */
+
+    const alias = {
+      plan_effective_period_end: END_DATE,
+      plan_effective_period_start: START_DATE,
+    };
+
+    const detailViewPlanInvestigationContainer: React.ReactElement[] = [];
+    if (plan.plan_fi_reason === ROUTINE_PLAN) {
+      planKeysArray.forEach((column: string) => {
+        if (column === 'plan_effective_period_end' || column === 'plan_effective_period_start') {
+          detailViewPlanInvestigationContainer.push(
+            <span key={column} className="detailview">
+              <b>{alias[column]}:</b> &nbsp;
+              {plan && plan[column]}
+            </span>
+          );
+        }
+      });
+    } else {
+      detailViewPlanInvestigationContainer.push(
+        <span key={plan && plan.plan_id}>
+          <b>Case Classification:</b>&nbsp;
+          {plan && plan.plan_intervention_type ? plan.plan_intervention_type : null}
+        </span>
+      );
+    }
     return (
       <div>
         <Helmet>
           <title>{`${FOCUS_INVESTIGATION}: ${plan && plan.plan_title}`}</title>
         </Helmet>
         <HeaderBreadcrumb {...breadCrumbProps} />
-        <h2 className="page-title mt-4 mb-4">
-          {FOCUS_INVESTIGATION}: {plan && plan.plan_title}
-        </h2>
+        <div>
+          <Row>
+            <Col xs="8">
+              <h2 className="page-title mt-4 mb-4">
+                {plan && plan.plan_title} {INVESTIGATION} {statusBadge}
+              </h2>
+            </Col>
+            <Col xs="4">
+              <SelectComponent plansArray={plansArray} />
+            </Col>
+          </Row>
+        </div>
         <div className="row no-gutters mb-5">
           <div className="col-9">
             <div className="map">
@@ -271,7 +324,15 @@ class SingleActiveFIMap extends React.Component<
           </div>
           <div className="col-3">
             <div className="mapSidebar">
-              <h5>{RESPONSE}</h5>
+              <div>
+                <h5>
+                  {plan.plan_fi_reason === CASE_TRIGGERED_PLAN ? REACTIVE : ROUTINE_PLAN}&nbsp;
+                  {INVESTIGATION}
+                </h5>
+                {detailViewPlanInvestigationContainer}
+              </div>
+              {markCompleteButton}
+              <h6 />
               <hr />
               {goals &&
                 goals.map((item: Goal) => {
@@ -370,7 +431,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
     plansArray: getPlansArray(
       state,
       InterventionType.FI,
-      [PlanStatus.ACTIVE, PlanStatus.DRAFT],
+      [PlanStatus.ACTIVE, PlanStatus.COMPLETE],
       null
     ),
     plansIdArray: getPlansIdArray(
