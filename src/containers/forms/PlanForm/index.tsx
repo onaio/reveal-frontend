@@ -53,6 +53,7 @@ const initialActivitiesValues: PlanActivityFormFields = {
 /** initial values for plan jurisdiction forms */
 const initialJurisdictionValues: PlanJurisdictionFormFields = {
   id: '',
+  name: '',
 };
 
 /** initial values for plan Form */
@@ -198,6 +199,12 @@ const PlanForm = (props: PlanFormProps) => {
                               ? 'is-invalid async-select'
                               : 'async-select'
                           }
+                          labelFieldName={`jurisdictions[${index}].name`}
+                        />
+                        <Field
+                          type="hidden"
+                          name={`jurisdictions[${index}].name`}
+                          id={`jurisdictions[${index}].name`}
                         />
 
                         {errors.jurisdictions && errors.jurisdictions[index] && (
