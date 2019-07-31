@@ -1,6 +1,6 @@
 import { ErrorMessage, Field, FieldArray, Form, Formik } from 'formik';
 import moment from 'moment';
-import React, { FormEvent } from 'react';
+import React, { FormEvent, useState } from 'react';
 import { Button, FormGroup, Label } from 'reactstrap';
 import DatePickerWrapper from '../../../components/DatePickerWrapper';
 import {
@@ -16,6 +16,7 @@ import {
   goalPriorities,
 } from '../../../configs/settings';
 import { SAVING } from '../../../constants';
+import { OpenSRPService } from '../../../services/opensrp';
 import { InterventionType, PlanStatus } from '../../../store/ducks/plans';
 import JurisdictionSelect from '../JurisdictionSelect';
 import {
@@ -85,17 +86,26 @@ interface PlanFormProps {
 
 /** Plan Form component */
 const PlanForm = (props: PlanFormProps) => {
+  const [globalError, setGlobalError] = useState<string>('');
+
   const { disabledFields, initialValues } = props;
   return (
     <div className="form-container">
       <Formik
         initialValues={initialValues}
         /* tslint:disable-next-line jsx-no-lambda */
-        onSubmit={(values, { setSubmitting }) => {
-          setTimeout(() => {
-            alert(JSON.stringify(generatePlanDefinition(values), null, 2));
-            setSubmitting(false);
-          }, 400);
+        onSubmit={(values, { setErrors, setSubmitting }) => {
+          const payload = generatePlanDefinition(values);
+          const apiService = new OpenSRPService('/plans');
+
+          apiService
+            .create(payload)
+            .then(() => {
+              setSubmitting(false);
+            })
+            .catch((e: Error) => {
+              setGlobalError(e.message);
+            });
         }}
         validationSchema={PlanSchema}
       >
@@ -122,6 +132,7 @@ const PlanForm = (props: PlanFormProps) => {
             className="mb-5"
           >
             <FormGroup className="non-field-errors">
+              {globalError !== '' && <p className="">{globalError}</p>}
               <ErrorMessage name="name" component="p" className="form-text text-danger" />
               <ErrorMessage name="date" component="p" className="form-text text-danger" />
             </FormGroup>
