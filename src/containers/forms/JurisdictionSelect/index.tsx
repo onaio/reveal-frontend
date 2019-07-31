@@ -127,24 +127,22 @@ const JurisdictionSelect = (props: JurisdictionSelectProps) => {
   };
 
   return (
-    <div>
-      <AsyncSelect
-        /** we are using the key as hack to reload the component when the parentId changes */
-        key={parentId}
-        name="jurisdiction"
-        bsSize="lg"
-        defaultMenuIsOpen={shouldMenuOpen}
-        closeMenuOnSelect={closeMenuOnSelect}
-        components={animatedComponents}
-        placeholder="Select Focus Area"
-        aria-label="Select Focus Area"
-        onChange={handleChange()}
-        defaultOptions={true}
-        loadOptions={promiseOptions}
-        isClearable={true}
-        cacheOptions={true}
-      />
-    </div>
+    <AsyncSelect
+      /** we are using the key as hack to reload the component when the parentId changes */
+      key={parentId}
+      name="jurisdiction"
+      bsSize="lg"
+      defaultMenuIsOpen={shouldMenuOpen}
+      closeMenuOnSelect={closeMenuOnSelect}
+      components={animatedComponents}
+      placeholder="Select Focus Area"
+      aria-label="Select Focus Area"
+      onChange={handleChange()}
+      defaultOptions={true}
+      loadOptions={promiseOptions}
+      isClearable={true}
+      cacheOptions={true}
+    />
   );
 };
 
