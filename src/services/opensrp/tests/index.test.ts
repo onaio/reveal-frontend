@@ -1,7 +1,7 @@
 import { getOpenSRPUserInfo } from '@onaio/gatekeeper';
 import { authenticateUser } from '@onaio/session-reducer';
 import store from '../../../store';
-import { getDefaultHeaders, getURLParams, OpenSRPService } from '../index';
+import { getDefaultHeaders, getFilterParams, getURLParams, OpenSRPService } from '../index';
 import { createPlan, plansListResponse } from './fixtures/plans';
 import { OpenSRPAPIResponse } from './fixtures/session';
 /* tslint:disable-next-line no-var-requires */
@@ -36,6 +36,13 @@ describe('services/OpenSRP', () => {
     expect(getURLParams({})).toEqual('');
     expect(getURLParams({ foo: 'bar', leet: 1337, mosh: 'pitt' })).toEqual(
       'foo=bar&leet=1337&mosh=pitt'
+    );
+  });
+
+  it('getFilterParams works', async () => {
+    expect(getFilterParams({})).toEqual('');
+    expect(getFilterParams({ foo: 'bar', leet: 1337, mosh: 'pitt' })).toEqual(
+      'foo:bar,leet:1337,mosh:pitt'
     );
   });
 
