@@ -115,6 +115,7 @@ const PlanForm = (props: PlanFormProps) => {
             <FormGroup>
               <Label for="interventionType">Intervention Type</Label>
               <Field
+                required={true}
                 component="select"
                 name="interventionType"
                 id="interventionType"
@@ -172,6 +173,7 @@ const PlanForm = (props: PlanFormProps) => {
                       >
                         <Label for={`jurisdictions[${index}].id`}>Focus Area</Label>
                         <Field
+                          required={true}
                           component={JurisdictionSelect}
                           name={`jurisdictions[${index}].id`}
                           id={`jurisdictions[${index}].id`}
@@ -215,6 +217,7 @@ const PlanForm = (props: PlanFormProps) => {
               <FormGroup>
                 <Label for="fiStatus">Focus Investigation Status</Label>
                 <Field
+                  required={values.interventionType === InterventionType.FI}
                   component="select"
                   name="fiStatus"
                   id="fiStatus"
@@ -235,6 +238,7 @@ const PlanForm = (props: PlanFormProps) => {
               <FormGroup>
                 <Label for="fiReason">Focus Investigation Reason</Label>
                 <Field
+                  required={values.interventionType === InterventionType.FI}
                   component="select"
                   name="fiReason"
                   id="fiReason"
@@ -255,6 +259,10 @@ const PlanForm = (props: PlanFormProps) => {
               <FormGroup>
                 <Label for="caseNum">Case Number</Label>
                 <Field
+                  required={
+                    values.interventionType === InterventionType.FI &&
+                    values.fiReason === FIReasons[1]
+                  }
                   type="text"
                   name="caseNum"
                   id="caseNum"
@@ -269,6 +277,7 @@ const PlanForm = (props: PlanFormProps) => {
             <FormGroup>
               <Label for="title">Plan Title</Label>
               <Field
+                required={true}
                 type="text"
                 name="title"
                 id="title"
@@ -284,6 +293,7 @@ const PlanForm = (props: PlanFormProps) => {
             <FormGroup>
               <Label for="status">Status</Label>
               <Field
+                required={true}
                 component="select"
                 name="status"
                 id="status"
@@ -301,6 +311,7 @@ const PlanForm = (props: PlanFormProps) => {
             <FormGroup>
               <Label for="start">Plan Start Date</Label>
               <Field
+                required={true}
                 type="date"
                 name="start"
                 id="start"
@@ -316,6 +327,7 @@ const PlanForm = (props: PlanFormProps) => {
             <FormGroup>
               <Label for="end">Plan End Date</Label>
               <Field
+                required={true}
                 type="date"
                 name="end"
                 id="end"
@@ -354,6 +366,8 @@ const PlanForm = (props: PlanFormProps) => {
                           type="text"
                           name={`activities[${index}].actionTitle`}
                           id={`activities[${index}].actionTitle`}
+                          required={true}
+                          disabled={disabledFields.includes('activities')}
                           className={
                             errors.activities &&
                             doesFieldHaveErrors('actionTitle', index, errors.activities)
@@ -388,6 +402,8 @@ const PlanForm = (props: PlanFormProps) => {
                           component="textarea"
                           name={`activities[${index}].actionDescription`}
                           id={`activities[${index}].actionDescription`}
+                          required={true}
+                          disabled={disabledFields.includes('activities')}
                           className={
                             errors.activities &&
                             doesFieldHaveErrors('actionDescription', index, errors.activities)
@@ -413,6 +429,8 @@ const PlanForm = (props: PlanFormProps) => {
                           type="number"
                           name={`activities[${index}].goalValue`}
                           id={`activities[${index}].goalValue`}
+                          required={true}
+                          disabled={disabledFields.includes('activities')}
                           className={
                             errors.activities &&
                             doesFieldHaveErrors('goalValue', index, errors.activities)
@@ -432,6 +450,8 @@ const PlanForm = (props: PlanFormProps) => {
                           type="date"
                           name={`activities[${index}].timingPeriodStart`}
                           id={`activities[${index}].timingPeriodStart`}
+                          required={true}
+                          disabled={disabledFields.includes('activities')}
                           dateFormat={DATE_FORMAT}
                           className={
                             errors.activities &&
@@ -455,6 +475,8 @@ const PlanForm = (props: PlanFormProps) => {
                           type="date"
                           name={`activities[${index}].timingPeriodEnd`}
                           id={`activities[${index}].timingPeriodEnd`}
+                          required={true}
+                          disabled={disabledFields.includes('activities')}
                           dateFormat={DATE_FORMAT}
                           className={
                             errors.activities &&
@@ -484,6 +506,8 @@ const PlanForm = (props: PlanFormProps) => {
                           component="select"
                           name={`activities[${index}].actionReason`}
                           id={`activities[${index}].actionReason`}
+                          required={true}
+                          disabled={disabledFields.includes('activities')}
                           className={
                             errors.activities &&
                             doesFieldHaveErrors('actionReason', index, errors.activities)
@@ -509,6 +533,8 @@ const PlanForm = (props: PlanFormProps) => {
                           component="select"
                           name={`activities[${index}].goalPriority`}
                           id={`activities[${index}].goalPriority`}
+                          required={true}
+                          disabled={disabledFields.includes('activities')}
                           className={
                             errors.activities &&
                             doesFieldHaveErrors('goalPriority', index, errors.activities)
