@@ -192,47 +192,59 @@ const PlanForm = (props: PlanFormProps) => {
                           </ul>
                         </div>
                       )}
-                      <FormGroup
-                        className={
-                          errors.jurisdictions &&
-                          doesFieldHaveErrors('id', index, errors.jurisdictions)
-                            ? 'is-invalid async-select-container'
-                            : 'async-select-container'
-                        }
-                      >
-                        <Label for={`jurisdictions[${index}].id`}>Focus Area</Label>
-                        <Field
-                          required={true}
-                          component={JurisdictionSelect}
-                          name={`jurisdictions[${index}].id`}
-                          id={`jurisdictions[${index}].id`}
-                          placeholder="Select Focus Area"
-                          aria-label="Select Focus Area"
-                          disabled={disabledFields.includes('jurisdictions')}
+                      <div className="jurisdiction-item position-relative">
+                        {values.jurisdictions && values.jurisdictions.length > 1 && (
+                          <button
+                            type="button"
+                            className="close position-absolute removeArrItem"
+                            aria-label="Close"
+                            onClick={() => arrayHelpers.remove(index)}
+                          >
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        )}
+                        <FormGroup
                           className={
                             errors.jurisdictions &&
                             doesFieldHaveErrors('id', index, errors.jurisdictions)
-                              ? 'is-invalid async-select'
-                              : 'async-select'
+                              ? 'is-invalid async-select-container'
+                              : 'async-select-container'
                           }
-                          labelFieldName={`jurisdictions[${index}].name`}
-                        />
-                        <Field
-                          type="hidden"
-                          name={`jurisdictions[${index}].name`}
-                          id={`jurisdictions[${index}].name`}
-                        />
+                        >
+                          <Label for={`jurisdictions[${index}].id`}>Focus Area</Label>
+                          <Field
+                            required={true}
+                            component={JurisdictionSelect}
+                            name={`jurisdictions[${index}].id`}
+                            id={`jurisdictions[${index}].id`}
+                            placeholder="Select Focus Area"
+                            aria-label="Select Focus Area"
+                            disabled={disabledFields.includes('jurisdictions')}
+                            className={
+                              errors.jurisdictions &&
+                              doesFieldHaveErrors('id', index, errors.jurisdictions)
+                                ? 'is-invalid async-select'
+                                : 'async-select'
+                            }
+                            labelFieldName={`jurisdictions[${index}].name`}
+                          />
+                          <Field
+                            type="hidden"
+                            name={`jurisdictions[${index}].name`}
+                            id={`jurisdictions[${index}].name`}
+                          />
 
-                        {errors.jurisdictions && errors.jurisdictions[index] && (
-                          <small className="form-text text-danger">An Error Ocurred</small>
-                        )}
+                          {errors.jurisdictions && errors.jurisdictions[index] && (
+                            <small className="form-text text-danger">An Error Ocurred</small>
+                          )}
 
-                        <ErrorMessage
-                          name={`jurisdictions[${index}].id`}
-                          component="small"
-                          className="form-text text-danger"
-                        />
-                      </FormGroup>
+                          <ErrorMessage
+                            name={`jurisdictions[${index}].id`}
+                            component="small"
+                            className="form-text text-danger"
+                          />
+                        </FormGroup>
+                      </div>
                     </fieldset>
                   ))}
                   {values.interventionType === InterventionType.IRS && (
