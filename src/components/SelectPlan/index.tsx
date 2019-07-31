@@ -14,13 +14,7 @@ class SelectPlan extends React.Component<SelectPlanProps, {}> {
     /** Sort plans by plan_date and build value label key value pairs to populate the select */
     let options;
     options = plansArray.sort((a, b) => {
-      if (a.plan_date > b.plan_date) {
-        return -1;
-      }
-      if (a.plan_date < b.plan_date) {
-        return 1;
-      }
-      return 0;
+      return a.plan_date === b.plan_date ? 0 : +(a.plan_date < b.plan_date) || -1;
     });
     options = options.map(element => {
       return { value: element.plan_id, label: element.plan_title };
