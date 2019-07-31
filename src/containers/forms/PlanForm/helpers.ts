@@ -295,8 +295,6 @@ export function extractActivitiesFromPlanForm(
  */
 export const getNameTitle = (event: FormEvent, formValues: PlanFormFields): [string, string] => {
   const target = event.target as HTMLInputElement;
-  let name = IRS_TITLE;
-  let title = IRS_TITLE;
   const currentInterventionType =
     target.name === 'interventionType' ? target.value : formValues.interventionType;
   const currentFiStatus = target.name === 'fiStatus' ? target.value : formValues.fiStatus;
@@ -305,6 +303,9 @@ export const getNameTitle = (event: FormEvent, formValues: PlanFormFields): [str
   if (formValues.jurisdictions.length > 0) {
     currentJurisdiction = formValues.jurisdictions[0].name;
   }
+
+  let name = currentInterventionType;
+  let title = currentInterventionType;
 
   const currentDate = target.name === 'date' ? target.value : formValues.date;
   if (currentInterventionType === InterventionType.FI) {
@@ -319,7 +320,16 @@ export const getNameTitle = (event: FormEvent, formValues: PlanFormFields): [str
     });
     name = result.join('-');
     title = result.join(' ');
+  } else {
+    const result = [name, moment(currentDate).format(DATE_FORMAT.toUpperCase())].map(e => {
+      if (e) {
+        return e;
+      }
+    });
+    name = result.join('-');
+    title = result.join(' ');
   }
+
   return [name, title];
 };
 
