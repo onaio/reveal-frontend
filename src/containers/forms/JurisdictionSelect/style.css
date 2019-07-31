@@ -5,3 +5,10 @@
 .async-select-container.is-invalid .async-select > div {
   border-color: red;
 }
+
+.removeArrItem {
+  top: -3px;
+  right: -3px;
+  color: #6c757d !important;
+  font-size: 30px;
+}
