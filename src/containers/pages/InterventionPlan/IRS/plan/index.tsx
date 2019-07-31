@@ -25,6 +25,7 @@ import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset from '@onaio/superset-connector';
 
 import {
+  IRS_PLAN_COUNTRIES,
   SUPERSET_JURISDICTIONS_DATA_SLICE,
   SUPERSET_JURISDICTIONS_SLICE,
   SUPERSET_PLAN_STRUCTURE_PIVOT_SLICE,
@@ -422,6 +423,18 @@ class IrsPlan extends React.Component<
       this.onStartPlanFormSubmit(e);
     };
 
+    const irsCountryOptions = IRS_PLAN_COUNTRIES.map((c, i) => {
+      if (CountriesAdmin0[c as ADMN0_PCODE]) {
+        const country = CountriesAdmin0[c as ADMN0_PCODE];
+        return (
+          <option key={i} value={country.ADMN0_PCODE}>
+            {country.ADMN0_EN}
+          </option>
+        );
+      }
+      return false;
+    }).filter(o => o);
+
     if (isStartingPlan && newPlan) {
       const { plan_effective_period_end, plan_effective_period_start, plan_title } = newPlan;
       return (
@@ -474,9 +487,7 @@ class IrsPlan extends React.Component<
                     type="select"
                   >
                     <option>...</option>
-                    {/* <option value="BW">Botswana</option> */}
-                    <option value="NA">Namibia</option>
-                    <option value="TH">Thailand</option>
+                    {irsCountryOptions}
                   </Input>
                 </FormGroup>
                 <Button
