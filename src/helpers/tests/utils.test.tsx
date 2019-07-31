@@ -321,7 +321,7 @@ describe('helpers/utils', () => {
       'b3debab9-1da3-5a24-ad81-c5eb8dd0cbd2'
     );
     expect(generateNameSpacedUUID(moment().toString(), PLAN_UUID_NAMESPACE)).toEqual(
-      '94a59b2f-8225-539c-94fa-9ce91a6e9b3f'
+      `94a59b2f-8225-539c-94fa-9ce91a6e9b3f>>${moment().toString()}`
     );
   });
 });
