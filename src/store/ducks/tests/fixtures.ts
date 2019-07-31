@@ -43,7 +43,7 @@ export const plan2 = {
 export const draftPlan = {
   id: 'draftPlan-id-2',
   jurisdiction_depth: 41,
-  jurisdiction_id: '450fc15b-5bd2-468a-927a-49cb10d3bbb',
+  jurisdiction_id: '3380',
   jurisdiction_name: 'TLv1_02',
   jurisdiction_name_path: ['Canton Tha Luang', 'Tha Luang Village'],
   jurisdiction_parent_id: '2977',
@@ -62,7 +62,7 @@ export const draftPlan = {
 export const completeRoutinePlan = {
   id: 'completedRoutinePlan-id-2',
   jurisdiction_depth: 51,
-  jurisdiction_id: '3378',
+  jurisdiction_id: '3381',
   jurisdiction_name: 'TLv1_02',
   jurisdiction_name_path: ['Canton Tha Luang', 'Tha Luang Village'],
   jurisdiction_parent_id: '2977',
@@ -81,7 +81,7 @@ export const completeRoutinePlan = {
 export const completeReactivePlan = {
   id: 'draftPlan-id-2',
   jurisdiction_depth: 43,
-  jurisdiction_id: '339956',
+  jurisdiction_id: '3391',
   jurisdiction_name: 'TLv1_02',
   jurisdiction_name_path: ['Canton Tha Luang', 'Tha Luang Village'],
   jurisdiction_parent_id: '2977',

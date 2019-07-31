@@ -118,7 +118,7 @@ exports[`containers/pages/IRS renders plans list correctly 1`] = `
           Object {
             "id": "draftPlan-id-2",
             "jurisdiction_depth": 41,
-            "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bbb",
+            "jurisdiction_id": "3380",
             "jurisdiction_name": "TLv1_02",
             "jurisdiction_name_path": Array [
               "Canton Tha Luang",
@@ -233,7 +233,7 @@ exports[`containers/pages/IRS renders plans list correctly 1`] = `
             Object {
               "id": "draftPlan-id-2",
               "jurisdiction_depth": 41,
-              "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bbb",
+              "jurisdiction_id": "3380",
               "jurisdiction_name": "TLv1_02",
               "jurisdiction_name_path": Array [
                 "Canton Tha Luang",
@@ -446,7 +446,7 @@ exports[`containers/pages/IRS renders plans list correctly 1`] = `
                 Object {
                   "id": "draftPlan-id-2",
                   "jurisdiction_depth": 41,
-                  "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bbb",
+                  "jurisdiction_id": "3380",
                   "jurisdiction_name": "TLv1_02",
                   "jurisdiction_name_path": Array [
                     "Canton Tha Luang",
@@ -625,7 +625,7 @@ exports[`containers/pages/IRS renders plans list correctly 1`] = `
                   Object {
                     "id": "draftPlan-id-2",
                     "jurisdiction_depth": 41,
-                    "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bbb",
+                    "jurisdiction_id": "3380",
                     "jurisdiction_name": "TLv1_02",
                     "jurisdiction_name_path": Array [
                       "Canton Tha Luang",
@@ -1641,7 +1641,7 @@ exports[`containers/pages/IRS renders plans list correctly 1`] = `
                                         Object {
                                           "id": "draftPlan-id-2",
                                           "jurisdiction_depth": 41,
-                                          "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bbb",
+                                          "jurisdiction_id": "3380",
                                           "jurisdiction_name": "TLv1_02",
                                           "jurisdiction_name_path": Array [
                                             "Canton Tha Luang",
@@ -1674,7 +1674,7 @@ exports[`containers/pages/IRS renders plans list correctly 1`] = `
                                           "_original": Object {
                                             "id": "draftPlan-id-2",
                                             "jurisdiction_depth": 41,
-                                            "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bbb",
+                                            "jurisdiction_id": "3380",
                                             "jurisdiction_name": "TLv1_02",
                                             "jurisdiction_name_path": Array [
                                               "Canton Tha Luang",
