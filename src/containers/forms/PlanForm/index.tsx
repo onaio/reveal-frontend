@@ -440,6 +440,8 @@ const PlanForm = (props: PlanFormProps) => {
                               : 'form-control'
                           }
                           component={DatePickerWrapper}
+                          minDate={values.start}
+                          maxDate={values.end}
                         />
                         <ErrorMessage
                           name={`activities[${index}].timingPeriodStart`}
@@ -462,6 +464,7 @@ const PlanForm = (props: PlanFormProps) => {
                           }
                           component={DatePickerWrapper}
                           minDate={values.activities[index].timingPeriodStart}
+                          maxDate={values.end}
                         />
                         <ErrorMessage
                           name={`activities[${index}].timingPeriodEnd`}
