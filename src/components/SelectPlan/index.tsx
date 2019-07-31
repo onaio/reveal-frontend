@@ -1,6 +1,5 @@
-import PropTypes from 'prop-types';
 import * as React from 'react';
-import { Redirect, RouteComponentProps, withRouter } from 'react-router';
+import { RouteComponentProps, withRouter } from 'react-router';
 import Select from 'react-select';
 import { FI_SINGLE_MAP_URL } from '../../constants';
 import { Plan } from '../../store/ducks/plans';
@@ -9,14 +8,15 @@ export interface SelectPlanProps extends RouteComponentProps {
   plansArray: Plan[];
 }
 class SelectPlan extends React.Component<SelectPlanProps, {}> {
-  public static contextTypes = {
-    router: PropTypes.object,
-  };
   constructor(props: SelectPlanProps) {
     super(props);
   }
   public change = (e: any) => {
-    this.context.router.history.push(`${FI_SINGLE_MAP_URL}/${e.value}`);
+    /** Dirty Mangy Hack */
+    this.props.history.push('/focus-investigation');
+    setTimeout(() => {
+      this.props.history.push(`${FI_SINGLE_MAP_URL}/${e.value}`);
+    }, 250);
   };
   public render() {
     const { plansArray } = this.props;
