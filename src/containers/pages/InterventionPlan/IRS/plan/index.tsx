@@ -695,15 +695,7 @@ class IrsPlan extends React.Component<
         <HeaderBreadcrumbs {...breadCrumbProps} />
         {planHeaderRow}
 
-        {this.state.isLoadingGeoms && (
-          <Row>
-            <Col>
-              <Loading />
-            </Col>
-          </Row>
-        )}
-
-        {gisidaWrapperProps && (
+        {gisidaWrapperProps ? (
           <Row>
             <Col>
               <div className="map irs-plan-map">
@@ -711,10 +703,12 @@ class IrsPlan extends React.Component<
               </div>
             </Col>
           </Row>
+        ) : (
+          <Loading />
         )}
 
         {/* Section for table of jurisdictions */}
-        {planTableProps && (
+        {planTableProps && planTableProps.data && planTableProps.data.length ? (
           <Row>
             <Col>
               <h3 className="table-title">{`${
@@ -724,6 +718,8 @@ class IrsPlan extends React.Component<
               {doRenderTable && <DrillDownTable {...planTableProps} />}
             </Col>
           </Row>
+        ) : (
+          <Loading />
         )}
       </div>
     );
