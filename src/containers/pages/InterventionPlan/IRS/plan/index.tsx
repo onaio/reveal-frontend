@@ -486,18 +486,20 @@ class IrsPlan extends React.Component<
     const onStartPlanFormSubmit = (e: any) => {
       this.onStartPlanFormSubmit(e);
     };
-
-    const irsCountryOptions = IRS_PLAN_COUNTRIES.map((c, i) => {
-      if (CountriesAdmin0[c as ADMN0_PCODE]) {
-        const country = CountriesAdmin0[c as ADMN0_PCODE];
-        return (
-          <option key={i} value={country.ADMN0_PCODE}>
-            {country.ADMN0_EN}
-          </option>
-        );
-      }
-      return false;
-    }).filter(o => o);
+    const countries = [...IRS_PLAN_COUNTRIES, 'Lop Buri', 'Lusaka'];
+    const irsCountryOptions = countries
+      .map((c, i) => {
+        if (CountriesAdmin0[c as ADMN0_PCODE]) {
+          const country = CountriesAdmin0[c as ADMN0_PCODE];
+          return (
+            <option key={i} value={country.ADMN0_PCODE}>
+              {country.ADMN0_EN}
+            </option>
+          );
+        }
+        return false;
+      })
+      .filter(o => o);
 
     if (isStartingPlan && newPlan) {
       const { plan_effective_period_end, plan_effective_period_start, plan_title } = newPlan;
@@ -1307,6 +1309,7 @@ class IrsPlan extends React.Component<
       const layers: FlexObject[] = [];
       const geoGraphicLevels: number[] = [];
       const layerIds: string[] = [];
+      const adminLayerIds: string[] = [];
       for (const j of jurisdictions) {
         const { geographic_level } = j;
         if (
@@ -1319,7 +1322,8 @@ class IrsPlan extends React.Component<
       geoGraphicLevels.sort();
       const jurisdictionFeatures: any[] = [];
 
-      for (const g of geoGraphicLevels) {
+      for (let i = 0; i < geoGraphicLevels.length; i += 1) {
+        const g = geoGraphicLevels[i];
         const featureCollection = {
           features: jurisdictions
             .filter(j => j.geographic_level === g)
@@ -1367,10 +1371,16 @@ class IrsPlan extends React.Component<
           visible: true,
         };
 
-        layerIds.push(layerId);
+        if (!tiles.length && !(i < geoGraphicLevels.length - 1)) {
+          layerIds.push(layerId);
+        } else {
+          adminLayerIds.push(layerId);
+        }
+
         layers.push(layer);
       }
       return {
+        JURISDICTION_ADMIN_LAYER_IDS: adminLayerIds,
         JURISDICTION_BOUNDS: GeojsonExtent({
           features: [...jurisdictionFeatures],
           type: 'FeatureCollection',
@@ -1381,14 +1391,19 @@ class IrsPlan extends React.Component<
     }
 
     const {
+      JURISDICTION_ADMIN_LAYER_IDS,
       JURISDICTION_BOUNDS,
       JURISDICTION_FILL_LAYERS,
       JURISDICTION_LAYER_IDS,
     } = getJurisdictionFillLayers(filteredJurisdictions, tilesets);
 
+    const onAdminFillClickLayerIds = tilesets.length
+      ? ADMIN_FILL_LAYER_IDS
+      : JURISDICTION_ADMIN_LAYER_IDS;
+
     const onAdminFillClickHandler: Handlers = {
       method: e => {
-        this.onAdminFillClick(e, country, [...ADMIN_FILL_LAYER_IDS].reverse(), [
+        this.onAdminFillClick(e, country, [...onAdminFillClickLayerIds].reverse(), [
           ...JURISDICTION_LAYER_IDS,
         ]);
       },
@@ -1451,11 +1466,15 @@ class IrsPlan extends React.Component<
     if (feature && country.tilesets) {
       const { geometry, layer, properties } = feature;
 
-      const clickedFeatureId = isJurisdictionLayer
-        ? properties.jurisdiction_id
-        : properties[country.tilesets[geographicLevel].idField];
+      const doUseTilesets = !!country.tilesets[geographicLevel];
+      const clickedFeatureId =
+        doUseTilesets && isJurisdictionLayer
+          ? properties[country.tilesets[geographicLevel].idField]
+          : properties.jurisdiction_id;
+
       const clickedFeatureJurisdiction = filteredJurisdictions.find(
-        j => j[isJurisdictionLayer ? 'jurisdiction_id' : 'name'] === clickedFeatureId
+        j =>
+          j[doUseTilesets && isJurisdictionLayer ? 'name' : 'jurisdiction_id'] === clickedFeatureId
       ) as Jurisdiction;
 
       if (clickedFeatureJurisdiction && !isShiftClick && !isJurisdictionLayer) {
@@ -1492,6 +1511,20 @@ class IrsPlan extends React.Component<
         } else {
           const decendantLayerId = `${country.ADMN0_EN}-admin-${geographicLevel +
             1}-jurisdiction-fill`;
+          if (!doUseTilesets) {
+            for (const adminLayer of adminLayerIds) {
+              if (Map.getLayer(adminLayer)) {
+                const layerFilter = Map.getFilter(adminLayer);
+                if (layerFilter) {
+                  layerFilter[2] = '';
+                  Map.setFilter(adminLayer, layerFilter);
+                } else {
+                  Map.setFilter(adminLayer, ['==', 'juisdiction_id', '']);
+                }
+              }
+            }
+          }
+
           // define childless decendant jurisdictions
           const decendantChildlessChildrenIds = this.getDecendantJurisdictionIds(
             [clickedFeatureJurisdiction.jurisdiction_id],
