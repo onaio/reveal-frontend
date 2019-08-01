@@ -1009,7 +1009,7 @@ class IrsPlan extends React.Component<
         const jurisdictions: Jurisdiction[] = [];
         // Loop through all parent_id results
         for (const Result of results) {
-          const result = Array.isArray(React) ? [...Result] : [{ ...Result }];
+          const result = Array.isArray(Result) ? [...Result] : [{ ...Result }];
           // Loop through all children of parent
           for (const geojson of result) {
             // If the child geojson needs to be loaded into state, do so
