@@ -1,5 +1,6 @@
 // this is the IRS Plan page component
 import { Actions } from 'gisida';
+import { keyBy } from 'lodash';
 import { EventData, LngLatBoundsLike } from 'mapbox-gl';
 import * as React from 'react';
 import { MouseEvent } from 'react';
@@ -67,6 +68,7 @@ import jurisdictionReducer, {
   fetchJurisdictions,
   getAllJurisdictionsIdArray,
   getJurisdictionsArray,
+  getJurisdictionsById,
   getJurisdictionsIdArray,
   Jurisdiction,
   reducerName as jurisdictionReducerName,
@@ -110,7 +112,7 @@ export interface IrsPlanProps {
   isDraftPlan?: boolean;
   isFinalizedPlan?: boolean;
   isNewPlan?: boolean;
-  jurisdictionsArray: Jurisdiction[];
+  jurisdictionsById: { [key: string]: Jurisdiction };
   loadedJurisdictionIds: string[];
   planById?: PlanRecord | null;
   planId: string | null;
@@ -126,7 +128,7 @@ export const defaultIrsPlanProps: IrsPlanProps = {
   isDraftPlan: false,
   isFinalizedPlan: false,
   isNewPlan: false,
-  jurisdictionsArray: [],
+  jurisdictionsById: {},
   loadedJurisdictionIds: [],
   planById: null,
   planId: null,
@@ -285,7 +287,7 @@ class IrsPlan extends React.Component<
 
     await supersetService(SUPERSET_JURISDICTIONS_DATA_SLICE, otherJurisdictionSupersetParams).then(
       (jurisdictionResults: FlexObject[] = []) => {
-        const jurisdictions: Jurisdiction[] = jurisdictionResults.map(j => {
+        const jurisdictionsArray: Jurisdiction[] = jurisdictionResults.map(j => {
           const { id, parent_id, name, geographic_level } = j;
           const jurisdiction: Jurisdiction = {
             geographic_level: geographic_level || 0,
@@ -302,14 +304,11 @@ class IrsPlan extends React.Component<
           this.props.planById.plan_jurisdictions_ids &&
           this.props.planById.plan_jurisdictions_ids.length
         ) {
-          const jurisdictionsById: { [key: string]: Jurisdiction } = {};
-          for (const j of jurisdictions) {
-            jurisdictionsById[j.jurisdiction_id] = j;
-          }
+          const jurisdictionsById = keyBy(jurisdictionsArray, j => j.jurisdiction_id);
 
           const ancestorIds = this.getAncestorJurisdictionIds(
             [...this.props.planById.plan_jurisdictions_ids],
-            jurisdictions
+            jurisdictionsArray
           );
           const parentlessParent = ancestorIds.find(
             a =>
@@ -333,7 +332,7 @@ class IrsPlan extends React.Component<
                     ? [country.jurisdictionId]
                     : [...country.jurisdictionIds];
                   const filteredJurisdictions = isDraftPlan
-                    ? this.getDecendantJurisdictionIds(countryIds, jurisdictions).map(
+                    ? this.getDecendantJurisdictionIds(countryIds, jurisdictionsById).map(
                         j => jurisdictionsById[j]
                       )
                     : ancestorIds.map(j => jurisdictionsById[j]);
@@ -384,7 +383,7 @@ class IrsPlan extends React.Component<
         } else {
           this.setState({ isLoadingJurisdictions: false });
         }
-        return fetchJurisdictionsActionCreator(jurisdictions);
+        return fetchJurisdictionsActionCreator(jurisdictionsArray);
       }
     );
   }
@@ -397,14 +396,12 @@ class IrsPlan extends React.Component<
       isLoadingJurisdictions,
       newPlan,
     } = this.state;
-    const { isNewPlan, isFinalizedPlan, jurisdictionsArray, planById } = nextProps;
+    const { isNewPlan, isFinalizedPlan, jurisdictionsById, planById } = nextProps;
 
     if (newPlan && childlessChildrenIds && country && isLoadingGeoms) {
-      const filteredJurisdictions = jurisdictionsArray.filter(
-        (j: Jurisdiction) => childlessChildrenIds.indexOf(j.jurisdiction_id) !== -1
-      );
-
+      const filteredJurisdictions = childlessChildrenIds.map(j => jurisdictionsById[j]);
       const loadedJurisdictions = filteredJurisdictions.filter((j: Jurisdiction) => j.geojson);
+
       if (loadedJurisdictions.length === filteredJurisdictions.length) {
         this.setState(
           {
@@ -425,7 +422,7 @@ class IrsPlan extends React.Component<
     if (
       !isFinalizedPlan &&
       isLoadingJurisdictions &&
-      jurisdictionsArray.length !== this.props.jurisdictionsArray.length
+      Object.keys(jurisdictionsById).length !== Object.keys(this.props.jurisdictionsById).length
     ) {
       this.setState({ isLoadingJurisdictions: false });
     }
@@ -768,9 +765,9 @@ class IrsPlan extends React.Component<
    * @param id - the jurisidction_id of the Jurisdiction clicked
    */
   private onDrilldownClick(id: string) {
-    const { tableCrumbs } = this.state;
-    const { jurisdictionsArray } = this.props;
-
+    const { tableCrumbs, filteredJurisdictionIds } = this.state;
+    const { jurisdictionsById } = this.props;
+    const jurisdictionsArray = filteredJurisdictionIds.map(j => jurisdictionsById[j]);
     let newCrumb: TableCrumb | null = null;
     for (const j of jurisdictionsArray) {
       if (j.jurisdiction_id === id) {
@@ -908,7 +905,7 @@ class IrsPlan extends React.Component<
    */
   private async onStartPlanFormSubmit(e: MouseEvent) {
     const { newPlan: NewPlan, planCountry } = this.state;
-    const { jurisdictionsArray, isDraftPlan } = this.props;
+    const { jurisdictionsById, isDraftPlan } = this.props;
     const country: JurisdictionsByCountry = CountriesAdmin0[planCountry as ADMN0_PCODE];
 
     if (!country || (!country.jurisdictionIds.length && !country.jurisdictionId.length)) {
@@ -921,15 +918,14 @@ class IrsPlan extends React.Component<
 
     const jurisdictionsToInclude = this.getDecendantJurisdictionIds(
       jurisdictionIds,
-      jurisdictionsArray
+      jurisdictionsById
     );
 
-    const filteredJurisdictions: Jurisdiction[] = jurisdictionsArray.filter(
-      (jurisdiction: Jurisdiction) =>
-        jurisdictionsToInclude.indexOf(jurisdiction.jurisdiction_id) !== -1
+    const filteredJurisdictions: Jurisdiction[] = jurisdictionsToInclude.map(
+      j => jurisdictionsById[j]
     );
-
     const filteredJurisdictionIds = filteredJurisdictions.map(j => j.jurisdiction_id);
+
     const childlessChildrenIds = this.getChildlessChildrenIds(filteredJurisdictions);
 
     const newPlan: PlanRecord | null = NewPlan
@@ -937,7 +933,7 @@ class IrsPlan extends React.Component<
           ...NewPlan,
           plan_jurisdictions_ids:
             isDraftPlan && NewPlan && NewPlan.plan_jurisdictions_ids
-              ? this.getAncestorJurisdictionIds(NewPlan.plan_jurisdictions_ids, jurisdictionsArray)
+              ? this.getAncestorJurisdictionIds(NewPlan.plan_jurisdictions_ids, jurisdictionsById)
               : [...jurisdictionsToInclude],
         }
       : NewPlan;
@@ -974,21 +970,14 @@ class IrsPlan extends React.Component<
       country,
       filteredJurisdictionIds,
     } = this.state;
+    const { jurisdictionsById } = this.props;
 
     const doLoadAllGeojson = country && country.tilesets && !country.tilesets.length;
     // Determine which Jurisdictions will need to be updated in state
-    const filteredJurisdictions = this.props.jurisdictionsArray.filter(j =>
-      filteredJurisdictionIds.includes(j.jurisdiction_id)
-    );
+    const filteredJurisdictions = filteredJurisdictionIds.map(j => jurisdictionsById[j]);
 
-    const filteredJurisdictionsById: { [key: string]: Jurisdiction } = {};
-    for (const j of filteredJurisdictions) {
-      filteredJurisdictionsById[j.jurisdiction_id] = j;
-    }
+    const childlessChildren = ChildlessChildrenIds.map(j => jurisdictionsById[j]);
 
-    const childlessChildren = filteredJurisdictions.filter(j =>
-      ChildlessChildrenIds.includes(j.jurisdiction_id)
-    );
     const loadedJurisdictionIds = childlessChildren
       .filter(j => !!j.geojson)
       .map(j => j.jurisdiction_id);
@@ -1042,7 +1031,7 @@ class IrsPlan extends React.Component<
           for (const geojson of result) {
             // If the child geojson needs to be loaded into state, do so
             if (doLoadAllGeojson || jurisdictionIdsToLoad.includes(geojson.id)) {
-              const J = filteredJurisdictionsById[geojson.id];
+              const J = jurisdictionsById[geojson.id];
               if (J) {
                 const j: Jurisdiction = {
                   ...J,
@@ -1067,14 +1056,18 @@ class IrsPlan extends React.Component<
    */
   private onToggleJurisdictionSelection(id: string) {
     const { newPlan: NewPlan, filteredJurisdictionIds } = this.state;
-    const filteredJurisdictions = this.props.jurisdictionsArray.filter(j =>
-      filteredJurisdictionIds.includes(j.jurisdiction_id)
-    );
+    const { jurisdictionsById } = this.props;
+
+    const filteredJurisdictions = filteredJurisdictionIds.map(j => jurisdictionsById[j]);
+    const filteredJurisdictionsById = keyBy(filteredJurisdictions, j => j.jurisdiction_id);
     if (NewPlan && NewPlan.plan_jurisdictions_ids && filteredJurisdictions.length) {
       const newPlanJurisdictionIds = [...NewPlan.plan_jurisdictions_ids];
 
       // define child jurisdictions of clicked jurisdiction
-      const jurisdictionIdsToToggle = this.getDecendantJurisdictionIds([id], filteredJurisdictions);
+      const jurisdictionIdsToToggle = this.getDecendantJurisdictionIds(
+        [id],
+        filteredJurisdictionsById
+      );
 
       // loop through all child jurisdictions
       for (const jurisdictionId of jurisdictionIdsToToggle) {
@@ -1105,9 +1098,9 @@ class IrsPlan extends React.Component<
   /** onToggleAllCheckboxChange - handler for de/select all Jurisdictions checkbox which updates component state */
   private onToggleAllCheckboxChange(e: any) {
     const { newPlan: NewPlan, filteredJurisdictionIds } = this.state;
-    const filteredJurisdictions = this.props.jurisdictionsArray.filter(j =>
-      filteredJurisdictionIds.includes(j.jurisdiction_id)
-    );
+    const { jurisdictionsById } = this.props;
+    const filteredJurisdictions = filteredJurisdictionIds.map(j => jurisdictionsById[j]);
+
     if (e && e.target && NewPlan) {
       const { checked: isSelected } = e.target;
       const newPlanJurisdictionIds: string[] = isSelected
@@ -1143,13 +1136,13 @@ class IrsPlan extends React.Component<
   }
   /** getDecendantJurisdictionIds - hierarchy util to get all decendants of certain Jurisdictions
    * @param ParentIds - jurisdiction_ids of the parent jurisdictions for which to find decendants
-   * @param jurisdictionsArray - list Jurisdictions through which to search for decendants
+   * @param jurisdictionsById - list Jurisdictions through which to search for decendants
    * @param doIncludeParentIds - boolean to determine whether or not to include ParentId strings in returned list
    * @returns list of jurisdiction_ids of all decendants
    */
   private getDecendantJurisdictionIds(
     ParentIds: string[],
-    jurisdictionsArray: Jurisdiction[],
+    jurisdictionsById: { [key: string]: Jurisdiction },
     doIncludeParentIds: boolean = true
   ): string[] {
     const decendantIds: string[] = [];
@@ -1160,10 +1153,10 @@ class IrsPlan extends React.Component<
       if (ParentIds.indexOf(parentId) === -1 || doIncludeParentIds) {
         decendantIds.push(parentId);
       }
-
-      for (const jurisdiction of jurisdictionsArray) {
-        if (jurisdiction.parent_id === parentId) {
-          parentIds.push(jurisdiction.jurisdiction_id);
+      const jurisdictionsKeys = Object.keys(jurisdictionsById);
+      for (const jurisdiction of jurisdictionsKeys) {
+        if (jurisdictionsById[jurisdiction].parent_id === parentId) {
+          parentIds.push(jurisdictionsById[jurisdiction].jurisdiction_id);
         }
       }
     }
@@ -1218,9 +1211,9 @@ class IrsPlan extends React.Component<
   /** getGisidaWrapperProps - GisidaWrapper prop builder building out layers and handlers for Gisida */
   private getGisidaWrapperProps(): GisidaProps | null {
     const { country, isLoadingGeoms, filteredJurisdictionIds } = this.state;
-    const filteredJurisdictions = this.props.jurisdictionsArray.filter(j =>
-      filteredJurisdictionIds.includes(j.jurisdiction_id)
-    );
+    const { jurisdictionsById } = this.props;
+    const filteredJurisdictions = filteredJurisdictionIds.map(j => jurisdictionsById[j]);
+
     if (!country || isLoadingGeoms) {
       return null;
     }
@@ -1444,9 +1437,9 @@ class IrsPlan extends React.Component<
     const isShiftClick = originalEvent.shiftKey;
     const isJurisdictionLayer = jurisdictionLayerIds.includes(feature.layer.id);
     const { filteredJurisdictionIds, childlessChildrenIds } = this.state;
-    const filteredJurisdictions = this.props.jurisdictionsArray.filter(j =>
-      filteredJurisdictionIds.includes(j.jurisdiction_id)
-    );
+    const { jurisdictionsById } = this.props;
+    const filteredJurisdictions = filteredJurisdictionIds.map(j => jurisdictionsById[j]);
+    const filteredJurisdictionsById = keyBy(filteredJurisdictions, j => j.jurisdiction_id);
 
     if (feature && country.tilesets) {
       const { geometry, layer, properties } = feature;
@@ -1495,7 +1488,7 @@ class IrsPlan extends React.Component<
           // define childless decendant jurisdictions
           const decendantChildlessChildrenIds = this.getDecendantJurisdictionIds(
             [clickedFeatureJurisdiction.jurisdiction_id],
-            filteredJurisdictions,
+            filteredJurisdictionsById,
             false
           );
           // update jurisdictions layer filter
@@ -1579,9 +1572,9 @@ class IrsPlan extends React.Component<
    */
   private getDrilldownPlanTableProps(state: IrsPlanState) {
     const { filteredJurisdictionIds, newPlan } = state;
-    const filteredJurisdictions = this.props.jurisdictionsArray.filter(j =>
-      filteredJurisdictionIds.includes(j.jurisdiction_id)
-    );
+    const { jurisdictionsById } = this.props;
+    const filteredJurisdictions = filteredJurisdictionIds.map(j => jurisdictionsById[j]);
+
     if (!newPlan || !newPlan.plan_jurisdictions_ids) {
       return null;
     }
@@ -1820,8 +1813,8 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
   const isDraftPlan = plan && plan.plan_status !== 'active';
   const isFinalizedPlan = plan && plan.plan_status === 'active';
 
+  const jurisdictionsById = getJurisdictionsById(state);
   const allJurisdictionIds = getAllJurisdictionsIdArray(state);
-  const jurisdictionsArray = getJurisdictionsArray(state);
   const loadedJurisdictionIds = getJurisdictionsIdArray(state);
 
   const props = {
@@ -1829,7 +1822,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
     isDraftPlan,
     isFinalizedPlan,
     isNewPlan,
-    jurisdictionsArray,
+    jurisdictionsById,
     loadedJurisdictionIds,
     planById: plan,
     planId,
