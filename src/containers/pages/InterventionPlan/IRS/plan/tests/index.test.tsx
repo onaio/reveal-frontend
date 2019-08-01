@@ -2,11 +2,9 @@ import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import { createBrowserHistory } from 'history';
 import React from 'react';
-import { Helmet } from 'react-helmet';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import { FI_SINGLE_URL } from '../../../../../../constants';
-import { IRS_PLAN_TITLE } from '../../../../../../constants';
 import store from '../../../../../../store';
 import * as fixtures from '../../../../../../store/ducks/tests/fixtures';
 
