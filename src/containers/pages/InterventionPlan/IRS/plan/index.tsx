@@ -1714,11 +1714,12 @@ class IrsPlan extends React.Component<
       const now = moment(new Date());
       const start = moment(newPlan.plan_effective_period_start);
       const end = moment(newPlan.plan_effective_period_end);
+      const format = DATE_FORMAT.toUpperCase();
       const newPlanDraft: PlanRecord = {
         ...newPlan,
-        plan_date: now.format('YYYY-MM-DD'),
-        plan_effective_period_end: end.format('YYYY-MM-DD'),
-        plan_effective_period_start: start.format('YYYY-MM-DD'),
+        plan_date: now.format(format),
+        plan_effective_period_end: end.format(format),
+        plan_effective_period_start: start.format(format),
         plan_jurisdictions_ids: newPlan.plan_jurisdictions_ids.filter(j =>
           childlessChildrenIds.includes(j)
         ),
