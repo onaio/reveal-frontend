@@ -312,7 +312,10 @@ class IrsPlan extends React.Component<
             jurisdictions
           );
           const parentlessParent = ancestorIds.find(
-            a => jurisdictionsById[a] && !jurisdictionsById[a].parent_id
+            a =>
+              jurisdictionsById[a] &&
+              !jurisdictionsById[a].parent_id &&
+              !jurisdictionsById[a].geographic_level
           );
           if (parentlessParent) {
             OpenSrpLocationService.read(parentlessParent, {
@@ -372,6 +375,8 @@ class IrsPlan extends React.Component<
                       }
                     }
                   );
+                } else {
+                  // handle country not found
                 }
               }
             });
@@ -703,8 +708,10 @@ class IrsPlan extends React.Component<
               </div>
             </Col>
           </Row>
-        ) : (
+        ) : !isFinalizedPlan ? (
           <Loading />
+        ) : (
+          ''
         )}
 
         {/* Section for table of jurisdictions */}
