@@ -3,6 +3,7 @@ import { faExternalLinkSquareAlt } from '@fortawesome/free-solid-svg-icons';
 import superset from '@onaio/superset-connector';
 import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
+import flushPromises from 'flush-promises';
 import { createBrowserHistory } from 'history';
 import React from 'react';
 import { Helmet } from 'react-helmet';
@@ -31,6 +32,7 @@ describe('containers/pages/SingleFI', () => {
 
   it('renders without crashing', () => {
     const mock: any = jest.fn();
+    const supersetServiceMock: any = jest.fn(async () => []);
     const props = {
       completeReactivePlansArray: [fixtures.completeReactivePlan],
       completeRoutinePlansArray: [fixtures.completeRoutinePlan],
@@ -48,6 +50,7 @@ describe('containers/pages/SingleFI', () => {
       },
       planById: fixtures.plan1 as Plan,
       plansIdArray: fixtures.plansIdArray,
+      supersetService: supersetServiceMock,
     };
     shallow(
       <Router history={history}>
@@ -140,6 +143,7 @@ describe('containers/pages/SingleFI', () => {
     store.dispatch(fetchPlans(fixtures.plans as Plan[]));
     store.dispatch(fetchGoals(fixtures.goals));
     store.dispatch(fetchJurisdictions(fixtures.jurisdictions));
+    const supersetServiceMock: any = jest.fn(async () => []);
     const props = {
       completeReactivePlansArray: [fixtures.completeReactivePlan],
       completeRoutinePlansArray: [fixtures.completeRoutinePlan],
@@ -173,9 +177,10 @@ describe('containers/pages/SingleFI', () => {
   });
 
   it('calls superset with the correct params', async () => {
+    const actualFormData = superset.getFormData;
     const getFormDataMock: any = jest.fn();
-    getFormDataMock.mockImplementation(() => {
-      return {};
+    getFormDataMock.mockImplementation((...args: any) => {
+      return actualFormData(...args);
     });
     superset.getFormData = getFormDataMock;
     const mock: any = jest.fn();
@@ -203,10 +208,46 @@ describe('containers/pages/SingleFI', () => {
         </Router>
       </Provider>
     );
-    // HACK: HACK: Force async code in componentDidMount to resolve
-    await Promise.resolve();
-    await Promise.resolve();
-    await Promise.resolve();
+
+    const plansParams = {
+      adhoc_filters: [
+        {
+          clause: 'WHERE',
+          comparator: '10f9e9fa-ce34-4b27-a961-72fab5206ab6',
+          expressionType: 'SIMPLE',
+          operator: '==',
+          subject: 'plan_id',
+        },
+      ],
+      row_limit: 3000,
+    };
+    const goalsParams = {
+      adhoc_filters: [
+        {
+          clause: 'WHERE',
+          comparator: '10f9e9fa-ce34-4b27-a961-72fab5206ab6',
+          expressionType: 'SIMPLE',
+          operator: '==',
+          subject: 'plan_id',
+        },
+      ],
+      order_by_cols: ['["action_prefix",+true]'],
+      row_limit: 3000,
+    };
+    const jurisdictionParams = {
+      adhoc_filters: [
+        {
+          clause: 'WHERE',
+          comparator: '450fc15b-5bd2-468a-927a-49cb10d3bcac',
+          expressionType: 'SIMPLE',
+          operator: '==',
+          subject: 'jurisdiction_id',
+        },
+      ],
+      row_limit: 3000,
+    };
+
+    await flushPromises();
     const getFormDataCallList = [
       [3000, [{ comparator: fixtures.plan1.plan_id, operator: '==', subject: 'plan_id' }]],
       [
@@ -225,9 +266,10 @@ describe('containers/pages/SingleFI', () => {
         ],
       ],
     ];
-    expect((superset.getFormData as any).mock.calls).toEqual(getFormDataCallList);
-    const callList = [[0, {}], [3, {}], [1, {}]];
+
+    const callList = [[0, plansParams], [3, goalsParams], [1, jurisdictionParams]];
     expect(supersetMock).toHaveBeenCalledTimes(3);
+    expect((superset.getFormData as any).mock.calls).toEqual(getFormDataCallList);
     expect(supersetMock.mock.calls).toEqual(callList);
     wrapper.unmount();
   });
