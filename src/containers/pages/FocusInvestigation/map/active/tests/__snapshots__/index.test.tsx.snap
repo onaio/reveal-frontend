@@ -369,11 +369,7 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
       [MockFunction] {
         "calls": Array [
           Array [
-<<<<<<< HEAD
-            undefined,
-=======
             1,
->>>>>>> Test getformData receives and results in correct data in mapFI
             Object {
               "adhoc_filters": Array [
                 Object {
@@ -2697,11 +2693,7 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store (g
         [MockFunction] {
           "calls": Array [
             Array [
-<<<<<<< HEAD
-              undefined,
-=======
               1,
->>>>>>> Test getformData receives and results in correct data in mapFI
               Object {
                 "adhoc_filters": Array [
                   Object {
@@ -2951,11 +2943,7 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store (g
           [MockFunction] {
             "calls": Array [
               Array [
-<<<<<<< HEAD
-                undefined,
-=======
                 1,
->>>>>>> Test getformData receives and results in correct data in mapFI
                 Object {
                   "adhoc_filters": Array [
                     Object {

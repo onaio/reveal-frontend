@@ -302,17 +302,10 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
                 "adhoc_filters": Array [
                   Object {
                     "clause": "WHERE",
-<<<<<<< HEAD
                     "comparator": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
                     "expressionType": "SIMPLE",
                     "operator": "==",
                     "subject": "jurisdiction_id",
-=======
-                    "comparator": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
-                    "expressionType": "SIMPLE",
-                    "operator": "==",
-                    "subject": "plan_id",
->>>>>>> Test getformData receives and results in correct data in singleFI
                   },
                 ],
                 "row_limit": 3000,
@@ -611,17 +604,10 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
                   "adhoc_filters": Array [
                     Object {
                       "clause": "WHERE",
-<<<<<<< HEAD
                       "comparator": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
                       "expressionType": "SIMPLE",
                       "operator": "==",
                       "subject": "jurisdiction_id",
-=======
-                      "comparator": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
-                      "expressionType": "SIMPLE",
-                      "operator": "==",
-                      "subject": "plan_id",
->>>>>>> Test getformData receives and results in correct data in singleFI
                     },
                   ],
                   "row_limit": 3000,
@@ -5764,10 +5750,6 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
                   "expressionType": "SIMPLE",
                   "operator": "==",
                   "subject": "jurisdiction_id",
-                  "comparator": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
-                  "expressionType": "SIMPLE",
-                  "operator": "==",
-                  "subject": "plan_id",
                 },
               ],
               "row_limit": 3000,

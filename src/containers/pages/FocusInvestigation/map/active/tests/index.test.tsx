@@ -13,7 +13,6 @@ import store from '../../../../../../store';
 import { fetchGoals } from '../../../../../../store/ducks/goals';
 import { fetchJurisdictions } from '../../../../../../store/ducks/jurisdictions';
 import { fetchPlans, Plan } from '../../../../../../store/ducks/plans';
-import { setStructures } from '../../../../../../store/ducks/structures';
 import { fetchTasks } from '../../../../../../store/ducks/tasks';
 import * as fixtures from '../../../../../../store/ducks/tests/fixtures';
 import ConnectedMapSingleFI, { SingleActiveFIMap } from '../../active/';
@@ -98,8 +97,6 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
     store.dispatch(fetchJurisdictions([fixtures.jurisdictions[0]]));
     store.dispatch(fetchPlans([fixtures.plan1 as Plan]));
     store.dispatch(fetchTasks(fixtures.tasks));
-    const supersetServiceMock: any = jest.fn();
-    supersetServiceMock.mockImplementation(async () => []);
     const props = {
       currentGoal: fixtures.goal3,
       history,
@@ -219,7 +216,7 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
     const callList = [
       [1, jurisdictionParams],
       [2, jurisdictionParams],
-      [0, supersetParams],
+      [0, jurisdictionParams],
       [3, goalParams],
       [4, supersetParams],
     ];

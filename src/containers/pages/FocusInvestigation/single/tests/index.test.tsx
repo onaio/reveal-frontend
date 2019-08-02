@@ -139,7 +139,6 @@ describe('containers/pages/SingleFI', () => {
 
   it('It works with the Redux store', () => {
     const mock: any = jest.fn();
-    const supersetServiceMock: any = jest.fn(async () => []);
     store.dispatch(fetchPlans(fixtures.plans as Plan[]));
     store.dispatch(fetchGoals(fixtures.goals));
     store.dispatch(fetchJurisdictions(fixtures.jurisdictions));
@@ -209,18 +208,6 @@ describe('containers/pages/SingleFI', () => {
       </Provider>
     );
 
-    const plansParams = {
-      adhoc_filters: [
-        {
-          clause: 'WHERE',
-          comparator: '10f9e9fa-ce34-4b27-a961-72fab5206ab6',
-          expressionType: 'SIMPLE',
-          operator: '==',
-          subject: 'plan_id',
-        },
-      ],
-      row_limit: 3000,
-    };
     const goalsParams = {
       adhoc_filters: [
         {
@@ -267,7 +254,7 @@ describe('containers/pages/SingleFI', () => {
       ],
     ];
 
-    const callList = [[0, plansParams], [3, goalsParams], [1, jurisdictionParams]];
+    const callList = [[0, jurisdictionParams], [3, goalsParams], [1, jurisdictionParams]];
     expect(supersetMock).toHaveBeenCalledTimes(3);
     expect((superset.getFormData as any).mock.calls).toEqual(getFormDataCallList);
     expect(supersetMock.mock.calls).toEqual(callList);
