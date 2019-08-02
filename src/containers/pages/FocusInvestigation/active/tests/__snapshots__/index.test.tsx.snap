@@ -2457,7 +2457,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                 <div
                   className="col-6"
                 >
-                  <LinkToNewPlans>
+                  <LinkToNewPlans
+                    classProp="focus-investigation btn btn-primary float-right mt-5"
+                  >
                     <Link
                       className="focus-investigation btn btn-primary float-right mt-5"
                       replace={false}
@@ -7242,7 +7244,9 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                 <div
                   className="col-6"
                 >
-                  <LinkToNewPlans>
+                  <LinkToNewPlans
+                    classProp="focus-investigation btn btn-primary float-right mt-5"
+                  >
                     <Link
                       className="focus-investigation btn btn-primary float-right mt-5"
                       replace={false}

@@ -1070,7 +1070,9 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
                       <div
                         className="col-6"
                       >
-                        <LinkToNewPlans>
+                        <LinkToNewPlans
+                          classProp="focus-investigation btn btn-primary float-right mt-5"
+                        >
                           <Link
                             className="focus-investigation btn btn-primary float-right mt-5"
                             replace={false}
@@ -7245,7 +7247,9 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
                   <div
                     className="col-6"
                   >
-                    <LinkToNewPlans>
+                    <LinkToNewPlans
+                      classProp="focus-investigation btn btn-primary float-right mt-5"
+                    >
                       <Link
                         className="focus-investigation btn btn-primary float-right mt-5"
                         replace={false}
@@ -10683,7 +10687,9 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
                   <div
                     className="col-6"
                   >
-                    <LinkToNewPlans>
+                    <LinkToNewPlans
+                      classProp="focus-investigation btn btn-primary float-right mt-5"
+                    >
                       <Link
                         className="focus-investigation btn btn-primary float-right mt-5"
                         replace={false}
