@@ -1070,19 +1070,21 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
                       <div
                         className="col-6"
                       >
-                        <Link
-                          className="focus-investigation btn btn-primary float-right mt-5"
-                          replace={false}
-                          to="/plans/new"
-                        >
-                          <a
+                        <LinkToNewPlans>
+                          <Link
                             className="focus-investigation btn btn-primary float-right mt-5"
-                            href="/plans/new"
-                            onClick={[Function]}
+                            replace={false}
+                            to="/plans/new"
                           >
-                            Add Focus Investigation
-                          </a>
-                        </Link>
+                            <a
+                              className="focus-investigation btn btn-primary float-right mt-5"
+                              href="/plans/new"
+                              onClick={[Function]}
+                            >
+                              Add Focus Investigation
+                            </a>
+                          </Link>
+                        </LinkToNewPlans>
                       </div>
                     </Col>
                   </div>
@@ -7243,19 +7245,21 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
                   <div
                     className="col-6"
                   >
-                    <Link
-                      className="focus-investigation btn btn-primary float-right mt-5"
-                      replace={false}
-                      to="/plans/new"
-                    >
-                      <a
+                    <LinkToNewPlans>
+                      <Link
                         className="focus-investigation btn btn-primary float-right mt-5"
-                        href="/plans/new"
-                        onClick={[Function]}
+                        replace={false}
+                        to="/plans/new"
                       >
-                        Add Focus Investigation
-                      </a>
-                    </Link>
+                        <a
+                          className="focus-investigation btn btn-primary float-right mt-5"
+                          href="/plans/new"
+                          onClick={[Function]}
+                        >
+                          Add Focus Investigation
+                        </a>
+                      </Link>
+                    </LinkToNewPlans>
                   </div>
                 </Col>
               </div>
@@ -10679,19 +10683,21 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
                   <div
                     className="col-6"
                   >
-                    <Link
-                      className="focus-investigation btn btn-primary float-right mt-5"
-                      replace={false}
-                      to="/plans/new"
-                    >
-                      <a
+                    <LinkToNewPlans>
+                      <Link
                         className="focus-investigation btn btn-primary float-right mt-5"
-                        href="/plans/new"
-                        onClick={[Function]}
+                        replace={false}
+                        to="/plans/new"
                       >
-                        Add Focus Investigation
-                      </a>
-                    </Link>
+                        <a
+                          className="focus-investigation btn btn-primary float-right mt-5"
+                          href="/plans/new"
+                          onClick={[Function]}
+                        >
+                          Add Focus Investigation
+                        </a>
+                      </Link>
+                    </LinkToNewPlans>
                   </div>
                 </Col>
               </div>
