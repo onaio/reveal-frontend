@@ -2,10 +2,12 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { NEW_PLAN_URL } from '../../constants';
 
+/** interface for LinkToNewPlans component */
 export interface Props {
   classProp: string;
 }
 
+/** LinkToNewPlans component */
 const LinkToNewPlans = (props: Props) => {
   return (
     <Link to={NEW_PLAN_URL} className={props.classProp}>
