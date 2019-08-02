@@ -151,6 +151,9 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
           },
         ]
       }
+      fetchGoalsActionCreator={[MockFunction]}
+      fetchJurisdictionActionCreator={[MockFunction]}
+      fetchPlansActionCreator={[MockFunction]}
       history={
         Object {
           "action": "POP",
@@ -290,6 +293,33 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
           "url": "/focus-investigation/view/16",
         }
       }
+      supersetService={
+        [MockFunction] {
+          "calls": Array [
+            Array [
+              0,
+              Object {
+                "adhoc_filters": Array [
+                  Object {
+                    "clause": "WHERE",
+                    "comparator": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
+                    "expressionType": "SIMPLE",
+                    "operator": "==",
+                    "subject": "jurisdiction_id",
+                  },
+                ],
+                "row_limit": 3000,
+              },
+            ],
+          ],
+          "results": Array [
+            Object {
+              "isThrow": false,
+              "value": Promise {},
+            },
+          ],
+        }
+      }
     >
       <SingleFI
         completeReactivePlansArray={Array []}
@@ -325,6 +355,7 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
           ]
         }
         fetchGoalsActionCreator={[Function]}
+        fetchJurisdictionActionCreator={[MockFunction]}
         fetchJurisdictionsActionCreator={[Function]}
         fetchPlansActionCreator={[Function]}
         goalsArray={
@@ -564,7 +595,33 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
             "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
           ]
         }
-        supersetService={[Function]}
+        supersetService={
+          [MockFunction] {
+            "calls": Array [
+              Array [
+                0,
+                Object {
+                  "adhoc_filters": Array [
+                    Object {
+                      "clause": "WHERE",
+                      "comparator": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
+                      "expressionType": "SIMPLE",
+                      "operator": "==",
+                      "subject": "jurisdiction_id",
+                    },
+                  ],
+                  "row_limit": 3000,
+                },
+              ],
+            ],
+            "results": Array [
+              Object {
+                "isThrow": false,
+                "value": Promise {},
+              },
+            ],
+          }
+        }
       >
         <div
           className="mb-5"
@@ -5467,9 +5524,10 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
         },
       ]
     }
-    fetchGoalsActionCreator={[Function]}
+    fetchGoalsActionCreator={[MockFunction]}
+    fetchJurisdictionActionCreator={[MockFunction]}
     fetchJurisdictionsActionCreator={[Function]}
-    fetchPlansActionCreator={[Function]}
+    fetchPlansActionCreator={[MockFunction]}
     goalsArray={
       Array [
         Object {
