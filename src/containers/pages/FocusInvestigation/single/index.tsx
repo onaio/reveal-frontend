@@ -163,7 +163,7 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
       await supersetService(SUPERSET_GOALS_SLICE, goalsParams).then((result2: Goal[]) =>
         fetchGoalsActionCreator(result2)
       );
-      await supersetFetch(SUPERSET_JURISDICTIONS_SLICE, jurisdictionsParams).then(
+      await supersetService(SUPERSET_JURISDICTIONS_SLICE, jurisdictionsParams).then(
         (result: Jurisdiction[]) => fetchJurisdictionsActionCreator(result)
       );
     }

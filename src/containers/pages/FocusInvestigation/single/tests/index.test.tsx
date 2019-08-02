@@ -58,8 +58,7 @@ describe('containers/pages/SingleFI', () => {
 
   it('renders SingleFI correctly', () => {
     const mock: any = jest.fn();
-    const supersetMock: any = jest.fn();
-    supersetMock.mockImplementation(() => Promise.resolve(fixtures.plans));
+    const supersetServiceMock: any = jest.fn(async () => []);
     const props = {
       completeReactivePlansArray: [fixtures.completeReactivePlan],
       completeRoutinePlansArray: [fixtures.completeRoutinePlan],
@@ -77,7 +76,11 @@ describe('containers/pages/SingleFI', () => {
       },
       planById: fixtures.plan1 as Plan,
       plansIdArray: fixtures.plansIdArray,
-      supersetService: supersetMock,
+      supersetService: supersetServiceMock,
+      // tslint:disable-next-line: object-literal-sort-keys
+      fetchPlansActionCreator: jest.fn(),
+      fetchGoalsActionCreator: jest.fn(),
+      fetchJurisdictionActionCreator: jest.fn(),
     };
     const wrapper = mount(
       <Router history={history}>
@@ -96,8 +99,7 @@ describe('containers/pages/SingleFI', () => {
 
   it('renders SingleFI correctly for null plan jurisdction id', () => {
     const mock: any = jest.fn();
-    const supersetMock: any = jest.fn();
-    supersetMock.mockImplementation(() => Promise.resolve(fixtures.plan5));
+    const supersetServiceMock: any = jest.fn(async () => []);
     const props = {
       completeReactivePlansArray: [],
       completeRoutinePlansArray: [],
@@ -116,7 +118,11 @@ describe('containers/pages/SingleFI', () => {
       planById: fixtures.plan5,
       plansArray: [fixtures.plan5],
       plansIdArray: [fixtures.plan5.id],
-      supersetService: supersetMock,
+      supersetService: supersetServiceMock,
+      // tslint:disable-next-line: object-literal-sort-keys
+      fetchPlansActionCreator: jest.fn(),
+      fetchGoalsActionCreator: jest.fn(),
+      fetchJurisdictionActionCreator: jest.fn(),
     };
     const wrapper = mount(
       <Router history={history}>
@@ -130,6 +136,7 @@ describe('containers/pages/SingleFI', () => {
 
   it('It works with the Redux store', () => {
     const mock: any = jest.fn();
+    const supersetServiceMock: any = jest.fn(async () => []);
     store.dispatch(fetchPlans(fixtures.plans as Plan[]));
     store.dispatch(fetchGoals(fixtures.goals));
     store.dispatch(fetchJurisdictions(fixtures.jurisdictions));
@@ -147,6 +154,11 @@ describe('containers/pages/SingleFI', () => {
         path: `${FI_SINGLE_URL}/:id`,
         url: `${FI_SINGLE_URL}/16`,
       },
+      supersetService: supersetServiceMock,
+      // tslint:disable-next-line: object-literal-sort-keys
+      fetchPlansActionCreator: jest.fn(),
+      fetchGoalsActionCreator: jest.fn(),
+      fetchJurisdictionActionCreator: jest.fn(),
     };
     const wrapper = mount(
       <Provider store={store}>
