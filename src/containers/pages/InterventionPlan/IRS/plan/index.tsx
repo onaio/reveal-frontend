@@ -1068,7 +1068,7 @@ class IrsPlan extends React.Component<
     if (NewPlan && NewPlan.plan_jurisdictions_ids && filteredJurisdictions.length) {
       const newPlanJurisdictionIds = [...NewPlan.plan_jurisdictions_ids];
       const clickedFeatureJurisdiction = jurisdictionsById[id];
-
+      const doSelect = !newPlanJurisdictionIds.includes(id);
       // define child jurisdictions of clicked jurisdiction
       const jurisdictionIdsToToggle = this.getDecendantJurisdictionIds(
         [id],
@@ -1078,10 +1078,10 @@ class IrsPlan extends React.Component<
       // loop through all child jurisdictions
       for (const jurisdictionId of jurisdictionIdsToToggle) {
         // if checked and not in plan_jurisdictions_ids, add it
-        if (!newPlanJurisdictionIds.includes(jurisdictionId)) {
+        if (doSelect && !newPlanJurisdictionIds.includes(jurisdictionId)) {
           newPlanJurisdictionIds.push(jurisdictionId);
           // if not checked and in plan_jurisdictions_ids, remove it
-        } else {
+        } else if (!doSelect && newPlanJurisdictionIds.includes(jurisdictionId)) {
           newPlanJurisdictionIds.splice(newPlanJurisdictionIds.indexOf(jurisdictionId), 1);
         }
       }
