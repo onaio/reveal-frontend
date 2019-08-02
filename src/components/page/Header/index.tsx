@@ -29,7 +29,7 @@ import {
   LOGIN_URL,
   LOGOUT_URL,
 } from '../../../constants';
-import './Header.css';
+import './index.css';
 
 /** interface for Header state */
 interface State {
