@@ -1,3 +1,4 @@
+import superset from '@onaio/superset-connector/dist/types';
 import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import { createBrowserHistory } from 'history';
@@ -57,6 +58,7 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
 
   it('renders SingleActiveFimap correctly & changes page title', () => {
     const mock: any = jest.fn();
+    const supersetServiceMock: any = jest.fn(async () => []);
     const props = {
       currentGoal: fixtures.goal3.goal_id,
       goals: [fixtures.goal3],
@@ -73,6 +75,7 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
       pointFeatureCollection: wrapFeatureCollection([fixtures.coloredTasks.task3.geojson]),
       polygonFeatureCollection: wrapFeatureCollection([fixtures.coloredTasks.task2.geojson]),
       structures: wrapFeatureCollection([fixtures.structure1.geojson]),
+      supersetService: supersetServiceMock,
     };
     const wrapper = mount(
       <Router history={history}>
@@ -88,6 +91,7 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
 
   it('works with redux store (gisidawrapper component that loads jurisdiction without structures and tasks)', () => {
     const mock: any = jest.fn();
+    const supersetServiceMock: any = jest.fn(async () => []);
     store.dispatch(fetchGoals([fixtures.goal3]));
     store.dispatch(fetchJurisdictions([fixtures.jurisdictions[0]]));
     store.dispatch(fetchPlans([fixtures.plan1 as Plan]));
@@ -104,6 +108,7 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
       },
       pointFeatureCollection: wrapFeatureCollection([fixtures.coloredTasks.task3.geojson]),
       polygonFeatureCollection: wrapFeatureCollection([fixtures.coloredTasks.task2.geojson]),
+      supersetService: supersetServiceMock,
     };
     const wrapper = mount(
       <Provider store={store}>

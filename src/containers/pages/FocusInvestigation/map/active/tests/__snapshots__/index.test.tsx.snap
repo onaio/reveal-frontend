@@ -365,6 +365,33 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
         "type": "FeatureCollection",
       }
     }
+    supersetService={
+      [MockFunction] {
+        "calls": Array [
+          Array [
+            undefined,
+            Object {
+              "adhoc_filters": Array [
+                Object {
+                  "clause": "WHERE",
+                  "comparator": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
+                  "expressionType": "SIMPLE",
+                  "operator": "==",
+                  "subject": "jurisdiction_id",
+                },
+              ],
+              "row_limit": 3000,
+            },
+          ],
+        ],
+        "results": Array [
+          Object {
+            "isThrow": false,
+            "value": Promise {},
+          },
+        ],
+      }
+    }
   >
     <div>
       <HelmetWrapper
@@ -2662,6 +2689,33 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store (g
           "type": "FeatureCollection",
         }
       }
+      supersetService={
+        [MockFunction] {
+          "calls": Array [
+            Array [
+              undefined,
+              Object {
+                "adhoc_filters": Array [
+                  Object {
+                    "clause": "WHERE",
+                    "comparator": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
+                    "expressionType": "SIMPLE",
+                    "operator": "==",
+                    "subject": "jurisdiction_id",
+                  },
+                ],
+                "row_limit": 3000,
+              },
+            ],
+          ],
+          "results": Array [
+            Object {
+              "isThrow": false,
+              "value": Promise {},
+            },
+          ],
+        }
+      }
     >
       <SingleActiveFIMap
         currentGoal={null}
@@ -2885,6 +2939,33 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store (g
         }
         setCurrentGoalActionCreator={[Function]}
         structures={null}
+        supersetService={
+          [MockFunction] {
+            "calls": Array [
+              Array [
+                undefined,
+                Object {
+                  "adhoc_filters": Array [
+                    Object {
+                      "clause": "WHERE",
+                      "comparator": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
+                      "expressionType": "SIMPLE",
+                      "operator": "==",
+                      "subject": "jurisdiction_id",
+                    },
+                  ],
+                  "row_limit": 3000,
+                },
+              ],
+            ],
+            "results": Array [
+              Object {
+                "isThrow": false,
+                "value": Promise {},
+              },
+            ],
+          }
+        }
       >
         <div>
           <HelmetWrapper
