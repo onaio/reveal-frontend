@@ -486,8 +486,11 @@ class IrsPlan extends React.Component<
     const onStartPlanFormSubmit = (e: any) => {
       this.onStartPlanFormSubmit(e);
     };
-    const countries = Object.keys(CountriesAdmin0);
-    const irsCountryOptions = countries
+
+    const irsCountryOptions = (IRS_PLAN_COUNTRIES.length
+      ? IRS_PLAN_COUNTRIES
+      : Object.keys(CountriesAdmin0)
+    )
       .map((c, i) => {
         if (CountriesAdmin0[c as ADMN0_PCODE]) {
           const country = CountriesAdmin0[c as ADMN0_PCODE];
