@@ -1,7 +1,8 @@
 // this is the IRS Plan page component
-import { Actions } from 'gisida';
+import { Actions, GisidaMap } from 'gisida';
 import { keyBy } from 'lodash';
 import { EventData, LngLatBoundsLike } from 'mapbox-gl';
+import { Map as mbMap } from 'mapbox-gl';
 import moment from 'moment';
 import { MouseEvent } from 'react';
 import * as React from 'react';
@@ -1059,13 +1060,14 @@ class IrsPlan extends React.Component<
    * @param id - the jurisdiction_id of the Jurisdiction being toggled
    */
   private onToggleJurisdictionSelection(id: string) {
-    const { newPlan: NewPlan, filteredJurisdictionIds } = this.state;
+    const { newPlan: NewPlan, filteredJurisdictionIds, country } = this.state;
     const { jurisdictionsById } = this.props;
 
     const filteredJurisdictions = filteredJurisdictionIds.map(j => jurisdictionsById[j]);
     const filteredJurisdictionsById = keyBy(filteredJurisdictions, j => j.jurisdiction_id);
     if (NewPlan && NewPlan.plan_jurisdictions_ids && filteredJurisdictions.length) {
       const newPlanJurisdictionIds = [...NewPlan.plan_jurisdictions_ids];
+      const clickedFeatureJurisdiction = jurisdictionsById[id];
 
       // define child jurisdictions of clicked jurisdiction
       const jurisdictionIdsToToggle = this.getDecendantJurisdictionIds(
@@ -1081,6 +1083,45 @@ class IrsPlan extends React.Component<
           // if not checked and in plan_jurisdictions_ids, remove it
         } else {
           newPlanJurisdictionIds.splice(newPlanJurisdictionIds.indexOf(jurisdictionId), 1);
+        }
+      }
+
+      // loop through all geographic_levels
+      const geoGraphicLevels = this.getGeographicLevelsFromJurisdictions(filteredJurisdictions);
+      if (
+        typeof clickedFeatureJurisdiction.geographic_level !== 'undefined' &&
+        country &&
+        country.tilesets
+      ) {
+        const Map = window.maps.find((e: mbMap) => (e as GisidaMap)._container.id === MAP_ID);
+        for (
+          let g = clickedFeatureJurisdiction.geographic_level;
+          g < geoGraphicLevels.length;
+          g += 1
+        ) {
+          // Define stops per geographic_level
+          const jurisdictionsByLevelArray = filteredJurisdictions.filter(
+            j => j.geographic_level === g
+          );
+          const nextPaintStops = this.getJurisdictionSelectionStops(
+            newPlanJurisdictionIds,
+            jurisdictionsByLevelArray,
+            country.tilesets[g]
+          );
+          // Apply stops to the layer
+          if (Map && Map.getLayer(`${country.ADMN0_EN}-admin-${g}-fill`)) {
+            Map.setPaintProperty(
+              `${country.ADMN0_EN}-admin-${g}-fill`,
+              'fill-opacity',
+              nextPaintStops
+            );
+          } else if (Map && Map.getLayer(`${country.ADMN0_EN}-admin-${g}-jurisdiction-fill`)) {
+            Map.setPaintProperty(
+              `${country.ADMN0_EN}-admin-${g}-jurisdiction-fill`,
+              'fill-opacity',
+              nextPaintStops
+            );
+          }
         }
       }
 
@@ -1210,6 +1251,44 @@ class IrsPlan extends React.Component<
     }
 
     return Array.from(new Set(ancestorIds));
+  }
+
+  private getJurisdictionSelectionStops(
+    selectedIds: string[],
+    jurisdictions: Jurisdiction[],
+    tileset: FlexObject | undefined
+  ) {
+    const selectionStyle = {
+      default: 0.75,
+      property: (tileset && tileset.idField) || 'jurisdiction_id',
+      stops: [] as Array<[string, number]>,
+      type: 'categorical',
+    };
+    for (const j of jurisdictions) {
+      const key: string = tileset && tileset.idField && j.name ? j.name : j.jurisdiction_id;
+      const opacity = selectedIds.includes(j.jurisdiction_id) ? 0.75 : 0.3;
+      selectionStyle.stops.push([key, opacity]);
+    }
+    return selectionStyle;
+  }
+
+  /** getGeographicLevelsFromJurisdictions - utility to derive all geographic levels
+   * @param filteredJurisdictions - array of Jurisdictions relevant to the country
+   * @returns array of geographic levels as numbers
+   */
+  private getGeographicLevelsFromJurisdictions(filteredJurisdictions: Jurisdiction[]): number[] {
+    const geoGraphicLevels: number[] = [];
+    for (const j of filteredJurisdictions) {
+      const { geographic_level } = j;
+      if (
+        typeof geographic_level !== 'undefined' &&
+        geoGraphicLevels.indexOf(geographic_level) === -1
+      ) {
+        geoGraphicLevels.push(geographic_level);
+      }
+    }
+    geoGraphicLevels.sort();
+    return geoGraphicLevels;
   }
 
   /** getGisidaWrapperProps - GisidaWrapper prop builder building out layers and handlers for Gisida */
@@ -1366,7 +1445,7 @@ class IrsPlan extends React.Component<
           visible: true,
         };
 
-        if (!tiles.length && !(i < geoGraphicLevels.length - 1)) {
+        if (tiles.length || (!tiles.length && !(i < geoGraphicLevels.length - 1))) {
           layerIds.push(layerId);
         } else {
           adminLayerIds.unshift(layerId);
