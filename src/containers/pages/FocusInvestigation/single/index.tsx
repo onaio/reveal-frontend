@@ -14,7 +14,7 @@ import HeaderBreadcrumbs, {
   BreadCrumbProps,
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
-import NullDataTable from '../../../../components/Table/NullDataTable/nulldatatable';
+import NullDataTable from '../../../../components/Table/NullDataTable';
 import TableHeader from '../../../../components/Table/TableHeaders/tableheaders';
 import {
   SUPERSET_GOALS_SLICE,
