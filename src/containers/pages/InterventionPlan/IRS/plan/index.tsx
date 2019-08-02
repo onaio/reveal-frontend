@@ -1,8 +1,9 @@
 // this is the IRS Plan page component
 import { Actions } from 'gisida';
 import { EventData, LngLatBoundsLike } from 'mapbox-gl';
-import * as React from 'react';
+import moment from 'moment';
 import { MouseEvent } from 'react';
+import * as React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { Column } from 'react-table';
@@ -26,6 +27,7 @@ import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset from '@onaio/superset-connector';
 
 import {
+  DATE_FORMAT,
   IRS_PLAN_COUNTRIES,
   SUPERSET_JURISDICTIONS_DATA_SLICE,
   SUPERSET_JURISDICTIONS_SLICE,
@@ -1735,10 +1737,15 @@ class IrsPlan extends React.Component<
   private onSavePlanButtonClick(e: MouseEvent, isFinal: boolean = false) {
     const { newPlan, childlessChildrenIds } = this.state;
     if (newPlan && newPlan.plan_jurisdictions_ids) {
-      const now = new Date();
+      const now = moment(new Date());
+      const start = moment(newPlan.plan_effective_period_start);
+      const end = moment(newPlan.plan_effective_period_end);
+      const format = DATE_FORMAT.toUpperCase();
       const newPlanDraft: PlanRecord = {
         ...newPlan,
-        plan_date: `${now.getFullYear()}-${now.getMonth()}-${now.getDate()}`,
+        plan_date: now.format(format),
+        plan_effective_period_end: end.format(format),
+        plan_effective_period_start: start.format(format),
         plan_jurisdictions_ids: newPlan.plan_jurisdictions_ids.filter(j =>
           childlessChildrenIds.includes(j)
         ),
