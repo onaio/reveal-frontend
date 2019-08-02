@@ -1463,13 +1463,13 @@ class IrsPlan extends React.Component<
 
       const doUseTilesets = !!country.tilesets[geographicLevel];
       const clickedFeatureId =
-        doUseTilesets && isJurisdictionLayer
+        doUseTilesets && !isJurisdictionLayer
           ? properties[country.tilesets[geographicLevel].idField]
           : properties.jurisdiction_id;
 
       const clickedFeatureJurisdiction = filteredJurisdictions.find(
         j =>
-          j[doUseTilesets && isJurisdictionLayer ? 'name' : 'jurisdiction_id'] === clickedFeatureId
+          j[doUseTilesets && !isJurisdictionLayer ? 'name' : 'jurisdiction_id'] === clickedFeatureId
       ) as Jurisdiction;
 
       if (clickedFeatureJurisdiction && !isShiftClick && !isJurisdictionLayer) {
