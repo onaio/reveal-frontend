@@ -486,7 +486,7 @@ class IrsPlan extends React.Component<
     const onStartPlanFormSubmit = (e: any) => {
       this.onStartPlanFormSubmit(e);
     };
-    const countries = [...IRS_PLAN_COUNTRIES, 'Lop Buri', 'Lusaka'];
+    const countries = Object.keys(CountriesAdmin0);
     const irsCountryOptions = countries
       .map((c, i) => {
         if (CountriesAdmin0[c as ADMN0_PCODE]) {
@@ -1322,7 +1322,7 @@ class IrsPlan extends React.Component<
       geoGraphicLevels.sort();
       const jurisdictionFeatures: any[] = [];
 
-      for (let i = 0; i < geoGraphicLevels.length; i += 1) {
+      for (let i = 1; i < geoGraphicLevels.length; i += 1) {
         const g = geoGraphicLevels[i];
         const featureCollection = {
           features: jurisdictions
@@ -1352,7 +1352,7 @@ class IrsPlan extends React.Component<
         const layerId = `${ADMN0_EN}-admin-${g}-jurisdiction-fill`;
         const layer = {
           ...fillLayerConfig,
-          filter: tiles.length ? ['==', 'parentId', ''] : null,
+          filter: g !== 1 ? ['==', 'parentId', ''] : null,
           id: layerId,
           paint: {
             'fill-color': adminLayerColors[g],
@@ -1374,10 +1374,10 @@ class IrsPlan extends React.Component<
         if (!tiles.length && !(i < geoGraphicLevels.length - 1)) {
           layerIds.push(layerId);
         } else {
-          adminLayerIds.push(layerId);
+          adminLayerIds.unshift(layerId);
         }
 
-        layers.push(layer);
+        layers.unshift(layer);
       }
       return {
         JURISDICTION_ADMIN_LAYER_IDS: adminLayerIds,
@@ -1413,7 +1413,7 @@ class IrsPlan extends React.Component<
 
     const drillUpHandler: Handlers = {
       method: e => {
-        this.onDrillUpClick(e, country);
+        this.onDrillUpClick(e, country, filteredJurisdictions);
       },
       name: 'drill-up-handler',
       type: 'click',
@@ -1490,22 +1490,38 @@ class IrsPlan extends React.Component<
           if (layerFilter) {
             layerFilter[2] = '';
             Map.setFilter(layer.id, layerFilter);
+          } else {
+            Map.setFilter(layer.id, ['==', 'parentId', clickedFeatureJurisdiction.jurisdiction_id]);
           }
         }
 
+        const nextAdminTileset = country.tilesets[geographicLevel + 1];
+        const nextAdminIdIndex = adminLayerIds.indexOf(
+          `${country.ADMN0_EN}-admin-${geographicLevel + 1}-jurisdiction-fill`
+        );
+        const nextAdminLayerId = nextAdminIdIndex !== -1 && adminLayerIds[nextAdminIdIndex];
         // check for next Admin fill layer
-        if (country.tilesets[geographicLevel + 1]) {
+        if (
+          (country.tilesets.length && nextAdminTileset) ||
+          (!country.tilesets.length && nextAdminLayerId)
+        ) {
           // zoom to clicked admin level
           const newBounds: LngLatBoundsLike = GeojsonExtent(geometry);
           Map.fitBounds(newBounds, { padding: 20 });
           // toggle next admin fill layer
-          const nextLayerId = `${country.ADMN0_EN}-admin-${geographicLevel + 1}-fill`;
+          const nextLayerId =
+            nextAdminLayerId || `${country.ADMN0_EN}-admin-${geographicLevel + 1}-fill`;
           // update layer filter of next admin level fill layer
           if (Map.getLayer(nextLayerId)) {
             const nextLayerFilter = Map.getFilter(nextLayerId);
             if (nextLayerFilter && country.tilesets && country.tilesets[geographicLevel]) {
               nextLayerFilter[2] = properties[country.tilesets[geographicLevel].idField];
               Map.setFilter(nextLayerId, nextLayerFilter);
+            } else if (nextLayerFilter) {
+              nextLayerFilter[2] = properties.jurisdiction_id;
+              Map.setFilter(nextLayerId, nextLayerFilter);
+            } else {
+              Map.setFilter(nextLayerId, ['==', 'parentId', properties.jurisdiction_id]);
             }
           }
         } else {
@@ -1519,7 +1535,7 @@ class IrsPlan extends React.Component<
                   layerFilter[2] = '';
                   Map.setFilter(adminLayer, layerFilter);
                 } else {
-                  Map.setFilter(adminLayer, ['==', 'juisdiction_id', '']);
+                  Map.setFilter(adminLayer, ['==', 'parentId', '']);
                 }
               }
             }
@@ -1567,37 +1583,79 @@ class IrsPlan extends React.Component<
    * @param e - Mapbox Event object
    * @param country - JurisdictionsByCountry object containing basic hierarchy information per country
    */
-  private onDrillUpClick(e: EventData, country: JurisdictionsByCountry) {
+  private onDrillUpClick(
+    e: EventData,
+    country: JurisdictionsByCountry,
+    filteredJurisdictions: Jurisdiction[]
+  ) {
     const { point, target: Map } = e;
     const features = Map.queryRenderedFeatures(point);
     const { ADMN0_EN, bounds, jurisdictionId, tilesets } = country;
     if (!features.length && tilesets && bounds) {
-      let t = 1;
-      for (t; t < tilesets.length; t += 1) {
-        const layerId = `${ADMN0_EN}-admin-${t}-fill`;
-        if (Map.getLayer(layerId)) {
-          // Reset layers to default visibility
-          if (t === 1) {
-            const isLayerVisible = Map.getLayoutProperty(layerId, 'visibility') === 'visible';
-            if (!isLayerVisible) {
-              store.dispatch(Actions.toggleLayer(MAP_ID, layerId));
+      if (tilesets.length) {
+        let t = 1;
+        for (t; t < tilesets.length; t += 1) {
+          const layerId = `${ADMN0_EN}-admin-${t}-fill`;
+          if (Map.getLayer(layerId)) {
+            // Reset layers to default visibility
+            if (t === 1) {
+              const isLayerVisible = Map.getLayoutProperty(layerId, 'visibility') === 'visible';
+              if (!isLayerVisible) {
+                store.dispatch(Actions.toggleLayer(MAP_ID, layerId));
+              }
+            } else {
+              const layerFilter = Map.getFilter(layerId);
+              if (layerFilter) {
+                layerFilter[2] = '';
+                Map.setFilter(layerId, layerFilter);
+              }
             }
-          } else {
+          }
+        }
+        // Reset layer filter for Jurisdiction fill layer
+        const jurisdictionsLayerId = `${country.ADMN0_EN}-admin-${t}-jurisdiction-fill`;
+        if (Map.getLayer(jurisdictionsLayerId)) {
+          const jurisdicitonLayerFilter = Map.getFilter(jurisdictionsLayerId);
+          if (jurisdicitonLayerFilter) {
+            jurisdicitonLayerFilter[2] = '';
+            Map.setFilter(jurisdictionsLayerId, jurisdicitonLayerFilter);
+          }
+        }
+      }
+
+      // todo - make this dry
+      if (!tilesets.length) {
+        const geoGraphicLevels: number[] = [];
+        for (const j of filteredJurisdictions) {
+          const { geographic_level } = j;
+          if (
+            typeof geographic_level !== 'undefined' &&
+            geoGraphicLevels.indexOf(geographic_level) === -1
+          ) {
+            geoGraphicLevels.push(geographic_level);
+          }
+        }
+        geoGraphicLevels.sort();
+        for (const g of geoGraphicLevels) {
+          const layerId = `${country.ADMN0_EN}-admin-${g}-jurisdiction-fill`;
+          if (g !== 1 && Map.getLayer(layerId)) {
             const layerFilter = Map.getFilter(layerId);
             if (layerFilter) {
               layerFilter[2] = '';
               Map.setFilter(layerId, layerFilter);
+            } else {
+              Map.setFilter(layerId, ['==', 'parent_id', '']);
+            }
+          } else if (Map.getLayer(layerId)) {
+            // Reset layers to default visibility
+            const isLayerVisible = Map.getLayoutProperty(layerId, 'visibility') === 'visible';
+            if (!isLayerVisible) {
+              store.dispatch(Actions.toggleLayer(MAP_ID, layerId));
+            }
+            if (Map.getFilter(layerId)) {
+              Map.setFilter(layerId, null);
             }
           }
-        }
-      }
-      // Reset layer filter for Jurisdiction fill layer
-      const jurisdictionsLayerId = `${country.ADMN0_EN}-admin-${t}-jurisdiction-fill`;
-      if (Map.getLayer(jurisdictionsLayerId)) {
-        const jurisdicitonLayerFilter = Map.getFilter(jurisdictionsLayerId);
-        if (jurisdicitonLayerFilter) {
-          jurisdicitonLayerFilter[2] = '';
-          Map.setFilter(jurisdictionsLayerId, jurisdicitonLayerFilter);
         }
       }
 
