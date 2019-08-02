@@ -193,7 +193,7 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
       'village',
       'canton',
       'district',
-      'provice',
+      'province',
       'jurisdiction_id',
       'focusArea',
     ];

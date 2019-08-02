@@ -369,7 +369,7 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
       [MockFunction] {
         "calls": Array [
           Array [
-            undefined,
+            1,
             Object {
               "adhoc_filters": Array [
                 Object {
@@ -2693,7 +2693,7 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store (g
         [MockFunction] {
           "calls": Array [
             Array [
-              undefined,
+              1,
               Object {
                 "adhoc_filters": Array [
                   Object {
@@ -2943,7 +2943,7 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store (g
           [MockFunction] {
             "calls": Array [
               Array [
-                undefined,
+                1,
                 Object {
                   "adhoc_filters": Array [
                     Object {
