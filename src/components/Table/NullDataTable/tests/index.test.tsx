@@ -1,8 +1,8 @@
 import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import React from 'react';
+import NullDataTable from '..';
 import * as fixtures from '../../../../store/ducks/tests/fixtures';
-import NullDataTable from '../nulldatatable';
 
 describe('components/Table/NullDateTable', () => {
   beforeEach(() => {
