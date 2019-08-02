@@ -15,7 +15,7 @@ import HeaderBreadcrumbs, {
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
 import NullDataTable from '../../../../components/Table/NullDataTable';
-import TableHeader from '../../../../components/Table/TableHeaders/tableheaders';
+import TableHeader from '../../../../components/Table/TableHeaders';
 import {
   SUPERSET_GOALS_SLICE,
   SUPERSET_JURISDICTIONS_SLICE,
