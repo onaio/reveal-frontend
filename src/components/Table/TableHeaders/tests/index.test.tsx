@@ -3,8 +3,8 @@ import toJson from 'enzyme-to-json';
 import { createBrowserHistory } from 'history';
 import React from 'react';
 import { Router } from 'react-router';
+import TableHeader from '..';
 import * as fixtures from '../../../../store/ducks/tests/fixtures';
-import TableHeader from '../tableheaders';
 
 const history = createBrowserHistory();
 

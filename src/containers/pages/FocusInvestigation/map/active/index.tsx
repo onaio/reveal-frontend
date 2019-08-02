@@ -108,6 +108,7 @@ export interface MapSingleFIProps {
   pointFeatureCollection: FeatureCollection<TaskGeoJSON>;
   polygonFeatureCollection: FeatureCollection<TaskGeoJSON>;
   structures: FeatureCollection<StructureGeoJSON> | null /** we use this to get all structures */;
+  supersetService: typeof supersetFetch;
 }
 
 /** default value for feature Collection */
@@ -132,6 +133,7 @@ export const defaultMapSingleFIProps: MapSingleFIProps = {
   polygonFeatureCollection: defaultFeatureCollection,
   setCurrentGoalActionCreator: setCurrentGoal,
   structures: null,
+  supersetService: supersetFetch,
 };
 
 /** Map View for Single Active Focus Investigation */
@@ -152,6 +154,7 @@ class SingleActiveFIMap extends React.Component<
       fetchStructuresActionCreator,
       fetchTasksActionCreator,
       plan,
+      supersetService,
     } = this.props;
 
     if (plan && plan.plan_id) {
@@ -159,7 +162,7 @@ class SingleActiveFIMap extends React.Component<
       const jurisdictionsParams = superset.getFormData(3000, [
         { comparator: plan.jurisdiction_id, operator: '==', subject: 'jurisdiction_id' },
       ]);
-      await supersetFetch(SUPERSET_JURISDICTIONS_SLICE, jurisdictionsParams).then(
+      await supersetService(SUPERSET_JURISDICTIONS_SLICE, jurisdictionsParams).then(
         (result: Jurisdiction[]) => fetchJurisdictionsActionCreator(result)
       );
       /** define superset params for filtering by plan_id */
@@ -173,18 +176,18 @@ class SingleActiveFIMap extends React.Component<
         { action_prefix: true }
       );
       /** Implement Ad hoc Queries since jurisdictions have no plan_id */
-      await supersetFetch(SUPERSET_STRUCTURES_SLICE, jurisdictionsParams).then(
+      await supersetService(SUPERSET_STRUCTURES_SLICE, jurisdictionsParams).then(
         (structuresResults: Structure[]) => {
           fetchStructuresActionCreator(structuresResults);
         }
       );
-      await supersetFetch(SUPERSET_PLANS_SLICE, jurisdictionsParams).then((result2: Plan[]) => {
+      await supersetService(SUPERSET_PLANS_SLICE, jurisdictionsParams).then((result2: Plan[]) => {
         fetchPlansActionCreator(result2);
       });
-      await supersetFetch(SUPERSET_GOALS_SLICE, goalsParams).then((result3: Goal[]) => {
+      await supersetService(SUPERSET_GOALS_SLICE, goalsParams).then((result3: Goal[]) => {
         fetchGoalsActionCreator(result3);
       });
-      await supersetFetch(SUPERSET_TASKS_SLICE, supersetParams).then((result4: Task[]) => {
+      await supersetService(SUPERSET_TASKS_SLICE, supersetParams).then((result4: Task[]) => {
         fetchTasksActionCreator(result4);
       });
     }

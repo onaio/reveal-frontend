@@ -3,7 +3,7 @@ import toJson from 'enzyme-to-json';
 import { createBrowserHistory } from 'history';
 import React from 'react';
 import { Router } from 'react-router';
-import HeaderComponent from '../Header';
+import HeaderComponent from '..';
 
 const history = createBrowserHistory();
 

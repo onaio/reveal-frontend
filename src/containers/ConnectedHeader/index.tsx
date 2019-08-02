@@ -1,7 +1,7 @@
 import { getUser, isAuthenticated, logOutUser } from '@onaio/session-reducer';
 import { connect } from 'react-redux';
 import { Store } from 'redux';
-import Header from '../../components/page/Header/Header';
+import Header from '../../components/page/Header';
 
 /** Connect the component to the store */
 

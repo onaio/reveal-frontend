@@ -14,8 +14,8 @@ import HeaderBreadcrumbs, {
   BreadCrumbProps,
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
-import NullDataTable from '../../../../components/Table/NullDataTable/nulldatatable';
-import TableHeader from '../../../../components/Table/TableHeaders/tableheaders';
+import NullDataTable from '../../../../components/Table/NullDataTable';
+import TableHeader from '../../../../components/Table/TableHeaders';
 import {
   SUPERSET_GOALS_SLICE,
   SUPERSET_JURISDICTIONS_SLICE,
@@ -163,7 +163,7 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
       await supersetService(SUPERSET_GOALS_SLICE, goalsParams).then((result2: Goal[]) =>
         fetchGoalsActionCreator(result2)
       );
-      await supersetFetch(SUPERSET_JURISDICTIONS_SLICE, jurisdictionsParams).then(
+      await supersetService(SUPERSET_JURISDICTIONS_SLICE, jurisdictionsParams).then(
         (result: Jurisdiction[]) => fetchJurisdictionsActionCreator(result)
       );
     }
@@ -193,7 +193,7 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
       'village',
       'canton',
       'district',
-      'provice',
+      'province',
       'jurisdiction_id',
       'focusArea',
     ];
