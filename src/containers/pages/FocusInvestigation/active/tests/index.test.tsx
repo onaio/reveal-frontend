@@ -16,6 +16,7 @@ import reducer, { fetchPlans, reducerName } from '../../../../../store/ducks/pla
 import * as fixtures from '../../../../../store/ducks/tests/fixtures';
 import ConnectedActiveFocusInvestigation, { ActiveFocusInvestigation } from '../../active';
 reducerRegistry.register(reducerName, reducer);
+import flushPromises from 'flush-promises';
 
 library.add(faExternalLinkSquareAlt);
 const history = createBrowserHistory();
@@ -129,9 +130,10 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
   });
 
   it('calls superset with the correct params', () => {
+    const actualFormData = superset.getFormData;
     const getFormDataMock: any = jest.fn();
-    getFormDataMock.mockImplementation(() => {
-      return {};
+    getFormDataMock.mockImplementation((...args: any) => {
+      return actualFormData(...args);
     });
     superset.getFormData = getFormDataMock;
     const mock: any = jest.fn();
@@ -150,11 +152,25 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
         </Router>
       </Provider>
     );
+    flushPromises();
+    const supersetParams = {
+      adhoc_filters: [
+        {
+          clause: 'WHERE',
+          comparator: 'FI',
+          expressionType: 'SIMPLE',
+          operator: '==',
+          subject: 'plan_intervention_type',
+        },
+      ],
+      row_limit: 2000,
+    };
+
     const supersetCallList = [
       [2000, [{ comparator: FI_PLAN_TYPE, operator: '==', subject: 'plan_intervention_type' }]],
     ];
     expect((superset.getFormData as any).mock.calls).toEqual(supersetCallList);
-    expect(supersetMock).toHaveBeenCalledWith(0, {});
+    expect(supersetMock).toHaveBeenCalledWith(0, supersetParams);
     wrapper.unmount();
   });
 });
