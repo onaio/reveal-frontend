@@ -69,7 +69,11 @@ export const PlanSchema = Yup.object().shape({
       timingPeriodStart: Yup.date().required(REQUIRED),
     })
   ),
-  caseNum: Yup.string(),
+  caseNum: Yup.string().when('interventionType', {
+    is: val => val === InterventionType.FI,
+    otherwise: Yup.string().notRequired(),
+    then: Yup.string().required(REQUIRED),
+  }),
   date: Yup.string().required(`${DATE} ${IS} ${REQUIRED}`),
   end: Yup.date().required(REQUIRED),
   fiReason: Yup.string().oneOf(FIReasons.map(e => e)),
