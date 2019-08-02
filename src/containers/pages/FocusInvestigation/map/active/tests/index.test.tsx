@@ -1,6 +1,7 @@
 import superset from '@onaio/superset-connector';
 import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
+import flushPromises from 'flush-promises';
 import { createBrowserHistory } from 'history';
 import React from 'react';
 import { Helmet } from 'react-helmet';
@@ -31,6 +32,7 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
 
   it('renders without crashing', () => {
     const mock: any = jest.fn();
+    const supersetServiceMock: any = jest.fn(async () => []);
     const props = {
       currentGoal: fixtures.goal3.goal_id,
       goals: [fixtures.goal3],
@@ -47,6 +49,7 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
       pointFeatureCollection: wrapFeatureCollection([fixtures.coloredTasks.task3.geojson]),
       polygonFeatureCollection: wrapFeatureCollection([fixtures.coloredTasks.task2.geojson]),
       structures: wrapFeatureCollection([fixtures.structure1.geojson]),
+      supersetService: supersetServiceMock,
     };
     shallow(
       <Router history={history}>
@@ -95,6 +98,8 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
     store.dispatch(fetchJurisdictions([fixtures.jurisdictions[0]]));
     store.dispatch(fetchPlans([fixtures.plan1 as Plan]));
     store.dispatch(fetchTasks(fixtures.tasks));
+    const supersetServiceMock: any = jest.fn();
+    supersetServiceMock.mockImplementation(async () => []);
     const props = {
       currentGoal: fixtures.goal3,
       history,
@@ -122,14 +127,15 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
   });
 
   it('calls superset with the correct params', async () => {
+    const actualFormData = superset.getFormData;
     const getFormDataMock: any = jest.fn();
-    getFormDataMock.mockImplementation(() => {
-      return {};
+    getFormDataMock.mockImplementation((...args: any) => {
+      return actualFormData(...args);
     });
     superset.getFormData = getFormDataMock;
     const mock: any = jest.fn();
-    const supersetMock: any = jest.fn();
-    supersetMock.mockImplementation(async () => []);
+    const supersetServiceMock: any = jest.fn();
+    supersetServiceMock.mockImplementation(async () => []);
     store.dispatch(fetchGoals([fixtures.goal3]));
     store.dispatch(fetchJurisdictions([fixtures.jurisdictions[0]]));
     store.dispatch(fetchPlans([fixtures.plan1 as Plan]));
@@ -146,7 +152,7 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
       },
       pointFeatureCollection: wrapFeatureCollection([fixtures.coloredTasks.task3.geojson]),
       polygonFeatureCollection: wrapFeatureCollection([fixtures.coloredTasks.task2.geojson]),
-      supersetService: supersetMock,
+      supersetService: supersetServiceMock,
     };
     const wrapper = mount(
       <Provider store={store}>
@@ -155,13 +161,43 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
         </Router>
       </Provider>
     );
-    // HACK: HACK: to force for asynchronous code in component to execute.
-    await Promise.resolve();
-    await Promise.resolve();
-    await Promise.resolve();
-    await Promise.resolve();
-    await Promise.resolve();
-    expect(supersetMock).toHaveBeenCalledTimes(5);
+    const jurisdictionParams = {
+      adhoc_filters: [
+        {
+          clause: 'WHERE',
+          comparator: '450fc15b-5bd2-468a-927a-49cb10d3bcac',
+          expressionType: 'SIMPLE',
+          operator: '==',
+          subject: 'jurisdiction_id',
+        },
+      ],
+      row_limit: 3000,
+    };
+    const supersetParams = {
+      adhoc_filters: [
+        {
+          clause: 'WHERE',
+          comparator: '10f9e9fa-ce34-4b27-a961-72fab5206ab6',
+          expressionType: 'SIMPLE',
+          operator: '==',
+          subject: 'plan_id',
+        },
+      ],
+      row_limit: 3000,
+    };
+    const goalParams = {
+      adhoc_filters: [
+        {
+          clause: 'WHERE',
+          comparator: '10f9e9fa-ce34-4b27-a961-72fab5206ab6',
+          expressionType: 'SIMPLE',
+          operator: '==',
+          subject: 'plan_id',
+        },
+      ],
+      order_by_cols: ['["action_prefix",+true]'],
+      row_limit: 3000,
+    };
     const getformDataCallList = [
       [
         3000,
@@ -180,10 +216,18 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
         { action_prefix: true },
       ],
     ];
-    const callList = [[1, {}], [2, {}], [0, {}], [3, {}], [4, {}]];
+    const callList = [
+      [1, jurisdictionParams],
+      [2, jurisdictionParams],
+      [0, supersetParams],
+      [3, goalParams],
+      [4, supersetParams],
+    ];
 
+    await flushPromises();
+    expect(supersetServiceMock.mock.calls).toEqual(callList);
+    expect(supersetServiceMock).toHaveBeenCalledTimes(5);
     expect((superset.getFormData as any).mock.calls).toEqual(getformDataCallList);
-    expect(supersetMock.mock.calls).toEqual(callList);
     wrapper.unmount();
   });
 });
