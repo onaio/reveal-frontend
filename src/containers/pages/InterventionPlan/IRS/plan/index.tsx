@@ -147,6 +147,8 @@ interface IrsPlanState {
   doRenderTable: boolean;
   filteredJurisdictionIds: string[];
   focusJurisdictionId: string | null;
+  gisidaWrapperProps: GisidaProps | null;
+  isBuildingGisidaProps: boolean;
   isEditingPlanName: boolean;
   isLoadingGeoms: boolean;
   isLoadingJurisdictions: boolean;
@@ -172,6 +174,8 @@ class IrsPlan extends React.Component<
       doRenderTable: true,
       filteredJurisdictionIds: [],
       focusJurisdictionId: null,
+      gisidaWrapperProps: null,
+      isBuildingGisidaProps: false,
       isEditingPlanName: false,
       isLoadingGeoms: false,
       isLoadingJurisdictions: true,
@@ -308,7 +312,10 @@ class IrsPlan extends React.Component<
             jurisdictions
           );
           const parentlessParent = ancestorIds.find(
-            a => jurisdictionsById[a] && !jurisdictionsById[a].parent_id
+            a =>
+              jurisdictionsById[a] &&
+              !jurisdictionsById[a].parent_id &&
+              !jurisdictionsById[a].geographic_level
           );
           if (parentlessParent) {
             OpenSrpLocationService.read(parentlessParent, {
@@ -368,6 +375,8 @@ class IrsPlan extends React.Component<
                       }
                     }
                   );
+                } else {
+                  // handle country not found
                 }
               }
             });
@@ -397,9 +406,19 @@ class IrsPlan extends React.Component<
 
       const loadedJurisdictions = filteredJurisdictions.filter((j: Jurisdiction) => j.geojson);
       if (loadedJurisdictions.length === filteredJurisdictions.length) {
-        this.setState({
-          isLoadingGeoms: false,
-        });
+        this.setState(
+          {
+            isBuildingGisidaProps: true,
+            isLoadingGeoms: false,
+          },
+          () => {
+            const gisidaWrapperProps = this.getGisidaWrapperProps();
+            this.setState({
+              gisidaWrapperProps,
+              isBuildingGisidaProps: false,
+            });
+          }
+        );
       }
     }
 
@@ -422,16 +441,23 @@ class IrsPlan extends React.Component<
   public render() {
     const { planId, planById, isDraftPlan, isFinalizedPlan, isNewPlan } = this.props;
     const {
-      planCountry,
       doRenderTable,
-      tableCrumbs,
-      newPlan,
+      gisidaWrapperProps,
+      isBuildingGisidaProps,
       isEditingPlanName,
       isLoadingJurisdictions,
       isSaveDraftDisabled,
       isStartingPlan,
+      newPlan,
+      planCountry,
+      tableCrumbs,
     } = this.state;
-    if ((planId && !planById) || (isNewPlan && !newPlan) || isLoadingJurisdictions) {
+    if (
+      (planId && !planById) ||
+      (isNewPlan && !newPlan) ||
+      isLoadingJurisdictions ||
+      isBuildingGisidaProps
+    ) {
       return <Loading />;
     }
 
@@ -666,8 +692,6 @@ class IrsPlan extends React.Component<
       </ol>
     );
 
-    const gisidaWrapperProps = !isFinalizedPlan && this.getGisidaWrapperProps();
-
     return (
       <div className="mb-5">
         <Helmet>
@@ -676,15 +700,7 @@ class IrsPlan extends React.Component<
         <HeaderBreadcrumbs {...breadCrumbProps} />
         {planHeaderRow}
 
-        {this.state.isLoadingGeoms && (
-          <Row>
-            <Col>
-              <Loading />
-            </Col>
-          </Row>
-        )}
-
-        {gisidaWrapperProps && (
+        {gisidaWrapperProps ? (
           <Row>
             <Col>
               <div className="map irs-plan-map">
@@ -692,10 +708,14 @@ class IrsPlan extends React.Component<
               </div>
             </Col>
           </Row>
+        ) : !isFinalizedPlan ? (
+          <Loading />
+        ) : (
+          ''
         )}
 
         {/* Section for table of jurisdictions */}
-        {planTableProps && (
+        {planTableProps && planTableProps.data && planTableProps.data.length ? (
           <Row>
             <Col>
               <h3 className="table-title">{`${
@@ -705,6 +725,8 @@ class IrsPlan extends React.Component<
               {doRenderTable && <DrillDownTable {...planTableProps} />}
             </Col>
           </Row>
+        ) : (
+          <Loading />
         )}
       </div>
     );
@@ -958,6 +980,12 @@ class IrsPlan extends React.Component<
     const filteredJurisdictions = this.props.jurisdictionsArray.filter(j =>
       filteredJurisdictionIds.includes(j.jurisdiction_id)
     );
+
+    const filteredJurisdictionsById: { [key: string]: Jurisdiction } = {};
+    for (const j of filteredJurisdictions) {
+      filteredJurisdictionsById[j.jurisdiction_id] = j;
+    }
+
     const childlessChildren = filteredJurisdictions.filter(j =>
       ChildlessChildrenIds.includes(j.jurisdiction_id)
     );
@@ -1009,14 +1037,12 @@ class IrsPlan extends React.Component<
         const jurisdictions: Jurisdiction[] = [];
         // Loop through all parent_id results
         for (const Result of results) {
-          const result = Array.isArray(React) ? [...Result] : [{ ...Result }];
+          const result = Array.isArray(Result) ? [...Result] : [{ ...Result }];
           // Loop through all children of parent
           for (const geojson of result) {
             // If the child geojson needs to be loaded into state, do so
             if (doLoadAllGeojson || jurisdictionIdsToLoad.includes(geojson.id)) {
-              const J = filteredJurisdictions.find(
-                j => j.jurisdiction_id === geojson.id
-              ) as Jurisdiction;
+              const J = filteredJurisdictionsById[geojson.id];
               if (J) {
                 const j: Jurisdiction = {
                   ...J,
