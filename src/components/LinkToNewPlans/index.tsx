@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { NEW_PLAN_URL } from '../../constants';
 
 export interface Props {
-  classProp: string;
+  classProp?: string;
 }
 
 const LinkToNewPlans = ({
