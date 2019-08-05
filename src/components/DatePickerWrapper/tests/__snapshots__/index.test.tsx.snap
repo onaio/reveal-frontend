@@ -250,7 +250,7 @@ exports[`components/DatePickerWrapper onHandle change is called when date is cho
   id="start"
   onChange={[MockFunction]}
   required={true}
-  selected={2019-08-05T12:12:25.670Z}
+  selected={2019-08-05T12:18:08.404Z}
   type="date"
 >
   <DatePicker
@@ -522,7 +522,7 @@ exports[`components/DatePickerWrapper onHandle change is called when date is cho
     readOnly={false}
     renderDayContents={[Function]}
     required={true}
-    selected={2019-08-05T12:12:25.670Z}
+    selected={2019-08-05T12:18:08.404Z}
     shouldCloseOnSelect={true}
     showMonthYearPicker={false}
     showTimeInput={false}
