@@ -47,7 +47,32 @@ describe('components/DatePickerWrapper', () => {
     expect(handleChange.mock.calls.length).toBe(1);
     wrapper
       .find('.react-datepicker__input-container > input')
+      .simulate('change', { target: { value: '2018-01-12' } });
+    expect(handleChange.mock.calls.length).toBe(2);
+  });
+
+  it('onHandleChange is called when date is chosen with FieldComponent', () => {
+    const handleChange = jest.fn();
+    const fieldWrapper = mount(
+      <Formik>
+        <Field
+          required={true}
+          type="date"
+          name="start"
+          id="start"
+          dateFormat={DATE_FORMAT}
+          component={DatePickerWrapper}
+          onChange={handleChange}
+        />
+      </Formik>
+    );
+    fieldWrapper
+      .find('.react-datepicker__input-container > input')
       .simulate('change', { target: { value: '2018-01-01' } });
+    expect(handleChange.mock.calls.length).toBe(1);
+    fieldWrapper
+      .find('.react-datepicker__input-container > input')
+      .simulate('change', { target: { value: '2018-01-12' } });
     expect(handleChange.mock.calls.length).toBe(2);
   });
 
