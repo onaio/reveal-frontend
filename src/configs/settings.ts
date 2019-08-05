@@ -737,8 +737,10 @@ export interface JurisdictionsByCountry extends ADMN0 {
 export const ZambiaAdmin0: JurisdictionsByCountry = {
   ADMN0_EN: 'Zambia',
   ADMN0_PCODE: 'ZM',
+  bounds: [28.20209213900005, -15.549759923999941, 32.755632835000085, -13.718855579980357],
   jurisdictionId: '',
   jurisdictionIds: ['2939', '2940', '2942', '2942', '2953', '2954'],
+  tilesets: [],
 };
 
 /** Country Jurisdictions definition for Thailand */
@@ -806,6 +808,7 @@ const NamibiaAdmin0: JurisdictionsByCountry = {
 export const BotswanaAdmin0: JurisdictionsByCountry = {
   ADMN0_EN: 'Botswana',
   ADMN0_PCODE: 'BW',
+  bounds: [19.99953461, -26.90737915, 29.36831093, -17.7808094],
   jurisdictionId: '16a77bba-8777-4bc4-8566-d193cb04af4c',
   jurisdictionIds: [],
   tilesets: [],
@@ -813,6 +816,7 @@ export const BotswanaAdmin0: JurisdictionsByCountry = {
 export const ChadizaAdmin0: JurisdictionsByCountry = {
   ADMN0_EN: 'Chadiza',
   ADMN0_PCODE: 'Chadiza',
+  bounds: [32.21137675056678, -14.309769922999974, 32.755632835000085, -13.899201952999928],
   jurisdictionId: '2939',
   jurisdictionIds: [],
   tilesets: [],
@@ -820,6 +824,7 @@ export const ChadizaAdmin0: JurisdictionsByCountry = {
 export const SindaAdmin0: JurisdictionsByCountry = {
   ADMN0_EN: 'Sinda',
   ADMN0_PCODE: 'Sinda',
+  bounds: [28.09754672919825, -16.727876287030366, 28.856324992204744, -16.196615979643692],
   jurisdictionId: '2941',
   jurisdictionIds: [],
   tilesets: [],
@@ -827,6 +832,7 @@ export const SindaAdmin0: JurisdictionsByCountry = {
 export const KateteAdmin0: JurisdictionsByCountry = {
   ADMN0_EN: 'Katete',
   ADMN0_PCODE: 'Katete',
+  bounds: [31.796349266000046, -14.376530907999832, 32.32032420000019, -13.718855579980357],
   jurisdictionId: '2940',
   jurisdictionIds: [],
   tilesets: [],
@@ -834,6 +840,7 @@ export const KateteAdmin0: JurisdictionsByCountry = {
 export const SiavongaAdmin0: JurisdictionsByCountry = {
   ADMN0_EN: 'Siavonga',
   ADMN0_PCODE: 'Siavonga',
+  bounds: [28.09754672919825, -16.727876287030366, 28.856324992204744, -16.196615979643692],
   jurisdictionId: '3954',
   jurisdictionIds: [],
   tilesets: [],
@@ -841,6 +848,7 @@ export const SiavongaAdmin0: JurisdictionsByCountry = {
 export const LopBuriAdmin0: JurisdictionsByCountry = {
   ADMN0_EN: 'Lop Buri',
   ADMN0_PCODE: 'Lop Buri',
+  bounds: [100.41996838300008, 14.646843667000041, 101.40442895400008, 15.756128613000044],
   jurisdictionId: '9c3c2db4-bddd-44c5-870a-a0eef539e4da',
   jurisdictionIds: [],
   tilesets: [],
@@ -848,6 +856,7 @@ export const LopBuriAdmin0: JurisdictionsByCountry = {
 export const OddarMeancheyProvinceAdmin0: JurisdictionsByCountry = {
   ADMN0_EN: 'Oddar Meanchey Province',
   ADMN0_PCODE: 'Oddar Meanchey Province',
+  bounds: [103.0318109980105, 13.87666596238883, 104.5085170565606, 14.440129974021772],
   jurisdictionId: 'f8863022-ff88-4c22-b2d1-83f59f31b874',
   jurisdictionIds: [],
   tilesets: [],
@@ -855,6 +864,7 @@ export const OddarMeancheyProvinceAdmin0: JurisdictionsByCountry = {
 export const LusakaAdmin0: JurisdictionsByCountry = {
   ADMN0_EN: 'Lusaka',
   ADMN0_PCODE: 'Lusaka',
+  bounds: [28.20209213900005, -15.549759923999941, 28.488907821000048, -15.31976316599997],
   jurisdictionId: '2942',
   jurisdictionIds: [],
   tilesets: [],
