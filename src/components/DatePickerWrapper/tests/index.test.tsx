@@ -34,4 +34,19 @@ describe('components/DatePickerWrapper', () => {
       .simulate('change', { target: { value: '2018-01-01' } });
     expect(handleChange.mock.calls.length).toBe(2);
   });
+
+  it('passes the correct date to onHandle change when date is chosen', () => {
+    const handleChange = jest.fn();
+    const wrapper = mount(
+      <DatePickerWrapper selected={new Date()} onChange={handleChange} {...props} />
+    );
+    wrapper
+      .find('.react-datepicker__input-container > input')
+      .simulate('change', { target: { value: '2018-01-01' } });
+    expect(wrapper.getDOMNode().getElementsByTagName('input')[0].value).toBe('2018-01-01');
+    wrapper
+      .find('.react-datepicker__input-container > input')
+      .simulate('change', { target: { value: '2018-01-12' } });
+    expect(wrapper.getDOMNode().getElementsByTagName('input')[0].value).toBe('2018-01-12');
+  });
 });
