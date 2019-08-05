@@ -1,14 +1,13 @@
 import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import { Field, FieldProps, FormikHandlers } from 'formik';
+import { Formik } from 'formik';
 import { createBrowserHistory } from 'history';
 import React from 'react';
 import { Router } from 'react-router';
 import DatePickerWrapper from '..';
 import { DATE_FORMAT } from '../../../configs/env';
 import props from './fixtures';
-
-const history = createBrowserHistory();
 
 describe('components/DatePickerWrapper', () => {
   beforeEach(() => {
@@ -18,6 +17,23 @@ describe('components/DatePickerWrapper', () => {
   it('renders without crashing', () => {
     const handleChange = () => jest.fn();
     shallow(<DatePickerWrapper selected={new Date()} onChange={handleChange} {...props} />);
+  });
+
+  it('renders without crashing with Field component', () => {
+    const handleChange = () => jest.fn();
+    shallow(
+      <Formik>
+        <Field
+          required={true}
+          type="date"
+          name="start"
+          id="start"
+          dateFormat={DATE_FORMAT}
+          component={DatePickerWrapper}
+          onChange={handleChange}
+        />
+      </Formik>
+    );
   });
 
   it('onHandle change is called when date is chosen', () => {
