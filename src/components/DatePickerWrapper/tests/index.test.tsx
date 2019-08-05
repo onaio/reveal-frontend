@@ -25,7 +25,6 @@ describe('components/DatePickerWrapper', () => {
     const wrapper = mount(
       <DatePickerWrapper selected={new Date()} onChange={handleChange} {...props} />
     );
-    expect(toJson(wrapper)).toMatchSnapshot();
     wrapper
       .find('.react-datepicker__input-container > input')
       .simulate('change', { target: { value: '2018-01-01' } });
