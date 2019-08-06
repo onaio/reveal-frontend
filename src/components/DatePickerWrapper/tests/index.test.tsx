@@ -121,7 +121,7 @@ describe('components/DatePickerWrapper', () => {
   it('matches snapshot', () => {
     const handleChange = jest.fn();
     const wrapper = mount(
-      <DatePickerWrapper selected={new Date(2019, 1, 1)} onChange={handleChange} {...props} />
+      <DatePickerWrapper selected={new Date(1422524805305)} onChange={handleChange} {...props} />
     );
     expect(toJson(wrapper)).toMatchSnapshot();
     wrapper.unmount();
