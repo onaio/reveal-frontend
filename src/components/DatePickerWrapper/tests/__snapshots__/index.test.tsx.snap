@@ -603,3 +603,271 @@ exports[`components/DatePickerWrapper matches snapshot 1`] = `
   </DatePicker>
 </DatePickerWrapper>
 `;
+
+exports[`components/DatePickerWrapper matches snapshot with FieldComponent 1`] = `
+<Formik
+  enableReinitialize={false}
+  isInitialValid={false}
+  validateOnBlur={true}
+  validateOnChange={true}
+>
+  <FormikConnect(FieldInner)
+    component={[Function]}
+    dateFormat="yyyy-MM-dd"
+    id="start"
+    name="start"
+    onChange={[MockFunction]}
+    required={true}
+    type="date"
+  >
+    <FieldInner
+      component={[Function]}
+      dateFormat="yyyy-MM-dd"
+      formik={
+        Object {
+          "dirty": false,
+          "errors": Object {},
+          "handleBlur": [Function],
+          "handleChange": [Function],
+          "handleReset": [Function],
+          "handleSubmit": [Function],
+          "initialValues": Object {},
+          "isSubmitting": false,
+          "isValid": false,
+          "isValidating": false,
+          "registerField": [Function],
+          "resetForm": [Function],
+          "setError": [Function],
+          "setErrors": [Function],
+          "setFieldError": [Function],
+          "setFieldTouched": [Function],
+          "setFieldValue": [Function],
+          "setFormikState": [Function],
+          "setStatus": [Function],
+          "setSubmitting": [Function],
+          "setTouched": [Function],
+          "setValues": [Function],
+          "status": undefined,
+          "submitCount": 0,
+          "submitForm": [Function],
+          "touched": Object {},
+          "unregisterField": [Function],
+          "validate": undefined,
+          "validateField": [Function],
+          "validateForm": [Function],
+          "validateOnBlur": true,
+          "validateOnChange": true,
+          "validationSchema": undefined,
+          "values": Object {},
+        }
+      }
+      id="start"
+      name="start"
+      onChange={[MockFunction]}
+      required={true}
+      type="date"
+    >
+      <DatePickerWrapper
+        dateFormat="yyyy-MM-dd"
+        field={
+          Object {
+            "name": "start",
+            "onBlur": [Function],
+            "onChange": [Function],
+            "value": undefined,
+          }
+        }
+        form={
+          Object {
+            "dirty": false,
+            "errors": Object {},
+            "handleBlur": [Function],
+            "handleChange": [Function],
+            "handleReset": [Function],
+            "handleSubmit": [Function],
+            "initialValues": Object {},
+            "isSubmitting": false,
+            "isValid": false,
+            "isValidating": false,
+            "registerField": [Function],
+            "resetForm": [Function],
+            "setError": [Function],
+            "setErrors": [Function],
+            "setFieldError": [Function],
+            "setFieldTouched": [Function],
+            "setFieldValue": [Function],
+            "setFormikState": [Function],
+            "setStatus": [Function],
+            "setSubmitting": [Function],
+            "setTouched": [Function],
+            "setValues": [Function],
+            "status": undefined,
+            "submitCount": 0,
+            "submitForm": [Function],
+            "touched": Object {},
+            "unregisterField": [Function],
+            "validateField": [Function],
+            "validateForm": [Function],
+            "validateOnBlur": true,
+            "validateOnChange": true,
+            "values": Object {},
+          }
+        }
+        id="start"
+        onChange={[MockFunction]}
+        required={true}
+        type="date"
+      >
+        <DatePicker
+          allowSameDay={false}
+          dateFormat="yyyy-MM-dd"
+          dateFormatCalendar="LLLL yyyy"
+          disabled={false}
+          disabledKeyboardNavigation={false}
+          dropdownMode="scroll"
+          field={
+            Object {
+              "name": "start",
+              "onBlur": [Function],
+              "onChange": [Function],
+              "value": undefined,
+            }
+          }
+          form={
+            Object {
+              "dirty": false,
+              "errors": Object {},
+              "handleBlur": [Function],
+              "handleChange": [Function],
+              "handleReset": [Function],
+              "handleSubmit": [Function],
+              "initialValues": Object {},
+              "isSubmitting": false,
+              "isValid": false,
+              "isValidating": false,
+              "registerField": [Function],
+              "resetForm": [Function],
+              "setError": [Function],
+              "setErrors": [Function],
+              "setFieldError": [Function],
+              "setFieldTouched": [Function],
+              "setFieldValue": [Function],
+              "setFormikState": [Function],
+              "setStatus": [Function],
+              "setSubmitting": [Function],
+              "setTouched": [Function],
+              "setValues": [Function],
+              "status": undefined,
+              "submitCount": 0,
+              "submitForm": [Function],
+              "touched": Object {},
+              "unregisterField": [Function],
+              "validateField": [Function],
+              "validateForm": [Function],
+              "validateOnBlur": true,
+              "validateOnChange": true,
+              "values": Object {},
+            }
+          }
+          id="start"
+          inlineFocusSelectedMonth={false}
+          monthsShown={1}
+          nextMonthButtonLabel="Next month"
+          onBlur={[Function]}
+          onChange={[MockFunction]}
+          onClickOutside={[Function]}
+          onFocus={[Function]}
+          onInputClick={[Function]}
+          onInputError={[Function]}
+          onKeyDown={[Function]}
+          onMonthChange={[Function]}
+          onSelect={[Function]}
+          onYearChange={[Function]}
+          preventOpenOnFocus={false}
+          previousMonthButtonLabel="Previous Month"
+          readOnly={false}
+          renderDayContents={[Function]}
+          required={true}
+          shouldCloseOnSelect={true}
+          showMonthYearPicker={false}
+          showTimeInput={false}
+          showTimeSelect={false}
+          strictParsing={false}
+          timeCaption="Time"
+          timeInputLabel="Time"
+          timeIntervals={30}
+          type="date"
+          withPortal={false}
+        >
+          <PopperComponent
+            hidePopper={true}
+            popperComponent={null}
+            popperModifiers={
+              Object {
+                "preventOverflow": Object {
+                  "boundariesElement": "viewport",
+                  "enabled": true,
+                  "escapeWithReference": true,
+                },
+              }
+            }
+            popperPlacement="bottom-start"
+            popperProps={Object {}}
+            targetComponent={
+              <div
+                className="react-datepicker__input-container"
+              >
+                <input
+                  className=""
+                  disabled={false}
+                  id="start"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  onClick={[Function]}
+                  onFocus={[Function]}
+                  onKeyDown={[Function]}
+                  readOnly={false}
+                  required={true}
+                  type="text"
+                  value=""
+                />
+              </div>
+            }
+          >
+            <Manager>
+              <Reference>
+                <InnerReference
+                  setReferenceNode={[Function]}
+                >
+                  <div
+                    className="react-datepicker-wrapper"
+                  >
+                    <div
+                      className="react-datepicker__input-container"
+                    >
+                      <input
+                        className=""
+                        disabled={false}
+                        id="start"
+                        onBlur={[Function]}
+                        onChange={[Function]}
+                        onClick={[Function]}
+                        onFocus={[Function]}
+                        onKeyDown={[Function]}
+                        readOnly={false}
+                        required={true}
+                        type="text"
+                        value=""
+                      />
+                    </div>
+                  </div>
+                </InnerReference>
+              </Reference>
+            </Manager>
+          </PopperComponent>
+        </DatePicker>
+      </DatePickerWrapper>
+    </FieldInner>
+  </FormikConnect(FieldInner)>
+</Formik>
+`;

@@ -128,4 +128,23 @@ describe('components/DatePickerWrapper', () => {
     expect(toJson(wrapper)).toMatchSnapshot();
     wrapper.unmount();
   });
+
+  it('matches snapshot with FieldComponent', () => {
+    const handleChange = jest.fn();
+    const wrapper = mount(
+      <Formik>
+        <Field
+          required={true}
+          type="date"
+          name="start"
+          id="start"
+          dateFormat={DATE_FORMAT}
+          component={DatePickerWrapper}
+          onChange={handleChange}
+        />
+      </Formik>
+    );
+    expect(toJson(wrapper)).toMatchSnapshot();
+    wrapper.unmount();
+  });
 });
