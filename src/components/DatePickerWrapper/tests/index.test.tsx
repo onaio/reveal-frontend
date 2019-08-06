@@ -1,10 +1,8 @@
 import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
-import { Field, FieldProps, FormikHandlers } from 'formik';
+import { Field } from 'formik';
 import { Formik } from 'formik';
-import { createBrowserHistory } from 'history';
 import React from 'react';
-import { Router } from 'react-router';
 import DatePickerWrapper from '..';
 import { DATE_FORMAT } from '../../../configs/env';
 import props from './fixtures';
