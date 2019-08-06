@@ -1,0 +1,605 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components/DatePickerWrapper matches snapshot 1`] = `
+<DatePickerWrapper
+  className="form-control"
+  dateFormat="yyyy-MM-dd"
+  disabled={false}
+  field={
+    Object {
+      "name": "start",
+      "onChange": [MockFunction],
+      "value": "2019-08-05T10:17:17.765Z",
+    }
+  }
+  form={
+    Object {
+      "dirty": false,
+      "errors": Object {},
+      "initialValues": Object {
+        "activities": Array [
+          Object {
+            "actionCode": "Case Confirmation",
+            "actionDescription": "Confirm the index case",
+            "actionIdentifier": "",
+            "actionReason": "Investigation",
+            "actionTitle": "Case Confirmation",
+            "goalDescription": "Confirm the index case",
+            "goalDue": "2019-08-12T10:17:17.765Z",
+            "goalPriority": "medium-priority",
+            "goalValue": 1,
+            "timingPeriodEnd": "2019-08-12T10:17:17.765Z",
+            "timingPeriodStart": "2019-08-05T10:17:17.765Z",
+          },
+          Object {
+            "actionCode": "RACD Register Family",
+            "actionDescription": "Register all families & family members in all residential structures enumerated (100%) within the operational area",
+            "actionIdentifier": "",
+            "actionReason": "Investigation",
+            "actionTitle": "Family Registration",
+            "goalDescription": "Register all families & family members in all residential structures enumerated (100%) within the operational area",
+            "goalDue": "2019-08-12T10:17:17.765Z",
+            "goalPriority": "medium-priority",
+            "goalValue": 100,
+            "timingPeriodEnd": "2019-08-12T10:17:17.765Z",
+            "timingPeriodStart": "2019-08-05T10:17:17.765Z",
+          },
+          Object {
+            "actionCode": "Blood Screening",
+            "actionDescription": "Visit all residential structures (100%) within a 1 km radius of a confirmed index case and test each registered person",
+            "actionIdentifier": "",
+            "actionReason": "Investigation",
+            "actionTitle": "Blood screening",
+            "goalDescription": "Visit all residential structures (100%) within a 1 km radius of a confirmed index case and test each registered person",
+            "goalDue": "2019-08-12T10:17:17.765Z",
+            "goalPriority": "medium-priority",
+            "goalValue": 100,
+            "timingPeriodEnd": "2019-08-12T10:17:17.765Z",
+            "timingPeriodStart": "2019-08-05T10:17:17.765Z",
+          },
+          Object {
+            "actionCode": "Bednet Distribution",
+            "actionDescription": "Visit 100% of residential structures in the operational area and provide nets",
+            "actionIdentifier": "",
+            "actionReason": "Investigation",
+            "actionTitle": "Bednet Distribution",
+            "goalDescription": "Visit 100% of residential structures in the operational area and provide nets",
+            "goalDue": "2019-08-12T10:17:17.765Z",
+            "goalPriority": "medium-priority",
+            "goalValue": 100,
+            "timingPeriodEnd": "2019-08-12T10:17:17.765Z",
+            "timingPeriodStart": "2019-08-05T10:17:17.765Z",
+          },
+          Object {
+            "actionCode": "Larval Dipping",
+            "actionDescription": "Perform a minimum of three larval dipping activities in the operational area",
+            "actionIdentifier": "",
+            "actionReason": "Investigation",
+            "actionTitle": "Larval Dipping",
+            "goalDescription": "Perform a minimum of three larval dipping activities in the operational area",
+            "goalDue": "2019-08-12T10:17:17.765Z",
+            "goalPriority": "medium-priority",
+            "goalValue": 3,
+            "timingPeriodEnd": "2019-08-12T10:17:17.765Z",
+            "timingPeriodStart": "2019-08-05T10:17:17.765Z",
+          },
+          Object {
+            "actionCode": "Mosquito Collection",
+            "actionDescription": "Set a minimum of three mosquito collection traps and complete the mosquito collection process",
+            "actionIdentifier": "",
+            "actionReason": "Investigation",
+            "actionTitle": "Mosquito Collection",
+            "goalDescription": "Set a minimum of three mosquito collection traps and complete the mosquito collection process",
+            "goalDue": "2019-08-12T10:17:17.765Z",
+            "goalPriority": "medium-priority",
+            "goalValue": 3,
+            "timingPeriodEnd": "2019-08-12T10:17:17.765Z",
+            "timingPeriodStart": "2019-08-05T10:17:17.765Z",
+          },
+          Object {
+            "actionCode": "BCC",
+            "actionDescription": "Conduct BCC activity",
+            "actionIdentifier": "",
+            "actionReason": "Investigation",
+            "actionTitle": "Behaviour Change Communication",
+            "goalDescription": "Complete at least 1 BCC activity for the operational area",
+            "goalDue": "2019-08-12T10:17:17.765Z",
+            "goalPriority": "medium-priority",
+            "goalValue": 1,
+            "timingPeriodEnd": "2019-08-12T10:17:17.765Z",
+            "timingPeriodStart": "2019-08-05T10:17:17.765Z",
+          },
+        ],
+        "caseNum": "",
+        "date": "2019-08-05T10:17:17.765Z",
+        "end": "2019-08-25T10:17:17.765Z",
+        "identifier": "",
+        "interventionType": "FI",
+        "jurisdictions": Array [
+          Object {
+            "id": "",
+            "name": "",
+          },
+        ],
+        "name": "",
+        "start": "2019-08-05T10:17:17.765Z",
+        "status": "draft",
+        "title": "",
+        "version": "1",
+      },
+      "isSubmitting": false,
+      "isValid": false,
+      "isValidating": false,
+      "submitCount": 0,
+      "touched": Object {},
+      "validateOnBlur": true,
+      "validateOnChange": true,
+      "values": Object {
+        "activities": Array [
+          Object {
+            "actionCode": "Case Confirmation",
+            "actionDescription": "Confirm the index case",
+            "actionIdentifier": "",
+            "actionReason": "Investigation",
+            "actionTitle": "Case Confirmation",
+            "goalDescription": "Confirm the index case",
+            "goalDue": "2019-08-12T10:17:17.765Z",
+            "goalPriority": "medium-priority",
+            "goalValue": 1,
+            "timingPeriodEnd": "2019-08-12T10:17:17.765Z",
+            "timingPeriodStart": "2019-08-05T10:17:17.765Z",
+          },
+          Object {
+            "actionCode": "RACD Register Family",
+            "actionDescription": "Register all families & family members in all residential structures enumerated (100%) within the operational area",
+            "actionIdentifier": "",
+            "actionReason": "Investigation",
+            "actionTitle": "Family Registration",
+            "goalDescription": "Register all families & family members in all residential structures enumerated (100%) within the operational area",
+            "goalDue": "2019-08-12T10:17:17.765Z",
+            "goalPriority": "medium-priority",
+            "goalValue": 100,
+            "timingPeriodEnd": "2019-08-12T10:17:17.765Z",
+            "timingPeriodStart": "2019-08-05T10:17:17.765Z",
+          },
+          Object {
+            "actionCode": "Blood Screening",
+            "actionDescription": "Visit all residential structures (100%) within a 1 km radius of a confirmed index case and test each registered person",
+            "actionIdentifier": "",
+            "actionReason": "Investigation",
+            "actionTitle": "Blood screening",
+            "goalDescription": "Visit all residential structures (100%) within a 1 km radius of a confirmed index case and test each registered person",
+            "goalDue": "2019-08-12T10:17:17.765Z",
+            "goalPriority": "medium-priority",
+            "goalValue": 100,
+            "timingPeriodEnd": "2019-08-12T10:17:17.765Z",
+            "timingPeriodStart": "2019-08-05T10:17:17.765Z",
+          },
+          Object {
+            "actionCode": "Bednet Distribution",
+            "actionDescription": "Visit 100% of residential structures in the operational area and provide nets",
+            "actionIdentifier": "",
+            "actionReason": "Investigation",
+            "actionTitle": "Bednet Distribution",
+            "goalDescription": "Visit 100% of residential structures in the operational area and provide nets",
+            "goalDue": "2019-08-12T10:17:17.765Z",
+            "goalPriority": "medium-priority",
+            "goalValue": 100,
+            "timingPeriodEnd": "2019-08-12T10:17:17.765Z",
+            "timingPeriodStart": "2019-08-05T10:17:17.765Z",
+          },
+          Object {
+            "actionCode": "Larval Dipping",
+            "actionDescription": "Perform a minimum of three larval dipping activities in the operational area",
+            "actionIdentifier": "",
+            "actionReason": "Investigation",
+            "actionTitle": "Larval Dipping",
+            "goalDescription": "Perform a minimum of three larval dipping activities in the operational area",
+            "goalDue": "2019-08-12T10:17:17.765Z",
+            "goalPriority": "medium-priority",
+            "goalValue": 3,
+            "timingPeriodEnd": "2019-08-12T10:17:17.765Z",
+            "timingPeriodStart": "2019-08-05T10:17:17.765Z",
+          },
+          Object {
+            "actionCode": "Mosquito Collection",
+            "actionDescription": "Set a minimum of three mosquito collection traps and complete the mosquito collection process",
+            "actionIdentifier": "",
+            "actionReason": "Investigation",
+            "actionTitle": "Mosquito Collection",
+            "goalDescription": "Set a minimum of three mosquito collection traps and complete the mosquito collection process",
+            "goalDue": "2019-08-12T10:17:17.765Z",
+            "goalPriority": "medium-priority",
+            "goalValue": 3,
+            "timingPeriodEnd": "2019-08-12T10:17:17.765Z",
+            "timingPeriodStart": "2019-08-05T10:17:17.765Z",
+          },
+          Object {
+            "actionCode": "BCC",
+            "actionDescription": "Conduct BCC activity",
+            "actionIdentifier": "",
+            "actionReason": "Investigation",
+            "actionTitle": "Behaviour Change Communication",
+            "goalDescription": "Complete at least 1 BCC activity for the operational area",
+            "goalDue": "2019-08-12T10:17:17.765Z",
+            "goalPriority": "medium-priority",
+            "goalValue": 1,
+            "timingPeriodEnd": "2019-08-12T10:17:17.765Z",
+            "timingPeriodStart": "2019-08-05T10:17:17.765Z",
+          },
+        ],
+        "caseNum": "",
+        "date": "2019-08-05T10:17:17.765Z",
+        "end": "2019-08-25T10:17:17.765Z",
+        "identifier": "",
+        "interventionType": "FI",
+        "jurisdictions": Array [
+          Object {
+            "id": "",
+            "name": "",
+          },
+        ],
+        "name": "",
+        "start": "2019-08-05T10:17:17.765Z",
+        "status": "draft",
+        "title": "",
+        "version": "1",
+      },
+    }
+  }
+  id="start"
+  onChange={[MockFunction]}
+  required={true}
+  selected={2019-01-31T21:00:00.000Z}
+  type="date"
+>
+  <DatePicker
+    allowSameDay={false}
+    className="form-control"
+    dateFormat="yyyy-MM-dd"
+    dateFormatCalendar="LLLL yyyy"
+    disabled={false}
+    disabledKeyboardNavigation={false}
+    dropdownMode="scroll"
+    field={
+      Object {
+        "name": "start",
+        "onChange": [MockFunction],
+        "value": "2019-08-05T10:17:17.765Z",
+      }
+    }
+    form={
+      Object {
+        "dirty": false,
+        "errors": Object {},
+        "initialValues": Object {
+          "activities": Array [
+            Object {
+              "actionCode": "Case Confirmation",
+              "actionDescription": "Confirm the index case",
+              "actionIdentifier": "",
+              "actionReason": "Investigation",
+              "actionTitle": "Case Confirmation",
+              "goalDescription": "Confirm the index case",
+              "goalDue": "2019-08-12T10:17:17.765Z",
+              "goalPriority": "medium-priority",
+              "goalValue": 1,
+              "timingPeriodEnd": "2019-08-12T10:17:17.765Z",
+              "timingPeriodStart": "2019-08-05T10:17:17.765Z",
+            },
+            Object {
+              "actionCode": "RACD Register Family",
+              "actionDescription": "Register all families & family members in all residential structures enumerated (100%) within the operational area",
+              "actionIdentifier": "",
+              "actionReason": "Investigation",
+              "actionTitle": "Family Registration",
+              "goalDescription": "Register all families & family members in all residential structures enumerated (100%) within the operational area",
+              "goalDue": "2019-08-12T10:17:17.765Z",
+              "goalPriority": "medium-priority",
+              "goalValue": 100,
+              "timingPeriodEnd": "2019-08-12T10:17:17.765Z",
+              "timingPeriodStart": "2019-08-05T10:17:17.765Z",
+            },
+            Object {
+              "actionCode": "Blood Screening",
+              "actionDescription": "Visit all residential structures (100%) within a 1 km radius of a confirmed index case and test each registered person",
+              "actionIdentifier": "",
+              "actionReason": "Investigation",
+              "actionTitle": "Blood screening",
+              "goalDescription": "Visit all residential structures (100%) within a 1 km radius of a confirmed index case and test each registered person",
+              "goalDue": "2019-08-12T10:17:17.765Z",
+              "goalPriority": "medium-priority",
+              "goalValue": 100,
+              "timingPeriodEnd": "2019-08-12T10:17:17.765Z",
+              "timingPeriodStart": "2019-08-05T10:17:17.765Z",
+            },
+            Object {
+              "actionCode": "Bednet Distribution",
+              "actionDescription": "Visit 100% of residential structures in the operational area and provide nets",
+              "actionIdentifier": "",
+              "actionReason": "Investigation",
+              "actionTitle": "Bednet Distribution",
+              "goalDescription": "Visit 100% of residential structures in the operational area and provide nets",
+              "goalDue": "2019-08-12T10:17:17.765Z",
+              "goalPriority": "medium-priority",
+              "goalValue": 100,
+              "timingPeriodEnd": "2019-08-12T10:17:17.765Z",
+              "timingPeriodStart": "2019-08-05T10:17:17.765Z",
+            },
+            Object {
+              "actionCode": "Larval Dipping",
+              "actionDescription": "Perform a minimum of three larval dipping activities in the operational area",
+              "actionIdentifier": "",
+              "actionReason": "Investigation",
+              "actionTitle": "Larval Dipping",
+              "goalDescription": "Perform a minimum of three larval dipping activities in the operational area",
+              "goalDue": "2019-08-12T10:17:17.765Z",
+              "goalPriority": "medium-priority",
+              "goalValue": 3,
+              "timingPeriodEnd": "2019-08-12T10:17:17.765Z",
+              "timingPeriodStart": "2019-08-05T10:17:17.765Z",
+            },
+            Object {
+              "actionCode": "Mosquito Collection",
+              "actionDescription": "Set a minimum of three mosquito collection traps and complete the mosquito collection process",
+              "actionIdentifier": "",
+              "actionReason": "Investigation",
+              "actionTitle": "Mosquito Collection",
+              "goalDescription": "Set a minimum of three mosquito collection traps and complete the mosquito collection process",
+              "goalDue": "2019-08-12T10:17:17.765Z",
+              "goalPriority": "medium-priority",
+              "goalValue": 3,
+              "timingPeriodEnd": "2019-08-12T10:17:17.765Z",
+              "timingPeriodStart": "2019-08-05T10:17:17.765Z",
+            },
+            Object {
+              "actionCode": "BCC",
+              "actionDescription": "Conduct BCC activity",
+              "actionIdentifier": "",
+              "actionReason": "Investigation",
+              "actionTitle": "Behaviour Change Communication",
+              "goalDescription": "Complete at least 1 BCC activity for the operational area",
+              "goalDue": "2019-08-12T10:17:17.765Z",
+              "goalPriority": "medium-priority",
+              "goalValue": 1,
+              "timingPeriodEnd": "2019-08-12T10:17:17.765Z",
+              "timingPeriodStart": "2019-08-05T10:17:17.765Z",
+            },
+          ],
+          "caseNum": "",
+          "date": "2019-08-05T10:17:17.765Z",
+          "end": "2019-08-25T10:17:17.765Z",
+          "identifier": "",
+          "interventionType": "FI",
+          "jurisdictions": Array [
+            Object {
+              "id": "",
+              "name": "",
+            },
+          ],
+          "name": "",
+          "start": "2019-08-05T10:17:17.765Z",
+          "status": "draft",
+          "title": "",
+          "version": "1",
+        },
+        "isSubmitting": false,
+        "isValid": false,
+        "isValidating": false,
+        "submitCount": 0,
+        "touched": Object {},
+        "validateOnBlur": true,
+        "validateOnChange": true,
+        "values": Object {
+          "activities": Array [
+            Object {
+              "actionCode": "Case Confirmation",
+              "actionDescription": "Confirm the index case",
+              "actionIdentifier": "",
+              "actionReason": "Investigation",
+              "actionTitle": "Case Confirmation",
+              "goalDescription": "Confirm the index case",
+              "goalDue": "2019-08-12T10:17:17.765Z",
+              "goalPriority": "medium-priority",
+              "goalValue": 1,
+              "timingPeriodEnd": "2019-08-12T10:17:17.765Z",
+              "timingPeriodStart": "2019-08-05T10:17:17.765Z",
+            },
+            Object {
+              "actionCode": "RACD Register Family",
+              "actionDescription": "Register all families & family members in all residential structures enumerated (100%) within the operational area",
+              "actionIdentifier": "",
+              "actionReason": "Investigation",
+              "actionTitle": "Family Registration",
+              "goalDescription": "Register all families & family members in all residential structures enumerated (100%) within the operational area",
+              "goalDue": "2019-08-12T10:17:17.765Z",
+              "goalPriority": "medium-priority",
+              "goalValue": 100,
+              "timingPeriodEnd": "2019-08-12T10:17:17.765Z",
+              "timingPeriodStart": "2019-08-05T10:17:17.765Z",
+            },
+            Object {
+              "actionCode": "Blood Screening",
+              "actionDescription": "Visit all residential structures (100%) within a 1 km radius of a confirmed index case and test each registered person",
+              "actionIdentifier": "",
+              "actionReason": "Investigation",
+              "actionTitle": "Blood screening",
+              "goalDescription": "Visit all residential structures (100%) within a 1 km radius of a confirmed index case and test each registered person",
+              "goalDue": "2019-08-12T10:17:17.765Z",
+              "goalPriority": "medium-priority",
+              "goalValue": 100,
+              "timingPeriodEnd": "2019-08-12T10:17:17.765Z",
+              "timingPeriodStart": "2019-08-05T10:17:17.765Z",
+            },
+            Object {
+              "actionCode": "Bednet Distribution",
+              "actionDescription": "Visit 100% of residential structures in the operational area and provide nets",
+              "actionIdentifier": "",
+              "actionReason": "Investigation",
+              "actionTitle": "Bednet Distribution",
+              "goalDescription": "Visit 100% of residential structures in the operational area and provide nets",
+              "goalDue": "2019-08-12T10:17:17.765Z",
+              "goalPriority": "medium-priority",
+              "goalValue": 100,
+              "timingPeriodEnd": "2019-08-12T10:17:17.765Z",
+              "timingPeriodStart": "2019-08-05T10:17:17.765Z",
+            },
+            Object {
+              "actionCode": "Larval Dipping",
+              "actionDescription": "Perform a minimum of three larval dipping activities in the operational area",
+              "actionIdentifier": "",
+              "actionReason": "Investigation",
+              "actionTitle": "Larval Dipping",
+              "goalDescription": "Perform a minimum of three larval dipping activities in the operational area",
+              "goalDue": "2019-08-12T10:17:17.765Z",
+              "goalPriority": "medium-priority",
+              "goalValue": 3,
+              "timingPeriodEnd": "2019-08-12T10:17:17.765Z",
+              "timingPeriodStart": "2019-08-05T10:17:17.765Z",
+            },
+            Object {
+              "actionCode": "Mosquito Collection",
+              "actionDescription": "Set a minimum of three mosquito collection traps and complete the mosquito collection process",
+              "actionIdentifier": "",
+              "actionReason": "Investigation",
+              "actionTitle": "Mosquito Collection",
+              "goalDescription": "Set a minimum of three mosquito collection traps and complete the mosquito collection process",
+              "goalDue": "2019-08-12T10:17:17.765Z",
+              "goalPriority": "medium-priority",
+              "goalValue": 3,
+              "timingPeriodEnd": "2019-08-12T10:17:17.765Z",
+              "timingPeriodStart": "2019-08-05T10:17:17.765Z",
+            },
+            Object {
+              "actionCode": "BCC",
+              "actionDescription": "Conduct BCC activity",
+              "actionIdentifier": "",
+              "actionReason": "Investigation",
+              "actionTitle": "Behaviour Change Communication",
+              "goalDescription": "Complete at least 1 BCC activity for the operational area",
+              "goalDue": "2019-08-12T10:17:17.765Z",
+              "goalPriority": "medium-priority",
+              "goalValue": 1,
+              "timingPeriodEnd": "2019-08-12T10:17:17.765Z",
+              "timingPeriodStart": "2019-08-05T10:17:17.765Z",
+            },
+          ],
+          "caseNum": "",
+          "date": "2019-08-05T10:17:17.765Z",
+          "end": "2019-08-25T10:17:17.765Z",
+          "identifier": "",
+          "interventionType": "FI",
+          "jurisdictions": Array [
+            Object {
+              "id": "",
+              "name": "",
+            },
+          ],
+          "name": "",
+          "start": "2019-08-05T10:17:17.765Z",
+          "status": "draft",
+          "title": "",
+          "version": "1",
+        },
+      }
+    }
+    id="start"
+    inlineFocusSelectedMonth={false}
+    monthsShown={1}
+    nextMonthButtonLabel="Next month"
+    onBlur={[Function]}
+    onChange={[MockFunction]}
+    onClickOutside={[Function]}
+    onFocus={[Function]}
+    onInputClick={[Function]}
+    onInputError={[Function]}
+    onKeyDown={[Function]}
+    onMonthChange={[Function]}
+    onSelect={[Function]}
+    onYearChange={[Function]}
+    preventOpenOnFocus={false}
+    previousMonthButtonLabel="Previous Month"
+    readOnly={false}
+    renderDayContents={[Function]}
+    required={true}
+    selected={2019-01-31T21:00:00.000Z}
+    shouldCloseOnSelect={true}
+    showMonthYearPicker={false}
+    showTimeInput={false}
+    showTimeSelect={false}
+    strictParsing={false}
+    timeCaption="Time"
+    timeInputLabel="Time"
+    timeIntervals={30}
+    type="date"
+    withPortal={false}
+  >
+    <PopperComponent
+      hidePopper={true}
+      popperComponent={null}
+      popperModifiers={
+        Object {
+          "preventOverflow": Object {
+            "boundariesElement": "viewport",
+            "enabled": true,
+            "escapeWithReference": true,
+          },
+        }
+      }
+      popperPlacement="bottom-start"
+      popperProps={Object {}}
+      targetComponent={
+        <div
+          className="react-datepicker__input-container"
+        >
+          <input
+            className="form-control"
+            disabled={false}
+            id="start"
+            onBlur={[Function]}
+            onChange={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onKeyDown={[Function]}
+            readOnly={false}
+            required={true}
+            type="text"
+            value="2019-02-01"
+          />
+        </div>
+      }
+    >
+      <Manager>
+        <Reference>
+          <InnerReference
+            setReferenceNode={[Function]}
+          >
+            <div
+              className="react-datepicker-wrapper"
+            >
+              <div
+                className="react-datepicker__input-container"
+              >
+                <input
+                  className="form-control"
+                  disabled={false}
+                  id="start"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  onClick={[Function]}
+                  onFocus={[Function]}
+                  onKeyDown={[Function]}
+                  readOnly={false}
+                  required={true}
+                  type="text"
+                  value="2019-02-01"
+                />
+              </div>
+            </div>
+          </InnerReference>
+        </Reference>
+      </Manager>
+    </PopperComponent>
+  </DatePicker>
+</DatePickerWrapper>
+`;

@@ -115,4 +115,12 @@ describe('components/DatePickerWrapper', () => {
       .simulate('change', { target: { value: '2018-01-12' } });
     expect(wrapper.getDOMNode().getElementsByTagName('input')[0].value).toBe('2018-01-12');
   });
+
+  it('matches snapshot', () => {
+    const handleChange = jest.fn();
+    const wrapper = mount(
+      <DatePickerWrapper selected={new Date(2019, 1, 1)} onChange={handleChange} {...props} />
+    );
+    expect(toJson(wrapper)).toMatchSnapshot();
+  });
 });
