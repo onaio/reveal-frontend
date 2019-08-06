@@ -49,6 +49,7 @@ describe('components/DatePickerWrapper', () => {
       .find('.react-datepicker__input-container > input')
       .simulate('change', { target: { value: '2018-01-12' } });
     expect(handleChange.mock.calls.length).toBe(2);
+    wrapper.unmount();
   });
 
   it('onHandleChange is called when date is chosen with FieldComponent', () => {
@@ -74,6 +75,7 @@ describe('components/DatePickerWrapper', () => {
       .find('.react-datepicker__input-container > input')
       .simulate('change', { target: { value: '2018-01-12' } });
     expect(handleChange.mock.calls.length).toBe(2);
+    fieldWrapper.unmount();
   });
 
   it('passes the correct date to onHandle change when date is chosen with FieldComponent', () => {
@@ -99,6 +101,7 @@ describe('components/DatePickerWrapper', () => {
       .find('.react-datepicker__input-container > input')
       .simulate('change', { target: { value: '2018-01-12' } });
     expect(fieldWrapper.getDOMNode().getElementsByTagName('input')[0].value).toBe('2018-01-12');
+    fieldWrapper.unmount();
   });
 
   it('passes the correct date to onHandle change when date is chosen', () => {
@@ -114,6 +117,7 @@ describe('components/DatePickerWrapper', () => {
       .find('.react-datepicker__input-container > input')
       .simulate('change', { target: { value: '2018-01-12' } });
     expect(wrapper.getDOMNode().getElementsByTagName('input')[0].value).toBe('2018-01-12');
+    wrapper.unmount();
   });
 
   it('matches snapshot', () => {
@@ -122,5 +126,6 @@ describe('components/DatePickerWrapper', () => {
       <DatePickerWrapper selected={new Date(2019, 1, 1)} onChange={handleChange} {...props} />
     );
     expect(toJson(wrapper)).toMatchSnapshot();
+    wrapper.unmount();
   });
 });
