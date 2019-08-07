@@ -138,7 +138,11 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
     superset.getFormData = getFormDataMock;
     const mock: any = jest.fn();
     const supersetMock: any = jest.fn();
-    supersetMock.mockImplementation(() => Promise.resolve(fixtures.plans));
+    try {
+      supersetMock.mockImplementation(() => Promise.resolve(fixtures.plans));
+    } catch (errors) {
+      return null;
+    }
     const props = {
       history,
       location: mock,
@@ -152,7 +156,11 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
         </Router>
       </Provider>
     );
-    flushPromises();
+    try {
+      flushPromises();
+    } catch (errors) {
+      return null;
+    }
     const supersetParams = {
       adhoc_filters: [
         {
