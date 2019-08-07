@@ -1,4 +1,4 @@
-import { extractActivityForForm, getFormActivities } from '../helpers';
+import { doesFieldHaveErrors, extractActivityForForm, getFormActivities } from '../helpers';
 import {
   bccTestPlanActivity,
   bccTestPlanActivityWithEmptyfields,
@@ -20,5 +20,20 @@ describe('PlanForm/helpers', () => {
     expect(JSON.stringify(getFormActivities(planActivities))).toEqual(
       JSON.stringify(extractedActivitiesFromForms)
     );
+  });
+
+  it('check doesFieldHaveErrors returns the correct value', () => {
+    let errors = [
+      {
+        id: 'Required',
+      },
+    ];
+    let field = 'id';
+    let index = 0;
+    expect(doesFieldHaveErrors(field, index, errors)).toBe(true);
+    field = '';
+    index = NaN;
+    errors = [];
+    expect(doesFieldHaveErrors(field, index, errors)).toBe(false);
   });
 });
