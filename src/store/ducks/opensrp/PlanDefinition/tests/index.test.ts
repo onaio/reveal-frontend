@@ -50,5 +50,12 @@ describe('reducers/opensrp/PlanDefinition', () => {
     expect(getPlanDefinitionsArray(store.getState(), InterventionType.IRS)).toEqual([
       fixtures.plans[1],
     ]);
+
+    expect(getPlanDefinitionsById(store.getState(), InterventionType.IRS)).toEqual(
+      keyBy([fixtures.plans[1]], 'identifier')
+    );
+    expect(getPlanDefinitionsById(store.getState(), InterventionType.FI)).toEqual(
+      keyBy([fixtures.plans[0], fixtures.plans[2], fixtures.plans[3]], 'identifier')
+    );
   });
 });
