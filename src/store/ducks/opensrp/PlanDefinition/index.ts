@@ -25,7 +25,7 @@ interface FetchPlanDefinitionsAction extends AnyAction {
 export const fetchPlanDefinitions = (
   planList: PlanDefinition[] = []
 ): FetchPlanDefinitionsAction => ({
-  planDefinitionsById: {},
+  planDefinitionsById: keyBy(planList, 'identifier'),
   type: PLAN_DEFINITIONS_FETCHED,
 });
 
