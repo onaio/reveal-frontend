@@ -65,3 +65,49 @@ export const expectedActivity = {
   timingPeriodEnd,
   timingPeriodStart,
 };
+
+export const bccTestPlanActivityWithEmptyfields = {
+  BCC: {
+    action: {
+      goalId: 'BCC_Focus',
+      prefix: 99,
+      subjectCodableConcept: {
+        text: 'Operational_Area',
+      },
+      taskTemplate: 'BCC_Focus',
+      timingPeriod: {
+        end: timingPeriodEnd,
+        start: timingPeriodStart,
+      },
+    },
+    goal: {
+      id: 'BCC_Focus',
+      target: [
+        {
+          detail: {
+            detailQuantity: {
+              comparator: '>=',
+              unit: 'activit(y|ies)',
+              value: 1,
+            },
+          },
+          due: goalDue,
+          measure: 'Number of BCC Activities Completed',
+        },
+      ],
+    },
+  },
+};
+
+export const expectedActivity2 = {
+  actionDescription: '',
+  actionIdentifier: '',
+  actionReason: '',
+  actionTitle: '',
+  goalDescription: '',
+  goalDue,
+  goalPriority: 'medium-priority',
+  goalValue: 1,
+  timingPeriodEnd,
+  timingPeriodStart,
+};
