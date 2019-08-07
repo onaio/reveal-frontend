@@ -1,4 +1,4 @@
-import { get, keyBy, keys, values } from 'lodash';
+import { get, keyBy, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
 import SeamlessImmutable from 'seamless-immutable';
 import { PlanDefinition, UseContext } from '../../../../configs/settings';
@@ -76,6 +76,9 @@ export function getPlanDefinitionsById(
   state: Partial<Store>,
   interventionType: InterventionType | null = null
 ): { [key: string]: PlanDefinition } {
+  if (interventionType) {
+    return keyBy(getPlanDefinitionsArray(state, interventionType), 'identifier');
+  }
   return (state as any)[reducerName].planDefinitionsById;
 }
 
