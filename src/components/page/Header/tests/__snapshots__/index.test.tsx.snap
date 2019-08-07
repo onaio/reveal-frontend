@@ -180,7 +180,7 @@ exports[`components/page/Header renders header correctly 1`] = `
                             <NavLink
                               activeClassName="active"
                               aria-current="page"
-                              className="nav-link"
+                              className="nav-link active"
                               to="/"
                             >
                               <Route
@@ -188,14 +188,14 @@ exports[`components/page/Header renders header correctly 1`] = `
                               >
                                 <Link
                                   aria-current="page"
-                                  className="nav-link active"
+                                  className="nav-link active active"
                                   replace={false}
                                   style={Object {}}
                                   to="/"
                                 >
                                   <a
                                     aria-current="page"
-                                    className="nav-link active"
+                                    className="nav-link active active"
                                     href="/"
                                     onClick={[Function]}
                                     style={Object {}}
@@ -739,7 +739,7 @@ exports[`components/page/Header renders header correctly when authenticated 1`] 
                             <NavLink
                               activeClassName="active"
                               aria-current="page"
-                              className="nav-link"
+                              className="nav-link active"
                               to="/"
                             >
                               <Route
@@ -747,14 +747,14 @@ exports[`components/page/Header renders header correctly when authenticated 1`] 
                               >
                                 <Link
                                   aria-current="page"
-                                  className="nav-link active"
+                                  className="nav-link active active"
                                   replace={false}
                                   style={Object {}}
                                   to="/"
                                 >
                                   <a
                                     aria-current="page"
-                                    className="nav-link active"
+                                    className="nav-link active active"
                                     href="/"
                                     onClick={[Function]}
                                     style={Object {}}
