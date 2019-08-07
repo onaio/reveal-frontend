@@ -59,4 +59,4 @@ jobs:
       - run: yarn lint-ts
       - run: CI=true
       # run tests!
-      - run: yarn test --verbose --coverage --forceExit --detectOpenHandles --watch=false
+      - run: yarn test --runInBand --verbose --coverage --forceExit --detectOpenHandles --watch=false
