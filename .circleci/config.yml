@@ -57,6 +57,5 @@ jobs:
 
       # run linter
       - run: yarn lint-ts
-      - jest --coverage --maxWorkers 2
       # run tests!
       - run: yarn test --verbose --coverage=true --forceExit --detectOpenHandles
