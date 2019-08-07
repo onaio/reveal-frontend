@@ -17,6 +17,8 @@ describe('PlanForm/helpers', () => {
   });
 
   it('check getFormActivities returns the correct value', () => {
-    expect(getFormActivities(planActivities)).toBe(extractedActivitiesFromForms);
+    expect(JSON.stringify(getFormActivities(planActivities))).toEqual(
+      JSON.stringify(extractedActivitiesFromForms)
+    );
   });
 });
