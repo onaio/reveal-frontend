@@ -54,6 +54,8 @@ export const resetPlanDefinitions = () => ({
   type: PLAN_DEFINITIONS_RESET,
 });
 
+// the reducer
+
 /** interface for PlanDefinition state */
 interface PlanDefinitionState {
   planDefinitionsById: { [key: string]: PlanDefinition };
