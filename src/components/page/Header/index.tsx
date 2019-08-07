@@ -80,7 +80,11 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
           <Collapse isOpen={this.state.isOpen} navbar={true}>
             <Nav className="mr-auto" navbar={true}>
               <NavItem>
-                <NavLink to="/" className="nav-link" activeClassName="active">
+                <NavLink
+                  to="/"
+                  className={path === '/' ? 'nav-link active' : 'nav-link'}
+                  activeClassName="active"
+                >
                   Home
                 </NavLink>
               </NavItem>
@@ -90,9 +94,7 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
                   <DropdownToggle
                     nav={true}
                     caret={true}
-                    className={
-                      path === FI_URL || path === FI_HISTORICAL_URL ? 'nav-link active' : 'nav-link'
-                    }
+                    className={path === INTERVENTION_IRS_URL ? 'nav-link active' : 'nav-link'}
                   >
                     Planning
                   </DropdownToggle>
