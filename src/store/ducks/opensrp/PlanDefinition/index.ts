@@ -19,6 +19,16 @@ interface FetchPlanDefinitionsAction extends AnyAction {
   type: typeof PLAN_DEFINITIONS_FETCHED;
 }
 
+// action creators
+
+/** Fetch Plan Definitions action creator */
+export const fetchPlanDefinitions = (
+  planList: PlanDefinition[] = []
+): FetchPlanDefinitionsAction => ({
+  planDefinitionsById: {},
+  type: PLAN_DEFINITIONS_FETCHED,
+});
+
 /** Create type for PlanDefinition reducer actions */
 export type PlanDefinitionActionTypes = FetchPlanDefinitionsAction | AnyAction;
 
