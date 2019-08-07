@@ -102,7 +102,8 @@ export function getPlanDefinitionsArray(
     return result.filter(
       (e: PlanDefinition) =>
         e.useContext.filter(
-          f => f.code === 'interventionType' && f.valueCodableConcept === interventionType
+          (f: UseContext) =>
+            f.code === 'interventionType' && f.valueCodableConcept === interventionType
         ).length > 0
     );
   }
