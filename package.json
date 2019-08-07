@@ -67,6 +67,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "CI=true react-scripts test --watch false --env=jsdom",
+    "test:coverage": "npm test -- --coverage",
     "eject": "react-scripts eject",
     "lint-js": "eslint 'src/**/*.{js,jsx}'",
     "lint-ts": "tslint -c tslint.json 'src/**/*.{ts,tsx}'"
