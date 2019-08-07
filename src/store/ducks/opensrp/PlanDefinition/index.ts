@@ -56,7 +56,7 @@ export default function reducer(
       if (action.planDefinitionsById) {
         return SeamlessImmutable({
           ...state,
-          planDefinitionsById: action.planDefinitionsById,
+          planDefinitionsById: { ...state.planDefinitionsById, ...action.planDefinitionsById },
         });
       }
       return state;
