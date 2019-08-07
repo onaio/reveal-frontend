@@ -10,6 +10,7 @@ import reducer, {
   getPlanDefinitionsArray,
   getPlanDefinitionsById,
   reducerName,
+  resetPlanDefinitions,
 } from '../index';
 import * as fixtures from './fixtures';
 
@@ -57,5 +58,9 @@ describe('reducers/opensrp/PlanDefinition', () => {
     expect(getPlanDefinitionsById(store.getState(), InterventionType.FI)).toEqual(
       keyBy([fixtures.plans[0], fixtures.plans[2], fixtures.plans[3]], 'identifier')
     );
+
+    // reset
+    store.dispatch(resetPlanDefinitions());
+    expect(getPlanDefinitionsArray(store.getState())).toEqual([]);
   });
 });
