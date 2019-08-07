@@ -63,4 +63,24 @@ describe('reducers/opensrp/PlanDefinition', () => {
     store.dispatch(resetPlanDefinitions());
     expect(getPlanDefinitionsArray(store.getState())).toEqual([]);
   });
+
+  it('Fetching plans does not replace planDefinitionsById', () => {
+    // fetch two plan definition objects
+    store.dispatch(
+      fetchPlanDefinitions([fixtures.plans[0], fixtures.plans[1]] as PlanDefinition[])
+    );
+    // we should have them in the store
+    expect(getPlanDefinitionsArray(store.getState())).toEqual([
+      fixtures.plans[0],
+      fixtures.plans[1],
+    ]);
+    // fetch one more plan definition objects
+    store.dispatch(fetchPlanDefinitions([fixtures.plans[3]] as PlanDefinition[]));
+    // we should now have a total of three plan definition objects in the store
+    expect(getPlanDefinitionsArray(store.getState())).toEqual([
+      fixtures.plans[0],
+      fixtures.plans[1],
+      fixtures.plans[3],
+    ]);
+  });
 });
