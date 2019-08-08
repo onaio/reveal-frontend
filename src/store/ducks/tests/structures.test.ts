@@ -35,6 +35,7 @@ describe('reducers/tasks', () => {
   });
 
   it('should have all the properties inside structure', () => {
+    store.dispatch(removeStructuresAction);
     store.dispatch(setStructures(cloneDeep([fixtures.structure1])));
     const structure = store.getState().structures.structuresById;
     if (structure) {
@@ -102,7 +103,7 @@ describe('reducers/tasks', () => {
     });
   });
 
-  it('should add new structures to existing structures, no overwrite', () => {
+  it('should add new structures to existing structures, not overwrite', () => {
     store.dispatch(removeStructuresAction);
     let structuresinStore = getAllStructuresFC(store.getState());
     expect(structuresinStore).toEqual({
