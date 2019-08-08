@@ -290,7 +290,7 @@ exports[`components/page/Header renders header correctly 1`] = `
                                                 href="/plans/list"
                                                 onClick={[Function]}
                                               >
-                                                Plans
+                                                Manage Plans
                                               </a>
                                             </Link>
                                           </Route>
@@ -888,7 +888,7 @@ exports[`components/page/Header renders header correctly when authenticated 1`] 
                                                 href="/plans/list"
                                                 onClick={[Function]}
                                               >
-                                                Plans
+                                                Manage Plans
                                               </a>
                                             </Link>
                                           </Route>

@@ -333,7 +333,7 @@ exports[`App renders App correctly 1`] = `
                                                           href="/plans/list"
                                                           onClick={[Function]}
                                                         >
-                                                          Plans
+                                                          Manage Plans
                                                         </a>
                                                       </Link>
                                                     </Route>

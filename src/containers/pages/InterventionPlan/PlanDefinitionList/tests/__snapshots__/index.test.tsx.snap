@@ -740,13 +740,13 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
         <SideEffect(NullComponent)
           defer={true}
           encodeSpecialCharacters={true}
-          title="Plans"
+          title="Manage Plans"
           titleAttributes={Object {}}
         >
           <NullComponent
             defer={true}
             encodeSpecialCharacters={true}
-            title="Plans"
+            title="Manage Plans"
             titleAttributes={Object {}}
           />
         </SideEffect(NullComponent)>
@@ -754,7 +754,7 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
       <HeaderBreadcrumb
         currentPage={
           Object {
-            "label": "Plans",
+            "label": "Manage Plans",
             "url": "/plans/list",
           }
         }
@@ -810,7 +810,7 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
                     aria-current="page"
                     className="active breadcrumb-item"
                   >
-                    Plans
+                    Manage Plans
                   </li>
                 </BreadcrumbItem>
               </ol>
@@ -821,7 +821,7 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
       <h3
         className="mt-3 mb-3 page-title"
       >
-        Plans
+        Manage Plans
       </h3>
       <Row
         tag="div"
