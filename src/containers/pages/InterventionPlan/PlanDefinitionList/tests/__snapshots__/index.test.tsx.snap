@@ -850,21 +850,25 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
                       "A2-Lusaka Akros Test Focus 2",
                       "FI",
                       "active",
+                      "2019-05-19",
                     ],
                     Array [
                       "TwoTwoOne_01 IRS 2019-07-10",
                       "IRS",
                       "active",
+                      "2019-07-10",
                     ],
                     Array [
                       "A1 - TwoTwoTwo_03 - 2019-07-18",
                       "FI",
                       "active",
+                      "2019-07-18",
                     ],
                     Array [
                       "A Test By Mosh",
                       "FI",
                       "draft",
+                      "2019-05-19",
                     ],
                   ]
                 }
@@ -873,6 +877,7 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
                     "Title",
                     "Intervention Type",
                     "Status",
+                    "Last Modified",
                   ]
                 }
                 renderHeaders={[Function]}
@@ -901,6 +906,7 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
                             "Title",
                             "Intervention Type",
                             "Status",
+                            "Last Modified",
                           ]
                         }
                       >
@@ -922,6 +928,12 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
                         >
                           Status
                         </th>
+                        <th
+                          className="listview-td"
+                          key="3"
+                        >
+                          Last Modified
+                        </th>
                       </ElementMap>
                     </tr>
                   </thead>
@@ -940,6 +952,7 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
                             "A2-Lusaka Akros Test Focus 2",
                             "FI",
                             "active",
+                            "2019-05-19",
                           ]
                         }
                       >
@@ -961,6 +974,12 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
                         >
                           active
                         </td>
+                        <td
+                          className="listview-th"
+                          key="3"
+                        >
+                          2019-05-19
+                        </td>
                       </ElementMap>
                     </tr>
                     <tr
@@ -975,6 +994,7 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
                             "TwoTwoOne_01 IRS 2019-07-10",
                             "IRS",
                             "active",
+                            "2019-07-10",
                           ]
                         }
                       >
@@ -996,6 +1016,12 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
                         >
                           active
                         </td>
+                        <td
+                          className="listview-th"
+                          key="3"
+                        >
+                          2019-07-10
+                        </td>
                       </ElementMap>
                     </tr>
                     <tr
@@ -1010,6 +1036,7 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
                             "A1 - TwoTwoTwo_03 - 2019-07-18",
                             "FI",
                             "active",
+                            "2019-07-18",
                           ]
                         }
                       >
@@ -1031,6 +1058,12 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
                         >
                           active
                         </td>
+                        <td
+                          className="listview-th"
+                          key="3"
+                        >
+                          2019-07-18
+                        </td>
                       </ElementMap>
                     </tr>
                     <tr
@@ -1045,6 +1078,7 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
                             "A Test By Mosh",
                             "FI",
                             "draft",
+                            "2019-05-19",
                           ]
                         }
                       >
@@ -1065,6 +1099,12 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
                           key="2"
                         >
                           draft
+                        </td>
+                        <td
+                          className="listview-th"
+                          key="3"
+                        >
+                          2019-05-19
                         </td>
                       </ElementMap>
                     </tr>
