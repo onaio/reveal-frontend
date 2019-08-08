@@ -1146,19 +1146,47 @@ class IrsPlan extends React.Component<
   }
   /** onToggleAllCheckboxChange - handler for de/select all Jurisdictions checkbox which updates component state */
   private onToggleAllCheckboxChange(e: any) {
-    const { newPlan: NewPlan, filteredJurisdictionIds } = this.state;
+    const { newPlan: NewPlan, filteredJurisdictionIds, focusJurisdictionId } = this.state;
     const { jurisdictionsById } = this.props;
-    const filteredJurisdictions = filteredJurisdictionIds.map(j => jurisdictionsById[j]);
 
     if (e && e.target && NewPlan) {
       const { checked: isSelected } = e.target;
-      const newPlanJurisdictionIds: string[] = isSelected
-        ? filteredJurisdictions.map((j: Jurisdiction) => j.jurisdiction_id)
-        : [];
+      const { plan_jurisdictions_ids } = NewPlan;
+
+      const selectedIds = (plan_jurisdictions_ids && [...plan_jurisdictions_ids]) || [
+        ...filteredJurisdictionIds,
+      ];
+      const decendantIds = focusJurisdictionId
+        ? this.getDecendantJurisdictionIds([focusJurisdictionId], jurisdictionsById)
+        : [...filteredJurisdictionIds];
+
+      // const newPlanJurisdictionIds: string[] = [];
+      if (focusJurisdictionId && isSelected) {
+        // select previously deselected decendants
+        for (const d of decendantIds) {
+          if (!selectedIds.includes(d)) {
+            selectedIds.push(d);
+          }
+        }
+      } else if (focusJurisdictionId && !isSelected) {
+        // de-select previously selected decendants
+        for (const d of decendantIds) {
+          if (selectedIds.includes(d)) {
+            selectedIds.splice(selectedIds.indexOf(d), 1);
+          }
+        }
+      } else if (!focusJurisdictionId) {
+        selectedIds.length = 0;
+        if (isSelected) {
+          selectedIds.concat(...filteredJurisdictionIds);
+        }
+      }
+
       const newPlan: PlanRecord = {
         ...(this.state.newPlan as PlanRecord),
-        plan_jurisdictions_ids: [...newPlanJurisdictionIds],
+        plan_jurisdictions_ids: [...selectedIds],
       };
+
       this.setState({ newPlan }, () => {
         const {
           country: nextCountry,
