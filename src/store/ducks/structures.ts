@@ -41,8 +41,11 @@ export interface Structure {
 }
 
 // actions
+
 /** STRUCTURES_SET action type */
 export const STRUCTURES_SET = 'reveal/reducer/structures/STRUCTURES_SET';
+/** REMOVE_STRUCTURES action type */
+export const REMOVE_STRUCTURES = 'reveal/reducer/structures/REMOVE_STRUCTURES';
 
 /** interface for setStructure action */
 interface SetStructuresAction extends AnyAction {
@@ -50,8 +53,14 @@ interface SetStructuresAction extends AnyAction {
   type: typeof STRUCTURES_SET;
 }
 
+/** interface for RemoveStructuresAction */
+interface RemoveStructuresAction extends AnyAction {
+  structuresById: {};
+  type: typeof REMOVE_STRUCTURES;
+}
+
 /** Create type for Structure reducer actions */
-export type StructureActionTypes = SetStructuresAction | AnyAction;
+export type StructureActionTypes = SetStructuresAction | RemoveStructuresAction | AnyAction;
 
 /** interface for Structure state */
 interface StructureState {
@@ -81,6 +90,11 @@ export default function reducer(
         });
       }
       return state;
+    case REMOVE_STRUCTURES:
+      return SeamlessImmutable({
+        ...state,
+        structuresById: action.structuresById,
+      });
     default:
       return state;
   }
@@ -111,6 +125,12 @@ export const setStructures = (structuresList: Structure[] = []): SetStructuresAc
     ),
     type: STRUCTURES_SET,
   };
+};
+
+// actions
+export const removeStructuresAction: RemoveStructuresAction = {
+  structuresById: {},
+  type: REMOVE_STRUCTURES,
 };
 
 // selectors
