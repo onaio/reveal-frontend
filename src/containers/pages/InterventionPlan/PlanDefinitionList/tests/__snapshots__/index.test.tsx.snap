@@ -818,11 +818,6 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
           </Breadcrumb>
         </div>
       </HeaderBreadcrumb>
-      <h3
-        className="mt-3 mb-3 page-title"
-      >
-        Manage Plans
-      </h3>
       <Row
         tag="div"
       >
@@ -830,6 +825,7 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
           className="row"
         >
           <Col
+            md={8}
             tag="div"
             widths={
               Array [
@@ -842,18 +838,41 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
             }
           >
             <div
-              className="col"
+              className="col-md-8"
+            >
+              <h3
+                className="mt-3 mb-3 page-title"
+              >
+                Manage Plans
+              </h3>
+            </div>
+          </Col>
+          <Col
+            md={4}
+            tag="div"
+            widths={
+              Array [
+                "xs",
+                "sm",
+                "md",
+                "lg",
+                "xl",
+              ]
+            }
+          >
+            <div
+              className="col-md-4"
             >
               <LinkToNewPlans
-                classProp="focus-investigation btn btn-primary float-right mt-2 mb-3"
+                classProp="focus-investigation btn btn-primary float-right mt-3 mb-3"
               >
                 <Link
-                  className="focus-investigation btn btn-primary float-right mt-2 mb-3"
+                  className="focus-investigation btn btn-primary float-right mt-3 mb-3"
                   replace={false}
                   to="/plans/new"
                 >
                   <a
-                    className="focus-investigation btn btn-primary float-right mt-2 mb-3"
+                    className="focus-investigation btn btn-primary float-right mt-3 mb-3"
                     href="/plans/new"
                     onClick={[Function]}
                   >
@@ -890,25 +909,41 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
                 data={
                   Array [
                     Array [
-                      "A2-Lusaka Akros Test Focus 2",
+                      <a
+                        href="#"
+                      >
+                        A2-Lusaka Akros Test Focus 2
+                      </a>,
                       "FI",
                       "active",
                       "2019-05-19",
                     ],
                     Array [
-                      "TwoTwoOne_01 IRS 2019-07-10",
+                      <a
+                        href="#"
+                      >
+                        TwoTwoOne_01 IRS 2019-07-10
+                      </a>,
                       "IRS",
                       "active",
                       "2019-07-10",
                     ],
                     Array [
-                      "A1 - TwoTwoTwo_03 - 2019-07-18",
+                      <a
+                        href="#"
+                      >
+                        A1 - TwoTwoTwo_03 - 2019-07-18
+                      </a>,
                       "FI",
                       "active",
                       "2019-07-18",
                     ],
                     Array [
-                      "A Test By Mosh",
+                      <a
+                        href="#"
+                      >
+                        A Test By Mosh
+                      </a>,
                       "FI",
                       "draft",
                       "2019-05-19",
@@ -992,7 +1027,11 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
                         className="listview-th"
                         items={
                           Array [
-                            "A2-Lusaka Akros Test Focus 2",
+                            <a
+                              href="#"
+                            >
+                              A2-Lusaka Akros Test Focus 2
+                            </a>,
                             "FI",
                             "active",
                             "2019-05-19",
@@ -1003,7 +1042,12 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
                           className="listview-th"
                           key="0"
                         >
-                          A2-Lusaka Akros Test Focus 2
+                          <a
+                            href="#"
+                            key="356b6b84-fc36-4389-a44a-2b038ed2f38d"
+                          >
+                            A2-Lusaka Akros Test Focus 2
+                          </a>
                         </td>
                         <td
                           className="listview-th"
@@ -1034,7 +1078,11 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
                         className="listview-th"
                         items={
                           Array [
-                            "TwoTwoOne_01 IRS 2019-07-10",
+                            <a
+                              href="#"
+                            >
+                              TwoTwoOne_01 IRS 2019-07-10
+                            </a>,
                             "IRS",
                             "active",
                             "2019-07-10",
@@ -1045,7 +1093,12 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
                           className="listview-th"
                           key="0"
                         >
-                          TwoTwoOne_01 IRS 2019-07-10
+                          <a
+                            href="#"
+                            key="8fa7eb32-99d7-4b49-8332-9ecedd6d51ae"
+                          >
+                            TwoTwoOne_01 IRS 2019-07-10
+                          </a>
                         </td>
                         <td
                           className="listview-th"
@@ -1076,7 +1129,11 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
                         className="listview-th"
                         items={
                           Array [
-                            "A1 - TwoTwoTwo_03 - 2019-07-18",
+                            <a
+                              href="#"
+                            >
+                              A1 - TwoTwoTwo_03 - 2019-07-18
+                            </a>,
                             "FI",
                             "active",
                             "2019-07-18",
@@ -1087,7 +1144,12 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
                           className="listview-th"
                           key="0"
                         >
-                          A1 - TwoTwoTwo_03 - 2019-07-18
+                          <a
+                            href="#"
+                            key="f0558ad1-396d-4d97-9fff-c46cf92b6ce6"
+                          >
+                            A1 - TwoTwoTwo_03 - 2019-07-18
+                          </a>
                         </td>
                         <td
                           className="listview-th"
@@ -1118,7 +1180,11 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
                         className="listview-th"
                         items={
                           Array [
-                            "A Test By Mosh",
+                            <a
+                              href="#"
+                            >
+                              A Test By Mosh
+                            </a>,
                             "FI",
                             "draft",
                             "2019-05-19",
@@ -1129,7 +1195,12 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
                           className="listview-th"
                           key="0"
                         >
-                          A Test By Mosh
+                          <a
+                            href="#"
+                            key="0e85c238-39c1-4cea-a926-3d89f0c98429"
+                          >
+                            A Test By Mosh
+                          </a>
                         </td>
                         <td
                           className="listview-th"
