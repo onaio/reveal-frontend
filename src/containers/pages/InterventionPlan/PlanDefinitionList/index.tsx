@@ -1,3 +1,4 @@
+import ListView from '@onaio/list-view';
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Col, Row } from 'reactstrap';
@@ -14,6 +15,8 @@ interface PlanListProps {
 
 /** Simple component that loads the new plan form and allows you to create a new plan */
 const PlanDefinitionList = (props: PlanListProps) => {
+  const { plans } = props;
+
   const pageTitle: string = PLANS;
 
   const breadcrumbProps = {
@@ -29,6 +32,21 @@ const PlanDefinitionList = (props: PlanListProps) => {
     ],
   };
 
+  const listViewProps = {
+    data: plans.map(planObj => {
+      const typeUseContext = planObj.useContext.filter(e => e.code === 'interventionType');
+
+      return [
+        planObj.title,
+        typeUseContext.length > 0 ? typeUseContext[0].valueCodableConcept : '',
+        planObj.status,
+        planObj.date,
+      ];
+    }),
+    headerItems: ['Title', 'Intervention Type', 'Status', 'Last Modified'],
+    tableClass: 'table table-striped plans-list',
+  };
+
   return (
     <div>
       <Helmet>
@@ -37,7 +55,9 @@ const PlanDefinitionList = (props: PlanListProps) => {
       <HeaderBreadcrumb {...breadcrumbProps} />
       <h3 className="mb-3 page-title">{pageTitle}</h3>
       <Row>
-        <Col>xxx</Col>
+        <Col>
+          <ListView {...listViewProps} />
+        </Col>
       </Row>
     </div>
   );
