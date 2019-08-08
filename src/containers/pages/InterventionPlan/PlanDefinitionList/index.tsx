@@ -93,10 +93,12 @@ const PlanDefinitionList = (props: PlanListProps) => {
         <title>{pageTitle}</title>
       </Helmet>
       <HeaderBreadcrumb {...breadcrumbProps} />
-      <h3 className="mt-3 mb-3 page-title">{pageTitle}</h3>
       <Row>
-        <Col>
-          <LinkToNewPlans classProp="focus-investigation btn btn-primary float-right mt-2 mb-3" />
+        <Col md={8}>
+          <h3 className="mt-3 mb-3 page-title">{pageTitle}</h3>
+        </Col>
+        <Col md={4}>
+          <LinkToNewPlans classProp="focus-investigation btn btn-primary float-right mt-3 mb-3" />
         </Col>
       </Row>
       <Row>
