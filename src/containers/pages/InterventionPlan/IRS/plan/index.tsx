@@ -1874,7 +1874,7 @@ class IrsPlan extends React.Component<
    * @returns tableProps|null - compatible object for DrillDownTable props
    */
   private getDrilldownPlanTableProps(state: IrsPlanState) {
-    const { filteredJurisdictionIds, newPlan } = state;
+    const { filteredJurisdictionIds, newPlan, focusJurisdictionId } = state;
     const { jurisdictionsById } = this.props;
     const filteredJurisdictions = filteredJurisdictionIds.map(j => jurisdictionsById[j]);
 
@@ -1902,14 +1902,18 @@ class IrsPlan extends React.Component<
 
     const columns = [
       {
-        Header: () => (
-          <Input
-            checked={planJurisdictionIds.length === filteredJurisdictions.length}
-            className="plan-jurisdiction-select-all-checkbox"
-            onChange={onToggleAllCheckboxChange}
-            type="checkbox"
-          />
-        ),
+        Header: () => {
+          const isChecked = this.getIsJurisdictionPartiallySelected(this.state.focusJurisdictionId);
+
+          return (
+            <Input
+              checked={isChecked}
+              className="plan-jurisdiction-select-all-checkbox"
+              onChange={onToggleAllCheckboxChange}
+              type="checkbox"
+            />
+          );
+        },
         columns: [
           {
             Header: '',
@@ -1985,16 +1989,50 @@ class IrsPlan extends React.Component<
         ...j,
         id: j.jurisdiction_id,
         isChildless: this.state.childlessChildrenIds.includes(j.jurisdiction_id),
+        isPartiallySelected:
+          !this.state.childlessChildrenIds.includes(j.jurisdiction_id) &&
+          this.getChildlessChildrenIds([jurisdictionsById[j.jurisdiction_id]]),
       })),
       identifierField: 'jurisdiction_id',
       linkerField: 'name',
       minRows: 0,
       parentIdentifierField: 'parent_id',
       rootParentId: this.state.focusJurisdictionId,
-      showPagination: false,
+      showPagination: true,
       useDrillDownTrProps: true,
     };
     return tableProps;
+  }
+
+  /** util to check if Jurisdiction has any selected decendants
+   * @param id - the jurisdiction_id of the Jurisdiction being checked
+   * @returns boolean
+   */
+  private getIsJurisdictionPartiallySelected(id: string | null): boolean {
+    const { newPlan, filteredJurisdictionIds } = this.state;
+    const { jurisdictionsById } = this.props;
+    const filteredJurisdictions = filteredJurisdictionIds
+      .map(j => jurisdictionsById[j])
+      .filter(j => !!j);
+    const planJurisdictionIds =
+      newPlan && newPlan.plan_jurisdictions_ids
+        ? [...newPlan.plan_jurisdictions_ids]
+        : [...filteredJurisdictionIds];
+
+    if (id) {
+      // check if drilled down Jurisdiction is at least partially selected
+      const decendants: Jurisdiction[] = this.getDecendantJurisdictionIds([id], jurisdictionsById)
+        .map(j => jurisdictionsById[j])
+        .filter(j => !!j);
+      const childlessDecendants: string[] = this.getChildlessChildrenIds(decendants);
+      for (const child of childlessDecendants) {
+        if (planJurisdictionIds.includes(child)) {
+          return true;
+        }
+      }
+    }
+
+    return planJurisdictionIds.length === filteredJurisdictions.length;
   }
 
   /** getBreadCrumbProps - get properties for HeaderBreadcrumbs component
