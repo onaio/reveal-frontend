@@ -101,4 +101,30 @@ describe('reducers/goals', () => {
       });
     }
   });
+
+  it('Should add new goals to existing goals in store', () => {
+    const plan1Id = '10f9e9fa-ce34-4b27-a961-72fab5206ab6';
+    let goalNumberInStore = getGoalsByPlanId(store.getState(), plan1Id).length;
+    expect(goalNumberInStore).toEqual(0);
+
+    store.dispatch(fetchGoals([fixtures.goal1]));
+    const goal1Id = '5a27ec10-7a5f-563c-ba11-4de150b336af';
+    let goal1FromStore = getGoalById(store.getState(), goal1Id);
+    expect(goal1FromStore).not.toBe(null);
+    goalNumberInStore = getGoalsByPlanId(store.getState(), plan1Id).length;
+    expect(goalNumberInStore).toEqual(1);
+
+    store.dispatch(fetchGoals([fixtures.goal2]));
+    const goal2Id = 'f8d4e0a9-5867-5c78-9e26-de45d72556c4';
+    const goal2FromStore = getGoalById(store.getState(), goal2Id);
+    goal1FromStore = getGoalById(store.getState(), goal1Id);
+    expect(goal2FromStore).not.toBe(null);
+    expect(goal1FromStore).not.toBe(null);
+    goalNumberInStore = getGoalsByPlanId(store.getState(), plan1Id).length;
+    expect(goalNumberInStore).toEqual(2);
+
+    store.dispatch(fetchGoals([fixtures.goal1]));
+    goalNumberInStore = getGoalsByPlanId(store.getState(), plan1Id).length;
+    expect(goalNumberInStore).toEqual(2);
+  });
 });
