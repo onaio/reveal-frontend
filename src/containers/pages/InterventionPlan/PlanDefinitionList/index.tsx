@@ -51,7 +51,7 @@ const PlanDefinitionList = (props: PlanListProps) => {
   /** async function to load the data */
   async function loadData() {
     try {
-      setLoading(plans.length < 1);
+      setLoading(plans.length < 1); // only set loading when there are no plans
       const planObjects = await apiService.list();
       fetchPlans(planObjects);
     } catch (e) {
@@ -81,7 +81,7 @@ const PlanDefinitionList = (props: PlanListProps) => {
       ];
     }),
     headerItems: ['Title', 'Intervention Type', 'Status', 'Last Modified'],
-    tableClass: 'table table-striped plans-list',
+    tableClass: 'table table-bordered plans-list',
   };
 
   return (
