@@ -296,6 +296,8 @@ export const extractPlanRecordFromPlanPayload = (planPayload: PlanPayload): Plan
 export const PLANS_FETCHED = 'reveal/reducer/plans/PLANS_FETCHED';
 /** PLAN_RECORDS_FETCHED action type */
 export const PLAN_RECORDS_FETCHED = 'reveal/reducer/plans/PLAN_RECORDS_FETCHED';
+/** REMOVE_PLANS action_type */
+export const REMOVE_PLANS = 'reveal/reducer/plans/REMOVE_PLANS';
 
 /** FetchPlansAction interface for PLANS_FETCHED */
 interface FetchPlansAction extends AnyAction {
@@ -308,8 +310,18 @@ interface FetchPlanRecordsAction extends AnyAction {
   type: typeof PLAN_RECORDS_FETCHED;
 }
 
+/** removePlansAction interface for REMOVE_PLANS */
+interface RemovePlansAction extends AnyAction {
+  type: typeof REMOVE_PLANS;
+  plansById: {};
+}
+
 /** Create type for Plan reducer actions */
-export type PlanActionTypes = FetchPlansAction | FetchPlanRecordsAction | AnyAction;
+export type PlanActionTypes =
+  | FetchPlansAction
+  | FetchPlanRecordsAction
+  | RemovePlansAction
+  | AnyAction;
 
 /** interface for Plan state */
 interface PlanState {
@@ -339,12 +351,23 @@ export default function reducer(state = initialState, action: PlanActionTypes): 
         ...state,
         planRecordsById: action.planRecordsById,
       });
+    case REMOVE_PLANS:
+      return SeamlessImmutable({
+        ...state,
+        plansById: action.plansById,
+      });
     default:
       return state;
   }
 }
 
 // action creators
+
+/** removePlansAction */
+export const removePlansAction: RemovePlansAction = {
+  plansById: {},
+  type: REMOVE_PLANS,
+};
 
 /** fetchPlans - action creator setting plansById
  * @param {Plan[]} plansList - array of plan objects
