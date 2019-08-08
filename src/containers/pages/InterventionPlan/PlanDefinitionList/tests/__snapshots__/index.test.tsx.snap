@@ -819,10 +819,52 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
         </div>
       </HeaderBreadcrumb>
       <h3
-        className="mb-3 page-title"
+        className="mt-3 mb-3 page-title"
       >
         Plans
       </h3>
+      <Row
+        tag="div"
+      >
+        <div
+          className="row"
+        >
+          <Col
+            tag="div"
+            widths={
+              Array [
+                "xs",
+                "sm",
+                "md",
+                "lg",
+                "xl",
+              ]
+            }
+          >
+            <div
+              className="col"
+            >
+              <LinkToNewPlans
+                classProp="focus-investigation btn btn-primary float-right mt-2 mb-3"
+              >
+                <Link
+                  className="focus-investigation btn btn-primary float-right mt-2 mb-3"
+                  replace={false}
+                  to="/plans/new"
+                >
+                  <a
+                    className="focus-investigation btn btn-primary float-right mt-2 mb-3"
+                    href="/plans/new"
+                    onClick={[Function]}
+                  >
+                    Add Focus Investigation
+                  </a>
+                </Link>
+              </LinkToNewPlans>
+            </div>
+          </Col>
+        </div>
+      </Row>
       <Row
         tag="div"
       >
