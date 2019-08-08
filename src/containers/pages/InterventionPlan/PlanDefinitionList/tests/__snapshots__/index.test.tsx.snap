@@ -730,6 +730,7 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
         },
       ]
     }
+    service={[Function]}
   >
     <div>
       <HelmetWrapper
