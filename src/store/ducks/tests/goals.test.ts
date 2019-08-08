@@ -13,6 +13,7 @@ import reducer, {
   getGoalsByPlanId,
   Goal,
   reducerName,
+  removeGoalsAction,
   setCurrentGoal,
 } from '../goals';
 import * as fixtures from './fixtures';
@@ -102,7 +103,23 @@ describe('reducers/goals', () => {
     }
   });
 
+  it('should reset goal records in store', () => {
+    store.dispatch(removeGoalsAction);
+    let goalsInStore = getGoalsById(store.getState());
+    expect(goalsInStore).toEqual({});
+
+    store.dispatch(fetchGoals(fixtures.goals));
+    goalsInStore = getGoalsById(store.getState());
+    goalsInStore = getGoalsById(store.getState());
+
+    store.dispatch(removeGoalsAction);
+    expect(goalsInStore).not.toEqual({});
+    goalsInStore = getGoalsById(store.getState());
+    expect(goalsInStore).toEqual({});
+  });
+
   it('Should add new goals to existing goals in store', () => {
+    store.dispatch(removeGoalsAction);
     const plan1Id = '10f9e9fa-ce34-4b27-a961-72fab5206ab6';
     let goalNumberInStore = getGoalsByPlanId(store.getState(), plan1Id).length;
     expect(goalNumberInStore).toEqual(0);
