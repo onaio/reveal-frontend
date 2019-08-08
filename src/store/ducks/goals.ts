@@ -81,7 +81,7 @@ export default function reducer(state = initialState, action: GoalActionTypes): 
     case GOALS_FETCHED:
       return SeamlessImmutable({
         ...state,
-        goalsById: action.goalsById,
+        goalsById: { ...state.goalsById, ...action.goalsById },
       });
     case SET_CURRENT_GOAL:
       return SeamlessImmutable({
