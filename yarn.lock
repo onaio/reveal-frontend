@@ -1165,6 +1165,11 @@
   resolved "https://registry.yarnpkg.com/@onaio/element-map/-/element-map-0.0.2.tgz#969a19bdf870a41820b10cbba9edffa2af30201c"
   integrity sha512-p4Cq0gnmTUdyqb7X2KCgLzsqqVzvPoRLy1YUwCTnCVyaLYVHhW5x3EppjUxpFbXrqGEcZy5UmfDQ/xB/SXDBbA==
 
+"@onaio/element-map@^0.0.5":
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/@onaio/element-map/-/element-map-0.0.5.tgz#6c8b55314d41fb76c1ea7538d4ee217a121936cb"
+  integrity sha512-PxhKq2uR9j8fZkvIqiUMp8CvZTX358d3sWuLj5a7LRpTK/Y+ZS1L9XZp2Xb9pplHCSferZxzwjm/YfKqVr56lA==
+
 "@onaio/gatekeeper@^0.0.14":
   version "0.0.14"
   resolved "https://registry.yarnpkg.com/@onaio/gatekeeper/-/gatekeeper-0.0.14.tgz#bdffeb5056cbb6ecc322178792fb40d3c87bbd6e"
@@ -1173,6 +1178,13 @@
     "@onaio/session-reducer" "^0.0.10"
     client-oauth2 "^4.2.3"
     query-string "^6.4.2"
+
+"@onaio/list-view@^0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@onaio/list-view/-/list-view-0.0.1.tgz#575f48f8a167437974c3ea2a37c4996190ca1331"
+  integrity sha512-/U5RNGIVXYTp5ecn6I/C/FErzAlYVCUAoYARyojdJjCdgo1245s/kc8R4f3VT/fztf14mQpwh1FNS+5qIjETKA==
+  dependencies:
+    "@onaio/element-map" "^0.0.5"
 
 "@onaio/redux-reducer-registry@^0.0.8":
   version "0.0.8"
