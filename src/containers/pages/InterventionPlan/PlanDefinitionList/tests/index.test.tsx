@@ -3,7 +3,7 @@ import toJson from 'enzyme-to-json';
 import { createBrowserHistory } from 'history';
 import React from 'react';
 import { Router } from 'react-router';
-import PlanDefinitionList from '../';
+import { PlanDefinitionList } from '../';
 import * as fixtures from '../../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
 
 const history = createBrowserHistory();
