@@ -86,7 +86,7 @@ export default function reducer(
       if (action.structuresById) {
         return SeamlessImmutable({
           ...state,
-          structuresById: action.structuresById,
+          structuresById: { ...state.structuresById, ...action.structuresById },
         });
       }
       return state;
