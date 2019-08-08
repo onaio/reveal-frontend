@@ -31,7 +31,7 @@ import Home from '../containers/pages/Home/Home';
 import IrsPlans from '../containers/pages/InterventionPlan/IRS';
 import IrsPlan from '../containers/pages/InterventionPlan/IRS/plan';
 import NewPlan from '../containers/pages/InterventionPlan/NewPlan';
-import PlanDefinitionList from '../containers/pages/InterventionPlan/PlanDefinitionList';
+import ConnectedPlanDefinitionList from '../containers/pages/InterventionPlan/PlanDefinitionList';
 import { oAuthUserInfoGetter } from '../helpers/utils';
 
 library.add(faMap);
@@ -130,7 +130,7 @@ class App extends Component {
                 disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                 exact={true}
                 path={PLAN_LIST_URL}
-                component={PlanDefinitionList}
+                component={ConnectedPlanDefinitionList}
               />
               {/* tslint:disable jsx-no-lambda */}
               <Route
