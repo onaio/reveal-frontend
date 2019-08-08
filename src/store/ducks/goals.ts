@@ -32,19 +32,33 @@ export const GOALS_FETCHED = 'reveal/reducer/goals/GOALS_FETCHED';
 /** SET_CURRENT_GOAL action type */
 export const SET_CURRENT_GOAL = 'reveal/reducer/goals/SET_CURRENT_GOAL';
 
+/** REMOVE_GOALS action type */
+export const REMOVE_GOALS = 'reveal/reducer/goals/REMOVE_GOALS';
+
 /** interface for authorize action */
 interface FetchGoalsAction extends AnyAction {
   goalsById: { [key: string]: Goal };
   type: typeof GOALS_FETCHED;
 }
 
+/** interface for setting current goal action */
 interface SetCurrentGoalAction extends AnyAction {
   currentGoal: string | null;
   type: typeof SET_CURRENT_GOAL;
 }
 
+/** Interface for remove goals action */
+interface RemoveGoalsAction extends AnyAction {
+  type: typeof REMOVE_GOALS;
+  goalsById: {};
+}
+
 /** Create type for Goal reducer action */
-export type GoalActionTypes = FetchGoalsAction | SetCurrentGoalAction | AnyAction;
+export type GoalActionTypes =
+  | FetchGoalsAction
+  | SetCurrentGoalAction
+  | RemoveGoalsAction
+  | AnyAction;
 
 /** interface for Goal state */
 interface GoalState {
@@ -73,6 +87,11 @@ export default function reducer(state = initialState, action: GoalActionTypes): 
       return SeamlessImmutable({
         ...state,
         currentGoal: action.currentGoal,
+      });
+    case REMOVE_GOALS:
+      return SeamlessImmutable({
+        ...state,
+        goalsById: action.goalsById,
       });
     default:
       return state;
@@ -109,6 +128,13 @@ export const setCurrentGoal = (currentGoal: string | null): SetCurrentGoalAction
     currentGoal,
     type: SET_CURRENT_GOAL,
   };
+};
+
+// Actions
+
+export const removeGoalsAction: RemoveGoalsAction = {
+  goalsById: {},
+  type: REMOVE_GOALS,
 };
 
 // selectors
