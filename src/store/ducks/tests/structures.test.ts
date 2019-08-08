@@ -101,6 +101,22 @@ describe('reducers/tasks', () => {
       type: FEATURE_COLLECTION,
     });
   });
+
+  it('should add new structures to existing structures, no overwrite', () => {
+    store.dispatch(removeStructuresAction);
+    let structuresinStore = getAllStructuresFC(store.getState());
+    expect(structuresinStore).toEqual({
+      features: [],
+      type: FEATURE_COLLECTION,
+    });
+
+    store.dispatch(setStructures(cloneDeep([fixtures.structure1])));
+    structuresinStore = getAllStructuresFC(store.getState());
+    expect(structuresinStore.features.length).toEqual(1);
+    store.dispatch(setStructures(cloneDeep([fixtures.structure2])));
+    structuresinStore = getAllStructuresFC(store.getState());
+    expect(structuresinStore.features.length).toEqual(2);
+  });
 });
 
 describe('reducers/structures/FeatureCollectionSelectors', () => {
