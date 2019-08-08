@@ -1089,6 +1089,17 @@ class IrsPlan extends React.Component<
         }
       }
 
+      // if parent is no longer, deselect it (todo: make this recursive)
+      const { parent_id } = jurisdictionsById[id];
+      const isParentSelected = doSelect
+        ? true
+        : parent_id && this.getIsJurisdictionPartiallySelected(parent_id, newPlanJurisdictionIds);
+      if (parent_id && !isParentSelected) {
+        newPlanJurisdictionIds.splice(newPlanJurisdictionIds.indexOf(parent_id), 1);
+      } else if (parent_id && isParentSelected && !newPlanJurisdictionIds.includes(parent_id)) {
+        newPlanJurisdictionIds.push(parent_id);
+      }
+
       // loop through all geographic_levels
       const geoGraphicLevels = this.getGeographicLevelsFromJurisdictions(filteredJurisdictions);
       if (
@@ -2008,16 +2019,17 @@ class IrsPlan extends React.Component<
    * @param id - the jurisdiction_id of the Jurisdiction being checked
    * @returns boolean
    */
-  private getIsJurisdictionPartiallySelected(id: string | null): boolean {
+  private getIsJurisdictionPartiallySelected(id: string | null, selectedIds?: string[]): boolean {
     const { newPlan, filteredJurisdictionIds } = this.state;
     const { jurisdictionsById } = this.props;
     const filteredJurisdictions = filteredJurisdictionIds
       .map(j => jurisdictionsById[j])
       .filter(j => !!j);
     const planJurisdictionIds =
-      newPlan && newPlan.plan_jurisdictions_ids
+      selectedIds ||
+      (newPlan && newPlan.plan_jurisdictions_ids
         ? [...newPlan.plan_jurisdictions_ids]
-        : [...filteredJurisdictionIds];
+        : [...filteredJurisdictionIds]);
 
     if (id) {
       // check if drilled down Jurisdiction is at least partially selected
