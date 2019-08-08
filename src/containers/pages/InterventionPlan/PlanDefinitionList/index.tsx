@@ -51,7 +51,7 @@ const PlanDefinitionList = (props: PlanListProps) => {
   /** async function to load the data */
   async function loadData() {
     try {
-      setLoading(true);
+      setLoading(plans.length < 1);
       const planObjects = await apiService.list();
       fetchPlans(planObjects);
     } catch (e) {
