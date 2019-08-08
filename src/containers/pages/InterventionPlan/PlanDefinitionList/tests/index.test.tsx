@@ -2,10 +2,8 @@ import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import { createBrowserHistory } from 'history';
 import React from 'react';
-import { Provider } from 'react-redux';
 import { Router } from 'react-router';
-import ConnectedPlanDefinitionList, { PlanDefinitionList } from '../';
-import store from '../../../../../store';
+import { PlanDefinitionList } from '../';
 import * as fixtures from '../../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
 
 /* tslint:disable-next-line no-var-requires */
@@ -38,19 +36,6 @@ describe('components/InterventionPlan/PlanDefinitionList', () => {
       <Router history={history}>
         <PlanDefinitionList {...props} />
       </Router>
-    );
-    expect(toJson(wrapper)).toMatchSnapshot();
-    wrapper.unmount();
-  });
-
-  it('works when connected to redux store', () => {
-    fetch.mockResponseOnce(fixtures.plansJSON);
-    const wrapper = mount(
-      <Provider store={store}>
-        <Router history={history}>
-          <ConnectedPlanDefinitionList />
-        </Router>
-      </Provider>
     );
     expect(toJson(wrapper)).toMatchSnapshot();
     wrapper.unmount();
