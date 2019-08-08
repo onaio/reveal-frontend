@@ -1261,18 +1261,23 @@ class IrsPlan extends React.Component<
     jurisdictions: Jurisdiction[],
     tileset: FlexObject | undefined
   ) {
+    const uniqueKeys: string[] = [];
     const selectionStyle = {
-      default: 0.75,
+      default: 0.3,
       property: (tileset && tileset.idField) || 'jurisdiction_id',
       stops: [] as Array<[string, number]>,
       type: 'categorical',
     };
     for (const j of jurisdictions) {
       const key: string = tileset && tileset.idField && j.name ? j.name : j.jurisdiction_id;
-      const opacity = selectedIds.includes(j.jurisdiction_id) ? 0.75 : 0.3;
-      selectionStyle.stops.push([key, opacity]);
+      // keys in stops must be unique
+      if (!uniqueKeys.includes(key)) {
+        uniqueKeys.push(key);
+        const opacity = selectedIds.includes(j.jurisdiction_id) ? 0.75 : 0.3;
+        selectionStyle.stops.push([key, opacity]);
+      }
     }
-    return selectionStyle;
+    return (selectionStyle.stops.length && selectionStyle) || 0.75;
   }
 
   /** getGeographicLevelsFromJurisdictions - utility to derive all geographic levels
@@ -1296,7 +1301,7 @@ class IrsPlan extends React.Component<
 
   /** getGisidaWrapperProps - GisidaWrapper prop builder building out layers and handlers for Gisida */
   private getGisidaWrapperProps(): GisidaProps | null {
-    const { country, isLoadingGeoms, filteredJurisdictionIds } = this.state;
+    const { country, isLoadingGeoms, filteredJurisdictionIds, newPlan } = this.state;
     const { jurisdictionsById } = this.props;
     const filteredJurisdictions = filteredJurisdictionIds.map(j => jurisdictionsById[j]);
 
@@ -1332,8 +1337,26 @@ class IrsPlan extends React.Component<
     const ADMIN_FILL_LAYER_IDS: string[] = [];
     const ADMIN_FILL_LAYERS: any[] = [];
     const adminFillColors: string[] = ['black', 'red', 'orange', 'yellow', 'green'];
+    const selectedJurisdictionsIds =
+      newPlan && newPlan.plan_jurisdictions_ids
+        ? [...newPlan.plan_jurisdictions_ids]
+        : [...filteredJurisdictionIds];
+
     for (let t = 1; t < tilesets.length; t += 1) {
       const adminFillLayerId = `${ADMN0_EN}-admin-${t}-fill`;
+
+      const adminLevelIds = selectedJurisdictionsIds.filter(
+        j => jurisdictionsById[j] && jurisdictionsById[j].geographic_level === t
+      );
+      const adminLevelJurs = filteredJurisdictionIds
+        .filter(j => jurisdictionsById[j] && jurisdictionsById[j].geographic_level === t)
+        .map(j => jurisdictionsById[j]);
+
+      const adminFillOpacity = this.getJurisdictionSelectionStops(
+        adminLevelIds,
+        adminLevelJurs,
+        tilesets[t]
+      );
 
       ADMIN_FILL_LAYER_IDS.unshift(adminFillLayerId);
       const adminFillLayer = {
@@ -1341,7 +1364,7 @@ class IrsPlan extends React.Component<
         id: adminFillLayerId,
         paint: {
           'fill-color': adminFillColors[t],
-          'fill-opacity': 0.75,
+          'fill-opacity': adminFillOpacity,
         },
         source: {
           layer: tilesets[t].layer,
@@ -1382,6 +1405,7 @@ class IrsPlan extends React.Component<
       ADMIN_FILL_LAYERS.unshift(adminFillLayer);
     }
 
+    const self = this;
     function getJurisdictionFillLayers(jurisdictions: Jurisdiction[], tiles: any[]) {
       const layers: FlexObject[] = [];
       const geoGraphicLevels: number[] = [];
@@ -1398,6 +1422,10 @@ class IrsPlan extends React.Component<
       }
       geoGraphicLevels.sort();
       const jurisdictionFeatures: any[] = [];
+      const selectedIds =
+        self.state.newPlan && self.state.newPlan.plan_jurisdictions_ids
+          ? [...self.state.newPlan.plan_jurisdictions_ids]
+          : [...filteredJurisdictionIds];
 
       for (let i = 1; i < geoGraphicLevels.length; i += 1) {
         const g = geoGraphicLevels[i];
@@ -1426,6 +1454,20 @@ class IrsPlan extends React.Component<
           jurisdictionFeatures.push(feature);
         }
 
+        const geoLevelIds: string[] = featureCollection.features
+          .map(f => (f && f.properties && f.properties.jurisdiction_id) || '')
+          .filter(j => j !== '' && selectedIds.includes(j));
+
+        const geoLevelJurs: Jurisdiction[] = jurisdictions.filter(j =>
+          geoLevelIds.includes(j.jurisdiction_id)
+        );
+
+        const selectionFillOpacity = self.getJurisdictionSelectionStops(
+          geoLevelIds,
+          geoLevelJurs,
+          undefined
+        );
+
         const layerId = `${ADMN0_EN}-admin-${g}-jurisdiction-fill`;
         const layer = {
           ...fillLayerConfig,
@@ -1433,6 +1475,7 @@ class IrsPlan extends React.Component<
           id: layerId,
           paint: {
             'fill-color': adminLayerColors[g],
+            'fill-opacity': selectionFillOpacity,
           },
           popup: {
             body: '<p class="select-jurisdictin-tooltip">{{name}}</p>',
