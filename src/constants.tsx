@@ -105,7 +105,7 @@ export const SAVING = 'Saving';
 export type SAVING = typeof SAVING;
 export const DATE = 'Date';
 export type DATE = typeof DATE;
-export const PLANS = 'Plans';
+export const PLANS = 'Manage Plans';
 export type PLANS = typeof PLANS;
 
 export const JURISDICTION_ID = 'jurisdiction_id';
