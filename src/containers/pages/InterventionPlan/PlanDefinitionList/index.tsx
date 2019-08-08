@@ -5,6 +5,7 @@ import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
+import LinkToNewPlans from '../../../../components/LinkToNewPlans';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
 import { PlanDefinition } from '../../../../configs/settings';
@@ -29,7 +30,7 @@ interface PlanListProps {
 /** Simple component that loads the new plan form and allows you to create a new plan */
 const PlanDefinitionList = (props: PlanListProps) => {
   const { fetchPlans, plans, service } = props;
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const apiService = new service('/plans');
 
@@ -90,7 +91,12 @@ const PlanDefinitionList = (props: PlanListProps) => {
         <title>{pageTitle}</title>
       </Helmet>
       <HeaderBreadcrumb {...breadcrumbProps} />
-      <h3 className="mb-3 page-title">{pageTitle}</h3>
+      <h3 className="mt-3 mb-3 page-title">{pageTitle}</h3>
+      <Row>
+        <Col>
+          <LinkToNewPlans classProp="focus-investigation btn btn-primary float-right mt-2 mb-3" />
+        </Col>
+      </Row>
       <Row>
         <Col>
           <ListView {...listViewProps} />
