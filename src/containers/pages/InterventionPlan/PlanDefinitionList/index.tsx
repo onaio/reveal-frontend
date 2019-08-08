@@ -34,8 +34,8 @@ const PlanDefinitionList = (props: PlanListProps) => {
 
   apiService
     .list()
-    .then((e: PlanDefinition[]) => {
-      fetchPlans(e);
+    .then((planObjects: PlanDefinition[]) => {
+      fetchPlans(planObjects);
     })
     .catch((e: Error) => {
       // do something with the error?
