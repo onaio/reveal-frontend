@@ -883,7 +883,7 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
                 }
                 renderHeaders={[Function]}
                 renderRows={[Function]}
-                tableClass="table table-striped plans-list"
+                tableClass="table table-bordered plans-list"
                 tbodyClass="listview-tbody"
                 tdClass="listview-td"
                 thClass="listview-th"
@@ -891,7 +891,7 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
                 trClass="listview-tr"
               >
                 <table
-                  className="table table-striped plans-list"
+                  className="table table-bordered plans-list"
                 >
                   <thead
                     className="listview-thead"
