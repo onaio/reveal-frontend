@@ -1,6 +1,6 @@
 import ListView from '@onaio/list-view';
 import reducerRegistry from '@onaio/redux-reducer-registry';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { Col, Row } from 'reactstrap';
@@ -22,24 +22,16 @@ reducerRegistry.register(planDefinitionReducerName, planDefinitionReducer);
 /** interface for PlanList props */
 interface PlanListProps {
   fetchPlans: typeof fetchPlanDefinitions;
-  plans: PlanDefinition[] | null;
+  plans: PlanDefinition[];
   service: typeof OpenSRPService;
 }
 
 /** Simple component that loads the new plan form and allows you to create a new plan */
 const PlanDefinitionList = (props: PlanListProps) => {
   const { fetchPlans, plans, service } = props;
+  const [loading, setLoading] = useState<boolean>(false);
 
   const apiService = new service('/plans');
-
-  apiService
-    .list()
-    .then((planObjects: PlanDefinition[]) => {
-      fetchPlans(planObjects);
-    })
-    .catch((e: Error) => {
-      // do something with the error?
-    });
 
   const pageTitle: string = PLANS;
 
@@ -56,7 +48,24 @@ const PlanDefinitionList = (props: PlanListProps) => {
     ],
   };
 
-  if (!plans) {
+  /** async function to load the data */
+  async function loadData() {
+    try {
+      setLoading(true);
+      const planObjects = await apiService.list();
+      fetchPlans(planObjects);
+    } catch (e) {
+      // do something with the error?
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  if (loading === true) {
     return <Loading />;
   }
 
@@ -106,7 +115,7 @@ export { PlanDefinitionList };
 
 /** interface to describe props from mapStateToProps */
 interface DispatchedStateProps {
-  plans: PlanDefinition[] | null;
+  plans: PlanDefinition[];
 }
 
 /** map state to props */
