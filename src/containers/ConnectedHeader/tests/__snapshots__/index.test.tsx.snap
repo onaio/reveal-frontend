@@ -84,6 +84,19 @@ Object {
                 activeClassName="active"
                 aria-current="page"
                 className="nav-link"
+                to="/plans/list"
+              >
+                Plans
+              </NavLink>
+            </DropdownItem>
+            <DropdownItem
+              tag="button"
+              toggle={true}
+            >
+              <NavLink
+                activeClassName="active"
+                aria-current="page"
+                className="nav-link"
                 to="/intervention/irs"
               >
                 IRS
@@ -264,6 +277,19 @@ Object {
             right={true}
             tag="div"
           >
+            <DropdownItem
+              tag="button"
+              toggle={true}
+            >
+              <NavLink
+                activeClassName="active"
+                aria-current="page"
+                className="nav-link"
+                to="/plans/list"
+              >
+                Plans
+              </NavLink>
+            </DropdownItem>
             <DropdownItem
               tag="button"
               toggle={true}

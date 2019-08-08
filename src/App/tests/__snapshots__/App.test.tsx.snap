@@ -316,6 +316,45 @@ exports[`App renders App correctly 1`] = `
                                                     activeClassName="active"
                                                     aria-current="page"
                                                     className="nav-link"
+                                                    to="/plans/list"
+                                                  >
+                                                    <Route
+                                                      path="\\\\/plans\\\\/list"
+                                                    >
+                                                      <Link
+                                                        aria-current={null}
+                                                        className="nav-link"
+                                                        replace={false}
+                                                        to="/plans/list"
+                                                      >
+                                                        <a
+                                                          aria-current={null}
+                                                          className="nav-link"
+                                                          href="/plans/list"
+                                                          onClick={[Function]}
+                                                        >
+                                                          Plans
+                                                        </a>
+                                                      </Link>
+                                                    </Route>
+                                                  </NavLink>
+                                                </button>
+                                              </DropdownItem>
+                                              <DropdownItem
+                                                tag="button"
+                                                toggle={true}
+                                              >
+                                                <button
+                                                  className="dropdown-item"
+                                                  onClick={[Function]}
+                                                  role="menuitem"
+                                                  tabIndex="0"
+                                                  type="button"
+                                                >
+                                                  <NavLink
+                                                    activeClassName="active"
+                                                    aria-current="page"
+                                                    className="nav-link"
                                                     to="/intervention/irs"
                                                   >
                                                     <Route
