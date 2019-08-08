@@ -28,6 +28,8 @@ import {
   INTERVENTION_IRS_URL,
   LOGIN_URL,
   LOGOUT_URL,
+  PLAN_LIST_URL,
+  PLANS,
 } from '../../../constants';
 import './Header.css';
 
@@ -99,6 +101,13 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
                     Planning
                   </DropdownToggle>
                   <DropdownMenu right={true}>
+                    {ENABLE_FI && (
+                      <DropdownItem>
+                        <NavLink to={PLAN_LIST_URL} className="nav-link" activeClassName="active">
+                          {PLANS}
+                        </NavLink>
+                      </DropdownItem>
+                    )}
                     {ENABLE_IRS && (
                       <DropdownItem>
                         <NavLink
