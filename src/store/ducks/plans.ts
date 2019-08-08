@@ -344,7 +344,7 @@ export default function reducer(state = initialState, action: PlanActionTypes): 
     case PLANS_FETCHED:
       return SeamlessImmutable({
         ...state,
-        plansById: action.plansById,
+        plansById: { ...state.plansById, ...action.plansById },
       });
     case PLAN_RECORDS_FETCHED:
       return SeamlessImmutable({
