@@ -75,7 +75,9 @@ const PlanDefinitionList = (props: PlanListProps) => {
       const typeUseContext = planObj.useContext.filter(e => e.code === 'interventionType');
 
       return [
-        planObj.title,
+        <a href="#" key={planObj.identifier}>
+          {planObj.title}
+        </a>,
         typeUseContext.length > 0 ? typeUseContext[0].valueCodableConcept : '',
         planObj.status,
         planObj.date,
