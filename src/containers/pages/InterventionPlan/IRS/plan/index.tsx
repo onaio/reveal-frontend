@@ -1097,6 +1097,7 @@ class IrsPlan extends React.Component<
         country.tilesets
       ) {
         const Map = window.maps.find((e: mbMap) => (e as GisidaMap)._container.id === MAP_ID);
+
         for (
           let g = clickedFeatureJurisdiction.geographic_level;
           g < geoGraphicLevels.length;
@@ -1158,7 +1159,63 @@ class IrsPlan extends React.Component<
         ...(this.state.newPlan as PlanRecord),
         plan_jurisdictions_ids: [...newPlanJurisdictionIds],
       };
-      this.setState({ newPlan });
+      this.setState({ newPlan }, () => {
+        const {
+          country: nextCountry,
+          filteredJurisdictionIds: nextFilteredJurisdictionIds,
+          newPlan: nextNewPlan,
+        } = this.state;
+        const Map = window.maps.find((m: mbMap) => (m as GisidaMap)._container.id === MAP_ID);
+
+        // Loop through geographic levels and update selection fill-opacity stops
+        if (nextCountry && Map) {
+          const nextFilteredJurisdictions = nextFilteredJurisdictionIds.map(
+            j => jurisdictionsById[j]
+          );
+          const selectedJurisdictionsIds =
+            nextNewPlan && nextNewPlan.plan_jurisdictions_ids
+              ? [...nextNewPlan.plan_jurisdictions_ids]
+              : [...nextFilteredJurisdictionIds];
+
+          const geoGraphicLevels = this.getGeographicLevelsFromJurisdictions(
+            nextFilteredJurisdictions
+          );
+
+          for (let d = 1; d < geoGraphicLevels.length; d += 1) {
+            // ids selected in this geographic level
+            const adminLevelIds = selectedJurisdictionsIds.filter(
+              j => jurisdictionsById[j] && jurisdictionsById[j].geographic_level === d
+            );
+            // all Jurisdictions for this geographic level
+            const adminLevelJurs = nextFilteredJurisdictionIds
+              .filter(j => jurisdictionsById[j] && jurisdictionsById[j].geographic_level === d)
+              .map(j => jurisdictionsById[j]);
+            // Mapbox categorical stops style spec
+            const adminFillOpacity = this.getJurisdictionSelectionStops(
+              adminLevelIds,
+              adminLevelJurs,
+              (nextCountry && nextCountry.tilesets && nextCountry.tilesets[d]) || undefined
+            );
+
+            if (Map && Map.getLayer(`${nextCountry.ADMN0_EN}-admin-${d}-fill`)) {
+              Map.setPaintProperty(
+                `${nextCountry.ADMN0_EN}-admin-${d}-fill`,
+                'fill-opacity',
+                adminFillOpacity
+              );
+            } else if (
+              Map &&
+              Map.getLayer(`${nextCountry.ADMN0_EN}-admin-${d}-jurisdiction-fill`)
+            ) {
+              Map.setPaintProperty(
+                `${nextCountry.ADMN0_EN}-admin-${d}-jurisdiction-fill`,
+                'fill-opacity',
+                adminFillOpacity
+              );
+            }
+          }
+        }
+      });
     }
   }
 
