@@ -105,6 +105,8 @@ export const SAVING = 'Saving';
 export type SAVING = typeof SAVING;
 export const DATE = 'Date';
 export type DATE = typeof DATE;
+export const PLANS = 'Plans';
+export type PLANS = typeof PLANS;
 
 export const JURISDICTION_ID = 'jurisdiction_id';
 export type JURISDICTION_ID = typeof JURISDICTION_ID;
@@ -138,6 +140,8 @@ export const FI_HISTORICAL_URL = '/focus-investigation/historical';
 export type FI_HISTORICAL_URL = typeof FI_HISTORICAL_URL;
 export const NEW_PLAN_URL = '/plans/new';
 export type NEW_PLAN_URL = typeof NEW_PLAN_URL;
+export const PLAN_LIST_URL = '/plans/list';
+export type PLAN_LIST_URL = typeof PLAN_LIST_URL;
 
 // OpenSRP API strings
 export const OPENSRP_FIND_BY_PROPERTIES = 'findByProperties';
