@@ -15,7 +15,7 @@ describe('components/InterventionPlan/PlanDefinitionList', () => {
 
   it('renders without crashing', () => {
     const props = {
-      plan: [fixtures.plans],
+      plans: fixtures.plans,
     };
     shallow(
       <Router history={history}>
@@ -26,7 +26,7 @@ describe('components/InterventionPlan/PlanDefinitionList', () => {
 
   it('renders plan definition list correctly', () => {
     const props = {
-      plans: [fixtures.plans],
+      plans: fixtures.plans,
     };
     const wrapper = mount(
       <Router history={history}>
