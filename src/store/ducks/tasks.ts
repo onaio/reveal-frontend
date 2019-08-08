@@ -119,7 +119,7 @@ export default function reducer(state = initialState, action: TaskActionTypes): 
       if (action.tasksById) {
         return SeamlessImmutable({
           ...state,
-          tasksById: action.tasksById,
+          tasksById: { ...state.tasksById, ...action.tasksById },
         });
       }
       return state;
