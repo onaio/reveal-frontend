@@ -5,14 +5,14 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
-import { IRS_TITLE } from '../../../../constants';
-import { FI_SINGLE_URL } from '../../../../constants';
-import store from '../../../../store';
-import { Plan } from '../../../../store/ducks/plans';
-import * as fixtures from '../../../../store/ducks/tests/fixtures';
-import ConnectedIrsPlans, { IrsPlans } from '../IRS';
+import ConnectedIrsPlans, { IrsPlans } from '..';
+import { IRS_TITLE } from '../../../../../constants';
+import { FI_SINGLE_URL } from '../../../../../constants';
+import store from '../../../../../store';
+import { Plan } from '../../../../../store/ducks/plans';
+import * as fixtures from '../../../../../store/ducks/tests/fixtures';
 
-jest.mock('../../../../configs/env');
+jest.mock('../../../../../configs/env');
 
 const history = createBrowserHistory();
 
