@@ -10,6 +10,7 @@ import reducer, {
   getJurisdictionsIdArray,
   Jurisdiction,
   reducerName,
+  removeJurisdictionsAction,
 } from '../jurisdictions';
 import * as fixtures from './fixtures';
 
@@ -90,5 +91,23 @@ describe('reducers/jurisdictions', () => {
         jurisdiction_id: 'abcde',
       });
     }
+  });
+
+  it('can remove jurisdictions from store', () => {
+    store.dispatch(removeJurisdictionsAction);
+    let jurisdictionsInStore = getJurisdictionsById(store.getState());
+    expect(jurisdictionsInStore).toEqual({});
+
+    store.dispatch(fetchJurisdictions([fixtures.jurisdiction3] as any));
+    let jurisdiction3FromStore = getJurisdictionById(store.getState(), 'abcde');
+    jurisdictionsInStore = getJurisdictionsById(store.getState());
+    expect(jurisdiction3FromStore).not.toBeNull();
+    expect(jurisdictionsInStore).not.toEqual({});
+
+    store.dispatch(removeJurisdictionsAction);
+    jurisdiction3FromStore = getJurisdictionById(store.getState(), 'abcde');
+    jurisdictionsInStore = getJurisdictionsById(store.getState());
+    expect(jurisdiction3FromStore).toBeNull();
+    expect(jurisdictionsInStore).toEqual({});
   });
 });
