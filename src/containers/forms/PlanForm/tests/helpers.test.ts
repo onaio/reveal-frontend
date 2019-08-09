@@ -12,6 +12,7 @@ import {
   bccTestPlanActivityWithEmptyfields,
   event,
   event2,
+  event3,
   expectedActivity,
   expectedActivity2,
   expectedExtractActivityFromPlanformResult,
@@ -63,5 +64,9 @@ describe('PlanForm/helpers', () => {
 
   it('check getNameTitle returns the correct value when IRS is selected', () => {
     expect(getNameTitle(event2, values)).toEqual(['IRS-2019-08-09', 'IRS 2019-08-09']);
+  });
+
+  it('check getNameTitle returns the correct value when nothing is selected', () => {
+    expect(getNameTitle(event3, values)).toEqual(['IRS-2019-08-09', 'IRS 2019-08-09']);
   });
 });

@@ -945,3 +945,7 @@ export const event2 = {
     value: 'IRS',
   },
 };
+
+export const event3 = {
+  target: {},
+};
