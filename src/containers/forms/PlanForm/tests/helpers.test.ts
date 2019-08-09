@@ -45,7 +45,7 @@ describe('PlanForm/helpers', () => {
     expect(doesFieldHaveErrors(field, index, errors)).toBe(false);
   });
   it('check extractActivitiesFromPlanForm returns the correct value', () => {
-    MockDate.set('1/30/2000');
+    MockDate.set('1/30/2000', 0);
     expect(extractActivitiesFromPlanForm(activities)).toEqual(
       expectedExtractActivityFromPlanformResult
     );
