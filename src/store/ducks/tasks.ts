@@ -2,7 +2,7 @@ import { Color } from 'csstype';
 import { get, keyBy, keys, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
 import SeamlessImmutable from 'seamless-immutable';
-import { MULTI_POLYGON, POINT, POLYGON } from '../../constants';
+import { MULTI_POLYGON, POLYGON } from '../../constants';
 import {
   FeatureCollection,
   GeoJSON,

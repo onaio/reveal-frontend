@@ -28,6 +28,8 @@ import {
   INTERVENTION_IRS_URL,
   LOGIN_URL,
   LOGOUT_URL,
+  PLAN_LIST_URL,
+  PLANS,
 } from '../../../constants';
 import './Header.css';
 
@@ -80,18 +82,48 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
           <Collapse isOpen={this.state.isOpen} navbar={true}>
             <Nav className="mr-auto" navbar={true}>
               <NavItem>
-                <NavLink to="/" className="nav-link" activeClassName="active">
+                <NavLink
+                  to="/"
+                  className={path === '/' ? 'nav-link active' : 'nav-link'}
+                  activeClassName="active"
+                >
                   Home
                 </NavLink>
               </NavItem>
-              {ENABLE_IRS && (
-                <NavItem>
-                  <NavLink to={INTERVENTION_IRS_URL} className="nav-link" activeClassName="active">
-                    IRS
-                  </NavLink>
-                </NavItem>
+
+              {(ENABLE_IRS || ENABLE_FI) && (
+                <UncontrolledDropdown nav={true} inNavbar={true}>
+                  <DropdownToggle
+                    nav={true}
+                    caret={true}
+                    className={path === INTERVENTION_IRS_URL ? 'nav-link active' : 'nav-link'}
+                  >
+                    Planning
+                  </DropdownToggle>
+                  <DropdownMenu right={true}>
+                    {ENABLE_FI && (
+                      <DropdownItem>
+                        <NavLink to={PLAN_LIST_URL} className="nav-link" activeClassName="active">
+                          {PLANS}
+                        </NavLink>
+                      </DropdownItem>
+                    )}
+                    {ENABLE_IRS && (
+                      <DropdownItem>
+                        <NavLink
+                          to={INTERVENTION_IRS_URL}
+                          className="nav-link"
+                          activeClassName="active"
+                        >
+                          IRS
+                        </NavLink>
+                      </DropdownItem>
+                    )}
+                  </DropdownMenu>
+                </UncontrolledDropdown>
               )}
-              {ENABLE_FI && (
+
+              {(ENABLE_IRS || ENABLE_FI) && (
                 <UncontrolledDropdown nav={true} inNavbar={true}>
                   <DropdownToggle
                     nav={true}
@@ -100,22 +132,31 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
                       path === FI_URL || path === FI_HISTORICAL_URL ? 'nav-link active' : 'nav-link'
                     }
                   >
-                    Focus Investigation
+                    Reporting
                   </DropdownToggle>
                   <DropdownMenu right={true}>
-                    <DropdownItem>
-                      <NavLink to={FI_URL} className="nav-link" activeClassName="active">
-                        Active
-                      </NavLink>
-                    </DropdownItem>
-                    <DropdownItem>
-                      <NavLink to={FI_HISTORICAL_URL} className="nav-link" activeClassName="active">
-                        Historical
-                      </NavLink>
-                    </DropdownItem>
+                    {ENABLE_FI && (
+                      <div>
+                        <DropdownItem>
+                          <NavLink to={FI_URL} className="nav-link" activeClassName="active">
+                            Focus Investigation
+                          </NavLink>
+                        </DropdownItem>
+                        <DropdownItem>
+                          <NavLink
+                            to={FI_HISTORICAL_URL}
+                            className="nav-link"
+                            activeClassName="active"
+                          >
+                            Historical FI
+                          </NavLink>
+                        </DropdownItem>
+                      </div>
+                    )}
                   </DropdownMenu>
                 </UncontrolledDropdown>
               )}
+
               {ENABLE_USERS && (
                 <NavItem>
                   <NavLink to="/404" className="nav-link" activeClassName="active">

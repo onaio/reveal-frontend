@@ -16,7 +16,7 @@ import {
   FIReasons,
   goalPriorities,
 } from '../../../configs/settings';
-import { HOME_URL, SAVING } from '../../../constants';
+import { PLAN_LIST_URL, SAVING } from '../../../constants';
 import { OpenSRPService } from '../../../services/opensrp';
 import { InterventionType, PlanStatus } from '../../../store/ducks/plans';
 import JurisdictionSelect from '../JurisdictionSelect';
@@ -626,7 +626,7 @@ const PlanForm = (props: PlanFormProps) => {
 const defaultProps: PlanFormProps = {
   disabledFields: [],
   initialValues: defaultInitialValues,
-  redirectAfterAction: HOME_URL,
+  redirectAfterAction: PLAN_LIST_URL,
 };
 
 PlanForm.defaultProps = defaultProps;
