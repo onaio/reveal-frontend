@@ -11,6 +11,7 @@ import {
   bccTestPlanActivity,
   bccTestPlanActivityWithEmptyfields,
   event,
+  event2,
   expectedActivity,
   expectedActivity2,
   expectedExtractActivityFromPlanformResult,
@@ -58,5 +59,9 @@ describe('PlanForm/helpers', () => {
 
   it('check getNameTitle returns the correct value when Focus Investigation(FI) is selected', () => {
     expect(getNameTitle(event, values)).toEqual(['A1--2019-08-09', 'A1  2019-08-09']);
+  });
+
+  it('check getNameTitle returns the correct value when IRS is selected', () => {
+    expect(getNameTitle(event2, values)).toEqual(['IRS-2019-08-09', 'IRS 2019-08-09']);
   });
 });
