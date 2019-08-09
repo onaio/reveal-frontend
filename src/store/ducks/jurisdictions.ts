@@ -15,7 +15,7 @@ export interface JurisdictionGeoJSON extends GeoJSON {
   };
 }
 
-// todo - distingquish non-geo Jurisdiction, inheritted by new JurisdictionGeo type
+// todo - distinguish non-geo Jurisdiction, inheritted by new JurisdictionGeo type
 /** interface to describe Jurisdiction */
 export interface Jurisdiction {
   geographic_level?: number;
@@ -33,9 +33,10 @@ export interface AllJurisdictionIds {
   };
 }
 
-// actions
+// action types
 export const FETCH_JURISDICTION = 'reveal/reducer/jurisdiction/FETCH_JURISDICTION';
 export const FETCH_ALL_JURISDICTION_IDS = 'reveal/reducer/jurisdiction/FETCH_ALL_JURISDICTION_IDS';
+export const REMOVE_JURISDICTIONS = 'reveal/reducer/jurisdiction/REMOVE_JURISDICTIONS';
 
 /** fetch jurisdiction action */
 interface FetchJurisdictionAction extends AnyAction {
@@ -50,10 +51,17 @@ interface FetchAllJurisdictionIdsAction extends AnyAction {
   type: typeof FETCH_ALL_JURISDICTION_IDS;
 }
 
+/** Remove jurisdictions action interface */
+interface RemoveJurisdictionsAction extends AnyAction {
+  jurisdictionsById: {};
+  type: typeof REMOVE_JURISDICTIONS;
+}
+
 /** jurisdiction action types */
 export type JurisdictionActionTypes =
   | FetchJurisdictionAction
   | FetchAllJurisdictionIdsAction
+  | RemoveJurisdictionsAction
   | AnyAction;
 
 /** interface to describe jurisdiction state */
@@ -95,6 +103,11 @@ export default function reducer(
       return SeamlessImmutable({
         ...state,
         allJurisdictionIds: action.allJurisdictionIds,
+      });
+    case REMOVE_JURISDICTIONS:
+      return SeamlessImmutable({
+        ...state,
+        jurisdictionsById: action.jurisdictionsById,
       });
     default:
       return state;
@@ -154,6 +167,13 @@ export const fetchAllJurisdictionIds = (jurisdictionIds: string[]) => ({
   ),
   type: FETCH_ALL_JURISDICTION_IDS,
 });
+
+// actions
+/** removeJurisdictions Action */
+export const removeJurisdictionsAction = {
+  jurisdictionsById: {},
+  type: REMOVE_JURISDICTIONS,
+};
 
 // selectors
 /** get jurisdictions by id
