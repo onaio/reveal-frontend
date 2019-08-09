@@ -938,3 +938,10 @@ export const event = {
     value: 'FI',
   },
 };
+
+export const event2 = {
+  target: {
+    name: 'interventionType',
+    value: 'IRS',
+  },
+};
