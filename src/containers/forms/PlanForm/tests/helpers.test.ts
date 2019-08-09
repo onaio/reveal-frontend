@@ -3,6 +3,7 @@ import {
   doesFieldHaveErrors,
   extractActivitiesFromPlanForm,
   extractActivityForForm,
+  generatePlanDefinition,
   getFormActivities,
   getNameTitle,
 } from '../helpers';
@@ -16,9 +17,11 @@ import {
   expectedActivity,
   expectedActivity2,
   expectedExtractActivityFromPlanformResult,
+  expectedPlanDefinition,
   extractedActivitiesFromForms,
   planActivities,
   values,
+  values2,
 } from './fixtures';
 
 describe('PlanForm/helpers', () => {
@@ -68,5 +71,11 @@ describe('PlanForm/helpers', () => {
 
   it('check getNameTitle returns the correct value when nothing is selected', () => {
     expect(getNameTitle(event3, values)).toEqual(['IRS-2019-08-09', 'IRS 2019-08-09']);
+  });
+
+  it('check generatePlanDefinition returns the correct value', () => {
+    MockDate.set('1/30/2000', 0);
+    expect(generatePlanDefinition(values2)).toEqual(expectedPlanDefinition);
+    MockDate.reset();
   });
 });

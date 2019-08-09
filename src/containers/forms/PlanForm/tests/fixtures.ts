@@ -949,3 +949,100 @@ export const event2 = {
 export const event3 = {
   target: {},
 };
+
+export const expectedPlanDefinition = {
+  action: [
+    {
+      code: 'IRS',
+      description: 'Visit each structure in the operational area and attempt to spray',
+      goalId: 'IRS',
+      identifier: '79255d56-9190-578d-8452-fc8520f24f2b',
+      prefix: 1,
+      reason: 'Routine',
+      subjectCodableConcept: {
+        text: 'Residential_Structure',
+      },
+      taskTemplate: 'Spray_Structures',
+      timingPeriod: {
+        end: '2019-08-16',
+        start: '2019-08-09',
+      },
+      title: 'Spray Structures',
+    },
+  ],
+  date: '2019-08-09',
+  effectivePeriod: {
+    end: '2019-08-29',
+    start: '2019-08-09',
+  },
+  goal: [
+    {
+      description: 'Spray structures in the operational area',
+      id: 'IRS',
+      priority: 'medium-priority',
+      target: [
+        {
+          detail: {
+            detailQuantity: {
+              comparator: '>=',
+              unit: 'Percent',
+              value: 90,
+            },
+          },
+          due: '2019-08-16',
+          measure: 'Percent of structures sprayed',
+        },
+      ],
+    },
+  ],
+  identifier: '0230f9e8-1f30-5e91-8693-4c993661785e',
+  jurisdiction: [
+    {
+      code: '3952',
+    },
+  ],
+  name: 'IRS-2019-08-09',
+  status: 'draft',
+  title: 'IRS 2019-08-09',
+  useContext: [
+    {
+      code: 'interventionType',
+      valueCodableConcept: 'IRS',
+    },
+  ],
+  version: '1',
+};
+
+export const values2 = {
+  activities: [
+    {
+      actionCode: 'IRS',
+      actionDescription: 'Visit each structure in the operational area and attempt to spray',
+      actionIdentifier: '',
+      actionReason: 'Routine',
+      actionTitle: 'Spray Structures',
+      goalDescription: 'Spray structures in the operational area',
+      goalDue: '2019-08-16T12:32:15.116Z',
+      goalPriority: 'medium-priority',
+      goalValue: 90,
+      timingPeriodEnd: '2019-08-16T12:32:15.117Z',
+      timingPeriodStart: '2019-08-09T12:32:15.117Z',
+    },
+  ],
+  caseNum: '',
+  date: '2019-08-09T12:32:01.685Z',
+  end: '2019-08-29T12:32:01.685Z',
+  identifier: '',
+  interventionType: 'IRS',
+  jurisdictions: [
+    {
+      id: '3952',
+      name: 'Akros_2',
+    },
+  ],
+  name: 'IRS-2019-08-09',
+  start: '2019-08-09T12:32:01.685Z',
+  status: 'draft',
+  title: 'IRS 2019-08-09',
+  version: '1',
+};
