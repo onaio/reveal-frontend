@@ -896,3 +896,45 @@ export const expectedExtractActivityFromPlanformResult = {
     },
   ],
 };
+
+export const values = {
+  activities: [
+    {
+      actionCode: 'IRS',
+      actionDescription: 'Visit each structure in the operational area and attempt to spray',
+      actionIdentifier: '',
+      actionReason: 'Routine',
+      actionTitle: 'Spray Structures',
+      goalDescription: 'Spray structures in the operational area',
+      goalDue: '2019-08-16T11:33:50.997Z',
+      goalPriority: 'medium-priority',
+      goalValue: 90,
+      timingPeriodEnd: '2019-08-16T11:33:50.997Z',
+      timingPeriodStart: '2019-08-09T11:33:50.997Z',
+    },
+  ],
+  caseNum: '',
+  date: '2019-08-09T11:33:20.156Z',
+  end: '2019-08-29T11:33:20.156Z',
+  fiStatus: 'A1',
+  identifier: '',
+  interventionType: 'IRS',
+  jurisdictions: [
+    {
+      id: '',
+      name: '',
+    },
+  ],
+  name: 'IRS-2019-08-09',
+  start: '2019-08-09T11:33:20.156Z',
+  status: 'draft',
+  title: 'IRS 2019-08-09',
+  version: '1',
+};
+
+export const event = {
+  target: {
+    name: 'interventionType',
+    value: 'FI',
+  },
+};

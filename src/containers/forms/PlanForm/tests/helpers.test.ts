@@ -4,16 +4,19 @@ import {
   extractActivitiesFromPlanForm,
   extractActivityForForm,
   getFormActivities,
+  getNameTitle,
 } from '../helpers';
 import {
   activities,
   bccTestPlanActivity,
   bccTestPlanActivityWithEmptyfields,
+  event,
   expectedActivity,
   expectedActivity2,
   expectedExtractActivityFromPlanformResult,
   extractedActivitiesFromForms,
   planActivities,
+  values,
 } from './fixtures';
 
 describe('PlanForm/helpers', () => {
@@ -44,11 +47,16 @@ describe('PlanForm/helpers', () => {
     errors = [];
     expect(doesFieldHaveErrors(field, index, errors)).toBe(false);
   });
+
   it('check extractActivitiesFromPlanForm returns the correct value', () => {
     MockDate.set('1/30/2000', 0);
     expect(extractActivitiesFromPlanForm(activities)).toEqual(
       expectedExtractActivityFromPlanformResult
     );
     MockDate.reset();
+  });
+
+  it('check getNameTitle returns the correct value when Focus Investigation(FI) is selected', () => {
+    expect(getNameTitle(event, values)).toEqual(['A1--2019-08-09', 'A1  2019-08-09']);
   });
 });
