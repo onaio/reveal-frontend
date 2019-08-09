@@ -52,22 +52,10 @@ Object {
           <NavLink
             activeClassName="active"
             aria-current="page"
-            className="nav-link"
+            className="nav-link active"
             to="/"
           >
             Home
-          </NavLink>
-        </NavItem>
-        <NavItem
-          tag="li"
-        >
-          <NavLink
-            activeClassName="active"
-            aria-current="page"
-            className="nav-link"
-            to="/intervention/irs"
-          >
-            IRS
           </NavLink>
         </NavItem>
         <UncontrolledDropdown
@@ -81,7 +69,7 @@ Object {
             color="secondary"
             nav={true}
           >
-            Focus Investigation
+            Planning
           </DropdownToggle>
           <DropdownMenu
             flip={true}
@@ -96,9 +84,9 @@ Object {
                 activeClassName="active"
                 aria-current="page"
                 className="nav-link"
-                to="/focus-investigation"
+                to="/plans/list"
               >
-                Active
+                Manage Plans
               </NavLink>
             </DropdownItem>
             <DropdownItem
@@ -109,11 +97,59 @@ Object {
                 activeClassName="active"
                 aria-current="page"
                 className="nav-link"
-                to="/focus-investigation/historical"
+                to="/intervention/irs"
               >
-                Historical
+                IRS
               </NavLink>
             </DropdownItem>
+          </DropdownMenu>
+        </UncontrolledDropdown>
+        <UncontrolledDropdown
+          inNavbar={true}
+          nav={true}
+        >
+          <DropdownToggle
+            aria-haspopup={true}
+            caret={true}
+            className="nav-link"
+            color="secondary"
+            nav={true}
+          >
+            Reporting
+          </DropdownToggle>
+          <DropdownMenu
+            flip={true}
+            right={true}
+            tag="div"
+          >
+            <div>
+              <DropdownItem
+                tag="button"
+                toggle={true}
+              >
+                <NavLink
+                  activeClassName="active"
+                  aria-current="page"
+                  className="nav-link"
+                  to="/focus-investigation"
+                >
+                  Focus Investigation
+                </NavLink>
+              </DropdownItem>
+              <DropdownItem
+                tag="button"
+                toggle={true}
+              >
+                <NavLink
+                  activeClassName="active"
+                  aria-current="page"
+                  className="nav-link"
+                  to="/focus-investigation/historical"
+                >
+                  Historical FI
+                </NavLink>
+              </DropdownItem>
+            </div>
           </DropdownMenu>
         </UncontrolledDropdown>
         <NavItem
@@ -217,22 +253,10 @@ Object {
           <NavLink
             activeClassName="active"
             aria-current="page"
-            className="nav-link"
+            className="nav-link active"
             to="/"
           >
             Home
-          </NavLink>
-        </NavItem>
-        <NavItem
-          tag="li"
-        >
-          <NavLink
-            activeClassName="active"
-            aria-current="page"
-            className="nav-link"
-            to="/intervention/irs"
-          >
-            IRS
           </NavLink>
         </NavItem>
         <UncontrolledDropdown
@@ -246,7 +270,7 @@ Object {
             color="secondary"
             nav={true}
           >
-            Focus Investigation
+            Planning
           </DropdownToggle>
           <DropdownMenu
             flip={true}
@@ -261,9 +285,9 @@ Object {
                 activeClassName="active"
                 aria-current="page"
                 className="nav-link"
-                to="/focus-investigation"
+                to="/plans/list"
               >
-                Active
+                Manage Plans
               </NavLink>
             </DropdownItem>
             <DropdownItem
@@ -274,11 +298,59 @@ Object {
                 activeClassName="active"
                 aria-current="page"
                 className="nav-link"
-                to="/focus-investigation/historical"
+                to="/intervention/irs"
               >
-                Historical
+                IRS
               </NavLink>
             </DropdownItem>
+          </DropdownMenu>
+        </UncontrolledDropdown>
+        <UncontrolledDropdown
+          inNavbar={true}
+          nav={true}
+        >
+          <DropdownToggle
+            aria-haspopup={true}
+            caret={true}
+            className="nav-link"
+            color="secondary"
+            nav={true}
+          >
+            Reporting
+          </DropdownToggle>
+          <DropdownMenu
+            flip={true}
+            right={true}
+            tag="div"
+          >
+            <div>
+              <DropdownItem
+                tag="button"
+                toggle={true}
+              >
+                <NavLink
+                  activeClassName="active"
+                  aria-current="page"
+                  className="nav-link"
+                  to="/focus-investigation"
+                >
+                  Focus Investigation
+                </NavLink>
+              </DropdownItem>
+              <DropdownItem
+                tag="button"
+                toggle={true}
+              >
+                <NavLink
+                  activeClassName="active"
+                  aria-current="page"
+                  className="nav-link"
+                  to="/focus-investigation/historical"
+                >
+                  Historical FI
+                </NavLink>
+              </DropdownItem>
+            </div>
           </DropdownMenu>
         </UncontrolledDropdown>
         <NavItem
