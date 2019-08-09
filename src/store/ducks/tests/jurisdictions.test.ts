@@ -110,4 +110,15 @@ describe('reducers/jurisdictions', () => {
     expect(jurisdiction3FromStore).toBeNull();
     expect(jurisdictionsInStore).toEqual({});
   });
+
+  it('new jurisdictions not overwrite but appended to existing', () => {
+    store.dispatch(removeJurisdictionsAction);
+    const jurisdictionsInStore = getJurisdictionsById(store.getState());
+    expect(jurisdictionsInStore).toEqual({});
+
+    store.dispatch(fetchJurisdictions([fixtures.jurisdiction3] as any));
+    store.dispatch(fetchJurisdictions([fixtures.jurisdictions] as any));
+    const jurisdiction3FromStore = getJurisdictionById(store.getState(), 'abcde');
+    expect(jurisdiction3FromStore).not.toBeNull();
+  });
 });
