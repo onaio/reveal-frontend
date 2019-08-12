@@ -152,7 +152,7 @@ class IrsPlans extends React.Component<IrsPlansProps & RouteComponentProps<Route
       minRows: 0,
       rootParentId: null,
       showPageSizeOptions: false,
-      showPagination: false,
+      showPagination: plansArray.length > 20,
       useDrillDownTrProps: false,
     };
 

@@ -295,7 +295,7 @@ class ActiveFocusInvestigation extends React.Component<
               parentIdentifierField: 'parent',
               rootParentId: null,
               showPageSizeOptions: false,
-              showPagination: false,
+              showPagination: thePlans.length > 20,
               useDrillDownTrProps: false,
             };
             const TableHeaderWithOptionalForm = plansArray.every(
