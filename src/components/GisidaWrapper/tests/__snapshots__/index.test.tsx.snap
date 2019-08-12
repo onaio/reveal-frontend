@@ -2331,7 +2331,7 @@ Object {
         "visible": true,
       },
       "type": "line",
-      "visible": true,
+      "visible": false,
     },
     "structure-layer": Object {
       "filters": Object {},
