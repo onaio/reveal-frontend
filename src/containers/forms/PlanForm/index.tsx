@@ -211,12 +211,12 @@ const PlanForm = (props: PlanFormProps) => {
                               : 'async-select-container'
                           }
                         >
-                          <Label for={`jurisdictions[${index}].id`}>Focus Area</Label>
+                          <Label for={`jurisdictions-${index}-id`}>Focus Area</Label>
                           <Field
                             required={true}
                             component={JurisdictionSelect}
                             name={`jurisdictions[${index}].id`}
-                            id={`jurisdictions[${index}].id`}
+                            id={`jurisdictions-${index}-id`}
                             placeholder="Select Focus Area"
                             aria-label="Select Focus Area"
                             disabled={disabledFields.includes('jurisdictions')}
@@ -231,7 +231,7 @@ const PlanForm = (props: PlanFormProps) => {
                           <Field
                             type="hidden"
                             name={`jurisdictions[${index}].name`}
-                            id={`jurisdictions[${index}].name`}
+                            id={`jurisdictions-${index}-name`}
                           />
 
                           {errors.jurisdictions && errors.jurisdictions[index] && (
