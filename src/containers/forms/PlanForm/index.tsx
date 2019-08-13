@@ -609,6 +609,7 @@ const PlanForm = (props: PlanFormProps) => {
             <hr className="mb-2" />
             <Button
               type="submit"
+              id="submit-button"
               className="btn btn-block"
               color="primary"
               aria-label="Save Plan"
