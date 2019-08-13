@@ -101,6 +101,21 @@ export const expectedActivity = {
     timingPeriodEnd,
     timingPeriodStart,
   },
+  mosquitoCollection: {
+    actionCode: 'Mosquito Collection',
+    actionDescription:
+      'Set a minimum of three mosquito collection traps and complete the mosquito collection process',
+    actionIdentifier: '',
+    actionReason: 'Investigation',
+    actionTitle: 'Mosquito Collection',
+    goalDescription:
+      'Set a minimum of three mosquito collection traps and complete the mosquito collection process',
+    goalDue,
+    goalPriority: 'medium-priority',
+    goalValue: 3,
+    timingPeriodEnd,
+    timingPeriodStart,
+  },
 };
 
 export const planActivityWithEmptyfields = {
