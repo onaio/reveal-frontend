@@ -408,11 +408,11 @@ const PlanForm = (props: PlanFormProps) => {
                         </div>
                       )}
                       <FormGroup>
-                        <Label for={`activities[${index}].actionTitle`}>Action</Label>
+                        <Label for={`activities-${index}-actionTitle`}>Action</Label>
                         <Field
                           type="text"
                           name={`activities[${index}].actionTitle`}
-                          id={`activities[${index}].actionTitle`}
+                          id={`activities-${index}-actionTitle`}
                           required={true}
                           disabled={disabledFields.includes('activities')}
                           className={
@@ -431,24 +431,24 @@ const PlanForm = (props: PlanFormProps) => {
                         <Field
                           type="hidden"
                           name={`activities[${index}].actionCode`}
-                          id={`activities[${index}].actionCode`}
+                          id={`activities-${index}-actionCode`}
                           value={values.activities[index].actionCode}
                           readOnly={true}
                         />
                         <Field
                           type="hidden"
                           name={`activities[${index}].actionIdentifier`}
-                          id={`activities[${index}].actionIdentifier`}
+                          id={`activities-${index}-actionIdentifier`}
                           value={values.activities[index].actionIdentifier}
                           readOnly={true}
                         />
                       </FormGroup>
                       <FormGroup>
-                        <Label for={`activities[${index}].actionDescription`}>Description</Label>
+                        <Label for={`activities-${index}-actionDescription`}>Description</Label>
                         <Field
                           component="textarea"
                           name={`activities[${index}].actionDescription`}
-                          id={`activities[${index}].actionDescription`}
+                          id={`activities-${index}-actionDescription`}
                           required={true}
                           disabled={disabledFields.includes('activities')}
                           className={
@@ -466,16 +466,16 @@ const PlanForm = (props: PlanFormProps) => {
                         <Field
                           type="hidden"
                           name={`activities[${index}].goalDescription`}
-                          id={`activities[${index}].goalDescription`}
+                          id={`activities-${index}-goalDescription`}
                           value={values.activities[index].actionDescription}
                         />
                       </FormGroup>
                       <FormGroup>
-                        <Label for={`activities[${index}].goalValue`}>Quantity</Label>
+                        <Label for={`activities-${index}-goalValue`}>Quantity</Label>
                         <Field
                           type="number"
                           name={`activities[${index}].goalValue`}
-                          id={`activities[${index}].goalValue`}
+                          id={`activities-${index}-goalValue`}
                           required={true}
                           disabled={disabledFields.includes('activities')}
                           className={
@@ -492,11 +492,11 @@ const PlanForm = (props: PlanFormProps) => {
                         />
                       </FormGroup>
                       <FormGroup>
-                        <Label for={`activities[${index}].timingPeriodStart`}>Start Date</Label>
+                        <Label for={`activities-${index}-timingPeriodStart`}>Start Date</Label>
                         <Field
                           type="date"
                           name={`activities[${index}].timingPeriodStart`}
-                          id={`activities[${index}].timingPeriodStart`}
+                          id={`activities-${index}-timingPeriodStart`}
                           required={true}
                           disabled={disabledFields.includes('activities')}
                           dateFormat={DATE_FORMAT}
@@ -517,11 +517,11 @@ const PlanForm = (props: PlanFormProps) => {
                         />
                       </FormGroup>
                       <FormGroup>
-                        <Label for={`activities[${index}].timingPeriodEnd`}>End Date</Label>
+                        <Label for={`activities-${index}-timingPeriodEnd`}>End Date</Label>
                         <Field
                           type="date"
                           name={`activities[${index}].timingPeriodEnd`}
-                          id={`activities[${index}].timingPeriodEnd`}
+                          id={`activities-${index}-timingPeriodEnd`}
                           required={true}
                           disabled={disabledFields.includes('activities')}
                           dateFormat={DATE_FORMAT}
@@ -548,11 +548,11 @@ const PlanForm = (props: PlanFormProps) => {
                         />
                       </FormGroup>
                       <FormGroup>
-                        <Label for={`activities[${index}].actionReason`}>Reason</Label>
+                        <Label for={`activities-${index}-actionReason`}>Reason</Label>
                         <Field
                           component="select"
                           name={`activities[${index}].actionReason`}
-                          id={`activities[${index}].actionReason`}
+                          id={`activities-${index}-actionReason`}
                           required={true}
                           disabled={disabledFields.includes('activities')}
                           className={
@@ -575,11 +575,11 @@ const PlanForm = (props: PlanFormProps) => {
                         />
                       </FormGroup>
                       <FormGroup>
-                        <Label for={`activities[${index}].goalPriority`}>Priority</Label>
+                        <Label for={`activities-${index}-goalPriority`}>Priority</Label>
                         <Field
                           component="select"
                           name={`activities[${index}].goalPriority`}
-                          id={`activities[${index}].goalPriority`}
+                          id={`activities-${index}-goalPriority`}
                           required={true}
                           disabled={disabledFields.includes('activities')}
                           className={
