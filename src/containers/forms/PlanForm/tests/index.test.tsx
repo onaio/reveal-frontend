@@ -44,6 +44,15 @@ describe('containers/forms/PlanForm', () => {
     expect(toJson(wrapper.find('#date input'))).toMatchSnapshot('date field');
     expect(toJson(wrapper.find('#submit-button button'))).toMatchSnapshot('submit button');
 
+    // if you set fiReason to case triggered then caseNum and opensrpEventId are now rendered
+    wrapper
+      .find('#fiReason select')
+      .simulate('change', { target: { value: 'Case Triggered', name: 'fiReason' } });
+    expect(toJson(wrapper.find({ for: 'caseNum' }))).toMatchSnapshot('caseNum label');
+    expect(toJson(wrapper.find('#caseNum input'))).toMatchSnapshot('caseNum field');
+    expect(wrapper.find({ for: 'opensrpEventId' }).length).toEqual(0);
+    expect(toJson(wrapper.find('#opensrpEventId input'))).toMatchSnapshot('opensrpEventId field');
+
     wrapper.unmount();
   });
 
