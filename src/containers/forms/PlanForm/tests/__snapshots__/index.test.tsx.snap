@@ -3110,3 +3110,77 @@ exports[`containers/forms/PlanForm renders correctly: version field 1`] = `
   value="1"
 />
 `;
+
+exports[`containers/forms/PlanForm renders jurisdictions fields correctly: jurisdictions[0].id field 1`] = `
+Array [
+  <input
+    aria-autocomplete="list"
+    aria-label="Select Focus Area"
+    autoCapitalize="none"
+    autoComplete="off"
+    autoCorrect="off"
+    disabled={false}
+    id="react-select-4-input"
+    onBlur={[Function]}
+    onChange={[Function]}
+    onFocus={[Function]}
+    spellCheck="false"
+    style={
+      Object {
+        "background": 0,
+        "border": 0,
+        "boxSizing": "content-box",
+        "color": "inherit",
+        "fontSize": "inherit",
+        "label": "input",
+        "opacity": 1,
+        "outline": 0,
+        "padding": 0,
+        "width": "2px",
+      }
+    }
+    tabIndex="0"
+    type="text"
+    value=""
+  />,
+  <input
+    name="jurisdictions[0].id"
+    type="hidden"
+    value=""
+  />,
+]
+`;
+
+exports[`containers/forms/PlanForm renders jurisdictions fields correctly: jurisdictions[0].id label 1`] = `
+<Label
+  for="jurisdictions-0-id"
+  tag="label"
+  widths={
+    Array [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+    ]
+  }
+>
+  <label
+    className=""
+    htmlFor="jurisdictions-0-id"
+  >
+    Focus Area
+  </label>
+</Label>
+`;
+
+exports[`containers/forms/PlanForm renders jurisdictions fields correctly: jurisdictions[0].name field 1`] = `
+<input
+  id="jurisdictions-0-name"
+  name="jurisdictions[0].name"
+  onBlur={[Function]}
+  onChange={[Function]}
+  type="hidden"
+  value=""
+/>
+`;
