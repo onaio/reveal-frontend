@@ -21,7 +21,6 @@ export enum PlanStatus {
   ACTIVE = 'active',
   COMPLETE = 'complete',
   DRAFT = 'draft',
-  NEW = 'new',
   RETIRED = 'retired',
 }
 /** PlanRecordResponse - interface for response objects from SUPERSET_PLANS_TABLE_SLICE */
