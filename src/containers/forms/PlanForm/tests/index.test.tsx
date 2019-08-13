@@ -53,6 +53,13 @@ describe('containers/forms/PlanForm', () => {
     expect(wrapper.find({ for: 'opensrpEventId' }).length).toEqual(0);
     expect(toJson(wrapper.find('#opensrpEventId input'))).toMatchSnapshot('opensrpEventId field');
 
+    // set it back
+    wrapper
+      .find('#fiReason select')
+      .simulate('change', { target: { value: 'Routine', name: 'fiReason' } });
+    expect(wrapper.find('#caseNum').length).toEqual(0);
+    expect(wrapper.find('#opensrpEventId').length).toEqual(0);
+
     wrapper.unmount();
   });
 
