@@ -29,6 +29,21 @@ export const expectedActivity = {
     timingPeriodEnd,
     timingPeriodStart,
   },
+  bednetDistribution: {
+    actionCode: 'Bednet Distribution',
+    actionDescription:
+      'Visit 100% of residential structures in the operational area and provide nets',
+    actionIdentifier: '',
+    actionReason: 'Investigation',
+    actionTitle: 'Bednet Distribution',
+    goalDescription:
+      'Visit 100% of residential structures in the operational area and provide nets',
+    goalDue,
+    goalPriority: 'medium-priority',
+    goalValue: 100,
+    timingPeriodEnd,
+    timingPeriodStart,
+  },
 };
 
 export const planActivityWithEmptyfields = {

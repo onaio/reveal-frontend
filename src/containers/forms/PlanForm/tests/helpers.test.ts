@@ -31,6 +31,12 @@ describe('containers/forms/PlanForm/helpers', () => {
     );
   });
 
+  it('check extractActivityForForm returns the correct value for IRS', () => {
+    expect(extractActivityForForm(planActivities.bednetDistribution)).toEqual(
+      expectedActivity.bednetDistribution
+    );
+  });
+
   it('check getFormActivities returns the correct value', () => {
     expect(JSON.stringify(getFormActivities(planActivities))).toEqual(
       JSON.stringify(extractedActivitiesFromForms)
