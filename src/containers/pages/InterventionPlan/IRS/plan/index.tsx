@@ -96,6 +96,7 @@ import HeaderBreadcrumbs, {
 } from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../../components/page/Loading';
 
+import './../../../../../tables.css';
 import './style.css';
 
 /** register the plans reducer */

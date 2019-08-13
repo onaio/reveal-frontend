@@ -33,6 +33,7 @@ import HeaderBreadcrumbs, {
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
 import { IRS_TITLE } from '../../../../constants';
+import './../../../../tables.css';
 
 /** register the plans reducer */
 reducerRegistry.register(plansReducerName, plansReducer);

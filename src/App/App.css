@@ -1,5 +1,3 @@
-@import './tables.css';
-
 tr.definitions td:first-child {
   padding-left: 0px;
 }
