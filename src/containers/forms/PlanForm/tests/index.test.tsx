@@ -2,6 +2,7 @@ import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import React from 'react';
 import PlanForm from '..';
+import * as fixtures from './fixtures';
 
 /* tslint:disable-next-line no-var-requires */
 const fetch = require('jest-fetch-mock');
@@ -16,7 +17,7 @@ describe('containers/forms/PlanForm', () => {
   });
 
   it('renders correctly', () => {
-    fetch.mockResponseOnce(JSON.stringify([]));
+    fetch.mockResponseOnce(fixtures.jurisdictionLevel0JSON);
     const wrapper = mount(<PlanForm />);
     expect(toJson(wrapper.find('#interventionType select'))).toMatchSnapshot(
       'interventionType field'
@@ -128,7 +129,7 @@ describe('containers/forms/PlanForm', () => {
       }
     }
 
-    fetch.mockResponseOnce(JSON.stringify([]));
+    fetch.mockResponseOnce(fixtures.jurisdictionLevel0JSON);
     const wrapper = mount(<PlanForm />);
 
     // activities are 6 and of type FI by default
