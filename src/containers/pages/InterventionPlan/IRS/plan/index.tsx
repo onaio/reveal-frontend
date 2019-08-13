@@ -197,7 +197,7 @@ class IrsPlan extends React.Component<
             plan_id: uuidv4(),
             plan_intervention_type: InterventionType.IRS,
             plan_jurisdictions_ids: [],
-            plan_status: PlanStatus.NEW,
+            plan_status: PlanStatus.DRAFT,
             plan_title: this.getNewPlanTitle(),
             plan_version: '',
           }
