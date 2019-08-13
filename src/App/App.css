@@ -1,3 +1,5 @@
+@import './tables.css';
+
 tr.definitions td:first-child {
   padding-left: 0px;
 }
@@ -64,9 +66,4 @@ fieldset[disabled] .gatekeeper-btn.active {
 .gatekeeper-btn .badge {
   color: #28a745;
   background-color: #ffffff;
-}
-
-.ReactTable .-pagination {
-  box-shadow: none;
-  border-top-width: 1px;
 }
