@@ -87,6 +87,20 @@ export const expectedActivity = {
     timingPeriodEnd,
     timingPeriodStart,
   },
+  larvalDipping: {
+    actionCode: 'Larval Dipping',
+    actionDescription:
+      'Perform a minimum of three larval dipping activities in the operational area',
+    actionIdentifier: '',
+    actionReason: 'Investigation',
+    actionTitle: 'Larval Dipping',
+    goalDescription: 'Perform a minimum of three larval dipping activities in the operational area',
+    goalDue,
+    goalPriority: 'medium-priority',
+    goalValue: 3,
+    timingPeriodEnd,
+    timingPeriodStart,
+  },
 };
 
 export const planActivityWithEmptyfields = {

@@ -49,6 +49,12 @@ describe('containers/forms/PlanForm/helpers', () => {
     );
   });
 
+  it('check extractActivityForForm returns the correct value for larvalDipping', () => {
+    expect(extractActivityForForm(planActivities.larvalDipping)).toEqual(
+      expectedActivity.larvalDipping
+    );
+  });
+
   it('check extractActivityForForm returns the correct value for familyRegistration', () => {
     expect(extractActivityForForm(planActivities.familyRegistration)).toEqual(
       expectedActivity.familyRegistration
