@@ -9,8 +9,6 @@ import {
 } from '../helpers';
 import {
   activities,
-  bccTestPlanActivity,
-  bccTestPlanActivityWithEmptyfields,
   event,
   event2,
   event3,
@@ -20,16 +18,15 @@ import {
   expectedPlanDefinition,
   extractedActivitiesFromForms,
   planActivities,
+  planActivityWithEmptyfields,
   values,
   values2,
 } from './fixtures';
 
 describe('containers/forms/PlanForm/helpers', () => {
   it('check extractActivityForForm returns the correct value', () => {
-    expect(extractActivityForForm(bccTestPlanActivity.BCC)).toEqual(expectedActivity);
-    expect(extractActivityForForm(bccTestPlanActivityWithEmptyfields.BCC)).toEqual(
-      expectedActivity2
-    );
+    expect(extractActivityForForm(planActivities.BCC)).toEqual(expectedActivity);
+    expect(extractActivityForForm(planActivityWithEmptyfields.BCC)).toEqual(expectedActivity2);
   });
 
   it('check getFormActivities returns the correct value', () => {

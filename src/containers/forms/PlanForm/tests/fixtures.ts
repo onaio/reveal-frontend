@@ -15,46 +15,6 @@ timingPeriodEnd.setMilliseconds(0);
 const timingPeriodStart = moment().toDate();
 timingPeriodStart.setMilliseconds(0);
 
-export const bccTestPlanActivity = {
-  BCC: {
-    action: {
-      code: 'BCC',
-      description: 'Conduct BCC activity',
-      goalId: 'BCC_Focus',
-      identifier: '',
-      prefix: 99,
-      reason: 'Investigation',
-      subjectCodableConcept: {
-        text: 'Operational_Area',
-      },
-      taskTemplate: 'BCC_Focus',
-      timingPeriod: {
-        end: timingPeriodEnd,
-        start: timingPeriodStart,
-      },
-      title: 'Behaviour Change Communication',
-    },
-    goal: {
-      description: 'Complete at least 1 BCC activity for the operational area',
-      id: 'BCC_Focus',
-      priority: 'medium-priority',
-      target: [
-        {
-          detail: {
-            detailQuantity: {
-              comparator: '>=',
-              unit: 'activit(y|ies)',
-              value: 1,
-            },
-          },
-          due: goalDue,
-          measure: 'Number of BCC Activities Completed',
-        },
-      ],
-    },
-  },
-};
-
 export const expectedActivity = {
   actionCode: 'BCC',
   actionDescription: 'Conduct BCC activity',
@@ -69,7 +29,7 @@ export const expectedActivity = {
   timingPeriodStart,
 };
 
-export const bccTestPlanActivityWithEmptyfields = {
+export const planActivityWithEmptyfields = {
   BCC: {
     action: {
       goalId: 'BCC_Focus',
