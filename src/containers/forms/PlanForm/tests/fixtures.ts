@@ -180,6 +180,38 @@ export const planActivityWithEmptyfields = {
       ],
     },
   },
+  bloodScreening: {
+    action: {
+      code: 'Blood Screening',
+      goalId: 'RACD_Blood_Screening',
+      prefix: 3,
+      subjectCodableConcept: {
+        text: 'Person',
+      },
+      taskTemplate: 'RACD_Blood_Screening',
+      timingPeriod: {
+        end: timingPeriodEnd,
+        start: timingPeriodStart,
+      },
+    },
+    goal: {
+      id: 'RACD_Blood_Screening',
+      priority: 'medium-priority',
+      target: [
+        {
+          detail: {
+            detailQuantity: {
+              comparator: '>=',
+              unit: 'Person(s)',
+              value: 100,
+            },
+          },
+          due: goalDue.toString(),
+          measure: 'Number of registered people tested',
+        },
+      ],
+    },
+  },
 };
 
 export const expectedActivityEmptyField = {
@@ -197,6 +229,19 @@ export const expectedActivityEmptyField = {
   },
   bednetDistribution: {
     actionCode: 'Bednet Distribution',
+    actionDescription: '',
+    actionIdentifier: '',
+    actionReason: '',
+    actionTitle: '',
+    goalDescription: '',
+    goalDue,
+    goalPriority: 'medium-priority',
+    goalValue: 100,
+    timingPeriodEnd,
+    timingPeriodStart,
+  },
+  bloodScreening: {
+    actionCode: 'Blood Screening',
     actionDescription: '',
     actionIdentifier: '',
     actionReason: '',

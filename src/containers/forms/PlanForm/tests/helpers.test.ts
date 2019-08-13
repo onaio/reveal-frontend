@@ -44,6 +44,9 @@ describe('containers/forms/PlanForm/helpers', () => {
     expect(extractActivityForForm(planActivities.bloodScreening)).toEqual(
       expectedActivity.bloodScreening
     );
+    expect(extractActivityForForm(planActivityWithEmptyfields.bloodScreening)).toEqual(
+      expectedActivityEmptyField.bloodScreening
+    );
   });
 
   it('check extractActivityForForm returns the correct value for caseConfirmation', () => {
