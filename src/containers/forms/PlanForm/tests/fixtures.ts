@@ -16,17 +16,19 @@ const timingPeriodStart = moment().toDate();
 timingPeriodStart.setMilliseconds(0);
 
 export const expectedActivity = {
-  actionCode: 'BCC',
-  actionDescription: 'Conduct BCC activity',
-  actionIdentifier: '',
-  actionReason: 'Investigation',
-  actionTitle: 'Behaviour Change Communication',
-  goalDescription: 'Complete at least 1 BCC activity for the operational area',
-  goalDue,
-  goalPriority: 'medium-priority',
-  goalValue: 1,
-  timingPeriodEnd,
-  timingPeriodStart,
+  BCC: {
+    actionCode: 'BCC',
+    actionDescription: 'Conduct BCC activity',
+    actionIdentifier: '',
+    actionReason: 'Investigation',
+    actionTitle: 'Behaviour Change Communication',
+    goalDescription: 'Complete at least 1 BCC activity for the operational area',
+    goalDue,
+    goalPriority: 'medium-priority',
+    goalValue: 1,
+    timingPeriodEnd,
+    timingPeriodStart,
+  },
 };
 
 export const planActivityWithEmptyfields = {
@@ -62,17 +64,19 @@ export const planActivityWithEmptyfields = {
   },
 };
 
-export const expectedActivity2 = {
-  actionDescription: '',
-  actionIdentifier: '',
-  actionReason: '',
-  actionTitle: '',
-  goalDescription: '',
-  goalDue,
-  goalPriority: 'medium-priority',
-  goalValue: 1,
-  timingPeriodEnd,
-  timingPeriodStart,
+export const expectedActivityEmptyField = {
+  BCC: {
+    actionDescription: '',
+    actionIdentifier: '',
+    actionReason: '',
+    actionTitle: '',
+    goalDescription: '',
+    goalDue,
+    goalPriority: 'medium-priority',
+    goalValue: 1,
+    timingPeriodEnd,
+    timingPeriodStart,
+  },
 };
 
 export const extractedActivitiesFromForms = [

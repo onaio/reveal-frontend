@@ -13,7 +13,7 @@ import {
   event2,
   event3,
   expectedActivity,
-  expectedActivity2,
+  expectedActivityEmptyField,
   expectedExtractActivityFromPlanformResult,
   expectedPlanDefinition,
   extractedActivitiesFromForms,
@@ -24,9 +24,11 @@ import {
 } from './fixtures';
 
 describe('containers/forms/PlanForm/helpers', () => {
-  it('check extractActivityForForm returns the correct value', () => {
-    expect(extractActivityForForm(planActivities.BCC)).toEqual(expectedActivity);
-    expect(extractActivityForForm(planActivityWithEmptyfields.BCC)).toEqual(expectedActivity2);
+  it('check extractActivityForForm returns the correct value for BCC', () => {
+    expect(extractActivityForForm(planActivities.BCC)).toEqual(expectedActivity.BCC);
+    expect(extractActivityForForm(planActivityWithEmptyfields.BCC)).toEqual(
+      expectedActivityEmptyField.BCC
+    );
   });
 
   it('check getFormActivities returns the correct value', () => {
