@@ -43,6 +43,12 @@ describe('containers/forms/PlanForm/helpers', () => {
     );
   });
 
+  it('check extractActivityForForm returns the correct value for caseConfirmation', () => {
+    expect(extractActivityForForm(planActivities.caseConfirmation)).toEqual(
+      expectedActivity.caseConfirmation
+    );
+  });
+
   it('check getFormActivities returns the correct value', () => {
     expect(JSON.stringify(getFormActivities(planActivities))).toEqual(
       JSON.stringify(extractedActivitiesFromForms)

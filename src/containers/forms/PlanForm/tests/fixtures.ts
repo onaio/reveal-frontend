@@ -59,6 +59,19 @@ export const expectedActivity = {
     timingPeriodEnd,
     timingPeriodStart,
   },
+  caseConfirmation: {
+    actionCode: 'Case Confirmation',
+    actionDescription: 'Confirm the index case',
+    actionIdentifier: '',
+    actionReason: 'Investigation',
+    actionTitle: 'Case Confirmation',
+    goalDescription: 'Confirm the index case',
+    goalDue,
+    goalPriority: 'medium-priority',
+    goalValue: 1,
+    timingPeriodEnd,
+    timingPeriodStart,
+  },
 };
 
 export const planActivityWithEmptyfields = {
