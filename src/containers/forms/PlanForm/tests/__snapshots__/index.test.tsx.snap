@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[0].actionCode field 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[0].actionCode field 1`] = `
 <input
   id="activities-0-actionCode"
   name="activities[0].actionCode"
@@ -12,7 +12,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 />
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[0].actionDescription field 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[0].actionDescription field 1`] = `
 <textarea
   className="form-control"
   disabled={false}
@@ -25,7 +25,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 />
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[0].actionDescription label 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[0].actionDescription label 1`] = `
 <Label
   for="activities-0-actionDescription"
   tag="label"
@@ -48,7 +48,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 </Label>
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[0].actionIdentifier field 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[0].actionIdentifier field 1`] = `
 <input
   id="activities-0-actionIdentifier"
   name="activities[0].actionIdentifier"
@@ -60,7 +60,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 />
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[0].actionReason field 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[0].actionReason field 1`] = `
 <select
   className="form-control"
   disabled={false}
@@ -86,7 +86,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 </select>
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[0].actionReason label 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[0].actionReason label 1`] = `
 <Label
   for="activities-0-actionReason"
   tag="label"
@@ -109,7 +109,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 </Label>
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[0].actionTitle field 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[0].actionTitle field 1`] = `
 <input
   className="form-control"
   disabled={false}
@@ -123,7 +123,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 />
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[0].actionTitle label 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[0].actionTitle label 1`] = `
 <Label
   for="activities-0-actionTitle"
   tag="label"
@@ -146,7 +146,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 </Label>
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[0].goalDescription field 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[0].goalDescription field 1`] = `
 <input
   id="activities-0-goalDescription"
   name="activities[0].goalDescription"
@@ -157,9 +157,18 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 />
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[0].goalDue field 1`] = `null`;
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[0].goalDue field 1`] = `
+<input
+  id="activities-0-goalDue"
+  name="activities[0].goalDue"
+  onBlur={[Function]}
+  onChange={[Function]}
+  type="hidden"
+  value={2017-07-20T16:31:00.000Z}
+/>
+`;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[0].goalPriority field 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[0].goalPriority field 1`] = `
 <select
   className="form-control"
   disabled={false}
@@ -191,7 +200,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 </select>
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[0].goalPriority label 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[0].goalPriority label 1`] = `
 <Label
   for="activities-0-goalPriority"
   tag="label"
@@ -214,7 +223,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 </Label>
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[0].goalValue field 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[0].goalValue field 1`] = `
 <input
   className="form-control"
   disabled={false}
@@ -228,7 +237,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 />
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[0].goalValue label 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[0].goalValue label 1`] = `
 <Label
   for="activities-0-goalValue"
   tag="label"
@@ -251,7 +260,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 </Label>
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[0].timingPeriodEnd field 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[0].timingPeriodEnd field 1`] = `
 <input
   className="form-control"
   disabled={false}
@@ -268,7 +277,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 />
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[0].timingPeriodEnd label 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[0].timingPeriodEnd label 1`] = `
 <Label
   for="activities-0-timingPeriodEnd"
   tag="label"
@@ -291,7 +300,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 </Label>
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[0].timingPeriodStart field 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[0].timingPeriodStart field 1`] = `
 <input
   className="form-control"
   disabled={false}
@@ -308,7 +317,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 />
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[0].timingPeriodStart label 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[0].timingPeriodStart label 1`] = `
 <Label
   for="activities-0-timingPeriodStart"
   tag="label"
@@ -331,7 +340,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 </Label>
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[1].actionCode field 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[1].actionCode field 1`] = `
 <input
   id="activities-1-actionCode"
   name="activities[1].actionCode"
@@ -343,7 +352,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 />
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[1].actionDescription field 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[1].actionDescription field 1`] = `
 <textarea
   className="form-control"
   disabled={false}
@@ -356,7 +365,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 />
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[1].actionDescription label 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[1].actionDescription label 1`] = `
 <Label
   for="activities-1-actionDescription"
   tag="label"
@@ -379,7 +388,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 </Label>
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[1].actionIdentifier field 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[1].actionIdentifier field 1`] = `
 <input
   id="activities-1-actionIdentifier"
   name="activities[1].actionIdentifier"
@@ -391,7 +400,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 />
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[1].actionReason field 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[1].actionReason field 1`] = `
 <select
   className="form-control"
   disabled={false}
@@ -417,7 +426,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 </select>
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[1].actionReason label 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[1].actionReason label 1`] = `
 <Label
   for="activities-1-actionReason"
   tag="label"
@@ -440,7 +449,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 </Label>
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[1].actionTitle field 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[1].actionTitle field 1`] = `
 <input
   className="form-control"
   disabled={false}
@@ -454,7 +463,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 />
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[1].actionTitle label 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[1].actionTitle label 1`] = `
 <Label
   for="activities-1-actionTitle"
   tag="label"
@@ -477,7 +486,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 </Label>
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[1].goalDescription field 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[1].goalDescription field 1`] = `
 <input
   id="activities-1-goalDescription"
   name="activities[1].goalDescription"
@@ -488,9 +497,18 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 />
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[1].goalDue field 1`] = `null`;
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[1].goalDue field 1`] = `
+<input
+  id="activities-1-goalDue"
+  name="activities[1].goalDue"
+  onBlur={[Function]}
+  onChange={[Function]}
+  type="hidden"
+  value={2017-07-20T16:31:00.000Z}
+/>
+`;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[1].goalPriority field 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[1].goalPriority field 1`] = `
 <select
   className="form-control"
   disabled={false}
@@ -522,7 +540,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 </select>
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[1].goalPriority label 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[1].goalPriority label 1`] = `
 <Label
   for="activities-1-goalPriority"
   tag="label"
@@ -545,7 +563,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 </Label>
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[1].goalValue field 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[1].goalValue field 1`] = `
 <input
   className="form-control"
   disabled={false}
@@ -559,7 +577,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 />
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[1].goalValue label 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[1].goalValue label 1`] = `
 <Label
   for="activities-1-goalValue"
   tag="label"
@@ -582,7 +600,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 </Label>
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[1].timingPeriodEnd field 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[1].timingPeriodEnd field 1`] = `
 <input
   className="form-control"
   disabled={false}
@@ -599,7 +617,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 />
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[1].timingPeriodEnd label 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[1].timingPeriodEnd label 1`] = `
 <Label
   for="activities-1-timingPeriodEnd"
   tag="label"
@@ -622,7 +640,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 </Label>
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[1].timingPeriodStart field 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[1].timingPeriodStart field 1`] = `
 <input
   className="form-control"
   disabled={false}
@@ -639,7 +657,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 />
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[1].timingPeriodStart label 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[1].timingPeriodStart label 1`] = `
 <Label
   for="activities-1-timingPeriodStart"
   tag="label"
@@ -662,7 +680,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 </Label>
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[2].actionCode field 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[2].actionCode field 1`] = `
 <input
   id="activities-2-actionCode"
   name="activities[2].actionCode"
@@ -674,7 +692,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 />
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[2].actionDescription field 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[2].actionDescription field 1`] = `
 <textarea
   className="form-control"
   disabled={false}
@@ -687,7 +705,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 />
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[2].actionDescription label 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[2].actionDescription label 1`] = `
 <Label
   for="activities-2-actionDescription"
   tag="label"
@@ -710,7 +728,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 </Label>
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[2].actionIdentifier field 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[2].actionIdentifier field 1`] = `
 <input
   id="activities-2-actionIdentifier"
   name="activities[2].actionIdentifier"
@@ -722,7 +740,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 />
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[2].actionReason field 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[2].actionReason field 1`] = `
 <select
   className="form-control"
   disabled={false}
@@ -748,7 +766,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 </select>
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[2].actionReason label 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[2].actionReason label 1`] = `
 <Label
   for="activities-2-actionReason"
   tag="label"
@@ -771,7 +789,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 </Label>
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[2].actionTitle field 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[2].actionTitle field 1`] = `
 <input
   className="form-control"
   disabled={false}
@@ -785,7 +803,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 />
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[2].actionTitle label 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[2].actionTitle label 1`] = `
 <Label
   for="activities-2-actionTitle"
   tag="label"
@@ -808,7 +826,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 </Label>
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[2].goalDescription field 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[2].goalDescription field 1`] = `
 <input
   id="activities-2-goalDescription"
   name="activities[2].goalDescription"
@@ -819,9 +837,18 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 />
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[2].goalDue field 1`] = `null`;
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[2].goalDue field 1`] = `
+<input
+  id="activities-2-goalDue"
+  name="activities[2].goalDue"
+  onBlur={[Function]}
+  onChange={[Function]}
+  type="hidden"
+  value={2017-07-20T16:31:00.000Z}
+/>
+`;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[2].goalPriority field 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[2].goalPriority field 1`] = `
 <select
   className="form-control"
   disabled={false}
@@ -853,7 +880,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 </select>
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[2].goalPriority label 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[2].goalPriority label 1`] = `
 <Label
   for="activities-2-goalPriority"
   tag="label"
@@ -876,7 +903,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 </Label>
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[2].goalValue field 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[2].goalValue field 1`] = `
 <input
   className="form-control"
   disabled={false}
@@ -890,7 +917,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 />
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[2].goalValue label 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[2].goalValue label 1`] = `
 <Label
   for="activities-2-goalValue"
   tag="label"
@@ -913,7 +940,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 </Label>
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[2].timingPeriodEnd field 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[2].timingPeriodEnd field 1`] = `
 <input
   className="form-control"
   disabled={false}
@@ -930,7 +957,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 />
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[2].timingPeriodEnd label 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[2].timingPeriodEnd label 1`] = `
 <Label
   for="activities-2-timingPeriodEnd"
   tag="label"
@@ -953,7 +980,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 </Label>
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[2].timingPeriodStart field 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[2].timingPeriodStart field 1`] = `
 <input
   className="form-control"
   disabled={false}
@@ -970,7 +997,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 />
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[2].timingPeriodStart label 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[2].timingPeriodStart label 1`] = `
 <Label
   for="activities-2-timingPeriodStart"
   tag="label"
@@ -993,7 +1020,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 </Label>
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[3].actionCode field 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[3].actionCode field 1`] = `
 <input
   id="activities-3-actionCode"
   name="activities[3].actionCode"
@@ -1005,7 +1032,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 />
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[3].actionDescription field 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[3].actionDescription field 1`] = `
 <textarea
   className="form-control"
   disabled={false}
@@ -1018,7 +1045,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 />
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[3].actionDescription label 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[3].actionDescription label 1`] = `
 <Label
   for="activities-3-actionDescription"
   tag="label"
@@ -1041,7 +1068,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 </Label>
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[3].actionIdentifier field 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[3].actionIdentifier field 1`] = `
 <input
   id="activities-3-actionIdentifier"
   name="activities[3].actionIdentifier"
@@ -1053,7 +1080,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 />
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[3].actionReason field 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[3].actionReason field 1`] = `
 <select
   className="form-control"
   disabled={false}
@@ -1079,7 +1106,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 </select>
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[3].actionReason label 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[3].actionReason label 1`] = `
 <Label
   for="activities-3-actionReason"
   tag="label"
@@ -1102,7 +1129,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 </Label>
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[3].actionTitle field 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[3].actionTitle field 1`] = `
 <input
   className="form-control"
   disabled={false}
@@ -1116,7 +1143,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 />
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[3].actionTitle label 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[3].actionTitle label 1`] = `
 <Label
   for="activities-3-actionTitle"
   tag="label"
@@ -1139,7 +1166,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 </Label>
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[3].goalDescription field 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[3].goalDescription field 1`] = `
 <input
   id="activities-3-goalDescription"
   name="activities[3].goalDescription"
@@ -1150,9 +1177,18 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 />
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[3].goalDue field 1`] = `null`;
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[3].goalDue field 1`] = `
+<input
+  id="activities-3-goalDue"
+  name="activities[3].goalDue"
+  onBlur={[Function]}
+  onChange={[Function]}
+  type="hidden"
+  value={2017-07-20T16:31:00.000Z}
+/>
+`;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[3].goalPriority field 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[3].goalPriority field 1`] = `
 <select
   className="form-control"
   disabled={false}
@@ -1184,7 +1220,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 </select>
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[3].goalPriority label 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[3].goalPriority label 1`] = `
 <Label
   for="activities-3-goalPriority"
   tag="label"
@@ -1207,7 +1243,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 </Label>
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[3].goalValue field 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[3].goalValue field 1`] = `
 <input
   className="form-control"
   disabled={false}
@@ -1221,7 +1257,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 />
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[3].goalValue label 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[3].goalValue label 1`] = `
 <Label
   for="activities-3-goalValue"
   tag="label"
@@ -1244,7 +1280,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 </Label>
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[3].timingPeriodEnd field 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[3].timingPeriodEnd field 1`] = `
 <input
   className="form-control"
   disabled={false}
@@ -1261,7 +1297,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 />
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[3].timingPeriodEnd label 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[3].timingPeriodEnd label 1`] = `
 <Label
   for="activities-3-timingPeriodEnd"
   tag="label"
@@ -1284,7 +1320,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 </Label>
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[3].timingPeriodStart field 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[3].timingPeriodStart field 1`] = `
 <input
   className="form-control"
   disabled={false}
@@ -1301,7 +1337,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 />
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[3].timingPeriodStart label 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[3].timingPeriodStart label 1`] = `
 <Label
   for="activities-3-timingPeriodStart"
   tag="label"
@@ -1324,7 +1360,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 </Label>
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[4].actionCode field 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[4].actionCode field 1`] = `
 <input
   id="activities-4-actionCode"
   name="activities[4].actionCode"
@@ -1336,7 +1372,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 />
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[4].actionDescription field 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[4].actionDescription field 1`] = `
 <textarea
   className="form-control"
   disabled={false}
@@ -1349,7 +1385,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 />
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[4].actionDescription label 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[4].actionDescription label 1`] = `
 <Label
   for="activities-4-actionDescription"
   tag="label"
@@ -1372,7 +1408,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 </Label>
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[4].actionIdentifier field 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[4].actionIdentifier field 1`] = `
 <input
   id="activities-4-actionIdentifier"
   name="activities[4].actionIdentifier"
@@ -1384,7 +1420,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 />
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[4].actionReason field 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[4].actionReason field 1`] = `
 <select
   className="form-control"
   disabled={false}
@@ -1410,7 +1446,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 </select>
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[4].actionReason label 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[4].actionReason label 1`] = `
 <Label
   for="activities-4-actionReason"
   tag="label"
@@ -1433,7 +1469,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 </Label>
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[4].actionTitle field 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[4].actionTitle field 1`] = `
 <input
   className="form-control"
   disabled={false}
@@ -1447,7 +1483,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 />
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[4].actionTitle label 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[4].actionTitle label 1`] = `
 <Label
   for="activities-4-actionTitle"
   tag="label"
@@ -1470,7 +1506,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 </Label>
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[4].goalDescription field 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[4].goalDescription field 1`] = `
 <input
   id="activities-4-goalDescription"
   name="activities[4].goalDescription"
@@ -1481,9 +1517,18 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 />
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[4].goalDue field 1`] = `null`;
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[4].goalDue field 1`] = `
+<input
+  id="activities-4-goalDue"
+  name="activities[4].goalDue"
+  onBlur={[Function]}
+  onChange={[Function]}
+  type="hidden"
+  value={2017-07-20T16:31:00.000Z}
+/>
+`;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[4].goalPriority field 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[4].goalPriority field 1`] = `
 <select
   className="form-control"
   disabled={false}
@@ -1515,7 +1560,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 </select>
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[4].goalPriority label 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[4].goalPriority label 1`] = `
 <Label
   for="activities-4-goalPriority"
   tag="label"
@@ -1538,7 +1583,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 </Label>
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[4].goalValue field 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[4].goalValue field 1`] = `
 <input
   className="form-control"
   disabled={false}
@@ -1552,7 +1597,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 />
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[4].goalValue label 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[4].goalValue label 1`] = `
 <Label
   for="activities-4-goalValue"
   tag="label"
@@ -1575,7 +1620,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 </Label>
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[4].timingPeriodEnd field 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[4].timingPeriodEnd field 1`] = `
 <input
   className="form-control"
   disabled={false}
@@ -1592,7 +1637,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 />
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[4].timingPeriodEnd label 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[4].timingPeriodEnd label 1`] = `
 <Label
   for="activities-4-timingPeriodEnd"
   tag="label"
@@ -1615,7 +1660,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 </Label>
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[4].timingPeriodStart field 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[4].timingPeriodStart field 1`] = `
 <input
   className="form-control"
   disabled={false}
@@ -1632,7 +1677,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 />
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[4].timingPeriodStart label 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[4].timingPeriodStart label 1`] = `
 <Label
   for="activities-4-timingPeriodStart"
   tag="label"
@@ -1655,7 +1700,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 </Label>
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[5].actionCode field 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[5].actionCode field 1`] = `
 <input
   id="activities-5-actionCode"
   name="activities[5].actionCode"
@@ -1667,7 +1712,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 />
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[5].actionDescription field 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[5].actionDescription field 1`] = `
 <textarea
   className="form-control"
   disabled={false}
@@ -1680,7 +1725,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 />
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[5].actionDescription label 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[5].actionDescription label 1`] = `
 <Label
   for="activities-5-actionDescription"
   tag="label"
@@ -1703,7 +1748,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 </Label>
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[5].actionIdentifier field 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[5].actionIdentifier field 1`] = `
 <input
   id="activities-5-actionIdentifier"
   name="activities[5].actionIdentifier"
@@ -1715,7 +1760,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 />
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[5].actionReason field 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[5].actionReason field 1`] = `
 <select
   className="form-control"
   disabled={false}
@@ -1741,7 +1786,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 </select>
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[5].actionReason label 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[5].actionReason label 1`] = `
 <Label
   for="activities-5-actionReason"
   tag="label"
@@ -1764,7 +1809,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 </Label>
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[5].actionTitle field 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[5].actionTitle field 1`] = `
 <input
   className="form-control"
   disabled={false}
@@ -1778,7 +1823,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 />
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[5].actionTitle label 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[5].actionTitle label 1`] = `
 <Label
   for="activities-5-actionTitle"
   tag="label"
@@ -1801,7 +1846,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 </Label>
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[5].goalDescription field 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[5].goalDescription field 1`] = `
 <input
   id="activities-5-goalDescription"
   name="activities[5].goalDescription"
@@ -1812,9 +1857,18 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 />
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[5].goalDue field 1`] = `null`;
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[5].goalDue field 1`] = `
+<input
+  id="activities-5-goalDue"
+  name="activities[5].goalDue"
+  onBlur={[Function]}
+  onChange={[Function]}
+  type="hidden"
+  value={2017-07-20T16:31:00.000Z}
+/>
+`;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[5].goalPriority field 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[5].goalPriority field 1`] = `
 <select
   className="form-control"
   disabled={false}
@@ -1846,7 +1900,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 </select>
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[5].goalPriority label 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[5].goalPriority label 1`] = `
 <Label
   for="activities-5-goalPriority"
   tag="label"
@@ -1869,7 +1923,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 </Label>
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[5].goalValue field 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[5].goalValue field 1`] = `
 <input
   className="form-control"
   disabled={false}
@@ -1883,7 +1937,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 />
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[5].goalValue label 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[5].goalValue label 1`] = `
 <Label
   for="activities-5-goalValue"
   tag="label"
@@ -1906,7 +1960,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 </Label>
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[5].timingPeriodEnd field 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[5].timingPeriodEnd field 1`] = `
 <input
   className="form-control"
   disabled={false}
@@ -1923,7 +1977,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 />
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[5].timingPeriodEnd label 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[5].timingPeriodEnd label 1`] = `
 <Label
   for="activities-5-timingPeriodEnd"
   tag="label"
@@ -1946,7 +2000,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 </Label>
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[5].timingPeriodStart field 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[5].timingPeriodStart field 1`] = `
 <input
   className="form-control"
   disabled={false}
@@ -1963,7 +2017,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 />
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[5].timingPeriodStart label 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[5].timingPeriodStart label 1`] = `
 <Label
   for="activities-5-timingPeriodStart"
   tag="label"
@@ -1986,7 +2040,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 </Label>
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[6].actionCode field 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[6].actionCode field 1`] = `
 <input
   id="activities-6-actionCode"
   name="activities[6].actionCode"
@@ -1998,7 +2052,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 />
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[6].actionDescription field 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[6].actionDescription field 1`] = `
 <textarea
   className="form-control"
   disabled={false}
@@ -2011,7 +2065,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 />
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[6].actionDescription label 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[6].actionDescription label 1`] = `
 <Label
   for="activities-6-actionDescription"
   tag="label"
@@ -2034,7 +2088,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 </Label>
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[6].actionIdentifier field 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[6].actionIdentifier field 1`] = `
 <input
   id="activities-6-actionIdentifier"
   name="activities[6].actionIdentifier"
@@ -2046,7 +2100,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 />
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[6].actionReason field 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[6].actionReason field 1`] = `
 <select
   className="form-control"
   disabled={false}
@@ -2072,7 +2126,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 </select>
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[6].actionReason label 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[6].actionReason label 1`] = `
 <Label
   for="activities-6-actionReason"
   tag="label"
@@ -2095,7 +2149,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 </Label>
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[6].actionTitle field 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[6].actionTitle field 1`] = `
 <input
   className="form-control"
   disabled={false}
@@ -2109,7 +2163,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 />
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[6].actionTitle label 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[6].actionTitle label 1`] = `
 <Label
   for="activities-6-actionTitle"
   tag="label"
@@ -2132,7 +2186,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 </Label>
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[6].goalDescription field 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[6].goalDescription field 1`] = `
 <input
   id="activities-6-goalDescription"
   name="activities[6].goalDescription"
@@ -2143,9 +2197,18 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 />
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[6].goalDue field 1`] = `null`;
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[6].goalDue field 1`] = `
+<input
+  id="activities-6-goalDue"
+  name="activities[6].goalDue"
+  onBlur={[Function]}
+  onChange={[Function]}
+  type="hidden"
+  value={2017-07-20T16:31:00.000Z}
+/>
+`;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[6].goalPriority field 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[6].goalPriority field 1`] = `
 <select
   className="form-control"
   disabled={false}
@@ -2177,7 +2240,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 </select>
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[6].goalPriority label 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[6].goalPriority label 1`] = `
 <Label
   for="activities-6-goalPriority"
   tag="label"
@@ -2200,7 +2263,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 </Label>
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[6].goalValue field 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[6].goalValue field 1`] = `
 <input
   className="form-control"
   disabled={false}
@@ -2214,7 +2277,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 />
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[6].goalValue label 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[6].goalValue label 1`] = `
 <Label
   for="activities-6-goalValue"
   tag="label"
@@ -2237,7 +2300,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 </Label>
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[6].timingPeriodEnd field 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[6].timingPeriodEnd field 1`] = `
 <input
   className="form-control"
   disabled={false}
@@ -2254,7 +2317,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 />
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[6].timingPeriodEnd label 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[6].timingPeriodEnd label 1`] = `
 <Label
   for="activities-6-timingPeriodEnd"
   tag="label"
@@ -2277,7 +2340,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 </Label>
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[6].timingPeriodStart field 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[6].timingPeriodStart field 1`] = `
 <input
   className="form-control"
   disabled={false}
@@ -2294,7 +2357,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
 />
 `;
 
-exports[`containers/forms/PlanForm renders activity fields correctly: activities[6].timingPeriodStart label 1`] = `
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[6].timingPeriodStart label 1`] = `
 <Label
   for="activities-6-timingPeriodStart"
   tag="label"
@@ -2311,6 +2374,346 @@ exports[`containers/forms/PlanForm renders activity fields correctly: activities
   <label
     className=""
     htmlFor="activities-6-timingPeriodStart"
+  >
+    Start Date
+  </label>
+</Label>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: IRS activities[0].actionCode field 1`] = `
+<input
+  id="activities-0-actionCode"
+  name="activities[0].actionCode"
+  onBlur={[Function]}
+  onChange={[Function]}
+  readOnly={true}
+  type="hidden"
+  value="IRS"
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: IRS activities[0].actionDescription field 1`] = `
+<textarea
+  className="form-control"
+  disabled={false}
+  id="activities-0-actionDescription"
+  name="activities[0].actionDescription"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  value="Visit each structure in the operational area and attempt to spray"
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: IRS activities[0].actionDescription label 1`] = `
+<Label
+  for="activities-0-actionDescription"
+  tag="label"
+  widths={
+    Array [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+    ]
+  }
+>
+  <label
+    className=""
+    htmlFor="activities-0-actionDescription"
+  >
+    Description
+  </label>
+</Label>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: IRS activities[0].actionIdentifier field 1`] = `
+<input
+  id="activities-0-actionIdentifier"
+  name="activities[0].actionIdentifier"
+  onBlur={[Function]}
+  onChange={[Function]}
+  readOnly={true}
+  type="hidden"
+  value=""
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: IRS activities[0].actionReason field 1`] = `
+<select
+  className="form-control"
+  disabled={false}
+  id="activities-0-actionReason"
+  name="activities[0].actionReason"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  value="Routine"
+>
+  <option
+    key="Investigation"
+    value="Investigation"
+  >
+    Investigation
+  </option>
+  <option
+    key="Routine"
+    value="Routine"
+  >
+    Routine
+  </option>
+</select>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: IRS activities[0].actionReason label 1`] = `
+<Label
+  for="activities-0-actionReason"
+  tag="label"
+  widths={
+    Array [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+    ]
+  }
+>
+  <label
+    className=""
+    htmlFor="activities-0-actionReason"
+  >
+    Reason
+  </label>
+</Label>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: IRS activities[0].actionTitle field 1`] = `
+<input
+  className="form-control"
+  disabled={false}
+  id="activities-0-actionTitle"
+  name="activities[0].actionTitle"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  type="text"
+  value="Spray Structures"
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: IRS activities[0].actionTitle label 1`] = `
+<Label
+  for="activities-0-actionTitle"
+  tag="label"
+  widths={
+    Array [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+    ]
+  }
+>
+  <label
+    className=""
+    htmlFor="activities-0-actionTitle"
+  >
+    Action
+  </label>
+</Label>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: IRS activities[0].goalDescription field 1`] = `
+<input
+  id="activities-0-goalDescription"
+  name="activities[0].goalDescription"
+  onBlur={[Function]}
+  onChange={[Function]}
+  type="hidden"
+  value="Visit each structure in the operational area and attempt to spray"
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: IRS activities[0].goalDue field 1`] = `
+<input
+  id="activities-0-goalDue"
+  name="activities[0].goalDue"
+  onBlur={[Function]}
+  onChange={[Function]}
+  type="hidden"
+  value={2017-07-20T16:31:00.000Z}
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: IRS activities[0].goalPriority field 1`] = `
+<select
+  className="form-control"
+  disabled={false}
+  id="activities-0-goalPriority"
+  name="activities[0].goalPriority"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  value="medium-priority"
+>
+  <option
+    key="low-priority"
+    value="low-priority"
+  >
+    low-priority
+  </option>
+  <option
+    key="medium-priority"
+    value="medium-priority"
+  >
+    medium-priority
+  </option>
+  <option
+    key="high-priority"
+    value="high-priority"
+  >
+    high-priority
+  </option>
+</select>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: IRS activities[0].goalPriority label 1`] = `
+<Label
+  for="activities-0-goalPriority"
+  tag="label"
+  widths={
+    Array [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+    ]
+  }
+>
+  <label
+    className=""
+    htmlFor="activities-0-goalPriority"
+  >
+    Priority
+  </label>
+</Label>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: IRS activities[0].goalValue field 1`] = `
+<input
+  className="form-control"
+  disabled={false}
+  id="activities-0-goalValue"
+  name="activities[0].goalValue"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  type="number"
+  value={90}
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: IRS activities[0].goalValue label 1`] = `
+<Label
+  for="activities-0-goalValue"
+  tag="label"
+  widths={
+    Array [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+    ]
+  }
+>
+  <label
+    className=""
+    htmlFor="activities-0-goalValue"
+  >
+    Quantity
+  </label>
+</Label>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: IRS activities[0].timingPeriodEnd field 1`] = `
+<input
+  className="form-control"
+  disabled={false}
+  id="activities-0-timingPeriodEnd"
+  onBlur={[Function]}
+  onChange={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onKeyDown={[Function]}
+  readOnly={false}
+  required={true}
+  type="text"
+  value="2017-07-20"
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: IRS activities[0].timingPeriodEnd label 1`] = `
+<Label
+  for="activities-0-timingPeriodEnd"
+  tag="label"
+  widths={
+    Array [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+    ]
+  }
+>
+  <label
+    className=""
+    htmlFor="activities-0-timingPeriodEnd"
+  >
+    End Date
+  </label>
+</Label>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: IRS activities[0].timingPeriodStart field 1`] = `
+<input
+  className="form-control"
+  disabled={false}
+  id="activities-0-timingPeriodStart"
+  onBlur={[Function]}
+  onChange={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onKeyDown={[Function]}
+  readOnly={false}
+  required={true}
+  type="text"
+  value="2017-07-13"
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: IRS activities[0].timingPeriodStart label 1`] = `
+<Label
+  for="activities-0-timingPeriodStart"
+  tag="label"
+  widths={
+    Array [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+    ]
+  }
+>
+  <label
+    className=""
+    htmlFor="activities-0-timingPeriodStart"
   >
     Start Date
   </label>
