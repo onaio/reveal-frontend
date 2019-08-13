@@ -35,6 +35,9 @@ describe('containers/forms/PlanForm/helpers', () => {
     expect(extractActivityForForm(planActivities.bednetDistribution)).toEqual(
       expectedActivity.bednetDistribution
     );
+    expect(extractActivityForForm(planActivityWithEmptyfields.bednetDistribution)).toEqual(
+      expectedActivityEmptyField.bednetDistribution
+    );
   });
 
   it('check extractActivityForForm returns the correct value for bloodScreening', () => {

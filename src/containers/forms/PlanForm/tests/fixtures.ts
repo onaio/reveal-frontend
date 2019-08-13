@@ -149,6 +149,37 @@ export const planActivityWithEmptyfields = {
       ],
     },
   },
+  bednetDistribution: {
+    action: {
+      code: 'Bednet Distribution',
+      goalId: 'RACD_bednet_distribution',
+      prefix: 4,
+      subjectCodableConcept: {
+        text: 'Residential_Structure',
+      },
+      taskTemplate: 'Bednet_Distribution',
+      timingPeriod: {
+        end: timingPeriodEnd,
+        start: timingPeriodStart,
+      },
+    },
+    goal: {
+      id: 'RACD_bednet_distribution',
+      target: [
+        {
+          detail: {
+            detailQuantity: {
+              comparator: '>=',
+              unit: 'Percent',
+              value: 100,
+            },
+          },
+          due: goalDue.toString(),
+          measure: 'Percent of residential structures received nets',
+        },
+      ],
+    },
+  },
 };
 
 export const expectedActivityEmptyField = {
@@ -161,6 +192,19 @@ export const expectedActivityEmptyField = {
     goalDue,
     goalPriority: 'medium-priority',
     goalValue: 1,
+    timingPeriodEnd,
+    timingPeriodStart,
+  },
+  bednetDistribution: {
+    actionCode: 'Bednet Distribution',
+    actionDescription: '',
+    actionIdentifier: '',
+    actionReason: '',
+    actionTitle: '',
+    goalDescription: '',
+    goalDue,
+    goalPriority: 'medium-priority',
+    goalValue: 100,
     timingPeriodEnd,
     timingPeriodStart,
   },
