@@ -53,11 +53,17 @@ describe('containers/forms/PlanForm/helpers', () => {
     expect(extractActivityForForm(planActivities.caseConfirmation)).toEqual(
       expectedActivity.caseConfirmation
     );
+    expect(extractActivityForForm(planActivityWithEmptyfields.caseConfirmation)).toEqual(
+      expectedActivityEmptyField.caseConfirmation
+    );
   });
 
   it('check extractActivityForForm returns the correct value for larvalDipping', () => {
     expect(extractActivityForForm(planActivities.larvalDipping)).toEqual(
       expectedActivity.larvalDipping
+    );
+    expect(extractActivityForForm(planActivityWithEmptyfields.larvalDipping)).toEqual(
+      expectedActivityEmptyField.larvalDipping
     );
   });
 
