@@ -65,3 +65,8 @@ fieldset[disabled] .gatekeeper-btn.active {
   color: #28a745;
   background-color: #ffffff;
 }
+
+.ReactTable .-pagination {
+  box-shadow: none;
+  border-top-width: 1px;
+}

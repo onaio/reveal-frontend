@@ -58,8 +58,3 @@
 .select-jurisdictin-tooltip {
   padding: 6px 8px !important;
 }
-
-.ReactTable .-pagination {
-  box-shadow: none;
-  border-top-width: 1px;
-}

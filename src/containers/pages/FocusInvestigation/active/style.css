@@ -2,7 +2,3 @@ div.routine-heading div.row button.focus-investigation.btn.btn-primary {
   margin-top: 3rem !important;
   float: right;
 }
-.ReactTable .-pagination {
-  box-shadow: none;
-  border-top-width: 1px;
-}
