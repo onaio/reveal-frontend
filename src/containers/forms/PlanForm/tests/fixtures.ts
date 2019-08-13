@@ -299,6 +299,35 @@ export const planActivityWithEmptyfields = {
       ],
     },
   },
+  mosquitoCollection: {
+    action: {
+      code: 'Mosquito Collection',
+      goalId: 'Mosquito_Collection',
+      prefix: 6,
+      taskTemplate: 'Mosquito_Collection_Point',
+      timingPeriod: {
+        end: timingPeriodEnd,
+        start: timingPeriodStart,
+      },
+    },
+    goal: {
+      id: 'Mosquito_Collection',
+      priority: 'medium-priority',
+      target: [
+        {
+          detail: {
+            detailQuantity: {
+              comparator: '>=',
+              unit: 'activit(y|ies)',
+              value: 3,
+            },
+          },
+          due: goalDue,
+          measure: 'Number of mosquito collection activities completed',
+        },
+      ],
+    },
+  },
 };
 
 export const expectedActivityEmptyField = {
@@ -368,6 +397,19 @@ export const expectedActivityEmptyField = {
   },
   larvalDipping: {
     actionCode: 'Larval Dipping',
+    actionDescription: '',
+    actionIdentifier: '',
+    actionReason: '',
+    actionTitle: '',
+    goalDescription: '',
+    goalDue,
+    goalPriority: 'medium-priority',
+    goalValue: 3,
+    timingPeriodEnd,
+    timingPeriodStart,
+  },
+  mosquitoCollection: {
+    actionCode: 'Mosquito Collection',
     actionDescription: '',
     actionIdentifier: '',
     actionReason: '',
