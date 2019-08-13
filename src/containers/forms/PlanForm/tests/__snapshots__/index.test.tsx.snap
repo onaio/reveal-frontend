@@ -2720,6 +2720,43 @@ exports[`containers/forms/PlanForm renders activity fields correctly: IRS activi
 </Label>
 `;
 
+exports[`containers/forms/PlanForm renders correctly: caseNum field 1`] = `
+<input
+  className="form-control"
+  disabled={false}
+  id="caseNum"
+  name="caseNum"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  type="text"
+  value=""
+/>
+`;
+
+exports[`containers/forms/PlanForm renders correctly: caseNum label 1`] = `
+<Label
+  for="caseNum"
+  tag="label"
+  widths={
+    Array [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+    ]
+  }
+>
+  <label
+    className=""
+    htmlFor="caseNum"
+  >
+    Case Number
+  </label>
+</Label>
+`;
+
 exports[`containers/forms/PlanForm renders correctly: date field 1`] = `
 <input
   id="date"
@@ -2891,6 +2928,17 @@ exports[`containers/forms/PlanForm renders correctly: name field 1`] = `
   onChange={[Function]}
   type="hidden"
   value=""
+/>
+`;
+
+exports[`containers/forms/PlanForm renders correctly: opensrpEventId field 1`] = `
+<input
+  id="opensrpEventId"
+  name="opensrpEventId"
+  onBlur={[Function]}
+  onChange={[Function]}
+  readOnly={true}
+  type="hidden"
 />
 `;
 
