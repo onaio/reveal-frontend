@@ -1,6 +1,5 @@
 import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
-import MockDate from 'mockdate';
 import React from 'react';
 import PlanForm from '..';
 
@@ -17,7 +16,6 @@ describe('containers/forms/PlanForm', () => {
   });
 
   it('renders correctly', () => {
-    MockDate.set('7-13-17 19:31', 3); // Mersenne primes :)
     fetch.mockResponseOnce(JSON.stringify([]));
     const wrapper = mount(<PlanForm />);
     expect(toJson(wrapper.find('#interventionType select'))).toMatchSnapshot(
@@ -50,7 +48,6 @@ describe('containers/forms/PlanForm', () => {
   });
 
   it('renders activity fields correctly', () => {
-    MockDate.set('7-13-17 19:31', 3); // Mersenne primes :)
     fetch.mockResponseOnce(JSON.stringify([]));
     const wrapper = mount(<PlanForm />);
 
