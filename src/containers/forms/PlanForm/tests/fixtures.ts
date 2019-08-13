@@ -241,6 +241,35 @@ export const planActivityWithEmptyfields = {
       ],
     },
   },
+  familyRegistration: {
+    action: {
+      code: 'RACD Register Family',
+      goalId: 'RACD_register_families',
+      prefix: 2,
+      taskTemplate: 'RACD_register_families',
+      timingPeriod: {
+        end: timingPeriodEnd,
+        start: timingPeriodStart,
+      },
+    },
+    goal: {
+      id: 'RACD_register_families',
+      priority: 'medium-priority',
+      target: [
+        {
+          detail: {
+            detailQuantity: {
+              comparator: '>=',
+              unit: 'Percent',
+              value: 100,
+            },
+          },
+          due: goalDue,
+          measure: 'Percent of residential structures with full family registration',
+        },
+      ],
+    },
+  },
   larvalDipping: {
     action: {
       code: 'Larval Dipping',
@@ -321,6 +350,19 @@ export const expectedActivityEmptyField = {
     goalDue,
     goalPriority: 'medium-priority',
     goalValue: 1,
+    timingPeriodEnd,
+    timingPeriodStart,
+  },
+  familyRegistration: {
+    actionCode: 'RACD Register Family',
+    actionDescription: '',
+    actionIdentifier: '',
+    actionReason: '',
+    actionTitle: '',
+    goalDescription: '',
+    goalDue,
+    goalPriority: 'medium-priority',
+    goalValue: 100,
     timingPeriodEnd,
     timingPeriodStart,
   },

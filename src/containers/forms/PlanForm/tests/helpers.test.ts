@@ -77,6 +77,9 @@ describe('containers/forms/PlanForm/helpers', () => {
     expect(extractActivityForForm(planActivities.mosquitoCollection)).toEqual(
       expectedActivity.mosquitoCollection
     );
+    expect(extractActivityForForm(planActivityWithEmptyfields.familyRegistration)).toEqual(
+      expectedActivityEmptyField.familyRegistration
+    );
   });
 
   it('check getFormActivities returns the correct value', () => {
