@@ -142,6 +142,15 @@ describe('containers/forms/PlanForm', () => {
     checkActivities(0, 'IRS');
     expect(wrapper.find(`#activities-1-actionTitle input`).length).toEqual(0);
 
+    // set it back
+    wrapper
+      .find('#interventionType select')
+      .simulate('change', { target: { value: 'FI', name: 'interventionType' } });
+    for (let i = 0; i <= 6; i++) {
+      expect(wrapper.find(`#activities-${i}-actionTitle input`).length).toEqual(1);
+    }
+    expect(wrapper.find(`#activities-7-actionTitle input`).length).toEqual(0);
+
     wrapper.unmount();
   });
 });
