@@ -61,7 +61,7 @@ import plansReducer, {
   PlanStatus,
   reducerName as plansReducerName,
 } from '../../../../store/ducks/plans';
-import './../../../../tables.css';
+import './../../../../styles/css/drill-down-table.css';
 import './style.css';
 
 /** register the plans reducer */
