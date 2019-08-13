@@ -48,69 +48,83 @@ describe('containers/forms/PlanForm', () => {
   });
 
   it('renders activity fields correctly', () => {
+    function checkActivities(num: number, name: string = 'FI') {
+      // FI activities by default
+      for (let i = 0; i <= num; i++) {
+        expect(toJson(wrapper.find({ for: `activities-${i}-actionTitle` }))).toMatchSnapshot(
+          `${name} activities[${i}].actionTitle label`
+        );
+        expect(toJson(wrapper.find(`#activities-${i}-actionTitle input`))).toMatchSnapshot(
+          `${name} activities[${i}].actionTitle field`
+        );
+        expect(wrapper.find({ for: `activities-${i}-actionCode` }).length).toEqual(0);
+        expect(toJson(wrapper.find(`#activities-${i}-actionCode input`))).toMatchSnapshot(
+          `${name} activities[${i}].actionCode field`
+        );
+        expect(wrapper.find({ for: `activities-${i}-actionIdentifier` }).length).toEqual(0);
+        expect(toJson(wrapper.find(`#activities-${i}-actionIdentifier input`))).toMatchSnapshot(
+          `${name} activities[${i}].actionIdentifier field`
+        );
+        expect(toJson(wrapper.find({ for: `activities-${i}-actionDescription` }))).toMatchSnapshot(
+          `${name} activities[${i}].actionDescription label`
+        );
+        expect(toJson(wrapper.find(`#activities-${i}-actionDescription textarea`))).toMatchSnapshot(
+          `${name} activities[${i}].actionDescription field`
+        );
+        expect(wrapper.find({ for: `activities-${i}-goalDescription` }).length).toEqual(0);
+        expect(toJson(wrapper.find(`#activities-${i}-goalDescription input`))).toMatchSnapshot(
+          `${name} activities[${i}].goalDescription field`
+        );
+        expect(toJson(wrapper.find({ for: `activities-${i}-goalValue` }))).toMatchSnapshot(
+          `${name} activities[${i}].goalValue label`
+        );
+        expect(toJson(wrapper.find(`#activities-${i}-goalValue input`))).toMatchSnapshot(
+          `${name} activities[${i}].goalValue field`
+        );
+        expect(toJson(wrapper.find({ for: `activities-${i}-timingPeriodStart` }))).toMatchSnapshot(
+          `${name} activities[${i}].timingPeriodStart label`
+        );
+        expect(toJson(wrapper.find(`#activities-${i}-timingPeriodStart input`))).toMatchSnapshot(
+          `${name} activities[${i}].timingPeriodStart field`
+        );
+        expect(toJson(wrapper.find({ for: `activities-${i}-timingPeriodEnd` }))).toMatchSnapshot(
+          `${name} activities[${i}].timingPeriodEnd label`
+        );
+        expect(toJson(wrapper.find(`#activities-${i}-timingPeriodEnd input`))).toMatchSnapshot(
+          `${name} activities[${i}].timingPeriodEnd field`
+        );
+        expect(wrapper.find({ for: `activities-${i}-goalDue` }).length).toEqual(0);
+        expect(toJson(wrapper.find(`#activities-${i}-goalDue input`))).toMatchSnapshot(
+          `${name} activities[${i}].goalDue field`
+        );
+        expect(toJson(wrapper.find({ for: `activities-${i}-actionReason` }))).toMatchSnapshot(
+          `${name} activities[${i}].actionReason label`
+        );
+        expect(toJson(wrapper.find(`#activities-${i}-actionReason select`))).toMatchSnapshot(
+          `${name} activities[${i}].actionReason field`
+        );
+        expect(toJson(wrapper.find({ for: `activities-${i}-goalPriority` }))).toMatchSnapshot(
+          `${name} activities[${i}].goalPriority label`
+        );
+        expect(toJson(wrapper.find(`#activities-${i}-goalPriority select`))).toMatchSnapshot(
+          `${name} activities[${i}].goalPriority field`
+        );
+      }
+    }
+
     fetch.mockResponseOnce(JSON.stringify([]));
     const wrapper = mount(<PlanForm />);
 
-    for (let i = 0; i <= 6; i++) {
-      expect(toJson(wrapper.find({ for: `activities-${i}-actionTitle` }))).toMatchSnapshot(
-        `activities[${i}].actionTitle label`
-      );
-      expect(toJson(wrapper.find(`#activities-${i}-actionTitle input`))).toMatchSnapshot(
-        `activities[${i}].actionTitle field`
-      );
-      expect(wrapper.find({ for: `activities-${i}-actionCode` }).length).toEqual(0);
-      expect(toJson(wrapper.find(`#activities-${i}-actionCode input`))).toMatchSnapshot(
-        `activities[${i}].actionCode field`
-      );
-      expect(wrapper.find({ for: `activities-${i}-actionIdentifier` }).length).toEqual(0);
-      expect(toJson(wrapper.find(`#activities-${i}-actionIdentifier input`))).toMatchSnapshot(
-        `activities[${i}].actionIdentifier field`
-      );
-      expect(toJson(wrapper.find({ for: `activities-${i}-actionDescription` }))).toMatchSnapshot(
-        `activities[${i}].actionDescription label`
-      );
-      expect(toJson(wrapper.find(`#activities-${i}-actionDescription textarea`))).toMatchSnapshot(
-        `activities[${i}].actionDescription field`
-      );
-      expect(wrapper.find({ for: `activities-${i}-goalDescription` }).length).toEqual(0);
-      expect(toJson(wrapper.find(`#activities-${i}-goalDescription input`))).toMatchSnapshot(
-        `activities[${i}].goalDescription field`
-      );
-      expect(toJson(wrapper.find({ for: `activities-${i}-goalValue` }))).toMatchSnapshot(
-        `activities[${i}].goalValue label`
-      );
-      expect(toJson(wrapper.find(`#activities-${i}-goalValue input`))).toMatchSnapshot(
-        `activities[${i}].goalValue field`
-      );
-      expect(toJson(wrapper.find({ for: `activities-${i}-timingPeriodStart` }))).toMatchSnapshot(
-        `activities[${i}].timingPeriodStart label`
-      );
-      expect(toJson(wrapper.find(`#activities-${i}-timingPeriodStart input`))).toMatchSnapshot(
-        `activities[${i}].timingPeriodStart field`
-      );
-      expect(toJson(wrapper.find({ for: `activities-${i}-timingPeriodEnd` }))).toMatchSnapshot(
-        `activities[${i}].timingPeriodEnd label`
-      );
-      expect(toJson(wrapper.find(`#activities-${i}-timingPeriodEnd input`))).toMatchSnapshot(
-        `activities[${i}].timingPeriodEnd field`
-      );
-      expect(wrapper.find({ for: `activities-${i}-goalDue` }).length).toEqual(0);
-      expect(toJson(wrapper.find(`#activities-${i}-goalDue input`))).toMatchSnapshot(
-        `activities[${i}].goalDue field`
-      );
-      expect(toJson(wrapper.find({ for: `activities-${i}-actionReason` }))).toMatchSnapshot(
-        `activities[${i}].actionReason label`
-      );
-      expect(toJson(wrapper.find(`#activities-${i}-actionReason select`))).toMatchSnapshot(
-        `activities[${i}].actionReason field`
-      );
-      expect(toJson(wrapper.find({ for: `activities-${i}-goalPriority` }))).toMatchSnapshot(
-        `activities[${i}].goalPriority label`
-      );
-      expect(toJson(wrapper.find(`#activities-${i}-goalPriority select`))).toMatchSnapshot(
-        `activities[${i}].goalPriority field`
-      );
-    }
+    // activities are 6 and of type FI by default
+    checkActivities(6, 'FI');
+    expect(wrapper.find(`#activities-7-actionTitle input`).length).toEqual(0);
+
+    // should get IRS activities if interventionType is IRS
+    wrapper
+      .find('#interventionType select')
+      .simulate('change', { target: { value: 'IRS', name: 'interventionType' } });
+    checkActivities(0, 'IRS');
+    expect(wrapper.find(`#activities-1-actionTitle input`).length).toEqual(0);
 
     wrapper.unmount();
   });
