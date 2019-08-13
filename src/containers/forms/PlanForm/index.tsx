@@ -543,7 +543,7 @@ const PlanForm = (props: PlanFormProps) => {
                         <Field
                           type="hidden"
                           name={`activities[${index}].goalDue`}
-                          id={`activities[${index}].goalDue`}
+                          id={`activities-${index}-goalDue`}
                           value={values.activities[index].timingPeriodEnd}
                         />
                       </FormGroup>
