@@ -37,6 +37,12 @@ describe('containers/forms/PlanForm/helpers', () => {
     );
   });
 
+  it('check extractActivityForForm returns the correct value for bloodScreening', () => {
+    expect(extractActivityForForm(planActivities.bloodScreening)).toEqual(
+      expectedActivity.bloodScreening
+    );
+  });
+
   it('check getFormActivities returns the correct value', () => {
     expect(JSON.stringify(getFormActivities(planActivities))).toEqual(
       JSON.stringify(extractedActivitiesFromForms)

@@ -44,6 +44,21 @@ export const expectedActivity = {
     timingPeriodEnd,
     timingPeriodStart,
   },
+  bloodScreening: {
+    actionCode: 'Blood Screening',
+    actionDescription:
+      'Visit all residential structures (100%) within a 1 km radius of a confirmed index case and test each registered person',
+    actionIdentifier: '',
+    actionReason: 'Investigation',
+    actionTitle: 'Blood screening',
+    goalDescription:
+      'Visit all residential structures (100%) within a 1 km radius of a confirmed index case and test each registered person',
+    goalDue,
+    goalPriority: 'medium-priority',
+    goalValue: 100,
+    timingPeriodEnd,
+    timingPeriodStart,
+  },
 };
 
 export const planActivityWithEmptyfields = {
