@@ -21,6 +21,7 @@ import {
   planActivityWithEmptyfields,
   values,
   values2,
+  valuesWithJurisdiction,
 } from './fixtures';
 
 describe('containers/forms/PlanForm/helpers', () => {
@@ -113,14 +114,26 @@ describe('containers/forms/PlanForm/helpers', () => {
 
   it('check getNameTitle returns the correct value when Focus Investigation(FI) is selected', () => {
     expect(getNameTitle(event, values)).toEqual(['A1--2019-08-09', 'A1  2019-08-09']);
+    expect(getNameTitle(event, valuesWithJurisdiction)).toEqual([
+      'A1-TLv2_01-2019-08-09',
+      'A1 TLv2_01 2019-08-09',
+    ]);
   });
 
   it('check getNameTitle returns the correct value when IRS is selected', () => {
     expect(getNameTitle(event2, values)).toEqual(['IRS-2019-08-09', 'IRS 2019-08-09']);
+    expect(getNameTitle(event2, valuesWithJurisdiction)).toEqual([
+      'IRS-2019-08-09',
+      'IRS 2019-08-09',
+    ]);
   });
 
   it('check getNameTitle returns the correct value when nothing is selected', () => {
     expect(getNameTitle(event3, values)).toEqual(['IRS-2019-08-09', 'IRS 2019-08-09']);
+    expect(getNameTitle(event3, valuesWithJurisdiction)).toEqual([
+      'IRS-2019-08-09',
+      'IRS 2019-08-09',
+    ]);
   });
 
   it('check generatePlanDefinition returns the correct value', () => {
