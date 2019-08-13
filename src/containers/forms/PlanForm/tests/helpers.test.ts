@@ -49,6 +49,12 @@ describe('containers/forms/PlanForm/helpers', () => {
     );
   });
 
+  it('check extractActivityForForm returns the correct value for familyRegistration', () => {
+    expect(extractActivityForForm(planActivities.familyRegistration)).toEqual(
+      expectedActivity.familyRegistration
+    );
+  });
+
   it('check getFormActivities returns the correct value', () => {
     expect(JSON.stringify(getFormActivities(planActivities))).toEqual(
       JSON.stringify(extractedActivitiesFromForms)

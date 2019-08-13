@@ -72,6 +72,21 @@ export const expectedActivity = {
     timingPeriodEnd,
     timingPeriodStart,
   },
+  familyRegistration: {
+    actionCode: 'RACD Register Family',
+    actionDescription:
+      'Register all families & family members in all residential structures enumerated (100%) within the operational area',
+    actionIdentifier: '',
+    actionReason: 'Investigation',
+    actionTitle: 'Family Registration',
+    goalDescription:
+      'Register all families & family members in all residential structures enumerated (100%) within the operational area',
+    goalDue,
+    goalPriority: 'medium-priority',
+    goalValue: 100,
+    timingPeriodEnd,
+    timingPeriodStart,
+  },
 };
 
 export const planActivityWithEmptyfields = {
