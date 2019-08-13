@@ -24,7 +24,7 @@ import {
   values2,
 } from './fixtures';
 
-describe('PlanForm/helpers', () => {
+describe('containers/forms/PlanForm/helpers', () => {
   it('check extractActivityForForm returns the correct value', () => {
     expect(extractActivityForForm(bccTestPlanActivity.BCC)).toEqual(expectedActivity);
     expect(extractActivityForForm(bccTestPlanActivityWithEmptyfields.BCC)).toEqual(
