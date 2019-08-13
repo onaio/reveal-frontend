@@ -154,4 +154,30 @@ describe('containers/forms/PlanForm', () => {
 
     wrapper.unmount();
   });
+
+  it('renders jurisdictions fields correctly', () => {
+    function checkJurisdtictions(num: number) {
+      // FI activities by default
+      for (let i = 0; i <= num; i++) {
+        expect(toJson(wrapper.find({ for: `jurisdictions-${i}-id` }))).toMatchSnapshot(
+          `jurisdictions[${i}].id label`
+        );
+        expect(toJson(wrapper.find(`#jurisdictions-${i}-id input`))).toMatchSnapshot(
+          `jurisdictions[${i}].id field`
+        );
+        expect(wrapper.find({ for: `jurisdictions-${i}-name` }).length).toEqual(0);
+        expect(toJson(wrapper.find(`#jurisdictions-${i}-name input`))).toMatchSnapshot(
+          `jurisdictions[${i}].name field`
+        );
+      }
+    }
+
+    fetch.mockResponseOnce(fixtures.jurisdictionLevel0JSON);
+    const wrapper = mount(<PlanForm />);
+
+    checkJurisdtictions(0);
+    expect(wrapper.find(`#jurisdictions-1-id input`).length).toEqual(0);
+
+    wrapper.unmount();
+  });
 });
