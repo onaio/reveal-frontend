@@ -427,12 +427,45 @@ export function getPlanFormValues(planObject: PlanDefinition): PlanFormFields {
     typeUseContext.length > 0
       ? (typeUseContext[0].valueCodableConcept as InterventionType)
       : InterventionType.FI;
-  const defaultActivities =
-    interventionType === InterventionType.IRS
-      ? getFormActivities(IRSActivities)
-      : getFormActivities(FIActivities);
 
-  const activities: PlanActivityFormFields[] = defaultActivities;
+  // const defaultActivities =
+  //   interventionType === InterventionType.IRS
+  //     ? getFormActivities(IRSActivities)
+  //     : getFormActivities(FIActivities);
+
+  // const activities: PlanActivityFormFields[] = defaultActivities;
+  // let result: PlanActivityFormFields[] = [];
+
+  // const x = planObject.action.map((currentAction) => {
+  //   const goalArray = planObject.goal.filter(goal => goal.id === currentAction.goalId);
+  //   if (goalArray.length > 0) {
+
+  //   }
+  //   const currentActivitry = extractActivityForForm({action: currentAction, goal: goalArray[0]})
+  //   return result.push(currentActivitry);
+  // })
+
+  let activities = planObject.action.reduce(
+    (accumulator: PlanActivityFormFields[], currentAction) => {
+      const goalArray = planObject.goal.filter(goal => goal.id === currentAction.goalId);
+      goalArray.map(currentGoal => {
+        const currentActivity = extractActivityForForm({
+          action: currentAction,
+          goal: currentGoal,
+        });
+        accumulator.push(currentActivity);
+      });
+      return accumulator;
+    },
+    []
+  );
+
+  if (activities.length < 1) {
+    activities =
+      interventionType === InterventionType.IRS
+        ? getFormActivities(IRSActivities)
+        : getFormActivities(FIActivities);
+  }
 
   // const activities: PlanActivityFormFields[] = planObject.action.map(action => {
   //   const goalArray = planObject.goal.filter(goal => goal.id === action.goalId);
