@@ -4,6 +4,7 @@ import DrillDownTable from '@onaio/drill-down-table';
 import { FlexObject } from '@onaio/drill-down-table/dist/types/helpers/utils';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset from '@onaio/superset-connector';
+import moment from 'moment';
 import * as React from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
@@ -214,11 +215,12 @@ class ActiveFocusInvestigation extends React.Component<
                   {
                     Cell: (cell: CellInfo) => {
                       /** if 24 hours ago show badge */
-                      const oneDayAgo = new Date().getTime() + 1 * 24 * 60 * 60;
+                      const oneDayAgo = moment().subtract(1, 'days');
                       const newRecordBadge =
-                        Date.parse(cell.original.plan_date) >= oneDayAgo ? (
+                        cell.original.plan_date &&
+                        moment(cell.original.plan_date).isAfter(oneDayAgo) ? (
                           <Badge color="warning" pill={true}>
-                            Warning
+                            New
                           </Badge>
                         ) : null;
                       return (
