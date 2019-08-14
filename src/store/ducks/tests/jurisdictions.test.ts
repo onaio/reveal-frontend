@@ -3,13 +3,16 @@ import { keyBy, values } from 'lodash';
 import { FlushThunks } from 'redux-testkit';
 import store from '../../index';
 import reducer, {
+  fetchAllJurisdictionIds,
   fetchJurisdictions,
+  getAllJurisdictionsIdArray,
   getJurisdictionById,
   getJurisdictionsArray,
   getJurisdictionsById,
   getJurisdictionsIdArray,
   Jurisdiction,
   reducerName,
+  removeAllJurisdictionsIdsAction,
   removeJurisdictionsAction,
 } from '../jurisdictions';
 import * as fixtures from './fixtures';
@@ -111,7 +114,7 @@ describe('reducers/jurisdictions', () => {
     expect(jurisdictionsInStore).toEqual({});
   });
 
-  it('new jurisdictions not overwrite but appended to existing', () => {
+  it('new jurisdictions not overwrite but added to existing', () => {
     store.dispatch(removeJurisdictionsAction);
     const jurisdictionsInStore = getJurisdictionsById(store.getState());
     expect(jurisdictionsInStore).toEqual({});
@@ -120,5 +123,23 @@ describe('reducers/jurisdictions', () => {
     store.dispatch(fetchJurisdictions([fixtures.jurisdictions] as any));
     const jurisdiction3FromStore = getJurisdictionById(store.getState(), 'abcde');
     expect(jurisdiction3FromStore).not.toBeNull();
+  });
+
+  it('can remove allJurisdictionsIds', () => {
+    store.dispatch(removeAllJurisdictionsIdsAction);
+    let alljurisdictionsIdsNumber = getAllJurisdictionsIdArray(store.getState()).length;
+    expect(alljurisdictionsIdsNumber).toEqual(0);
+
+    store.dispatch(fetchAllJurisdictionIds(['id1']));
+    alljurisdictionsIdsNumber = getAllJurisdictionsIdArray(store.getState()).length;
+    expect(alljurisdictionsIdsNumber).toEqual(1);
+
+    store.dispatch(removeAllJurisdictionsIdsAction);
+    alljurisdictionsIdsNumber = getAllJurisdictionsIdArray(store.getState()).length;
+    expect(alljurisdictionsIdsNumber).toEqual(0);
+  });
+
+  it('new jurisdictionsIds do not overwrite but added to existing', () => {
+    // some tests here
   });
 });
