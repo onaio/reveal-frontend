@@ -581,7 +581,10 @@ const PlanForm = (props: PlanFormProps) => {
                           name={`activities[${index}].goalPriority`}
                           id={`activities-${index}-goalPriority`}
                           required={true}
-                          disabled={disabledFields.includes('activities')}
+                          disabled={
+                            disabledFields.includes('activities') ||
+                            disabledFields.includes('goalPriority')
+                          }
                           className={
                             errors.activities &&
                             doesFieldHaveErrors('goalPriority', index, errors.activities)

@@ -35,7 +35,7 @@ const NewPlan = () => {
       <h3 className="mb-3 page-title">{pageTitle}</h3>
       <Row>
         <Col md={8}>
-          <PlanForm />
+          <PlanForm disabledFields={['goalPriority']} />
         </Col>
       </Row>
     </div>
