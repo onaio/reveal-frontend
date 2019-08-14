@@ -11,4 +11,14 @@ describe('components/LinkToNewPlans', () => {
   it('renders without crashing', () => {
     shallow(<LinkToNewPlans />);
   });
+
+  it('Matches snapshot', () => {
+    const wrapper = mount(
+      <Router history={history}>
+        <LinkToNewPlans />
+      </Router>
+    );
+    expect(toJson(wrapper)).toMatchSnapshot();
+    wrapper.unmount();
+  });
 });
