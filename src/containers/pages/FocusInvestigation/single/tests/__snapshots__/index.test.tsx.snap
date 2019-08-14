@@ -2644,6 +2644,14 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
                                             </a>
                                           </Link>
                                            
+                                          <NewRecordBadge
+                                            className="new-record"
+                                            color="warning"
+                                            numDays={1}
+                                            pill={true}
+                                            recordDate="2019-06-18"
+                                            text="New"
+                                          />
                                         </div>
                                       </Cell>
                                     </div>
@@ -7114,6 +7122,14 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
                                         </a>
                                       </Link>
                                        
+                                      <NewRecordBadge
+                                        className="new-record"
+                                        color="warning"
+                                        numDays={1}
+                                        pill={true}
+                                        recordDate="2019-06-18"
+                                        text="New"
+                                      />
                                     </div>
                                   </Cell>
                                 </div>
@@ -8822,6 +8838,14 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
                                         </a>
                                       </Link>
                                        
+                                      <NewRecordBadge
+                                        className="new-record"
+                                        color="warning"
+                                        numDays={1}
+                                        pill={true}
+                                        recordDate="2019-06-18"
+                                        text="New"
+                                      />
                                     </div>
                                   </Cell>
                                 </div>
@@ -10529,6 +10553,14 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
                                         </a>
                                       </Link>
                                        
+                                      <NewRecordBadge
+                                        className="new-record"
+                                        color="warning"
+                                        numDays={1}
+                                        pill={true}
+                                        recordDate="2019-06-18"
+                                        text="New"
+                                      />
                                     </div>
                                   </Cell>
                                 </div>
@@ -11736,6 +11768,14 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
                                         </a>
                                       </Link>
                                        
+                                      <NewRecordBadge
+                                        className="new-record"
+                                        color="warning"
+                                        numDays={1}
+                                        pill={true}
+                                        recordDate="2019-06-18"
+                                        text="New"
+                                      />
                                     </div>
                                   </Cell>
                                 </div>

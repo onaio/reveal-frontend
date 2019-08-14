@@ -32,7 +32,7 @@ import HeaderBreadcrumbs, {
   BreadCrumbProps,
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
-import { IRS_TITLE } from '../../../../constants';
+import { IRS_PLANS, IRS_TITLE } from '../../../../constants';
 import './../../../../styles/css/drill-down-table.css';
 
 /** register the plans reducer */
@@ -163,7 +163,7 @@ class IrsPlans extends React.Component<IrsPlansProps & RouteComponentProps<Route
           <title>{IRS_TITLE}</title>
         </Helmet>
         <HeaderBreadcrumbs {...breadCrumbProps} />
-        <h2 className="page-title">IRS Plans</h2>
+        <h2 className="page-title">{IRS_PLANS}</h2>
         <DrillDownTable {...tableProps} />
         <br />
         <Button color="primary" tag={Link} to={`${INTERVENTION_IRS_URL}/new`}>

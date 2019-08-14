@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components/NewRecordBadge renders badge correctly: badge 1`] = `
+<Badge
+  className="new-record"
+  color="warning"
+  pill={true}
+  tag="span"
+>
+  <span
+    className="new-record badge badge-warning badge-pill"
+  >
+    New
+  </span>
+</Badge>
+`;
+
+exports[`components/NewRecordBadge renders okay with custom props: badge 1`] = `
+<Badge
+  className="mosh"
+  color="danger"
+  pill={false}
+  tag="span"
+>
+  <span
+    className="mosh badge badge-danger"
+  >
+    Cool
+  </span>
+</Badge>
+`;
