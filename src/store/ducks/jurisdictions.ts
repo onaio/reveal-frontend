@@ -99,7 +99,7 @@ export default function reducer(
       if (action.jurisdictionsById) {
         return SeamlessImmutable({
           ...state,
-          allJurisdictionIds: action.allJurisdictionIds,
+          allJurisdictionIds: { ...state.allJurisdictionIds, ...action.allJurisdictionIds },
           jurisdictionsById: {
             ...state.jurisdictionsById,
             ...action.jurisdictionsById,
@@ -110,7 +110,7 @@ export default function reducer(
     case FETCH_ALL_JURISDICTION_IDS:
       return SeamlessImmutable({
         ...state,
-        allJurisdictionIds: action.allJurisdictionIds,
+        allJurisdictionIds: { ...state.allJurisdictionIds, ...action.allJurisdictionIds },
       });
     case REMOVE_JURISDICTIONS:
       return SeamlessImmutable({
