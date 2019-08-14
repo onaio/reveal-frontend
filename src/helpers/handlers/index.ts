@@ -17,6 +17,7 @@ export function popupHandler(event: EventData) {
   /** currentGoal is currently not being used but we may/ may not use it in the future  */
   const features = event.target.queryRenderedFeatures(event.point) as any[];
   let description: string = '';
+  const goalIds: string[] = [];
   features.forEach((feature: any) => {
     if (
       feature &&
@@ -25,11 +26,13 @@ export function popupHandler(event: EventData) {
       feature.properties &&
       feature.properties.action_code &&
       feature.layer.type !== 'line' &&
-      feature.layer.id
+      feature.layer.id &&
+      !goalIds.includes(feature.properties.goal_id)
     ) {
-      description += `<p class="heading"> ${feature.properties.action_code}</b></p> <p> ${
-        feature.properties.task_business_status
-      }</p><br/><br/>`;
+      if (feature.properties.goal_id) {
+        goalIds.push(feature.properties.goal_id);
+      }
+      description += `<p class="heading"> ${feature.properties.action_code}</b></p> <p> ${feature.properties.task_business_status}</p><br/><br/>`;
     }
   });
   if (description.length) {
