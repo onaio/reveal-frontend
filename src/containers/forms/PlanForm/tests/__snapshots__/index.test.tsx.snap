@@ -2643,7 +2643,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: IRS activi
 exports[`containers/forms/PlanForm renders activity fields correctly: IRS activities[0].timingPeriodEnd field 1`] = `
 <input
   className="form-control"
-  disabled={false}
+  disabled={true}
   id="activities-0-timingPeriodEnd"
   onBlur={[Function]}
   onChange={[Function]}
@@ -2653,7 +2653,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: IRS activi
   readOnly={false}
   required={true}
   type="text"
-  value="2017-07-20"
+  value="2017-08-02"
 />
 `;
 
@@ -2683,7 +2683,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: IRS activi
 exports[`containers/forms/PlanForm renders activity fields correctly: IRS activities[0].timingPeriodStart field 1`] = `
 <input
   className="form-control"
-  disabled={false}
+  disabled={true}
   id="activities-0-timingPeriodStart"
   onBlur={[Function]}
   onChange={[Function]}

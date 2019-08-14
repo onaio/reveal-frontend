@@ -498,7 +498,10 @@ const PlanForm = (props: PlanFormProps) => {
                           name={`activities[${index}].timingPeriodStart`}
                           id={`activities-${index}-timingPeriodStart`}
                           required={true}
-                          disabled={disabledFields.includes('activities')}
+                          disabled={
+                            disabledFields.includes('activities') ||
+                            values.interventionType === InterventionType.IRS
+                          }
                           dateFormat={DATE_FORMAT}
                           className={
                             errors.activities &&
@@ -509,6 +512,11 @@ const PlanForm = (props: PlanFormProps) => {
                           component={DatePickerWrapper}
                           minDate={values.start}
                           maxDate={values.end}
+                          selected={
+                            values.interventionType === InterventionType.IRS
+                              ? values.start
+                              : values.activities[index].timingPeriodStart
+                          }
                         />
                         <ErrorMessage
                           name={`activities[${index}].timingPeriodStart`}
@@ -523,7 +531,10 @@ const PlanForm = (props: PlanFormProps) => {
                           name={`activities[${index}].timingPeriodEnd`}
                           id={`activities-${index}-timingPeriodEnd`}
                           required={true}
-                          disabled={disabledFields.includes('activities')}
+                          disabled={
+                            disabledFields.includes('activities') ||
+                            values.interventionType === InterventionType.IRS
+                          }
                           dateFormat={DATE_FORMAT}
                           className={
                             errors.activities &&
@@ -534,6 +545,11 @@ const PlanForm = (props: PlanFormProps) => {
                           component={DatePickerWrapper}
                           minDate={values.activities[index].timingPeriodStart}
                           maxDate={values.end}
+                          selected={
+                            values.interventionType === InterventionType.IRS
+                              ? values.end
+                              : values.activities[index].timingPeriodEnd
+                          }
                         />
                         <ErrorMessage
                           name={`activities[${index}].timingPeriodEnd`}
