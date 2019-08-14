@@ -196,7 +196,7 @@ const PlanForm = (props: PlanFormProps) => {
                         {values.jurisdictions && values.jurisdictions.length > 1 && (
                           <button
                             type="button"
-                            className="close position-absolute removeArrItem"
+                            className="close position-absolute removeArrItem removeJurisdiction"
                             aria-label="Close"
                             onClick={() => arrayHelpers.remove(index)}
                           >
@@ -250,7 +250,7 @@ const PlanForm = (props: PlanFormProps) => {
                   {values.interventionType === InterventionType.IRS && (
                     <button
                       type="button"
-                      className="btn btn-primary btn-sm mb-5"
+                      className="btn btn-primary btn-sm mb-5 addJurisdiction"
                       onClick={() => arrayHelpers.push(initialJurisdictionValues)}
                     >
                       Add Focus Area
