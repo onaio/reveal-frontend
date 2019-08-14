@@ -32,7 +32,9 @@ export function popupHandler(event: EventData) {
       if (feature.properties.goal_id) {
         goalIds.push(feature.properties.goal_id);
       }
-      description += `<p class="heading"> ${feature.properties.action_code}</b></p> <p> ${feature.properties.task_business_status}</p><br/><br/>`;
+      // Splitting into two lines to fix breaking tests
+      description += `<p class="heading">${feature.properties.action_code}</b></p>`;
+      description += `<p>${feature.properties.task_business_status}</p><br/><br/>`;
     }
   });
   if (description.length) {
