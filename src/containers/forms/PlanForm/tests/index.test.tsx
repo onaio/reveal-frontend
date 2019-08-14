@@ -134,6 +134,7 @@ describe('containers/forms/PlanForm', () => {
 
     // activities are 6 and of type FI by default
     checkActivities(6, 'FI');
+    // ensure there are only 6 options so far
     expect(wrapper.find(`#activities-7-actionTitle input`).length).toEqual(0);
 
     // should get IRS activities if interventionType is IRS
@@ -141,6 +142,8 @@ describe('containers/forms/PlanForm', () => {
       .find('#interventionType select')
       .simulate('change', { target: { value: 'IRS', name: 'interventionType' } });
     checkActivities(0, 'IRS');
+
+    // ensure there is only one options right now
     expect(wrapper.find(`#activities-1-actionTitle input`).length).toEqual(0);
 
     // set it back
@@ -150,6 +153,7 @@ describe('containers/forms/PlanForm', () => {
     for (let i = 0; i <= 6; i++) {
       expect(wrapper.find(`#activities-${i}-actionTitle input`).length).toEqual(1);
     }
+    // ensure there are only 6 options so far
     expect(wrapper.find(`#activities-7-actionTitle input`).length).toEqual(0);
 
     wrapper.unmount();
@@ -176,6 +180,7 @@ describe('containers/forms/PlanForm', () => {
     const wrapper = mount(<PlanForm />);
 
     checkJurisdtictions(0);
+    // ensure there is only one options so far
     expect(wrapper.find(`#jurisdictions-1-id input`).length).toEqual(0);
 
     wrapper.unmount();
