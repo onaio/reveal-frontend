@@ -1,44 +1,21 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`components/LinkToNewPlans Matches snapshot 1`] = `
-<Router
-  history={
-    Object {
-      "action": "POP",
-      "block": [Function],
-      "createHref": [Function],
-      "go": [Function],
-      "goBack": [Function],
-      "goForward": [Function],
-      "length": 1,
-      "listen": [Function],
-      "location": Object {
-        "hash": "",
-        "pathname": "/",
-        "search": "",
-        "state": undefined,
-      },
-      "push": [Function],
-      "replace": [Function],
-    }
-  }
+<LinkToNewPlans
+  classProp="focus-investigation btn btn-primary float-right mt-5"
 >
-  <LinkToNewPlans
-    classProp="focus-investigation btn btn-primary float-right mt-5"
+  <Link
+    className="focus-investigation btn btn-primary float-right mt-5"
+    replace={false}
+    to="/plans/new"
   >
-    <Link
+    <a
       className="focus-investigation btn btn-primary float-right mt-5"
-      replace={false}
-      to="/plans/new"
+      href="/plans/new"
+      onClick={[Function]}
     >
-      <a
-        className="focus-investigation btn btn-primary float-right mt-5"
-        href="/plans/new"
-        onClick={[Function]}
-      >
-        Add Focus Investigation
-      </a>
-    </Link>
-  </LinkToNewPlans>
-</Router>
+      Add Focus Investigation
+    </a>
+  </Link>
+</LinkToNewPlans>
 `;
