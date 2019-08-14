@@ -27,30 +27,10 @@ import {
   getFormActivities,
   getNameTitle,
   IRSActivities,
-  PlanActivityFormFields,
   PlanFormFields,
   PlanJurisdictionFormFields,
   PlanSchema,
 } from './helpers';
-
-/** initial values for plan activity forms */
-const initialActivitiesValues: PlanActivityFormFields = {
-  actionCode: '',
-  actionDescription: '',
-  actionIdentifier: '',
-  actionReason: actionReasons[0],
-  actionTitle: '',
-  goalDescription: '',
-  goalDue: moment()
-    .add(DEFAULT_ACTIVITY_DURATION_DAYS, 'days')
-    .toDate(),
-  goalPriority: goalPriorities[1],
-  goalValue: 0,
-  timingPeriodEnd: moment()
-    .add(DEFAULT_ACTIVITY_DURATION_DAYS, 'days')
-    .toDate(),
-  timingPeriodStart: moment().toDate(),
-};
 
 /** initial values for plan jurisdiction forms */
 const initialJurisdictionValues: PlanJurisdictionFormFields = {
