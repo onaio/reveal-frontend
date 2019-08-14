@@ -37,6 +37,7 @@ export interface AllJurisdictionIds {
 export const FETCH_JURISDICTION = 'reveal/reducer/jurisdiction/FETCH_JURISDICTION';
 export const FETCH_ALL_JURISDICTION_IDS = 'reveal/reducer/jurisdiction/FETCH_ALL_JURISDICTION_IDS';
 export const REMOVE_JURISDICTIONS = 'reveal/reducer/jurisdiction/REMOVE_JURISDICTIONS';
+export const REMOVE_ALL_JURISDICTION_IDS = 'reveal/reducer/jurisdiction/REMOVE_ALL_JURISDICTIONIDS';
 
 /** fetch jurisdiction action */
 interface FetchJurisdictionAction extends AnyAction {
@@ -57,11 +58,18 @@ interface RemoveJurisdictionsAction extends AnyAction {
   type: typeof REMOVE_JURISDICTIONS;
 }
 
+/** Interface for remove all jurisdictions ids action */
+interface RemoveAllJurisdictionIdsAction extends AnyAction {
+  type: typeof REMOVE_ALL_JURISDICTION_IDS;
+  allJurisdictionIds: {};
+}
+
 /** jurisdiction action types */
 export type JurisdictionActionTypes =
   | FetchJurisdictionAction
   | FetchAllJurisdictionIdsAction
   | RemoveJurisdictionsAction
+  | RemoveAllJurisdictionIdsAction
   | AnyAction;
 
 /** interface to describe jurisdiction state */
@@ -108,6 +116,11 @@ export default function reducer(
       return SeamlessImmutable({
         ...state,
         jurisdictionsById: action.jurisdictionsById,
+      });
+    case REMOVE_ALL_JURISDICTION_IDS:
+      return SeamlessImmutable({
+        ...state,
+        allJurisdictionIds: action.allJurisdictionIds,
       });
     default:
       return state;
@@ -173,6 +186,12 @@ export const fetchAllJurisdictionIds = (jurisdictionIds: string[]) => ({
 export const removeJurisdictionsAction = {
   jurisdictionsById: {},
   type: REMOVE_JURISDICTIONS,
+};
+
+/** remove all jurisdiction ids Actoin */
+export const removeAllJurisdictionIdsAction: RemoveAllJurisdictionIdsAction = {
+  allJurisdictionIds: {},
+  type: REMOVE_ALL_JURISDICTION_IDS,
 };
 
 // selectors

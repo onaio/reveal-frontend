@@ -12,7 +12,7 @@ import reducer, {
   getJurisdictionsIdArray,
   Jurisdiction,
   reducerName,
-  removeAllJurisdictionsIdsAction,
+  removeAllJurisdictionIdsAction,
   removeJurisdictionsAction,
 } from '../jurisdictions';
 import * as fixtures from './fixtures';
@@ -126,7 +126,7 @@ describe('reducers/jurisdictions', () => {
   });
 
   it('can remove allJurisdictionsIds', () => {
-    store.dispatch(removeAllJurisdictionsIdsAction);
+    store.dispatch(removeAllJurisdictionIdsAction);
     let alljurisdictionsIdsNumber = getAllJurisdictionsIdArray(store.getState()).length;
     expect(alljurisdictionsIdsNumber).toEqual(0);
 
@@ -134,7 +134,7 @@ describe('reducers/jurisdictions', () => {
     alljurisdictionsIdsNumber = getAllJurisdictionsIdArray(store.getState()).length;
     expect(alljurisdictionsIdsNumber).toEqual(1);
 
-    store.dispatch(removeAllJurisdictionsIdsAction);
+    store.dispatch(removeAllJurisdictionIdsAction);
     alljurisdictionsIdsNumber = getAllJurisdictionsIdArray(store.getState()).length;
     expect(alljurisdictionsIdsNumber).toEqual(0);
   });
