@@ -566,11 +566,22 @@ const PlanForm = (props: PlanFormProps) => {
                               : 'form-control'
                           }
                         >
-                          {actionReasons.map(e => (
-                            <option key={e} value={e}>
-                              {e}
-                            </option>
-                          ))}
+                          {disabledFields.includes('activities') ||
+                          disabledFields.includes('actionReason')
+                            ? (values.fiReason === FIReasons[0] && (
+                                <option key={actionReasons[1]} value={actionReasons[1]}>
+                                  {actionReasons[1]}
+                                </option>
+                              )) || (
+                                <option key={actionReasons[0]} value={actionReasons[0]}>
+                                  {actionReasons[0]}
+                                </option>
+                              )
+                            : actionReasons.map(e => (
+                                <option key={e} value={e}>
+                                  {e}
+                                </option>
+                              ))}
                         </Field>
                         <ErrorMessage
                           name={`activities[${index}].actionReason`}
