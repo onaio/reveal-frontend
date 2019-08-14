@@ -107,6 +107,8 @@ export const DATE = 'Date';
 export type DATE = typeof DATE;
 export const PLANS = 'Manage Plans';
 export type PLANS = typeof PLANS;
+export const IRS_PLANS = 'IRS Plans';
+export type IRS_PLANS = typeof IRS_PLANS;
 
 export const JURISDICTION_ID = 'jurisdiction_id';
 export type JURISDICTION_ID = typeof JURISDICTION_ID;
