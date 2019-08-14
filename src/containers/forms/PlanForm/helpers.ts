@@ -410,3 +410,65 @@ export function generatePlanDefinition(formValue: PlanFormFields): PlanDefinitio
     version: planVersion as string,
   };
 }
+
+/**
+ * Get plan form field values from plan definition object
+ * @param planObject - the plan definition object
+ * @returns {PlanFormFields} - the plan form field values
+ */
+export function getPlanFormValues(planObject: PlanDefinition): PlanFormFields {
+  const typeUseContext = planObject.useContext.filter(e => e.code === 'interventionType');
+  const reasonUseContext = planObject.useContext.filter(e => e.code === 'fiReason');
+  const statusUseContext = planObject.useContext.filter(e => e.code === 'fiStatus');
+  const eventIdUseContext = planObject.useContext.filter(e => e.code === 'opensrpEventId');
+  const caseNumUseContext = planObject.useContext.filter(e => e.code === 'caseNum');
+
+  const interventionType =
+    typeUseContext.length > 0
+      ? (typeUseContext[0].valueCodableConcept as InterventionType)
+      : InterventionType.FI;
+  const defaultActivities =
+    interventionType === InterventionType.IRS
+      ? getFormActivities(IRSActivities)
+      : getFormActivities(FIActivities);
+
+  const activities: PlanActivityFormFields[] = defaultActivities;
+
+  // const activities: PlanActivityFormFields[] = planObject.action.map(action => {
+  //   const goalArray = planObject.goal.filter(goal => goal.id === action.goalId);
+  //   if (goalArray.length > 0) {
+  //     const goalActivities = goalArray.map(goal => ({ action, goal }));
+  //     return defaultActivities;
+  //   } else {
+  //     return defaultActivities;
+  //   }
+  // })
+
+  return {
+    activities,
+    caseNum: caseNumUseContext.length > 0 ? caseNumUseContext[0].valueCodableConcept : '',
+    date: moment(planObject.date).toDate(),
+    end: moment(planObject.effectivePeriod.end).toDate(),
+    fiReason:
+      reasonUseContext.length > 0
+        ? (reasonUseContext[0].valueCodableConcept as FIReasonType)
+        : undefined,
+    fiStatus:
+      statusUseContext.length > 0
+        ? (statusUseContext[0].valueCodableConcept as FIStatusType)
+        : undefined,
+    identifier: planObject.identifier,
+    interventionType,
+    jurisdictions: planObject.jurisdiction.map(e => ({
+      id: e.code,
+      name: e.code,
+    })) /** a little cheating: since we dnt have the name yet, we just use code */,
+    name: planObject.name,
+    opensrpEventId:
+      eventIdUseContext.length > 0 ? eventIdUseContext[0].valueCodableConcept : undefined,
+    start: moment(planObject.effectivePeriod.start).toDate(),
+    status: planObject.status as PlanStatus,
+    title: planObject.title,
+    version: planObject.version,
+  };
+}
