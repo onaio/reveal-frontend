@@ -227,3 +227,26 @@ describe('containers/forms/PlanForm', () => {
     wrapper.unmount();
   });
 });
+
+describe('containers/forms/PlanForm - Edit', () => {
+  beforeEach(() => {
+    jest.resetAllMocks();
+  });
+
+  it('renders all fields correctly in edit mode', () => {
+    const props = {
+      disabledFields: [
+        'interventionType',
+        'fiReason',
+        'fiStatus',
+        'identifier',
+        'start',
+        'end',
+        'name',
+        'opensrpEventId',
+        'jurisdictions',
+      ],
+    };
+    const wrapper = mount(<PlanForm {...props} />);
+  });
+});
