@@ -3048,7 +3048,7 @@ exports[`containers/forms/PlanForm renders correctly: submit button 1`] = `
   aria-label="Save Plan"
   className="btn btn-block btn btn-primary"
   disabled={false}
-  id="submit-button"
+  id="planform-submit-button"
   onClick={[Function]}
   type="submit"
 >
