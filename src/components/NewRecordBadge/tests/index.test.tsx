@@ -39,4 +39,22 @@ describe('components/NewRecordBadge', () => {
     );
     expect(wrapper3.find('Badge').length).toEqual(0);
   });
+
+  it('renders okay with custom props', () => {
+    // renders okay for a date within threshold
+    const wrapper = mount(
+      <NewRecordBadge
+        className="mosh"
+        color="danger"
+        numDays={2}
+        pill={false}
+        recordDate={moment()
+          .subtract(26, 'hours')
+          .toDate()}
+        text="Cool"
+      />
+    );
+    expect(wrapper.find('Badge').length).toEqual(1);
+    expect(toJson(wrapper.find('Badge'))).toMatchSnapshot('badge');
+  });
 });
