@@ -200,7 +200,7 @@ describe('containers/forms/PlanForm', () => {
 
     // add one jurisdiction
     wrapper.find(`.addJurisdiction`).simulate('click');
-    // there is still now two buttons to remove jurisdictions
+    // there are now two buttons to remove jurisdictions
     expect(wrapper.find(`.removeJurisdiction`).length).toEqual(2);
     expect(toJson(wrapper.find('.removeJurisdiction'))).toMatchSnapshot(
       'removeJurisdiction buttons'
