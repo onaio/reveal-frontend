@@ -12,7 +12,7 @@ const customGlobal: GlobalWithFetchMock = global as GlobalWithFetchMock;
 customGlobal.fetch = require('jest-fetch-mock');
 customGlobal.fetchMock = customGlobal.fetch;
 
-MockDate.set('7-13-17 19:31', 3); // Mersenne primes :)
+MockDate.set('7-13-17 19:31', 0); // Mersenne primes :)
 
 enzyme.configure({ adapter: new Adapter() });
 library.add(faMap);
