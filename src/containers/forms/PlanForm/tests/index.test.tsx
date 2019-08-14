@@ -182,6 +182,47 @@ describe('containers/forms/PlanForm', () => {
     checkJurisdtictions(0);
     // ensure there is only one options so far
     expect(wrapper.find(`#jurisdictions-1-id input`).length).toEqual(0);
+    // there is no button to remove jurisdictions
+    expect(wrapper.find(`.removeJurisdiction`).length).toEqual(0);
+    // there is no button to add more jurisdictions
+    expect(wrapper.find(`.addJurisdiction`).length).toEqual(0);
+
+    // change interventionType to IRS
+    wrapper
+      .find('#interventionType select')
+      .simulate('change', { target: { value: 'IRS', name: 'interventionType' } });
+
+    // there is now a button to add jurisdictions
+    expect(wrapper.find(`.addJurisdiction`).length).toEqual(1);
+    expect(toJson(wrapper.find('.addJurisdiction'))).toMatchSnapshot('addJurisdiction button');
+    // there is still no button to remove jurisdictions
+    expect(wrapper.find(`.removeJurisdiction`).length).toEqual(0);
+
+    // add one jurisdiction
+    wrapper.find(`.addJurisdiction`).simulate('click');
+    // there is still now two buttons to remove jurisdictions
+    expect(wrapper.find(`.removeJurisdiction`).length).toEqual(2);
+    expect(toJson(wrapper.find('.removeJurisdiction'))).toMatchSnapshot(
+      'removeJurisdiction buttons'
+    );
+
+    // remove one jurisdiction
+    wrapper
+      .find(`.removeJurisdiction`)
+      .first()
+      .simulate('click');
+    // there is now no button to remove jurisdictions
+    expect(wrapper.find(`.removeJurisdiction`).length).toEqual(0);
+
+    // change interventionType to FI
+    wrapper
+      .find('#interventionType select')
+      .simulate('change', { target: { value: 'FI', name: 'interventionType' } });
+
+    // there is no button to remove jurisdictions
+    expect(wrapper.find(`.removeJurisdiction`).length).toEqual(0);
+    // there is no button to add more jurisdictions
+    expect(wrapper.find(`.addJurisdiction`).length).toEqual(0);
 
     wrapper.unmount();
   });
