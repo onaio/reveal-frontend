@@ -5,6 +5,7 @@ import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import flushPromises from 'flush-promises';
 import { createBrowserHistory } from 'history';
+import MockDate from 'mockdate';
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Provider } from 'react-redux';
@@ -25,9 +26,11 @@ jest.mock('../../../../../components/GisidaWrapper', () => {
 jest.mock('../../../../../configs/env');
 const history = createBrowserHistory();
 library.add(faExternalLinkSquareAlt);
+
 describe('containers/pages/SingleFI', () => {
   beforeEach(() => {
     jest.resetAllMocks();
+    MockDate.reset();
   });
 
   it('renders without crashing', () => {
