@@ -140,6 +140,20 @@ describe('reducers/jurisdictions', () => {
   });
 
   it('new jurisdictionsIds do not overwrite but added to existing', () => {
-    // some tests here
+    store.dispatch(removeAllJurisdictionIdsAction);
+    let alljurisdictionsIdsNumber = getAllJurisdictionsIdArray(store.getState()).length;
+    expect(alljurisdictionsIdsNumber).toEqual(0);
+
+    store.dispatch(fetchAllJurisdictionIds(['id1']));
+    alljurisdictionsIdsNumber = getAllJurisdictionsIdArray(store.getState()).length;
+    expect(alljurisdictionsIdsNumber).toEqual(1);
+
+    store.dispatch(fetchAllJurisdictionIds(['id2']));
+    alljurisdictionsIdsNumber = getAllJurisdictionsIdArray(store.getState()).length;
+    expect(alljurisdictionsIdsNumber).toEqual(2);
+
+    store.dispatch(fetchJurisdictions([fixtures.jurisdiction3] as any));
+    alljurisdictionsIdsNumber = getAllJurisdictionsIdArray(store.getState()).length;
+    expect(alljurisdictionsIdsNumber).toEqual(3);
   });
 });
