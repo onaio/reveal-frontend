@@ -18,7 +18,8 @@ describe('components/LinkToNewPlans', () => {
         <LinkToNewPlans />
       </Router>
     );
-    expect(toJson(wrapper)).toMatchSnapshot();
+    expect(wrapper.find('Router').length).toEqual(1);
+    expect(toJson(wrapper.find('LinkToNewPlans'))).toMatchSnapshot();
     wrapper.unmount();
   });
 });
