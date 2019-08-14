@@ -1,5 +1,3 @@
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { faExternalLinkSquareAlt } from '@fortawesome/free-solid-svg-icons';
 import superset from '@onaio/superset-connector';
 import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
@@ -25,7 +23,6 @@ jest.mock('../../../../../components/GisidaWrapper', () => {
 
 jest.mock('../../../../../configs/env');
 const history = createBrowserHistory();
-library.add(faExternalLinkSquareAlt);
 
 describe('containers/pages/SingleFI', () => {
   beforeEach(() => {
