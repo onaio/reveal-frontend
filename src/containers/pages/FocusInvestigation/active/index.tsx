@@ -4,7 +4,6 @@ import DrillDownTable from '@onaio/drill-down-table';
 import { FlexObject } from '@onaio/drill-down-table/dist/types/helpers/utils';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset from '@onaio/superset-connector';
-import moment from 'moment';
 import * as React from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
@@ -12,10 +11,11 @@ import { RouteComponentProps } from 'react-router';
 import { Link } from 'react-router-dom';
 import { CellInfo, Column } from 'react-table';
 import 'react-table/react-table.css';
-import { Badge, Button, Col, Form, FormGroup, Input, Row, Table } from 'reactstrap';
+import { Button, Col, Form, FormGroup, Input, Row, Table } from 'reactstrap';
 import { Store } from 'redux';
 import DrillDownTableLinkedCell from '../../../../components/DrillDownTableLinkedCell';
 import LinkToNewPlans from '../../../../components/LinkToNewPlans';
+import NewRecordBadge from '../../../../components/NewRecordBadge';
 import HeaderBreadCrumb, {
   BreadCrumbProps,
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
@@ -214,15 +214,6 @@ class ActiveFocusInvestigation extends React.Component<
                 columns: [
                   {
                     Cell: (cell: CellInfo) => {
-                      /** if 24 hours ago show badge */
-                      const oneDayAgo = moment().subtract(1, 'days');
-                      const newRecordBadge =
-                        cell.original.plan_date &&
-                        moment(cell.original.plan_date).isAfter(oneDayAgo) ? (
-                          <Badge color="warning" pill={true}>
-                            New
-                          </Badge>
-                        ) : null;
                       return (
                         <div>
                           {cell.original.focusArea.trim() && (
@@ -231,7 +222,7 @@ class ActiveFocusInvestigation extends React.Component<
                             </Link>
                           )}
                           &nbsp;
-                          {newRecordBadge}
+                          <NewRecordBadge recordDate={cell.original.plan_date} />
                         </div>
                       );
                     },
