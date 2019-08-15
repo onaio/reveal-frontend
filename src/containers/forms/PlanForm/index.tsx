@@ -162,91 +162,108 @@ const PlanForm = (props: PlanFormProps) => {
               render={arrayHelpers => (
                 <div>
                   {editMode ? (
-                    <div id="jurisdictions-display-container" />
+                    <div id="jurisdictions-display-container" className="mb-5">
+                      {values.jurisdictions.map((jurisdiction, index) => (
+                        <fieldset key={index}>
+                          <Field
+                            type="hidden"
+                            readOnly={true}
+                            name={`jurisdictions[${index}].id`}
+                            id={`jurisdictions-${index}-id`}
+                            value={jurisdiction.id}
+                          />
+                          <Field
+                            type="hidden"
+                            readOnly={true}
+                            name={`jurisdictions[${index}].name`}
+                            id={`jurisdictions-${index}-name`}
+                            value={jurisdiction.name}
+                          />
+                        </fieldset>
+                      ))}
+                    </div>
                   ) : (
-                    <div id="jurisdictions-select-container">
-                      <div className="mb-5">
-                        {values.jurisdictions.map((jurisdiction, index) => (
-                          <fieldset key={index}>
-                            {errors.jurisdictions && errors.jurisdictions[index] && (
-                              <div className="alert alert-danger" role="alert">
-                                <h6 className="alert-heading">Please fix these errors</h6>
-                                <ul className="list-unstyled">
-                                  {Object.entries(errors.jurisdictions[index] || {}).map(
-                                    ([key, val]) => (
-                                      <li key={key}>
-                                        <strong>Focus Area</strong>: {val}
-                                      </li>
-                                    )
-                                  )}
-                                </ul>
-                              </div>
+                    <div id="jurisdictions-select-container" className="mb-5">
+                      {values.jurisdictions.map((jurisdiction, index) => (
+                        <fieldset key={index}>
+                          {errors.jurisdictions && errors.jurisdictions[index] && (
+                            <div className="alert alert-danger" role="alert">
+                              <h6 className="alert-heading">Please fix these errors</h6>
+                              <ul className="list-unstyled">
+                                {Object.entries(errors.jurisdictions[index] || {}).map(
+                                  ([key, val]) => (
+                                    <li key={key}>
+                                      <strong>Focus Area</strong>: {val}
+                                    </li>
+                                  )
+                                )}
+                              </ul>
+                            </div>
+                          )}
+                          <div className="jurisdiction-item position-relative">
+                            {values.jurisdictions && values.jurisdictions.length > 1 && (
+                              <button
+                                type="button"
+                                className="close position-absolute removeArrItem removeJurisdiction"
+                                aria-label="Close"
+                                onClick={() => arrayHelpers.remove(index)}
+                              >
+                                <span aria-hidden="true">&times;</span>
+                              </button>
                             )}
-                            <div className="jurisdiction-item position-relative">
-                              {values.jurisdictions && values.jurisdictions.length > 1 && (
-                                <button
-                                  type="button"
-                                  className="close position-absolute removeArrItem removeJurisdiction"
-                                  aria-label="Close"
-                                  onClick={() => arrayHelpers.remove(index)}
-                                >
-                                  <span aria-hidden="true">&times;</span>
-                                </button>
-                              )}
-                              <FormGroup
+                            <FormGroup
+                              className={
+                                errors.jurisdictions &&
+                                doesFieldHaveErrors('id', index, errors.jurisdictions)
+                                  ? 'is-invalid async-select-container'
+                                  : 'async-select-container'
+                              }
+                            >
+                              <Label for={`jurisdictions-${index}-id`}>Focus Area</Label>
+                              <Field
+                                required={true}
+                                component={JurisdictionSelect}
+                                name={`jurisdictions[${index}].id`}
+                                id={`jurisdictions-${index}-id`}
+                                placeholder="Select Focus Area"
+                                aria-label="Select Focus Area"
+                                disabled={disabledFields.includes('jurisdictions')}
                                 className={
                                   errors.jurisdictions &&
                                   doesFieldHaveErrors('id', index, errors.jurisdictions)
-                                    ? 'is-invalid async-select-container'
-                                    : 'async-select-container'
+                                    ? 'is-invalid async-select'
+                                    : 'async-select'
                                 }
-                              >
-                                <Label for={`jurisdictions-${index}-id`}>Focus Area</Label>
-                                <Field
-                                  required={true}
-                                  component={JurisdictionSelect}
-                                  name={`jurisdictions[${index}].id`}
-                                  id={`jurisdictions-${index}-id`}
-                                  placeholder="Select Focus Area"
-                                  aria-label="Select Focus Area"
-                                  disabled={disabledFields.includes('jurisdictions')}
-                                  className={
-                                    errors.jurisdictions &&
-                                    doesFieldHaveErrors('id', index, errors.jurisdictions)
-                                      ? 'is-invalid async-select'
-                                      : 'async-select'
-                                  }
-                                  labelFieldName={`jurisdictions[${index}].name`}
-                                />
-                                <Field
-                                  type="hidden"
-                                  name={`jurisdictions[${index}].name`}
-                                  id={`jurisdictions-${index}-name`}
-                                />
+                                labelFieldName={`jurisdictions[${index}].name`}
+                              />
+                              <Field
+                                type="hidden"
+                                name={`jurisdictions[${index}].name`}
+                                id={`jurisdictions-${index}-name`}
+                              />
 
-                                {errors.jurisdictions && errors.jurisdictions[index] && (
-                                  <small className="form-text text-danger">An Error Ocurred</small>
-                                )}
+                              {errors.jurisdictions && errors.jurisdictions[index] && (
+                                <small className="form-text text-danger">An Error Ocurred</small>
+                              )}
 
-                                <ErrorMessage
-                                  name={`jurisdictions[${index}].id`}
-                                  component="small"
-                                  className="form-text text-danger"
-                                />
-                              </FormGroup>
-                            </div>
-                          </fieldset>
-                        ))}
-                        {values.interventionType === InterventionType.IRS && (
-                          <button
-                            type="button"
-                            className="btn btn-primary btn-sm mb-5 addJurisdiction"
-                            onClick={() => arrayHelpers.push(initialJurisdictionValues)}
-                          >
-                            Add Focus Area
-                          </button>
-                        )}
-                      </div>
+                              <ErrorMessage
+                                name={`jurisdictions[${index}].id`}
+                                component="small"
+                                className="form-text text-danger"
+                              />
+                            </FormGroup>
+                          </div>
+                        </fieldset>
+                      ))}
+                      {values.interventionType === InterventionType.IRS && (
+                        <button
+                          type="button"
+                          className="btn btn-primary btn-sm mb-5 addJurisdiction"
+                          onClick={() => arrayHelpers.push(initialJurisdictionValues)}
+                        >
+                          Add Focus Area
+                        </button>
+                      )}
                     </div>
                   )}
                 </div>
