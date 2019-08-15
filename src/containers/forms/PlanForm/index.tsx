@@ -161,7 +161,9 @@ const PlanForm = (props: PlanFormProps) => {
               /* tslint:disable-next-line jsx-no-lambda */
               render={arrayHelpers => (
                 <div>
-                  {editMode !== true && (
+                  {editMode ? (
+                    <div id="jurisdictions-display-container" />
+                  ) : (
                     <div id="jurisdictions-select-container">
                       <div className="mb-5">
                         {values.jurisdictions.map((jurisdiction, index) => (
