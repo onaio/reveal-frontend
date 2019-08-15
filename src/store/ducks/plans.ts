@@ -454,13 +454,15 @@ export function getPlansArray(
   state: Partial<Store>,
   intervention: InterventionType = InterventionType.FI,
   status: string[],
-  reason: string | null = null
+  reason: string | null = null,
+  jurisdictions: string[] = []
 ): Plan[] {
   return values((state as any)[reducerName].plansById).filter(
     (plan: Plan) =>
       plan.plan_intervention_type === intervention &&
       (status.length ? status.includes(plan.plan_status) : true) &&
-      (reason ? plan.plan_fi_reason === reason : true)
+      (reason ? plan.plan_fi_reason === reason : true) &&
+      (jurisdictions.length ? jurisdictions.includes(plan.jurisdiction_id) : true)
   );
 }
 

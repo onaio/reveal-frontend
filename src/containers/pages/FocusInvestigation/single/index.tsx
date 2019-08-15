@@ -460,31 +460,36 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
     goalsArray = getGoalsByPlanAndJurisdiction(state, plan.plan_id, plan.jurisdiction_id);
     jurisdiction = getJurisdictionById(state, plan.jurisdiction_id);
   }
+  const jurisdictionId: string[] = jurisdiction ? [jurisdiction.jurisdiction_id] : [];
   const result = {
     completeReactivePlansArray: getPlansArray(
       state,
       InterventionType.FI,
       [PlanStatus.COMPLETE],
-      CASE_TRIGGERED
-    ).filter(p => (jurisdiction ? p.jurisdiction_id === jurisdiction.jurisdiction_id : true)),
+      CASE_TRIGGERED,
+      jurisdictionId
+    ),
     completeRoutinePlansArray: getPlansArray(
       state,
       InterventionType.FI,
       [PlanStatus.COMPLETE],
-      ROUTINE
-    ).filter(p => (jurisdiction ? p.jurisdiction_id === jurisdiction.jurisdiction_id : true)),
+      ROUTINE,
+      jurisdictionId
+    ),
     currentReactivePlansArray: getPlansArray(
       state,
       InterventionType.FI,
       [PlanStatus.ACTIVE, PlanStatus.DRAFT],
-      CASE_TRIGGERED
-    ).filter(p => (jurisdiction ? p.jurisdiction_id === jurisdiction.jurisdiction_id : true)),
+      CASE_TRIGGERED,
+      jurisdictionId
+    ),
     currentRoutinePlansArray: getPlansArray(
       state,
       InterventionType.FI,
       [PlanStatus.ACTIVE, PlanStatus.DRAFT],
-      ROUTINE
-    ).filter(p => (jurisdiction ? p.jurisdiction_id === jurisdiction.jurisdiction_id : true)),
+      ROUTINE,
+      jurisdictionId
+    ),
     goalsArray,
     jurisdiction,
     planById: plan,
