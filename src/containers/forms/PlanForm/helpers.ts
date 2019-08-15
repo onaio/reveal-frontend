@@ -179,6 +179,7 @@ export function getFormActivities(items: typeof FIActivities | typeof IRSActivit
 /**
  * Get action and plans from PlanForm activities
  * @param {PlanActivityFormFields[]} activities - this of activities from PlanForm
+ * @param {string} planIdentifier - this plan identifier
  */
 export function extractActivitiesFromPlanForm(
   activities: PlanActivityFormFields[],
@@ -193,6 +194,7 @@ export function extractActivitiesFromPlanForm(
       // we must declare them with some value. BCC chosen randomly here
       let thisAction: PlanAction = planActivities.BCC.action;
       let thisGoal: PlanGoal = planActivities.BCC.goal;
+
       // first populate with default values
       if (element.actionCode === 'BCC') {
         thisAction = planActivities.BCC.action;
