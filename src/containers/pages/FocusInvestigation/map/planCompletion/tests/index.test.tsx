@@ -13,6 +13,7 @@ import store from '../../../../../../store';
 import reducer, {
   fetchPlans,
   getPlanById,
+  Plan,
   PlanStatus,
   reducerName,
 } from '../../../../../../store/ducks/plans';
@@ -107,25 +108,29 @@ describe('@containers/pages/map/planCompletion/', () => {
         isExact: true,
         params: { id: fixtures.plan1.id },
         path: `${PLAN_COMPLETION_URL}/:id`,
-        url: `${PLAN_COMPLETION_URL}/13`,
+        url: `${PLAN_COMPLETION_URL}/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f`,
       },
     };
-    const wrapper = mount(
-      <Provider store={store}>
-        <Router history={history}>
-          <ConnectedPlanCompletion {...props} />
-        </Router>
-      </Provider>
-    );
-    const confirmButton = wrapper.find('.card.mb-3 card-body button:last-child');
-    confirmButton.simulate('click');
+    // const wrapper = mount(
+    //   <Provider store={store}>
+    //     <Router history={history}>
+    //       <ConnectedPlanCompletion {...props} />
+    //     </Router>
+    //   </Provider>
+    // );
+
+    const discoWrapper = mount(<PlanCompletion plan={fixtures.plan1 as Plan} {...props} />);
+
+    const cancelButton = discoWrapper.find('#complete-plan-cancel-btn');
+    expect(cancelButton.length).toEqual(1);
+    cancelButton.simulate('click');
     // check that history url after clicking cancel points to singleFi url
 
     // check that plan still has the previous plan_status
     const plan1FromStore = getPlanById(store.getState(), fixtures.plan1.id);
     expect(plan1FromStore).toBe(PlanStatus.ACTIVE);
 
-    wrapper.unmount();
+    discoWrapper.unmount();
   });
 
   it('things it should do when confirm  mark as complete', () => {
@@ -149,23 +154,27 @@ describe('@containers/pages/map/planCompletion/', () => {
       },
       serviceClass: classMock,
     };
-    const wrapper = mount(
-      <Provider store={store}>
-        <Router history={history}>
-          <ConnectedPlanCompletion {...props} />
-        </Router>
-      </Provider>
-    );
-    const confirmButton = wrapper.find('.card.mb-3 card-body button:first-child');
+    // const wrapper = mount(
+    //   <Provider store={store}>
+    //     <Router history={history}>
+    //       <ConnectedPlanCompletion {...props} />
+    //     </Router>
+    //   </Provider>
+    // );
+    const discoWrapper = mount(<PlanCompletion plan={fixtures.plan1 as Plan} {...props} />);
+    const confirmButton = discoWrapper.find('#complete-plan-confirm-btn');
+    expect(confirmButton.length).toEqual(1);
+
     confirmButton.simulate('click');
     expect(classMock).toBeCalledTimes(1);
     expect(classMock).toBeCalledWith(OPENSRP_PLANS);
     const completedPlan = cloneDeep(fixtures.plan1);
     completedPlan.plan_status = PlanStatus.COMPLETE;
     expect(mockUpdate).toBeCalledWith(completedPlan);
+
     // check the plan in the store
     const plan1FromStore = getPlanById(store.getState(), fixtures.plan1.id);
     expect(plan1FromStore).toBe(PlanStatus.COMPLETE);
-    wrapper.unmount();
+    discoWrapper.unmount();
   });
 });
