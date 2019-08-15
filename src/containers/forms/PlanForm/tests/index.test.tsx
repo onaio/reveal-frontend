@@ -46,6 +46,7 @@ describe('containers/forms/PlanForm', () => {
     expect(wrapper.find({ for: 'date' }).length).toEqual(0);
     expect(toJson(wrapper.find('#date input'))).toMatchSnapshot('date field');
     expect(toJson(wrapper.find('#planform-submit-button button'))).toMatchSnapshot('submit button');
+    expect(wrapper.find('#jurisdictions-select-container').length).toEqual(1);
 
     // if you set fiReason to case triggered then caseNum and opensrpEventId are now rendered
     wrapper
