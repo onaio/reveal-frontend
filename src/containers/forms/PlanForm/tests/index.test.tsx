@@ -240,6 +240,12 @@ describe('containers/forms/PlanForm - Edit', () => {
   it('renders all fields correctly in edit mode', () => {
     fetch.mockResponseOnce(fixtures.jurisdictionLevel0JSON);
     const props = {
+      disabledActivityFields: [
+        'actionReason',
+        'goalPriority',
+        'timingPeriodStart',
+        'timingPeriodEnd',
+      ],
       disabledFields: [
         'interventionType',
         'fiReason',
@@ -290,6 +296,12 @@ describe('containers/forms/PlanForm - Edit', () => {
 
     fetch.mockResponseOnce(fixtures.jurisdictionLevel0JSON);
     const props = {
+      disabledActivityFields: [
+        'actionReason',
+        'goalPriority',
+        'timingPeriodStart',
+        'timingPeriodEnd',
+      ],
       disabledFields: [
         'interventionType',
         'fiReason',
