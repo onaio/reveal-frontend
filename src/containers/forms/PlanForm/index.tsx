@@ -163,24 +163,29 @@ const PlanForm = (props: PlanFormProps) => {
                 <div>
                   {editMode ? (
                     <div id="jurisdictions-display-container" className="mb-5">
-                      {values.jurisdictions.map((jurisdiction, index) => (
-                        <fieldset key={index}>
-                          <Field
-                            type="hidden"
-                            readOnly={true}
-                            name={`jurisdictions[${index}].id`}
-                            id={`jurisdictions-${index}-id`}
-                            value={jurisdiction.id}
-                          />
-                          <Field
-                            type="hidden"
-                            readOnly={true}
-                            name={`jurisdictions[${index}].name`}
-                            id={`jurisdictions-${index}-name`}
-                            value={jurisdiction.name}
-                          />
-                        </fieldset>
-                      ))}
+                      <ul id="selected-jurisdiction-list">
+                        {values.jurisdictions.map((jurisdiction, index) => (
+                          <li key={index}>
+                            <span>{jurisdiction.name}</span>
+                            <fieldset>
+                              <Field
+                                type="hidden"
+                                readOnly={true}
+                                name={`jurisdictions[${index}].id`}
+                                id={`jurisdictions-${index}-id`}
+                                value={jurisdiction.id}
+                              />
+                              <Field
+                                type="hidden"
+                                readOnly={true}
+                                name={`jurisdictions[${index}].name`}
+                                id={`jurisdictions-${index}-name`}
+                                value={jurisdiction.name}
+                              />
+                            </fieldset>
+                          </li>
+                        ))}
+                      </ul>
                     </div>
                   ) : (
                     <div id="jurisdictions-select-container" className="mb-5">
