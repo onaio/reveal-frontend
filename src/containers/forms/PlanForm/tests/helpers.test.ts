@@ -23,6 +23,7 @@ import {
   extractedActivitiesFromForms,
   planActivities,
   planActivityWithEmptyfields,
+  planFormValues,
   values,
   values2,
   valuesWithJurisdiction,
@@ -146,14 +147,22 @@ describe('containers/forms/PlanForm/helpers', () => {
     MockDate.reset();
   });
 
-  it('getPlanFormValues and generatePlanDefinition are interoperable', () => {
-    MockDate.set('1/30/2000', 0);
-    const planForm = values2 as PlanFormFields;
+  it('getPlanFormValues can get original planForm', () => {
+    const planForm = planFormValues as PlanFormFields;
+
     const generatedPlan = generatePlanDefinition(planForm);
     const generatedPlanForm = getPlanFormValues(generatedPlan);
 
-    expect(planForm).toEqual(generatedPlanForm);
-    MockDate.reset();
+    expect(planForm).toEqual({
+      ...generatedPlanForm,
+      jurisdictions: [
+        {
+          id: '3952',
+          name: 'Akros_2', // getPlanFormValues does not have access to the name
+        },
+      ],
+      version: '1', // the version is updated so we change it back
+    });
   });
 
   it('getPlanFormValues returns the correct value', () => {
