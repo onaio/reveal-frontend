@@ -460,12 +460,12 @@ export function generatePlanDefinition(
     },
   ];
 
-  if (formValue.fiReason) {
-    useContext.push({ code: 'fiReason', valueCodableConcept: formValue.fiReason });
-  }
-
   if (formValue.fiStatus) {
     useContext.push({ code: 'fiStatus', valueCodableConcept: formValue.fiStatus });
+  }
+
+  if (formValue.fiReason) {
+    useContext.push({ code: 'fiReason', valueCodableConcept: formValue.fiReason });
   }
 
   if (formValue.caseNum) {
