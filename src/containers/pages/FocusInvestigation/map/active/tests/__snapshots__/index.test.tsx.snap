@@ -431,11 +431,11 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
             },
             Object {
               "label": "Chadiza",
-              "url": "",
+              "url": "/focus-investigation/filtered/2939",
             },
             Object {
               "label": "Naviluli",
-              "url": "",
+              "url": "/focus-investigation/filtered/2944",
             },
             Object {
               "label": "NVI_439",
@@ -507,7 +507,18 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
                   <li
                     className="breadcrumb-item"
                   >
-                    Chadiza
+                    <Link
+                      key="2"
+                      replace={false}
+                      to="/focus-investigation/filtered/2939"
+                    >
+                      <a
+                        href="/focus-investigation/filtered/2939"
+                        onClick={[Function]}
+                      >
+                        Chadiza
+                      </a>
+                    </Link>
                   </li>
                 </BreadcrumbItem>
                 <BreadcrumbItem
@@ -517,7 +528,18 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
                   <li
                     className="breadcrumb-item"
                   >
-                    Naviluli
+                    <Link
+                      key="3"
+                      replace={false}
+                      to="/focus-investigation/filtered/2944"
+                    >
+                      <a
+                        href="/focus-investigation/filtered/2944"
+                        onClick={[Function]}
+                      >
+                        Naviluli
+                      </a>
+                    </Link>
                   </li>
                 </BreadcrumbItem>
                 <BreadcrumbItem
@@ -3015,11 +3037,11 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store (g
                 },
                 Object {
                   "label": "Chadiza",
-                  "url": "",
+                  "url": "/focus-investigation/filtered/2939",
                 },
                 Object {
                   "label": "Naviluli",
-                  "url": "",
+                  "url": "/focus-investigation/filtered/2944",
                 },
                 Object {
                   "label": "NVI_439",
@@ -3091,7 +3113,18 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store (g
                       <li
                         className="breadcrumb-item"
                       >
-                        Chadiza
+                        <Link
+                          key="2"
+                          replace={false}
+                          to="/focus-investigation/filtered/2939"
+                        >
+                          <a
+                            href="/focus-investigation/filtered/2939"
+                            onClick={[Function]}
+                          >
+                            Chadiza
+                          </a>
+                        </Link>
                       </li>
                     </BreadcrumbItem>
                     <BreadcrumbItem
@@ -3101,7 +3134,18 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store (g
                       <li
                         className="breadcrumb-item"
                       >
-                        Naviluli
+                        <Link
+                          key="3"
+                          replace={false}
+                          to="/focus-investigation/filtered/2944"
+                        >
+                          <a
+                            href="/focus-investigation/filtered/2944"
+                            onClick={[Function]}
+                          >
+                            Naviluli
+                          </a>
+                        </Link>
                       </li>
                     </BreadcrumbItem>
                     <BreadcrumbItem
