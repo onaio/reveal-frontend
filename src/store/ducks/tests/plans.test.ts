@@ -45,7 +45,8 @@ describe('reducers/plans', () => {
     expect(getPlanRecordsIdArray(store.getState())).toEqual([]);
     expect(getPlanRecordsArray(store.getState())).toEqual([]);
     expect(getPlanRecordById(store.getState(), 'somId')).toEqual(null);
-    // expect(getFilteredPlansArray(store.getState(), InterventionType.FI, [], null)).toEqual([]);
+    expect(getFilteredPlansArray(store.getState(), InterventionType.FI, [], null)).toEqual([]);
+    expect(getFilteredPlansArray(store.getState())).toEqual([]);
   });
 
   it('should fetch Plans', () => {
