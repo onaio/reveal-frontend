@@ -47,6 +47,7 @@ describe('containers/forms/PlanForm', () => {
     expect(toJson(wrapper.find('#date input'))).toMatchSnapshot('date field');
     expect(toJson(wrapper.find('#planform-submit-button button'))).toMatchSnapshot('submit button');
     expect(wrapper.find('#jurisdictions-select-container').length).toEqual(1);
+    expect(wrapper.find('#jurisdictions-display-container').length).toEqual(0);
 
     // if you set fiReason to case triggered then caseNum and opensrpEventId are now rendered
     wrapper
@@ -271,5 +272,6 @@ describe('containers/forms/PlanForm - Edit', () => {
     expect(toJson(wrapper.find('#end input'))).toMatchSnapshot('end field');
     expect(toJson(wrapper.find('#date input'))).toMatchSnapshot('date field');
     expect(wrapper.find('#jurisdictions-select-container').length).toEqual(0);
+    expect(wrapper.find('#jurisdictions-display-container').length).toEqual(1);
   });
 });
