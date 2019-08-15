@@ -50,7 +50,7 @@ describe('reducers/plans', () => {
   });
 
   it('should fetch Plans', () => {
-    store.dispatch(fetchPlans(fixtures.plans));
+    store.dispatch(fetchPlans(fixtures.plans as any));
     const allPlans = keyBy(fixtures.plans, (plan: Plan) => plan.id);
     const fiPlans = pickBy(allPlans, (e: Plan) => e.plan_intervention_type === InterventionType.FI);
     const irsPlans = pickBy(
@@ -112,57 +112,6 @@ describe('reducers/plans', () => {
     expect(getPlansArray(store.getState(), InterventionType.FI, [PlanStatus.DRAFT], null)).toEqual(
       values(reactiveDraftPlans)
     );
-
-    // filter irs plans based on location
-    // const filteredIRSPlans = pickBy(
-    //   allPlans,
-    //   (e: Plan) =>
-    //     e.plan_intervention_type === InterventionType.IRS &&
-    //     e.jurisdiction_name_path[0] === 'Canton Tha Luang'
-    // );
-    // // filter fi plans based on a location
-    // const filteredFIPlans = pickBy(
-    //   allPlans,
-    //   (e: Plan) =>
-    //     e.plan_intervention_type === InterventionType.FI &&
-    //     e.jurisdiction_name_path[0] === 'Chadiza'
-    // );
-    // // filter routine fi plans based on a location
-    // const filteredRoutineFIPlans = pickBy(
-    //   allPlans,
-    //   (e: Plan) =>
-    //     e.plan_intervention_type === InterventionType.FI &&
-    //     e.plan_fi_reason === ROUTINE &&
-    //     e.jurisdiction_name_path[0] === 'Chadiza'
-    // );
-    // // filter case-triggered irs plans based on a location
-    // const filteredCaseTriggeredIRSPlans = pickBy(
-    //   allPlans,
-    //   (e: Plan) =>
-    //     e.plan_intervention_type === InterventionType.IRS &&
-    //     e.plan_fi_reason === CASE_TRIGGERED_PLAN &&
-    //     e.jurisdiction_name_path[0] === 'Canton Tha Luang'
-    // );
-    // // getFilteredPlansArray gets filters plans by location when no location is passed
-    // expect(
-    //   getFilteredPlansArray(store.getState(), InterventionType.IRS, [], null, 'Canton Tha Luang', 1)
-    // ).toEqual(values(filteredIRSPlans));
-    // expect(
-    //   getFilteredPlansArray(store.getState(), InterventionType.FI, [], null, 'Chadiza', 1)
-    // ).toEqual(values(filteredFIPlans));
-    // expect(
-    //   getFilteredPlansArray(
-    //     store.getState(),
-    //     InterventionType.IRS,
-    //     [],
-    //     CASE_TRIGGERED_PLAN,
-    //     'Canton Tha Luang',
-    //     1
-    //   )
-    // ).toEqual(values(filteredCaseTriggeredIRSPlans));
-    // expect(
-    //   getFilteredPlansArray(store.getState(), InterventionType.FI, [], ROUTINE, 'Chadiza', 1)
-    // ).toEqual(values(filteredRoutineFIPlans));
 
     expect(getPlanById(store.getState(), 'ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f')).toEqual(
       allPlans['ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f']
