@@ -177,13 +177,38 @@ export function getFormActivities(items: typeof FIActivities | typeof IRSActivit
 }
 
 /**
+ * Get a plan activity from a plan definition object
+ * @param {PlanDefinition} planObj - the plan definition
+ * @param {PlanActionCodesType} actionCode - the action code
+ * @returns {PlanActivity | null} - the plan activity or null
+ */
+export function getActivityFromPlan(
+  planObj: PlanDefinition,
+  actionCode: PlanActionCodesType
+): PlanActivity | null {
+  const actions = planObj.action.filter(e => e.code === actionCode);
+  if (actions.length > 0) {
+    const goals = planObj.goal.filter(e => e.id === actions[0].goalId);
+    if (goals.length > 0) {
+      return {
+        action: actions[0],
+        goal: goals[0],
+      };
+    }
+  }
+
+  return null;
+}
+
+/**
  * Get action and plans from PlanForm activities
  * @param {PlanActivityFormFields[]} activities - this of activities from PlanForm
  * @param {string} planIdentifier - this plan identifier
  */
 export function extractActivitiesFromPlanForm(
   activities: PlanActivityFormFields[],
-  planIdentifier: string = ''
+  planIdentifier: string = '',
+  planObj: PlanDefinition | null = null
 ) {
   const actions: PlanAction[] = [];
   const goals: PlanGoal[] = [];
