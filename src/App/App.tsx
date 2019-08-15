@@ -103,6 +103,12 @@ class App extends Component {
               <ConnectedPrivateRoute
                 disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                 exact={true}
+                path={`${FI_URL}/:locationHierarchy/:location`}
+                component={ActiveFocusInvestigation}
+              />
+              <ConnectedPrivateRoute
+                disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                exact={true}
                 path={`${PLAN_COMPLETION_URL}/:id`}
                 component={ConnectedPlanCompletion}
               />
