@@ -1,3 +1,4 @@
+import { parseISO } from 'date-fns';
 import moment from 'moment';
 import { DEFAULT_ACTIVITY_DURATION_DAYS } from '../../../../configs/env';
 import { PlanActivities } from '../../../../configs/settings';
@@ -1364,16 +1365,16 @@ export const values2 = {
       actionReason: 'Routine',
       actionTitle: 'Spray Structures',
       goalDescription: 'Spray structures in the operational area',
-      goalDue: moment('2019-08-16T12:32:15.116Z').toDate(),
+      goalDue: parseISO('2019-08-16'),
       goalPriority: 'medium-priority',
       goalValue: 90,
-      timingPeriodEnd: moment('2019-08-16T12:32:01.685Z').toDate(),
-      timingPeriodStart: moment('2019-08-09T12:32:01.685Z').toDate(),
+      timingPeriodEnd: parseISO('2019-08-16'),
+      timingPeriodStart: parseISO('2019-08-09'),
     },
   ],
   caseNum: '',
-  date: moment('2019-08-09T12:32:01.685Z').toDate(),
-  end: moment('2019-08-29T12:32:01.685Z').toDate(),
+  date: parseISO('2019-08-09'),
+  end: parseISO('2019-08-29'),
   identifier: '',
   interventionType: 'IRS',
   jurisdictions: [
@@ -1383,7 +1384,7 @@ export const values2 = {
     },
   ],
   name: 'IRS-2019-08-09',
-  start: moment('2019-08-09T12:32:01.685Z').toDate(),
+  start: parseISO('2019-08-09'),
   status: 'draft',
   title: 'IRS 2019-08-09',
   version: '1',
