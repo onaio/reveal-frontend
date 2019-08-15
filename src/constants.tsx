@@ -1,3 +1,6 @@
+import { goBack } from 'connected-react-router';
+import { Marker } from 'mapbox-gl';
+
 // strings
 export const MAP = 'map';
 export type MAP = typeof MAP;
@@ -65,6 +68,10 @@ export const OF = 'of';
 export type OF = typeof OF;
 export const IS = 'is';
 export type IS = typeof IS;
+export const MARK = 'Mark';
+export type MARK = typeof MARK;
+export const AS = 'as';
+export type AS = typeof AS;
 export const MARK_AS_COMPLETE = 'Mark as complete';
 export type MARK_AS_COMPLETE = typeof MARK_AS_COMPLETE;
 export const TARGET = 'Target';
@@ -107,6 +114,10 @@ export const DATE = 'Date';
 export type DATE = typeof DATE;
 export const PLANS = 'Manage Plans';
 export type PLANS = typeof PLANS;
+export const CONFIRM = 'Confirm';
+export type CONFIRM = typeof CONFIRM;
+export const GO_BACK = 'Go Back';
+export type GO_BACK = typeof GO_BACK;
 
 export const JURISDICTION_ID = 'jurisdiction_id';
 export type JURISDICTION_ID = typeof JURISDICTION_ID;
