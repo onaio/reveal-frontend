@@ -587,17 +587,25 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
                    
                   Investigation
                    
-                  <Badge
-                    color="warning"
-                    pill={true}
-                    tag="span"
+                  <h5
+                    style={
+                      Object {
+                        "display": "inline",
+                      }
+                    }
                   >
-                    <span
-                      className="badge badge-warning badge-pill"
+                    <Badge
+                      color="warning"
+                      pill={true}
+                      tag="span"
                     >
-                      active
-                    </span>
-                  </Badge>
+                      <span
+                        className="badge badge-warning badge-pill"
+                      >
+                        active
+                      </span>
+                    </Badge>
+                  </h5>
                 </h2>
               </div>
             </Col>
@@ -3161,17 +3169,25 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store (g
                        
                       Investigation
                        
-                      <Badge
-                        color="warning"
-                        pill={true}
-                        tag="span"
+                      <h5
+                        style={
+                          Object {
+                            "display": "inline",
+                          }
+                        }
                       >
-                        <span
-                          className="badge badge-warning badge-pill"
+                        <Badge
+                          color="warning"
+                          pill={true}
+                          tag="span"
                         >
-                          active
-                        </span>
-                      </Badge>
+                          <span
+                            className="badge badge-warning badge-pill"
+                          >
+                            active
+                          </span>
+                        </Badge>
+                      </h5>
                     </h2>
                   </div>
                 </Col>

@@ -82,7 +82,7 @@ export type Task = UpdateType<InitialTask, GeoJSONUpdate>;
 // actions
 /** TASKS_FETCHED action type */
 export const TASKS_FETCHED = 'reveal/reducer/tasks/TASKS_FETCHED';
-export const RESET_TASKS = 'reveal/reducer/tasks/RESET_TASKS';
+export const REMOVE_TASKS = 'reveal/reducer/tasks/REMOVE_TASKS';
 
 /** interface for authorize action */
 interface FetchTasksAction extends AnyAction {
@@ -93,7 +93,7 @@ interface FetchTasksAction extends AnyAction {
 /** Interface for reset tasks action */
 interface ResetTaskAction extends AnyAction {
   tasksById: {};
-  type: typeof RESET_TASKS;
+  type: typeof REMOVE_TASKS;
 }
 
 /** Create type for Task reducer actions */
@@ -119,12 +119,13 @@ export default function reducer(state = initialState, action: TaskActionTypes): 
       if (action.tasksById) {
         return SeamlessImmutable({
           ...state,
-          tasksById: action.tasksById,
+          tasksById: { ...state.tasksById, ...action.tasksById },
         });
       }
       return state;
-    case RESET_TASKS:
+    case REMOVE_TASKS:
       return SeamlessImmutable({
+        ...state,
         tasksById: action.tasksById,
       });
     default:
@@ -158,11 +159,13 @@ export const fetchTasks = (tasksList: InitialTask[] = []): FetchTasksAction => (
   type: TASKS_FETCHED,
 });
 
-/** Reset-tasks-state action creator */
-export const resetTasks = (): ResetTaskAction => ({
+// actions
+
+/** remove tasks action */
+export const removeTasksAction: ResetTaskAction = {
   tasksById: {},
-  type: RESET_TASKS,
-});
+  type: REMOVE_TASKS,
+};
 
 // selectors
 

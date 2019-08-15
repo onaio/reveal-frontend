@@ -96,6 +96,7 @@ import HeaderBreadcrumbs, {
 } from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../../components/page/Loading';
 
+import './../../../../../styles/css/drill-down-table.css';
 import './style.css';
 
 /** register the plans reducer */
@@ -1850,6 +1851,14 @@ class IrsPlan extends React.Component<
       });
     }
 
+    let showPagination: boolean = false;
+    if (this.state.focusJurisdictionId) {
+      const directDecendants = filteredJurisdictions.filter(
+        j => j.parent_id === this.state.focusJurisdictionId
+      );
+      showPagination = directDecendants.length > 20;
+    }
+
     const tableProps: DrillDownProps<any> = {
       CellComponent: DropDownCell,
       columns,
@@ -1863,7 +1872,8 @@ class IrsPlan extends React.Component<
       minRows: 0,
       parentIdentifierField: 'parent_id',
       rootParentId: this.state.focusJurisdictionId,
-      showPagination: false,
+      showPageSizeOptions: false,
+      showPagination,
       useDrillDownTrProps: true,
     };
     return tableProps;

@@ -8,11 +8,11 @@ import { MouseEvent } from 'react';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { CellInfo, Column } from 'react-table';
-import { Badge } from 'reactstrap';
 import SeamlessImmutable from 'seamless-immutable';
 import uuidv5 from 'uuid/v5';
 import { TASK_YELLOW } from '../colors';
 import DrillDownTableLinkedCell from '../components/DrillDownTableLinkedCell';
+import NewRecordBadge from '../components/NewRecordBadge';
 import { DIGITAL_GLOBE_CONNECT_ID, ONADATA_OAUTH_STATE, OPENSRP_OAUTH_STATE } from '../configs/env';
 import { imgArr, locationHierarchy, LocationItem } from '../configs/settings';
 import {
@@ -449,21 +449,13 @@ export const jsxColumns = (colType: string): Column[] | [] => {
         columns: [
           {
             Cell: (cell: CellInfo) => {
-              /** if 24 hours ago show badge */
-              const oneDayAgo = new Date().getTime() + 1 * 24 * 60 * 60;
-              const newRecordBadge =
-                Date.parse(cell.original.plan_date) >= oneDayAgo ? (
-                  <Badge color="warning" pill={true}>
-                    Warning
-                  </Badge>
-                ) : null;
               return (
                 <div>
                   {cell.original.focusArea.trim() && (
                     <Link to={`${FI_SINGLE_MAP_URL}/${cell.original.id}`}>{cell.value}</Link>
                   )}
                   &nbsp;
-                  {newRecordBadge}
+                  <NewRecordBadge recordDate={cell.original.plan_date} />
                 </div>
               );
             },

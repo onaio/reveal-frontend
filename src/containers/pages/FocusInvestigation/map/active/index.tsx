@@ -305,7 +305,8 @@ class SingleActiveFIMap extends React.Component<
           <Row>
             <Col xs="8">
               <h2 className="page-title mt-4 mb-4">
-                {plan && plan.plan_title} {INVESTIGATION} {statusBadge}
+                {plan && plan.plan_title} {INVESTIGATION}{' '}
+                <h5 style={{ display: 'inline' }}>{statusBadge}</h5>
               </h2>
             </Col>
             <Col xs="4">

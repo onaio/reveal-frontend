@@ -203,7 +203,7 @@ export const PlanActivityTitles = [
 export type PlanActivityTitlesType = typeof PlanActivityTitles[number];
 
 /** type to describe plan activities */
-type PlanActivities = { [K in PlanActivityTitlesType]: PlanActivity };
+export type PlanActivities = { [K in PlanActivityTitlesType]: PlanActivity };
 
 /** default plan activities */
 export const planActivities: PlanActivities = {
@@ -644,7 +644,7 @@ export const circleLayerConfig = {
   paint: {
     'circle-color': '#FFDC00',
     'circle-opacity': 0.7,
-    'circle-radius': ['interpolate', ['linear'], ['zoom'], 13.98, 0, 17.79, 10, 18.8, 15],
+    'circle-radius': ['interpolate', ['linear'], ['zoom'], 13.98, 10, 17.79, 10, 18.8, 15],
     'circle-stroke-width': 2,
   },
   source: {
