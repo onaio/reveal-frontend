@@ -153,7 +153,6 @@ describe('containers/forms/PlanForm/helpers', () => {
     const generatedPlanForm = getPlanFormValues(generatedPlan);
 
     expect(planForm).toEqual(generatedPlanForm);
-    // expect(generatePlanDefinition(values2)).toEqual(expectedPlanDefinition);
     MockDate.reset();
   });
 
@@ -263,8 +262,8 @@ describe('containers/forms/PlanForm/helpers', () => {
         },
       ],
       caseNum: '',
-      date: moment('2019-05-18T21:00:00.000Z').toDate(),
-      end: moment('2019-08-29T21:00:00.000Z').toDate(),
+      date: moment('2019-05-19T00:00:00.000Z').toDate(),
+      end: moment('2019-08-30T00:00:00.000Z').toDate(),
       fiReason: 'Case-triggered',
       fiStatus: 'A2',
       identifier: '356b6b84-fc36-4389-a44a-2b038ed2f38d',
@@ -272,7 +271,7 @@ describe('containers/forms/PlanForm/helpers', () => {
       jurisdictions: [{ id: '3952', name: '3952' }],
       name: 'A2-Lusaka_Akros_Focus_2',
       opensrpEventId: undefined,
-      start: moment('2019-05-19T21:00:00.000Z').toDate(),
+      start: moment('2019-05-20T00:00:00.000Z').toDate(),
       status: 'active',
       title: 'A2-Lusaka Akros Test Focus 2',
       version: '1',
