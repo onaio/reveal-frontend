@@ -480,15 +480,14 @@ export function getFilteredPlansArray(
   intervention: InterventionType = InterventionType.FI,
   status: string[] = [],
   reason: string | null = null,
-  location: string | null = null, // we may not have a location to filter sometimes
-  locationHierarchy: number = 0
+  jurisdictionId: string | null = null
 ): Plan[] {
   return values((state as any)[reducerName].plansById).filter(
     (plan: Plan) =>
       plan.plan_intervention_type === intervention &&
       (status.length ? status.includes(plan.plan_status) : true) &&
       (reason ? plan.plan_fi_reason === reason : true) &&
-      (location ? location === plan.jurisdiction_name_path[locationHierarchy - 1] : true)
+      (jurisdictionId ? plan.jurisdiction_path.includes(jurisdictionId) : true)
   );
 }
 
