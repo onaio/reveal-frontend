@@ -33,7 +33,7 @@ import {
   PlanGoalTarget,
   UseContext,
 } from '../../../configs/settings';
-import { DATE, IRS_TITLE, IS, NAME, REQUIRED } from '../../../constants';
+import { DATE, IS, NAME, REQUIRED } from '../../../constants';
 import { generateNameSpacedUUID } from '../../../helpers/utils';
 import { InterventionType, PlanStatus } from '../../../store/ducks/plans';
 
