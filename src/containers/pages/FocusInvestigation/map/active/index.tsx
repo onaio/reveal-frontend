@@ -23,6 +23,7 @@ import {
 import {
   CASE_TRIGGERED_PLAN,
   END_DATE,
+  FI_FILTERED_URL,
   FI_SINGLE_MAP_URL,
   FI_SINGLE_URL,
   FI_URL,
@@ -239,11 +240,11 @@ class SingleActiveFIMap extends React.Component<
     };
     const namePaths =
       plan.jurisdiction_name_path instanceof Array ? plan.jurisdiction_name_path : [];
-    const pages = namePaths.map(namePath => {
+    const pages = namePaths.map((namePath, i) => {
       // return a page object for each name path
       return {
         label: namePath,
-        url: '',
+        url: FI_FILTERED_URL + '/' + plan.jurisdiction_path[i],
       };
     });
     breadCrumbProps.pages = [homePage, basePage, ...pages, secondLastPage];
