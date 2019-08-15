@@ -455,7 +455,7 @@ interface DispatchedStateProps {
 const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateProps => {
   const plan = getPlanById(state, ownProps.match.params.id);
   let goalsArray = null;
-  let jurisdiction = null;
+  let jurisdiction: Jurisdiction | null = null;
   if (plan) {
     goalsArray = getGoalsByPlanAndJurisdiction(state, plan.plan_id, plan.jurisdiction_id);
     jurisdiction = getJurisdictionById(state, plan.jurisdiction_id);
@@ -466,25 +466,25 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
       InterventionType.FI,
       [PlanStatus.COMPLETE],
       CASE_TRIGGERED
-    ),
+    ).filter(p => (jurisdiction ? p.jurisdiction_id === jurisdiction.jurisdiction_id : true)),
     completeRoutinePlansArray: getPlansArray(
       state,
       InterventionType.FI,
       [PlanStatus.COMPLETE],
       ROUTINE
-    ),
+    ).filter(p => (jurisdiction ? p.jurisdiction_id === jurisdiction.jurisdiction_id : true)),
     currentReactivePlansArray: getPlansArray(
       state,
       InterventionType.FI,
       [PlanStatus.ACTIVE, PlanStatus.DRAFT],
       CASE_TRIGGERED
-    ),
+    ).filter(p => (jurisdiction ? p.jurisdiction_id === jurisdiction.jurisdiction_id : true)),
     currentRoutinePlansArray: getPlansArray(
       state,
       InterventionType.FI,
       [PlanStatus.ACTIVE, PlanStatus.DRAFT],
       ROUTINE
-    ),
+    ).filter(p => (jurisdiction ? p.jurisdiction_id === jurisdiction.jurisdiction_id : true)),
     goalsArray,
     jurisdiction,
     planById: plan,
