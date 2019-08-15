@@ -332,4 +332,75 @@ describe('containers/forms/PlanForm - Edit', () => {
 
     wrapper.unmount();
   });
+
+  it('renders activity fields correctly', () => {
+    function checkActivities(num: number) {
+      // FI activities by default
+      for (let i = 0; i <= num; i++) {
+        expect(toJson(wrapper.find(`#activities-${i}-actionTitle input`))).toMatchSnapshot(
+          `activities[${i}].actionTitle field`
+        );
+        expect(toJson(wrapper.find(`#activities-${i}-actionCode input`))).toMatchSnapshot(
+          `activities[${i}].actionCode field`
+        );
+        expect(toJson(wrapper.find(`#activities-${i}-actionIdentifier input`))).toMatchSnapshot(
+          `activities[${i}].actionIdentifier field`
+        );
+
+        expect(toJson(wrapper.find(`#activities-${i}-actionDescription textarea`))).toMatchSnapshot(
+          `activities[${i}].actionDescription field`
+        );
+        expect(toJson(wrapper.find(`#activities-${i}-goalDescription input`))).toMatchSnapshot(
+          `activities[${i}].goalDescription field`
+        );
+        expect(toJson(wrapper.find(`#activities-${i}-goalValue input`))).toMatchSnapshot(
+          `activities[${i}].goalValue field`
+        );
+        expect(toJson(wrapper.find(`#activities-${i}-timingPeriodStart input`))).toMatchSnapshot(
+          `activities[${i}].timingPeriodStart field`
+        );
+        expect(toJson(wrapper.find(`#activities-${i}-timingPeriodEnd input`))).toMatchSnapshot(
+          `activities[${i}].timingPeriodEnd field`
+        );
+        expect(toJson(wrapper.find(`#activities-${i}-goalDue input`))).toMatchSnapshot(
+          `activities[${i}].goalDue field`
+        );
+        expect(toJson(wrapper.find(`#activities-${i}-actionReason select`))).toMatchSnapshot(
+          `activities[${i}].actionReason field`
+        );
+        expect(toJson(wrapper.find(`#activities-${i}-goalPriority select`))).toMatchSnapshot(
+          `activities[${i}].goalPriority field`
+        );
+      }
+    }
+
+    fetch.mockResponseOnce(fixtures.jurisdictionLevel0JSON);
+    const props = {
+      disabledActivityFields: [
+        'actionReason',
+        'goalPriority',
+        'timingPeriodStart',
+        'timingPeriodEnd',
+      ],
+      disabledFields: [
+        'interventionType',
+        'fiReason',
+        'fiStatus',
+        'identifier',
+        'start',
+        'date',
+        'end',
+        'name',
+        'caseNum',
+        'opensrpEventId',
+        'jurisdictions',
+      ],
+      initialValues: getPlanFormValues(plans[1]),
+    };
+    const wrapper = mount(<PlanForm {...props} />);
+
+    checkActivities(plans[1].action.length);
+
+    wrapper.unmount();
+  });
 });
