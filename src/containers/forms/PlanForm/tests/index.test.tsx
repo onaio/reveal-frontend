@@ -309,6 +309,10 @@ describe('containers/forms/PlanForm - Edit', () => {
 
     checkJurisdtictions(plans[1].jurisdiction.length);
 
+    expect(toJson(wrapper.find('#selected-jurisdiction-list li span'))).toMatchSnapshot(
+      'selected jurisdictions'
+    );
+
     // there is no button to remove jurisdictions
     expect(wrapper.find(`.removeJurisdiction`).length).toEqual(0);
     // there is no button to add more jurisdictions

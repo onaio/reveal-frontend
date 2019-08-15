@@ -310,6 +310,20 @@ exports[`containers/forms/PlanForm - Edit renders jurisdictions fields correctly
 
 exports[`containers/forms/PlanForm - Edit renders jurisdictions fields correctly: jurisdictions[3].name field 1`] = `null`;
 
+exports[`containers/forms/PlanForm - Edit renders jurisdictions fields correctly: selected jurisdictions 1`] = `
+Array [
+  <span>
+    35968df5-f335-44ae-8ae5-25804caa2d86
+  </span>,
+  <span>
+    3952
+  </span>,
+  <span>
+    ac7ba751-35e8-4b46-9e53-3cbaad193697
+  </span>,
+]
+`;
+
 exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[0].actionCode field 1`] = `
 <input
   id="activities-0-actionCode"
