@@ -65,7 +65,7 @@ describe('helpers/handlers', () => {
       });
       e.setHTML = (f: string) => {
         expect(f).toEqual(
-          '<div><p class="heading"> Bednet Distribution</b></p> <p> Not Visited</p><br/><br/></div>'
+          '<div><p class="heading">Bednet Distribution</b></p><p>Not Visited</p><br/><br/></div>'
         );
         e.addTo = addToMock;
         return e;
