@@ -31,6 +31,7 @@ import {
   HOME,
   HOME_URL,
   INVESTIGATION,
+  MARK_AS_COMPLETE,
   MEASURE,
   MULTI_POLYGON,
   OF,
@@ -258,7 +259,7 @@ class SingleActiveFIMap extends React.Component<
     const markCompleteButton =
       plan && plan.plan_status === PlanStatus.ACTIVE ? (
         <Button color="primary" size="lg" block={true}>
-          Mark as Complete
+          {MARK_AS_COMPLETE}
         </Button>
       ) : null;
     /** Array that holds keys of a plan object
