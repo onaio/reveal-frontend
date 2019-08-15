@@ -1,3 +1,4 @@
+import { parseISO } from 'date-fns';
 import { FormikErrors } from 'formik';
 import { omit, pick } from 'lodash';
 import moment from 'moment';
@@ -8,6 +9,7 @@ import {
   DATE_FORMAT,
   DEFAULT_ACTIVITY_DURATION_DAYS,
   DEFAULT_PLAN_VERSION,
+  DEFAULT_TIME,
   PLAN_UUID_NAMESPACE,
 } from '../../../configs/env';
 import {
@@ -453,8 +455,8 @@ export function getPlanFormValues(planObject: PlanDefinition): PlanFormFields {
   return {
     activities,
     caseNum: caseNumUseContext.length > 0 ? caseNumUseContext[0].valueCodableConcept : '',
-    date: moment(planObject.date).toDate(),
-    end: moment(planObject.effectivePeriod.end).toDate(),
+    date: parseISO(`${planObject.date}${DEFAULT_TIME}`),
+    end: parseISO(`${planObject.effectivePeriod.end}${DEFAULT_TIME}`),
     fiReason:
       reasonUseContext.length > 0
         ? (reasonUseContext[0].valueCodableConcept as FIReasonType)
@@ -472,7 +474,7 @@ export function getPlanFormValues(planObject: PlanDefinition): PlanFormFields {
     name: planObject.name,
     opensrpEventId:
       eventIdUseContext.length > 0 ? eventIdUseContext[0].valueCodableConcept : undefined,
-    start: moment(planObject.effectivePeriod.start).toDate(),
+    start: parseISO(`${planObject.effectivePeriod.start}${DEFAULT_TIME}`),
     status: planObject.status as PlanStatus,
     title: planObject.title,
     version: planObject.version,
