@@ -123,7 +123,8 @@ class ActiveFocusInvestigation extends React.Component<
 
     const { caseTriggeredPlans, routinePlans } = this.props;
     if (
-      (caseTriggeredPlans && caseTriggeredPlans.length === 0) ||
+      caseTriggeredPlans &&
+      caseTriggeredPlans.length === 0 &&
       (routinePlans && routinePlans.length === 0)
     ) {
       return <Loading />;
