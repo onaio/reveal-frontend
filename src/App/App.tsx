@@ -12,6 +12,7 @@ import { WEBSITE_NAME } from '../configs/env';
 import { DISABLE_LOGIN_PROTECTION } from '../configs/env';
 import { providers } from '../configs/settings';
 import {
+  FI_FILTERED_URL,
   FI_HISTORICAL_URL,
   FI_SINGLE_MAP_URL,
   FI_SINGLE_URL,
@@ -97,14 +98,14 @@ class App extends Component {
               <ConnectedPrivateRoute
                 disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                 exact={true}
-                path={`${FI_SINGLE_URL}/:id`}
-                component={SingleFI}
+                path={`${FI_FILTERED_URL}/:locationHierarchy/:location`}
+                component={ActiveFocusInvestigation}
               />
               <ConnectedPrivateRoute
                 disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                 exact={true}
-                path={`${FI_URL}/:locationHierarchy/:location`}
-                component={ActiveFocusInvestigation}
+                path={`${FI_SINGLE_URL}/:id`}
+                component={SingleFI}
               />
               <ConnectedPrivateRoute
                 disableLoginProtection={DISABLE_LOGIN_PROTECTION}
