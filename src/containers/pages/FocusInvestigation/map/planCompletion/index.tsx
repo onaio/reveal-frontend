@@ -112,11 +112,19 @@ export class PlanCompletion extends React.Component<
           <div className="card-body">
             {/* this should be error handlers not links */}
             <p>{`${MARK} ${plan.plan_title} ${AS} ${COMPLETE.toLocaleLowerCase()}`}</p>
-            <button onClick={this.goBackClickHandler} className="btn btn-outline-secondary">
+            <button
+              id="complete-plan-cancel-btn"
+              onClick={this.goBackClickHandler}
+              className="btn btn-outline-secondary"
+            >
               {GO_BACK}
             </button>
             &nbsp;&nbsp;&nbsp;&nbsp;
-            <button onClick={this.confirmClickHandler} className="btn btn-primary">
+            <button
+              id="complete-plan-confirm-btn"
+              onClick={this.confirmClickHandler}
+              className="btn btn-primary"
+            >
               {CONFIRM}
             </button>
           </div>
