@@ -118,22 +118,29 @@ export const expectedActivity = {
   },
 };
 
-export const planActivityWithEmptyfields = {
+export const planActivityWithEmptyfields: PlanActivities = {
   BCC: {
     action: {
+      code: 'BCC',
+      description: '',
       goalId: 'BCC_Focus',
+      identifier: '',
       prefix: 99,
+      reason: 'Investigation',
       subjectCodableConcept: {
         text: 'Operational_Area',
       },
       taskTemplate: 'BCC_Focus',
       timingPeriod: {
-        end: timingPeriodEnd,
-        start: timingPeriodStart,
+        end: timingPeriodEnd.toString(),
+        start: timingPeriodStart.toString(),
       },
+      title: 'Behaviour Change Communication',
     },
     goal: {
+      description: '',
       id: 'BCC_Focus',
+      priority: 'medium-priority',
       target: [
         {
           detail: {
@@ -143,8 +150,45 @@ export const planActivityWithEmptyfields = {
               value: 1,
             },
           },
-          due: goalDue,
+          due: goalDue.toString(),
           measure: 'Number of BCC Activities Completed',
+        },
+      ],
+    },
+  },
+  IRS: {
+    action: {
+      code: 'IRS',
+      description: 'Visit each structure in the operational area and attempt to spray',
+      goalId: 'IRS',
+      identifier: '',
+      prefix: 7,
+      reason: 'Routine',
+      subjectCodableConcept: {
+        text: 'Residential_Structure',
+      },
+      taskTemplate: 'Spray_Structures',
+      timingPeriod: {
+        end: '',
+        start: '',
+      },
+      title: 'Spray Structures',
+    },
+    goal: {
+      description: 'Spray structures in the operational area',
+      id: 'IRS',
+      priority: 'medium-priority',
+      target: [
+        {
+          detail: {
+            detailQuantity: {
+              comparator: '>=',
+              unit: 'Percent',
+              value: 90,
+            },
+          },
+          due: '',
+          measure: 'Percent of structures sprayed',
         },
       ],
     },
@@ -152,19 +196,25 @@ export const planActivityWithEmptyfields = {
   bednetDistribution: {
     action: {
       code: 'Bednet Distribution',
+      description: '',
       goalId: 'RACD_bednet_distribution',
+      identifier: '',
       prefix: 4,
+      reason: 'Investigation',
       subjectCodableConcept: {
         text: 'Residential_Structure',
       },
       taskTemplate: 'Bednet_Distribution',
       timingPeriod: {
-        end: timingPeriodEnd,
-        start: timingPeriodStart,
+        end: timingPeriodEnd.toString(),
+        start: timingPeriodStart.toString(),
       },
+      title: '',
     },
     goal: {
+      description: '',
       id: 'RACD_bednet_distribution',
+      priority: 'medium-priority',
       target: [
         {
           detail: {
@@ -174,7 +224,7 @@ export const planActivityWithEmptyfields = {
               value: 100,
             },
           },
-          due: goalDue,
+          due: goalDue.toString(),
           measure: 'Percent of residential structures received nets',
         },
       ],
@@ -183,18 +233,23 @@ export const planActivityWithEmptyfields = {
   bloodScreening: {
     action: {
       code: 'Blood Screening',
+      description: '',
       goalId: 'RACD_Blood_Screening',
+      identifier: '',
       prefix: 3,
+      reason: 'Investigation',
       subjectCodableConcept: {
         text: 'Person',
       },
       taskTemplate: 'RACD_Blood_Screening',
       timingPeriod: {
-        end: timingPeriodEnd,
-        start: timingPeriodStart,
+        end: timingPeriodEnd.toString(),
+        start: timingPeriodStart.toString(),
       },
+      title: '',
     },
     goal: {
+      description: '',
       id: 'RACD_Blood_Screening',
       priority: 'medium-priority',
       target: [
@@ -206,7 +261,7 @@ export const planActivityWithEmptyfields = {
               value: 100,
             },
           },
-          due: goalDue,
+          due: goalDue.toString(),
           measure: 'Number of registered people tested',
         },
       ],
@@ -215,15 +270,23 @@ export const planActivityWithEmptyfields = {
   caseConfirmation: {
     action: {
       code: 'Case Confirmation',
+      description: '',
       goalId: 'Case_Confirmation',
+      identifier: '',
       prefix: 1,
+      reason: 'Investigation',
+      subjectCodableConcept: {
+        text: 'Person',
+      },
       taskTemplate: 'Case_Confirmation',
       timingPeriod: {
-        end: timingPeriodEnd,
-        start: timingPeriodStart,
+        end: timingPeriodEnd.toString(),
+        start: timingPeriodStart.toString(),
       },
+      title: '',
     },
     goal: {
+      description: '',
       id: 'Case_Confirmation',
       priority: 'medium-priority',
       target: [
@@ -235,7 +298,7 @@ export const planActivityWithEmptyfields = {
               value: 1,
             },
           },
-          due: goalDue,
+          due: goalDue.toString(),
           measure: 'Number of cases confirmed',
         },
       ],
@@ -244,15 +307,23 @@ export const planActivityWithEmptyfields = {
   familyRegistration: {
     action: {
       code: 'RACD Register Family',
+      description: '',
       goalId: 'RACD_register_families',
+      identifier: '',
       prefix: 2,
+      reason: 'Investigation',
+      subjectCodableConcept: {
+        text: 'Person',
+      },
       taskTemplate: 'RACD_register_families',
       timingPeriod: {
-        end: timingPeriodEnd,
-        start: timingPeriodStart,
+        end: timingPeriodEnd.toString(),
+        start: timingPeriodStart.toString(),
       },
+      title: '',
     },
     goal: {
+      description: '',
       id: 'RACD_register_families',
       priority: 'medium-priority',
       target: [
@@ -264,7 +335,7 @@ export const planActivityWithEmptyfields = {
               value: 100,
             },
           },
-          due: goalDue,
+          due: goalDue.toString(),
           measure: 'Percent of residential structures with full family registration',
         },
       ],
@@ -273,15 +344,23 @@ export const planActivityWithEmptyfields = {
   larvalDipping: {
     action: {
       code: 'Larval Dipping',
+      description: '',
       goalId: 'Larval_Dipping',
+      identifier: '',
       prefix: 5,
+      reason: 'Investigation',
+      subjectCodableConcept: {
+        text: 'Person',
+      },
       taskTemplate: 'Larval_Dipping',
       timingPeriod: {
-        end: timingPeriodEnd,
-        start: timingPeriodStart,
+        end: timingPeriodEnd.toString(),
+        start: timingPeriodStart.toString(),
       },
+      title: '',
     },
     goal: {
+      description: '',
       id: 'Larval_Dipping',
       priority: 'medium-priority',
       target: [
@@ -293,7 +372,7 @@ export const planActivityWithEmptyfields = {
               value: 3,
             },
           },
-          due: goalDue,
+          due: goalDue.toString(),
           measure: 'Number of larval dipping activities completed',
         },
       ],
@@ -302,15 +381,23 @@ export const planActivityWithEmptyfields = {
   mosquitoCollection: {
     action: {
       code: 'Mosquito Collection',
+      description: '',
       goalId: 'Mosquito_Collection',
+      identifier: '',
       prefix: 6,
+      reason: 'Investigation',
+      subjectCodableConcept: {
+        text: 'Person',
+      },
       taskTemplate: 'Mosquito_Collection_Point',
       timingPeriod: {
-        end: timingPeriodEnd,
-        start: timingPeriodStart,
+        end: timingPeriodEnd.toString(),
+        start: timingPeriodStart.toString(),
       },
+      title: '',
     },
     goal: {
+      description: '',
       id: 'Mosquito_Collection',
       priority: 'medium-priority',
       target: [
@@ -322,7 +409,7 @@ export const planActivityWithEmptyfields = {
               value: 3,
             },
           },
-          due: goalDue,
+          due: goalDue.toString(),
           measure: 'Number of mosquito collection activities completed',
         },
       ],
@@ -332,10 +419,11 @@ export const planActivityWithEmptyfields = {
 
 export const expectedActivityEmptyField = {
   BCC: {
+    actionCode: 'BCC',
     actionDescription: '',
     actionIdentifier: '',
-    actionReason: '',
-    actionTitle: '',
+    actionReason: 'Investigation',
+    actionTitle: 'Behaviour Change Communication',
     goalDescription: '',
     goalDue,
     goalPriority: 'medium-priority',
@@ -347,7 +435,7 @@ export const expectedActivityEmptyField = {
     actionCode: 'Bednet Distribution',
     actionDescription: '',
     actionIdentifier: '',
-    actionReason: '',
+    actionReason: 'Investigation',
     actionTitle: '',
     goalDescription: '',
     goalDue,
@@ -360,7 +448,7 @@ export const expectedActivityEmptyField = {
     actionCode: 'Blood Screening',
     actionDescription: '',
     actionIdentifier: '',
-    actionReason: '',
+    actionReason: 'Investigation',
     actionTitle: '',
     goalDescription: '',
     goalDue,
@@ -373,7 +461,7 @@ export const expectedActivityEmptyField = {
     actionCode: 'Case Confirmation',
     actionDescription: '',
     actionIdentifier: '',
-    actionReason: '',
+    actionReason: 'Investigation',
     actionTitle: '',
     goalDescription: '',
     goalDue,
@@ -399,7 +487,7 @@ export const expectedActivityEmptyField = {
     actionCode: 'Larval Dipping',
     actionDescription: '',
     actionIdentifier: '',
-    actionReason: '',
+    actionReason: 'Investigation',
     actionTitle: '',
     goalDescription: '',
     goalDue,
@@ -412,7 +500,7 @@ export const expectedActivityEmptyField = {
     actionCode: 'Mosquito Collection',
     actionDescription: '',
     actionIdentifier: '',
-    actionReason: '',
+    actionReason: 'Investigation',
     actionTitle: '',
     goalDescription: '',
     goalDue,
@@ -434,8 +522,8 @@ export const extractedActivitiesFromForms = [
     goalDue: goalDue.toISOString(),
     goalPriority: 'medium-priority',
     goalValue: 1,
-    timingPeriodEnd: timingPeriodEnd.toISOString(),
-    timingPeriodStart: timingPeriodStart.toISOString(),
+    timingPeriodEnd,
+    timingPeriodStart,
   },
   {
     actionCode: 'RACD Register Family',
