@@ -1364,16 +1364,16 @@ export const values2 = {
       actionReason: 'Routine',
       actionTitle: 'Spray Structures',
       goalDescription: 'Spray structures in the operational area',
-      goalDue: '2019-08-16T12:32:15.116Z',
+      goalDue: moment('2019-08-16T12:32:15.116Z').toDate(),
       goalPriority: 'medium-priority',
       goalValue: 90,
-      timingPeriodEnd: '2019-08-16T12:32:15.117Z',
-      timingPeriodStart: '2019-08-09T12:32:15.117Z',
+      timingPeriodEnd: moment('2019-08-16T12:32:01.685Z').toDate(),
+      timingPeriodStart: moment('2019-08-09T12:32:01.685Z').toDate(),
     },
   ],
   caseNum: '',
-  date: '2019-08-09T12:32:01.685Z',
-  end: '2019-08-29T12:32:01.685Z',
+  date: moment('2019-08-09T12:32:01.685Z').toDate(),
+  end: moment('2019-08-29T12:32:01.685Z').toDate(),
   identifier: '',
   interventionType: 'IRS',
   jurisdictions: [
@@ -1383,11 +1383,12 @@ export const values2 = {
     },
   ],
   name: 'IRS-2019-08-09',
-  start: '2019-08-09T12:32:01.685Z',
+  start: moment('2019-08-09T12:32:01.685Z').toDate(),
   status: 'draft',
   title: 'IRS 2019-08-09',
   version: '1',
 };
+
 export const jurisdictionLevel0JSON =
   '[{"type":"Feature","id":"2942","properties":{"status":"Active","name":"Lusaka","geographicLevel":0,"version":0},"serverVersion":1545204913827},{"type":"Feature","id":"f8863022-ff88-4c22-b2d1-83f59f31b874","properties":{"status":"Active","name":"Oddar Meanchey Province","geographicLevel":0,"version":0},"serverVersion":1553900609745},{"type":"Feature","id":"9c3c2db4-bddd-44c5-870a-a0eef539e4da","properties":{"status":"Active","name":"Lop Buri","geographicLevel":0,"version":0},"serverVersion":1554861473099},{"type":"Feature","id":"3953","properties":{"status":"Active","name":"Siavonga","geographicLevel":0,"version":0},"serverVersion":1549235783958},{"type":"Feature","id":"3954","properties":{"status":"Active","name":"Siavonga","geographicLevel":0,"version":0},"serverVersion":1549387863860},{"type":"Feature","id":"2940","properties":{"status":"Active","name":"Katete","geographicLevel":0,"version":0},"serverVersion":1545218425249},{"type":"Feature","id":"2941","properties":{"status":"Active","name":"Sinda","geographicLevel":0,"version":0},"serverVersion":1545219282280},{"type":"Feature","id":"2939","properties":{"status":"Active","name":"Chadiza","geographicLevel":0,"version":0},"serverVersion":1545217996275},{"type":"Feature","id":"16a77bba-8777-4bc4-8566-d193cb04af4c","properties":{"status":"Active","name":"Botswana","geographicLevel":0,"version":0},"serverVersion":1563583239021},{"type":"Feature","id":"f45b9380-c970-4dd1-8533-9e95ab12f128","properties":{"status":"Active","name":"Namibia","geographicLevel":0,"version":0,"ADM0_EN":"Namibia","ADM0_PCODE":"NA"},"serverVersion":1564401702479}]';
 
