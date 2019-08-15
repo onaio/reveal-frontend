@@ -270,5 +270,6 @@ describe('containers/forms/PlanForm - Edit', () => {
     expect(toJson(wrapper.find('#start input'))).toMatchSnapshot('start field');
     expect(toJson(wrapper.find('#end input'))).toMatchSnapshot('end field');
     expect(toJson(wrapper.find('#date input'))).toMatchSnapshot('date field');
+    expect(wrapper.find('#jurisdictions-select-container').length).toEqual(0);
   });
 });
