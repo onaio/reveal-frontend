@@ -478,7 +478,7 @@ export function getPlansArray(
 export function getFilteredPlansArray(
   state: Partial<Store>,
   intervention: InterventionType = InterventionType.FI,
-  status: string[],
+  status: string[] = [],
   reason: string | null = null,
   location: string | null = null, // we may not have a location to filter sometimes
   locationHierarchy: number = 0
