@@ -147,7 +147,7 @@ export function extractActivityForForm(activityObj: PlanActivity): PlanActivityF
     goalDescription: activityObj.goal.description || '',
     goalDue:
       activityObj.goal.target[0].due && activityObj.goal.target[0].due !== ''
-        ? moment(activityObj.goal.target[0].due).toDate()
+        ? parseISO(`${activityObj.goal.target[0].due}${DEFAULT_TIME}`)
         : moment()
             .add(DEFAULT_ACTIVITY_DURATION_DAYS, 'days')
             .toDate(),
@@ -155,13 +155,13 @@ export function extractActivityForForm(activityObj: PlanActivity): PlanActivityF
     goalValue: activityObj.goal.target[0].detail.detailQuantity.value || 0,
     timingPeriodEnd:
       activityObj.action.timingPeriod.end && activityObj.action.timingPeriod.end !== ''
-        ? moment(activityObj.action.timingPeriod.end).toDate()
+        ? parseISO(`${activityObj.action.timingPeriod.end}${DEFAULT_TIME}`)
         : moment()
             .add(DEFAULT_ACTIVITY_DURATION_DAYS, 'days')
             .toDate(),
     timingPeriodStart:
       activityObj.action.timingPeriod.start && activityObj.action.timingPeriod.start !== ''
-        ? moment(activityObj.action.timingPeriod.start).toDate()
+        ? parseISO(`${activityObj.action.timingPeriod.start}${DEFAULT_TIME}`)
         : moment().toDate(),
   };
 }
