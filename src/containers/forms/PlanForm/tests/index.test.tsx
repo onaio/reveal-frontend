@@ -238,6 +238,7 @@ describe('containers/forms/PlanForm - Edit', () => {
   });
 
   it('renders all fields correctly in edit mode', () => {
+    fetch.mockResponseOnce(fixtures.jurisdictionLevel0JSON);
     const props = {
       disabledFields: [
         'interventionType',
@@ -273,5 +274,46 @@ describe('containers/forms/PlanForm - Edit', () => {
     expect(toJson(wrapper.find('#date input'))).toMatchSnapshot('date field');
     expect(wrapper.find('#jurisdictions-select-container').length).toEqual(0);
     expect(wrapper.find('#jurisdictions-display-container').length).toEqual(1);
+  });
+
+  it('renders jurisdictions fields correctly', () => {
+    function checkJurisdtictions(num: number) {
+      for (let i = 0; i <= num; i++) {
+        expect(toJson(wrapper.find(`#jurisdictions-${i}-id input`))).toMatchSnapshot(
+          `jurisdictions[${i}].id field`
+        );
+        expect(toJson(wrapper.find(`#jurisdictions-${i}-name input`))).toMatchSnapshot(
+          `jurisdictions[${i}].name field`
+        );
+      }
+    }
+
+    fetch.mockResponseOnce(fixtures.jurisdictionLevel0JSON);
+    const props = {
+      disabledFields: [
+        'interventionType',
+        'fiReason',
+        'fiStatus',
+        'identifier',
+        'start',
+        'date',
+        'end',
+        'name',
+        'caseNum',
+        'opensrpEventId',
+        'jurisdictions',
+      ],
+      initialValues: getPlanFormValues(plans[1]),
+    };
+    const wrapper = mount(<PlanForm {...props} />);
+
+    checkJurisdtictions(plans[1].jurisdiction.length);
+
+    // there is no button to remove jurisdictions
+    expect(wrapper.find(`.removeJurisdiction`).length).toEqual(0);
+    // there is no button to add more jurisdictions
+    expect(wrapper.find(`.addJurisdiction`).length).toEqual(0);
+
+    wrapper.unmount();
   });
 });
