@@ -142,6 +142,8 @@ export const NEW_PLAN_URL = '/plans/new';
 export type NEW_PLAN_URL = typeof NEW_PLAN_URL;
 export const PLAN_LIST_URL = '/plans/list';
 export type PLAN_LIST_URL = typeof PLAN_LIST_URL;
+export const PLAN_COMPLETION_URL = '/focus-investigation/view/complete';
+export type PLAN_COMPLETION_URL = typeof PLAN_COMPLETION_URL;
 
 // OpenSRP API strings
 export const OPENSRP_FIND_BY_PROPERTIES = 'findByProperties';
