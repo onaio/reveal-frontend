@@ -1,7 +1,7 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import { cloneDeep, keyBy, keys, pickBy, values } from 'lodash';
 import { FlushThunks } from 'redux-testkit';
-import { REACTIVE, ROUTINE } from '../../../constants';
+import { CASE_TRIGGERED_PLAN, REACTIVE, ROUTINE } from '../../../constants';
 import store from '../../index';
 import reducer, {
   fetchPlanRecords,
@@ -92,11 +92,77 @@ describe('reducers/plans', () => {
     expect(getPlansArray(store.getState(), InterventionType.FI, [PlanStatus.DRAFT], null)).toEqual(
       values(reactiveDraftPlans)
     );
+
+    // getFilteredPlansArray gets does not filter plans by location when no location is passed
+    // you can pass only the state and getFilteredPlansArray will return all fiPlans in the store
+    expect(getFilteredPlansArray(store.getState())).toEqual(values(fiPlans));
+    expect(getFilteredPlansArray(store.getState(), InterventionType.FI, [], null)).toEqual(
+      values(fiPlans)
+    );
+    expect(getFilteredPlansArray(store.getState(), InterventionType.IRS, [], null)).toEqual(
+      values(irsPlans)
+    );
+    expect(getFilteredPlansArray(store.getState(), InterventionType.FI, [], REACTIVE)).toEqual(
+      values(reactivePlans)
+    );
+    expect(getFilteredPlansArray(store.getState(), InterventionType.FI, [], ROUTINE)).toEqual(
+      values(routinePlans)
+    );
+    expect(getPlansArray(store.getState(), InterventionType.FI, [PlanStatus.DRAFT], null)).toEqual(
+      values(reactiveDraftPlans)
+    );
+
+    // filter irs plans based on location
+    const filteredIRSPlans = pickBy(
+      allPlans,
+      (e: Plan) =>
+        e.plan_intervention_type === InterventionType.IRS &&
+        e.jurisdiction_name_path[0] === 'Canton Tha Luang'
+    );
+    // filter fi plans based on a location
+    const filteredFIPlans = pickBy(
+      allPlans,
+      (e: Plan) =>
+        e.plan_intervention_type === InterventionType.FI &&
+        e.jurisdiction_name_path[0] === 'Chadiza'
+    );
+    // filter routine fi plans based on a location
+    const filteredRoutineFIPlans = pickBy(
+      allPlans,
+      (e: Plan) =>
+        e.plan_intervention_type === InterventionType.FI &&
+        e.plan_fi_reason === ROUTINE &&
+        e.jurisdiction_name_path[0] === 'Chadiza'
+    );
+    // filter case-triggered irs plans based on a location
+    const filteredCaseTriggeredIRSPlans = pickBy(
+      allPlans,
+      (e: Plan) =>
+        e.plan_intervention_type === InterventionType.IRS &&
+        e.plan_fi_reason === CASE_TRIGGERED_PLAN &&
+        e.jurisdiction_name_path[0] === 'Canton Tha Luang'
+    );
+    // getFilteredPlansArray gets filters plans by location when no location is passed
     expect(
-      getPlansArray(store.getState(), InterventionType.FI, [], ROUTINE, [
-        '450fc15b-5bd2-468a-927a-49cb10d3bcac',
-      ])
-    ).toEqual(values(filteredByJurisdictionPlans));
+      getFilteredPlansArray(store.getState(), InterventionType.IRS, [], null, 'Canton Tha Luang', 1)
+    ).toEqual(values(filteredIRSPlans));
+    expect(
+      getFilteredPlansArray(store.getState(), InterventionType.FI, [], null, 'Chadiza', 1)
+    ).toEqual(values(filteredFIPlans));
+    expect(
+      getFilteredPlansArray(
+        store.getState(),
+        InterventionType.IRS,
+        [],
+        CASE_TRIGGERED_PLAN,
+        'Canton Tha Luang',
+        1
+      )
+    ).toEqual(values(filteredCaseTriggeredIRSPlans));
+    expect(
+      getFilteredPlansArray(store.getState(), InterventionType.FI, [], ROUTINE, 'Chadiza', 1)
+    ).toEqual(values(filteredRoutineFIPlans));
+
     expect(getPlanById(store.getState(), 'ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f')).toEqual(
       allPlans['ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f']
     );
