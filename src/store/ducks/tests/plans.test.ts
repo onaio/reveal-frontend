@@ -94,24 +94,24 @@ describe('reducers/plans', () => {
       values(reactiveDraftPlans)
     );
 
-    // // getFilteredPlansArray gets does not filter plans by location when no location is passed
-    // // you can pass only the state and getFilteredPlansArray will return all fiPlans in the store
-    // expect(getFilteredPlansArray(store.getState())).toEqual(values(fiPlans));
-    // expect(getFilteredPlansArray(store.getState(), InterventionType.FI, [], null)).toEqual(
-    //   values(fiPlans)
-    // );
-    // expect(getFilteredPlansArray(store.getState(), InterventionType.IRS, [], null)).toEqual(
-    //   values(irsPlans)
-    // );
-    // expect(getFilteredPlansArray(store.getState(), InterventionType.FI, [], REACTIVE)).toEqual(
-    //   values(reactivePlans)
-    // );
-    // expect(getFilteredPlansArray(store.getState(), InterventionType.FI, [], ROUTINE)).toEqual(
-    //   values(routinePlans)
-    // );
-    // expect(getPlansArray(store.getState(), InterventionType.FI, [PlanStatus.DRAFT], null)).toEqual(
-    //   values(reactiveDraftPlans)
-    // );
+    // getFilteredPlansArray gets does not filter plans by location when no location is passed
+    // you can pass only the state and getFilteredPlansArray will return all fiPlans in the store
+    expect(getFilteredPlansArray(store.getState())).toEqual(values(fiPlans));
+    expect(getFilteredPlansArray(store.getState(), InterventionType.FI, [], null)).toEqual(
+      values(fiPlans)
+    );
+    expect(getFilteredPlansArray(store.getState(), InterventionType.IRS, [], null)).toEqual(
+      values(irsPlans)
+    );
+    expect(getFilteredPlansArray(store.getState(), InterventionType.FI, [], REACTIVE)).toEqual(
+      values(reactivePlans)
+    );
+    expect(getFilteredPlansArray(store.getState(), InterventionType.FI, [], ROUTINE)).toEqual(
+      values(routinePlans)
+    );
+    expect(getPlansArray(store.getState(), InterventionType.FI, [PlanStatus.DRAFT], null)).toEqual(
+      values(reactiveDraftPlans)
+    );
 
     // filter irs plans based on location
     // const filteredIRSPlans = pickBy(
