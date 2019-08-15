@@ -9,6 +9,7 @@ import {
   getFormActivities,
   getNameTitle,
   getPlanFormValues,
+  PlanFormFields,
 } from '../helpers';
 import {
   activities,
@@ -142,6 +143,17 @@ describe('containers/forms/PlanForm/helpers', () => {
   it('check generatePlanDefinition returns the correct value', () => {
     MockDate.set('1/30/2000', 0);
     expect(generatePlanDefinition(values2)).toEqual(expectedPlanDefinition);
+    MockDate.reset();
+  });
+
+  it('getPlanFormValues and generatePlanDefinition are interoperable', () => {
+    MockDate.set('1/30/2000', 0);
+    const planForm = values2 as PlanFormFields;
+    const generatedPlan = generatePlanDefinition(planForm);
+    const generatedPlanForm = getPlanFormValues(generatedPlan);
+
+    expect(planForm).toEqual(generatedPlanForm);
+    // expect(generatePlanDefinition(values2)).toEqual(expectedPlanDefinition);
     MockDate.reset();
   });
 
