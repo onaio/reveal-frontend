@@ -2,6 +2,8 @@ import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import React from 'react';
 import PlanForm from '..';
+import { plans } from '../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
+import { getPlanFormValues } from '../helpers';
 import * as fixtures from './fixtures';
 
 /* tslint:disable-next-line no-var-requires */
@@ -241,12 +243,31 @@ describe('containers/forms/PlanForm - Edit', () => {
         'fiStatus',
         'identifier',
         'start',
+        'date',
         'end',
         'name',
+        'caseNum',
         'opensrpEventId',
         'jurisdictions',
       ],
+      initialValues: getPlanFormValues(plans[0]),
     };
     const wrapper = mount(<PlanForm {...props} />);
+    expect(toJson(wrapper.find('#interventionType select'))).toMatchSnapshot(
+      'interventionType field'
+    );
+    expect(toJson(wrapper.find('#fiStatus select'))).toMatchSnapshot('fiStatus field');
+    expect(toJson(wrapper.find('#fiReason select'))).toMatchSnapshot('fiReason field');
+    // caseNum and opensrpEventId are not present in this plan object
+    expect(wrapper.find('#caseNum').length).toEqual(0);
+    expect(wrapper.find('#opensrpEventId').length).toEqual(0);
+    expect(toJson(wrapper.find('#title input'))).toMatchSnapshot('title field');
+    expect(toJson(wrapper.find('#name input'))).toMatchSnapshot('name field');
+    expect(toJson(wrapper.find('#identifier input'))).toMatchSnapshot('identifier field');
+    expect(toJson(wrapper.find('#version input'))).toMatchSnapshot('version field');
+    expect(toJson(wrapper.find('#status select'))).toMatchSnapshot('status field');
+    expect(toJson(wrapper.find('#start input'))).toMatchSnapshot('start field');
+    expect(toJson(wrapper.find('#end input'))).toMatchSnapshot('end field');
+    expect(toJson(wrapper.find('#date input'))).toMatchSnapshot('date field');
   });
 });
