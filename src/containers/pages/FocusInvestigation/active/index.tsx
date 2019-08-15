@@ -345,14 +345,14 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
     InterventionType.FI,
     [PlanStatus.ACTIVE, PlanStatus.DRAFT],
     CASE_TRIGGERED,
-    ownProps.match.params.jurisdiction_parent_id
+    ownProps.match.params ? ownProps.match.params.jurisdiction_parent_id : null
   );
   const routinePlans = getFilteredPlansArray(
     state,
     InterventionType.FI,
     [PlanStatus.ACTIVE, PlanStatus.DRAFT],
     ROUTINE,
-    ownProps.match.params.jurisdiction_parent_id
+    ownProps.match.params ? ownProps.match.params.jurisdiction_parent_id : null
   );
   return {
     caseTriggeredPlans,
