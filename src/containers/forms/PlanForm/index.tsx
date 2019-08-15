@@ -61,6 +61,7 @@ export const defaultInitialValues: PlanFormFields = {
 
 /** interface for plan form props */
 interface PlanFormProps {
+  disabledActivityFields: string[];
   disabledFields: string[];
   initialValues: PlanFormFields;
   redirectAfterAction: string;
@@ -71,7 +72,7 @@ const PlanForm = (props: PlanFormProps) => {
   const [globalError, setGlobalError] = useState<string>('');
   const [areWeDoneHere, setAreWeDoneHere] = useState<boolean>(false);
 
-  const { disabledFields, initialValues, redirectAfterAction } = props;
+  const { disabledActivityFields, disabledFields, initialValues, redirectAfterAction } = props;
   const editMode: boolean = initialValues.identifier !== '';
 
   return (
@@ -429,7 +430,10 @@ const PlanForm = (props: PlanFormProps) => {
                           name={`activities[${index}].actionTitle`}
                           id={`activities-${index}-actionTitle`}
                           required={true}
-                          disabled={disabledFields.includes('activities')}
+                          disabled={
+                            disabledFields.includes('activities') ||
+                            disabledActivityFields.includes('actionTitle')
+                          }
                           className={
                             errors.activities &&
                             doesFieldHaveErrors('actionTitle', index, errors.activities)
@@ -465,7 +469,10 @@ const PlanForm = (props: PlanFormProps) => {
                           name={`activities[${index}].actionDescription`}
                           id={`activities-${index}-actionDescription`}
                           required={true}
-                          disabled={disabledFields.includes('activities')}
+                          disabled={
+                            disabledFields.includes('activities') ||
+                            disabledActivityFields.includes('actionDescription')
+                          }
                           className={
                             errors.activities &&
                             doesFieldHaveErrors('actionDescription', index, errors.activities)
@@ -492,7 +499,10 @@ const PlanForm = (props: PlanFormProps) => {
                           name={`activities[${index}].goalValue`}
                           id={`activities-${index}-goalValue`}
                           required={true}
-                          disabled={disabledFields.includes('activities')}
+                          disabled={
+                            disabledFields.includes('activities') ||
+                            disabledActivityFields.includes('goalValue')
+                          }
                           className={
                             errors.activities &&
                             doesFieldHaveErrors('goalValue', index, errors.activities)
@@ -513,7 +523,10 @@ const PlanForm = (props: PlanFormProps) => {
                           name={`activities[${index}].timingPeriodStart`}
                           id={`activities-${index}-timingPeriodStart`}
                           required={true}
-                          disabled={disabledFields.includes('activities')}
+                          disabled={
+                            disabledFields.includes('activities') ||
+                            disabledActivityFields.includes('timingPeriodStart')
+                          }
                           dateFormat={DATE_FORMAT}
                           className={
                             errors.activities &&
@@ -538,7 +551,10 @@ const PlanForm = (props: PlanFormProps) => {
                           name={`activities[${index}].timingPeriodEnd`}
                           id={`activities-${index}-timingPeriodEnd`}
                           required={true}
-                          disabled={disabledFields.includes('activities')}
+                          disabled={
+                            disabledFields.includes('activities') ||
+                            disabledActivityFields.includes('timingPeriodEnd')
+                          }
                           dateFormat={DATE_FORMAT}
                           className={
                             errors.activities &&
@@ -569,7 +585,10 @@ const PlanForm = (props: PlanFormProps) => {
                           name={`activities[${index}].actionReason`}
                           id={`activities-${index}-actionReason`}
                           required={true}
-                          disabled={disabledFields.includes('activities')}
+                          disabled={
+                            disabledFields.includes('activities') ||
+                            disabledActivityFields.includes('actionReason')
+                          }
                           className={
                             errors.activities &&
                             doesFieldHaveErrors('actionReason', index, errors.activities)
@@ -596,7 +615,10 @@ const PlanForm = (props: PlanFormProps) => {
                           name={`activities[${index}].goalPriority`}
                           id={`activities-${index}-goalPriority`}
                           required={true}
-                          disabled={disabledFields.includes('activities')}
+                          disabled={
+                            disabledFields.includes('activities') ||
+                            disabledActivityFields.includes('goalPriority')
+                          }
                           className={
                             errors.activities &&
                             doesFieldHaveErrors('goalPriority', index, errors.activities)
@@ -640,6 +662,7 @@ const PlanForm = (props: PlanFormProps) => {
 };
 
 const defaultProps: PlanFormProps = {
+  disabledActivityFields: [],
   disabledFields: [],
   initialValues: defaultInitialValues,
   redirectAfterAction: PLAN_LIST_URL,
