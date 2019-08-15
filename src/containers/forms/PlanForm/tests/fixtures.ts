@@ -1,6 +1,6 @@
 import { parseISO } from 'date-fns';
 import moment from 'moment';
-import { DEFAULT_ACTIVITY_DURATION_DAYS } from '../../../../configs/env';
+import { DEFAULT_ACTIVITY_DURATION_DAYS, DEFAULT_TIME } from '../../../../configs/env';
 import { PlanActivities } from '../../../../configs/settings';
 
 const goalDue = moment()
@@ -1365,16 +1365,16 @@ export const values2 = {
       actionReason: 'Routine',
       actionTitle: 'Spray Structures',
       goalDescription: 'Spray structures in the operational area',
-      goalDue: parseISO('2019-08-16'),
+      goalDue: parseISO(`2019-08-16${DEFAULT_TIME}`),
       goalPriority: 'medium-priority',
       goalValue: 90,
-      timingPeriodEnd: parseISO('2019-08-16'),
-      timingPeriodStart: parseISO('2019-08-09'),
+      timingPeriodEnd: parseISO(`2019-08-16${DEFAULT_TIME}`),
+      timingPeriodStart: parseISO(`2019-08-09${DEFAULT_TIME}`),
     },
   ],
   caseNum: '',
-  date: parseISO('2019-08-09'),
-  end: parseISO('2019-08-29'),
+  date: parseISO(`2019-08-09${DEFAULT_TIME}`),
+  end: parseISO(`2019-08-29${DEFAULT_TIME}`),
   identifier: '',
   interventionType: 'IRS',
   jurisdictions: [
@@ -1384,7 +1384,44 @@ export const values2 = {
     },
   ],
   name: 'IRS-2019-08-09',
-  start: parseISO('2019-08-09'),
+  start: parseISO(`2019-08-09${DEFAULT_TIME}`),
+  status: 'draft',
+  title: 'IRS 2019-08-09',
+  version: '1',
+};
+
+export const planFormValues = {
+  activities: [
+    {
+      actionCode: 'IRS',
+      actionDescription: 'Visit each structure in the operational area and attempt to spray',
+      actionIdentifier: 'ce6f39db-505a-5d44-b70d-c92a73be6c15',
+      actionReason: 'Routine',
+      actionTitle: 'Spray Structures',
+      goalDescription: 'Spray structures in the operational area',
+      goalDue: parseISO(`2019-08-16${DEFAULT_TIME}`),
+      goalPriority: 'medium-priority',
+      goalValue: 90,
+      timingPeriodEnd: parseISO(`2019-08-16${DEFAULT_TIME}`),
+      timingPeriodStart: parseISO(`2019-08-09${DEFAULT_TIME}`),
+    },
+  ],
+  caseNum: '',
+  date: parseISO(`2019-08-09${DEFAULT_TIME}`),
+  end: parseISO(`2019-08-29${DEFAULT_TIME}`),
+  fiReason: undefined,
+  fiStatus: undefined,
+  identifier: 'afbfc83d-c7a2-5293-9db5-081781235c60',
+  interventionType: 'IRS',
+  jurisdictions: [
+    {
+      id: '3952',
+      name: 'Akros_2',
+    },
+  ],
+  name: 'IRS-2019-08-09',
+  opensrpEventId: undefined,
+  start: parseISO(`2019-08-09${DEFAULT_TIME}`),
   status: 'draft',
   title: 'IRS 2019-08-09',
   version: '1',
