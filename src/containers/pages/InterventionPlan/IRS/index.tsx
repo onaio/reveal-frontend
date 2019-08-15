@@ -33,6 +33,7 @@ import HeaderBreadcrumbs, {
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
 import { IRS_PLANS, IRS_TITLE } from '../../../../constants';
+import './../../../../styles/css/drill-down-table.css';
 
 /** register the plans reducer */
 reducerRegistry.register(plansReducerName, plansReducer);
@@ -152,7 +153,7 @@ class IrsPlans extends React.Component<IrsPlansProps & RouteComponentProps<Route
       minRows: 0,
       rootParentId: null,
       showPageSizeOptions: false,
-      showPagination: false,
+      showPagination: plansArray.length > 20,
       useDrillDownTrProps: false,
     };
 
