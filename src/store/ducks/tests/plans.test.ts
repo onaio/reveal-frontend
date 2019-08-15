@@ -19,6 +19,7 @@ import reducer, {
   PlanRecord,
   PlanStatus,
   reducerName,
+  removePlansAction,
 } from '../plans';
 import * as fixtures from './fixtures';
 
@@ -141,5 +142,34 @@ describe('reducers/plans', () => {
       ]);
       expect(plan3FromStore).toEqual(fixtures.plan3);
     }
+  });
+  it('resets plansById records', () => {
+    store.dispatch(removePlansAction);
+    let numberOfPlansInStore = getPlansArray(store.getState(), undefined, []).length;
+    expect(numberOfPlansInStore).toEqual(0);
+
+    store.dispatch(fetchPlans([fixtures.plan3] as any));
+    numberOfPlansInStore = getPlansArray(store.getState(), undefined, []).length;
+    expect(numberOfPlansInStore).toEqual(1);
+
+    store.dispatch(removePlansAction);
+    numberOfPlansInStore = getPlansArray(store.getState(), undefined, []).length;
+    expect(numberOfPlansInStore).toEqual(0);
+  });
+
+  it('Concatenates new plans to existing plans after fetching', () => {
+    store.dispatch(removePlansAction);
+    let numberOfPlansInStore = getPlansArray(store.getState(), undefined, []).length;
+    expect(numberOfPlansInStore).toEqual(0);
+    store.dispatch(fetchPlans([fixtures.plan3] as any));
+    let plan3FromStore = getPlanById(store.getState(), '1502e539');
+    expect(plan3FromStore).not.toBeNull();
+    store.dispatch(fetchPlans([fixtures.plan99] as any));
+    plan3FromStore = getPlanById(store.getState(), '1502e539');
+    const plan99FromStore = getPlanById(store.getState(), '236ca3fb-1b74-5028-a0c8-ab954bb28044');
+    expect(plan3FromStore).not.toBeNull();
+    expect(plan99FromStore).not.toBeNull();
+    numberOfPlansInStore = getPlansArray(store.getState(), undefined, []).length;
+    expect(numberOfPlansInStore).toEqual(2);
   });
 });

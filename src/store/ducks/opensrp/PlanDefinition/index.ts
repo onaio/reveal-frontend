@@ -14,8 +14,8 @@ export const PLAN_DEFINITIONS_FETCHED =
   'reveal/reducer/opensrp/PlanDefinition/PLAN_DEFINITIONS_FETCHED';
 
 /** PLAN_DEFINITION_FETCHED action type */
-export const PLAN_DEFINITIONS_RESET =
-  'reveal/reducer/opensrp/PlanDefinition/PLAN_DEFINITIONS_RESET';
+export const REMOVE_PLAN_DEFINITIONS =
+  'reveal/reducer/opensrp/PlanDefinition/REMOVE_PLAN_DEFINITIONS';
 
 /** interface for fetch PlanDefinitions action */
 interface FetchPlanDefinitionsAction extends AnyAction {
@@ -24,15 +24,15 @@ interface FetchPlanDefinitionsAction extends AnyAction {
 }
 
 /** interface for fetch PlanDefinitions action */
-interface ResetPlanDefinitionsAction extends AnyAction {
+interface RemovePlanDefinitionsAction extends AnyAction {
   planDefinitionsById: { [key: string]: PlanDefinition };
-  type: typeof PLAN_DEFINITIONS_RESET;
+  type: typeof REMOVE_PLAN_DEFINITIONS;
 }
 
 /** Create type for PlanDefinition reducer actions */
 export type PlanDefinitionActionTypes =
   | FetchPlanDefinitionsAction
-  | ResetPlanDefinitionsAction
+  | RemovePlanDefinitionsAction
   | AnyAction;
 
 // action creators
@@ -49,9 +49,9 @@ export const fetchPlanDefinitions = (
 });
 
 /** Reset plan definitions state action creator */
-export const resetPlanDefinitions = () => ({
+export const removePlanDefinitions = () => ({
   planDefinitionsById: {},
-  type: PLAN_DEFINITIONS_RESET,
+  type: REMOVE_PLAN_DEFINITIONS,
 });
 
 // the reducer
@@ -84,7 +84,7 @@ export default function reducer(
         });
       }
       return state;
-    case PLAN_DEFINITIONS_RESET:
+    case REMOVE_PLAN_DEFINITIONS:
       return SeamlessImmutable({
         planDefinitionsById: action.planDefinitionsById,
       });
