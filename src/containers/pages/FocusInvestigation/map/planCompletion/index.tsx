@@ -13,11 +13,17 @@ import {
   MARK,
   MARK_AS_COMPLETE,
   OPENSRP_PLANS,
-  PLAN_COMPLETION_URL,
+  PLAN_LIST_URL,
 } from '../../../../../constants';
 import { FlexObject } from '../../../../../helpers/utils';
 import { OpenSRPService } from '../../../../../services/opensrp';
-import { fetchPlans, getPlanById, Plan, PlanStatus } from '../../../../../store/ducks/plans';
+import {
+  fetchPlans,
+  getPlanById,
+  Plan,
+  PlanPayload,
+  PlanStatus,
+} from '../../../../../store/ducks/plans';
 
 /** Props interface for the plan completion component page */
 export interface PlanCompletionProps {
@@ -59,9 +65,32 @@ export class PlanCompletion extends React.Component<
     const planToconfirm: Plan = { ...(plan as Plan) };
     planToconfirm.plan_status = PlanStatus.COMPLETE;
     const service = new serviceClass(`${OPENSRP_PLANS}`);
-    await service.update(planToconfirm).then(response => {
-      fetchPlansActionCreator([planToconfirm]);
-      this.props.history.push(`${PLAN_COMPLETION_URL}/${planToconfirm.id}`);
+
+    // get the plan as it exists in the OpenSRP Server
+    await service.read(planToconfirm.plan_id).then((planPayload: PlanPayload) => {
+      if (planPayload && JSON.stringify(planPayload) !== '{}') {
+        // set the plan status to complete
+        const thePlan: PlanPayload = {
+          ...planPayload,
+          status: PlanStatus.COMPLETE,
+        };
+        // update the plan with updated status
+        return service
+          .update(thePlan)
+          .then(response => {
+            // todo - extract Plan from PlanPayload to save to state
+            fetchPlansActionCreator([planToconfirm]);
+            // redirect to Focus Investigations page
+            this.props.history.push(`${PLAN_LIST_URL}`);
+          })
+          .catch(e => {
+            // catch the error if one is returned from OpenSRP
+            alert('Sorry, something went wrong when we tried to update the plan status');
+          });
+      } else {
+        // catch the error of the plan not existing in the server
+        alert('Sorry, no plan found in the cloud!');
+      }
     });
   }
 
