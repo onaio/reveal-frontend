@@ -216,42 +216,96 @@ export function extractActivitiesFromPlanForm(
   activities.forEach((element, index) => {
     const prefix = index + 1;
     if (PlanActionCodes.includes(element.actionCode as PlanActionCodesType)) {
+      const planActionGoal = (planObj &&
+        getActivityFromPlan(planObj, element.actionCode as PlanActionCodesType)) || {
+        action: {},
+        goal: {},
+      };
+
       // we must declare them with some value. BCC chosen randomly here
       let thisAction: PlanAction = planActivities.BCC.action;
       let thisGoal: PlanGoal = planActivities.BCC.goal;
 
       // first populate with default values
       if (element.actionCode === 'BCC') {
-        thisAction = planActivities.BCC.action;
-        thisGoal = planActivities.BCC.goal;
+        thisAction = {
+          ...planActivities.BCC.action,
+          ...planActionGoal.action,
+        };
+        thisGoal = {
+          ...planActivities.BCC.goal,
+          ...planActionGoal.goal,
+        };
       }
       if (element.actionCode === 'IRS') {
-        thisAction = planActivities.IRS.action;
-        thisGoal = planActivities.IRS.goal;
+        thisAction = {
+          ...planActivities.IRS.action,
+          ...planActionGoal.action,
+        };
+        thisGoal = {
+          ...planActivities.IRS.goal,
+          ...planActionGoal.goal,
+        };
       }
       if (element.actionCode === 'Bednet Distribution') {
-        thisAction = planActivities.bednetDistribution.action;
-        thisGoal = planActivities.bednetDistribution.goal;
+        thisAction = {
+          ...planActivities.bednetDistribution.action,
+          ...planActionGoal.action,
+        };
+        thisGoal = {
+          ...planActivities.bednetDistribution.goal,
+          ...planActionGoal.goal,
+        };
       }
       if (element.actionCode === 'Blood Screening') {
-        thisAction = planActivities.bloodScreening.action;
-        thisGoal = planActivities.bloodScreening.goal;
+        thisAction = {
+          ...planActivities.bloodScreening.action,
+          ...planActionGoal.action,
+        };
+        thisGoal = {
+          ...planActivities.bloodScreening.goal,
+          ...planActionGoal.goal,
+        };
       }
       if (element.actionCode === 'Case Confirmation') {
-        thisAction = planActivities.caseConfirmation.action;
-        thisGoal = planActivities.caseConfirmation.goal;
+        thisAction = {
+          ...planActivities.caseConfirmation.action,
+          ...planActionGoal.action,
+        };
+        thisGoal = {
+          ...planActivities.caseConfirmation.goal,
+          ...planActionGoal.goal,
+        };
       }
       if (element.actionCode === 'RACD Register Family') {
-        thisAction = planActivities.familyRegistration.action;
-        thisGoal = planActivities.familyRegistration.goal;
+        thisAction = {
+          ...planActivities.familyRegistration.action,
+          ...planActionGoal.action,
+        };
+        thisGoal = {
+          ...planActivities.familyRegistration.goal,
+          ...planActionGoal.goal,
+        };
       }
       if (element.actionCode === 'Larval Dipping') {
-        thisAction = planActivities.larvalDipping.action;
-        thisGoal = planActivities.larvalDipping.goal;
+        thisAction = {
+          ...planActivities.larvalDipping.action,
+          ...planActionGoal.action,
+        };
+        thisGoal = {
+          ...planActivities.larvalDipping.goal,
+          ...planActionGoal.goal,
+        };
       }
       if (element.actionCode === 'Mosquito Collection') {
-        thisAction = planActivities.mosquitoCollection.action;
-        thisGoal = planActivities.mosquitoCollection.goal;
+        thisAction = {
+          ...planActivities.mosquitoCollection.action,
+          ...planActionGoal.action,
+        };
+        thisGoal = {
+          ...planActivities.mosquitoCollection.goal,
+          ...planActionGoal.goal,
+        };
       }
 
       const thisActionIdentifier =
@@ -383,7 +437,10 @@ export function doesFieldHaveErrors(
  * @param formValue - the value gotten from the PlanForm
  * @returns {PlanDefinition} - the plan definition object
  */
-export function generatePlanDefinition(formValue: PlanFormFields): PlanDefinition {
+export function generatePlanDefinition(
+  formValue: PlanFormFields,
+  planObj: PlanDefinition | null = null
+): PlanDefinition {
   const planIdentifier =
     formValue.identifier && formValue.identifier !== '' // is this an existing plan?
       ? formValue.identifier
@@ -420,7 +477,11 @@ export function generatePlanDefinition(formValue: PlanFormFields): PlanDefinitio
   }
 
   return {
-    ...extractActivitiesFromPlanForm(formValue.activities), // action and goal
+    ...extractActivitiesFromPlanForm(
+      formValue.activities,
+      planObj ? planObj.identifier : '',
+      planObj
+    ), // action and goal
     date: moment(formValue.date).format(DATE_FORMAT.toUpperCase()),
     effectivePeriod: {
       end: moment(formValue.end).format(DATE_FORMAT.toUpperCase()),
