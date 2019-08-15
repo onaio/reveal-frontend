@@ -118,6 +118,52 @@ describe('reducers/plans', () => {
     );
   });
 
+  it('filters correctly when jurisdiction_parent_id is provided', () => {
+    store.dispatch(fetchPlans(fixtures.plans as any));
+    const allPlans = keyBy(fixtures.plans, (plan: Plan) => plan.id);
+    // filter irs plans based on location
+    const filteredIRSPlans = pickBy(
+      allPlans,
+      (e: Plan) =>
+        e.plan_intervention_type === InterventionType.IRS && e.jurisdiction_path.includes('2977')
+    );
+    // filter fi plans based on a location
+    const filteredFIPlans = pickBy(
+      allPlans,
+      (e: Plan) =>
+        e.plan_intervention_type === InterventionType.FI && e.jurisdiction_path.includes('2944')
+    );
+    // filter routine fi plans based on a location
+    const filteredRoutineFIPlans = pickBy(
+      allPlans,
+      (e: Plan) =>
+        e.plan_intervention_type === InterventionType.FI &&
+        e.plan_fi_reason === ROUTINE &&
+        e.jurisdiction_path.includes('2939')
+    );
+    // filter case-triggered irs plans based on a location
+    const filteredCaseTriggeredIRSPlans = pickBy(
+      allPlans,
+      (e: Plan) =>
+        e.plan_intervention_type === InterventionType.IRS &&
+        e.plan_fi_reason === CASE_TRIGGERED_PLAN &&
+        e.jurisdiction_path.includes('2989')
+    );
+    // getFilteredPlansArray gets filters plans by location when no location is passed
+    expect(getFilteredPlansArray(store.getState(), InterventionType.IRS, [], null, '2977')).toEqual(
+      values(filteredIRSPlans)
+    );
+    expect(getFilteredPlansArray(store.getState(), InterventionType.FI, [], null, '2944')).toEqual(
+      values(filteredFIPlans)
+    );
+    expect(
+      getFilteredPlansArray(store.getState(), InterventionType.IRS, [], CASE_TRIGGERED_PLAN, '2989')
+    ).toEqual(values(filteredCaseTriggeredIRSPlans));
+    expect(
+      getFilteredPlansArray(store.getState(), InterventionType.FI, [], ROUTINE, '2939')
+    ).toEqual(values(filteredRoutineFIPlans));
+  });
+
   it('should fetch PlanRecords', () => {
     store.dispatch(fetchPlanRecords(fixtures.planRecordResponses));
     const { planRecordsById: allPlanRecords } = fixtures;
