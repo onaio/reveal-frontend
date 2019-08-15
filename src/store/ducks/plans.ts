@@ -472,22 +472,21 @@ export function getPlansArray(
  * @param {InterventionType} intervention - the intervention type
  * @param {string[]} status - the plan status
  * @param {string} reason - the plan reason
- * @param {string} location - the location to be filtered in
- * @param {number} locationHierarchy - the location hierarchy to look at
+ * @param {string} parentJurisdictionId - The jurisdiction_parent_id of the plan
  */
 export function getFilteredPlansArray(
   state: Partial<Store>,
   intervention: InterventionType = InterventionType.FI,
   status: string[] = [],
   reason: string | null = null,
-  jurisdictionId: string | null = null
+  parentJurisdictionId: string | null = null
 ): Plan[] {
   return values((state as any)[reducerName].plansById).filter(
     (plan: Plan) =>
       plan.plan_intervention_type === intervention &&
       (status.length ? status.includes(plan.plan_status) : true) &&
       (reason ? plan.plan_fi_reason === reason : true) &&
-      (jurisdictionId ? plan.jurisdiction_path.includes(jurisdictionId) : true)
+      (parentJurisdictionId ? plan.jurisdiction_path.includes(parentJurisdictionId) : true)
   );
 }
 
