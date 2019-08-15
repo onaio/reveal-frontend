@@ -6,6 +6,7 @@ import store from '../../index';
 import reducer, {
   fetchPlanRecords,
   fetchPlans,
+  getFilteredPlansArray,
   getPlanById,
   getPlanRecordById,
   getPlanRecordsArray,
@@ -44,6 +45,7 @@ describe('reducers/plans', () => {
     expect(getPlanRecordsIdArray(store.getState())).toEqual([]);
     expect(getPlanRecordsArray(store.getState())).toEqual([]);
     expect(getPlanRecordById(store.getState(), 'somId')).toEqual(null);
+    expect(getFilteredPlansArray(store.getState(), InterventionType.FI, [], null)).toEqual([]);
   });
 
   it('should fetch Plans', () => {
