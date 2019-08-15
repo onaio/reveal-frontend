@@ -1,5 +1,385 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[0].actionCode field 1`] = `
+<input
+  id="activities-0-actionCode"
+  name="activities[0].actionCode"
+  onBlur={[Function]}
+  onChange={[Function]}
+  readOnly={true}
+  type="hidden"
+  value="BCC"
+/>
+`;
+
+exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[0].actionDescription field 1`] = `
+<textarea
+  className="form-control"
+  disabled={false}
+  id="activities-0-actionDescription"
+  name="activities[0].actionDescription"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  value="Perform BCC for the operational area"
+/>
+`;
+
+exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[0].actionIdentifier field 1`] = `
+<input
+  id="activities-0-actionIdentifier"
+  name="activities[0].actionIdentifier"
+  onBlur={[Function]}
+  onChange={[Function]}
+  readOnly={true}
+  type="hidden"
+  value="3f2eef38-38fe-4108-abb3-4e896b880302"
+/>
+`;
+
+exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[0].actionReason field 1`] = `
+<select
+  className="form-control"
+  disabled={true}
+  id="activities-0-actionReason"
+  name="activities[0].actionReason"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  value="Routine"
+>
+  <option
+    key="Investigation"
+    value="Investigation"
+  >
+    Investigation
+  </option>
+  <option
+    key="Routine"
+    value="Routine"
+  >
+    Routine
+  </option>
+</select>
+`;
+
+exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[0].actionTitle field 1`] = `
+<input
+  className="form-control"
+  disabled={false}
+  id="activities-0-actionTitle"
+  name="activities[0].actionTitle"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  type="text"
+  value="Perform BCC"
+/>
+`;
+
+exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[0].goalDescription field 1`] = `
+<input
+  id="activities-0-goalDescription"
+  name="activities[0].goalDescription"
+  onBlur={[Function]}
+  onChange={[Function]}
+  type="hidden"
+  value="Perform BCC for the operational area"
+/>
+`;
+
+exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[0].goalDue field 1`] = `
+<input
+  id="activities-0-goalDue"
+  name="activities[0].goalDue"
+  onBlur={[Function]}
+  onChange={[Function]}
+  type="hidden"
+  value={2019-07-30T00:00:00.000Z}
+/>
+`;
+
+exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[0].goalPriority field 1`] = `
+<select
+  className="form-control"
+  disabled={true}
+  id="activities-0-goalPriority"
+  name="activities[0].goalPriority"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  value="medium-priority"
+>
+  <option
+    key="low-priority"
+    value="low-priority"
+  >
+    low-priority
+  </option>
+  <option
+    key="medium-priority"
+    value="medium-priority"
+  >
+    medium-priority
+  </option>
+  <option
+    key="high-priority"
+    value="high-priority"
+  >
+    high-priority
+  </option>
+</select>
+`;
+
+exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[0].goalValue field 1`] = `
+<input
+  className="form-control"
+  disabled={false}
+  id="activities-0-goalValue"
+  name="activities[0].goalValue"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  type="number"
+  value={1}
+/>
+`;
+
+exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[0].timingPeriodEnd field 1`] = `
+<input
+  className="form-control"
+  disabled={true}
+  id="activities-0-timingPeriodEnd"
+  onBlur={[Function]}
+  onChange={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onKeyDown={[Function]}
+  readOnly={false}
+  required={true}
+  type="text"
+  value="2019-07-30"
+/>
+`;
+
+exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[0].timingPeriodStart field 1`] = `
+<input
+  className="form-control"
+  disabled={true}
+  id="activities-0-timingPeriodStart"
+  onBlur={[Function]}
+  onChange={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onKeyDown={[Function]}
+  readOnly={false}
+  required={true}
+  type="text"
+  value="2019-07-10"
+/>
+`;
+
+exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[1].actionCode field 1`] = `
+<input
+  id="activities-1-actionCode"
+  name="activities[1].actionCode"
+  onBlur={[Function]}
+  onChange={[Function]}
+  readOnly={true}
+  type="hidden"
+  value="IRS"
+/>
+`;
+
+exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[1].actionDescription field 1`] = `
+<textarea
+  className="form-control"
+  disabled={false}
+  id="activities-1-actionDescription"
+  name="activities[1].actionDescription"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  value="Visit each structure in the operational area and attempt to spray"
+/>
+`;
+
+exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[1].actionIdentifier field 1`] = `
+<input
+  id="activities-1-actionIdentifier"
+  name="activities[1].actionIdentifier"
+  onBlur={[Function]}
+  onChange={[Function]}
+  readOnly={true}
+  type="hidden"
+  value="95a5a00f-a411-4fe5-bd9c-460a856239c9"
+/>
+`;
+
+exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[1].actionReason field 1`] = `
+<select
+  className="form-control"
+  disabled={true}
+  id="activities-1-actionReason"
+  name="activities[1].actionReason"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  value="Routine"
+>
+  <option
+    key="Investigation"
+    value="Investigation"
+  >
+    Investigation
+  </option>
+  <option
+    key="Routine"
+    value="Routine"
+  >
+    Routine
+  </option>
+</select>
+`;
+
+exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[1].actionTitle field 1`] = `
+<input
+  className="form-control"
+  disabled={false}
+  id="activities-1-actionTitle"
+  name="activities[1].actionTitle"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  type="text"
+  value="Spray Structures"
+/>
+`;
+
+exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[1].goalDescription field 1`] = `
+<input
+  id="activities-1-goalDescription"
+  name="activities[1].goalDescription"
+  onBlur={[Function]}
+  onChange={[Function]}
+  type="hidden"
+  value="Visit each structure in the operational area and attempt to spray"
+/>
+`;
+
+exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[1].goalDue field 1`] = `
+<input
+  id="activities-1-goalDue"
+  name="activities[1].goalDue"
+  onBlur={[Function]}
+  onChange={[Function]}
+  type="hidden"
+  value={2019-07-30T00:00:00.000Z}
+/>
+`;
+
+exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[1].goalPriority field 1`] = `
+<select
+  className="form-control"
+  disabled={true}
+  id="activities-1-goalPriority"
+  name="activities[1].goalPriority"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  value="medium-priority"
+>
+  <option
+    key="low-priority"
+    value="low-priority"
+  >
+    low-priority
+  </option>
+  <option
+    key="medium-priority"
+    value="medium-priority"
+  >
+    medium-priority
+  </option>
+  <option
+    key="high-priority"
+    value="high-priority"
+  >
+    high-priority
+  </option>
+</select>
+`;
+
+exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[1].goalValue field 1`] = `
+<input
+  className="form-control"
+  disabled={false}
+  id="activities-1-goalValue"
+  name="activities[1].goalValue"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  type="number"
+  value={90}
+/>
+`;
+
+exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[1].timingPeriodEnd field 1`] = `
+<input
+  className="form-control"
+  disabled={true}
+  id="activities-1-timingPeriodEnd"
+  onBlur={[Function]}
+  onChange={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onKeyDown={[Function]}
+  readOnly={false}
+  required={true}
+  type="text"
+  value="2019-07-30"
+/>
+`;
+
+exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[1].timingPeriodStart field 1`] = `
+<input
+  className="form-control"
+  disabled={true}
+  id="activities-1-timingPeriodStart"
+  onBlur={[Function]}
+  onChange={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onKeyDown={[Function]}
+  readOnly={false}
+  required={true}
+  type="text"
+  value="2019-07-10"
+/>
+`;
+
+exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[2].actionCode field 1`] = `null`;
+
+exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[2].actionDescription field 1`] = `null`;
+
+exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[2].actionIdentifier field 1`] = `null`;
+
+exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[2].actionReason field 1`] = `null`;
+
+exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[2].actionTitle field 1`] = `null`;
+
+exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[2].goalDescription field 1`] = `null`;
+
+exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[2].goalDue field 1`] = `null`;
+
+exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[2].goalPriority field 1`] = `null`;
+
+exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[2].goalValue field 1`] = `null`;
+
+exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[2].timingPeriodEnd field 1`] = `null`;
+
+exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[2].timingPeriodStart field 1`] = `null`;
+
 exports[`containers/forms/PlanForm - Edit renders all fields correctly in edit mode: date field 1`] = `
 <input
   id="date"
