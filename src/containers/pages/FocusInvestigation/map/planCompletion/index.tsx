@@ -1,10 +1,20 @@
 import { RouteParams } from '@onaio/gatekeeper/dist/types';
 import * as React from 'react';
+import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { Store } from 'redux';
 import Loading from '../../../../../components/page/Loading';
-import { PLAN_COMPLETION_URL } from '../../../../../constants';
+import {
+  AS,
+  COMPLETE,
+  CONFIRM,
+  GO_BACK,
+  MARK,
+  MARK_AS_COMPLETE,
+  OPENSRP_PLANS,
+  PLAN_COMPLETION_URL,
+} from '../../../../../constants';
 import { FlexObject } from '../../../../../helpers/utils';
 import { OpenSRPService } from '../../../../../services/opensrp';
 import { fetchPlans, getPlanById, Plan, PlanStatus } from '../../../../../store/ducks/plans';
@@ -48,7 +58,7 @@ export class PlanCompletion extends React.Component<
     const { plan, serviceClass, fetchPlansActionCreator } = this.props;
     const planToconfirm: Plan = { ...(plan as Plan) };
     planToconfirm.plan_status = PlanStatus.COMPLETE;
-    const service = new serviceClass('plans');
+    const service = new serviceClass(`${OPENSRP_PLANS}`);
     await service.update(planToconfirm).then(response => {
       fetchPlansActionCreator([planToconfirm]);
       this.props.history.push(`${PLAN_COMPLETION_URL}/${planToconfirm.id}`);
@@ -64,25 +74,21 @@ export class PlanCompletion extends React.Component<
 
     return (
       <div>
+        <Helmet>
+          <title>{`${MARK} ${plan.plan_title} ${AS} ${COMPLETE.toLocaleLowerCase()}`}</title>
+        </Helmet>
         {/** prompt to confirm mark as complete click action */}
         <div className="card mb-3">
-          <div className="card-header">Mark As complete</div>
+          <div className="card-header">{MARK_AS_COMPLETE}</div>
           <div className="card-body">
             {/* this should be error handlers not links */}
-            <button
-              onClick={this.confirmClickHandler}
-              className="btn btn-primary"
-              data-toggle="confirmation"
-            >
-              Confirm
+            {`${MARK} ${plan.plan_title} ${AS} ${COMPLETE.toLocaleLowerCase()}`}
+            <button onClick={this.confirmClickHandler} className="btn btn-primary">
+              {CONFIRM}
             </button>
             &nbsp;&nbsp;&nbsp;&nbsp;
-            <button
-              onClick={this.goBackClickHandler}
-              className="btn btn-primary"
-              data-toggle="confirmation"
-            >
-              Go Back
+            <button onClick={this.goBackClickHandler} className="btn btn-primary">
+              {GO_BACK}
             </button>
           </div>
         </div>
