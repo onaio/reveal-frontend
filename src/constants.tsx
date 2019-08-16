@@ -1,4 +1,3 @@
-import { goBack } from 'connected-react-router';
 import { Marker } from 'mapbox-gl';
 
 // strings
@@ -116,8 +115,8 @@ export const PLANS = 'Manage Plans';
 export type PLANS = typeof PLANS;
 export const CONFIRM = 'Confirm';
 export type CONFIRM = typeof CONFIRM;
-export const GO_BACK = 'Go Back';
-export type GO_BACK = typeof GO_BACK;
+export const CANCEL = 'Cancel';
+export type CANCEL = typeof CANCEL;
 export const IRS_PLANS = 'IRS Plans';
 export type IRS_PLANS = typeof IRS_PLANS;
 
