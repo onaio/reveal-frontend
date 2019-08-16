@@ -739,7 +739,11 @@ const PlanForm = (props: PlanFormProps) => {
                     values.activities.length > 1 &&
                     !checkIfAllActivitiesSelected(values) && (
                       <div>
-                        <Button color="danger" onClick={toggleActivityModal}>
+                        <Button
+                          color="danger"
+                          className="add-more-activities"
+                          onClick={toggleActivityModal}
+                        >
                           Add Activity
                         </Button>
                         <Modal
@@ -772,7 +776,7 @@ const PlanForm = (props: PlanFormProps) => {
                                   <li key={g.actionCode}>
                                     <button
                                       type="button"
-                                      className="btn btn-primary btn-sm addActivity"
+                                      className="btn btn-primary btn-sm mb-1 addActivity"
                                       onClick={() => arrayHelpers.push(g)}
                                     >
                                       Add <b>{g.actionCode}</b> Activity
