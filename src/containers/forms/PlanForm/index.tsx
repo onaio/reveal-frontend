@@ -2,7 +2,7 @@ import { ErrorMessage, Field, FieldArray, Form, Formik } from 'formik';
 import moment from 'moment';
 import React, { FormEvent, useState } from 'react';
 import { Redirect } from 'react-router-dom';
-import { Button, FormGroup, Label } from 'reactstrap';
+import { Button, FormGroup, Label, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import DatePickerWrapper from '../../../components/DatePickerWrapper';
 import {
   DATE_FORMAT,
@@ -72,6 +72,7 @@ interface PlanFormProps {
 const PlanForm = (props: PlanFormProps) => {
   const [globalError, setGlobalError] = useState<string>('');
   const [areWeDoneHere, setAreWeDoneHere] = useState<boolean>(false);
+  const [activityModal, setActivityModal] = useState<boolean>(false);
 
   const { disabledActivityFields, disabledFields, initialValues, redirectAfterAction } = props;
   const editMode: boolean = initialValues.identifier !== '';
@@ -89,6 +90,10 @@ const PlanForm = (props: PlanFormProps) => {
     ) {
       initialValues.fiReason = FIReasons[0];
     }
+  }
+
+  function toggleActivityModal() {
+    setActivityModal(!activityModal);
   }
 
   return (
@@ -688,6 +693,33 @@ const PlanForm = (props: PlanFormProps) => {
                       </div>
                     </div>
                   ))}
+                  {values.activities && values.activities.length > 1 && (
+                    <div>
+                      <Button color="danger" onClick={toggleActivityModal}>
+                        Add Activity
+                      </Button>
+                      <Modal
+                        backdrop={false}
+                        size="lg"
+                        isOpen={activityModal}
+                        toggle={toggleActivityModal}
+                        className="activity-modal"
+                      >
+                        <ModalHeader toggle={toggleActivityModal}>
+                          <h5 className="modal-title">Modal title</h5>
+                          <button
+                            type="button"
+                            className="close"
+                            data-dismiss="modal"
+                            aria-label="Close"
+                          >
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </ModalHeader>
+                        <ModalBody>modal content</ModalBody>
+                      </Modal>
+                    </div>
+                  )}
                 </div>
               )}
             />
