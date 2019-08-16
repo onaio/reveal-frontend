@@ -214,6 +214,18 @@ const isPropertyErrorPresent = (
   return !!caseNumAssociatedErrors.length;
 };
 
+describe('./isPropertyPresent', () => {
+  it('works correctly for valid data; clean test', () => {
+    const path = "caseNum";
+    const message = REQUIRED;
+    const errorObjects = [{path, message}, {path:'random', message}]
+    let got = isPropertyErrorPresent(errorObjects, 'caseNum');
+    expect(got).toBeTruthy();
+    got = isPropertyErrorPresent([{path: 'name', mesage: ''}], 'name');
+    expect(got).toBeFalsy();
+  })
+})
+
 describe('src/containers/forms/PlanForm.PlanSchema.caseNum', () => {
   /** Case Num requireability is dependent on whether the
    * Intervention Type value is FI
