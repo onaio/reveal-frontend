@@ -283,7 +283,7 @@ describe('containers/forms/PlanForm - Edit', () => {
     expect(wrapper.find('#jurisdictions-select-container').length).toEqual(0);
     expect(wrapper.find('#jurisdictions-display-container').length).toEqual(1);
 
-    // there are now buttons to remove activities
+    // there are no buttons to remove activities
     expect(wrapper.find(`.removeActivity`).length).toEqual(0);
     // there is no modal to add more activities
     expect(wrapper.find(`.add-more-activities`).length).toEqual(0);
