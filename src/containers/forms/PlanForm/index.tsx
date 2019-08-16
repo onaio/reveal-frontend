@@ -76,6 +76,7 @@ const PlanForm = (props: PlanFormProps) => {
 
   const disAllowedStatusChoices: string[] = [];
   if (editMode) {
+    // Dont allow setting status back to draft
     if (initialValues.status !== PlanStatus.DRAFT) {
       disAllowedStatusChoices.push(PlanStatus.DRAFT);
     }
