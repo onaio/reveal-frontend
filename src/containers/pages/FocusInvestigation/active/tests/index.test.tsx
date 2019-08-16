@@ -17,7 +17,6 @@ import reducer, { fetchPlans, reducerName } from '../../../../../store/ducks/pla
 import * as fixtures from '../../../../../store/ducks/tests/fixtures';
 import ConnectedActiveFocusInvestigation, { ActiveFocusInvestigation } from '../../active';
 reducerRegistry.register(reducerName, reducer);
-import flushPromises from 'flush-promises';
 
 library.add(faExternalLinkSquareAlt);
 const history = createBrowserHistory();
@@ -154,7 +153,6 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
         </Router>
       </Provider>
     );
-    flushPromises();
     const supersetParams = {
       adhoc_filters: [
         {
