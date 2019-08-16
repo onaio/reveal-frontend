@@ -1,3 +1,6 @@
+import { REQUIRED } from '../../../../constants';
+import { InterventionType } from '../../../../store/ducks/plans';
+import { PlanSchema } from '../helpers';
 import MockDate from 'mockdate';
 import { plans } from '../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
 import {
@@ -192,15 +195,21 @@ describe('containers/forms/PlanForm/helpers', () => {
       { id: '3952', name: '3952' },
       { id: 'ac7ba751-35e8-4b46-9e53-3cbaad193697', name: 'ac7ba751-35e8-4b46-9e53-3cbaad193697' },
     ]);
-import { InterventionType } from '../../../../store/ducks/plans';
-import { PlanSchema } from '../helpers';
 
 /** Answers : among the validation errors raised, is there an error obj
- * associated with the caseNum property resulting from caseNum being required
+ * associated with the given property resulting from that property having
+ * the given error message.
+ * @param {any} errors - list of errors thrown by the validator
+ * @param {string} propertyName - name of the plan property under investigation
+ * @param {string} errorMessage - validation errorMessage
  */
-const isCaseNumErrorPresent = (errors: any): boolean => {
+const isPropertyErrorPresent = (
+  errors: any,
+  propertyName: string,
+  errorMessage: string = REQUIRED
+): boolean => {
   const caseNumAssociatedErrors = errors.inner.filter(
-    (err: any) => err.path === 'caseNum' && err.message === 'Required'
+    (err: any) => err.path === propertyName && err.message === errorMessage
   );
   return !!caseNumAssociatedErrors.length;
 };
@@ -246,3 +255,15 @@ describe('src/containers/forms/PlanForm.PlanSchema.caseNum', () => {
     }
   });
 });
+
+// describe('src/containers/forms/PlanForm.PlanSchema.date', () => {
+//   it('clean test for valid data', () => {
+//     const BadDateplan = {
+//       // Is there a date validator for yup.date
+//       date: 'string that is obviously not a date'
+//     }
+
+//     const BadDateplan1 = {
+//     }
+//   })
+// })
