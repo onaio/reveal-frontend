@@ -17,7 +17,7 @@ import planDefinitionReducer, {
   reducerName as planDefinitionReducerName,
 } from '../../../../store/ducks/opensrp/PlanDefinition';
 
-/** register the goals reducer */
+/** register the plan definitions reducer */
 reducerRegistry.register(planDefinitionReducerName, planDefinitionReducer);
 
 /** interface for PlanList props */
