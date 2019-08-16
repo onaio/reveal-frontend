@@ -6,7 +6,6 @@ import { Button, FormGroup, Label } from 'reactstrap';
 import DatePickerWrapper from '../../../components/DatePickerWrapper';
 import {
   DATE_FORMAT,
-  DEFAULT_ACTIVITY_DURATION_DAYS,
   DEFAULT_PLAN_DURATION_DAYS,
   DEFAULT_PLAN_VERSION,
 } from '../../../configs/env';
