@@ -637,7 +637,7 @@ const PlanForm = (props: PlanFormProps) => {
                           }
                         >
                           {disabledFields.includes('activities') ||
-                          disabledFields.includes('actionReason')
+                          disabledActivityFields.includes('actionReason')
                             ? (values.fiReason === FIReasons[0] && (
                                 <option key={actionReasons[1]} value={actionReasons[1]}>
                                   {actionReasons[1]}
@@ -725,6 +725,7 @@ const defaultProps: PlanFormProps = {
 export const propsForUpdatingPlans: Partial<PlanFormProps> = {
   disabledActivityFields: ['actionReason', 'goalPriority'],
   disabledFields: [
+    'activities',
     'interventionType',
     'fiReason',
     'fiStatus',

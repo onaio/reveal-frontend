@@ -15,7 +15,7 @@ exports[`containers/forms/PlanForm - Edit renders activity fields correctly: act
 exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[0].actionDescription field 1`] = `
 <textarea
   className="form-control"
-  disabled={false}
+  disabled={true}
   id="activities-0-actionDescription"
   name="activities[0].actionDescription"
   onBlur={[Function]}
@@ -54,19 +54,13 @@ exports[`containers/forms/PlanForm - Edit renders activity fields correctly: act
   >
     Investigation
   </option>
-  <option
-    key="Routine"
-    value="Routine"
-  >
-    Routine
-  </option>
 </select>
 `;
 
 exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[0].actionTitle field 1`] = `
 <input
   className="form-control"
-  disabled={false}
+  disabled={true}
   id="activities-0-actionTitle"
   name="activities[0].actionTitle"
   onBlur={[Function]}
@@ -134,7 +128,7 @@ exports[`containers/forms/PlanForm - Edit renders activity fields correctly: act
 exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[0].goalValue field 1`] = `
 <input
   className="form-control"
-  disabled={false}
+  disabled={true}
   id="activities-0-goalValue"
   name="activities[0].goalValue"
   onBlur={[Function]}
@@ -148,7 +142,7 @@ exports[`containers/forms/PlanForm - Edit renders activity fields correctly: act
 exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[0].timingPeriodEnd field 1`] = `
 <input
   className="form-control"
-  disabled={false}
+  disabled={true}
   id="activities-0-timingPeriodEnd"
   onBlur={[Function]}
   onChange={[Function]}
@@ -158,14 +152,14 @@ exports[`containers/forms/PlanForm - Edit renders activity fields correctly: act
   readOnly={false}
   required={true}
   type="text"
-  value="2019-07-30"
+  value="2019-07-29"
 />
 `;
 
 exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[0].timingPeriodStart field 1`] = `
 <input
   className="form-control"
-  disabled={false}
+  disabled={true}
   id="activities-0-timingPeriodStart"
   onBlur={[Function]}
   onChange={[Function]}
@@ -175,7 +169,7 @@ exports[`containers/forms/PlanForm - Edit renders activity fields correctly: act
   readOnly={false}
   required={true}
   type="text"
-  value="2019-07-10"
+  value="2019-07-09"
 />
 `;
 
@@ -194,7 +188,7 @@ exports[`containers/forms/PlanForm - Edit renders activity fields correctly: act
 exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[1].actionDescription field 1`] = `
 <textarea
   className="form-control"
-  disabled={false}
+  disabled={true}
   id="activities-1-actionDescription"
   name="activities[1].actionDescription"
   onBlur={[Function]}
@@ -233,19 +227,13 @@ exports[`containers/forms/PlanForm - Edit renders activity fields correctly: act
   >
     Investigation
   </option>
-  <option
-    key="Routine"
-    value="Routine"
-  >
-    Routine
-  </option>
 </select>
 `;
 
 exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[1].actionTitle field 1`] = `
 <input
   className="form-control"
-  disabled={false}
+  disabled={true}
   id="activities-1-actionTitle"
   name="activities[1].actionTitle"
   onBlur={[Function]}
@@ -313,7 +301,7 @@ exports[`containers/forms/PlanForm - Edit renders activity fields correctly: act
 exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[1].goalValue field 1`] = `
 <input
   className="form-control"
-  disabled={false}
+  disabled={true}
   id="activities-1-goalValue"
   name="activities[1].goalValue"
   onBlur={[Function]}
@@ -327,7 +315,7 @@ exports[`containers/forms/PlanForm - Edit renders activity fields correctly: act
 exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[1].timingPeriodEnd field 1`] = `
 <input
   className="form-control"
-  disabled={false}
+  disabled={true}
   id="activities-1-timingPeriodEnd"
   onBlur={[Function]}
   onChange={[Function]}
@@ -337,14 +325,14 @@ exports[`containers/forms/PlanForm - Edit renders activity fields correctly: act
   readOnly={false}
   required={true}
   type="text"
-  value="2019-07-30"
+  value="2019-07-29"
 />
 `;
 
 exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[1].timingPeriodStart field 1`] = `
 <input
   className="form-control"
-  disabled={false}
+  disabled={true}
   id="activities-1-timingPeriodStart"
   onBlur={[Function]}
   onChange={[Function]}
@@ -354,7 +342,7 @@ exports[`containers/forms/PlanForm - Edit renders activity fields correctly: act
   readOnly={false}
   required={true}
   type="text"
-  value="2019-07-10"
+  value="2019-07-09"
 />
 `;
 
@@ -404,7 +392,7 @@ exports[`containers/forms/PlanForm - Edit renders all fields correctly in edit m
   readOnly={false}
   required={true}
   type="text"
-  value="2019-08-30"
+  value="2019-08-29"
 />
 `;
 
@@ -546,7 +534,7 @@ exports[`containers/forms/PlanForm - Edit renders all fields correctly in edit m
   readOnly={false}
   required={true}
   type="text"
-  value="2019-05-20"
+  value="2019-05-19"
 />
 `;
 

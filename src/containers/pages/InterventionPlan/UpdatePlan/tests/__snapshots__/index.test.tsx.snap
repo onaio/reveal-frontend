@@ -87,6 +87,7 @@ Object {
     "goalPriority",
   ],
   "disabledFields": Array [
+    "activities",
     "interventionType",
     "fiReason",
     "fiStatus",
