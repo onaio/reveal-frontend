@@ -1,7 +1,10 @@
 import { parseISO } from 'date-fns';
 import moment from 'moment';
+import { FormEvent } from 'react';
 import { DEFAULT_ACTIVITY_DURATION_DAYS, DEFAULT_TIME } from '../../../../configs/env';
 import { PlanActivities } from '../../../../configs/settings';
+import { InterventionType, PlanStatus } from '../../../../store/ducks/plans';
+import { PlanActivityFormFields, PlanFormFields } from '../helpers';
 
 const goalDue = moment()
   .add(DEFAULT_ACTIVITY_DURATION_DAYS, 'days')
@@ -933,7 +936,7 @@ export const planActivities: PlanActivities = {
   },
 };
 
-export const activities = [
+export const activities: PlanActivityFormFields[] = [
   {
     actionCode: 'Case Confirmation',
     actionDescription: 'Confirm the index case',
@@ -941,11 +944,11 @@ export const activities = [
     actionReason: 'Investigation',
     actionTitle: 'Case Confirmation',
     goalDescription: 'Confirm the index case',
-    goalDue: '2019-08-16T08:39:42.773Z',
+    goalDue: parseISO('2019-08-16T08:39:42.773Z'),
     goalPriority: 'medium-priority',
     goalValue: 1,
-    timingPeriodEnd: '2019-08-16T08:39:42.773Z',
-    timingPeriodStart: '2019-08-09T08:39:42.773Z',
+    timingPeriodEnd: parseISO('2019-08-16T08:39:42.773Z'),
+    timingPeriodStart: parseISO('2019-08-09T08:39:42.773Z'),
   },
   {
     actionCode: 'RACD Register Family',
@@ -956,11 +959,11 @@ export const activities = [
     actionTitle: 'Family Registration',
     goalDescription:
       'Register all families & family members in all residential structures enumerated (100%) within the operational area',
-    goalDue: '2019-08-16T08:39:42.773Z',
+    goalDue: parseISO('2019-08-16T08:39:42.773Z'),
     goalPriority: 'medium-priority',
     goalValue: 100,
-    timingPeriodEnd: '2019-08-16T08:39:42.773Z',
-    timingPeriodStart: '2019-08-09T08:39:42.774Z',
+    timingPeriodEnd: parseISO('2019-08-16T08:39:42.773Z'),
+    timingPeriodStart: parseISO('2019-08-09T08:39:42.774Z'),
   },
   {
     actionCode: 'Blood Screening',
@@ -971,11 +974,11 @@ export const activities = [
     actionTitle: 'Blood screening',
     goalDescription:
       'Visit all residential structures (100%) within a 1 km radius of a confirmed index case and test each registered person',
-    goalDue: '2019-08-16T08:39:42.774Z',
+    goalDue: parseISO('2019-08-16T08:39:42.774Z'),
     goalPriority: 'medium-priority',
     goalValue: 100,
-    timingPeriodEnd: '2019-08-16T08:39:42.775Z',
-    timingPeriodStart: '2019-08-09T08:39:42.775Z',
+    timingPeriodEnd: parseISO('2019-08-16T08:39:42.775Z'),
+    timingPeriodStart: parseISO('2019-08-09T08:39:42.775Z'),
   },
   {
     actionCode: 'Bednet Distribution',
@@ -986,11 +989,11 @@ export const activities = [
     actionTitle: 'Bednet Distribution',
     goalDescription:
       'Visit 100% of residential structures in the operational area and provide nets',
-    goalDue: '2019-08-16T08:39:42.775Z',
+    goalDue: parseISO('2019-08-16T08:39:42.775Z'),
     goalPriority: 'medium-priority',
     goalValue: 100,
-    timingPeriodEnd: '2019-08-16T08:39:42.775Z',
-    timingPeriodStart: '2019-08-09T08:39:42.775Z',
+    timingPeriodEnd: parseISO('2019-08-16T08:39:42.775Z'),
+    timingPeriodStart: parseISO('2019-08-09T08:39:42.775Z'),
   },
   {
     actionCode: 'Larval Dipping',
@@ -1000,11 +1003,11 @@ export const activities = [
     actionReason: 'Investigation',
     actionTitle: 'Larval Dipping',
     goalDescription: 'Perform a minimum of three larval dipping activities in the operational area',
-    goalDue: '2019-08-16T08:39:42.775Z',
+    goalDue: parseISO('2019-08-16T08:39:42.775Z'),
     goalPriority: 'medium-priority',
     goalValue: 3,
-    timingPeriodEnd: '2019-08-16T08:39:42.776Z',
-    timingPeriodStart: '2019-08-09T08:39:42.776Z',
+    timingPeriodEnd: parseISO('2019-08-16T08:39:42.776Z'),
+    timingPeriodStart: parseISO('2019-08-09T08:39:42.776Z'),
   },
   {
     actionCode: 'Mosquito Collection',
@@ -1015,11 +1018,11 @@ export const activities = [
     actionTitle: 'Mosquito Collection',
     goalDescription:
       'Set a minimum of three mosquito collection traps and complete the mosquito collection process',
-    goalDue: '2019-08-16T08:39:42.776Z',
+    goalDue: parseISO('2019-08-16T08:39:42.776Z'),
     goalPriority: 'medium-priority',
     goalValue: 3,
-    timingPeriodEnd: '2019-08-16T08:39:42.776Z',
-    timingPeriodStart: '2019-08-09T08:39:42.776Z',
+    timingPeriodEnd: parseISO('2019-08-16T08:39:42.776Z'),
+    timingPeriodStart: parseISO('2019-08-09T08:39:42.776Z'),
   },
   {
     actionCode: 'BCC',
@@ -1028,11 +1031,11 @@ export const activities = [
     actionReason: 'Investigation',
     actionTitle: 'Behaviour Change Communication',
     goalDescription: 'Complete at least 1 BCC activity for the operational area',
-    goalDue: '2019-08-16T08:39:42.778Z',
+    goalDue: parseISO('2019-08-16T08:39:42.778Z'),
     goalPriority: 'medium-priority',
     goalValue: 1,
-    timingPeriodEnd: '2019-08-16T08:39:42.778Z',
-    timingPeriodStart: '2019-08-09T08:39:42.778Z',
+    timingPeriodEnd: parseISO('2019-08-16T08:39:42.778Z'),
+    timingPeriodStart: parseISO('2019-08-09T08:39:42.778Z'),
   },
 ];
 
@@ -1294,7 +1297,7 @@ export const expectedExtractActivityFromPlanformResult = {
   ],
 };
 
-export const values = {
+export const values: PlanFormFields = {
   activities: [
     {
       actionCode: 'IRS',
@@ -1303,19 +1306,19 @@ export const values = {
       actionReason: 'Routine',
       actionTitle: 'Spray Structures',
       goalDescription: 'Spray structures in the operational area',
-      goalDue: '2019-08-16T11:33:50.997Z',
+      goalDue: parseISO('2019-08-16T11:33:50.997Z'),
       goalPriority: 'medium-priority',
       goalValue: 90,
-      timingPeriodEnd: '2019-08-16T11:33:50.997Z',
-      timingPeriodStart: '2019-08-09T11:33:50.997Z',
+      timingPeriodEnd: parseISO('2019-08-16T11:33:50.997Z'),
+      timingPeriodStart: parseISO('2019-08-09T11:33:50.997Z'),
     },
   ],
   caseNum: '',
-  date: '2019-08-09T11:33:20.156Z',
-  end: '2019-08-29T11:33:20.156Z',
+  date: parseISO('2019-08-09T11:33:20.156Z'),
+  end: parseISO('2019-08-29T11:33:20.156Z'),
   fiStatus: 'A1',
   identifier: '',
-  interventionType: 'IRS',
+  interventionType: InterventionType.IRS,
   jurisdictions: [
     {
       id: '',
@@ -1323,13 +1326,13 @@ export const values = {
     },
   ],
   name: 'IRS-2019-08-09',
-  start: '2019-08-09T11:33:20.156Z',
-  status: 'draft',
+  start: parseISO('2019-08-09T11:33:20.156Z'),
+  status: PlanStatus.DRAFT,
   title: 'IRS 2019-08-09',
   version: '1',
 };
 
-export const valuesWithJurisdiction = {
+export const valuesWithJurisdiction: PlanFormFields = {
   activities: [
     {
       actionCode: 'IRS',
@@ -1338,19 +1341,19 @@ export const valuesWithJurisdiction = {
       actionReason: 'Routine',
       actionTitle: 'Spray Structures',
       goalDescription: 'Spray structures in the operational area',
-      goalDue: '2019-08-16T11:33:50.997Z',
+      goalDue: parseISO('2019-08-16T11:33:50.997Z'),
       goalPriority: 'medium-priority',
       goalValue: 90,
-      timingPeriodEnd: '2019-08-16T11:33:50.997Z',
-      timingPeriodStart: '2019-08-09T11:33:50.997Z',
+      timingPeriodEnd: parseISO('2019-08-16T11:33:50.997Z'),
+      timingPeriodStart: parseISO('2019-08-09T11:33:50.997Z'),
     },
   ],
   caseNum: '',
-  date: '2019-08-09T11:33:20.156Z',
-  end: '2019-08-29T11:33:20.156Z',
+  date: parseISO('2019-08-09T11:33:20.156Z'),
+  end: parseISO('2019-08-29T11:33:20.156Z'),
   fiStatus: 'A1',
   identifier: '',
-  interventionType: 'IRS',
+  interventionType: InterventionType.IRS,
   jurisdictions: [
     {
       id: 'd6396aeb-436d-4b78-91bd-7387ec2e8d5c',
@@ -1358,26 +1361,26 @@ export const valuesWithJurisdiction = {
     },
   ],
   name: 'IRS-2019-08-09',
-  start: '2019-08-09T11:33:20.156Z',
-  status: 'draft',
+  start: parseISO('2019-08-09T11:33:20.156Z'),
+  status: PlanStatus.DRAFT,
   title: 'IRS 2019-08-09',
   version: '1',
 };
-export const event = {
+export const event: FormEvent = {
   target: {
     name: 'interventionType',
     value: 'FI',
   },
 };
 
-export const event2 = {
+export const event2: FormEvent = {
   target: {
     name: 'interventionType',
     value: 'IRS',
   },
 };
 
-export const event3 = {
+export const event3: FormEvent = {
   target: {},
 };
 
@@ -1444,7 +1447,7 @@ export const expectedPlanDefinition = {
   version: '1',
 };
 
-export const values2 = {
+export const values2: PlanFormFields = {
   activities: [
     {
       actionCode: 'IRS',
@@ -1464,7 +1467,7 @@ export const values2 = {
   date: parseISO(`2019-08-09${DEFAULT_TIME}`),
   end: parseISO(`2019-08-29${DEFAULT_TIME}`),
   identifier: '',
-  interventionType: 'IRS',
+  interventionType: InterventionType.IRS,
   jurisdictions: [
     {
       id: '3952',
@@ -1473,7 +1476,7 @@ export const values2 = {
   ],
   name: 'IRS-2019-08-09',
   start: parseISO(`2019-08-09${DEFAULT_TIME}`),
-  status: 'draft',
+  status: PlanStatus.DRAFT,
   title: 'IRS 2019-08-09',
   version: '1',
 };
