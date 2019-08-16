@@ -668,6 +668,26 @@ const defaultProps: PlanFormProps = {
   redirectAfterAction: PLAN_LIST_URL,
 };
 
+/** props for updating plan definition objects
+ * We are defining these here to keep things DRY
+ */
+export const propsForUpdatingPlans: Partial<PlanFormProps> = {
+  disabledActivityFields: ['actionReason', 'goalPriority', 'timingPeriodStart', 'timingPeriodEnd'],
+  disabledFields: [
+    'interventionType',
+    'fiReason',
+    'fiStatus',
+    'identifier',
+    'start',
+    'date',
+    'end',
+    'name',
+    'caseNum',
+    'opensrpEventId',
+    'jurisdictions',
+  ],
+};
+
 PlanForm.defaultProps = defaultProps;
 
 export default PlanForm;
