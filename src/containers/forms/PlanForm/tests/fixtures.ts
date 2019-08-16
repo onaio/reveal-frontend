@@ -1366,6 +1366,7 @@ export const valuesWithJurisdiction: PlanFormFields = {
   title: 'IRS 2019-08-09',
   version: '1',
 };
+
 export const event: FormEvent = {
   bubbles: false,
   cancelable: false,
@@ -1408,7 +1409,7 @@ export const event2: FormEvent = {
     dispatchEvent: () => false,
     name: 'interventionType',
     removeEventListener: () => false,
-    value: 'FI',
+    value: 'IRS',
   } as EventTarget,
   timeStamp: 0,
   type: '',
