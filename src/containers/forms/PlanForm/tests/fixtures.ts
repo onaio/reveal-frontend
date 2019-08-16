@@ -1571,6 +1571,126 @@ export const planFormValues = {
   version: '1',
 };
 
+export const planFormValues2 = {
+  activities: [
+    {
+      actionCode: 'Case Confirmation',
+      actionDescription: 'Confirm the index case',
+      actionIdentifier: 'c711ae51-6432-4b68-84c3-d2b5b1fd1948',
+      actionReason: 'Investigation',
+      actionTitle: 'Case Confirmation',
+      goalDescription: 'Confirm the index case',
+      goalDue: moment('2019-05-21T00:00:00.000Z').toDate(),
+      goalPriority: 'medium-priority',
+      goalValue: 1,
+      timingPeriodEnd: moment('2019-05-24T00:00:00.000Z').toDate(),
+      timingPeriodStart: moment('2019-05-21T00:00:00.000Z').toDate(),
+    },
+    {
+      actionCode: 'RACD Register Family',
+      actionDescription:
+        'Register all families & famiy members in all residential structures enumerated (100%) within the operational area',
+      actionIdentifier: '402b8c13-6774-4515-929f-48e71a61a379',
+      actionReason: 'Investigation',
+      actionTitle: 'Family Registration',
+      goalDescription:
+        'Register all families and family members in all residential structures enumerated or added (100%) within operational area',
+      goalDue: moment('2019-08-30T00:00:00.000Z').toDate(),
+      goalPriority: 'medium-priority',
+      goalValue: 100,
+      timingPeriodEnd: moment('2019-08-30T00:00:00.000Z').toDate(),
+      timingPeriodStart: moment('2019-05-21T00:00:00.000Z').toDate(),
+    },
+    {
+      actionCode: 'Bednet Distribution',
+      actionDescription:
+        'Visit 100% of residential structures in the operational area and provide nets',
+      actionIdentifier: '1bd830ea-50e3-44dc-b855-9d5e9339e2be',
+      actionReason: 'Routine',
+      actionTitle: 'Bednet Distribution',
+      goalDescription:
+        'Visit 100% of residential structures in the operational area and provide nets',
+      goalDue: moment('2019-08-30T00:00:00.000Z').toDate(),
+      goalPriority: 'medium-priority',
+      goalValue: 100,
+      timingPeriodEnd: moment('2019-08-30T00:00:00.000Z').toDate(),
+      timingPeriodStart: moment('2019-05-21T00:00:00.000Z').toDate(),
+    },
+    {
+      actionCode: 'Blood Screening',
+      actionDescription:
+        'Visit all residential structures (100%) within a 1 km radius of a confirmed index case and test each registered person',
+      actionIdentifier: '2303a70e-4e3f-4fb9-a430-f0476010bfb5',
+      actionReason: 'Investigation',
+      actionTitle: 'RACD Blood screening',
+      goalDescription:
+        'Visit all residential structures (100%) within a 1 km radius of a confirmed index case and test each registered person',
+      goalDue: moment('2019-05-28T00:00:00.000Z').toDate(),
+      goalPriority: 'medium-priority',
+      goalValue: 100,
+      timingPeriodEnd: moment('2019-05-28T00:00:00.000Z').toDate(),
+      timingPeriodStart: moment('2019-05-21T00:00:00.000Z').toDate(),
+    },
+    {
+      actionCode: 'Larval Dipping',
+      actionDescription:
+        'Perform a minimum of three larval dipping activities in the operational area',
+      actionIdentifier: '2482dfd7-8284-43c6-bea1-a03dcda71ff4',
+      actionReason: 'Investigation',
+      actionTitle: 'Larval Dipping',
+      goalDescription:
+        'Perform a minimum of three larval dipping activities in the operational area',
+      goalDue: moment('2019-05-28T00:00:00.000Z').toDate(),
+      goalPriority: 'medium-priority',
+      goalValue: 3,
+      timingPeriodEnd: moment('2019-05-28T00:00:00.000Z').toDate(),
+      timingPeriodStart: moment('2019-05-21T00:00:00.000Z').toDate(),
+    },
+    {
+      actionCode: 'Mosquito Collection',
+      actionDescription:
+        'Set a minimum of three mosquito collection traps and complete the mosquito collection process',
+      actionIdentifier: '423f6665-5367-40be-855e-7c5e6941a0c3',
+      actionReason: 'Investigation',
+      actionTitle: 'Mosquito Collection',
+      goalDescription:
+        'Set a minimum of three mosquito collection traps and complete the mosquito collection process',
+      goalDue: moment('2019-05-28T00:00:00.000Z').toDate(),
+      goalPriority: 'medium-priority',
+      goalValue: 3,
+      timingPeriodEnd: moment('2019-05-28T00:00:00.000Z').toDate(),
+      timingPeriodStart: moment('2019-05-21T00:00:00.000Z').toDate(),
+    },
+    {
+      actionCode: 'BCC',
+      actionDescription: 'Conduct BCC activity',
+      actionIdentifier: 'c8fc89a9-cdd2-4746-8272-650883ae380e',
+      actionReason: 'Investigation',
+      actionTitle: 'Behaviour Change Communication',
+      goalDescription: 'Complete at least 1 BCC activity for the operational area',
+      goalDue: moment('2019-06-21T00:00:00.000Z').toDate(),
+      goalPriority: 'medium-priority',
+      goalValue: 1,
+      timingPeriodEnd: moment('2019-06-21T00:00:00.000Z').toDate(),
+      timingPeriodStart: moment('2019-05-21T00:00:00.000Z').toDate(),
+    },
+  ],
+  caseNum: '',
+  date: moment('2019-05-19T00:00:00.000Z').toDate(),
+  end: moment('2019-08-30T00:00:00.000Z').toDate(),
+  fiReason: 'Case-triggered',
+  fiStatus: 'A2',
+  identifier: '356b6b84-fc36-4389-a44a-2b038ed2f38d',
+  interventionType: 'FI',
+  jurisdictions: [{ id: '3952', name: '3952' }],
+  name: 'A2-Lusaka_Akros_Focus_2',
+  opensrpEventId: undefined,
+  start: moment('2019-05-20T00:00:00.000Z').toDate(),
+  status: 'active',
+  title: 'A2-Lusaka Akros Test Focus 2',
+  version: '1',
+};
+
 export const jurisdictionLevel0JSON =
   '[{"type":"Feature","id":"2942","properties":{"status":"Active","name":"Lusaka","geographicLevel":0,"version":0},"serverVersion":1545204913827},{"type":"Feature","id":"f8863022-ff88-4c22-b2d1-83f59f31b874","properties":{"status":"Active","name":"Oddar Meanchey Province","geographicLevel":0,"version":0},"serverVersion":1553900609745},{"type":"Feature","id":"9c3c2db4-bddd-44c5-870a-a0eef539e4da","properties":{"status":"Active","name":"Lop Buri","geographicLevel":0,"version":0},"serverVersion":1554861473099},{"type":"Feature","id":"3953","properties":{"status":"Active","name":"Siavonga","geographicLevel":0,"version":0},"serverVersion":1549235783958},{"type":"Feature","id":"3954","properties":{"status":"Active","name":"Siavonga","geographicLevel":0,"version":0},"serverVersion":1549387863860},{"type":"Feature","id":"2940","properties":{"status":"Active","name":"Katete","geographicLevel":0,"version":0},"serverVersion":1545218425249},{"type":"Feature","id":"2941","properties":{"status":"Active","name":"Sinda","geographicLevel":0,"version":0},"serverVersion":1545219282280},{"type":"Feature","id":"2939","properties":{"status":"Active","name":"Chadiza","geographicLevel":0,"version":0},"serverVersion":1545217996275},{"type":"Feature","id":"16a77bba-8777-4bc4-8566-d193cb04af4c","properties":{"status":"Active","name":"Botswana","geographicLevel":0,"version":0},"serverVersion":1563583239021},{"type":"Feature","id":"f45b9380-c970-4dd1-8533-9e95ab12f128","properties":{"status":"Active","name":"Namibia","geographicLevel":0,"version":0,"ADM0_EN":"Namibia","ADM0_PCODE":"NA"},"serverVersion":1564401702479}]';
 
