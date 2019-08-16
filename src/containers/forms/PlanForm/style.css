@@ -1,7 +1,11 @@
+.close {
+  color: #6c757d !important;
+  font-size: 30px;
+}
+
 .removeArrItem,
 .close.removeArrItem.removeActivity {
   top: 0px;
   right: 7px;
   color: #ff0000 !important;
-  font-size: 30px;
 }
