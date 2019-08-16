@@ -148,7 +148,7 @@ exports[`containers/forms/PlanForm - Edit renders activity fields correctly: act
 exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[0].timingPeriodEnd field 1`] = `
 <input
   className="form-control"
-  disabled={true}
+  disabled={false}
   id="activities-0-timingPeriodEnd"
   onBlur={[Function]}
   onChange={[Function]}
@@ -165,7 +165,7 @@ exports[`containers/forms/PlanForm - Edit renders activity fields correctly: act
 exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[0].timingPeriodStart field 1`] = `
 <input
   className="form-control"
-  disabled={true}
+  disabled={false}
   id="activities-0-timingPeriodStart"
   onBlur={[Function]}
   onChange={[Function]}
@@ -327,7 +327,7 @@ exports[`containers/forms/PlanForm - Edit renders activity fields correctly: act
 exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[1].timingPeriodEnd field 1`] = `
 <input
   className="form-control"
-  disabled={true}
+  disabled={false}
   id="activities-1-timingPeriodEnd"
   onBlur={[Function]}
   onChange={[Function]}
@@ -344,7 +344,7 @@ exports[`containers/forms/PlanForm - Edit renders activity fields correctly: act
 exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[1].timingPeriodStart field 1`] = `
 <input
   className="form-control"
-  disabled={true}
+  disabled={false}
   id="activities-1-timingPeriodStart"
   onBlur={[Function]}
   onChange={[Function]}
@@ -394,7 +394,7 @@ exports[`containers/forms/PlanForm - Edit renders all fields correctly in edit m
 exports[`containers/forms/PlanForm - Edit renders all fields correctly in edit mode: end field 1`] = `
 <input
   className="form-control"
-  disabled={true}
+  disabled={false}
   id="end"
   onBlur={[Function]}
   onChange={[Function]}
@@ -536,7 +536,7 @@ exports[`containers/forms/PlanForm - Edit renders all fields correctly in edit m
 exports[`containers/forms/PlanForm - Edit renders all fields correctly in edit mode: start field 1`] = `
 <input
   className="form-control"
-  disabled={true}
+  disabled={false}
   id="start"
   onBlur={[Function]}
   onChange={[Function]}
