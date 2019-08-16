@@ -10,6 +10,7 @@ import {
   CANCEL,
   COMPLETE,
   CONFIRM,
+  FI_SINGLE_MAP_URL,
   MARK,
   MARK_AS_COMPLETE,
   OPENSRP_PLANS,
@@ -48,12 +49,13 @@ export class PlanCompletion extends React.Component<
     super(props);
 
     // This binding is necessary to make `this` work in the callback
+    this.cancelClickHandler = this.cancelClickHandler.bind(this);
     this.confirmClickHandler = this.confirmClickHandler.bind(this);
   }
 
   /** click handler for cancelling mark as complete action */
   public cancelClickHandler = (event: any) => {
-    this.props.history.goBack();
+    this.props.history.replace(`${FI_SINGLE_MAP_URL}/${this.props.plan!.id}`);
   };
 
   /** Click Handler : changes status of a plan to complete and syncs
