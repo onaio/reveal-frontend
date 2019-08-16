@@ -8,7 +8,9 @@ import { Helmet } from 'react-helmet';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import ConnectedPlanCompletion, { PlanCompletion } from '..';
-import { OPENSRP_PLANS, PLAN_COMPLETION_URL } from '../../../../../../constants';
+import { FI_SINGLE_MAP_URL, OPENSRP_PLANS, PLAN_COMPLETION_URL } from '../../../../../../constants';
+import { OpenSRPService } from '../../../../../../services/opensrp';
+import { plansListResponse } from '../../../../../../services/opensrp/tests/fixtures/plans';
 import store from '../../../../../../store';
 import reducer, {
   fetchPlans,
@@ -16,8 +18,12 @@ import reducer, {
   Plan,
   PlanStatus,
   reducerName,
+  removePlansAction,
 } from '../../../../../../store/ducks/plans';
 import * as fixtures from '../../../../../../store/ducks/tests/fixtures';
+
+// tslint:disable-next-line: no-var-requires
+const fetch = require('jest-fetch-mock');
 
 reducerRegistry.register(reducerName, reducer);
 const history = createBrowserHistory();
@@ -25,6 +31,8 @@ const history = createBrowserHistory();
 describe('@containers/pages/map/planCompletion/', () => {
   beforeEach(() => {
     jest.resetAllMocks();
+    store.dispatch(removePlansAction);
+    fetch.resetMocks();
   });
 
   it('renders without crashing', () => {
@@ -65,7 +73,7 @@ describe('@containers/pages/map/planCompletion/', () => {
         <PlanCompletion {...props} />
       </Router>
     );
-    // expect(wrapper).toMatchSnapshot();
+    expect(wrapper).toMatchSnapshot();
 
     // check the page title
     const helmet = Helmet.peek();
@@ -100,7 +108,7 @@ describe('@containers/pages/map/planCompletion/', () => {
 
   it('goes back on cancelling mark as complete', async () => {
     const mock: any = jest.fn();
-    store.dispatch(fetchPlans([fixtures.plans] as any));
+    store.dispatch(fetchPlans(fixtures.plans as any));
     const props = {
       history,
       location: mock,
@@ -120,30 +128,30 @@ describe('@containers/pages/map/planCompletion/', () => {
     // );
 
     const discoWrapper = mount(<PlanCompletion plan={fixtures.plan1 as Plan} {...props} />);
-
     const cancelButton = discoWrapper.find('#complete-plan-cancel-btn');
     expect(cancelButton.length).toEqual(1);
     cancelButton.simulate('click');
     // check that history url after clicking cancel points to singleFi url
+    discoWrapper.update();
+    expect(discoWrapper.props().history.action).toEqual('REPLACE');
+    expect(discoWrapper.props().history.location.pathname).toEqual(
+      `${FI_SINGLE_MAP_URL}/${fixtures.plan1.id}`
+    );
 
     // check that plan still has the previous plan_status
-    // const plan1FromStore = getPlanById(store.getState(), fixtures.plan1.id);
-    // expect(plan1FromStore).toBe(PlanStatus.ACTIVE);
+    const plan1FromStore = getPlanById(store.getState(), fixtures.plan1.id);
+    expect(plan1FromStore!.plan_status).toBe(PlanStatus.ACTIVE);
 
     discoWrapper.unmount();
   });
 
-  it('things it should do when confirm  mark as complete', () => {
+  it('E2E things it should do when confirm  mark as complete', () => {
     // calls correct url with the right arguments
-    const mockUpdate = jest.fn(() => ({}));
-    const classMock = jest.fn().mockImplementation(() => {
-      return {
-        update: mockUpdate,
-      };
-    });
     const mock: any = jest.fn();
-    store.dispatch(fetchPlans([fixtures.plans] as any));
+    const fetchPlansMock = jest.fn();
+    store.dispatch(fetchPlans(fixtures.plans as any));
     const props = {
+      fetchPlansActionCreator: fetchPlansMock,
       history,
       location: mock,
       match: {
@@ -152,7 +160,7 @@ describe('@containers/pages/map/planCompletion/', () => {
         path: `${PLAN_COMPLETION_URL}/:id`,
         url: `${PLAN_COMPLETION_URL}/13`,
       },
-      serviceClass: classMock,
+      serviceClass: OpenSRPService,
     };
     // const wrapper = mount(
     //   <Provider store={store}>
@@ -163,18 +171,23 @@ describe('@containers/pages/map/planCompletion/', () => {
     // );
     const discoWrapper = mount(<PlanCompletion plan={fixtures.plan1 as Plan} {...props} />);
     const confirmButton = discoWrapper.find('#complete-plan-confirm-btn');
-    expect(confirmButton.length).toEqual(1);
-
     confirmButton.simulate('click');
-    expect(classMock).toBeCalledTimes(1);
-    expect(classMock).toBeCalledWith(OPENSRP_PLANS);
-    // const completedPlan = cloneDeep(fixtures.plan1);
-    // completedPlan.plan_status = PlanStatus.COMPLETE;
-    // expect(mockUpdate).toBeCalledWith(completedPlan);
 
-    // check the plan in the store
-    // const plan1FromStore = getPlanById(store.getState(), fixtures.plan1.id);
-    // expect(plan1FromStore).toBe(PlanStatus.COMPLETE);
+    const expectedCalledUrl =
+      'https://reveal-stage.smartregister.org/opensrp/rest/plans/10f9e9fa-ce34-4b27-a961-72fab5206ab6';
+    fetch.once(JSON.stringify(plansListResponse[0])).once(JSON.stringify({}));
+    // const ss = new OpenSRPService('plans');
+    // ss.read('some_id');
+    // apparently this fetch mock works only if a call to a function that uses
+    // fetch is done from within this scope
+    const completedPlan = cloneDeep(fixtures.plan1);
+    completedPlan.plan_status = PlanStatus.COMPLETE;
+
+    // expect(fetch).toBeCalledTimes(2);
+
+    expect(fetch.mock.calls[0][0]).toEqual(expectedCalledUrl);
+    // expect(fetchPlansMock.mock.calls[0][0]).toEqual(completedPlan);
+
     discoWrapper.unmount();
   });
 });
