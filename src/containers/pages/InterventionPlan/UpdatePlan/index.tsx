@@ -8,14 +8,7 @@ import { Store } from 'redux';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
 import { PlanDefinition } from '../../../../configs/settings';
-import {
-  HOME,
-  HOME_URL,
-  NEW_PLAN_URL,
-  PLAN_LIST_URL,
-  PLAN_UPDATE_URL,
-  PLANS,
-} from '../../../../constants';
+import { HOME, HOME_URL, NEW_PLAN_URL, PLAN_LIST_URL, PLANS } from '../../../../constants';
 import { OpenSRPService } from '../../../../services/opensrp';
 import planDefinitionReducer, {
   addPlanDefinition,
