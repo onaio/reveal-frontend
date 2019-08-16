@@ -96,6 +96,7 @@ Object {
     "opensrpEventId",
     "jurisdictions",
   ],
+  "fetchPlan": [Function],
   "initialValues": Object {
     "activities": Array [
       Object {

@@ -17,6 +17,7 @@ import {
 } from '../../../configs/settings';
 import { PLAN_LIST_URL, SAVING } from '../../../constants';
 import { OpenSRPService } from '../../../services/opensrp';
+import { addPlanDefinition } from '../../../store/ducks/opensrp/PlanDefinition';
 import { InterventionType, PlanStatus } from '../../../store/ducks/plans';
 import JurisdictionSelect from '../JurisdictionSelect';
 import {
@@ -62,6 +63,7 @@ export const defaultInitialValues: PlanFormFields = {
 interface PlanFormProps {
   disabledActivityFields: string[];
   disabledFields: string[];
+  fetchPlan: typeof addPlanDefinition;
   initialValues: PlanFormFields;
   redirectAfterAction: string;
 }
@@ -103,6 +105,7 @@ const PlanForm = (props: PlanFormProps) => {
             apiService
               .update(payload)
               .then(() => {
+                props.fetchPlan(payload);
                 setSubmitting(false);
                 setAreWeDoneHere(true);
               })
@@ -113,6 +116,7 @@ const PlanForm = (props: PlanFormProps) => {
             apiService
               .create(payload)
               .then(() => {
+                props.fetchPlan(payload);
                 setSubmitting(false);
                 setAreWeDoneHere(true);
               })
@@ -692,6 +696,7 @@ const PlanForm = (props: PlanFormProps) => {
 const defaultProps: PlanFormProps = {
   disabledActivityFields: [],
   disabledFields: [],
+  fetchPlan: addPlanDefinition,
   initialValues: defaultInitialValues,
   redirectAfterAction: PLAN_LIST_URL,
 };
