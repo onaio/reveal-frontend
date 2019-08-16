@@ -19,6 +19,7 @@ import {
 import { OpenSRPService } from '../../../../services/opensrp';
 import planDefinitionReducer, {
   addPlanDefinition,
+  getPlanDefinitionById,
   reducerName as planDefinitionReducerName,
 } from '../../../../store/ducks/opensrp/PlanDefinition';
 import PlanForm, { propsForUpdatingPlans } from '../../../forms/PlanForm';
@@ -124,26 +125,25 @@ export { UpdatePlan };
 /** Connect the component to the store */
 
 /** interface to describe props from mapStateToProps */
-// interface DispatchedStateProps {
-//   plans: PlanDefinition[];
-// }
+interface DispatchedStateProps {
+  plan: PlanDefinition | null;
+}
 
 // /** map state to props */
-// const mapStateToProps = (state: Partial<Store>): DispatchedStateProps => {
-//   const planDefinitionsArray = getPlanDefinitionsArray(state);
+const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateProps => {
+  const planObj = getPlanDefinitionById(state, ownProps.match.params.id);
+  return {
+    plan: planObj,
+  };
+};
 
-//   return {
-//     plans: planDefinitionsArray,
-//   };
-// };
+/** map dispatch to props */
+const mapDispatchToProps = { fetchPlan: addPlanDefinition };
 
-// /** map dispatch to props */
-// const mapDispatchToProps = { fetchPlans: fetchPlanDefinitions };
+/** Connected ActiveFI component */
+const ConnectedUpdatePlan = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(UpdatePlan);
 
-// /** Connected ActiveFI component */
-// const ConnectedPlanDefinitionList = connect(
-//   mapStateToProps,
-//   mapDispatchToProps
-// )(PlanDefinitionList);
-
-// export default ConnectedPlanDefinitionList;
+export default ConnectedUpdatePlan;
