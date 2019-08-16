@@ -1,6 +1,10 @@
+import { parseISO } from 'date-fns';
 import moment from 'moment';
-import { DEFAULT_ACTIVITY_DURATION_DAYS } from '../../../../configs/env';
+import { FormEvent } from 'react';
+import { DEFAULT_ACTIVITY_DURATION_DAYS, DEFAULT_TIME } from '../../../../configs/env';
 import { PlanActivities } from '../../../../configs/settings';
+import { InterventionType, PlanStatus } from '../../../../store/ducks/plans';
+import { PlanActivityFormFields, PlanFormFields } from '../helpers';
 
 const goalDue = moment()
   .add(DEFAULT_ACTIVITY_DURATION_DAYS, 'days')
@@ -118,22 +122,29 @@ export const expectedActivity = {
   },
 };
 
-export const planActivityWithEmptyfields = {
+export const planActivityWithEmptyfields: PlanActivities = {
   BCC: {
     action: {
+      code: 'BCC',
+      description: '',
       goalId: 'BCC_Focus',
+      identifier: '',
       prefix: 99,
+      reason: 'Investigation',
       subjectCodableConcept: {
         text: 'Operational_Area',
       },
       taskTemplate: 'BCC_Focus',
       timingPeriod: {
-        end: timingPeriodEnd,
-        start: timingPeriodStart,
+        end: timingPeriodEnd.toISOString(),
+        start: timingPeriodStart.toISOString(),
       },
+      title: 'Behaviour Change Communication',
     },
     goal: {
+      description: '',
       id: 'BCC_Focus',
+      priority: 'medium-priority',
       target: [
         {
           detail: {
@@ -143,8 +154,45 @@ export const planActivityWithEmptyfields = {
               value: 1,
             },
           },
-          due: goalDue,
+          due: goalDue.toISOString(),
           measure: 'Number of BCC Activities Completed',
+        },
+      ],
+    },
+  },
+  IRS: {
+    action: {
+      code: 'IRS',
+      description: 'Visit each structure in the operational area and attempt to spray',
+      goalId: 'IRS',
+      identifier: '',
+      prefix: 7,
+      reason: 'Routine',
+      subjectCodableConcept: {
+        text: 'Residential_Structure',
+      },
+      taskTemplate: 'Spray_Structures',
+      timingPeriod: {
+        end: '',
+        start: '',
+      },
+      title: 'Spray Structures',
+    },
+    goal: {
+      description: 'Spray structures in the operational area',
+      id: 'IRS',
+      priority: 'medium-priority',
+      target: [
+        {
+          detail: {
+            detailQuantity: {
+              comparator: '>=',
+              unit: 'Percent',
+              value: 90,
+            },
+          },
+          due: '',
+          measure: 'Percent of structures sprayed',
         },
       ],
     },
@@ -152,19 +200,25 @@ export const planActivityWithEmptyfields = {
   bednetDistribution: {
     action: {
       code: 'Bednet Distribution',
+      description: '',
       goalId: 'RACD_bednet_distribution',
+      identifier: '',
       prefix: 4,
+      reason: 'Investigation',
       subjectCodableConcept: {
         text: 'Residential_Structure',
       },
       taskTemplate: 'Bednet_Distribution',
       timingPeriod: {
-        end: timingPeriodEnd,
-        start: timingPeriodStart,
+        end: timingPeriodEnd.toISOString(),
+        start: timingPeriodStart.toISOString(),
       },
+      title: '',
     },
     goal: {
+      description: '',
       id: 'RACD_bednet_distribution',
+      priority: 'medium-priority',
       target: [
         {
           detail: {
@@ -174,7 +228,7 @@ export const planActivityWithEmptyfields = {
               value: 100,
             },
           },
-          due: goalDue,
+          due: goalDue.toISOString(),
           measure: 'Percent of residential structures received nets',
         },
       ],
@@ -183,18 +237,23 @@ export const planActivityWithEmptyfields = {
   bloodScreening: {
     action: {
       code: 'Blood Screening',
+      description: '',
       goalId: 'RACD_Blood_Screening',
+      identifier: '',
       prefix: 3,
+      reason: 'Investigation',
       subjectCodableConcept: {
         text: 'Person',
       },
       taskTemplate: 'RACD_Blood_Screening',
       timingPeriod: {
-        end: timingPeriodEnd,
-        start: timingPeriodStart,
+        end: timingPeriodEnd.toISOString(),
+        start: timingPeriodStart.toISOString(),
       },
+      title: '',
     },
     goal: {
+      description: '',
       id: 'RACD_Blood_Screening',
       priority: 'medium-priority',
       target: [
@@ -206,7 +265,7 @@ export const planActivityWithEmptyfields = {
               value: 100,
             },
           },
-          due: goalDue,
+          due: goalDue.toISOString(),
           measure: 'Number of registered people tested',
         },
       ],
@@ -215,15 +274,23 @@ export const planActivityWithEmptyfields = {
   caseConfirmation: {
     action: {
       code: 'Case Confirmation',
+      description: '',
       goalId: 'Case_Confirmation',
+      identifier: '',
       prefix: 1,
+      reason: 'Investigation',
+      subjectCodableConcept: {
+        text: 'Person',
+      },
       taskTemplate: 'Case_Confirmation',
       timingPeriod: {
-        end: timingPeriodEnd,
-        start: timingPeriodStart,
+        end: timingPeriodEnd.toISOString(),
+        start: timingPeriodStart.toISOString(),
       },
+      title: '',
     },
     goal: {
+      description: '',
       id: 'Case_Confirmation',
       priority: 'medium-priority',
       target: [
@@ -235,7 +302,7 @@ export const planActivityWithEmptyfields = {
               value: 1,
             },
           },
-          due: goalDue,
+          due: goalDue.toISOString(),
           measure: 'Number of cases confirmed',
         },
       ],
@@ -244,15 +311,23 @@ export const planActivityWithEmptyfields = {
   familyRegistration: {
     action: {
       code: 'RACD Register Family',
+      description: '',
       goalId: 'RACD_register_families',
+      identifier: '',
       prefix: 2,
+      reason: 'Investigation',
+      subjectCodableConcept: {
+        text: 'Person',
+      },
       taskTemplate: 'RACD_register_families',
       timingPeriod: {
-        end: timingPeriodEnd,
-        start: timingPeriodStart,
+        end: timingPeriodEnd.toISOString(),
+        start: timingPeriodStart.toISOString(),
       },
+      title: '',
     },
     goal: {
+      description: '',
       id: 'RACD_register_families',
       priority: 'medium-priority',
       target: [
@@ -264,7 +339,7 @@ export const planActivityWithEmptyfields = {
               value: 100,
             },
           },
-          due: goalDue,
+          due: goalDue.toISOString(),
           measure: 'Percent of residential structures with full family registration',
         },
       ],
@@ -273,15 +348,23 @@ export const planActivityWithEmptyfields = {
   larvalDipping: {
     action: {
       code: 'Larval Dipping',
+      description: '',
       goalId: 'Larval_Dipping',
+      identifier: '',
       prefix: 5,
+      reason: 'Investigation',
+      subjectCodableConcept: {
+        text: 'Person',
+      },
       taskTemplate: 'Larval_Dipping',
       timingPeriod: {
-        end: timingPeriodEnd,
-        start: timingPeriodStart,
+        end: timingPeriodEnd.toISOString(),
+        start: timingPeriodStart.toISOString(),
       },
+      title: '',
     },
     goal: {
+      description: '',
       id: 'Larval_Dipping',
       priority: 'medium-priority',
       target: [
@@ -293,7 +376,7 @@ export const planActivityWithEmptyfields = {
               value: 3,
             },
           },
-          due: goalDue,
+          due: goalDue.toISOString(),
           measure: 'Number of larval dipping activities completed',
         },
       ],
@@ -302,15 +385,23 @@ export const planActivityWithEmptyfields = {
   mosquitoCollection: {
     action: {
       code: 'Mosquito Collection',
+      description: '',
       goalId: 'Mosquito_Collection',
+      identifier: '',
       prefix: 6,
+      reason: 'Investigation',
+      subjectCodableConcept: {
+        text: 'Person',
+      },
       taskTemplate: 'Mosquito_Collection_Point',
       timingPeriod: {
-        end: timingPeriodEnd,
-        start: timingPeriodStart,
+        end: timingPeriodEnd.toISOString(),
+        start: timingPeriodStart.toISOString(),
       },
+      title: '',
     },
     goal: {
+      description: '',
       id: 'Mosquito_Collection',
       priority: 'medium-priority',
       target: [
@@ -322,7 +413,7 @@ export const planActivityWithEmptyfields = {
               value: 3,
             },
           },
-          due: goalDue,
+          due: goalDue.toISOString(),
           measure: 'Number of mosquito collection activities completed',
         },
       ],
@@ -332,10 +423,11 @@ export const planActivityWithEmptyfields = {
 
 export const expectedActivityEmptyField = {
   BCC: {
+    actionCode: 'BCC',
     actionDescription: '',
     actionIdentifier: '',
-    actionReason: '',
-    actionTitle: '',
+    actionReason: 'Investigation',
+    actionTitle: 'Behaviour Change Communication',
     goalDescription: '',
     goalDue,
     goalPriority: 'medium-priority',
@@ -347,7 +439,7 @@ export const expectedActivityEmptyField = {
     actionCode: 'Bednet Distribution',
     actionDescription: '',
     actionIdentifier: '',
-    actionReason: '',
+    actionReason: 'Investigation',
     actionTitle: '',
     goalDescription: '',
     goalDue,
@@ -360,7 +452,7 @@ export const expectedActivityEmptyField = {
     actionCode: 'Blood Screening',
     actionDescription: '',
     actionIdentifier: '',
-    actionReason: '',
+    actionReason: 'Investigation',
     actionTitle: '',
     goalDescription: '',
     goalDue,
@@ -373,7 +465,7 @@ export const expectedActivityEmptyField = {
     actionCode: 'Case Confirmation',
     actionDescription: '',
     actionIdentifier: '',
-    actionReason: '',
+    actionReason: 'Investigation',
     actionTitle: '',
     goalDescription: '',
     goalDue,
@@ -399,7 +491,7 @@ export const expectedActivityEmptyField = {
     actionCode: 'Larval Dipping',
     actionDescription: '',
     actionIdentifier: '',
-    actionReason: '',
+    actionReason: 'Investigation',
     actionTitle: '',
     goalDescription: '',
     goalDue,
@@ -412,7 +504,7 @@ export const expectedActivityEmptyField = {
     actionCode: 'Mosquito Collection',
     actionDescription: '',
     actionIdentifier: '',
-    actionReason: '',
+    actionReason: 'Investigation',
     actionTitle: '',
     goalDescription: '',
     goalDue,
@@ -434,8 +526,8 @@ export const extractedActivitiesFromForms = [
     goalDue: goalDue.toISOString(),
     goalPriority: 'medium-priority',
     goalValue: 1,
-    timingPeriodEnd: timingPeriodEnd.toISOString(),
-    timingPeriodStart: timingPeriodStart.toISOString(),
+    timingPeriodEnd,
+    timingPeriodStart,
   },
   {
     actionCode: 'RACD Register Family',
@@ -553,8 +645,8 @@ export const planActivities: PlanActivities = {
       },
       taskTemplate: 'BCC_Focus',
       timingPeriod: {
-        end: timingPeriodEnd.toString(),
-        start: timingPeriodStart.toString(),
+        end: timingPeriodEnd.toISOString(),
+        start: timingPeriodStart.toISOString(),
       },
       title: 'Behaviour Change Communication',
     },
@@ -571,7 +663,7 @@ export const planActivities: PlanActivities = {
               value: 1,
             },
           },
-          due: goalDue.toString(),
+          due: goalDue.toISOString(),
           measure: 'Number of BCC Activities Completed',
         },
       ],
@@ -590,8 +682,8 @@ export const planActivities: PlanActivities = {
       },
       taskTemplate: 'Spray_Structures',
       timingPeriod: {
-        end: timingPeriodEnd.toString(),
-        start: timingPeriodStart.toString(),
+        end: timingPeriodEnd.toISOString(),
+        start: timingPeriodStart.toISOString(),
       },
       title: 'Spray Structures',
     },
@@ -608,7 +700,7 @@ export const planActivities: PlanActivities = {
               value: 90,
             },
           },
-          due: goalDue.toString(),
+          due: goalDue.toISOString(),
           measure: 'Percent of structures sprayed',
         },
       ],
@@ -627,8 +719,8 @@ export const planActivities: PlanActivities = {
       },
       taskTemplate: 'Bednet_Distribution',
       timingPeriod: {
-        end: timingPeriodEnd.toString(),
-        start: timingPeriodStart.toString(),
+        end: timingPeriodEnd.toISOString(),
+        start: timingPeriodStart.toISOString(),
       },
       title: 'Bednet Distribution',
     },
@@ -645,7 +737,7 @@ export const planActivities: PlanActivities = {
               value: 100,
             },
           },
-          due: goalDue.toString(),
+          due: goalDue.toISOString(),
           measure: 'Percent of residential structures received nets',
         },
       ],
@@ -665,8 +757,8 @@ export const planActivities: PlanActivities = {
       },
       taskTemplate: 'RACD_Blood_Screening',
       timingPeriod: {
-        end: timingPeriodEnd.toString(),
-        start: timingPeriodStart.toString(),
+        end: timingPeriodEnd.toISOString(),
+        start: timingPeriodStart.toISOString(),
       },
       title: 'Blood screening',
     },
@@ -684,7 +776,7 @@ export const planActivities: PlanActivities = {
               value: 100,
             },
           },
-          due: goalDue.toString(),
+          due: goalDue.toISOString(),
           measure: 'Number of registered people tested',
         },
       ],
@@ -703,8 +795,8 @@ export const planActivities: PlanActivities = {
       },
       taskTemplate: 'Case_Confirmation',
       timingPeriod: {
-        end: timingPeriodEnd.toString(),
-        start: timingPeriodStart.toString(),
+        end: timingPeriodEnd.toISOString(),
+        start: timingPeriodStart.toISOString(),
       },
       title: 'Case Confirmation',
     },
@@ -721,7 +813,7 @@ export const planActivities: PlanActivities = {
               value: 1,
             },
           },
-          due: goalDue.toString(),
+          due: goalDue.toISOString(),
           measure: 'Number of cases confirmed',
         },
       ],
@@ -741,8 +833,8 @@ export const planActivities: PlanActivities = {
       },
       taskTemplate: 'RACD_register_families',
       timingPeriod: {
-        end: timingPeriodEnd.toString(),
-        start: timingPeriodStart.toString(),
+        end: timingPeriodEnd.toISOString(),
+        start: timingPeriodStart.toISOString(),
       },
       title: 'Family Registration',
     },
@@ -760,7 +852,7 @@ export const planActivities: PlanActivities = {
               value: 100,
             },
           },
-          due: goalDue.toString(),
+          due: goalDue.toISOString(),
           measure: 'Percent of residential structures with full family registration',
         },
       ],
@@ -779,8 +871,8 @@ export const planActivities: PlanActivities = {
       },
       taskTemplate: 'Larval_Dipping',
       timingPeriod: {
-        end: timingPeriodEnd.toString(),
-        start: timingPeriodStart.toString(),
+        end: timingPeriodEnd.toISOString(),
+        start: timingPeriodStart.toISOString(),
       },
       title: 'Larval Dipping',
     },
@@ -797,7 +889,7 @@ export const planActivities: PlanActivities = {
               value: 3,
             },
           },
-          due: goalDue.toString(),
+          due: goalDue.toISOString(),
           measure: 'Number of larval dipping activities completed',
         },
       ],
@@ -817,8 +909,8 @@ export const planActivities: PlanActivities = {
       },
       taskTemplate: 'Mosquito_Collection_Point',
       timingPeriod: {
-        end: timingPeriodEnd.toString(),
-        start: timingPeriodStart.toString(),
+        end: timingPeriodEnd.toISOString(),
+        start: timingPeriodStart.toISOString(),
       },
       title: 'Mosquito Collection',
     },
@@ -836,7 +928,7 @@ export const planActivities: PlanActivities = {
               value: 3,
             },
           },
-          due: goalDue.toString(),
+          due: goalDue.toISOString(),
           measure: 'Number of mosquito collection activities completed',
         },
       ],
@@ -844,7 +936,7 @@ export const planActivities: PlanActivities = {
   },
 };
 
-export const activities = [
+export const activities: PlanActivityFormFields[] = [
   {
     actionCode: 'Case Confirmation',
     actionDescription: 'Confirm the index case',
@@ -852,11 +944,11 @@ export const activities = [
     actionReason: 'Investigation',
     actionTitle: 'Case Confirmation',
     goalDescription: 'Confirm the index case',
-    goalDue: '2019-08-16T08:39:42.773Z',
+    goalDue: parseISO('2019-08-16T08:39:42.773Z'),
     goalPriority: 'medium-priority',
     goalValue: 1,
-    timingPeriodEnd: '2019-08-16T08:39:42.773Z',
-    timingPeriodStart: '2019-08-09T08:39:42.773Z',
+    timingPeriodEnd: parseISO('2019-08-16T08:39:42.773Z'),
+    timingPeriodStart: parseISO('2019-08-09T08:39:42.773Z'),
   },
   {
     actionCode: 'RACD Register Family',
@@ -867,11 +959,11 @@ export const activities = [
     actionTitle: 'Family Registration',
     goalDescription:
       'Register all families & family members in all residential structures enumerated (100%) within the operational area',
-    goalDue: '2019-08-16T08:39:42.773Z',
+    goalDue: parseISO('2019-08-16T08:39:42.773Z'),
     goalPriority: 'medium-priority',
     goalValue: 100,
-    timingPeriodEnd: '2019-08-16T08:39:42.773Z',
-    timingPeriodStart: '2019-08-09T08:39:42.774Z',
+    timingPeriodEnd: parseISO('2019-08-16T08:39:42.773Z'),
+    timingPeriodStart: parseISO('2019-08-09T08:39:42.774Z'),
   },
   {
     actionCode: 'Blood Screening',
@@ -882,11 +974,11 @@ export const activities = [
     actionTitle: 'Blood screening',
     goalDescription:
       'Visit all residential structures (100%) within a 1 km radius of a confirmed index case and test each registered person',
-    goalDue: '2019-08-16T08:39:42.774Z',
+    goalDue: parseISO('2019-08-16T08:39:42.774Z'),
     goalPriority: 'medium-priority',
     goalValue: 100,
-    timingPeriodEnd: '2019-08-16T08:39:42.775Z',
-    timingPeriodStart: '2019-08-09T08:39:42.775Z',
+    timingPeriodEnd: parseISO('2019-08-16T08:39:42.775Z'),
+    timingPeriodStart: parseISO('2019-08-09T08:39:42.775Z'),
   },
   {
     actionCode: 'Bednet Distribution',
@@ -897,11 +989,11 @@ export const activities = [
     actionTitle: 'Bednet Distribution',
     goalDescription:
       'Visit 100% of residential structures in the operational area and provide nets',
-    goalDue: '2019-08-16T08:39:42.775Z',
+    goalDue: parseISO('2019-08-16T08:39:42.775Z'),
     goalPriority: 'medium-priority',
     goalValue: 100,
-    timingPeriodEnd: '2019-08-16T08:39:42.775Z',
-    timingPeriodStart: '2019-08-09T08:39:42.775Z',
+    timingPeriodEnd: parseISO('2019-08-16T08:39:42.775Z'),
+    timingPeriodStart: parseISO('2019-08-09T08:39:42.775Z'),
   },
   {
     actionCode: 'Larval Dipping',
@@ -911,11 +1003,11 @@ export const activities = [
     actionReason: 'Investigation',
     actionTitle: 'Larval Dipping',
     goalDescription: 'Perform a minimum of three larval dipping activities in the operational area',
-    goalDue: '2019-08-16T08:39:42.775Z',
+    goalDue: parseISO('2019-08-16T08:39:42.775Z'),
     goalPriority: 'medium-priority',
     goalValue: 3,
-    timingPeriodEnd: '2019-08-16T08:39:42.776Z',
-    timingPeriodStart: '2019-08-09T08:39:42.776Z',
+    timingPeriodEnd: parseISO('2019-08-16T08:39:42.776Z'),
+    timingPeriodStart: parseISO('2019-08-09T08:39:42.776Z'),
   },
   {
     actionCode: 'Mosquito Collection',
@@ -926,11 +1018,11 @@ export const activities = [
     actionTitle: 'Mosquito Collection',
     goalDescription:
       'Set a minimum of three mosquito collection traps and complete the mosquito collection process',
-    goalDue: '2019-08-16T08:39:42.776Z',
+    goalDue: parseISO('2019-08-16T08:39:42.776Z'),
     goalPriority: 'medium-priority',
     goalValue: 3,
-    timingPeriodEnd: '2019-08-16T08:39:42.776Z',
-    timingPeriodStart: '2019-08-09T08:39:42.776Z',
+    timingPeriodEnd: parseISO('2019-08-16T08:39:42.776Z'),
+    timingPeriodStart: parseISO('2019-08-09T08:39:42.776Z'),
   },
   {
     actionCode: 'BCC',
@@ -939,11 +1031,11 @@ export const activities = [
     actionReason: 'Investigation',
     actionTitle: 'Behaviour Change Communication',
     goalDescription: 'Complete at least 1 BCC activity for the operational area',
-    goalDue: '2019-08-16T08:39:42.778Z',
+    goalDue: parseISO('2019-08-16T08:39:42.778Z'),
     goalPriority: 'medium-priority',
     goalValue: 1,
-    timingPeriodEnd: '2019-08-16T08:39:42.778Z',
-    timingPeriodStart: '2019-08-09T08:39:42.778Z',
+    timingPeriodEnd: parseISO('2019-08-16T08:39:42.778Z'),
+    timingPeriodStart: parseISO('2019-08-09T08:39:42.778Z'),
   },
 ];
 
@@ -1205,7 +1297,7 @@ export const expectedExtractActivityFromPlanformResult = {
   ],
 };
 
-export const values = {
+export const values: PlanFormFields = {
   activities: [
     {
       actionCode: 'IRS',
@@ -1214,19 +1306,19 @@ export const values = {
       actionReason: 'Routine',
       actionTitle: 'Spray Structures',
       goalDescription: 'Spray structures in the operational area',
-      goalDue: '2019-08-16T11:33:50.997Z',
+      goalDue: parseISO('2019-08-16T11:33:50.997Z'),
       goalPriority: 'medium-priority',
       goalValue: 90,
-      timingPeriodEnd: '2019-08-16T11:33:50.997Z',
-      timingPeriodStart: '2019-08-09T11:33:50.997Z',
+      timingPeriodEnd: parseISO('2019-08-16T11:33:50.997Z'),
+      timingPeriodStart: parseISO('2019-08-09T11:33:50.997Z'),
     },
   ],
   caseNum: '',
-  date: '2019-08-09T11:33:20.156Z',
-  end: '2019-08-29T11:33:20.156Z',
+  date: parseISO('2019-08-09T11:33:20.156Z'),
+  end: parseISO('2019-08-29T11:33:20.156Z'),
   fiStatus: 'A1',
   identifier: '',
-  interventionType: 'IRS',
+  interventionType: InterventionType.IRS,
   jurisdictions: [
     {
       id: '',
@@ -1234,13 +1326,13 @@ export const values = {
     },
   ],
   name: 'IRS-2019-08-09',
-  start: '2019-08-09T11:33:20.156Z',
-  status: 'draft',
+  start: parseISO('2019-08-09T11:33:20.156Z'),
+  status: PlanStatus.DRAFT,
   title: 'IRS 2019-08-09',
   version: '1',
 };
 
-export const valuesWithJurisdiction = {
+export const valuesWithJurisdiction: PlanFormFields = {
   activities: [
     {
       actionCode: 'IRS',
@@ -1249,19 +1341,19 @@ export const valuesWithJurisdiction = {
       actionReason: 'Routine',
       actionTitle: 'Spray Structures',
       goalDescription: 'Spray structures in the operational area',
-      goalDue: '2019-08-16T11:33:50.997Z',
+      goalDue: parseISO('2019-08-16T11:33:50.997Z'),
       goalPriority: 'medium-priority',
       goalValue: 90,
-      timingPeriodEnd: '2019-08-16T11:33:50.997Z',
-      timingPeriodStart: '2019-08-09T11:33:50.997Z',
+      timingPeriodEnd: parseISO('2019-08-16T11:33:50.997Z'),
+      timingPeriodStart: parseISO('2019-08-09T11:33:50.997Z'),
     },
   ],
   caseNum: '',
-  date: '2019-08-09T11:33:20.156Z',
-  end: '2019-08-29T11:33:20.156Z',
+  date: parseISO('2019-08-09T11:33:20.156Z'),
+  end: parseISO('2019-08-29T11:33:20.156Z'),
   fiStatus: 'A1',
   identifier: '',
-  interventionType: 'IRS',
+  interventionType: InterventionType.IRS,
   jurisdictions: [
     {
       id: 'd6396aeb-436d-4b78-91bd-7387ec2e8d5c',
@@ -1269,27 +1361,80 @@ export const valuesWithJurisdiction = {
     },
   ],
   name: 'IRS-2019-08-09',
-  start: '2019-08-09T11:33:20.156Z',
-  status: 'draft',
+  start: parseISO('2019-08-09T11:33:20.156Z'),
+  status: PlanStatus.DRAFT,
   title: 'IRS 2019-08-09',
   version: '1',
 };
-export const event = {
+
+export const event: FormEvent = {
+  bubbles: false,
+  cancelable: false,
+  currentTarget: {} as EventTarget & Element,
+  defaultPrevented: false,
+  eventPhase: 0,
+  isDefaultPrevented: () => false,
+  isPropagationStopped: () => false,
+  isTrusted: true,
+  nativeEvent: {} as Event,
+  persist: () => null,
+  preventDefault: () => null,
+  stopPropagation: () => null,
   target: {
+    addEventListener: () => false,
+    dispatchEvent: () => false,
     name: 'interventionType',
+    removeEventListener: () => false,
     value: 'FI',
-  },
+  } as EventTarget,
+  timeStamp: 0,
+  type: '',
 };
 
-export const event2 = {
+export const event2: FormEvent = {
+  bubbles: false,
+  cancelable: false,
+  currentTarget: {} as EventTarget & Element,
+  defaultPrevented: false,
+  eventPhase: 0,
+  isDefaultPrevented: () => false,
+  isPropagationStopped: () => false,
+  isTrusted: true,
+  nativeEvent: {} as Event,
+  persist: () => null,
+  preventDefault: () => null,
+  stopPropagation: () => null,
   target: {
+    addEventListener: () => false,
+    dispatchEvent: () => false,
     name: 'interventionType',
+    removeEventListener: () => false,
     value: 'IRS',
-  },
+  } as EventTarget,
+  timeStamp: 0,
+  type: '',
 };
 
-export const event3 = {
-  target: {},
+export const event3: FormEvent = {
+  bubbles: false,
+  cancelable: false,
+  currentTarget: {} as EventTarget & Element,
+  defaultPrevented: false,
+  eventPhase: 0,
+  isDefaultPrevented: () => false,
+  isPropagationStopped: () => false,
+  isTrusted: true,
+  nativeEvent: {} as Event,
+  persist: () => null,
+  preventDefault: () => null,
+  stopPropagation: () => null,
+  target: {
+    addEventListener: () => null,
+    dispatchEvent: () => false,
+    removeEventListener: () => null,
+  } as EventTarget,
+  timeStamp: 0,
+  type: '',
 };
 
 export const expectedPlanDefinition = {
@@ -1355,7 +1500,7 @@ export const expectedPlanDefinition = {
   version: '1',
 };
 
-export const values2 = {
+export const values2: PlanFormFields = {
   activities: [
     {
       actionCode: 'IRS',
@@ -1364,17 +1509,53 @@ export const values2 = {
       actionReason: 'Routine',
       actionTitle: 'Spray Structures',
       goalDescription: 'Spray structures in the operational area',
-      goalDue: '2019-08-16T12:32:15.116Z',
+      goalDue: parseISO(`2019-08-16${DEFAULT_TIME}`),
       goalPriority: 'medium-priority',
       goalValue: 90,
-      timingPeriodEnd: '2019-08-16T12:32:15.117Z',
-      timingPeriodStart: '2019-08-09T12:32:15.117Z',
+      timingPeriodEnd: parseISO(`2019-08-16${DEFAULT_TIME}`),
+      timingPeriodStart: parseISO(`2019-08-09${DEFAULT_TIME}`),
     },
   ],
   caseNum: '',
-  date: '2019-08-09T12:32:01.685Z',
-  end: '2019-08-29T12:32:01.685Z',
+  date: parseISO(`2019-08-09${DEFAULT_TIME}`),
+  end: parseISO(`2019-08-29${DEFAULT_TIME}`),
   identifier: '',
+  interventionType: InterventionType.IRS,
+  jurisdictions: [
+    {
+      id: '3952',
+      name: 'Akros_2',
+    },
+  ],
+  name: 'IRS-2019-08-09',
+  start: parseISO(`2019-08-09${DEFAULT_TIME}`),
+  status: PlanStatus.DRAFT,
+  title: 'IRS 2019-08-09',
+  version: '1',
+};
+
+export const planFormValues = {
+  activities: [
+    {
+      actionCode: 'IRS',
+      actionDescription: 'Visit each structure in the operational area and attempt to spray',
+      actionIdentifier: 'ce6f39db-505a-5d44-b70d-c92a73be6c15',
+      actionReason: 'Routine',
+      actionTitle: 'Spray Structures',
+      goalDescription: 'Spray structures in the operational area',
+      goalDue: parseISO(`2019-08-16${DEFAULT_TIME}`),
+      goalPriority: 'medium-priority',
+      goalValue: 90,
+      timingPeriodEnd: parseISO(`2019-08-16${DEFAULT_TIME}`),
+      timingPeriodStart: parseISO(`2019-08-09${DEFAULT_TIME}`),
+    },
+  ],
+  caseNum: '',
+  date: parseISO(`2019-08-09${DEFAULT_TIME}`),
+  end: parseISO(`2019-08-29${DEFAULT_TIME}`),
+  fiReason: undefined,
+  fiStatus: undefined,
+  identifier: 'afbfc83d-c7a2-5293-9db5-081781235c60',
   interventionType: 'IRS',
   jurisdictions: [
     {
@@ -1383,11 +1564,133 @@ export const values2 = {
     },
   ],
   name: 'IRS-2019-08-09',
-  start: '2019-08-09T12:32:01.685Z',
+  opensrpEventId: undefined,
+  start: parseISO(`2019-08-09${DEFAULT_TIME}`),
   status: 'draft',
   title: 'IRS 2019-08-09',
   version: '1',
 };
+
+export const planFormValues2 = {
+  activities: [
+    {
+      actionCode: 'Case Confirmation',
+      actionDescription: 'Confirm the index case',
+      actionIdentifier: 'c711ae51-6432-4b68-84c3-d2b5b1fd1948',
+      actionReason: 'Investigation',
+      actionTitle: 'Case Confirmation',
+      goalDescription: 'Confirm the index case',
+      goalDue: moment('2019-05-21T00:00:00.000Z').toDate(),
+      goalPriority: 'medium-priority',
+      goalValue: 1,
+      timingPeriodEnd: moment('2019-05-24T00:00:00.000Z').toDate(),
+      timingPeriodStart: moment('2019-05-21T00:00:00.000Z').toDate(),
+    },
+    {
+      actionCode: 'RACD Register Family',
+      actionDescription:
+        'Register all families & famiy members in all residential structures enumerated (100%) within the operational area',
+      actionIdentifier: '402b8c13-6774-4515-929f-48e71a61a379',
+      actionReason: 'Investigation',
+      actionTitle: 'Family Registration',
+      goalDescription:
+        'Register all families and family members in all residential structures enumerated or added (100%) within operational area',
+      goalDue: moment('2019-08-30T00:00:00.000Z').toDate(),
+      goalPriority: 'medium-priority',
+      goalValue: 100,
+      timingPeriodEnd: moment('2019-08-30T00:00:00.000Z').toDate(),
+      timingPeriodStart: moment('2019-05-21T00:00:00.000Z').toDate(),
+    },
+    {
+      actionCode: 'Bednet Distribution',
+      actionDescription:
+        'Visit 100% of residential structures in the operational area and provide nets',
+      actionIdentifier: '1bd830ea-50e3-44dc-b855-9d5e9339e2be',
+      actionReason: 'Routine',
+      actionTitle: 'Bednet Distribution',
+      goalDescription:
+        'Visit 100% of residential structures in the operational area and provide nets',
+      goalDue: moment('2019-08-30T00:00:00.000Z').toDate(),
+      goalPriority: 'medium-priority',
+      goalValue: 100,
+      timingPeriodEnd: moment('2019-08-30T00:00:00.000Z').toDate(),
+      timingPeriodStart: moment('2019-05-21T00:00:00.000Z').toDate(),
+    },
+    {
+      actionCode: 'Blood Screening',
+      actionDescription:
+        'Visit all residential structures (100%) within a 1 km radius of a confirmed index case and test each registered person',
+      actionIdentifier: '2303a70e-4e3f-4fb9-a430-f0476010bfb5',
+      actionReason: 'Investigation',
+      actionTitle: 'RACD Blood screening',
+      goalDescription:
+        'Visit all residential structures (100%) within a 1 km radius of a confirmed index case and test each registered person',
+      goalDue: moment('2019-05-28T00:00:00.000Z').toDate(),
+      goalPriority: 'medium-priority',
+      goalValue: 100,
+      timingPeriodEnd: moment('2019-05-28T00:00:00.000Z').toDate(),
+      timingPeriodStart: moment('2019-05-21T00:00:00.000Z').toDate(),
+    },
+    {
+      actionCode: 'Larval Dipping',
+      actionDescription:
+        'Perform a minimum of three larval dipping activities in the operational area',
+      actionIdentifier: '2482dfd7-8284-43c6-bea1-a03dcda71ff4',
+      actionReason: 'Investigation',
+      actionTitle: 'Larval Dipping',
+      goalDescription:
+        'Perform a minimum of three larval dipping activities in the operational area',
+      goalDue: moment('2019-05-28T00:00:00.000Z').toDate(),
+      goalPriority: 'medium-priority',
+      goalValue: 3,
+      timingPeriodEnd: moment('2019-05-28T00:00:00.000Z').toDate(),
+      timingPeriodStart: moment('2019-05-21T00:00:00.000Z').toDate(),
+    },
+    {
+      actionCode: 'Mosquito Collection',
+      actionDescription:
+        'Set a minimum of three mosquito collection traps and complete the mosquito collection process',
+      actionIdentifier: '423f6665-5367-40be-855e-7c5e6941a0c3',
+      actionReason: 'Investigation',
+      actionTitle: 'Mosquito Collection',
+      goalDescription:
+        'Set a minimum of three mosquito collection traps and complete the mosquito collection process',
+      goalDue: moment('2019-05-28T00:00:00.000Z').toDate(),
+      goalPriority: 'medium-priority',
+      goalValue: 3,
+      timingPeriodEnd: moment('2019-05-28T00:00:00.000Z').toDate(),
+      timingPeriodStart: moment('2019-05-21T00:00:00.000Z').toDate(),
+    },
+    {
+      actionCode: 'BCC',
+      actionDescription: 'Conduct BCC activity',
+      actionIdentifier: 'c8fc89a9-cdd2-4746-8272-650883ae380e',
+      actionReason: 'Investigation',
+      actionTitle: 'Behaviour Change Communication',
+      goalDescription: 'Complete at least 1 BCC activity for the operational area',
+      goalDue: moment('2019-06-21T00:00:00.000Z').toDate(),
+      goalPriority: 'medium-priority',
+      goalValue: 1,
+      timingPeriodEnd: moment('2019-06-21T00:00:00.000Z').toDate(),
+      timingPeriodStart: moment('2019-05-21T00:00:00.000Z').toDate(),
+    },
+  ],
+  caseNum: '',
+  date: moment('2019-05-19T00:00:00.000Z').toDate(),
+  end: moment('2019-08-30T00:00:00.000Z').toDate(),
+  fiReason: 'Case-triggered',
+  fiStatus: 'A2',
+  identifier: '356b6b84-fc36-4389-a44a-2b038ed2f38d',
+  interventionType: 'FI',
+  jurisdictions: [{ id: '3952', name: '3952' }],
+  name: 'A2-Lusaka_Akros_Focus_2',
+  opensrpEventId: undefined,
+  start: moment('2019-05-20T00:00:00.000Z').toDate(),
+  status: 'active',
+  title: 'A2-Lusaka Akros Test Focus 2',
+  version: '1',
+};
+
 export const jurisdictionLevel0JSON =
   '[{"type":"Feature","id":"2942","properties":{"status":"Active","name":"Lusaka","geographicLevel":0,"version":0},"serverVersion":1545204913827},{"type":"Feature","id":"f8863022-ff88-4c22-b2d1-83f59f31b874","properties":{"status":"Active","name":"Oddar Meanchey Province","geographicLevel":0,"version":0},"serverVersion":1553900609745},{"type":"Feature","id":"9c3c2db4-bddd-44c5-870a-a0eef539e4da","properties":{"status":"Active","name":"Lop Buri","geographicLevel":0,"version":0},"serverVersion":1554861473099},{"type":"Feature","id":"3953","properties":{"status":"Active","name":"Siavonga","geographicLevel":0,"version":0},"serverVersion":1549235783958},{"type":"Feature","id":"3954","properties":{"status":"Active","name":"Siavonga","geographicLevel":0,"version":0},"serverVersion":1549387863860},{"type":"Feature","id":"2940","properties":{"status":"Active","name":"Katete","geographicLevel":0,"version":0},"serverVersion":1545218425249},{"type":"Feature","id":"2941","properties":{"status":"Active","name":"Sinda","geographicLevel":0,"version":0},"serverVersion":1545219282280},{"type":"Feature","id":"2939","properties":{"status":"Active","name":"Chadiza","geographicLevel":0,"version":0},"serverVersion":1545217996275},{"type":"Feature","id":"16a77bba-8777-4bc4-8566-d193cb04af4c","properties":{"status":"Active","name":"Botswana","geographicLevel":0,"version":0},"serverVersion":1563583239021},{"type":"Feature","id":"f45b9380-c970-4dd1-8533-9e95ab12f128","properties":{"status":"Active","name":"Namibia","geographicLevel":0,"version":0,"ADM0_EN":"Namibia","ADM0_PCODE":"NA"},"serverVersion":1564401702479}]';
 

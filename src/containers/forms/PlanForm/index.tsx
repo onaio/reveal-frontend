@@ -6,7 +6,6 @@ import { Button, FormGroup, Label } from 'reactstrap';
 import DatePickerWrapper from '../../../components/DatePickerWrapper';
 import {
   DATE_FORMAT,
-  DEFAULT_ACTIVITY_DURATION_DAYS,
   DEFAULT_PLAN_DURATION_DAYS,
   DEFAULT_PLAN_VERSION,
 } from '../../../configs/env';
@@ -27,30 +26,10 @@ import {
   getFormActivities,
   getNameTitle,
   IRSActivities,
-  PlanActivityFormFields,
   PlanFormFields,
   PlanJurisdictionFormFields,
   PlanSchema,
 } from './helpers';
-
-/** initial values for plan activity forms */
-const initialActivitiesValues: PlanActivityFormFields = {
-  actionCode: '',
-  actionDescription: '',
-  actionIdentifier: '',
-  actionReason: actionReasons[0],
-  actionTitle: '',
-  goalDescription: '',
-  goalDue: moment()
-    .add(DEFAULT_ACTIVITY_DURATION_DAYS, 'days')
-    .toDate(),
-  goalPriority: goalPriorities[1],
-  goalValue: 0,
-  timingPeriodEnd: moment()
-    .add(DEFAULT_ACTIVITY_DURATION_DAYS, 'days')
-    .toDate(),
-  timingPeriodStart: moment().toDate(),
-};
 
 /** initial values for plan jurisdiction forms */
 const initialJurisdictionValues: PlanJurisdictionFormFields = {
@@ -81,6 +60,7 @@ export const defaultInitialValues: PlanFormFields = {
 
 /** interface for plan form props */
 interface PlanFormProps {
+  disabledActivityFields: string[];
   disabledFields: string[];
   initialValues: PlanFormFields;
   redirectAfterAction: string;
@@ -91,7 +71,24 @@ const PlanForm = (props: PlanFormProps) => {
   const [globalError, setGlobalError] = useState<string>('');
   const [areWeDoneHere, setAreWeDoneHere] = useState<boolean>(false);
 
-  const { disabledFields, initialValues, redirectAfterAction } = props;
+  const { disabledActivityFields, disabledFields, initialValues, redirectAfterAction } = props;
+  const editMode: boolean = initialValues.identifier !== '';
+
+  const disAllowedStatusChoices: string[] = [];
+  if (editMode) {
+    // Dont allow setting status back to draft
+    if (initialValues.status !== PlanStatus.DRAFT) {
+      disAllowedStatusChoices.push(PlanStatus.DRAFT);
+    }
+    // set these fields to friendly defaults if not set or else the form cant be submitted
+    if (
+      initialValues.interventionType === InterventionType.FI &&
+      (!initialValues.fiReason || !FIReasons.includes(initialValues.fiReason))
+    ) {
+      initialValues.fiReason = FIReasons[0];
+    }
+  }
+
   return (
     <div className="form-container">
       {areWeDoneHere === true && <Redirect to={redirectAfterAction} />}
@@ -102,15 +99,27 @@ const PlanForm = (props: PlanFormProps) => {
           const payload = generatePlanDefinition(values);
           const apiService = new OpenSRPService('/plans');
 
-          apiService
-            .create(payload)
-            .then(() => {
-              setSubmitting(false);
-              setAreWeDoneHere(true);
-            })
-            .catch((e: Error) => {
-              setGlobalError(e.message);
-            });
+          if (editMode) {
+            apiService
+              .update(payload)
+              .then(() => {
+                setSubmitting(false);
+                setAreWeDoneHere(true);
+              })
+              .catch((e: Error) => {
+                setGlobalError(e.message);
+              });
+          } else {
+            apiService
+              .create(payload)
+              .then(() => {
+                setSubmitting(false);
+                setAreWeDoneHere(true);
+              })
+              .catch((e: Error) => {
+                setGlobalError(e.message);
+              });
+          }
         }}
         validationSchema={PlanSchema}
       >
@@ -173,88 +182,121 @@ const PlanForm = (props: PlanFormProps) => {
             </FormGroup>
 
             <h5 className="mt-5">Locations</h5>
+
             <FieldArray
               name="jurisdictions"
               /* tslint:disable-next-line jsx-no-lambda */
               render={arrayHelpers => (
-                <div className="mb-5">
-                  {values.jurisdictions.map((jurisdiction, index) => (
-                    <fieldset key={index}>
-                      {errors.jurisdictions && errors.jurisdictions[index] && (
-                        <div className="alert alert-danger" role="alert">
-                          <h6 className="alert-heading">Please fix these errors</h6>
-                          <ul className="list-unstyled">
-                            {Object.entries(errors.jurisdictions[index] || {}).map(([key, val]) => (
-                              <li key={key}>
-                                <strong>Focus Area</strong>: {val}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
-                      <div className="jurisdiction-item position-relative">
-                        {values.jurisdictions && values.jurisdictions.length > 1 && (
-                          <button
-                            type="button"
-                            className="close position-absolute removeArrItem removeJurisdiction"
-                            aria-label="Close"
-                            onClick={() => arrayHelpers.remove(index)}
-                          >
-                            <span aria-hidden="true">&times;</span>
-                          </button>
-                        )}
-                        <FormGroup
-                          className={
-                            errors.jurisdictions &&
-                            doesFieldHaveErrors('id', index, errors.jurisdictions)
-                              ? 'is-invalid async-select-container'
-                              : 'async-select-container'
-                          }
-                        >
-                          <Label for={`jurisdictions-${index}-id`}>Focus Area</Label>
-                          <Field
-                            required={true}
-                            component={JurisdictionSelect}
-                            name={`jurisdictions[${index}].id`}
-                            id={`jurisdictions-${index}-id`}
-                            placeholder="Select Focus Area"
-                            aria-label="Select Focus Area"
-                            disabled={disabledFields.includes('jurisdictions')}
-                            className={
-                              errors.jurisdictions &&
-                              doesFieldHaveErrors('id', index, errors.jurisdictions)
-                                ? 'is-invalid async-select'
-                                : 'async-select'
-                            }
-                            labelFieldName={`jurisdictions[${index}].name`}
-                          />
-                          <Field
-                            type="hidden"
-                            name={`jurisdictions[${index}].name`}
-                            id={`jurisdictions-${index}-name`}
-                          />
-
+                <div>
+                  {editMode ? (
+                    <div id="jurisdictions-display-container" className="mb-5">
+                      <ul id="selected-jurisdiction-list">
+                        {values.jurisdictions.map((jurisdiction, index) => (
+                          <li key={index}>
+                            <span>{jurisdiction.name}</span>
+                            <fieldset>
+                              <Field
+                                type="hidden"
+                                readOnly={true}
+                                name={`jurisdictions[${index}].id`}
+                                id={`jurisdictions-${index}-id`}
+                                value={jurisdiction.id}
+                              />
+                              <Field
+                                type="hidden"
+                                readOnly={true}
+                                name={`jurisdictions[${index}].name`}
+                                id={`jurisdictions-${index}-name`}
+                                value={jurisdiction.name}
+                              />
+                            </fieldset>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ) : (
+                    <div id="jurisdictions-select-container" className="mb-5">
+                      {values.jurisdictions.map((jurisdiction, index) => (
+                        <fieldset key={index}>
                           {errors.jurisdictions && errors.jurisdictions[index] && (
-                            <small className="form-text text-danger">An Error Ocurred</small>
+                            <div className="alert alert-danger" role="alert">
+                              <h6 className="alert-heading">Please fix these errors</h6>
+                              <ul className="list-unstyled">
+                                {Object.entries(errors.jurisdictions[index] || {}).map(
+                                  ([key, val]) => (
+                                    <li key={key}>
+                                      <strong>Focus Area</strong>: {val}
+                                    </li>
+                                  )
+                                )}
+                              </ul>
+                            </div>
                           )}
+                          <div className="jurisdiction-item position-relative">
+                            {values.jurisdictions && values.jurisdictions.length > 1 && (
+                              <button
+                                type="button"
+                                className="close position-absolute removeArrItem removeJurisdiction"
+                                aria-label="Close"
+                                onClick={() => arrayHelpers.remove(index)}
+                              >
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            )}
+                            <FormGroup
+                              className={
+                                errors.jurisdictions &&
+                                doesFieldHaveErrors('id', index, errors.jurisdictions)
+                                  ? 'is-invalid async-select-container'
+                                  : 'async-select-container'
+                              }
+                            >
+                              <Label for={`jurisdictions-${index}-id`}>Focus Area</Label>
+                              <Field
+                                required={true}
+                                component={JurisdictionSelect}
+                                name={`jurisdictions[${index}].id`}
+                                id={`jurisdictions-${index}-id`}
+                                placeholder="Select Focus Area"
+                                aria-label="Select Focus Area"
+                                disabled={disabledFields.includes('jurisdictions')}
+                                className={
+                                  errors.jurisdictions &&
+                                  doesFieldHaveErrors('id', index, errors.jurisdictions)
+                                    ? 'is-invalid async-select'
+                                    : 'async-select'
+                                }
+                                labelFieldName={`jurisdictions[${index}].name`}
+                              />
+                              <Field
+                                type="hidden"
+                                name={`jurisdictions[${index}].name`}
+                                id={`jurisdictions-${index}-name`}
+                              />
 
-                          <ErrorMessage
-                            name={`jurisdictions[${index}].id`}
-                            component="small"
-                            className="form-text text-danger"
-                          />
-                        </FormGroup>
-                      </div>
-                    </fieldset>
-                  ))}
-                  {values.interventionType === InterventionType.IRS && (
-                    <button
-                      type="button"
-                      className="btn btn-primary btn-sm mb-5 addJurisdiction"
-                      onClick={() => arrayHelpers.push(initialJurisdictionValues)}
-                    >
-                      Add Focus Area
-                    </button>
+                              {errors.jurisdictions && errors.jurisdictions[index] && (
+                                <small className="form-text text-danger">An Error Ocurred</small>
+                              )}
+
+                              <ErrorMessage
+                                name={`jurisdictions[${index}].id`}
+                                component="small"
+                                className="form-text text-danger"
+                              />
+                            </FormGroup>
+                          </div>
+                        </fieldset>
+                      ))}
+                      {values.interventionType === InterventionType.IRS && (
+                        <button
+                          type="button"
+                          className="btn btn-primary btn-sm mb-5 addJurisdiction"
+                          onClick={() => arrayHelpers.push(initialJurisdictionValues)}
+                        >
+                          Add Focus Area
+                        </button>
+                      )}
+                    </div>
                   )}
                 </div>
               )}
@@ -347,11 +389,13 @@ const PlanForm = (props: PlanFormProps) => {
                 disabled={disabledFields.includes('status')}
                 className={errors.status ? 'form-control is-invalid' : 'form-control'}
               >
-                {Object.entries(PlanStatus).map(e => (
-                  <option key={e[0]} value={e[1]}>
-                    {e[1]}
-                  </option>
-                ))}
+                {Object.entries(PlanStatus)
+                  .filter(e => !disAllowedStatusChoices.includes(e[1]))
+                  .map(e => (
+                    <option key={e[0]} value={e[1]}>
+                      {e[1]}
+                    </option>
+                  ))}
               </Field>
               <ErrorMessage name="status" component="small" className="form-text text-danger" />
             </FormGroup>
@@ -414,7 +458,10 @@ const PlanForm = (props: PlanFormProps) => {
                           name={`activities[${index}].actionTitle`}
                           id={`activities-${index}-actionTitle`}
                           required={true}
-                          disabled={disabledFields.includes('activities')}
+                          disabled={
+                            disabledFields.includes('activities') ||
+                            disabledActivityFields.includes('actionTitle')
+                          }
                           className={
                             errors.activities &&
                             doesFieldHaveErrors('actionTitle', index, errors.activities)
@@ -450,7 +497,10 @@ const PlanForm = (props: PlanFormProps) => {
                           name={`activities[${index}].actionDescription`}
                           id={`activities-${index}-actionDescription`}
                           required={true}
-                          disabled={disabledFields.includes('activities')}
+                          disabled={
+                            disabledFields.includes('activities') ||
+                            disabledActivityFields.includes('actionDescription')
+                          }
                           className={
                             errors.activities &&
                             doesFieldHaveErrors('actionDescription', index, errors.activities)
@@ -477,7 +527,10 @@ const PlanForm = (props: PlanFormProps) => {
                           name={`activities[${index}].goalValue`}
                           id={`activities-${index}-goalValue`}
                           required={true}
-                          disabled={disabledFields.includes('activities')}
+                          disabled={
+                            disabledFields.includes('activities') ||
+                            disabledActivityFields.includes('goalValue')
+                          }
                           className={
                             errors.activities &&
                             doesFieldHaveErrors('goalValue', index, errors.activities)
@@ -498,7 +551,10 @@ const PlanForm = (props: PlanFormProps) => {
                           name={`activities[${index}].timingPeriodStart`}
                           id={`activities-${index}-timingPeriodStart`}
                           required={true}
-                          disabled={disabledFields.includes('activities')}
+                          disabled={
+                            disabledFields.includes('activities') ||
+                            disabledActivityFields.includes('timingPeriodStart')
+                          }
                           dateFormat={DATE_FORMAT}
                           className={
                             errors.activities &&
@@ -523,7 +579,10 @@ const PlanForm = (props: PlanFormProps) => {
                           name={`activities[${index}].timingPeriodEnd`}
                           id={`activities-${index}-timingPeriodEnd`}
                           required={true}
-                          disabled={disabledFields.includes('activities')}
+                          disabled={
+                            disabledFields.includes('activities') ||
+                            disabledActivityFields.includes('timingPeriodEnd')
+                          }
                           dateFormat={DATE_FORMAT}
                           className={
                             errors.activities &&
@@ -554,7 +613,10 @@ const PlanForm = (props: PlanFormProps) => {
                           name={`activities[${index}].actionReason`}
                           id={`activities-${index}-actionReason`}
                           required={true}
-                          disabled={disabledFields.includes('activities')}
+                          disabled={
+                            disabledFields.includes('activities') ||
+                            disabledActivityFields.includes('actionReason')
+                          }
                           className={
                             errors.activities &&
                             doesFieldHaveErrors('actionReason', index, errors.activities)
@@ -581,7 +643,10 @@ const PlanForm = (props: PlanFormProps) => {
                           name={`activities[${index}].goalPriority`}
                           id={`activities-${index}-goalPriority`}
                           required={true}
-                          disabled={disabledFields.includes('activities')}
+                          disabled={
+                            disabledFields.includes('activities') ||
+                            disabledActivityFields.includes('goalPriority')
+                          }
                           className={
                             errors.activities &&
                             doesFieldHaveErrors('goalPriority', index, errors.activities)
@@ -625,9 +690,27 @@ const PlanForm = (props: PlanFormProps) => {
 };
 
 const defaultProps: PlanFormProps = {
+  disabledActivityFields: [],
   disabledFields: [],
   initialValues: defaultInitialValues,
   redirectAfterAction: PLAN_LIST_URL,
+};
+
+/** props for updating plan definition objects
+ * We are defining these here to keep things DRY
+ */
+export const propsForUpdatingPlans: Partial<PlanFormProps> = {
+  disabledActivityFields: ['actionReason', 'goalPriority'],
+  disabledFields: [
+    'interventionType',
+    'fiReason',
+    'fiStatus',
+    'identifier',
+    'name',
+    'caseNum',
+    'opensrpEventId',
+    'jurisdictions',
+  ],
 };
 
 PlanForm.defaultProps = defaultProps;

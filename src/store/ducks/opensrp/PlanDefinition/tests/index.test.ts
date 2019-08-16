@@ -5,6 +5,7 @@ import { PlanDefinition } from '../../../../../configs/settings';
 import store from '../../../../index';
 import { InterventionType } from '../../../plans';
 import reducer, {
+  addPlanDefinition,
   fetchPlanDefinitions,
   getPlanDefinitionById,
   getPlanDefinitionsArray,
@@ -80,6 +81,33 @@ describe('reducers/opensrp/PlanDefinition', () => {
     expect(getPlanDefinitionsArray(store.getState())).toEqual([
       fixtures.plans[0],
       fixtures.plans[1],
+      fixtures.plans[3],
+    ]);
+  });
+
+  it('You can add one plan definition object to the store', () => {
+    // reset
+    store.dispatch(removePlanDefinitions());
+
+    // add one plan definition objects
+    store.dispatch(addPlanDefinition(fixtures.plans[2] as PlanDefinition));
+    // we should have it in the store
+    expect(getPlanDefinitionsArray(store.getState())).toEqual([fixtures.plans[2]]);
+
+    // fetch one more plan definition objects
+    store.dispatch(addPlanDefinition(fixtures.plans[3] as PlanDefinition));
+    // we should now have a total of three plan definition objects in the store
+    expect(getPlanDefinitionsArray(store.getState())).toEqual([
+      fixtures.plans[2],
+      fixtures.plans[3],
+    ]);
+
+    // add an existing plan again
+    store.dispatch(addPlanDefinition(fixtures.plans[2] as PlanDefinition));
+    // nothing should have changed in the store
+    // we should now have a total of three plan definition objects in the store
+    expect(getPlanDefinitionsArray(store.getState())).toEqual([
+      fixtures.plans[2],
       fixtures.plans[3],
     ]);
   });
