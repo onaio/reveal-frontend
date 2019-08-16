@@ -38,6 +38,60 @@ describe('components/GisidaWrapper', () => {
     );
   });
 
+  it('renders given symbol layers based on currentGoal', () => {
+    /* get this from settings file so when someone adds a goal that should render a symbol layer 
+      the snapshots fail **/
+    const goalsWithSymbols = [
+      'Mosquito_Collection_Min_3_Traps',
+      'Larval_Dipping_Min_3_Sites',
+      'Case_Confirmation',
+    ];
+    goalsWithSymbols.forEach(goal => {
+      const polygonFeatureCollection: FeatureCollection<TaskGeoJSON> = {
+        features: fixtures.polygonTask.map((task: any) => task.geojson),
+        type: 'FeatureCollection',
+      };
+      const pointFeatureCollection: FeatureCollection<TaskGeoJSON> = {
+        features: fixtures.pointTasks.map((task: any) => task.geojson),
+        type: 'FeatureCollection',
+      };
+
+      const props1 = {
+        basemapStyle: 'mapbox://styles/mapbox/satellite-v9',
+        currentGoal: null,
+        geoData: fixtures.jurisdictions[2],
+        goal: fixtures.goals,
+        handlers: [],
+        pointFeatureCollection,
+        polygonFeatureCollection,
+        structures: wrapFeatureCollection([fixtures.structure1.geojson]),
+      };
+      const props = {
+        currentGoal: goal,
+        geoData: fixtures.jurisdictions[2],
+        goal: fixtures.goals,
+        handlers: [],
+        pointFeatureCollection,
+        polygonFeatureCollection,
+        structures: wrapFeatureCollection([fixtures.structure1.geojson]),
+      };
+      const wrapper = mount(<GisidaWrapper {...props1} />);
+      /** Investigate why it won't set state inside initmap even though
+       * it goes into init map this leads to setting dorenderMap to state
+       * manually
+       */
+      wrapper.setState({ doRenderMap: true });
+      wrapper.setProps({ ...props });
+
+      jest.runOnlyPendingTimers();
+      const layer = store.getState()['map-1'].layers;
+      expect(layer).toMatchSnapshot();
+      const componentWillUnmount = jest.spyOn(wrapper.instance(), 'componentWillUnmount');
+      wrapper.unmount();
+      expect(componentWillUnmount).toHaveBeenCalled();
+    });
+  });
+
   it('renders map component without Featurecollection', () => {
     const props = {
       basemapStyle: 'mapbox://styles/mapbox/satellite-v9',
