@@ -96,13 +96,12 @@ export class PlanCompletion extends React.Component<
 
   public render() {
     const { plan } = this.props;
-
     if (!plan) {
       return <Loading />;
     }
 
     return (
-      <div>
+      <div id="plan-completion-page-wrapper">
         <Helmet>
           <title>{`${MARK} ${plan.plan_title} ${AS} ${COMPLETE.toLocaleLowerCase()}`}</title>
         </Helmet>
