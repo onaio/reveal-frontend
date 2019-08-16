@@ -1,4 +1,5 @@
-.close {
+.close,
+.modal-content .close {
   color: #6c757d !important;
   font-size: 30px;
 }
