@@ -93,8 +93,18 @@ describe('reducers/opensrp/PlanDefinition', () => {
     store.dispatch(addPlanDefinition(fixtures.plans[2] as PlanDefinition));
     // we should have it in the store
     expect(getPlanDefinitionsArray(store.getState())).toEqual([fixtures.plans[2]]);
+
     // fetch one more plan definition objects
     store.dispatch(addPlanDefinition(fixtures.plans[3] as PlanDefinition));
+    // we should now have a total of three plan definition objects in the store
+    expect(getPlanDefinitionsArray(store.getState())).toEqual([
+      fixtures.plans[2],
+      fixtures.plans[3],
+    ]);
+
+    // add an existing plan again
+    store.dispatch(addPlanDefinition(fixtures.plans[2] as PlanDefinition));
+    // nothing should have changed in the store
     // we should now have a total of three plan definition objects in the store
     expect(getPlanDefinitionsArray(store.getState())).toEqual([
       fixtures.plans[2],
