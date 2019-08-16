@@ -233,7 +233,7 @@ describe('containers/forms/PlanForm', () => {
     // there is no button to add more jurisdictions
     expect(wrapper.find(`.addJurisdiction`).length).toEqual(0);
 
-    // there are now 7 bottons to remove activities
+    // there are now 7 buttons to remove activities
     expect(wrapper.find(`.removeActivity`).length).toEqual(7);
     // there is no modal to add more activities
     expect(wrapper.find(`.add-more-activities`).length).toEqual(0);
@@ -243,7 +243,7 @@ describe('containers/forms/PlanForm', () => {
       .find(`.removeActivity`)
       .first()
       .simulate('click');
-    // there are now 6 bottons to remove activities
+    // there are now 6 buttons to remove activities
     expect(wrapper.find(`.removeActivity`).length).toEqual(6);
     // there is now a modal to add more activities
     expect(wrapper.find(`Button .add-more-activities`).length).toEqual(1);
@@ -282,6 +282,11 @@ describe('containers/forms/PlanForm - Edit', () => {
     expect(toJson(wrapper.find('#date input'))).toMatchSnapshot('date field');
     expect(wrapper.find('#jurisdictions-select-container').length).toEqual(0);
     expect(wrapper.find('#jurisdictions-display-container').length).toEqual(1);
+
+    // there are now buttons to remove activities
+    expect(wrapper.find(`.removeActivity`).length).toEqual(0);
+    // there is no modal to add more activities
+    expect(wrapper.find(`.add-more-activities`).length).toEqual(0);
   });
 
   it('renders jurisdictions fields correctly', () => {
