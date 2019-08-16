@@ -669,7 +669,6 @@ const PlanForm = (props: PlanFormProps) => {
                           disabled={
                             disabledFields.includes('activities') ||
                             disabledActivityFields.includes('goalPriority')
-
                           }
                           className={
                             errors.activities &&
