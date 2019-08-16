@@ -1,5 +1,5 @@
 import { PropertyName } from 'lodash';
-import { REQUIRED } from '../../../../constants';
+import { DATE, IS, REQUIRED } from '../../../../constants';
 import { FlexObject } from '../../../../helpers/utils';
 import { InterventionType } from '../../../../store/ducks/plans';
 import { PlanSchema } from '../helpers';
@@ -295,14 +295,30 @@ describe('src/containers/forms/PlanForm.PlanSchema.caseNum', () => {
   });
 });
 
-// describe('src/containers/forms/PlanForm.PlanSchema.date', () => {
-//   it('clean test for valid data', () => {
-//     const BadDateplan = {
-//       // Is there a date validator for yup.date
-//       date: 'string that is obviously not a date'
-//     }
+describe('src/containers/forms/PlanForm.PlanSchema.date', () => {
+  it('yup validates date as date', () => {
+    expect.assertions(1);
+  });
 
-//     const BadDateplan1 = {
-//     }
-//   })
-// })
+  it('date validation works for valid date', () => {
+    const propertyName = 'date';
+    const errorMessage = `${DATE} ${IS} ${REQUIRED}`;
+    const shouldFail = false;
+
+    const BadDatePlan = {};
+
+    testRunner(BadDatePlan, propertyName, errorMessage, shouldFail);
+  });
+
+  it('date validation works for invalid date', () => {
+    const propertyName = 'date';
+    const errorMessage = `${DATE} ${IS} ${REQUIRED}`;
+    const shouldFail = false;
+
+    const goodDatePlan = {
+      date: '',
+    };
+
+    testRunner(goodDatePlan, propertyName, errorMessage, shouldFail);
+  });
+});
