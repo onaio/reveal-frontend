@@ -7,9 +7,9 @@ import { Store } from 'redux';
 import Loading from '../../../../../components/page/Loading';
 import {
   AS,
+  CANCEL,
   COMPLETE,
   CONFIRM,
-  GO_BACK,
   MARK,
   MARK_AS_COMPLETE,
   OPENSRP_PLANS,
@@ -48,12 +48,11 @@ export class PlanCompletion extends React.Component<
     super(props);
 
     // This binding is necessary to make `this` work in the callback
-    this.goBackClickHandler = this.goBackClickHandler.bind(this);
     this.confirmClickHandler = this.confirmClickHandler.bind(this);
   }
 
   /** click handler for cancelling mark as complete action */
-  public goBackClickHandler = (event: any) => {
+  public cancelClickHandler = (event: any) => {
     this.props.history.goBack();
   };
 
@@ -62,8 +61,7 @@ export class PlanCompletion extends React.Component<
    */
   public async confirmClickHandler(event: any) {
     const { plan, serviceClass, fetchPlansActionCreator } = this.props;
-    const planToconfirm: Plan = { ...(plan as Plan) };
-    planToconfirm.plan_status = PlanStatus.COMPLETE;
+    const planToconfirm: Plan = { ...(plan as Plan), plan_status: PlanStatus.COMPLETE };
     const service = new serviceClass(`${OPENSRP_PLANS}`);
 
     // get the plan as it exists in the OpenSRP Server
@@ -107,6 +105,10 @@ export class PlanCompletion extends React.Component<
           <title>{`${MARK} ${plan.plan_title} ${AS} ${COMPLETE.toLocaleLowerCase()}`}</title>
         </Helmet>
         {/** prompt to confirm mark as complete click action */}
+        <h2 className="mb-3 mt-5 page-title">{`${MARK} ${
+          plan.plan_title
+        } ${AS} ${COMPLETE.toLocaleLowerCase()}`}</h2>
+        <hr />
         <div className="card mb-3">
           <div className="card-header">{MARK_AS_COMPLETE}</div>
           <div className="card-body">
@@ -114,16 +116,16 @@ export class PlanCompletion extends React.Component<
             <p>{`${MARK} ${plan.plan_title} ${AS} ${COMPLETE.toLocaleLowerCase()}`}</p>
             <button
               id="complete-plan-cancel-btn"
-              onClick={this.goBackClickHandler}
-              className="btn btn-outline-secondary"
+              onClick={this.cancelClickHandler}
+              className="btn btn-danger"
             >
-              {GO_BACK}
+              {CANCEL}
             </button>
             &nbsp;&nbsp;&nbsp;&nbsp;
             <button
               id="complete-plan-confirm-btn"
               onClick={this.confirmClickHandler}
-              className="btn btn-primary"
+              className="btn btn-success"
             >
               {CONFIRM}
             </button>
