@@ -1,10 +1,21 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
+import { connect } from 'react-redux';
+import { RouteComponentProps } from 'react-router';
 import { Col, Row } from 'reactstrap';
+import { Store } from 'redux';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
+import Loading from '../../../../components/page/Loading';
 import { PlanDefinition } from '../../../../configs/settings';
-import { HOME, HOME_URL, NEW_PLAN_URL, PLAN_LIST_URL, PLANS } from '../../../../constants';
+import {
+  HOME,
+  HOME_URL,
+  NEW_PLAN_URL,
+  PLAN_LIST_URL,
+  PLAN_UPDATE_URL,
+  PLANS,
+} from '../../../../constants';
 import { OpenSRPService } from '../../../../services/opensrp';
 import planDefinitionReducer, {
   addPlanDefinition,
@@ -23,11 +34,44 @@ interface UpdatePlanProps {
   service: typeof OpenSRPService;
 }
 
-/** Component used to update Plan Definition objects */
-const UpdatePlan = (props: UpdatePlanProps) => {
-  const { plan } = props;
+/** Route params interface */
+export interface RouteParams {
+  id: string;
+}
 
-  const pageTitle: string = 'Update Plan';
+/** Component used to update Plan Definition objects */
+const UpdatePlan = (props: RouteComponentProps<RouteParams> & UpdatePlanProps) => {
+  const { fetchPlan, plan, service } = props;
+  const planIdentifier = props.match.params.id;
+  const [loading, setLoading] = useState<boolean>(true);
+
+  if (!planIdentifier) {
+    return null; /** we should make this into a better error page */
+  }
+
+  /** async function to load the data */
+  async function loadData() {
+    try {
+      setLoading(plan === null); // only set loading when there are no plans
+      const planFromAPI = await apiService.read(planIdentifier);
+      fetchPlan(planFromAPI);
+    } catch (e) {
+      // do something with the error?
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  if (loading === true) {
+    return <Loading />;
+  }
+
+  const apiService = new service('/plans');
+  const pageTitle: string = plan ? `Update Plan: ${plan.title}` : 'Update Plan';
 
   const breadcrumbProps = {
     currentPage: {
@@ -41,7 +85,7 @@ const UpdatePlan = (props: UpdatePlanProps) => {
       },
       {
         label: PLANS,
-        url: PLAN_LIST_URL,
+        url: `${PLAN_LIST_URL}`,
       },
     ],
   };
