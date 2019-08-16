@@ -1,7 +1,7 @@
 import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import React from 'react';
-import PlanForm from '..';
+import PlanForm, { propsForUpdatingPlans } from '..';
 import { plans } from '../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
 import { getPlanFormValues } from '../helpers';
 import * as fixtures from './fixtures';
@@ -240,25 +240,7 @@ describe('containers/forms/PlanForm - Edit', () => {
   it('renders all fields correctly in edit mode', () => {
     fetch.mockResponseOnce(fixtures.jurisdictionLevel0JSON);
     const props = {
-      disabledActivityFields: [
-        'actionReason',
-        'goalPriority',
-        'timingPeriodStart',
-        'timingPeriodEnd',
-      ],
-      disabledFields: [
-        'interventionType',
-        'fiReason',
-        'fiStatus',
-        'identifier',
-        'start',
-        'date',
-        'end',
-        'name',
-        'caseNum',
-        'opensrpEventId',
-        'jurisdictions',
-      ],
+      ...propsForUpdatingPlans,
       initialValues: getPlanFormValues(plans[0]),
     };
     const wrapper = mount(<PlanForm {...props} />);
@@ -296,25 +278,7 @@ describe('containers/forms/PlanForm - Edit', () => {
 
     fetch.mockResponseOnce(fixtures.jurisdictionLevel0JSON);
     const props = {
-      disabledActivityFields: [
-        'actionReason',
-        'goalPriority',
-        'timingPeriodStart',
-        'timingPeriodEnd',
-      ],
-      disabledFields: [
-        'interventionType',
-        'fiReason',
-        'fiStatus',
-        'identifier',
-        'start',
-        'date',
-        'end',
-        'name',
-        'caseNum',
-        'opensrpEventId',
-        'jurisdictions',
-      ],
+      ...propsForUpdatingPlans,
       initialValues: getPlanFormValues(plans[1]),
     };
     const wrapper = mount(<PlanForm {...props} />);
@@ -376,25 +340,7 @@ describe('containers/forms/PlanForm - Edit', () => {
 
     fetch.mockResponseOnce(fixtures.jurisdictionLevel0JSON);
     const props = {
-      disabledActivityFields: [
-        'actionReason',
-        'goalPriority',
-        'timingPeriodStart',
-        'timingPeriodEnd',
-      ],
-      disabledFields: [
-        'interventionType',
-        'fiReason',
-        'fiStatus',
-        'identifier',
-        'start',
-        'date',
-        'end',
-        'name',
-        'caseNum',
-        'opensrpEventId',
-        'jurisdictions',
-      ],
+      ...propsForUpdatingPlans,
       initialValues: getPlanFormValues(plans[1]),
     };
     const wrapper = mount(<PlanForm {...props} />);
