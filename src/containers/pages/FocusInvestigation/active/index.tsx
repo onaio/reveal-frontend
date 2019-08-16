@@ -342,13 +342,13 @@ const mapStateToProps = (state: Partial<Store>): DispatchedStateProps => {
   const caseTriggeredPlans = getPlansArray(
     state,
     InterventionType.FI,
-    [PlanStatus.ACTIVE, PlanStatus.DRAFT],
+    [PlanStatus.ACTIVE, PlanStatus.COMPLETE],
     CASE_TRIGGERED
   );
   const routinePlans = getPlansArray(
     state,
     InterventionType.FI,
-    [PlanStatus.ACTIVE, PlanStatus.DRAFT],
+    [PlanStatus.ACTIVE, PlanStatus.COMPLETE],
     ROUTINE
   );
   return {
