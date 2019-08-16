@@ -59,6 +59,12 @@ describe('reducers/plans', () => {
         plan.plan_intervention_type === InterventionType.FI && plan.plan_fi_reason === ROUTINE
     );
 
+    const filteredByJurisdictionPlans = values(
+      cloneDeep(routinePlans).filter(
+        (plan: Plan) => plan.jurisdiction_id === '450fc15b-5bd2-468a-927a-49cb10d3bcac'
+      )
+    );
+
     const reactivePlans = values(cloneDeep(store.getState().plans.plansById)).filter(
       (plan: Plan) => plan.plan_fi_reason === REACTIVE
     );
@@ -84,6 +90,11 @@ describe('reducers/plans', () => {
     expect(getPlansArray(store.getState(), InterventionType.FI, [PlanStatus.DRAFT], null)).toEqual(
       values(reactiveDraftPlans)
     );
+    expect(
+      getPlansArray(store.getState(), InterventionType.FI, [], ROUTINE, [
+        '450fc15b-5bd2-468a-927a-49cb10d3bcac',
+      ])
+    ).toEqual(values(filteredByJurisdictionPlans));
     expect(getPlanById(store.getState(), 'ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f')).toEqual(
       allPlans['ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f']
     );
