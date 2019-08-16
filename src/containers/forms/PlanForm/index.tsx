@@ -3,7 +3,7 @@ import { xor } from 'lodash';
 import moment from 'moment';
 import React, { FormEvent, useState } from 'react';
 import { Redirect } from 'react-router-dom';
-import { Button, FormGroup, Label, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
+import { Button, FormGroup, Label, Modal, ModalBody, ModalHeader } from 'reactstrap';
 import DatePickerWrapper from '../../../components/DatePickerWrapper';
 import {
   DATE_FORMAT,
@@ -736,7 +736,7 @@ const PlanForm = (props: PlanFormProps) => {
                     </div>
                   ))}
                   {values.activities &&
-                    values.activities.length > 1 &&
+                    values.activities.length >= 1 &&
                     !checkIfAllActivitiesSelected(values) &&
                     !editMode && (
                       <div>
@@ -761,6 +761,7 @@ const PlanForm = (props: PlanFormProps) => {
                               className="close"
                               data-dismiss="modal"
                               aria-label="Close"
+                              style={{ color: '6c757d', fontSize: '30px' }}
                             >
                               <span aria-hidden="true">&times;</span>
                             </button>
