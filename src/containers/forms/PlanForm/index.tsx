@@ -784,6 +784,8 @@ const PlanForm = (props: PlanFormProps) => {
                         </Modal>
                       </div>
                     )}
+                  {/** Turn off modal if all activities selected */}
+                  {checkIfAllActivitiesSelected(values) && setActivityModal(false)}
                 </div>
               )}
             />
