@@ -202,6 +202,11 @@ describe('containers/forms/PlanForm', () => {
     // there is still no button to remove jurisdictions
     expect(wrapper.find(`.removeJurisdiction`).length).toEqual(0);
 
+    // there is no button to remove activities
+    expect(wrapper.find(`.removeActivity`).length).toEqual(0);
+    // there is no modal to add more activities
+    expect(wrapper.find(`.add-more-activities`).length).toEqual(0);
+
     // add one jurisdiction
     wrapper.find(`.addJurisdiction`).simulate('click');
     // there are now two buttons to remove jurisdictions
@@ -227,6 +232,21 @@ describe('containers/forms/PlanForm', () => {
     expect(wrapper.find(`.removeJurisdiction`).length).toEqual(0);
     // there is no button to add more jurisdictions
     expect(wrapper.find(`.addJurisdiction`).length).toEqual(0);
+
+    // there are now 7 bottons to remove activities
+    expect(wrapper.find(`.removeActivity`).length).toEqual(7);
+    // there is no modal to add more activities
+    expect(wrapper.find(`.add-more-activities`).length).toEqual(0);
+
+    // remove one jurisdiction
+    wrapper
+      .find(`.removeActivity`)
+      .first()
+      .simulate('click');
+    // there are now 6 bottons to remove activities
+    expect(wrapper.find(`.removeActivity`).length).toEqual(6);
+    // there is now a modal to add more activities
+    expect(wrapper.find(`Button .add-more-activities`).length).toEqual(1);
 
     wrapper.unmount();
   });
