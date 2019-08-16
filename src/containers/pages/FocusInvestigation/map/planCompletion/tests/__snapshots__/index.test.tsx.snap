@@ -1,0 +1,71 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`@containers/pages/map/planCompletion/ renders correctly 1`] = `
+<div
+  id="plan-completion-page-wrapper"
+>
+  <HelmetWrapper
+    defer={true}
+    encodeSpecialCharacters={true}
+  >
+    <SideEffect(NullComponent)
+      defer={true}
+      encodeSpecialCharacters={true}
+      title="Mark A1-Tha Luang Village 1 Focus 01 as complete"
+      titleAttributes={Object {}}
+    >
+      <NullComponent
+        defer={true}
+        encodeSpecialCharacters={true}
+        title="Mark A1-Tha Luang Village 1 Focus 01 as complete"
+        titleAttributes={Object {}}
+      />
+    </SideEffect(NullComponent)>
+  </HelmetWrapper>
+  <h2
+    className="mb-3 mt-5 page-title"
+  >
+    Mark A1-Tha Luang Village 1 Focus 01 as complete
+  </h2>
+  <hr />
+  <div
+    className="card mb-3"
+  >
+    <div
+      className="card-header"
+    >
+      Mark as complete
+    </div>
+    <div
+      className="card-body"
+    >
+      <p>
+        Mark A1-Tha Luang Village 1 Focus 01 as complete
+      </p>
+      <button
+        className="btn btn-danger"
+        id="complete-plan-cancel-btn"
+        onClick={[Function]}
+      >
+        Cancel
+      </button>
+          
+      <button
+        className="btn btn-success"
+        id="complete-plan-confirm-btn"
+        onClick={[Function]}
+      >
+        Confirm
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`@containers/pages/map/planCompletion/ works with the redux store 1`] = `
+<h2
+  className="mb-3 mt-5 page-title"
+>
+  Mark A1-Tha Luang Village 1 Focus 01 as complete
+</h2>
+`;

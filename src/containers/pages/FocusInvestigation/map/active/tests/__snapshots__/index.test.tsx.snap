@@ -2112,20 +2112,21 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
                 2019-07-31
               </span>
             </div>
-            <Button
-              block={true}
+            <Link
+              className="btn btn-primary"
               color="primary"
-              size="lg"
-              tag="button"
+              replace={false}
+              to="/focus-investigation/view/complete/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
             >
-              <button
-                aria-label={null}
-                className="btn btn-primary btn-lg btn-block"
+              <a
+                className="btn btn-primary"
+                color="primary"
+                href="/focus-investigation/view/complete/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
                 onClick={[Function]}
               >
-                Mark as Complete
-              </button>
-            </Button>
+                Mark as complete
+              </a>
+            </Link>
             <h6 />
             <hr />
             <div
@@ -4700,20 +4701,21 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store (g
                     2019-07-31
                   </span>
                 </div>
-                <Button
-                  block={true}
+                <Link
+                  className="btn btn-primary"
                   color="primary"
-                  size="lg"
-                  tag="button"
+                  replace={false}
+                  to="/focus-investigation/view/complete/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
                 >
-                  <button
-                    aria-label={null}
-                    className="btn btn-primary btn-lg btn-block"
+                  <a
+                    className="btn btn-primary"
+                    color="primary"
+                    href="/focus-investigation/view/complete/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
                     onClick={[Function]}
                   >
-                    Mark as Complete
-                  </button>
-                </Button>
+                    Mark as complete
+                  </a>
+                </Link>
                 <h6 />
                 <hr />
               </div>

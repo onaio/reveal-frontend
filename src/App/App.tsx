@@ -20,6 +20,7 @@ import {
   LOGIN_URL,
   LOGOUT_URL,
   NEW_PLAN_URL,
+  PLAN_COMPLETION_URL,
   PLAN_LIST_URL,
   PLAN_UPDATE_URL,
 } from '../constants';
@@ -27,6 +28,7 @@ import ConnectedHeader from '../containers/ConnectedHeader';
 import ActiveFocusInvestigation from '../containers/pages/FocusInvestigation/active';
 import HistoricalFocusInvestigation from '../containers/pages/FocusInvestigation/historical';
 import SingleActiveFIMap from '../containers/pages/FocusInvestigation/map/active';
+import ConnectedPlanCompletion from '../containers/pages/FocusInvestigation/map/planCompletion';
 import SingleFI from '../containers/pages/FocusInvestigation/single';
 import Home from '../containers/pages/Home/Home';
 import IrsPlans from '../containers/pages/InterventionPlan/IRS';
@@ -97,6 +99,12 @@ class App extends Component {
                 exact={true}
                 path={`${FI_SINGLE_URL}/:id`}
                 component={SingleFI}
+              />
+              <ConnectedPrivateRoute
+                disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                exact={true}
+                path={`${PLAN_COMPLETION_URL}/:id`}
+                component={ConnectedPlanCompletion}
               />
               <ConnectedPrivateRoute
                 disableLoginProtection={DISABLE_LOGIN_PROTECTION}
