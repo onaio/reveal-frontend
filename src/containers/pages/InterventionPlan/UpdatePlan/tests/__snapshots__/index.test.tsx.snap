@@ -85,17 +85,12 @@ Object {
   "disabledActivityFields": Array [
     "actionReason",
     "goalPriority",
-    "timingPeriodStart",
-    "timingPeriodEnd",
   ],
   "disabledFields": Array [
     "interventionType",
     "fiReason",
     "fiStatus",
     "identifier",
-    "start",
-    "date",
-    "end",
     "name",
     "caseNum",
     "opensrpEventId",
