@@ -1,4 +1,6 @@
+import { PropertyName } from 'lodash';
 import { REQUIRED } from '../../../../constants';
+import { FlexObject } from '../../../../helpers/utils';
 import { InterventionType } from '../../../../store/ducks/plans';
 import { PlanSchema } from '../helpers';
 import MockDate from 'mockdate';
@@ -199,6 +201,7 @@ describe('containers/forms/PlanForm/helpers', () => {
 /** Answers : among the validation errors raised, is there an error obj
  * associated with the given property resulting from that property having
  * the given error message.
+ *
  * @param {any} errors - list of errors thrown by the validator
  * @param {string} propertyName - name of the plan property under investigation
  * @param {string} errorMessage - validation errorMessage
@@ -214,57 +217,81 @@ const isPropertyErrorPresent = (
   return !!caseNumAssociatedErrors.length;
 };
 
+/** Matches that the truthy value got from inspecting errors generated
+ * by validating the object , is as expected
+ *
+ * @param {FlexObject} object  - object to validate using planSchema
+ * @param {PropertyName} propertyName - name of the plan property under investigation
+ * @param {string} errorMessage - validation errorMessage
+ * @param {string} expected - whether an error bound by above args is expected
+ */
+const testRunner = (
+  object: FlexObject,
+  propertyName: string,
+  errorMessage: string,
+  expected: boolean
+) => {
+  try {
+    PlanSchema.validateSync(object, { abortEarly: false });
+  } catch (errors) {
+    const got = isPropertyErrorPresent(errors, propertyName, errorMessage);
+    expect(got).toEqual(expected);
+    return;
+  }
+  expect.assertions(1);
+};
+
 describe('./isPropertyPresent', () => {
   it('works correctly for valid data; clean test', () => {
-    const path = "caseNum";
+    const path = 'caseNum';
     const message = REQUIRED;
-    const errorObjects = [{path, message}, {path:'random', message}]
+    const errorObjects = [{ path, message }, { path: 'random', message }];
     let got = isPropertyErrorPresent(errorObjects, 'caseNum');
     expect(got).toBeTruthy();
-    got = isPropertyErrorPresent([{path: 'name', mesage: ''}], 'name');
+    got = isPropertyErrorPresent([{ path: 'name', mesage: '' }], 'name');
     expect(got).toBeFalsy();
-  })
-})
+  });
+});
 
 describe('src/containers/forms/PlanForm.PlanSchema.caseNum', () => {
   /** Case Num requireability is dependent on whether the
    * Intervention Type value is FI
    */
   it('validationError if Intervention is FI && no caseNum', () => {
+    const propertyName = 'caseNum';
+    const errorMessage = REQUIRED;
+    const shouldFail = true;
+
     const badCaseNum = {
       interventionType: InterventionType.FI,
     };
 
-    try {
-      PlanSchema.validateSync(badCaseNum, { abortEarly: false });
-    } catch (errors) {
-      expect(isCaseNumErrorPresent(errors)).toBeTruthy();
-    }
+    testRunner(badCaseNum, propertyName, errorMessage, shouldFail);
   });
 
   it('No validationError if Intervention is FI && caseNum present', () => {
+    const propertyName = 'caseNum';
+    const errorMessage = REQUIRED;
+    const shouldFail = false;
+
     const goodCaseNum = {
       caseNum: 'Case Num',
       interventionType: InterventionType.FI,
     };
 
-    try {
-      PlanSchema.validateSync(goodCaseNum, { abortEarly: false });
-    } catch (errors) {
-      expect(isCaseNumErrorPresent(errors)).toBeFalsy();
-    }
+    testRunner(goodCaseNum, propertyName, errorMessage, shouldFail);
   });
 
   it('No validationError if Intervention is IRS and no caseNum', () => {
+    const propertyName = 'caseNum';
+    const errorMessage = REQUIRED;
+    const shouldFail = false;
+
     const goodCaseNum = {
       interventionType: InterventionType.IRS,
     };
 
-    try {
-      PlanSchema.validateSync(goodCaseNum, { abortEarly: false });
-    } catch (errors) {
-      expect(isCaseNumErrorPresent(errors)).toBeFalsy();
-    }
+    testRunner(goodCaseNum, propertyName, errorMessage, shouldFail);
   });
 });
 
