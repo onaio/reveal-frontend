@@ -417,7 +417,7 @@ exports[`containers/forms/PlanForm - Edit renders all fields correctly in edit m
   onBlur={[Function]}
   onChange={[Function]}
   required={true}
-  value="Case-triggered"
+  value="Routine"
 >
   <option>
     ----
