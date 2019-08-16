@@ -489,7 +489,7 @@ const PlanForm = (props: PlanFormProps) => {
                     <div className="card mb-3" key={index}>
                       <h5 className="card-header position-relative">
                         {values.activities[index].actionTitle}
-                        {values.activities && values.activities.length > 1 && (
+                        {values.activities && values.activities.length > 1 && !editMode && (
                           <button
                             type="button"
                             className="close position-absolute removeArrItem removeActivity"
@@ -737,7 +737,8 @@ const PlanForm = (props: PlanFormProps) => {
                   ))}
                   {values.activities &&
                     values.activities.length > 1 &&
-                    !checkIfAllActivitiesSelected(values) && (
+                    !checkIfAllActivitiesSelected(values) &&
+                    !editMode && (
                       <div>
                         <Button
                           color="danger"
