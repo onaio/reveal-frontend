@@ -62,7 +62,9 @@ import plansReducer, {
   PlanStatus,
   reducerName as plansReducerName,
 } from '../../../../store/ducks/plans';
+import './../../../../styles/css/drill-down-table.css';
 import './style.css';
+
 /** register the plans reducer */
 reducerRegistry.register(plansReducerName, plansReducer);
 
@@ -288,7 +290,7 @@ class ActiveFocusInvestigation extends React.Component<
               parentIdentifierField: 'parent',
               rootParentId: null,
               showPageSizeOptions: false,
-              showPagination: false,
+              showPagination: thePlans.length > 20,
               useDrillDownTrProps: false,
             };
             const TableHeaderWithOptionalForm = plansArray.every(

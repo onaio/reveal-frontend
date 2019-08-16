@@ -144,6 +144,8 @@ export const NEW_PLAN_URL = '/plans/new';
 export type NEW_PLAN_URL = typeof NEW_PLAN_URL;
 export const PLAN_LIST_URL = '/plans/list';
 export type PLAN_LIST_URL = typeof PLAN_LIST_URL;
+export const PLAN_UPDATE_URL = '/plans/update';
+export type PLAN_UPDATE_URL = typeof PLAN_UPDATE_URL;
 
 // OpenSRP API strings
 export const OPENSRP_FIND_BY_PROPERTIES = 'findByProperties';

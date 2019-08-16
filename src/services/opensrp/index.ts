@@ -10,7 +10,7 @@ type HTTPMethod = 'GET' | 'POST' | 'PUT';
 export function getDefaultHeaders(
   accept: string = 'application/json',
   authorizationType: string = 'Bearer',
-  contentType: string = 'application/json'
+  contentType: string = 'application/json;charset=UTF-8'
 ): IncomingHttpHeaders {
   return {
     accept,

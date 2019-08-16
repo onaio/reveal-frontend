@@ -1,0 +1,158 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components/InterventionPlan/UpdatePlan renders plan definition list correctly: Breadcrumb 1`] = `
+<Breadcrumb
+  aria-label="breadcrumb"
+  className="reveal-breadcrumb"
+  listTag="ol"
+  tag="nav"
+>
+  <nav
+    aria-label="breadcrumb"
+    className="reveal-breadcrumb"
+  >
+    <ol
+      className="breadcrumb"
+    >
+      <BreadcrumbItem
+        key="0"
+        tag="li"
+      >
+        <li
+          className="breadcrumb-item"
+        >
+          <Link
+            key="0"
+            replace={false}
+            to="/"
+          >
+            <a
+              href="/"
+              onClick={[Function]}
+            >
+              Home
+            </a>
+          </Link>
+        </li>
+      </BreadcrumbItem>
+      <BreadcrumbItem
+        key="1"
+        tag="li"
+      >
+        <li
+          className="breadcrumb-item"
+        >
+          <Link
+            key="1"
+            replace={false}
+            to="/plans/list"
+          >
+            <a
+              href="/plans/list"
+              onClick={[Function]}
+            >
+              Manage Plans
+            </a>
+          </Link>
+        </li>
+      </BreadcrumbItem>
+      <BreadcrumbItem
+        active={true}
+        tag="li"
+      >
+        <li
+          aria-current="page"
+          className="active breadcrumb-item"
+        >
+          Update Plan: TwoTwoOne_01 IRS 2019-07-10
+        </li>
+      </BreadcrumbItem>
+    </ol>
+  </nav>
+</Breadcrumb>
+`;
+
+exports[`components/InterventionPlan/UpdatePlan renders plan definition list correctly: Page title 1`] = `
+<h3
+  className="mb-3 page-title"
+>
+  Update Plan: TwoTwoOne_01 IRS 2019-07-10
+</h3>
+`;
+
+exports[`components/InterventionPlan/UpdatePlan renders plan definition list correctly: PlanForm 1`] = `
+Object {
+  "disabledActivityFields": Array [
+    "actionReason",
+    "goalPriority",
+  ],
+  "disabledFields": Array [
+    "interventionType",
+    "fiReason",
+    "fiStatus",
+    "identifier",
+    "name",
+    "caseNum",
+    "opensrpEventId",
+    "jurisdictions",
+  ],
+  "initialValues": Object {
+    "activities": Array [
+      Object {
+        "actionCode": "BCC",
+        "actionDescription": "Perform BCC for the operational area",
+        "actionIdentifier": "3f2eef38-38fe-4108-abb3-4e896b880302",
+        "actionReason": "Routine",
+        "actionTitle": "Perform BCC",
+        "goalDescription": "Complete BCC for the operational area",
+        "goalDue": 2019-07-10T00:00:00.000Z,
+        "goalPriority": "medium-priority",
+        "goalValue": 1,
+        "timingPeriodEnd": 2019-07-30T00:00:00.000Z,
+        "timingPeriodStart": 2019-07-10T00:00:00.000Z,
+      },
+      Object {
+        "actionCode": "IRS",
+        "actionDescription": "Visit each structure in the operational area and attempt to spray",
+        "actionIdentifier": "95a5a00f-a411-4fe5-bd9c-460a856239c9",
+        "actionReason": "Routine",
+        "actionTitle": "Spray Structures",
+        "goalDescription": "Spray 90 % of structures in the operational area",
+        "goalDue": 2019-07-30T00:00:00.000Z,
+        "goalPriority": "medium-priority",
+        "goalValue": 90,
+        "timingPeriodEnd": 2019-07-30T00:00:00.000Z,
+        "timingPeriodStart": 2019-07-10T00:00:00.000Z,
+      },
+    ],
+    "caseNum": "",
+    "date": 2019-07-10T00:00:00.000Z,
+    "end": 2019-07-30T00:00:00.000Z,
+    "fiReason": undefined,
+    "fiStatus": undefined,
+    "identifier": "8fa7eb32-99d7-4b49-8332-9ecedd6d51ae",
+    "interventionType": "IRS",
+    "jurisdictions": Array [
+      Object {
+        "id": "35968df5-f335-44ae-8ae5-25804caa2d86",
+        "name": "35968df5-f335-44ae-8ae5-25804caa2d86",
+      },
+      Object {
+        "id": "3952",
+        "name": "3952",
+      },
+      Object {
+        "id": "ac7ba751-35e8-4b46-9e53-3cbaad193697",
+        "name": "ac7ba751-35e8-4b46-9e53-3cbaad193697",
+      },
+    ],
+    "name": "TwoTwoOne_01_IRS_2019-07-10",
+    "opensrpEventId": undefined,
+    "start": 2019-07-10T00:00:00.000Z,
+    "status": "active",
+    "title": "TwoTwoOne_01 IRS 2019-07-10",
+    "version": "1",
+  },
+  "redirectAfterAction": "/plans/list",
+}
+`;

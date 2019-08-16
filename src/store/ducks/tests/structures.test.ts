@@ -1,5 +1,6 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import { cloneDeep, keyBy } from 'lodash';
+import { FEATURE_COLLECTION } from '../../../constants';
 import { FeatureCollection } from '../../../helpers/utils';
 import store from '../../index';
 import reducer, {
@@ -7,6 +8,7 @@ import reducer, {
   getStructuresFCByJurisdictionId,
   getStructuresGeoJsonData,
   reducerName,
+  removeStructuresAction,
   setStructures,
   Structure,
   StructureGeoJSON,
@@ -31,7 +33,9 @@ describe('reducers/tasks', () => {
     const expectedStoreData = keyBy(fixtures.structures, (structure: Structure) => structure.id);
     expect(store.getState().structures.structuresById).toEqual(expectedStoreData);
   });
+
   it('should have all the properties inside structure', () => {
+    store.dispatch(removeStructuresAction);
     store.dispatch(setStructures(cloneDeep([fixtures.structure1])));
     const structure = store.getState().structures.structuresById;
     if (structure) {
@@ -77,6 +81,42 @@ describe('reducers/tasks', () => {
     store.dispatch(setStructures(cloneDeep(fixtures.structures)));
     const expected = cloneDeep([fixtures.structure1.geojson, fixtures.structure2.geojson]);
     expect(getStructuresGeoJsonData(store.getState(), false)).toEqual(expected);
+  });
+
+  it('should reset structures', () => {
+    store.dispatch(removeStructuresAction);
+    let structuresinStore = getAllStructuresFC(store.getState());
+    expect(structuresinStore).toEqual({
+      features: [],
+      type: FEATURE_COLLECTION,
+    });
+
+    store.dispatch(setStructures(cloneDeep(fixtures.structures)));
+    const expected = cloneDeep([fixtures.structure1.geojson, fixtures.structure2.geojson]);
+    expect(getStructuresGeoJsonData(store.getState(), false)).toEqual(expected);
+
+    store.dispatch(removeStructuresAction);
+    structuresinStore = getAllStructuresFC(store.getState());
+    expect(structuresinStore).toEqual({
+      features: [],
+      type: FEATURE_COLLECTION,
+    });
+  });
+
+  it('should add new structures to existing structures, not overwrite', () => {
+    store.dispatch(removeStructuresAction);
+    let structuresinStore = getAllStructuresFC(store.getState());
+    expect(structuresinStore).toEqual({
+      features: [],
+      type: FEATURE_COLLECTION,
+    });
+
+    store.dispatch(setStructures(cloneDeep([fixtures.structure1])));
+    structuresinStore = getAllStructuresFC(store.getState());
+    expect(structuresinStore.features.length).toEqual(1);
+    store.dispatch(setStructures(cloneDeep([fixtures.structure2])));
+    structuresinStore = getAllStructuresFC(store.getState());
+    expect(structuresinStore.features.length).toEqual(2);
   });
 });
 
