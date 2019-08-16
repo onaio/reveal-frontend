@@ -106,7 +106,7 @@ describe('@containers/pages/map/planCompletion/', () => {
     wrapper.unmount();
   });
 
-  it('goes back on cancelling mark as complete', async () => {
+  it('E2E test flow for cancel mark as complete for planCompletion', async () => {
     const mock: any = jest.fn();
     store.dispatch(fetchPlans(fixtures.plans as any));
     const props = {
@@ -119,13 +119,6 @@ describe('@containers/pages/map/planCompletion/', () => {
         url: `${PLAN_COMPLETION_URL}/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f`,
       },
     };
-    // const wrapper = mount(
-    //   <Provider store={store}>
-    //     <Router history={history}>
-    //       <ConnectedPlanCompletion {...props} />
-    //     </Router>
-    //   </Provider>
-    // );
 
     const discoWrapper = mount(<PlanCompletion plan={fixtures.plan1 as Plan} {...props} />);
     const cancelButton = discoWrapper.find('#complete-plan-cancel-btn');
@@ -187,6 +180,44 @@ describe('@containers/pages/map/planCompletion/', () => {
 
     expect(fetch.mock.calls[0][0]).toEqual(expectedCalledUrl);
     // expect(fetchPlansMock.mock.calls[0][0]).toEqual(completedPlan);
+
+    discoWrapper.unmount();
+  });
+
+  it('E2E flow for cancel mark as complete in Connected component', async () => {
+    const mock: any = jest.fn();
+    store.dispatch(fetchPlans(fixtures.plans as any));
+    const props = {
+      history,
+      location: mock,
+      match: {
+        isExact: true,
+        params: { id: fixtures.plan1.id },
+        path: `${PLAN_COMPLETION_URL}/:id`,
+        url: `${PLAN_COMPLETION_URL}/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f`,
+      },
+      serviceClass: mock,
+    };
+    const discoWrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedPlanCompletion {...props} />
+        </Router>
+      </Provider>
+    );
+    const cancelButton = discoWrapper.find('#complete-plan-cancel-btn');
+    expect(cancelButton.length).toEqual(1);
+    cancelButton.simulate('click');
+    // check that history url after clicking cancel points to singleFi url
+    discoWrapper.update();
+    expect(discoWrapper.props().children.props.history.action).toEqual('REPLACE');
+    expect(discoWrapper.props().children.props.history.location.pathname).toEqual(
+      `${FI_SINGLE_MAP_URL}/${fixtures.plan1.id}`
+    );
+
+    // check that plan still has the previous plan_status
+    const plan1FromStore = getPlanById(store.getState(), fixtures.plan1.id);
+    expect(plan1FromStore!.plan_status).toBe(PlanStatus.ACTIVE);
 
     discoWrapper.unmount();
   });
