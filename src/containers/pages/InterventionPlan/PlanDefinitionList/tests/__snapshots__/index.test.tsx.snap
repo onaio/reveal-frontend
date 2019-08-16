@@ -915,41 +915,45 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
                 data={
                   Array [
                     Array [
-                      <a
-                        href="#"
+                      <Link
+                        replace={false}
+                        to="/plans/update/356b6b84-fc36-4389-a44a-2b038ed2f38d"
                       >
                         A2-Lusaka Akros Test Focus 2
-                      </a>,
+                      </Link>,
                       "FI",
                       "active",
                       "2019-05-19",
                     ],
                     Array [
-                      <a
-                        href="#"
+                      <Link
+                        replace={false}
+                        to="/plans/update/8fa7eb32-99d7-4b49-8332-9ecedd6d51ae"
                       >
                         TwoTwoOne_01 IRS 2019-07-10
-                      </a>,
+                      </Link>,
                       "IRS",
                       "active",
                       "2019-07-10",
                     ],
                     Array [
-                      <a
-                        href="#"
+                      <Link
+                        replace={false}
+                        to="/plans/update/f0558ad1-396d-4d97-9fff-c46cf92b6ce6"
                       >
                         A1 - TwoTwoTwo_03 - 2019-07-18
-                      </a>,
+                      </Link>,
                       "FI",
                       "active",
                       "2019-07-18",
                     ],
                     Array [
-                      <a
-                        href="#"
+                      <Link
+                        replace={false}
+                        to="/plans/update/0e85c238-39c1-4cea-a926-3d89f0c98429"
                       >
                         A Test By Mosh
-                      </a>,
+                      </Link>,
                       "FI",
                       "draft",
                       "2019-05-19",
@@ -1033,11 +1037,12 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
                         className="listview-th"
                         items={
                           Array [
-                            <a
-                              href="#"
+                            <Link
+                              replace={false}
+                              to="/plans/update/356b6b84-fc36-4389-a44a-2b038ed2f38d"
                             >
                               A2-Lusaka Akros Test Focus 2
-                            </a>,
+                            </Link>,
                             "FI",
                             "active",
                             "2019-05-19",
@@ -1048,12 +1053,18 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
                           className="listview-th"
                           key="0"
                         >
-                          <a
-                            href="#"
+                          <Link
                             key="356b6b84-fc36-4389-a44a-2b038ed2f38d"
+                            replace={false}
+                            to="/plans/update/356b6b84-fc36-4389-a44a-2b038ed2f38d"
                           >
-                            A2-Lusaka Akros Test Focus 2
-                          </a>
+                            <a
+                              href="/plans/update/356b6b84-fc36-4389-a44a-2b038ed2f38d"
+                              onClick={[Function]}
+                            >
+                              A2-Lusaka Akros Test Focus 2
+                            </a>
+                          </Link>
                         </td>
                         <td
                           className="listview-th"
@@ -1084,11 +1095,12 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
                         className="listview-th"
                         items={
                           Array [
-                            <a
-                              href="#"
+                            <Link
+                              replace={false}
+                              to="/plans/update/8fa7eb32-99d7-4b49-8332-9ecedd6d51ae"
                             >
                               TwoTwoOne_01 IRS 2019-07-10
-                            </a>,
+                            </Link>,
                             "IRS",
                             "active",
                             "2019-07-10",
@@ -1099,12 +1111,18 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
                           className="listview-th"
                           key="0"
                         >
-                          <a
-                            href="#"
+                          <Link
                             key="8fa7eb32-99d7-4b49-8332-9ecedd6d51ae"
+                            replace={false}
+                            to="/plans/update/8fa7eb32-99d7-4b49-8332-9ecedd6d51ae"
                           >
-                            TwoTwoOne_01 IRS 2019-07-10
-                          </a>
+                            <a
+                              href="/plans/update/8fa7eb32-99d7-4b49-8332-9ecedd6d51ae"
+                              onClick={[Function]}
+                            >
+                              TwoTwoOne_01 IRS 2019-07-10
+                            </a>
+                          </Link>
                         </td>
                         <td
                           className="listview-th"
@@ -1135,11 +1153,12 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
                         className="listview-th"
                         items={
                           Array [
-                            <a
-                              href="#"
+                            <Link
+                              replace={false}
+                              to="/plans/update/f0558ad1-396d-4d97-9fff-c46cf92b6ce6"
                             >
                               A1 - TwoTwoTwo_03 - 2019-07-18
-                            </a>,
+                            </Link>,
                             "FI",
                             "active",
                             "2019-07-18",
@@ -1150,12 +1169,18 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
                           className="listview-th"
                           key="0"
                         >
-                          <a
-                            href="#"
+                          <Link
                             key="f0558ad1-396d-4d97-9fff-c46cf92b6ce6"
+                            replace={false}
+                            to="/plans/update/f0558ad1-396d-4d97-9fff-c46cf92b6ce6"
                           >
-                            A1 - TwoTwoTwo_03 - 2019-07-18
-                          </a>
+                            <a
+                              href="/plans/update/f0558ad1-396d-4d97-9fff-c46cf92b6ce6"
+                              onClick={[Function]}
+                            >
+                              A1 - TwoTwoTwo_03 - 2019-07-18
+                            </a>
+                          </Link>
                         </td>
                         <td
                           className="listview-th"
@@ -1186,11 +1211,12 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
                         className="listview-th"
                         items={
                           Array [
-                            <a
-                              href="#"
+                            <Link
+                              replace={false}
+                              to="/plans/update/0e85c238-39c1-4cea-a926-3d89f0c98429"
                             >
                               A Test By Mosh
-                            </a>,
+                            </Link>,
                             "FI",
                             "draft",
                             "2019-05-19",
@@ -1201,12 +1227,18 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
                           className="listview-th"
                           key="0"
                         >
-                          <a
-                            href="#"
+                          <Link
                             key="0e85c238-39c1-4cea-a926-3d89f0c98429"
+                            replace={false}
+                            to="/plans/update/0e85c238-39c1-4cea-a926-3d89f0c98429"
                           >
-                            A Test By Mosh
-                          </a>
+                            <a
+                              href="/plans/update/0e85c238-39c1-4cea-a926-3d89f0c98429"
+                              onClick={[Function]}
+                            >
+                              A Test By Mosh
+                            </a>
+                          </Link>
                         </td>
                         <td
                           className="listview-th"
