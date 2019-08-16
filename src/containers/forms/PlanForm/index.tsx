@@ -1,4 +1,5 @@
 import { ErrorMessage, Field, FieldArray, Form, Formik } from 'formik';
+import { xor } from 'lodash';
 import moment from 'moment';
 import React, { FormEvent, useState } from 'react';
 import { Redirect } from 'react-router-dom';
@@ -86,6 +87,8 @@ const PlanForm = (props: PlanFormProps) => {
   } = props;
 
   const editMode: boolean = initialValues.identifier !== '';
+  const irsActivities = getFormActivities(IRSActivities);
+  const fiActivities = getFormActivities(FIActivities);
 
   const disAllowedStatusChoices: string[] = [];
   if (editMode) {
@@ -102,8 +105,37 @@ const PlanForm = (props: PlanFormProps) => {
     }
   }
 
+  /** simple function to toggle activity modal */
   function toggleActivityModal() {
     setActivityModal(!activityModal);
+  }
+
+  /** get the source list of activities
+   * This is used to filter out activities selected but not in the "source"
+   * @param {PlanFormFields} values - current form values
+   */
+  function getSourceActivities(values: PlanFormFields) {
+    if (values.interventionType === InterventionType.FI) {
+      return fiActivities;
+    }
+    if (values.interventionType === InterventionType.IRS) {
+      return irsActivities;
+    }
+
+    return allFormActivities;
+  }
+
+  /**
+   * Check if all the source activities have been selected
+   * @param {PlanFormFields} values - current form values
+   */
+  function checkIfAllActivitiesSelected(values: PlanFormFields) {
+    return (
+      xor(
+        getSourceActivities(values).map(e => e.actionCode),
+        values.activities.map(e => e.actionCode)
+      ).length === 0
+    );
   }
 
   return (
@@ -179,9 +211,9 @@ const PlanForm = (props: PlanFormProps) => {
                 onChange={(e: FormEvent) => {
                   const target = e.target as HTMLInputElement;
                   if (target.value === InterventionType.IRS) {
-                    setFieldValue('activities', getFormActivities(IRSActivities));
+                    setFieldValue('activities', irsActivities);
                   } else {
-                    setFieldValue('activities', getFormActivities(FIActivities));
+                    setFieldValue('activities', fiActivities);
                   }
                   setFieldValue('jurisdictions', [initialJurisdictionValues]);
                   handleChange(e);
@@ -703,48 +735,55 @@ const PlanForm = (props: PlanFormProps) => {
                       </div>
                     </div>
                   ))}
-                  {values.activities && values.activities.length > 1 && (
-                    <div>
-                      <Button color="danger" onClick={toggleActivityModal}>
-                        Add Activity
-                      </Button>
-                      <Modal
-                        backdrop={false}
-                        size="lg"
-                        isOpen={activityModal}
-                        toggle={toggleActivityModal}
-                        className="activity-modal"
-                      >
-                        <ModalHeader toggle={toggleActivityModal}>
-                          <h5 className="modal-title">Add Activity</h5>
-                          <button
-                            type="button"
-                            className="close"
-                            data-dismiss="modal"
-                            aria-label="Close"
-                          >
-                            <span aria-hidden="true">&times;</span>
-                          </button>
-                        </ModalHeader>
-                        <ModalBody>
-                          {allFormActivities
-                            .filter(
-                              e => !values.activities.map(f => f.actionCode).includes(e.actionCode)
-                            )
-                            .map(g => (
-                              <button
-                                key={g.actionCode}
-                                type="button"
-                                className="btn btn-primary btn-sm mb-5 addJurisdiction"
-                                onClick={() => arrayHelpers.push(g)}
-                              >
-                                Add <b>{g.actionCode}</b> Activity
-                              </button>
-                            ))}
-                        </ModalBody>
-                      </Modal>
-                    </div>
-                  )}
+                  {values.activities &&
+                    values.activities.length > 1 &&
+                    !checkIfAllActivitiesSelected(values) && (
+                      <div>
+                        <Button color="danger" onClick={toggleActivityModal}>
+                          Add Activity
+                        </Button>
+                        <Modal
+                          backdrop={false}
+                          size="lg"
+                          isOpen={activityModal}
+                          toggle={toggleActivityModal}
+                          className="activity-modal"
+                        >
+                          <ModalHeader toggle={toggleActivityModal}>
+                            Add Activity
+                            <button
+                              type="button"
+                              className="close"
+                              data-dismiss="modal"
+                              aria-label="Close"
+                            >
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </ModalHeader>
+                          <ModalBody>
+                            {/** we want to allow the user to only add activities that are not already selected */}
+                            <ul className="list-unstyled">
+                              {getSourceActivities(values)
+                                .filter(
+                                  e =>
+                                    !values.activities.map(f => f.actionCode).includes(e.actionCode)
+                                )
+                                .map(g => (
+                                  <li key={g.actionCode}>
+                                    <button
+                                      type="button"
+                                      className="btn btn-primary btn-sm addActivity"
+                                      onClick={() => arrayHelpers.push(g)}
+                                    >
+                                      Add <b>{g.actionCode}</b> Activity
+                                    </button>
+                                  </li>
+                                ))}
+                            </ul>
+                          </ModalBody>
+                        </Modal>
+                      </div>
+                    )}
                 </div>
               )}
             />
