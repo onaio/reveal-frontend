@@ -21,6 +21,7 @@ import {
   LOGOUT_URL,
   NEW_PLAN_URL,
   PLAN_LIST_URL,
+  PLAN_UPDATE_URL,
 } from '../constants';
 import ConnectedHeader from '../containers/ConnectedHeader';
 import ActiveFocusInvestigation from '../containers/pages/FocusInvestigation/active';
@@ -32,6 +33,7 @@ import IrsPlans from '../containers/pages/InterventionPlan/IRS';
 import IrsPlan from '../containers/pages/InterventionPlan/IRS/plan';
 import NewPlan from '../containers/pages/InterventionPlan/NewPlan';
 import ConnectedPlanDefinitionList from '../containers/pages/InterventionPlan/PlanDefinitionList';
+import ConnectedUpdatePlan from '../containers/pages/InterventionPlan/UpdatePlan';
 import { oAuthUserInfoGetter } from '../helpers/utils';
 
 library.add(faMap);
@@ -125,6 +127,12 @@ class App extends Component {
                 exact={true}
                 path={NEW_PLAN_URL}
                 component={NewPlan}
+              />
+              <ConnectedPrivateRoute
+                disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                exact={true}
+                path={`${PLAN_UPDATE_URL}/:id`}
+                component={ConnectedUpdatePlan}
               />
               <ConnectedPrivateRoute
                 disableLoginProtection={DISABLE_LOGIN_PROTECTION}

@@ -1,4 +1,5 @@
 import MockDate from 'mockdate';
+import { plans } from '../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
 import {
   doesFieldHaveErrors,
   extractActivitiesFromPlanForm,
@@ -6,6 +7,8 @@ import {
   generatePlanDefinition,
   getFormActivities,
   getNameTitle,
+  getPlanFormValues,
+  PlanFormFields,
 } from '../helpers';
 import {
   activities,
@@ -19,6 +22,8 @@ import {
   extractedActivitiesFromForms,
   planActivities,
   planActivityWithEmptyfields,
+  planFormValues,
+  planFormValues2,
   values,
   values2,
   valuesWithJurisdiction,
@@ -140,5 +145,51 @@ describe('containers/forms/PlanForm/helpers', () => {
     MockDate.set('1/30/2000', 0);
     expect(generatePlanDefinition(values2)).toEqual(expectedPlanDefinition);
     MockDate.reset();
+  });
+
+  it('getPlanFormValues can get original planForm', () => {
+    const planForm = planFormValues as PlanFormFields;
+
+    const generatedPlan = generatePlanDefinition(planForm);
+    const generatedPlanForm = getPlanFormValues(generatedPlan);
+
+    expect(planForm).toEqual({
+      ...generatedPlanForm,
+      jurisdictions: [
+        {
+          id: '3952',
+          name: 'Akros_2', // getPlanFormValues does not have access to the name
+        },
+      ],
+      version: '1', // the version is updated so we change it back
+    });
+  });
+
+  it('generatePlanDefinition can get original planDefinition', () => {
+    const plan = plans[0];
+
+    const generatedPlanForm = getPlanFormValues(plan);
+    const generatedPlan = generatePlanDefinition(generatedPlanForm, plan);
+
+    expect(plan).toEqual({
+      ...generatedPlan,
+      serverVersion: 1563303150422,
+      version: '1',
+    });
+  });
+
+  it('getPlanFormValues returns the correct value', () => {
+    expect(getPlanFormValues(plans[0])).toEqual(planFormValues2);
+
+    const plan = getPlanFormValues(plans[2]);
+    // caseNum and opensrpEventId are gotten right
+    expect(plan.caseNum).toEqual('1');
+    expect(plan.opensrpEventId).toEqual('1');
+    // multiple jurisdictions are gotten right
+    expect(getPlanFormValues(plans[1]).jurisdictions).toEqual([
+      { id: '35968df5-f335-44ae-8ae5-25804caa2d86', name: '35968df5-f335-44ae-8ae5-25804caa2d86' },
+      { id: '3952', name: '3952' },
+      { id: 'ac7ba751-35e8-4b46-9e53-3cbaad193697', name: 'ac7ba751-35e8-4b46-9e53-3cbaad193697' },
+    ]);
   });
 });

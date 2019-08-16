@@ -1,7 +1,9 @@
 import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import React from 'react';
-import PlanForm from '..';
+import PlanForm, { propsForUpdatingPlans } from '..';
+import { plans } from '../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
+import { getPlanFormValues } from '../helpers';
 import * as fixtures from './fixtures';
 
 /* tslint:disable-next-line no-var-requires */
@@ -44,6 +46,8 @@ describe('containers/forms/PlanForm', () => {
     expect(wrapper.find({ for: 'date' }).length).toEqual(0);
     expect(toJson(wrapper.find('#date input'))).toMatchSnapshot('date field');
     expect(toJson(wrapper.find('#planform-submit-button button'))).toMatchSnapshot('submit button');
+    expect(wrapper.find('#jurisdictions-select-container').length).toEqual(1);
+    expect(wrapper.find('#jurisdictions-display-container').length).toEqual(0);
 
     // if you set fiReason to case triggered then caseNum and opensrpEventId are now rendered
     wrapper
@@ -223,6 +227,125 @@ describe('containers/forms/PlanForm', () => {
     expect(wrapper.find(`.removeJurisdiction`).length).toEqual(0);
     // there is no button to add more jurisdictions
     expect(wrapper.find(`.addJurisdiction`).length).toEqual(0);
+
+    wrapper.unmount();
+  });
+});
+
+describe('containers/forms/PlanForm - Edit', () => {
+  beforeEach(() => {
+    jest.resetAllMocks();
+  });
+
+  it('renders all fields correctly in edit mode', () => {
+    fetch.mockResponseOnce(fixtures.jurisdictionLevel0JSON);
+    const props = {
+      ...propsForUpdatingPlans,
+      initialValues: getPlanFormValues(plans[0]),
+    };
+    const wrapper = mount(<PlanForm {...props} />);
+    expect(toJson(wrapper.find('#interventionType select'))).toMatchSnapshot(
+      'interventionType field'
+    );
+    expect(toJson(wrapper.find('#fiStatus select'))).toMatchSnapshot('fiStatus field');
+    expect(toJson(wrapper.find('#fiReason select'))).toMatchSnapshot('fiReason field');
+    // caseNum and opensrpEventId are not present in this plan object
+    expect(wrapper.find('#caseNum').length).toEqual(0);
+    expect(wrapper.find('#opensrpEventId').length).toEqual(0);
+    expect(toJson(wrapper.find('#title input'))).toMatchSnapshot('title field');
+    expect(toJson(wrapper.find('#name input'))).toMatchSnapshot('name field');
+    expect(toJson(wrapper.find('#identifier input'))).toMatchSnapshot('identifier field');
+    expect(toJson(wrapper.find('#version input'))).toMatchSnapshot('version field');
+    expect(toJson(wrapper.find('#status select'))).toMatchSnapshot('status field');
+    expect(toJson(wrapper.find('#start input'))).toMatchSnapshot('start field');
+    expect(toJson(wrapper.find('#end input'))).toMatchSnapshot('end field');
+    expect(toJson(wrapper.find('#date input'))).toMatchSnapshot('date field');
+    expect(wrapper.find('#jurisdictions-select-container').length).toEqual(0);
+    expect(wrapper.find('#jurisdictions-display-container').length).toEqual(1);
+  });
+
+  it('renders jurisdictions fields correctly', () => {
+    function checkJurisdtictions(num: number) {
+      for (let i = 0; i <= num; i++) {
+        expect(toJson(wrapper.find(`#jurisdictions-${i}-id input`))).toMatchSnapshot(
+          `jurisdictions[${i}].id field`
+        );
+        expect(toJson(wrapper.find(`#jurisdictions-${i}-name input`))).toMatchSnapshot(
+          `jurisdictions[${i}].name field`
+        );
+      }
+    }
+
+    fetch.mockResponseOnce(fixtures.jurisdictionLevel0JSON);
+    const props = {
+      ...propsForUpdatingPlans,
+      initialValues: getPlanFormValues(plans[1]),
+    };
+    const wrapper = mount(<PlanForm {...props} />);
+
+    checkJurisdtictions(plans[1].jurisdiction.length);
+
+    expect(toJson(wrapper.find('#selected-jurisdiction-list li span'))).toMatchSnapshot(
+      'selected jurisdictions'
+    );
+
+    // there is no button to remove jurisdictions
+    expect(wrapper.find(`.removeJurisdiction`).length).toEqual(0);
+    // there is no button to add more jurisdictions
+    expect(wrapper.find(`.addJurisdiction`).length).toEqual(0);
+
+    wrapper.unmount();
+  });
+
+  it('renders activity fields correctly', () => {
+    function checkActivities(num: number) {
+      // FI activities by default
+      for (let i = 0; i <= num; i++) {
+        expect(toJson(wrapper.find(`#activities-${i}-actionTitle input`))).toMatchSnapshot(
+          `activities[${i}].actionTitle field`
+        );
+        expect(toJson(wrapper.find(`#activities-${i}-actionCode input`))).toMatchSnapshot(
+          `activities[${i}].actionCode field`
+        );
+        expect(toJson(wrapper.find(`#activities-${i}-actionIdentifier input`))).toMatchSnapshot(
+          `activities[${i}].actionIdentifier field`
+        );
+
+        expect(toJson(wrapper.find(`#activities-${i}-actionDescription textarea`))).toMatchSnapshot(
+          `activities[${i}].actionDescription field`
+        );
+        expect(toJson(wrapper.find(`#activities-${i}-goalDescription input`))).toMatchSnapshot(
+          `activities[${i}].goalDescription field`
+        );
+        expect(toJson(wrapper.find(`#activities-${i}-goalValue input`))).toMatchSnapshot(
+          `activities[${i}].goalValue field`
+        );
+        expect(toJson(wrapper.find(`#activities-${i}-timingPeriodStart input`))).toMatchSnapshot(
+          `activities[${i}].timingPeriodStart field`
+        );
+        expect(toJson(wrapper.find(`#activities-${i}-timingPeriodEnd input`))).toMatchSnapshot(
+          `activities[${i}].timingPeriodEnd field`
+        );
+        expect(toJson(wrapper.find(`#activities-${i}-goalDue input`))).toMatchSnapshot(
+          `activities[${i}].goalDue field`
+        );
+        expect(toJson(wrapper.find(`#activities-${i}-actionReason select`))).toMatchSnapshot(
+          `activities[${i}].actionReason field`
+        );
+        expect(toJson(wrapper.find(`#activities-${i}-goalPriority select`))).toMatchSnapshot(
+          `activities[${i}].goalPriority field`
+        );
+      }
+    }
+
+    fetch.mockResponseOnce(fixtures.jurisdictionLevel0JSON);
+    const props = {
+      ...propsForUpdatingPlans,
+      initialValues: getPlanFormValues(plans[1]),
+    };
+    const wrapper = mount(<PlanForm {...props} />);
+
+    checkActivities(plans[1].action.length);
 
     wrapper.unmount();
   });
