@@ -80,6 +80,13 @@ const PlanForm = (props: PlanFormProps) => {
     if (initialValues.status !== PlanStatus.DRAFT) {
       disAllowedStatusChoices.push(PlanStatus.DRAFT);
     }
+    // set these fields to friendly defaults if not set or else the form cant be submitted
+    if (
+      initialValues.interventionType === InterventionType.FI &&
+      (!initialValues.fiReason || !FIReasons.includes(initialValues.fiReason))
+    ) {
+      initialValues.fiReason = FIReasons[0];
+    }
   }
 
   return (
