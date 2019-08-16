@@ -5,6 +5,7 @@ import { Actions, ducks } from 'gisida';
 import { createBrowserHistory } from 'history';
 import React from 'react';
 import { Router } from 'react-router';
+import { goalsWithSymbols } from '../../../configs/settings';
 import { APP, MAP_ID } from '../../../constants';
 import { FeatureCollection, toggleLayer, wrapFeatureCollection } from '../../../helpers/utils';
 import store from '../../../store';
@@ -41,11 +42,6 @@ describe('components/GisidaWrapper', () => {
   it('renders given symbol layers based on currentGoal', () => {
     /* get this from settings file so when someone adds a goal that should render a symbol layer 
       the snapshots fail **/
-    const goalsWithSymbols = [
-      'Mosquito_Collection_Min_3_Traps',
-      'Larval_Dipping_Min_3_Sites',
-      'Case_Confirmation',
-    ];
     goalsWithSymbols.forEach(goal => {
       const polygonFeatureCollection: FeatureCollection<TaskGeoJSON> = {
         features: fixtures.polygonTask.map((task: any) => task.geojson),
@@ -101,7 +97,10 @@ describe('components/GisidaWrapper', () => {
     };
     const wrapper = mount(<GisidaWrapper {...props} />);
     expect(store.getState().APP).toMatchSnapshot();
-    expect(store.getState()['map-1']).toMatchSnapshot({});
+    const map1 = store.getState()['map-1'];
+    // remove reloadLayers because they keep changing
+    delete map1.reloadLayers;
+    expect(map1).toMatchSnapshot({});
     expect(toJson(wrapper)).toMatchSnapshot();
     wrapper.setProps({ ...props });
     wrapper.setState({ doRenderMap: true });

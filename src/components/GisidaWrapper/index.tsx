@@ -11,6 +11,7 @@ import { GISIDA_MAPBOX_TOKEN, GISIDA_ONADATA_API_TOKEN } from '../../configs/env
 import {
   circleLayerConfig,
   fillLayerConfig,
+  goalsWithSymbols,
   lineLayerConfig,
   symbolLayerConfig,
 } from '../../configs/settings';
@@ -330,12 +331,6 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
       | FillLayerObj[]
       | FlexObject = [];
 
-    /** Goals with icons array  */
-    const goalsWithSymbols = [
-      'Mosquito_Collection_Min_3_Traps',
-      'Larval_Dipping_Min_3_Sites',
-      'Case_Confirmation',
-    ];
     /**  Deal with structures */
     const { structures } = this.props;
     if (structures) {
