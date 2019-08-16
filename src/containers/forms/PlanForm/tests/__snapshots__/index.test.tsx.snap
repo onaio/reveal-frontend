@@ -574,12 +574,6 @@ exports[`containers/forms/PlanForm - Edit renders all fields correctly in edit m
     complete
   </option>
   <option
-    key="DRAFT"
-    value="draft"
-  >
-    draft
-  </option>
-  <option
     key="RETIRED"
     value="retired"
   >
