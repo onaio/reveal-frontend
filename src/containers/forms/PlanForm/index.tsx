@@ -14,6 +14,7 @@ import {
   FIClassifications,
   FIReasons,
   goalPriorities,
+  planActivities,
 } from '../../../configs/settings';
 import { PLAN_LIST_URL, SAVING } from '../../../constants';
 import { OpenSRPService } from '../../../services/opensrp';
@@ -26,6 +27,7 @@ import {
   getFormActivities,
   getNameTitle,
   IRSActivities,
+  PlanActivityFormFields,
   PlanFormFields,
   PlanJurisdictionFormFields,
   PlanSchema,
@@ -62,6 +64,7 @@ export const defaultInitialValues: PlanFormFields = {
 
 /** interface for plan form props */
 interface PlanFormProps {
+  allFormActivities: PlanActivityFormFields[];
   disabledActivityFields: string[];
   disabledFields: string[];
   initialValues: PlanFormFields;
@@ -74,7 +77,14 @@ const PlanForm = (props: PlanFormProps) => {
   const [areWeDoneHere, setAreWeDoneHere] = useState<boolean>(false);
   const [activityModal, setActivityModal] = useState<boolean>(false);
 
-  const { disabledActivityFields, disabledFields, initialValues, redirectAfterAction } = props;
+  const {
+    allFormActivities,
+    disabledActivityFields,
+    disabledFields,
+    initialValues,
+    redirectAfterAction,
+  } = props;
+
   const editMode: boolean = initialValues.identifier !== '';
 
   const disAllowedStatusChoices: string[] = [];
@@ -706,7 +716,7 @@ const PlanForm = (props: PlanFormProps) => {
                         className="activity-modal"
                       >
                         <ModalHeader toggle={toggleActivityModal}>
-                          <h5 className="modal-title">Modal title</h5>
+                          <h5 className="modal-title">Add Activity</h5>
                           <button
                             type="button"
                             className="close"
@@ -716,7 +726,22 @@ const PlanForm = (props: PlanFormProps) => {
                             <span aria-hidden="true">&times;</span>
                           </button>
                         </ModalHeader>
-                        <ModalBody>modal content</ModalBody>
+                        <ModalBody>
+                          {allFormActivities
+                            .filter(
+                              e => !values.activities.map(f => f.actionCode).includes(e.actionCode)
+                            )
+                            .map(g => (
+                              <button
+                                key={g.actionCode}
+                                type="button"
+                                className="btn btn-primary btn-sm mb-5 addJurisdiction"
+                                onClick={() => arrayHelpers.push(g)}
+                              >
+                                Add <b>{g.actionCode}</b> Activity
+                              </button>
+                            ))}
+                        </ModalBody>
                       </Modal>
                     </div>
                   )}
@@ -742,6 +767,7 @@ const PlanForm = (props: PlanFormProps) => {
 };
 
 const defaultProps: PlanFormProps = {
+  allFormActivities: getFormActivities(planActivities),
   disabledActivityFields: [],
   disabledFields: [],
   initialValues: defaultInitialValues,
