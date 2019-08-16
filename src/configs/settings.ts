@@ -205,6 +205,12 @@ export const PlanActivityTitles = [
   'BCC',
   'IRS',
 ] as const;
+
+export const goalsWithSymbols = [
+  'Mosquito_Collection_Min_3_Traps',
+  'Larval_Dipping_Min_3_Sites',
+  'Case_Confirmation',
+];
 export type PlanActivityTitlesType = typeof PlanActivityTitles[number];
 
 /** type to describe plan activities */
