@@ -74,6 +74,13 @@ const PlanForm = (props: PlanFormProps) => {
   const { disabledActivityFields, disabledFields, initialValues, redirectAfterAction } = props;
   const editMode: boolean = initialValues.identifier !== '';
 
+  const disAllowedStatusChoices: string[] = [];
+  if (editMode) {
+    if (initialValues.status !== PlanStatus.DRAFT) {
+      disAllowedStatusChoices.push(PlanStatus.DRAFT);
+    }
+  }
+
   return (
     <div className="form-container">
       {areWeDoneHere === true && <Redirect to={redirectAfterAction} />}
@@ -362,11 +369,13 @@ const PlanForm = (props: PlanFormProps) => {
                 disabled={disabledFields.includes('status')}
                 className={errors.status ? 'form-control is-invalid' : 'form-control'}
               >
-                {Object.entries(PlanStatus).map(e => (
-                  <option key={e[0]} value={e[1]}>
-                    {e[1]}
-                  </option>
-                ))}
+                {Object.entries(PlanStatus)
+                  .filter(e => !disAllowedStatusChoices.includes(e[1]))
+                  .map(e => (
+                    <option key={e[0]} value={e[1]}>
+                      {e[1]}
+                    </option>
+                  ))}
               </Field>
               <ErrorMessage name="status" component="small" className="form-text text-danger" />
             </FormGroup>
