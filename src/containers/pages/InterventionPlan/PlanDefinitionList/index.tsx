@@ -3,13 +3,14 @@ import reducerRegistry from '@onaio/redux-reducer-registry';
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
 import LinkToNewPlans from '../../../../components/LinkToNewPlans';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
 import { PlanDefinition } from '../../../../configs/settings';
-import { HOME, HOME_URL, PLAN_LIST_URL, PLANS } from '../../../../constants';
+import { HOME, HOME_URL, PLAN_LIST_URL, PLAN_UPDATE_URL, PLANS } from '../../../../constants';
 import { OpenSRPService } from '../../../../services/opensrp';
 import planDefinitionReducer, {
   fetchPlanDefinitions,
@@ -75,9 +76,9 @@ const PlanDefinitionList = (props: PlanListProps) => {
       const typeUseContext = planObj.useContext.filter(e => e.code === 'interventionType');
 
       return [
-        <a href="#" key={planObj.identifier}>
+        <Link to={`${PLAN_UPDATE_URL}/${planObj.identifier}`} key={planObj.identifier}>
           {planObj.title}
-        </a>,
+        </Link>,
         typeUseContext.length > 0 ? typeUseContext[0].valueCodableConcept : '',
         planObj.status,
         planObj.date,
