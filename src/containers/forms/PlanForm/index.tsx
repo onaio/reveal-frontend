@@ -91,15 +91,27 @@ const PlanForm = (props: PlanFormProps) => {
           const payload = generatePlanDefinition(values);
           const apiService = new OpenSRPService('/plans');
 
-          apiService
-            .create(payload)
-            .then(() => {
-              setSubmitting(false);
-              setAreWeDoneHere(true);
-            })
-            .catch((e: Error) => {
-              setGlobalError(e.message);
-            });
+          if (editMode) {
+            apiService
+              .update(payload)
+              .then(() => {
+                setSubmitting(false);
+                setAreWeDoneHere(true);
+              })
+              .catch((e: Error) => {
+                setGlobalError(e.message);
+              });
+          } else {
+            apiService
+              .create(payload)
+              .then(() => {
+                setSubmitting(false);
+                setAreWeDoneHere(true);
+              })
+              .catch((e: Error) => {
+                setGlobalError(e.message);
+              });
+          }
         }}
         validationSchema={PlanSchema}
       >
