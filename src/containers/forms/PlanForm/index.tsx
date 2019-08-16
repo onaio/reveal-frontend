@@ -31,6 +31,8 @@ import {
   PlanSchema,
 } from './helpers';
 
+import './style.css';
+
 /** initial values for plan jurisdiction forms */
 const initialJurisdictionValues: PlanJurisdictionFormFields = {
   id: '',
@@ -437,236 +439,254 @@ const PlanForm = (props: PlanFormProps) => {
               render={arrayHelpers => (
                 <div>
                   {values.activities.map((activity, index) => (
-                    <fieldset key={index}>
-                      <legend>{values.activities[index].actionTitle}</legend>
-                      {errors.activities && errors.activities[index] && (
-                        <div className="alert alert-danger" role="alert">
-                          <h5 className="alert-heading">Please fix these errors</h5>
-                          <ul className="list-unstyled">
-                            {Object.entries(errors.activities[index] || {}).map(([key, val]) => (
-                              <li key={key}>
-                                <strong>{key}</strong>: {val}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
-                      <FormGroup>
-                        <Label for={`activities-${index}-actionTitle`}>Action</Label>
-                        <Field
-                          type="text"
-                          name={`activities[${index}].actionTitle`}
-                          id={`activities-${index}-actionTitle`}
-                          required={true}
-                          disabled={
-                            disabledFields.includes('activities') ||
-                            disabledActivityFields.includes('actionTitle')
-                          }
-                          className={
-                            errors.activities &&
-                            doesFieldHaveErrors('actionTitle', index, errors.activities)
-                              ? 'form-control is-invalid'
-                              : 'form-control'
-                          }
-                        />
-                        <ErrorMessage
-                          name={`activities[${index}].actionTitle`}
-                          component="small"
-                          className="form-text text-danger"
-                        />
+                    <div className="card mb-3" key={index}>
+                      <h5 className="card-header position-relative">
+                        {values.activities[index].actionTitle}
+                        {values.activities && values.activities.length > 1 && (
+                          <button
+                            type="button"
+                            className="close position-absolute removeArrItem removeActivity"
+                            aria-label="Close"
+                            onClick={() => arrayHelpers.remove(index)}
+                          >
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        )}
+                      </h5>
+                      <div className="card-body">
+                        <fieldset key={index}>
+                          {errors.activities && errors.activities[index] && (
+                            <div className="alert alert-danger" role="alert">
+                              <h6 className="alert-heading">Please fix these errors</h6>
+                              <ul className="list-unstyled">
+                                {Object.entries(errors.activities[index] || {}).map(
+                                  ([key, val]) => (
+                                    <li key={key}>
+                                      <strong>{key}</strong>: {val}
+                                    </li>
+                                  )
+                                )}
+                              </ul>
+                            </div>
+                          )}
+                          <FormGroup>
+                            <Label for={`activities-${index}-actionTitle`}>Action</Label>
+                            <Field
+                              type="text"
+                              name={`activities[${index}].actionTitle`}
+                              id={`activities-${index}-actionTitle`}
+                              required={true}
+                              disabled={
+                                disabledFields.includes('activities') ||
+                                disabledActivityFields.includes('actionTitle')
+                              }
+                              className={
+                                errors.activities &&
+                                doesFieldHaveErrors('actionTitle', index, errors.activities)
+                                  ? 'form-control is-invalid'
+                                  : 'form-control'
+                              }
+                            />
+                            <ErrorMessage
+                              name={`activities[${index}].actionTitle`}
+                              component="small"
+                              className="form-text text-danger"
+                            />
 
-                        <Field
-                          type="hidden"
-                          name={`activities[${index}].actionCode`}
-                          id={`activities-${index}-actionCode`}
-                          value={values.activities[index].actionCode}
-                          readOnly={true}
-                        />
-                        <Field
-                          type="hidden"
-                          name={`activities[${index}].actionIdentifier`}
-                          id={`activities-${index}-actionIdentifier`}
-                          value={values.activities[index].actionIdentifier}
-                          readOnly={true}
-                        />
-                      </FormGroup>
-                      <FormGroup>
-                        <Label for={`activities-${index}-actionDescription`}>Description</Label>
-                        <Field
-                          component="textarea"
-                          name={`activities[${index}].actionDescription`}
-                          id={`activities-${index}-actionDescription`}
-                          required={true}
-                          disabled={
-                            disabledFields.includes('activities') ||
-                            disabledActivityFields.includes('actionDescription')
-                          }
-                          className={
-                            errors.activities &&
-                            doesFieldHaveErrors('actionDescription', index, errors.activities)
-                              ? 'form-control is-invalid'
-                              : 'form-control'
-                          }
-                        />
-                        <ErrorMessage
-                          name={`activities[${index}].actionDescription`}
-                          component="small"
-                          className="form-text text-danger"
-                        />
-                        <Field
-                          type="hidden"
-                          name={`activities[${index}].goalDescription`}
-                          id={`activities-${index}-goalDescription`}
-                          value={values.activities[index].actionDescription}
-                        />
-                      </FormGroup>
-                      <FormGroup>
-                        <Label for={`activities-${index}-goalValue`}>Quantity</Label>
-                        <Field
-                          type="number"
-                          name={`activities[${index}].goalValue`}
-                          id={`activities-${index}-goalValue`}
-                          required={true}
-                          disabled={
-                            disabledFields.includes('activities') ||
-                            disabledActivityFields.includes('goalValue')
-                          }
-                          className={
-                            errors.activities &&
-                            doesFieldHaveErrors('goalValue', index, errors.activities)
-                              ? 'form-control is-invalid'
-                              : 'form-control'
-                          }
-                        />
-                        <ErrorMessage
-                          name={`activities[${index}].goalValue`}
-                          component="small"
-                          className="form-text text-danger"
-                        />
-                      </FormGroup>
-                      <FormGroup>
-                        <Label for={`activities-${index}-timingPeriodStart`}>Start Date</Label>
-                        <Field
-                          type="date"
-                          name={`activities[${index}].timingPeriodStart`}
-                          id={`activities-${index}-timingPeriodStart`}
-                          required={true}
-                          disabled={
-                            disabledFields.includes('activities') ||
-                            disabledActivityFields.includes('timingPeriodStart')
-                          }
-                          dateFormat={DATE_FORMAT}
-                          className={
-                            errors.activities &&
-                            doesFieldHaveErrors('timingPeriodStart', index, errors.activities)
-                              ? 'form-control is-invalid'
-                              : 'form-control'
-                          }
-                          component={DatePickerWrapper}
-                          minDate={values.start}
-                          maxDate={values.end}
-                        />
-                        <ErrorMessage
-                          name={`activities[${index}].timingPeriodStart`}
-                          component="small"
-                          className="form-text text-danger"
-                        />
-                      </FormGroup>
-                      <FormGroup>
-                        <Label for={`activities-${index}-timingPeriodEnd`}>End Date</Label>
-                        <Field
-                          type="date"
-                          name={`activities[${index}].timingPeriodEnd`}
-                          id={`activities-${index}-timingPeriodEnd`}
-                          required={true}
-                          disabled={
-                            disabledFields.includes('activities') ||
-                            disabledActivityFields.includes('timingPeriodEnd')
-                          }
-                          dateFormat={DATE_FORMAT}
-                          className={
-                            errors.activities &&
-                            doesFieldHaveErrors('timingPeriodEnd', index, errors.activities)
-                              ? 'form-control is-invalid'
-                              : 'form-control'
-                          }
-                          component={DatePickerWrapper}
-                          minDate={values.activities[index].timingPeriodStart}
-                          maxDate={values.end}
-                        />
-                        <ErrorMessage
-                          name={`activities[${index}].timingPeriodEnd`}
-                          component="small"
-                          className="form-text text-danger"
-                        />
-                        <Field
-                          type="hidden"
-                          name={`activities[${index}].goalDue`}
-                          id={`activities-${index}-goalDue`}
-                          value={values.activities[index].timingPeriodEnd}
-                        />
-                      </FormGroup>
-                      <FormGroup>
-                        <Label for={`activities-${index}-actionReason`}>Reason</Label>
-                        <Field
-                          component="select"
-                          name={`activities[${index}].actionReason`}
-                          id={`activities-${index}-actionReason`}
-                          required={true}
-                          disabled={
-                            disabledFields.includes('activities') ||
-                            disabledActivityFields.includes('actionReason')
-                          }
-                          className={
-                            errors.activities &&
-                            doesFieldHaveErrors('actionReason', index, errors.activities)
-                              ? 'form-control is-invalid'
-                              : 'form-control'
-                          }
-                        >
-                          {actionReasons.map(e => (
-                            <option key={e} value={e}>
-                              {e}
-                            </option>
-                          ))}
-                        </Field>
-                        <ErrorMessage
-                          name={`activities[${index}].actionReason`}
-                          component="small"
-                          className="form-text text-danger"
-                        />
-                      </FormGroup>
-                      <FormGroup>
-                        <Label for={`activities-${index}-goalPriority`}>Priority</Label>
-                        <Field
-                          component="select"
-                          name={`activities[${index}].goalPriority`}
-                          id={`activities-${index}-goalPriority`}
-                          required={true}
-                          disabled={
-                            disabledFields.includes('activities') ||
-                            disabledActivityFields.includes('goalPriority')
-                          }
-                          className={
-                            errors.activities &&
-                            doesFieldHaveErrors('goalPriority', index, errors.activities)
-                              ? 'form-control is-invalid'
-                              : 'form-control'
-                          }
-                        >
-                          {goalPriorities.map(e => (
-                            <option key={e} value={e}>
-                              {e}
-                            </option>
-                          ))}
-                        </Field>
-                        <ErrorMessage
-                          name={`activities[${index}].goalPriority`}
-                          component="small"
-                          className="form-text text-danger"
-                        />
-                      </FormGroup>
-                    </fieldset>
+                            <Field
+                              type="hidden"
+                              name={`activities[${index}].actionCode`}
+                              id={`activities-${index}-actionCode`}
+                              value={values.activities[index].actionCode}
+                              readOnly={true}
+                            />
+                            <Field
+                              type="hidden"
+                              name={`activities[${index}].actionIdentifier`}
+                              id={`activities-${index}-actionIdentifier`}
+                              value={values.activities[index].actionIdentifier}
+                              readOnly={true}
+                            />
+                          </FormGroup>
+                          <FormGroup>
+                            <Label for={`activities-${index}-actionDescription`}>Description</Label>
+                            <Field
+                              component="textarea"
+                              name={`activities[${index}].actionDescription`}
+                              id={`activities-${index}-actionDescription`}
+                              required={true}
+                              disabled={
+                                disabledFields.includes('activities') ||
+                                disabledActivityFields.includes('actionDescription')
+                              }
+                              className={
+                                errors.activities &&
+                                doesFieldHaveErrors('actionDescription', index, errors.activities)
+                                  ? 'form-control is-invalid'
+                                  : 'form-control'
+                              }
+                            />
+                            <ErrorMessage
+                              name={`activities[${index}].actionDescription`}
+                              component="small"
+                              className="form-text text-danger"
+                            />
+                            <Field
+                              type="hidden"
+                              name={`activities[${index}].goalDescription`}
+                              id={`activities-${index}-goalDescription`}
+                              value={values.activities[index].actionDescription}
+                            />
+                          </FormGroup>
+                          <FormGroup>
+                            <Label for={`activities-${index}-goalValue`}>Quantity</Label>
+                            <Field
+                              type="number"
+                              name={`activities[${index}].goalValue`}
+                              id={`activities-${index}-goalValue`}
+                              required={true}
+                              disabled={
+                                disabledFields.includes('activities') ||
+                                disabledActivityFields.includes('goalValue')
+                              }
+                              className={
+                                errors.activities &&
+                                doesFieldHaveErrors('goalValue', index, errors.activities)
+                                  ? 'form-control is-invalid'
+                                  : 'form-control'
+                              }
+                            />
+                            <ErrorMessage
+                              name={`activities[${index}].goalValue`}
+                              component="small"
+                              className="form-text text-danger"
+                            />
+                          </FormGroup>
+                          <FormGroup>
+                            <Label for={`activities-${index}-timingPeriodStart`}>Start Date</Label>
+                            <Field
+                              type="date"
+                              name={`activities[${index}].timingPeriodStart`}
+                              id={`activities-${index}-timingPeriodStart`}
+                              required={true}
+                              disabled={
+                                disabledFields.includes('activities') ||
+                                disabledActivityFields.includes('timingPeriodStart')
+                              }
+                              dateFormat={DATE_FORMAT}
+                              className={
+                                errors.activities &&
+                                doesFieldHaveErrors('timingPeriodStart', index, errors.activities)
+                                  ? 'form-control is-invalid'
+                                  : 'form-control'
+                              }
+                              component={DatePickerWrapper}
+                              minDate={values.start}
+                              maxDate={values.end}
+                            />
+                            <ErrorMessage
+                              name={`activities[${index}].timingPeriodStart`}
+                              component="small"
+                              className="form-text text-danger"
+                            />
+                          </FormGroup>
+                          <FormGroup>
+                            <Label for={`activities-${index}-timingPeriodEnd`}>End Date</Label>
+                            <Field
+                              type="date"
+                              name={`activities[${index}].timingPeriodEnd`}
+                              id={`activities-${index}-timingPeriodEnd`}
+                              required={true}
+                              disabled={
+                                disabledFields.includes('activities') ||
+                                disabledActivityFields.includes('timingPeriodEnd')
+                              }
+                              dateFormat={DATE_FORMAT}
+                              className={
+                                errors.activities &&
+                                doesFieldHaveErrors('timingPeriodEnd', index, errors.activities)
+                                  ? 'form-control is-invalid'
+                                  : 'form-control'
+                              }
+                              component={DatePickerWrapper}
+                              minDate={values.activities[index].timingPeriodStart}
+                              maxDate={values.end}
+                            />
+                            <ErrorMessage
+                              name={`activities[${index}].timingPeriodEnd`}
+                              component="small"
+                              className="form-text text-danger"
+                            />
+                            <Field
+                              type="hidden"
+                              name={`activities[${index}].goalDue`}
+                              id={`activities-${index}-goalDue`}
+                              value={values.activities[index].timingPeriodEnd}
+                            />
+                          </FormGroup>
+                          <FormGroup>
+                            <Label for={`activities-${index}-actionReason`}>Reason</Label>
+                            <Field
+                              component="select"
+                              name={`activities[${index}].actionReason`}
+                              id={`activities-${index}-actionReason`}
+                              required={true}
+                              disabled={
+                                disabledFields.includes('activities') ||
+                                disabledActivityFields.includes('actionReason')
+                              }
+                              className={
+                                errors.activities &&
+                                doesFieldHaveErrors('actionReason', index, errors.activities)
+                                  ? 'form-control is-invalid'
+                                  : 'form-control'
+                              }
+                            >
+                              {actionReasons.map(e => (
+                                <option key={e} value={e}>
+                                  {e}
+                                </option>
+                              ))}
+                            </Field>
+                            <ErrorMessage
+                              name={`activities[${index}].actionReason`}
+                              component="small"
+                              className="form-text text-danger"
+                            />
+                          </FormGroup>
+                          <FormGroup>
+                            <Label for={`activities-${index}-goalPriority`}>Priority</Label>
+                            <Field
+                              component="select"
+                              name={`activities[${index}].goalPriority`}
+                              id={`activities-${index}-goalPriority`}
+                              required={true}
+                              disabled={
+                                disabledFields.includes('activities') ||
+                                disabledActivityFields.includes('goalPriority')
+                              }
+                              className={
+                                errors.activities &&
+                                doesFieldHaveErrors('goalPriority', index, errors.activities)
+                                  ? 'form-control is-invalid'
+                                  : 'form-control'
+                              }
+                            >
+                              {goalPriorities.map(e => (
+                                <option key={e} value={e}>
+                                  {e}
+                                </option>
+                              ))}
+                            </Field>
+                            <ErrorMessage
+                              name={`activities[${index}].goalPriority`}
+                              component="small"
+                              className="form-text text-danger"
+                            />
+                          </FormGroup>
+                        </fieldset>
+                      </div>
+                    </div>
                   ))}
                 </div>
               )}
