@@ -672,15 +672,12 @@ const defaultProps: PlanFormProps = {
  * We are defining these here to keep things DRY
  */
 export const propsForUpdatingPlans: Partial<PlanFormProps> = {
-  disabledActivityFields: ['actionReason', 'goalPriority', 'timingPeriodStart', 'timingPeriodEnd'],
+  disabledActivityFields: ['actionReason', 'goalPriority'],
   disabledFields: [
     'interventionType',
     'fiReason',
     'fiStatus',
     'identifier',
-    'start',
-    'date',
-    'end',
     'name',
     'caseNum',
     'opensrpEventId',
