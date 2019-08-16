@@ -1367,21 +1367,67 @@ export const valuesWithJurisdiction: PlanFormFields = {
   version: '1',
 };
 export const event: FormEvent = {
+  bubbles: false,
+  cancelable: false,
+  currentTarget: {} as any,
+  defaultPrevented: false,
+  eventPhase: 0,
+  isDefaultPrevented: () => false,
+  isPropagationStopped: () => false,
+  isTrusted: true,
+  nativeEvent: {} as any,
+  persist: () => null,
+  preventDefault: () => null,
+  stopPropagation: () => null,
   target: {
     name: 'interventionType',
     value: 'FI',
-  },
+  } as any,
+  timeStamp: 0,
+  type: '',
 };
 
 export const event2: FormEvent = {
+  bubbles: false,
+  cancelable: false,
+  currentTarget: {} as any,
+  defaultPrevented: false,
+  eventPhase: 0,
+  isDefaultPrevented: () => false,
+  isPropagationStopped: () => false,
+  isTrusted: true,
+  nativeEvent: {} as any,
+  persist: () => null,
+  preventDefault: () => null,
+  stopPropagation: () => null,
   target: {
     name: 'interventionType',
     value: 'IRS',
-  },
+  } as any,
+  timeStamp: 0,
+  type: '',
 };
 
 export const event3: FormEvent = {
-  target: {},
+  bubbles: false,
+  cancelable: false,
+  currentTarget: {} as any,
+  defaultPrevented: false,
+  eventPhase: 0,
+  isDefaultPrevented: () => false,
+  isPropagationStopped: () => false,
+  isTrusted: true,
+  nativeEvent: {} as any,
+  persist: () => null,
+  preventDefault: () => null,
+  stopPropagation: () => null,
+  target: {
+    addEventListener: () => null,
+    dispatchEvent: () => false,
+    removeEventListener: () => null,
+  },
+  timeStamp: 0,
+  type: '',
 };
 
 export const expectedPlanDefinition = {
