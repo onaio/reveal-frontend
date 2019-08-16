@@ -136,6 +136,9 @@ export type IRS_PLAN_COUNTRIES = typeof IRS_PLAN_COUNTRIES;
 export const DATE_FORMAT = process.env.REACT_APP_DATE_FORMAT || 'yyyy-MM-dd';
 export type DATE_FORMAT = typeof DATE_FORMAT;
 
+export const DEFAULT_TIME = process.env.REACT_APP_DEFAULT_TIME || 'T00:00:00+00:00';
+export type DEFAULT_TIME = typeof DEFAULT_TIME;
+
 export const DEFAULT_PLAN_DURATION_DAYS = process.env.REACT_APP_DEFAULT_PLAN_DURATION_DAYS || 20;
 export type DEFAULT_PLAN_DURATION_DAYS = typeof DEFAULT_PLAN_DURATION_DAYS;
 
