@@ -17,22 +17,32 @@ export const PLAN_DEFINITIONS_FETCHED =
 export const REMOVE_PLAN_DEFINITIONS =
   'reveal/reducer/opensrp/PlanDefinition/REMOVE_PLAN_DEFINITIONS';
 
+/** PLAN_DEFINITION_FETCHED action type */
+export const ADD_PLAN_DEFINITION = 'reveal/reducer/opensrp/PlanDefinition/ADD_PLAN_DEFINITION';
+
 /** interface for fetch PlanDefinitions action */
 interface FetchPlanDefinitionsAction extends AnyAction {
   planDefinitionsById: { [key: string]: PlanDefinition };
   type: typeof PLAN_DEFINITIONS_FETCHED;
 }
 
-/** interface for fetch PlanDefinitions action */
+/** interface for removing PlanDefinitions action */
 interface RemovePlanDefinitionsAction extends AnyAction {
   planDefinitionsById: { [key: string]: PlanDefinition };
   type: typeof REMOVE_PLAN_DEFINITIONS;
+}
+
+/** interface for adding a single PlanDefinitions action */
+interface AddPlanDefinitionAction extends AnyAction {
+  planObj: PlanDefinition;
+  type: typeof ADD_PLAN_DEFINITION;
 }
 
 /** Create type for PlanDefinition reducer actions */
 export type PlanDefinitionActionTypes =
   | FetchPlanDefinitionsAction
   | RemovePlanDefinitionsAction
+  | AddPlanDefinitionAction
   | AnyAction;
 
 // action creators
@@ -52,6 +62,15 @@ export const fetchPlanDefinitions = (
 export const removePlanDefinitions = () => ({
   planDefinitionsById: {},
   type: REMOVE_PLAN_DEFINITIONS,
+});
+
+/**
+ * Add one Plan Definition action creator
+ * @param {PlanDefinition} planObj - the plan definition object
+ */
+export const addPlanDefinition = (planObj: PlanDefinition): AddPlanDefinitionAction => ({
+  planObj,
+  type: ADD_PLAN_DEFINITION,
 });
 
 // the reducer
@@ -84,8 +103,20 @@ export default function reducer(
         });
       }
       return state;
+    case ADD_PLAN_DEFINITION:
+      if (action.planObj as PlanDefinition) {
+        return SeamlessImmutable({
+          ...state,
+          planDefinitionsById: {
+            ...state.planDefinitionsById,
+            [action.planObj.identifier as string]: action.planObj,
+          },
+        });
+      }
+      return state;
     case REMOVE_PLAN_DEFINITIONS:
       return SeamlessImmutable({
+        ...state,
         planDefinitionsById: action.planDefinitionsById,
       });
     default:
