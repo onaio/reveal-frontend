@@ -245,10 +245,16 @@ describe('./isPropertyPresent', () => {
   it('works correctly for valid data; clean test', () => {
     const path = 'caseNum';
     const message = REQUIRED;
-    const errorObjects = [{ path, message }, { path: 'random', message }];
-    let got = isPropertyErrorPresent(errorObjects, 'caseNum');
+    // error should be termed as present if both the propertyName and
+    // the error Mesage matchup
+    let validationErrors = { inner: [{ path, message }, { path: 'random', message }] };
+    let got = isPropertyErrorPresent(validationErrors, 'caseNum');
     expect(got).toBeTruthy();
-    got = isPropertyErrorPresent([{ path: 'name', mesage: '' }], 'name');
+    validationErrors = { inner: [{ path: 'name', message: '' }] };
+    got = isPropertyErrorPresent(validationErrors, 'name');
+    expect(got).toBeFalsy();
+    validationErrors = { inner: [{ path: 'someOtherProperty', message }] };
+    got = isPropertyErrorPresent(validationErrors, 'name');
     expect(got).toBeFalsy();
   });
 });
@@ -358,3 +364,14 @@ describe('Planschema validation behaviour for missing propertys', () => {
     });
   });
 });
+
+// describe('PlanSchema validates correctly based on date types', () =>{
+//   /** Should not throw validation error if property values
+//    * are of expected type
+//    */
+
+//    /** Should raise errors if property's values are not of
+//     * the expected type <-> This will not be exhaustive(logically
+//     * it cant be.)
+//     */
+// })
