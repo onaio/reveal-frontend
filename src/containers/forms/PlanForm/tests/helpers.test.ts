@@ -365,13 +365,34 @@ describe('Planschema validation behaviour for missing propertys', () => {
   });
 });
 
-// describe('PlanSchema validates correctly based on date types', () =>{
-//   /** Should not throw validation error if property values
-//    * are of expected type
-//    */
+describe('PlanSchema validates correctly based on data types', () => {
+  /** Should not throw validation error if property values
+   * are of expected data type
+   */
+  /** Should raise errors if property's values are not of
+   * the expected type <-> This will not be exhaustive(logically
+   * it cant be.)
+   */
+  // Apparently anything can be serialized into a string. meaning the
+  // yup.string(), is not of much help
+});
 
-//    /** Should raise errors if property's values are not of
-//     * the expected type <-> This will not be exhaustive(logically
-//     * it cant be.)
-//     */
-// })
+describe('Schema validation for one of', () => {
+  /** validation errors if property value is  not one of specified */
+  [
+    [{ fiReason: '09fasdf' }, 'fiReason', '', true],
+    [{ fiReason: 'Routine' }, 'fiReason', '', false],
+    [{ fiStatus: 'dontknow' }, 'fiStatus', '', true],
+    [{ fiStatus: 'A1' }, 'fiStatus', '', false],
+    [{ interventionType: 'notType' }, 'interventionType', '', true],
+    [{ interventionType: 'FI' }, 'interventionType', '', false],
+    [{ status: 'invalidStatus' }, 'status', '', true],
+    [{ status: 'active' }, 'status', '', false],
+  ].forEach(e => {
+    it(`validation ${e[3] ? 'fails' : 'passes'} if ${e[1]} is ${
+      e[3] ? 'not one' : 'one'
+    } of the enumerated values`, () => {
+      testRunner(e[0], e[1] as string, e[2] as string, e[3] as boolean);
+    });
+  });
+});
