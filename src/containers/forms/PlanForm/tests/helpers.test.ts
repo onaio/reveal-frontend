@@ -1,5 +1,5 @@
 import { PropertyName } from 'lodash';
-import { DATE, IS, REQUIRED } from '../../../../constants';
+import { DATE, IS, NAME, REQUIRED } from '../../../../constants';
 import { FlexObject } from '../../../../helpers/utils';
 import { InterventionType } from '../../../../store/ducks/plans';
 import { PlanSchema } from '../helpers';
@@ -320,5 +320,41 @@ describe('src/containers/forms/PlanForm.PlanSchema.date', () => {
     };
 
     testRunner(goodDatePlan, propertyName, errorMessage, shouldFail);
+  });
+});
+
+describe('Planschema validation behaviour for missing propertys', () => {
+  /** Structure => [object, propertyName, errorMessage, ifshouldFail] */
+  const required = 'required';
+  [
+    [{}, 'end', required, true],
+    [{}, 'identifier', required, false],
+    [{}, 'interventionType', required, true],
+    [{}, 'name', `${NAME} ${IS} ${REQUIRED}`, true],
+    [{}, 'opensrpEventId', '', false],
+    [{}, 'start', required, true],
+    [{}, 'status', required, true],
+    [{}, 'title', required, true],
+    [{}, 'version', required, false],
+  ].forEach(e => {
+    it(`validation ${e[3] ? 'fails' : 'passes'} if ${e[1]} is missing`, () => {
+      testRunner(e[0], e[1] as string, e[2] as string, e[3] as boolean);
+    });
+  });
+
+  [
+    [{ end: 'not a date' }, 'end', required, false],
+    [{ identifier: 'this guy' }, 'identifier', required, false],
+    [{ interventionType: 'FI' }, 'interventionType', required, false],
+    [{ name: 'Joey Tribbiani' }, 'name', `${NAME} ${IS} ${REQUIRED}`, false],
+    [{ opensrpEventId: '1.234' }, 'opensrpEventId', '', false],
+    [{ start: '2019 AD' }, 'start', required, false],
+    [{ status: 'active' }, 'status', required, false],
+    [{ title: 'Some string' }, 'title', required, false],
+    [{ version: 'v1' }, 'version', required, false],
+  ].forEach(e => {
+    it(`validation ${e[3] ? 'fails' : 'passes'} if ${e[1]} is present`, () => {
+      testRunner(e[0], e[1] as string, e[2] as string, e[3] as boolean);
+    });
   });
 });
