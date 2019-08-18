@@ -1,4 +1,5 @@
 import { PropertyName } from 'lodash';
+import { FIReasons } from '../../../../configs/settings';
 import { DATE, IS, NAME, REQUIRED } from '../../../../constants';
 import { FlexObject } from '../../../../helpers/utils';
 import { InterventionType } from '../../../../store/ducks/plans';
@@ -204,17 +205,18 @@ describe('containers/forms/PlanForm/helpers', () => {
  *
  * @param {any} errors - list of errors thrown by the validator
  * @param {string} propertyName - name of the plan property under investigation
- * @param {string} errorMessage - validation errorMessage
+ * @param {string} errorMessage - validation errorMessage PS: the essential part of it
  */
 const isPropertyErrorPresent = (
   errors: any,
   propertyName: string,
   errorMessage: string = REQUIRED
 ): boolean => {
-  const caseNumAssociatedErrors = errors.inner.filter(
-    (err: any) => err.path === propertyName && err.message === errorMessage
+  const errMessageRegex = new RegExp(errorMessage);
+  const propertyAssociatedErrors = errors.inner.filter(
+    (err: any) => err.path === propertyName && errMessageRegex.test(err.message)
   );
-  return !!caseNumAssociatedErrors.length;
+  return !!propertyAssociatedErrors.length;
 };
 
 /** Matches that the truthy value got from inspecting errors generated
@@ -306,42 +308,41 @@ describe('src/containers/forms/PlanForm.PlanSchema.date', () => {
     expect.assertions(1);
   });
 
-  it('date validation works for valid date', () => {
+  it('date validation passes for valid date', () => {
     const propertyName = 'date';
     const errorMessage = `${DATE} ${IS} ${REQUIRED}`;
     const shouldFail = false;
 
-    const BadDatePlan = {};
+    const goodDatePlan = { date: 'Not a date' };
 
-    testRunner(BadDatePlan, propertyName, errorMessage, shouldFail);
+    testRunner(goodDatePlan, propertyName, errorMessage, shouldFail);
   });
 
-  it('date validation works for invalid date', () => {
+  it('date validation fails for invalid date', () => {
     const propertyName = 'date';
     const errorMessage = `${DATE} ${IS} ${REQUIRED}`;
-    const shouldFail = false;
+    const shouldFail = true;
 
-    const goodDatePlan = {
+    const badDatePlan = {
       date: '',
     };
 
-    testRunner(goodDatePlan, propertyName, errorMessage, shouldFail);
+    testRunner(badDatePlan, propertyName, errorMessage, shouldFail);
   });
 });
 
 describe('Planschema validation behaviour for missing propertys', () => {
   /** Structure => [object, propertyName, errorMessage, ifshouldFail] */
-  const required = 'required';
   [
-    [{}, 'end', required, true],
-    [{}, 'identifier', required, false],
-    [{}, 'interventionType', required, true],
+    [{}, 'end', REQUIRED, true],
+    [{}, 'identifier', REQUIRED, false],
+    [{}, 'interventionType', REQUIRED, true],
     [{}, 'name', `${NAME} ${IS} ${REQUIRED}`, true],
     [{}, 'opensrpEventId', '', false],
-    [{}, 'start', required, true],
-    [{}, 'status', required, true],
-    [{}, 'title', required, true],
-    [{}, 'version', required, false],
+    [{}, 'start', REQUIRED, true],
+    [{}, 'status', REQUIRED, true],
+    [{}, 'title', REQUIRED, true],
+    [{}, 'version', REQUIRED, false],
   ].forEach(e => {
     it(`validation ${e[3] ? 'fails' : 'passes'} if ${e[1]} is missing`, () => {
       testRunner(e[0], e[1] as string, e[2] as string, e[3] as boolean);
@@ -349,15 +350,15 @@ describe('Planschema validation behaviour for missing propertys', () => {
   });
 
   [
-    [{ end: 'not a date' }, 'end', required, false],
-    [{ identifier: 'this guy' }, 'identifier', required, false],
-    [{ interventionType: 'FI' }, 'interventionType', required, false],
+    [{ end: 'not a date' }, 'end', REQUIRED, false],
+    [{ identifier: 'this guy' }, 'identifier', REQUIRED, false],
+    [{ interventionType: 'FI' }, 'interventionType', REQUIRED, false],
     [{ name: 'Joey Tribbiani' }, 'name', `${NAME} ${IS} ${REQUIRED}`, false],
     [{ opensrpEventId: '1.234' }, 'opensrpEventId', '', false],
-    [{ start: '2019 AD' }, 'start', required, false],
-    [{ status: 'active' }, 'status', required, false],
-    [{ title: 'Some string' }, 'title', required, false],
-    [{ version: 'v1' }, 'version', required, false],
+    [{ start: '2019 AD' }, 'start', REQUIRED, false],
+    [{ status: 'active' }, 'status', REQUIRED, false],
+    [{ title: 'Some string' }, 'title', REQUIRED, false],
+    [{ version: 'v1' }, 'version', REQUIRED, false],
   ].forEach(e => {
     it(`validation ${e[3] ? 'fails' : 'passes'} if ${e[1]} is present`, () => {
       testRunner(e[0], e[1] as string, e[2] as string, e[3] as boolean);
@@ -379,15 +380,19 @@ describe('PlanSchema validates correctly based on data types', () => {
 
 describe('Schema validation for one of', () => {
   /** validation errors if property value is  not one of specified */
+  const fiReasonEnums = FIReasons.join(', ');
+  const fiStatusEnums = fiStatusCodes.join(', ');
+  const interventionTypeEnums = Object.values(InterventionType).join(', ');
+  const statusEnums = Object.values(PlanStatus).join(', ');
   [
-    [{ fiReason: '09fasdf' }, 'fiReason', '', true],
-    [{ fiReason: 'Routine' }, 'fiReason', '', false],
-    [{ fiStatus: 'dontknow' }, 'fiStatus', '', true],
-    [{ fiStatus: 'A1' }, 'fiStatus', '', false],
-    [{ interventionType: 'notType' }, 'interventionType', '', true],
-    [{ interventionType: 'FI' }, 'interventionType', '', false],
-    [{ status: 'invalidStatus' }, 'status', '', true],
-    [{ status: 'active' }, 'status', '', false],
+    [{ fiReason: '09fasdf' }, 'fiReason', fiReasonEnums, true],
+    [{ fiReason: 'Routine' }, 'fiReason', fiReasonEnums, false],
+    [{ fiStatus: 'dontknow' }, 'fiStatus', fiStatusEnums, true],
+    [{ fiStatus: 'A1' }, 'fiStatus', fiStatusEnums, false],
+    [{ interventionType: 'notType' }, 'interventionType', interventionTypeEnums, true],
+    [{ interventionType: 'FI' }, 'interventionType', interventionTypeEnums, false],
+    [{ status: 'invalidStatus' }, 'status', statusEnums, true],
+    [{ status: 'active' }, 'status', statusEnums, false],
   ].forEach(e => {
     it(`validation ${e[3] ? 'fails' : 'passes'} if ${e[1]} is ${
       e[3] ? 'not one' : 'one'
