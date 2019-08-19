@@ -280,6 +280,9 @@ describe('containers/forms/PlanForm - Edit', () => {
     expect(toJson(wrapper.find('#name input'))).toMatchSnapshot('name field');
     expect(toJson(wrapper.find('#identifier input'))).toMatchSnapshot('identifier field');
     expect(toJson(wrapper.find('#version input'))).toMatchSnapshot('version field');
+    expect(toJson(wrapper.find('#taskGenerationStatus input'))).toMatchSnapshot(
+      'taskGenerationStatus field'
+    );
     expect(toJson(wrapper.find('#status select'))).toMatchSnapshot('status field');
     expect(toJson(wrapper.find('#start input'))).toMatchSnapshot('start field');
     expect(toJson(wrapper.find('#end input'))).toMatchSnapshot('end field');
