@@ -31,6 +31,7 @@ import {
   PlanGoalDetail,
   PlanGoaldetailQuantity,
   PlanGoalTarget,
+  taskGenerationStatusType,
   UseContext,
 } from '../../../configs/settings';
 import { DATE, IS, NAME, REQUIRED } from '../../../constants';
@@ -128,7 +129,7 @@ export interface PlanFormFields {
   opensrpEventId?: string;
   start: Date;
   status: PlanStatus;
-  taskGenerationStatus: string;
+  taskGenerationStatus: taskGenerationStatusType;
   title: string;
   version: string;
 }
