@@ -620,6 +620,44 @@ exports[`containers/forms/PlanForm - Edit renders all fields correctly in edit m
 />
 `;
 
+exports[`containers/forms/PlanForm - Edit renders conditional fields correctly in edit mode: caseNum field present in editMode 1`] = `
+<input
+  className="form-control"
+  disabled={true}
+  id="caseNum"
+  name="caseNum"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  type="text"
+  value="1"
+/>
+`;
+
+exports[`containers/forms/PlanForm - Edit renders conditional fields correctly in edit mode: opensrpEventId field present in editMode 1`] = `
+<input
+  id="opensrpEventId"
+  name="opensrpEventId"
+  onBlur={[Function]}
+  onChange={[Function]}
+  readOnly={true}
+  type="hidden"
+  value="1"
+/>
+`;
+
+exports[`containers/forms/PlanForm - Edit renders conditional fields correctly in edit mode: taskGenerationStatus field present in editMode 1`] = `
+<input
+  id="taskGenerationStatus"
+  name="taskGenerationStatus"
+  onBlur={[Function]}
+  onChange={[Function]}
+  readOnly={true}
+  type="hidden"
+  value="True"
+/>
+`;
+
 exports[`containers/forms/PlanForm - Edit renders jurisdictions fields correctly: jurisdictions[0].id field 1`] = `
 <input
   id="jurisdictions-0-id"
