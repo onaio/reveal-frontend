@@ -115,6 +115,7 @@ export const useContextCodes = [
   'fiReason',
   'opensrpEventId',
   'caseNum',
+  'taskGenerationStatus',
 ] as const;
 export type UseContextCodesType = typeof useContextCodes[number];
 
@@ -130,6 +131,10 @@ export const PlanActionCodes = [
   'Mosquito Collection',
 ] as const;
 export type PlanActionCodesType = typeof PlanActionCodes[number];
+
+/** Allowed taskGenerationStatus values */
+export const taskGenerationStatuses = ['True', 'False'] as const;
+export type taskGenerationStatusType = typeof taskGenerationStatuses[number];
 
 /** Plan Action Timing Period */
 export interface PlanActionTimingPeriod {

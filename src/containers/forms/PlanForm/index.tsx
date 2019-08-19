@@ -59,6 +59,7 @@ export const defaultInitialValues: PlanFormFields = {
   opensrpEventId: undefined,
   start: moment().toDate(),
   status: PlanStatus.DRAFT,
+  taskGenerationStatus: 'False',
   title: '',
   version: DEFAULT_PLAN_VERSION,
 };
@@ -427,6 +428,12 @@ const PlanForm = (props: PlanFormProps) => {
               <Field type="hidden" name="name" id="name" />
               <Field type="hidden" name="identifier" id="identifier" readOnly={true} />
               <Field type="hidden" name="version" id="version" readOnly={true} />
+              <Field
+                type="hidden"
+                name="taskGenerationStatus"
+                id="taskGenerationStatus"
+                readOnly={true}
+              />
             </FormGroup>
             <FormGroup>
               <Label for="status">Status</Label>

@@ -688,15 +688,19 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
             },
             Object {
               "code": "fiReason",
-              "valueCodableConcept": "Case-triggered",
+              "valueCodableConcept": "Case Triggered",
+            },
+            Object {
+              "code": "caseNum",
+              "valueCodableConcept": "1",
             },
             Object {
               "code": "opensrpEventId",
               "valueCodableConcept": "1",
             },
             Object {
-              "code": "caseNum",
-              "valueCodableConcept": "1",
+              "code": "taskGenerationStatus",
+              "valueCodableConcept": "True",
             },
           ],
           "version": "1",
