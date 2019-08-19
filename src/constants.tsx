@@ -122,6 +122,12 @@ export type IRS_PLANS = typeof IRS_PLANS;
 
 export const JURISDICTION_ID = 'jurisdiction_id';
 export type JURISDICTION_ID = typeof JURISDICTION_ID;
+export const JURISDICTIONID = 'jurisdictionId';
+export type JURISDICTIONID = typeof JURISDICTIONID;
+export const PARENT_ID = 'parent_id';
+export type PARENT_ID = typeof JURISDICTION_ID;
+export const PARENTID = 'parentId';
+export type PARENTID = typeof JURISDICTIONID;
 export const START_DATE = 'Start Date';
 export type START_DATE = typeof START_DATE;
 export const END_DATE = 'End Date';
