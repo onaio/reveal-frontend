@@ -10508,6 +10508,14 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
                             </a>
                           </Link>
                            
+                          <NewRecordBadge
+                            className="new-record"
+                            color="warning"
+                            numDays={1}
+                            pill={true}
+                            recordDate="2019-06-18"
+                            text="New"
+                          />
                         </div>
                       </Cell>
                     </div>
