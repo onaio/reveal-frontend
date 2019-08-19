@@ -45,7 +45,7 @@ describe('@containers/pages/map/planCompletion/', () => {
         path: `${PLAN_COMPLETION_URL}/:id`,
         url: `${PLAN_COMPLETION_URL}/13`,
       },
-      plan: fixtures.plan1,
+      plan: fixtures.plan1 as Plan,
     };
     shallow(
       <Router history={history}>
@@ -65,7 +65,7 @@ describe('@containers/pages/map/planCompletion/', () => {
         path: `${PLAN_COMPLETION_URL}/:id`,
         url: `${PLAN_COMPLETION_URL}/13`,
       },
-      plan: fixtures.plan1,
+      plan: fixtures.plan1 as Plan,
     };
     const wrapper = mount(
       <Router history={history}>
