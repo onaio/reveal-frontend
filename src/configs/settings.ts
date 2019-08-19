@@ -115,6 +115,7 @@ export const useContextCodes = [
   'fiReason',
   'opensrpEventId',
   'caseNum',
+  'taskGenerationStatus',
 ] as const;
 export type UseContextCodesType = typeof useContextCodes[number];
 
