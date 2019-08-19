@@ -43,6 +43,7 @@ import {
   OPENSRP_LOCATION,
   OPENSRP_PARENT_ID,
   OPENSRP_PLANS,
+  PARENTID,
 } from '../../../../../constants';
 import {
   FlexObject,
@@ -1768,7 +1769,7 @@ class IrsPlan extends React.Component<
             layerFilter[2] = '';
             Map.setFilter(layer.id, layerFilter);
           } else {
-            Map.setFilter(layer.id, ['==', 'parentId', clickedFeatureJurisdiction.jurisdiction_id]);
+            Map.setFilter(layer.id, ['==', PARENTID, clickedFeatureJurisdiction.jurisdiction_id]);
           }
         }
 
@@ -1798,7 +1799,7 @@ class IrsPlan extends React.Component<
               nextLayerFilter[2] = properties.jurisdiction_id;
               Map.setFilter(nextLayerId, nextLayerFilter);
             } else {
-              Map.setFilter(nextLayerId, ['==', 'parentId', properties.jurisdiction_id]);
+              Map.setFilter(nextLayerId, ['==', PARENTID, properties.jurisdiction_id]);
             }
           }
         } else {
@@ -1812,7 +1813,7 @@ class IrsPlan extends React.Component<
                   layerFilter[2] = '';
                   Map.setFilter(adminLayer, layerFilter);
                 } else {
-                  Map.setFilter(adminLayer, ['==', 'parentId', '']);
+                  Map.setFilter(adminLayer, ['==', PARENTID, '']);
                 }
               }
             }
