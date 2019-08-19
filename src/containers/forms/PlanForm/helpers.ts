@@ -478,6 +478,13 @@ export function generatePlanDefinition(
     useContext.push({ code: 'opensrpEventId', valueCodableConcept: formValue.opensrpEventId });
   }
 
+  if (formValue.taskGenerationStatus) {
+    useContext.push({
+      code: 'taskGenerationStatus',
+      valueCodableConcept: formValue.taskGenerationStatus,
+    });
+  }
+
   return {
     ...extractActivitiesFromPlanForm(
       formValue.activities,
