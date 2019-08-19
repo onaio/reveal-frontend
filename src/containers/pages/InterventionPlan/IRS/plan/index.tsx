@@ -8,7 +8,6 @@ import { MouseEvent } from 'react';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
-import { Column } from 'react-table';
 import {
   Button,
   Col,
@@ -32,8 +31,6 @@ import {
   DATE_FORMAT,
   IRS_PLAN_COUNTRIES,
   SUPERSET_JURISDICTIONS_DATA_SLICE,
-  SUPERSET_JURISDICTIONS_SLICE,
-  SUPERSET_PLAN_STRUCTURE_PIVOT_SLICE,
 } from '../../../../../configs/env';
 import {
   HOME,
@@ -70,7 +67,6 @@ import jurisdictionReducer, {
   fetchAllJurisdictionIds,
   fetchJurisdictions,
   getAllJurisdictionsIdArray,
-  getJurisdictionsArray,
   getJurisdictionsById,
   getJurisdictionsIdArray,
   Jurisdiction,
@@ -88,7 +84,6 @@ import plansReducer, {
   reducerName as plansReducerName,
 } from '../../../../../store/ducks/plans';
 
-import { strict } from 'assert';
 import { Helmet } from 'react-helmet';
 import GisidaWrapper, { GisidaProps, Handlers } from '../../../../../components/GisidaWrapper';
 import HeaderBreadcrumbs, {
