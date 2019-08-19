@@ -431,11 +431,11 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
             },
             Object {
               "label": "Chadiza",
-              "url": "/focus-investigation/filtered/2939",
+              "url": "/focus-investigation/2939",
             },
             Object {
               "label": "Naviluli",
-              "url": "/focus-investigation/filtered/2944",
+              "url": "/focus-investigation/2944",
             },
             Object {
               "label": "NVI_439",
@@ -510,10 +510,10 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
                     <Link
                       key="2"
                       replace={false}
-                      to="/focus-investigation/filtered/2939"
+                      to="/focus-investigation/2939"
                     >
                       <a
-                        href="/focus-investigation/filtered/2939"
+                        href="/focus-investigation/2939"
                         onClick={[Function]}
                       >
                         Chadiza
@@ -531,10 +531,10 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
                     <Link
                       key="3"
                       replace={false}
-                      to="/focus-investigation/filtered/2944"
+                      to="/focus-investigation/2944"
                     >
                       <a
-                        href="/focus-investigation/filtered/2944"
+                        href="/focus-investigation/2944"
                         onClick={[Function]}
                       >
                         Naviluli
@@ -3037,11 +3037,11 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store (g
                 },
                 Object {
                   "label": "Chadiza",
-                  "url": "/focus-investigation/filtered/2939",
+                  "url": "/focus-investigation/2939",
                 },
                 Object {
                   "label": "Naviluli",
-                  "url": "/focus-investigation/filtered/2944",
+                  "url": "/focus-investigation/2944",
                 },
                 Object {
                   "label": "NVI_439",
@@ -3116,10 +3116,10 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store (g
                         <Link
                           key="2"
                           replace={false}
-                          to="/focus-investigation/filtered/2939"
+                          to="/focus-investigation/2939"
                         >
                           <a
-                            href="/focus-investigation/filtered/2939"
+                            href="/focus-investigation/2939"
                             onClick={[Function]}
                           >
                             Chadiza
@@ -3137,10 +3137,10 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store (g
                         <Link
                           key="3"
                           replace={false}
-                          to="/focus-investigation/filtered/2944"
+                          to="/focus-investigation/2944"
                         >
                           <a
-                            href="/focus-investigation/filtered/2944"
+                            href="/focus-investigation/2944"
                             onClick={[Function]}
                           >
                             Naviluli
