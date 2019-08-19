@@ -224,6 +224,8 @@ const isPropertyErrorPresent = (
   return !!propertyAssociatedErrors.length;
 };
 
+// TODO - Add the name of the schema to the test name(programmatically)
+
 /** Matches that the truthy value got from inspecting errors generated
  * by validating the object , is as expected
  *
@@ -247,7 +249,9 @@ const testRunner = (
     expect(got).toEqual(expected);
     return;
   }
-  expect.assertions(1);
+  // HACK : This means that the validation did not raise any errors, so validation,
+  // passed.
+  expect(1).toEqual(1);
 };
 
 describe('./isPropertyPresent', () => {
@@ -272,7 +276,7 @@ describe('src/containers/forms/PlanForm.PlanSchema.caseNum', () => {
   /** Case Num requireability is dependent on whether the
    * Intervention Type value is FI
    */
-  it('validationError if Intervention is FI && no caseNum', () => {
+  it('[PlanShema] validationError if Intervention is FI && no caseNum', () => {
     const propertyName = 'caseNum';
     const errorMessage = REQUIRED;
     const shouldFail = true;
@@ -284,7 +288,7 @@ describe('src/containers/forms/PlanForm.PlanSchema.caseNum', () => {
     testRunner(badCaseNum, propertyName, errorMessage, shouldFail);
   });
 
-  it('No validationError if Intervention is FI && caseNum present', () => {
+  it('[PlanShema] No validationError if Intervention is FI && caseNum present', () => {
     const propertyName = 'caseNum';
     const errorMessage = REQUIRED;
     const shouldFail = false;
@@ -297,7 +301,7 @@ describe('src/containers/forms/PlanForm.PlanSchema.caseNum', () => {
     testRunner(goodCaseNum, propertyName, errorMessage, shouldFail);
   });
 
-  it('No validationError if Intervention is IRS and no caseNum', () => {
+  it('[PlanShema] No validationError if Intervention is IRS and no caseNum', () => {
     const propertyName = 'caseNum';
     const errorMessage = REQUIRED;
     const shouldFail = false;
@@ -310,46 +314,24 @@ describe('src/containers/forms/PlanForm.PlanSchema.caseNum', () => {
   });
 });
 
-describe('src/containers/forms/PlanForm.PlanSchema.date', () => {
-  it('yup validates date as date', () => {
-    expect.assertions(1);
-  });
-
-  it('date validation passes for valid date', () => {
-    const propertyName = 'date';
-    const errorMessage = `${DATE} ${IS} ${REQUIRED}`;
-    const shouldFail = false;
-
-    const goodDatePlan = { date: 'Not a date' };
-
-    testRunner(goodDatePlan, propertyName, errorMessage, shouldFail);
-  });
-
-  it('date validation fails for invalid date', () => {
-    const propertyName = 'date';
-    const errorMessage = `${DATE} ${IS} ${REQUIRED}`;
-    const shouldFail = true;
-
-    const badDatePlan = {
-      date: '',
-    };
-
-    testRunner(badDatePlan, propertyName, errorMessage, shouldFail);
-  });
-});
-
 describe('Schema validation behavior for missing property"s', () => {
-  /** Structure => [object, propertyName, errorMessage, ifshouldFail, schema(default: PlanSchema)] */
+  /**
+   *
+   * TEST STRUCTURE:
+   *
+   * [object, propertyName, errorMessage, ifshouldFail, schemaToUse]
+   *
+   */
   [
-    [{}, 'end', REQUIRED, true],
-    [{}, 'identifier', REQUIRED, false],
-    [{}, 'interventionType', REQUIRED, true],
-    [{}, 'name', `${NAME} ${IS} ${REQUIRED}`, true],
-    [{}, 'opensrpEventId', '', false],
-    [{}, 'start', REQUIRED, true],
-    [{}, 'status', REQUIRED, true],
-    [{}, 'title', REQUIRED, true],
-    [{}, 'version', REQUIRED, false],
+    [{}, 'end', REQUIRED, true, PlanSchema],
+    [{}, 'identifier', REQUIRED, false, PlanSchema],
+    [{}, 'interventionType', REQUIRED, true, PlanSchema],
+    [{}, 'name', `${NAME} ${IS} ${REQUIRED}`, true, PlanSchema],
+    [{}, 'opensrpEventId', '', false, PlanSchema],
+    [{}, 'start', REQUIRED, true, PlanSchema],
+    [{}, 'status', REQUIRED, true, PlanSchema],
+    [{}, 'title', REQUIRED, true, PlanSchema],
+    [{}, 'version', REQUIRED, false, PlanSchema],
     [{}, 'actionDescription', REQUIRED, true, ActivitiesSchema],
     [{}, 'actionIdentifier', REQUIRED, false, ActivitiesSchema],
     [{}, 'actionReason', REQUIRED, true, ActivitiesSchema],
@@ -362,9 +344,10 @@ describe('Schema validation behavior for missing property"s', () => {
     [{}, 'timingPeriodStart', REQUIRED, true, ActivitiesSchema],
     [{}, 'id', REQUIRED, true, JurisdictionSchema],
     [{}, 'name', REQUIRED, false, JurisdictionSchema],
+    [{}, 'date', `${DATE} ${IS} ${REQUIRED}`, true, PlanSchema],
   ].forEach(e => {
     it(`validation ${e[3] ? 'fails' : 'passes'} if ${e[1]} is missing`, () => {
-      testRunner(e[0], e[1] as string, e[2] as string, e[3] as boolean);
+      testRunner(e[0], e[1] as string, e[2] as string, e[3] as boolean, e[4]);
     });
   });
 
@@ -373,15 +356,15 @@ describe('Schema validation behavior for missing property"s', () => {
    * they are required or not.
    */
   [
-    [{ end: 'not a date' }, 'end', REQUIRED, false],
-    [{ identifier: 'this guy' }, 'identifier', REQUIRED, false],
-    [{ interventionType: 'FI' }, 'interventionType', REQUIRED, false],
-    [{ name: 'Joey Tribbiani' }, 'name', `${NAME} ${IS} ${REQUIRED}`, false],
-    [{ opensrpEventId: '1.234' }, 'opensrpEventId', '', false],
-    [{ start: '2019 AD' }, 'start', REQUIRED, false],
-    [{ status: 'active' }, 'status', REQUIRED, false],
-    [{ title: 'Some string' }, 'title', REQUIRED, false],
-    [{ version: 'v1' }, 'version', REQUIRED, false],
+    [{ end: 'not a date' }, 'end', REQUIRED, false, PlanSchema],
+    [{ identifier: 'this guy' }, 'identifier', REQUIRED, false, PlanSchema],
+    [{ interventionType: 'FI' }, 'interventionType', REQUIRED, false, PlanSchema],
+    [{ name: 'Joey Tribbiani' }, 'name', `${NAME} ${IS} ${REQUIRED}`, false, PlanSchema],
+    [{ opensrpEventId: '1.234' }, 'opensrpEventId', '', false, PlanSchema],
+    [{ start: '2019 AD' }, 'start', REQUIRED, false, PlanSchema],
+    [{ status: 'active' }, 'status', REQUIRED, false, PlanSchema],
+    [{ title: 'Some string' }, 'title', REQUIRED, false, PlanSchema],
+    [{ version: 'v1' }, 'version', REQUIRED, false, PlanSchema],
     [{ actionDescription: 'aString' }, 'actionDescription', REQUIRED, false, ActivitiesSchema],
     [{ actionIdentifier: 'aString' }, 'actionIdentifier', REQUIRED, false, ActivitiesSchema],
     [{ actionReason: 'someString' }, 'actionReason', REQUIRED, false, ActivitiesSchema],
@@ -393,7 +376,8 @@ describe('Schema validation behavior for missing property"s', () => {
     [{ timingPeriodEnd: 'shouldbeDate' }, 'timingPeriodEnd', REQUIRED, false, ActivitiesSchema],
     [{ timingPeriodStart: 'shouldbeDate' }, 'timingPeriodStart', REQUIRED, false, ActivitiesSchema],
     [{ id: 'someId' }, 'id', REQUIRED, false, JurisdictionSchema],
-    [{}, 'name', REQUIRED, false, JurisdictionSchema],
+    [{ name: 'some Name' }, 'name', REQUIRED, false, JurisdictionSchema],
+    [{ date: 'NotADate' }, 'date', `${DATE} ${IS} ${REQUIRED}`, false, PlanSchema],
   ].forEach(e => {
     it(`validation ${e[3] ? 'fails' : 'passes'} if ${e[1]} is present`, () => {
       testRunner(e[0], e[1] as string, e[2] as string, e[3] as boolean, e[4]);
@@ -402,6 +386,11 @@ describe('Schema validation behavior for missing property"s', () => {
 });
 
 describe('PlanSchema validates correctly based on data types', () => {
+  /**
+   *  Apparently anything can be serialized into a string. meaning the
+   *  yup.string(), is not of much help, probably only do validation checks for
+   *  other data types: date, number
+   */
   /** Should not throw validation error if property values
    * are of expected data type
    */
@@ -409,8 +398,29 @@ describe('PlanSchema validates correctly based on data types', () => {
    * the expected type <-> This will not be exhaustive(logically
    * it cant be.)
    */
-  // Apparently anything can be serialized into a string. meaning the
-  // yup.string(), is not of much help
+  const goalValueErrorMessage = 'goalValue must be a `number` type';
+  const dateErrorMessage = 'must be a `date` type';
+  [
+    [{ goalValue: 'garbage' }, 'goalValue', goalValueErrorMessage, true, ActivitiesSchema],
+    [{ goalValue: 12 }, 'goalValue', goalValueErrorMessage, false, ActivitiesSchema],
+    [{ goalDue: 'notDate' }, 'goalDue', dateErrorMessage, true, ActivitiesSchema],
+    [{ timingPeriodEnd: 'notDate' }, 'timingPeriodEnd', dateErrorMessage, true, ActivitiesSchema],
+    [
+      { timingPeriodStart: 'notDate' },
+      'timingPeriodStart',
+      dateErrorMessage,
+      true,
+      ActivitiesSchema,
+    ],
+    [{ end: 'notDate' }, 'end', dateErrorMessage, true, PlanSchema],
+    [{ start: 'notDate' }, 'start', dateErrorMessage, true, PlanSchema],
+  ].forEach(e => {
+    it(`validation ${e[3] ? 'fails' : 'passes'} if ${e[1]} is ${
+      e[3] ? 'not of' : 'of'
+    } expected data type`, () => {
+      testRunner(e[0], e[1] as string, e[2] as string, e[3] as boolean, e[4]);
+    });
+  });
 });
 
 describe('Schema validation for one of', () => {
@@ -423,14 +433,14 @@ describe('Schema validation for one of', () => {
   const actionReasonsEnums = actionReasons.join(', ');
   const goalPriorityEnums = goalPriorities.join(', ');
   [
-    [{ fiReason: '09fasdf' }, 'fiReason', fiReasonEnums, true],
-    [{ fiReason: 'Routine' }, 'fiReason', fiReasonEnums, false],
-    [{ fiStatus: 'dontknow' }, 'fiStatus', fiStatusEnums, true],
-    [{ fiStatus: 'A1' }, 'fiStatus', fiStatusEnums, false],
-    [{ interventionType: 'notType' }, 'interventionType', interventionTypeEnums, true],
-    [{ interventionType: 'FI' }, 'interventionType', interventionTypeEnums, false],
-    [{ status: 'invalidStatus' }, 'status', statusEnums, true],
-    [{ status: 'active' }, 'status', statusEnums, false],
+    [{ fiReason: '09fasdf' }, 'fiReason', fiReasonEnums, true, PlanSchema],
+    [{ fiReason: 'Routine' }, 'fiReason', fiReasonEnums, false, PlanSchema],
+    [{ fiStatus: 'dontknow' }, 'fiStatus', fiStatusEnums, true, PlanSchema],
+    [{ fiStatus: 'A1' }, 'fiStatus', fiStatusEnums, false, PlanSchema],
+    [{ interventionType: 'notType' }, 'interventionType', interventionTypeEnums, true, PlanSchema],
+    [{ interventionType: 'FI' }, 'interventionType', interventionTypeEnums, false, PlanSchema],
+    [{ status: 'invalidStatus' }, 'status', statusEnums, true, PlanSchema],
+    [{ status: 'active' }, 'status', statusEnums, false, PlanSchema],
     [
       { actionCode: 'invalidActionCode' },
       'actionCode',
