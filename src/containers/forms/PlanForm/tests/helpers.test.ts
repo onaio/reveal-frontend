@@ -166,14 +166,14 @@ describe('containers/forms/PlanForm/helpers', () => {
   });
 
   it('generatePlanDefinition can get original planDefinition', () => {
-    const plan = plans[0];
+    const plan = plans[2];
 
     const generatedPlanForm = getPlanFormValues(plan);
     const generatedPlan = generatePlanDefinition(generatedPlanForm, plan);
 
     expect(plan).toEqual({
       ...generatedPlan,
-      serverVersion: 1563303150422,
+      serverVersion: 1563494230144,
       version: '1',
     });
   });
