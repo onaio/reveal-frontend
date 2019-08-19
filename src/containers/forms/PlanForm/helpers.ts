@@ -581,7 +581,7 @@ export function getPlanFormValues(planObject: PlanDefinition): PlanFormFields {
     taskGenerationStatus:
       taskGenerationStatusContext.length > 0
         ? (taskGenerationStatusContext[0].valueCodableConcept as taskGenerationStatusType)
-        : 'False',
+        : taskGenerationStatuses[1],
     title: planObject.title,
     version: planObject.version,
   };
