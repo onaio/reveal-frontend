@@ -3754,6 +3754,18 @@ exports[`containers/forms/PlanForm renders correctly: submit button 1`] = `
 </button>
 `;
 
+exports[`containers/forms/PlanForm renders correctly: taskGenerationStatus field 1`] = `
+<input
+  id="taskGenerationStatus"
+  name="taskGenerationStatus"
+  onBlur={[Function]}
+  onChange={[Function]}
+  readOnly={true}
+  type="hidden"
+  value="False"
+/>
+`;
+
 exports[`containers/forms/PlanForm renders correctly: title field 1`] = `
 <input
   className="form-control"
