@@ -128,6 +128,7 @@ export interface PlanFormFields {
   opensrpEventId?: string;
   start: Date;
   status: PlanStatus;
+  taskGenerationStatus: string;
   title: string;
   version: string;
 }
@@ -567,6 +568,10 @@ export function getPlanFormValues(planObject: PlanDefinition): PlanFormFields {
       eventIdUseContext.length > 0 ? eventIdUseContext[0].valueCodableConcept : undefined,
     start: parseISO(`${planObject.effectivePeriod.start}${DEFAULT_TIME}`),
     status: planObject.status as PlanStatus,
+    taskGenerationStatus:
+      taskGenerationStatusContext.length > 0
+        ? taskGenerationStatusContext[0].valueCodableConcept
+        : 'False',
     title: planObject.title,
     version: planObject.version,
   };
