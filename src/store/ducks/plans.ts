@@ -449,6 +449,8 @@ export function getPlansById(
  * @param {InterventionType} intervention - the intervention type
  * @param {string[]} status - the plan status
  * @param {string} reason - the plan reason
+ * @param {string} parentJurisdictionId - The jurisdiction_parent_id of the plan
+ * @param {string[]} jurisdictions - jurisdiction IDs list to find plan's jurisdiction_id within
  */
 export function getPlansArray(
   state: Partial<Store>,
