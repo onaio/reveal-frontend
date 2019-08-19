@@ -36,6 +36,7 @@ import {
   HOME,
   HOME_URL,
   INTERVENTION_IRS_URL,
+  JURISDICTION_ID,
   MAP_ID,
   NEW_PLAN,
   OPENSRP_FIND_BY_PROPERTIES,
@@ -1750,8 +1751,7 @@ class IrsPlan extends React.Component<
           : properties.jurisdiction_id;
 
       const clickedFeatureJurisdiction = filteredJurisdictions.find(
-        j =>
-          j[doUseTilesets && !isJurisdictionLayer ? 'name' : 'jurisdiction_id'] === clickedFeatureId
+        j => j[JURISDICTION_ID] === clickedFeatureId
       ) as Jurisdiction;
 
       if (clickedFeatureJurisdiction && !isShiftClick && !isJurisdictionLayer) {
