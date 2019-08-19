@@ -512,6 +512,9 @@ export function getPlanFormValues(planObject: PlanDefinition): PlanFormFields {
   const statusUseContext = planObject.useContext.filter(e => e.code === 'fiStatus');
   const eventIdUseContext = planObject.useContext.filter(e => e.code === 'opensrpEventId');
   const caseNumUseContext = planObject.useContext.filter(e => e.code === 'caseNum');
+  const taskGenerationStatusContext = planObject.useContext.filter(
+    e => e.code === 'taskGenerationStatus'
+  );
 
   const interventionType =
     typeUseContext.length > 0
