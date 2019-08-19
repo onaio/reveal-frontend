@@ -182,9 +182,10 @@ describe('containers/forms/PlanForm/helpers', () => {
     expect(getPlanFormValues(plans[0])).toEqual(planFormValues2);
 
     const plan = getPlanFormValues(plans[2]);
-    // caseNum and opensrpEventId are gotten right
+    // caseNum and opensrpEventId and taskGenerationStatus are gotten right
     expect(plan.caseNum).toEqual('1');
     expect(plan.opensrpEventId).toEqual('1');
+    expect(plan.taskGenerationStatus).toEqual('True');
     // multiple jurisdictions are gotten right
     expect(getPlanFormValues(plans[1]).jurisdictions).toEqual([
       { id: '35968df5-f335-44ae-8ae5-25804caa2d86', name: '35968df5-f335-44ae-8ae5-25804caa2d86' },
