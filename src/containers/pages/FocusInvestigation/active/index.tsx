@@ -56,7 +56,6 @@ import {
 import supersetFetch from '../../../../services/superset';
 import plansReducer, {
   fetchPlans,
-  getFilteredPlansArray,
   getPlansArray,
   InterventionType,
   Plan,
@@ -341,7 +340,7 @@ interface DispatchedStateProps {
 
 /** map state to props */
 const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateProps => {
-  const caseTriggeredPlans = getFilteredPlansArray(
+  const caseTriggeredPlans = getPlansArray(
     state,
     InterventionType.FI,
     [PlanStatus.ACTIVE, PlanStatus.COMPLETE],
@@ -350,7 +349,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
       ? ownProps.match.params.jurisdiction_parent_id
       : null
   );
-  const routinePlans = getFilteredPlansArray(
+  const routinePlans = getPlansArray(
     state,
     InterventionType.FI,
     [PlanStatus.ACTIVE, PlanStatus.COMPLETE],
