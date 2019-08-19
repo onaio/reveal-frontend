@@ -66,13 +66,18 @@ class IrsPlans extends React.Component<IrsPlansProps & RouteComponentProps<Route
     OpenSrpPlanService.list()
       .then(plans => {
         // filter for IRS plans
-        const irsPlans = plans.filter(
-          (p: PlanPayload) =>
-            p.useContext &&
-            p.useContext[0] &&
-            p.useContext[0].code === 'interventionType' &&
-            p.useContext[0].valueCodableConcept === 'IRS'
-        );
+        const irsPlans = plans.filter((p: PlanPayload) => {
+          for (const u of p.useContext) {
+            if (u.code === 'interventionType') {
+              if (u.valueCodableConcept === 'IRS') {
+                return true;
+              } else {
+                return false;
+              }
+            }
+          }
+          return false;
+        });
         const irsPlanRecords: PlanRecordResponse[] = irsPlans.map(
           extractPlanRecordResponseFromPlanPayload
         );
