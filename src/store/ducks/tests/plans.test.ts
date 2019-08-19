@@ -6,7 +6,6 @@ import store from '../../index';
 import reducer, {
   fetchPlanRecords,
   fetchPlans,
-  getFilteredPlansArray,
   getPlanById,
   getPlanRecordById,
   getPlanRecordsArray,
@@ -45,8 +44,7 @@ describe('reducers/plans', () => {
     expect(getPlanRecordsIdArray(store.getState())).toEqual([]);
     expect(getPlanRecordsArray(store.getState())).toEqual([]);
     expect(getPlanRecordById(store.getState(), 'somId')).toEqual(null);
-    expect(getFilteredPlansArray(store.getState(), InterventionType.FI, [], null)).toEqual([]);
-    expect(getFilteredPlansArray(store.getState())).toEqual([]);
+    expect(getPlansArray(store.getState())).toEqual([]);
   });
 
   it('should fetch Plans', () => {
@@ -94,19 +92,16 @@ describe('reducers/plans', () => {
       values(reactiveDraftPlans)
     );
 
-    // getFilteredPlansArray gets does not filter plans by location when no location is passed
-    // you can pass only the state and getFilteredPlansArray will return all fiPlans in the store
-    expect(getFilteredPlansArray(store.getState())).toEqual(values(fiPlans));
-    expect(getFilteredPlansArray(store.getState(), InterventionType.FI, [], null)).toEqual(
-      values(fiPlans)
-    );
-    expect(getFilteredPlansArray(store.getState(), InterventionType.IRS, [], null)).toEqual(
+    // getPlansArray gets does not filter plans by location when no location is passed
+    // you can pass only the state and getPlansArray will return all fiPlans in the store
+    expect(getPlansArray(store.getState(), InterventionType.FI, [], null)).toEqual(values(fiPlans));
+    expect(getPlansArray(store.getState(), InterventionType.IRS, [], null)).toEqual(
       values(irsPlans)
     );
-    expect(getFilteredPlansArray(store.getState(), InterventionType.FI, [], REACTIVE)).toEqual(
+    expect(getPlansArray(store.getState(), InterventionType.FI, [], REACTIVE)).toEqual(
       values(reactivePlans)
     );
-    expect(getFilteredPlansArray(store.getState(), InterventionType.FI, [], ROUTINE)).toEqual(
+    expect(getPlansArray(store.getState(), InterventionType.FI, [], ROUTINE)).toEqual(
       values(routinePlans)
     );
     expect(getPlansArray(store.getState(), InterventionType.FI, [PlanStatus.DRAFT], null)).toEqual(
@@ -149,19 +144,19 @@ describe('reducers/plans', () => {
         e.plan_fi_reason === CASE_TRIGGERED_PLAN &&
         e.jurisdiction_path.includes('2989')
     );
-    // getFilteredPlansArray gets filters plans by location when no location is passed
-    expect(getFilteredPlansArray(store.getState(), InterventionType.IRS, [], null, '2977')).toEqual(
+    // getPlansArray gets filters plans by location when no location is passed
+    expect(getPlansArray(store.getState(), InterventionType.IRS, [], null, '2977')).toEqual(
       values(filteredIRSPlans)
     );
-    expect(getFilteredPlansArray(store.getState(), InterventionType.FI, [], null, '2944')).toEqual(
+    expect(getPlansArray(store.getState(), InterventionType.FI, [], null, '2944')).toEqual(
       values(filteredFIPlans)
     );
     expect(
-      getFilteredPlansArray(store.getState(), InterventionType.IRS, [], CASE_TRIGGERED_PLAN, '2989')
+      getPlansArray(store.getState(), InterventionType.IRS, [], CASE_TRIGGERED_PLAN, '2989')
     ).toEqual(values(filteredCaseTriggeredIRSPlans));
-    expect(
-      getFilteredPlansArray(store.getState(), InterventionType.FI, [], ROUTINE, '2939')
-    ).toEqual(values(filteredRoutineFIPlans));
+    expect(getPlansArray(store.getState(), InterventionType.FI, [], ROUTINE, '2939')).toEqual(
+      values(filteredRoutineFIPlans)
+    );
   });
 
   it('should fetch PlanRecords', () => {
