@@ -96,6 +96,7 @@ import HeaderBreadcrumbs, {
 } from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../../components/page/Loading';
 
+import './../../../../../styles/css/drill-down-table.css';
 import './style.css';
 
 /** register the plans reducer */
@@ -197,7 +198,7 @@ class IrsPlan extends React.Component<
             plan_id: uuidv4(),
             plan_intervention_type: InterventionType.IRS,
             plan_jurisdictions_ids: [],
-            plan_status: PlanStatus.NEW,
+            plan_status: PlanStatus.DRAFT,
             plan_title: this.getNewPlanTitle(),
             plan_version: '',
           }
@@ -1993,6 +1994,14 @@ class IrsPlan extends React.Component<
       });
     }
 
+    let showPagination: boolean = false;
+    if (this.state.focusJurisdictionId) {
+      const directDecendants = filteredJurisdictions.filter(
+        j => j.parent_id === this.state.focusJurisdictionId
+      );
+      showPagination = directDecendants.length > 20;
+    }
+
     const tableProps: DrillDownProps<any> = {
       CellComponent: DropDownCell,
       columns,
@@ -2009,7 +2018,8 @@ class IrsPlan extends React.Component<
       minRows: 0,
       parentIdentifierField: 'parent_id',
       rootParentId: this.state.focusJurisdictionId,
-      showPagination: true,
+      showPageSizeOptions: false,
+      showPagination,
       useDrillDownTrProps: true,
     };
     return tableProps;

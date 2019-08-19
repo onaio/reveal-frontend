@@ -1,3 +1,4 @@
+import { parseISO } from 'date-fns';
 import { FormikErrors } from 'formik';
 import { omit, pick } from 'lodash';
 import moment from 'moment';
@@ -8,6 +9,7 @@ import {
   DATE_FORMAT,
   DEFAULT_ACTIVITY_DURATION_DAYS,
   DEFAULT_PLAN_VERSION,
+  DEFAULT_TIME,
   PLAN_UUID_NAMESPACE,
 } from '../../../configs/env';
 import {
@@ -31,7 +33,7 @@ import {
   PlanGoalTarget,
   UseContext,
 } from '../../../configs/settings';
-import { DATE, IRS_TITLE, IS, NAME, REQUIRED } from '../../../constants';
+import { DATE, IS, NAME, REQUIRED } from '../../../constants';
 import { generateNameSpacedUUID } from '../../../helpers/utils';
 import { InterventionType, PlanStatus } from '../../../store/ducks/plans';
 
@@ -145,7 +147,7 @@ export function extractActivityForForm(activityObj: PlanActivity): PlanActivityF
     goalDescription: activityObj.goal.description || '',
     goalDue:
       activityObj.goal.target[0].due && activityObj.goal.target[0].due !== ''
-        ? moment(activityObj.goal.target[0].due).toDate()
+        ? parseISO(`${activityObj.goal.target[0].due}${DEFAULT_TIME}`)
         : moment()
             .add(DEFAULT_ACTIVITY_DURATION_DAYS, 'days')
             .toDate(),
@@ -153,13 +155,13 @@ export function extractActivityForForm(activityObj: PlanActivity): PlanActivityF
     goalValue: activityObj.goal.target[0].detail.detailQuantity.value || 0,
     timingPeriodEnd:
       activityObj.action.timingPeriod.end && activityObj.action.timingPeriod.end !== ''
-        ? moment(activityObj.action.timingPeriod.end).toDate()
+        ? parseISO(`${activityObj.action.timingPeriod.end}${DEFAULT_TIME}`)
         : moment()
             .add(DEFAULT_ACTIVITY_DURATION_DAYS, 'days')
             .toDate(),
     timingPeriodStart:
       activityObj.action.timingPeriod.start && activityObj.action.timingPeriod.start !== ''
-        ? moment(activityObj.action.timingPeriod.start).toDate()
+        ? parseISO(`${activityObj.action.timingPeriod.start}${DEFAULT_TIME}`)
         : moment().toDate(),
   };
 }
@@ -175,12 +177,38 @@ export function getFormActivities(items: typeof FIActivities | typeof IRSActivit
 }
 
 /**
+ * Get a plan activity from a plan definition object
+ * @param {PlanDefinition} planObj - the plan definition
+ * @param {PlanActionCodesType} actionCode - the action code
+ * @returns {PlanActivity | null} - the plan activity or null
+ */
+export function getActivityFromPlan(
+  planObj: PlanDefinition,
+  actionCode: PlanActionCodesType
+): PlanActivity | null {
+  const actions = planObj.action.filter(e => e.code === actionCode);
+  if (actions.length > 0) {
+    const goals = planObj.goal.filter(e => e.id === actions[0].goalId);
+    if (goals.length > 0) {
+      return {
+        action: actions[0],
+        goal: goals[0],
+      };
+    }
+  }
+
+  return null;
+}
+
+/**
  * Get action and plans from PlanForm activities
  * @param {PlanActivityFormFields[]} activities - this of activities from PlanForm
+ * @param {string} planIdentifier - this plan identifier
  */
 export function extractActivitiesFromPlanForm(
   activities: PlanActivityFormFields[],
-  planIdentifier: string = ''
+  planIdentifier: string = '',
+  planObj: PlanDefinition | null = null
 ) {
   const actions: PlanAction[] = [];
   const goals: PlanGoal[] = [];
@@ -188,41 +216,96 @@ export function extractActivitiesFromPlanForm(
   activities.forEach((element, index) => {
     const prefix = index + 1;
     if (PlanActionCodes.includes(element.actionCode as PlanActionCodesType)) {
+      const planActionGoal = (planObj &&
+        getActivityFromPlan(planObj, element.actionCode as PlanActionCodesType)) || {
+        action: {},
+        goal: {},
+      };
+
       // we must declare them with some value. BCC chosen randomly here
       let thisAction: PlanAction = planActivities.BCC.action;
       let thisGoal: PlanGoal = planActivities.BCC.goal;
+
       // first populate with default values
       if (element.actionCode === 'BCC') {
-        thisAction = planActivities.BCC.action;
-        thisGoal = planActivities.BCC.goal;
+        thisAction = {
+          ...planActivities.BCC.action,
+          ...planActionGoal.action,
+        };
+        thisGoal = {
+          ...planActivities.BCC.goal,
+          ...planActionGoal.goal,
+        };
       }
       if (element.actionCode === 'IRS') {
-        thisAction = planActivities.IRS.action;
-        thisGoal = planActivities.IRS.goal;
+        thisAction = {
+          ...planActivities.IRS.action,
+          ...planActionGoal.action,
+        };
+        thisGoal = {
+          ...planActivities.IRS.goal,
+          ...planActionGoal.goal,
+        };
       }
       if (element.actionCode === 'Bednet Distribution') {
-        thisAction = planActivities.bednetDistribution.action;
-        thisGoal = planActivities.bednetDistribution.goal;
+        thisAction = {
+          ...planActivities.bednetDistribution.action,
+          ...planActionGoal.action,
+        };
+        thisGoal = {
+          ...planActivities.bednetDistribution.goal,
+          ...planActionGoal.goal,
+        };
       }
       if (element.actionCode === 'Blood Screening') {
-        thisAction = planActivities.bloodScreening.action;
-        thisGoal = planActivities.bloodScreening.goal;
+        thisAction = {
+          ...planActivities.bloodScreening.action,
+          ...planActionGoal.action,
+        };
+        thisGoal = {
+          ...planActivities.bloodScreening.goal,
+          ...planActionGoal.goal,
+        };
       }
       if (element.actionCode === 'Case Confirmation') {
-        thisAction = planActivities.caseConfirmation.action;
-        thisGoal = planActivities.caseConfirmation.goal;
+        thisAction = {
+          ...planActivities.caseConfirmation.action,
+          ...planActionGoal.action,
+        };
+        thisGoal = {
+          ...planActivities.caseConfirmation.goal,
+          ...planActionGoal.goal,
+        };
       }
       if (element.actionCode === 'RACD Register Family') {
-        thisAction = planActivities.familyRegistration.action;
-        thisGoal = planActivities.familyRegistration.goal;
+        thisAction = {
+          ...planActivities.familyRegistration.action,
+          ...planActionGoal.action,
+        };
+        thisGoal = {
+          ...planActivities.familyRegistration.goal,
+          ...planActionGoal.goal,
+        };
       }
       if (element.actionCode === 'Larval Dipping') {
-        thisAction = planActivities.larvalDipping.action;
-        thisGoal = planActivities.larvalDipping.goal;
+        thisAction = {
+          ...planActivities.larvalDipping.action,
+          ...planActionGoal.action,
+        };
+        thisGoal = {
+          ...planActivities.larvalDipping.goal,
+          ...planActionGoal.goal,
+        };
       }
       if (element.actionCode === 'Mosquito Collection') {
-        thisAction = planActivities.mosquitoCollection.action;
-        thisGoal = planActivities.mosquitoCollection.goal;
+        thisAction = {
+          ...planActivities.mosquitoCollection.action,
+          ...planActionGoal.action,
+        };
+        thisGoal = {
+          ...planActivities.mosquitoCollection.goal,
+          ...planActionGoal.goal,
+        };
       }
 
       const thisActionIdentifier =
@@ -354,7 +437,10 @@ export function doesFieldHaveErrors(
  * @param formValue - the value gotten from the PlanForm
  * @returns {PlanDefinition} - the plan definition object
  */
-export function generatePlanDefinition(formValue: PlanFormFields): PlanDefinition {
+export function generatePlanDefinition(
+  formValue: PlanFormFields,
+  planObj: PlanDefinition | null = null
+): PlanDefinition {
   const planIdentifier =
     formValue.identifier && formValue.identifier !== '' // is this an existing plan?
       ? formValue.identifier
@@ -374,12 +460,12 @@ export function generatePlanDefinition(formValue: PlanFormFields): PlanDefinitio
     },
   ];
 
-  if (formValue.fiReason) {
-    useContext.push({ code: 'fiReason', valueCodableConcept: formValue.fiReason });
-  }
-
   if (formValue.fiStatus) {
     useContext.push({ code: 'fiStatus', valueCodableConcept: formValue.fiStatus });
+  }
+
+  if (formValue.fiReason) {
+    useContext.push({ code: 'fiReason', valueCodableConcept: formValue.fiReason });
   }
 
   if (formValue.caseNum) {
@@ -391,7 +477,11 @@ export function generatePlanDefinition(formValue: PlanFormFields): PlanDefinitio
   }
 
   return {
-    ...extractActivitiesFromPlanForm(formValue.activities), // action and goal
+    ...extractActivitiesFromPlanForm(
+      formValue.activities,
+      planObj ? planObj.identifier : '',
+      planObj
+    ), // action and goal
     date: moment(formValue.date).format(DATE_FORMAT.toUpperCase()),
     effectivePeriod: {
       end: moment(formValue.end).format(DATE_FORMAT.toUpperCase()),
@@ -408,5 +498,73 @@ export function generatePlanDefinition(formValue: PlanFormFields): PlanDefinitio
     title: formValue.title,
     useContext,
     version: planVersion as string,
+  };
+}
+
+/**
+ * Get plan form field values from plan definition object
+ * @param planObject - the plan definition object
+ * @returns {PlanFormFields} - the plan form field values
+ */
+export function getPlanFormValues(planObject: PlanDefinition): PlanFormFields {
+  const typeUseContext = planObject.useContext.filter(e => e.code === 'interventionType');
+  const reasonUseContext = planObject.useContext.filter(e => e.code === 'fiReason');
+  const statusUseContext = planObject.useContext.filter(e => e.code === 'fiStatus');
+  const eventIdUseContext = planObject.useContext.filter(e => e.code === 'opensrpEventId');
+  const caseNumUseContext = planObject.useContext.filter(e => e.code === 'caseNum');
+
+  const interventionType =
+    typeUseContext.length > 0
+      ? (typeUseContext[0].valueCodableConcept as InterventionType)
+      : InterventionType.FI;
+
+  let activities = planObject.action.reduce(
+    (accumulator: PlanActivityFormFields[], currentAction) => {
+      const goalArray = planObject.goal.filter(goal => goal.id === currentAction.goalId);
+      goalArray.map(currentGoal => {
+        const currentActivity = extractActivityForForm({
+          action: currentAction,
+          goal: currentGoal,
+        });
+        accumulator.push(currentActivity);
+      });
+      return accumulator;
+    },
+    []
+  );
+
+  if (activities.length < 1) {
+    activities =
+      interventionType === InterventionType.IRS
+        ? getFormActivities(IRSActivities)
+        : getFormActivities(FIActivities);
+  }
+
+  return {
+    activities,
+    caseNum: caseNumUseContext.length > 0 ? caseNumUseContext[0].valueCodableConcept : '',
+    date: parseISO(`${planObject.date}${DEFAULT_TIME}`),
+    end: parseISO(`${planObject.effectivePeriod.end}${DEFAULT_TIME}`),
+    fiReason:
+      reasonUseContext.length > 0
+        ? (reasonUseContext[0].valueCodableConcept as FIReasonType)
+        : undefined,
+    fiStatus:
+      statusUseContext.length > 0
+        ? (statusUseContext[0].valueCodableConcept as FIStatusType)
+        : undefined,
+    identifier: planObject.identifier,
+    interventionType,
+    jurisdictions: planObject.jurisdiction.map(e => ({
+      id: e.code,
+      name: e.code,
+    })) /** a little cheating: since we dnt have the name yet, we just use code */,
+    name: planObject.name,
+    opensrpEventId:
+      eventIdUseContext.length > 0 ? eventIdUseContext[0].valueCodableConcept : undefined,
+    start: parseISO(`${planObject.effectivePeriod.start}${DEFAULT_TIME}`),
+    status: planObject.status as PlanStatus,
+    title: planObject.title,
+    version: planObject.version,
   };
 }

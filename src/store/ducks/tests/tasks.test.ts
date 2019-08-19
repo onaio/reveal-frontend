@@ -1,3 +1,4 @@
+import { initialState } from '@onaio/gatekeeper/dist/types/ducks/gatekeeper';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import { cloneDeep, keyBy, values } from 'lodash';
 import { FlushThunks } from 'redux-testkit';
@@ -28,7 +29,7 @@ import reducer, {
   getTasksIdArray,
   InitialTaskGeoJSON,
   reducerName,
-  resetTasks,
+  removeTasksAction,
   Task,
 } from '../tasks';
 import * as fixtures from './fixtures';
@@ -44,7 +45,7 @@ describe('reducers/tasks', () => {
   });
 
   afterEach(() => {
-    store.dispatch(resetTasks());
+    store.dispatch(removeTasksAction);
   });
 
   it('should have initial state', () => {
@@ -152,6 +153,33 @@ describe('reducers/tasks', () => {
       });
     }
   });
+
+  it('removes tasks correctly', () => {
+    store.dispatch(removeTasksAction);
+    let tasksInStore = getTasksById(store.getState());
+    expect(tasksInStore).toEqual({});
+
+    store.dispatch(fetchTasks([fixtures.task1]));
+    tasksInStore = getTasksById(store.getState());
+    expect(tasksInStore).not.toEqual({});
+
+    store.dispatch(removeTasksAction);
+    tasksInStore = getTasksById(store.getState());
+    expect(tasksInStore).toEqual({});
+  });
+
+  it('Tasks do not overwrite existing tasks', () => {
+    store.dispatch(removeTasksAction);
+    const tasksInStore = getTasksById(store.getState());
+    expect(tasksInStore).toEqual({});
+
+    store.dispatch(fetchTasks([fixtures.task1]));
+    let tasksNumberInStore = getTasksArray(store.getState()).length;
+    expect(tasksNumberInStore).toEqual(1);
+    store.dispatch(fetchTasks([fixtures.task2]));
+    tasksNumberInStore = getTasksArray(store.getState()).length;
+    expect(tasksNumberInStore).toEqual(2);
+  });
 });
 
 // goeJSON Feature Collection selectors tests
@@ -164,7 +192,7 @@ describe('reducers/tasks/FeatureCollectionSelectors', () => {
   });
 
   afterEach(() => {
-    store.dispatch(resetTasks());
+    store.dispatch(removeTasksAction);
   });
 
   it('works for initial state', () => {

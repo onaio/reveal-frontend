@@ -21,7 +21,6 @@ export enum PlanStatus {
   ACTIVE = 'active',
   COMPLETE = 'complete',
   DRAFT = 'draft',
-  NEW = 'new',
   RETIRED = 'retired',
 }
 /** PlanRecordResponse - interface for response objects from SUPERSET_PLANS_TABLE_SLICE */
@@ -297,6 +296,8 @@ export const extractPlanRecordFromPlanPayload = (planPayload: PlanPayload): Plan
 export const PLANS_FETCHED = 'reveal/reducer/plans/PLANS_FETCHED';
 /** PLAN_RECORDS_FETCHED action type */
 export const PLAN_RECORDS_FETCHED = 'reveal/reducer/plans/PLAN_RECORDS_FETCHED';
+/** REMOVE_PLANS action_type */
+export const REMOVE_PLANS = 'reveal/reducer/plans/REMOVE_PLANS';
 
 /** FetchPlansAction interface for PLANS_FETCHED */
 interface FetchPlansAction extends AnyAction {
@@ -309,8 +310,18 @@ interface FetchPlanRecordsAction extends AnyAction {
   type: typeof PLAN_RECORDS_FETCHED;
 }
 
+/** removePlansAction interface for REMOVE_PLANS */
+interface RemovePlansAction extends AnyAction {
+  type: typeof REMOVE_PLANS;
+  plansById: {};
+}
+
 /** Create type for Plan reducer actions */
-export type PlanActionTypes = FetchPlansAction | FetchPlanRecordsAction | AnyAction;
+export type PlanActionTypes =
+  | FetchPlansAction
+  | FetchPlanRecordsAction
+  | RemovePlansAction
+  | AnyAction;
 
 /** interface for Plan state */
 interface PlanState {
@@ -333,12 +344,17 @@ export default function reducer(state = initialState, action: PlanActionTypes): 
     case PLANS_FETCHED:
       return SeamlessImmutable({
         ...state,
-        plansById: action.plansById,
+        plansById: { ...state.plansById, ...action.plansById },
       });
     case PLAN_RECORDS_FETCHED:
       return SeamlessImmutable({
         ...state,
         planRecordsById: action.planRecordsById,
+      });
+    case REMOVE_PLANS:
+      return SeamlessImmutable({
+        ...state,
+        plansById: action.plansById,
       });
     default:
       return state;
@@ -346,6 +362,12 @@ export default function reducer(state = initialState, action: PlanActionTypes): 
 }
 
 // action creators
+
+/** removePlansAction */
+export const removePlansAction: RemovePlansAction = {
+  plansById: {},
+  type: REMOVE_PLANS,
+};
 
 /** fetchPlans - action creator setting plansById
  * @param {Plan[]} plansList - array of plan objects
@@ -432,13 +454,15 @@ export function getPlansArray(
   state: Partial<Store>,
   intervention: InterventionType = InterventionType.FI,
   status: string[],
-  reason: string | null = null
+  reason: string | null = null,
+  jurisdictions: string[] = []
 ): Plan[] {
   return values((state as any)[reducerName].plansById).filter(
     (plan: Plan) =>
       plan.plan_intervention_type === intervention &&
       (status.length ? status.includes(plan.plan_status) : true) &&
-      (reason ? plan.plan_fi_reason === reason : true)
+      (reason ? plan.plan_fi_reason === reason : true) &&
+      (jurisdictions.length ? jurisdictions.includes(plan.jurisdiction_id) : true)
   );
 }
 

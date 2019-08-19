@@ -19,6 +19,7 @@ import reducer, {
   PlanRecord,
   PlanStatus,
   reducerName,
+  removePlansAction,
 } from '../plans';
 import * as fixtures from './fixtures';
 
@@ -58,6 +59,12 @@ describe('reducers/plans', () => {
         plan.plan_intervention_type === InterventionType.FI && plan.plan_fi_reason === ROUTINE
     );
 
+    const filteredByJurisdictionPlans = values(
+      cloneDeep(routinePlans).filter(
+        (plan: Plan) => plan.jurisdiction_id === '450fc15b-5bd2-468a-927a-49cb10d3bcac'
+      )
+    );
+
     const reactivePlans = values(cloneDeep(store.getState().plans.plansById)).filter(
       (plan: Plan) => plan.plan_fi_reason === REACTIVE
     );
@@ -83,6 +90,11 @@ describe('reducers/plans', () => {
     expect(getPlansArray(store.getState(), InterventionType.FI, [PlanStatus.DRAFT], null)).toEqual(
       values(reactiveDraftPlans)
     );
+    expect(
+      getPlansArray(store.getState(), InterventionType.FI, [], ROUTINE, [
+        '450fc15b-5bd2-468a-927a-49cb10d3bcac',
+      ])
+    ).toEqual(values(filteredByJurisdictionPlans));
     expect(getPlanById(store.getState(), 'ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f')).toEqual(
       allPlans['ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f']
     );
@@ -141,5 +153,34 @@ describe('reducers/plans', () => {
       ]);
       expect(plan3FromStore).toEqual(fixtures.plan3);
     }
+  });
+  it('resets plansById records', () => {
+    store.dispatch(removePlansAction);
+    let numberOfPlansInStore = getPlansArray(store.getState(), undefined, []).length;
+    expect(numberOfPlansInStore).toEqual(0);
+
+    store.dispatch(fetchPlans([fixtures.plan3] as any));
+    numberOfPlansInStore = getPlansArray(store.getState(), undefined, []).length;
+    expect(numberOfPlansInStore).toEqual(1);
+
+    store.dispatch(removePlansAction);
+    numberOfPlansInStore = getPlansArray(store.getState(), undefined, []).length;
+    expect(numberOfPlansInStore).toEqual(0);
+  });
+
+  it('Concatenates new plans to existing plans after fetching', () => {
+    store.dispatch(removePlansAction);
+    let numberOfPlansInStore = getPlansArray(store.getState(), undefined, []).length;
+    expect(numberOfPlansInStore).toEqual(0);
+    store.dispatch(fetchPlans([fixtures.plan3] as any));
+    let plan3FromStore = getPlanById(store.getState(), '1502e539');
+    expect(plan3FromStore).not.toBeNull();
+    store.dispatch(fetchPlans([fixtures.plan99] as any));
+    plan3FromStore = getPlanById(store.getState(), '1502e539');
+    const plan99FromStore = getPlanById(store.getState(), '236ca3fb-1b74-5028-a0c8-ab954bb28044');
+    expect(plan3FromStore).not.toBeNull();
+    expect(plan99FromStore).not.toBeNull();
+    numberOfPlansInStore = getPlansArray(store.getState(), undefined, []).length;
+    expect(numberOfPlansInStore).toEqual(2);
   });
 });

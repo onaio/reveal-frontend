@@ -215,7 +215,10 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
   }
 
   public componentWillReceiveProps(nextProps: GisidaProps) {
-    if (this.props.geoData !== nextProps.geoData && this.state.doRenderMap) {
+    if (
+      JSON.stringify(this.props.geoData) !== JSON.stringify(nextProps.geoData) &&
+      this.state.doRenderMap
+    ) {
       this.setState(
         {
           doRenderMap: false,

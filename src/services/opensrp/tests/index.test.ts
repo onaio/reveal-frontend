@@ -21,7 +21,7 @@ describe('services/OpenSRP', () => {
     expect(getDefaultHeaders()).toEqual({
       accept: 'application/json',
       authorization: 'Bearer hunter2',
-      'content-type': 'application/json',
+      'content-type': 'application/json;charset=UTF-8',
     });
   });
 
@@ -58,7 +58,7 @@ describe('services/OpenSRP', () => {
           headers: {
             accept: 'application/json',
             authorization: 'Bearer hunter2',
-            'content-type': 'application/json',
+            'content-type': 'application/json;charset=UTF-8',
           },
           method: 'GET',
         },
@@ -99,7 +99,7 @@ describe('services/OpenSRP', () => {
           headers: {
             accept: 'application/json',
             authorization: 'Bearer hunter2',
-            'content-type': 'application/json',
+            'content-type': 'application/json;charset=UTF-8',
           },
           method: 'GET',
         },
@@ -150,7 +150,7 @@ describe('services/OpenSRP', () => {
           headers: {
             accept: 'application/json',
             authorization: 'Bearer hunter2',
-            'content-type': 'application/json',
+            'content-type': 'application/json;charset=UTF-8',
           },
           method: 'POST',
         },
@@ -198,7 +198,7 @@ describe('services/OpenSRP', () => {
           headers: {
             accept: 'application/json',
             authorization: 'Bearer hunter2',
-            'content-type': 'application/json',
+            'content-type': 'application/json;charset=UTF-8',
           },
           method: 'PUT',
         },

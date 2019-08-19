@@ -1,0 +1,3917 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[0].actionCode field 1`] = `
+<input
+  id="activities-0-actionCode"
+  name="activities[0].actionCode"
+  onBlur={[Function]}
+  onChange={[Function]}
+  readOnly={true}
+  type="hidden"
+  value="BCC"
+/>
+`;
+
+exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[0].actionDescription field 1`] = `
+<textarea
+  className="form-control"
+  disabled={false}
+  id="activities-0-actionDescription"
+  name="activities[0].actionDescription"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  value="Perform BCC for the operational area"
+/>
+`;
+
+exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[0].actionIdentifier field 1`] = `
+<input
+  id="activities-0-actionIdentifier"
+  name="activities[0].actionIdentifier"
+  onBlur={[Function]}
+  onChange={[Function]}
+  readOnly={true}
+  type="hidden"
+  value="3f2eef38-38fe-4108-abb3-4e896b880302"
+/>
+`;
+
+exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[0].actionReason field 1`] = `
+<select
+  className="form-control"
+  disabled={true}
+  id="activities-0-actionReason"
+  name="activities[0].actionReason"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  value="Routine"
+>
+  <option
+    key="Investigation"
+    value="Investigation"
+  >
+    Investigation
+  </option>
+  <option
+    key="Routine"
+    value="Routine"
+  >
+    Routine
+  </option>
+</select>
+`;
+
+exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[0].actionTitle field 1`] = `
+<input
+  className="form-control"
+  disabled={false}
+  id="activities-0-actionTitle"
+  name="activities[0].actionTitle"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  type="text"
+  value="Perform BCC"
+/>
+`;
+
+exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[0].goalDescription field 1`] = `
+<input
+  id="activities-0-goalDescription"
+  name="activities[0].goalDescription"
+  onBlur={[Function]}
+  onChange={[Function]}
+  type="hidden"
+  value="Perform BCC for the operational area"
+/>
+`;
+
+exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[0].goalDue field 1`] = `
+<input
+  id="activities-0-goalDue"
+  name="activities[0].goalDue"
+  onBlur={[Function]}
+  onChange={[Function]}
+  type="hidden"
+  value={2019-07-30T00:00:00.000Z}
+/>
+`;
+
+exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[0].goalPriority field 1`] = `
+<select
+  className="form-control"
+  disabled={true}
+  id="activities-0-goalPriority"
+  name="activities[0].goalPriority"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  value="medium-priority"
+>
+  <option
+    key="low-priority"
+    value="low-priority"
+  >
+    low-priority
+  </option>
+  <option
+    key="medium-priority"
+    value="medium-priority"
+  >
+    medium-priority
+  </option>
+  <option
+    key="high-priority"
+    value="high-priority"
+  >
+    high-priority
+  </option>
+</select>
+`;
+
+exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[0].goalValue field 1`] = `
+<input
+  className="form-control"
+  disabled={false}
+  id="activities-0-goalValue"
+  name="activities[0].goalValue"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  type="number"
+  value={1}
+/>
+`;
+
+exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[0].timingPeriodEnd field 1`] = `
+<input
+  className="form-control"
+  disabled={false}
+  id="activities-0-timingPeriodEnd"
+  onBlur={[Function]}
+  onChange={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onKeyDown={[Function]}
+  readOnly={false}
+  required={true}
+  type="text"
+  value="2019-07-30"
+/>
+`;
+
+exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[0].timingPeriodStart field 1`] = `
+<input
+  className="form-control"
+  disabled={false}
+  id="activities-0-timingPeriodStart"
+  onBlur={[Function]}
+  onChange={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onKeyDown={[Function]}
+  readOnly={false}
+  required={true}
+  type="text"
+  value="2019-07-10"
+/>
+`;
+
+exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[1].actionCode field 1`] = `
+<input
+  id="activities-1-actionCode"
+  name="activities[1].actionCode"
+  onBlur={[Function]}
+  onChange={[Function]}
+  readOnly={true}
+  type="hidden"
+  value="IRS"
+/>
+`;
+
+exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[1].actionDescription field 1`] = `
+<textarea
+  className="form-control"
+  disabled={false}
+  id="activities-1-actionDescription"
+  name="activities[1].actionDescription"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  value="Visit each structure in the operational area and attempt to spray"
+/>
+`;
+
+exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[1].actionIdentifier field 1`] = `
+<input
+  id="activities-1-actionIdentifier"
+  name="activities[1].actionIdentifier"
+  onBlur={[Function]}
+  onChange={[Function]}
+  readOnly={true}
+  type="hidden"
+  value="95a5a00f-a411-4fe5-bd9c-460a856239c9"
+/>
+`;
+
+exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[1].actionReason field 1`] = `
+<select
+  className="form-control"
+  disabled={true}
+  id="activities-1-actionReason"
+  name="activities[1].actionReason"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  value="Routine"
+>
+  <option
+    key="Investigation"
+    value="Investigation"
+  >
+    Investigation
+  </option>
+  <option
+    key="Routine"
+    value="Routine"
+  >
+    Routine
+  </option>
+</select>
+`;
+
+exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[1].actionTitle field 1`] = `
+<input
+  className="form-control"
+  disabled={false}
+  id="activities-1-actionTitle"
+  name="activities[1].actionTitle"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  type="text"
+  value="Spray Structures"
+/>
+`;
+
+exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[1].goalDescription field 1`] = `
+<input
+  id="activities-1-goalDescription"
+  name="activities[1].goalDescription"
+  onBlur={[Function]}
+  onChange={[Function]}
+  type="hidden"
+  value="Visit each structure in the operational area and attempt to spray"
+/>
+`;
+
+exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[1].goalDue field 1`] = `
+<input
+  id="activities-1-goalDue"
+  name="activities[1].goalDue"
+  onBlur={[Function]}
+  onChange={[Function]}
+  type="hidden"
+  value={2019-07-30T00:00:00.000Z}
+/>
+`;
+
+exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[1].goalPriority field 1`] = `
+<select
+  className="form-control"
+  disabled={true}
+  id="activities-1-goalPriority"
+  name="activities[1].goalPriority"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  value="medium-priority"
+>
+  <option
+    key="low-priority"
+    value="low-priority"
+  >
+    low-priority
+  </option>
+  <option
+    key="medium-priority"
+    value="medium-priority"
+  >
+    medium-priority
+  </option>
+  <option
+    key="high-priority"
+    value="high-priority"
+  >
+    high-priority
+  </option>
+</select>
+`;
+
+exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[1].goalValue field 1`] = `
+<input
+  className="form-control"
+  disabled={false}
+  id="activities-1-goalValue"
+  name="activities[1].goalValue"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  type="number"
+  value={90}
+/>
+`;
+
+exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[1].timingPeriodEnd field 1`] = `
+<input
+  className="form-control"
+  disabled={false}
+  id="activities-1-timingPeriodEnd"
+  onBlur={[Function]}
+  onChange={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onKeyDown={[Function]}
+  readOnly={false}
+  required={true}
+  type="text"
+  value="2019-07-30"
+/>
+`;
+
+exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[1].timingPeriodStart field 1`] = `
+<input
+  className="form-control"
+  disabled={false}
+  id="activities-1-timingPeriodStart"
+  onBlur={[Function]}
+  onChange={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onKeyDown={[Function]}
+  readOnly={false}
+  required={true}
+  type="text"
+  value="2019-07-10"
+/>
+`;
+
+exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[2].actionCode field 1`] = `null`;
+
+exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[2].actionDescription field 1`] = `null`;
+
+exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[2].actionIdentifier field 1`] = `null`;
+
+exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[2].actionReason field 1`] = `null`;
+
+exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[2].actionTitle field 1`] = `null`;
+
+exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[2].goalDescription field 1`] = `null`;
+
+exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[2].goalDue field 1`] = `null`;
+
+exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[2].goalPriority field 1`] = `null`;
+
+exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[2].goalValue field 1`] = `null`;
+
+exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[2].timingPeriodEnd field 1`] = `null`;
+
+exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[2].timingPeriodStart field 1`] = `null`;
+
+exports[`containers/forms/PlanForm - Edit renders all fields correctly in edit mode: date field 1`] = `
+<input
+  id="date"
+  name="date"
+  onBlur={[Function]}
+  onChange={[Function]}
+  type="hidden"
+  value={2019-05-19T00:00:00.000Z}
+/>
+`;
+
+exports[`containers/forms/PlanForm - Edit renders all fields correctly in edit mode: end field 1`] = `
+<input
+  className="form-control"
+  disabled={false}
+  id="end"
+  onBlur={[Function]}
+  onChange={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onKeyDown={[Function]}
+  readOnly={false}
+  required={true}
+  type="text"
+  value="2019-08-30"
+/>
+`;
+
+exports[`containers/forms/PlanForm - Edit renders all fields correctly in edit mode: fiReason field 1`] = `
+<select
+  className="form-control"
+  disabled={true}
+  id="fiReason"
+  name="fiReason"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  value="Routine"
+>
+  <option>
+    ----
+  </option>
+  <option
+    key="Routine"
+    value="Routine"
+  >
+    Routine
+  </option>
+  <option
+    key="Case Triggered"
+    value="Case Triggered"
+  >
+    Case Triggered
+  </option>
+</select>
+`;
+
+exports[`containers/forms/PlanForm - Edit renders all fields correctly in edit mode: fiStatus field 1`] = `
+<select
+  className="form-control"
+  disabled={true}
+  id="fiStatus"
+  name="fiStatus"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  value="A2"
+>
+  <option>
+    ----
+  </option>
+  <option
+    key="A1"
+    value="A1"
+  >
+    A1
+     - 
+    Active
+  </option>
+  <option
+    key="A2"
+    value="A2"
+  >
+    A2
+     - 
+    Residual Non-Active
+  </option>
+  <option
+    key="B1"
+    value="B1"
+  >
+    B1
+     - 
+    Cleared Receptive
+  </option>
+  <option
+    key="B2"
+    value="B2"
+  >
+    B2
+     - 
+    Cleared Non-Receptive
+  </option>
+</select>
+`;
+
+exports[`containers/forms/PlanForm - Edit renders all fields correctly in edit mode: identifier field 1`] = `
+<input
+  id="identifier"
+  name="identifier"
+  onBlur={[Function]}
+  onChange={[Function]}
+  readOnly={true}
+  type="hidden"
+  value="356b6b84-fc36-4389-a44a-2b038ed2f38d"
+/>
+`;
+
+exports[`containers/forms/PlanForm - Edit renders all fields correctly in edit mode: interventionType field 1`] = `
+<select
+  className="form-control"
+  disabled={true}
+  id="interventionType"
+  name="interventionType"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  value="FI"
+>
+  <option
+    value="FI"
+  >
+    Focus Investigation
+  </option>
+  <option
+    value="IRS"
+  >
+    IRS
+  </option>
+</select>
+`;
+
+exports[`containers/forms/PlanForm - Edit renders all fields correctly in edit mode: name field 1`] = `
+<input
+  id="name"
+  name="name"
+  onBlur={[Function]}
+  onChange={[Function]}
+  type="hidden"
+  value="A2-Lusaka_Akros_Focus_2"
+/>
+`;
+
+exports[`containers/forms/PlanForm - Edit renders all fields correctly in edit mode: start field 1`] = `
+<input
+  className="form-control"
+  disabled={false}
+  id="start"
+  onBlur={[Function]}
+  onChange={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onKeyDown={[Function]}
+  readOnly={false}
+  required={true}
+  type="text"
+  value="2019-05-20"
+/>
+`;
+
+exports[`containers/forms/PlanForm - Edit renders all fields correctly in edit mode: status field 1`] = `
+<select
+  className="form-control"
+  disabled={false}
+  id="status"
+  name="status"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  value="active"
+>
+  <option
+    key="ACTIVE"
+    value="active"
+  >
+    active
+  </option>
+  <option
+    key="COMPLETE"
+    value="complete"
+  >
+    complete
+  </option>
+  <option
+    key="RETIRED"
+    value="retired"
+  >
+    retired
+  </option>
+</select>
+`;
+
+exports[`containers/forms/PlanForm - Edit renders all fields correctly in edit mode: title field 1`] = `
+<input
+  className="form-control"
+  disabled={false}
+  id="title"
+  name="title"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  type="text"
+  value="A2-Lusaka Akros Test Focus 2"
+/>
+`;
+
+exports[`containers/forms/PlanForm - Edit renders all fields correctly in edit mode: version field 1`] = `
+<input
+  id="version"
+  name="version"
+  onBlur={[Function]}
+  onChange={[Function]}
+  readOnly={true}
+  type="hidden"
+  value="1"
+/>
+`;
+
+exports[`containers/forms/PlanForm - Edit renders jurisdictions fields correctly: jurisdictions[0].id field 1`] = `
+<input
+  id="jurisdictions-0-id"
+  name="jurisdictions[0].id"
+  onBlur={[Function]}
+  onChange={[Function]}
+  readOnly={true}
+  type="hidden"
+  value="35968df5-f335-44ae-8ae5-25804caa2d86"
+/>
+`;
+
+exports[`containers/forms/PlanForm - Edit renders jurisdictions fields correctly: jurisdictions[0].name field 1`] = `
+<input
+  id="jurisdictions-0-name"
+  name="jurisdictions[0].name"
+  onBlur={[Function]}
+  onChange={[Function]}
+  readOnly={true}
+  type="hidden"
+  value="35968df5-f335-44ae-8ae5-25804caa2d86"
+/>
+`;
+
+exports[`containers/forms/PlanForm - Edit renders jurisdictions fields correctly: jurisdictions[1].id field 1`] = `
+<input
+  id="jurisdictions-1-id"
+  name="jurisdictions[1].id"
+  onBlur={[Function]}
+  onChange={[Function]}
+  readOnly={true}
+  type="hidden"
+  value="3952"
+/>
+`;
+
+exports[`containers/forms/PlanForm - Edit renders jurisdictions fields correctly: jurisdictions[1].name field 1`] = `
+<input
+  id="jurisdictions-1-name"
+  name="jurisdictions[1].name"
+  onBlur={[Function]}
+  onChange={[Function]}
+  readOnly={true}
+  type="hidden"
+  value="3952"
+/>
+`;
+
+exports[`containers/forms/PlanForm - Edit renders jurisdictions fields correctly: jurisdictions[2].id field 1`] = `
+<input
+  id="jurisdictions-2-id"
+  name="jurisdictions[2].id"
+  onBlur={[Function]}
+  onChange={[Function]}
+  readOnly={true}
+  type="hidden"
+  value="ac7ba751-35e8-4b46-9e53-3cbaad193697"
+/>
+`;
+
+exports[`containers/forms/PlanForm - Edit renders jurisdictions fields correctly: jurisdictions[2].name field 1`] = `
+<input
+  id="jurisdictions-2-name"
+  name="jurisdictions[2].name"
+  onBlur={[Function]}
+  onChange={[Function]}
+  readOnly={true}
+  type="hidden"
+  value="ac7ba751-35e8-4b46-9e53-3cbaad193697"
+/>
+`;
+
+exports[`containers/forms/PlanForm - Edit renders jurisdictions fields correctly: jurisdictions[3].id field 1`] = `null`;
+
+exports[`containers/forms/PlanForm - Edit renders jurisdictions fields correctly: jurisdictions[3].name field 1`] = `null`;
+
+exports[`containers/forms/PlanForm - Edit renders jurisdictions fields correctly: selected jurisdictions 1`] = `
+Array [
+  <span>
+    35968df5-f335-44ae-8ae5-25804caa2d86
+  </span>,
+  <span>
+    3952
+  </span>,
+  <span>
+    ac7ba751-35e8-4b46-9e53-3cbaad193697
+  </span>,
+]
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[0].actionCode field 1`] = `
+<input
+  id="activities-0-actionCode"
+  name="activities[0].actionCode"
+  onBlur={[Function]}
+  onChange={[Function]}
+  readOnly={true}
+  type="hidden"
+  value="Case Confirmation"
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[0].actionDescription field 1`] = `
+<textarea
+  className="form-control"
+  disabled={false}
+  id="activities-0-actionDescription"
+  name="activities[0].actionDescription"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  value="Confirm the index case"
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[0].actionDescription label 1`] = `
+<Label
+  for="activities-0-actionDescription"
+  tag="label"
+  widths={
+    Array [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+    ]
+  }
+>
+  <label
+    className=""
+    htmlFor="activities-0-actionDescription"
+  >
+    Description
+  </label>
+</Label>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[0].actionIdentifier field 1`] = `
+<input
+  id="activities-0-actionIdentifier"
+  name="activities[0].actionIdentifier"
+  onBlur={[Function]}
+  onChange={[Function]}
+  readOnly={true}
+  type="hidden"
+  value=""
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[0].actionReason field 1`] = `
+<select
+  className="form-control"
+  disabled={false}
+  id="activities-0-actionReason"
+  name="activities[0].actionReason"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  value="Investigation"
+>
+  <option
+    key="Investigation"
+    value="Investigation"
+  >
+    Investigation
+  </option>
+  <option
+    key="Routine"
+    value="Routine"
+  >
+    Routine
+  </option>
+</select>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[0].actionReason label 1`] = `
+<Label
+  for="activities-0-actionReason"
+  tag="label"
+  widths={
+    Array [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+    ]
+  }
+>
+  <label
+    className=""
+    htmlFor="activities-0-actionReason"
+  >
+    Reason
+  </label>
+</Label>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[0].actionTitle field 1`] = `
+<input
+  className="form-control"
+  disabled={false}
+  id="activities-0-actionTitle"
+  name="activities[0].actionTitle"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  type="text"
+  value="Case Confirmation"
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[0].actionTitle label 1`] = `
+<Label
+  for="activities-0-actionTitle"
+  tag="label"
+  widths={
+    Array [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+    ]
+  }
+>
+  <label
+    className=""
+    htmlFor="activities-0-actionTitle"
+  >
+    Action
+  </label>
+</Label>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[0].goalDescription field 1`] = `
+<input
+  id="activities-0-goalDescription"
+  name="activities[0].goalDescription"
+  onBlur={[Function]}
+  onChange={[Function]}
+  type="hidden"
+  value="Confirm the index case"
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[0].goalDue field 1`] = `
+<input
+  id="activities-0-goalDue"
+  name="activities[0].goalDue"
+  onBlur={[Function]}
+  onChange={[Function]}
+  type="hidden"
+  value={2017-07-20T19:31:00.000Z}
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[0].goalPriority field 1`] = `
+<select
+  className="form-control"
+  disabled={false}
+  id="activities-0-goalPriority"
+  name="activities[0].goalPriority"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  value="medium-priority"
+>
+  <option
+    key="low-priority"
+    value="low-priority"
+  >
+    low-priority
+  </option>
+  <option
+    key="medium-priority"
+    value="medium-priority"
+  >
+    medium-priority
+  </option>
+  <option
+    key="high-priority"
+    value="high-priority"
+  >
+    high-priority
+  </option>
+</select>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[0].goalPriority label 1`] = `
+<Label
+  for="activities-0-goalPriority"
+  tag="label"
+  widths={
+    Array [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+    ]
+  }
+>
+  <label
+    className=""
+    htmlFor="activities-0-goalPriority"
+  >
+    Priority
+  </label>
+</Label>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[0].goalValue field 1`] = `
+<input
+  className="form-control"
+  disabled={false}
+  id="activities-0-goalValue"
+  name="activities[0].goalValue"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  type="number"
+  value={1}
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[0].goalValue label 1`] = `
+<Label
+  for="activities-0-goalValue"
+  tag="label"
+  widths={
+    Array [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+    ]
+  }
+>
+  <label
+    className=""
+    htmlFor="activities-0-goalValue"
+  >
+    Quantity
+  </label>
+</Label>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[0].timingPeriodEnd field 1`] = `
+<input
+  className="form-control"
+  disabled={false}
+  id="activities-0-timingPeriodEnd"
+  onBlur={[Function]}
+  onChange={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onKeyDown={[Function]}
+  readOnly={false}
+  required={true}
+  type="text"
+  value="2017-07-20"
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[0].timingPeriodEnd label 1`] = `
+<Label
+  for="activities-0-timingPeriodEnd"
+  tag="label"
+  widths={
+    Array [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+    ]
+  }
+>
+  <label
+    className=""
+    htmlFor="activities-0-timingPeriodEnd"
+  >
+    End Date
+  </label>
+</Label>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[0].timingPeriodStart field 1`] = `
+<input
+  className="form-control"
+  disabled={false}
+  id="activities-0-timingPeriodStart"
+  onBlur={[Function]}
+  onChange={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onKeyDown={[Function]}
+  readOnly={false}
+  required={true}
+  type="text"
+  value="2017-07-13"
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[0].timingPeriodStart label 1`] = `
+<Label
+  for="activities-0-timingPeriodStart"
+  tag="label"
+  widths={
+    Array [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+    ]
+  }
+>
+  <label
+    className=""
+    htmlFor="activities-0-timingPeriodStart"
+  >
+    Start Date
+  </label>
+</Label>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[1].actionCode field 1`] = `
+<input
+  id="activities-1-actionCode"
+  name="activities[1].actionCode"
+  onBlur={[Function]}
+  onChange={[Function]}
+  readOnly={true}
+  type="hidden"
+  value="RACD Register Family"
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[1].actionDescription field 1`] = `
+<textarea
+  className="form-control"
+  disabled={false}
+  id="activities-1-actionDescription"
+  name="activities[1].actionDescription"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  value="Register all families & family members in all residential structures enumerated (100%) within the operational area"
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[1].actionDescription label 1`] = `
+<Label
+  for="activities-1-actionDescription"
+  tag="label"
+  widths={
+    Array [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+    ]
+  }
+>
+  <label
+    className=""
+    htmlFor="activities-1-actionDescription"
+  >
+    Description
+  </label>
+</Label>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[1].actionIdentifier field 1`] = `
+<input
+  id="activities-1-actionIdentifier"
+  name="activities[1].actionIdentifier"
+  onBlur={[Function]}
+  onChange={[Function]}
+  readOnly={true}
+  type="hidden"
+  value=""
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[1].actionReason field 1`] = `
+<select
+  className="form-control"
+  disabled={false}
+  id="activities-1-actionReason"
+  name="activities[1].actionReason"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  value="Investigation"
+>
+  <option
+    key="Investigation"
+    value="Investigation"
+  >
+    Investigation
+  </option>
+  <option
+    key="Routine"
+    value="Routine"
+  >
+    Routine
+  </option>
+</select>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[1].actionReason label 1`] = `
+<Label
+  for="activities-1-actionReason"
+  tag="label"
+  widths={
+    Array [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+    ]
+  }
+>
+  <label
+    className=""
+    htmlFor="activities-1-actionReason"
+  >
+    Reason
+  </label>
+</Label>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[1].actionTitle field 1`] = `
+<input
+  className="form-control"
+  disabled={false}
+  id="activities-1-actionTitle"
+  name="activities[1].actionTitle"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  type="text"
+  value="Family Registration"
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[1].actionTitle label 1`] = `
+<Label
+  for="activities-1-actionTitle"
+  tag="label"
+  widths={
+    Array [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+    ]
+  }
+>
+  <label
+    className=""
+    htmlFor="activities-1-actionTitle"
+  >
+    Action
+  </label>
+</Label>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[1].goalDescription field 1`] = `
+<input
+  id="activities-1-goalDescription"
+  name="activities[1].goalDescription"
+  onBlur={[Function]}
+  onChange={[Function]}
+  type="hidden"
+  value="Register all families & family members in all residential structures enumerated (100%) within the operational area"
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[1].goalDue field 1`] = `
+<input
+  id="activities-1-goalDue"
+  name="activities[1].goalDue"
+  onBlur={[Function]}
+  onChange={[Function]}
+  type="hidden"
+  value={2017-07-20T19:31:00.000Z}
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[1].goalPriority field 1`] = `
+<select
+  className="form-control"
+  disabled={false}
+  id="activities-1-goalPriority"
+  name="activities[1].goalPriority"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  value="medium-priority"
+>
+  <option
+    key="low-priority"
+    value="low-priority"
+  >
+    low-priority
+  </option>
+  <option
+    key="medium-priority"
+    value="medium-priority"
+  >
+    medium-priority
+  </option>
+  <option
+    key="high-priority"
+    value="high-priority"
+  >
+    high-priority
+  </option>
+</select>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[1].goalPriority label 1`] = `
+<Label
+  for="activities-1-goalPriority"
+  tag="label"
+  widths={
+    Array [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+    ]
+  }
+>
+  <label
+    className=""
+    htmlFor="activities-1-goalPriority"
+  >
+    Priority
+  </label>
+</Label>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[1].goalValue field 1`] = `
+<input
+  className="form-control"
+  disabled={false}
+  id="activities-1-goalValue"
+  name="activities[1].goalValue"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  type="number"
+  value={100}
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[1].goalValue label 1`] = `
+<Label
+  for="activities-1-goalValue"
+  tag="label"
+  widths={
+    Array [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+    ]
+  }
+>
+  <label
+    className=""
+    htmlFor="activities-1-goalValue"
+  >
+    Quantity
+  </label>
+</Label>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[1].timingPeriodEnd field 1`] = `
+<input
+  className="form-control"
+  disabled={false}
+  id="activities-1-timingPeriodEnd"
+  onBlur={[Function]}
+  onChange={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onKeyDown={[Function]}
+  readOnly={false}
+  required={true}
+  type="text"
+  value="2017-07-20"
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[1].timingPeriodEnd label 1`] = `
+<Label
+  for="activities-1-timingPeriodEnd"
+  tag="label"
+  widths={
+    Array [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+    ]
+  }
+>
+  <label
+    className=""
+    htmlFor="activities-1-timingPeriodEnd"
+  >
+    End Date
+  </label>
+</Label>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[1].timingPeriodStart field 1`] = `
+<input
+  className="form-control"
+  disabled={false}
+  id="activities-1-timingPeriodStart"
+  onBlur={[Function]}
+  onChange={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onKeyDown={[Function]}
+  readOnly={false}
+  required={true}
+  type="text"
+  value="2017-07-13"
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[1].timingPeriodStart label 1`] = `
+<Label
+  for="activities-1-timingPeriodStart"
+  tag="label"
+  widths={
+    Array [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+    ]
+  }
+>
+  <label
+    className=""
+    htmlFor="activities-1-timingPeriodStart"
+  >
+    Start Date
+  </label>
+</Label>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[2].actionCode field 1`] = `
+<input
+  id="activities-2-actionCode"
+  name="activities[2].actionCode"
+  onBlur={[Function]}
+  onChange={[Function]}
+  readOnly={true}
+  type="hidden"
+  value="Blood Screening"
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[2].actionDescription field 1`] = `
+<textarea
+  className="form-control"
+  disabled={false}
+  id="activities-2-actionDescription"
+  name="activities[2].actionDescription"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  value="Visit all residential structures (100%) within a 1 km radius of a confirmed index case and test each registered person"
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[2].actionDescription label 1`] = `
+<Label
+  for="activities-2-actionDescription"
+  tag="label"
+  widths={
+    Array [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+    ]
+  }
+>
+  <label
+    className=""
+    htmlFor="activities-2-actionDescription"
+  >
+    Description
+  </label>
+</Label>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[2].actionIdentifier field 1`] = `
+<input
+  id="activities-2-actionIdentifier"
+  name="activities[2].actionIdentifier"
+  onBlur={[Function]}
+  onChange={[Function]}
+  readOnly={true}
+  type="hidden"
+  value=""
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[2].actionReason field 1`] = `
+<select
+  className="form-control"
+  disabled={false}
+  id="activities-2-actionReason"
+  name="activities[2].actionReason"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  value="Investigation"
+>
+  <option
+    key="Investigation"
+    value="Investigation"
+  >
+    Investigation
+  </option>
+  <option
+    key="Routine"
+    value="Routine"
+  >
+    Routine
+  </option>
+</select>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[2].actionReason label 1`] = `
+<Label
+  for="activities-2-actionReason"
+  tag="label"
+  widths={
+    Array [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+    ]
+  }
+>
+  <label
+    className=""
+    htmlFor="activities-2-actionReason"
+  >
+    Reason
+  </label>
+</Label>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[2].actionTitle field 1`] = `
+<input
+  className="form-control"
+  disabled={false}
+  id="activities-2-actionTitle"
+  name="activities[2].actionTitle"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  type="text"
+  value="Blood screening"
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[2].actionTitle label 1`] = `
+<Label
+  for="activities-2-actionTitle"
+  tag="label"
+  widths={
+    Array [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+    ]
+  }
+>
+  <label
+    className=""
+    htmlFor="activities-2-actionTitle"
+  >
+    Action
+  </label>
+</Label>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[2].goalDescription field 1`] = `
+<input
+  id="activities-2-goalDescription"
+  name="activities[2].goalDescription"
+  onBlur={[Function]}
+  onChange={[Function]}
+  type="hidden"
+  value="Visit all residential structures (100%) within a 1 km radius of a confirmed index case and test each registered person"
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[2].goalDue field 1`] = `
+<input
+  id="activities-2-goalDue"
+  name="activities[2].goalDue"
+  onBlur={[Function]}
+  onChange={[Function]}
+  type="hidden"
+  value={2017-07-20T19:31:00.000Z}
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[2].goalPriority field 1`] = `
+<select
+  className="form-control"
+  disabled={false}
+  id="activities-2-goalPriority"
+  name="activities[2].goalPriority"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  value="medium-priority"
+>
+  <option
+    key="low-priority"
+    value="low-priority"
+  >
+    low-priority
+  </option>
+  <option
+    key="medium-priority"
+    value="medium-priority"
+  >
+    medium-priority
+  </option>
+  <option
+    key="high-priority"
+    value="high-priority"
+  >
+    high-priority
+  </option>
+</select>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[2].goalPriority label 1`] = `
+<Label
+  for="activities-2-goalPriority"
+  tag="label"
+  widths={
+    Array [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+    ]
+  }
+>
+  <label
+    className=""
+    htmlFor="activities-2-goalPriority"
+  >
+    Priority
+  </label>
+</Label>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[2].goalValue field 1`] = `
+<input
+  className="form-control"
+  disabled={false}
+  id="activities-2-goalValue"
+  name="activities[2].goalValue"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  type="number"
+  value={100}
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[2].goalValue label 1`] = `
+<Label
+  for="activities-2-goalValue"
+  tag="label"
+  widths={
+    Array [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+    ]
+  }
+>
+  <label
+    className=""
+    htmlFor="activities-2-goalValue"
+  >
+    Quantity
+  </label>
+</Label>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[2].timingPeriodEnd field 1`] = `
+<input
+  className="form-control"
+  disabled={false}
+  id="activities-2-timingPeriodEnd"
+  onBlur={[Function]}
+  onChange={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onKeyDown={[Function]}
+  readOnly={false}
+  required={true}
+  type="text"
+  value="2017-07-20"
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[2].timingPeriodEnd label 1`] = `
+<Label
+  for="activities-2-timingPeriodEnd"
+  tag="label"
+  widths={
+    Array [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+    ]
+  }
+>
+  <label
+    className=""
+    htmlFor="activities-2-timingPeriodEnd"
+  >
+    End Date
+  </label>
+</Label>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[2].timingPeriodStart field 1`] = `
+<input
+  className="form-control"
+  disabled={false}
+  id="activities-2-timingPeriodStart"
+  onBlur={[Function]}
+  onChange={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onKeyDown={[Function]}
+  readOnly={false}
+  required={true}
+  type="text"
+  value="2017-07-13"
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[2].timingPeriodStart label 1`] = `
+<Label
+  for="activities-2-timingPeriodStart"
+  tag="label"
+  widths={
+    Array [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+    ]
+  }
+>
+  <label
+    className=""
+    htmlFor="activities-2-timingPeriodStart"
+  >
+    Start Date
+  </label>
+</Label>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[3].actionCode field 1`] = `
+<input
+  id="activities-3-actionCode"
+  name="activities[3].actionCode"
+  onBlur={[Function]}
+  onChange={[Function]}
+  readOnly={true}
+  type="hidden"
+  value="Bednet Distribution"
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[3].actionDescription field 1`] = `
+<textarea
+  className="form-control"
+  disabled={false}
+  id="activities-3-actionDescription"
+  name="activities[3].actionDescription"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  value="Visit 100% of residential structures in the operational area and provide nets"
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[3].actionDescription label 1`] = `
+<Label
+  for="activities-3-actionDescription"
+  tag="label"
+  widths={
+    Array [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+    ]
+  }
+>
+  <label
+    className=""
+    htmlFor="activities-3-actionDescription"
+  >
+    Description
+  </label>
+</Label>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[3].actionIdentifier field 1`] = `
+<input
+  id="activities-3-actionIdentifier"
+  name="activities[3].actionIdentifier"
+  onBlur={[Function]}
+  onChange={[Function]}
+  readOnly={true}
+  type="hidden"
+  value=""
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[3].actionReason field 1`] = `
+<select
+  className="form-control"
+  disabled={false}
+  id="activities-3-actionReason"
+  name="activities[3].actionReason"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  value="Investigation"
+>
+  <option
+    key="Investigation"
+    value="Investigation"
+  >
+    Investigation
+  </option>
+  <option
+    key="Routine"
+    value="Routine"
+  >
+    Routine
+  </option>
+</select>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[3].actionReason label 1`] = `
+<Label
+  for="activities-3-actionReason"
+  tag="label"
+  widths={
+    Array [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+    ]
+  }
+>
+  <label
+    className=""
+    htmlFor="activities-3-actionReason"
+  >
+    Reason
+  </label>
+</Label>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[3].actionTitle field 1`] = `
+<input
+  className="form-control"
+  disabled={false}
+  id="activities-3-actionTitle"
+  name="activities[3].actionTitle"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  type="text"
+  value="Bednet Distribution"
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[3].actionTitle label 1`] = `
+<Label
+  for="activities-3-actionTitle"
+  tag="label"
+  widths={
+    Array [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+    ]
+  }
+>
+  <label
+    className=""
+    htmlFor="activities-3-actionTitle"
+  >
+    Action
+  </label>
+</Label>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[3].goalDescription field 1`] = `
+<input
+  id="activities-3-goalDescription"
+  name="activities[3].goalDescription"
+  onBlur={[Function]}
+  onChange={[Function]}
+  type="hidden"
+  value="Visit 100% of residential structures in the operational area and provide nets"
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[3].goalDue field 1`] = `
+<input
+  id="activities-3-goalDue"
+  name="activities[3].goalDue"
+  onBlur={[Function]}
+  onChange={[Function]}
+  type="hidden"
+  value={2017-07-20T19:31:00.000Z}
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[3].goalPriority field 1`] = `
+<select
+  className="form-control"
+  disabled={false}
+  id="activities-3-goalPriority"
+  name="activities[3].goalPriority"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  value="medium-priority"
+>
+  <option
+    key="low-priority"
+    value="low-priority"
+  >
+    low-priority
+  </option>
+  <option
+    key="medium-priority"
+    value="medium-priority"
+  >
+    medium-priority
+  </option>
+  <option
+    key="high-priority"
+    value="high-priority"
+  >
+    high-priority
+  </option>
+</select>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[3].goalPriority label 1`] = `
+<Label
+  for="activities-3-goalPriority"
+  tag="label"
+  widths={
+    Array [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+    ]
+  }
+>
+  <label
+    className=""
+    htmlFor="activities-3-goalPriority"
+  >
+    Priority
+  </label>
+</Label>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[3].goalValue field 1`] = `
+<input
+  className="form-control"
+  disabled={false}
+  id="activities-3-goalValue"
+  name="activities[3].goalValue"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  type="number"
+  value={100}
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[3].goalValue label 1`] = `
+<Label
+  for="activities-3-goalValue"
+  tag="label"
+  widths={
+    Array [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+    ]
+  }
+>
+  <label
+    className=""
+    htmlFor="activities-3-goalValue"
+  >
+    Quantity
+  </label>
+</Label>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[3].timingPeriodEnd field 1`] = `
+<input
+  className="form-control"
+  disabled={false}
+  id="activities-3-timingPeriodEnd"
+  onBlur={[Function]}
+  onChange={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onKeyDown={[Function]}
+  readOnly={false}
+  required={true}
+  type="text"
+  value="2017-07-20"
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[3].timingPeriodEnd label 1`] = `
+<Label
+  for="activities-3-timingPeriodEnd"
+  tag="label"
+  widths={
+    Array [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+    ]
+  }
+>
+  <label
+    className=""
+    htmlFor="activities-3-timingPeriodEnd"
+  >
+    End Date
+  </label>
+</Label>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[3].timingPeriodStart field 1`] = `
+<input
+  className="form-control"
+  disabled={false}
+  id="activities-3-timingPeriodStart"
+  onBlur={[Function]}
+  onChange={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onKeyDown={[Function]}
+  readOnly={false}
+  required={true}
+  type="text"
+  value="2017-07-13"
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[3].timingPeriodStart label 1`] = `
+<Label
+  for="activities-3-timingPeriodStart"
+  tag="label"
+  widths={
+    Array [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+    ]
+  }
+>
+  <label
+    className=""
+    htmlFor="activities-3-timingPeriodStart"
+  >
+    Start Date
+  </label>
+</Label>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[4].actionCode field 1`] = `
+<input
+  id="activities-4-actionCode"
+  name="activities[4].actionCode"
+  onBlur={[Function]}
+  onChange={[Function]}
+  readOnly={true}
+  type="hidden"
+  value="Larval Dipping"
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[4].actionDescription field 1`] = `
+<textarea
+  className="form-control"
+  disabled={false}
+  id="activities-4-actionDescription"
+  name="activities[4].actionDescription"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  value="Perform a minimum of three larval dipping activities in the operational area"
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[4].actionDescription label 1`] = `
+<Label
+  for="activities-4-actionDescription"
+  tag="label"
+  widths={
+    Array [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+    ]
+  }
+>
+  <label
+    className=""
+    htmlFor="activities-4-actionDescription"
+  >
+    Description
+  </label>
+</Label>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[4].actionIdentifier field 1`] = `
+<input
+  id="activities-4-actionIdentifier"
+  name="activities[4].actionIdentifier"
+  onBlur={[Function]}
+  onChange={[Function]}
+  readOnly={true}
+  type="hidden"
+  value=""
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[4].actionReason field 1`] = `
+<select
+  className="form-control"
+  disabled={false}
+  id="activities-4-actionReason"
+  name="activities[4].actionReason"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  value="Investigation"
+>
+  <option
+    key="Investigation"
+    value="Investigation"
+  >
+    Investigation
+  </option>
+  <option
+    key="Routine"
+    value="Routine"
+  >
+    Routine
+  </option>
+</select>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[4].actionReason label 1`] = `
+<Label
+  for="activities-4-actionReason"
+  tag="label"
+  widths={
+    Array [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+    ]
+  }
+>
+  <label
+    className=""
+    htmlFor="activities-4-actionReason"
+  >
+    Reason
+  </label>
+</Label>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[4].actionTitle field 1`] = `
+<input
+  className="form-control"
+  disabled={false}
+  id="activities-4-actionTitle"
+  name="activities[4].actionTitle"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  type="text"
+  value="Larval Dipping"
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[4].actionTitle label 1`] = `
+<Label
+  for="activities-4-actionTitle"
+  tag="label"
+  widths={
+    Array [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+    ]
+  }
+>
+  <label
+    className=""
+    htmlFor="activities-4-actionTitle"
+  >
+    Action
+  </label>
+</Label>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[4].goalDescription field 1`] = `
+<input
+  id="activities-4-goalDescription"
+  name="activities[4].goalDescription"
+  onBlur={[Function]}
+  onChange={[Function]}
+  type="hidden"
+  value="Perform a minimum of three larval dipping activities in the operational area"
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[4].goalDue field 1`] = `
+<input
+  id="activities-4-goalDue"
+  name="activities[4].goalDue"
+  onBlur={[Function]}
+  onChange={[Function]}
+  type="hidden"
+  value={2017-07-20T19:31:00.000Z}
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[4].goalPriority field 1`] = `
+<select
+  className="form-control"
+  disabled={false}
+  id="activities-4-goalPriority"
+  name="activities[4].goalPriority"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  value="medium-priority"
+>
+  <option
+    key="low-priority"
+    value="low-priority"
+  >
+    low-priority
+  </option>
+  <option
+    key="medium-priority"
+    value="medium-priority"
+  >
+    medium-priority
+  </option>
+  <option
+    key="high-priority"
+    value="high-priority"
+  >
+    high-priority
+  </option>
+</select>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[4].goalPriority label 1`] = `
+<Label
+  for="activities-4-goalPriority"
+  tag="label"
+  widths={
+    Array [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+    ]
+  }
+>
+  <label
+    className=""
+    htmlFor="activities-4-goalPriority"
+  >
+    Priority
+  </label>
+</Label>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[4].goalValue field 1`] = `
+<input
+  className="form-control"
+  disabled={false}
+  id="activities-4-goalValue"
+  name="activities[4].goalValue"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  type="number"
+  value={3}
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[4].goalValue label 1`] = `
+<Label
+  for="activities-4-goalValue"
+  tag="label"
+  widths={
+    Array [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+    ]
+  }
+>
+  <label
+    className=""
+    htmlFor="activities-4-goalValue"
+  >
+    Quantity
+  </label>
+</Label>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[4].timingPeriodEnd field 1`] = `
+<input
+  className="form-control"
+  disabled={false}
+  id="activities-4-timingPeriodEnd"
+  onBlur={[Function]}
+  onChange={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onKeyDown={[Function]}
+  readOnly={false}
+  required={true}
+  type="text"
+  value="2017-07-20"
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[4].timingPeriodEnd label 1`] = `
+<Label
+  for="activities-4-timingPeriodEnd"
+  tag="label"
+  widths={
+    Array [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+    ]
+  }
+>
+  <label
+    className=""
+    htmlFor="activities-4-timingPeriodEnd"
+  >
+    End Date
+  </label>
+</Label>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[4].timingPeriodStart field 1`] = `
+<input
+  className="form-control"
+  disabled={false}
+  id="activities-4-timingPeriodStart"
+  onBlur={[Function]}
+  onChange={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onKeyDown={[Function]}
+  readOnly={false}
+  required={true}
+  type="text"
+  value="2017-07-13"
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[4].timingPeriodStart label 1`] = `
+<Label
+  for="activities-4-timingPeriodStart"
+  tag="label"
+  widths={
+    Array [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+    ]
+  }
+>
+  <label
+    className=""
+    htmlFor="activities-4-timingPeriodStart"
+  >
+    Start Date
+  </label>
+</Label>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[5].actionCode field 1`] = `
+<input
+  id="activities-5-actionCode"
+  name="activities[5].actionCode"
+  onBlur={[Function]}
+  onChange={[Function]}
+  readOnly={true}
+  type="hidden"
+  value="Mosquito Collection"
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[5].actionDescription field 1`] = `
+<textarea
+  className="form-control"
+  disabled={false}
+  id="activities-5-actionDescription"
+  name="activities[5].actionDescription"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  value="Set a minimum of three mosquito collection traps and complete the mosquito collection process"
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[5].actionDescription label 1`] = `
+<Label
+  for="activities-5-actionDescription"
+  tag="label"
+  widths={
+    Array [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+    ]
+  }
+>
+  <label
+    className=""
+    htmlFor="activities-5-actionDescription"
+  >
+    Description
+  </label>
+</Label>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[5].actionIdentifier field 1`] = `
+<input
+  id="activities-5-actionIdentifier"
+  name="activities[5].actionIdentifier"
+  onBlur={[Function]}
+  onChange={[Function]}
+  readOnly={true}
+  type="hidden"
+  value=""
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[5].actionReason field 1`] = `
+<select
+  className="form-control"
+  disabled={false}
+  id="activities-5-actionReason"
+  name="activities[5].actionReason"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  value="Investigation"
+>
+  <option
+    key="Investigation"
+    value="Investigation"
+  >
+    Investigation
+  </option>
+  <option
+    key="Routine"
+    value="Routine"
+  >
+    Routine
+  </option>
+</select>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[5].actionReason label 1`] = `
+<Label
+  for="activities-5-actionReason"
+  tag="label"
+  widths={
+    Array [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+    ]
+  }
+>
+  <label
+    className=""
+    htmlFor="activities-5-actionReason"
+  >
+    Reason
+  </label>
+</Label>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[5].actionTitle field 1`] = `
+<input
+  className="form-control"
+  disabled={false}
+  id="activities-5-actionTitle"
+  name="activities[5].actionTitle"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  type="text"
+  value="Mosquito Collection"
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[5].actionTitle label 1`] = `
+<Label
+  for="activities-5-actionTitle"
+  tag="label"
+  widths={
+    Array [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+    ]
+  }
+>
+  <label
+    className=""
+    htmlFor="activities-5-actionTitle"
+  >
+    Action
+  </label>
+</Label>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[5].goalDescription field 1`] = `
+<input
+  id="activities-5-goalDescription"
+  name="activities[5].goalDescription"
+  onBlur={[Function]}
+  onChange={[Function]}
+  type="hidden"
+  value="Set a minimum of three mosquito collection traps and complete the mosquito collection process"
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[5].goalDue field 1`] = `
+<input
+  id="activities-5-goalDue"
+  name="activities[5].goalDue"
+  onBlur={[Function]}
+  onChange={[Function]}
+  type="hidden"
+  value={2017-07-20T19:31:00.000Z}
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[5].goalPriority field 1`] = `
+<select
+  className="form-control"
+  disabled={false}
+  id="activities-5-goalPriority"
+  name="activities[5].goalPriority"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  value="medium-priority"
+>
+  <option
+    key="low-priority"
+    value="low-priority"
+  >
+    low-priority
+  </option>
+  <option
+    key="medium-priority"
+    value="medium-priority"
+  >
+    medium-priority
+  </option>
+  <option
+    key="high-priority"
+    value="high-priority"
+  >
+    high-priority
+  </option>
+</select>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[5].goalPriority label 1`] = `
+<Label
+  for="activities-5-goalPriority"
+  tag="label"
+  widths={
+    Array [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+    ]
+  }
+>
+  <label
+    className=""
+    htmlFor="activities-5-goalPriority"
+  >
+    Priority
+  </label>
+</Label>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[5].goalValue field 1`] = `
+<input
+  className="form-control"
+  disabled={false}
+  id="activities-5-goalValue"
+  name="activities[5].goalValue"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  type="number"
+  value={3}
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[5].goalValue label 1`] = `
+<Label
+  for="activities-5-goalValue"
+  tag="label"
+  widths={
+    Array [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+    ]
+  }
+>
+  <label
+    className=""
+    htmlFor="activities-5-goalValue"
+  >
+    Quantity
+  </label>
+</Label>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[5].timingPeriodEnd field 1`] = `
+<input
+  className="form-control"
+  disabled={false}
+  id="activities-5-timingPeriodEnd"
+  onBlur={[Function]}
+  onChange={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onKeyDown={[Function]}
+  readOnly={false}
+  required={true}
+  type="text"
+  value="2017-07-20"
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[5].timingPeriodEnd label 1`] = `
+<Label
+  for="activities-5-timingPeriodEnd"
+  tag="label"
+  widths={
+    Array [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+    ]
+  }
+>
+  <label
+    className=""
+    htmlFor="activities-5-timingPeriodEnd"
+  >
+    End Date
+  </label>
+</Label>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[5].timingPeriodStart field 1`] = `
+<input
+  className="form-control"
+  disabled={false}
+  id="activities-5-timingPeriodStart"
+  onBlur={[Function]}
+  onChange={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onKeyDown={[Function]}
+  readOnly={false}
+  required={true}
+  type="text"
+  value="2017-07-13"
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[5].timingPeriodStart label 1`] = `
+<Label
+  for="activities-5-timingPeriodStart"
+  tag="label"
+  widths={
+    Array [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+    ]
+  }
+>
+  <label
+    className=""
+    htmlFor="activities-5-timingPeriodStart"
+  >
+    Start Date
+  </label>
+</Label>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[6].actionCode field 1`] = `
+<input
+  id="activities-6-actionCode"
+  name="activities[6].actionCode"
+  onBlur={[Function]}
+  onChange={[Function]}
+  readOnly={true}
+  type="hidden"
+  value="BCC"
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[6].actionDescription field 1`] = `
+<textarea
+  className="form-control"
+  disabled={false}
+  id="activities-6-actionDescription"
+  name="activities[6].actionDescription"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  value="Conduct BCC activity"
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[6].actionDescription label 1`] = `
+<Label
+  for="activities-6-actionDescription"
+  tag="label"
+  widths={
+    Array [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+    ]
+  }
+>
+  <label
+    className=""
+    htmlFor="activities-6-actionDescription"
+  >
+    Description
+  </label>
+</Label>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[6].actionIdentifier field 1`] = `
+<input
+  id="activities-6-actionIdentifier"
+  name="activities[6].actionIdentifier"
+  onBlur={[Function]}
+  onChange={[Function]}
+  readOnly={true}
+  type="hidden"
+  value=""
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[6].actionReason field 1`] = `
+<select
+  className="form-control"
+  disabled={false}
+  id="activities-6-actionReason"
+  name="activities[6].actionReason"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  value="Investigation"
+>
+  <option
+    key="Investigation"
+    value="Investigation"
+  >
+    Investigation
+  </option>
+  <option
+    key="Routine"
+    value="Routine"
+  >
+    Routine
+  </option>
+</select>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[6].actionReason label 1`] = `
+<Label
+  for="activities-6-actionReason"
+  tag="label"
+  widths={
+    Array [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+    ]
+  }
+>
+  <label
+    className=""
+    htmlFor="activities-6-actionReason"
+  >
+    Reason
+  </label>
+</Label>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[6].actionTitle field 1`] = `
+<input
+  className="form-control"
+  disabled={false}
+  id="activities-6-actionTitle"
+  name="activities[6].actionTitle"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  type="text"
+  value="Behaviour Change Communication"
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[6].actionTitle label 1`] = `
+<Label
+  for="activities-6-actionTitle"
+  tag="label"
+  widths={
+    Array [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+    ]
+  }
+>
+  <label
+    className=""
+    htmlFor="activities-6-actionTitle"
+  >
+    Action
+  </label>
+</Label>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[6].goalDescription field 1`] = `
+<input
+  id="activities-6-goalDescription"
+  name="activities[6].goalDescription"
+  onBlur={[Function]}
+  onChange={[Function]}
+  type="hidden"
+  value="Conduct BCC activity"
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[6].goalDue field 1`] = `
+<input
+  id="activities-6-goalDue"
+  name="activities[6].goalDue"
+  onBlur={[Function]}
+  onChange={[Function]}
+  type="hidden"
+  value={2017-07-20T19:31:00.000Z}
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[6].goalPriority field 1`] = `
+<select
+  className="form-control"
+  disabled={false}
+  id="activities-6-goalPriority"
+  name="activities[6].goalPriority"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  value="medium-priority"
+>
+  <option
+    key="low-priority"
+    value="low-priority"
+  >
+    low-priority
+  </option>
+  <option
+    key="medium-priority"
+    value="medium-priority"
+  >
+    medium-priority
+  </option>
+  <option
+    key="high-priority"
+    value="high-priority"
+  >
+    high-priority
+  </option>
+</select>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[6].goalPriority label 1`] = `
+<Label
+  for="activities-6-goalPriority"
+  tag="label"
+  widths={
+    Array [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+    ]
+  }
+>
+  <label
+    className=""
+    htmlFor="activities-6-goalPriority"
+  >
+    Priority
+  </label>
+</Label>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[6].goalValue field 1`] = `
+<input
+  className="form-control"
+  disabled={false}
+  id="activities-6-goalValue"
+  name="activities[6].goalValue"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  type="number"
+  value={1}
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[6].goalValue label 1`] = `
+<Label
+  for="activities-6-goalValue"
+  tag="label"
+  widths={
+    Array [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+    ]
+  }
+>
+  <label
+    className=""
+    htmlFor="activities-6-goalValue"
+  >
+    Quantity
+  </label>
+</Label>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[6].timingPeriodEnd field 1`] = `
+<input
+  className="form-control"
+  disabled={false}
+  id="activities-6-timingPeriodEnd"
+  onBlur={[Function]}
+  onChange={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onKeyDown={[Function]}
+  readOnly={false}
+  required={true}
+  type="text"
+  value="2017-07-20"
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[6].timingPeriodEnd label 1`] = `
+<Label
+  for="activities-6-timingPeriodEnd"
+  tag="label"
+  widths={
+    Array [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+    ]
+  }
+>
+  <label
+    className=""
+    htmlFor="activities-6-timingPeriodEnd"
+  >
+    End Date
+  </label>
+</Label>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[6].timingPeriodStart field 1`] = `
+<input
+  className="form-control"
+  disabled={false}
+  id="activities-6-timingPeriodStart"
+  onBlur={[Function]}
+  onChange={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onKeyDown={[Function]}
+  readOnly={false}
+  required={true}
+  type="text"
+  value="2017-07-13"
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[6].timingPeriodStart label 1`] = `
+<Label
+  for="activities-6-timingPeriodStart"
+  tag="label"
+  widths={
+    Array [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+    ]
+  }
+>
+  <label
+    className=""
+    htmlFor="activities-6-timingPeriodStart"
+  >
+    Start Date
+  </label>
+</Label>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: IRS activities[0].actionCode field 1`] = `
+<input
+  id="activities-0-actionCode"
+  name="activities[0].actionCode"
+  onBlur={[Function]}
+  onChange={[Function]}
+  readOnly={true}
+  type="hidden"
+  value="IRS"
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: IRS activities[0].actionDescription field 1`] = `
+<textarea
+  className="form-control"
+  disabled={false}
+  id="activities-0-actionDescription"
+  name="activities[0].actionDescription"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  value="Visit each structure in the operational area and attempt to spray"
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: IRS activities[0].actionDescription label 1`] = `
+<Label
+  for="activities-0-actionDescription"
+  tag="label"
+  widths={
+    Array [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+    ]
+  }
+>
+  <label
+    className=""
+    htmlFor="activities-0-actionDescription"
+  >
+    Description
+  </label>
+</Label>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: IRS activities[0].actionIdentifier field 1`] = `
+<input
+  id="activities-0-actionIdentifier"
+  name="activities[0].actionIdentifier"
+  onBlur={[Function]}
+  onChange={[Function]}
+  readOnly={true}
+  type="hidden"
+  value=""
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: IRS activities[0].actionReason field 1`] = `
+<select
+  className="form-control"
+  disabled={false}
+  id="activities-0-actionReason"
+  name="activities[0].actionReason"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  value="Routine"
+>
+  <option
+    key="Investigation"
+    value="Investigation"
+  >
+    Investigation
+  </option>
+  <option
+    key="Routine"
+    value="Routine"
+  >
+    Routine
+  </option>
+</select>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: IRS activities[0].actionReason label 1`] = `
+<Label
+  for="activities-0-actionReason"
+  tag="label"
+  widths={
+    Array [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+    ]
+  }
+>
+  <label
+    className=""
+    htmlFor="activities-0-actionReason"
+  >
+    Reason
+  </label>
+</Label>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: IRS activities[0].actionTitle field 1`] = `
+<input
+  className="form-control"
+  disabled={false}
+  id="activities-0-actionTitle"
+  name="activities[0].actionTitle"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  type="text"
+  value="Spray Structures"
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: IRS activities[0].actionTitle label 1`] = `
+<Label
+  for="activities-0-actionTitle"
+  tag="label"
+  widths={
+    Array [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+    ]
+  }
+>
+  <label
+    className=""
+    htmlFor="activities-0-actionTitle"
+  >
+    Action
+  </label>
+</Label>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: IRS activities[0].goalDescription field 1`] = `
+<input
+  id="activities-0-goalDescription"
+  name="activities[0].goalDescription"
+  onBlur={[Function]}
+  onChange={[Function]}
+  type="hidden"
+  value="Visit each structure in the operational area and attempt to spray"
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: IRS activities[0].goalDue field 1`] = `
+<input
+  id="activities-0-goalDue"
+  name="activities[0].goalDue"
+  onBlur={[Function]}
+  onChange={[Function]}
+  type="hidden"
+  value={2017-07-20T19:31:00.000Z}
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: IRS activities[0].goalPriority field 1`] = `
+<select
+  className="form-control"
+  disabled={false}
+  id="activities-0-goalPriority"
+  name="activities[0].goalPriority"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  value="medium-priority"
+>
+  <option
+    key="low-priority"
+    value="low-priority"
+  >
+    low-priority
+  </option>
+  <option
+    key="medium-priority"
+    value="medium-priority"
+  >
+    medium-priority
+  </option>
+  <option
+    key="high-priority"
+    value="high-priority"
+  >
+    high-priority
+  </option>
+</select>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: IRS activities[0].goalPriority label 1`] = `
+<Label
+  for="activities-0-goalPriority"
+  tag="label"
+  widths={
+    Array [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+    ]
+  }
+>
+  <label
+    className=""
+    htmlFor="activities-0-goalPriority"
+  >
+    Priority
+  </label>
+</Label>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: IRS activities[0].goalValue field 1`] = `
+<input
+  className="form-control"
+  disabled={false}
+  id="activities-0-goalValue"
+  name="activities[0].goalValue"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  type="number"
+  value={90}
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: IRS activities[0].goalValue label 1`] = `
+<Label
+  for="activities-0-goalValue"
+  tag="label"
+  widths={
+    Array [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+    ]
+  }
+>
+  <label
+    className=""
+    htmlFor="activities-0-goalValue"
+  >
+    Quantity
+  </label>
+</Label>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: IRS activities[0].timingPeriodEnd field 1`] = `
+<input
+  className="form-control"
+  disabled={false}
+  id="activities-0-timingPeriodEnd"
+  onBlur={[Function]}
+  onChange={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onKeyDown={[Function]}
+  readOnly={false}
+  required={true}
+  type="text"
+  value="2017-07-20"
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: IRS activities[0].timingPeriodEnd label 1`] = `
+<Label
+  for="activities-0-timingPeriodEnd"
+  tag="label"
+  widths={
+    Array [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+    ]
+  }
+>
+  <label
+    className=""
+    htmlFor="activities-0-timingPeriodEnd"
+  >
+    End Date
+  </label>
+</Label>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: IRS activities[0].timingPeriodStart field 1`] = `
+<input
+  className="form-control"
+  disabled={false}
+  id="activities-0-timingPeriodStart"
+  onBlur={[Function]}
+  onChange={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onKeyDown={[Function]}
+  readOnly={false}
+  required={true}
+  type="text"
+  value="2017-07-13"
+/>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: IRS activities[0].timingPeriodStart label 1`] = `
+<Label
+  for="activities-0-timingPeriodStart"
+  tag="label"
+  widths={
+    Array [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+    ]
+  }
+>
+  <label
+    className=""
+    htmlFor="activities-0-timingPeriodStart"
+  >
+    Start Date
+  </label>
+</Label>
+`;
+
+exports[`containers/forms/PlanForm renders correctly: caseNum field 1`] = `
+<input
+  className="form-control"
+  disabled={false}
+  id="caseNum"
+  name="caseNum"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  type="text"
+  value=""
+/>
+`;
+
+exports[`containers/forms/PlanForm renders correctly: caseNum label 1`] = `
+<Label
+  for="caseNum"
+  tag="label"
+  widths={
+    Array [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+    ]
+  }
+>
+  <label
+    className=""
+    htmlFor="caseNum"
+  >
+    Case Number
+  </label>
+</Label>
+`;
+
+exports[`containers/forms/PlanForm renders correctly: date field 1`] = `
+<input
+  id="date"
+  name="date"
+  onBlur={[Function]}
+  onChange={[Function]}
+  type="hidden"
+  value={2017-07-13T19:31:00.000Z}
+/>
+`;
+
+exports[`containers/forms/PlanForm renders correctly: end field 1`] = `
+<input
+  className="form-control"
+  disabled={false}
+  id="end"
+  onBlur={[Function]}
+  onChange={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onKeyDown={[Function]}
+  readOnly={false}
+  required={true}
+  type="text"
+  value="2017-08-02"
+/>
+`;
+
+exports[`containers/forms/PlanForm renders correctly: end label 1`] = `
+<Label
+  for="end"
+  tag="label"
+  widths={
+    Array [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+    ]
+  }
+>
+  <label
+    className=""
+    htmlFor="end"
+  >
+    Plan End Date
+  </label>
+</Label>
+`;
+
+exports[`containers/forms/PlanForm renders correctly: fiReason field 1`] = `
+<select
+  className="form-control"
+  disabled={false}
+  id="fiReason"
+  name="fiReason"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+>
+  <option>
+    ----
+  </option>
+  <option
+    key="Routine"
+    value="Routine"
+  >
+    Routine
+  </option>
+  <option
+    key="Case Triggered"
+    value="Case Triggered"
+  >
+    Case Triggered
+  </option>
+</select>
+`;
+
+exports[`containers/forms/PlanForm renders correctly: fiStatus field 1`] = `
+<select
+  className="form-control"
+  disabled={false}
+  id="fiStatus"
+  name="fiStatus"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+>
+  <option>
+    ----
+  </option>
+  <option
+    key="A1"
+    value="A1"
+  >
+    A1
+     - 
+    Active
+  </option>
+  <option
+    key="A2"
+    value="A2"
+  >
+    A2
+     - 
+    Residual Non-Active
+  </option>
+  <option
+    key="B1"
+    value="B1"
+  >
+    B1
+     - 
+    Cleared Receptive
+  </option>
+  <option
+    key="B2"
+    value="B2"
+  >
+    B2
+     - 
+    Cleared Non-Receptive
+  </option>
+</select>
+`;
+
+exports[`containers/forms/PlanForm renders correctly: identifier field 1`] = `
+<input
+  id="identifier"
+  name="identifier"
+  onBlur={[Function]}
+  onChange={[Function]}
+  readOnly={true}
+  type="hidden"
+  value=""
+/>
+`;
+
+exports[`containers/forms/PlanForm renders correctly: interventionType field 1`] = `
+<select
+  className="form-control"
+  disabled={false}
+  id="interventionType"
+  name="interventionType"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  value="FI"
+>
+  <option
+    value="FI"
+  >
+    Focus Investigation
+  </option>
+  <option
+    value="IRS"
+  >
+    IRS
+  </option>
+</select>
+`;
+
+exports[`containers/forms/PlanForm renders correctly: name field 1`] = `
+<input
+  id="name"
+  name="name"
+  onBlur={[Function]}
+  onChange={[Function]}
+  type="hidden"
+  value=""
+/>
+`;
+
+exports[`containers/forms/PlanForm renders correctly: opensrpEventId field 1`] = `
+<input
+  id="opensrpEventId"
+  name="opensrpEventId"
+  onBlur={[Function]}
+  onChange={[Function]}
+  readOnly={true}
+  type="hidden"
+/>
+`;
+
+exports[`containers/forms/PlanForm renders correctly: start field 1`] = `
+<input
+  className="form-control"
+  disabled={false}
+  id="start"
+  onBlur={[Function]}
+  onChange={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onKeyDown={[Function]}
+  readOnly={false}
+  required={true}
+  type="text"
+  value="2017-07-13"
+/>
+`;
+
+exports[`containers/forms/PlanForm renders correctly: start label 1`] = `
+<Label
+  for="start"
+  tag="label"
+  widths={
+    Array [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+    ]
+  }
+>
+  <label
+    className=""
+    htmlFor="start"
+  >
+    Plan Start Date
+  </label>
+</Label>
+`;
+
+exports[`containers/forms/PlanForm renders correctly: status field 1`] = `
+<select
+  className="form-control"
+  disabled={false}
+  id="status"
+  name="status"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  value="draft"
+>
+  <option
+    key="ACTIVE"
+    value="active"
+  >
+    active
+  </option>
+  <option
+    key="COMPLETE"
+    value="complete"
+  >
+    complete
+  </option>
+  <option
+    key="DRAFT"
+    value="draft"
+  >
+    draft
+  </option>
+  <option
+    key="RETIRED"
+    value="retired"
+  >
+    retired
+  </option>
+</select>
+`;
+
+exports[`containers/forms/PlanForm renders correctly: status label 1`] = `
+<Label
+  for="status"
+  tag="label"
+  widths={
+    Array [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+    ]
+  }
+>
+  <label
+    className=""
+    htmlFor="status"
+  >
+    Status
+  </label>
+</Label>
+`;
+
+exports[`containers/forms/PlanForm renders correctly: submit button 1`] = `
+<button
+  aria-label="Save Plan"
+  className="btn btn-block btn btn-primary"
+  disabled={false}
+  id="planform-submit-button"
+  onClick={[Function]}
+  type="submit"
+>
+  Save Plan
+</button>
+`;
+
+exports[`containers/forms/PlanForm renders correctly: title field 1`] = `
+<input
+  className="form-control"
+  disabled={false}
+  id="title"
+  name="title"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  type="text"
+  value=""
+/>
+`;
+
+exports[`containers/forms/PlanForm renders correctly: title label 1`] = `
+<Label
+  for="title"
+  tag="label"
+  widths={
+    Array [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+    ]
+  }
+>
+  <label
+    className=""
+    htmlFor="title"
+  >
+    Plan Title
+  </label>
+</Label>
+`;
+
+exports[`containers/forms/PlanForm renders correctly: version field 1`] = `
+<input
+  id="version"
+  name="version"
+  onBlur={[Function]}
+  onChange={[Function]}
+  readOnly={true}
+  type="hidden"
+  value="1"
+/>
+`;
+
+exports[`containers/forms/PlanForm renders jurisdictions fields correctly: addJurisdiction button 1`] = `
+<button
+  className="btn btn-primary btn-sm mb-5 addJurisdiction"
+  onClick={[Function]}
+  type="button"
+>
+  Add Focus Area
+</button>
+`;
+
+exports[`containers/forms/PlanForm renders jurisdictions fields correctly: jurisdictions[0].id field 1`] = `
+Array [
+  <input
+    aria-autocomplete="list"
+    aria-label="Select Focus Area"
+    autoCapitalize="none"
+    autoComplete="off"
+    autoCorrect="off"
+    disabled={false}
+    id="react-select-4-input"
+    onBlur={[Function]}
+    onChange={[Function]}
+    onFocus={[Function]}
+    spellCheck="false"
+    style={
+      Object {
+        "background": 0,
+        "border": 0,
+        "boxSizing": "content-box",
+        "color": "inherit",
+        "fontSize": "inherit",
+        "label": "input",
+        "opacity": 1,
+        "outline": 0,
+        "padding": 0,
+        "width": "2px",
+      }
+    }
+    tabIndex="0"
+    type="text"
+    value=""
+  />,
+  <input
+    name="jurisdictions[0].id"
+    type="hidden"
+    value=""
+  />,
+]
+`;
+
+exports[`containers/forms/PlanForm renders jurisdictions fields correctly: jurisdictions[0].id label 1`] = `
+<Label
+  for="jurisdictions-0-id"
+  tag="label"
+  widths={
+    Array [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+    ]
+  }
+>
+  <label
+    className=""
+    htmlFor="jurisdictions-0-id"
+  >
+    Focus Area
+  </label>
+</Label>
+`;
+
+exports[`containers/forms/PlanForm renders jurisdictions fields correctly: jurisdictions[0].name field 1`] = `
+<input
+  id="jurisdictions-0-name"
+  name="jurisdictions[0].name"
+  onBlur={[Function]}
+  onChange={[Function]}
+  type="hidden"
+  value=""
+/>
+`;
+
+exports[`containers/forms/PlanForm renders jurisdictions fields correctly: removeJurisdiction buttons 1`] = `
+Array [
+  <button
+    aria-label="Close"
+    className="close position-absolute removeArrItem removeJurisdiction"
+    onClick={[Function]}
+    type="button"
+  >
+    <span
+      aria-hidden="true"
+    >
+      ×
+    </span>
+  </button>,
+  <button
+    aria-label="Close"
+    className="close position-absolute removeArrItem removeJurisdiction"
+    onClick={[Function]}
+    type="button"
+  >
+    <span
+      aria-hidden="true"
+    >
+      ×
+    </span>
+  </button>,
+]
+`;

@@ -4,7 +4,7 @@ import * as React from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { Badge, Button, Col, Row } from 'reactstrap';
 import { Store } from 'redux';
 import GisidaWrapper from '../../../../../components/GisidaWrapper';
@@ -31,9 +31,11 @@ import {
   HOME,
   HOME_URL,
   INVESTIGATION,
+  MARK_AS_COMPLETE,
   MEASURE,
   MULTI_POLYGON,
   OF,
+  PLAN_COMPLETION_URL,
   POINT,
   POLYGON,
   PROGRESS,
@@ -255,11 +257,11 @@ class SingleActiveFIMap extends React.Component<
           {plan.plan_status}
         </Badge>
       );
-    const markCompleteButton =
+    const markCompleteLink =
       plan && plan.plan_status === PlanStatus.ACTIVE ? (
-        <Button color="primary" size="lg" block={true}>
-          Mark as Complete
-        </Button>
+        <Link className="btn btn-primary" to={`${PLAN_COMPLETION_URL}/${plan.id}`} color="primary">
+          {MARK_AS_COMPLETE}
+        </Link>
       ) : null;
     /** Array that holds keys of a plan object
      * Will be used to check plan_effective_period_end or plan_effective_period_start to build the detailview
@@ -303,7 +305,8 @@ class SingleActiveFIMap extends React.Component<
           <Row>
             <Col xs="8">
               <h2 className="page-title mt-4 mb-4">
-                {plan && plan.plan_title} {INVESTIGATION} {statusBadge}
+                {plan && plan.plan_title} {INVESTIGATION}{' '}
+                <h5 style={{ display: 'inline' }}>{statusBadge}</h5>
               </h2>
             </Col>
             <Col xs="4">
@@ -334,7 +337,7 @@ class SingleActiveFIMap extends React.Component<
                 </h5>
                 {detailViewPlanInvestigationContainer}
               </div>
-              {markCompleteButton}
+              {markCompleteLink}
               <h6 />
               <hr />
               {goals &&

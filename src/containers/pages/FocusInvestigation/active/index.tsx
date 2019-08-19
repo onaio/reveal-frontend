@@ -11,10 +11,11 @@ import { RouteComponentProps } from 'react-router';
 import { Link } from 'react-router-dom';
 import { CellInfo, Column } from 'react-table';
 import 'react-table/react-table.css';
-import { Badge, Button, Col, Form, FormGroup, Input, Row, Table } from 'reactstrap';
+import { Button, Col, Form, FormGroup, Input, Row, Table } from 'reactstrap';
 import { Store } from 'redux';
 import DrillDownTableLinkedCell from '../../../../components/DrillDownTableLinkedCell';
 import LinkToNewPlans from '../../../../components/LinkToNewPlans';
+import NewRecordBadge from '../../../../components/NewRecordBadge';
 import HeaderBreadCrumb, {
   BreadCrumbProps,
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
@@ -61,7 +62,9 @@ import plansReducer, {
   PlanStatus,
   reducerName as plansReducerName,
 } from '../../../../store/ducks/plans';
+import './../../../../styles/css/drill-down-table.css';
 import './style.css';
+
 /** register the plans reducer */
 reducerRegistry.register(plansReducerName, plansReducer);
 
@@ -213,14 +216,6 @@ class ActiveFocusInvestigation extends React.Component<
                 columns: [
                   {
                     Cell: (cell: CellInfo) => {
-                      /** if 24 hours ago show badge */
-                      const oneDayAgo = new Date().getTime() + 1 * 24 * 60 * 60;
-                      const newRecordBadge =
-                        Date.parse(cell.original.plan_date) >= oneDayAgo ? (
-                          <Badge color="warning" pill={true}>
-                            Warning
-                          </Badge>
-                        ) : null;
                       return (
                         <div>
                           {cell.original.focusArea.trim() && (
@@ -229,7 +224,7 @@ class ActiveFocusInvestigation extends React.Component<
                             </Link>
                           )}
                           &nbsp;
-                          {newRecordBadge}
+                          <NewRecordBadge recordDate={cell.original.plan_date} />
                         </div>
                       );
                     },
@@ -295,7 +290,7 @@ class ActiveFocusInvestigation extends React.Component<
               parentIdentifierField: 'parent',
               rootParentId: null,
               showPageSizeOptions: false,
-              showPagination: false,
+              showPagination: thePlans.length > 20,
               useDrillDownTrProps: false,
             };
             const TableHeaderWithOptionalForm = plansArray.every(
@@ -347,13 +342,13 @@ const mapStateToProps = (state: Partial<Store>): DispatchedStateProps => {
   const caseTriggeredPlans = getPlansArray(
     state,
     InterventionType.FI,
-    [PlanStatus.ACTIVE, PlanStatus.DRAFT],
+    [PlanStatus.ACTIVE, PlanStatus.COMPLETE],
     CASE_TRIGGERED
   );
   const routinePlans = getPlansArray(
     state,
     InterventionType.FI,
-    [PlanStatus.ACTIVE, PlanStatus.DRAFT],
+    [PlanStatus.ACTIVE, PlanStatus.COMPLETE],
     ROUTINE
   );
   return {

@@ -20,18 +20,22 @@ import {
   LOGIN_URL,
   LOGOUT_URL,
   NEW_PLAN_URL,
+  PLAN_COMPLETION_URL,
   PLAN_LIST_URL,
+  PLAN_UPDATE_URL,
 } from '../constants';
 import ConnectedHeader from '../containers/ConnectedHeader';
 import ActiveFocusInvestigation from '../containers/pages/FocusInvestigation/active';
 import HistoricalFocusInvestigation from '../containers/pages/FocusInvestigation/historical';
 import SingleActiveFIMap from '../containers/pages/FocusInvestigation/map/active';
+import ConnectedPlanCompletion from '../containers/pages/FocusInvestigation/map/planCompletion';
 import SingleFI from '../containers/pages/FocusInvestigation/single';
 import Home from '../containers/pages/Home/Home';
 import IrsPlans from '../containers/pages/InterventionPlan/IRS';
 import IrsPlan from '../containers/pages/InterventionPlan/IRS/plan';
 import NewPlan from '../containers/pages/InterventionPlan/NewPlan';
 import ConnectedPlanDefinitionList from '../containers/pages/InterventionPlan/PlanDefinitionList';
+import ConnectedUpdatePlan from '../containers/pages/InterventionPlan/UpdatePlan';
 import { oAuthUserInfoGetter } from '../helpers/utils';
 
 library.add(faMap);
@@ -99,6 +103,12 @@ class App extends Component {
               <ConnectedPrivateRoute
                 disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                 exact={true}
+                path={`${PLAN_COMPLETION_URL}/:id`}
+                component={ConnectedPlanCompletion}
+              />
+              <ConnectedPrivateRoute
+                disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                exact={true}
                 path={`${FI_SINGLE_MAP_URL}/:id/`}
                 component={SingleActiveFIMap}
               />
@@ -125,6 +135,12 @@ class App extends Component {
                 exact={true}
                 path={NEW_PLAN_URL}
                 component={NewPlan}
+              />
+              <ConnectedPrivateRoute
+                disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                exact={true}
+                path={`${PLAN_UPDATE_URL}/:id`}
+                component={ConnectedUpdatePlan}
               />
               <ConnectedPrivateRoute
                 disableLoginProtection={DISABLE_LOGIN_PROTECTION}

@@ -3,13 +3,17 @@ import { keyBy, values } from 'lodash';
 import { FlushThunks } from 'redux-testkit';
 import store from '../../index';
 import reducer, {
+  fetchAllJurisdictionIds,
   fetchJurisdictions,
+  getAllJurisdictionsIdArray,
   getJurisdictionById,
   getJurisdictionsArray,
   getJurisdictionsById,
   getJurisdictionsIdArray,
   Jurisdiction,
   reducerName,
+  removeAllJurisdictionIdsAction,
+  removeJurisdictionsAction,
 } from '../jurisdictions';
 import * as fixtures from './fixtures';
 
@@ -90,5 +94,66 @@ describe('reducers/jurisdictions', () => {
         jurisdiction_id: 'abcde',
       });
     }
+  });
+
+  it('can remove jurisdictions from store', () => {
+    store.dispatch(removeJurisdictionsAction);
+    let jurisdictionsInStore = getJurisdictionsById(store.getState());
+    expect(jurisdictionsInStore).toEqual({});
+
+    store.dispatch(fetchJurisdictions([fixtures.jurisdiction3] as any));
+    let jurisdiction3FromStore = getJurisdictionById(store.getState(), 'abcde');
+    jurisdictionsInStore = getJurisdictionsById(store.getState());
+    expect(jurisdiction3FromStore).not.toBeNull();
+    expect(jurisdictionsInStore).not.toEqual({});
+
+    store.dispatch(removeJurisdictionsAction);
+    jurisdiction3FromStore = getJurisdictionById(store.getState(), 'abcde');
+    jurisdictionsInStore = getJurisdictionsById(store.getState());
+    expect(jurisdiction3FromStore).toBeNull();
+    expect(jurisdictionsInStore).toEqual({});
+  });
+
+  it('new jurisdictions not overwrite but added to existing', () => {
+    store.dispatch(removeJurisdictionsAction);
+    const jurisdictionsInStore = getJurisdictionsById(store.getState());
+    expect(jurisdictionsInStore).toEqual({});
+
+    store.dispatch(fetchJurisdictions([fixtures.jurisdiction3] as any));
+    store.dispatch(fetchJurisdictions([fixtures.jurisdictions] as any));
+    const jurisdiction3FromStore = getJurisdictionById(store.getState(), 'abcde');
+    expect(jurisdiction3FromStore).not.toBeNull();
+  });
+
+  it('can remove allJurisdictionsIds', () => {
+    store.dispatch(removeAllJurisdictionIdsAction);
+    let alljurisdictionsIdsNumber = getAllJurisdictionsIdArray(store.getState()).length;
+    expect(alljurisdictionsIdsNumber).toEqual(0);
+
+    store.dispatch(fetchAllJurisdictionIds(['id1']));
+    alljurisdictionsIdsNumber = getAllJurisdictionsIdArray(store.getState()).length;
+    expect(alljurisdictionsIdsNumber).toEqual(1);
+
+    store.dispatch(removeAllJurisdictionIdsAction);
+    alljurisdictionsIdsNumber = getAllJurisdictionsIdArray(store.getState()).length;
+    expect(alljurisdictionsIdsNumber).toEqual(0);
+  });
+
+  it('new jurisdictionsIds do not overwrite but added to existing', () => {
+    store.dispatch(removeAllJurisdictionIdsAction);
+    let alljurisdictionsIdsNumber = getAllJurisdictionsIdArray(store.getState()).length;
+    expect(alljurisdictionsIdsNumber).toEqual(0);
+
+    store.dispatch(fetchAllJurisdictionIds(['id1']));
+    alljurisdictionsIdsNumber = getAllJurisdictionsIdArray(store.getState()).length;
+    expect(alljurisdictionsIdsNumber).toEqual(1);
+
+    store.dispatch(fetchAllJurisdictionIds(['id2']));
+    alljurisdictionsIdsNumber = getAllJurisdictionsIdArray(store.getState()).length;
+    expect(alljurisdictionsIdsNumber).toEqual(2);
+
+    store.dispatch(fetchJurisdictions([fixtures.jurisdiction3] as any));
+    alljurisdictionsIdsNumber = getAllJurisdictionsIdArray(store.getState()).length;
+    expect(alljurisdictionsIdsNumber).toEqual(3);
   });
 });

@@ -5,6 +5,7 @@ import superset from '@onaio/superset-connector';
 import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import { createBrowserHistory } from 'history';
+import MockDate from 'mockdate';
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Provider } from 'react-redux';
@@ -16,7 +17,6 @@ import reducer, { fetchPlans, reducerName } from '../../../../../store/ducks/pla
 import * as fixtures from '../../../../../store/ducks/tests/fixtures';
 import ConnectedActiveFocusInvestigation, { ActiveFocusInvestigation } from '../../active';
 reducerRegistry.register(reducerName, reducer);
-import flushPromises from 'flush-promises';
 
 library.add(faExternalLinkSquareAlt);
 const history = createBrowserHistory();
@@ -25,6 +25,7 @@ jest.mock('../../../../../configs/env');
 describe('containers/pages/ActiveFocusInvestigation', () => {
   beforeEach(() => {
     jest.resetAllMocks();
+    MockDate.reset();
   });
 
   it('renders without crashing', () => {
@@ -152,7 +153,6 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
         </Router>
       </Provider>
     );
-    flushPromises();
     const supersetParams = {
       adhoc_filters: [
         {
