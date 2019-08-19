@@ -710,6 +710,8 @@ export interface ADMN3 extends ADMN2 {
   ADMN3_EN: string;
 }
 
+export const JurisdictionLevels = ['administrative', 'operational'] as const;
+export type JurisdictionTypes = typeof JurisdictionLevels[number];
 /** interface descbribing basic country level information */
 export interface JurisdictionsByCountry extends ADMN0 {
   // the GPS extents of given geometry(s)
@@ -728,6 +730,7 @@ export interface JurisdictionsByCountry extends ADMN0 {
   // list of tilesets used for administrative boundaries
   tilesets?: Array<{
     idField: string; // the feature property cooresponding with jurisdiction_id (for joining)
+    jurisdictionType: JurisdictionTypes; // Admin or OA/FA/SA
     layer: string; // the Mapbox tileset-layer name
     parentIdField: string; // the feature property cooresponding with parent_id (for joining)
     url: string; // the Mapbox tileset url
@@ -757,12 +760,14 @@ export const ThailandAdmin0: JurisdictionsByCountry = {
   tilesets: [
     {
       idField: 'ADM0_EN',
+      jurisdictionType: JurisdictionLevels[0] as JurisdictionTypes,
       layer: 'TH_0',
       parentIdField: '',
       url: 'mapbox://thailandbvbd.6o8cg6kd',
     },
     {
       idField: 'ADM1_EN',
+      jurisdictionType: JurisdictionLevels[0] as JurisdictionTypes,
       layer: 'TH_1',
       parentIdField: 'ADM0_EN',
       url: 'mapbox://thailandbvbd.91ktth0q',
@@ -779,29 +784,33 @@ const NamibiaAdmin0: JurisdictionsByCountry = {
   jurisdictionIds: [],
   tilesets: [
     {
-      idField: '',
+      idField: 'jurisdictionId',
+      jurisdictionType: JurisdictionLevels[0] as JurisdictionTypes,
       layer: 'NA_0',
       parentIdField: '',
-      url: 'mapbox://thailandbvbd.5van29qd',
+      url: 'mapbox://thailandbvbd.8k701kz0',
     },
     {
-      idField: 'ADM1_NAME',
+      idField: 'jurisdictionId',
+      jurisdictionType: JurisdictionLevels[0] as JurisdictionTypes,
       layer: 'NA_1',
-      parentIdField: '',
-      url: 'mapbox://thailandbvbd.cjsljfri',
+      parentIdField: 'parentId',
+      url: 'mapbox://thailandbvbd.4pm7lyll',
     },
     {
-      idField: 'District',
+      idField: 'jurisdictionId',
+      jurisdictionType: JurisdictionLevels[0] as JurisdictionTypes,
       layer: 'NA_2',
-      parentIdField: 'Region',
-      url: 'mapbox://thailandbvbd.40rp5je6',
+      parentIdField: 'parentId',
+      url: 'mapbox://thailandbvbd.d7wo2nki',
     },
-    // {
-    //   idField: 'RDHVC',
-    //   layer: 'NA_3',
-    //   parentIdField: 'District',
-    //   url: 'mapbox://thailandbvbd.cutg3mx7',
-    // },
+    {
+      idField: 'id',
+      jurisdictionType: JurisdictionLevels[1],
+      layer: 'NA_3',
+      parentIdField: 'parentId',
+      url: 'mapbox://thailandbvbd.2gab6o28',
+    },
   ],
 };
 
