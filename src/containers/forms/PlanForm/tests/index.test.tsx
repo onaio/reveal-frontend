@@ -296,6 +296,25 @@ describe('containers/forms/PlanForm - Edit', () => {
     expect(wrapper.find(`.add-more-activities`).length).toEqual(0);
   });
 
+  it('renders conditional fields correctly in edit mode', () => {
+    fetch.mockResponseOnce(fixtures.jurisdictionLevel0JSON);
+    const props = {
+      ...propsForUpdatingPlans,
+      initialValues: getPlanFormValues(plans[2]),
+    };
+    const wrapper = mount(<PlanForm {...props} />);
+
+    expect(toJson(wrapper.find('#caseNum input'))).toMatchSnapshot(
+      'caseNum field present in editMode'
+    );
+    expect(toJson(wrapper.find('#opensrpEventId input'))).toMatchSnapshot(
+      'opensrpEventId field present in editMode'
+    );
+    expect(toJson(wrapper.find('#taskGenerationStatus input'))).toMatchSnapshot(
+      'taskGenerationStatus field present in editMode'
+    );
+  });
+
   it('renders jurisdictions fields correctly', () => {
     function checkJurisdtictions(num: number) {
       for (let i = 0; i <= num; i++) {
