@@ -1,9 +1,14 @@
 import { PropertyName } from 'lodash';
-import { FIReasons } from '../../../../configs/settings';
+import {
+  actionReasons,
+  FIReasons,
+  goalPriorities,
+  PlanActionCodes,
+} from '../../../../configs/settings';
 import { DATE, IS, NAME, REQUIRED } from '../../../../constants';
 import { FlexObject } from '../../../../helpers/utils';
-import { InterventionType } from '../../../../store/ducks/plans';
-import { PlanSchema } from '../helpers';
+import { InterventionType, PlanStatus } from '../../../../store/ducks/plans';
+import { ActivitiesSchema, fiStatusCodes, JurisdictionSchema, PlanSchema } from '../helpers';
 import MockDate from 'mockdate';
 import { plans } from '../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
 import {
@@ -226,15 +231,17 @@ const isPropertyErrorPresent = (
  * @param {PropertyName} propertyName - name of the plan property under investigation
  * @param {string} errorMessage - validation errorMessage
  * @param {string} expected - whether an error bound by above args is expected
+ * @param {any} schema - schema to use for validation
  */
 const testRunner = (
   object: FlexObject,
   propertyName: string,
   errorMessage: string,
-  expected: boolean
+  expected: boolean,
+  schema: any = PlanSchema
 ) => {
   try {
-    PlanSchema.validateSync(object, { abortEarly: false });
+    schema.validateSync(object, { abortEarly: false });
   } catch (errors) {
     const got = isPropertyErrorPresent(errors, propertyName, errorMessage);
     expect(got).toEqual(expected);
@@ -331,8 +338,8 @@ describe('src/containers/forms/PlanForm.PlanSchema.date', () => {
   });
 });
 
-describe('Planschema validation behaviour for missing propertys', () => {
-  /** Structure => [object, propertyName, errorMessage, ifshouldFail] */
+describe('Schema validation behavior for missing property"s', () => {
+  /** Structure => [object, propertyName, errorMessage, ifshouldFail, schema(default: PlanSchema)] */
   [
     [{}, 'end', REQUIRED, true],
     [{}, 'identifier', REQUIRED, false],
@@ -343,12 +350,28 @@ describe('Planschema validation behaviour for missing propertys', () => {
     [{}, 'status', REQUIRED, true],
     [{}, 'title', REQUIRED, true],
     [{}, 'version', REQUIRED, false],
+    [{}, 'actionDescription', REQUIRED, true, ActivitiesSchema],
+    [{}, 'actionIdentifier', REQUIRED, false, ActivitiesSchema],
+    [{}, 'actionReason', REQUIRED, true, ActivitiesSchema],
+    [{}, 'actionTitle', REQUIRED, true, ActivitiesSchema],
+    [{}, 'goalDescription', REQUIRED, true, ActivitiesSchema],
+    [{}, 'goalDue', REQUIRED, true, ActivitiesSchema],
+    [{}, 'goalPriority', REQUIRED, true, ActivitiesSchema],
+    [{}, 'goalValue', REQUIRED, true, ActivitiesSchema],
+    [{}, 'timingPeriodEnd', REQUIRED, true, ActivitiesSchema],
+    [{}, 'timingPeriodStart', REQUIRED, true, ActivitiesSchema],
+    [{}, 'id', REQUIRED, true, JurisdictionSchema],
+    [{}, 'name', REQUIRED, false, JurisdictionSchema],
   ].forEach(e => {
     it(`validation ${e[3] ? 'fails' : 'passes'} if ${e[1]} is missing`, () => {
       testRunner(e[0], e[1] as string, e[2] as string, e[3] as boolean);
     });
   });
 
+  /** For some of this propertyNames, the values are really not valid, its just that
+   * we are checking their validity based on a single check in this case; whether
+   * they are required or not.
+   */
   [
     [{ end: 'not a date' }, 'end', REQUIRED, false],
     [{ identifier: 'this guy' }, 'identifier', REQUIRED, false],
@@ -359,9 +382,21 @@ describe('Planschema validation behaviour for missing propertys', () => {
     [{ status: 'active' }, 'status', REQUIRED, false],
     [{ title: 'Some string' }, 'title', REQUIRED, false],
     [{ version: 'v1' }, 'version', REQUIRED, false],
+    [{ actionDescription: 'aString' }, 'actionDescription', REQUIRED, false, ActivitiesSchema],
+    [{ actionIdentifier: 'aString' }, 'actionIdentifier', REQUIRED, false, ActivitiesSchema],
+    [{ actionReason: 'someString' }, 'actionReason', REQUIRED, false, ActivitiesSchema],
+    [{ actionTitle: 'someString' }, 'actionTitle', REQUIRED, false, ActivitiesSchema],
+    [{ goalDescription: 'someString' }, 'goalDescription', REQUIRED, false, ActivitiesSchema],
+    [{ goalDue: 'notADate' }, 'goalDue', REQUIRED, false, ActivitiesSchema],
+    [{ goalPriority: 'someString' }, 'goalPriority', REQUIRED, false, ActivitiesSchema],
+    [{ goalValue: 'shouldbeInt' }, 'goalValue', REQUIRED, false, ActivitiesSchema],
+    [{ timingPeriodEnd: 'shouldbeDate' }, 'timingPeriodEnd', REQUIRED, false, ActivitiesSchema],
+    [{ timingPeriodStart: 'shouldbeDate' }, 'timingPeriodStart', REQUIRED, false, ActivitiesSchema],
+    [{ id: 'someId' }, 'id', REQUIRED, false, JurisdictionSchema],
+    [{}, 'name', REQUIRED, false, JurisdictionSchema],
   ].forEach(e => {
     it(`validation ${e[3] ? 'fails' : 'passes'} if ${e[1]} is present`, () => {
-      testRunner(e[0], e[1] as string, e[2] as string, e[3] as boolean);
+      testRunner(e[0], e[1] as string, e[2] as string, e[3] as boolean, e[4]);
     });
   });
 });
@@ -384,6 +419,9 @@ describe('Schema validation for one of', () => {
   const fiStatusEnums = fiStatusCodes.join(', ');
   const interventionTypeEnums = Object.values(InterventionType).join(', ');
   const statusEnums = Object.values(PlanStatus).join(', ');
+  const planActionCodesEnums = PlanActionCodes.join(', ');
+  const actionReasonsEnums = actionReasons.join(', ');
+  const goalPriorityEnums = goalPriorities.join(', ');
   [
     [{ fiReason: '09fasdf' }, 'fiReason', fiReasonEnums, true],
     [{ fiReason: 'Routine' }, 'fiReason', fiReasonEnums, false],
@@ -393,11 +431,23 @@ describe('Schema validation for one of', () => {
     [{ interventionType: 'FI' }, 'interventionType', interventionTypeEnums, false],
     [{ status: 'invalidStatus' }, 'status', statusEnums, true],
     [{ status: 'active' }, 'status', statusEnums, false],
+    [
+      { actionCode: 'invalidActionCode' },
+      'actionCode',
+      planActionCodesEnums,
+      true,
+      ActivitiesSchema,
+    ],
+    [{ actionCode: 'BCC' }, 'actionCode', planActionCodesEnums, false, ActivitiesSchema],
+    [{ actionReason: 'someString' }, 'actionReason', actionReasonsEnums, true, ActivitiesSchema],
+    [{ actionReason: 'Routine' }, 'actionReason', actionReasonsEnums, false, ActivitiesSchema],
+    [{ goalPriority: 'notPriority' }, 'goalPriority', goalPriorityEnums, true, ActivitiesSchema],
+    [{ goalPriority: 'low-priority' }, 'goalPriority', goalPriorityEnums, false, ActivitiesSchema],
   ].forEach(e => {
     it(`validation ${e[3] ? 'fails' : 'passes'} if ${e[1]} is ${
       e[3] ? 'not one' : 'one'
     } of the enumerated values`, () => {
-      testRunner(e[0], e[1] as string, e[2] as string, e[3] as boolean);
+      testRunner(e[0], e[1] as string, e[2] as string, e[3] as boolean, e[4]);
     });
   });
 });
