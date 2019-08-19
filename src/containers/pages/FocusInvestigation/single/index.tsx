@@ -467,6 +467,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
       InterventionType.FI,
       [PlanStatus.COMPLETE],
       CASE_TRIGGERED,
+      null,
       jurisdictionId
     ),
     completeRoutinePlansArray: getPlansArray(
@@ -474,6 +475,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
       InterventionType.FI,
       [PlanStatus.COMPLETE],
       ROUTINE,
+      null,
       jurisdictionId
     ),
     currentReactivePlansArray: getPlansArray(
@@ -481,6 +483,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
       InterventionType.FI,
       [PlanStatus.ACTIVE, PlanStatus.DRAFT],
       CASE_TRIGGERED,
+      null,
       jurisdictionId
     ),
     currentRoutinePlansArray: getPlansArray(
@@ -488,6 +491,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
       InterventionType.FI,
       [PlanStatus.ACTIVE, PlanStatus.DRAFT],
       ROUTINE,
+      null,
       jurisdictionId
     ),
     goalsArray,
