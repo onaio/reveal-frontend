@@ -31,6 +31,7 @@ import {
   PlanGoalDetail,
   PlanGoaldetailQuantity,
   PlanGoalTarget,
+  taskGenerationStatuses,
   taskGenerationStatusType,
   UseContext,
 } from '../../../configs/settings';
@@ -89,6 +90,7 @@ export const PlanSchema = Yup.object().shape({
   status: Yup.string()
     .oneOf(Object.values(PlanStatus))
     .required(REQUIRED),
+  taskGenerationStatus: Yup.string().oneOf(taskGenerationStatuses.map(e => e)),
   title: Yup.string().required(REQUIRED),
   version: Yup.string(),
 });
