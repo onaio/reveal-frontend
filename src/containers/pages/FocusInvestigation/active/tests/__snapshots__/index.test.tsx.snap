@@ -9537,771 +9537,54 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
 `;
 
 exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`] = `
-<div
-  className="ReactTable"
-  style={Object {}}
->
-  <TableComponent
-    className=""
+Array [
+  <div
+    className="ReactTable"
+    style={Object {}}
   >
-    <div
-      className="rt-table"
-      role="grid"
+    <TableComponent
+      className=""
     >
-      <Thead
-        className="-headerGroups"
-        style={
-          Object {
-            "minWidth": "1080px",
-          }
-        }
+      <div
+        className="rt-table"
+        role="grid"
       >
-        <div
-          className="rt-thead -headerGroups"
+        <Thead
+          className="-headerGroups"
           style={
             Object {
-              "minWidth": "1080px",
+              "minWidth": "1100px",
             }
           }
         >
-          <TrComponent>
-            <div
-              className="rt-tr"
-              role="row"
-            >
-              <ThComponent
-                className=""
-                key="0-undefined"
-                style={
-                  Object {
-                    "flex": "180 0 auto",
-                    "maxWidth": null,
-                    "width": "180px",
-                  }
-                }
-              >
-                <div
-                  className="rt-th"
-                  onClick={[Function]}
-                  role="columnheader"
-                  style={
-                    Object {
-                      "flex": "180 0 auto",
-                      "maxWidth": null,
-                      "width": "180px",
-                    }
-                  }
-                  tabIndex="-1"
-                >
-                  Name
-                </div>
-              </ThComponent>
-              <ThComponent
-                className=""
-                key="1-undefined"
-                style={
-                  Object {
-                    "flex": "80 0 auto",
-                    "maxWidth": null,
-                    "width": "80px",
-                  }
-                }
-              >
-                <div
-                  className="rt-th"
-                  onClick={[Function]}
-                  role="columnheader"
-                  style={
-                    Object {
-                      "flex": "80 0 auto",
-                      "maxWidth": null,
-                      "width": "80px",
-                    }
-                  }
-                  tabIndex="-1"
-                >
-                  FI Status
-                </div>
-              </ThComponent>
-              <ThComponent
-                className=""
-                key="2-undefined"
-                style={
-                  Object {
-                    "flex": "100 0 auto",
-                    "maxWidth": null,
-                    "width": "100px",
-                  }
-                }
-              >
-                <div
-                  className="rt-th"
-                  onClick={[Function]}
-                  role="columnheader"
-                  style={
-                    Object {
-                      "flex": "100 0 auto",
-                      "maxWidth": null,
-                      "width": "100px",
-                    }
-                  }
-                  tabIndex="-1"
-                >
-                  Province
-                </div>
-              </ThComponent>
-              <ThComponent
-                className=""
-                key="3-undefined"
-                style={
-                  Object {
-                    "flex": "100 0 auto",
-                    "maxWidth": null,
-                    "width": "100px",
-                  }
-                }
-              >
-                <div
-                  className="rt-th"
-                  onClick={[Function]}
-                  role="columnheader"
-                  style={
-                    Object {
-                      "flex": "100 0 auto",
-                      "maxWidth": null,
-                      "width": "100px",
-                    }
-                  }
-                  tabIndex="-1"
-                >
-                  District
-                </div>
-              </ThComponent>
-              <ThComponent
-                className=""
-                key="4-undefined"
-                style={
-                  Object {
-                    "flex": "100 0 auto",
-                    "maxWidth": null,
-                    "width": "100px",
-                  }
-                }
-              >
-                <div
-                  className="rt-th"
-                  onClick={[Function]}
-                  role="columnheader"
-                  style={
-                    Object {
-                      "flex": "100 0 auto",
-                      "maxWidth": null,
-                      "width": "100px",
-                    }
-                  }
-                  tabIndex="-1"
-                >
-                  Canton
-                </div>
-              </ThComponent>
-              <ThComponent
-                className=""
-                key="5-undefined"
-                style={
-                  Object {
-                    "flex": "100 0 auto",
-                    "maxWidth": null,
-                    "width": "100px",
-                  }
-                }
-              >
-                <div
-                  className="rt-th"
-                  onClick={[Function]}
-                  role="columnheader"
-                  style={
-                    Object {
-                      "flex": "100 0 auto",
-                      "maxWidth": null,
-                      "width": "100px",
-                    }
-                  }
-                  tabIndex="-1"
-                >
-                  Village
-                </div>
-              </ThComponent>
-              <ThComponent
-                className=""
-                key="6-undefined"
-                style={
-                  Object {
-                    "flex": "180 0 auto",
-                    "maxWidth": null,
-                    "width": "180px",
-                  }
-                }
-              >
-                <div
-                  className="rt-th"
-                  onClick={[Function]}
-                  role="columnheader"
-                  style={
-                    Object {
-                      "flex": "180 0 auto",
-                      "maxWidth": null,
-                      "width": "180px",
-                    }
-                  }
-                  tabIndex="-1"
-                >
-                  Focus Area
-                </div>
-              </ThComponent>
-              <ThComponent
-                className=""
-                key="7-undefined"
-                style={
-                  Object {
-                    "flex": "60 0 auto",
-                    "maxWidth": "60px",
-                    "width": "60px",
-                  }
-                }
-              >
-                <div
-                  className="rt-th"
-                  onClick={[Function]}
-                  role="columnheader"
-                  style={
-                    Object {
-                      "flex": "60 0 auto",
-                      "maxWidth": "60px",
-                      "width": "60px",
-                    }
-                  }
-                  tabIndex="-1"
-                >
-                  Status
-                </div>
-              </ThComponent>
-              <ThComponent
-                className=""
-                key="8-undefined"
-                style={
-                  Object {
-                    "flex": "80 0 auto",
-                    "maxWidth": null,
-                    "width": "80px",
-                  }
-                }
-              >
-                <div
-                  className="rt-th"
-                  onClick={[Function]}
-                  role="columnheader"
-                  style={
-                    Object {
-                      "flex": "80 0 auto",
-                      "maxWidth": null,
-                      "width": "80px",
-                    }
-                  }
-                  tabIndex="-1"
-                >
-                  Start Date
-                </div>
-              </ThComponent>
-              <ThComponent
-                className=""
-                key="9-undefined"
-                style={
-                  Object {
-                    "flex": "100 0 auto",
-                    "maxWidth": null,
-                    "width": "100px",
-                  }
-                }
-              >
-                <div
-                  className="rt-th"
-                  onClick={[Function]}
-                  role="columnheader"
-                  style={
-                    Object {
-                      "flex": "100 0 auto",
-                      "maxWidth": null,
-                      "width": "100px",
-                    }
-                  }
-                  tabIndex="-1"
-                >
-                  End Date
-                </div>
-              </ThComponent>
-            </div>
-          </TrComponent>
-        </div>
-      </Thead>
-      <Thead
-        className="-header"
-        style={
-          Object {
-            "minWidth": "1080px",
-          }
-        }
-      >
-        <div
-          className="rt-thead -header"
-          style={
-            Object {
-              "minWidth": "1080px",
+          <div
+            className="rt-thead -headerGroups"
+            style={
+              Object {
+                "minWidth": "1100px",
+              }
             }
-          }
-        >
-          <TrComponent>
-            <div
-              className="rt-tr"
-              role="row"
-            >
-              <ThComponent
-                className="rt-resizable-header -cursor-pointer"
-                key="0-plan_title"
-                style={
-                  Object {
-                    "flex": "180 0 auto",
-                    "maxWidth": null,
-                    "width": "180px",
-                  }
-                }
-                toggleSort={[Function]}
-              >
-                <div
-                  className="rt-th rt-resizable-header -cursor-pointer"
-                  onClick={[Function]}
-                  role="columnheader"
-                  style={
-                    Object {
-                      "flex": "180 0 auto",
-                      "maxWidth": null,
-                      "width": "180px",
-                    }
-                  }
-                  tabIndex="-1"
-                >
-                  <div
-                    className="rt-resizable-header-content"
-                  />
-                  <Resizer
-                    onMouseDown={[Function]}
-                    onTouchStart={[Function]}
-                  >
-                    <div
-                      className="rt-resizer"
-                      onMouseDown={[Function]}
-                      onTouchStart={[Function]}
-                    />
-                  </Resizer>
-                </div>
-              </ThComponent>
-              <ThComponent
-                className="rt-resizable-header -cursor-pointer"
-                key="1-plan_status"
-                style={
-                  Object {
-                    "flex": "80 0 auto",
-                    "maxWidth": null,
-                    "width": "80px",
-                  }
-                }
-                toggleSort={[Function]}
-              >
-                <div
-                  className="rt-th rt-resizable-header -cursor-pointer"
-                  onClick={[Function]}
-                  role="columnheader"
-                  style={
-                    Object {
-                      "flex": "80 0 auto",
-                      "maxWidth": null,
-                      "width": "80px",
-                    }
-                  }
-                  tabIndex="-1"
-                >
-                  <div
-                    className="rt-resizable-header-content"
-                  />
-                  <Resizer
-                    onMouseDown={[Function]}
-                    onTouchStart={[Function]}
-                  >
-                    <div
-                      className="rt-resizer"
-                      onMouseDown={[Function]}
-                      onTouchStart={[Function]}
-                    />
-                  </Resizer>
-                </div>
-              </ThComponent>
-              <ThComponent
-                className="rt-resizable-header -cursor-pointer"
-                key="2-province"
-                style={
-                  Object {
-                    "flex": "100 0 auto",
-                    "maxWidth": null,
-                    "width": "100px",
-                  }
-                }
-                toggleSort={[Function]}
-              >
-                <div
-                  className="rt-th rt-resizable-header -cursor-pointer"
-                  onClick={[Function]}
-                  role="columnheader"
-                  style={
-                    Object {
-                      "flex": "100 0 auto",
-                      "maxWidth": null,
-                      "width": "100px",
-                    }
-                  }
-                  tabIndex="-1"
-                >
-                  <div
-                    className="rt-resizable-header-content"
-                  />
-                  <Resizer
-                    onMouseDown={[Function]}
-                    onTouchStart={[Function]}
-                  >
-                    <div
-                      className="rt-resizer"
-                      onMouseDown={[Function]}
-                      onTouchStart={[Function]}
-                    />
-                  </Resizer>
-                </div>
-              </ThComponent>
-              <ThComponent
-                className="rt-resizable-header -cursor-pointer"
-                key="3-district"
-                style={
-                  Object {
-                    "flex": "100 0 auto",
-                    "maxWidth": null,
-                    "width": "100px",
-                  }
-                }
-                toggleSort={[Function]}
-              >
-                <div
-                  className="rt-th rt-resizable-header -cursor-pointer"
-                  onClick={[Function]}
-                  role="columnheader"
-                  style={
-                    Object {
-                      "flex": "100 0 auto",
-                      "maxWidth": null,
-                      "width": "100px",
-                    }
-                  }
-                  tabIndex="-1"
-                >
-                  <div
-                    className="rt-resizable-header-content"
-                  />
-                  <Resizer
-                    onMouseDown={[Function]}
-                    onTouchStart={[Function]}
-                  >
-                    <div
-                      className="rt-resizer"
-                      onMouseDown={[Function]}
-                      onTouchStart={[Function]}
-                    />
-                  </Resizer>
-                </div>
-              </ThComponent>
-              <ThComponent
-                className="rt-resizable-header -cursor-pointer"
-                key="4-canton"
-                style={
-                  Object {
-                    "flex": "100 0 auto",
-                    "maxWidth": null,
-                    "width": "100px",
-                  }
-                }
-                toggleSort={[Function]}
-              >
-                <div
-                  className="rt-th rt-resizable-header -cursor-pointer"
-                  onClick={[Function]}
-                  role="columnheader"
-                  style={
-                    Object {
-                      "flex": "100 0 auto",
-                      "maxWidth": null,
-                      "width": "100px",
-                    }
-                  }
-                  tabIndex="-1"
-                >
-                  <div
-                    className="rt-resizable-header-content"
-                  />
-                  <Resizer
-                    onMouseDown={[Function]}
-                    onTouchStart={[Function]}
-                  >
-                    <div
-                      className="rt-resizer"
-                      onMouseDown={[Function]}
-                      onTouchStart={[Function]}
-                    />
-                  </Resizer>
-                </div>
-              </ThComponent>
-              <ThComponent
-                className="rt-resizable-header -cursor-pointer"
-                key="5-village"
-                style={
-                  Object {
-                    "flex": "100 0 auto",
-                    "maxWidth": null,
-                    "width": "100px",
-                  }
-                }
-                toggleSort={[Function]}
-              >
-                <div
-                  className="rt-th rt-resizable-header -cursor-pointer"
-                  onClick={[Function]}
-                  role="columnheader"
-                  style={
-                    Object {
-                      "flex": "100 0 auto",
-                      "maxWidth": null,
-                      "width": "100px",
-                    }
-                  }
-                  tabIndex="-1"
-                >
-                  <div
-                    className="rt-resizable-header-content"
-                  />
-                  <Resizer
-                    onMouseDown={[Function]}
-                    onTouchStart={[Function]}
-                  >
-                    <div
-                      className="rt-resizer"
-                      onMouseDown={[Function]}
-                      onTouchStart={[Function]}
-                    />
-                  </Resizer>
-                </div>
-              </ThComponent>
-              <ThComponent
-                className="rt-resizable-header -cursor-pointer"
-                key="6-focusArea"
-                style={
-                  Object {
-                    "flex": "180 0 auto",
-                    "maxWidth": null,
-                    "width": "180px",
-                  }
-                }
-                toggleSort={[Function]}
-              >
-                <div
-                  className="rt-th rt-resizable-header -cursor-pointer"
-                  onClick={[Function]}
-                  role="columnheader"
-                  style={
-                    Object {
-                      "flex": "180 0 auto",
-                      "maxWidth": null,
-                      "width": "180px",
-                    }
-                  }
-                  tabIndex="-1"
-                >
-                  <div
-                    className="rt-resizable-header-content"
-                  />
-                  <Resizer
-                    onMouseDown={[Function]}
-                    onTouchStart={[Function]}
-                  >
-                    <div
-                      className="rt-resizer"
-                      onMouseDown={[Function]}
-                      onTouchStart={[Function]}
-                    />
-                  </Resizer>
-                </div>
-              </ThComponent>
-              <ThComponent
-                className="rt-resizable-header -cursor-pointer"
-                key="7-status"
-                style={
-                  Object {
-                    "flex": "60 0 auto",
-                    "maxWidth": "60px",
-                    "width": "60px",
-                  }
-                }
-                toggleSort={[Function]}
-              >
-                <div
-                  className="rt-th rt-resizable-header -cursor-pointer"
-                  onClick={[Function]}
-                  role="columnheader"
-                  style={
-                    Object {
-                      "flex": "60 0 auto",
-                      "maxWidth": "60px",
-                      "width": "60px",
-                    }
-                  }
-                  tabIndex="-1"
-                >
-                  <div
-                    className="rt-resizable-header-content"
-                  />
-                  <Resizer
-                    onMouseDown={[Function]}
-                    onTouchStart={[Function]}
-                  >
-                    <div
-                      className="rt-resizer"
-                      onMouseDown={[Function]}
-                      onTouchStart={[Function]}
-                    />
-                  </Resizer>
-                </div>
-              </ThComponent>
-              <ThComponent
-                className="rt-resizable-header -cursor-pointer"
-                key="8-plan_effective_period_start"
-                style={
-                  Object {
-                    "flex": "80 0 auto",
-                    "maxWidth": null,
-                    "width": "80px",
-                  }
-                }
-                toggleSort={[Function]}
-              >
-                <div
-                  className="rt-th rt-resizable-header -cursor-pointer"
-                  onClick={[Function]}
-                  role="columnheader"
-                  style={
-                    Object {
-                      "flex": "80 0 auto",
-                      "maxWidth": null,
-                      "width": "80px",
-                    }
-                  }
-                  tabIndex="-1"
-                >
-                  <div
-                    className="rt-resizable-header-content"
-                  />
-                  <Resizer
-                    onMouseDown={[Function]}
-                    onTouchStart={[Function]}
-                  >
-                    <div
-                      className="rt-resizer"
-                      onMouseDown={[Function]}
-                      onTouchStart={[Function]}
-                    />
-                  </Resizer>
-                </div>
-              </ThComponent>
-              <ThComponent
-                className="rt-resizable-header -cursor-pointer"
-                key="9-plan_effective_period_end"
-                style={
-                  Object {
-                    "flex": "100 0 auto",
-                    "maxWidth": null,
-                    "width": "100px",
-                  }
-                }
-                toggleSort={[Function]}
-              >
-                <div
-                  className="rt-th rt-resizable-header -cursor-pointer"
-                  onClick={[Function]}
-                  role="columnheader"
-                  style={
-                    Object {
-                      "flex": "100 0 auto",
-                      "maxWidth": null,
-                      "width": "100px",
-                    }
-                  }
-                  tabIndex="-1"
-                >
-                  <div
-                    className="rt-resizable-header-content"
-                  />
-                  <Resizer
-                    onMouseDown={[Function]}
-                    onTouchStart={[Function]}
-                  >
-                    <div
-                      className="rt-resizer"
-                      onMouseDown={[Function]}
-                      onTouchStart={[Function]}
-                    />
-                  </Resizer>
-                </div>
-              </ThComponent>
-            </div>
-          </TrComponent>
-        </div>
-      </Thead>
-      <Tbody
-        className=""
-        style={
-          Object {
-            "minWidth": "1080px",
-          }
-        }
-      >
-        <div
-          className="rt-tbody"
-          style={
-            Object {
-              "minWidth": "1080px",
-            }
-          }
-        >
-          <TrGroupComponent
-            key="0"
           >
-            <div
-              className="rt-tr-group"
-              role="rowgroup"
-            >
-              <TrComponent
-                className="-odd"
+            <TrComponent>
+              <div
+                className="rt-tr"
+                role="row"
               >
-                <div
-                  className="rt-tr -odd"
-                  role="row"
+                <ThComponent
+                  className=""
+                  key="0-undefined"
+                  style={
+                    Object {
+                      "flex": "180 0 auto",
+                      "maxWidth": null,
+                      "width": "180px",
+                    }
+                  }
                 >
-                  <TdComponent
-                    className=""
-                    key="0-plan_title"
+                  <div
+                    className="rt-th"
                     onClick={[Function]}
+                    role="columnheader"
                     style={
                       Object {
                         "flex": "180 0 auto",
@@ -10309,11 +9592,1483 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
                         "width": "180px",
                       }
                     }
+                    tabIndex="-1"
+                  >
+                    Name
+                  </div>
+                </ThComponent>
+                <ThComponent
+                  className=""
+                  key="1-undefined"
+                  style={
+                    Object {
+                      "flex": "80 0 auto",
+                      "maxWidth": null,
+                      "width": "80px",
+                    }
+                  }
+                >
+                  <div
+                    className="rt-th"
+                    onClick={[Function]}
+                    role="columnheader"
+                    style={
+                      Object {
+                        "flex": "80 0 auto",
+                        "maxWidth": null,
+                        "width": "80px",
+                      }
+                    }
+                    tabIndex="-1"
+                  >
+                    FI Status
+                  </div>
+                </ThComponent>
+                <ThComponent
+                  className=""
+                  key="2-undefined"
+                  style={
+                    Object {
+                      "flex": "100 0 auto",
+                      "maxWidth": null,
+                      "width": "100px",
+                    }
+                  }
+                >
+                  <div
+                    className="rt-th"
+                    onClick={[Function]}
+                    role="columnheader"
+                    style={
+                      Object {
+                        "flex": "100 0 auto",
+                        "maxWidth": null,
+                        "width": "100px",
+                      }
+                    }
+                    tabIndex="-1"
+                  >
+                    Province
+                  </div>
+                </ThComponent>
+                <ThComponent
+                  className=""
+                  key="3-undefined"
+                  style={
+                    Object {
+                      "flex": "100 0 auto",
+                      "maxWidth": null,
+                      "width": "100px",
+                    }
+                  }
+                >
+                  <div
+                    className="rt-th"
+                    onClick={[Function]}
+                    role="columnheader"
+                    style={
+                      Object {
+                        "flex": "100 0 auto",
+                        "maxWidth": null,
+                        "width": "100px",
+                      }
+                    }
+                    tabIndex="-1"
+                  >
+                    District
+                  </div>
+                </ThComponent>
+                <ThComponent
+                  className=""
+                  key="4-undefined"
+                  style={
+                    Object {
+                      "flex": "100 0 auto",
+                      "maxWidth": null,
+                      "width": "100px",
+                    }
+                  }
+                >
+                  <div
+                    className="rt-th"
+                    onClick={[Function]}
+                    role="columnheader"
+                    style={
+                      Object {
+                        "flex": "100 0 auto",
+                        "maxWidth": null,
+                        "width": "100px",
+                      }
+                    }
+                    tabIndex="-1"
+                  >
+                    Canton
+                  </div>
+                </ThComponent>
+                <ThComponent
+                  className=""
+                  key="5-undefined"
+                  style={
+                    Object {
+                      "flex": "100 0 auto",
+                      "maxWidth": null,
+                      "width": "100px",
+                    }
+                  }
+                >
+                  <div
+                    className="rt-th"
+                    onClick={[Function]}
+                    role="columnheader"
+                    style={
+                      Object {
+                        "flex": "100 0 auto",
+                        "maxWidth": null,
+                        "width": "100px",
+                      }
+                    }
+                    tabIndex="-1"
+                  >
+                    Village
+                  </div>
+                </ThComponent>
+                <ThComponent
+                  className=""
+                  key="6-undefined"
+                  style={
+                    Object {
+                      "flex": "180 0 auto",
+                      "maxWidth": null,
+                      "width": "180px",
+                    }
+                  }
+                >
+                  <div
+                    className="rt-th"
+                    onClick={[Function]}
+                    role="columnheader"
+                    style={
+                      Object {
+                        "flex": "180 0 auto",
+                        "maxWidth": null,
+                        "width": "180px",
+                      }
+                    }
+                    tabIndex="-1"
+                  >
+                    Focus Area
+                  </div>
+                </ThComponent>
+                <ThComponent
+                  className=""
+                  key="7-undefined"
+                  style={
+                    Object {
+                      "flex": "60 0 auto",
+                      "maxWidth": "60px",
+                      "width": "60px",
+                    }
+                  }
+                >
+                  <div
+                    className="rt-th"
+                    onClick={[Function]}
+                    role="columnheader"
+                    style={
+                      Object {
+                        "flex": "60 0 auto",
+                        "maxWidth": "60px",
+                        "width": "60px",
+                      }
+                    }
+                    tabIndex="-1"
+                  >
+                    Status
+                  </div>
+                </ThComponent>
+                <ThComponent
+                  className=""
+                  key="8-undefined"
+                  style={
+                    Object {
+                      "flex": "100 0 auto",
+                      "maxWidth": null,
+                      "width": "100px",
+                    }
+                  }
+                >
+                  <div
+                    className="rt-th"
+                    onClick={[Function]}
+                    role="columnheader"
+                    style={
+                      Object {
+                        "flex": "100 0 auto",
+                        "maxWidth": null,
+                        "width": "100px",
+                      }
+                    }
+                    tabIndex="-1"
+                  >
+                    Case No
+                  </div>
+                </ThComponent>
+                <ThComponent
+                  className=""
+                  key="9-undefined"
+                  style={
+                    Object {
+                      "flex": "100 0 auto",
+                      "maxWidth": null,
+                      "width": "100px",
+                    }
+                  }
+                >
+                  <div
+                    className="rt-th"
+                    onClick={[Function]}
+                    role="columnheader"
+                    style={
+                      Object {
+                        "flex": "100 0 auto",
+                        "maxWidth": null,
+                        "width": "100px",
+                      }
+                    }
+                    tabIndex="-1"
+                  >
+                    Case Class.
+                  </div>
+                </ThComponent>
+              </div>
+            </TrComponent>
+          </div>
+        </Thead>
+        <Thead
+          className="-header"
+          style={
+            Object {
+              "minWidth": "1100px",
+            }
+          }
+        >
+          <div
+            className="rt-thead -header"
+            style={
+              Object {
+                "minWidth": "1100px",
+              }
+            }
+          >
+            <TrComponent>
+              <div
+                className="rt-tr"
+                role="row"
+              >
+                <ThComponent
+                  className="rt-resizable-header -cursor-pointer"
+                  key="0-undefined"
+                  style={
+                    Object {
+                      "flex": "180 0 auto",
+                      "maxWidth": null,
+                      "width": "180px",
+                    }
+                  }
+                  toggleSort={[Function]}
+                >
+                  <div
+                    className="rt-th rt-resizable-header -cursor-pointer"
+                    onClick={[Function]}
+                    role="columnheader"
+                    style={
+                      Object {
+                        "flex": "180 0 auto",
+                        "maxWidth": null,
+                        "width": "180px",
+                      }
+                    }
+                    tabIndex="-1"
                   >
                     <div
-                      className="rt-td"
+                      className="rt-resizable-header-content"
+                    />
+                    <Resizer
+                      onMouseDown={[Function]}
+                      onTouchStart={[Function]}
+                    >
+                      <div
+                        className="rt-resizer"
+                        onMouseDown={[Function]}
+                        onTouchStart={[Function]}
+                      />
+                    </Resizer>
+                  </div>
+                </ThComponent>
+                <ThComponent
+                  className="rt-resizable-header -cursor-pointer"
+                  key="1-undefined"
+                  style={
+                    Object {
+                      "flex": "80 0 auto",
+                      "maxWidth": null,
+                      "width": "80px",
+                    }
+                  }
+                  toggleSort={[Function]}
+                >
+                  <div
+                    className="rt-th rt-resizable-header -cursor-pointer"
+                    onClick={[Function]}
+                    role="columnheader"
+                    style={
+                      Object {
+                        "flex": "80 0 auto",
+                        "maxWidth": null,
+                        "width": "80px",
+                      }
+                    }
+                    tabIndex="-1"
+                  >
+                    <div
+                      className="rt-resizable-header-content"
+                    />
+                    <Resizer
+                      onMouseDown={[Function]}
+                      onTouchStart={[Function]}
+                    >
+                      <div
+                        className="rt-resizer"
+                        onMouseDown={[Function]}
+                        onTouchStart={[Function]}
+                      />
+                    </Resizer>
+                  </div>
+                </ThComponent>
+                <ThComponent
+                  className="rt-resizable-header -cursor-pointer"
+                  key="2-undefined"
+                  style={
+                    Object {
+                      "flex": "100 0 auto",
+                      "maxWidth": null,
+                      "width": "100px",
+                    }
+                  }
+                  toggleSort={[Function]}
+                >
+                  <div
+                    className="rt-th rt-resizable-header -cursor-pointer"
+                    onClick={[Function]}
+                    role="columnheader"
+                    style={
+                      Object {
+                        "flex": "100 0 auto",
+                        "maxWidth": null,
+                        "width": "100px",
+                      }
+                    }
+                    tabIndex="-1"
+                  >
+                    <div
+                      className="rt-resizable-header-content"
+                    />
+                    <Resizer
+                      onMouseDown={[Function]}
+                      onTouchStart={[Function]}
+                    >
+                      <div
+                        className="rt-resizer"
+                        onMouseDown={[Function]}
+                        onTouchStart={[Function]}
+                      />
+                    </Resizer>
+                  </div>
+                </ThComponent>
+                <ThComponent
+                  className="rt-resizable-header -cursor-pointer"
+                  key="3-undefined"
+                  style={
+                    Object {
+                      "flex": "100 0 auto",
+                      "maxWidth": null,
+                      "width": "100px",
+                    }
+                  }
+                  toggleSort={[Function]}
+                >
+                  <div
+                    className="rt-th rt-resizable-header -cursor-pointer"
+                    onClick={[Function]}
+                    role="columnheader"
+                    style={
+                      Object {
+                        "flex": "100 0 auto",
+                        "maxWidth": null,
+                        "width": "100px",
+                      }
+                    }
+                    tabIndex="-1"
+                  >
+                    <div
+                      className="rt-resizable-header-content"
+                    />
+                    <Resizer
+                      onMouseDown={[Function]}
+                      onTouchStart={[Function]}
+                    >
+                      <div
+                        className="rt-resizer"
+                        onMouseDown={[Function]}
+                        onTouchStart={[Function]}
+                      />
+                    </Resizer>
+                  </div>
+                </ThComponent>
+                <ThComponent
+                  className="rt-resizable-header -cursor-pointer"
+                  key="4-undefined"
+                  style={
+                    Object {
+                      "flex": "100 0 auto",
+                      "maxWidth": null,
+                      "width": "100px",
+                    }
+                  }
+                  toggleSort={[Function]}
+                >
+                  <div
+                    className="rt-th rt-resizable-header -cursor-pointer"
+                    onClick={[Function]}
+                    role="columnheader"
+                    style={
+                      Object {
+                        "flex": "100 0 auto",
+                        "maxWidth": null,
+                        "width": "100px",
+                      }
+                    }
+                    tabIndex="-1"
+                  >
+                    <div
+                      className="rt-resizable-header-content"
+                    />
+                    <Resizer
+                      onMouseDown={[Function]}
+                      onTouchStart={[Function]}
+                    >
+                      <div
+                        className="rt-resizer"
+                        onMouseDown={[Function]}
+                        onTouchStart={[Function]}
+                      />
+                    </Resizer>
+                  </div>
+                </ThComponent>
+                <ThComponent
+                  className="rt-resizable-header -cursor-pointer"
+                  key="5-undefined"
+                  style={
+                    Object {
+                      "flex": "100 0 auto",
+                      "maxWidth": null,
+                      "width": "100px",
+                    }
+                  }
+                  toggleSort={[Function]}
+                >
+                  <div
+                    className="rt-th rt-resizable-header -cursor-pointer"
+                    onClick={[Function]}
+                    role="columnheader"
+                    style={
+                      Object {
+                        "flex": "100 0 auto",
+                        "maxWidth": null,
+                        "width": "100px",
+                      }
+                    }
+                    tabIndex="-1"
+                  >
+                    <div
+                      className="rt-resizable-header-content"
+                    />
+                    <Resizer
+                      onMouseDown={[Function]}
+                      onTouchStart={[Function]}
+                    >
+                      <div
+                        className="rt-resizer"
+                        onMouseDown={[Function]}
+                        onTouchStart={[Function]}
+                      />
+                    </Resizer>
+                  </div>
+                </ThComponent>
+                <ThComponent
+                  className="rt-resizable-header -cursor-pointer"
+                  key="6-undefined"
+                  style={
+                    Object {
+                      "flex": "180 0 auto",
+                      "maxWidth": null,
+                      "width": "180px",
+                    }
+                  }
+                  toggleSort={[Function]}
+                >
+                  <div
+                    className="rt-th rt-resizable-header -cursor-pointer"
+                    onClick={[Function]}
+                    role="columnheader"
+                    style={
+                      Object {
+                        "flex": "180 0 auto",
+                        "maxWidth": null,
+                        "width": "180px",
+                      }
+                    }
+                    tabIndex="-1"
+                  >
+                    <div
+                      className="rt-resizable-header-content"
+                    />
+                    <Resizer
+                      onMouseDown={[Function]}
+                      onTouchStart={[Function]}
+                    >
+                      <div
+                        className="rt-resizer"
+                        onMouseDown={[Function]}
+                        onTouchStart={[Function]}
+                      />
+                    </Resizer>
+                  </div>
+                </ThComponent>
+                <ThComponent
+                  className="rt-resizable-header -cursor-pointer"
+                  key="7-undefined"
+                  style={
+                    Object {
+                      "flex": "60 0 auto",
+                      "maxWidth": "60px",
+                      "width": "60px",
+                    }
+                  }
+                  toggleSort={[Function]}
+                >
+                  <div
+                    className="rt-th rt-resizable-header -cursor-pointer"
+                    onClick={[Function]}
+                    role="columnheader"
+                    style={
+                      Object {
+                        "flex": "60 0 auto",
+                        "maxWidth": "60px",
+                        "width": "60px",
+                      }
+                    }
+                    tabIndex="-1"
+                  >
+                    <div
+                      className="rt-resizable-header-content"
+                    />
+                    <Resizer
+                      onMouseDown={[Function]}
+                      onTouchStart={[Function]}
+                    >
+                      <div
+                        className="rt-resizer"
+                        onMouseDown={[Function]}
+                        onTouchStart={[Function]}
+                      />
+                    </Resizer>
+                  </div>
+                </ThComponent>
+                <ThComponent
+                  className="rt-resizable-header -cursor-pointer"
+                  key="8-undefined"
+                  style={
+                    Object {
+                      "flex": "100 0 auto",
+                      "maxWidth": null,
+                      "width": "100px",
+                    }
+                  }
+                  toggleSort={[Function]}
+                >
+                  <div
+                    className="rt-th rt-resizable-header -cursor-pointer"
+                    onClick={[Function]}
+                    role="columnheader"
+                    style={
+                      Object {
+                        "flex": "100 0 auto",
+                        "maxWidth": null,
+                        "width": "100px",
+                      }
+                    }
+                    tabIndex="-1"
+                  >
+                    <div
+                      className="rt-resizable-header-content"
+                    />
+                    <Resizer
+                      onMouseDown={[Function]}
+                      onTouchStart={[Function]}
+                    >
+                      <div
+                        className="rt-resizer"
+                        onMouseDown={[Function]}
+                        onTouchStart={[Function]}
+                      />
+                    </Resizer>
+                  </div>
+                </ThComponent>
+                <ThComponent
+                  className="rt-resizable-header -cursor-pointer"
+                  key="9-undefined"
+                  style={
+                    Object {
+                      "flex": "100 0 auto",
+                      "maxWidth": null,
+                      "width": "100px",
+                    }
+                  }
+                  toggleSort={[Function]}
+                >
+                  <div
+                    className="rt-th rt-resizable-header -cursor-pointer"
+                    onClick={[Function]}
+                    role="columnheader"
+                    style={
+                      Object {
+                        "flex": "100 0 auto",
+                        "maxWidth": null,
+                        "width": "100px",
+                      }
+                    }
+                    tabIndex="-1"
+                  >
+                    <div
+                      className="rt-resizable-header-content"
+                    />
+                    <Resizer
+                      onMouseDown={[Function]}
+                      onTouchStart={[Function]}
+                    >
+                      <div
+                        className="rt-resizer"
+                        onMouseDown={[Function]}
+                        onTouchStart={[Function]}
+                      />
+                    </Resizer>
+                  </div>
+                </ThComponent>
+              </div>
+            </TrComponent>
+          </div>
+        </Thead>
+        <Tbody
+          className=""
+          style={
+            Object {
+              "minWidth": "1100px",
+            }
+          }
+        >
+          <div
+            className="rt-tbody"
+            style={
+              Object {
+                "minWidth": "1100px",
+              }
+            }
+          />
+        </Tbody>
+      </div>
+    </TableComponent>
+    <NoDataComponent />
+    <LoadingComponent
+      loading={false}
+      loadingText="Loading..."
+    >
+      <div
+        className="-loading"
+      >
+        <div
+          className="-loading-inner"
+        >
+          Loading...
+        </div>
+      </div>
+    </LoadingComponent>
+  </div>,
+  <div
+    className="ReactTable"
+    style={Object {}}
+  >
+    <TableComponent
+      className=""
+    >
+      <div
+        className="rt-table"
+        role="grid"
+      >
+        <Thead
+          className="-headerGroups"
+          style={
+            Object {
+              "minWidth": "1080px",
+            }
+          }
+        >
+          <div
+            className="rt-thead -headerGroups"
+            style={
+              Object {
+                "minWidth": "1080px",
+              }
+            }
+          >
+            <TrComponent>
+              <div
+                className="rt-tr"
+                role="row"
+              >
+                <ThComponent
+                  className=""
+                  key="0-undefined"
+                  style={
+                    Object {
+                      "flex": "180 0 auto",
+                      "maxWidth": null,
+                      "width": "180px",
+                    }
+                  }
+                >
+                  <div
+                    className="rt-th"
+                    onClick={[Function]}
+                    role="columnheader"
+                    style={
+                      Object {
+                        "flex": "180 0 auto",
+                        "maxWidth": null,
+                        "width": "180px",
+                      }
+                    }
+                    tabIndex="-1"
+                  >
+                    Name
+                  </div>
+                </ThComponent>
+                <ThComponent
+                  className=""
+                  key="1-undefined"
+                  style={
+                    Object {
+                      "flex": "80 0 auto",
+                      "maxWidth": null,
+                      "width": "80px",
+                    }
+                  }
+                >
+                  <div
+                    className="rt-th"
+                    onClick={[Function]}
+                    role="columnheader"
+                    style={
+                      Object {
+                        "flex": "80 0 auto",
+                        "maxWidth": null,
+                        "width": "80px",
+                      }
+                    }
+                    tabIndex="-1"
+                  >
+                    FI Status
+                  </div>
+                </ThComponent>
+                <ThComponent
+                  className=""
+                  key="2-undefined"
+                  style={
+                    Object {
+                      "flex": "100 0 auto",
+                      "maxWidth": null,
+                      "width": "100px",
+                    }
+                  }
+                >
+                  <div
+                    className="rt-th"
+                    onClick={[Function]}
+                    role="columnheader"
+                    style={
+                      Object {
+                        "flex": "100 0 auto",
+                        "maxWidth": null,
+                        "width": "100px",
+                      }
+                    }
+                    tabIndex="-1"
+                  >
+                    Province
+                  </div>
+                </ThComponent>
+                <ThComponent
+                  className=""
+                  key="3-undefined"
+                  style={
+                    Object {
+                      "flex": "100 0 auto",
+                      "maxWidth": null,
+                      "width": "100px",
+                    }
+                  }
+                >
+                  <div
+                    className="rt-th"
+                    onClick={[Function]}
+                    role="columnheader"
+                    style={
+                      Object {
+                        "flex": "100 0 auto",
+                        "maxWidth": null,
+                        "width": "100px",
+                      }
+                    }
+                    tabIndex="-1"
+                  >
+                    District
+                  </div>
+                </ThComponent>
+                <ThComponent
+                  className=""
+                  key="4-undefined"
+                  style={
+                    Object {
+                      "flex": "100 0 auto",
+                      "maxWidth": null,
+                      "width": "100px",
+                    }
+                  }
+                >
+                  <div
+                    className="rt-th"
+                    onClick={[Function]}
+                    role="columnheader"
+                    style={
+                      Object {
+                        "flex": "100 0 auto",
+                        "maxWidth": null,
+                        "width": "100px",
+                      }
+                    }
+                    tabIndex="-1"
+                  >
+                    Canton
+                  </div>
+                </ThComponent>
+                <ThComponent
+                  className=""
+                  key="5-undefined"
+                  style={
+                    Object {
+                      "flex": "100 0 auto",
+                      "maxWidth": null,
+                      "width": "100px",
+                    }
+                  }
+                >
+                  <div
+                    className="rt-th"
+                    onClick={[Function]}
+                    role="columnheader"
+                    style={
+                      Object {
+                        "flex": "100 0 auto",
+                        "maxWidth": null,
+                        "width": "100px",
+                      }
+                    }
+                    tabIndex="-1"
+                  >
+                    Village
+                  </div>
+                </ThComponent>
+                <ThComponent
+                  className=""
+                  key="6-undefined"
+                  style={
+                    Object {
+                      "flex": "180 0 auto",
+                      "maxWidth": null,
+                      "width": "180px",
+                    }
+                  }
+                >
+                  <div
+                    className="rt-th"
+                    onClick={[Function]}
+                    role="columnheader"
+                    style={
+                      Object {
+                        "flex": "180 0 auto",
+                        "maxWidth": null,
+                        "width": "180px",
+                      }
+                    }
+                    tabIndex="-1"
+                  >
+                    Focus Area
+                  </div>
+                </ThComponent>
+                <ThComponent
+                  className=""
+                  key="7-undefined"
+                  style={
+                    Object {
+                      "flex": "60 0 auto",
+                      "maxWidth": "60px",
+                      "width": "60px",
+                    }
+                  }
+                >
+                  <div
+                    className="rt-th"
+                    onClick={[Function]}
+                    role="columnheader"
+                    style={
+                      Object {
+                        "flex": "60 0 auto",
+                        "maxWidth": "60px",
+                        "width": "60px",
+                      }
+                    }
+                    tabIndex="-1"
+                  >
+                    Status
+                  </div>
+                </ThComponent>
+                <ThComponent
+                  className=""
+                  key="8-undefined"
+                  style={
+                    Object {
+                      "flex": "80 0 auto",
+                      "maxWidth": null,
+                      "width": "80px",
+                    }
+                  }
+                >
+                  <div
+                    className="rt-th"
+                    onClick={[Function]}
+                    role="columnheader"
+                    style={
+                      Object {
+                        "flex": "80 0 auto",
+                        "maxWidth": null,
+                        "width": "80px",
+                      }
+                    }
+                    tabIndex="-1"
+                  >
+                    Start Date
+                  </div>
+                </ThComponent>
+                <ThComponent
+                  className=""
+                  key="9-undefined"
+                  style={
+                    Object {
+                      "flex": "100 0 auto",
+                      "maxWidth": null,
+                      "width": "100px",
+                    }
+                  }
+                >
+                  <div
+                    className="rt-th"
+                    onClick={[Function]}
+                    role="columnheader"
+                    style={
+                      Object {
+                        "flex": "100 0 auto",
+                        "maxWidth": null,
+                        "width": "100px",
+                      }
+                    }
+                    tabIndex="-1"
+                  >
+                    End Date
+                  </div>
+                </ThComponent>
+              </div>
+            </TrComponent>
+          </div>
+        </Thead>
+        <Thead
+          className="-header"
+          style={
+            Object {
+              "minWidth": "1080px",
+            }
+          }
+        >
+          <div
+            className="rt-thead -header"
+            style={
+              Object {
+                "minWidth": "1080px",
+              }
+            }
+          >
+            <TrComponent>
+              <div
+                className="rt-tr"
+                role="row"
+              >
+                <ThComponent
+                  className="rt-resizable-header -cursor-pointer"
+                  key="0-plan_title"
+                  style={
+                    Object {
+                      "flex": "180 0 auto",
+                      "maxWidth": null,
+                      "width": "180px",
+                    }
+                  }
+                  toggleSort={[Function]}
+                >
+                  <div
+                    className="rt-th rt-resizable-header -cursor-pointer"
+                    onClick={[Function]}
+                    role="columnheader"
+                    style={
+                      Object {
+                        "flex": "180 0 auto",
+                        "maxWidth": null,
+                        "width": "180px",
+                      }
+                    }
+                    tabIndex="-1"
+                  >
+                    <div
+                      className="rt-resizable-header-content"
+                    />
+                    <Resizer
+                      onMouseDown={[Function]}
+                      onTouchStart={[Function]}
+                    >
+                      <div
+                        className="rt-resizer"
+                        onMouseDown={[Function]}
+                        onTouchStart={[Function]}
+                      />
+                    </Resizer>
+                  </div>
+                </ThComponent>
+                <ThComponent
+                  className="rt-resizable-header -cursor-pointer"
+                  key="1-plan_status"
+                  style={
+                    Object {
+                      "flex": "80 0 auto",
+                      "maxWidth": null,
+                      "width": "80px",
+                    }
+                  }
+                  toggleSort={[Function]}
+                >
+                  <div
+                    className="rt-th rt-resizable-header -cursor-pointer"
+                    onClick={[Function]}
+                    role="columnheader"
+                    style={
+                      Object {
+                        "flex": "80 0 auto",
+                        "maxWidth": null,
+                        "width": "80px",
+                      }
+                    }
+                    tabIndex="-1"
+                  >
+                    <div
+                      className="rt-resizable-header-content"
+                    />
+                    <Resizer
+                      onMouseDown={[Function]}
+                      onTouchStart={[Function]}
+                    >
+                      <div
+                        className="rt-resizer"
+                        onMouseDown={[Function]}
+                        onTouchStart={[Function]}
+                      />
+                    </Resizer>
+                  </div>
+                </ThComponent>
+                <ThComponent
+                  className="rt-resizable-header -cursor-pointer"
+                  key="2-province"
+                  style={
+                    Object {
+                      "flex": "100 0 auto",
+                      "maxWidth": null,
+                      "width": "100px",
+                    }
+                  }
+                  toggleSort={[Function]}
+                >
+                  <div
+                    className="rt-th rt-resizable-header -cursor-pointer"
+                    onClick={[Function]}
+                    role="columnheader"
+                    style={
+                      Object {
+                        "flex": "100 0 auto",
+                        "maxWidth": null,
+                        "width": "100px",
+                      }
+                    }
+                    tabIndex="-1"
+                  >
+                    <div
+                      className="rt-resizable-header-content"
+                    />
+                    <Resizer
+                      onMouseDown={[Function]}
+                      onTouchStart={[Function]}
+                    >
+                      <div
+                        className="rt-resizer"
+                        onMouseDown={[Function]}
+                        onTouchStart={[Function]}
+                      />
+                    </Resizer>
+                  </div>
+                </ThComponent>
+                <ThComponent
+                  className="rt-resizable-header -cursor-pointer"
+                  key="3-district"
+                  style={
+                    Object {
+                      "flex": "100 0 auto",
+                      "maxWidth": null,
+                      "width": "100px",
+                    }
+                  }
+                  toggleSort={[Function]}
+                >
+                  <div
+                    className="rt-th rt-resizable-header -cursor-pointer"
+                    onClick={[Function]}
+                    role="columnheader"
+                    style={
+                      Object {
+                        "flex": "100 0 auto",
+                        "maxWidth": null,
+                        "width": "100px",
+                      }
+                    }
+                    tabIndex="-1"
+                  >
+                    <div
+                      className="rt-resizable-header-content"
+                    />
+                    <Resizer
+                      onMouseDown={[Function]}
+                      onTouchStart={[Function]}
+                    >
+                      <div
+                        className="rt-resizer"
+                        onMouseDown={[Function]}
+                        onTouchStart={[Function]}
+                      />
+                    </Resizer>
+                  </div>
+                </ThComponent>
+                <ThComponent
+                  className="rt-resizable-header -cursor-pointer"
+                  key="4-canton"
+                  style={
+                    Object {
+                      "flex": "100 0 auto",
+                      "maxWidth": null,
+                      "width": "100px",
+                    }
+                  }
+                  toggleSort={[Function]}
+                >
+                  <div
+                    className="rt-th rt-resizable-header -cursor-pointer"
+                    onClick={[Function]}
+                    role="columnheader"
+                    style={
+                      Object {
+                        "flex": "100 0 auto",
+                        "maxWidth": null,
+                        "width": "100px",
+                      }
+                    }
+                    tabIndex="-1"
+                  >
+                    <div
+                      className="rt-resizable-header-content"
+                    />
+                    <Resizer
+                      onMouseDown={[Function]}
+                      onTouchStart={[Function]}
+                    >
+                      <div
+                        className="rt-resizer"
+                        onMouseDown={[Function]}
+                        onTouchStart={[Function]}
+                      />
+                    </Resizer>
+                  </div>
+                </ThComponent>
+                <ThComponent
+                  className="rt-resizable-header -cursor-pointer"
+                  key="5-village"
+                  style={
+                    Object {
+                      "flex": "100 0 auto",
+                      "maxWidth": null,
+                      "width": "100px",
+                    }
+                  }
+                  toggleSort={[Function]}
+                >
+                  <div
+                    className="rt-th rt-resizable-header -cursor-pointer"
+                    onClick={[Function]}
+                    role="columnheader"
+                    style={
+                      Object {
+                        "flex": "100 0 auto",
+                        "maxWidth": null,
+                        "width": "100px",
+                      }
+                    }
+                    tabIndex="-1"
+                  >
+                    <div
+                      className="rt-resizable-header-content"
+                    />
+                    <Resizer
+                      onMouseDown={[Function]}
+                      onTouchStart={[Function]}
+                    >
+                      <div
+                        className="rt-resizer"
+                        onMouseDown={[Function]}
+                        onTouchStart={[Function]}
+                      />
+                    </Resizer>
+                  </div>
+                </ThComponent>
+                <ThComponent
+                  className="rt-resizable-header -cursor-pointer"
+                  key="6-focusArea"
+                  style={
+                    Object {
+                      "flex": "180 0 auto",
+                      "maxWidth": null,
+                      "width": "180px",
+                    }
+                  }
+                  toggleSort={[Function]}
+                >
+                  <div
+                    className="rt-th rt-resizable-header -cursor-pointer"
+                    onClick={[Function]}
+                    role="columnheader"
+                    style={
+                      Object {
+                        "flex": "180 0 auto",
+                        "maxWidth": null,
+                        "width": "180px",
+                      }
+                    }
+                    tabIndex="-1"
+                  >
+                    <div
+                      className="rt-resizable-header-content"
+                    />
+                    <Resizer
+                      onMouseDown={[Function]}
+                      onTouchStart={[Function]}
+                    >
+                      <div
+                        className="rt-resizer"
+                        onMouseDown={[Function]}
+                        onTouchStart={[Function]}
+                      />
+                    </Resizer>
+                  </div>
+                </ThComponent>
+                <ThComponent
+                  className="rt-resizable-header -cursor-pointer"
+                  key="7-status"
+                  style={
+                    Object {
+                      "flex": "60 0 auto",
+                      "maxWidth": "60px",
+                      "width": "60px",
+                    }
+                  }
+                  toggleSort={[Function]}
+                >
+                  <div
+                    className="rt-th rt-resizable-header -cursor-pointer"
+                    onClick={[Function]}
+                    role="columnheader"
+                    style={
+                      Object {
+                        "flex": "60 0 auto",
+                        "maxWidth": "60px",
+                        "width": "60px",
+                      }
+                    }
+                    tabIndex="-1"
+                  >
+                    <div
+                      className="rt-resizable-header-content"
+                    />
+                    <Resizer
+                      onMouseDown={[Function]}
+                      onTouchStart={[Function]}
+                    >
+                      <div
+                        className="rt-resizer"
+                        onMouseDown={[Function]}
+                        onTouchStart={[Function]}
+                      />
+                    </Resizer>
+                  </div>
+                </ThComponent>
+                <ThComponent
+                  className="rt-resizable-header -cursor-pointer"
+                  key="8-plan_effective_period_start"
+                  style={
+                    Object {
+                      "flex": "80 0 auto",
+                      "maxWidth": null,
+                      "width": "80px",
+                    }
+                  }
+                  toggleSort={[Function]}
+                >
+                  <div
+                    className="rt-th rt-resizable-header -cursor-pointer"
+                    onClick={[Function]}
+                    role="columnheader"
+                    style={
+                      Object {
+                        "flex": "80 0 auto",
+                        "maxWidth": null,
+                        "width": "80px",
+                      }
+                    }
+                    tabIndex="-1"
+                  >
+                    <div
+                      className="rt-resizable-header-content"
+                    />
+                    <Resizer
+                      onMouseDown={[Function]}
+                      onTouchStart={[Function]}
+                    >
+                      <div
+                        className="rt-resizer"
+                        onMouseDown={[Function]}
+                        onTouchStart={[Function]}
+                      />
+                    </Resizer>
+                  </div>
+                </ThComponent>
+                <ThComponent
+                  className="rt-resizable-header -cursor-pointer"
+                  key="9-plan_effective_period_end"
+                  style={
+                    Object {
+                      "flex": "100 0 auto",
+                      "maxWidth": null,
+                      "width": "100px",
+                    }
+                  }
+                  toggleSort={[Function]}
+                >
+                  <div
+                    className="rt-th rt-resizable-header -cursor-pointer"
+                    onClick={[Function]}
+                    role="columnheader"
+                    style={
+                      Object {
+                        "flex": "100 0 auto",
+                        "maxWidth": null,
+                        "width": "100px",
+                      }
+                    }
+                    tabIndex="-1"
+                  >
+                    <div
+                      className="rt-resizable-header-content"
+                    />
+                    <Resizer
+                      onMouseDown={[Function]}
+                      onTouchStart={[Function]}
+                    >
+                      <div
+                        className="rt-resizer"
+                        onMouseDown={[Function]}
+                        onTouchStart={[Function]}
+                      />
+                    </Resizer>
+                  </div>
+                </ThComponent>
+              </div>
+            </TrComponent>
+          </div>
+        </Thead>
+        <Tbody
+          className=""
+          style={
+            Object {
+              "minWidth": "1080px",
+            }
+          }
+        >
+          <div
+            className="rt-tbody"
+            style={
+              Object {
+                "minWidth": "1080px",
+              }
+            }
+          >
+            <TrGroupComponent
+              key="0"
+            >
+              <div
+                className="rt-tr-group"
+                role="rowgroup"
+              >
+                <TrComponent
+                  className="-odd"
+                >
+                  <div
+                    className="rt-tr -odd"
+                    role="row"
+                  >
+                    <TdComponent
+                      className=""
+                      key="0-plan_title"
                       onClick={[Function]}
-                      role="gridcell"
                       style={
                         Object {
                           "flex": "180 0 auto",
@@ -10322,117 +11077,87 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
                         }
                       }
                     >
-                      <Cell
-                        classes={
-                          Array [
-                            undefined,
-                            "",
-                            undefined,
-                          ]
-                        }
-                        column={
+                      <div
+                        className="rt-td"
+                        onClick={[Function]}
+                        role="gridcell"
+                        style={
                           Object {
-                            "Aggregated": undefined,
-                            "Cell": [Function],
-                            "Expander": undefined,
-                            "Filter": undefined,
-                            "Footer": undefined,
-                            "Header": "",
-                            "Pivot": undefined,
-                            "PivotValue": undefined,
-                            "Placeholder": undefined,
-                            "accessor": [Function],
-                            "aggregate": undefined,
-                            "className": "",
-                            "filterAll": false,
-                            "filterMethod": undefined,
-                            "filterable": undefined,
-                            "footerClassName": "",
-                            "footerStyle": Object {},
-                            "getFooterProps": [Function],
-                            "getHeaderProps": [Function],
-                            "getProps": [Function],
-                            "headerClassName": "",
-                            "headerStyle": Object {},
-                            "id": "plan_title",
-                            "minResizeWidth": 11,
-                            "minWidth": 180,
-                            "parentColumn": Object {
-                              "Header": "Name",
-                              "columns": Array [
-                                Object {
-                                  "Cell": [Function],
-                                  "Header": "",
-                                  "accessor": "plan_title",
-                                  "minWidth": 180,
-                                },
-                              ],
-                            },
-                            "resizable": undefined,
-                            "show": true,
-                            "sortMethod": undefined,
-                            "sortable": undefined,
-                            "style": Object {},
+                            "flex": "180 0 auto",
+                            "maxWidth": null,
+                            "width": "180px",
                           }
                         }
-                        columnProps={
-                          Object {
-                            "className": undefined,
-                            "rest": Object {},
-                            "style": undefined,
+                      >
+                        <Cell
+                          classes={
+                            Array [
+                              undefined,
+                              "",
+                              undefined,
+                            ]
                           }
-                        }
-                        index={0}
-                        level={0}
-                        nestingPath={
-                          Array [
-                            0,
-                          ]
-                        }
-                        original={
-                          Object {
-                            "canton": "Chadiza",
-                            "caseClassification": null,
-                            "caseNotificationDate": null,
-                            "district": "",
-                            "focusArea": "NVI_439",
-                            "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
-                            "jurisdiction_depth": 2,
-                            "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
-                            "jurisdiction_name": "NVI_439",
-                            "jurisdiction_name_path": Array [
-                              "Chadiza",
-                              "Naviluli",
-                            ],
-                            "jurisdiction_parent_id": "2944",
-                            "jurisdiction_path": Array [
-                              "2939",
-                              "2944",
-                            ],
-                            "plan_date": "2019-06-18",
-                            "plan_effective_period_end": "2019-06-18",
-                            "plan_effective_period_start": "2019-07-31",
-                            "plan_fi_reason": "Routine",
-                            "plan_fi_status": "A1",
-                            "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
-                            "plan_intervention_type": "FI",
-                            "plan_status": "active",
-                            "plan_title": "A1-Tha Luang Village 1 Focus 01",
-                            "plan_version": "1",
-                            "province": "",
-                            "reason": "Routine",
-                            "status": "A1",
-                            "village": "Naviluli",
+                          column={
+                            Object {
+                              "Aggregated": undefined,
+                              "Cell": [Function],
+                              "Expander": undefined,
+                              "Filter": undefined,
+                              "Footer": undefined,
+                              "Header": "",
+                              "Pivot": undefined,
+                              "PivotValue": undefined,
+                              "Placeholder": undefined,
+                              "accessor": [Function],
+                              "aggregate": undefined,
+                              "className": "",
+                              "filterAll": false,
+                              "filterMethod": undefined,
+                              "filterable": undefined,
+                              "footerClassName": "",
+                              "footerStyle": Object {},
+                              "getFooterProps": [Function],
+                              "getHeaderProps": [Function],
+                              "getProps": [Function],
+                              "headerClassName": "",
+                              "headerStyle": Object {},
+                              "id": "plan_title",
+                              "minResizeWidth": 11,
+                              "minWidth": 180,
+                              "parentColumn": Object {
+                                "Header": "Name",
+                                "columns": Array [
+                                  Object {
+                                    "Cell": [Function],
+                                    "Header": "",
+                                    "accessor": "plan_title",
+                                    "minWidth": 180,
+                                  },
+                                ],
+                              },
+                              "resizable": undefined,
+                              "show": true,
+                              "sortMethod": undefined,
+                              "sortable": undefined,
+                              "style": Object {},
+                            }
                           }
-                        }
-                        page={0}
-                        pageSize={20}
-                        resized={Array []}
-                        row={
-                          Object {
-                            "_index": 0,
-                            "_nestingLevel": 0,
-                            "_original": Object {
+                          columnProps={
+                            Object {
+                              "className": undefined,
+                              "rest": Object {},
+                              "style": undefined,
+                            }
+                          }
+                          index={0}
+                          level={0}
+                          nestingPath={
+                            Array [
+                              0,
+                            ]
+                          }
+                          original={
+                            Object {
                               "canton": "Chadiza",
                               "caseClassification": null,
                               "caseNotificationDate": null,
@@ -10465,75 +11190,105 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
                               "reason": "Routine",
                               "status": "A1",
                               "village": "Naviluli",
-                            },
-                            "_subRows": undefined,
-                            "_viewIndex": 0,
-                            "canton": "Chadiza",
-                            "district": "",
-                            "focusArea": "NVI_439",
-                            "plan_effective_period_end": "2019-06-18",
-                            "plan_effective_period_start": "2019-07-31",
-                            "plan_status": "active",
-                            "plan_title": "A1-Tha Luang Village 1 Focus 01",
-                            "province": "",
-                            "status": "A1",
-                            "village": "Naviluli",
+                            }
                           }
-                        }
-                        show={true}
-                        styles={Object {}}
-                        tdProps={
-                          Object {
-                            "className": undefined,
-                            "rest": Object {},
-                            "style": undefined,
+                          page={0}
+                          pageSize={20}
+                          resized={Array []}
+                          row={
+                            Object {
+                              "_index": 0,
+                              "_nestingLevel": 0,
+                              "_original": Object {
+                                "canton": "Chadiza",
+                                "caseClassification": null,
+                                "caseNotificationDate": null,
+                                "district": "",
+                                "focusArea": "NVI_439",
+                                "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
+                                "jurisdiction_depth": 2,
+                                "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
+                                "jurisdiction_name": "NVI_439",
+                                "jurisdiction_name_path": Array [
+                                  "Chadiza",
+                                  "Naviluli",
+                                ],
+                                "jurisdiction_parent_id": "2944",
+                                "jurisdiction_path": Array [
+                                  "2939",
+                                  "2944",
+                                ],
+                                "plan_date": "2019-06-18",
+                                "plan_effective_period_end": "2019-06-18",
+                                "plan_effective_period_start": "2019-07-31",
+                                "plan_fi_reason": "Routine",
+                                "plan_fi_status": "A1",
+                                "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+                                "plan_intervention_type": "FI",
+                                "plan_status": "active",
+                                "plan_title": "A1-Tha Luang Village 1 Focus 01",
+                                "plan_version": "1",
+                                "province": "",
+                                "reason": "Routine",
+                                "status": "A1",
+                                "village": "Naviluli",
+                              },
+                              "_subRows": undefined,
+                              "_viewIndex": 0,
+                              "canton": "Chadiza",
+                              "district": "",
+                              "focusArea": "NVI_439",
+                              "plan_effective_period_end": "2019-06-18",
+                              "plan_effective_period_start": "2019-07-31",
+                              "plan_status": "active",
+                              "plan_title": "A1-Tha Luang Village 1 Focus 01",
+                              "province": "",
+                              "status": "A1",
+                              "village": "Naviluli",
+                            }
                           }
-                        }
-                        value="A1-Tha Luang Village 1 Focus 01"
-                        viewIndex={0}
-                        width={180}
-                      >
-                        <div>
-                          <Link
-                            replace={false}
-                            to="/focus-investigation/map/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
-                          >
-                            <a
-                              href="/focus-investigation/map/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
-                              onClick={[Function]}
+                          show={true}
+                          styles={Object {}}
+                          tdProps={
+                            Object {
+                              "className": undefined,
+                              "rest": Object {},
+                              "style": undefined,
+                            }
+                          }
+                          value="A1-Tha Luang Village 1 Focus 01"
+                          viewIndex={0}
+                          width={180}
+                        >
+                          <div>
+                            <Link
+                              replace={false}
+                              to="/focus-investigation/map/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
                             >
-                              A1-Tha Luang Village 1 Focus 01
-                            </a>
-                          </Link>
-                           
-                          <NewRecordBadge
-                            className="new-record"
-                            color="warning"
-                            numDays={1}
-                            pill={true}
-                            recordDate="2019-06-18"
-                            text="New"
-                          />
-                        </div>
-                      </Cell>
-                    </div>
-                  </TdComponent>
-                  <TdComponent
-                    className=""
-                    key="1-plan_status"
-                    onClick={[Function]}
-                    style={
-                      Object {
-                        "flex": "80 0 auto",
-                        "maxWidth": null,
-                        "width": "80px",
-                      }
-                    }
-                  >
-                    <div
-                      className="rt-td"
+                              <a
+                                href="/focus-investigation/map/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
+                                onClick={[Function]}
+                              >
+                                A1-Tha Luang Village 1 Focus 01
+                              </a>
+                            </Link>
+                             
+                            <NewRecordBadge
+                              className="new-record"
+                              color="warning"
+                              numDays={1}
+                              pill={true}
+                              recordDate="2019-06-18"
+                              text="New"
+                            />
+                          </div>
+                        </Cell>
+                      </div>
+                    </TdComponent>
+                    <TdComponent
+                      className=""
+                      key="1-plan_status"
                       onClick={[Function]}
-                      role="gridcell"
                       style={
                         Object {
                           "flex": "80 0 auto",
@@ -10542,75 +11297,25 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
                         }
                       }
                     >
-                      active
-                    </div>
-                  </TdComponent>
-                  <TdComponent
-                    className=""
-                    key="2-province"
-                    onClick={[Function]}
-                    style={
-                      Object {
-                        "flex": "100 0 auto",
-                        "maxWidth": null,
-                        "width": "100px",
-                      }
-                    }
-                  >
-                    <div
-                      className="rt-td"
-                      onClick={[Function]}
-                      role="gridcell"
-                      style={
-                        Object {
-                          "flex": "100 0 auto",
-                          "maxWidth": null,
-                          "width": "100px",
+                      <div
+                        className="rt-td"
+                        onClick={[Function]}
+                        role="gridcell"
+                        style={
+                          Object {
+                            "flex": "80 0 auto",
+                            "maxWidth": null,
+                            "width": "80px",
+                          }
                         }
-                      }
-                    />
-                  </TdComponent>
-                  <TdComponent
-                    className=""
-                    key="3-district"
-                    onClick={[Function]}
-                    style={
-                      Object {
-                        "flex": "100 0 auto",
-                        "maxWidth": null,
-                        "width": "100px",
-                      }
-                    }
-                  >
-                    <div
-                      className="rt-td"
+                      >
+                        active
+                      </div>
+                    </TdComponent>
+                    <TdComponent
+                      className=""
+                      key="2-province"
                       onClick={[Function]}
-                      role="gridcell"
-                      style={
-                        Object {
-                          "flex": "100 0 auto",
-                          "maxWidth": null,
-                          "width": "100px",
-                        }
-                      }
-                    />
-                  </TdComponent>
-                  <TdComponent
-                    className=""
-                    key="4-canton"
-                    onClick={[Function]}
-                    style={
-                      Object {
-                        "flex": "100 0 auto",
-                        "maxWidth": null,
-                        "width": "100px",
-                      }
-                    }
-                  >
-                    <div
-                      className="rt-td"
-                      onClick={[Function]}
-                      role="gridcell"
                       style={
                         Object {
                           "flex": "100 0 auto",
@@ -10619,25 +11324,23 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
                         }
                       }
                     >
-                      Chadiza
-                    </div>
-                  </TdComponent>
-                  <TdComponent
-                    className=""
-                    key="5-village"
-                    onClick={[Function]}
-                    style={
-                      Object {
-                        "flex": "100 0 auto",
-                        "maxWidth": null,
-                        "width": "100px",
-                      }
-                    }
-                  >
-                    <div
-                      className="rt-td"
+                      <div
+                        className="rt-td"
+                        onClick={[Function]}
+                        role="gridcell"
+                        style={
+                          Object {
+                            "flex": "100 0 auto",
+                            "maxWidth": null,
+                            "width": "100px",
+                          }
+                        }
+                      />
+                    </TdComponent>
+                    <TdComponent
+                      className=""
+                      key="3-district"
                       onClick={[Function]}
-                      role="gridcell"
                       style={
                         Object {
                           "flex": "100 0 auto",
@@ -10646,25 +11349,77 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
                         }
                       }
                     >
-                      Naviluli
-                    </div>
-                  </TdComponent>
-                  <TdComponent
-                    className=""
-                    key="6-focusArea"
-                    onClick={[Function]}
-                    style={
-                      Object {
-                        "flex": "180 0 auto",
-                        "maxWidth": null,
-                        "width": "180px",
-                      }
-                    }
-                  >
-                    <div
-                      className="rt-td"
+                      <div
+                        className="rt-td"
+                        onClick={[Function]}
+                        role="gridcell"
+                        style={
+                          Object {
+                            "flex": "100 0 auto",
+                            "maxWidth": null,
+                            "width": "100px",
+                          }
+                        }
+                      />
+                    </TdComponent>
+                    <TdComponent
+                      className=""
+                      key="4-canton"
                       onClick={[Function]}
-                      role="gridcell"
+                      style={
+                        Object {
+                          "flex": "100 0 auto",
+                          "maxWidth": null,
+                          "width": "100px",
+                        }
+                      }
+                    >
+                      <div
+                        className="rt-td"
+                        onClick={[Function]}
+                        role="gridcell"
+                        style={
+                          Object {
+                            "flex": "100 0 auto",
+                            "maxWidth": null,
+                            "width": "100px",
+                          }
+                        }
+                      >
+                        Chadiza
+                      </div>
+                    </TdComponent>
+                    <TdComponent
+                      className=""
+                      key="5-village"
+                      onClick={[Function]}
+                      style={
+                        Object {
+                          "flex": "100 0 auto",
+                          "maxWidth": null,
+                          "width": "100px",
+                        }
+                      }
+                    >
+                      <div
+                        className="rt-td"
+                        onClick={[Function]}
+                        role="gridcell"
+                        style={
+                          Object {
+                            "flex": "100 0 auto",
+                            "maxWidth": null,
+                            "width": "100px",
+                          }
+                        }
+                      >
+                        Naviluli
+                      </div>
+                    </TdComponent>
+                    <TdComponent
+                      className=""
+                      key="6-focusArea"
+                      onClick={[Function]}
                       style={
                         Object {
                           "flex": "180 0 auto",
@@ -10673,117 +11428,87 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
                         }
                       }
                     >
-                      <Cell
-                        classes={
-                          Array [
-                            undefined,
-                            "",
-                            undefined,
-                          ]
-                        }
-                        column={
+                      <div
+                        className="rt-td"
+                        onClick={[Function]}
+                        role="gridcell"
+                        style={
                           Object {
-                            "Aggregated": undefined,
-                            "Cell": [Function],
-                            "Expander": undefined,
-                            "Filter": undefined,
-                            "Footer": undefined,
-                            "Header": "",
-                            "Pivot": undefined,
-                            "PivotValue": undefined,
-                            "Placeholder": undefined,
-                            "accessor": [Function],
-                            "aggregate": undefined,
-                            "className": "",
-                            "filterAll": false,
-                            "filterMethod": undefined,
-                            "filterable": undefined,
-                            "footerClassName": "",
-                            "footerStyle": Object {},
-                            "getFooterProps": [Function],
-                            "getHeaderProps": [Function],
-                            "getProps": [Function],
-                            "headerClassName": "",
-                            "headerStyle": Object {},
-                            "id": "focusArea",
-                            "minResizeWidth": 11,
-                            "minWidth": 180,
-                            "parentColumn": Object {
-                              "Header": "Focus Area",
-                              "columns": Array [
-                                Object {
-                                  "Cell": [Function],
-                                  "Header": "",
-                                  "accessor": "focusArea",
-                                  "minWidth": 180,
-                                },
-                              ],
-                            },
-                            "resizable": undefined,
-                            "show": true,
-                            "sortMethod": undefined,
-                            "sortable": undefined,
-                            "style": Object {},
+                            "flex": "180 0 auto",
+                            "maxWidth": null,
+                            "width": "180px",
                           }
                         }
-                        columnProps={
-                          Object {
-                            "className": undefined,
-                            "rest": Object {},
-                            "style": undefined,
+                      >
+                        <Cell
+                          classes={
+                            Array [
+                              undefined,
+                              "",
+                              undefined,
+                            ]
                           }
-                        }
-                        index={0}
-                        level={0}
-                        nestingPath={
-                          Array [
-                            0,
-                          ]
-                        }
-                        original={
-                          Object {
-                            "canton": "Chadiza",
-                            "caseClassification": null,
-                            "caseNotificationDate": null,
-                            "district": "",
-                            "focusArea": "NVI_439",
-                            "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
-                            "jurisdiction_depth": 2,
-                            "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
-                            "jurisdiction_name": "NVI_439",
-                            "jurisdiction_name_path": Array [
-                              "Chadiza",
-                              "Naviluli",
-                            ],
-                            "jurisdiction_parent_id": "2944",
-                            "jurisdiction_path": Array [
-                              "2939",
-                              "2944",
-                            ],
-                            "plan_date": "2019-06-18",
-                            "plan_effective_period_end": "2019-06-18",
-                            "plan_effective_period_start": "2019-07-31",
-                            "plan_fi_reason": "Routine",
-                            "plan_fi_status": "A1",
-                            "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
-                            "plan_intervention_type": "FI",
-                            "plan_status": "active",
-                            "plan_title": "A1-Tha Luang Village 1 Focus 01",
-                            "plan_version": "1",
-                            "province": "",
-                            "reason": "Routine",
-                            "status": "A1",
-                            "village": "Naviluli",
+                          column={
+                            Object {
+                              "Aggregated": undefined,
+                              "Cell": [Function],
+                              "Expander": undefined,
+                              "Filter": undefined,
+                              "Footer": undefined,
+                              "Header": "",
+                              "Pivot": undefined,
+                              "PivotValue": undefined,
+                              "Placeholder": undefined,
+                              "accessor": [Function],
+                              "aggregate": undefined,
+                              "className": "",
+                              "filterAll": false,
+                              "filterMethod": undefined,
+                              "filterable": undefined,
+                              "footerClassName": "",
+                              "footerStyle": Object {},
+                              "getFooterProps": [Function],
+                              "getHeaderProps": [Function],
+                              "getProps": [Function],
+                              "headerClassName": "",
+                              "headerStyle": Object {},
+                              "id": "focusArea",
+                              "minResizeWidth": 11,
+                              "minWidth": 180,
+                              "parentColumn": Object {
+                                "Header": "Focus Area",
+                                "columns": Array [
+                                  Object {
+                                    "Cell": [Function],
+                                    "Header": "",
+                                    "accessor": "focusArea",
+                                    "minWidth": 180,
+                                  },
+                                ],
+                              },
+                              "resizable": undefined,
+                              "show": true,
+                              "sortMethod": undefined,
+                              "sortable": undefined,
+                              "style": Object {},
+                            }
                           }
-                        }
-                        page={0}
-                        pageSize={20}
-                        resized={Array []}
-                        row={
-                          Object {
-                            "_index": 0,
-                            "_nestingLevel": 0,
-                            "_original": Object {
+                          columnProps={
+                            Object {
+                              "className": undefined,
+                              "rest": Object {},
+                              "style": undefined,
+                            }
+                          }
+                          index={0}
+                          level={0}
+                          nestingPath={
+                            Array [
+                              0,
+                            ]
+                          }
+                          original={
+                            Object {
                               "canton": "Chadiza",
                               "caseClassification": null,
                               "caseNotificationDate": null,
@@ -10816,108 +11541,138 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
                               "reason": "Routine",
                               "status": "A1",
                               "village": "Naviluli",
-                            },
-                            "_subRows": undefined,
-                            "_viewIndex": 0,
-                            "canton": "Chadiza",
-                            "district": "",
-                            "focusArea": "NVI_439",
-                            "plan_effective_period_end": "2019-06-18",
-                            "plan_effective_period_start": "2019-07-31",
-                            "plan_status": "active",
-                            "plan_title": "A1-Tha Luang Village 1 Focus 01",
-                            "province": "",
-                            "status": "A1",
-                            "village": "Naviluli",
+                            }
                           }
-                        }
-                        show={true}
-                        styles={Object {}}
-                        tdProps={
-                          Object {
-                            "className": undefined,
-                            "rest": Object {},
-                            "style": undefined,
+                          page={0}
+                          pageSize={20}
+                          resized={Array []}
+                          row={
+                            Object {
+                              "_index": 0,
+                              "_nestingLevel": 0,
+                              "_original": Object {
+                                "canton": "Chadiza",
+                                "caseClassification": null,
+                                "caseNotificationDate": null,
+                                "district": "",
+                                "focusArea": "NVI_439",
+                                "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
+                                "jurisdiction_depth": 2,
+                                "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
+                                "jurisdiction_name": "NVI_439",
+                                "jurisdiction_name_path": Array [
+                                  "Chadiza",
+                                  "Naviluli",
+                                ],
+                                "jurisdiction_parent_id": "2944",
+                                "jurisdiction_path": Array [
+                                  "2939",
+                                  "2944",
+                                ],
+                                "plan_date": "2019-06-18",
+                                "plan_effective_period_end": "2019-06-18",
+                                "plan_effective_period_start": "2019-07-31",
+                                "plan_fi_reason": "Routine",
+                                "plan_fi_status": "A1",
+                                "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+                                "plan_intervention_type": "FI",
+                                "plan_status": "active",
+                                "plan_title": "A1-Tha Luang Village 1 Focus 01",
+                                "plan_version": "1",
+                                "province": "",
+                                "reason": "Routine",
+                                "status": "A1",
+                                "village": "Naviluli",
+                              },
+                              "_subRows": undefined,
+                              "_viewIndex": 0,
+                              "canton": "Chadiza",
+                              "district": "",
+                              "focusArea": "NVI_439",
+                              "plan_effective_period_end": "2019-06-18",
+                              "plan_effective_period_start": "2019-07-31",
+                              "plan_status": "active",
+                              "plan_title": "A1-Tha Luang Village 1 Focus 01",
+                              "province": "",
+                              "status": "A1",
+                              "village": "Naviluli",
+                            }
                           }
-                        }
-                        value="NVI_439"
-                        viewIndex={0}
-                        width={180}
-                      >
-                        <div>
-                          NVI_439
-                            
-                          <Link
-                            replace={false}
-                            to="/focus-investigation/view/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
-                          >
-                            <a
-                              href="/focus-investigation/view/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
-                              onClick={[Function]}
+                          show={true}
+                          styles={Object {}}
+                          tdProps={
+                            Object {
+                              "className": undefined,
+                              "rest": Object {},
+                              "style": undefined,
+                            }
+                          }
+                          value="NVI_439"
+                          viewIndex={0}
+                          width={180}
+                        >
+                          <div>
+                            NVI_439
+                              
+                            <Link
+                              replace={false}
+                              to="/focus-investigation/view/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
                             >
-                              <FontAwesomeIcon
-                                border={false}
-                                className=""
-                                fixedWidth={false}
-                                flip={null}
-                                icon={
-                                  Array [
-                                    "fas",
-                                    "external-link-square-alt",
-                                  ]
-                                }
-                                inverse={false}
-                                listItem={false}
-                                mask={null}
-                                pull={null}
-                                pulse={false}
-                                rotation={null}
-                                size={null}
-                                spin={false}
-                                symbol={false}
-                                title=""
-                                transform={null}
+                              <a
+                                href="/focus-investigation/view/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
+                                onClick={[Function]}
                               >
-                                <svg
-                                  aria-hidden="true"
-                                  className="svg-inline--fa fa-external-link-square-alt fa-w-14 "
-                                  data-icon="external-link-square-alt"
-                                  data-prefix="fas"
-                                  focusable="false"
-                                  role="img"
-                                  style={Object {}}
-                                  viewBox="0 0 448 512"
-                                  xmlns="http://www.w3.org/2000/svg"
+                                <FontAwesomeIcon
+                                  border={false}
+                                  className=""
+                                  fixedWidth={false}
+                                  flip={null}
+                                  icon={
+                                    Array [
+                                      "fas",
+                                      "external-link-square-alt",
+                                    ]
+                                  }
+                                  inverse={false}
+                                  listItem={false}
+                                  mask={null}
+                                  pull={null}
+                                  pulse={false}
+                                  rotation={null}
+                                  size={null}
+                                  spin={false}
+                                  symbol={false}
+                                  title=""
+                                  transform={null}
                                 >
-                                  <path
-                                    d="M448 80v352c0 26.51-21.49 48-48 48H48c-26.51 0-48-21.49-48-48V80c0-26.51 21.49-48 48-48h352c26.51 0 48 21.49 48 48zm-88 16H248.029c-21.313 0-32.08 25.861-16.971 40.971l31.984 31.987L67.515 364.485c-4.686 4.686-4.686 12.284 0 16.971l31.029 31.029c4.687 4.686 12.285 4.686 16.971 0l195.526-195.526 31.988 31.991C358.058 263.977 384 253.425 384 231.979V120c0-13.255-10.745-24-24-24z"
-                                    fill="currentColor"
+                                  <svg
+                                    aria-hidden="true"
+                                    className="svg-inline--fa fa-external-link-square-alt fa-w-14 "
+                                    data-icon="external-link-square-alt"
+                                    data-prefix="fas"
+                                    focusable="false"
+                                    role="img"
                                     style={Object {}}
-                                  />
-                                </svg>
-                              </FontAwesomeIcon>
-                            </a>
-                          </Link>
-                        </div>
-                      </Cell>
-                    </div>
-                  </TdComponent>
-                  <TdComponent
-                    className=""
-                    key="7-status"
-                    onClick={[Function]}
-                    style={
-                      Object {
-                        "flex": "60 0 auto",
-                        "maxWidth": "60px",
-                        "width": "60px",
-                      }
-                    }
-                  >
-                    <div
-                      className="rt-td"
+                                    viewBox="0 0 448 512"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      d="M448 80v352c0 26.51-21.49 48-48 48H48c-26.51 0-48-21.49-48-48V80c0-26.51 21.49-48 48-48h352c26.51 0 48 21.49 48 48zm-88 16H248.029c-21.313 0-32.08 25.861-16.971 40.971l31.984 31.987L67.515 364.485c-4.686 4.686-4.686 12.284 0 16.971l31.029 31.029c4.687 4.686 12.285 4.686 16.971 0l195.526-195.526 31.988 31.991C358.058 263.977 384 253.425 384 231.979V120c0-13.255-10.745-24-24-24z"
+                                      fill="currentColor"
+                                      style={Object {}}
+                                    />
+                                  </svg>
+                                </FontAwesomeIcon>
+                              </a>
+                            </Link>
+                          </div>
+                        </Cell>
+                      </div>
+                    </TdComponent>
+                    <TdComponent
+                      className=""
+                      key="7-status"
                       onClick={[Function]}
-                      role="gridcell"
                       style={
                         Object {
                           "flex": "60 0 auto",
@@ -10926,25 +11681,25 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
                         }
                       }
                     >
-                      A1
-                    </div>
-                  </TdComponent>
-                  <TdComponent
-                    className=""
-                    key="8-plan_effective_period_start"
-                    onClick={[Function]}
-                    style={
-                      Object {
-                        "flex": "80 0 auto",
-                        "maxWidth": null,
-                        "width": "80px",
-                      }
-                    }
-                  >
-                    <div
-                      className="rt-td"
+                      <div
+                        className="rt-td"
+                        onClick={[Function]}
+                        role="gridcell"
+                        style={
+                          Object {
+                            "flex": "60 0 auto",
+                            "maxWidth": "60px",
+                            "width": "60px",
+                          }
+                        }
+                      >
+                        A1
+                      </div>
+                    </TdComponent>
+                    <TdComponent
+                      className=""
+                      key="8-plan_effective_period_start"
                       onClick={[Function]}
-                      role="gridcell"
                       style={
                         Object {
                           "flex": "80 0 auto",
@@ -10953,117 +11708,87 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
                         }
                       }
                     >
-                      <Cell
-                        classes={
-                          Array [
-                            undefined,
-                            "",
-                            undefined,
-                          ]
-                        }
-                        column={
+                      <div
+                        className="rt-td"
+                        onClick={[Function]}
+                        role="gridcell"
+                        style={
                           Object {
-                            "Aggregated": undefined,
-                            "Cell": [Function],
-                            "Expander": undefined,
-                            "Filter": undefined,
-                            "Footer": undefined,
-                            "Header": "",
-                            "Pivot": undefined,
-                            "PivotValue": undefined,
-                            "Placeholder": undefined,
-                            "accessor": [Function],
-                            "aggregate": undefined,
-                            "className": "",
-                            "filterAll": false,
-                            "filterMethod": undefined,
-                            "filterable": undefined,
-                            "footerClassName": "",
-                            "footerStyle": Object {},
-                            "getFooterProps": [Function],
-                            "getHeaderProps": [Function],
-                            "getProps": [Function],
-                            "headerClassName": "",
-                            "headerStyle": Object {},
-                            "id": "plan_effective_period_start",
-                            "minResizeWidth": 11,
-                            "minWidth": 80,
-                            "parentColumn": Object {
-                              "Header": "Start Date",
-                              "columns": Array [
-                                Object {
-                                  "Cell": [Function],
-                                  "Header": "",
-                                  "accessor": "plan_effective_period_start",
-                                  "minWidth": 80,
-                                },
-                              ],
-                            },
-                            "resizable": undefined,
-                            "show": true,
-                            "sortMethod": undefined,
-                            "sortable": undefined,
-                            "style": Object {},
+                            "flex": "80 0 auto",
+                            "maxWidth": null,
+                            "width": "80px",
                           }
                         }
-                        columnProps={
-                          Object {
-                            "className": undefined,
-                            "rest": Object {},
-                            "style": undefined,
+                      >
+                        <Cell
+                          classes={
+                            Array [
+                              undefined,
+                              "",
+                              undefined,
+                            ]
                           }
-                        }
-                        index={0}
-                        level={0}
-                        nestingPath={
-                          Array [
-                            0,
-                          ]
-                        }
-                        original={
-                          Object {
-                            "canton": "Chadiza",
-                            "caseClassification": null,
-                            "caseNotificationDate": null,
-                            "district": "",
-                            "focusArea": "NVI_439",
-                            "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
-                            "jurisdiction_depth": 2,
-                            "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
-                            "jurisdiction_name": "NVI_439",
-                            "jurisdiction_name_path": Array [
-                              "Chadiza",
-                              "Naviluli",
-                            ],
-                            "jurisdiction_parent_id": "2944",
-                            "jurisdiction_path": Array [
-                              "2939",
-                              "2944",
-                            ],
-                            "plan_date": "2019-06-18",
-                            "plan_effective_period_end": "2019-06-18",
-                            "plan_effective_period_start": "2019-07-31",
-                            "plan_fi_reason": "Routine",
-                            "plan_fi_status": "A1",
-                            "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
-                            "plan_intervention_type": "FI",
-                            "plan_status": "active",
-                            "plan_title": "A1-Tha Luang Village 1 Focus 01",
-                            "plan_version": "1",
-                            "province": "",
-                            "reason": "Routine",
-                            "status": "A1",
-                            "village": "Naviluli",
+                          column={
+                            Object {
+                              "Aggregated": undefined,
+                              "Cell": [Function],
+                              "Expander": undefined,
+                              "Filter": undefined,
+                              "Footer": undefined,
+                              "Header": "",
+                              "Pivot": undefined,
+                              "PivotValue": undefined,
+                              "Placeholder": undefined,
+                              "accessor": [Function],
+                              "aggregate": undefined,
+                              "className": "",
+                              "filterAll": false,
+                              "filterMethod": undefined,
+                              "filterable": undefined,
+                              "footerClassName": "",
+                              "footerStyle": Object {},
+                              "getFooterProps": [Function],
+                              "getHeaderProps": [Function],
+                              "getProps": [Function],
+                              "headerClassName": "",
+                              "headerStyle": Object {},
+                              "id": "plan_effective_period_start",
+                              "minResizeWidth": 11,
+                              "minWidth": 80,
+                              "parentColumn": Object {
+                                "Header": "Start Date",
+                                "columns": Array [
+                                  Object {
+                                    "Cell": [Function],
+                                    "Header": "",
+                                    "accessor": "plan_effective_period_start",
+                                    "minWidth": 80,
+                                  },
+                                ],
+                              },
+                              "resizable": undefined,
+                              "show": true,
+                              "sortMethod": undefined,
+                              "sortable": undefined,
+                              "style": Object {},
+                            }
                           }
-                        }
-                        page={0}
-                        pageSize={20}
-                        resized={Array []}
-                        row={
-                          Object {
-                            "_index": 0,
-                            "_nestingLevel": 0,
-                            "_original": Object {
+                          columnProps={
+                            Object {
+                              "className": undefined,
+                              "rest": Object {},
+                              "style": undefined,
+                            }
+                          }
+                          index={0}
+                          level={0}
+                          nestingPath={
+                            Array [
+                              0,
+                            ]
+                          }
+                          original={
+                            Object {
                               "canton": "Chadiza",
                               "caseClassification": null,
                               "caseNotificationDate": null,
@@ -11096,56 +11821,86 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
                               "reason": "Routine",
                               "status": "A1",
                               "village": "Naviluli",
-                            },
-                            "_subRows": undefined,
-                            "_viewIndex": 0,
-                            "canton": "Chadiza",
-                            "district": "",
-                            "focusArea": "NVI_439",
-                            "plan_effective_period_end": "2019-06-18",
-                            "plan_effective_period_start": "2019-07-31",
-                            "plan_status": "active",
-                            "plan_title": "A1-Tha Luang Village 1 Focus 01",
-                            "province": "",
-                            "status": "A1",
-                            "village": "Naviluli",
+                            }
                           }
-                        }
-                        show={true}
-                        styles={Object {}}
-                        tdProps={
-                          Object {
-                            "className": undefined,
-                            "rest": Object {},
-                            "style": undefined,
+                          page={0}
+                          pageSize={20}
+                          resized={Array []}
+                          row={
+                            Object {
+                              "_index": 0,
+                              "_nestingLevel": 0,
+                              "_original": Object {
+                                "canton": "Chadiza",
+                                "caseClassification": null,
+                                "caseNotificationDate": null,
+                                "district": "",
+                                "focusArea": "NVI_439",
+                                "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
+                                "jurisdiction_depth": 2,
+                                "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
+                                "jurisdiction_name": "NVI_439",
+                                "jurisdiction_name_path": Array [
+                                  "Chadiza",
+                                  "Naviluli",
+                                ],
+                                "jurisdiction_parent_id": "2944",
+                                "jurisdiction_path": Array [
+                                  "2939",
+                                  "2944",
+                                ],
+                                "plan_date": "2019-06-18",
+                                "plan_effective_period_end": "2019-06-18",
+                                "plan_effective_period_start": "2019-07-31",
+                                "plan_fi_reason": "Routine",
+                                "plan_fi_status": "A1",
+                                "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+                                "plan_intervention_type": "FI",
+                                "plan_status": "active",
+                                "plan_title": "A1-Tha Luang Village 1 Focus 01",
+                                "plan_version": "1",
+                                "province": "",
+                                "reason": "Routine",
+                                "status": "A1",
+                                "village": "Naviluli",
+                              },
+                              "_subRows": undefined,
+                              "_viewIndex": 0,
+                              "canton": "Chadiza",
+                              "district": "",
+                              "focusArea": "NVI_439",
+                              "plan_effective_period_end": "2019-06-18",
+                              "plan_effective_period_start": "2019-07-31",
+                              "plan_status": "active",
+                              "plan_title": "A1-Tha Luang Village 1 Focus 01",
+                              "province": "",
+                              "status": "A1",
+                              "village": "Naviluli",
+                            }
                           }
-                        }
-                        value="2019-07-31"
-                        viewIndex={0}
-                        width={80}
-                      >
-                        <div>
-                          2019-07-31
-                        </div>
-                      </Cell>
-                    </div>
-                  </TdComponent>
-                  <TdComponent
-                    className=""
-                    key="9-plan_effective_period_end"
-                    onClick={[Function]}
-                    style={
-                      Object {
-                        "flex": "100 0 auto",
-                        "maxWidth": null,
-                        "width": "100px",
-                      }
-                    }
-                  >
-                    <div
-                      className="rt-td"
+                          show={true}
+                          styles={Object {}}
+                          tdProps={
+                            Object {
+                              "className": undefined,
+                              "rest": Object {},
+                              "style": undefined,
+                            }
+                          }
+                          value="2019-07-31"
+                          viewIndex={0}
+                          width={80}
+                        >
+                          <div>
+                            2019-07-31
+                          </div>
+                        </Cell>
+                      </div>
+                    </TdComponent>
+                    <TdComponent
+                      className=""
+                      key="9-plan_effective_period_end"
                       onClick={[Function]}
-                      role="gridcell"
                       style={
                         Object {
                           "flex": "100 0 auto",
@@ -11154,30 +11909,43 @@ exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`
                         }
                       }
                     >
-                      2019-06-18
-                    </div>
-                  </TdComponent>
-                </div>
-              </TrComponent>
-            </div>
-          </TrGroupComponent>
-        </div>
-      </Tbody>
-    </div>
-  </TableComponent>
-  <LoadingComponent
-    loading={false}
-    loadingText="Loading..."
-  >
-    <div
-      className="-loading"
+                      <div
+                        className="rt-td"
+                        onClick={[Function]}
+                        role="gridcell"
+                        style={
+                          Object {
+                            "flex": "100 0 auto",
+                            "maxWidth": null,
+                            "width": "100px",
+                          }
+                        }
+                      >
+                        2019-06-18
+                      </div>
+                    </TdComponent>
+                  </div>
+                </TrComponent>
+              </div>
+            </TrGroupComponent>
+          </div>
+        </Tbody>
+      </div>
+    </TableComponent>
+    <LoadingComponent
+      loading={false}
+      loadingText="Loading..."
     >
       <div
-        className="-loading-inner"
+        className="-loading"
       >
-        Loading...
+        <div
+          className="-loading-inner"
+        >
+          Loading...
+        </div>
       </div>
-    </div>
-  </LoadingComponent>
-</div>
+    </LoadingComponent>
+  </div>,
+]
 `;
