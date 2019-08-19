@@ -20,8 +20,13 @@ import HeaderBreadCrumb, {
   BreadCrumbProps,
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
+import NullDataTable from '../../../../components/Table/NullDataTable';
 import { SUPERSET_PLANS_SLICE } from '../../../../configs/env';
-import { FIClassifications, locationHierarchy } from '../../../../configs/settings';
+import {
+  emptyCurrentReactivePlans,
+  FIClassifications,
+  locationHierarchy,
+} from '../../../../configs/settings';
 import {
   CASE_CLASSIFICATION_HEADER,
   CASE_NOTIF_DATE_HEADER,
@@ -47,6 +52,7 @@ import {
 } from '../../../../constants';
 import { renderClassificationRow } from '../../../../helpers/indicators';
 import '../../../../helpers/tables.css';
+import { defaultTableProps } from '../../../../helpers/utils';
 import {
   extractPlan,
   getLocationColumns,
@@ -150,7 +156,7 @@ class ActiveFocusInvestigation extends React.Component<
             Search
           </Button>
         </Form>
-        {[caseTriggeredPlans, routinePlans].forEach((plansArray: Plan[] | null) => {
+        {[caseTriggeredPlans, routinePlans].forEach((plansArray: Plan[] | null, i) => {
           if (plansArray && plansArray.length) {
             const thePlans = plansArray.map((item: Plan) => {
               let thisItem = extractPlan(item);
@@ -315,6 +321,58 @@ class ActiveFocusInvestigation extends React.Component<
                 {TableHeaderWithOptionalForm}
                 <DrillDownTable {...tableProps} />
               </div>
+            );
+          } else {
+            const header = i ? ROUTINE : REACTIVE;
+            const emptyPlansColumns = [
+              {
+                Header: NAME,
+                columns: [{ minWidth: 180 }],
+              },
+              {
+                Header: FI_STATUS,
+                columns: [{ minWidth: 80 }],
+              },
+              {
+                Header: 'Province',
+                columns: [{}],
+              },
+              {
+                Header: 'District',
+                columns: [{}],
+              },
+              {
+                Header: 'Canton',
+                columns: [{}],
+              },
+              {
+                Header: 'Village',
+                columns: [{}],
+              },
+              {
+                Header: 'Focus Area',
+                columns: [{ minWidth: 180 }],
+              },
+              {
+                Header: 'Status',
+                columns: [{ maxWidth: 60 }],
+              },
+
+              {
+                Header: 'Case No',
+                columns: [{}],
+              },
+              {
+                Header: 'Case Class.',
+                columns: [{}],
+              },
+            ];
+            const tableProps = {
+              ...defaultTableProps,
+              columns: emptyPlansColumns,
+            };
+            routineReactivePlans.push(
+              <NullDataTable tableProps={tableProps} reasonType={header} />
             );
           }
         })}
