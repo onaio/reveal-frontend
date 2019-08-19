@@ -46,29 +46,36 @@ export const IRSActivities = pick(planActivities, ['IRS']);
 /** Array of FI Statuses */
 export const fiStatusCodes = Object.values(FIClassifications).map(e => e.code as FIStatusType);
 
+/** yup validation for PlanSchema.activities */
+export const ActivitiesSchema = Yup.object().shape({
+  actionCode: Yup.string().oneOf(PlanActionCodes.map(e => e)),
+  actionDescription: Yup.string().required(REQUIRED),
+  actionIdentifier: Yup.string(),
+  actionReason: Yup.string()
+    .oneOf(Object.values(actionReasons))
+    .required(REQUIRED),
+  actionTitle: Yup.string().required(REQUIRED),
+  goalDescription: Yup.string().required(REQUIRED),
+  goalDue: Yup.date().required(REQUIRED),
+  goalPriority: Yup.string()
+    .oneOf(Object.values(goalPriorities))
+    .required(REQUIRED),
+  goalValue: Yup.number()
+    .min(1)
+    .required(REQUIRED),
+  timingPeriodEnd: Yup.date().required(REQUIRED),
+  timingPeriodStart: Yup.date().required(REQUIRED),
+});
+
+/** yup validation schema for PlanSchema.jurisdictions */
+export const JurisdictionSchema = Yup.object().shape({
+  id: Yup.string().required(REQUIRED),
+  name: Yup.string(),
+});
+
 /** Yup validation schema for PlanForm */
 export const PlanSchema = Yup.object().shape({
-  activities: Yup.array().of(
-    Yup.object().shape({
-      actionCode: Yup.string().oneOf(PlanActionCodes.map(e => e)),
-      actionDescription: Yup.string().required(REQUIRED),
-      actionIdentifier: Yup.string(),
-      actionReason: Yup.string()
-        .oneOf(Object.values(actionReasons))
-        .required(REQUIRED),
-      actionTitle: Yup.string().required(REQUIRED),
-      goalDescription: Yup.string().required(REQUIRED),
-      goalDue: Yup.date().required(REQUIRED),
-      goalPriority: Yup.string()
-        .oneOf(Object.values(goalPriorities))
-        .required(REQUIRED),
-      goalValue: Yup.number()
-        .min(1)
-        .required(REQUIRED),
-      timingPeriodEnd: Yup.date().required(REQUIRED),
-      timingPeriodStart: Yup.date().required(REQUIRED),
-    })
-  ),
+  activities: Yup.array().of(ActivitiesSchema),
   caseNum: Yup.string().when('interventionType', {
     is: val => val === InterventionType.FI,
     otherwise: Yup.string().notRequired(),
@@ -82,12 +89,7 @@ export const PlanSchema = Yup.object().shape({
   interventionType: Yup.string()
     .oneOf(Object.values(InterventionType))
     .required(REQUIRED),
-  jurisdictions: Yup.array().of(
-    Yup.object().shape({
-      id: Yup.string().required(REQUIRED),
-      name: Yup.string(),
-    })
-  ),
+  jurisdictions: Yup.array().of(JurisdictionSchema),
   name: Yup.string().required(`${NAME} ${IS} ${REQUIRED}`),
   opensrpEventId: Yup.string(),
   start: Yup.date().required(REQUIRED),
