@@ -59,6 +59,7 @@ export const defaultInitialValues: PlanFormFields = {
   opensrpEventId: undefined,
   start: moment().toDate(),
   status: PlanStatus.DRAFT,
+  taskGenerationStatus: 'False',
   title: '',
   version: DEFAULT_PLAN_VERSION,
 };
