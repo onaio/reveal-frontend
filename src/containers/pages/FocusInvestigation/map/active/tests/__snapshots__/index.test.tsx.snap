@@ -587,7 +587,8 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
                    
                   Investigation
                    
-                  <h5
+                  <p
+                    className="h5"
                     style={
                       Object {
                         "display": "inline",
@@ -605,7 +606,7 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
                         active
                       </span>
                     </Badge>
-                  </h5>
+                  </p>
                 </h2>
               </div>
             </Col>
@@ -3170,7 +3171,8 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store (g
                        
                       Investigation
                        
-                      <h5
+                      <p
+                        className="h5"
                         style={
                           Object {
                             "display": "inline",
@@ -3188,7 +3190,7 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store (g
                             active
                           </span>
                         </Badge>
-                      </h5>
+                      </p>
                     </h2>
                   </div>
                 </Col>
