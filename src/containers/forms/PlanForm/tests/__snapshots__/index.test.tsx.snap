@@ -582,6 +582,18 @@ exports[`containers/forms/PlanForm - Edit renders all fields correctly in edit m
 </select>
 `;
 
+exports[`containers/forms/PlanForm - Edit renders all fields correctly in edit mode: taskGenerationStatus field 1`] = `
+<input
+  id="taskGenerationStatus"
+  name="taskGenerationStatus"
+  onBlur={[Function]}
+  onChange={[Function]}
+  readOnly={true}
+  type="hidden"
+  value="False"
+/>
+`;
+
 exports[`containers/forms/PlanForm - Edit renders all fields correctly in edit mode: title field 1`] = `
 <input
   className="form-control"
