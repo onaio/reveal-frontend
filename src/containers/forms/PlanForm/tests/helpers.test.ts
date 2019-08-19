@@ -1,4 +1,4 @@
-import { PropertyName } from 'lodash';
+import MockDate from 'mockdate';
 import {
   actionReasons,
   FIReasons,
@@ -7,10 +7,9 @@ import {
 } from '../../../../configs/settings';
 import { DATE, IS, NAME, REQUIRED } from '../../../../constants';
 import { FlexObject } from '../../../../helpers/utils';
+import { plans } from '../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
 import { InterventionType, PlanStatus } from '../../../../store/ducks/plans';
 import { ActivitiesSchema, fiStatusCodes, JurisdictionSchema, PlanSchema } from '../helpers';
-import MockDate from 'mockdate';
-import { plans } from '../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
 import {
   doesFieldHaveErrors,
   extractActivitiesFromPlanForm,
@@ -203,6 +202,8 @@ describe('containers/forms/PlanForm/helpers', () => {
       { id: '3952', name: '3952' },
       { id: 'ac7ba751-35e8-4b46-9e53-3cbaad193697', name: 'ac7ba751-35e8-4b46-9e53-3cbaad193697' },
     ]);
+  });
+});
 
 /** Answers : among the validation errors raised, is there an error obj
  * associated with the given property resulting from that property having
