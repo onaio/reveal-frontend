@@ -316,10 +316,12 @@ class IrsPlan extends React.Component<
               !jurisdictionsById[a].geographic_level
           );
           if (parentlessParent) {
-            OpenSrpLocationService.read(parentlessParent, {
+            OpenSrpLocationService.read(OPENSRP_FIND_BY_PROPERTIES, {
               is_jurisdiction: true,
+              properties_filter: `name:${jurisdictionsById[parentlessParent].name}`,
               return_geometry: false,
-            }).then(result => {
+            }).then(results => {
+              const result = results[0];
               if (result && result.properties) {
                 const country: JurisdictionsByCountry =
                   CountriesAdmin0[
