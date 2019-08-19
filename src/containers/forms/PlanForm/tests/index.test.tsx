@@ -37,6 +37,10 @@ describe('containers/forms/PlanForm', () => {
     expect(toJson(wrapper.find('#identifier input'))).toMatchSnapshot('identifier field');
     expect(wrapper.find({ for: 'version' }).length).toEqual(0);
     expect(toJson(wrapper.find('#version input'))).toMatchSnapshot('version field');
+    expect(wrapper.find({ for: 'taskGenerationStatus' }).length).toEqual(0);
+    expect(toJson(wrapper.find('#taskGenerationStatus input'))).toMatchSnapshot(
+      'taskGenerationStatus field'
+    );
     expect(toJson(wrapper.find({ for: 'status' }))).toMatchSnapshot('status label');
     expect(toJson(wrapper.find('#status select'))).toMatchSnapshot('status field');
     expect(toJson(wrapper.find({ for: 'start' }))).toMatchSnapshot('start label');
