@@ -1498,6 +1498,10 @@ export const expectedPlanDefinition = {
       code: 'interventionType',
       valueCodableConcept: 'IRS',
     },
+    {
+      code: 'taskGenerationStatus',
+      valueCodableConcept: 'False',
+    },
   ],
   version: '1',
 };
