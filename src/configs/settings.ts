@@ -731,6 +731,7 @@ export interface JurisdictionsByCountry extends ADMN0 {
   tilesets?: Array<{
     idField: string; // the feature property cooresponding with jurisdiction_id (for joining)
     jurisdictionType: JurisdictionTypes; // Admin or OA/FA/SA
+    labelField?: string; // the feature property cooresponding with the display name
     layer: string; // the Mapbox tileset-layer name
     parentIdField: string; // the feature property cooresponding with parent_id (for joining)
     url: string; // the Mapbox tileset url
@@ -761,6 +762,7 @@ export const ThailandAdmin0: JurisdictionsByCountry = {
     {
       idField: 'ADM0_EN',
       jurisdictionType: JurisdictionLevels[0] as JurisdictionTypes,
+      // labelField: '',
       layer: 'TH_0',
       parentIdField: '',
       url: 'mapbox://thailandbvbd.6o8cg6kd',
@@ -768,6 +770,7 @@ export const ThailandAdmin0: JurisdictionsByCountry = {
     {
       idField: 'ADM1_EN',
       jurisdictionType: JurisdictionLevels[0] as JurisdictionTypes,
+      // labelField: '',
       layer: 'TH_1',
       parentIdField: 'ADM0_EN',
       url: 'mapbox://thailandbvbd.91ktth0q',
@@ -786,13 +789,15 @@ const NamibiaAdmin0: JurisdictionsByCountry = {
     {
       idField: 'jurisdictionId',
       jurisdictionType: JurisdictionLevels[0] as JurisdictionTypes,
+      labelField: 'name',
       layer: 'NA_0',
-      parentIdField: '',
+      parentIdField: 'name',
       url: 'mapbox://thailandbvbd.8k701kz0',
     },
     {
       idField: 'jurisdictionId',
       jurisdictionType: JurisdictionLevels[0] as JurisdictionTypes,
+      labelField: 'name',
       layer: 'NA_1',
       parentIdField: 'parentId',
       url: 'mapbox://thailandbvbd.4pm7lyll',
@@ -800,6 +805,7 @@ const NamibiaAdmin0: JurisdictionsByCountry = {
     {
       idField: 'jurisdictionId',
       jurisdictionType: JurisdictionLevels[0] as JurisdictionTypes,
+      labelField: 'name',
       layer: 'NA_2',
       parentIdField: 'parentId',
       url: 'mapbox://thailandbvbd.d7wo2nki',
@@ -807,6 +813,7 @@ const NamibiaAdmin0: JurisdictionsByCountry = {
     {
       idField: 'id',
       jurisdictionType: JurisdictionLevels[1],
+      labelField: 'name',
       layer: 'NA_3',
       parentIdField: 'parentId',
       url: 'mapbox://thailandbvbd.2gab6o28',

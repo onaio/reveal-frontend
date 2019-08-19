@@ -55,7 +55,9 @@ import {
   ADMN0_PCODE,
   CountriesAdmin0,
   fillLayerConfig,
+  JurisdictionLevels,
   JurisdictionsByCountry,
+  JurisdictionTypes,
   lineLayerConfig,
 } from './../../../../../configs/settings';
 
@@ -979,6 +981,14 @@ class IrsPlan extends React.Component<
     const { jurisdictionsById } = this.props;
 
     const doLoadAllGeojson = country && country.tilesets && !country.tilesets.length;
+    const doLoadOperationalGeometries =
+      !country ||
+      !country.tilesets ||
+      !country.tilesets.length ||
+      !country.tilesets
+        .map(t => t.jurisdictionType)
+        .includes(JurisdictionLevels[1] as JurisdictionTypes);
+
     // Determine which Jurisdictions will need to be updated in state
     const filteredJurisdictions = filteredJurisdictionIds.map(j => jurisdictionsById[j]);
 
@@ -992,11 +1002,12 @@ class IrsPlan extends React.Component<
     );
 
     // Determine all parent_ids of childless children jurisdictions
-    const jurisdictionIdsToCall: string[] = doLoadAllGeojson
-      ? filteredJurisdictions.map(j => j.jurisdiction_id)
-      : [];
+    const jurisdictionIdsToCall: string[] =
+      doLoadAllGeojson && !doLoadOperationalGeometries
+        ? filteredJurisdictions.map(j => j.jurisdiction_id)
+        : [];
 
-    if (!doLoadAllGeojson) {
+    if (!doLoadAllGeojson && doLoadOperationalGeometries) {
       for (const child of childlessChildren) {
         if (
           child.parent_id &&
@@ -1052,7 +1063,19 @@ class IrsPlan extends React.Component<
         this.props.fetchJurisdictionsActionCreator(jurisdictions);
       });
     } else {
-      this.setState({ isLoadingGeoms: false });
+      this.setState(
+        {
+          isBuildingGisidaProps: true,
+          isLoadingGeoms: false,
+        },
+        () => {
+          const gisidaWrapperProps = this.getGisidaWrapperProps();
+          this.setState({
+            gisidaWrapperProps,
+            isBuildingGisidaProps: false,
+          });
+        }
+      );
     }
   }
 
@@ -1363,12 +1386,11 @@ class IrsPlan extends React.Component<
       type: 'categorical',
     };
     for (const j of jurisdictions) {
-      const key: string = tileset && tileset.idField && j.name ? j.name : j.jurisdiction_id;
       // keys in stops must be unique
-      if (!uniqueKeys.includes(key)) {
-        uniqueKeys.push(key);
+      if (!uniqueKeys.includes(j.jurisdiction_id)) {
+        uniqueKeys.push(j.jurisdiction_id);
         const opacity = selectedIds.includes(j.jurisdiction_id) ? 0.75 : 0.3;
-        selectionStyle.stops.push([key, opacity]);
+        selectionStyle.stops.push([j.jurisdiction_id, opacity]);
       }
     }
     return (selectionStyle.stops.length && selectionStyle) || 0.75;
@@ -1410,22 +1432,24 @@ class IrsPlan extends React.Component<
     const ADMIN_LINE_LAYERS: any[] = [];
     const adminBorderWidths: number[] = [1.5, 1, 0.75, 0.5];
     for (let t = 0; t < tilesets.length; t += 1) {
-      const adminLineLayer = {
-        ...lineLayerConfig,
-        id: `${ADMN0_EN}-admin-${t}-line`,
-        paint: {
-          'line-color': 'white',
-          'line-opacity': t ? 1 : 0.45,
-          'line-width': adminBorderWidths[t],
-        },
-        source: {
-          layer: tilesets[t].layer,
-          type: 'vector',
-          url: tilesets[t].url,
-        },
-        visible: true,
-      };
-      ADMIN_LINE_LAYERS.push(adminLineLayer);
+      if (tilesets[t].jurisdictionType === JurisdictionLevels[0]) {
+        const adminLineLayer = {
+          ...lineLayerConfig,
+          id: `${ADMN0_EN}-admin-${t}-line`,
+          paint: {
+            'line-color': 'white',
+            'line-opacity': t ? 1 : 0.45,
+            'line-width': adminBorderWidths[t],
+          },
+          source: {
+            layer: tilesets[t].layer,
+            type: 'vector',
+            url: tilesets[t].url,
+          },
+          visible: true,
+        };
+        ADMIN_LINE_LAYERS.push(adminLineLayer);
+      }
     }
 
     const ADMIN_FILL_LAYER_IDS: string[] = [];
@@ -1468,31 +1492,14 @@ class IrsPlan extends React.Component<
         visible: true,
       };
 
-      const tooltipVal = tilesets[t].idField;
+      const tooltipVal = tilesets[t].labelField || tilesets[t].idField;
       if (tooltipVal && tooltipVal.length) {
         (adminFillLayer as any).popup = {
           body: `<p class="select-jurisdictin-tooltip">{{${tooltipVal}}}</p>`,
         };
       }
 
-      if (t === 1) {
-        const adminFilterExpression: any[] = ['any'];
-        for (const jurisdiction of filteredJurisdictions) {
-          if (jurisdiction.geographic_level === 1) {
-            const filterExpression = [
-              '==',
-              tilesets[t].idField,
-              jurisdiction.name as string,
-            ].filter(e => !!e);
-            if (filterExpression.length === 3) {
-              adminFilterExpression.push(filterExpression);
-            }
-          }
-        }
-        if (adminFilterExpression.length > 1) {
-          (adminFillLayer as any).filter = [...adminFilterExpression];
-        }
-      } else {
+      if (t > 1) {
         (adminFillLayer as any).filter = ['==', tilesets[t].parentIdField, ''];
       }
 
@@ -1501,98 +1508,154 @@ class IrsPlan extends React.Component<
 
     const self = this;
     function getJurisdictionFillLayers(jurisdictions: Jurisdiction[], tiles: any[]) {
+      const filteredJurisdictionsById = keyBy(jurisdictions, j => j.jurisdiction_id);
+      const jurisdictionIds = jurisdictions.map(j => j.jurisdiction_id);
       const layers: FlexObject[] = [];
       const geoGraphicLevels: number[] = [];
       const layerIds: string[] = [];
       const adminLayerIds: string[] = [];
-      for (const j of jurisdictions) {
-        const { geographic_level } = j;
-        if (
-          typeof geographic_level !== 'undefined' &&
-          geoGraphicLevels.indexOf(geographic_level) === -1
-        ) {
-          geoGraphicLevels.push(geographic_level);
-        }
-      }
-      geoGraphicLevels.sort();
       const jurisdictionFeatures: any[] = [];
+
+      const operationalTilesets =
+        tilesets &&
+        tilesets.filter(t => t.jurisdictionType === (JurisdictionLevels[1] as JurisdictionTypes));
       const selectedIds =
         self.state.newPlan && self.state.newPlan.plan_jurisdictions_ids
           ? [...self.state.newPlan.plan_jurisdictions_ids]
           : [...filteredJurisdictionIds];
 
-      for (let i = 1; i < geoGraphicLevels.length; i += 1) {
-        const g = geoGraphicLevels[i];
-        const featureCollection = {
-          features: jurisdictions
-            .filter(j => j.geographic_level === g)
-            .map(j => {
-              if (j.geojson) {
-                return {
-                  ...j.geojson,
-                  properties: {
-                    ...j.geojson.properties,
-                    jurisdiction_id: j.jurisdiction_id,
-                    selected: true,
-                  },
-                };
-              }
-              return false;
-            })
-            .filter(geojson => geojson),
-          type: 'FeatureCollection',
-        };
-
-        // stash features for bounds
-        for (const feature of featureCollection.features) {
-          jurisdictionFeatures.push(feature);
-        }
-
-        const geoLevelIds: string[] = featureCollection.features
-          .map(f => (f && f.properties && f.properties.jurisdiction_id) || '')
-          .filter(j => j !== '' && selectedIds.includes(j));
-
-        const geoLevelJurs: Jurisdiction[] = jurisdictions.filter(j =>
-          geoLevelIds.includes(j.jurisdiction_id)
+      if (tilesets && operationalTilesets && operationalTilesets.length) {
+        const operationalGeographicLevelIndecies = operationalTilesets.map(ot =>
+          tilesets.map(t => t.layer).indexOf(ot.layer)
         );
+        for (const g of operationalGeographicLevelIndecies) {
+          const geoLevelIds: string[] = jurisdictionIds.filter(
+            j => filteredJurisdictionsById[j].geographic_level === g
+          );
+          const geoLevelJurs = geoLevelIds.map(j => filteredJurisdictionsById[j]);
 
-        const selectionFillOpacity = self.getJurisdictionSelectionStops(
-          geoLevelIds,
-          geoLevelJurs,
-          undefined
-        );
+          const selectionFillOpacity = self.getJurisdictionSelectionStops(
+            geoLevelIds.filter((j: string) => j !== '' && selectedIds.includes(j)),
+            geoLevelJurs,
+            undefined
+          );
 
-        const layerId = `${ADMN0_EN}-admin-${g}-jurisdiction-fill`;
-        const layer = {
-          ...fillLayerConfig,
-          filter: g !== 1 ? ['==', 'parentId', ''] : null,
-          id: layerId,
-          paint: {
-            'fill-color': adminLayerColors[g],
-            'fill-opacity': selectionFillOpacity,
-          },
-          popup: {
-            body: '<p class="select-jurisdictin-tooltip">{{name}}</p>',
-            join: [],
-          },
-          source: {
-            ...fillLayerConfig.source,
-            data: {
-              ...fillLayerConfig.source.data,
-              data: JSON.stringify(featureCollection),
+          const layerId = `${ADMN0_EN}-admin-${g}-jurisdiction-fill`;
+          const layer = {
+            ...fillLayerConfig,
+            filter: g !== 1 ? ['==', 'parentId', ''] : null,
+            id: layerId,
+            paint: {
+              'fill-color': adminLayerColors[g],
+              'fill-opacity': selectionFillOpacity,
             },
-          },
-          visible: true,
-        };
+            popup: {
+              body: '<p class="select-jurisdictin-tooltip">{{name}}</p>',
+              join: [],
+            },
+            source: {
+              layer: tilesets[g].layer,
+              type: 'vector',
+              url: tilesets[g].url,
+            },
+            visible: true,
+          };
 
-        if (tiles.length || (!tiles.length && !(i < geoGraphicLevels.length - 1))) {
-          layerIds.push(layerId);
-        } else {
-          adminLayerIds.unshift(layerId);
+          if (tiles.length || (!tiles.length && !(g < geoGraphicLevels.length - 1))) {
+            layerIds.push(layerId);
+          } else {
+            adminLayerIds.unshift(layerId);
+          }
+
+          layers.unshift(layer);
         }
+      } else {
+        // Derive geographic levels
+        for (const j of jurisdictions) {
+          const { geographic_level } = j;
+          if (
+            typeof geographic_level !== 'undefined' &&
+            geoGraphicLevels.indexOf(geographic_level) === -1
+          ) {
+            geoGraphicLevels.push(geographic_level);
+          }
+        }
+        geoGraphicLevels.sort();
 
-        layers.unshift(layer);
+        for (let i = 1; i < geoGraphicLevels.length; i += 1) {
+          const g = geoGraphicLevels[i];
+          const featureCollection = {
+            features: jurisdictions
+              .filter(j => j.geographic_level === g)
+              .map(j => {
+                if (j.geojson) {
+                  return {
+                    ...j.geojson,
+                    properties: {
+                      ...j.geojson.properties,
+                      jurisdiction_id: j.jurisdiction_id,
+                      selected: true,
+                    },
+                  };
+                }
+                return false;
+              })
+              .filter(geojson => geojson),
+            type: 'FeatureCollection',
+          };
+
+          // stash features for bounds
+          for (const feature of featureCollection.features) {
+            jurisdictionFeatures.push(feature);
+          }
+
+          const geoLevelIds: string[] = featureCollection.features
+            .map(f => (f && f.properties && f.properties.jurisdiction_id) || '')
+            .filter(j => j !== '' && selectedIds.includes(j));
+
+          const geoLevelJurs: Jurisdiction[] = jurisdictions.filter(j =>
+            geoLevelIds.includes(j.jurisdiction_id)
+          );
+
+          const selectionFillOpacity = self.getJurisdictionSelectionStops(
+            geoLevelIds,
+            geoLevelJurs,
+            undefined
+          );
+
+          const layerId = `${ADMN0_EN}-admin-${g}-jurisdiction-fill`;
+          const layer = {
+            ...fillLayerConfig,
+            filter: g !== 1 ? ['==', 'parentId', ''] : null,
+            id: layerId,
+            paint: {
+              'fill-color': adminLayerColors[g],
+              'fill-opacity': selectionFillOpacity,
+            },
+            popup: {
+              body: '<p class="select-jurisdictin-tooltip">{{name}}</p>',
+              join: [],
+            },
+            source: {
+              ...fillLayerConfig.source,
+              data: {
+                ...fillLayerConfig.source.data,
+                data: JSON.stringify(featureCollection),
+              },
+            },
+            visible: true,
+          };
+
+          if (tiles.length || (!tiles.length && !(i < geoGraphicLevels.length - 1))) {
+            layerIds.push(layerId);
+          } else {
+            adminLayerIds.unshift(layerId);
+          }
+
+          layers.unshift(layer);
+        }
       }
+
       return {
         JURISDICTION_ADMIN_LAYER_IDS: adminLayerIds,
         JURISDICTION_BOUNDS: GeojsonExtent({
