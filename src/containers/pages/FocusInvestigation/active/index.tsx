@@ -398,23 +398,23 @@ interface DispatchedStateProps {
 
 /** map state to props */
 const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateProps => {
+  const jurisdictionParentId =
+    ownProps.match.params && ownProps.match.params.jurisdiction_parent_id
+      ? ownProps.match.params.jurisdiction_parent_id
+      : null;
   const caseTriggeredPlans = getPlansArray(
     state,
     InterventionType.FI,
     [PlanStatus.ACTIVE, PlanStatus.COMPLETE],
     CASE_TRIGGERED,
-    ownProps.match.params && ownProps.match.params.jurisdiction_parent_id
-      ? ownProps.match.params.jurisdiction_parent_id
-      : null
+    jurisdictionParentId
   );
   const routinePlans = getPlansArray(
     state,
     InterventionType.FI,
     [PlanStatus.ACTIVE, PlanStatus.COMPLETE],
     ROUTINE,
-    ownProps.match.params && ownProps.match.params.jurisdiction_parent_id
-      ? ownProps.match.params.jurisdiction_parent_id
-      : null
+    jurisdictionParentId
   );
   return {
     caseTriggeredPlans,
