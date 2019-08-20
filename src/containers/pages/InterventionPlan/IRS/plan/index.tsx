@@ -1946,9 +1946,10 @@ class IrsPlan extends React.Component<
    * @returns tableProps|null - compatible object for DrillDownTable props
    */
   private getDrilldownPlanTableProps(state: IrsPlanState) {
-    const { filteredJurisdictionIds, newPlan, focusJurisdictionId } = state;
+    const { filteredJurisdictionIds, newPlan, focusJurisdictionId, tableCrumbs } = state;
     const { jurisdictionsById } = this.props;
     const filteredJurisdictions = filteredJurisdictionIds.map(j => jurisdictionsById[j]);
+    const isFocusJurisdictionTopLevel = tableCrumbs[0] && focusJurisdictionId === tableCrumbs[0].id;
 
     if (!newPlan || !newPlan.plan_jurisdictions_ids) {
       return null;
@@ -1975,8 +1976,14 @@ class IrsPlan extends React.Component<
     const columns = [
       {
         Header: () => {
-          const isChecked = this.getIsJurisdictionPartiallySelected(this.state.focusJurisdictionId);
-
+          const isChecked = isFocusJurisdictionTopLevel
+            ? newPlan &&
+              newPlan.plan_jurisdictions_ids &&
+              newPlan.plan_jurisdictions_ids.length === filteredJurisdictionIds.length
+            : !!focusJurisdictionId &&
+              newPlan &&
+              newPlan.plan_jurisdictions_ids &&
+              newPlan.plan_jurisdictions_ids.includes(focusJurisdictionId);
           return (
             <Input
               checked={isChecked}
