@@ -1004,10 +1004,9 @@ class IrsPlan extends React.Component<
     );
 
     // Determine all parent_ids of childless children jurisdictions
-    const jurisdictionIdsToCall: string[] =
-      doLoadAllGeojson && !doLoadOperationalGeometries
-        ? filteredJurisdictions.map(j => j.jurisdiction_id)
-        : [];
+    const jurisdictionIdsToCall: string[] = doLoadAllGeojson
+      ? filteredJurisdictions.map(j => j.jurisdiction_id)
+      : [];
 
     if (!doLoadAllGeojson && doLoadOperationalGeometries) {
       for (const child of childlessChildren) {
