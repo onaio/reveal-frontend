@@ -457,8 +457,8 @@ export function getPlansArray(
   intervention: InterventionType = InterventionType.FI,
   status: string[] = [],
   reason: string | null = null,
-  parentJurisdictionId: string | null = null,
-  jurisdictions: string[] = []
+  jurisdictions: string[] = [],
+  parentJurisdictionId: string | null = null
 ): Plan[] {
   return values((state as any)[reducerName].plansById).filter(
     (plan: Plan) =>

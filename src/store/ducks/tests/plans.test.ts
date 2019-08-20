@@ -145,16 +145,16 @@ describe('reducers/plans', () => {
         e.jurisdiction_path.includes('2989')
     );
     // getPlansArray gets filters plans by location when no location is passed
-    expect(getPlansArray(store.getState(), InterventionType.IRS, [], null, '2977')).toEqual(
+    expect(getPlansArray(store.getState(), InterventionType.IRS, [], null, [], '2977')).toEqual(
       values(filteredIRSPlans)
     );
-    expect(getPlansArray(store.getState(), InterventionType.FI, [], null, '2944')).toEqual(
+    expect(getPlansArray(store.getState(), InterventionType.FI, [], null, [], '2944')).toEqual(
       values(filteredFIPlans)
     );
     expect(
-      getPlansArray(store.getState(), InterventionType.IRS, [], CASE_TRIGGERED_PLAN, '2989')
+      getPlansArray(store.getState(), InterventionType.IRS, [], CASE_TRIGGERED_PLAN, [], '2989')
     ).toEqual(values(filteredCaseTriggeredIRSPlans));
-    expect(getPlansArray(store.getState(), InterventionType.FI, [], ROUTINE, '2939')).toEqual(
+    expect(getPlansArray(store.getState(), InterventionType.FI, [], ROUTINE, [], '2939')).toEqual(
       values(filteredRoutineFIPlans)
     );
   });
