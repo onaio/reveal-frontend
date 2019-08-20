@@ -218,7 +218,7 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
         "plan_version": "1",
       }
     }
-    plansArray={Array []}
+    plansByFocusArea={Array []}
     pointFeatureCollection={
       Object {
         "features": Array [
@@ -2923,7 +2923,7 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store (g
             "plan_version": "1",
           }
         }
-        plansArray={
+        plansByFocusArea={
           Array [
             Object {
               "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
