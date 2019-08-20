@@ -200,7 +200,7 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
         !some(polygonFeatures) &&
         !this.state.initMapWithoutFC &&
         this.state.locations) ||
-      this.props.goal === null
+      (this.props.goal === null && !(this.props.layers && this.props.layers.length))
     ) {
       this.setState(
         { doInitMap: true, initMapWithoutFC: true, initMapWithStructures: true },
@@ -519,6 +519,7 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
         bounds: bounds.length && bounds,
         boxZoom: !!!(this.props.handlers && this.props.handlers.length),
         layers,
+        mapConfigContainer: MAP_ID,
         style: this.props.basemapStyle,
       },
       GISIDA_MAPBOX_TOKEN,
