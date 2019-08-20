@@ -29,6 +29,16 @@ describe('containers/pages/NewPlan', () => {
     // check that planform receives the correct props
     expect(wrapper.find('PlanForm').props()).toMatchSnapshot('plan form props');
 
+    // check that there's a Row that nests a Col that nests a Planform
+    expect(wrapper.find('Row')).toHaveLength(1);
+    expect(wrapper.find('Row').find('Col')).toHaveLength(1);
+    expect(
+      wrapper
+        .find('Row')
+        .find('Col')
+        .find('PlanForm')
+    ).toHaveLength(1);
+
     wrapper.unmount();
   });
 });
