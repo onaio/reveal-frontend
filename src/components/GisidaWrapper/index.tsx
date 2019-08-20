@@ -519,7 +519,6 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
         bounds: bounds.length && bounds,
         boxZoom: !!!(this.props.handlers && this.props.handlers.length),
         layers,
-        mapConfigContainer: MAP_ID,
         style: this.props.basemapStyle,
       },
       GISIDA_MAPBOX_TOKEN,
