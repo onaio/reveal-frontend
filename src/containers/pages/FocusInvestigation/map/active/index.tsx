@@ -111,7 +111,6 @@ export interface MapSingleFIProps {
   goals: Goal[] | null;
   jurisdiction: Jurisdiction | null;
   plan: Plan | null;
-  plansArray: Plan[];
   pointFeatureCollection: FeatureCollection<TaskGeoJSON>;
   polygonFeatureCollection: FeatureCollection<TaskGeoJSON>;
   structures: FeatureCollection<StructureGeoJSON> | null /** we use this to get all structures */;
@@ -136,7 +135,6 @@ export const defaultMapSingleFIProps: MapSingleFIProps = {
   goals: null,
   jurisdiction: null,
   plan: null,
-  plansArray: [],
   plansByFocusArea: [],
   pointFeatureCollection: defaultFeatureCollection,
   polygonFeatureCollection: defaultFeatureCollection,
@@ -217,7 +215,6 @@ class SingleActiveFIMap extends React.Component<
       plan,
       goals,
       currentGoal,
-      plansArray,
       pointFeatureCollection,
       polygonFeatureCollection,
       structures,
