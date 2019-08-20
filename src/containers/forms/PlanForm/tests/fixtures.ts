@@ -1328,6 +1328,7 @@ export const values: PlanFormFields = {
   name: 'IRS-2019-08-09',
   start: parseISO('2019-08-09T11:33:20.156Z'),
   status: PlanStatus.DRAFT,
+  taskGenerationStatus: 'True',
   title: 'IRS 2019-08-09',
   version: '1',
 };
@@ -1363,6 +1364,7 @@ export const valuesWithJurisdiction: PlanFormFields = {
   name: 'IRS-2019-08-09',
   start: parseISO('2019-08-09T11:33:20.156Z'),
   status: PlanStatus.DRAFT,
+  taskGenerationStatus: 'False',
   title: 'IRS 2019-08-09',
   version: '1',
 };
@@ -1496,6 +1498,10 @@ export const expectedPlanDefinition = {
       code: 'interventionType',
       valueCodableConcept: 'IRS',
     },
+    {
+      code: 'taskGenerationStatus',
+      valueCodableConcept: 'False',
+    },
   ],
   version: '1',
 };
@@ -1530,6 +1536,7 @@ export const values2: PlanFormFields = {
   name: 'IRS-2019-08-09',
   start: parseISO(`2019-08-09${DEFAULT_TIME}`),
   status: PlanStatus.DRAFT,
+  taskGenerationStatus: 'False',
   title: 'IRS 2019-08-09',
   version: '1',
 };
@@ -1567,6 +1574,7 @@ export const planFormValues = {
   opensrpEventId: undefined,
   start: parseISO(`2019-08-09${DEFAULT_TIME}`),
   status: 'draft',
+  taskGenerationStatus: 'False',
   title: 'IRS 2019-08-09',
   version: '1',
 };
@@ -1687,6 +1695,7 @@ export const planFormValues2 = {
   opensrpEventId: undefined,
   start: moment('2019-05-20T00:00:00.000Z').toDate(),
   status: 'active',
+  taskGenerationStatus: 'False',
   title: 'A2-Lusaka Akros Test Focus 2',
   version: '1',
 };

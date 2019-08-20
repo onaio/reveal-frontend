@@ -582,6 +582,18 @@ exports[`containers/forms/PlanForm - Edit renders all fields correctly in edit m
 </select>
 `;
 
+exports[`containers/forms/PlanForm - Edit renders all fields correctly in edit mode: taskGenerationStatus field 1`] = `
+<input
+  id="taskGenerationStatus"
+  name="taskGenerationStatus"
+  onBlur={[Function]}
+  onChange={[Function]}
+  readOnly={true}
+  type="hidden"
+  value="False"
+/>
+`;
+
 exports[`containers/forms/PlanForm - Edit renders all fields correctly in edit mode: title field 1`] = `
 <input
   className="form-control"
@@ -605,6 +617,44 @@ exports[`containers/forms/PlanForm - Edit renders all fields correctly in edit m
   readOnly={true}
   type="hidden"
   value="1"
+/>
+`;
+
+exports[`containers/forms/PlanForm - Edit renders conditional fields correctly in edit mode: caseNum field present in editMode 1`] = `
+<input
+  className="form-control"
+  disabled={true}
+  id="caseNum"
+  name="caseNum"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  type="text"
+  value="1"
+/>
+`;
+
+exports[`containers/forms/PlanForm - Edit renders conditional fields correctly in edit mode: opensrpEventId field present in editMode 1`] = `
+<input
+  id="opensrpEventId"
+  name="opensrpEventId"
+  onBlur={[Function]}
+  onChange={[Function]}
+  readOnly={true}
+  type="hidden"
+  value="1"
+/>
+`;
+
+exports[`containers/forms/PlanForm - Edit renders conditional fields correctly in edit mode: taskGenerationStatus field present in editMode 1`] = `
+<input
+  id="taskGenerationStatus"
+  name="taskGenerationStatus"
+  onBlur={[Function]}
+  onChange={[Function]}
+  readOnly={true}
+  type="hidden"
+  value="True"
 />
 `;
 
@@ -3752,6 +3802,18 @@ exports[`containers/forms/PlanForm renders correctly: submit button 1`] = `
 >
   Save Plan
 </button>
+`;
+
+exports[`containers/forms/PlanForm renders correctly: taskGenerationStatus field 1`] = `
+<input
+  id="taskGenerationStatus"
+  name="taskGenerationStatus"
+  onBlur={[Function]}
+  onChange={[Function]}
+  readOnly={true}
+  type="hidden"
+  value="False"
+/>
 `;
 
 exports[`containers/forms/PlanForm renders correctly: title field 1`] = `

@@ -31,6 +31,8 @@ import {
   PlanGoalDetail,
   PlanGoaldetailQuantity,
   PlanGoalTarget,
+  taskGenerationStatuses,
+  taskGenerationStatusType,
   UseContext,
 } from '../../../configs/settings';
 import { DATE, IS, NAME, REQUIRED } from '../../../constants';
@@ -88,6 +90,7 @@ export const PlanSchema = Yup.object().shape({
   status: Yup.string()
     .oneOf(Object.values(PlanStatus))
     .required(REQUIRED),
+  taskGenerationStatus: Yup.string().oneOf(taskGenerationStatuses.map(e => e)),
   title: Yup.string().required(REQUIRED),
   version: Yup.string(),
 });
@@ -128,6 +131,7 @@ export interface PlanFormFields {
   opensrpEventId?: string;
   start: Date;
   status: PlanStatus;
+  taskGenerationStatus: taskGenerationStatusType;
   title: string;
   version: string;
 }
@@ -476,6 +480,13 @@ export function generatePlanDefinition(
     useContext.push({ code: 'opensrpEventId', valueCodableConcept: formValue.opensrpEventId });
   }
 
+  if (formValue.taskGenerationStatus) {
+    useContext.push({
+      code: 'taskGenerationStatus',
+      valueCodableConcept: formValue.taskGenerationStatus,
+    });
+  }
+
   return {
     ...extractActivitiesFromPlanForm(
       formValue.activities,
@@ -512,6 +523,9 @@ export function getPlanFormValues(planObject: PlanDefinition): PlanFormFields {
   const statusUseContext = planObject.useContext.filter(e => e.code === 'fiStatus');
   const eventIdUseContext = planObject.useContext.filter(e => e.code === 'opensrpEventId');
   const caseNumUseContext = planObject.useContext.filter(e => e.code === 'caseNum');
+  const taskGenerationStatusContext = planObject.useContext.filter(
+    e => e.code === 'taskGenerationStatus'
+  );
 
   const interventionType =
     typeUseContext.length > 0
@@ -564,6 +578,10 @@ export function getPlanFormValues(planObject: PlanDefinition): PlanFormFields {
       eventIdUseContext.length > 0 ? eventIdUseContext[0].valueCodableConcept : undefined,
     start: parseISO(`${planObject.effectivePeriod.start}${DEFAULT_TIME}`),
     status: planObject.status as PlanStatus,
+    taskGenerationStatus:
+      taskGenerationStatusContext.length > 0
+        ? (taskGenerationStatusContext[0].valueCodableConcept as taskGenerationStatusType)
+        : taskGenerationStatuses[1],
     title: planObject.title,
     version: planObject.version,
   };

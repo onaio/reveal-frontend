@@ -37,6 +37,10 @@ describe('containers/forms/PlanForm', () => {
     expect(toJson(wrapper.find('#identifier input'))).toMatchSnapshot('identifier field');
     expect(wrapper.find({ for: 'version' }).length).toEqual(0);
     expect(toJson(wrapper.find('#version input'))).toMatchSnapshot('version field');
+    expect(wrapper.find({ for: 'taskGenerationStatus' }).length).toEqual(0);
+    expect(toJson(wrapper.find('#taskGenerationStatus input'))).toMatchSnapshot(
+      'taskGenerationStatus field'
+    );
     expect(toJson(wrapper.find({ for: 'status' }))).toMatchSnapshot('status label');
     expect(toJson(wrapper.find('#status select'))).toMatchSnapshot('status field');
     expect(toJson(wrapper.find({ for: 'start' }))).toMatchSnapshot('start label');
@@ -276,6 +280,9 @@ describe('containers/forms/PlanForm - Edit', () => {
     expect(toJson(wrapper.find('#name input'))).toMatchSnapshot('name field');
     expect(toJson(wrapper.find('#identifier input'))).toMatchSnapshot('identifier field');
     expect(toJson(wrapper.find('#version input'))).toMatchSnapshot('version field');
+    expect(toJson(wrapper.find('#taskGenerationStatus input'))).toMatchSnapshot(
+      'taskGenerationStatus field'
+    );
     expect(toJson(wrapper.find('#status select'))).toMatchSnapshot('status field');
     expect(toJson(wrapper.find('#start input'))).toMatchSnapshot('start field');
     expect(toJson(wrapper.find('#end input'))).toMatchSnapshot('end field');
@@ -287,6 +294,25 @@ describe('containers/forms/PlanForm - Edit', () => {
     expect(wrapper.find(`.removeActivity`).length).toEqual(0);
     // there is no modal to add more activities
     expect(wrapper.find(`.add-more-activities`).length).toEqual(0);
+  });
+
+  it('renders conditional fields correctly in edit mode', () => {
+    fetch.mockResponseOnce(fixtures.jurisdictionLevel0JSON);
+    const props = {
+      ...propsForUpdatingPlans,
+      initialValues: getPlanFormValues(plans[2]),
+    };
+    const wrapper = mount(<PlanForm {...props} />);
+
+    expect(toJson(wrapper.find('#caseNum input'))).toMatchSnapshot(
+      'caseNum field present in editMode'
+    );
+    expect(toJson(wrapper.find('#opensrpEventId input'))).toMatchSnapshot(
+      'opensrpEventId field present in editMode'
+    );
+    expect(toJson(wrapper.find('#taskGenerationStatus input'))).toMatchSnapshot(
+      'taskGenerationStatus field present in editMode'
+    );
   });
 
   it('renders jurisdictions fields correctly', () => {
