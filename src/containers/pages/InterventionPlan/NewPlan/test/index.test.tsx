@@ -22,7 +22,7 @@ describe('containers/pages/NewPlan', () => {
         <NewPlan />
       </Router>
     );
-    expect(toJson(wrapper)).toMatchSnapshot();
+    expect(toJson(wrapper.find('h3.mb-3.page-title'))).toMatchSnapshot('page title');
     wrapper.unmount();
   });
 });
