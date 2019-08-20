@@ -407,6 +407,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
     InterventionType.FI,
     [PlanStatus.ACTIVE, PlanStatus.COMPLETE],
     CASE_TRIGGERED,
+    [],
     jurisdictionParentId
   );
   const routinePlans = getPlansArray(
@@ -414,6 +415,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
     InterventionType.FI,
     [PlanStatus.ACTIVE, PlanStatus.COMPLETE],
     ROUTINE,
+    [],
     jurisdictionParentId
   );
   return {
