@@ -550,7 +550,7 @@ Object {
       15.0953281335118,
     ],
     "boxZoom": true,
-    "container": "map",
+    "container": "map-1",
     "fitBoundsOptions": Object {
       "padding": 20,
     },
@@ -2690,7 +2690,7 @@ Object {
       15.0780906816776,
     ],
     "boxZoom": true,
-    "container": "map",
+    "container": "map-1",
     "fitBoundsOptions": Object {
       "padding": 20,
     },
@@ -7608,7 +7608,7 @@ Object {
       15.0953281335118,
     ],
     "boxZoom": true,
-    "container": "map",
+    "container": "map-1",
     "fitBoundsOptions": Object {
       "padding": 20,
     },
