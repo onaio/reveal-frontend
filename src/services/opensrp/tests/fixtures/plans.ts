@@ -1,4 +1,12 @@
 /* tslint:disable object-literal-sort-keys */
+export const updateResponse = {
+  ok: true,
+  redirected: false,
+  status: 201,
+  statusText: 'Created',
+  type: 'cors',
+  url: 'https://reveal-stage.smartregister.org/opensrp/rest/plans',
+};
 export const plansListResponse = [
   {
     identifier: '0e85c238-39c1-4cea-a926-3d89f0c98427',
