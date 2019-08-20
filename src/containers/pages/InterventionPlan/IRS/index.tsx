@@ -10,13 +10,7 @@ import { Store } from 'redux';
 import DrillDownTable from '@onaio/drill-down-table';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 
-import {
-  HOME,
-  HOME_URL,
-  INTERVENTION_IRS_URL,
-  INTERVENTION_TYPE,
-  IRS_PLAN_TYPE,
-} from '../../../../constants';
+import { HOME, HOME_URL, INTERVENTION_IRS_URL, IRS_PLAN_TYPE } from '../../../../constants';
 
 import { RouteParams } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
@@ -38,6 +32,7 @@ import HeaderBreadcrumbs, {
   BreadCrumbProps,
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
+import { useContextCodes } from '../../../../configs/settings';
 import { IRS_PLANS, IRS_TITLE } from '../../../../constants';
 import './../../../../styles/css/drill-down-table.css';
 
@@ -74,7 +69,7 @@ class IrsPlans extends React.Component<IrsPlansProps & RouteComponentProps<Route
         // filter for IRS plans
         const irsPlans = plans.filter((p: PlanPayload) => {
           for (const u of p.useContext) {
-            if (u.code === INTERVENTION_TYPE) {
+            if (u.code === useContextCodes[0]) {
               if (u.valueCodableConcept === IRS_PLAN_TYPE) {
                 return true;
               } else {

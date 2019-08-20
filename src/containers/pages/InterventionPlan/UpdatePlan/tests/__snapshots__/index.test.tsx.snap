@@ -256,6 +256,7 @@ Object {
     "opensrpEventId": undefined,
     "start": 2019-07-10T00:00:00.000Z,
     "status": "active",
+    "taskGenerationStatus": "False",
     "title": "TwoTwoOne_01 IRS 2019-07-10",
     "version": "1",
   },

@@ -166,14 +166,14 @@ describe('containers/forms/PlanForm/helpers', () => {
   });
 
   it('generatePlanDefinition can get original planDefinition', () => {
-    const plan = plans[0];
+    const plan = plans[2];
 
     const generatedPlanForm = getPlanFormValues(plan);
     const generatedPlan = generatePlanDefinition(generatedPlanForm, plan);
 
     expect(plan).toEqual({
       ...generatedPlan,
-      serverVersion: 1563303150422,
+      serverVersion: 1563494230144,
       version: '1',
     });
   });
@@ -182,9 +182,10 @@ describe('containers/forms/PlanForm/helpers', () => {
     expect(getPlanFormValues(plans[0])).toEqual(planFormValues2);
 
     const plan = getPlanFormValues(plans[2]);
-    // caseNum and opensrpEventId are gotten right
+    // caseNum and opensrpEventId and taskGenerationStatus are gotten right
     expect(plan.caseNum).toEqual('1');
     expect(plan.opensrpEventId).toEqual('1');
+    expect(plan.taskGenerationStatus).toEqual('True');
     // multiple jurisdictions are gotten right
     expect(getPlanFormValues(plans[1]).jurisdictions).toEqual([
       { id: '35968df5-f335-44ae-8ae5-25804caa2d86', name: '35968df5-f335-44ae-8ae5-25804caa2d86' },
