@@ -84,3 +84,142 @@ export const dataIds = data.map(el => el.id);
 export const dataByID = keyBy(data, 'id');
 
 export const singleFI = dataByID['13'];
+
+export const activeFocusInvestigationProps = {
+  caseTriggeredPlans: [
+    {
+      id: 'plan-id-2',
+      jurisdiction_depth: 2,
+      jurisdiction_id: '3378',
+      jurisdiction_name: 'TLv1_02',
+      jurisdiction_name_path: ['Canton Tha Luang', 'Tha Luang Village'],
+      jurisdiction_parent_id: '2977',
+      jurisdiction_path: ['2989', '2977'],
+      plan_date: '2019-06-18',
+      plan_effective_period_end: '2019-06-18',
+      plan_effective_period_start: '2019-07-31',
+      plan_fi_reason: 'Case-triggered',
+      plan_fi_status: 'A1',
+      plan_id: 'plan-id-2',
+      plan_intervention_type: 'IRS',
+      plan_status: 'active',
+      plan_title: 'A1-Tha Luang Village 1 Focus 01',
+      plan_version: '1',
+    },
+  ],
+  fetchPlansActionCreator: expect.anything(),
+  history: {
+    action: 'POP',
+    block: [Function],
+    createHref: [Function],
+    go: [Function],
+    goBack: [Function],
+    goForward: [Function],
+    length: 1,
+    listen: [Function],
+    location: {
+      hash: '',
+      pathname: '/',
+      search: '',
+      state: undefined,
+    },
+    push: [Function],
+    replace: [Function],
+  },
+  location: {
+    calls: [
+      [
+        0,
+        {
+          adhoc_filters: [
+            {
+              clause: 'WHERE',
+              comparator: 'FI',
+              expressionType: 'SIMPLE',
+              operator: '==',
+              subject: 'plan_intervention_type',
+            },
+          ],
+          row_limit: 2000,
+        },
+      ],
+    ],
+    results: [
+      {
+        isThrow: false,
+        value: {},
+      },
+    ],
+  },
+  match: {
+    calls: [
+      [
+        0,
+        {
+          adhoc_filters: [
+            {
+              clause: 'WHERE',
+              comparator: 'FI',
+              expressionType: 'SIMPLE',
+              operator: '==',
+              subject: 'plan_intervention_type',
+            },
+          ],
+          row_limit: 2000,
+        },
+      ],
+    ],
+    results: [
+      {
+        isThrow: false,
+        value: {},
+      },
+    ],
+  },
+  routinePlans: [
+    {
+      id: 'ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f',
+      jurisdiction_depth: 2,
+      jurisdiction_id: '450fc15b-5bd2-468a-927a-49cb10d3bcac',
+      jurisdiction_name: 'NVI_439',
+      jurisdiction_name_path: ['Chadiza', 'Naviluli'],
+      jurisdiction_parent_id: '2944',
+      jurisdiction_path: ['2939', '2944'],
+      plan_date: '2019-06-18',
+      plan_effective_period_end: '2019-06-18',
+      plan_effective_period_start: '2019-07-31',
+      plan_fi_reason: 'Routine',
+      plan_fi_status: 'A1',
+      plan_id: '10f9e9fa-ce34-4b27-a961-72fab5206ab6',
+      plan_intervention_type: 'FI',
+      plan_status: 'active',
+      plan_title: 'A1-Tha Luang Village 1 Focus 01',
+      plan_version: '1',
+    },
+  ],
+  supersetService: {
+    calls: [
+      [
+        0,
+        {
+          adhoc_filters: [
+            {
+              clause: 'WHERE',
+              comparator: 'FI',
+              expressionType: 'SIMPLE',
+              operator: '==',
+              subject: 'plan_intervention_type',
+            },
+          ],
+          row_limit: 2000,
+        },
+      ],
+    ],
+    results: [
+      {
+        isThrow: false,
+        value: {},
+      },
+    ],
+  },
+};
