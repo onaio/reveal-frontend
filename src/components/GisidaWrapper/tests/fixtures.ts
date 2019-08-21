@@ -1267,7 +1267,7 @@ export const appState = {
   ],
 };
 
-export const gsidaWrapperProps = {
+export const gisidaWrapperProps = {
   basemapStyle: 'mapbox://styles/mapbox/satellite-v9',
   currentGoal: null,
   geoData: {

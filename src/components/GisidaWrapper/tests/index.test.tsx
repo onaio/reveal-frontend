@@ -12,7 +12,7 @@ import store from '../../../store';
 import { Task, TaskGeoJSON } from '../../../store/ducks/tasks';
 import * as fixtures from '../../../store/ducks/tests/fixtures';
 import GisidaWrapper from '../index';
-import { appState, gsidaWrapperProps, layer1 } from './fixtures';
+import { appState, gisidaWrapperProps, layer1 } from './fixtures';
 
 jest.mock('gisida-react', () => {
   const MapComponent = () => <div>I love oov</div>;
@@ -102,13 +102,13 @@ describe('components/GisidaWrapper', () => {
     // remove reloadLayers because they keep changing
     delete map1.reloadLayers;
     expect(map1).toMatchSnapshot({});
-    expect(toJson(wrapper).props).toMatchSnapshot(JSON.stringify(gsidaWrapperProps));
+    expect(toJson(wrapper).props).toMatchSnapshot(JSON.stringify(gisidaWrapperProps));
     wrapper.setProps({ ...props });
     wrapper.setState({ doRenderMap: true });
     jest.runOnlyPendingTimers();
     expect(setTimeout).toHaveBeenCalledTimes(1);
     expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 3000);
-    expect(toJson(wrapper).props).toMatchSnapshot(JSON.stringify(gsidaWrapperProps));
+    expect(toJson(wrapper).props).toMatchSnapshot(JSON.stringify(gisidaWrapperProps));
     expect(wrapper.find('MapComponent').props()).toMatchSnapshot('Map component');
     store.dispatch((Actions as any).mapRendered('map-1', true));
     store.dispatch((Actions as any).mapLoaded('map-1', true));
