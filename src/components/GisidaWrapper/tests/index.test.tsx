@@ -12,7 +12,7 @@ import store from '../../../store';
 import { Task, TaskGeoJSON } from '../../../store/ducks/tasks';
 import * as fixtures from '../../../store/ducks/tests/fixtures';
 import GisidaWrapper from '../index';
-import { appState, gisidaWrapperProps, layer1 } from './fixtures';
+import { appState, gisidaWrapperProps, layer1, map1Fixture } from './fixtures';
 
 jest.mock('gisida-react', () => {
   const MapComponent = () => <div>I love oov</div>;
@@ -202,10 +202,10 @@ describe('components/GisidaWrapper', () => {
      */
     const allLayers = store.getState()['map-1'].layers;
     toggleLayer(allLayers, props.currentGoal, store, Actions);
-    expect(store.getState()['map-1']).toMatchSnapshot({
-      currentRegion: expect.any(Number),
-      reloadLayers: expect.any(Number),
-    });
+    const map1 = store.getState()['map-1'];
+    delete map1.currentRegion;
+    delete map1.reloadLayers;
+    expect(map1).toEqual(map1Fixture);
     const componentWillUnmount = jest.spyOn(wrapper.instance(), 'componentWillUnmount');
     wrapper.unmount();
     expect(componentWillUnmount).toHaveBeenCalled();
