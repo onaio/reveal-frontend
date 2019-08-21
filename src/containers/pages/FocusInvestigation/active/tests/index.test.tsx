@@ -1,5 +1,6 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faExternalLinkSquareAlt } from '@fortawesome/free-solid-svg-icons';
+import DrillDownTable from '@onaio/drill-down-table/dist/types';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset from '@onaio/superset-connector';
 import { mount, shallow } from 'enzyme';
@@ -10,12 +11,15 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
-import { CURRENT_FOCUS_INVESTIGATION } from '../../../../../constants';
 import { FI_PLAN_TYPE } from '../../../../../constants';
+import { CURRENT_FOCUS_INVESTIGATION } from '../../../../../constants';
 import store from '../../../../../store';
 import reducer, { fetchPlans, reducerName } from '../../../../../store/ducks/plans';
+import { Plan } from '../../../../../store/ducks/plans';
 import * as fixtures from '../../../../../store/ducks/tests/fixtures';
 import ConnectedActiveFocusInvestigation, { ActiveFocusInvestigation } from '../../active';
+import { ActiveFIProps } from '../index';
+import { activeFocusInvestigationProps } from './fixtures';
 reducerRegistry.register(reducerName, reducer);
 
 library.add(faExternalLinkSquareAlt);
@@ -81,8 +85,25 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
     );
     const helmet = Helmet.peek();
     expect(helmet.title).toEqual(CURRENT_FOCUS_INVESTIGATION);
-    expect(toJson(wrapper)).toMatchSnapshot();
-    expect(toJson(wrapper.find('HeaderBreadcrumb'))).toMatchSnapshot();
+    expect(wrapper.find(ActiveFocusInvestigation).props().caseTriggeredPlans).toEqual(
+      activeFocusInvestigationProps.caseTriggeredPlans
+    );
+    expect(wrapper.find(ActiveFocusInvestigation).props().routinePlans).toEqual(
+      activeFocusInvestigationProps.routinePlans
+    );
+    expect(wrapper.find('HeaderBreadcrumb').length).toEqual(1);
+    expect(wrapper.find('HeaderBreadcrumb').props()).toEqual({
+      currentPage: {
+        label: 'Focus Investigations',
+        url: '/focus-investigation',
+      },
+      pages: [
+        {
+          label: 'Home',
+          url: '/',
+        },
+      ],
+    });
     wrapper.unmount();
   });
 
@@ -90,7 +111,7 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
     const mock: any = jest.fn();
     mock.mockImplementation(() => Promise.resolve(fixtures.plans));
     const props = {
-      caseTriggeredPlans: [fixtures.plan2],
+      caseTriggeredPlans: [fixtures.plan2] as Plan[],
       fetchPlansActionCreator: jest.fn(),
       history,
       location: mock,
@@ -103,8 +124,25 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
         <ActiveFocusInvestigation {...props} />
       </Router>
     );
-    expect(toJson(wrapper)).toMatchSnapshot();
+    expect(wrapper.find(ActiveFocusInvestigation).props().caseTriggeredPlans).toEqual(
+      activeFocusInvestigationProps.caseTriggeredPlans
+    );
+    expect(wrapper.find(ActiveFocusInvestigation).props().routinePlans).toEqual(
+      activeFocusInvestigationProps.routinePlans
+    );
     expect(wrapper.find('HeaderBreadcrumb').length).toEqual(1);
+    expect(wrapper.find('HeaderBreadcrumb').props()).toEqual({
+      currentPage: {
+        label: 'Focus Investigations',
+        url: '/focus-investigation',
+      },
+      pages: [
+        {
+          label: 'Home',
+          url: '/',
+        },
+      ],
+    });
     wrapper.unmount();
   });
 
