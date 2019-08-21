@@ -7,4 +7,3 @@ exports[`containers/pages/NewPlan renders correctly: page title 1`] = `
   Create New Plan
 </h3>
 `;
-
