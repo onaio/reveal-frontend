@@ -25,7 +25,6 @@ import uuidv4 from 'uuid/v4';
 import GeojsonExtent from '@mapbox/geojson-extent';
 import DrillDownTable, { DrillDownProps, DropDownCell } from '@onaio/drill-down-table';
 import reducerRegistry from '@onaio/redux-reducer-registry';
-import superset from '@onaio/superset-connector';
 
 import {
   DATE_FORMAT,
@@ -210,13 +209,10 @@ class IrsPlan extends React.Component<
 
   public async componentDidMount() {
     const {
-      allJurisdictionIds,
-      fetchAllJurisdictionIdsActionCreator,
       fetchJurisdictionsActionCreator,
       fetchPlansActionCreator,
       isDraftPlan,
       isNewPlan,
-      loadedJurisdictionIds,
       planId,
       planById,
       supersetService,
@@ -865,7 +861,7 @@ class IrsPlan extends React.Component<
    */
   private async onStartPlanFormSubmit(e: MouseEvent) {
     const { newPlan: NewPlan, planCountry } = this.state;
-    const { jurisdictionsById, isDraftPlan, isNewPlan } = this.props;
+    const { jurisdictionsById, isDraftPlan } = this.props;
     const country: JurisdictionsByCountry = CountriesAdmin0[planCountry as ADMN0_PCODE];
 
     if (!country || (!country.jurisdictionIds.length && !country.jurisdictionId.length)) {
