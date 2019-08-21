@@ -160,6 +160,7 @@ interface IrsPlanState {
   isStartingPlan: boolean;
   newPlan: PlanRecord | null;
   planCountry: string;
+  planTableProps: DrillDownProps<any> | null;
   previousPlanName: string;
   tableCrumbs: TableCrumb[];
 }
@@ -202,6 +203,7 @@ class IrsPlan extends React.Component<
           }
         : (props.planById as PlanRecord) || null,
       planCountry: '',
+      planTableProps: null,
       previousPlanName: '',
       tableCrumbs: [],
     };
@@ -320,9 +322,12 @@ class IrsPlan extends React.Component<
                       tableCrumbs,
                     },
                     () => {
-                      if (isDraftPlan) {
-                        this.loadJurisdictionGeometries();
-                      }
+                      const planTableProps = this.getDrilldownPlanTableProps(this.state);
+                      this.setState({ planTableProps }, () => {
+                        if (isDraftPlan) {
+                          this.loadJurisdictionGeometries();
+                        }
+                      });
                     }
                   );
                 } else {
@@ -332,7 +337,8 @@ class IrsPlan extends React.Component<
             });
           }
         } else {
-          this.setState({ isLoadingJurisdictions: false });
+          const planTableProps = this.getDrilldownPlanTableProps(this.state);
+          this.setState({ isLoadingJurisdictions: false, planTableProps });
         }
         return fetchJurisdictionsActionCreator(jurisdictionsArray);
       }
@@ -417,7 +423,7 @@ class IrsPlan extends React.Component<
 
     const breadCrumbProps = this.getBreadCrumbProps(this.props, pageLabel);
 
-    const planTableProps = this.getDrilldownPlanTableProps(this.state);
+    const { planTableProps } = this.state;
 
     const onSetPlanNameChange = (e: any) => {
       this.onSetPlanNameChange(e);
@@ -711,8 +717,10 @@ class IrsPlan extends React.Component<
         tableCrumbs: nextCrumbs,
       },
       () => {
+        const planTableProps = this.getDrilldownPlanTableProps(this.state);
         this.setState({
           doRenderTable: true,
+          planTableProps,
         });
       }
     );
@@ -742,10 +750,16 @@ class IrsPlan extends React.Component<
     }));
 
     if (newCrumb) {
-      this.setState({
-        focusJurisdictionId: (id as string) || null,
-        tableCrumbs: [...newCrumbs, newCrumb],
-      });
+      this.setState(
+        {
+          focusJurisdictionId: (id as string) || null,
+          tableCrumbs: [...newCrumbs, newCrumb],
+        },
+        () => {
+          const planTableProps = this.getDrilldownPlanTableProps(this.state);
+          this.setState({ planTableProps });
+        }
+      );
     }
   }
 
@@ -915,7 +929,10 @@ class IrsPlan extends React.Component<
         newPlan,
         tableCrumbs,
       },
-      this.loadJurisdictionGeometries
+      () => {
+        const planTableProps = this.getDrilldownPlanTableProps(this.state);
+        this.setState({ planTableProps }, this.loadJurisdictionGeometries);
+      }
     );
   }
 
@@ -1113,7 +1130,10 @@ class IrsPlan extends React.Component<
         ...NewPlan,
         plan_jurisdictions_ids: [...newPlanJurisdictionIds],
       };
-      this.setState({ newPlan });
+      this.setState({ newPlan }, () => {
+        const planTableProps = this.getDrilldownPlanTableProps(this.state);
+        this.setState({ planTableProps });
+      });
     }
   }
   /** onTableCheckboxChange - handler for drilldown table checkbox click which calls this.onToggleJurisdictionSelection */
@@ -1221,6 +1241,9 @@ class IrsPlan extends React.Component<
               );
             }
           }
+
+          const planTableProps = this.getDrilldownPlanTableProps(this.state);
+          this.setState({ planTableProps });
         }
       });
     }
@@ -1891,7 +1914,7 @@ class IrsPlan extends React.Component<
    * @param props - component props
    * @returns tableProps|null - compatible object for DrillDownTable props
    */
-  private getDrilldownPlanTableProps(state: IrsPlanState) {
+  private getDrilldownPlanTableProps(state: IrsPlanState): DrillDownProps<any> | null {
     const { filteredJurisdictionIds, newPlan, focusJurisdictionId, tableCrumbs } = state;
     const { jurisdictionsById } = this.props;
     const filteredJurisdictions = filteredJurisdictionIds.map(j => jurisdictionsById[j]);
