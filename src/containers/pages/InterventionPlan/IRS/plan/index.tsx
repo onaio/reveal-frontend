@@ -223,25 +223,6 @@ class IrsPlan extends React.Component<
       supersetService,
     } = this.props;
 
-    // GET LIST OF ALL JURISDICTIONS
-    let allJurIds: string[] = [];
-    if (!allJurisdictionIds.length || allJurisdictionIds.length === loadedJurisdictionIds.length) {
-      // todo - is there a better way to fetch a list of ALL jurisdiction ids?
-      await supersetFetch(SUPERSET_JURISDICTIONS_DATA_SLICE, { row_limit: 10000 }).then(result => {
-        // populate array of unique `id`s
-        if (result && result.length) {
-          for (const j of result) {
-            if (allJurIds.indexOf(j.id) === -1) {
-              allJurIds.push(j.id);
-            }
-          }
-        }
-        return fetchAllJurisdictionIdsActionCreator([...allJurIds]);
-      });
-    } else {
-      allJurIds = [...allJurisdictionIds];
-    }
-
     // GET PLAN
     if (planId && !planById) {
       await OpenSrpPlanService.read(planId)
@@ -256,38 +237,7 @@ class IrsPlan extends React.Component<
       this.setState({ newPlan: planById });
     }
 
-    // GET PLAN JURISDICTIONS associated with this plan
-    const planJurisdictionIdsToGet: string[] = [];
-    let otherJurisdictionIdsToGet: string[] = [];
-
-    // GET REMAINING JURISDICTIONS
-    let sqlFilterExpression = '';
-    let idsToUse: string[] = [];
-    if (loadedJurisdictionIds.length || planJurisdictionIdsToGet.length) {
-      otherJurisdictionIdsToGet = allJurIds.filter((j: string) => {
-        return !loadedJurisdictionIds.includes(j) && !planJurisdictionIdsToGet.includes(j);
-      });
-
-      const otherJurisdictionIdsNotToGet = Array.from(
-        new Set([...planJurisdictionIdsToGet, ...loadedJurisdictionIds])
-      );
-
-      const doInclude = otherJurisdictionIdsToGet.length < otherJurisdictionIdsNotToGet.length;
-      idsToUse = doInclude ? otherJurisdictionIdsToGet : otherJurisdictionIdsNotToGet;
-
-      // build query params
-      for (let i = 0; i < idsToUse.length; i += 1) {
-        const jurId = idsToUse[i];
-        if (i) {
-          sqlFilterExpression += doInclude ? ' OR ' : ' AND ';
-        }
-        sqlFilterExpression += `id ${doInclude ? '=' : '!='} '${jurId}'`;
-      }
-    }
-
-    const otherJurisdictionSupersetParams = sqlFilterExpression.length
-      ? superset.getFormData(10000, [{ sqlExpression: sqlFilterExpression }])
-      : { row_limit: 10000 };
+    const otherJurisdictionSupersetParams = { row_limit: 10000 };
 
     await supersetService(SUPERSET_JURISDICTIONS_DATA_SLICE, otherJurisdictionSupersetParams).then(
       (jurisdictionResults: FlexObject[] = []) => {
