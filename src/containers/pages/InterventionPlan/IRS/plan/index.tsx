@@ -1891,7 +1891,7 @@ class IrsPlan extends React.Component<
    * @param props - component props
    * @returns tableProps|null - compatible object for DrillDownTable props
    */
-  private getDrilldownPlanTableProps(state: IrsPlanState) {
+  private getDrilldownPlanTableProps(state: IrsPlanState): DrillDownProps<any> | null {
     const { filteredJurisdictionIds, newPlan, focusJurisdictionId, tableCrumbs } = state;
     const { jurisdictionsById } = this.props;
     const filteredJurisdictions = filteredJurisdictionIds.map(j => jurisdictionsById[j]);
