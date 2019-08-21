@@ -160,6 +160,7 @@ interface IrsPlanState {
   isStartingPlan: boolean;
   newPlan: PlanRecord | null;
   planCountry: string;
+  planTableProps: DrillDownProps<any> | null;
   previousPlanName: string;
   tableCrumbs: TableCrumb[];
 }
@@ -202,6 +203,7 @@ class IrsPlan extends React.Component<
           }
         : (props.planById as PlanRecord) || null,
       planCountry: '',
+      planTableProps: null,
       previousPlanName: '',
       tableCrumbs: [],
     };
