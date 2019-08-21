@@ -865,7 +865,7 @@ class IrsPlan extends React.Component<
    */
   private async onStartPlanFormSubmit(e: MouseEvent) {
     const { newPlan: NewPlan, planCountry } = this.state;
-    const { jurisdictionsById, isDraftPlan } = this.props;
+    const { jurisdictionsById, isDraftPlan, isNewPlan } = this.props;
     const country: JurisdictionsByCountry = CountriesAdmin0[planCountry as ADMN0_PCODE];
 
     if (!country || (!country.jurisdictionIds.length && !country.jurisdictionId.length)) {
@@ -894,7 +894,7 @@ class IrsPlan extends React.Component<
           plan_jurisdictions_ids:
             isDraftPlan && NewPlan && NewPlan.plan_jurisdictions_ids
               ? this.getAncestorJurisdictionIds(NewPlan.plan_jurisdictions_ids, jurisdictionsById)
-              : [...jurisdictionsToInclude],
+              : [],
         }
       : NewPlan;
 
