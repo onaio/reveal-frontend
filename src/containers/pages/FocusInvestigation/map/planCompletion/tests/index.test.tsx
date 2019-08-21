@@ -179,6 +179,8 @@ describe('@containers/pages/map/planCompletion/', () => {
     const completedPlan = cloneDeep(fixtures.plan1);
     completedPlan.plan_status = PlanStatus.COMPLETE;
 
+    expect(discoWrapper.props().children.props.history.action).toEqual('PUSH');
+
     expect(fetch).toBeCalledTimes(2);
     expect(fetch.mock.calls[0][0]).toEqual(expectedCalledUrl);
 
