@@ -108,8 +108,8 @@ describe('components/GisidaWrapper', () => {
     jest.runOnlyPendingTimers();
     expect(setTimeout).toHaveBeenCalledTimes(1);
     expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 3000);
-    expect(toJson(wrapper)).toMatchSnapshot();
-    expect(wrapper.find('MapComponent').props()).toMatchSnapshot();
+    expect(toJson(wrapper).props).toMatchSnapshot(JSON.stringify(gsidaWrapperProps));
+    expect(wrapper.find('MapComponent').props()).toMatchSnapshot('Map component');
     store.dispatch((Actions as any).mapRendered('map-1', true));
     store.dispatch((Actions as any).mapLoaded('map-1', true));
     expect(store.getState().APP).toMatchSnapshot({
