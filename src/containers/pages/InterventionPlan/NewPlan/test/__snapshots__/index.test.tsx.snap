@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`containers/pages/NewPlan renders correctly: page title 1`] = `
+<h3
+  className="mb-3 page-title"
+>
+  Create New Plan
+</h3>
+`;
