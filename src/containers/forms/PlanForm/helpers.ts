@@ -518,14 +518,35 @@ export function generatePlanDefinition(
  * @returns {PlanFormFields} - the plan form field values
  */
 export function getPlanFormValues(planObject: PlanDefinition): PlanFormFields {
-  const typeUseContext = planObject.useContext.filter(e => e.code === 'interventionType');
-  const reasonUseContext = planObject.useContext.filter(e => e.code === 'fiReason');
-  const statusUseContext = planObject.useContext.filter(e => e.code === 'fiStatus');
-  const eventIdUseContext = planObject.useContext.filter(e => e.code === 'opensrpEventId');
-  const caseNumUseContext = planObject.useContext.filter(e => e.code === 'caseNum');
-  const taskGenerationStatusContext = planObject.useContext.filter(
-    e => e.code === 'taskGenerationStatus'
-  );
+  const typeUseContext = [];
+  const reasonUseContext = [];
+  const statusUseContext = [];
+  const eventIdUseContext = [];
+  const caseNumUseContext = [];
+  const taskGenerationStatusContext = [];
+
+  for (const context of planObject.useContext) {
+    switch (context.code) {
+      case 'interventionType':
+        typeUseContext.push(context);
+        break;
+      case 'fiReason':
+        reasonUseContext.push(context);
+        break;
+      case 'fiStatus':
+        statusUseContext.push(context);
+        break;
+      case 'opensrpEventId':
+        eventIdUseContext.push(context);
+        break;
+      case 'caseNum':
+        caseNumUseContext.push(context);
+        break;
+      case 'taskGenerationStatus':
+        taskGenerationStatusContext.push(context);
+        break;
+    }
+  }
 
   const interventionType =
     typeUseContext.length > 0
