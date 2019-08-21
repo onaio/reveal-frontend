@@ -322,9 +322,12 @@ class IrsPlan extends React.Component<
                       tableCrumbs,
                     },
                     () => {
-                      if (isDraftPlan) {
-                        this.loadJurisdictionGeometries();
-                      }
+                      const planTableProps = this.getDrilldownPlanTableProps(this.state);
+                      this.setState({ planTableProps }, () => {
+                        if (isDraftPlan) {
+                          this.loadJurisdictionGeometries();
+                        }
+                      });
                     }
                   );
                 } else {
@@ -334,7 +337,8 @@ class IrsPlan extends React.Component<
             });
           }
         } else {
-          this.setState({ isLoadingJurisdictions: false });
+          const planTableProps = this.getDrilldownPlanTableProps(this.state);
+          this.setState({ isLoadingJurisdictions: false, planTableProps });
         }
         return fetchJurisdictionsActionCreator(jurisdictionsArray);
       }
@@ -917,7 +921,10 @@ class IrsPlan extends React.Component<
         newPlan,
         tableCrumbs,
       },
-      this.loadJurisdictionGeometries
+      () => {
+        const planTableProps = this.getDrilldownPlanTableProps(this.state);
+        this.setState({ planTableProps }, this.loadJurisdictionGeometries);
+      }
     );
   }
 
