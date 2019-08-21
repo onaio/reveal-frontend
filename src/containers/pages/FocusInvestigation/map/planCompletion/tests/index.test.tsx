@@ -30,6 +30,7 @@ import reducer, {
   removePlansAction,
 } from '../../../../../../store/ducks/plans';
 import * as fixtures from '../../../../../../store/ducks/tests/fixtures';
+import { payload } from './fixtures';
 
 // tslint:disable-next-line: no-var-requires
 const fetch = require('jest-fetch-mock');
@@ -191,6 +192,11 @@ describe('@containers/pages/map/planCompletion/', () => {
 
     expect(fetch).toBeCalledTimes(2);
     expect(fetch.mock.calls[0][0]).toEqual(expectedCalledUrl);
+    expect(fetch.mock.calls[1][0]).toEqual(
+      'https://reveal-stage.smartregister.org/opensrp/rest/plans'
+    );
+
+    expect(JSON.parse(fetch.mock.calls[1][1].body)).toEqual(payload.body);
 
     expect(plan1FromStore).toEqual(completedPlan);
 
