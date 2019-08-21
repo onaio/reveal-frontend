@@ -423,7 +423,7 @@ class IrsPlan extends React.Component<
 
     const breadCrumbProps = this.getBreadCrumbProps(this.props, pageLabel);
 
-    const planTableProps = this.getDrilldownPlanTableProps(this.state);
+    const { planTableProps } = this.state;
 
     const onSetPlanNameChange = (e: any) => {
       this.onSetPlanNameChange(e);
