@@ -717,8 +717,10 @@ class IrsPlan extends React.Component<
         tableCrumbs: nextCrumbs,
       },
       () => {
+        const planTableProps = this.getDrilldownPlanTableProps(this.state);
         this.setState({
           doRenderTable: true,
+          planTableProps,
         });
       }
     );
@@ -748,10 +750,16 @@ class IrsPlan extends React.Component<
     }));
 
     if (newCrumb) {
-      this.setState({
-        focusJurisdictionId: (id as string) || null,
-        tableCrumbs: [...newCrumbs, newCrumb],
-      });
+      this.setState(
+        {
+          focusJurisdictionId: (id as string) || null,
+          tableCrumbs: [...newCrumbs, newCrumb],
+        },
+        () => {
+          const planTableProps = this.getDrilldownPlanTableProps(this.state);
+          this.setState({ planTableProps });
+        }
+      );
     }
   }
 
@@ -1122,7 +1130,10 @@ class IrsPlan extends React.Component<
         ...NewPlan,
         plan_jurisdictions_ids: [...newPlanJurisdictionIds],
       };
-      this.setState({ newPlan });
+      this.setState({ newPlan }, () => {
+        const planTableProps = this.getDrilldownPlanTableProps(this.state);
+        this.setState({ planTableProps });
+      });
     }
   }
   /** onTableCheckboxChange - handler for drilldown table checkbox click which calls this.onToggleJurisdictionSelection */
@@ -1230,6 +1241,9 @@ class IrsPlan extends React.Component<
               );
             }
           }
+
+          const planTableProps = this.getDrilldownPlanTableProps(this.state);
+          this.setState({ planTableProps });
         }
       });
     }
