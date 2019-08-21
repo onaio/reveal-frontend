@@ -12,6 +12,7 @@ import store from '../../../store';
 import { Task, TaskGeoJSON } from '../../../store/ducks/tasks';
 import * as fixtures from '../../../store/ducks/tests/fixtures';
 import GisidaWrapper from '../index';
+import { appState, gsidaWrapperProps, layer1 } from './fixtures';
 
 jest.mock('gisida-react', () => {
   const MapComponent = () => <div>I love oov</div>;
@@ -81,7 +82,7 @@ describe('components/GisidaWrapper', () => {
 
       jest.runOnlyPendingTimers();
       const layer = store.getState()['map-1'].layers;
-      expect(layer).toMatchSnapshot();
+      expect(layer).toMatchSnapshot(JSON.stringify(layer1));
       const componentWillUnmount = jest.spyOn(wrapper.instance(), 'componentWillUnmount');
       wrapper.unmount();
       expect(componentWillUnmount).toHaveBeenCalled();
@@ -96,12 +97,12 @@ describe('components/GisidaWrapper', () => {
       structures: wrapFeatureCollection([fixtures.structure1.geojson]),
     };
     const wrapper = mount(<GisidaWrapper {...props} />);
-    expect(store.getState().APP).toMatchSnapshot();
+    expect(store.getState().APP).toMatchSnapshot(JSON.stringify(appState));
     const map1 = store.getState()['map-1'];
     // remove reloadLayers because they keep changing
     delete map1.reloadLayers;
     expect(map1).toMatchSnapshot({});
-    expect(toJson(wrapper)).toMatchSnapshot();
+    expect(toJson(wrapper).props).toMatchSnapshot(JSON.stringify(gsidaWrapperProps));
     wrapper.setProps({ ...props });
     wrapper.setState({ doRenderMap: true });
     jest.runOnlyPendingTimers();
@@ -161,7 +162,7 @@ describe('components/GisidaWrapper', () => {
      */
     wrapper.setState({ doRenderMap: true });
     wrapper.setProps({ ...props });
-    expect(toJson(wrapper)).toMatchSnapshot();
+    expect(toJson(wrapper)).toMatchSnapshot('gisida wrapper 1');
     expect(wrapper.find('MapComponent').props()).toMatchSnapshot({});
     store.dispatch((Actions as any).mapRendered('map-1', true));
     store.dispatch((Actions as any).mapLoaded('map-1', true));
@@ -217,7 +218,7 @@ describe('components/GisidaWrapper', () => {
     const wrapper = mount(<GisidaWrapper {...props1} />);
     wrapper.setState({ doRenderMap: true });
     wrapper.setProps({ ...props });
-    expect(toJson(wrapper)).toMatchSnapshot();
+    expect(toJson(wrapper)).toMatchSnapshot('gisida wrapper');
     expect(store.getState().APP).toMatchSnapshot({
       accessToken: expect.any(String),
       apiAccessToken: expect.any(String),
@@ -271,7 +272,7 @@ describe('components/GisidaWrapper', () => {
      */
     wrapper.setState({ doRenderMap: true });
     wrapper.setProps({ ...props });
-    expect(wrapper.find('MapComponent').props()).toMatchSnapshot();
+    expect(wrapper.find('MapComponent').props()).toMatchSnapshot('map component');
     store.dispatch((Actions as any).mapRendered('map-1', true));
     store.dispatch((Actions as any).mapLoaded('map-1', true));
     expect(store.getState().APP).toMatchSnapshot({
