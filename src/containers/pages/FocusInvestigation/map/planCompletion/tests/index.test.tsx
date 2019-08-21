@@ -9,7 +9,12 @@ import { Helmet } from 'react-helmet';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import ConnectedPlanCompletion, { PlanCompletion } from '..';
-import { FI_SINGLE_MAP_URL, OPENSRP_PLANS, PLAN_COMPLETION_URL } from '../../../../../../constants';
+import {
+  FI_SINGLE_MAP_URL,
+  OPENSRP_PLANS,
+  PLAN_COMPLETION_URL,
+  PLAN_LIST_URL,
+} from '../../../../../../constants';
 import { OpenSRPService } from '../../../../../../services/opensrp';
 import {
   plansListResponse,
@@ -180,6 +185,9 @@ describe('@containers/pages/map/planCompletion/', () => {
     completedPlan.plan_status = PlanStatus.COMPLETE;
 
     expect(discoWrapper.props().children.props.history.action).toEqual('PUSH');
+    expect(discoWrapper.props().children.props.history.location.pathname).toEqual(
+      `${PLAN_LIST_URL}`
+    );
 
     expect(fetch).toBeCalledTimes(2);
     expect(fetch.mock.calls[0][0]).toEqual(expectedCalledUrl);
