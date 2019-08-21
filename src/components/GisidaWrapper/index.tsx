@@ -200,7 +200,7 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
         !some(polygonFeatures) &&
         !this.state.initMapWithoutFC &&
         this.state.locations) ||
-      this.props.goal === null
+      (this.props.goal === null && !(this.props.layers && this.props.layers.length))
     ) {
       this.setState(
         { doInitMap: true, initMapWithoutFC: true, initMapWithStructures: true },

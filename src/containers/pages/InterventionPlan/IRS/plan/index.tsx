@@ -1040,6 +1040,17 @@ class IrsPlan extends React.Component<
         }
       }
 
+      // if parent is no longer, deselect it (todo: make this recursive)
+      const { parent_id } = jurisdictionsById[id];
+      const isParentSelected = doSelect
+        ? true
+        : parent_id && this.getIsJurisdictionPartiallySelected(parent_id, newPlanJurisdictionIds);
+      if (parent_id && !isParentSelected) {
+        newPlanJurisdictionIds.splice(newPlanJurisdictionIds.indexOf(parent_id), 1);
+      } else if (parent_id && isParentSelected && !newPlanJurisdictionIds.includes(parent_id)) {
+        newPlanJurisdictionIds.push(parent_id);
+      }
+
       // loop through all geographic_levels
       const geoGraphicLevels = this.getGeographicLevelsFromJurisdictions(filteredJurisdictions);
       if (
@@ -1048,6 +1059,7 @@ class IrsPlan extends React.Component<
         country.tilesets
       ) {
         const Map = window.maps.find((e: mbMap) => (e as GisidaMap)._container.id === MAP_ID);
+
         for (
           let g = clickedFeatureJurisdiction.geographic_level;
           g < geoGraphicLevels.length;
@@ -1096,20 +1108,104 @@ class IrsPlan extends React.Component<
   }
   /** onToggleAllCheckboxChange - handler for de/select all Jurisdictions checkbox which updates component state */
   private onToggleAllCheckboxChange(e: any) {
-    const { newPlan: NewPlan, filteredJurisdictionIds } = this.state;
+    const { newPlan: NewPlan, filteredJurisdictionIds, focusJurisdictionId } = this.state;
     const { jurisdictionsById } = this.props;
-    const filteredJurisdictions = filteredJurisdictionIds.map(j => jurisdictionsById[j]);
 
     if (e && e.target && NewPlan) {
       const { checked: isSelected } = e.target;
-      const newPlanJurisdictionIds: string[] = isSelected
-        ? filteredJurisdictions.map((j: Jurisdiction) => j.jurisdiction_id)
-        : [];
+      const { plan_jurisdictions_ids } = NewPlan;
+
+      const selectedIds = (plan_jurisdictions_ids && [...plan_jurisdictions_ids]) || [
+        ...filteredJurisdictionIds,
+      ];
+      const decendantIds = focusJurisdictionId
+        ? this.getDecendantJurisdictionIds([focusJurisdictionId], jurisdictionsById)
+        : [...filteredJurisdictionIds];
+
+      // const newPlanJurisdictionIds: string[] = [];
+      if (focusJurisdictionId && isSelected) {
+        // select previously deselected decendants
+        for (const d of decendantIds) {
+          if (!selectedIds.includes(d)) {
+            selectedIds.push(d);
+          }
+        }
+      } else if (focusJurisdictionId && !isSelected) {
+        // de-select previously selected decendants
+        for (const d of decendantIds) {
+          if (selectedIds.includes(d)) {
+            selectedIds.splice(selectedIds.indexOf(d), 1);
+          }
+        }
+      } else if (!focusJurisdictionId) {
+        selectedIds.length = 0;
+        if (isSelected) {
+          selectedIds.concat(...filteredJurisdictionIds);
+        }
+      }
+
       const newPlan: PlanRecord = {
         ...(this.state.newPlan as PlanRecord),
-        plan_jurisdictions_ids: [...newPlanJurisdictionIds],
+        plan_jurisdictions_ids: [...selectedIds],
       };
-      this.setState({ newPlan });
+
+      this.setState({ newPlan }, () => {
+        const {
+          country: nextCountry,
+          filteredJurisdictionIds: nextFilteredJurisdictionIds,
+          newPlan: nextNewPlan,
+        } = this.state;
+        const Map = window.maps.find((m: mbMap) => (m as GisidaMap)._container.id === MAP_ID);
+
+        // Loop through geographic levels and update selection fill-opacity stops
+        if (nextCountry && Map) {
+          const nextFilteredJurisdictions = nextFilteredJurisdictionIds.map(
+            j => jurisdictionsById[j]
+          );
+          const selectedJurisdictionsIds =
+            nextNewPlan && nextNewPlan.plan_jurisdictions_ids
+              ? [...nextNewPlan.plan_jurisdictions_ids]
+              : [...nextFilteredJurisdictionIds];
+
+          const geoGraphicLevels = this.getGeographicLevelsFromJurisdictions(
+            nextFilteredJurisdictions
+          );
+
+          for (let d = 1; d < geoGraphicLevels.length; d += 1) {
+            // ids selected in this geographic level
+            const adminLevelIds = selectedJurisdictionsIds.filter(
+              j => jurisdictionsById[j] && jurisdictionsById[j].geographic_level === d
+            );
+            // all Jurisdictions for this geographic level
+            const adminLevelJurs = nextFilteredJurisdictionIds
+              .filter(j => jurisdictionsById[j] && jurisdictionsById[j].geographic_level === d)
+              .map(j => jurisdictionsById[j]);
+            // Mapbox categorical stops style spec
+            const adminFillOpacity = this.getJurisdictionSelectionStops(
+              adminLevelIds,
+              adminLevelJurs,
+              (nextCountry && nextCountry.tilesets && nextCountry.tilesets[d]) || undefined
+            );
+
+            if (Map && Map.getLayer(`${nextCountry.ADMN0_EN}-admin-${d}-fill`)) {
+              Map.setPaintProperty(
+                `${nextCountry.ADMN0_EN}-admin-${d}-fill`,
+                'fill-opacity',
+                adminFillOpacity
+              );
+            } else if (
+              Map &&
+              Map.getLayer(`${nextCountry.ADMN0_EN}-admin-${d}-jurisdiction-fill`)
+            ) {
+              Map.setPaintProperty(
+                `${nextCountry.ADMN0_EN}-admin-${d}-jurisdiction-fill`,
+                'fill-opacity',
+                adminFillOpacity
+              );
+            }
+          }
+        }
+      });
     }
   }
 
@@ -1212,18 +1308,23 @@ class IrsPlan extends React.Component<
     jurisdictions: Jurisdiction[],
     tileset: FlexObject | undefined
   ) {
+    const uniqueKeys: string[] = [];
     const selectionStyle = {
-      default: 0.75,
+      default: 0.3,
       property: (tileset && tileset.idField) || 'jurisdiction_id',
       stops: [] as Array<[string, number]>,
       type: 'categorical',
     };
     for (const j of jurisdictions) {
       const key: string = tileset && tileset.idField && j.name ? j.name : j.jurisdiction_id;
-      const opacity = selectedIds.includes(j.jurisdiction_id) ? 0.75 : 0.3;
-      selectionStyle.stops.push([key, opacity]);
+      // keys in stops must be unique
+      if (!uniqueKeys.includes(key)) {
+        uniqueKeys.push(key);
+        const opacity = selectedIds.includes(j.jurisdiction_id) ? 0.75 : 0.3;
+        selectionStyle.stops.push([key, opacity]);
+      }
     }
-    return selectionStyle;
+    return (selectionStyle.stops.length && selectionStyle) || 0.75;
   }
 
   /** getGeographicLevelsFromJurisdictions - utility to derive all geographic levels
@@ -1247,7 +1348,7 @@ class IrsPlan extends React.Component<
 
   /** getGisidaWrapperProps - GisidaWrapper prop builder building out layers and handlers for Gisida */
   private getGisidaWrapperProps(): GisidaProps | null {
-    const { country, isLoadingGeoms, filteredJurisdictionIds } = this.state;
+    const { country, isLoadingGeoms, filteredJurisdictionIds, newPlan } = this.state;
     const { jurisdictionsById } = this.props;
     const filteredJurisdictions = filteredJurisdictionIds.map(j => jurisdictionsById[j]);
 
@@ -1283,8 +1384,26 @@ class IrsPlan extends React.Component<
     const ADMIN_FILL_LAYER_IDS: string[] = [];
     const ADMIN_FILL_LAYERS: any[] = [];
     const adminFillColors: string[] = ['black', 'red', 'orange', 'yellow', 'green'];
+    const selectedJurisdictionsIds =
+      newPlan && newPlan.plan_jurisdictions_ids
+        ? [...newPlan.plan_jurisdictions_ids]
+        : [...filteredJurisdictionIds];
+
     for (let t = 1; t < tilesets.length; t += 1) {
       const adminFillLayerId = `${ADMN0_EN}-admin-${t}-fill`;
+
+      const adminLevelIds = selectedJurisdictionsIds.filter(
+        j => jurisdictionsById[j] && jurisdictionsById[j].geographic_level === t
+      );
+      const adminLevelJurs = filteredJurisdictionIds
+        .filter(j => jurisdictionsById[j] && jurisdictionsById[j].geographic_level === t)
+        .map(j => jurisdictionsById[j]);
+
+      const adminFillOpacity = this.getJurisdictionSelectionStops(
+        adminLevelIds,
+        adminLevelJurs,
+        tilesets[t]
+      );
 
       ADMIN_FILL_LAYER_IDS.unshift(adminFillLayerId);
       const adminFillLayer = {
@@ -1292,7 +1411,7 @@ class IrsPlan extends React.Component<
         id: adminFillLayerId,
         paint: {
           'fill-color': adminFillColors[t],
-          'fill-opacity': 0.75,
+          'fill-opacity': adminFillOpacity,
         },
         source: {
           layer: tilesets[t].layer,
@@ -1333,6 +1452,7 @@ class IrsPlan extends React.Component<
       ADMIN_FILL_LAYERS.unshift(adminFillLayer);
     }
 
+    const self = this;
     function getJurisdictionFillLayers(jurisdictions: Jurisdiction[], tiles: any[]) {
       const layers: FlexObject[] = [];
       const geoGraphicLevels: number[] = [];
@@ -1349,6 +1469,10 @@ class IrsPlan extends React.Component<
       }
       geoGraphicLevels.sort();
       const jurisdictionFeatures: any[] = [];
+      const selectedIds =
+        self.state.newPlan && self.state.newPlan.plan_jurisdictions_ids
+          ? [...self.state.newPlan.plan_jurisdictions_ids]
+          : [...filteredJurisdictionIds];
 
       for (let i = 1; i < geoGraphicLevels.length; i += 1) {
         const g = geoGraphicLevels[i];
@@ -1377,6 +1501,20 @@ class IrsPlan extends React.Component<
           jurisdictionFeatures.push(feature);
         }
 
+        const geoLevelIds: string[] = featureCollection.features
+          .map(f => (f && f.properties && f.properties.jurisdiction_id) || '')
+          .filter(j => j !== '' && selectedIds.includes(j));
+
+        const geoLevelJurs: Jurisdiction[] = jurisdictions.filter(j =>
+          geoLevelIds.includes(j.jurisdiction_id)
+        );
+
+        const selectionFillOpacity = self.getJurisdictionSelectionStops(
+          geoLevelIds,
+          geoLevelJurs,
+          undefined
+        );
+
         const layerId = `${ADMN0_EN}-admin-${g}-jurisdiction-fill`;
         const layer = {
           ...fillLayerConfig,
@@ -1384,6 +1522,7 @@ class IrsPlan extends React.Component<
           id: layerId,
           paint: {
             'fill-color': adminLayerColors[g],
+            'fill-opacity': selectionFillOpacity,
           },
           popup: {
             body: '<p class="select-jurisdictin-tooltip">{{name}}</p>',
@@ -1697,9 +1836,10 @@ class IrsPlan extends React.Component<
    * @returns tableProps|null - compatible object for DrillDownTable props
    */
   private getDrilldownPlanTableProps(state: IrsPlanState) {
-    const { filteredJurisdictionIds, newPlan } = state;
+    const { filteredJurisdictionIds, newPlan, focusJurisdictionId, tableCrumbs } = state;
     const { jurisdictionsById } = this.props;
     const filteredJurisdictions = filteredJurisdictionIds.map(j => jurisdictionsById[j]);
+    const isFocusJurisdictionTopLevel = tableCrumbs[0] && focusJurisdictionId === tableCrumbs[0].id;
 
     if (!newPlan || !newPlan.plan_jurisdictions_ids) {
       return null;
@@ -1725,14 +1865,24 @@ class IrsPlan extends React.Component<
 
     const columns = [
       {
-        Header: () => (
-          <Input
-            checked={planJurisdictionIds.length === filteredJurisdictions.length}
-            className="plan-jurisdiction-select-all-checkbox"
-            onChange={onToggleAllCheckboxChange}
-            type="checkbox"
-          />
-        ),
+        Header: () => {
+          const isChecked = isFocusJurisdictionTopLevel
+            ? newPlan &&
+              newPlan.plan_jurisdictions_ids &&
+              newPlan.plan_jurisdictions_ids.length === filteredJurisdictionIds.length
+            : !!focusJurisdictionId &&
+              newPlan &&
+              newPlan.plan_jurisdictions_ids &&
+              newPlan.plan_jurisdictions_ids.includes(focusJurisdictionId);
+          return (
+            <Input
+              checked={isChecked}
+              className="plan-jurisdiction-select-all-checkbox"
+              onChange={onToggleAllCheckboxChange}
+              type="checkbox"
+            />
+          );
+        },
         columns: [
           {
             Header: '',
@@ -1816,6 +1966,9 @@ class IrsPlan extends React.Component<
         ...j,
         id: j.jurisdiction_id,
         isChildless: this.state.childlessChildrenIds.includes(j.jurisdiction_id),
+        isPartiallySelected:
+          !this.state.childlessChildrenIds.includes(j.jurisdiction_id) &&
+          this.getChildlessChildrenIds([jurisdictionsById[j.jurisdiction_id]]),
       })),
       identifierField: 'jurisdiction_id',
       linkerField: 'name',
@@ -1827,6 +1980,38 @@ class IrsPlan extends React.Component<
       useDrillDownTrProps: true,
     };
     return tableProps;
+  }
+
+  /** util to check if Jurisdiction has any selected decendants
+   * @param id - the jurisdiction_id of the Jurisdiction being checked
+   * @returns boolean
+   */
+  private getIsJurisdictionPartiallySelected(id: string | null, selectedIds?: string[]): boolean {
+    const { newPlan, filteredJurisdictionIds } = this.state;
+    const { jurisdictionsById } = this.props;
+    const filteredJurisdictions = filteredJurisdictionIds
+      .map(j => jurisdictionsById[j])
+      .filter(j => !!j);
+    const planJurisdictionIds =
+      selectedIds ||
+      (newPlan && newPlan.plan_jurisdictions_ids
+        ? [...newPlan.plan_jurisdictions_ids]
+        : [...filteredJurisdictionIds]);
+
+    if (id) {
+      // check if drilled down Jurisdiction is at least partially selected
+      const decendants: Jurisdiction[] = this.getDecendantJurisdictionIds([id], jurisdictionsById)
+        .map(j => jurisdictionsById[j])
+        .filter(j => !!j);
+      const childlessDecendants: string[] = this.getChildlessChildrenIds(decendants);
+      for (const child of childlessDecendants) {
+        if (planJurisdictionIds.includes(child)) {
+          return true;
+        }
+      }
+    }
+
+    return planJurisdictionIds.length === filteredJurisdictions.length;
   }
 
   /** getBreadCrumbProps - get properties for HeaderBreadcrumbs component
