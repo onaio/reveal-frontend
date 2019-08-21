@@ -82,7 +82,31 @@ describe('components/GisidaWrapper', () => {
 
       jest.runOnlyPendingTimers();
       const layer = store.getState()['map-1'].layers;
-      expect(layer).toMatchSnapshot(JSON.stringify(layer1));
+      const mosquitoCollectionTraps = layer['Mosquito_Collection_Min_3_Traps-fill'];
+      delete mosquitoCollectionTraps.visible;
+      expect(mosquitoCollectionTraps).toEqual(layer1['Mosquito_Collection_Min_3_Traps-fill']);
+      const mosquitoCollectionTrapsfillLine = layer['Mosquito_Collection_Min_3_Traps-fill-line'];
+      delete mosquitoCollectionTrapsfillLine.visible;
+      expect(mosquitoCollectionTrapsfillLine).toEqual(
+        layer1['Mosquito_Collection_Min_3_Traps-fill-line']
+      );
+      const mosquitoCollectionTrapsPoint = layer['Mosquito_Collection_Min_3_Traps-point'];
+      delete mosquitoCollectionTrapsPoint.visible;
+      expect(mosquitoCollectionTrapsPoint).toEqual(layer1['Mosquito_Collection_Min_3_Traps-point']);
+      const mosquitoCollectionTrapsSymbol = layer['Mosquito_Collection_Min_3_Traps-symbol'];
+      delete mosquitoCollectionTrapsSymbol.visible;
+      expect(mosquitoCollectionTrapsSymbol).toEqual(
+        layer1['Mosquito_Collection_Min_3_Traps-symbol']
+      );
+      const mainPlanLayer = layer['main-plan-layer-304cbcd4-0850-404a-a8b1-486b02f7b84d'];
+      delete mainPlanLayer.visible;
+      expect(mainPlanLayer).toEqual(layer1['main-plan-layer-304cbcd4-0850-404a-a8b1-486b02f7b84d']);
+      const structureLayer = layer['structure-layer'];
+      delete structureLayer.visible;
+      expect(structureLayer).toEqual(layer1['structure-layer']);
+      const structureLayerLine = layer['structure-layer-line'];
+      delete structureLayerLine.visible;
+      expect(structureLayerLine).toEqual(layer1['structure-layer-line']);
       const componentWillUnmount = jest.spyOn(wrapper.instance(), 'componentWillUnmount');
       wrapper.unmount();
       expect(componentWillUnmount).toHaveBeenCalled();

@@ -274,7 +274,6 @@ export const layer1 = {
       visible: true,
     },
     type: 'fill',
-    visible: true,
   },
   'Mosquito_Collection_Min_3_Traps-fill-line': {
     filters: {},
@@ -527,7 +526,6 @@ export const layer1 = {
       visible: true,
     },
     type: 'line',
-    visible: true,
   },
   'Mosquito_Collection_Min_3_Traps-point': {
     categories: {
@@ -633,7 +631,6 @@ export const layer1 = {
       visible: true,
     },
     type: 'circle',
-    visible: true,
   },
   'Mosquito_Collection_Min_3_Traps-symbol': {
     filters: {},
@@ -899,7 +896,6 @@ export const layer1 = {
       type: 'symbol',
     },
     type: 'symbol',
-    visible: true,
   },
   'main-plan-layer-304cbcd4-0850-404a-a8b1-486b02f7b84d': {
     filters: {},
@@ -1004,7 +1000,6 @@ export const layer1 = {
       visible: true,
     },
     type: 'line',
-    visible: true,
   },
   'structure-layer': {
     filters: {},
@@ -1129,7 +1124,6 @@ export const layer1 = {
       visible: true,
     },
     type: 'fill',
-    visible: true,
   },
   'structure-layer-line': {
     filters: {},
@@ -1230,7 +1224,6 @@ export const layer1 = {
       visible: true,
     },
     type: 'line',
-    visible: true,
   },
 };
 
