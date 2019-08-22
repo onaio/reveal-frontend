@@ -1942,26 +1942,22 @@ class IrsPlan extends React.Component<
       }
     };
 
+    const headerCheckboxIsChecked = isFocusJurisdictionTopLevel
+      ? newPlan &&
+        newPlan.plan_jurisdictions_ids &&
+        newPlan.plan_jurisdictions_ids.length === filteredJurisdictionIds.length
+      : !!focusJurisdictionId && this.getIsJurisdictionPartiallySelected(focusJurisdictionId);
+
     const columns = [
       {
-        Header: () => {
-          const isChecked = isFocusJurisdictionTopLevel
-            ? newPlan &&
-              newPlan.plan_jurisdictions_ids &&
-              newPlan.plan_jurisdictions_ids.length === filteredJurisdictionIds.length
-            : !!focusJurisdictionId &&
-              newPlan &&
-              newPlan.plan_jurisdictions_ids &&
-              newPlan.plan_jurisdictions_ids.includes(focusJurisdictionId);
-          return (
-            <Input
-              checked={isChecked}
-              className="plan-jurisdiction-select-all-checkbox"
-              onChange={onToggleAllCheckboxChange}
-              type="checkbox"
-            />
-          );
-        },
+        Header: () => (
+          <Input
+            checked={headerCheckboxIsChecked}
+            className="plan-jurisdiction-select-all-checkbox"
+            onChange={onToggleAllCheckboxChange}
+            type="checkbox"
+          />
+        ),
         columns: [
           {
             Header: '',
