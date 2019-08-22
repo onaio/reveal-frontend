@@ -27,9 +27,9 @@ describe('containers/pages/NewPlan', () => {
     // check that page title is displayed
     expect(toJson(wrapper.find('h3.mb-3.page-title'))).toMatchSnapshot('page title');
 
-    // check that planform receives the correct props
+    // check that PlanForm receives the correct props
     expect(wrapper.find('PlanForm').props()).toEqual(planFormProps);
-    // check that there's a Row that nests a Col that nests a Planform
+    // check that there's a Row that nests a Col that nests a PlanForm
     expect(wrapper.find('Row')).toHaveLength(1);
     expect(wrapper.find('Row').find('Col')).toHaveLength(1);
     expect(
