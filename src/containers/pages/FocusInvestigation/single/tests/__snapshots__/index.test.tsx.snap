@@ -663,11 +663,11 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
                 },
                 Object {
                   "label": "Chadiza",
-                  "url": "",
+                  "url": "/focus-investigation/2939",
                 },
                 Object {
                   "label": "Naviluli",
-                  "url": "",
+                  "url": "/focus-investigation/2944",
                 },
               ]
             }
@@ -735,7 +735,18 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
                       <li
                         className="breadcrumb-item"
                       >
-                        Chadiza
+                        <Link
+                          key="2"
+                          replace={false}
+                          to="/focus-investigation/2939"
+                        >
+                          <a
+                            href="/focus-investigation/2939"
+                            onClick={[Function]}
+                          >
+                            Chadiza
+                          </a>
+                        </Link>
                       </li>
                     </BreadcrumbItem>
                     <BreadcrumbItem
@@ -745,7 +756,18 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
                       <li
                         className="breadcrumb-item"
                       >
-                        Naviluli
+                        <Link
+                          key="3"
+                          replace={false}
+                          to="/focus-investigation/2944"
+                        >
+                          <a
+                            href="/focus-investigation/2944"
+                            onClick={[Function]}
+                          >
+                            Naviluli
+                          </a>
+                        </Link>
                       </li>
                     </BreadcrumbItem>
                     <BreadcrumbItem
@@ -5817,11 +5839,11 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
             },
             Object {
               "label": "Chadiza",
-              "url": "",
+              "url": "/focus-investigation/2939",
             },
             Object {
               "label": "Naviluli",
-              "url": "",
+              "url": "/focus-investigation/2944",
             },
           ]
         }
@@ -5889,7 +5911,18 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
                   <li
                     className="breadcrumb-item"
                   >
-                    Chadiza
+                    <Link
+                      key="2"
+                      replace={false}
+                      to="/focus-investigation/2939"
+                    >
+                      <a
+                        href="/focus-investigation/2939"
+                        onClick={[Function]}
+                      >
+                        Chadiza
+                      </a>
+                    </Link>
                   </li>
                 </BreadcrumbItem>
                 <BreadcrumbItem
@@ -5899,7 +5932,18 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
                   <li
                     className="breadcrumb-item"
                   >
-                    Naviluli
+                    <Link
+                      key="3"
+                      replace={false}
+                      to="/focus-investigation/2944"
+                    >
+                      <a
+                        href="/focus-investigation/2944"
+                        onClick={[Function]}
+                      >
+                        Naviluli
+                      </a>
+                    </Link>
                   </li>
                 </BreadcrumbItem>
                 <BreadcrumbItem
