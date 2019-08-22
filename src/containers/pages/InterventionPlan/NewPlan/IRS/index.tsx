@@ -29,6 +29,7 @@ const NewIRSPlan = () => {
   };
 
   const props: Partial<PlanFormProps> = {
+    allowMoreJurisdictions: false,
     cascadingSelect: false,
     disabledFields: ['interventionType', 'status'],
     initialValues: {
