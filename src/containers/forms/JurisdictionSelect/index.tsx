@@ -29,6 +29,7 @@ interface SelectOption {
 /** JurisdictionSelect props */
 export interface JurisdictionSelectProps<T = SelectOption> extends AsyncSelectProps<T> {
   apiEndpoint: string;
+  cascadingSelect: boolean;
   params: URLParams;
   serviceClass: typeof OpenSRPService;
 }
@@ -36,6 +37,7 @@ export interface JurisdictionSelectProps<T = SelectOption> extends AsyncSelectPr
 /** default props for JurisdictionSelect */
 const defaultProps: Partial<JurisdictionSelectProps> = {
   apiEndpoint: 'location/findByProperties',
+  cascadingSelect: true,
   params: {
     is_jurisdiction: true,
     return_geometry: false,
@@ -49,7 +51,7 @@ const defaultProps: Partial<JurisdictionSelectProps> = {
  * This is simply a Higher Order Component that wraps around AsyncSelect
  */
 const JurisdictionSelect = (props: JurisdictionSelectProps & FieldProps) => {
-  const { apiEndpoint, field, form, labelFieldName, params, serviceClass } = props;
+  const { apiEndpoint, cascadingSelect, field, form, labelFieldName, params, serviceClass } = props;
 
   const [parentId, setParentId] = useState<string>('');
   const [hierarchy, setHierarchy] = useState<SelectOption[]>([]);
@@ -106,7 +108,7 @@ const JurisdictionSelect = (props: JurisdictionSelectProps & FieldProps) => {
       };
       service.list(newParamsToUse).then(e => {
         setShouldMenuOpen(true);
-        if (e.length > 0) {
+        if (e.length > 0 && cascadingSelect === true) {
           setParentId(optionVal.value);
 
           hierarchy.push(optionVal);
