@@ -3871,7 +3871,8 @@ exports[`containers/forms/PlanForm renders jurisdictions fields correctly: addJu
   onClick={[Function]}
   type="button"
 >
-  Add Focus Area
+  Add 
+  Focus Area
 </button>
 `;
 
