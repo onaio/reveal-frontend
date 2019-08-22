@@ -83,10 +83,26 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
         <SingleActiveFIMap {...props} />
       </Router>
     );
+
+    // what is passed as the document page title text
     const helmet = Helmet.peek();
     expect(helmet.title).toEqual('Focus Investigation: A1-Tha Luang Village 1 Focus 01');
-    expect(toJson(wrapper)).toMatchSnapshot();
-    expect(wrapper.find('GisidaWrapperMock').props()).toMatchSnapshot();
+
+    // Check a few crucial components to make sure the page has rendered
+
+    // check Header Breadcrumb
+    const headerWrapper = wrapper.find('HeaderBreadcrumb');
+    expect(toJson(headerWrapper)).toMatchSnapshot();
+
+    // Check gisida component using a mock
+    expect(toJson(wrapper.find('GisidaWrapperMock'))).toMatchSnapshot();
+
+    // how about the selectPlan component
+    expect(wrapper.find('SelectPlan').length).toEqual(1);
+
+    // We should have progressBars somewhere in there
+    expect(toJson(wrapper.find('.targetItem').first())).toMatchSnapshot();
+
     wrapper.unmount();
   });
 
@@ -118,8 +134,28 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
         </Router>
       </Provider>
     );
-    expect(toJson(wrapper)).toMatchSnapshot();
+
     expect(wrapper.find('GisidaWrapperMock').props()).toMatchSnapshot();
+
+    // Check data passed to component props that should come from redux
+
+    // plan prop
+    expect(wrapper.find('SingleActiveFIMap').props().plan).toEqual(fixtures.plan1);
+
+    // goals prop
+    expect(wrapper.find('SingleActiveFIMap').props().goals).toEqual([]);
+
+    // jurisdiction prop
+    expect(wrapper.find('SingleActiveFIMap').props().jurisdiction).toEqual(
+      fixtures.jurisdictions[0]
+    );
+
+    // plansByFocusArea
+    expect(wrapper.find('SingleActiveFIMap').props().plansByFocusArea).toEqual([fixtures.plan1]);
+
+    // structures
+    expect(wrapper.find('SingleActiveFIMap').props().structures).toBeNull();
+
     wrapper.unmount();
   });
 
