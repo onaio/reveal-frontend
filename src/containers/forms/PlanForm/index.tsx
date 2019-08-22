@@ -67,6 +67,7 @@ export const defaultInitialValues: PlanFormFields = {
 /** interface for plan form props */
 interface PlanFormProps {
   allFormActivities: PlanActivityFormFields[];
+  cascadingSelect: boolean;
   disabledActivityFields: string[];
   disabledFields: string[];
   initialValues: PlanFormFields;
@@ -81,6 +82,7 @@ const PlanForm = (props: PlanFormProps) => {
 
   const {
     allFormActivities,
+    cascadingSelect,
     disabledActivityFields,
     disabledFields,
     initialValues,
@@ -93,7 +95,7 @@ const PlanForm = (props: PlanFormProps) => {
 
   const disAllowedStatusChoices: string[] = [];
   if (editMode) {
-    // Dont allow setting status back to draft
+    // Don't allow setting status back to draft
     if (initialValues.status !== PlanStatus.DRAFT) {
       disAllowedStatusChoices.push(PlanStatus.DRAFT);
     }
@@ -305,6 +307,7 @@ const PlanForm = (props: PlanFormProps) => {
                               <Field
                                 required={true}
                                 component={JurisdictionSelect}
+                                cascadingSelect={cascadingSelect}
                                 name={`jurisdictions[${index}].id`}
                                 id={`jurisdictions-${index}-id`}
                                 placeholder="Select Focus Area"
@@ -822,6 +825,7 @@ const PlanForm = (props: PlanFormProps) => {
 
 const defaultProps: PlanFormProps = {
   allFormActivities: getFormActivities(planActivities),
+  cascadingSelect: true,
   disabledActivityFields: [],
   disabledFields: [],
   initialValues: defaultInitialValues,
