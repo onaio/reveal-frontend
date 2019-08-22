@@ -245,5 +245,6 @@ export const planFormProps = {
     title: '',
     version: '1',
   },
+  jurisdictionLabel: 'Focus Area',
   redirectAfterAction: '/plans/list',
 };
