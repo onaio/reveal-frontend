@@ -67,6 +67,7 @@ export const defaultInitialValues: PlanFormFields = {
 /** interface for plan form props */
 export interface PlanFormProps {
   allFormActivities: PlanActivityFormFields[];
+  allowMoreJurisdictions: boolean;
   cascadingSelect: boolean;
   disabledActivityFields: string[];
   disabledFields: string[];
@@ -83,6 +84,7 @@ const PlanForm = (props: PlanFormProps) => {
 
   const {
     allFormActivities,
+    allowMoreJurisdictions,
     cascadingSelect,
     disabledActivityFields,
     disabledFields,
@@ -342,15 +344,16 @@ const PlanForm = (props: PlanFormProps) => {
                           </div>
                         </fieldset>
                       ))}
-                      {values.interventionType === InterventionType.IRS && (
-                        <button
-                          type="button"
-                          className="btn btn-primary btn-sm mb-5 addJurisdiction"
-                          onClick={() => arrayHelpers.push(initialJurisdictionValues)}
-                        >
-                          Add {jurisdictionLabel}
-                        </button>
-                      )}
+                      {values.interventionType === InterventionType.IRS &&
+                        allowMoreJurisdictions === true && (
+                          <button
+                            type="button"
+                            className="btn btn-primary btn-sm mb-5 addJurisdiction"
+                            onClick={() => arrayHelpers.push(initialJurisdictionValues)}
+                          >
+                            Add {jurisdictionLabel}
+                          </button>
+                        )}
                     </div>
                   )}
                 </div>
@@ -827,6 +830,7 @@ const PlanForm = (props: PlanFormProps) => {
 
 const defaultProps: PlanFormProps = {
   allFormActivities: getFormActivities(planActivities),
+  allowMoreJurisdictions: true,
   cascadingSelect: true,
   disabledActivityFields: [],
   disabledFields: [],
