@@ -2,7 +2,14 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Col, Row } from 'reactstrap';
 import HeaderBreadcrumb from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
-import { HOME, HOME_URL, NEW_IRS_PLAN_URL, PLAN_LIST_URL, PLANS } from '../../../../../constants';
+import {
+  HOME,
+  HOME_URL,
+  INTERVENTION_IRS_URL,
+  NEW_IRS_PLAN_URL,
+  PLAN_LIST_URL,
+  PLANS,
+} from '../../../../../constants';
 import { InterventionType } from '../../../../../store/ducks/plans';
 import PlanForm, { defaultInitialValues, PlanFormProps } from '../../../../forms/PlanForm';
 import { getFormActivities, IRSActivities } from '../../../../forms/PlanForm/helpers';
@@ -38,6 +45,7 @@ const NewIRSPlan = () => {
       interventionType: InterventionType.IRS,
     },
     jurisdictionLabel: 'Country',
+    redirectAfterAction: INTERVENTION_IRS_URL,
   };
 
   return (
