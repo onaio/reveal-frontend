@@ -66,14 +66,14 @@ export const defaultInitialValues: PlanFormFields = {
 
 /** interface for plan form props */
 export interface PlanFormProps {
-  allFormActivities: PlanActivityFormFields[];
-  allowMoreJurisdictions: boolean;
-  cascadingSelect: boolean;
-  disabledActivityFields: string[];
-  disabledFields: string[];
-  initialValues: PlanFormFields;
-  jurisdictionLabel: string;
-  redirectAfterAction: string;
+  allFormActivities: PlanActivityFormFields[] /** the list of all allowed activities */;
+  allowMoreJurisdictions: boolean /** should we allow one to add more jurisdictions */;
+  cascadingSelect: boolean /** should we use cascading selects for jurisdiction selection */;
+  disabledActivityFields: string[] /** activity fields that are disabled */;
+  disabledFields: string[] /** fields that are disabled */;
+  initialValues: PlanFormFields /** initial values for fields on the form */;
+  jurisdictionLabel: string /** the label used for the jurisdiction selection */;
+  redirectAfterAction: string /** the url to redirect to after form submission */;
 }
 
 /** Plan Form component */
