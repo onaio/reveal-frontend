@@ -33,7 +33,7 @@ import SingleFI from '../containers/pages/FocusInvestigation/single';
 import Home from '../containers/pages/Home/Home';
 import IrsPlans from '../containers/pages/InterventionPlan/IRS';
 import IrsPlan from '../containers/pages/InterventionPlan/IRS/plan';
-import NewPlan from '../containers/pages/InterventionPlan/NewPlan';
+import NewPlan from '../containers/pages/InterventionPlan/NewPlan/General';
 import ConnectedPlanDefinitionList from '../containers/pages/InterventionPlan/PlanDefinitionList';
 import ConnectedUpdatePlan from '../containers/pages/InterventionPlan/UpdatePlan';
 import { oAuthUserInfoGetter } from '../helpers/utils';
