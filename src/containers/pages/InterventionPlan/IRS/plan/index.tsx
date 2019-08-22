@@ -238,16 +238,20 @@ class IrsPlan extends React.Component<
 
     await supersetService(SUPERSET_JURISDICTIONS_DATA_SLICE, otherJurisdictionSupersetParams).then(
       (jurisdictionResults: FlexObject[] = []) => {
-        const jurisdictionsArray: Jurisdiction[] = jurisdictionResults.map(j => {
-          const { id, parent_id, name, geographic_level } = j;
-          const jurisdiction: Jurisdiction = {
-            geographic_level: geographic_level || 0,
-            jurisdiction_id: id,
-            name: name || null,
-            parent_id: parent_id || null,
-          };
-          return jurisdiction;
-        });
+        const jurisdictionsArray: Jurisdiction[] = jurisdictionResults
+          .map(j => {
+            const { id, parent_id, name, geographic_level } = j;
+            const jurisdiction: Jurisdiction = {
+              geographic_level: geographic_level || 0,
+              jurisdiction_id: id,
+              name: name || null,
+              parent_id: parent_id || null,
+            };
+            return jurisdiction;
+          })
+          .sort((a, b) =>
+            a.geographic_level && b.geographic_level ? b.geographic_level - a.geographic_level : 0
+          );
         // initialize Finalized Plan
         if (
           !isNewPlan &&
