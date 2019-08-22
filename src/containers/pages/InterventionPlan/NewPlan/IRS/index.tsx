@@ -36,6 +36,7 @@ const NewIRSPlan = () => {
       activities: getFormActivities(IRSActivities),
       interventionType: InterventionType.IRS,
     },
+    jurisdictionLabel: 'Country',
   };
 
   return (
