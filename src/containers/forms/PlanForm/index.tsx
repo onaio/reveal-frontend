@@ -65,7 +65,7 @@ export const defaultInitialValues: PlanFormFields = {
 };
 
 /** interface for plan form props */
-interface PlanFormProps {
+export interface PlanFormProps {
   allFormActivities: PlanActivityFormFields[];
   cascadingSelect: boolean;
   disabledActivityFields: string[];
