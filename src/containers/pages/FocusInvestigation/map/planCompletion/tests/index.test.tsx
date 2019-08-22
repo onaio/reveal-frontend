@@ -1,6 +1,7 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
+import flushPromises from 'flush-promises';
 import { createBrowserHistory } from 'history';
 import { cloneDeep } from 'lodash';
 import React from 'react';
@@ -8,8 +9,17 @@ import { Helmet } from 'react-helmet';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import ConnectedPlanCompletion, { PlanCompletion } from '..';
-import { FI_SINGLE_MAP_URL, OPENSRP_PLANS, PLAN_COMPLETION_URL } from '../../../../../../constants';
-import { plansListResponse } from '../../../../../../services/opensrp/tests/fixtures/plans';
+import {
+  FI_SINGLE_MAP_URL,
+  OPENSRP_PLANS,
+  PLAN_COMPLETION_URL,
+  PLAN_LIST_URL,
+} from '../../../../../../constants';
+import { OpenSRPService } from '../../../../../../services/opensrp';
+import {
+  plansListResponse,
+  updateResponse,
+} from '../../../../../../services/opensrp/tests/fixtures/plans';
 import store from '../../../../../../store';
 import reducer, {
   fetchPlans,
@@ -20,6 +30,7 @@ import reducer, {
   removePlansAction,
 } from '../../../../../../store/ducks/plans';
 import * as fixtures from '../../../../../../store/ducks/tests/fixtures';
+import { payload } from './fixtures';
 
 // tslint:disable-next-line: no-var-requires
 const fetch = require('jest-fetch-mock');
@@ -45,7 +56,7 @@ describe('@containers/pages/map/planCompletion/', () => {
         path: `${PLAN_COMPLETION_URL}/:id`,
         url: `${PLAN_COMPLETION_URL}/13`,
       },
-      plan: fixtures.plan1,
+      plan: fixtures.plan1 as Plan,
     };
     shallow(
       <Router history={history}>
@@ -65,7 +76,7 @@ describe('@containers/pages/map/planCompletion/', () => {
         path: `${PLAN_COMPLETION_URL}/:id`,
         url: `${PLAN_COMPLETION_URL}/13`,
       },
-      plan: fixtures.plan1,
+      plan: fixtures.plan1 as Plan,
     };
     const wrapper = mount(
       <Router history={history}>
@@ -141,7 +152,7 @@ describe('@containers/pages/map/planCompletion/', () => {
     discoWrapper.unmount();
   });
 
-  it('E2E things it should do when confirm  mark as complete', () => {
+  it('E2E things it should do when confirm  mark as complete', async () => {
     // calls correct url with the right arguments
     const mock: any = jest.fn();
     store.dispatch(fetchPlans(fixtures.plans as any));
@@ -155,19 +166,39 @@ describe('@containers/pages/map/planCompletion/', () => {
         url: `${PLAN_COMPLETION_URL}/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f`,
       },
     };
-    const discoWrapper = mount(<PlanCompletion plan={fixtures.plan1 as Plan} {...props} />);
-    const confirmButton = discoWrapper.find('#complete-plan-confirm-btn');
-    confirmButton.simulate('click');
 
     const expectedCalledUrl =
       'https://reveal-stage.smartregister.org/opensrp/rest/plans/10f9e9fa-ce34-4b27-a961-72fab5206ab6';
-    fetch.once(JSON.stringify(plansListResponse[0])).once(JSON.stringify({}));
+    fetch.once(JSON.stringify(plansListResponse[0])).once(JSON.stringify(updateResponse));
+
+    const discoWrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedPlanCompletion plan={fixtures.plan1 as Plan} {...props} />
+        </Router>
+      </Provider>
+    );
+    const confirmButton = discoWrapper.find('#complete-plan-confirm-btn');
+    confirmButton.simulate('click');
+    await flushPromises();
+    const plan1FromStore = getPlanById(store.getState(), fixtures.plan1.id);
     const completedPlan = cloneDeep(fixtures.plan1);
     completedPlan.plan_status = PlanStatus.COMPLETE;
 
-    // expect(fetch).toBeCalledTimes(2);
+    expect(discoWrapper.props().children.props.history.action).toEqual('PUSH');
+    expect(discoWrapper.props().children.props.history.location.pathname).toEqual(
+      `${PLAN_LIST_URL}`
+    );
+
+    expect(fetch).toBeCalledTimes(2);
     expect(fetch.mock.calls[0][0]).toEqual(expectedCalledUrl);
-    // expect(fetchPlansMock.mock.calls[0][0]).toEqual(completedPlan);
+    expect(fetch.mock.calls[1][0]).toEqual(
+      'https://reveal-stage.smartregister.org/opensrp/rest/plans'
+    );
+
+    expect(JSON.parse(fetch.mock.calls[1][1].body)).toEqual(payload.body);
+
+    expect(plan1FromStore).toEqual(completedPlan);
 
     discoWrapper.unmount();
   });
