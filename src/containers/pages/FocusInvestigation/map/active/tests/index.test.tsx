@@ -15,7 +15,7 @@ import { fetchJurisdictions } from '../../../../../../store/ducks/jurisdictions'
 import { fetchPlans, Plan } from '../../../../../../store/ducks/plans';
 import { fetchTasks } from '../../../../../../store/ducks/tasks';
 import * as fixtures from '../../../../../../store/ducks/tests/fixtures';
-import ConnectedMapSingleFI, { SingleActiveFIMap } from '../../active/';
+import ConnectedMapSingleFI, { MapSingleFIProps, SingleActiveFIMap } from '../../active/';
 
 jest.mock('../../../../../../components/GisidaWrapper', () => {
   const GisidaWrapperMock = () => <div>I love oov</div>;
@@ -139,22 +139,25 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
 
     // Check data passed to component props that should come from redux
 
+    const singleActiveWrapperProps = wrapper.find('SingleActiveFIMap').props();
     // plan prop
-    expect(wrapper.find('SingleActiveFIMap').props().plan).toEqual(fixtures.plan1);
+    expect((singleActiveWrapperProps as MapSingleFIProps).plan).toEqual(fixtures.plan1);
 
     // goals prop
-    expect(wrapper.find('SingleActiveFIMap').props().goals).toEqual([]);
+    expect((singleActiveWrapperProps as MapSingleFIProps).goals).toEqual([]);
 
     // jurisdiction prop
-    expect(wrapper.find('SingleActiveFIMap').props().jurisdiction).toEqual(
+    expect((singleActiveWrapperProps as MapSingleFIProps).jurisdiction).toEqual(
       fixtures.jurisdictions[0]
     );
 
     // plansByFocusArea
-    expect(wrapper.find('SingleActiveFIMap').props().plansByFocusArea).toEqual([fixtures.plan1]);
+    expect((singleActiveWrapperProps as MapSingleFIProps).plansByFocusArea).toEqual([
+      fixtures.plan1,
+    ]);
 
     // structures
-    expect(wrapper.find('SingleActiveFIMap').props().structures).toBeNull();
+    expect((singleActiveWrapperProps as MapSingleFIProps).structures).toBeNull();
 
     wrapper.unmount();
   });
