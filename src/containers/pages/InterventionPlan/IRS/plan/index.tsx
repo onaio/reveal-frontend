@@ -147,6 +147,7 @@ interface TableCrumb {
 /** Interface to describe props for the IrsPlan component */
 interface IrsPlanState {
   childlessChildrenIds: string[];
+  childrenByParentId: { [key: string]: string[] };
   country: JurisdictionsByCountry | null;
   doRenderTable: boolean;
   filteredJurisdictionIds: string[];
@@ -175,6 +176,7 @@ class IrsPlan extends React.Component<
     super(props);
     this.state = {
       childlessChildrenIds: [],
+      childrenByParentId: {},
       country: null,
       doRenderTable: true,
       filteredJurisdictionIds: [],
@@ -261,6 +263,22 @@ class IrsPlan extends React.Component<
         ) {
           const jurisdictionsById = keyBy(jurisdictionsArray, j => j.jurisdiction_id);
 
+          const childrenByParentId: { [key: string]: string[] } = {};
+          // build and store decendant jurisdictions, jurisdictionsArray MUST be sorted by geographic_level from high to low
+          for (const j of jurisdictionsArray) {
+            if (j.parent_id) {
+              if (!childrenByParentId[j.parent_id]) {
+                childrenByParentId[j.parent_id] = [];
+              }
+              childrenByParentId[j.parent_id].push(j.jurisdiction_id);
+              if (childrenByParentId[j.jurisdiction_id]) {
+                childrenByParentId[j.parent_id] = childrenByParentId[j.parent_id].concat(
+                  childrenByParentId[j.jurisdiction_id]
+                );
+              }
+            }
+          }
+
           const ancestorIds = this.getAncestorJurisdictionIds(
             [...this.props.planById.plan_jurisdictions_ids],
             jurisdictionsArray
@@ -289,9 +307,12 @@ class IrsPlan extends React.Component<
                     ? [country.jurisdictionId]
                     : [...country.jurisdictionIds];
                   const filteredJurisdictions = isDraftPlan
-                    ? this.getDecendantJurisdictionIds(countryIds, jurisdictionsById).map(
-                        j => jurisdictionsById[j]
-                      )
+                    ? this.getDecendantJurisdictionIds(
+                        countryIds,
+                        jurisdictionsById,
+                        true,
+                        childrenByParentId
+                      ).map(j => jurisdictionsById[j])
                     : ancestorIds.map(j => jurisdictionsById[j]);
                   const childlessChildrenIds = this.getChildlessChildrenIds(filteredJurisdictions);
 
@@ -311,6 +332,7 @@ class IrsPlan extends React.Component<
                   this.setState(
                     {
                       childlessChildrenIds,
+                      childrenByParentId,
                       country,
                       filteredJurisdictionIds: isDraftPlan
                         ? filteredJurisdictions.map(j => j.jurisdiction_id)
@@ -1282,8 +1304,11 @@ class IrsPlan extends React.Component<
   private getDecendantJurisdictionIds(
     ParentIds: string[],
     jurisdictionsById: { [key: string]: Jurisdiction },
-    doIncludeParentIds: boolean = true
+    doIncludeParentIds: boolean = true,
+    ChildrenByParentId?: { [key: string]: string[] }
   ): string[] {
+    const { childlessChildrenIds } = this.state;
+    const childrenByParentId = ChildrenByParentId || this.state.childrenByParentId;
     const decendantIds: string[] = [];
     const parentIds: string[] = [...ParentIds];
 
@@ -1292,10 +1317,18 @@ class IrsPlan extends React.Component<
       if (ParentIds.indexOf(parentId) === -1 || doIncludeParentIds) {
         decendantIds.push(parentId);
       }
-      const jurisdictionsKeys = Object.keys(jurisdictionsById);
-      for (const jurisdiction of jurisdictionsKeys) {
-        if (jurisdictionsById[jurisdiction].parent_id === parentId) {
-          parentIds.push(jurisdictionsById[jurisdiction].jurisdiction_id);
+      if (childrenByParentId && childrenByParentId[parentId]) {
+        for (const jurisdcitionId of childrenByParentId[parentId]) {
+          if (!decendantIds.includes(jurisdcitionId)) {
+            decendantIds.push(jurisdcitionId);
+          }
+        }
+      } else if (!childlessChildrenIds.includes(parentId)) {
+        const jurisdictionsKeys = Object.keys(jurisdictionsById);
+        for (const jurisdiction of jurisdictionsKeys) {
+          if (jurisdictionsById[jurisdiction].parent_id === parentId) {
+            parentIds.push(jurisdictionsById[jurisdiction].jurisdiction_id);
+          }
         }
       }
     }
