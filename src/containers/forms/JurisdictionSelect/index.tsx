@@ -116,7 +116,7 @@ const JurisdictionSelect = (props: JurisdictionSelectProps & FieldProps) => {
 
           setCloseMenuOnSelect(false);
         } else {
-          // set the formik field value
+          // set the Formik field value
           if (form && field) {
             form.setFieldValue(field.name, optionVal.value);
             form.setFieldTouched(field.name, true);
@@ -136,7 +136,7 @@ const JurisdictionSelect = (props: JurisdictionSelectProps & FieldProps) => {
       setHierarchy([]);
       setShouldMenuOpen(false);
       setCloseMenuOnSelect(false);
-      // set the formik field value
+      // set the Formik field value
       if (form && field) {
         form.setFieldValue(field.name, '');
       }
