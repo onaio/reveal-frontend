@@ -6,9 +6,8 @@ import {
   HOME,
   HOME_URL,
   INTERVENTION_IRS_URL,
+  IRS_PLANS,
   NEW_IRS_PLAN_URL,
-  PLAN_LIST_URL,
-  PLANS,
 } from '../../../../../constants';
 import { InterventionType } from '../../../../../store/ducks/plans';
 import PlanForm, { defaultInitialValues, PlanFormProps } from '../../../../forms/PlanForm';
@@ -29,8 +28,8 @@ const NewIRSPlan = () => {
         url: HOME_URL,
       },
       {
-        label: PLANS,
-        url: PLAN_LIST_URL,
+        label: IRS_PLANS,
+        url: INTERVENTION_IRS_URL,
       },
     ],
   };
