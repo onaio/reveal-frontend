@@ -28,10 +28,10 @@ interface SelectOption {
 
 /** JurisdictionSelect props */
 export interface JurisdictionSelectProps<T = SelectOption> extends AsyncSelectProps<T> {
-  apiEndpoint: string;
-  cascadingSelect: boolean;
-  params: URLParams;
-  serviceClass: typeof OpenSRPService;
+  apiEndpoint: string /** the OpenSRP API endpoint */;
+  cascadingSelect: boolean /** should we have a cascading select or not */;
+  params: URLParams /** extra URL params to send to OpenSRP */;
+  serviceClass: typeof OpenSRPService /** the OpenSRP service */;
 }
 
 /** default props for JurisdictionSelect */
