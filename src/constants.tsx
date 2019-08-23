@@ -119,6 +119,8 @@ export const CANCEL = 'Cancel';
 export type CANCEL = typeof CANCEL;
 export const IRS_PLANS = 'IRS Plans';
 export type IRS_PLANS = typeof IRS_PLANS;
+export const COUNTRY = 'Country';
+export type COUNTRY = typeof COUNTRY;
 
 export const JURISDICTION_ID = 'jurisdiction_id';
 export type JURISDICTION_ID = typeof JURISDICTION_ID;
