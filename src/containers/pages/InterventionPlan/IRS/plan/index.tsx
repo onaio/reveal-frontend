@@ -1113,18 +1113,10 @@ class IrsPlan extends React.Component<
 
       // loop through all geographic_levels
       const geoGraphicLevels = this.getGeographicLevelsFromJurisdictions(filteredJurisdictions);
-      if (
-        typeof clickedFeatureJurisdiction.geographic_level !== 'undefined' &&
-        country &&
-        country.tilesets
-      ) {
+      if (country && country.tilesets) {
         const Map = window.maps.find((e: mbMap) => (e as GisidaMap)._container.id === MAP_ID);
 
-        for (
-          let g = clickedFeatureJurisdiction.geographic_level;
-          g < geoGraphicLevels.length;
-          g += 1
-        ) {
+        for (let g = 1; g < geoGraphicLevels.length; g += 1) {
           // Define stops per geographic_level
           const jurisdictionsByLevelArray = filteredJurisdictions.filter(
             j => j.geographic_level === g
