@@ -108,7 +108,7 @@ describe('components/GisidaWrapper', () => {
     // remove reloadLayers because they keep changing
     delete map1.reloadLayers;
     expect(map1).toMatchSnapshot({});
-    expect(toJson(wrapper).props).toMatchSnapshot(JSON.stringify(gisidaWrapperProps));
+    expect(toJson(wrapper).props).toEqual(gisidaWrapperProps);
     wrapper.setProps({ ...props });
     wrapper.setState({ doRenderMap: true });
     jest.runOnlyPendingTimers();
