@@ -1235,17 +1235,13 @@ class IrsPlan extends React.Component<
           );
 
           for (let d = 1; d < geoGraphicLevels.length; d += 1) {
-            // ids selected in this geographic level
-            const adminLevelIds = selectedJurisdictionsIds.filter(
-              j => jurisdictionsById[j] && jurisdictionsById[j].geographic_level === d
-            );
             // all Jurisdictions for this geographic level
             const adminLevelJurs = nextFilteredJurisdictionIds
               .filter(j => jurisdictionsById[j] && jurisdictionsById[j].geographic_level === d)
               .map(j => jurisdictionsById[j]);
             // Mapbox categorical stops style spec
             const adminFillOpacity = this.getJurisdictionSelectionStops(
-              adminLevelIds,
+              selectedJurisdictionsIds,
               adminLevelJurs,
               (nextCountry && nextCountry.tilesets && nextCountry.tilesets[d]) || undefined
             );
@@ -1385,22 +1381,34 @@ class IrsPlan extends React.Component<
     jurisdictions: Jurisdiction[],
     tileset: FlexObject | undefined
   ) {
+    const { childrenByParentId, newPlan } = this.state;
     const uniqueKeys: string[] = [];
     const selectionStyle = {
-      default: 0.3,
+      default: 0.33,
       property: (tileset && tileset.idField) || 'jurisdiction_id',
       stops: [] as Array<[string, number]>,
       type: 'categorical',
     };
+
     for (const j of jurisdictions) {
       // keys in stops must be unique
       if (!uniqueKeys.includes(j.jurisdiction_id)) {
         uniqueKeys.push(j.jurisdiction_id);
-        const opacity = selectedIds.includes(j.jurisdiction_id) ? 0.75 : 0.3;
+        const selectedChildren =
+          (childrenByParentId[j.jurisdiction_id] &&
+            childrenByParentId[j.jurisdiction_id].filter(c => selectedIds.includes(c))) ||
+          [];
+        const opacity = !selectedIds.includes(j.jurisdiction_id)
+          ? 0.33
+          : childrenByParentId[j.jurisdiction_id] &&
+            selectedChildren.length !== childrenByParentId[j.jurisdiction_id].length
+          ? 0.7
+          : 0.9;
+
         selectionStyle.stops.push([j.jurisdiction_id, opacity]);
       }
     }
-    return (selectionStyle.stops.length && selectionStyle) || 0.75;
+    return (selectionStyle.stops.length && selectionStyle) || 0.7;
   }
 
   /** getGeographicLevelsFromJurisdictions - utility to derive all geographic levels
@@ -1470,15 +1478,12 @@ class IrsPlan extends React.Component<
     for (let t = 1; t < tilesets.length; t += 1) {
       const adminFillLayerId = `${ADMN0_EN}-admin-${t}-fill`;
 
-      const adminLevelIds = selectedJurisdictionsIds.filter(
-        j => jurisdictionsById[j] && jurisdictionsById[j].geographic_level === t
-      );
       const adminLevelJurs = filteredJurisdictionIds
         .filter(j => jurisdictionsById[j] && jurisdictionsById[j].geographic_level === t)
         .map(j => jurisdictionsById[j]);
 
       const adminFillOpacity = this.getJurisdictionSelectionStops(
-        adminLevelIds,
+        selectedJurisdictionsIds,
         adminLevelJurs,
         tilesets[t]
       );
@@ -1542,7 +1547,7 @@ class IrsPlan extends React.Component<
           const geoLevelJurs = geoLevelIds.map(j => filteredJurisdictionsById[j]);
 
           const selectionFillOpacity = self.getJurisdictionSelectionStops(
-            geoLevelIds.filter((j: string) => j !== '' && selectedIds.includes(j)),
+            selectedIds,
             geoLevelJurs,
             undefined
           );
@@ -1625,7 +1630,7 @@ class IrsPlan extends React.Component<
           );
 
           const selectionFillOpacity = self.getJurisdictionSelectionStops(
-            geoLevelIds,
+            selectedIds,
             geoLevelJurs,
             undefined
           );
