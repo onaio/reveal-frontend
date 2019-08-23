@@ -1,8 +1,7 @@
 // this is the IRS Plan page component
-import { Actions, GisidaMap } from 'gisida';
+import { Actions } from 'gisida';
 import { keyBy } from 'lodash';
 import { EventData, LngLatBoundsLike } from 'mapbox-gl';
-import { Map as mbMap } from 'mapbox-gl';
 import moment from 'moment';
 import { MouseEvent } from 'react';
 import * as React from 'react';
@@ -46,6 +45,7 @@ import {
 } from '../../../../../constants';
 import {
   FlexObject,
+  getGisidaMapById,
   preventDefault,
   RouteParams,
   stopPropagation,
@@ -1100,8 +1100,7 @@ class IrsPlan extends React.Component<
         }
       }
 
-      // if parent is no longer, deselect it (todo: make this recursive)
-      const { parent_id } = jurisdictionsById[id];
+      const { parent_id } = clickedFeatureJurisdiction;
       const isParentSelected = doSelect
         ? true
         : parent_id && this.getIsJurisdictionPartiallySelected(parent_id, newPlanJurisdictionIds);
@@ -1114,7 +1113,7 @@ class IrsPlan extends React.Component<
       // loop through all geographic_levels
       const geoGraphicLevels = this.getGeographicLevelsFromJurisdictions(filteredJurisdictions);
       if (country && country.tilesets) {
-        const Map = window.maps.find((e: mbMap) => (e as GisidaMap)._container.id === MAP_ID);
+        const Map = getGisidaMapById(MAP_ID);
 
         for (let g = 1; g < geoGraphicLevels.length; g += 1) {
           // Define stops per geographic_level
@@ -1210,7 +1209,7 @@ class IrsPlan extends React.Component<
           filteredJurisdictionIds: nextFilteredJurisdictionIds,
           newPlan: nextNewPlan,
         } = this.state;
-        const Map = window.maps.find((m: mbMap) => (m as GisidaMap)._container.id === MAP_ID);
+        const Map = getGisidaMapById(MAP_ID);
 
         // Loop through geographic levels and update selection fill-opacity stops
         if (nextCountry && Map) {

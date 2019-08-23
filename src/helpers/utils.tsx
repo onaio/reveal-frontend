@@ -2,10 +2,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { getOnadataUserInfo, getOpenSRPUserInfo } from '@onaio/gatekeeper';
 import { SessionState } from '@onaio/session-reducer';
 import { Color } from 'csstype';
+import { GisidaMap } from 'gisida';
 import { findKey, uniq } from 'lodash';
 import { FitBoundsOptions, Layer, Style } from 'mapbox-gl';
-import { MouseEvent } from 'react';
+import { Map } from 'mapbox-gl';
 import React from 'react';
+import { MouseEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { CellInfo, Column } from 'react-table';
 import SeamlessImmutable from 'seamless-immutable';
@@ -232,6 +234,17 @@ export const ConfigStore = (
   };
   return config;
 };
+/** utility method or getting a Gisida Mapbox Map from the reference saved in window.maps
+ * @param {string} mapId - The id string of the map to be returned
+ * @return {Map|null} - The Mapbox-gl object of the Map or null if not found
+ */
+export const getGisidaMapById = (mapId: string = MAP_ID): Map | null => {
+  if (!window.maps || !Array.isArray(window.maps)) {
+    return null;
+  }
+  return window.maps.find((e: Map) => (e as GisidaMap)._container.id === mapId) || null;
+};
+
 /** utility method to extract plan from superset response object */
 export function extractPlan(plan: Plan) {
   const result: { [key: string]: any } = {
