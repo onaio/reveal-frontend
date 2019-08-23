@@ -790,7 +790,7 @@ class IrsPlan extends React.Component<
         const bounds = GeojsonExtent(jurisdictionFeature.geometry);
         newCrumb.bounds = bounds;
         setGisidaMapPosition({ bounds });
-        // this.updateMapOnHierarchyChange(jurisdictionFeature, jurisdictionsById[id])
+        this.updateMapOnHierarchyChange(jurisdictionFeature, jurisdictionsById[id]);
       }
 
       newCrumbs.push(newCrumb);
