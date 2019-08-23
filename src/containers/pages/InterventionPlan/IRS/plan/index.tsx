@@ -1,7 +1,7 @@
 // this is the IRS Plan page component
 import { Actions } from 'gisida';
 import { keyBy } from 'lodash';
-import { EventData, LngLatBounds, LngLatBoundsLike } from 'mapbox-gl';
+import { EventData, LngLatBounds, LngLatBoundsLike, MapboxGeoJSONFeature } from 'mapbox-gl';
 import moment from 'moment';
 import { MouseEvent } from 'react';
 import * as React from 'react';
@@ -730,6 +730,7 @@ class IrsPlan extends React.Component<
       const clickedTableCrumb = this.state.tableCrumbs.find(c => c.id === e.currentTarget.id);
       if (clickedTableCrumb && clickedTableCrumb.bounds) {
         setGisidaMapPosition({ bounds: clickedTableCrumb.bounds });
+        // updateMapOnHierarchyChange()
       }
       // update drilldown table
       this.onResetDrilldownTableHierarchy(e.currentTarget.id);
@@ -789,6 +790,7 @@ class IrsPlan extends React.Component<
         const bounds = GeojsonExtent(jurisdictionFeature.geometry);
         newCrumb.bounds = bounds;
         setGisidaMapPosition({ bounds });
+        // this.updateMapOnHierarchyChange(jurisdictionFeature, jurisdictionsById[id])
       }
 
       newCrumbs.push(newCrumb);
@@ -1776,10 +1778,37 @@ class IrsPlan extends React.Component<
         // handle Drilldown Click
         this.onDrilldownClick(clickedFeatureJurisdiction.jurisdiction_id);
         this.onResetDrilldownTableHierarchy(clickedFeatureJurisdiction.jurisdiction_id);
+        this.updateMapOnHierarchyChange(feature, clickedFeatureJurisdiction);
+      } else if (isShiftClick && clickedFeatureJurisdiction) {
+        // Handle selection click
+        this.onToggleJurisdictionSelection(clickedFeatureJurisdiction.jurisdiction_id);
+      }
+    }
+  }
 
-        // toggle current layer / filter current layer
+  /** updates the Gisida Layers' filters and updates the position of the map
+   * @param {MapboxGeoJSONFeature} feature - the mapbox feature which was clicked
+   * @param {Jurisdiction} clickedFeatureJurisdiction - the Jurisdiction coorisponding to the clicke feature
+   * @param {string} mapId - optional id to explicitly specify the Mabox Map to use
+   */
+  private updateMapOnHierarchyChange(
+    feature: MapboxGeoJSONFeature,
+    clickedFeatureJurisdiction: Jurisdiction,
+    mapId?: string
+  ) {
+    const { country } = this.state;
+    if (country) {
+      const geographicLevel = clickedFeatureJurisdiction.geographic_level || 1;
+      const Map = getGisidaMapById(MAP_ID);
+      const { layer, properties, geometry } = feature;
+
+      const { tilesets } = country;
+      const layerIds = Map && (Map as any).style && Object.keys((Map as any).style.sourceCaches);
+
+      if (Map && tilesets && properties && layerIds) {
+        const doUseTilesets = !!tilesets[geographicLevel];
         if (geographicLevel === 1) {
-          store.dispatch(Actions.toggleLayer(MAP_ID, layer.id));
+          store.dispatch(Actions.toggleLayer(mapId || MAP_ID, layer.id));
         } else {
           const layerFilter = Map.getFilter(layer.id);
           if (layerFilter) {
@@ -1790,16 +1819,14 @@ class IrsPlan extends React.Component<
           }
         }
 
-        const nextAdminTileset = country.tilesets[geographicLevel + 1];
+        const adminLayerIds = layerIds.filter(l => l.includes('jurisdiction-fill')).sort();
+        const nextAdminTileset = tilesets[geographicLevel + 1];
         const nextAdminIdIndex = adminLayerIds.indexOf(
           `${country.ADMN0_EN}-admin-${geographicLevel + 1}-jurisdiction-fill`
         );
         const nextAdminLayerId = nextAdminIdIndex !== -1 && adminLayerIds[nextAdminIdIndex];
         // check for next Admin fill layer
-        if (
-          (country.tilesets.length && nextAdminTileset) ||
-          (!country.tilesets.length && nextAdminLayerId)
-        ) {
+        if ((tilesets.length && nextAdminTileset) || (!tilesets.length && nextAdminLayerId)) {
           // zoom to clicked admin level
           const newBounds: LngLatBoundsLike = GeojsonExtent(geometry);
           setGisidaMapPosition({ bounds: newBounds });
@@ -1809,8 +1836,8 @@ class IrsPlan extends React.Component<
           // update layer filter of next admin level fill layer
           if (Map.getLayer(nextLayerId)) {
             const nextLayerFilter = Map.getFilter(nextLayerId);
-            if (nextLayerFilter && country.tilesets && country.tilesets[geographicLevel]) {
-              nextLayerFilter[2] = properties[country.tilesets[geographicLevel].idField];
+            if (nextLayerFilter && tilesets && tilesets[geographicLevel]) {
+              nextLayerFilter[2] = properties[tilesets[geographicLevel].idField];
               Map.setFilter(nextLayerId, nextLayerFilter);
             } else if (nextLayerFilter) {
               nextLayerFilter[2] = properties.jurisdiction_id;
@@ -1820,6 +1847,11 @@ class IrsPlan extends React.Component<
             }
           }
         } else {
+          const { jurisdictionsById } = this.props;
+          const { childlessChildrenIds, filteredJurisdictionIds } = this.state;
+          const filteredJurisdictions = filteredJurisdictionIds.map(j => jurisdictionsById[j]);
+          const filteredJurisdictionsById = keyBy(filteredJurisdictions, j => j.jurisdiction_id);
+
           const decendantLayerId = `${country.ADMN0_EN}-admin-${geographicLevel +
             1}-jurisdiction-fill`;
           if (!doUseTilesets) {
@@ -1868,12 +1900,10 @@ class IrsPlan extends React.Component<
             setGisidaMapPosition({ bounds: newBounds });
           }
         }
-      } else if (isShiftClick && clickedFeatureJurisdiction) {
-        // Handle selection click
-        this.onToggleJurisdictionSelection(clickedFeatureJurisdiction.jurisdiction_id);
       }
     }
   }
+
   /** onDrillUpClick - map click handler passed into Gisida for resetting the drilldown hierarchy
    * @param e - Mapbox Event object
    * @param country - JurisdictionsByCountry object containing basic hierarchy information per country
