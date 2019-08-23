@@ -141,7 +141,7 @@ class ActiveFocusInvestigation extends React.Component<
       );
       breadcrumbProps.currentPage = {
         label: plan.jurisdiction_name_path[currentPageIndex],
-        url: `${FI_URL}`,
+        url: '',
       };
       const labels = plan.jurisdiction_name_path.slice(0, currentPageIndex);
       breadcrumbProps.pages = labels.map((label, i) => {
