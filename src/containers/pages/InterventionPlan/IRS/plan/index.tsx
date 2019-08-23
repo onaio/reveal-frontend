@@ -1,7 +1,7 @@
 // this is the IRS Plan page component
 import { Actions } from 'gisida';
 import { keyBy } from 'lodash';
-import { EventData, LngLatBoundsLike } from 'mapbox-gl';
+import { EventData, LngLatBounds, LngLatBoundsLike } from 'mapbox-gl';
 import moment from 'moment';
 import { MouseEvent } from 'react';
 import * as React from 'react';
@@ -144,6 +144,7 @@ interface TableCrumb {
   label: string;
   id: string | null;
   active: boolean;
+  bounds?: LngLatBoundsLike;
 }
 
 /** Interface to describe props for the IrsPlan component */
@@ -326,6 +327,7 @@ class IrsPlan extends React.Component<
                   const tableCrumbs: TableCrumb[] = [
                     {
                       active: true,
+                      bounds: country.bounds,
                       id: country.jurisdictionId.length ? country.jurisdictionId : null,
                       label: country.ADMN0_EN,
                     },
@@ -724,6 +726,12 @@ class IrsPlan extends React.Component<
   private onTableBreadCrumbClick = (e: MouseEvent) => {
     preventDefault(e);
     if (e && e.currentTarget && e.currentTarget.id) {
+      // update map position
+      const clickedTableCrumb = this.state.tableCrumbs.find(c => c.id === e.currentTarget.id);
+      if (clickedTableCrumb && clickedTableCrumb.bounds) {
+        setGisidaMapPosition({ bounds: clickedTableCrumb.bounds });
+      }
+      // update drilldown table
       this.onResetDrilldownTableHierarchy(e.currentTarget.id);
     }
   };
@@ -774,14 +782,16 @@ class IrsPlan extends React.Component<
         ...c,
         active: false,
       }));
-      newCrumbs.push(newCrumb);
 
       // update map position
       const jurisdictionFeature = getFeatureByProperty('jurisdictionId', id);
       if (jurisdictionFeature && jurisdictionFeature.geometry) {
         const bounds = GeojsonExtent(jurisdictionFeature.geometry);
+        newCrumb.bounds = bounds;
         setGisidaMapPosition({ bounds });
       }
+
+      newCrumbs.push(newCrumb);
 
       this.setState(
         {
