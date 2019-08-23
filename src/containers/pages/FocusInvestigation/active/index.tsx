@@ -123,15 +123,36 @@ class ActiveFocusInvestigation extends React.Component<
       },
       pages: [],
     };
+
+    const basePage = {
+      label: FOCUS_INVESTIGATIONS,
+      url: FI_URL,
+    };
     const homePage = {
-      label: `${HOME}`,
-      url: `${HOME_URL}`,
+      label: HOME,
+      url: HOME_URL,
     };
 
     const { caseTriggeredPlans, routinePlans, plan } = this.props;
-    // get the planId
+    // get the current page index
+    if (plan) {
+      const currentPageIndex: number = plan.jurisdiction_path.indexOf(
+        this.props.match.params.jurisdiction_parent_id
+      );
+      breadcrumbProps.currentPage = {
+        label: plan.jurisdiction_name_path[currentPageIndex],
+        url: `${FI_URL}`,
+      };
+      const labels = plan.jurisdiction_name_path.slice(0, currentPageIndex);
+      breadcrumbProps.pages = labels.map((label, i) => {
+        return {
+          label,
+          url: `${FI_URL}`,
+        };
+      });
+    }
 
-    breadcrumbProps.pages = [homePage];
+    breadcrumbProps.pages = [homePage, basePage, ...breadcrumbProps.pages];
 
     if (
       caseTriggeredPlans &&
