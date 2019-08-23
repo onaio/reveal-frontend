@@ -224,8 +224,10 @@ describe('components/GisidaWrapper', () => {
     const allLayers = store.getState()['map-1'].layers;
     toggleLayer(allLayers, props.currentGoal, store, Actions);
     const map1 = store.getState()['map-1'];
-    delete map1.currentRegion;
-    delete map1.reloadLayers;
+    expect(typeof map1.currentRegion).toBe('number');
+    expect(typeof map1.reloadLayers).toBe('number');
+    expect(delete map1.currentRegion).toBe(true);
+    expect(delete map1.reloadLayers).toBe(true);
     expect(map1).toEqual(map1Fixture);
     const componentWillUnmount = jest.spyOn(wrapper.instance(), 'componentWillUnmount');
     wrapper.unmount();
@@ -330,8 +332,10 @@ describe('components/GisidaWrapper', () => {
     const allLayers = store.getState()['map-1'].layers;
     toggleLayer(allLayers, props.currentGoal, store, Actions);
     const mapState1 = store.getState()['map-1'];
-    delete mapState1.currentRegion;
-    delete mapState1.reloadLayers;
+    expect(typeof mapState1.currentRegion).toBe('number');
+    expect(typeof mapState1.reloadLayers).toBe('number');
+    expect(delete mapState1.currentRegion).toBe(true);
+    expect(delete mapState1.reloadLayers).toBe(true);
     expect(mapState1).toEqual(mapStateFixture);
     const componentWillUnmount = jest.spyOn(wrapper.instance(), 'componentWillUnmount');
     wrapper.unmount();
