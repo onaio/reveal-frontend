@@ -16,6 +16,7 @@ import {
   appState,
   gisidaWrapperProps,
   gisidaWrapperProps2,
+  gisidaWrapperProps3,
   layer1,
   map1Fixture,
   mapFixture,
@@ -262,7 +263,7 @@ describe('components/GisidaWrapper', () => {
     const wrapper = mount(<GisidaWrapper {...props1} />);
     wrapper.setState({ doRenderMap: true });
     wrapper.setProps({ ...props });
-    expect(toJson(wrapper)).toMatchSnapshot('gisida wrapper');
+    expect(wrapper.props()).toEqual(gisidaWrapperProps3);
     expect(store.getState().APP).toMatchSnapshot({
       accessToken: expect.any(String),
       apiAccessToken: expect.any(String),
