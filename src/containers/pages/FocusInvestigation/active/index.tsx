@@ -372,7 +372,7 @@ class ActiveFocusInvestigation extends React.Component<
               columns: emptyPlansColumns,
             };
             routineReactivePlans.push(
-              <NullDataTable tableProps={tableProps} reasonType={header} />
+              <NullDataTable tableProps={tableProps} reasonType={header} key={`${'current'}`} />
             );
           }
         })}
