@@ -45,9 +45,11 @@ import {
 } from '../../../../../constants';
 import {
   FlexObject,
+  getFeatureByProperty,
   getGisidaMapById,
   preventDefault,
   RouteParams,
+  setGisidaMapPosition,
   stopPropagation,
   stopPropagationAndPreventDefault,
 } from '../../../../../helpers/utils';
@@ -773,6 +775,13 @@ class IrsPlan extends React.Component<
         active: false,
       }));
       newCrumbs.push(newCrumb);
+
+      // update map position
+      const jurisdictionFeature = getFeatureByProperty('jurisdictionId', id);
+      if (jurisdictionFeature && jurisdictionFeature.geometry) {
+        const bounds = GeojsonExtent(jurisdictionFeature.geometry);
+        setGisidaMapPosition({ bounds });
+      }
 
       this.setState(
         {
