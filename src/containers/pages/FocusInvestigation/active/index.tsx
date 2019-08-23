@@ -57,6 +57,7 @@ import { extractPlan, getLocationColumns, transformValues } from '../../../../he
 import supersetFetch from '../../../../services/superset';
 import plansReducer, {
   fetchPlans,
+  getPlanById,
   getPlansArray,
   InterventionType,
   Plan,
@@ -80,12 +81,14 @@ export interface ActiveFIProps {
   fetchPlansActionCreator: typeof fetchPlans;
   routinePlans: Plan[] | null;
   supersetService: typeof supersetFetch;
+  plan: Plan | null;
 }
 
 /** default props for ActiveFI component */
 export const defaultActiveFIProps: ActiveFIProps = {
   caseTriggeredPlans: null,
   fetchPlansActionCreator: fetchPlans,
+  plan: null,
   routinePlans: null,
   supersetService: supersetFetch,
 };
@@ -124,12 +127,12 @@ class ActiveFocusInvestigation extends React.Component<
       label: `${HOME}`,
       url: `${HOME_URL}`,
     };
+
+    const { caseTriggeredPlans, routinePlans, plan } = this.props;
     // get the planId
-    const planId = this.props.match.params.plan_id;
 
     breadcrumbProps.pages = [homePage];
 
-    const { caseTriggeredPlans, routinePlans } = this.props;
     if (
       caseTriggeredPlans &&
       caseTriggeredPlans.length === 0 &&
@@ -395,12 +398,16 @@ export { ActiveFocusInvestigation };
 
 /** interface to describe props from mapStateToProps */
 interface DispatchedStateProps {
+  plan: Plan | null;
   caseTriggeredPlans: Plan[] | null;
   routinePlans: Plan[] | null;
 }
 
 /** map state to props */
 const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateProps => {
+  const planId =
+    ownProps.match.params && ownProps.match.params.plan_id ? ownProps.match.params.plan_id : null;
+  const plan = planId ? getPlanById(state, planId) : null;
   const jurisdictionParentId =
     ownProps.match.params && ownProps.match.params.jurisdiction_parent_id
       ? ownProps.match.params.jurisdiction_parent_id
@@ -423,6 +430,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
   );
   return {
     caseTriggeredPlans,
+    plan,
     routinePlans,
   };
 };

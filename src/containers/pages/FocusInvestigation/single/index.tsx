@@ -219,7 +219,7 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
       // return a page object for each name path
       return {
         label: namePath,
-        url: FI_URL + '/filter/' + planById.jurisdiction_path[i] + '/' + planById.plan_id,
+        url: FI_URL + '/filter/' + planById.jurisdiction_path[i] + '/' + planById.id,
       };
     });
     breadCrumbProps.pages = [homePage, basePage, ...pages];
