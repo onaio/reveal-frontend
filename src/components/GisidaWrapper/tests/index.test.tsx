@@ -20,6 +20,8 @@ import {
   layer1,
   map1Fixture,
   mapFixture,
+  mapState,
+  mapStateFixture,
 } from './fixtures';
 
 jest.mock('gisida-react', () => {
@@ -93,7 +95,7 @@ describe('components/GisidaWrapper', () => {
 
       for (const goalLayer in layer) {
         if (layer.hasOwnProperty(goalLayer)) {
-          expect(layer[goalLayer]).toMatchSnapshot();
+          expect(layer[goalLayer]).toMatchSnapshot(goalLayer);
         }
       }
 
@@ -329,10 +331,10 @@ describe('components/GisidaWrapper', () => {
 
     const allLayers = store.getState()['map-1'].layers;
     toggleLayer(allLayers, props.currentGoal, store, Actions);
-    expect(store.getState()['map-1']).toMatchSnapshot({
-      currentRegion: expect.any(Number),
-      reloadLayers: expect.any(Number),
-    });
+    const mapState1 = store.getState()['map-1'];
+    delete mapState1.currentRegion;
+    delete mapState1.reloadLayers;
+    expect(mapState1).toEqual(mapStateFixture);
     const componentWillUnmount = jest.spyOn(wrapper.instance(), 'componentWillUnmount');
     wrapper.unmount();
     expect(componentWillUnmount).toHaveBeenCalled();
