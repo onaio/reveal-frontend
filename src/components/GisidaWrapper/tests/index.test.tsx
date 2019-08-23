@@ -135,11 +135,10 @@ describe('components/GisidaWrapper', () => {
     });
     jest.runOnlyPendingTimers();
     const mapState1 = store.getState()['map-1'];
-    for (const layer in mapState1) {
-      if (mapState1.hasOwnProperty(layer)) {
-        expect(mapState1[layer]).toMatchSnapshot();
-      }
-    }
+    delete mapState1.reloadLayers;
+    delete mapState1.currentRegion;
+    expect(mapState1).toMatchSnapshot();
+
     const componentWillUnmount = jest.spyOn(wrapper.instance(), 'componentWillUnmount');
     wrapper.unmount();
     expect(componentWillUnmount).toHaveBeenCalled();
