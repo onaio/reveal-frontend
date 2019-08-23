@@ -243,7 +243,7 @@ class SingleActiveFIMap extends React.Component<
       // return a page object for each name path
       return {
         label: namePath,
-        url: FI_URL + '/' + plan.jurisdiction_path[i],
+        url: FI_URL + '/filter/' + plan.jurisdiction_path[i],
       };
     });
     breadCrumbProps.pages = [homePage, basePage, ...pages, secondLastPage];
