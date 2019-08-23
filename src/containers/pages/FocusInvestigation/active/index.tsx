@@ -53,12 +53,7 @@ import {
 import { renderClassificationRow } from '../../../../helpers/indicators';
 import '../../../../helpers/tables.css';
 import { defaultTableProps } from '../../../../helpers/utils';
-import {
-  extractPlan,
-  getLocationColumns,
-  RouteParams,
-  transformValues,
-} from '../../../../helpers/utils';
+import { extractPlan, getLocationColumns, transformValues } from '../../../../helpers/utils';
 import supersetFetch from '../../../../services/superset';
 import plansReducer, {
   fetchPlans,
@@ -73,6 +68,11 @@ import './style.css';
 
 /** register the plans reducer */
 reducerRegistry.register(plansReducerName, plansReducer);
+
+export interface RouteParams {
+  jurisdiction_parent_id: string;
+  plan_id: string;
+}
 
 /** interface to describe props for ActiveFI component */
 export interface ActiveFIProps {
@@ -124,6 +124,9 @@ class ActiveFocusInvestigation extends React.Component<
       label: `${HOME}`,
       url: `${HOME_URL}`,
     };
+    // get the planId
+    const planId = this.props.match.params.plan_id;
+
     breadcrumbProps.pages = [homePage];
 
     const { caseTriggeredPlans, routinePlans } = this.props;
