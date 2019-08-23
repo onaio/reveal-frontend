@@ -755,31 +755,29 @@ class IrsPlan extends React.Component<
    * @param id - the jurisidction_id of the Jurisdiction clicked
    */
   private onDrilldownClick(id: string) {
-    const { tableCrumbs, filteredJurisdictionIds } = this.state;
+    const { tableCrumbs } = this.state;
     const { jurisdictionsById } = this.props;
-    const jurisdictionsArray = filteredJurisdictionIds.map(j => jurisdictionsById[j]);
-    let newCrumb: TableCrumb | null = null;
-    for (const j of jurisdictionsArray) {
-      if (j.jurisdiction_id === id) {
-        newCrumb = {
-          active: true,
-          id,
-          label: j.name || 'Jurisdiction',
-        };
-        break;
-      }
-    }
 
-    const newCrumbs: TableCrumb[] = tableCrumbs.map(c => ({
-      ...c,
-      active: false,
-    }));
+    const newCrumb: TableCrumb | null =
+      (jurisdictionsById[id] && {
+        active: true,
+        id,
+        label: jurisdictionsById[id].name || 'Jurisdiction',
+      }) ||
+      null;
 
     if (newCrumb) {
+      // rebuild tableCrumbs
+      const newCrumbs: TableCrumb[] = tableCrumbs.map(c => ({
+        ...c,
+        active: false,
+      }));
+      newCrumbs.push(newCrumb);
+
       this.setState(
         {
           focusJurisdictionId: (id as string) || null,
-          tableCrumbs: [...newCrumbs, newCrumb],
+          tableCrumbs: [...newCrumbs],
         },
         () => {
           const planTableProps = this.getDrilldownPlanTableProps(this.state);
