@@ -210,6 +210,7 @@ export const goalsWithSymbols = [
   'Mosquito_Collection_Min_3_Traps',
   'Larval_Dipping_Min_3_Sites',
   'Case_Confirmation',
+  'Laval_Dipping',
 ];
 export type PlanActivityTitlesType = typeof PlanActivityTitles[number];
 
