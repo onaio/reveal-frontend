@@ -12,7 +12,7 @@ import store from '../../../store';
 import { Task, TaskGeoJSON } from '../../../store/ducks/tasks';
 import * as fixtures from '../../../store/ducks/tests/fixtures';
 import GisidaWrapper from '../index';
-import { appState, gisidaWrapperProps, layer1, map1Fixture } from './fixtures';
+import { appState, gisidaWrapperProps, gisidaWrapperProps2, layer1, map1Fixture } from './fixtures';
 
 jest.mock('gisida-react', () => {
   const MapComponent = () => <div>I love oov</div>;
@@ -168,7 +168,7 @@ describe('components/GisidaWrapper', () => {
      */
     wrapper.setState({ doRenderMap: true });
     wrapper.setProps({ ...props });
-    expect(toJson(wrapper)).toMatchSnapshot('gisida wrapper 1');
+    expect(wrapper.props()).toEqual(gisidaWrapperProps2);
     expect(wrapper.find('MapComponent').props()).toMatchSnapshot({});
     store.dispatch((Actions as any).mapRendered('map-1', true));
     store.dispatch((Actions as any).mapLoaded('map-1', true));
