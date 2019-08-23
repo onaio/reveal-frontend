@@ -17,10 +17,8 @@ import {
   gisidaWrapperProps,
   gisidaWrapperProps2,
   gisidaWrapperProps3,
-  layer1,
   map1Fixture,
   mapFixture,
-  mapState,
   mapStateFixture,
 } from './fixtures';
 
