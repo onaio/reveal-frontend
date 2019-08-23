@@ -28,14 +28,16 @@ interface SelectOption {
 
 /** JurisdictionSelect props */
 export interface JurisdictionSelectProps<T = SelectOption> extends AsyncSelectProps<T> {
-  apiEndpoint: string;
-  params: URLParams;
-  serviceClass: typeof OpenSRPService;
+  apiEndpoint: string /** the OpenSRP API endpoint */;
+  cascadingSelect: boolean /** should we have a cascading select or not */;
+  params: URLParams /** extra URL params to send to OpenSRP */;
+  serviceClass: typeof OpenSRPService /** the OpenSRP service */;
 }
 
 /** default props for JurisdictionSelect */
 const defaultProps: Partial<JurisdictionSelectProps> = {
   apiEndpoint: 'location/findByProperties',
+  cascadingSelect: true,
   params: {
     is_jurisdiction: true,
     return_geometry: false,
@@ -49,7 +51,7 @@ const defaultProps: Partial<JurisdictionSelectProps> = {
  * This is simply a Higher Order Component that wraps around AsyncSelect
  */
 const JurisdictionSelect = (props: JurisdictionSelectProps & FieldProps) => {
-  const { apiEndpoint, field, form, labelFieldName, params, serviceClass } = props;
+  const { apiEndpoint, cascadingSelect, field, form, labelFieldName, params, serviceClass } = props;
 
   const [parentId, setParentId] = useState<string>('');
   const [hierarchy, setHierarchy] = useState<SelectOption[]>([]);
@@ -106,7 +108,7 @@ const JurisdictionSelect = (props: JurisdictionSelectProps & FieldProps) => {
       };
       service.list(newParamsToUse).then(e => {
         setShouldMenuOpen(true);
-        if (e.length > 0) {
+        if (e.length > 0 && cascadingSelect === true) {
           setParentId(optionVal.value);
 
           hierarchy.push(optionVal);
@@ -114,7 +116,7 @@ const JurisdictionSelect = (props: JurisdictionSelectProps & FieldProps) => {
 
           setCloseMenuOnSelect(false);
         } else {
-          // set the formik field value
+          // set the Formik field value
           if (form && field) {
             form.setFieldValue(field.name, optionVal.value);
             form.setFieldTouched(field.name, true);
@@ -134,7 +136,7 @@ const JurisdictionSelect = (props: JurisdictionSelectProps & FieldProps) => {
       setHierarchy([]);
       setShouldMenuOpen(false);
       setCloseMenuOnSelect(false);
-      // set the formik field value
+      // set the Formik field value
       if (form && field) {
         form.setFieldValue(field.name, '');
       }

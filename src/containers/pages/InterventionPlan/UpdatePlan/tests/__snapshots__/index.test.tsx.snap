@@ -188,6 +188,8 @@ Object {
       "timingPeriodStart": 2017-07-13T19:31:00.000Z,
     },
   ],
+  "allowMoreJurisdictions": true,
+  "cascadingSelect": true,
   "disabledActivityFields": Array [
     "actionReason",
     "goalPriority",
@@ -260,6 +262,7 @@ Object {
     "title": "TwoTwoOne_01 IRS 2019-07-10",
     "version": "1",
   },
+  "jurisdictionLabel": "Focus Area",
   "redirectAfterAction": "/plans/list",
 }
 `;

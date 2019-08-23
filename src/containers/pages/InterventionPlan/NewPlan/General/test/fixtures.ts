@@ -117,6 +117,8 @@ export const planFormProps = {
       timingPeriodStart: parseISO('2017-07-13T19:31:00.000Z'),
     },
   ],
+  allowMoreJurisdictions: true,
+  cascadingSelect: true,
   disabledActivityFields: [],
   disabledFields: [],
   initialValues: {
@@ -244,5 +246,6 @@ export const planFormProps = {
     title: '',
     version: '1',
   },
+  jurisdictionLabel: 'Focus Area',
   redirectAfterAction: '/plans/list',
 };

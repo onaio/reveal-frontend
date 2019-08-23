@@ -19,6 +19,7 @@ import {
   INTERVENTION_IRS_URL,
   LOGIN_URL,
   LOGOUT_URL,
+  NEW_IRS_PLAN_URL,
   NEW_PLAN_URL,
   PLAN_COMPLETION_URL,
   PLAN_LIST_URL,
@@ -33,7 +34,8 @@ import SingleFI from '../containers/pages/FocusInvestigation/single';
 import Home from '../containers/pages/Home/Home';
 import IrsPlans from '../containers/pages/InterventionPlan/IRS';
 import IrsPlan from '../containers/pages/InterventionPlan/IRS/plan';
-import NewPlan from '../containers/pages/InterventionPlan/NewPlan';
+import NewPlan from '../containers/pages/InterventionPlan/NewPlan/General';
+import NewIRSPlan from '../containers/pages/InterventionPlan/NewPlan/IRS';
 import ConnectedPlanDefinitionList from '../containers/pages/InterventionPlan/PlanDefinitionList';
 import ConnectedUpdatePlan from '../containers/pages/InterventionPlan/UpdatePlan';
 import { oAuthUserInfoGetter } from '../helpers/utils';
@@ -70,8 +72,8 @@ class App extends Component {
               <ConnectedPrivateRoute
                 disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                 exact={true}
-                path={`${INTERVENTION_IRS_URL}/new`}
-                component={IrsPlan}
+                path={NEW_IRS_PLAN_URL}
+                component={NewIRSPlan}
               />
 
               <ConnectedPrivateRoute

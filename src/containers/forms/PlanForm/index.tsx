@@ -65,12 +65,15 @@ export const defaultInitialValues: PlanFormFields = {
 };
 
 /** interface for plan form props */
-interface PlanFormProps {
-  allFormActivities: PlanActivityFormFields[];
-  disabledActivityFields: string[];
-  disabledFields: string[];
-  initialValues: PlanFormFields;
-  redirectAfterAction: string;
+export interface PlanFormProps {
+  allFormActivities: PlanActivityFormFields[] /** the list of all allowed activities */;
+  allowMoreJurisdictions: boolean /** should we allow one to add more jurisdictions */;
+  cascadingSelect: boolean /** should we use cascading selects for jurisdiction selection */;
+  disabledActivityFields: string[] /** activity fields that are disabled */;
+  disabledFields: string[] /** fields that are disabled */;
+  initialValues: PlanFormFields /** initial values for fields on the form */;
+  jurisdictionLabel: string /** the label used for the jurisdiction selection */;
+  redirectAfterAction: string /** the url to redirect to after form submission */;
 }
 
 /** Plan Form component */
@@ -81,9 +84,12 @@ const PlanForm = (props: PlanFormProps) => {
 
   const {
     allFormActivities,
+    allowMoreJurisdictions,
+    cascadingSelect,
     disabledActivityFields,
     disabledFields,
     initialValues,
+    jurisdictionLabel,
     redirectAfterAction,
   } = props;
 
@@ -93,7 +99,7 @@ const PlanForm = (props: PlanFormProps) => {
 
   const disAllowedStatusChoices: string[] = [];
   if (editMode) {
-    // Dont allow setting status back to draft
+    // Don't allow setting status back to draft
     if (initialValues.status !== PlanStatus.DRAFT) {
       disAllowedStatusChoices.push(PlanStatus.DRAFT);
     }
@@ -275,7 +281,7 @@ const PlanForm = (props: PlanFormProps) => {
                                 {Object.entries(errors.jurisdictions[index] || {}).map(
                                   ([key, val]) => (
                                     <li key={key}>
-                                      <strong>Focus Area</strong>: {val}
+                                      <strong>{jurisdictionLabel}</strong>: {val}
                                     </li>
                                   )
                                 )}
@@ -301,14 +307,15 @@ const PlanForm = (props: PlanFormProps) => {
                                   : 'async-select-container'
                               }
                             >
-                              <Label for={`jurisdictions-${index}-id`}>Focus Area</Label>
+                              <Label for={`jurisdictions-${index}-id`}>{jurisdictionLabel}</Label>
                               <Field
                                 required={true}
                                 component={JurisdictionSelect}
+                                cascadingSelect={cascadingSelect}
                                 name={`jurisdictions[${index}].id`}
                                 id={`jurisdictions-${index}-id`}
-                                placeholder="Select Focus Area"
-                                aria-label="Select Focus Area"
+                                placeholder={`Select ${jurisdictionLabel}`}
+                                aria-label={`Select ${jurisdictionLabel}`}
                                 disabled={disabledFields.includes('jurisdictions')}
                                 className={
                                   errors.jurisdictions &&
@@ -337,15 +344,16 @@ const PlanForm = (props: PlanFormProps) => {
                           </div>
                         </fieldset>
                       ))}
-                      {values.interventionType === InterventionType.IRS && (
-                        <button
-                          type="button"
-                          className="btn btn-primary btn-sm mb-5 addJurisdiction"
-                          onClick={() => arrayHelpers.push(initialJurisdictionValues)}
-                        >
-                          Add Focus Area
-                        </button>
-                      )}
+                      {values.interventionType === InterventionType.IRS &&
+                        allowMoreJurisdictions === true && (
+                          <button
+                            type="button"
+                            className="btn btn-primary btn-sm mb-5 addJurisdiction"
+                            onClick={() => arrayHelpers.push(initialJurisdictionValues)}
+                          >
+                            Add {jurisdictionLabel}
+                          </button>
+                        )}
                     </div>
                   )}
                 </div>
@@ -822,9 +830,12 @@ const PlanForm = (props: PlanFormProps) => {
 
 const defaultProps: PlanFormProps = {
   allFormActivities: getFormActivities(planActivities),
+  allowMoreJurisdictions: true,
+  cascadingSelect: true,
   disabledActivityFields: [],
   disabledFields: [],
   initialValues: defaultInitialValues,
+  jurisdictionLabel: 'Focus Area',
   redirectAfterAction: PLAN_LIST_URL,
 };
 

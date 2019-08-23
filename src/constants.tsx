@@ -119,6 +119,8 @@ export const CANCEL = 'Cancel';
 export type CANCEL = typeof CANCEL;
 export const IRS_PLANS = 'IRS Plans';
 export type IRS_PLANS = typeof IRS_PLANS;
+export const COUNTRY = 'Country';
+export type COUNTRY = typeof COUNTRY;
 
 export const JURISDICTION_ID = 'jurisdiction_id';
 export type JURISDICTION_ID = typeof JURISDICTION_ID;
@@ -148,6 +150,8 @@ export const HOME_URL = '/';
 export type HOME_URL = typeof HOME_URL;
 export const INTERVENTION_IRS_URL = '/intervention/irs';
 export type INTERVENTION_IRS_URL = typeof INTERVENTION_IRS_URL;
+export const NEW_IRS_PLAN_URL = '/intervention/irs/new';
+export type NEW_IRS_PLAN_URL = typeof NEW_IRS_PLAN_URL;
 export const FI_URL = '/focus-investigation';
 export type FI_URL = typeof FI_URL;
 export const FI_SINGLE_URL = '/focus-investigation/view';
