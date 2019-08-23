@@ -4,8 +4,7 @@ import { SessionState } from '@onaio/session-reducer';
 import { Color } from 'csstype';
 import { GisidaMap } from 'gisida';
 import { findKey, uniq } from 'lodash';
-import { FitBoundsOptions, Layer, Style } from 'mapbox-gl';
-import { Map } from 'mapbox-gl';
+import { FitBoundsOptions, Layer, LngLatBoundsLike, LngLatLike, Map, Style } from 'mapbox-gl';
 import React from 'react';
 import { MouseEvent } from 'react';
 import { Link } from 'react-router-dom';
@@ -277,6 +276,54 @@ export const getFeatureByProperty = (
     }
   }
   return null;
+};
+
+/** interface for setGisidaMapPosition `position` parameter */
+export interface GisidaPositionType {
+  bounds?: LngLatBoundsLike;
+  boundsOptions?: FitBoundsOptions;
+  lat?: number;
+  lng?: number;
+  zoom?: number;
+}
+
+/** utility method to update the position of a Gisida Mapbox Map
+ * @param {GisidaPositionType} position - The config object describing the new map position
+ * @param {string} mapId - The id string of the map to query for features
+ * @returns {boolean} - Indicates the success or failure of updating the map position
+ */
+export const setGisidaMapPosition = (
+  position: GisidaPositionType,
+  mapId: string = MAP_ID
+): boolean => {
+  const map: Map | null = getGisidaMapById(mapId);
+
+  if (!map) {
+    return false;
+  }
+
+  if (position.bounds) {
+    // set position with fitBounds
+    try {
+      map.fitBounds(position.bounds, position.boundsOptions || { padding: 20 });
+    } catch {
+      return false;
+    }
+  } else {
+    // set position with l
+    const { lat, lng, zoom } = position;
+    const lngLat: LngLatLike | null = (lng && lat && [lng, lat]) || null;
+    if (lngLat && typeof zoom !== 'undefined') {
+      try {
+        map.setCenter(lngLat);
+        map.setZoom(zoom);
+      } catch {
+        return false;
+      }
+    }
+  }
+
+  return true;
 };
 
 /** utility method to extract plan from superset response object */
