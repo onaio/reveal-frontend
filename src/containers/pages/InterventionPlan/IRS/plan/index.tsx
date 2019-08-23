@@ -1373,10 +1373,10 @@ class IrsPlan extends React.Component<
     jurisdictions: Jurisdiction[],
     tileset: FlexObject | undefined
   ) {
-    const { childrenByParentId, newPlan } = this.state;
+    const { childrenByParentId } = this.state;
     const uniqueKeys: string[] = [];
     const selectionStyle = {
-      default: 0.33,
+      default: 0.3,
       property: (tileset && tileset.idField) || 'jurisdiction_id',
       stops: [] as Array<[string, number]>,
       type: 'categorical',
@@ -1384,18 +1384,17 @@ class IrsPlan extends React.Component<
 
     for (const j of jurisdictions) {
       // keys in stops must be unique
-      if (!uniqueKeys.includes(j.jurisdiction_id)) {
+      if (!uniqueKeys.includes(j.jurisdiction_id) && selectedIds.includes(j.jurisdiction_id)) {
         uniqueKeys.push(j.jurisdiction_id);
         const selectedChildren =
           (childrenByParentId[j.jurisdiction_id] &&
             childrenByParentId[j.jurisdiction_id].filter(c => selectedIds.includes(c))) ||
           [];
-        const opacity = !selectedIds.includes(j.jurisdiction_id)
-          ? 0.33
-          : childrenByParentId[j.jurisdiction_id] &&
-            selectedChildren.length !== childrenByParentId[j.jurisdiction_id].length
-          ? 0.7
-          : 0.9;
+        const opacity =
+          childrenByParentId[j.jurisdiction_id] &&
+          selectedChildren.length !== childrenByParentId[j.jurisdiction_id].length
+            ? 0.6
+            : 0.9;
 
         selectionStyle.stops.push([j.jurisdiction_id, opacity]);
       }
