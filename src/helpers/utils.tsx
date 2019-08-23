@@ -234,7 +234,7 @@ export const ConfigStore = (
   };
   return config;
 };
-/** utility method or getting a Gisida Mapbox Map from the reference saved in window.maps
+/** utility method ror getting a Gisida Mapbox Map from the reference saved in window.maps
  * @param {string} mapId - The id string of the map to be returned
  * @return {Map|null} - The Mapbox-gl object of the Map or null if not found
  */
@@ -243,6 +243,40 @@ export const getGisidaMapById = (mapId: string = MAP_ID): Map | null => {
     return null;
   }
   return window.maps.find((e: Map) => (e as GisidaMap)._container.id === mapId) || null;
+};
+
+/** utility method for getting a rendered feature by matching property
+ * @param {string} prop - The feature property name of the value to compair against
+ * @param {string|number} val - The value to compair the feature property against
+ * @param {string} layerType - The Mapbox layer type to query
+ * @param {string} mapId - The id string of the map to query for features
+ * @return {mapboxFeature|null} - The queried feature matching the prop/val or null if none found
+ */
+export const getFeatureByProperty = (
+  prop: string,
+  val: string | number,
+  layerType: string = 'fill',
+  mapId: string = MAP_ID
+) => {
+  const map: Map | null = getGisidaMapById(mapId);
+  if (map) {
+    const features = map.queryRenderedFeatures().filter(f => f.layer.type === layerType);
+    for (const feature of features) {
+      if (feature && feature.properties && typeof feature.properties[prop] !== 'undefined') {
+        let propVal = feature.properties[prop];
+        // Make sure feature propVal and val are the same type before compairing
+        if (typeof val === 'string' && typeof propVal !== 'string') {
+          propVal = propVal.toString();
+        } else if (typeof val === 'number' && typeof propVal !== 'number') {
+          propVal = Number(propVal);
+        }
+        if (propVal === val) {
+          return feature;
+        }
+      }
+    }
+  }
+  return null;
 };
 
 /** utility method to extract plan from superset response object */
