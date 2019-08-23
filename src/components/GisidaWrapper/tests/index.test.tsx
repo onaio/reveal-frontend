@@ -12,7 +12,14 @@ import store from '../../../store';
 import { Task, TaskGeoJSON } from '../../../store/ducks/tasks';
 import * as fixtures from '../../../store/ducks/tests/fixtures';
 import GisidaWrapper from '../index';
-import { appState, gisidaWrapperProps, gisidaWrapperProps2, layer1, map1Fixture } from './fixtures';
+import {
+  appState,
+  gisidaWrapperProps,
+  gisidaWrapperProps2,
+  layer1,
+  map1Fixture,
+  mapFixture,
+} from './fixtures';
 
 jest.mock('gisida-react', () => {
   const MapComponent = () => <div>I love oov</div>;
@@ -103,11 +110,42 @@ describe('components/GisidaWrapper', () => {
       structures: wrapFeatureCollection([fixtures.structure1.geojson]),
     };
     const wrapper = mount(<GisidaWrapper {...props} />);
-    expect(store.getState().APP).toMatchSnapshot(JSON.stringify(appState));
+    expect(store.getState().APP).toEqual({
+      accessToken: 'hunter2',
+      apiAccessToken: 'hunter2',
+      appName: 'TLv1_02',
+      loaded: true,
+      mapConfig: {
+        bounds: [101.187686920166, 15.0853007474691, 101.202192306519, 15.0953281335118],
+        boxZoom: true,
+        container: 'map',
+        fitBoundsOptions: {
+          padding: 20,
+        },
+        style: 'mapbox://styles/mapbox/satellite-v9',
+      },
+      mapIcons: [
+        {
+          id: 'case-confirmation',
+          imageUrl:
+            'https://raw.githubusercontent.com/onaio/reveal-frontend/master/src/assets/images/case-confirmation.png',
+        },
+        {
+          id: 'larval',
+          imageUrl:
+            'https://raw.githubusercontent.com/onaio/reveal-frontend/master/src/assets/images/larval.png',
+        },
+        {
+          id: 'mosquito',
+          imageUrl:
+            'https://raw.githubusercontent.com/onaio/reveal-frontend/master/src/assets/images/mosquito.png',
+        },
+      ],
+    });
     const map1 = store.getState()['map-1'];
     // remove reloadLayers because they keep changing
     delete map1.reloadLayers;
-    expect(map1).toMatchSnapshot({});
+    expect(map1).toEqual(mapFixture);
     expect(toJson(wrapper).props).toEqual(gisidaWrapperProps);
     wrapper.setProps({ ...props });
     wrapper.setState({ doRenderMap: true });
@@ -281,19 +319,7 @@ describe('components/GisidaWrapper', () => {
     expect(wrapper.find('MapComponent').props()).toMatchSnapshot('map component');
     store.dispatch((Actions as any).mapRendered('map-1', true));
     store.dispatch((Actions as any).mapLoaded('map-1', true));
-    expect(store.getState().APP).toMatchSnapshot({
-      accessToken: expect.any(String),
-      apiAccessToken: expect.any(String),
-      mapConfig: {
-        style: {
-          sources: {
-            diimagery: {
-              tiles: [expect.any(String)],
-            },
-          },
-        },
-      },
-    });
+    expect(store.getState().APP).toEqual(appState);
     jest.runOnlyPendingTimers();
     /** Investigate why it won't toggleLayers considering.
      * point and polygon featurecollection has been added to props
