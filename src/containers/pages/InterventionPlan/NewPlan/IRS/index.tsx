@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet';
 import { Col, Row } from 'reactstrap';
 import HeaderBreadcrumb from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import {
+  COUNTRY,
   HOME,
   HOME_URL,
   INTERVENTION_IRS_URL,
@@ -43,7 +44,7 @@ const NewIRSPlan = () => {
       activities: getFormActivities(IRSActivities),
       interventionType: InterventionType.IRS,
     },
-    jurisdictionLabel: 'Country',
+    jurisdictionLabel: COUNTRY,
     redirectAfterAction: INTERVENTION_IRS_URL,
   };
 
