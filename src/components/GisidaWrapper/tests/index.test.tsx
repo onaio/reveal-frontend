@@ -19,10 +19,6 @@ import {
   gisidaWrapperProps,
   gisidaWrapperProps2,
   gisidaWrapperProps3,
-  map1Fixture,
-  mapFixture,
-  mapStateFixture,
-  maptStateFixture2,
 } from './fixtures';
 
 jest.mock('gisida-react', () => {
