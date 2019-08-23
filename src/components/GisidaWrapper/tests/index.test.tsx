@@ -14,12 +14,15 @@ import * as fixtures from '../../../store/ducks/tests/fixtures';
 import GisidaWrapper from '../index';
 import {
   appState,
+  appStateFixture3,
+  appStateFixture4,
   gisidaWrapperProps,
   gisidaWrapperProps2,
   gisidaWrapperProps3,
   map1Fixture,
   mapFixture,
   mapStateFixture,
+  maptStateFixture2,
 } from './fixtures';
 
 jest.mock('gisida-react', () => {
@@ -111,38 +114,7 @@ describe('components/GisidaWrapper', () => {
       structures: wrapFeatureCollection([fixtures.structure1.geojson]),
     };
     const wrapper = mount(<GisidaWrapper {...props} />);
-    expect(store.getState().APP).toEqual({
-      accessToken: 'hunter2',
-      apiAccessToken: 'hunter2',
-      appName: 'TLv1_02',
-      loaded: true,
-      mapConfig: {
-        bounds: [101.187686920166, 15.0853007474691, 101.202192306519, 15.0953281335118],
-        boxZoom: true,
-        container: 'map',
-        fitBoundsOptions: {
-          padding: 20,
-        },
-        style: 'mapbox://styles/mapbox/satellite-v9',
-      },
-      mapIcons: [
-        {
-          id: 'case-confirmation',
-          imageUrl:
-            'https://raw.githubusercontent.com/onaio/reveal-frontend/master/src/assets/images/case-confirmation.png',
-        },
-        {
-          id: 'larval',
-          imageUrl:
-            'https://raw.githubusercontent.com/onaio/reveal-frontend/master/src/assets/images/larval.png',
-        },
-        {
-          id: 'mosquito',
-          imageUrl:
-            'https://raw.githubusercontent.com/onaio/reveal-frontend/master/src/assets/images/mosquito.png',
-        },
-      ],
-    });
+    expect(store.getState().APP).toEqual(appStateFixture4);
     const map1 = store.getState()['map-1'];
     // remove reloadLayers because they keep changing
     delete map1.reloadLayers;
@@ -162,10 +134,12 @@ describe('components/GisidaWrapper', () => {
       apiAccessToken: expect.any(String),
     });
     jest.runOnlyPendingTimers();
-    expect(store.getState()['map-1']).toMatchSnapshot({
-      currentRegion: expect.any(Number),
-      reloadLayers: expect.any(Number),
-    });
+    const mapState1 = store.getState()['map-1'];
+    expect(typeof mapState1.currentRegion).toBe('number');
+    expect(typeof mapState1.reloadLayers).toBe('number');
+    expect(delete mapState1.currentRegion).toBe(true);
+    expect(delete mapState1.reloadLayers).toBe(true);
+    expect(mapState1).toEqual(maptStateFixture2);
     const componentWillUnmount = jest.spyOn(wrapper.instance(), 'componentWillUnmount');
     wrapper.unmount();
     expect(componentWillUnmount).toHaveBeenCalled();
@@ -208,13 +182,10 @@ describe('components/GisidaWrapper', () => {
     wrapper.setState({ doRenderMap: true });
     wrapper.setProps({ ...props });
     expect(wrapper.props()).toEqual(gisidaWrapperProps2);
-    expect(wrapper.find('MapComponent').props()).toMatchSnapshot({});
+    expect(wrapper.find('MapComponent').props()).toMatchSnapshot();
     store.dispatch((Actions as any).mapRendered('map-1', true));
     store.dispatch((Actions as any).mapLoaded('map-1', true));
-    expect(store.getState().APP).toMatchSnapshot({
-      accessToken: expect.any(String),
-      apiAccessToken: expect.any(String),
-    });
+    expect(store.getState().APP).toEqual(appStateFixture3);
 
     jest.runOnlyPendingTimers();
     /** Investigate why it won't toggleLayers considering.
