@@ -1792,7 +1792,7 @@ class IrsPlan extends React.Component<
         ) {
           // zoom to clicked admin level
           const newBounds: LngLatBoundsLike = GeojsonExtent(geometry);
-          Map.fitBounds(newBounds, { padding: 20 });
+          setGisidaMapPosition({ bounds: newBounds });
           // toggle next admin fill layer
           const nextLayerId =
             nextAdminLayerId || `${country.ADMN0_EN}-admin-${geographicLevel + 1}-fill`;
@@ -1850,12 +1850,12 @@ class IrsPlan extends React.Component<
             )
             .map(j => j.geojson);
           // zoom to extends of childless decendant jurisdiction geometries
-          const newBounds = GeojsonExtent({
+          const newBounds: LngLatBoundsLike = GeojsonExtent({
             features: decendantChildlessFeatures,
             type: 'FeatureCollection',
           });
           if (newBounds) {
-            Map.fitBounds(newBounds, { padding: 20 });
+            setGisidaMapPosition({ bounds: newBounds });
           }
         }
       } else if (isShiftClick && clickedFeatureJurisdiction) {
@@ -1944,7 +1944,7 @@ class IrsPlan extends React.Component<
         }
       }
 
-      Map.fitBounds(bounds as LngLatBoundsLike, { padding: 20 });
+      setGisidaMapPosition({ bounds });
       this.onResetDrilldownTableHierarchy(jurisdictionId.length ? jurisdictionId : null);
     }
   }

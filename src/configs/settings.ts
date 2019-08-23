@@ -1,6 +1,6 @@
 /** This is the main configuration module */
 import { Providers } from '@onaio/gatekeeper';
-import { Expression } from 'mapbox-gl';
+import { Expression, LngLatBoundsLike } from 'mapbox-gl';
 import {
   DOMAIN_NAME,
   ENABLE_ONADATA_OAUTH,
@@ -720,7 +720,7 @@ export type JurisdictionTypes = typeof JurisdictionLevels[number];
 /** interface descbribing basic country level information */
 export interface JurisdictionsByCountry extends ADMN0 {
   // the GPS extents of given geometry(s)
-  bounds?: any[];
+  bounds?: LngLatBoundsLike;
 
   // the top level jurisdiction_Ids from OpenSRP
   // this is most useful for instances where tilesets DO NOT match the OpenSRP hierarchy
