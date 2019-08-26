@@ -1,13 +1,13 @@
-.btn-intervention {
+.btn-home-call-to-action {
   min-height: 234px;
 }
 
-.intervention-link,
-.intervention-link:hover {
+.home-link,
+.home-link:hover {
   text-decoration: none;
 }
 
-.btn-outline-dark.btn-intervention {
+.btn-outline-dark.btn-home-call-to-action {
   border-color: #cccccc;
 }
 
