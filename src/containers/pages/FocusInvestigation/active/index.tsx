@@ -150,9 +150,10 @@ class ActiveFocusInvestigation extends React.Component<
           url: FI_URL + '/filter/' + plan.jurisdiction_path[i] + '/' + plan.id,
         };
       });
+      breadcrumbProps.pages = [homePage, basePage, ...breadcrumbProps.pages];
+    } else {
+      breadcrumbProps.pages = [homePage];
     }
-
-    breadcrumbProps.pages = [homePage, basePage, ...breadcrumbProps.pages];
 
     if (
       caseTriggeredPlans &&
