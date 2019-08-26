@@ -1151,7 +1151,8 @@ class IrsPlan extends React.Component<
               'fill-opacity',
               nextPaintStops
             );
-          } else if (Map && Map.getLayer(`${country.ADMN0_EN}-admin-${g}-jurisdiction-fill`)) {
+          }
+          if (Map && Map.getLayer(`${country.ADMN0_EN}-admin-${g}-jurisdiction-fill`)) {
             Map.setPaintProperty(
               `${country.ADMN0_EN}-admin-${g}-jurisdiction-fill`,
               'fill-opacity',
@@ -1404,15 +1405,18 @@ class IrsPlan extends React.Component<
       // keys in stops must be unique
       if (!uniqueKeys.includes(j.jurisdiction_id) && selectedIds.includes(j.jurisdiction_id)) {
         uniqueKeys.push(j.jurisdiction_id);
-        const selectedChildren =
-          (childrenByParentId[j.jurisdiction_id] &&
-            childrenByParentId[j.jurisdiction_id].filter(c => selectedIds.includes(c))) ||
-          [];
-        const opacity =
-          childrenByParentId[j.jurisdiction_id] &&
-          selectedChildren.length !== childrenByParentId[j.jurisdiction_id].length
-            ? 0.6
-            : 0.9;
+        let opacity: number = 0.9;
+        if (childrenByParentId[j.jurisdiction_id]) {
+          const selectedChildren =
+            (childrenByParentId[j.jurisdiction_id] &&
+              childrenByParentId[j.jurisdiction_id].filter(c => selectedIds.includes(c))) ||
+            [];
+          opacity =
+            childrenByParentId[j.jurisdiction_id] &&
+            selectedChildren.length !== childrenByParentId[j.jurisdiction_id].length
+              ? 0.6
+              : 0.9;
+        }
 
         selectionStyle.stops.push([j.jurisdiction_id, opacity]);
       }
@@ -1558,7 +1562,7 @@ class IrsPlan extends React.Component<
           const selectionFillOpacity = self.getJurisdictionSelectionStops(
             selectedIds,
             geoLevelJurs,
-            undefined
+            tilesets[g]
           );
 
           const layerId = `${ADMN0_EN}-admin-${g}-jurisdiction-fill`;
@@ -1753,9 +1757,9 @@ class IrsPlan extends React.Component<
     ) {
       return false;
     }
-    const geographicLevel = [...adminLayerIds].indexOf(feature.layer.id) + 1;
     const isShiftClick = originalEvent.shiftKey;
     const isJurisdictionLayer = jurisdictionLayerIds.includes(feature.layer.id);
+    const geographicLevel = [...adminLayerIds, ...jurisdictionLayerIds].indexOf(feature.layer.id);
     const { filteredJurisdictionIds, childlessChildrenIds } = this.state;
     const { jurisdictionsById } = this.props;
     const filteredJurisdictions = filteredJurisdictionIds.map(j => jurisdictionsById[j]);
@@ -1766,7 +1770,10 @@ class IrsPlan extends React.Component<
 
       const doUseTilesets = !!country.tilesets[geographicLevel];
       const clickedFeatureId =
-        doUseTilesets && !isJurisdictionLayer
+        doUseTilesets &&
+        (!isJurisdictionLayer ||
+          (isJurisdictionLayer &&
+            country.tilesets[geographicLevel].jurisdictionType === JurisdictionLevels[1]))
           ? properties[country.tilesets[geographicLevel].idField]
           : properties.jurisdiction_id;
 
