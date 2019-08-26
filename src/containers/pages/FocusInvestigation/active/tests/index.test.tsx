@@ -164,7 +164,7 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
       </Provider>
     );
     wrapper.update();
-    expect(toJson(wrapper.find('.ReactTable').find('Cell'))).toMatchSnapshot();
+    expect(toJson(wrapper.find('Link').at(0))).toMatchSnapshot();
     wrapper.unmount();
   });
 
