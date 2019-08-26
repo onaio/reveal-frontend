@@ -1815,7 +1815,9 @@ class IrsPlan extends React.Component<
       if (Map && tilesets && properties && layerIds) {
         const doUseTilesets = !!tilesets[geographicLevel];
         if (geographicLevel === 1) {
-          store.dispatch(Actions.toggleLayer(mapId || MAP_ID, layer.id));
+          if (Map.getLayer(layer.id)) {
+            Map.setLayoutProperty(layer.id, 'visibility', 'none');
+          }
         } else {
           const layerFilter = Map.getFilter(layer.id);
           if (layerFilter) {
@@ -1933,7 +1935,7 @@ class IrsPlan extends React.Component<
             if (t === 1) {
               const isLayerVisible = Map.getLayoutProperty(layerId, 'visibility') === 'visible';
               if (!isLayerVisible) {
-                store.dispatch(Actions.toggleLayer(MAP_ID, layerId));
+                Map.setLayoutProperty(layerId, 'visibility', 'visible');
               }
             } else {
               const layerFilter = Map.getFilter(layerId);
