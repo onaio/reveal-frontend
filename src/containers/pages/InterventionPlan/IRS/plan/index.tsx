@@ -1387,6 +1387,11 @@ class IrsPlan extends React.Component<
     return Array.from(new Set(ancestorIds));
   }
 
+  /** utility for getting opacity stops based on selection
+   * @param {string[]} selectedIds - Ids of all selected Juristictions
+   * @param {Jurisdiction[]} jurisdictions - all Jurisdictions filtered by geographic level
+   * @param {FlexObject | undefined} tileset - the coorisponding tileset
+   */
   private getJurisdictionSelectionStops(
     selectedIds: string[],
     jurisdictions: Jurisdiction[],
