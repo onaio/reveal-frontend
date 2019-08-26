@@ -728,9 +728,22 @@ class IrsPlan extends React.Component<
     if (e && e.currentTarget && e.currentTarget.id) {
       // update map position
       const clickedTableCrumb = this.state.tableCrumbs.find(c => c.id === e.currentTarget.id);
-      if (clickedTableCrumb && clickedTableCrumb.bounds) {
+      if (clickedTableCrumb && clickedTableCrumb.bounds && this.state.country) {
+        // update map positin
         setGisidaMapPosition({ bounds: clickedTableCrumb.bounds });
-        // updateMapOnHierarchyChange()
+
+        // update map layer filters
+        const filteredJurisdictions = this.state.filteredJurisdictionIds.map(
+          j => this.props.jurisdictionsById[j]
+        );
+        const geographicLevel = this.state.tableCrumbs.map(c => c.id).indexOf(clickedTableCrumb.id);
+        const fauxE: EventData = {
+          bounds: clickedTableCrumb.bounds,
+          clickedId: clickedTableCrumb.id,
+          geographicLevel,
+          target: getGisidaMapById(MAP_ID),
+        };
+        this.onDrillUpClick(fauxE, this.state.country, filteredJurisdictions);
       }
       // update drilldown table
       this.onResetDrilldownTableHierarchy(e.currentTarget.id);
@@ -1804,7 +1817,7 @@ class IrsPlan extends React.Component<
    * @param {string} mapId - optional id to explicitly specify the Mabox Map to use
    */
   private updateMapOnHierarchyChange(
-    feature: MapboxGeoJSONFeature,
+    feature: MapboxGeoJSONFeature | FlexObject, // todo - replace FlexObject with proper type
     clickedFeatureJurisdiction: Jurisdiction,
     mapId?: string
   ) {
@@ -1927,17 +1940,18 @@ class IrsPlan extends React.Component<
     country: JurisdictionsByCountry,
     filteredJurisdictions: Jurisdiction[]
   ) {
-    const { point, target: Map } = e;
-    const features = Map.queryRenderedFeatures(point);
-    const { ADMN0_EN, bounds, jurisdictionId, tilesets } = country;
+    const { geographicLevel, clickedId, point, target: Map } = e;
+    const features = point ? Map.queryRenderedFeatures(point) : [];
+    const { ADMN0_EN, jurisdictionId, tilesets } = country;
+    const bounds = e.bounds || country.bounds;
     if (!features.length && tilesets && bounds) {
       if (tilesets.length) {
-        let t = 1;
+        let t = geographicLevel || 1;
         for (t; t < tilesets.length; t += 1) {
           const layerId = `${ADMN0_EN}-admin-${t}-fill`;
           if (Map.getLayer(layerId)) {
             // Reset layers to default visibility
-            if (t === 1) {
+            if (t === 1 && geographicLevel !== t) {
               const isLayerVisible = Map.getLayoutProperty(layerId, 'visibility') === 'visible';
               if (!isLayerVisible) {
                 Map.setLayoutProperty(layerId, 'visibility', 'visible');
@@ -1945,7 +1959,7 @@ class IrsPlan extends React.Component<
             } else {
               const layerFilter = Map.getFilter(layerId);
               if (layerFilter) {
-                layerFilter[2] = '';
+                layerFilter[2] = t === geographicLevel + 1 ? clickedId : '';
                 Map.setFilter(layerId, layerFilter);
               }
             }
