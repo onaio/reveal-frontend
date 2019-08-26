@@ -663,11 +663,11 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
                 },
                 Object {
                   "label": "Chadiza",
-                  "url": "/focus-investigation/2939",
+                  "url": "/focus-investigation/filter/2939/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
                 },
                 Object {
                   "label": "Naviluli",
-                  "url": "/focus-investigation/2944",
+                  "url": "/focus-investigation/filter/2944/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
                 },
               ]
             }
@@ -738,10 +738,10 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
                         <Link
                           key="2"
                           replace={false}
-                          to="/focus-investigation/2939"
+                          to="/focus-investigation/filter/2939/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
                         >
                           <a
-                            href="/focus-investigation/2939"
+                            href="/focus-investigation/filter/2939/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
                             onClick={[Function]}
                           >
                             Chadiza
@@ -759,10 +759,10 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
                         <Link
                           key="3"
                           replace={false}
-                          to="/focus-investigation/2944"
+                          to="/focus-investigation/filter/2944/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
                         >
                           <a
-                            href="/focus-investigation/2944"
+                            href="/focus-investigation/filter/2944/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
                             onClick={[Function]}
                           >
                             Naviluli
@@ -5840,11 +5840,11 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
             },
             Object {
               "label": "Chadiza",
-              "url": "/focus-investigation/2939",
+              "url": "/focus-investigation/filter/2939/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
             },
             Object {
               "label": "Naviluli",
-              "url": "/focus-investigation/2944",
+              "url": "/focus-investigation/filter/2944/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
             },
           ]
         }
@@ -5915,10 +5915,10 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
                     <Link
                       key="2"
                       replace={false}
-                      to="/focus-investigation/2939"
+                      to="/focus-investigation/filter/2939/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
                     >
                       <a
-                        href="/focus-investigation/2939"
+                        href="/focus-investigation/filter/2939/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
                         onClick={[Function]}
                       >
                         Chadiza
@@ -5936,10 +5936,10 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
                     <Link
                       key="3"
                       replace={false}
-                      to="/focus-investigation/2944"
+                      to="/focus-investigation/filter/2944/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
                     >
                       <a
-                        href="/focus-investigation/2944"
+                        href="/focus-investigation/filter/2944/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
                         onClick={[Function]}
                       >
                         Naviluli
