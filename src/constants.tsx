@@ -121,6 +121,10 @@ export const IRS_PLANS = 'IRS Plans';
 export type IRS_PLANS = typeof IRS_PLANS;
 export const COUNTRY = 'Country';
 export type COUNTRY = typeof COUNTRY;
+export const TEAMS = 'Teams';
+export type TEAMS = typeof TEAMS;
+export const TEAM = 'Team';
+export type TEAM = typeof TEAM;
 
 export const JURISDICTION_ID = 'jurisdiction_id';
 export type JURISDICTION_ID = typeof JURISDICTION_ID;
