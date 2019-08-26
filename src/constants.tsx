@@ -172,6 +172,10 @@ export const CREATE_TEAM_URL = '/teams/new';
 export type CREATE_TEAM_URL = typeof CREATE_TEAM_URL;
 export const EDIT_TEAM_URL = '/teams/edit';
 export type EDIT_TEAM_URL = typeof EDIT_TEAM_URL;
+export const SINGLE_TEAM_URL = '/teams/view';
+export type SINGLE_TEAM_URL = typeof SINGLE_TEAM_URL;
+export const TEAM_LIST_URL = '/teams';
+export type TEAMS_LIST_URL = typeof TEAM_LIST_URL;
 
 // OpenSRP API strings
 export const OPENSRP_FIND_BY_PROPERTIES = 'findByProperties';
