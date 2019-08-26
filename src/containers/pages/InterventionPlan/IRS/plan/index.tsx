@@ -744,9 +744,10 @@ class IrsPlan extends React.Component<
           target: getGisidaMapById(MAP_ID),
         };
         this.onDrillUpClick(fauxE, this.state.country, filteredJurisdictions);
+
+        // update drilldown table
+        this.onResetDrilldownTableHierarchy(clickedTableCrumb.id);
       }
-      // update drilldown table
-      this.onResetDrilldownTableHierarchy(e.currentTarget.id);
     }
   };
   /** onResetDrilldownTableHierarchy - function for resetting drilldown table hierachy baseline
@@ -756,7 +757,7 @@ class IrsPlan extends React.Component<
     const id = Id !== 'null' ? Id : null;
     const { tableCrumbs } = this.state;
     const nextActiveCrumbIndex = tableCrumbs.map(c => c.id).indexOf(id) + 1;
-    const nextCrumbs = [...tableCrumbs];
+    const nextCrumbs = tableCrumbs.map(c => ({ ...c, active: false }));
     nextCrumbs.splice(nextActiveCrumbIndex);
     nextCrumbs[nextCrumbs.length - 1].active = true;
 
