@@ -2,6 +2,7 @@ import { GisidaMap } from 'gisida';
 import { LngLat, Map } from 'mapbox-gl';
 import { MAP_ID } from '../../constants';
 import { EventData } from '../mapbox';
+import { FlexObject } from '../utils';
 import './handlers.css';
 
 /** declare globals interface */
@@ -11,14 +12,22 @@ declare global {
   }
   const mapboxgl: typeof mapboxgl;
 }
-
+export interface Feature {
+  layer: FlexObject;
+  properties: FlexObject;
+  source: string;
+  state: FlexObject;
+  type: string;
+  geometry?: FlexObject;
+  vectorTileFeature?: FlexObject;
+}
 /** Having features as any type is not most desirable this has been qued up as part of technical debt payment */
 export function popupHandler(event: EventData) {
-  /** currentGoal is currently not being used but we may/ may not use it in the future  */
-  const features = event.target.queryRenderedFeatures(event.point) as any[];
+  /** currentGoal is currently not being used but we  may  use it in the future  */
+  const features = event.target.queryRenderedFeatures(event.point) as Feature[];
   let description: string = '';
   const goalIds: string[] = [];
-  features.forEach((feature: any) => {
+  features.forEach((feature: Feature) => {
     if (
       feature &&
       feature.geometry &&
