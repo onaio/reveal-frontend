@@ -184,6 +184,7 @@ class ActiveFocusInvestigation extends React.Component<
           </Button>
         </Form>
         {[caseTriggeredPlans, routinePlans].forEach((plansArray: Plan[] | null, i) => {
+          const locationColumns: Column[] = getLocationColumns(locationHierarchy, true);
           if (plansArray && plansArray.length) {
             const thePlans = plansArray.map((item: Plan) => {
               let thisItem = extractPlan(item);
@@ -192,7 +193,6 @@ class ActiveFocusInvestigation extends React.Component<
               thisItem = transformValues(thisItem, propertiesToTransform);
               return thisItem;
             });
-            const locationColumns: Column[] = getLocationColumns(locationHierarchy, true);
             /**  Handle Columns Unique for Routine and Reactive Tables */
             const columnsBasedOnReason = [];
             plansArray.every((singlePlan: Plan) => singlePlan.plan_fi_reason === CASE_TRIGGERED)
@@ -356,41 +356,22 @@ class ActiveFocusInvestigation extends React.Component<
                 Header: NAME,
                 columns: [{ minWidth: 180 }],
               },
+              ...locationColumns,
               {
-                Header: FI_STATUS,
-                columns: [{ minWidth: 80 }],
-              },
-              {
-                Header: 'Province',
-                columns: [{}],
-              },
-              {
-                Header: 'District',
-                columns: [{}],
-              },
-              {
-                Header: 'Canton',
-                columns: [{}],
-              },
-              {
-                Header: 'Village',
-                columns: [{}],
-              },
-              {
-                Header: 'Focus Area',
+                Header: FOCUS_AREA_HEADER,
                 columns: [{ minWidth: 180 }],
               },
               {
-                Header: 'Status',
+                Header: STATUS_HEADER,
                 columns: [{ maxWidth: 60 }],
               },
 
               {
-                Header: 'Case No',
-                columns: [{}],
+                Header: CASE_NOTIF_DATE_HEADER,
+                columns: [{ maxWidth: 90 }],
               },
               {
-                Header: 'Case Class.',
+                Header: CASE_CLASSIFICATION_HEADER,
                 columns: [{}],
               },
             ];
