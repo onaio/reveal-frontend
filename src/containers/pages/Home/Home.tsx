@@ -3,8 +3,8 @@ import * as React from 'react';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { Button, Col, Row } from 'reactstrap';
-import { ENABLE_FI, ENABLE_IRS } from '../../../configs/env';
-import { FI_URL, INTERVENTION_IRS_URL } from '../../../constants';
+import { ENABLE_FI, ENABLE_IRS, ENABLE_TEAMS } from '../../../configs/env';
+import { FI_URL, INTERVENTION_IRS_URL, TEAM_LIST_URL } from '../../../constants';
 import { HOME_TITLE } from '../../../constants';
 import './Home.css';
 
@@ -28,10 +28,10 @@ class Home extends React.Component<{}, {}> {
         <Row className="intervention-box">
           {ENABLE_IRS && (
             <Col md="6">
-              <Link to={INTERVENTION_IRS_URL} className="intervention-link">
+              <Link to={INTERVENTION_IRS_URL} className="home-link">
                 <Button
                   color="outline"
-                  className="btn-intervention btn-lg btn-block btn-outline-dark"
+                  className="btn-home-call-to-action btn-lg btn-block btn-outline-dark"
                 >
                   IRS
                 </Button>
@@ -40,12 +40,24 @@ class Home extends React.Component<{}, {}> {
           )}
           {ENABLE_FI && (
             <Col md="6">
-              <Link to={FI_URL} className="intervention-link">
+              <Link to={FI_URL} className="home-link">
                 <Button
                   color="outline"
-                  className="btn-intervention btn-lg btn-block btn-outline-dark"
+                  className="btn-home-call-to-action btn-lg btn-block btn-outline-dark"
                 >
                   Focus Investigation
+                </Button>
+              </Link>
+            </Col>
+          )}
+          {ENABLE_TEAMS && (
+            <Col md="6">
+              <Link to={TEAM_LIST_URL} className="home-link">
+                <Button
+                  color="outline"
+                  className="btn-home-call-to-action btn-lg btn-block btn-outline-dark"
+                >
+                  Teams
                 </Button>
               </Link>
             </Col>
