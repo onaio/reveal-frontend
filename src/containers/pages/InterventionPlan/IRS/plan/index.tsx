@@ -1936,14 +1936,26 @@ class IrsPlan extends React.Component<
               }
             }
           }
+          if (tilesets[t].jurisdictionType === JurisdictionLevels[1]) {
+            // Reset layer filter for operational Jurisdiction fill layer if defined in tileset
+            const jurisdictionsTilesetLayerId = `${country.ADMN0_EN}-admin-${t}-jurisdiction-fill`;
+            if (Map.getLayer(jurisdictionsTilesetLayerId)) {
+              const jurisdicitonLayerFilter = Map.getFilter(jurisdictionsTilesetLayerId);
+              if (jurisdicitonLayerFilter) {
+                jurisdicitonLayerFilter[2] = '';
+                Map.setFilter(jurisdictionsTilesetLayerId, jurisdicitonLayerFilter);
+              }
+            }
+          }
         }
-        // Reset layer filter for Jurisdiction fill layer
-        const jurisdictionsLayerId = `${country.ADMN0_EN}-admin-${t}-jurisdiction-fill`;
-        if (Map.getLayer(jurisdictionsLayerId)) {
-          const jurisdicitonLayerFilter = Map.getFilter(jurisdictionsLayerId);
+
+        // Reset layer filter for operational Jurisdiction fill layer if not defined in tileset
+        const jurisdictionsGeojsonLayerId = `${country.ADMN0_EN}-admin-${t}-jurisdiction-fill`;
+        if (Map.getLayer(jurisdictionsGeojsonLayerId)) {
+          const jurisdicitonLayerFilter = Map.getFilter(jurisdictionsGeojsonLayerId);
           if (jurisdicitonLayerFilter) {
             jurisdicitonLayerFilter[2] = '';
-            Map.setFilter(jurisdictionsLayerId, jurisdicitonLayerFilter);
+            Map.setFilter(jurisdictionsGeojsonLayerId, jurisdicitonLayerFilter);
           }
         }
       }
