@@ -195,7 +195,7 @@ class ActiveFocusInvestigation extends React.Component<
             const locationColumns: Column[] = getLocationColumns(locationHierarchy, true);
             /**  Handle Columns Unique for Routine and Reactive Tables */
             const columnsBasedOnReason = [];
-            plansArray.every(d => d.plan_fi_reason === CASE_TRIGGERED)
+            plansArray.every((singlePlan: Plan) => singlePlan.plan_fi_reason === CASE_TRIGGERED)
               ? columnsBasedOnReason.push(
                   {
                     Header: CASE_NOTIF_DATE_HEADER,
