@@ -134,6 +134,9 @@ class ActiveFocusInvestigation extends React.Component<
     };
 
     const { caseTriggeredPlans, routinePlans, plan } = this.props;
+    // We need to initialize jurisdictionName to a falsy value
+    let jurisdictionName = null;
+
     // get the current page index
     if (plan) {
       const currentPageIndex: number = plan.jurisdiction_path.indexOf(
@@ -143,6 +146,7 @@ class ActiveFocusInvestigation extends React.Component<
         label: plan.jurisdiction_name_path[currentPageIndex],
         url: '',
       };
+      jurisdictionName = plan.jurisdiction_name_path[currentPageIndex];
       const labels = plan.jurisdiction_name_path.slice(0, currentPageIndex);
       breadcrumbProps.pages = labels.map((label, i) => {
         return {
@@ -163,13 +167,16 @@ class ActiveFocusInvestigation extends React.Component<
       return <Loading />;
     }
     const routineReactivePlans: FlexObject[] = [];
+    const pageTitle = jurisdictionName
+      ? CURRENT_FOCUS_INVESTIGATION + ` in ${jurisdictionName}`
+      : CURRENT_FOCUS_INVESTIGATION;
     return (
       <div>
         <Helmet>
-          <title>{CURRENT_FOCUS_INVESTIGATION}</title>
+          <title>{pageTitle}</title>
         </Helmet>
         <HeaderBreadCrumb {...breadcrumbProps} />
-        <h2 className="mb-3 mt-5 page-title">{CURRENT_FOCUS_INVESTIGATION}</h2>
+        <h2 className="mb-3 mt-5 page-title">{pageTitle}</h2>
         <hr />
         <Form inline={true} onSubmit={this.handleSubmit}>
           <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
