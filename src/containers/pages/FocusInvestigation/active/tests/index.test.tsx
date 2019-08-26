@@ -102,10 +102,6 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
           label: 'Home',
           url: '/',
         },
-        {
-          label: 'Focus Investigations',
-          url: '/focus-investigation',
-        },
       ],
     });
     wrapper.unmount();
@@ -144,10 +140,6 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
         {
           label: 'Home',
           url: '/',
-        },
-        {
-          label: 'Focus Investigations',
-          url: '/focus-investigation',
         },
       ],
     });
