@@ -468,5 +468,9 @@ describe('containers/forms/PlanForm - Submission', () => {
     expect(wrapper.find('small.interventionType-error').text()).toEqual('Required');
     // status is required
     expect(wrapper.find('small.status-error').text()).toEqual('Required');
+    // start is required
+    expect(wrapper.find('small.start-error').text()).toEqual(
+      'start must be a `date` type, but the final value was: `Invalid Date`.'
+    );
   });
 });
