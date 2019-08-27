@@ -241,7 +241,7 @@ const PlanForm = (props: PlanFormProps) => {
               <ErrorMessage
                 name="interventionType"
                 component="small"
-                className="form-text text-danger"
+                className="form-text text-danger interventionType-error"
               />
             </FormGroup>
 
