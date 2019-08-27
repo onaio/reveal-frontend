@@ -18,3 +18,7 @@
 .intervention-box {
   margin-top: 55px;
 }
+
+.intervention-box div.col-md-6 {
+  margin-bottom: 20px;
+}
