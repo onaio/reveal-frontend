@@ -493,7 +493,11 @@ const PlanForm = (props: PlanFormProps) => {
                 className={errors.start ? 'form-control is-invalid' : 'form-control'}
                 component={DatePickerWrapper}
               />
-              <ErrorMessage name="start" component="small" className="form-text text-danger" />
+              <ErrorMessage
+                name="start"
+                component="small"
+                className="form-text text-danger start-error"
+              />
 
               <Field type="hidden" name="date" id="date" />
             </FormGroup>
