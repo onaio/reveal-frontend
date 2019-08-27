@@ -2,7 +2,7 @@
 import React, { FormEvent } from 'react';
 import { Button, Form, FormGroup, Input } from 'reactstrap';
 
-interface Props {
+export interface Props {
   handleSubmit?: (e: FormEvent) => void;
   inputId: string;
   inputPlaceholder: string;
