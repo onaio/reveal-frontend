@@ -21,9 +21,18 @@ declare global {
   }
   const mapboxgl: typeof mapboxgl;
 }
-/** FeatureWithLayer Interface extends Feature, Adds layer prop which is missing on Feature */
-export interface FeatureWithLayer extends Feature {
+/**
+ * Geometry type is a union of seven types.
+ * Unfortunately, not all of those types include the coordinates property
+ * Let's exclude GeometryCollection which has no coordinates for our case when extending Feature
+ * FeatureWithLayer Interface extends Feature, Adds layer prop which is missing on Feature
+ */
+export interface FeatureWithLayer
+  extends Feature<Point | MultiPoint | LineString | MultiLineString | Polygon | MultiPolygon> {
   layer: FlexObject;
+}
+export interface CustomGeometry {
+  geometry: Point | MultiPoint | LineString | MultiLineString | Polygon | MultiPolygon;
 }
 export function popupHandler(event: EventData) {
   /** currentGoal is currently not being used but we  may  use it in the future  */
@@ -31,21 +40,10 @@ export function popupHandler(event: EventData) {
   let description: string = '';
   const goalIds: string[] = [];
   features.forEach((feature: FeatureWithLayer) => {
-    /**
-     * Geometry type is a union of seven types.
-     * Unfortunately, not all of those types include the coordinates property
-     * Let's exclude GeometryCollection which has no coordinates for our case
-     */
     if (
       feature &&
       feature.geometry &&
-      (feature.geometry as
-        | Point
-        | MultiPoint
-        | LineString
-        | MultiLineString
-        | Polygon
-        | MultiPolygon).coordinates &&
+      feature.geometry.coordinates &&
       feature.properties &&
       feature.properties.action_code &&
       feature.layer.type !== 'line' &&
