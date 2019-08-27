@@ -1,3 +1,4 @@
+import { Feature, Point } from 'geojson';
 import { GisidaMap } from 'gisida';
 import { LngLat, Map } from 'mapbox-gl';
 import { MAP_ID } from '../../constants';
@@ -12,22 +13,20 @@ declare global {
   }
   const mapboxgl: typeof mapboxgl;
 }
-export interface Feature {
+/** FeatureWithLayer extends Feature
+ * Adds layer and geometry as Point
+ * Geometry in Feature has GeometryCollection which has no coordinates prop hence  we use geometry as Point
+ */
+export interface FeatureWithLayer extends Feature {
   layer: FlexObject;
-  properties: FlexObject;
-  source: string;
-  state: FlexObject;
-  type: string;
-  geometry?: FlexObject;
-  vectorTileFeature?: FlexObject;
+  geometry: Point;
 }
-/** Having features as any type is not most desirable this has been qued up as part of technical debt payment */
 export function popupHandler(event: EventData) {
   /** currentGoal is currently not being used but we  may  use it in the future  */
-  const features = event.target.queryRenderedFeatures(event.point) as Feature[];
+  const features = event.target.queryRenderedFeatures(event.point) as FeatureWithLayer[];
   let description: string = '';
   const goalIds: string[] = [];
-  features.forEach((feature: Feature) => {
+  features.forEach((feature: FeatureWithLayer) => {
     if (
       feature &&
       feature.geometry &&
