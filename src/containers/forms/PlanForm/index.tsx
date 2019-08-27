@@ -208,7 +208,11 @@ const PlanForm = (props: PlanFormProps) => {
                 component="p"
                 className="form-text text-danger name-error"
               />
-              <ErrorMessage name="date" component="p" className="form-text text-danger" />
+              <ErrorMessage
+                name="date"
+                component="p"
+                className="form-text text-danger date-error"
+              />
             </FormGroup>
             <FormGroup>
               <Label for="interventionType">Intervention Type</Label>
