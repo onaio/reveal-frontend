@@ -437,7 +437,11 @@ const PlanForm = (props: PlanFormProps) => {
                 disabled={disabledFields.includes('title')}
                 className={errors.name || errors.title ? 'form-control is-invalid' : 'form-control'}
               />
-              <ErrorMessage name="title" component="small" className="form-text text-danger" />
+              <ErrorMessage
+                name="title"
+                component="small"
+                className="form-text text-danger title-error"
+              />
 
               <Field type="hidden" name="name" id="name" />
               <Field type="hidden" name="identifier" id="identifier" readOnly={true} />
