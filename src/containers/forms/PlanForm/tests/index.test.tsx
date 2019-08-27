@@ -446,13 +446,13 @@ describe('containers/forms/PlanForm - Submission', () => {
     // Remove the date field value
     wrapper.find('input[name="date"]').simulate('change', { target: { name: 'date', value: '' } });
     // Remove the end field value
-    // wrapper.find('input[name="end"]').simulate('change', { target: { name: 'end', value: '' } });
+    wrapper.find('input[id="end"]').simulate('change', { target: { name: 'end', value: '' } });
     // Remove the interventionType field value
     wrapper
       .find('select[name="interventionType"]')
       .simulate('change', { target: { name: 'interventionType', value: '' } });
     // Remove the start field value
-    // wrapper.find('input[name="start"]').simulate('change', { target: { name: 'start', value: '' } });
+    wrapper.find('input[id="start"]').simulate('change', { target: { name: 'start', value: '' } });
     // Remove the status field value
     wrapper
       .find('select[name="status"]')
