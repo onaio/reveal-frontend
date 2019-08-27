@@ -442,8 +442,21 @@ describe('containers/forms/PlanForm - Submission', () => {
     expect(wrapper.find('small.jurisdictions-error').text()).toEqual('An Error Ocurred');
 
     // let us cause errors for other required fields and ascertain that they are indeed validated
+
     // Remove the date field value
-    wrapper.find('input[name="date"]').simulate('change', { target: { name: 'name', value: '' } });
+    wrapper.find('input[name="date"]').simulate('change', { target: { name: 'date', value: '' } });
+    // Remove the end field value
+    // wrapper.find('input[name="end"]').simulate('change', { target: { name: 'end', value: '' } });
+    // Remove the interventionType field value
+    wrapper
+      .find('select[name="interventionType"]')
+      .simulate('change', { target: { name: 'interventionType', value: '' } });
+    // Remove the start field value
+    // wrapper.find('input[name="start"]').simulate('change', { target: { name: 'start', value: '' } });
+    // Remove the status field value
+    wrapper
+      .find('select[name="status"]')
+      .simulate('change', { target: { name: 'status', value: '' } });
 
     wrapper.find('form').simulate('submit');
     await new Promise(resolve => setImmediate(resolve));
