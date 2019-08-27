@@ -464,5 +464,7 @@ describe('containers/forms/PlanForm - Submission', () => {
 
     // date is required
     expect(wrapper.find('.non-field-errors p.date-error').text()).toEqual('Date is Required');
+    // interventionType is required
+    expect(wrapper.find('small.interventionType-error').text()).toEqual('Required');
   });
 });
