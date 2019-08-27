@@ -336,7 +336,9 @@ const PlanForm = (props: PlanFormProps) => {
                               />
 
                               {errors.jurisdictions && errors.jurisdictions[index] && (
-                                <small className="form-text text-danger">An Error Ocurred</small>
+                                <small className="form-text text-danger jurisdictions-error">
+                                  An Error Ocurred
+                                </small>
                               )}
 
                               <ErrorMessage
