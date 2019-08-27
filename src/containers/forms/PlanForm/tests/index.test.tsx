@@ -472,5 +472,9 @@ describe('containers/forms/PlanForm - Submission', () => {
     expect(wrapper.find('small.start-error').text()).toEqual(
       'start must be a `date` type, but the final value was: `Invalid Date`.'
     );
+    // end is required
+    expect(wrapper.find('small.end-error').text()).toEqual(
+      'end must be a `date` type, but the final value was: `Invalid Date`.'
+    );
   });
 });
