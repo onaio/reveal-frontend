@@ -177,7 +177,7 @@ class App extends Component {
                 component={ConnectedSingleTeamView}
               />
               <ConnectedPrivateRoute
-                disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                disableLoginProtection={!DISABLE_LOGIN_PROTECTION}
                 exact={true}
                 path={TEAM_LIST_URL}
                 component={TeamListView}
