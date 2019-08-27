@@ -514,7 +514,11 @@ const PlanForm = (props: PlanFormProps) => {
                 component={DatePickerWrapper}
                 minDate={values.start}
               />
-              <ErrorMessage name="end" component="small" className="form-text text-danger" />
+              <ErrorMessage
+                name="end"
+                component="small"
+                className="form-text text-danger end-error"
+              />
             </FormGroup>
             <h4 className="mt-5">Activities</h4>
             <FieldArray
