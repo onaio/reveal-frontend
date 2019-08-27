@@ -27,6 +27,7 @@ import {
   PLAN_LIST_URL,
   PLAN_UPDATE_URL,
   SINGLE_TEAM_URL,
+  TEAM_LIST_URL,
 } from '../constants';
 import ConnectedHeader from '../containers/ConnectedHeader';
 import ActiveFocusInvestigation from '../containers/pages/FocusInvestigation/active';
@@ -43,6 +44,7 @@ import ConnectedPlanDefinitionList from '../containers/pages/InterventionPlan/Pl
 import ConnectedUpdatePlan from '../containers/pages/InterventionPlan/UpdatePlan';
 import ConnectedCreateEditTeamView from '../containers/pages/TeamAssignment/CreateEditTeamView';
 import ConnectedSingleTeamView from '../containers/pages/TeamAssignment/SingleTeamView';
+import { TeamListView } from '../containers/pages/TeamAssignment/TeamListView';
 import { oAuthUserInfoGetter } from '../helpers/utils';
 
 library.add(faMap);
@@ -172,6 +174,12 @@ class App extends Component {
                 exact={true}
                 path={`${SINGLE_TEAM_URL}/:id`}
                 component={ConnectedSingleTeamView}
+              />
+              <ConnectedPrivateRoute
+                disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                exact={true}
+                path={TEAM_LIST_URL}
+                component={TeamListView}
               />
               {/* tslint:disable jsx-no-lambda */}
               <Route
