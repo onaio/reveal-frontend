@@ -440,5 +440,16 @@ describe('containers/forms/PlanForm - Submission', () => {
     expect(wrapper.find('small.title-error').text()).toEqual('Required');
     // jurisdiction is required
     expect(wrapper.find('small.jurisdictions-error').text()).toEqual('An Error Ocurred');
+
+    // let us cause errors for other required fields and ascertain that they are indeed validated
+    // Remove the date field value
+    wrapper.find('input[name="date"]').simulate('change', { target: { name: 'name', value: '' } });
+
+    wrapper.find('form').simulate('submit');
+    await new Promise(resolve => setImmediate(resolve));
+    wrapper.update();
+
+    // date is required
+    expect(wrapper.find('.non-field-errors p.date-error').text()).toEqual('Date is Required');
   });
 });
