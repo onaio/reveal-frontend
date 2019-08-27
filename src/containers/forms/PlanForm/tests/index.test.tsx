@@ -254,45 +254,6 @@ describe('containers/forms/PlanForm', () => {
 
     wrapper.unmount();
   });
-
-  it('Form validation works', async () => {
-    const wrapper = mount(<PlanForm />);
-
-    // no errors are initially shown
-    expect(
-      (wrapper
-        .find('FieldInner')
-        .first()
-        .props() as any).formik.errors
-    ).toEqual({});
-
-    wrapper.find('form').simulate('submit');
-    await new Promise(resolve => setImmediate(resolve));
-    wrapper.update();
-
-    // we now have some errors
-    expect(
-      (wrapper
-        .find('FieldInner')
-        .first()
-        .props() as any).formik.errors
-    ).toEqual({
-      jurisdictions: [
-        {
-          id: 'Required',
-        },
-      ],
-      name: 'Name is Required',
-      title: 'Required',
-    });
-
-    // name is required
-    expect(wrapper.find('.non-field-errors p.name-error').text()).toEqual('Name is Required');
-    // title is required
-    expect(wrapper.find('small.title-error').text()).toEqual('Required');
-    // jurisdiction is required
-    expect(wrapper.find('small.jurisdictions-error').text()).toEqual('An Error Ocurred');
-  });
 });
 
 describe('containers/forms/PlanForm - Edit', () => {
@@ -438,5 +399,46 @@ describe('containers/forms/PlanForm - Edit', () => {
     checkActivities(plans[1].action.length);
 
     wrapper.unmount();
+  });
+});
+
+describe('containers/forms/PlanForm - Submission', () => {
+  it('Form validation works', async () => {
+    const wrapper = mount(<PlanForm />);
+
+    // no errors are initially shown
+    expect(
+      (wrapper
+        .find('FieldInner')
+        .first()
+        .props() as any).formik.errors
+    ).toEqual({});
+
+    wrapper.find('form').simulate('submit');
+    await new Promise(resolve => setImmediate(resolve));
+    wrapper.update();
+
+    // we now have some errors
+    expect(
+      (wrapper
+        .find('FieldInner')
+        .first()
+        .props() as any).formik.errors
+    ).toEqual({
+      jurisdictions: [
+        {
+          id: 'Required',
+        },
+      ],
+      name: 'Name is Required',
+      title: 'Required',
+    });
+
+    // name is required
+    expect(wrapper.find('.non-field-errors p.name-error').text()).toEqual('Name is Required');
+    // title is required
+    expect(wrapper.find('small.title-error').text()).toEqual('Required');
+    // jurisdiction is required
+    expect(wrapper.find('small.jurisdictions-error').text()).toEqual('An Error Ocurred');
   });
 });
