@@ -259,23 +259,32 @@ describe('containers/forms/PlanForm', () => {
     const wrapper = mount(<PlanForm />);
 
     // no errors are initially shown
-    expect(wrapper.find('.non-field-errors').length).toEqual(2);
     expect(
-      wrapper
-        .find('.non-field-errors')
+      (wrapper
+        .find('FieldInner')
         .first()
-        .text()
-    ).toEqual('');
-    expect(
-      wrapper
-        .find('.non-field-errors')
-        .last()
-        .text()
-    ).toEqual('');
+        .props() as any).formik.errors
+    ).toEqual({});
 
     wrapper.find('form').simulate('submit');
     await new Promise(resolve => setImmediate(resolve));
     wrapper.update();
+
+    // we now have some errors
+    expect(
+      (wrapper
+        .find('FieldInner')
+        .first()
+        .props() as any).formik.errors
+    ).toEqual({
+      jurisdictions: [
+        {
+          id: 'Required',
+        },
+      ],
+      name: 'Name is Required',
+      title: 'Required',
+    });
 
     // name is required
     expect(wrapper.find('.non-field-errors p.name-error').text()).toEqual('Name is Required');
