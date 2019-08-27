@@ -475,7 +475,11 @@ const PlanForm = (props: PlanFormProps) => {
                     </option>
                   ))}
               </Field>
-              <ErrorMessage name="status" component="small" className="form-text text-danger" />
+              <ErrorMessage
+                name="status"
+                component="small"
+                className="form-text text-danger status-error"
+              />
             </FormGroup>
             <FormGroup>
               <Label for="start">Plan Start Date</Label>
