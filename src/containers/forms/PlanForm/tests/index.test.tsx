@@ -254,6 +254,32 @@ describe('containers/forms/PlanForm', () => {
 
     wrapper.unmount();
   });
+
+  it('Form validation works', async () => {
+    const wrapper = mount(<PlanForm />);
+
+    // no errors are initially shown
+    expect(wrapper.find('.non-field-errors').length).toEqual(2);
+    expect(
+      wrapper
+        .find('.non-field-errors')
+        .first()
+        .text()
+    ).toEqual('');
+    expect(
+      wrapper
+        .find('.non-field-errors')
+        .last()
+        .text()
+    ).toEqual('');
+
+    wrapper.find('form').simulate('submit');
+    await new Promise(resolve => setImmediate(resolve));
+    wrapper.update();
+
+    // name is required
+    expect(wrapper.find('.non-field-errors p.name-error').text()).toEqual('Name is Required');
+  });
 });
 
 describe('containers/forms/PlanForm - Edit', () => {
