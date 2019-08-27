@@ -1,4 +1,12 @@
-import { Feature, Point } from 'geojson';
+import {
+  Feature,
+  LineString,
+  MultiLineString,
+  MultiPoint,
+  MultiPolygon,
+  Point,
+  Polygon,
+} from 'geojson';
 import { GisidaMap } from 'gisida';
 import { LngLat, Map } from 'mapbox-gl';
 import { MAP_ID } from '../../constants';
@@ -13,13 +21,9 @@ declare global {
   }
   const mapboxgl: typeof mapboxgl;
 }
-/** FeatureWithLayer extends Feature
- * Adds layer and geometry as Point
- * Geometry in Feature has GeometryCollection which has no coordinates prop hence  we use geometry as Point
- */
+/** FeatureWithLayer Interface extends Feature, Adds layer prop which is missing on Feature */
 export interface FeatureWithLayer extends Feature {
   layer: FlexObject;
-  geometry: Point;
 }
 export function popupHandler(event: EventData) {
   /** currentGoal is currently not being used but we  may  use it in the future  */
@@ -27,10 +31,21 @@ export function popupHandler(event: EventData) {
   let description: string = '';
   const goalIds: string[] = [];
   features.forEach((feature: FeatureWithLayer) => {
+    /**
+     * Geometry type is a union of seven types.
+     * Unfortunately, not all of those types include the coordinates property
+     * Let's exclude GeometryCollection which has no coordinates for our case
+     */
     if (
       feature &&
       feature.geometry &&
-      feature.geometry.coordinates &&
+      (feature.geometry as
+        | Point
+        | MultiPoint
+        | LineString
+        | MultiLineString
+        | Polygon
+        | MultiPolygon).coordinates &&
       feature.properties &&
       feature.properties.action_code &&
       feature.layer.type !== 'line' &&
