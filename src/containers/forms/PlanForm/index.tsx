@@ -203,7 +203,11 @@ const PlanForm = (props: PlanFormProps) => {
           >
             <FormGroup className="non-field-errors">
               {globalError !== '' && <p className="">{globalError}</p>}
-              <ErrorMessage name="name" component="p" className="form-text text-danger" />
+              <ErrorMessage
+                name="name"
+                component="p"
+                className="form-text text-danger name-error"
+              />
               <ErrorMessage name="date" component="p" className="form-text text-danger" />
             </FormGroup>
             <FormGroup>
