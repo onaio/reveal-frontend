@@ -630,4 +630,25 @@ describe('containers/forms/PlanForm - Submission', () => {
       'goalValue: activities[0].goalValue must be greater than or equal to 1'
     );
   });
+
+  it('Auto-setting name and title field values works', async () => {
+    const wrapper = mount(<PlanForm />);
+    // Set IRS for interventionType
+    wrapper
+      .find('select[name="interventionType"]')
+      .simulate('change', { target: { name: 'interventionType', value: 'IRS' } });
+
+    expect(
+      (wrapper
+        .find('FieldInner')
+        .first()
+        .props() as any).formik.values.name
+    ).toEqual('IRS-2017-07-13');
+    expect(
+      (wrapper
+        .find('FieldInner')
+        .first()
+        .props() as any).formik.values.title
+    ).toEqual('IRS 2017-07-13');
+  });
 });
