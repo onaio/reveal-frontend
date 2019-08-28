@@ -1,13 +1,19 @@
+import { getOpenSRPUserInfo } from '@onaio/gatekeeper';
+import { authenticateUser } from '@onaio/session-reducer';
 import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import React from 'react';
 import PlanForm, { propsForUpdatingPlans } from '..';
+import { OpenSRPAPIResponse } from '../../../../services/opensrp/tests/fixtures/session';
+import store from '../../../../store';
 import { plans } from '../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
-import { getPlanFormValues } from '../helpers';
+import { generatePlanDefinition, getPlanFormValues } from '../helpers';
 import * as fixtures from './fixtures';
 
 /* tslint:disable-next-line no-var-requires */
 const fetch = require('jest-fetch-mock');
+
+jest.mock('../../../../configs/env');
 
 describe('containers/forms/PlanForm', () => {
   beforeEach(() => {
@@ -684,5 +690,73 @@ describe('containers/forms/PlanForm - Submission', () => {
         .first()
         .props() as any).formik.values.title
     ).toEqual('A2 Onyx 2017-07-13');
+  });
+
+  it('Form submission for new plans works', async () => {
+    // ensure that we are logged in so that we can get the OpenSRP token from Redux
+    const { authenticated, user, extraData } = getOpenSRPUserInfo(OpenSRPAPIResponse);
+    await store.dispatch(authenticateUser(authenticated, user, extraData));
+
+    fetch.mockResponseOnce(JSON.stringify({}), { status: 201 });
+
+    const wrapper = mount(<PlanForm />);
+
+    // Set FI for interventionType
+    wrapper
+      .find('select[name="interventionType"]')
+      .simulate('change', { target: { name: 'interventionType', value: 'FI' } });
+    // set jurisdiction id ==> we use Formik coz React-Select is acting weird
+    (wrapper
+      .find('FieldInner')
+      .first()
+      .props() as any).formik.setFieldValue('jurisdictions[0].id', '1337');
+    // set jurisdiction name
+    wrapper
+      .find('input[name="jurisdictions[0].name"]')
+      .simulate('change', { target: { name: 'jurisdictions[0].name', value: 'Onyx' } });
+    // Set fiReason field value
+    wrapper
+      .find('select[name="fiReason"]')
+      .simulate('change', { target: { name: 'fiReason', value: 'Routine' } });
+    // Set fiStatus field value
+    wrapper
+      .find('select[name="fiStatus"]')
+      .simulate('change', { target: { name: 'fiStatus', value: 'A2' } });
+
+    wrapper.find('form').simulate('submit');
+    await new Promise(resolve => setImmediate(resolve));
+    wrapper.update();
+
+    // no errors are initially shown
+    expect(
+      (wrapper
+        .find('FieldInner')
+        .first()
+        .props() as any).formik.errors
+    ).toEqual({});
+
+    // the expected payload
+    const payload = generatePlanDefinition(
+      (wrapper
+        .find('FieldInner')
+        .first()
+        .props() as any).formik.values
+    );
+
+    // the last request should be the one that is sent to OpenSRP
+    expect(fetch.mock.calls.pop()).toEqual([
+      'https://test.smartregister.org/opensrp/rest/plans',
+      {
+        'Cache-Control': 'no-cache',
+        Pragma: 'no-cache',
+        body: JSON.stringify(payload),
+        headers: {
+          accept: 'application/json',
+          authorization: 'Bearer hunter2',
+          'content-type': 'application/json;charset=UTF-8',
+        },
+        method: 'POST',
+      },
+    ]);
   });
 });
