@@ -7,16 +7,18 @@ import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { Link } from 'react-router-dom';
-import { Row } from 'reactstrap';
+import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
 import InlineSearchForm, {
   Props as InlineSearchFormProps,
 } from '../../../../components/InlineSearchForm';
+import LinkAsButton from '../../../../components/LinkAsButton';
 import HeaderBreadcrumb, {
   BreadCrumbProps,
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import { HOME, HOME_URL } from '../../../../constants';
 import teamsReducer, { reducerName as teamsReducerName, Team } from '../../../../store/ducks/teams';
+import './index.css';
 
 reducerRegistry.register(teamsReducerName, teamsReducer);
 
@@ -60,18 +62,22 @@ const TeamListView = (props: TeamListViewPropsType) => {
   const listViewProps = {
     data: teams.map((team: any) => {
       return [
-        team.name,
         team.identifier,
-        team.location,
-        team.supervisor,
-        ``,
+        ,
         <Link to={`single team view`} key={team.identifier}>
-          view
+          team.name
         </Link>,
+        ,
+        team.jurisdictions,
       ];
     }),
-    headerItems: ['Team Name', 'Identifier', 'Location', 'Supervisor', 'Members No.', 'Actions'],
-    tableClass: 'table-striped',
+    headerItems: ['#', 'Team Name', 'Area'],
+    tableClass: 'table table-bordered',
+  };
+
+  const linkAsButtonProps = {
+    text: `Add team`,
+    to: `add team`,
   };
 
   return (
@@ -80,14 +86,17 @@ const TeamListView = (props: TeamListViewPropsType) => {
         <title>{`TEAMS`}</title>
       </Helmet>
       <HeaderBreadcrumb {...breadcrumbProps} />
-      <div>
-        <h2 className="mb-3 mt-5 page-title">{`Team Name`}</h2>
-        <br />
-        <Link to={`add new team`}>
-          <FontAwesomeIcon icon={['fas', 'plus']} /> Add Team
-        </Link>
-      </div>
+      <Row>
+        <Col className="xs">
+          <h2 className="mb-3 mt-5 page-title">{`Teams(${teams.length})`}</h2>
+        </Col>
+        <Col className="xs" style={{ float: 'right' }}>
+          <LinkAsButton {...linkAsButtonProps} />
+        </Col>
+      </Row>
+      <hr />
       <InlineSearchForm {...inlineSearchFormProps} />
+
       <ListView {...listViewProps} />
     </div>
   );
@@ -101,7 +110,7 @@ export { TeamListView };
 
 const mapStateToProps = (state: Partial<Store>) => {
   return {
-    teams: getTeamsArray(state),
+    teams: [], // getTeamsArray(state),
   };
 };
 
