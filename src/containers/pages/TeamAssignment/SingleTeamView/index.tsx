@@ -1,18 +1,19 @@
 /** The Single Teams view page:
  * lists details pertaining to a specific team
  */
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import ListView from '@onaio/list-view';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import * as React from 'react';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
-import { Link } from 'react-router-dom';
-import { Button, Col, Row, Table } from 'reactstrap';
+import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
+import LinkAsButton from '../../../../components/LinkAsButton';
 import HeaderBreadcrumb, {
   BreadCrumbProps,
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
+import Loading from '../../../../components/page/Loading';
 import { HOME, HOME_URL, SINGLE_TEAM_URL, TEAM, TEAM_LIST_URL, TEAMS } from '../../../../constants';
 import { RouteParams } from '../../../../helpers/utils';
 import teamsReducer, {
@@ -38,6 +39,11 @@ type SingleTeamViewPropsType = SingleTeamViewProps & RouteComponentProps<RoutePa
 
 const SingleTeamView = (props: SingleTeamViewPropsType) => {
   const { team } = props;
+
+  if (!team) {
+    return <Loading />;
+  }
+
   const basePage = {
     label: TEAMS,
     url: TEAM_LIST_URL,
@@ -54,29 +60,44 @@ const SingleTeamView = (props: SingleTeamViewPropsType) => {
     url: `${HOME_URL}`,
   };
   breadcrumbProps.pages = [homePage, basePage];
+
+  // listViewProps for team members
+  const listViewProps = {
+    data: [['1', 'User_45', 'Sam Sam', 'User_45'], ['2', 'Bob', 'joe', 'South']],
+    headerItems: ['#', 'Username', 'Name', 'Team'],
+    tableClass: 'table table-bordered',
+  };
+
+  // LinkAsButton Props
+  const linkAsButtonProps = {
+    text: 'Add New Team',
+    to: `teams/new`,
+  };
+
   return (
     <div>
       <Helmet>
         <title>{`${TEAM} - ${`Team Name`}`}</title>
       </Helmet>
       <HeaderBreadcrumb {...breadcrumbProps} />
-      <Link to={TEAM_LIST_URL}>
-        <FontAwesomeIcon icon={['fas', 'arrow-left']} /> Back To Teams
-      </Link>
       <br />
-      <h2 className="mb-3 mt-2 page-title">{`Team Name`}</h2>
-      <Button outline={true} color="primary">
-        {`Edit Team`}
-      </Button>
+      <Row>
+        <col className="xs">
+          <h2 className="mb-3 mt-5 page-title">{`Team Name`}</h2>
+        </col>
+        <col className="xs" style={{ float: 'right' }}>
+          <LinkAsButton {...linkAsButtonProps} />
+        </col>
+      </Row>
       <hr />
-      <div className="card mb-3">
+      <div id="team-details" className="card mb-3">
         <div className="card-header">{`Team Details`}</div>
         <div className="card-body">
           {/* the below display should be in 2 cols*/}
           <Row>
             <Col className="col-6">
               <Row>
-                <Col className="col-6">Name</Col>
+                <Col className="col-6">identifier</Col>
                 <Col className="col-6">Teng</Col>
               </Row>
             </Col>
@@ -88,46 +109,20 @@ const SingleTeamView = (props: SingleTeamViewPropsType) => {
             </Col>
             <Col className="col-6">
               <Row>
-                <Col className="col-6">Name</Col>
+                <Col className="col-6">Description</Col>
                 <Col className="col-6">Teng</Col>
               </Row>
             </Col>
           </Row>
         </div>
       </div>
-      <div className="card mb-3">
-        <div className="card-header">{`Team Members`}</div>
-        <div className="card-body">
-          <Table>
-            <thead>
-              <tr>
-                <th>Username</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th colSpan={2}>Actions </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>TobiMayowa</td>
-                <td>Waiyapi</td>
-                <td>Wanke</td>
-                <td>
-                  {' '}
-                  <Link to={'/404'}> view</Link>
-                </td>
-                <td>
-                  {' '}
-                  <Link to={'/404'}> Remove</Link>
-                </td>
-              </tr>
-            </tbody>
-          </Table>
-        </div>
-      </div>
+      <h3 className="mb-3 mt-5 page-title">{`Team Members`}</h3>
+      <ListView {...listViewProps} />
     </div>
   );
 };
+
+SingleTeamView.defualtProps = defaultProps;
 
 export { SingleTeamView };
 
