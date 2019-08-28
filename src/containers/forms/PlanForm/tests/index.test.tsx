@@ -492,5 +492,24 @@ describe('containers/forms/PlanForm - Submission', () => {
     expect(wrapper.find('small.interventionType-error').text()).toEqual(
       'interventionType must be one of the following values: FI, IRS'
     );
+
+    // Set FI for interventionType field value so that we can test the other fields
+    wrapper
+      .find('select[name="interventionType"]')
+      .simulate('change', { target: { name: 'interventionType', value: 'FI' } });
+
+    // Set wrong fiReason field value
+    wrapper
+      .find('select[name="fiReason"]')
+      .simulate('change', { target: { name: 'fiReason', value: 'justin' } });
+
+    wrapper.find('form').simulate('submit');
+    await new Promise(resolve => setImmediate(resolve));
+    wrapper.update();
+
+    // fiReason should be as expected
+    expect(wrapper.find('small.fiReason-error').text()).toEqual(
+      'fiReason must be one of the following values: Routine, Case Triggered'
+    );
   });
 });
