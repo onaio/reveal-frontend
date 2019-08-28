@@ -565,27 +565,9 @@ describe('containers/forms/PlanForm - Submission', () => {
     await new Promise(resolve => setImmediate(resolve));
     wrapper.update();
 
-    // lets mess with the activity fields
+    // lets mess with the activity fields :)
 
     // Remove all the values for the first activity
-
-    //     actionCode: Yup.string().oneOf(PlanActionCodes.map(e => e)),
-    // actionDescription: Yup.string().required(REQUIRED),
-    // actionReason: Yup.string()
-    //   .oneOf(Object.values(actionReasons))
-    //   .required(REQUIRED),
-    // actionTitle: Yup.string().required(REQUIRED),
-    // goalDescription: Yup.string().required(REQUIRED),
-    // goalDue: Yup.date().required(REQUIRED),
-    // goalPriority: Yup.string()
-    //   .oneOf(Object.values(goalPriorities))
-    //   .required(REQUIRED),
-    // goalValue: Yup.number()
-    //   .min(1)
-    //   .required(REQUIRED),
-    // timingPeriodEnd: Yup.date().required(REQUIRED),
-    // timingPeriodStart: Yup.date().required(REQUIRED),
-
     wrapper
       .find('input[name="activities[0].actionCode"]')
       .simulate('change', { target: { name: 'activities[0].actionCode', value: '' } });
