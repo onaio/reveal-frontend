@@ -153,7 +153,7 @@ const PlanForm = (props: PlanFormProps) => {
         /* tslint:disable-next-line jsx-no-lambda */
         onSubmit={(values, { setErrors, setSubmitting }) => {
           const payload = generatePlanDefinition(values);
-          const apiService = new OpenSRPService('/plans');
+          const apiService = new OpenSRPService('plans');
 
           if (editMode) {
             apiService
@@ -203,8 +203,16 @@ const PlanForm = (props: PlanFormProps) => {
           >
             <FormGroup className="non-field-errors">
               {globalError !== '' && <p className="">{globalError}</p>}
-              <ErrorMessage name="name" component="p" className="form-text text-danger" />
-              <ErrorMessage name="date" component="p" className="form-text text-danger" />
+              <ErrorMessage
+                name="name"
+                component="p"
+                className="form-text text-danger name-error"
+              />
+              <ErrorMessage
+                name="date"
+                component="p"
+                className="form-text text-danger date-error"
+              />
             </FormGroup>
             <FormGroup>
               <Label for="interventionType">Intervention Type</Label>
@@ -233,7 +241,7 @@ const PlanForm = (props: PlanFormProps) => {
               <ErrorMessage
                 name="interventionType"
                 component="small"
-                className="form-text text-danger"
+                className="form-text text-danger interventionType-error"
               />
             </FormGroup>
 
@@ -332,7 +340,9 @@ const PlanForm = (props: PlanFormProps) => {
                               />
 
                               {errors.jurisdictions && errors.jurisdictions[index] && (
-                                <small className="form-text text-danger">An Error Ocurred</small>
+                                <small className="form-text text-danger jurisdictions-error">
+                                  An Error Ocurred
+                                </small>
                               )}
 
                               <ErrorMessage
@@ -378,7 +388,11 @@ const PlanForm = (props: PlanFormProps) => {
                     </option>
                   ))}
                 </Field>
-                <ErrorMessage name="fiStatus" component="small" className="form-text text-danger" />
+                <ErrorMessage
+                  name="fiStatus"
+                  component="small"
+                  className="form-text text-danger fiStatus-error"
+                />
               </FormGroup>
             )}
             {values.interventionType === InterventionType.FI && (
@@ -399,7 +413,11 @@ const PlanForm = (props: PlanFormProps) => {
                     </option>
                   ))}
                 </Field>
-                <ErrorMessage name="fiReason" component="small" className="form-text text-danger" />
+                <ErrorMessage
+                  name="fiReason"
+                  component="small"
+                  className="form-text text-danger fiReason-error"
+                />
               </FormGroup>
             )}
             {values.interventionType === InterventionType.FI && values.fiReason === FIReasons[1] && (
@@ -431,7 +449,11 @@ const PlanForm = (props: PlanFormProps) => {
                 disabled={disabledFields.includes('title')}
                 className={errors.name || errors.title ? 'form-control is-invalid' : 'form-control'}
               />
-              <ErrorMessage name="title" component="small" className="form-text text-danger" />
+              <ErrorMessage
+                name="title"
+                component="small"
+                className="form-text text-danger title-error"
+              />
 
               <Field type="hidden" name="name" id="name" />
               <Field type="hidden" name="identifier" id="identifier" readOnly={true} />
@@ -461,7 +483,11 @@ const PlanForm = (props: PlanFormProps) => {
                     </option>
                   ))}
               </Field>
-              <ErrorMessage name="status" component="small" className="form-text text-danger" />
+              <ErrorMessage
+                name="status"
+                component="small"
+                className="form-text text-danger status-error"
+              />
             </FormGroup>
             <FormGroup>
               <Label for="start">Plan Start Date</Label>
@@ -475,7 +501,11 @@ const PlanForm = (props: PlanFormProps) => {
                 className={errors.start ? 'form-control is-invalid' : 'form-control'}
                 component={DatePickerWrapper}
               />
-              <ErrorMessage name="start" component="small" className="form-text text-danger" />
+              <ErrorMessage
+                name="start"
+                component="small"
+                className="form-text text-danger start-error"
+              />
 
               <Field type="hidden" name="date" id="date" />
             </FormGroup>
@@ -492,7 +522,11 @@ const PlanForm = (props: PlanFormProps) => {
                 component={DatePickerWrapper}
                 minDate={values.start}
               />
-              <ErrorMessage name="end" component="small" className="form-text text-danger" />
+              <ErrorMessage
+                name="end"
+                component="small"
+                className="form-text text-danger end-error"
+              />
             </FormGroup>
             <h4 className="mt-5">Activities</h4>
             <FieldArray
@@ -518,12 +552,15 @@ const PlanForm = (props: PlanFormProps) => {
                       <div className="card-body">
                         <fieldset key={index}>
                           {errors.activities && errors.activities[index] && (
-                            <div className="alert alert-danger" role="alert">
+                            <div
+                              className={`alert alert-danger activities-${index}-errors`}
+                              role="alert"
+                            >
                               <h6 className="alert-heading">Please fix these errors</h6>
                               <ul className="list-unstyled">
                                 {Object.entries(errors.activities[index] || {}).map(
                                   ([key, val]) => (
-                                    <li key={key}>
+                                    <li key={key} id={`${key}-${index}-error`}>
                                       <strong>{key}</strong>: {val}
                                     </li>
                                   )

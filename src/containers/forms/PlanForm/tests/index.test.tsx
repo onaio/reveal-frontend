@@ -1,13 +1,19 @@
+import { getOpenSRPUserInfo } from '@onaio/gatekeeper';
+import { authenticateUser } from '@onaio/session-reducer';
 import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import React from 'react';
 import PlanForm, { propsForUpdatingPlans } from '..';
+import { OpenSRPAPIResponse } from '../../../../services/opensrp/tests/fixtures/session';
+import store from '../../../../store';
 import { plans } from '../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
-import { getPlanFormValues } from '../helpers';
+import { generatePlanDefinition, getPlanFormValues } from '../helpers';
 import * as fixtures from './fixtures';
 
 /* tslint:disable-next-line no-var-requires */
 const fetch = require('jest-fetch-mock');
+
+jest.mock('../../../../configs/env');
 
 describe('containers/forms/PlanForm', () => {
   beforeEach(() => {
@@ -399,5 +405,398 @@ describe('containers/forms/PlanForm - Edit', () => {
     checkActivities(plans[1].action.length);
 
     wrapper.unmount();
+  });
+});
+
+describe('containers/forms/PlanForm - Submission', () => {
+  it('Form validation works', async () => {
+    const wrapper = mount(<PlanForm />);
+
+    // no errors are initially shown
+    expect(
+      (wrapper
+        .find('FieldInner')
+        .first()
+        .props() as any).formik.errors
+    ).toEqual({});
+
+    wrapper.find('form').simulate('submit');
+    await new Promise(resolve => setImmediate(resolve));
+    wrapper.update();
+
+    // we now have some errors
+    expect(
+      (wrapper
+        .find('FieldInner')
+        .first()
+        .props() as any).formik.errors
+    ).toEqual({
+      jurisdictions: [
+        {
+          id: 'Required',
+        },
+      ],
+      name: 'Name is Required',
+      title: 'Required',
+    });
+
+    // name is required
+    expect(wrapper.find('.non-field-errors p.name-error').text()).toEqual('Name is Required');
+    // title is required
+    expect(wrapper.find('small.title-error').text()).toEqual('Required');
+    // jurisdiction is required
+    expect(wrapper.find('small.jurisdictions-error').text()).toEqual('An Error Ocurred');
+
+    // let us cause errors for other required fields and ascertain that they are indeed validated
+
+    // Remove the date field value
+    wrapper.find('input[name="date"]').simulate('change', { target: { name: 'date', value: '' } });
+    // Remove the end field value
+    wrapper.find('input[id="end"]').simulate('change', { target: { name: 'end', value: '' } });
+    // Remove the interventionType field value
+    wrapper
+      .find('select[name="interventionType"]')
+      .simulate('change', { target: { name: 'interventionType', value: '' } });
+    // Remove the start field value
+    wrapper.find('input[id="start"]').simulate('change', { target: { name: 'start', value: '' } });
+    // Remove the status field value
+    wrapper
+      .find('select[name="status"]')
+      .simulate('change', { target: { name: 'status', value: '' } });
+
+    wrapper.find('form').simulate('submit');
+    await new Promise(resolve => setImmediate(resolve));
+    wrapper.update();
+
+    // date is required
+    expect(wrapper.find('.non-field-errors p.date-error').text()).toEqual('Date is Required');
+    // interventionType is required
+    expect(wrapper.find('small.interventionType-error').text()).toEqual('Required');
+    // status is required
+    expect(wrapper.find('small.status-error').text()).toEqual('Required');
+    // start is required
+    expect(wrapper.find('small.start-error').text()).toEqual(
+      'start must be a `date` type, but the final value was: `Invalid Date`.'
+    );
+    // end is required
+    expect(wrapper.find('small.end-error').text()).toEqual(
+      'end must be a `date` type, but the final value was: `Invalid Date`.'
+    );
+
+    // next we set wrong values for fields that expect specific values
+
+    // Set wrong interventionType field value
+    wrapper
+      .find('select[name="interventionType"]')
+      .simulate('change', { target: { name: 'interventionType', value: 'oOv' } });
+
+    wrapper.find('form').simulate('submit');
+    await new Promise(resolve => setImmediate(resolve));
+    wrapper.update();
+
+    // interventionType should be as expected
+    expect(wrapper.find('small.interventionType-error').text()).toEqual(
+      'interventionType must be one of the following values: FI, IRS'
+    );
+
+    // Set FI for interventionType field value so that we can test the other fields
+    wrapper
+      .find('select[name="interventionType"]')
+      .simulate('change', { target: { name: 'interventionType', value: 'FI' } });
+
+    // Set wrong fiReason field value
+    wrapper
+      .find('select[name="fiReason"]')
+      .simulate('change', { target: { name: 'fiReason', value: 'justin' } });
+    // Set wrong fiStatus field value
+    wrapper
+      .find('select[name="fiStatus"]')
+      .simulate('change', { target: { name: 'fiStatus', value: 'mosh' } });
+    // Set wrong status field value
+    wrapper
+      .find('select[name="status"]')
+      .simulate('change', { target: { name: 'status', value: 'Ona' } });
+
+    wrapper.find('form').simulate('submit');
+    await new Promise(resolve => setImmediate(resolve));
+    wrapper.update();
+
+    // fiReason should be as expected
+    expect(wrapper.find('small.fiReason-error').text()).toEqual(
+      'fiReason must be one of the following values: Routine, Case Triggered'
+    );
+    // fiStatus should be as expected
+    expect(wrapper.find('small.fiStatus-error').text()).toEqual(
+      'fiStatus must be one of the following values: A1, A2, B1, B2'
+    );
+    // status should be as expected
+    expect(wrapper.find('small.status-error').text()).toEqual(
+      'status must be one of the following values: active, complete, draft, retired'
+    );
+
+    // now lets look at the entire error object once again
+    expect(
+      (wrapper
+        .find('FieldInner')
+        .first()
+        .props() as any).formik.errors
+    ).toEqual({
+      date: 'Date is Required',
+      end: 'end must be a `date` type, but the final value was: `Invalid Date`.',
+      fiReason: 'fiReason must be one of the following values: Routine, Case Triggered',
+      fiStatus: 'fiStatus must be one of the following values: A1, A2, B1, B2',
+      jurisdictions: [
+        {
+          id: 'Required',
+        },
+      ],
+      start: 'start must be a `date` type, but the final value was: `Invalid Date`.',
+      status: 'status must be one of the following values: active, complete, draft, retired',
+    });
+    // nice, eh?
+  });
+
+  it('Form validation works for activity fields', async () => {
+    const wrapper = mount(<PlanForm />);
+
+    // no errors are initially present
+    expect(
+      (wrapper
+        .find('FieldInner')
+        .first()
+        .props() as any).formik.errors
+    ).toEqual({});
+
+    wrapper.find('form').simulate('submit');
+    await new Promise(resolve => setImmediate(resolve));
+    wrapper.update();
+
+    // lets mess with the activity fields :)
+
+    // Remove all the values for the first activity
+    wrapper
+      .find('input[name="activities[0].actionCode"]')
+      .simulate('change', { target: { name: 'activities[0].actionCode', value: '' } });
+    wrapper
+      .find('textarea[name="activities[0].actionDescription"]')
+      .simulate('change', { target: { name: 'activities[0].actionDescription', value: '' } });
+    wrapper
+      .find('select[name="activities[0].actionReason"]')
+      .simulate('change', { target: { name: 'activities[0].actionReason', value: '' } });
+    wrapper
+      .find('input[name="activities[0].actionTitle"]')
+      .simulate('change', { target: { name: 'activities[0].actionTitle', value: '' } });
+    wrapper
+      .find('input[name="activities[0].goalDescription"]')
+      .simulate('change', { target: { name: 'activities[0].goalDescription', value: '' } });
+    wrapper
+      .find('input[name="activities[0].goalDue"]')
+      .simulate('change', { target: { name: 'activities[0].goalDue', value: '' } });
+    wrapper
+      .find('select[name="activities[0].goalPriority"]')
+      .simulate('change', { target: { name: 'activities[0].goalPriority', value: '' } });
+    wrapper
+      .find('input[name="activities[0].goalValue"]')
+      .simulate('change', { target: { name: 'activities[0].goalValue', value: '' } });
+    wrapper
+      .find('input[id="activities-0-timingPeriodEnd"]')
+      .simulate('change', { target: { name: 'activities[0].timingPeriodEnd', value: '' } });
+    wrapper
+      .find('input[id="activities-0-timingPeriodStart"]')
+      .simulate('change', { target: { name: 'activities[0].timingPeriodStart', value: '' } });
+
+    wrapper.find('form').simulate('submit');
+    await new Promise(resolve => setImmediate(resolve));
+    wrapper.update();
+
+    // activity errors display nicely, as expected
+    expect(toJson(wrapper.find(`.activities-0-errors ul`))).toMatchSnapshot(`activities-0 errors`);
+
+    // set wrong values for some fields
+
+    // set wrong actionReason
+    wrapper
+      .find('select[name="activities[0].actionReason"]')
+      .simulate('change', { target: { name: 'activities[0].actionReason', value: 'ILoveOov' } });
+    // set wrong goalValue
+    wrapper
+      .find('input[name="activities[0].goalValue"]')
+      .simulate('change', { target: { name: 'activities[0].goalValue', value: '0' } });
+
+    wrapper.find('form').simulate('submit');
+    await new Promise(resolve => setImmediate(resolve));
+    wrapper.update();
+
+    // actionReason should be as expected
+    expect(wrapper.find('li#actionReason-0-error').text()).toEqual(
+      'actionReason: activities[0].actionReason must be one of the following values: Investigation, Routine'
+    );
+    // goalValue should be as expected
+    expect(wrapper.find('li#goalValue-0-error').text()).toEqual(
+      'goalValue: activities[0].goalValue must be greater than or equal to 1'
+    );
+  });
+
+  it('Auto-setting name and title field values works', async () => {
+    const wrapper = mount(<PlanForm />);
+    // Set IRS for interventionType
+    wrapper
+      .find('select[name="interventionType"]')
+      .simulate('change', { target: { name: 'interventionType', value: 'IRS' } });
+
+    expect(
+      (wrapper
+        .find('FieldInner')
+        .first()
+        .props() as any).formik.values.name
+    ).toEqual('IRS-2017-07-13');
+    expect(
+      (wrapper
+        .find('FieldInner')
+        .first()
+        .props() as any).formik.values.title
+    ).toEqual('IRS 2017-07-13');
+
+    // Set FI for interventionType
+    wrapper
+      .find('select[name="interventionType"]')
+      .simulate('change', { target: { name: 'interventionType', value: 'FI' } });
+    // set jurisdiction id ==> we use Formik coz React-Select is acting weird
+    (wrapper
+      .find('FieldInner')
+      .first()
+      .props() as any).formik.setFieldValue('jurisdictions[0].id', '1337');
+    // set jurisdiction name
+    wrapper
+      .find('input[name="jurisdictions[0].name"]')
+      .simulate('change', { target: { name: 'jurisdictions[0].name', value: 'Onyx' } });
+    // Set fiReason field value
+    wrapper
+      .find('select[name="fiReason"]')
+      .simulate('change', { target: { name: 'fiReason', value: 'Routine' } });
+    // Set fiStatus field value
+    wrapper
+      .find('select[name="fiStatus"]')
+      .simulate('change', { target: { name: 'fiStatus', value: 'A2' } });
+
+    expect(
+      (wrapper
+        .find('FieldInner')
+        .first()
+        .props() as any).formik.values.name
+    ).toEqual('A2-Onyx-2017-07-13');
+    expect(
+      (wrapper
+        .find('FieldInner')
+        .first()
+        .props() as any).formik.values.title
+    ).toEqual('A2 Onyx 2017-07-13');
+  });
+
+  it('Form submission for new plans works', async () => {
+    // ensure that we are logged in so that we can get the OpenSRP token from Redux
+    const { authenticated, user, extraData } = getOpenSRPUserInfo(OpenSRPAPIResponse);
+    await store.dispatch(authenticateUser(authenticated, user, extraData));
+
+    fetch.mockResponseOnce(JSON.stringify({}), { status: 201 });
+
+    const wrapper = mount(<PlanForm />);
+
+    // Set FI for interventionType
+    wrapper
+      .find('select[name="interventionType"]')
+      .simulate('change', { target: { name: 'interventionType', value: 'FI' } });
+    // set jurisdiction id ==> we use Formik coz React-Select is acting weird
+    (wrapper
+      .find('FieldInner')
+      .first()
+      .props() as any).formik.setFieldValue('jurisdictions[0].id', '1337');
+    // set jurisdiction name
+    wrapper
+      .find('input[name="jurisdictions[0].name"]')
+      .simulate('change', { target: { name: 'jurisdictions[0].name', value: 'Onyx' } });
+    // Set fiReason field value
+    wrapper
+      .find('select[name="fiReason"]')
+      .simulate('change', { target: { name: 'fiReason', value: 'Routine' } });
+    // Set fiStatus field value
+    wrapper
+      .find('select[name="fiStatus"]')
+      .simulate('change', { target: { name: 'fiStatus', value: 'A2' } });
+
+    wrapper.find('form').simulate('submit');
+    await new Promise(resolve => setImmediate(resolve));
+    wrapper.update();
+
+    // no errors are initially shown
+    expect(
+      (wrapper
+        .find('FieldInner')
+        .first()
+        .props() as any).formik.errors
+    ).toEqual({});
+
+    // the expected payload
+    const payload = generatePlanDefinition(
+      (wrapper
+        .find('FieldInner')
+        .first()
+        .props() as any).formik.values
+    );
+
+    // the last request should be the one that is sent to OpenSRP
+    expect(fetch.mock.calls.pop()).toEqual([
+      'https://test.smartregister.org/opensrp/rest/plans',
+      {
+        'Cache-Control': 'no-cache',
+        Pragma: 'no-cache',
+        body: JSON.stringify(payload),
+        headers: {
+          accept: 'application/json',
+          authorization: 'Bearer hunter2',
+          'content-type': 'application/json;charset=UTF-8',
+        },
+        method: 'POST',
+      },
+    ]);
+  });
+
+  it('Form submission for updating plans works', async () => {
+    // ensure that we are logged in so that we can get the OpenSRP token from Redux
+    const { authenticated, user, extraData } = getOpenSRPUserInfo(OpenSRPAPIResponse);
+    await store.dispatch(authenticateUser(authenticated, user, extraData));
+
+    fetch.mockResponseOnce(JSON.stringify({}));
+
+    const props = {
+      ...propsForUpdatingPlans,
+      initialValues: getPlanFormValues(plans[1]),
+    };
+    const wrapper = mount(<PlanForm {...props} />);
+
+    wrapper.find('form').simulate('submit');
+    await new Promise(resolve => setImmediate(resolve));
+    wrapper.update();
+
+    const payload = {
+      ...generatePlanDefinition(getPlanFormValues(plans[1])),
+      version: 2,
+    };
+
+    // the last request should be the one that is sent to OpenSRP
+    expect(fetch.mock.calls.pop()).toEqual([
+      'https://test.smartregister.org/opensrp/rest/plans',
+      {
+        'Cache-Control': 'no-cache',
+        Pragma: 'no-cache',
+        body: JSON.stringify(payload),
+        headers: {
+          accept: 'application/json',
+          authorization: 'Bearer hunter2',
+          'content-type': 'application/json;charset=UTF-8',
+        },
+        method: 'PUT',
+      },
+    ]);
   });
 });
