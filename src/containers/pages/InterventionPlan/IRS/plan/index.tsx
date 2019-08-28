@@ -734,7 +734,7 @@ class IrsPlan extends React.Component<
       // update map position
       const clickedTableCrumb = this.state.tableCrumbs.find(c => c.id === e.currentTarget.id);
       if (clickedTableCrumb && clickedTableCrumb.bounds && this.state.country) {
-        // update map positin
+        // update map position
         setGisidaMapPosition({ bounds: clickedTableCrumb.bounds });
 
         // update map layer filters
@@ -1825,12 +1825,10 @@ class IrsPlan extends React.Component<
   /** updates the Gisida Layers' filters and updates the position of the map
    * @param {MapboxGeoJSONFeature} feature - the mapbox feature which was clicked
    * @param {Jurisdiction} clickedFeatureJurisdiction - the Jurisdiction coorisponding to the clicke feature
-   * @param {string} mapId - optional id to explicitly specify the Mabox Map to use
    */
   private updateMapOnHierarchyChange(
-    feature: MapboxGeoJSONFeature | FlexObject, // todo - replace FlexObject with proper type
-    clickedFeatureJurisdiction: Jurisdiction,
-    mapId?: string
+    feature: MapboxGeoJSONFeature,
+    clickedFeatureJurisdiction: Jurisdiction
   ) {
     const { country } = this.state;
     if (country) {
