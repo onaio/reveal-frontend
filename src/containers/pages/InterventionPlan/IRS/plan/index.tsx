@@ -1800,7 +1800,12 @@ class IrsPlan extends React.Component<
         j => j[JURISDICTION_ID] === clickedFeatureId
       ) as Jurisdiction;
 
-      if (clickedFeatureJurisdiction && !isShiftClick && !isJurisdictionLayer) {
+      if (
+        clickedFeatureJurisdiction &&
+        !isShiftClick &&
+        !isJurisdictionLayer &&
+        !childlessChildrenIds.includes(clickedFeatureId)
+      ) {
         // handle Drilldown Click
         this.onDrilldownClick(clickedFeatureJurisdiction.jurisdiction_id);
         this.onResetDrilldownTableHierarchy(clickedFeatureJurisdiction.jurisdiction_id);
