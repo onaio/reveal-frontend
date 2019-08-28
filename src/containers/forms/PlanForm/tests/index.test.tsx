@@ -759,4 +759,43 @@ describe('containers/forms/PlanForm - Submission', () => {
       },
     ]);
   });
+
+  it('Form submission for updating plans works', async () => {
+    // ensure that we are logged in so that we can get the OpenSRP token from Redux
+    const { authenticated, user, extraData } = getOpenSRPUserInfo(OpenSRPAPIResponse);
+    await store.dispatch(authenticateUser(authenticated, user, extraData));
+
+    fetch.mockResponseOnce(JSON.stringify({}));
+
+    const props = {
+      ...propsForUpdatingPlans,
+      initialValues: getPlanFormValues(plans[1]),
+    };
+    const wrapper = mount(<PlanForm {...props} />);
+
+    wrapper.find('form').simulate('submit');
+    await new Promise(resolve => setImmediate(resolve));
+    wrapper.update();
+
+    const payload = {
+      ...generatePlanDefinition(getPlanFormValues(plans[1])),
+      version: 2,
+    };
+
+    // the last request should be the one that is sent to OpenSRP
+    expect(fetch.mock.calls.pop()).toEqual([
+      'https://test.smartregister.org/opensrp/rest/plans',
+      {
+        'Cache-Control': 'no-cache',
+        Pragma: 'no-cache',
+        body: JSON.stringify(payload),
+        headers: {
+          accept: 'application/json',
+          authorization: 'Bearer hunter2',
+          'content-type': 'application/json;charset=UTF-8',
+        },
+        method: 'PUT',
+      },
+    ]);
+  });
 });
