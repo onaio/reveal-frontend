@@ -661,10 +661,11 @@ describe('containers/forms/PlanForm - Submission', () => {
     wrapper
       .find('select[name="interventionType"]')
       .simulate('change', { target: { name: 'interventionType', value: 'FI' } });
-    // set jurisdiction id
-    wrapper
-      .find('input[name="jurisdictions[0].id"]')
-      .simulate('change', { target: { name: 'jurisdictions[0].id', value: '1337' } });
+    // set jurisdiction id ==> we use Formik coz React-Select is acting weird
+    (wrapper
+      .find('FieldInner')
+      .first()
+      .props() as any).formik.setFieldValue('jurisdictions[0].id', '1337');
     // set jurisdiction name
     wrapper
       .find('input[name="jurisdictions[0].name"]')
