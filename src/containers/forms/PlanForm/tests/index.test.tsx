@@ -502,6 +502,10 @@ describe('containers/forms/PlanForm - Submission', () => {
     wrapper
       .find('select[name="fiReason"]')
       .simulate('change', { target: { name: 'fiReason', value: 'justin' } });
+    // Set wrong fiStatus field value
+    wrapper
+      .find('select[name="fiStatus"]')
+      .simulate('change', { target: { name: 'fiStatus', value: 'mosh' } });
 
     wrapper.find('form').simulate('submit');
     await new Promise(resolve => setImmediate(resolve));
@@ -510,6 +514,10 @@ describe('containers/forms/PlanForm - Submission', () => {
     // fiReason should be as expected
     expect(wrapper.find('small.fiReason-error').text()).toEqual(
       'fiReason must be one of the following values: Routine, Case Triggered'
+    );
+    // fiStatus should be as expected
+    expect(wrapper.find('small.fiStatus-error').text()).toEqual(
+      'fiStatus must be one of the following values: A1, A2, B1, B2'
     );
   });
 });
