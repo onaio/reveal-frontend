@@ -16,11 +16,7 @@ import HeaderBreadcrumb, {
   BreadCrumbProps,
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import { HOME, HOME_URL } from '../../../../constants';
-import teamsReducer, {
-  getTeamsArray,
-  reducerName as teamsReducerName,
-  Team,
-} from '../../../../store/ducks/teams';
+import teamsReducer, { reducerName as teamsReducerName, Team } from '../../../../store/ducks/teams';
 
 reducerRegistry.register(teamsReducerName, teamsReducer);
 
@@ -52,6 +48,7 @@ const TeamListView = (props: TeamListViewPropsType) => {
   };
   breadcrumbProps.pages = [homePage];
 
+  // tslint:disable-next-line: no-empty
   function handleSubmit(event: React.FormEvent) {}
 
   const inlineSearchFormProps: InlineSearchFormProps = {
