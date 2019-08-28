@@ -476,5 +476,21 @@ describe('containers/forms/PlanForm - Submission', () => {
     expect(wrapper.find('small.end-error').text()).toEqual(
       'end must be a `date` type, but the final value was: `Invalid Date`.'
     );
+
+    // next we set wrong values for fields that expect specific values
+
+    // Set wrong interventionType field value
+    wrapper
+      .find('select[name="interventionType"]')
+      .simulate('change', { target: { name: 'interventionType', value: 'oOv' } });
+
+    wrapper.find('form').simulate('submit');
+    await new Promise(resolve => setImmediate(resolve));
+    wrapper.update();
+
+    // interventionType should be as expected
+    expect(wrapper.find('small.interventionType-error').text()).toEqual(
+      'interventionType must be one of the following values: FI, IRS'
+    );
   });
 });
