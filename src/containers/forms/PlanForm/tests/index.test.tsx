@@ -650,5 +650,39 @@ describe('containers/forms/PlanForm - Submission', () => {
         .first()
         .props() as any).formik.values.title
     ).toEqual('IRS 2017-07-13');
+
+    // Set FI for interventionType
+    wrapper
+      .find('select[name="interventionType"]')
+      .simulate('change', { target: { name: 'interventionType', value: 'FI' } });
+    // set jurisdiction id
+    wrapper
+      .find('input[name="jurisdictions[0].id"]')
+      .simulate('change', { target: { name: 'jurisdictions[0].id', value: '1337' } });
+    // set jurisdiction name
+    wrapper
+      .find('input[name="jurisdictions[0].name"]')
+      .simulate('change', { target: { name: 'jurisdictions[0].name', value: 'Onyx' } });
+    // Set fiReason field value
+    wrapper
+      .find('select[name="fiReason"]')
+      .simulate('change', { target: { name: 'fiReason', value: 'Routine' } });
+    // Set fiStatus field value
+    wrapper
+      .find('select[name="fiStatus"]')
+      .simulate('change', { target: { name: 'fiStatus', value: 'A2' } });
+
+    expect(
+      (wrapper
+        .find('FieldInner')
+        .first()
+        .props() as any).formik.values.name
+    ).toEqual('A2-Onyx-2017-07-13');
+    expect(
+      (wrapper
+        .find('FieldInner')
+        .first()
+        .props() as any).formik.values.title
+    ).toEqual('A2 Onyx 2017-07-13');
   });
 });
