@@ -506,6 +506,10 @@ describe('containers/forms/PlanForm - Submission', () => {
     wrapper
       .find('select[name="fiStatus"]')
       .simulate('change', { target: { name: 'fiStatus', value: 'mosh' } });
+    // Set wrong status field value
+    wrapper
+      .find('select[name="status"]')
+      .simulate('change', { target: { name: 'status', value: 'Ona' } });
 
     wrapper.find('form').simulate('submit');
     await new Promise(resolve => setImmediate(resolve));
@@ -518,6 +522,10 @@ describe('containers/forms/PlanForm - Submission', () => {
     // fiStatus should be as expected
     expect(wrapper.find('small.fiStatus-error').text()).toEqual(
       'fiStatus must be one of the following values: A1, A2, B1, B2'
+    );
+    // status should be as expected
+    expect(wrapper.find('small.status-error').text()).toEqual(
+      'status must be one of the following values: active, complete, draft, retired'
     );
   });
 });
