@@ -153,7 +153,7 @@ const PlanForm = (props: PlanFormProps) => {
         /* tslint:disable-next-line jsx-no-lambda */
         onSubmit={(values, { setErrors, setSubmitting }) => {
           const payload = generatePlanDefinition(values);
-          const apiService = new OpenSRPService('/plans');
+          const apiService = new OpenSRPService('plans');
 
           if (editMode) {
             apiService
