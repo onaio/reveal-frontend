@@ -547,5 +547,74 @@ describe('containers/forms/PlanForm - Submission', () => {
       start: 'start must be a `date` type, but the final value was: `Invalid Date`.',
       status: 'status must be one of the following values: active, complete, draft, retired',
     });
+    // nice, eh?
+  });
+
+  it('Form validation works for activity fields', async () => {
+    const wrapper = mount(<PlanForm />);
+
+    // no errors are initially present
+    expect(
+      (wrapper
+        .find('FieldInner')
+        .first()
+        .props() as any).formik.errors
+    ).toEqual({});
+
+    wrapper.find('form').simulate('submit');
+    await new Promise(resolve => setImmediate(resolve));
+    wrapper.update();
+
+    // lets mess with the activity fields
+
+    // Remove all the values for the first activity
+
+    //     actionCode: Yup.string().oneOf(PlanActionCodes.map(e => e)),
+    // actionDescription: Yup.string().required(REQUIRED),
+    // actionReason: Yup.string()
+    //   .oneOf(Object.values(actionReasons))
+    //   .required(REQUIRED),
+    // actionTitle: Yup.string().required(REQUIRED),
+    // goalDescription: Yup.string().required(REQUIRED),
+    // goalDue: Yup.date().required(REQUIRED),
+    // goalPriority: Yup.string()
+    //   .oneOf(Object.values(goalPriorities))
+    //   .required(REQUIRED),
+    // goalValue: Yup.number()
+    //   .min(1)
+    //   .required(REQUIRED),
+    // timingPeriodEnd: Yup.date().required(REQUIRED),
+    // timingPeriodStart: Yup.date().required(REQUIRED),
+
+    wrapper
+      .find('input[name="activities[0].actionCode"]')
+      .simulate('change', { target: { name: 'activities[0].actionCode', value: '' } });
+    wrapper
+      .find('textarea[name="activities[0].actionDescription"]')
+      .simulate('change', { target: { name: 'activities[0].actionDescription', value: '' } });
+    wrapper
+      .find('select[name="activities[0].actionReason"]')
+      .simulate('change', { target: { name: 'activities[0].actionReason', value: '' } });
+    wrapper
+      .find('input[name="activities[0].actionTitle"]')
+      .simulate('change', { target: { name: 'activities[0].actionTitle', value: '' } });
+    wrapper
+      .find('input[name="activities[0].goalDescription"]')
+      .simulate('change', { target: { name: 'activities[0].goalDescription', value: '' } });
+    wrapper
+      .find('input[name="activities[0].goalDue"]')
+      .simulate('change', { target: { name: 'activities[0].goalDue', value: '' } });
+    wrapper
+      .find('select[name="activities[0].goalPriority"]')
+      .simulate('change', { target: { name: 'activities[0].goalPriority', value: '' } });
+    wrapper
+      .find('input[name="activities[0].goalValue"]')
+      .simulate('change', { target: { name: 'activities[0].goalValue', value: '' } });
+    wrapper
+      .find('input[id="activities-0-timingPeriodEnd"]')
+      .simulate('change', { target: { name: 'activities[0].timingPeriodEnd', value: '' } });
+    wrapper
+      .find('input[id="activities-0-timingPeriodStart"]')
+      .simulate('change', { target: { name: 'activities[0].timingPeriodStart', value: '' } });
   });
 });
