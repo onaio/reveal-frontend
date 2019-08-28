@@ -56,5 +56,13 @@
 }
 
 .select-jurisdictin-tooltip {
-  padding: 6px 8px !important;
+  padding: 6px 8px 0 !important;
+  font-weight: 600;
+}
+
+.select-jurisdictin-tooltip-hint {
+  color: grey;
+  font-size: 0.75rem;
+  font-style: italic;
+  padding: 0 6px 8px !important;
 }
