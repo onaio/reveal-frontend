@@ -527,5 +527,25 @@ describe('containers/forms/PlanForm - Submission', () => {
     expect(wrapper.find('small.status-error').text()).toEqual(
       'status must be one of the following values: active, complete, draft, retired'
     );
+
+    // now lets look at the entire error object once again
+    expect(
+      (wrapper
+        .find('FieldInner')
+        .first()
+        .props() as any).formik.errors
+    ).toEqual({
+      date: 'Date is Required',
+      end: 'end must be a `date` type, but the final value was: `Invalid Date`.',
+      fiReason: 'fiReason must be one of the following values: Routine, Case Triggered',
+      fiStatus: 'fiStatus must be one of the following values: A1, A2, B1, B2',
+      jurisdictions: [
+        {
+          id: 'Required',
+        },
+      ],
+      start: 'start must be a `date` type, but the final value was: `Invalid Date`.',
+      status: 'status must be one of the following values: active, complete, draft, retired',
+    });
   });
 });
