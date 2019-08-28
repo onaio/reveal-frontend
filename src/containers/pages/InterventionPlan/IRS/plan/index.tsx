@@ -1445,7 +1445,7 @@ class IrsPlan extends React.Component<
         selectionStyle.stops.push([j.jurisdiction_id, opacity]);
       }
     }
-    return (selectionStyle.stops.length && selectionStyle) || 0.7;
+    return (selectionStyle.stops.length && selectionStyle) || deselectedJurisdictionOpacity;
   }
 
   /** getGeographicLevelsFromJurisdictions - utility to derive all geographic levels
