@@ -388,7 +388,11 @@ const PlanForm = (props: PlanFormProps) => {
                     </option>
                   ))}
                 </Field>
-                <ErrorMessage name="fiStatus" component="small" className="form-text text-danger" />
+                <ErrorMessage
+                  name="fiStatus"
+                  component="small"
+                  className="form-text text-danger fiStatus-error"
+                />
               </FormGroup>
             )}
             {values.interventionType === InterventionType.FI && (
@@ -409,7 +413,11 @@ const PlanForm = (props: PlanFormProps) => {
                     </option>
                   ))}
                 </Field>
-                <ErrorMessage name="fiReason" component="small" className="form-text text-danger" />
+                <ErrorMessage
+                  name="fiReason"
+                  component="small"
+                  className="form-text text-danger fiReason-error"
+                />
               </FormGroup>
             )}
             {values.interventionType === InterventionType.FI && values.fiReason === FIReasons[1] && (
