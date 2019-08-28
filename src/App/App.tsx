@@ -12,6 +12,8 @@ import { WEBSITE_NAME } from '../configs/env';
 import { DISABLE_LOGIN_PROTECTION } from '../configs/env';
 import { providers } from '../configs/settings';
 import {
+  CREATE_TEAM_URL,
+  EDIT_TEAM_URL,
   FI_HISTORICAL_URL,
   FI_SINGLE_MAP_URL,
   FI_SINGLE_URL,
@@ -38,6 +40,7 @@ import NewPlan from '../containers/pages/InterventionPlan/NewPlan/General';
 import NewIRSPlan from '../containers/pages/InterventionPlan/NewPlan/IRS';
 import ConnectedPlanDefinitionList from '../containers/pages/InterventionPlan/PlanDefinitionList';
 import ConnectedUpdatePlan from '../containers/pages/InterventionPlan/UpdatePlan';
+import ConnectedCreateEditTeamView from '../containers/pages/TeamAssignment/CreateEditTeamView';
 import { oAuthUserInfoGetter } from '../helpers/utils';
 
 library.add(faMap);
@@ -149,6 +152,18 @@ class App extends Component {
                 exact={true}
                 path={PLAN_LIST_URL}
                 component={ConnectedPlanDefinitionList}
+              />
+              <ConnectedPrivateRoute
+                disableLoginProtection={!DISABLE_LOGIN_PROTECTION}
+                exact={true}
+                path={CREATE_TEAM_URL}
+                component={ConnectedCreateEditTeamView}
+              />
+              <ConnectedPrivateRoute
+                disableLoginProtection={!DISABLE_LOGIN_PROTECTION}
+                exact={true}
+                path={EDIT_TEAM_URL}
+                component={ConnectedCreateEditTeamView}
               />
               {/* tslint:disable jsx-no-lambda */}
               <Route
