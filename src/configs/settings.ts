@@ -603,6 +603,9 @@ export const lineLayerConfig = {
   visible: false,
 };
 
+export const jurisdictionSelectionTooltipHint: string =
+  'Shift+Click a Jurisdiction to toggle its selection';
+
 /** Fill opacity configuration */
 export const structureFillOpacity: Expression = [
   'match',
