@@ -3968,7 +3968,7 @@ exports[`containers/forms/PlanForm renders correctly: version field 1`] = `
   onChange={[Function]}
   readOnly={true}
   type="hidden"
-  value="1"
+  value="2"
 />
 `;
 
