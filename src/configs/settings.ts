@@ -720,6 +720,7 @@ export interface ADMN3 extends ADMN2 {
   ADMN3_EN: string;
 }
 
+export const baseTilesetGeographicLevel: number = 1; // this tells the Jurisdiction Selection map at which geographic level to start rendering administrative fill layers
 export const JurisdictionLevels = ['administrative', 'operational'] as const;
 export type JurisdictionTypes = typeof JurisdictionLevels[number];
 /** interface descbribing basic country level information */

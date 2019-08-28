@@ -56,6 +56,7 @@ import {
 import {
   adminLayerColors,
   ADMN0_PCODE,
+  baseTilesetGeographicLevel,
   CountriesAdmin0,
   deselectedJurisdictionOpacity,
   fillLayerConfig,
@@ -1841,7 +1842,7 @@ class IrsPlan extends React.Component<
 
       if (Map && tilesets && properties && layerIds) {
         const doUseTilesets = !!tilesets[geographicLevel];
-        if (geographicLevel === 1) {
+        if (geographicLevel === baseTilesetGeographicLevel) {
           if (Map.getLayer(layer.id)) {
             Map.setLayoutProperty(layer.id, 'visibility', 'none');
           }
@@ -1955,7 +1956,7 @@ class IrsPlan extends React.Component<
     const bounds = e.bounds || country.bounds;
     if (!features.length && tilesets && bounds) {
       if (tilesets.length) {
-        let t = geographicLevel || 1;
+        let t = geographicLevel || baseTilesetGeographicLevel;
         for (t; t < tilesets.length; t += 1) {
           const layerId = `${ADMN0_EN}-admin-${t}-fill`;
           if (Map.getLayer(layerId)) {
