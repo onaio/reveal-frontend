@@ -168,6 +168,10 @@ export const PLAN_COMPLETION_URL = '/focus-investigation/view/complete';
 export type PLAN_COMPLETION_URL = typeof PLAN_COMPLETION_URL;
 export const PLAN_UPDATE_URL = '/plans/update';
 export type PLAN_UPDATE_URL = typeof PLAN_UPDATE_URL;
+export const CREATE_TEAM_URL = '/teams/new';
+export type CREATE_TEAM_URL = typeof CREATE_TEAM_URL;
+export const EDIT_TEAM_URL = '/teams/edit';
+export type EDIT_TEAM_URL = typeof EDIT_TEAM_URL;
 
 // OpenSRP API strings
 export const OPENSRP_FIND_BY_PROPERTIES = 'findByProperties';
