@@ -1,6 +1,6 @@
 /** This is the main configuration module */
 import { Providers } from '@onaio/gatekeeper';
-import { Expression } from 'mapbox-gl';
+import { Expression, LngLatBoundsLike } from 'mapbox-gl';
 import {
   DOMAIN_NAME,
   ENABLE_ONADATA_OAUTH,
@@ -621,6 +621,11 @@ export const structureFillOpacity: Expression = [
   0.75,
 ];
 
+/** Jurisdiction Selection Map Layer Style Settings */
+export const fullySelectedJurisdictionOpacity: number = 0.9;
+export const partiallySelectedJurisdictionOpacity: number = 0.6;
+export const deselectedJurisdictionOpacity: number = 0.3;
+
 /** Fill layer configuration */
 export const fillLayerConfig = {
   id: 'single-jurisdiction',
@@ -718,12 +723,13 @@ export interface ADMN3 extends ADMN2 {
   ADMN3_EN: string;
 }
 
+export const baseTilesetGeographicLevel: number = 1; // this tells the Jurisdiction Selection map at which geographic level to start rendering administrative fill layers
 export const JurisdictionLevels = ['administrative', 'operational'] as const;
 export type JurisdictionTypes = typeof JurisdictionLevels[number];
 /** interface descbribing basic country level information */
 export interface JurisdictionsByCountry extends ADMN0 {
   // the GPS extents of given geometry(s)
-  bounds?: any[];
+  bounds?: LngLatBoundsLike;
 
   // the top level jurisdiction_Ids from OpenSRP
   // this is most useful for instances where tilesets DO NOT match the OpenSRP hierarchy
