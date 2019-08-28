@@ -63,6 +63,7 @@ import {
   fullySelectedJurisdictionOpacity,
   JurisdictionLevels,
   JurisdictionsByCountry,
+  jurisdictionSelectionTooltipHint,
   JurisdictionTypes,
   lineLayerConfig,
   partiallySelectedJurisdictionOpacity,
@@ -1543,7 +1544,7 @@ class IrsPlan extends React.Component<
       const tooltipVal = tilesets[t].labelField || tilesets[t].idField;
       if (tooltipVal && tooltipVal.length) {
         (adminFillLayer as any).popup = {
-          body: `<p class="select-jurisdictin-tooltip">{{${tooltipVal}}}</p>`,
+          body: `<div><p class="select-jurisdictin-tooltip">{{${tooltipVal}}}</p><span class="select-jurisdictin-tooltip-hint">${jurisdictionSelectionTooltipHint}</span></div>`,
         };
       }
 
