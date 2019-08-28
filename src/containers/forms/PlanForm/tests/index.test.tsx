@@ -623,5 +623,29 @@ describe('containers/forms/PlanForm - Submission', () => {
 
     // activity errors display nicely, as expected
     expect(toJson(wrapper.find(`.activities-0-errors ul`))).toMatchSnapshot(`activities-0 errors`);
+
+    // set wrong values for some fields
+
+    // set wrong actionReason
+    wrapper
+      .find('select[name="activities[0].actionReason"]')
+      .simulate('change', { target: { name: 'activities[0].actionReason', value: 'ILoveOov' } });
+    // set wrong goalValue
+    wrapper
+      .find('input[name="activities[0].goalValue"]')
+      .simulate('change', { target: { name: 'activities[0].goalValue', value: '0' } });
+
+    wrapper.find('form').simulate('submit');
+    await new Promise(resolve => setImmediate(resolve));
+    wrapper.update();
+
+    // actionReason should be as expected
+    expect(wrapper.find('li#actionReason-0-error').text()).toEqual(
+      'actionReason: activities[0].actionReason must be one of the following values: Investigation, Routine'
+    );
+    // goalValue should be as expected
+    expect(wrapper.find('li#goalValue-0-error').text()).toEqual(
+      'goalValue: activities[0].goalValue must be greater than or equal to 1'
+    );
   });
 });
