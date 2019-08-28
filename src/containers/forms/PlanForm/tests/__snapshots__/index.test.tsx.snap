@@ -748,6 +748,113 @@ Array [
 ]
 `;
 
+exports[`containers/forms/PlanForm - Submission Form validation works for activity fields: activities-0 errors 1`] = `
+<ul
+  className="list-unstyled"
+>
+  <li
+    id="actionCode-0-error"
+    key="actionCode"
+  >
+    <strong>
+      actionCode
+    </strong>
+    : 
+    activities[0].actionCode must be one of the following values: BCC, IRS, Bednet Distribution, Blood Screening, Case Confirmation, RACD Register Family, Larval Dipping, Mosquito Collection
+  </li>
+  <li
+    id="actionDescription-0-error"
+    key="actionDescription"
+  >
+    <strong>
+      actionDescription
+    </strong>
+    : 
+    Required
+  </li>
+  <li
+    id="actionReason-0-error"
+    key="actionReason"
+  >
+    <strong>
+      actionReason
+    </strong>
+    : 
+    activities[0].actionReason must be one of the following values: Investigation, Routine
+  </li>
+  <li
+    id="actionTitle-0-error"
+    key="actionTitle"
+  >
+    <strong>
+      actionTitle
+    </strong>
+    : 
+    Required
+  </li>
+  <li
+    id="goalDescription-0-error"
+    key="goalDescription"
+  >
+    <strong>
+      goalDescription
+    </strong>
+    : 
+    Required
+  </li>
+  <li
+    id="goalDue-0-error"
+    key="goalDue"
+  >
+    <strong>
+      goalDue
+    </strong>
+    : 
+    activities[0].goalDue must be a \`date\` type, but the final value was: \`Invalid Date\` (cast from the value \`""\`).
+  </li>
+  <li
+    id="goalPriority-0-error"
+    key="goalPriority"
+  >
+    <strong>
+      goalPriority
+    </strong>
+    : 
+    activities[0].goalPriority must be one of the following values: low-priority, medium-priority, high-priority
+  </li>
+  <li
+    id="goalValue-0-error"
+    key="goalValue"
+  >
+    <strong>
+      goalValue
+    </strong>
+    : 
+    activities[0].goalValue must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`""\`).
+  </li>
+  <li
+    id="timingPeriodEnd-0-error"
+    key="timingPeriodEnd"
+  >
+    <strong>
+      timingPeriodEnd
+    </strong>
+    : 
+    activities[0].timingPeriodEnd must be a \`date\` type, but the final value was: \`Invalid Date\`.
+  </li>
+  <li
+    id="timingPeriodStart-0-error"
+    key="timingPeriodStart"
+  >
+    <strong>
+      timingPeriodStart
+    </strong>
+    : 
+    activities[0].timingPeriodStart must be a \`date\` type, but the final value was: \`Invalid Date\`.
+  </li>
+</ul>
+`;
+
 exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[0].actionCode field 1`] = `
 <input
   id="activities-0-actionCode"
@@ -3861,7 +3968,7 @@ exports[`containers/forms/PlanForm renders correctly: version field 1`] = `
   onChange={[Function]}
   readOnly={true}
   type="hidden"
-  value="1"
+  value="2"
 />
 `;
 
