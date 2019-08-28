@@ -1,4 +1,5 @@
 import { clone, cloneDeep } from 'lodash';
+import { Team } from '../teams';
 
 export const plan1 = {
   id: 'ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f',
@@ -1173,3 +1174,17 @@ export const CompleteRoutineTableProps = {
   showPagination: false,
   useDrillDownTrProps: false,
 };
+
+export const team1: Team = {
+  identifier: '1',
+  jurisdictions: [],
+  name: 'User_45',
+};
+
+export const team2: Team = {
+  identifier: '2',
+  jurisdictions: [],
+  name: 'South',
+};
+
+export const teams: Team[] = [team1, team2];
