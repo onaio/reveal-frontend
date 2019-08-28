@@ -552,12 +552,15 @@ const PlanForm = (props: PlanFormProps) => {
                       <div className="card-body">
                         <fieldset key={index}>
                           {errors.activities && errors.activities[index] && (
-                            <div className="alert alert-danger" role="alert">
+                            <div
+                              className={`alert alert-danger activities-${index}-errors`}
+                              role="alert"
+                            >
                               <h6 className="alert-heading">Please fix these errors</h6>
                               <ul className="list-unstyled">
                                 {Object.entries(errors.activities[index] || {}).map(
                                   ([key, val]) => (
-                                    <li key={key}>
+                                    <li key={key} id={`${key}-${index}-error`}>
                                       <strong>{key}</strong>: {val}
                                     </li>
                                   )
