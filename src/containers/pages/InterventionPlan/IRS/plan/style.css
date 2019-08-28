@@ -57,7 +57,7 @@
 
 .select-jurisdictin-tooltip {
   padding: 6px 8px 0 !important;
-  font-weight: 600;
+  font-weight: 600 !important;
 }
 
 .select-jurisdictin-tooltip-hint {
