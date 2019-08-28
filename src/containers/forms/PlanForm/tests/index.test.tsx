@@ -616,5 +616,12 @@ describe('containers/forms/PlanForm - Submission', () => {
     wrapper
       .find('input[id="activities-0-timingPeriodStart"]')
       .simulate('change', { target: { name: 'activities[0].timingPeriodStart', value: '' } });
+
+    wrapper.find('form').simulate('submit');
+    await new Promise(resolve => setImmediate(resolve));
+    wrapper.update();
+
+    // activity errors display nicely, as expected
+    expect(toJson(wrapper.find(`.activities-0-errors ul`))).toMatchSnapshot(`activities-0 errors`);
   });
 });
