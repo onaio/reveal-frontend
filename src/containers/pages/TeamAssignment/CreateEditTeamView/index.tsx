@@ -6,7 +6,7 @@ import * as React from 'react';
 import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
 
-const NewUpdateTeamView = (props: any) => {
+const CreateEditTeamview = (props: any) => {
   return (
     <div>
       <Helmet>
@@ -16,4 +16,4 @@ const NewUpdateTeamView = (props: any) => {
   );
 };
 
-export { NewUpdateTeamView };
+export { CreateEditTeamview as NewUpdateTeamView };
