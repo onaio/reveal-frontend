@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
-import LinkToNewPlans from '../../../../components/LinkToNewPlans';
+import LinkAsButton from '../../../../components/LinkAsButton';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
 import { PlanDefinition } from '../../../../configs/settings';
@@ -99,7 +99,7 @@ const PlanDefinitionList = (props: PlanListProps) => {
           <h3 className="mt-3 mb-3 page-title">{pageTitle}</h3>
         </Col>
         <Col md={4}>
-          <LinkToNewPlans classProp="focus-investigation btn btn-primary float-right mt-3 mb-3" />
+          <LinkAsButton classProp="focus-investigation btn btn-primary float-right mt-3 mb-3" />
         </Col>
       </Row>
       <Row>

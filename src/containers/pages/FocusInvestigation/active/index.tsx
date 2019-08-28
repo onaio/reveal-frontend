@@ -14,7 +14,7 @@ import 'react-table/react-table.css';
 import { Button, Col, Form, FormGroup, Input, Row, Table } from 'reactstrap';
 import { Store } from 'redux';
 import DrillDownTableLinkedCell from '../../../../components/DrillDownTableLinkedCell';
-import LinkToNewPlans from '../../../../components/LinkToNewPlans';
+import LinkAsButton from '../../../../components/LinkAsButton';
 import NewRecordBadge from '../../../../components/NewRecordBadge';
 import HeaderBreadCrumb, {
   BreadCrumbProps,
@@ -304,7 +304,7 @@ class ActiveFocusInvestigation extends React.Component<
                     <h3 className="mb-3 mt-5 page-title">{ROUTINE}</h3>
                   </Col>
                   <Col xs="6">
-                    <LinkToNewPlans />
+                    <LinkAsButton />
                   </Col>
                 </Row>
               </div>
