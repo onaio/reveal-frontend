@@ -618,6 +618,11 @@ export const structureFillOpacity: Expression = [
   0.75,
 ];
 
+/** Jurisdiction Selection Map Layer Style Settings */
+export const fullySelectedJurisdictionOpacity: number = 0.9;
+export const partiallySelectedJurisdictionOpacity: number = 0.6;
+export const deselectedJurisdictionOpacity: number = 0.3;
+
 /** Fill layer configuration */
 export const fillLayerConfig = {
   id: 'single-jurisdiction',

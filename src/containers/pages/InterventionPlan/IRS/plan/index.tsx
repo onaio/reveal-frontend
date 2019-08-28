@@ -57,11 +57,14 @@ import {
   adminLayerColors,
   ADMN0_PCODE,
   CountriesAdmin0,
+  deselectedJurisdictionOpacity,
   fillLayerConfig,
+  fullySelectedJurisdictionOpacity,
   JurisdictionLevels,
   JurisdictionsByCountry,
   JurisdictionTypes,
   lineLayerConfig,
+  partiallySelectedJurisdictionOpacity,
 } from './../../../../../configs/settings';
 
 import { OpenSRPService } from '../../../../../services/opensrp';
@@ -1414,7 +1417,7 @@ class IrsPlan extends React.Component<
     const { childrenByParentId } = this.state;
     const uniqueKeys: string[] = [];
     const selectionStyle = {
-      default: 0.3,
+      default: deselectedJurisdictionOpacity,
       property: (tileset && tileset.idField) || 'jurisdiction_id',
       stops: [] as Array<[string, number]>,
       type: 'categorical',
@@ -1424,7 +1427,7 @@ class IrsPlan extends React.Component<
       // keys in stops must be unique
       if (!uniqueKeys.includes(j.jurisdiction_id) && selectedIds.includes(j.jurisdiction_id)) {
         uniqueKeys.push(j.jurisdiction_id);
-        let opacity: number = 0.9;
+        let opacity: number = fullySelectedJurisdictionOpacity;
         if (childrenByParentId[j.jurisdiction_id]) {
           const selectedChildren =
             (childrenByParentId[j.jurisdiction_id] &&
@@ -1433,8 +1436,8 @@ class IrsPlan extends React.Component<
           opacity =
             childrenByParentId[j.jurisdiction_id] &&
             selectedChildren.length !== childrenByParentId[j.jurisdiction_id].length
-              ? 0.6
-              : 0.9;
+              ? partiallySelectedJurisdictionOpacity
+              : fullySelectedJurisdictionOpacity;
         }
 
         selectionStyle.stops.push([j.jurisdiction_id, opacity]);
