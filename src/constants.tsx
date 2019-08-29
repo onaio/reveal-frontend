@@ -128,6 +128,10 @@ export type TEAM = typeof TEAM;
 export const EDIT_TEAM = 'Edit Team';
 export type EDIT_TEAM = typeof EDIT_TEAM;
 export const NEW_TEAM = 'New Team';
+export const TEAM_DETAILS = 'Team Details';
+export type TEAM_DETAILS = typeof TEAM_DETAILS;
+export const TEAM_MEMBERS = 'Team Members';
+export type TEAM_MEMBERS = typeof TEAM_MEMBERS;
 
 export const JURISDICTION_ID = 'jurisdiction_id';
 export type JURISDICTION_ID = typeof JURISDICTION_ID;

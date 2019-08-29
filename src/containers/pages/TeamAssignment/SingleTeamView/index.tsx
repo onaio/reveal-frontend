@@ -14,7 +14,16 @@ import HeaderBreadcrumb, {
   BreadCrumbProps,
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
-import { HOME, HOME_URL, SINGLE_TEAM_URL, TEAM, TEAM_LIST_URL, TEAMS } from '../../../../constants';
+import {
+  HOME,
+  HOME_URL,
+  SINGLE_TEAM_URL,
+  TEAM,
+  TEAM_DETAILS,
+  TEAM_LIST_URL,
+  TEAM_MEMBERS,
+  TEAMS,
+} from '../../../../constants';
 import { RouteParams } from '../../../../helpers/utils';
 import teamsReducer, {
   getTeamById,
@@ -50,8 +59,8 @@ const SingleTeamView = (props: SingleTeamViewPropsType) => {
   };
   const breadcrumbProps: BreadCrumbProps = {
     currentPage: {
-      label: `team.name`,
-      url: `${SINGLE_TEAM_URL}/${`team.id`}`,
+      label: team.identifier,
+      url: `${SINGLE_TEAM_URL}/${team.identifier}`,
     },
     pages: [],
   };
@@ -77,21 +86,21 @@ const SingleTeamView = (props: SingleTeamViewPropsType) => {
   return (
     <div>
       <Helmet>
-        <title>{`${TEAM} - ${`Team Name`}`}</title>
+        <title>{`${TEAM} - ${team.name}`}</title>
       </Helmet>
       <HeaderBreadcrumb {...breadcrumbProps} />
       <br />
       <Row>
-        <col className="xs">
-          <h2 className="mb-3 mt-5 page-title">{`Team Name`}</h2>
-        </col>
-        <col className="xs" style={{ float: 'right' }}>
+        <Col className="xs">
+          <h2 className="mb-3 mt-5 page-title">{team.name}</h2>
+        </Col>
+        <Col className="link-as-button xs">
           <LinkAsButton {...linkAsButtonProps} />
-        </col>
+        </Col>
       </Row>
       <hr />
       <div id="team-details" className="card mb-3">
-        <div className="card-header">{`Team Details`}</div>
+        <div className="card-header">{TEAM_DETAILS}</div>
         <div className="card-body">
           {/* the below display should be in 2 cols*/}
           <Row>
@@ -116,7 +125,7 @@ const SingleTeamView = (props: SingleTeamViewPropsType) => {
           </Row>
         </div>
       </div>
-      <h3 className="mb-3 mt-5 page-title">{`Team Members`}</h3>
+      <h3 className="mb-3 mt-5 page-title">{TEAM_MEMBERS}</h3>
       <ListView {...listViewProps} />
     </div>
   );
