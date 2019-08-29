@@ -464,8 +464,9 @@ class IrsPlan extends React.Component<
             <h2 className="page-title">IRS: {pageLabel}</h2>
           </Col>
         )}
-        {!isFinalizedPlan && (
-          <Col xs="4" className="save-plan-buttons-column">
+
+        <Col xs="4" className="save-plan-buttons-column">
+          {!isFinalizedPlan && (
             <Button
               className="save-plan-as-draft-btn"
               color="success"
@@ -476,19 +477,17 @@ class IrsPlan extends React.Component<
             >
               Save as a Draft
             </Button>
-            {!isNewPlan && (
-              <Button
-                className="save-as-finalized-plan-btn"
-                color="primary"
-                disabled={isSaveDraftDisabled}
-                onClick={onSaveFinalizedPlanButtonClick}
-                size="sm"
-              >
-                Save Finalized Plan
-              </Button>
-            )}
-          </Col>
-        )}
+          )}
+          <Button
+            className="save-as-finalized-plan-btn"
+            color="primary"
+            disabled={isSaveDraftDisabled}
+            onClick={onSaveFinalizedPlanButtonClick}
+            size="sm"
+          >
+            Save Finalized Plan
+          </Button>
+        </Col>
       </Row>
     );
 
