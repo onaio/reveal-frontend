@@ -89,7 +89,7 @@ const SingleTeamView = (props: SingleTeamViewPropsType) => {
   // LinkAsButton Props
   const linkAsButtonProps = {
     text: EDIT_TEAM,
-    to: EDIT_TEAM_URL,
+    to: `${EDIT_TEAM_URL}/${team.identifier}`,
   };
 
   return (
