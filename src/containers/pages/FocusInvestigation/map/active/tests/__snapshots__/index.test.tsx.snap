@@ -2084,7 +2084,9 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
           <div
             className="mapSidebar"
           >
-            <div>
+            <div
+              className="mb-3"
+            >
               <h5>
                 Routine
                  
@@ -4674,7 +4676,9 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store (g
               <div
                 className="mapSidebar"
               >
-                <div>
+                <div
+                  className="mb-3"
+                >
                   <h5>
                     Routine
                      
