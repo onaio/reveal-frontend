@@ -2521,6 +2521,119 @@ Object {
 }
 `;
 
+exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap correctly & changes page title: Breadcrumbs 1`] = `
+<Breadcrumb
+  aria-label="breadcrumb"
+  className="reveal-breadcrumb"
+  listTag="ol"
+  tag="nav"
+>
+  <nav
+    aria-label="breadcrumb"
+    className="reveal-breadcrumb"
+  >
+    <ol
+      className="breadcrumb"
+    >
+      <BreadcrumbItem
+        key="0"
+        tag="li"
+      >
+        <li
+          className="breadcrumb-item"
+        >
+          <Link
+            key="0"
+            replace={false}
+            to="/"
+          >
+            <a
+              href="/"
+              onClick={[Function]}
+            >
+              Home
+            </a>
+          </Link>
+        </li>
+      </BreadcrumbItem>
+      <BreadcrumbItem
+        key="1"
+        tag="li"
+      >
+        <li
+          className="breadcrumb-item"
+        >
+          <Link
+            key="1"
+            replace={false}
+            to="/focus-investigation"
+          >
+            <a
+              href="/focus-investigation"
+              onClick={[Function]}
+            >
+              Focus Investigations
+            </a>
+          </Link>
+        </li>
+      </BreadcrumbItem>
+      <BreadcrumbItem
+        key="2"
+        tag="li"
+      >
+        <li
+          className="breadcrumb-item"
+        >
+          Chadiza
+        </li>
+      </BreadcrumbItem>
+      <BreadcrumbItem
+        key="3"
+        tag="li"
+      >
+        <li
+          className="breadcrumb-item"
+        >
+          Naviluli
+        </li>
+      </BreadcrumbItem>
+      <BreadcrumbItem
+        key="4"
+        tag="li"
+      >
+        <li
+          className="breadcrumb-item"
+        >
+          <Link
+            key="4"
+            replace={false}
+            to="/focus-investigation/view/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
+          >
+            <a
+              href="/focus-investigation/view/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
+              onClick={[Function]}
+            >
+              NVI_439
+            </a>
+          </Link>
+        </li>
+      </BreadcrumbItem>
+      <BreadcrumbItem
+        active={true}
+        tag="li"
+      >
+        <li
+          aria-current="page"
+          className="active breadcrumb-item"
+        >
+          A1-Tha Luang Village 1 Focus 01
+        </li>
+      </BreadcrumbItem>
+    </ol>
+  </nav>
+</Breadcrumb>
+`;
+
 exports[`containers/pages/FocusInvestigation/activeMap works with redux store (gisidawrapper component that loads jurisdiction without structures and tasks) 1`] = `
 <Provider
   store={
