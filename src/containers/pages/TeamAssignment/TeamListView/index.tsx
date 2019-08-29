@@ -16,7 +16,15 @@ import LinkAsButton from '../../../../components/LinkAsButton';
 import HeaderBreadcrumb, {
   BreadCrumbProps,
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
-import { HOME, HOME_URL } from '../../../../constants';
+import {
+  CREATE_TEAM_URL,
+  HOME,
+  HOME_URL,
+  NEW_TEAM,
+  SINGLE_TEAM_URL,
+  TEAM_LIST_URL,
+  TEAMS,
+} from '../../../../constants';
 import teamsReducer, { reducerName as teamsReducerName, Team } from '../../../../store/ducks/teams';
 import './index.css';
 
@@ -39,8 +47,8 @@ const TeamListView = (props: TeamListViewPropsType) => {
   const { teams } = props;
   const breadcrumbProps: BreadCrumbProps = {
     currentPage: {
-      label: `teams`,
-      url: `/teams`,
+      label: TEAMS,
+      url: TEAM_LIST_URL,
     },
     pages: [],
   };
@@ -64,7 +72,7 @@ const TeamListView = (props: TeamListViewPropsType) => {
       return [
         team.identifier,
         ,
-        <Link to={`single team view`} key={team.identifier}>
+        <Link to={`${SINGLE_TEAM_URL}/${team.identifier}`} key={team.identifier}>
           team.name
         </Link>,
         ,
@@ -76,19 +84,20 @@ const TeamListView = (props: TeamListViewPropsType) => {
   };
 
   const linkAsButtonProps = {
-    text: `Add team`,
-    to: `add team`,
+    text: NEW_TEAM,
+    to: CREATE_TEAM_URL,
   };
 
   return (
     <div>
       <Helmet>
-        <title>{`TEAMS`}</title>
+        <title>{`${TEAMS}(${teams.length})`}</title>
       </Helmet>
       <HeaderBreadcrumb {...breadcrumbProps} />
       <Row>
         <Col className="xs">
-          <h2 className="mb-3 mt-5 page-title">{`Teams(${teams.length})`}</h2>
+          {/** ? Should this be the number of teams in store or in the api */}
+          <h2 className="mb-3 mt-5 page-title">{`${TEAMS}(${teams.length})`}</h2>
         </Col>
         <Col className="xs" style={{ float: 'right' }}>
           <LinkAsButton {...linkAsButtonProps} />
