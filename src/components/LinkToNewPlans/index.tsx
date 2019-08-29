@@ -4,22 +4,22 @@ import { NEW_PLAN_URL } from '../../constants';
 
 /** interface for LinkToNewPlans component props */
 export interface Props {
-  classProp: string;
+  className: string;
   text: string;
 }
 
 /** LinkToNewPlans component */
 const LinkToNewPlans = (props: Props) => {
-  const { text } = props;
+  const { className, text } = props;
   return (
-    <Link to={NEW_PLAN_URL} className={props.classProp}>
+    <Link to={NEW_PLAN_URL} className={className}>
       {text}
     </Link>
   );
 };
 
 const defaultProps: Props = {
-  classProp: 'focus-investigation btn btn-primary float-right mt-5',
+  className: 'focus-investigation btn btn-primary float-right mt-5',
   text: 'Add Focus Investigation',
 };
 LinkToNewPlans.defaultProps = defaultProps;
