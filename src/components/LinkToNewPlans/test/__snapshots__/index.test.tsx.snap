@@ -3,6 +3,7 @@
 exports[`components/LinkToNewPlans Matches snapshot 1`] = `
 <LinkToNewPlans
   classProp="focus-investigation btn btn-primary float-right mt-5"
+  text="Add Focus Investigation"
 >
   <Link
     className="focus-investigation btn btn-primary float-right mt-5"

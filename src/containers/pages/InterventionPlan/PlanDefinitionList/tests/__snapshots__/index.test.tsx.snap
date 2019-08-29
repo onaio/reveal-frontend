@@ -875,6 +875,7 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
             >
               <LinkToNewPlans
                 classProp="focus-investigation btn btn-primary float-right mt-3 mb-3"
+                text="Add Focus Investigation"
               >
                 <Link
                   className="focus-investigation btn btn-primary float-right mt-3 mb-3"

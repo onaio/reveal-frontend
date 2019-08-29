@@ -2467,6 +2467,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                 >
                   <LinkToNewPlans
                     classProp="focus-investigation btn btn-primary float-right mt-5"
+                    text="Add Focus Investigation"
                   >
                     <Link
                       className="focus-investigation btn btn-primary float-right mt-5"
@@ -7270,6 +7271,7 @@ exports[`containers/pages/ActiveFocusInvestigation renders ActiveFocusInvestigat
                 >
                   <LinkToNewPlans
                     classProp="focus-investigation btn btn-primary float-right mt-5"
+                    text="Add Focus Investigation"
                   >
                     <Link
                       className="focus-investigation btn btn-primary float-right mt-5"
