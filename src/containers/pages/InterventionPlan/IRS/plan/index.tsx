@@ -537,7 +537,10 @@ class IrsPlan extends React.Component<
     );
   }
 
-  // Jurisdiction Hierarchy Control
+  /************************
+   * Click Handlers
+   ************************
+   */
   /** onTableBreadCrumbClick - handler for drilldown table breadcrumb clicks to reset the table hierarchy */
   private onTableBreadCrumbClick = (e: MouseEvent) => {
     preventDefault(e);
@@ -566,32 +569,6 @@ class IrsPlan extends React.Component<
       }
     }
   };
-  /** onResetDrilldownTableHierarchy - function for resetting drilldown table hierachy baseline
-   * @param Id - the id of the highest level parent_idto show in the table, or null to reset completely
-   */
-  private onResetDrilldownTableHierarchy(Id: string | null) {
-    const id = Id !== 'null' ? Id : null;
-    const { tableCrumbs } = this.state;
-    const nextActiveCrumbIndex = tableCrumbs.map(c => c.id).indexOf(id) + 1;
-    const nextCrumbs = tableCrumbs.map(c => ({ ...c, active: false }));
-    nextCrumbs.splice(nextActiveCrumbIndex);
-    nextCrumbs[nextCrumbs.length - 1].active = true;
-
-    this.setState(
-      {
-        doRenderTable: false,
-        focusJurisdictionId: id,
-        tableCrumbs: nextCrumbs,
-      },
-      () => {
-        const planTableProps = this.getDrilldownPlanTableProps(this.state);
-        this.setState({
-          doRenderTable: true,
-          planTableProps,
-        });
-      }
-    );
-  }
   /** onDrilldownClick - function to update the drilldown breadcrumbs when drilling down into the hierarchy
    * @param id - the jurisidction_id of the Jurisdiction clicked
    */
@@ -635,200 +612,6 @@ class IrsPlan extends React.Component<
           this.setState({ planTableProps });
         }
       );
-    }
-  }
-
-  /** loadJurisdictionGeometries - utility to define and fetch any required Jurisdiction GeoJSON from OpenSRP */
-  private loadJurisdictionGeometries() {
-    // Get geoms for jurisdictionsToInclude
-    const {
-      childlessChildrenIds: ChildlessChildrenIds,
-      country,
-      filteredJurisdictionIds,
-    } = this.state;
-    const { jurisdictionsById } = this.props;
-
-    const doLoadAllGeojson = country && country.tilesets && !country.tilesets.length;
-    const doLoadOperationalGeometries =
-      !country ||
-      !country.tilesets ||
-      !country.tilesets.length ||
-      !country.tilesets
-        .map(t => t.jurisdictionType)
-        .includes(JurisdictionLevels[1] as JurisdictionTypes);
-
-    // Determine which Jurisdictions will need to be updated in state
-    const filteredJurisdictions = filteredJurisdictionIds.map(j => jurisdictionsById[j]);
-
-    const childlessChildren = ChildlessChildrenIds.map(j => jurisdictionsById[j]);
-
-    const loadedJurisdictionIds = childlessChildren
-      .filter(j => !!j.geojson)
-      .map(j => j.jurisdiction_id);
-    const jurisdictionIdsToLoad = ChildlessChildrenIds.filter(
-      j => !loadedJurisdictionIds.includes(j)
-    );
-
-    // Determine all parent_ids of childless children jurisdictions
-    const jurisdictionIdsToCall: string[] = doLoadAllGeojson
-      ? filteredJurisdictions.map(j => j.jurisdiction_id)
-      : [];
-
-    if (!doLoadAllGeojson && doLoadOperationalGeometries) {
-      for (const child of childlessChildren) {
-        if (
-          child.parent_id &&
-          child.parent_id.length &&
-          child.parent_id !== 'null' &&
-          !jurisdictionIdsToCall.includes(child.parent_id)
-        ) {
-          jurisdictionIdsToCall.push(child.parent_id);
-        }
-      }
-    }
-
-    // Build a list of OpenSRP API calls to make (fetch by parent_id to reduce number of calls)
-    if (jurisdictionIdsToCall.length) {
-      const promises = [];
-      for (const jurisdiction of jurisdictionIdsToCall) {
-        const endpoint = doLoadAllGeojson ? jurisdiction : OPENSRP_FIND_BY_PROPERTIES;
-        const params = { is_jurisdiction: true, return_geometry: true };
-        if (!doLoadAllGeojson) {
-          (params as any).properties_filter = `${OPENSRP_PARENT_ID}:${jurisdiction}`;
-        }
-        promises.push(
-          new Promise((resolve, reject) => {
-            OpenSrpLocationService.read(endpoint, params)
-              .then(jurisidction => resolve(jurisidction))
-              .catch(error => reject(error));
-          })
-        );
-      }
-
-      // Make all calls to OpenSRP API
-      Promise.all(promises).then((results: any[]) => {
-        const jurisdictions: Jurisdiction[] = [];
-        // Loop through all parent_id results
-        for (const Result of results) {
-          const result = Array.isArray(Result) ? [...Result] : [{ ...Result }];
-          // Loop through all children of parent
-          for (const geojson of result) {
-            // If the child geojson needs to be loaded into state, do so
-            if (doLoadAllGeojson || jurisdictionIdsToLoad.includes(geojson.id)) {
-              const J = jurisdictionsById[geojson.id];
-              if (J) {
-                const j: Jurisdiction = {
-                  ...J,
-                  geojson,
-                };
-                jurisdictions.push(j);
-              }
-            }
-          }
-        }
-        // Update the store with newly loaded jurisdictions with geojson
-        this.props.fetchJurisdictionsActionCreator(jurisdictions);
-      });
-    } else {
-      this.setState(
-        {
-          isBuildingGisidaProps: true,
-          isLoadingGeoms: false,
-        },
-        () => {
-          const gisidaWrapperProps = this.getGisidaWrapperProps();
-          this.setState({
-            gisidaWrapperProps,
-            isBuildingGisidaProps: false,
-          });
-        }
-      );
-    }
-  }
-
-  // Jurisdiction Selection Control (which jurisidcitions should be included in the plan)
-  /** onToggleJurisdictionSelection - toggles selection of clicked Jurisdiction and all decendants
-   * @param id - the jurisdiction_id of the Jurisdiction being toggled
-   */
-  private onToggleJurisdictionSelection(id: string) {
-    const { newPlan: NewPlan, filteredJurisdictionIds, country } = this.state;
-    const { jurisdictionsById } = this.props;
-
-    const filteredJurisdictions = filteredJurisdictionIds.map(j => jurisdictionsById[j]);
-    const filteredJurisdictionsById = keyBy(filteredJurisdictions, j => j.jurisdiction_id);
-    if (NewPlan && NewPlan.plan_jurisdictions_ids && filteredJurisdictions.length) {
-      const newPlanJurisdictionIds = [...NewPlan.plan_jurisdictions_ids];
-      const clickedFeatureJurisdiction = jurisdictionsById[id];
-      const doSelect = !newPlanJurisdictionIds.includes(id);
-      // define child jurisdictions of clicked jurisdiction
-      const jurisdictionIdsToToggle = this.getDecendantJurisdictionIds(
-        [id],
-        filteredJurisdictionsById
-      );
-
-      // loop through all child jurisdictions
-      for (const jurisdictionId of jurisdictionIdsToToggle) {
-        // if checked and not in plan_jurisdictions_ids, add it
-        if (doSelect && !newPlanJurisdictionIds.includes(jurisdictionId)) {
-          newPlanJurisdictionIds.push(jurisdictionId);
-          // if not checked and in plan_jurisdictions_ids, remove it
-        } else if (!doSelect && newPlanJurisdictionIds.includes(jurisdictionId)) {
-          newPlanJurisdictionIds.splice(newPlanJurisdictionIds.indexOf(jurisdictionId), 1);
-        }
-      }
-
-      const { parent_id } = clickedFeatureJurisdiction;
-      const isParentSelected = doSelect
-        ? true
-        : parent_id && this.getIsJurisdictionPartiallySelected(parent_id, newPlanJurisdictionIds);
-      if (parent_id && !isParentSelected) {
-        newPlanJurisdictionIds.splice(newPlanJurisdictionIds.indexOf(parent_id), 1);
-      } else if (parent_id && isParentSelected && !newPlanJurisdictionIds.includes(parent_id)) {
-        newPlanJurisdictionIds.push(parent_id);
-      }
-
-      // loop through all geographic_levels
-      const geoGraphicLevels = this.getGeographicLevelsFromJurisdictions(filteredJurisdictions);
-      if (country && country.tilesets) {
-        const Map = getGisidaMapById(MAP_ID);
-
-        for (let g = 1; g < geoGraphicLevels.length; g += 1) {
-          // Define stops per geographic_level
-          const jurisdictionsByLevelArray = filteredJurisdictions.filter(
-            j => j.geographic_level === g
-          );
-          const nextPaintStops = this.getJurisdictionSelectionStops(
-            newPlanJurisdictionIds,
-            jurisdictionsByLevelArray,
-            country.tilesets[g]
-          );
-          // Apply stops to the layer
-          if (Map && Map.getLayer(`${country.ADMN0_EN}-admin-${g}-fill`)) {
-            Map.setPaintProperty(
-              `${country.ADMN0_EN}-admin-${g}-fill`,
-              'fill-opacity',
-              nextPaintStops
-            );
-          }
-          if (Map && Map.getLayer(`${country.ADMN0_EN}-admin-${g}-jurisdiction-fill`)) {
-            Map.setPaintProperty(
-              `${country.ADMN0_EN}-admin-${g}-jurisdiction-fill`,
-              'fill-opacity',
-              nextPaintStops
-            );
-          }
-        }
-      }
-
-      // define newPlan with newPlanJurisdictionIds, set state
-      const newPlan: PlanRecord = {
-        ...NewPlan,
-        plan_jurisdictions_ids: [...newPlanJurisdictionIds],
-      };
-      this.setState({ newPlan }, () => {
-        const planTableProps = this.getDrilldownPlanTableProps(this.state);
-        this.setState({ planTableProps });
-      });
     }
   }
   /** onTableCheckboxChange - handler for drilldown table checkbox click which calls this.onToggleJurisdictionSelection */
@@ -939,8 +722,319 @@ class IrsPlan extends React.Component<
       });
     }
   }
+  /** onAdminFillClick - map click handler passed into Gisida for map drill down functionality
+   * @param e - Mapbox Event object
+   * @param country - JurisdictionsByCountry object containing basic hierarchy information per country
+   * @param geographicLevel - The hierarchical level of the feature being clicked
+   */
+  private onAdminFillClick(
+    e: EventData,
+    country: JurisdictionsByCountry,
+    adminLayerIds: string[],
+    jurisdictionLayerIds: string[]
+  ) {
+    const { point, target: Map, originalEvent } = e;
+    const features = Map.queryRenderedFeatures(point);
+    const feature = features[0];
 
-  // Getter methods
+    if (
+      !feature ||
+      !feature.layer ||
+      !feature.layer.id ||
+      (!adminLayerIds.includes(feature.layer.id) &&
+        !jurisdictionLayerIds.includes(feature.layer.id))
+    ) {
+      return false;
+    }
+    const isShiftClick = originalEvent.shiftKey;
+    const isJurisdictionLayer = jurisdictionLayerIds.includes(feature.layer.id);
+    const geographicLevel = [...adminLayerIds, ...jurisdictionLayerIds].indexOf(feature.layer.id);
+    const { filteredJurisdictionIds, childlessChildrenIds } = this.state;
+    const { jurisdictionsById } = this.props;
+    const filteredJurisdictions = filteredJurisdictionIds.map(j => jurisdictionsById[j]);
+
+    if (feature && country.tilesets) {
+      const { properties } = feature;
+
+      const doUseTilesets = !!country.tilesets[geographicLevel];
+      const clickedFeatureId =
+        doUseTilesets &&
+        (!isJurisdictionLayer ||
+          (isJurisdictionLayer &&
+            country.tilesets[geographicLevel].jurisdictionType === JurisdictionLevels[1]))
+          ? properties[country.tilesets[geographicLevel].idField]
+          : properties.jurisdiction_id;
+
+      const clickedFeatureJurisdiction = filteredJurisdictions.find(
+        j => j[JURISDICTION_ID] === clickedFeatureId
+      ) as Jurisdiction;
+
+      if (
+        clickedFeatureJurisdiction &&
+        !isShiftClick &&
+        !isJurisdictionLayer &&
+        !childlessChildrenIds.includes(clickedFeatureId)
+      ) {
+        // handle Drilldown Click
+        this.onDrilldownClick(clickedFeatureJurisdiction.jurisdiction_id);
+        this.onResetDrilldownTableHierarchy(clickedFeatureJurisdiction.jurisdiction_id);
+        this.updateMapOnHierarchyChange(feature, clickedFeatureJurisdiction);
+      } else if (isShiftClick && clickedFeatureJurisdiction) {
+        // Handle selection click
+        this.onToggleJurisdictionSelection(clickedFeatureJurisdiction.jurisdiction_id);
+      }
+    }
+  }
+  /** onDrillUpClick - map click handler passed into Gisida for resetting the drilldown hierarchy
+   * @param e - Mapbox Event object
+   * @param country - JurisdictionsByCountry object containing basic hierarchy information per country
+   */
+  private onDrillUpClick(
+    e: EventData,
+    country: JurisdictionsByCountry,
+    filteredJurisdictions: Jurisdiction[]
+  ) {
+    const { geographicLevel, clickedId, point, target: Map } = e;
+    const features = point ? Map.queryRenderedFeatures(point) : [];
+    const { ADMN0_EN, jurisdictionId, tilesets } = country;
+    const bounds = e.bounds || country.bounds;
+    if (!features.length && tilesets && bounds) {
+      if (tilesets.length) {
+        let t = geographicLevel || baseTilesetGeographicLevel;
+        for (t; t < tilesets.length; t += 1) {
+          const layerId = `${ADMN0_EN}-admin-${t}-fill`;
+          if (Map.getLayer(layerId)) {
+            // Reset layers to default visibility
+            if (t === 1 && geographicLevel !== t) {
+              const isLayerVisible = Map.getLayoutProperty(layerId, 'visibility') === 'visible';
+              if (!isLayerVisible) {
+                Map.setLayoutProperty(layerId, 'visibility', 'visible');
+              }
+            } else {
+              const layerFilter = Map.getFilter(layerId);
+              if (layerFilter) {
+                layerFilter[2] = t === geographicLevel + 1 ? clickedId : '';
+                Map.setFilter(layerId, layerFilter);
+              }
+            }
+          }
+          if (tilesets[t].jurisdictionType === JurisdictionLevels[1]) {
+            // Reset layer filter for operational Jurisdiction fill layer if defined in tileset
+            const jurisdictionsTilesetLayerId = `${country.ADMN0_EN}-admin-${t}-jurisdiction-fill`;
+            if (Map.getLayer(jurisdictionsTilesetLayerId)) {
+              const jurisdicitonLayerFilter = Map.getFilter(jurisdictionsTilesetLayerId);
+              if (jurisdicitonLayerFilter) {
+                jurisdicitonLayerFilter[2] = '';
+                Map.setFilter(jurisdictionsTilesetLayerId, jurisdicitonLayerFilter);
+              }
+            }
+          }
+        }
+
+        // Reset layer filter for operational Jurisdiction fill layer if not defined in tileset
+        const jurisdictionsGeojsonLayerId = `${country.ADMN0_EN}-admin-${t}-jurisdiction-fill`;
+        if (Map.getLayer(jurisdictionsGeojsonLayerId)) {
+          const jurisdicitonLayerFilter = Map.getFilter(jurisdictionsGeojsonLayerId);
+          if (jurisdicitonLayerFilter) {
+            jurisdicitonLayerFilter[2] = '';
+            Map.setFilter(jurisdictionsGeojsonLayerId, jurisdicitonLayerFilter);
+          }
+        }
+      }
+
+      // todo - make this dry
+      if (!tilesets.length) {
+        const geoGraphicLevels: number[] = [];
+        for (const j of filteredJurisdictions) {
+          const { geographic_level } = j;
+          if (
+            typeof geographic_level !== 'undefined' &&
+            geoGraphicLevels.indexOf(geographic_level) === -1
+          ) {
+            geoGraphicLevels.push(geographic_level);
+          }
+        }
+        geoGraphicLevels.sort();
+        for (const g of geoGraphicLevels) {
+          const layerId = `${country.ADMN0_EN}-admin-${g}-jurisdiction-fill`;
+          if (g !== 1 && Map.getLayer(layerId)) {
+            const layerFilter = Map.getFilter(layerId);
+            if (layerFilter) {
+              layerFilter[2] = '';
+              Map.setFilter(layerId, layerFilter);
+            } else {
+              Map.setFilter(layerId, ['==', 'parent_id', '']);
+            }
+          } else if (Map.getLayer(layerId)) {
+            // Reset layers to default visibility
+            const isLayerVisible = Map.getLayoutProperty(layerId, 'visibility') === 'visible';
+            if (!isLayerVisible) {
+              store.dispatch(Actions.toggleLayer(MAP_ID, layerId));
+            }
+            if (Map.getFilter(layerId)) {
+              Map.setFilter(layerId, null);
+            }
+          }
+        }
+      }
+
+      setGisidaMapPosition({ bounds });
+      this.onResetDrilldownTableHierarchy(jurisdictionId.length ? jurisdictionId : null);
+    }
+  }
+
+  /************************
+   * Hierarchy Helpers
+   ************************
+   */
+  /** onResetDrilldownTableHierarchy - function for resetting drilldown table hierachy baseline
+   * @param Id - the id of the highest level parent_idto show in the table, or null to reset completely
+   */
+  private onResetDrilldownTableHierarchy(Id: string | null) {
+    const id = Id !== 'null' ? Id : null;
+    const { tableCrumbs } = this.state;
+    const nextActiveCrumbIndex = tableCrumbs.map(c => c.id).indexOf(id) + 1;
+    const nextCrumbs = tableCrumbs.map(c => ({ ...c, active: false }));
+    nextCrumbs.splice(nextActiveCrumbIndex);
+    nextCrumbs[nextCrumbs.length - 1].active = true;
+
+    this.setState(
+      {
+        doRenderTable: false,
+        focusJurisdictionId: id,
+        tableCrumbs: nextCrumbs,
+      },
+      () => {
+        const planTableProps = this.getDrilldownPlanTableProps(this.state);
+        this.setState({
+          doRenderTable: true,
+          planTableProps,
+        });
+      }
+    );
+  }
+  /** updateMapOnHierarchyChange - updates the Gisida Layers' filters and updates the position of the map
+   * @param {MapboxGeoJSONFeature} feature - the mapbox feature which was clicked
+   * @param {Jurisdiction} clickedFeatureJurisdiction - the Jurisdiction coorisponding to the clicke feature
+   */
+  private updateMapOnHierarchyChange(
+    feature: MapboxGeoJSONFeature,
+    clickedFeatureJurisdiction: Jurisdiction
+  ) {
+    const { country } = this.state;
+    if (country) {
+      const geographicLevel = clickedFeatureJurisdiction.geographic_level || 1;
+      const Map = getGisidaMapById(MAP_ID);
+      const { layer, properties, geometry } = feature;
+
+      const { tilesets } = country;
+      const layerIds = Map && (Map as any).style && Object.keys((Map as any).style.sourceCaches);
+
+      if (Map && tilesets && properties && layerIds) {
+        const doUseTilesets = !!tilesets[geographicLevel];
+        if (geographicLevel === baseTilesetGeographicLevel) {
+          if (Map.getLayer(layer.id)) {
+            Map.setLayoutProperty(layer.id, 'visibility', 'none');
+          }
+        } else {
+          const layerFilter = Map.getFilter(layer.id);
+          if (layerFilter) {
+            layerFilter[2] = '';
+            Map.setFilter(layer.id, layerFilter);
+          } else {
+            Map.setFilter(layer.id, ['==', PARENTID, clickedFeatureJurisdiction.jurisdiction_id]);
+          }
+        }
+
+        const adminLayerIds = layerIds.filter(l => l.includes('jurisdiction-fill')).sort();
+        const nextAdminTileset = tilesets[geographicLevel + 1];
+        const nextAdminIdIndex = adminLayerIds.indexOf(
+          `${country.ADMN0_EN}-admin-${geographicLevel + 1}-jurisdiction-fill`
+        );
+        const nextAdminLayerId = nextAdminIdIndex !== -1 && adminLayerIds[nextAdminIdIndex];
+        // check for next Admin fill layer
+        if ((tilesets.length && nextAdminTileset) || (!tilesets.length && nextAdminLayerId)) {
+          // zoom to clicked admin level
+          const newBounds: LngLatBoundsLike = GeojsonExtent(geometry);
+          setGisidaMapPosition({ bounds: newBounds });
+          // toggle next admin fill layer
+          const nextLayerId =
+            nextAdminLayerId || `${country.ADMN0_EN}-admin-${geographicLevel + 1}-fill`;
+          // update layer filter of next admin level fill layer
+          if (Map.getLayer(nextLayerId)) {
+            const nextLayerFilter = Map.getFilter(nextLayerId);
+            if (nextLayerFilter && tilesets && tilesets[geographicLevel]) {
+              nextLayerFilter[2] = properties[tilesets[geographicLevel].idField];
+              Map.setFilter(nextLayerId, nextLayerFilter);
+            } else if (nextLayerFilter) {
+              nextLayerFilter[2] = properties.jurisdiction_id;
+              Map.setFilter(nextLayerId, nextLayerFilter);
+            } else {
+              Map.setFilter(nextLayerId, ['==', PARENTID, properties.jurisdiction_id]);
+            }
+          }
+        } else {
+          const { jurisdictionsById } = this.props;
+          const { childlessChildrenIds, filteredJurisdictionIds } = this.state;
+          const filteredJurisdictions = filteredJurisdictionIds.map(j => jurisdictionsById[j]);
+          const filteredJurisdictionsById = keyBy(filteredJurisdictions, j => j.jurisdiction_id);
+
+          const decendantLayerId = `${country.ADMN0_EN}-admin-${geographicLevel +
+            1}-jurisdiction-fill`;
+          if (!doUseTilesets) {
+            for (const adminLayer of adminLayerIds) {
+              if (Map.getLayer(adminLayer)) {
+                const layerFilter = Map.getFilter(adminLayer);
+                if (layerFilter) {
+                  layerFilter[2] = '';
+                  Map.setFilter(adminLayer, layerFilter);
+                } else {
+                  Map.setFilter(adminLayer, ['==', PARENTID, '']);
+                }
+              }
+            }
+          }
+
+          // define childless decendant jurisdictions
+          const decendantChildlessChildrenIds = this.getDecendantJurisdictionIds(
+            [clickedFeatureJurisdiction.jurisdiction_id],
+            filteredJurisdictionsById,
+            false
+          );
+          // update jurisdictions layer filter
+          if (Map.getLayer(decendantLayerId)) {
+            const nextLayerFilter = Map.getFilter(decendantLayerId);
+            if (nextLayerFilter) {
+              nextLayerFilter[2] = clickedFeatureJurisdiction.jurisdiction_id;
+              Map.setFilter(decendantLayerId, nextLayerFilter);
+            }
+          }
+
+          // define geojson of childless decendant jurisdictions
+          const decendantChildlessFeatures = filteredJurisdictions
+            .filter(
+              j =>
+                decendantChildlessChildrenIds.includes(j.jurisdiction_id) &&
+                childlessChildrenIds.includes(j.jurisdiction_id)
+            )
+            .map(j => j.geojson);
+          // zoom to extends of childless decendant jurisdiction geometries
+          const newBounds: LngLatBoundsLike = GeojsonExtent({
+            features: decendantChildlessFeatures,
+            type: 'FeatureCollection',
+          });
+          if (newBounds) {
+            setGisidaMapPosition({ bounds: newBounds });
+          }
+        }
+      }
+    }
+  }
+
+  /************************
+   * Hierarchy Getters
+   ************************
+   */
   /** getChildlessChildrenIds - hierarchy util to get all childless decendants of certain Jurisdictions
    * @param filteredJurisdictions - list of Jurisdictions of which to find the childless decendants
    * @returns list of jurisdiction_ids of childless decendants
@@ -1044,8 +1138,114 @@ class IrsPlan extends React.Component<
 
     return Array.from(new Set(ancestorIds));
   }
+  /** getGeographicLevelsFromJurisdictions - utility to derive all geographic levels
+   * @param filteredJurisdictions - array of Jurisdictions relevant to the country
+   * @returns array of geographic levels as numbers
+   */
+  private getGeographicLevelsFromJurisdictions(filteredJurisdictions: Jurisdiction[]): number[] {
+    const geoGraphicLevels: number[] = [];
+    for (const j of filteredJurisdictions) {
+      const { geographic_level } = j;
+      if (
+        typeof geographic_level !== 'undefined' &&
+        geoGraphicLevels.indexOf(geographic_level) === -1
+      ) {
+        geoGraphicLevels.push(geographic_level);
+      }
+    }
+    geoGraphicLevels.sort();
+    return geoGraphicLevels;
+  }
 
-  /** utility for getting opacity stops based on selection
+  /************************
+   * Jurisdiction Selection
+   ************************
+   */
+  /** onToggleJurisdictionSelection - toggles selection of clicked Jurisdiction and all decendants
+   * @param id - the jurisdiction_id of the Jurisdiction being toggled
+   */
+  private onToggleJurisdictionSelection(id: string) {
+    const { newPlan: NewPlan, filteredJurisdictionIds, country } = this.state;
+    const { jurisdictionsById } = this.props;
+
+    const filteredJurisdictions = filteredJurisdictionIds.map(j => jurisdictionsById[j]);
+    const filteredJurisdictionsById = keyBy(filteredJurisdictions, j => j.jurisdiction_id);
+    if (NewPlan && NewPlan.plan_jurisdictions_ids && filteredJurisdictions.length) {
+      const newPlanJurisdictionIds = [...NewPlan.plan_jurisdictions_ids];
+      const clickedFeatureJurisdiction = jurisdictionsById[id];
+      const doSelect = !newPlanJurisdictionIds.includes(id);
+      // define child jurisdictions of clicked jurisdiction
+      const jurisdictionIdsToToggle = this.getDecendantJurisdictionIds(
+        [id],
+        filteredJurisdictionsById
+      );
+
+      // loop through all child jurisdictions
+      for (const jurisdictionId of jurisdictionIdsToToggle) {
+        // if checked and not in plan_jurisdictions_ids, add it
+        if (doSelect && !newPlanJurisdictionIds.includes(jurisdictionId)) {
+          newPlanJurisdictionIds.push(jurisdictionId);
+          // if not checked and in plan_jurisdictions_ids, remove it
+        } else if (!doSelect && newPlanJurisdictionIds.includes(jurisdictionId)) {
+          newPlanJurisdictionIds.splice(newPlanJurisdictionIds.indexOf(jurisdictionId), 1);
+        }
+      }
+
+      const { parent_id } = clickedFeatureJurisdiction;
+      const isParentSelected = doSelect
+        ? true
+        : parent_id && this.getIsJurisdictionPartiallySelected(parent_id, newPlanJurisdictionIds);
+      if (parent_id && !isParentSelected) {
+        newPlanJurisdictionIds.splice(newPlanJurisdictionIds.indexOf(parent_id), 1);
+      } else if (parent_id && isParentSelected && !newPlanJurisdictionIds.includes(parent_id)) {
+        newPlanJurisdictionIds.push(parent_id);
+      }
+
+      // loop through all geographic_levels
+      const geoGraphicLevels = this.getGeographicLevelsFromJurisdictions(filteredJurisdictions);
+      if (country && country.tilesets) {
+        const Map = getGisidaMapById(MAP_ID);
+
+        for (let g = 1; g < geoGraphicLevels.length; g += 1) {
+          // Define stops per geographic_level
+          const jurisdictionsByLevelArray = filteredJurisdictions.filter(
+            j => j.geographic_level === g
+          );
+          const nextPaintStops = this.getJurisdictionSelectionStops(
+            newPlanJurisdictionIds,
+            jurisdictionsByLevelArray,
+            country.tilesets[g]
+          );
+          // Apply stops to the layer
+          if (Map && Map.getLayer(`${country.ADMN0_EN}-admin-${g}-fill`)) {
+            Map.setPaintProperty(
+              `${country.ADMN0_EN}-admin-${g}-fill`,
+              'fill-opacity',
+              nextPaintStops
+            );
+          }
+          if (Map && Map.getLayer(`${country.ADMN0_EN}-admin-${g}-jurisdiction-fill`)) {
+            Map.setPaintProperty(
+              `${country.ADMN0_EN}-admin-${g}-jurisdiction-fill`,
+              'fill-opacity',
+              nextPaintStops
+            );
+          }
+        }
+      }
+
+      // define newPlan with newPlanJurisdictionIds, set state
+      const newPlan: PlanRecord = {
+        ...NewPlan,
+        plan_jurisdictions_ids: [...newPlanJurisdictionIds],
+      };
+      this.setState({ newPlan }, () => {
+        const planTableProps = this.getDrilldownPlanTableProps(this.state);
+        this.setState({ planTableProps });
+      });
+    }
+  }
+  /** getJurisdictionSelectionStops - utility for getting opacity stops based on selection
    * @param {string[]} selectedIds - Ids of all selected Juristictions
    * @param {Jurisdiction[]} jurisdictions - all Jurisdictions filtered by geographic level
    * @param {FlexObject | undefined} tileset - the coorisponding tileset
@@ -1086,26 +1286,42 @@ class IrsPlan extends React.Component<
     }
     return (selectionStyle.stops.length && selectionStyle) || deselectedJurisdictionOpacity;
   }
-
-  /** getGeographicLevelsFromJurisdictions - utility to derive all geographic levels
-   * @param filteredJurisdictions - array of Jurisdictions relevant to the country
-   * @returns array of geographic levels as numbers
+  /** util to check if Jurisdiction has any selected decendants
+   * @param id - the jurisdiction_id of the Jurisdiction being checked
+   * @returns boolean
    */
-  private getGeographicLevelsFromJurisdictions(filteredJurisdictions: Jurisdiction[]): number[] {
-    const geoGraphicLevels: number[] = [];
-    for (const j of filteredJurisdictions) {
-      const { geographic_level } = j;
-      if (
-        typeof geographic_level !== 'undefined' &&
-        geoGraphicLevels.indexOf(geographic_level) === -1
-      ) {
-        geoGraphicLevels.push(geographic_level);
+  private getIsJurisdictionPartiallySelected(id: string | null, selectedIds?: string[]): boolean {
+    const { newPlan, filteredJurisdictionIds } = this.state;
+    const { jurisdictionsById } = this.props;
+    const filteredJurisdictions = filteredJurisdictionIds
+      .map(j => jurisdictionsById[j])
+      .filter(j => !!j);
+    const planJurisdictionIds =
+      selectedIds ||
+      (newPlan && newPlan.plan_jurisdictions_ids
+        ? [...newPlan.plan_jurisdictions_ids]
+        : [...filteredJurisdictionIds]);
+
+    if (id) {
+      // check if drilled down Jurisdiction is at least partially selected
+      const decendants: Jurisdiction[] = this.getDecendantJurisdictionIds([id], jurisdictionsById)
+        .map(j => jurisdictionsById[j])
+        .filter(j => !!j);
+      const childlessDecendants: string[] = this.getChildlessChildrenIds(decendants);
+      for (const child of childlessDecendants) {
+        if (planJurisdictionIds.includes(child)) {
+          return true;
+        }
       }
     }
-    geoGraphicLevels.sort();
-    return geoGraphicLevels;
+
+    return planJurisdictionIds.length === filteredJurisdictions.length;
   }
 
+  /************************
+   * Component Prop Getters
+   ************************
+   */
   /** getGisidaWrapperProps - GisidaWrapper prop builder building out layers and handlers for Gisida */
   private getGisidaWrapperProps(): GisidaProps | null {
     const { country, isLoadingGeoms, filteredJurisdictionIds, newPlan } = this.state;
@@ -1395,287 +1611,6 @@ class IrsPlan extends React.Component<
     };
     return gisidaWrapperProps;
   }
-
-  /** onAdminFillClick - map click handler passed into Gisida for map drill down functionality
-   * @param e - Mapbox Event object
-   * @param country - JurisdictionsByCountry object containing basic hierarchy information per country
-   * @param geographicLevel - The hierarchical level of the feature being clicked
-   */
-  private onAdminFillClick(
-    e: EventData,
-    country: JurisdictionsByCountry,
-    adminLayerIds: string[],
-    jurisdictionLayerIds: string[]
-  ) {
-    const { point, target: Map, originalEvent } = e;
-    const features = Map.queryRenderedFeatures(point);
-    const feature = features[0];
-
-    if (
-      !feature ||
-      !feature.layer ||
-      !feature.layer.id ||
-      (!adminLayerIds.includes(feature.layer.id) &&
-        !jurisdictionLayerIds.includes(feature.layer.id))
-    ) {
-      return false;
-    }
-    const isShiftClick = originalEvent.shiftKey;
-    const isJurisdictionLayer = jurisdictionLayerIds.includes(feature.layer.id);
-    const geographicLevel = [...adminLayerIds, ...jurisdictionLayerIds].indexOf(feature.layer.id);
-    const { filteredJurisdictionIds, childlessChildrenIds } = this.state;
-    const { jurisdictionsById } = this.props;
-    const filteredJurisdictions = filteredJurisdictionIds.map(j => jurisdictionsById[j]);
-
-    if (feature && country.tilesets) {
-      const { properties } = feature;
-
-      const doUseTilesets = !!country.tilesets[geographicLevel];
-      const clickedFeatureId =
-        doUseTilesets &&
-        (!isJurisdictionLayer ||
-          (isJurisdictionLayer &&
-            country.tilesets[geographicLevel].jurisdictionType === JurisdictionLevels[1]))
-          ? properties[country.tilesets[geographicLevel].idField]
-          : properties.jurisdiction_id;
-
-      const clickedFeatureJurisdiction = filteredJurisdictions.find(
-        j => j[JURISDICTION_ID] === clickedFeatureId
-      ) as Jurisdiction;
-
-      if (
-        clickedFeatureJurisdiction &&
-        !isShiftClick &&
-        !isJurisdictionLayer &&
-        !childlessChildrenIds.includes(clickedFeatureId)
-      ) {
-        // handle Drilldown Click
-        this.onDrilldownClick(clickedFeatureJurisdiction.jurisdiction_id);
-        this.onResetDrilldownTableHierarchy(clickedFeatureJurisdiction.jurisdiction_id);
-        this.updateMapOnHierarchyChange(feature, clickedFeatureJurisdiction);
-      } else if (isShiftClick && clickedFeatureJurisdiction) {
-        // Handle selection click
-        this.onToggleJurisdictionSelection(clickedFeatureJurisdiction.jurisdiction_id);
-      }
-    }
-  }
-
-  /** updates the Gisida Layers' filters and updates the position of the map
-   * @param {MapboxGeoJSONFeature} feature - the mapbox feature which was clicked
-   * @param {Jurisdiction} clickedFeatureJurisdiction - the Jurisdiction coorisponding to the clicke feature
-   */
-  private updateMapOnHierarchyChange(
-    feature: MapboxGeoJSONFeature,
-    clickedFeatureJurisdiction: Jurisdiction
-  ) {
-    const { country } = this.state;
-    if (country) {
-      const geographicLevel = clickedFeatureJurisdiction.geographic_level || 1;
-      const Map = getGisidaMapById(MAP_ID);
-      const { layer, properties, geometry } = feature;
-
-      const { tilesets } = country;
-      const layerIds = Map && (Map as any).style && Object.keys((Map as any).style.sourceCaches);
-
-      if (Map && tilesets && properties && layerIds) {
-        const doUseTilesets = !!tilesets[geographicLevel];
-        if (geographicLevel === baseTilesetGeographicLevel) {
-          if (Map.getLayer(layer.id)) {
-            Map.setLayoutProperty(layer.id, 'visibility', 'none');
-          }
-        } else {
-          const layerFilter = Map.getFilter(layer.id);
-          if (layerFilter) {
-            layerFilter[2] = '';
-            Map.setFilter(layer.id, layerFilter);
-          } else {
-            Map.setFilter(layer.id, ['==', PARENTID, clickedFeatureJurisdiction.jurisdiction_id]);
-          }
-        }
-
-        const adminLayerIds = layerIds.filter(l => l.includes('jurisdiction-fill')).sort();
-        const nextAdminTileset = tilesets[geographicLevel + 1];
-        const nextAdminIdIndex = adminLayerIds.indexOf(
-          `${country.ADMN0_EN}-admin-${geographicLevel + 1}-jurisdiction-fill`
-        );
-        const nextAdminLayerId = nextAdminIdIndex !== -1 && adminLayerIds[nextAdminIdIndex];
-        // check for next Admin fill layer
-        if ((tilesets.length && nextAdminTileset) || (!tilesets.length && nextAdminLayerId)) {
-          // zoom to clicked admin level
-          const newBounds: LngLatBoundsLike = GeojsonExtent(geometry);
-          setGisidaMapPosition({ bounds: newBounds });
-          // toggle next admin fill layer
-          const nextLayerId =
-            nextAdminLayerId || `${country.ADMN0_EN}-admin-${geographicLevel + 1}-fill`;
-          // update layer filter of next admin level fill layer
-          if (Map.getLayer(nextLayerId)) {
-            const nextLayerFilter = Map.getFilter(nextLayerId);
-            if (nextLayerFilter && tilesets && tilesets[geographicLevel]) {
-              nextLayerFilter[2] = properties[tilesets[geographicLevel].idField];
-              Map.setFilter(nextLayerId, nextLayerFilter);
-            } else if (nextLayerFilter) {
-              nextLayerFilter[2] = properties.jurisdiction_id;
-              Map.setFilter(nextLayerId, nextLayerFilter);
-            } else {
-              Map.setFilter(nextLayerId, ['==', PARENTID, properties.jurisdiction_id]);
-            }
-          }
-        } else {
-          const { jurisdictionsById } = this.props;
-          const { childlessChildrenIds, filteredJurisdictionIds } = this.state;
-          const filteredJurisdictions = filteredJurisdictionIds.map(j => jurisdictionsById[j]);
-          const filteredJurisdictionsById = keyBy(filteredJurisdictions, j => j.jurisdiction_id);
-
-          const decendantLayerId = `${country.ADMN0_EN}-admin-${geographicLevel +
-            1}-jurisdiction-fill`;
-          if (!doUseTilesets) {
-            for (const adminLayer of adminLayerIds) {
-              if (Map.getLayer(adminLayer)) {
-                const layerFilter = Map.getFilter(adminLayer);
-                if (layerFilter) {
-                  layerFilter[2] = '';
-                  Map.setFilter(adminLayer, layerFilter);
-                } else {
-                  Map.setFilter(adminLayer, ['==', PARENTID, '']);
-                }
-              }
-            }
-          }
-
-          // define childless decendant jurisdictions
-          const decendantChildlessChildrenIds = this.getDecendantJurisdictionIds(
-            [clickedFeatureJurisdiction.jurisdiction_id],
-            filteredJurisdictionsById,
-            false
-          );
-          // update jurisdictions layer filter
-          if (Map.getLayer(decendantLayerId)) {
-            const nextLayerFilter = Map.getFilter(decendantLayerId);
-            if (nextLayerFilter) {
-              nextLayerFilter[2] = clickedFeatureJurisdiction.jurisdiction_id;
-              Map.setFilter(decendantLayerId, nextLayerFilter);
-            }
-          }
-
-          // define geojson of childless decendant jurisdictions
-          const decendantChildlessFeatures = filteredJurisdictions
-            .filter(
-              j =>
-                decendantChildlessChildrenIds.includes(j.jurisdiction_id) &&
-                childlessChildrenIds.includes(j.jurisdiction_id)
-            )
-            .map(j => j.geojson);
-          // zoom to extends of childless decendant jurisdiction geometries
-          const newBounds: LngLatBoundsLike = GeojsonExtent({
-            features: decendantChildlessFeatures,
-            type: 'FeatureCollection',
-          });
-          if (newBounds) {
-            setGisidaMapPosition({ bounds: newBounds });
-          }
-        }
-      }
-    }
-  }
-
-  /** onDrillUpClick - map click handler passed into Gisida for resetting the drilldown hierarchy
-   * @param e - Mapbox Event object
-   * @param country - JurisdictionsByCountry object containing basic hierarchy information per country
-   */
-  private onDrillUpClick(
-    e: EventData,
-    country: JurisdictionsByCountry,
-    filteredJurisdictions: Jurisdiction[]
-  ) {
-    const { geographicLevel, clickedId, point, target: Map } = e;
-    const features = point ? Map.queryRenderedFeatures(point) : [];
-    const { ADMN0_EN, jurisdictionId, tilesets } = country;
-    const bounds = e.bounds || country.bounds;
-    if (!features.length && tilesets && bounds) {
-      if (tilesets.length) {
-        let t = geographicLevel || baseTilesetGeographicLevel;
-        for (t; t < tilesets.length; t += 1) {
-          const layerId = `${ADMN0_EN}-admin-${t}-fill`;
-          if (Map.getLayer(layerId)) {
-            // Reset layers to default visibility
-            if (t === 1 && geographicLevel !== t) {
-              const isLayerVisible = Map.getLayoutProperty(layerId, 'visibility') === 'visible';
-              if (!isLayerVisible) {
-                Map.setLayoutProperty(layerId, 'visibility', 'visible');
-              }
-            } else {
-              const layerFilter = Map.getFilter(layerId);
-              if (layerFilter) {
-                layerFilter[2] = t === geographicLevel + 1 ? clickedId : '';
-                Map.setFilter(layerId, layerFilter);
-              }
-            }
-          }
-          if (tilesets[t].jurisdictionType === JurisdictionLevels[1]) {
-            // Reset layer filter for operational Jurisdiction fill layer if defined in tileset
-            const jurisdictionsTilesetLayerId = `${country.ADMN0_EN}-admin-${t}-jurisdiction-fill`;
-            if (Map.getLayer(jurisdictionsTilesetLayerId)) {
-              const jurisdicitonLayerFilter = Map.getFilter(jurisdictionsTilesetLayerId);
-              if (jurisdicitonLayerFilter) {
-                jurisdicitonLayerFilter[2] = '';
-                Map.setFilter(jurisdictionsTilesetLayerId, jurisdicitonLayerFilter);
-              }
-            }
-          }
-        }
-
-        // Reset layer filter for operational Jurisdiction fill layer if not defined in tileset
-        const jurisdictionsGeojsonLayerId = `${country.ADMN0_EN}-admin-${t}-jurisdiction-fill`;
-        if (Map.getLayer(jurisdictionsGeojsonLayerId)) {
-          const jurisdicitonLayerFilter = Map.getFilter(jurisdictionsGeojsonLayerId);
-          if (jurisdicitonLayerFilter) {
-            jurisdicitonLayerFilter[2] = '';
-            Map.setFilter(jurisdictionsGeojsonLayerId, jurisdicitonLayerFilter);
-          }
-        }
-      }
-
-      // todo - make this dry
-      if (!tilesets.length) {
-        const geoGraphicLevels: number[] = [];
-        for (const j of filteredJurisdictions) {
-          const { geographic_level } = j;
-          if (
-            typeof geographic_level !== 'undefined' &&
-            geoGraphicLevels.indexOf(geographic_level) === -1
-          ) {
-            geoGraphicLevels.push(geographic_level);
-          }
-        }
-        geoGraphicLevels.sort();
-        for (const g of geoGraphicLevels) {
-          const layerId = `${country.ADMN0_EN}-admin-${g}-jurisdiction-fill`;
-          if (g !== 1 && Map.getLayer(layerId)) {
-            const layerFilter = Map.getFilter(layerId);
-            if (layerFilter) {
-              layerFilter[2] = '';
-              Map.setFilter(layerId, layerFilter);
-            } else {
-              Map.setFilter(layerId, ['==', 'parent_id', '']);
-            }
-          } else if (Map.getLayer(layerId)) {
-            // Reset layers to default visibility
-            const isLayerVisible = Map.getLayoutProperty(layerId, 'visibility') === 'visible';
-            if (!isLayerVisible) {
-              store.dispatch(Actions.toggleLayer(MAP_ID, layerId));
-            }
-            if (Map.getFilter(layerId)) {
-              Map.setFilter(layerId, null);
-            }
-          }
-        }
-      }
-
-      setGisidaMapPosition({ bounds });
-      this.onResetDrilldownTableHierarchy(jurisdictionId.length ? jurisdictionId : null);
-    }
-  }
-
   /** getDrilldownPlanTableProps - getter for hierarchical DrilldownTable props
    * @param props - component props
    * @returns tableProps|null - compatible object for DrillDownTable props
@@ -1822,39 +1757,6 @@ class IrsPlan extends React.Component<
     };
     return tableProps;
   }
-
-  /** util to check if Jurisdiction has any selected decendants
-   * @param id - the jurisdiction_id of the Jurisdiction being checked
-   * @returns boolean
-   */
-  private getIsJurisdictionPartiallySelected(id: string | null, selectedIds?: string[]): boolean {
-    const { newPlan, filteredJurisdictionIds } = this.state;
-    const { jurisdictionsById } = this.props;
-    const filteredJurisdictions = filteredJurisdictionIds
-      .map(j => jurisdictionsById[j])
-      .filter(j => !!j);
-    const planJurisdictionIds =
-      selectedIds ||
-      (newPlan && newPlan.plan_jurisdictions_ids
-        ? [...newPlan.plan_jurisdictions_ids]
-        : [...filteredJurisdictionIds]);
-
-    if (id) {
-      // check if drilled down Jurisdiction is at least partially selected
-      const decendants: Jurisdiction[] = this.getDecendantJurisdictionIds([id], jurisdictionsById)
-        .map(j => jurisdictionsById[j])
-        .filter(j => !!j);
-      const childlessDecendants: string[] = this.getChildlessChildrenIds(decendants);
-      for (const child of childlessDecendants) {
-        if (planJurisdictionIds.includes(child)) {
-          return true;
-        }
-      }
-    }
-
-    return planJurisdictionIds.length === filteredJurisdictions.length;
-  }
-
   /** getBreadCrumbProps - get properties for HeaderBreadcrumbs component
    * @param props - component props
    * @param pageLabel - string for the current page lable
@@ -1882,6 +1784,117 @@ class IrsPlan extends React.Component<
     return breadCrumbProps;
   }
 
+  /************************
+   * Service Handlers
+   ************************
+   */
+  /** loadJurisdictionGeometries - utility to define and fetch any required Jurisdiction GeoJSON from OpenSRP */
+  private loadJurisdictionGeometries() {
+    // Get geoms for jurisdictionsToInclude
+    const {
+      childlessChildrenIds: ChildlessChildrenIds,
+      country,
+      filteredJurisdictionIds,
+    } = this.state;
+    const { jurisdictionsById } = this.props;
+
+    const doLoadAllGeojson = country && country.tilesets && !country.tilesets.length;
+    const doLoadOperationalGeometries =
+      !country ||
+      !country.tilesets ||
+      !country.tilesets.length ||
+      !country.tilesets
+        .map(t => t.jurisdictionType)
+        .includes(JurisdictionLevels[1] as JurisdictionTypes);
+
+    // Determine which Jurisdictions will need to be updated in state
+    const filteredJurisdictions = filteredJurisdictionIds.map(j => jurisdictionsById[j]);
+
+    const childlessChildren = ChildlessChildrenIds.map(j => jurisdictionsById[j]);
+
+    const loadedJurisdictionIds = childlessChildren
+      .filter(j => !!j.geojson)
+      .map(j => j.jurisdiction_id);
+    const jurisdictionIdsToLoad = ChildlessChildrenIds.filter(
+      j => !loadedJurisdictionIds.includes(j)
+    );
+
+    // Determine all parent_ids of childless children jurisdictions
+    const jurisdictionIdsToCall: string[] = doLoadAllGeojson
+      ? filteredJurisdictions.map(j => j.jurisdiction_id)
+      : [];
+
+    if (!doLoadAllGeojson && doLoadOperationalGeometries) {
+      for (const child of childlessChildren) {
+        if (
+          child.parent_id &&
+          child.parent_id.length &&
+          child.parent_id !== 'null' &&
+          !jurisdictionIdsToCall.includes(child.parent_id)
+        ) {
+          jurisdictionIdsToCall.push(child.parent_id);
+        }
+      }
+    }
+
+    // Build a list of OpenSRP API calls to make (fetch by parent_id to reduce number of calls)
+    if (jurisdictionIdsToCall.length) {
+      const promises = [];
+      for (const jurisdiction of jurisdictionIdsToCall) {
+        const endpoint = doLoadAllGeojson ? jurisdiction : OPENSRP_FIND_BY_PROPERTIES;
+        const params = { is_jurisdiction: true, return_geometry: true };
+        if (!doLoadAllGeojson) {
+          (params as any).properties_filter = `${OPENSRP_PARENT_ID}:${jurisdiction}`;
+        }
+        promises.push(
+          new Promise((resolve, reject) => {
+            OpenSrpLocationService.read(endpoint, params)
+              .then(jurisidction => resolve(jurisidction))
+              .catch(error => reject(error));
+          })
+        );
+      }
+
+      // Make all calls to OpenSRP API
+      Promise.all(promises).then((results: any[]) => {
+        const jurisdictions: Jurisdiction[] = [];
+        // Loop through all parent_id results
+        for (const Result of results) {
+          const result = Array.isArray(Result) ? [...Result] : [{ ...Result }];
+          // Loop through all children of parent
+          for (const geojson of result) {
+            // If the child geojson needs to be loaded into state, do so
+            if (doLoadAllGeojson || jurisdictionIdsToLoad.includes(geojson.id)) {
+              const J = jurisdictionsById[geojson.id];
+              if (J) {
+                const j: Jurisdiction = {
+                  ...J,
+                  geojson,
+                };
+                jurisdictions.push(j);
+              }
+            }
+          }
+        }
+        // Update the store with newly loaded jurisdictions with geojson
+        this.props.fetchJurisdictionsActionCreator(jurisdictions);
+      });
+    } else {
+      this.setState(
+        {
+          isBuildingGisidaProps: true,
+          isLoadingGeoms: false,
+        },
+        () => {
+          const gisidaWrapperProps = this.getGisidaWrapperProps();
+          this.setState({
+            gisidaWrapperProps,
+            isBuildingGisidaProps: false,
+          });
+        }
+      );
+    }
+  }
   /** onSavePlanButtonClick - extracts PlanPayload from newPlan and PUSHs or PUTs to OpenSRP
    * @param e - MouseEvent
    * @param isFinal - determines if the Plan should be saved as a draft or as a finalized plan
