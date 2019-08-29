@@ -4,7 +4,7 @@ import { Redirect } from 'react-router';
 import { Button, Label } from 'reactstrap';
 import { FormGroup } from 'reactstrap';
 import * as Yup from 'yup';
-import { OPENSRP_ORGANIZATION_ENDPOINT, REQUIRED, SAVING } from '../../../constants';
+import { OPENSRP_ORGANIZATION_ENDPOINT, REQUIRED, SAVING, TEAM_LIST_URL } from '../../../constants';
 import { OpenSRPService } from '../../../services/opensrp';
 
 /** yup validation schema for teams Form input */
@@ -33,30 +33,6 @@ const defaultInitialValues: TeamFormFields = {
   name: '',
 };
 
-/** makes call to opensrpService to either create or edit a data object
- * from inside formik.
- */
-// export const AddOrModify(editMode: boolean, payload: any, setSubmitting: any, setIfDoneWorkingOnForm: any, setGlobalError: any): void{
-//     const defaultFunction = (...args: any) => {};
-//     // might or might not need to call hooks
-//     const apiService = new OpenSRPService(OPENSRP_ORGANIZATION_ENDPOINT);
-//     if(editMode){
-//         apiService.update(payload).then(() => {
-//             setSubmitting(false);
-//             setIfDoneWorkingOnForm(true);
-//         }).catch((e: Error) => {
-//             setGlobalError(e.message)
-//         });
-//     }else{
-//         apiService.create(payload).then(() => {
-//             setSubmitting(false);
-//             setIfDoneWorkingOnForm(true);
-//         }).catch((e: Error) => {
-//             setGlobalError(e.message)
-//         });
-//     }
-// }
-
 // TODO - need to figure out how after creating a new team its saved to store
 /** Team form component */
 const TeamForm = (props: TeamFormProps) => {
@@ -64,6 +40,7 @@ const TeamForm = (props: TeamFormProps) => {
   const [ifDoneHere, setifDoneHere] = useState<boolean>(false);
   const { initialValues, redirectAfterAction, disabledFields } = props;
   const [globalError, setGlobalError] = useState<string>('');
+
   /** editmode set to true if we are updating a team data. */
   const editMode: boolean = initialValues.identifier !== '';
 
@@ -100,47 +77,45 @@ const TeamForm = (props: TeamFormProps) => {
           }
         }}
       >
-        {({ errors, handleChange, isSubmitting, setFieldValue, values }) => (
-          <Form>
+        {({ errors, isSubmitting }) => (
+          <Form className="mb-5">
             <FormGroup className="non-field-errors">
               {globalError !== '' && <p className="">{globalError}</p>}
               <ErrorMessage name="name" component="p" className="form-text text-danger" />
               <ErrorMessage name="date" component="p" className="form-text text-danger" />
             </FormGroup>
             <FormGroup>
-              <Label>
-                Team Id
-                <Field
-                  type="text"
-                  name="identifier"
-                  id="identifier"
-                  disabled={disabledFields.includes('identifier')}
-                  className={errors.identifier ? `form-control is-invalid` : `form-control`}
-                />
-                <ErrorMessage name="identifier" className="form-text text-danger" />
-              </Label>
+              <Label>Team Id</Label>
+              <Field
+                type="text"
+                name="identifier"
+                id="identifier"
+                disabled={disabledFields.includes('identifier')}
+                className={errors.identifier ? `form-control is-invalid` : `form-control`}
+              />
+              <ErrorMessage name="identifier" className="form-text text-danger" />
             </FormGroup>
             <FormGroup>
-              <Label>
-                Name
-                <Field
-                  type="text"
-                  name="name"
-                  id="name"
-                  disabled={disabledFields.includes('name')}
-                  className={errors.name ? `form-control is-invalid` : `form-control`}
-                />
-                <ErrorMessage name="name" className="form-text text-danger" />
-              </Label>
+              <Label>Name</Label>
+              <Field
+                type="text"
+                name="name"
+                id="name"
+                disabled={disabledFields.includes('name')}
+                className={errors.name ? `form-control is-invalid` : `form-control`}
+              />
+              <ErrorMessage name="name" className="form-text text-danger" />
             </FormGroup>
+            <hr className="mb-2" />
             <Button
               type="submit"
               id="teamform-submit-button"
-              className="btn btn-block"
+              className="btn btn-block btn btn-primary"
               aria-label="Save Team"
               disabled={isSubmitting || Object.keys(errors).length > 0}
-            />
-            {isSubmitting ? SAVING : 'Save Team'}
+            >
+              {isSubmitting ? SAVING : 'Save Team'}
+            </Button>
           </Form>
         )}
       </Formik>
@@ -149,14 +124,9 @@ const TeamForm = (props: TeamFormProps) => {
 };
 
 const defaultProps: TeamFormProps = {
-  disabledFields: [],
-  initialValues: defaultInitialValues,
-  redirectAfterAction: '/teams',
-};
-
-/** default Props for updating team data objects */
-const propsForUpdatingTeam: Partial<TeamFormProps> = {
   disabledFields: ['identifier'],
+  initialValues: defaultInitialValues,
+  redirectAfterAction: TEAM_LIST_URL,
 };
 
 TeamForm.defaultProps = defaultProps;
