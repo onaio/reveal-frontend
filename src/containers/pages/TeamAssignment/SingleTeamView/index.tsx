@@ -16,10 +16,10 @@ import HeaderBreadcrumb, {
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
 import {
-  CREATE_TEAM_URL,
+  EDIT_TEAM,
+  EDIT_TEAM_URL,
   HOME,
   HOME_URL,
-  NEW_TEAM,
   SINGLE_TEAM_URL,
   TEAM,
   TEAM_DETAILS,
@@ -88,8 +88,8 @@ const SingleTeamView = (props: SingleTeamViewPropsType) => {
 
   // LinkAsButton Props
   const linkAsButtonProps = {
-    text: NEW_TEAM,
-    to: CREATE_TEAM_URL,
+    text: EDIT_TEAM,
+    to: EDIT_TEAM_URL,
   };
 
   return (
