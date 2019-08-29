@@ -7,17 +7,7 @@ import { MouseEvent } from 'react';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
-import {
-  Button,
-  Col,
-  Form,
-  FormGroup,
-  Input,
-  InputGroup,
-  InputGroupAddon,
-  Label,
-  Row,
-} from 'reactstrap';
+import { Button, Col, Input, InputGroup, InputGroupAddon, Row } from 'reactstrap';
 import { Store } from 'redux';
 import uuidv4 from 'uuid/v4';
 
@@ -460,112 +450,6 @@ class IrsPlan extends React.Component<
 
     const { planTableProps } = this.state;
 
-    const onSetPlanNameChange = (e: any) => {
-      this.onSetPlanNameChange(e);
-    };
-    const onSetPlanStartDateChange = (e: any) => {
-      this.onSetPlanStartDateChange(e);
-    };
-    const onSetPlanEndDateChange = (e: any) => {
-      this.onSetPlanEndDateChange(e);
-    };
-    const onSelectCountryChange = (e: any) => {
-      this.onSelectCountryChange(e);
-    };
-    const onStartPlanFormSubmit = (e: any) => {
-      this.onStartPlanFormSubmit(e);
-    };
-
-    const irsCountryOptions = (IRS_PLAN_COUNTRIES.length
-      ? IRS_PLAN_COUNTRIES
-      : Object.keys(CountriesAdmin0)
-    )
-      .map((c, i) => {
-        if (CountriesAdmin0[c as ADMN0_PCODE]) {
-          const country = CountriesAdmin0[c as ADMN0_PCODE];
-          return (
-            <option key={i} value={country.ADMN0_PCODE}>
-              {country.ADMN0_EN}
-            </option>
-          );
-        }
-        return false;
-      })
-      .filter(o => o);
-
-    if (isStartingPlan && newPlan) {
-      const { plan_effective_period_end, plan_effective_period_start, plan_title } = newPlan;
-      return (
-        <div className="mb-5">
-          <Helmet>
-            <title>IRS: New Plan</title>
-          </Helmet>
-          <HeaderBreadcrumbs {...breadCrumbProps} />
-          <Row>
-            <Col>
-              <h2 className="page-title">New IRS Plan</h2>
-            </Col>
-          </Row>
-          <Row>
-            <Col xs="6">
-              <Form>
-                <FormGroup>
-                  <Label for="set-plan-name">Plan Name</Label>
-                  <Input
-                    id="set-plan-name"
-                    onChange={onSetPlanNameChange}
-                    placeholder={plan_title}
-                  />
-                </FormGroup>
-                <FormGroup>
-                  <Label for="set-plan-start-date">Start Date</Label>
-                  <Input
-                    id="set-plan-start-date"
-                    onChange={onSetPlanStartDateChange}
-                    defaultValue={plan_effective_period_start}
-                    type="date"
-                  />
-                </FormGroup>
-                <FormGroup>
-                  <Label for="set-plan-end-date">End Date</Label>
-                  <Input
-                    id="set-plan-end-date"
-                    onChange={onSetPlanEndDateChange}
-                    defaultValue={plan_effective_period_end}
-                    type="date"
-                  />
-                </FormGroup>
-                <FormGroup>
-                  <Label for="select-plan-country">Select a Country</Label>
-                  <Input
-                    id="select-plan-country"
-                    defaultValue={planCountry}
-                    name="select-plan-country"
-                    onChange={onSelectCountryChange}
-                    type="select"
-                  >
-                    <option>...</option>
-                    {irsCountryOptions}
-                  </Input>
-                </FormGroup>
-                <Button
-                  color="primary"
-                  disabled={
-                    !newPlan.plan_effective_period_end.length ||
-                    !newPlan.plan_effective_period_start.length ||
-                    !planCountry.length
-                  }
-                  onClick={onStartPlanFormSubmit}
-                >
-                  Select Jurisdictions
-                </Button>
-              </Form>
-            </Col>
-          </Row>
-        </div>
-      );
-    }
-
     const onEditNameButtonClick = (e: MouseEvent) => {
       this.onEditNameButtonClick(e);
     };
@@ -623,10 +507,6 @@ class IrsPlan extends React.Component<
                   save
                 </Button>
               </InputGroupAddon>
-
-              <Button color="link" onClick={onEditPlanSettingsButtonClick} size="sm">
-                Plan settings...
-              </Button>
             </InputGroup>
           </Col>
         )}
@@ -892,112 +772,6 @@ class IrsPlan extends React.Component<
     if (!this.props.isFinalizedPlan) {
       this.setState({ isStartingPlan: true });
     }
-  }
-
-  // New Plan form handlers
-  /** onSetPlanNameChange - handler updating plan title in component state */
-  private onSetPlanNameChange(e: any) {
-    if (e && e.target && e.target.value) {
-      const newPlan: PlanRecord = {
-        ...(this.state.newPlan as PlanRecord),
-        plan_title: e.target.value,
-      };
-      this.setState({ newPlan });
-    }
-  }
-  /** onSetPlanStartDateChange - handler updatint plan_effective_period_start in component state */
-  private onSetPlanStartDateChange(e: any) {
-    if (e && e.target && e.target.value) {
-      const newPlan: PlanRecord = {
-        ...(this.state.newPlan as PlanRecord),
-        plan_effective_period_start: e.target.value,
-      };
-      this.setState({ newPlan });
-    }
-  }
-  /** onSetPlanEndDateChange - handler updatint plan_effective_period_end in component state */
-  private onSetPlanEndDateChange(e: any) {
-    if (e && e.target && e.target.value) {
-      const newPlan: PlanRecord = {
-        ...(this.state.newPlan as PlanRecord),
-        plan_effective_period_end: e.target.value,
-      };
-      this.setState({ newPlan });
-    }
-  }
-  /** onSelectCountryChange - handler updating country in component state */
-  private onSelectCountryChange(e: any) {
-    if (e && e.target && (e.target.value as ADMN0_PCODE)) {
-      this.setState({ planCountry: e.target.value });
-    }
-  }
-  /** onStartPlanFormSubmit - handler which:
-   * Updates component state with relative Jurisdictions
-   * Identifies childless children Jurisdictions
-   * Sets the first drilldown table breadcrumb
-   * Requests unloaded geojson for childless children
-   */
-  private async onStartPlanFormSubmit(e: MouseEvent) {
-    const { newPlan: NewPlan, planCountry } = this.state;
-    const { jurisdictionsById, isDraftPlan } = this.props;
-    const country: JurisdictionsByCountry = CountriesAdmin0[planCountry as ADMN0_PCODE];
-
-    if (!country || (!country.jurisdictionIds.length && !country.jurisdictionId.length)) {
-      return false;
-    }
-
-    const jurisdictionIds = country.jurisdictionIds.length
-      ? [...country.jurisdictionIds]
-      : [country.jurisdictionId];
-
-    const jurisdictionsToInclude = this.getDecendantJurisdictionIds(
-      jurisdictionIds,
-      jurisdictionsById
-    );
-
-    const filteredJurisdictions: Jurisdiction[] = jurisdictionsToInclude.map(
-      j => jurisdictionsById[j]
-    );
-    const filteredJurisdictionIds = filteredJurisdictions.map(j => j.jurisdiction_id);
-
-    const childlessChildrenIds = this.getChildlessChildrenIds(filteredJurisdictions);
-
-    const newPlan: PlanRecord | null = NewPlan
-      ? {
-          ...NewPlan,
-          plan_jurisdictions_ids:
-            isDraftPlan && NewPlan && NewPlan.plan_jurisdictions_ids
-              ? this.getAncestorJurisdictionIds(NewPlan.plan_jurisdictions_ids, jurisdictionsById)
-              : [],
-        }
-      : NewPlan;
-
-    const tableCrumbs: TableCrumb[] = [
-      {
-        active: true,
-        id: country.jurisdictionId.length ? country.jurisdictionId : null,
-        label: country.ADMN0_EN,
-      },
-    ];
-
-    this.setState(
-      {
-        childlessChildrenIds,
-        country,
-        filteredJurisdictionIds,
-        focusJurisdictionId: country.jurisdictionId.length
-          ? country.jurisdictionId
-          : this.state.focusJurisdictionId,
-        isLoadingGeoms: true,
-        isStartingPlan: false,
-        newPlan,
-        tableCrumbs,
-      },
-      () => {
-        const planTableProps = this.getDrilldownPlanTableProps(this.state);
-        this.setState({ planTableProps }, this.loadJurisdictionGeometries);
-      }
-    );
   }
 
   private loadJurisdictionGeometries() {
