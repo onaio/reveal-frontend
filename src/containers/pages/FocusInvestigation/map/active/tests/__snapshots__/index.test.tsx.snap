@@ -2634,6 +2634,37 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
 </Breadcrumb>
 `;
 
+exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap correctly & changes page title: Page title 1`] = `
+<h2
+  className="page-title mt-4 mb-4"
+>
+  A1-Tha Luang Village 1 Focus 01
+   
+  Investigation
+   
+  <p
+    className="h5"
+    style={
+      Object {
+        "display": "inline",
+      }
+    }
+  >
+    <Badge
+      color="warning"
+      pill={true}
+      tag="span"
+    >
+      <span
+        className="badge badge-warning badge-pill"
+      >
+        active
+      </span>
+    </Badge>
+  </p>
+</h2>
+`;
+
 exports[`containers/pages/FocusInvestigation/activeMap works with redux store (gisidawrapper component that loads jurisdiction without structures and tasks) 1`] = `
 <Provider
   store={
