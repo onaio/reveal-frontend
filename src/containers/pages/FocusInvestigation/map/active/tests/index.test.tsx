@@ -85,6 +85,8 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
     );
     const helmet = Helmet.peek();
     expect(helmet.title).toEqual('Focus Investigation: A1-Tha Luang Village 1 Focus 01');
+    expect(toJson(wrapper.find('Breadcrumb'))).toMatchSnapshot('Breadcrumbs');
+
     expect(toJson(wrapper)).toMatchSnapshot();
     expect(wrapper.find('GisidaWrapperMock').props()).toMatchSnapshot();
     wrapper.unmount();
