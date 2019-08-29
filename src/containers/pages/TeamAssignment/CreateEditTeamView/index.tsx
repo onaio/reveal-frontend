@@ -10,7 +10,16 @@ import { Link } from 'react-router-dom';
 import HeaderBreadcrumb, {
   BreadCrumbProps,
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
-import { CREATE_TEAM_URL, EDIT_TEAM_URL, HOME, HOME_URL } from '../../../../constants';
+import {
+  CREATE_TEAM_URL,
+  EDIT_TEAM,
+  EDIT_TEAM_URL,
+  HOME,
+  HOME_URL,
+  NEW_TEAM,
+  TEAM_LIST_URL,
+  TEAMS,
+} from '../../../../constants';
 import { RouteParams } from '../../../../helpers/utils';
 import TeamForm from '../../../forms/TeamForm';
 
@@ -30,12 +39,12 @@ const CreateEditTeamview = (props: CreateEditTeamViewTypes) => {
   const editing = !!props.match.params.id;
   //  props for breadcrumbs
   const basePage = {
-    label: `teams`,
-    url: `/teams`,
+    label: TEAMS,
+    url: TEAM_LIST_URL,
   };
   const breadcrumbProps: BreadCrumbProps = {
     currentPage: {
-      label: editing ? `edit team` : `Create Team`,
+      label: editing ? EDIT_TEAM : NEW_TEAM,
       url: editing ? `${EDIT_TEAM_URL}/${team!.identifier}` : CREATE_TEAM_URL,
     },
     pages: [],

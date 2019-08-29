@@ -125,6 +125,9 @@ export const TEAMS = 'Teams';
 export type TEAMS = typeof TEAMS;
 export const TEAM = 'Team';
 export type TEAM = typeof TEAM;
+export const EDIT_TEAM = 'Edit Team';
+export type EDIT_TEAM = typeof EDIT_TEAM;
+export const NEW_TEAM = 'New Team';
 
 export const JURISDICTION_ID = 'jurisdiction_id';
 export type JURISDICTION_ID = typeof JURISDICTION_ID;
