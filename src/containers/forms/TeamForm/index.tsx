@@ -1,10 +1,10 @@
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import React, { useState } from 'react';
 import { Redirect } from 'react-router';
-import { Label } from 'reactstrap';
+import { Button, Label } from 'reactstrap';
 import { FormGroup } from 'reactstrap';
 import * as Yup from 'yup';
-import { OPENSRP_ORGANIZATION_ENDPOINT, REQUIRED } from '../../../constants';
+import { OPENSRP_ORGANIZATION_ENDPOINT, REQUIRED, SAVING } from '../../../constants';
 import { OpenSRPService } from '../../../services/opensrp';
 
 /** yup validation schema for teams Form input */
@@ -57,6 +57,7 @@ const defaultInitialValues: TeamFormFields = {
 //     }
 // }
 
+// TODO - need to figure out how after creating a new team its saved to store
 /** Team form component */
 const TeamForm = (props: TeamFormProps) => {
   /** track when redirection from this form page should occur */
@@ -132,6 +133,14 @@ const TeamForm = (props: TeamFormProps) => {
                 <ErrorMessage name="name" className="form-text text-danger" />
               </Label>
             </FormGroup>
+            <Button
+              type="submit"
+              id="teamform-submit-button"
+              className="btn btn-block"
+              aria-label="Save Team"
+              disabled={isSubmitting || Object.keys(errors).length > 0}
+            />
+            {isSubmitting ? SAVING : 'Save Team'}
           </Form>
         )}
       </Formik>
