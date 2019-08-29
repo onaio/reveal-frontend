@@ -33,7 +33,7 @@ const PlanDefinitionList = (props: PlanListProps) => {
   const { fetchPlans, plans, service } = props;
   const [loading, setLoading] = useState<boolean>(true);
 
-  const apiService = new service('/plans');
+  const apiService = new service('plans');
 
   const pageTitle: string = PLANS;
 
@@ -99,7 +99,10 @@ const PlanDefinitionList = (props: PlanListProps) => {
           <h3 className="mt-3 mb-3 page-title">{pageTitle}</h3>
         </Col>
         <Col md={4}>
-          <LinkToNewPlans classProp="focus-investigation btn btn-primary float-right mt-3 mb-3" />
+          <LinkToNewPlans
+            className="focus-investigation btn btn-primary float-right mt-3 mb-3"
+            text="Add Plan"
+          />
         </Col>
       </Row>
       <Row>
