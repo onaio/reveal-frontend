@@ -3,6 +3,7 @@
  */
 import ListView from '@onaio/list-view';
 import reducerRegistry from '@onaio/redux-reducer-registry';
+import { values } from 'lodash';
 import * as React from 'react';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
@@ -15,8 +16,10 @@ import HeaderBreadcrumb, {
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
 import {
+  CREATE_TEAM_URL,
   HOME,
   HOME_URL,
+  NEW_TEAM,
   SINGLE_TEAM_URL,
   TEAM,
   TEAM_DETAILS,
@@ -30,12 +33,18 @@ import teamsReducer, {
   reducerName as teamsReducerName,
   Team,
 } from '../../../../store/ducks/teams';
+import * as fixtures from '../../../../store/ducks/tests/fixtures';
 
 reducerRegistry.register(teamsReducerName, teamsReducer);
 
 /** interface to describe our custom created SingleTeamView props */
 interface SingleTeamViewProps {
   team: Team | null;
+  teamMembers?: [
+    {
+      [key: string]: string;
+    }
+  ];
 }
 
 /** the default props for SingleTeamView */
@@ -47,7 +56,7 @@ const defaultProps: SingleTeamViewProps = {
 type SingleTeamViewPropsType = SingleTeamViewProps & RouteComponentProps<RouteParams>;
 
 const SingleTeamView = (props: SingleTeamViewPropsType) => {
-  const { team } = props;
+  const { team, teamMembers } = props;
 
   if (!team) {
     return <Loading />;
@@ -72,15 +81,15 @@ const SingleTeamView = (props: SingleTeamViewPropsType) => {
 
   // listViewProps for team members
   const listViewProps = {
-    data: [['1', 'User_45', 'Sam Sam', 'User_45'], ['2', 'Bob', 'joe', 'South']],
+    data: teamMembers!.map((teamMember: any) => values(teamMember)),
     headerItems: ['#', 'Username', 'Name', 'Team'],
     tableClass: 'table table-bordered',
   };
 
   // LinkAsButton Props
   const linkAsButtonProps = {
-    text: 'Add New Team',
-    to: `teams/new`,
+    text: NEW_TEAM,
+    to: CREATE_TEAM_URL,
   };
 
   return (
@@ -106,20 +115,20 @@ const SingleTeamView = (props: SingleTeamViewPropsType) => {
           <Row>
             <Col className="col-6">
               <Row>
-                <Col className="col-6">identifier</Col>
-                <Col className="col-6">Teng</Col>
+                <Col className="col-6">Identifier</Col>
+                <Col className="col-6">{team.identifier}</Col>
               </Row>
             </Col>
             <Col className="col-6">
               <Row>
                 <Col className="col-6">Name</Col>
-                <Col className="col-6">Teng</Col>
+                <Col className="col-6">{team.name}</Col>
               </Row>
             </Col>
             <Col className="col-6">
               <Row>
                 <Col className="col-6">Description</Col>
-                <Col className="col-6">Teng</Col>
+                <Col className="col-6">Lorem Ipsum</Col>
               </Row>
             </Col>
           </Row>
@@ -140,6 +149,7 @@ export { SingleTeamView };
 /** interface to describe props from mapStateToProps */
 interface MapStateToProps {
   team: Team | null;
+  teamMembers: any;
 }
 
 /** Maps a prop to a selector from the teams dux module */
@@ -149,9 +159,11 @@ const mapStateToProps = (
 ): MapStateToProps => {
   let teamId = ownProps.match.params.id;
   teamId = teamId ? teamId : '';
-  const team = getTeamById(state, teamId);
+  const team = fixtures.teams.filter(tm => tm.identifier === teamId)[0]; // getTeamById(state, teamId);
+  const teamMembers = fixtures.teamMembers.filter(teamMember => teamMember.team === team.name);
   return {
     team,
+    teamMembers,
   };
 };
 

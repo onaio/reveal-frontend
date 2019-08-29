@@ -1188,3 +1188,19 @@ export const team2: Team = {
 };
 
 export const teams: Team[] = [team1, team2];
+
+export const teamMember1 = {
+  identifier: '1',
+  name: 'Sam Sam',
+  team: 'User_45',
+  username: 'User_45_1',
+};
+
+export const teamMember2 = {
+  identifier: '2',
+  name: 'Joe',
+  team: 'South',
+  username: 'Bob',
+};
+
+export const teamMembers = [teamMember1, teamMember2];

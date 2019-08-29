@@ -16,6 +16,7 @@ import LinkAsButton from '../../../../components/LinkAsButton';
 import HeaderBreadcrumb, {
   BreadCrumbProps,
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
+import Loading from '../../../../components/page/Loading';
 import {
   CREATE_TEAM_URL,
   HOME,
@@ -26,6 +27,7 @@ import {
   TEAMS,
 } from '../../../../constants';
 import teamsReducer, { reducerName as teamsReducerName, Team } from '../../../../store/ducks/teams';
+import * as fixtures from '../../../../store/ducks/tests/fixtures';
 import './index.css';
 
 reducerRegistry.register(teamsReducerName, teamsReducer);
@@ -45,6 +47,9 @@ type TeamListViewPropsType = TeamListViewProps & RouteComponentProps;
 
 const TeamListView = (props: TeamListViewPropsType) => {
   const { teams } = props;
+  if (teams.length < 1) {
+    return <Loading />;
+  }
   const breadcrumbProps: BreadCrumbProps = {
     currentPage: {
       label: TEAMS,
@@ -70,10 +75,11 @@ const TeamListView = (props: TeamListViewPropsType) => {
   const listViewProps = {
     data: teams.map((team: any) => {
       return [
-        team.identifier,
-        ,
         <Link to={`${SINGLE_TEAM_URL}/${team.identifier}`} key={team.identifier}>
-          team.name
+          {team.identifier}
+        </Link>,
+        <Link to={`${SINGLE_TEAM_URL}/${team.identifier}`} key={team.identifier}>
+          {team.name}
         </Link>,
         ,
         team.jurisdictions,
@@ -119,7 +125,7 @@ export { TeamListView };
 
 const mapStateToProps = (state: Partial<Store>) => {
   return {
-    teams: [], // getTeamsArray(state),
+    teams: fixtures.teams, // getTeamsArray(state),
   };
 };
 
