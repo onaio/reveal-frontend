@@ -1,14 +1,16 @@
+// tslint:disable: object-literal-sort-keys
+
 export const plan1 = {
   identifier: '356b6b84-fc36-4389-a44a-2b038ed2f38d',
   version: '1',
-  // tslint:disable-next-line: object-literal-sort-keys
+
   name: 'A2-Lusaka_Akros_Focus_2',
   title: 'A2-Lusaka Akros Test Focus 2',
   status: 'active',
   date: '2019-05-19',
   effectivePeriod: {
     start: '2019-05-20',
-    // tslint:disable-next-line: object-literal-sort-keys
+
     end: '2019-08-30',
   },
   useContext: [
@@ -34,17 +36,17 @@ export const plan1 = {
   goal: [
     {
       id: 'Case_Confirmation',
-      // tslint:disable-next-line: object-literal-sort-keys
+
       description: 'Confirm the index case',
       priority: 'medium-priority',
       target: [
         {
           measure: 'Number of case confirmation forms complete',
-          // tslint:disable-next-line: object-literal-sort-keys
+
           detail: {
             detailQuantity: {
               value: 1,
-              // tslint:disable-next-line: object-literal-sort-keys
+
               comparator: '>=',
               unit: 'form(s)',
             },
@@ -55,18 +57,18 @@ export const plan1 = {
     },
     {
       id: 'RACD_register_all_families',
-      // tslint:disable-next-line: object-literal-sort-keys
+
       description:
         'Register all families and family members in all residential structures enumerated or added (100%) within operational area',
       priority: 'medium-priority',
       target: [
         {
           measure: 'Percent of residential structures with full family registration',
-          // tslint:disable-next-line: object-literal-sort-keys
+
           detail: {
             detailQuantity: {
               value: 100,
-              // tslint:disable-next-line: object-literal-sort-keys
+
               comparator: '>=',
               unit: 'Percent',
             },
@@ -77,15 +79,17 @@ export const plan1 = {
     },
     {
       id: 'RACD_bednet_dist_1km_radius',
-      // tslint:disable-next-line: object-literal-sort-keys
+
       description: 'Visit 100% of residential structures in the operational area and provide nets',
       priority: 'medium-priority',
       target: [
         {
           measure: 'Percent of residential structures received nets',
+
           detail: {
             detailQuantity: {
               value: 100,
+
               comparator: '>=',
               unit: 'Percent',
             },
