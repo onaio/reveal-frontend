@@ -162,7 +162,7 @@ class App extends Component {
               <ConnectedPrivateRoute
                 disableLoginProtection={!DISABLE_LOGIN_PROTECTION}
                 exact={true}
-                path={EDIT_TEAM_URL}
+                path={`${EDIT_TEAM_URL}/:id`}
                 component={ConnectedCreateEditTeamView}
               />
               {/* tslint:disable jsx-no-lambda */}
