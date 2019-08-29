@@ -156,7 +156,6 @@ interface IrsPlanState {
   isLoadingGeoms: boolean;
   isLoadingJurisdictions: boolean;
   isSaveDraftDisabled: boolean;
-  isStartingPlan: boolean;
   newPlan: PlanRecord | null;
   planCountry: string;
   planTableProps: DrillDownProps<any> | null;
@@ -185,7 +184,6 @@ class IrsPlan extends React.Component<
       isLoadingGeoms: false,
       isLoadingJurisdictions: true,
       isSaveDraftDisabled: false,
-      isStartingPlan: props.isNewPlan || false,
       newPlan: props.isNewPlan
         ? {
             id: uuidv4(),
@@ -341,7 +339,6 @@ class IrsPlan extends React.Component<
                         : this.state.focusJurisdictionId,
                       isLoadingGeoms: !!isDraftPlan,
                       isLoadingJurisdictions: false,
-                      isStartingPlan: false,
                       newPlan,
                       planCountry: result.properties.ADM0_PCODE,
                       tableCrumbs,
@@ -411,7 +408,6 @@ class IrsPlan extends React.Component<
 
     if (isNewPlan && !newPlan && planById && planById.plan_jurisdictions_ids) {
       this.setState({
-        isStartingPlan: !!this.state.country,
         newPlan: planById,
       });
     }
@@ -426,7 +422,6 @@ class IrsPlan extends React.Component<
       isEditingPlanName,
       isLoadingJurisdictions,
       isSaveDraftDisabled,
-      isStartingPlan,
       newPlan,
       planCountry,
       tableCrumbs,
