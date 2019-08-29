@@ -110,7 +110,6 @@ export interface IrsPlanProps {
   fetchPlansActionCreator: typeof fetchPlanRecords;
   isDraftPlan?: boolean;
   isFinalizedPlan?: boolean;
-  isNewPlan?: boolean;
   jurisdictionsById: { [key: string]: Jurisdiction };
   loadedJurisdictionIds: string[];
   planById?: PlanRecord | null;
@@ -126,7 +125,6 @@ export const defaultIrsPlanProps: IrsPlanProps = {
   fetchPlansActionCreator: fetchPlanRecords,
   isDraftPlan: false,
   isFinalizedPlan: false,
-  isNewPlan: false,
   jurisdictionsById: {},
   loadedJurisdictionIds: [],
   planById: null,
@@ -184,22 +182,7 @@ class IrsPlan extends React.Component<
       isLoadingGeoms: false,
       isLoadingJurisdictions: true,
       isSaveDraftDisabled: false,
-      newPlan: props.isNewPlan
-        ? {
-            id: uuidv4(),
-            plan_date: this.getNewPlanDate(),
-            plan_effective_period_end: '',
-            plan_effective_period_start: '',
-            plan_fi_reason: '',
-            plan_fi_status: '',
-            plan_id: uuidv4(),
-            plan_intervention_type: InterventionType.IRS,
-            plan_jurisdictions_ids: [],
-            plan_status: PlanStatus.DRAFT,
-            plan_title: this.getNewPlanTitle(),
-            plan_version: '',
-          }
-        : (props.planById as PlanRecord) || null,
+      newPlan: (props.planById as PlanRecord) || null,
       planCountry: '',
       planTableProps: null,
       previousPlanName: '',
@@ -212,7 +195,6 @@ class IrsPlan extends React.Component<
       fetchJurisdictionsActionCreator,
       fetchPlansActionCreator,
       isDraftPlan,
-      isNewPlan,
       planId,
       planById,
       supersetService,
@@ -252,7 +234,6 @@ class IrsPlan extends React.Component<
           );
         // initialize Finalized Plan
         if (
-          !isNewPlan &&
           this.props.planById &&
           this.props.planById.plan_jurisdictions_ids &&
           this.props.planById.plan_jurisdictions_ids.length
@@ -375,7 +356,7 @@ class IrsPlan extends React.Component<
       isLoadingJurisdictions,
       newPlan,
     } = this.state;
-    const { isNewPlan, isFinalizedPlan, jurisdictionsById, planById } = nextProps;
+    const { isFinalizedPlan, jurisdictionsById, planById } = nextProps;
 
     if (newPlan && childlessChildrenIds && country && isLoadingGeoms) {
       const filteredJurisdictions = childlessChildrenIds.map(j => jurisdictionsById[j]);
@@ -406,7 +387,7 @@ class IrsPlan extends React.Component<
       this.setState({ isLoadingJurisdictions: false });
     }
 
-    if (isNewPlan && !newPlan && planById && planById.plan_jurisdictions_ids) {
+    if (!newPlan && planById && planById.plan_jurisdictions_ids) {
       this.setState({
         newPlan: planById,
       });
@@ -414,7 +395,7 @@ class IrsPlan extends React.Component<
   }
 
   public render() {
-    const { planId, planById, isDraftPlan, isFinalizedPlan, isNewPlan } = this.props;
+    const { planId, planById, isDraftPlan, isFinalizedPlan } = this.props;
     const {
       doRenderTable,
       gisidaWrapperProps,
@@ -426,12 +407,7 @@ class IrsPlan extends React.Component<
       planCountry,
       tableCrumbs,
     } = this.state;
-    if (
-      (planId && !planById) ||
-      (isNewPlan && !newPlan) ||
-      isLoadingJurisdictions ||
-      isBuildingGisidaProps
-    ) {
+    if ((planId && !planById) || !newPlan || isLoadingJurisdictions || isBuildingGisidaProps) {
       return <Loading />;
     }
 
@@ -521,7 +497,7 @@ class IrsPlan extends React.Component<
     return (
       <div className="mb-5">
         <Helmet>
-          <title>IRS: {isNewPlan ? 'New Plan' : pageLabel}</title>
+          <title>IRS: {pageLabel}</title>
         </Helmet>
         <HeaderBreadcrumbs {...breadCrumbProps} />
         {planHeaderRow}
@@ -657,22 +633,6 @@ class IrsPlan extends React.Component<
         }
       );
     }
-  }
-
-  // Plan Title Control
-  /** getNewPlanDate - getter function for today's date (YYYY-MM-DD)
-   * @returns string of today's date
-   */
-  private getNewPlanDate(): string {
-    const date = new Date();
-    return `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
-  }
-  /** getNewPlanTitle - getter function generating new plan title
-   * @returns string of default auto-generated plan title
-   */
-  private getNewPlanTitle(): string {
-    const date = this.getNewPlanDate();
-    return `${InterventionType.IRS}_${date}`;
   }
 
   private loadJurisdictionGeometries() {
@@ -1948,19 +1908,8 @@ class IrsPlan extends React.Component<
         const planPayload = extractPlanPayloadFromPlanRecord(newPlanDraft);
         if (planPayload) {
           this.setState({ isSaveDraftDisabled: true }, () => {
-            if (this.props.isNewPlan) {
-              OpenSrpPlanService.create(planPayload)
-                .then(() => {
-                  // todo - force remounting of component by breaking this page into several
-                  // this.props.history.push(
-                  //   `${INTERVENTION_IRS_URL}/draft/${planPayload.identifier}`
-                  // );
-                  this.props.history.push(INTERVENTION_IRS_URL);
-                })
-                .catch(() => {
-                  this.setState({ isSaveDraftDisabled: false });
-                });
-            } else if (this.props.isDraftPlan) {
+            // todo - handle Finalized plans!!
+            if (this.props.isDraftPlan) {
               OpenSrpPlanService.update(planPayload)
                 .then(() => {
                   if (isFinal) {
