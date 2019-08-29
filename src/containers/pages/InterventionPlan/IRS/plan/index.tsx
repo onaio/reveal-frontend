@@ -216,6 +216,7 @@ class IrsPlan extends React.Component<
 
     const otherJurisdictionSupersetParams = { row_limit: 10000 };
 
+    // GET FULL JURISDICTION HIERARCHY
     await supersetService(SUPERSET_JURISDICTIONS_DATA_SLICE, otherJurisdictionSupersetParams).then(
       (jurisdictionResults: FlexObject[] = []) => {
         const jurisdictionsArray: Jurisdiction[] = jurisdictionResults
@@ -232,7 +233,7 @@ class IrsPlan extends React.Component<
           .sort((a, b) =>
             a.geographic_level && b.geographic_level ? b.geographic_level - a.geographic_level : 0
           );
-        // initialize Finalized Plan
+        // initialize Plan
         if (
           this.props.planById &&
           this.props.planById.plan_jurisdictions_ids &&
@@ -240,8 +241,8 @@ class IrsPlan extends React.Component<
         ) {
           const jurisdictionsById = keyBy(jurisdictionsArray, j => j.jurisdiction_id);
 
-          const childrenByParentId: { [key: string]: string[] } = {};
           // build and store decendant jurisdictions, jurisdictionsArray MUST be sorted by geographic_level from high to low
+          const childrenByParentId: { [key: string]: string[] } = {};
           for (const j of jurisdictionsArray) {
             if (j.parent_id) {
               if (!childrenByParentId[j.parent_id]) {
@@ -256,6 +257,7 @@ class IrsPlan extends React.Component<
             }
           }
 
+          // define level 0 Jurisdiction as parentlessParent
           const ancestorIds = this.getAncestorJurisdictionIds(
             [...this.props.planById.plan_jurisdictions_ids],
             jurisdictionsArray
@@ -267,6 +269,7 @@ class IrsPlan extends React.Component<
               !jurisdictionsById[a].geographic_level
           );
           if (parentlessParent) {
+            // GET parentlessParent Jurisdiction from OpenSRP
             OpenSrpLocationService.read(OPENSRP_FIND_BY_PROPERTIES, {
               is_jurisdiction: true,
               properties_filter: `name:${jurisdictionsById[parentlessParent].name}`,
@@ -274,15 +277,18 @@ class IrsPlan extends React.Component<
             }).then(results => {
               const result = results[0];
               if (result && result.properties) {
+                // Define which country settings to use
                 const country: JurisdictionsByCountry =
                   CountriesAdmin0[
                     (result.properties.ADM0_PCODE || result.properties.name) as ADMN0_PCODE
                   ];
 
                 if (country) {
+                  // define id of parentless parent or ids of admin level 1s
                   const countryIds = country.jurisdictionId.length
                     ? [country.jurisdictionId]
                     : [...country.jurisdictionIds];
+                  // define all Jurisdictions pertaining to this Plan only (by country)
                   const filteredJurisdictions = isDraftPlan
                     ? this.getDecendantJurisdictionIds(
                         countryIds,
@@ -298,6 +304,7 @@ class IrsPlan extends React.Component<
                     plan_jurisdictions_ids: [...ancestorIds],
                   };
 
+                  // build first TableCrumb based on the country settings
                   const tableCrumbs: TableCrumb[] = [
                     {
                       active: true,
@@ -325,6 +332,7 @@ class IrsPlan extends React.Component<
                       tableCrumbs,
                     },
                     () => {
+                      // build drilldown table props
                       const planTableProps = this.getDrilldownPlanTableProps(this.state);
                       this.setState({ planTableProps }, () => {
                         if (isDraftPlan) {
@@ -340,6 +348,7 @@ class IrsPlan extends React.Component<
             });
           }
         } else {
+          // build drilldown table props
           const planTableProps = this.getDrilldownPlanTableProps(this.state);
           this.setState({ isLoadingJurisdictions: false, planTableProps });
         }
@@ -358,6 +367,7 @@ class IrsPlan extends React.Component<
     } = this.state;
     const { isFinalizedPlan, jurisdictionsById, planById } = nextProps;
 
+    // update state after geometries are fetched from this.loadJurisdictionGeometries()
     if (newPlan && childlessChildrenIds && country && isLoadingGeoms) {
       const filteredJurisdictions = childlessChildrenIds.map(j => jurisdictionsById[j]);
       const loadedJurisdictions = filteredJurisdictions.filter((j: Jurisdiction) => j.geojson);
@@ -369,6 +379,7 @@ class IrsPlan extends React.Component<
             isLoadingGeoms: false,
           },
           () => {
+            // build gisida wrapper props
             const gisidaWrapperProps = this.getGisidaWrapperProps();
             this.setState({
               gisidaWrapperProps,
@@ -379,6 +390,7 @@ class IrsPlan extends React.Component<
       }
     }
 
+    // update state after Jurisdiction Hierarchy is fetched from SUPERSET_JURISDICTIONS_DATA_SLICE
     if (
       !isFinalizedPlan &&
       isLoadingJurisdictions &&
@@ -387,6 +399,7 @@ class IrsPlan extends React.Component<
       this.setState({ isLoadingJurisdictions: false });
     }
 
+    // update state after fetching plan from OpenSRP
     if (!newPlan && planById && planById.plan_jurisdictions_ids) {
       this.setState({
         newPlan: planById,
@@ -635,6 +648,7 @@ class IrsPlan extends React.Component<
     }
   }
 
+  /** loadJurisdictionGeometries - utility to define and fetch any required Jurisdiction GeoJSON from OpenSRP */
   private loadJurisdictionGeometries() {
     // Get geoms for jurisdictionsToInclude
     const {
