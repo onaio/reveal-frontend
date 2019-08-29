@@ -332,7 +332,7 @@ class SingleActiveFIMap extends React.Component<
           </div>
           <div className="col-3">
             <div className="mapSidebar">
-              <div>
+              <div className="mb-3">
                 <h5>
                   {plan.plan_fi_reason === CASE_TRIGGERED_PLAN ? REACTIVE : ROUTINE_PLAN}&nbsp;
                   {INVESTIGATION}
