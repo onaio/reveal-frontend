@@ -1963,10 +1963,10 @@ export { IrsPlan };
  */
 const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateProps => {
   const planId = ownProps.match.params.id || null;
-  const plan = getPlanRecordById(state, planId);
+  const planById = getPlanRecordById(state, planId);
   const isNewPlan = planId === null;
-  const isDraftPlan = plan && plan.plan_status !== 'active';
-  const isFinalizedPlan = plan && plan.plan_status === 'active';
+  const isDraftPlan = planById && planById.plan_status !== 'active';
+  const isFinalizedPlan = planById && planById.plan_status === 'active';
 
   const jurisdictionsById = getJurisdictionsById(state);
   const allJurisdictionIds = getAllJurisdictionsIdArray(state);
@@ -1979,7 +1979,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
     isNewPlan,
     jurisdictionsById,
     loadedJurisdictionIds,
-    planById: plan,
+    planById,
     planId,
     ...ownProps,
   };
