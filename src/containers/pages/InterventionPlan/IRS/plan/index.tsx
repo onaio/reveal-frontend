@@ -450,21 +450,6 @@ class IrsPlan extends React.Component<
 
     const { planTableProps } = this.state;
 
-    const onEditNameButtonClick = (e: MouseEvent) => {
-      this.onEditNameButtonClick(e);
-    };
-    const onCancleEditNameButtonClick = (e: MouseEvent) => {
-      this.onCancleEditNameButtonClick(e);
-    };
-    const onEditNameInputChange = (e: any) => {
-      this.onEditNameInputChange(e);
-    };
-    const onSaveEditNameButtonClick = (e: MouseEvent) => {
-      this.onSaveEditNameButtonClick(e);
-    };
-    const onEditPlanSettingsButtonClick = (e: MouseEvent) => {
-      this.onEditPlanSettingsButtonClick(e);
-    };
     const onSaveAsDraftButtonClick = (e: MouseEvent) => {
       this.onSavePlanButtonClick(e);
     };
@@ -482,35 +467,8 @@ class IrsPlan extends React.Component<
         {!isFinalizedPlan && !isEditingPlanName && (
           <Col xs="8" className="page-title-col">
             <h2 className="page-title">IRS: {pageLabel}</h2>
-            <Button color="link" onClick={onEditNameButtonClick} size="sm">
-              edit
-            </Button>
           </Col>
         )}
-        {!isFinalizedPlan && newPlan && isEditingPlanName && (
-          <Col xs="8" className="page-title-col">
-            <h2 className="page-title edit">IRS:</h2>
-            <InputGroup className="edit-plan-title-input-group">
-              <Input
-                id="edit-plan-title-input"
-                name="edit-plan-title-input"
-                onChange={onEditNameInputChange}
-                placeholder={newPlan.plan_title}
-              />
-              <InputGroupAddon addonType="append">
-                <Button color="secondary" onClick={onCancleEditNameButtonClick} size="sm">
-                  cancel
-                </Button>
-              </InputGroupAddon>
-              <InputGroupAddon addonType="append">
-                <Button color="primary" onClick={onSaveEditNameButtonClick} size="sm">
-                  save
-                </Button>
-              </InputGroupAddon>
-            </InputGroup>
-          </Col>
-        )}
-        {/* <Col>Save / finalize buttons will go here</Col> */}
         {!isFinalizedPlan && (
           <Col xs="4" className="save-plan-buttons-column">
             <Button
@@ -721,57 +679,6 @@ class IrsPlan extends React.Component<
   private getNewPlanTitle(): string {
     const date = this.getNewPlanDate();
     return `${InterventionType.IRS}_${date}`;
-  }
-  /** onEditNameButtonClick - handler enabling inline-editing the plan name */
-  private onEditNameButtonClick(e: MouseEvent) {
-    preventDefault(e);
-    if (this.state.newPlan) {
-      this.setState({
-        isEditingPlanName: true,
-        previousPlanName: this.state.newPlan.plan_title,
-      });
-    }
-  }
-  /** onEditNameInputChange - handler updating component state when plan title is changed */
-  private onEditNameInputChange(e: any) {
-    const { newPlan: NewPlan } = this.state;
-    if (NewPlan) {
-      const newPlan: PlanRecord = {
-        ...NewPlan,
-        plan_title: e.target.value,
-      };
-      this.setState({ newPlan });
-    }
-  }
-  /** onCancleEditNameButtonClick - handler disabling inline-editing and restoring previous plan title */
-  private onCancleEditNameButtonClick(e: MouseEvent) {
-    preventDefault(e);
-    const { newPlan: NewPlan, previousPlanName } = this.state;
-    if (NewPlan) {
-      const newPlan: PlanRecord = {
-        ...NewPlan,
-        plan_title: previousPlanName,
-      };
-      this.setState({
-        isEditingPlanName: false,
-        newPlan,
-        previousPlanName: '',
-      });
-    }
-  }
-  /** onSaveEditNameButtonClick - handler disabling inline-editing */
-  private onSaveEditNameButtonClick(e: MouseEvent) {
-    e.preventDefault();
-    this.setState({
-      isEditingPlanName: false,
-      previousPlanName: '',
-    });
-  }
-  /** onEditPlanSettingsButtonClick - handler updating component state to render new plan form */
-  private onEditPlanSettingsButtonClick(e: MouseEvent) {
-    if (!this.props.isFinalizedPlan) {
-      this.setState({ isStartingPlan: true });
-    }
   }
 
   private loadJurisdictionGeometries() {
