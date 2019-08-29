@@ -28,7 +28,7 @@ export interface TeamFormProps {
   redirectAfterAction: string;
 }
 
-const defaultInitialValues: TeamFormFields = {
+export const defaultInitialValues: TeamFormFields = {
   identifier: '',
   name: '',
 };

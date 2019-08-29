@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { Link } from 'react-router-dom';
 import { Col, Row } from 'reactstrap';
+import { Store } from 'redux';
 import HeaderBreadcrumb, {
   BreadCrumbProps,
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
@@ -22,10 +23,12 @@ import {
   TEAMS,
 } from '../../../../constants';
 import { RouteParams } from '../../../../helpers/utils';
-import TeamForm, { TeamFormProps } from '../../../forms/TeamForm';
+import { Team } from '../../../../store/ducks/teams';
+import * as fixtures from '../../../../store/ducks/tests/fixtures';
+import TeamForm, { defaultInitialValues, TeamFormProps } from '../../../forms/TeamForm';
 
 export interface Props {
-  team: { identifier: string } | null;
+  team: Team | null;
 }
 
 export const defaultProps: Props = {
@@ -55,8 +58,13 @@ const CreateEditTeamview = (props: CreateEditTeamViewTypes) => {
     label: `${HOME}`,
     url: `${HOME_URL}`,
   };
-  breadcrumbProps.pages = [homePage];
+  breadcrumbProps.pages = [homePage, basePage];
 
+  const teamFormProps: TeamFormProps = {
+    disabledFields: ['identifier'],
+    initialValues: editing ? team! : defaultInitialValues,
+    redirectAfterAction: TEAM_LIST_URL,
+  };
   return (
     <div>
       <Helmet>
@@ -65,7 +73,7 @@ const CreateEditTeamview = (props: CreateEditTeamViewTypes) => {
       <HeaderBreadcrumb {...breadcrumbProps} />
       <Row>
         <Col md={8}>
-          <TeamForm />
+          <TeamForm {...teamFormProps} />
         </Col>
       </Row>
     </div>
@@ -76,8 +84,19 @@ CreateEditTeamview.defaultProps = defaultProps;
 
 export { CreateEditTeamview };
 
-// connect to store
+type DispatchedProps = Props;
 
-const ConnectedCreateEditTeamView = connect()(CreateEditTeamview);
+// connect to store
+const mapStateToprops = (
+  state: Partial<Store>,
+  ownProps: CreateEditTeamViewTypes
+): DispatchedProps => {
+  let teamId = ownProps.match.params.id;
+  teamId = teamId ? teamId : '';
+  const team = fixtures.teams.filter((tm: Team) => tm.identifier === teamId)[0];
+  return { team };
+};
+
+const ConnectedCreateEditTeamView = connect(mapStateToprops)(CreateEditTeamview);
 
 export default ConnectedCreateEditTeamView;
