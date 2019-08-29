@@ -1,5 +1,4 @@
 /** Team Assignment component for listing all teams */
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ListView from '@onaio/list-view';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import * as React from 'react';
@@ -73,7 +72,7 @@ const TeamListView = (props: TeamListViewPropsType) => {
   };
 
   const listViewProps = {
-    data: teams.map((team: any) => {
+    data: teams.map((team: Team) => {
       return [
         <Link to={`${SINGLE_TEAM_URL}/${team.identifier}`} key={team.identifier}>
           {team.identifier}
@@ -100,12 +99,12 @@ const TeamListView = (props: TeamListViewPropsType) => {
         <title>{`${TEAMS}(${teams.length})`}</title>
       </Helmet>
       <HeaderBreadcrumb {...breadcrumbProps} />
-      <Row>
+      <Row id="header-row">
         <Col className="xs">
           {/** ? Should this be the number of teams in store or in the api */}
           <h2 className="mb-3 mt-5 page-title">{`${TEAMS}(${teams.length})`}</h2>
         </Col>
-        <Col className="xs" style={{ float: 'right' }}>
+        <Col className="xs">
           <LinkAsButton {...linkAsButtonProps} />
         </Col>
       </Row>
