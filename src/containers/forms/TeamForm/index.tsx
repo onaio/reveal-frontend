@@ -63,6 +63,7 @@ const TeamForm = (props: TeamFormProps) => {
               })
               .catch((e: Error) => {
                 setGlobalError(e.message);
+                setSubmitting(false);
               });
           } else {
             apiService
@@ -73,6 +74,7 @@ const TeamForm = (props: TeamFormProps) => {
               })
               .catch((e: Error) => {
                 setGlobalError(e.message);
+                setSubmitting(false);
               });
           }
         }}
@@ -80,9 +82,7 @@ const TeamForm = (props: TeamFormProps) => {
         {({ errors, isSubmitting }) => (
           <Form className="mb-5">
             <FormGroup className="non-field-errors">
-              {globalError !== '' && <p className="">{globalError}</p>}
-              <ErrorMessage name="name" component="p" className="form-text text-danger" />
-              <ErrorMessage name="date" component="p" className="form-text text-danger" />
+              {globalError !== '' && <p className="form-text text-danger">{globalError}</p>}
             </FormGroup>
             <FormGroup>
               <Label>Team Id</Label>
@@ -109,7 +109,7 @@ const TeamForm = (props: TeamFormProps) => {
             <hr className="mb-2" />
             <Button
               type="submit"
-              id="teamform-submit-button"
+              id="team-form-submit-button"
               className="btn btn-block btn btn-primary"
               aria-label="Save Team"
               disabled={isSubmitting || Object.keys(errors).length > 0}
