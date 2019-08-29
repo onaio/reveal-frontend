@@ -44,7 +44,7 @@ import ConnectedPlanDefinitionList from '../containers/pages/InterventionPlan/Pl
 import ConnectedUpdatePlan from '../containers/pages/InterventionPlan/UpdatePlan';
 import ConnectedCreateEditTeamView from '../containers/pages/TeamAssignment/CreateEditTeamView';
 import ConnectedSingleTeamView from '../containers/pages/TeamAssignment/SingleTeamView';
-import { TeamListView } from '../containers/pages/TeamAssignment/TeamListView';
+import ConnectedTeamListView from '../containers/pages/TeamAssignment/TeamListView';
 import { oAuthUserInfoGetter } from '../helpers/utils';
 
 library.add(faMap);
@@ -179,7 +179,7 @@ class App extends Component {
                 disableLoginProtection={!DISABLE_LOGIN_PROTECTION}
                 exact={true}
                 path={TEAM_LIST_URL}
-                component={TeamListView}
+                component={ConnectedTeamListView}
               />
               {/* tslint:disable jsx-no-lambda */}
               <Route
