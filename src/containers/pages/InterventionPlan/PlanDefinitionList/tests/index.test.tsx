@@ -32,15 +32,19 @@ describe('components/InterventionPlan/PlanDefinitionList', () => {
   });
 
   it('renders plan definition list correctly', async () => {
-    const mockList: any = jest.fn(async () => {});
-    const serviceMock = jest.fn(() => {
-      list: mockList;
+    // tslint:disable-next-line: no-empty
+    const mockList = jest.fn(() => {});
+    const classMock = jest.fn().mockImplementation(() => {
+      return {
+        list: mockList,
+      };
     });
+
     const fetchPlansMock = jest.fn();
     const props = {
       fetchPlans: fetchPlansMock,
       plans: [fixtures.plan1],
-      service: serviceMock,
+      service: classMock,
     };
     const wrapper = mount(
       <Router history={history}>
@@ -61,7 +65,7 @@ describe('components/InterventionPlan/PlanDefinitionList', () => {
     expect(toJson(wrapper.find('table.plans-list'))).toMatchSnapshot('planlistTable');
 
     // check that openSRPService is called
-    expect(serviceMock).toHaveBeenCalledWith('/plans');
+    expect(classMock).toHaveBeenCalledWith('/plans');
 
     // fetchPlans is called with response from service.list
     expect(fetchPlansMock).toBeCalledWith({});
