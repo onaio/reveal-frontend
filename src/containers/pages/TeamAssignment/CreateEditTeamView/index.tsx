@@ -7,6 +7,7 @@ import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { Link } from 'react-router-dom';
+import { Col, Row } from 'reactstrap';
 import HeaderBreadcrumb, {
   BreadCrumbProps,
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
@@ -21,7 +22,7 @@ import {
   TEAMS,
 } from '../../../../constants';
 import { RouteParams } from '../../../../helpers/utils';
-import TeamForm from '../../../forms/TeamForm';
+import TeamForm, { TeamFormProps } from '../../../forms/TeamForm';
 
 export interface Props {
   team: { identifier: string } | null;
@@ -37,6 +38,7 @@ const CreateEditTeamview = (props: CreateEditTeamViewTypes) => {
   const { team } = props;
   // use route to know if we are editing team or creating team
   const editing = !!props.match.params.id;
+
   //  props for breadcrumbs
   const basePage = {
     label: TEAMS,
@@ -58,10 +60,14 @@ const CreateEditTeamview = (props: CreateEditTeamViewTypes) => {
   return (
     <div>
       <Helmet>
-        <title />
+        <title>{NEW_TEAM}</title>
       </Helmet>
       <HeaderBreadcrumb {...breadcrumbProps} />
-      <TeamForm />
+      <Row>
+        <Col md={8}>
+          <TeamForm />
+        </Col>
+      </Row>
     </div>
   );
 };
