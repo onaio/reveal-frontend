@@ -1,25 +1,20 @@
 // this is the IRS Plan page component
 import { Actions } from 'gisida';
 import { keyBy } from 'lodash';
-import { EventData, LngLatBounds, LngLatBoundsLike, MapboxGeoJSONFeature } from 'mapbox-gl';
+import { EventData, LngLatBoundsLike, MapboxGeoJSONFeature } from 'mapbox-gl';
 import moment from 'moment';
 import { MouseEvent } from 'react';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
-import { Button, Col, Input, InputGroup, InputGroupAddon, Row } from 'reactstrap';
+import { Button, Col, Input, Row } from 'reactstrap';
 import { Store } from 'redux';
-import uuidv4 from 'uuid/v4';
 
 import GeojsonExtent from '@mapbox/geojson-extent';
 import DrillDownTable, { DrillDownProps, DropDownCell } from '@onaio/drill-down-table';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 
-import {
-  DATE_FORMAT,
-  IRS_PLAN_COUNTRIES,
-  SUPERSET_JURISDICTIONS_DATA_SLICE,
-} from '../../../../../configs/env';
+import { DATE_FORMAT, SUPERSET_JURISDICTIONS_DATA_SLICE } from '../../../../../configs/env';
 import {
   HOME,
   HOME_URL,
@@ -77,7 +72,6 @@ import plansReducer, {
   extractPlanRecordResponseFromPlanPayload,
   fetchPlanRecords,
   getPlanRecordById,
-  InterventionType,
   PlanPayload,
   PlanRecord,
   PlanStatus,
@@ -150,7 +144,6 @@ interface IrsPlanState {
   focusJurisdictionId: string | null;
   gisidaWrapperProps: GisidaProps | null;
   isBuildingGisidaProps: boolean;
-  isEditingPlanName: boolean;
   isLoadingGeoms: boolean;
   isLoadingJurisdictions: boolean;
   isSaveDraftDisabled: boolean;
@@ -178,7 +171,6 @@ class IrsPlan extends React.Component<
       focusJurisdictionId: null,
       gisidaWrapperProps: null,
       isBuildingGisidaProps: false,
-      isEditingPlanName: false,
       isLoadingGeoms: false,
       isLoadingJurisdictions: true,
       isSaveDraftDisabled: false,
@@ -413,11 +405,9 @@ class IrsPlan extends React.Component<
       doRenderTable,
       gisidaWrapperProps,
       isBuildingGisidaProps,
-      isEditingPlanName,
       isLoadingJurisdictions,
       isSaveDraftDisabled,
       newPlan,
-      planCountry,
       tableCrumbs,
     } = this.state;
     if ((planId && !planById) || !newPlan || isLoadingJurisdictions || isBuildingGisidaProps) {
@@ -434,11 +424,11 @@ class IrsPlan extends React.Component<
 
     const { planTableProps } = this.state;
 
-    const onSaveAsDraftButtonClick = (e: MouseEvent) => {
-      this.onSavePlanButtonClick(e);
+    const onSaveAsDraftButtonClick = () => {
+      this.onSavePlanButtonClick();
     };
-    const onSaveFinalizedPlanButtonClick = (e: MouseEvent) => {
-      this.onSavePlanButtonClick(e, true);
+    const onSaveFinalizedPlanButtonClick = () => {
+      this.onSavePlanButtonClick(true);
     };
 
     const planHeaderRow = (
@@ -448,7 +438,7 @@ class IrsPlan extends React.Component<
             <h2 className="page-title">IRS: {pageLabel}</h2>
           </Col>
         )}
-        {!isFinalizedPlan && !isEditingPlanName && (
+        {!isFinalizedPlan && (
           <Col xs="8" className="page-title-col">
             <h2 className="page-title">IRS: {pageLabel}</h2>
           </Col>
@@ -1436,10 +1426,9 @@ class IrsPlan extends React.Component<
     const { filteredJurisdictionIds, childlessChildrenIds } = this.state;
     const { jurisdictionsById } = this.props;
     const filteredJurisdictions = filteredJurisdictionIds.map(j => jurisdictionsById[j]);
-    const filteredJurisdictionsById = keyBy(filteredJurisdictions, j => j.jurisdiction_id);
 
     if (feature && country.tilesets) {
-      const { geometry, layer, properties } = feature;
+      const { properties } = feature;
 
       const doUseTilesets = !!country.tilesets[geographicLevel];
       const clickedFeatureId =
@@ -1897,7 +1886,7 @@ class IrsPlan extends React.Component<
    * @param e - MouseEvent
    * @param isFinal - determines if the Plan should be saved as a draft or as a finalized plan
    */
-  private onSavePlanButtonClick(e: MouseEvent, isFinal: boolean = false) {
+  private onSavePlanButtonClick(isFinal: boolean = false) {
     const { newPlan, childlessChildrenIds } = this.state;
     if (newPlan && newPlan.plan_jurisdictions_ids) {
       const now = moment(new Date());
