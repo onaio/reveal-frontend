@@ -34,6 +34,7 @@ import {
   CURRENT_FOCUS_INVESTIGATION,
   DEFINITIONS,
   END_DATE,
+  FI_FILTER_URL,
   FI_PLAN_TYPE,
   FI_SINGLE_MAP_URL,
   FI_SINGLE_URL,
@@ -151,7 +152,7 @@ class ActiveFocusInvestigation extends React.Component<
       breadcrumbProps.pages = labels.map((label, i) => {
         return {
           label,
-          url: FI_URL + '/filter/' + plan.jurisdiction_path[i] + '/' + plan.id,
+          url: `${FI_FILTER_URL}/${plan.jurisdiction_path[i]}/${plan.id}`,
         };
       });
       breadcrumbProps.pages = [homePage, basePage, ...breadcrumbProps.pages];
