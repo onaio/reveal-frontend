@@ -1,6 +1,5 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faExternalLinkSquareAlt } from '@fortawesome/free-solid-svg-icons';
-import DrillDownTable from '@onaio/drill-down-table/dist/types';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset from '@onaio/superset-connector';
 import { mount, shallow } from 'enzyme';
@@ -18,7 +17,6 @@ import reducer, { fetchPlans, reducerName } from '../../../../../store/ducks/pla
 import { Plan } from '../../../../../store/ducks/plans';
 import * as fixtures from '../../../../../store/ducks/tests/fixtures';
 import ConnectedActiveFocusInvestigation, { ActiveFocusInvestigation } from '../../active';
-import { ActiveFIProps } from '../index';
 import { activeFocusInvestigationProps } from './fixtures';
 reducerRegistry.register(reducerName, reducer);
 
