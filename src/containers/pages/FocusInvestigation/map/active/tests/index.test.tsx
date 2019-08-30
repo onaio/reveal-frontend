@@ -92,16 +92,16 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
 
     // check Header Breadcrumb
     const headerWrapper = wrapper.find('HeaderBreadcrumb');
-    expect(toJson(headerWrapper)).toMatchSnapshot();
+    expect(toJson(headerWrapper)).toMatchSnapshot('HeaderWrapper');
 
     // Check gisida component using a mock
-    expect(toJson(wrapper.find('GisidaWrapperMock'))).toMatchSnapshot();
+    expect(toJson(wrapper.find('GisidaWrapperMock'))).toMatchSnapshot('GisidaWrapperMock');
 
     // how about the selectPlan component
     expect(wrapper.find('SelectPlan').length).toEqual(1);
 
     // We should have progressBars somewhere in there
-    expect(toJson(wrapper.find('.targetItem').first())).toMatchSnapshot();
+    expect(toJson(wrapper.find('.targetItem').first())).toMatchSnapshot('ProgressBar instance');
 
     wrapper.unmount();
   });
@@ -135,7 +135,7 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
       </Provider>
     );
 
-    expect(wrapper.find('GisidaWrapperMock').props()).toMatchSnapshot();
+    expect(wrapper.find('GisidaWrapperMock').props()).toMatchSnapshot('GisidaWrapperMock');
 
     // Check data passed to component props that should come from redux
 
