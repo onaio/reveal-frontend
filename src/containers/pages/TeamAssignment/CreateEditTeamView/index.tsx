@@ -37,7 +37,7 @@ export const defaultProps: Props = {
 
 export type CreateEditTeamViewTypes = Props & RouteComponentProps<RouteParams>;
 
-const CreateEditTeamview = (props: CreateEditTeamViewTypes) => {
+const CreateEditTeamView = (props: CreateEditTeamViewTypes) => {
   const { team } = props;
   // use route to know if we are editing team or creating team
   const editing = !!props.match.params.id;
@@ -80,9 +80,9 @@ const CreateEditTeamview = (props: CreateEditTeamViewTypes) => {
   );
 };
 
-CreateEditTeamview.defaultProps = defaultProps;
+CreateEditTeamView.defaultProps = defaultProps;
 
-export { CreateEditTeamview };
+export { CreateEditTeamView };
 
 type DispatchedProps = Props;
 
@@ -97,6 +97,6 @@ const mapStateToprops = (
   return { team };
 };
 
-const ConnectedCreateEditTeamView = connect(mapStateToprops)(CreateEditTeamview);
+const ConnectedCreateEditTeamView = connect(mapStateToprops)(CreateEditTeamView);
 
 export default ConnectedCreateEditTeamView;
