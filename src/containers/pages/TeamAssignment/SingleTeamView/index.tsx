@@ -134,7 +134,7 @@ const SingleTeamView = (props: SingleTeamViewPropsType) => {
           </Row>
         </div>
       </div>
-      <h3 className="mb-3 mt-5 page-title">{TEAM_MEMBERS}</h3>
+      <h3 className="mb-3 mt-5">{TEAM_MEMBERS}</h3>
       <ListView {...listViewProps} />
     </div>
   );
