@@ -169,7 +169,7 @@ class ActiveFocusInvestigation extends React.Component<
     }
     const routineReactivePlans: FlexObject[] = [];
     const pageTitle = jurisdictionName
-      ? CURRENT_FOCUS_INVESTIGATION + ` in ${jurisdictionName}`
+      ? `${CURRENT_FOCUS_INVESTIGATION} in ${jurisdictionName}`
       : CURRENT_FOCUS_INVESTIGATION;
     return (
       <div>
