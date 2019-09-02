@@ -1,0 +1,140 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`src/containers/TeamAssignment/TeamListview/ a  dumb TeamListView correctly: First table record in listview 1`] = `
+<tr
+  className="listview-tr"
+  key="0"
+>
+  <ElementMap
+    HTMLTag="td"
+    className="listview-th"
+    items={
+      Array [
+        <Link
+          replace={false}
+          to="/teams/view/1"
+        >
+          1
+        </Link>,
+        <Link
+          replace={false}
+          to="/teams/view/1"
+        >
+          User_45
+        </Link>,
+        undefined,
+        Array [],
+      ]
+    }
+  >
+    <td
+      className="listview-th"
+      key="0"
+    >
+      <Link
+        key="1"
+        replace={false}
+        to="/teams/view/1"
+      >
+        <a
+          href="/teams/view/1"
+          onClick={[Function]}
+        >
+          1
+        </a>
+      </Link>
+    </td>
+    <td
+      className="listview-th"
+      key="1"
+    >
+      <Link
+        key="1"
+        replace={false}
+        to="/teams/view/1"
+      >
+        <a
+          href="/teams/view/1"
+          onClick={[Function]}
+        >
+          User_45
+        </a>
+      </Link>
+    </td>
+    <td
+      className="listview-th"
+      key="3"
+    />
+  </ElementMap>
+</tr>
+`;
+
+exports[`src/containers/TeamAssignment/TeamListview/ a  dumb TeamListView correctly: Header Breadcrumb 1`] = `
+<HeaderBreadcrumb
+  currentPage={
+    Object {
+      "label": "Teams",
+      "url": "/teams",
+    }
+  }
+  pages={
+    Array [
+      Object {
+        "label": "Home",
+        "url": "/",
+      },
+    ]
+  }
+>
+  <div>
+    <Breadcrumb
+      aria-label="breadcrumb"
+      className="reveal-breadcrumb"
+      listTag="ol"
+      tag="nav"
+    >
+      <nav
+        aria-label="breadcrumb"
+        className="reveal-breadcrumb"
+      >
+        <ol
+          className="breadcrumb"
+        >
+          <BreadcrumbItem
+            key="0"
+            tag="li"
+          >
+            <li
+              className="breadcrumb-item"
+            >
+              <Link
+                key="0"
+                replace={false}
+                to="/"
+              >
+                <a
+                  href="/"
+                  onClick={[Function]}
+                >
+                  Home
+                </a>
+              </Link>
+            </li>
+          </BreadcrumbItem>
+          <BreadcrumbItem
+            active={true}
+            tag="li"
+          >
+            <li
+              aria-current="page"
+              className="active breadcrumb-item"
+            >
+              Teams
+            </li>
+          </BreadcrumbItem>
+        </ol>
+      </nav>
+    </Breadcrumb>
+  </div>
+</HeaderBreadcrumb>
+`;

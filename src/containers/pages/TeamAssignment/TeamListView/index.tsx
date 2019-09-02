@@ -42,7 +42,7 @@ const defaultListViewProps: TeamListViewProps = {
 };
 
 /** the interface for all SingleTeamView props  */
-type TeamListViewPropsType = TeamListViewProps & RouteComponentProps;
+export type TeamListViewPropsType = TeamListViewProps & RouteComponentProps;
 
 const TeamListView = (props: TeamListViewPropsType) => {
   const { teams } = props;
