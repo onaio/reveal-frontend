@@ -3,8 +3,8 @@
  */
 import ListView from '@onaio/list-view';
 import reducerRegistry from '@onaio/redux-reducer-registry';
-import { values } from 'lodash';
-import * as React from 'react';
+import { capitalize, values } from 'lodash';
+import React from 'react';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
@@ -37,19 +37,24 @@ import * as fixtures from '../../../../store/ducks/tests/fixtures';
 
 reducerRegistry.register(teamsReducerName, teamsReducer);
 
+/** Placeholder interface for a teamMember object schema */
+interface TeamMember {
+  identifier: string;
+  name: string;
+  team: string;
+  username: string;
+}
+
 /** interface to describe our custom created SingleTeamView props */
 interface SingleTeamViewProps {
   team: Team | null;
-  teamMembers?: [
-    {
-      [key: string]: string;
-    }
-  ];
+  teamMembers: TeamMember[];
 }
 
 /** the default props for SingleTeamView */
 const defaultProps: SingleTeamViewProps = {
   team: null,
+  teamMembers: [],
 };
 
 /** the interface for all SingleTeamView props  */
@@ -81,7 +86,7 @@ const SingleTeamView = (props: SingleTeamViewPropsType) => {
 
   // listViewProps for team members
   const listViewProps = {
-    data: teamMembers!.map((teamMember: any) => values(teamMember)),
+    data: teamMembers.map((teamMember: any) => values(teamMember)),
     headerItems: ['#', 'Username', 'Name', 'Team'],
     tableClass: 'table table-bordered',
   };
@@ -111,26 +116,20 @@ const SingleTeamView = (props: SingleTeamViewPropsType) => {
       <div id="team-details" className="card mb-3">
         <div className="card-header">{TEAM_DETAILS}</div>
         <div className="card-body">
-          {/* the below display should be in 2 cols*/}
+          {/* the below display should be in 2 cols */}
+          {/* If automated how do we preserve the display order */}
           <Row>
-            <Col className="col-6">
-              <Row>
-                <Col className="col-6">Identifier</Col>
-                <Col className="col-6">{team.identifier}</Col>
-              </Row>
-            </Col>
-            <Col className="col-6">
-              <Row>
-                <Col className="col-6">Name</Col>
-                <Col className="col-6">{team.name}</Col>
-              </Row>
-            </Col>
-            <Col className="col-6">
-              <Row>
-                <Col className="col-6">Description</Col>
-                <Col className="col-6">Lorem Ipsum</Col>
-              </Row>
-            </Col>
+            {['identifier', 'name', 'description'].map(element => {
+              return (
+                <Col className="col-6" key={element} id={element}>
+                  <Row>
+                    <Col className="text-muted mb-4 col-6">{capitalize(element)}</Col>
+                    <Col className=" mb-4 col-6">{(team as any)[element]}</Col>
+                  </Row>
+                </Col>
+              );
+            })}
+            {/* */}
           </Row>
         </div>
       </div>

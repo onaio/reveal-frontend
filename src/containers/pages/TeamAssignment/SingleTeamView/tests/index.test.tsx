@@ -2,6 +2,7 @@ import ListView from '@onaio/list-view';
 import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import { createBrowserHistory } from 'history';
+import React from 'react';
 import Helmet from 'react-helmet';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
@@ -30,14 +31,14 @@ describe('src/containers/pages/TeamAssignment', () => {
         url: `${SINGLE_TEAM_URL}/teamId`,
       },
       team: fixtures.team1,
+      teamMembers: fixtures.teamMembers,
     };
 
-    const shallowWrapper = shallow(
+    shallow(
       <Router history={history}>
         <SingleTeamView {...props} />
       </Router>
     );
-    shallowWrapper.unmount();
   });
 
   it('renders SingleTeamView correctly', () => {
@@ -53,7 +54,7 @@ describe('src/containers/pages/TeamAssignment', () => {
         url: `${SINGLE_TEAM_URL}/teamId`,
       },
       team: fixtures.team1,
-      teamMembers: fixtures.teamMember1,
+      teamMembers: [fixtures.teamMember1],
     };
 
     const wrapper = mount(
@@ -90,7 +91,7 @@ describe('src/containers/pages/TeamAssignment', () => {
       location: mock,
       match: {
         isExact: true,
-        params: { id: '' },
+        params: { id: '1' },
         path: `${SINGLE_TEAM_URL}/:id`,
         url: `${SINGLE_TEAM_URL}/1`,
       },
@@ -104,6 +105,6 @@ describe('src/containers/pages/TeamAssignment', () => {
     );
     const passedProps = wrapper.find(SingleTeamView).props() as any;
     expect(passedProps.team).toEqual(fixtures.team1);
-    expect(passedProps.teamMembers).toEqual(fixtures.teamMember1);
+    expect(passedProps.teamMembers).toEqual([fixtures.teamMember1]);
   });
 });
