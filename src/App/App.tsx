@@ -158,13 +158,13 @@ class App extends Component {
                 component={ConnectedPlanDefinitionList}
               />
               <ConnectedPrivateRoute
-                disableLoginProtection={!DISABLE_LOGIN_PROTECTION}
+                disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                 exact={true}
                 path={CREATE_TEAM_URL}
                 component={ConnectedCreateEditTeamView}
               />
               <ConnectedPrivateRoute
-                disableLoginProtection={!DISABLE_LOGIN_PROTECTION}
+                disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                 exact={true}
                 path={`${EDIT_TEAM_URL}/:id`}
                 component={ConnectedCreateEditTeamView}
@@ -176,7 +176,7 @@ class App extends Component {
                 component={ConnectedSingleTeamView}
               />
               <ConnectedPrivateRoute
-                disableLoginProtection={!DISABLE_LOGIN_PROTECTION}
+                disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                 exact={true}
                 path={TEAM_LIST_URL}
                 component={ConnectedTeamListView}
