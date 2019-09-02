@@ -162,7 +162,27 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
       </Provider>
     );
     wrapper.update();
-    expect(toJson(wrapper.find('Link').at(0))).toMatchSnapshot();
+    expect(
+      wrapper
+        .find('.ReactTable')
+        .find('Cell')
+        .at(0)
+        .props()
+    ).toMatchSnapshot();
+    expect(
+      wrapper
+        .find('.ReactTable')
+        .find('Cell')
+        .at(1)
+        .props()
+    ).toMatchSnapshot();
+    expect(
+      wrapper
+        .find('.ReactTable')
+        .find('Cell')
+        .at(2)
+        .props()
+    ).toMatchSnapshot();
     wrapper.unmount();
   });
 
