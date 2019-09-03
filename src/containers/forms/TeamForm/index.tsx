@@ -93,7 +93,11 @@ const TeamForm = (props: TeamFormProps) => {
                 disabled={disabledFields.includes('identifier')}
                 className={errors.identifier ? `form-control is-invalid` : `form-control`}
               />
-              <ErrorMessage name="identifier" className="form-text text-danger" />
+              <ErrorMessage
+                component="small"
+                name="identifier"
+                className="form-text text-danger identifier-error"
+              />
             </FormGroup>
             <FormGroup>
               <Label>Name</Label>
@@ -104,7 +108,11 @@ const TeamForm = (props: TeamFormProps) => {
                 disabled={disabledFields.includes('name')}
                 className={errors.name ? `form-control is-invalid` : `form-control`}
               />
-              <ErrorMessage name="name" className="form-text text-danger" />
+              <ErrorMessage
+                name="name"
+                component="small"
+                className="form-text text-danger name-error"
+              />
             </FormGroup>
             <hr className="mb-2" />
             <Button
