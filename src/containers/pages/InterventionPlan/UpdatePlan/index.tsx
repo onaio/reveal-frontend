@@ -15,6 +15,7 @@ import {
   OPENSRP_PLANS,
   PLAN_LIST_URL,
   PLANS,
+  UPDATE_PLAN,
 } from '../../../../constants';
 import { OpenSRPService } from '../../../../services/opensrp';
 import planDefinitionReducer, {
@@ -72,7 +73,7 @@ const UpdatePlan = (props: RouteComponentProps<RouteParams> & UpdatePlanProps) =
   }
 
   const apiService = new service(OPENSRP_PLANS);
-  const pageTitle: string = plan ? `Update Plan: ${plan.title}` : 'Update Plan';
+  const pageTitle: string = plan ? `${UPDATE_PLAN}: ${plan.title}` : UPDATE_PLAN;
 
   const breadcrumbProps = {
     currentPage: {
