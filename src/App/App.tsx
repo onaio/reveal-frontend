@@ -18,6 +18,7 @@ import {
   FI_SINGLE_MAP_URL,
   FI_SINGLE_URL,
   FI_URL,
+  INTERVENTION_IRS_DRAFTS_URL,
   INTERVENTION_IRS_URL,
   LOGIN_URL,
   LOGOUT_URL,
@@ -65,10 +66,20 @@ class App extends Component {
                 path="/"
                 component={Home}
               />
+
+              {/* Active IRS Plans */}
               <ConnectedPrivateRoute
                 disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                 exact={true}
                 path={INTERVENTION_IRS_URL}
+                component={IrsPlans}
+              />
+
+              {/* Draft IRS Plans */}
+              <ConnectedPrivateRoute
+                disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                exact={true}
+                path={INTERVENTION_IRS_DRAFTS_URL}
                 component={IrsPlans}
               />
 
