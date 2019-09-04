@@ -21,6 +21,7 @@ import {
   INTERVENTION_IRS_URL,
   LOGIN_URL,
   LOGOUT_URL,
+  MAP,
   NEW_IRS_PLAN_URL,
   NEW_PLAN_URL,
   PLAN_COMPLETION_URL,
@@ -89,6 +90,13 @@ class App extends Component {
                 disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                 exact={true}
                 path={`${ACTIVE_IRS_PLAN_URL}/:id`}
+                component={IrsPlan}
+              />
+
+              <ConnectedPrivateRoute
+                disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                exact={true}
+                path={`${ACTIVE_IRS_PLAN_URL}/:id/${MAP}/:jurisdictionId`}
                 component={IrsPlan}
               />
 
