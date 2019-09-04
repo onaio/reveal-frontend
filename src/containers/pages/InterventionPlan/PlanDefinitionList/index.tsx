@@ -11,6 +11,7 @@ import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/Heade
 import Loading from '../../../../components/page/Loading';
 import { PlanDefinition } from '../../../../configs/settings';
 import {
+  ADD_PLAN,
   HOME,
   HOME_URL,
   OPENSRP_PLANS,
@@ -108,7 +109,7 @@ const PlanDefinitionList = (props: PlanListProps) => {
         <Col md={4}>
           <LinkToNewPlans
             className="focus-investigation btn btn-primary float-right mt-3 mb-3"
-            text="Add Plan"
+            text={ADD_PLAN}
           />
         </Col>
       </Row>
