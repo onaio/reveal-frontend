@@ -10,7 +10,14 @@ import LinkToNewPlans from '../../../../components/LinkToNewPlans';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
 import { PlanDefinition } from '../../../../configs/settings';
-import { HOME, HOME_URL, PLAN_LIST_URL, PLAN_UPDATE_URL, PLANS } from '../../../../constants';
+import {
+  HOME,
+  HOME_URL,
+  OPENSRP_PLANS,
+  PLAN_LIST_URL,
+  PLAN_UPDATE_URL,
+  PLANS,
+} from '../../../../constants';
 import { OpenSRPService } from '../../../../services/opensrp';
 import planDefinitionReducer, {
   fetchPlanDefinitions,
@@ -33,7 +40,7 @@ const PlanDefinitionList = (props: PlanListProps) => {
   const { fetchPlans, plans, service } = props;
   const [loading, setLoading] = useState<boolean>(true);
 
-  const apiService = new service('plans');
+  const apiService = new service(OPENSRP_PLANS);
 
   const pageTitle: string = PLANS;
 
