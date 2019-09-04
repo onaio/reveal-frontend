@@ -282,7 +282,7 @@ class IrsPlan extends React.Component<
                     : [...country.jurisdictionIds];
                   // define all Jurisdictions pertaining to this Plan only (by country)
                   const filteredJurisdictions = isDraftPlan
-                    ? this.getDecendantJurisdictionIds(
+                    ? this.getDescendantJurisdictionIds(
                         countryIds,
                         jurisdictionsById,
                         true,
@@ -593,7 +593,7 @@ class IrsPlan extends React.Component<
     );
   }
   /** onDrilldownClick - function to update the drilldown breadcrumbs when drilling down into the hierarchy
-   * @param id - the jurisidction_id of the Jurisdiction clicked
+   * @param id - the jurisdiction_id of the Jurisdiction clicked
    */
   private onDrilldownClick(id: string) {
     const { tableCrumbs } = this.state;
@@ -699,7 +699,7 @@ class IrsPlan extends React.Component<
         promises.push(
           new Promise((resolve, reject) => {
             OpenSrpLocationService.read(endpoint, params)
-              .then(jurisidction => resolve(jurisidction))
+              .then(j => resolve(j))
               .catch(error => reject(error));
           })
         );
@@ -747,7 +747,7 @@ class IrsPlan extends React.Component<
   }
 
   // Jurisdiction Selection Control (which jurisidcitions should be included in the plan)
-  /** onToggleJurisdictionSelection - toggles selection of clicked Jurisdiction and all decendants
+  /** onToggleJurisdictionSelection - toggles selection of clicked Jurisdiction and all descendants
    * @param id - the jurisdiction_id of the Jurisdiction being toggled
    */
   private onToggleJurisdictionSelection(id: string) {
@@ -761,7 +761,7 @@ class IrsPlan extends React.Component<
       const clickedFeatureJurisdiction = jurisdictionsById[id];
       const doSelect = !newPlanJurisdictionIds.includes(id);
       // define child jurisdictions of clicked jurisdiction
-      const jurisdictionIdsToToggle = this.getDecendantJurisdictionIds(
+      const jurisdictionIdsToToggle = this.getDescendantJurisdictionIds(
         [id],
         filteredJurisdictionsById
       );
@@ -851,19 +851,19 @@ class IrsPlan extends React.Component<
         ...filteredJurisdictionIds,
       ];
       const decendantIds = focusJurisdictionId
-        ? this.getDecendantJurisdictionIds([focusJurisdictionId], jurisdictionsById)
+        ? this.getDescendantJurisdictionIds([focusJurisdictionId], jurisdictionsById)
         : [...filteredJurisdictionIds];
 
       // const newPlanJurisdictionIds: string[] = [];
       if (focusJurisdictionId && isSelected) {
-        // select previously deselected decendants
+        // select previously deselected descendants
         for (const d of decendantIds) {
           if (!selectedIds.includes(d)) {
             selectedIds.push(d);
           }
         }
       } else if (focusJurisdictionId && !isSelected) {
-        // de-select previously selected decendants
+        // de-select previously selected descendants
         for (const d of decendantIds) {
           if (selectedIds.includes(d)) {
             selectedIds.splice(selectedIds.indexOf(d), 1);
@@ -941,9 +941,9 @@ class IrsPlan extends React.Component<
   }
 
   // Getter methods
-  /** getChildlessChildrenIds - hierarchy util to get all childless decendants of certain Jurisdictions
-   * @param filteredJurisdictions - list of Jurisdictions of which to find the childless decendants
-   * @returns list of jurisdiction_ids of childless decendants
+  /** getChildlessChildrenIds - hierarchy util to get all childless descendants of certain Jurisdictions
+   * @param filteredJurisdictions - list of Jurisdictions of which to find the childless descendants
+   * @returns list of jurisdiction_ids of childless descendants
    */
   private getChildlessChildrenIds(filteredJurisdictions: Jurisdiction[]): string[] {
     const childlessChildrenIds = filteredJurisdictions.map(j => j.jurisdiction_id);
@@ -960,13 +960,13 @@ class IrsPlan extends React.Component<
 
     return childlessChildrenIds;
   }
-  /** getDecendantJurisdictionIds - hierarchy util to get all decendants of certain Jurisdictions
-   * @param ParentIds - jurisdiction_ids of the parent jurisdictions for which to find decendants
-   * @param jurisdictionsById - list Jurisdictions through which to search for decendants
+  /** getDescendantJurisdictionIds - hierarchy util to get all descendants of certain Jurisdictions
+   * @param ParentIds - jurisdiction_ids of the parent jurisdictions for which to find descendants
+   * @param jurisdictionsById - list Jurisdictions through which to search for descendants
    * @param doIncludeParentIds - boolean to determine whether or not to include ParentId strings in returned list
-   * @returns list of jurisdiction_ids of all decendants
+   * @returns list of jurisdiction_ids of all descendants
    */
-  private getDecendantJurisdictionIds(
+  private getDescendantJurisdictionIds(
     ParentIds: string[],
     jurisdictionsById: { [key: string]: Jurisdiction },
     doIncludeParentIds: boolean = true,
@@ -1000,9 +1000,9 @@ class IrsPlan extends React.Component<
 
     return decendantIds;
   }
-  /** getDecendantJurisdictionIds - recursive hierarchy util to get all ancestors of certain Jurisdictions
+  /** getDescendantJurisdictionIds - recursive hierarchy util to get all ancestors of certain Jurisdictions
    * @param ChildIds - jurisdiction_ids of the child jurisdictions for which to find ancestors
-   * @param jurisdictions [array] - list Jurisdictions through which to search for decendants
+   * @param jurisdictions [array] - list Jurisdictions through which to search for descendants
    * @param jurisdictions [object] - key/value map of jurisdictionsById
    * @param doIncludeChildIds - boolean to determine whether or not to include ChildId strings in returned list
    * @returns list of jurisdiction_ids of all ancestors
@@ -1543,7 +1543,7 @@ class IrsPlan extends React.Component<
           }
 
           // define childless decendant jurisdictions
-          const decendantChildlessChildrenIds = this.getDecendantJurisdictionIds(
+          const decendantChildlessChildrenIds = this.getDescendantJurisdictionIds(
             [clickedFeatureJurisdiction.jurisdiction_id],
             filteredJurisdictionsById,
             false
@@ -1794,10 +1794,10 @@ class IrsPlan extends React.Component<
 
     let showPagination: boolean = false;
     if (this.state.focusJurisdictionId) {
-      const directDecendants = filteredJurisdictions.filter(
+      const directDescendants = filteredJurisdictions.filter(
         j => j.parent_id === this.state.focusJurisdictionId
       );
-      showPagination = directDecendants.length > 20;
+      showPagination = directDescendants.length > 20;
     }
 
     const tableProps: DrillDownProps<any> = {
@@ -1823,7 +1823,7 @@ class IrsPlan extends React.Component<
     return tableProps;
   }
 
-  /** util to check if Jurisdiction has any selected decendants
+  /** util to check if Jurisdiction has any selected descendants
    * @param id - the jurisdiction_id of the Jurisdiction being checked
    * @returns boolean
    */
@@ -1841,11 +1841,11 @@ class IrsPlan extends React.Component<
 
     if (id) {
       // check if drilled down Jurisdiction is at least partially selected
-      const decendants: Jurisdiction[] = this.getDecendantJurisdictionIds([id], jurisdictionsById)
+      const descendants: Jurisdiction[] = this.getDescendantJurisdictionIds([id], jurisdictionsById)
         .map(j => jurisdictionsById[j])
         .filter(j => !!j);
-      const childlessDecendants: string[] = this.getChildlessChildrenIds(decendants);
-      for (const child of childlessDecendants) {
+      const childlessDescendants: string[] = this.getChildlessChildrenIds(descendants);
+      for (const child of childlessDescendants) {
         if (planJurisdictionIds.includes(child)) {
           return true;
         }
