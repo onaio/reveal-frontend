@@ -52,6 +52,7 @@ import {
   JurisdictionTypes,
   lineLayerConfig,
   partiallySelectedJurisdictionOpacity,
+  Tileset,
 } from './../../../../../configs/settings';
 
 import { OpenSRPService } from '../../../../../services/opensrp';
@@ -1201,7 +1202,7 @@ class IrsPlan extends React.Component<
     }
 
     const self = this;
-    function getJurisdictionFillLayers(jurisdictions: Jurisdiction[], tiles: any[]) {
+    function getJurisdictionFillLayers(jurisdictions: Jurisdiction[], tiles: Tileset[]) {
       const filteredJurisdictionsById = keyBy(jurisdictions, j => j.jurisdiction_id);
       const jurisdictionIds = jurisdictions.map(j => j.jurisdiction_id);
       const layers: FlexObject[] = [];
