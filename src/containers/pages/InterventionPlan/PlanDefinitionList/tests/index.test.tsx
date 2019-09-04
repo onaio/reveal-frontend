@@ -62,13 +62,15 @@ describe('components/InterventionPlan/PlanDefinitionList', () => {
     expect(helmet.title).toEqual(PLANS);
 
     // check that headerBredcrumb is displayed
-    expect(toJson(wrapper.find('HeaderBreadcrumb'))).toMatchSnapshot('Headerbreadcrumb');
+    expect(toJson(wrapper.find('Breadcrumb'))).toMatchSnapshot('Breadcrumb');
 
     // there is this table that should be within the page
-    expect(toJson(wrapper.find('table.plans-list'))).toMatchSnapshot('planlistTable');
+    expect(toJson(wrapper.find('table.plans-list tbody tr td').first())).toMatchSnapshot(
+      'planlistTable single first tbody row data'
+    );
 
     // check that openSRPService is called
-    // expect(classMock).toHaveBeenCalledWith(OPENSRP_PLANS);
+    expect(classMock).toHaveBeenCalledWith(OPENSRP_PLANS);
 
     // fetchPlans is called with response from service.list
     expect(fetchPlansMock).toBeCalledWith({});

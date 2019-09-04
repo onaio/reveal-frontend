@@ -1,130 +1,18 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`components/InterventionPlan/PlanDefinitionList renders plan definition list correctly: Headerbreadcrumb 1`] = `
-<HeaderBreadcrumb
-  currentPage={
-    Object {
-      "label": "Manage Plans",
-      "url": "/plans/list",
-    }
-  }
-  pages={
-    Array [
-      Object {
-        "label": "Home",
-        "url": "/",
-      },
-    ]
-  }
+exports[`components/InterventionPlan/PlanDefinitionList renders plan definition list correctly: Breadcrumb 1`] = `
+<Breadcrumb
+  aria-label="breadcrumb"
+  className="reveal-breadcrumb"
+  listTag="ol"
+  tag="nav"
 >
-  <div>
-    <Breadcrumb
-      aria-label="breadcrumb"
-      className="reveal-breadcrumb"
-      listTag="ol"
-      tag="nav"
-    >
-      <nav
-        aria-label="breadcrumb"
-        className="reveal-breadcrumb"
-      >
-        <ol
-          className="breadcrumb"
-        >
-          <BreadcrumbItem
-            key="0"
-            tag="li"
-          >
-            <li
-              className="breadcrumb-item"
-            >
-              <Link
-                key="0"
-                replace={false}
-                to="/"
-              >
-                <a
-                  href="/"
-                  onClick={[Function]}
-                >
-                  Home
-                </a>
-              </Link>
-            </li>
-          </BreadcrumbItem>
-          <BreadcrumbItem
-            active={true}
-            tag="li"
-          >
-            <li
-              aria-current="page"
-              className="active breadcrumb-item"
-            >
-              Manage Plans
-            </li>
-          </BreadcrumbItem>
-        </ol>
-      </nav>
-    </Breadcrumb>
-  </div>
-</HeaderBreadcrumb>
-`;
-
-exports[`components/InterventionPlan/PlanDefinitionList renders plan definition list correctly: planlistTable 1`] = `
-<table
-  className="table table-bordered plans-list"
->
-  <thead
-    className="listview-thead"
+  <nav
+    aria-label="breadcrumb"
+    className="reveal-breadcrumb"
   >
-    <tr
-      className="listview-tr"
-    >
-      <ElementMap
-        HTMLTag="th"
-        className="listview-td"
-        items={
-          Array [
-            "Title",
-            "Intervention Type",
-            "Status",
-            "Last Modified",
-          ]
-        }
-      >
-        <th
-          className="listview-td"
-          key="0"
-        >
-          Title
-        </th>
-        <th
-          className="listview-td"
-          key="1"
-        >
-          Intervention Type
-        </th>
-        <th
-          className="listview-td"
-          key="2"
-        >
-          Status
-        </th>
-        <th
-          className="listview-td"
-          key="3"
-        >
-          Last Modified
-        </th>
-      </ElementMap>
-    </tr>
-  </thead>
-  <tbody
-    className="listview-tbody"
-  >
-    <tr
-      className="listview-tr"
-      key="0"
+    <ol
+      className="breadcrumb"
     >
       <ElementMap
         HTMLTag="td"
@@ -142,44 +30,59 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
             "2019-05-19",
           ]
         }
+      <BreadcrumbItem
+        key="0"
+        tag="li"
       >
-        <td
-          className="listview-th"
-          key="0"
+        <li
+          className="breadcrumb-item"
         >
           <Link
-            key="356b6b84-fc36-4389-a44a-2b038ed2f38d"
+            key="0"
             replace={false}
-            to="/plans/update/356b6b84-fc36-4389-a44a-2b038ed2f38d"
+            to="/"
           >
             <a
-              href="/plans/update/356b6b84-fc36-4389-a44a-2b038ed2f38d"
+              href="/"
               onClick={[Function]}
             >
-              A2-Lusaka Akros Test Focus 2
+              Home
             </a>
           </Link>
-        </td>
-        <td
-          className="listview-th"
-          key="1"
+        </li>
+      </BreadcrumbItem>
+      <BreadcrumbItem
+        active={true}
+        tag="li"
+      >
+        <li
+          aria-current="page"
+          className="active breadcrumb-item"
         >
-          FI
-        </td>
-        <td
-          className="listview-th"
-          key="2"
-        >
-          active
-        </td>
-        <td
-          className="listview-th"
-          key="3"
-        >
-          2019-05-19
-        </td>
-      </ElementMap>
-    </tr>
-  </tbody>
-</table>
+          Manage Plans
+        </li>
+      </BreadcrumbItem>
+    </ol>
+  </nav>
+</Breadcrumb>
+`;
+
+exports[`components/InterventionPlan/PlanDefinitionList renders plan definition list correctly: planlistTable single first tbody row data 1`] = `
+<td
+  className="listview-th"
+  key="0"
+>
+  <Link
+    key="356b6b84-fc36-4389-a44a-2b038ed2f38d"
+    replace={false}
+    to="/plans/update/356b6b84-fc36-4389-a44a-2b038ed2f38d"
+  >
+    <a
+      href="/plans/update/356b6b84-fc36-4389-a44a-2b038ed2f38d"
+      onClick={[Function]}
+    >
+      A2-Lusaka Akros Test Focus 2
+    </a>
+  </Link>
+</td>
 `;
