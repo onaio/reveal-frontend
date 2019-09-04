@@ -66,6 +66,7 @@ import jurisdictionReducer, {
   getJurisdictionsById,
   getJurisdictionsIdArray,
   Jurisdiction,
+  JurisdictionGeoJSON,
   reducerName as jurisdictionReducerName,
 } from '../../../../../store/ducks/jurisdictions';
 import plansReducer, {
@@ -1128,7 +1129,7 @@ class IrsPlan extends React.Component<
       return null;
     }
 
-    const ADMIN_LINE_LAYERS: any[] = [];
+    const ADMIN_LINE_LAYERS: FlexObject[] = [];
     const adminBorderWidths: number[] = [1.5, 1, 0.75, 0.5];
     for (let t = 0; t < tilesets.length; t += 1) {
       if (tilesets[t].jurisdictionType === JurisdictionLevels[0]) {
@@ -1209,7 +1210,7 @@ class IrsPlan extends React.Component<
       const geoGraphicLevels: number[] = [];
       const layerIds: string[] = [];
       const adminLayerIds: string[] = [];
-      const jurisdictionFeatures: any[] = [];
+      const jurisdictionFeatures: JurisdictionGeoJSON[] = [];
 
       const operationalTilesets =
         tilesets &&
@@ -1301,7 +1302,7 @@ class IrsPlan extends React.Component<
 
           // stash features for bounds
           for (const feature of featureCollection.features) {
-            jurisdictionFeatures.push(feature);
+            jurisdictionFeatures.push(feature as JurisdictionGeoJSON);
           }
 
           const geoLevelIds: string[] = featureCollection.features
@@ -1723,6 +1724,12 @@ class IrsPlan extends React.Component<
         newPlan.plan_jurisdictions_ids.length === filteredJurisdictionIds.length
       : !!focusJurisdictionId && this.getIsJurisdictionPartiallySelected(focusJurisdictionId);
 
+    // a simple interface for the the drilldown table data extending Jurisdiciton
+    interface JurisdictionRow extends Jurisdiction {
+      isChildless: boolean;
+      isPartiallySelected: boolean;
+    }
+
     const columns = [
       {
         Header: () => (
@@ -1736,7 +1743,7 @@ class IrsPlan extends React.Component<
         columns: [
           {
             Header: '',
-            accessor: (j: Jurisdiction) => (
+            accessor: (j: JurisdictionRow) => (
               <Input
                 checked={planJurisdictionIds.includes(j.jurisdiction_id)}
                 className="plan-jurisdiction-selection-checkbox"
@@ -1756,7 +1763,7 @@ class IrsPlan extends React.Component<
         columns: [
           {
             Header: '',
-            accessor: (j: any) => (
+            accessor: (j: JurisdictionRow) => (
               <span
                 id={j.jurisdiction_id}
                 onClick={onDrilldownClick}
@@ -1774,7 +1781,7 @@ class IrsPlan extends React.Component<
         columns: [
           {
             Header: '',
-            accessor: (j: any) => {
+            accessor: (j: JurisdictionRow) => {
               return (
                 <span onClick={stopPropagationAndPreventDefault}>
                   {j.isChildless ? 'Spray Area' : `Admin Level ${j.geographic_level}`}
@@ -1812,14 +1819,17 @@ class IrsPlan extends React.Component<
     const tableProps: DrillDownProps<any> = {
       CellComponent: DropDownCell,
       columns,
-      data: filteredJurisdictions.map((j: any) => ({
-        ...j,
-        id: j.jurisdiction_id,
-        isChildless: this.state.childlessChildrenIds.includes(j.jurisdiction_id),
-        isPartiallySelected:
-          !this.state.childlessChildrenIds.includes(j.jurisdiction_id) &&
-          this.getChildlessChildrenIds([jurisdictionsById[j.jurisdiction_id]]),
-      })),
+      data: filteredJurisdictions.map(
+        (j: Jurisdiction) =>
+          ({
+            ...j,
+            id: j.jurisdiction_id,
+            isChildless: this.state.childlessChildrenIds.includes(j.jurisdiction_id),
+            isPartiallySelected:
+              !this.state.childlessChildrenIds.includes(j.jurisdiction_id) &&
+              this.getChildlessChildrenIds([jurisdictionsById[j.jurisdiction_id]]),
+          } as JurisdictionRow)
+      ),
       identifierField: 'jurisdiction_id',
       linkerField: 'name',
       minRows: 0,
