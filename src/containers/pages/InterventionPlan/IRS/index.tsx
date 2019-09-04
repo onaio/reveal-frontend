@@ -11,6 +11,7 @@ import DrillDownTable from '@onaio/drill-down-table';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 
 import {
+  DRAFTS_PARENTHESIS,
   HOME,
   HOME_URL,
   INTERVENTION_IRS_DRAFTS_URL,
@@ -51,12 +52,14 @@ const OpenSrpPlanService = new OpenSRPService('plans');
 /** IrsPlansProps - interface for IRS Plans page */
 export interface IrsPlansProps {
   fetchPlansActionCreator: typeof fetchPlanRecords;
+  pageTitle: string;
   plansArray: PlanRecord[];
 }
 
 /** defaultIrsPlansProps - default props for IRS Plans page */
 export const defaultIrsPlansProps: IrsPlansProps = {
   fetchPlansActionCreator: fetchPlanRecords,
+  pageTitle: '',
   plansArray: [],
 };
 
@@ -97,13 +100,14 @@ class IrsPlans extends React.Component<IrsPlansProps & RouteComponentProps<Route
   }
 
   public render() {
+    const { pageTitle } = this.props;
     const homePage = {
       label: HOME,
       url: HOME_URL,
     };
     const breadCrumbProps: BreadCrumbProps = {
       currentPage: {
-        label: 'IRS',
+        label: pageTitle,
         url: INTERVENTION_IRS_URL,
       },
       pages: [homePage],
@@ -172,10 +176,10 @@ class IrsPlans extends React.Component<IrsPlansProps & RouteComponentProps<Route
     return (
       <div className="mb-5">
         <Helmet>
-          <title>{IRS_TITLE}</title>
+          <title>{pageTitle.length ? pageTitle : IRS_TITLE}</title>
         </Helmet>
         <HeaderBreadcrumbs {...breadCrumbProps} />
-        <h2 className="page-title">{IRS_PLANS}</h2>
+        <h2 className="page-title">{pageTitle}</h2>
         <DrillDownTable {...tableProps} />
         <br />
         <Button color="primary" tag={Link} to={`${INTERVENTION_IRS_URL}/new`}>
@@ -195,8 +199,10 @@ interface DispatchedStateProps {
 const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateProps => {
   const isDraftsList = ownProps.path === INTERVENTION_IRS_DRAFTS_URL;
   const planStatus = isDraftsList ? PlanStatus.DRAFT : PlanStatus.ACTIVE;
+  const pageTitle = `${IRS_PLANS}${isDraftsList ? ` ${DRAFTS_PARENTHESIS}` : ''}`;
 
   const props = {
+    pageTitle,
     plansArray: getPlanRecordsArray(state, InterventionType.IRS, [planStatus]),
     ...ownProps,
   };
