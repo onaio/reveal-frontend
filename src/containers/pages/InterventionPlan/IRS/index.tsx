@@ -10,7 +10,13 @@ import { Store } from 'redux';
 import DrillDownTable from '@onaio/drill-down-table';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 
-import { HOME, HOME_URL, INTERVENTION_IRS_URL, IRS_PLAN_TYPE } from '../../../../constants';
+import {
+  HOME,
+  HOME_URL,
+  INTERVENTION_IRS_DRAFTS_URL,
+  INTERVENTION_IRS_URL,
+  IRS_PLAN_TYPE,
+} from '../../../../constants';
 
 import { RouteParams } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
@@ -187,11 +193,11 @@ interface DispatchedStateProps {
 }
 
 const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateProps => {
+  const isDraftsList = ownProps.path === INTERVENTION_IRS_DRAFTS_URL;
+  const planStatus = isDraftsList ? PlanStatus.DRAFT : PlanStatus.ACTIVE;
+
   const props = {
-    plansArray: getPlanRecordsArray(state, InterventionType.IRS, [
-      PlanStatus.ACTIVE,
-      PlanStatus.DRAFT,
-    ]),
+    plansArray: getPlanRecordsArray(state, InterventionType.IRS, [planStatus]),
     ...ownProps,
   };
   return props;
