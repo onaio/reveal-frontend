@@ -44,7 +44,7 @@ const PlanDefinitionList = (props: PlanListProps) => {
   /** Track status of the component  during a single render */
   let isMounted = true;
 
-  const apiService = new service('/plans');
+  const apiService = new service(OPENSRP_PLANS);
 
   const pageTitle: string = PLANS;
 
@@ -84,7 +84,7 @@ const PlanDefinitionList = (props: PlanListProps) => {
     loadData();
 
     // cleanup function -> sets mount status to false
-    return () => {
+    return function cleanup() {
       isMounted = false;
     };
   }, []);
