@@ -16,10 +16,12 @@ import reducerRegistry from '@onaio/redux-reducer-registry';
 
 import { DATE_FORMAT, SUPERSET_JURISDICTIONS_DATA_SLICE } from '../../../../../configs/env';
 import {
+  ACTIVE_IRS_PLAN_URL,
   HOME,
   HOME_URL,
   INTERVENTION_IRS_URL,
   JURISDICTION_ID,
+  MAP,
   MAP_ID,
   NEW_PLAN,
   OPENSRP_FIND_BY_PROPERTIES,
@@ -87,6 +89,8 @@ import HeaderBreadcrumbs, {
 } from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../../components/page/Loading';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Link } from 'react-router-dom';
 import './../../../../../styles/css/drill-down-table.css';
 import './style.css';
 
@@ -1692,7 +1696,7 @@ class IrsPlan extends React.Component<
    */
   private getDrilldownPlanTableProps(state: IrsPlanState): DrillDownProps<any> | null {
     const { filteredJurisdictionIds, newPlan, focusJurisdictionId, tableCrumbs } = state;
-    const { jurisdictionsById } = this.props;
+    const { isFinalizedPlan, jurisdictionsById, planId } = this.props;
     const filteredJurisdictions = filteredJurisdictionIds.map(j => jurisdictionsById[j]);
     const isFocusJurisdictionTopLevel = tableCrumbs[0] && focusJurisdictionId === tableCrumbs[0].id;
 
@@ -1769,6 +1773,15 @@ class IrsPlan extends React.Component<
                 onClick={onDrilldownClick}
                 className={`plan-jurisdiction-name${!j.isChildless ? ' btn-link' : ''}`}
               >
+                {isFinalizedPlan && j.isChildless && (
+                  <span>
+                    <Link to={`${ACTIVE_IRS_PLAN_URL}/${planId}/${MAP}/${j.jurisdiction_id}`}>
+                      <FontAwesomeIcon icon={['fas', MAP]} />
+                    </Link>
+                    &nbsp;&nbsp;
+                  </span>
+                )}
+
                 {j.name}
               </span>
             ),
