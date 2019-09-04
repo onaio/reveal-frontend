@@ -702,7 +702,7 @@ export const symbolLayerConfig = {
 };
 
 /** Default colors layer fill colors per administrative level */
-export const adminLayerColors = ['purple', 'blue', 'green', 'yellow', 'orange', 'red'];
+export const adminLayerColors = ['black', 'red', 'orange', 'yellow', 'green'];
 export type adminLayerColorsType = typeof adminLayerColors[number];
 
 /** Interfaces describing administrative hierarchy via ISO 3166 admin codes */

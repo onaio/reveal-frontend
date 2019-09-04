@@ -1151,8 +1151,7 @@ class IrsPlan extends React.Component<
     }
 
     const ADMIN_FILL_LAYER_IDS: string[] = [];
-    const ADMIN_FILL_LAYERS: any[] = [];
-    const adminFillColors: string[] = ['black', 'red', 'orange', 'yellow', 'green'];
+    const ADMIN_FILL_LAYERS: FlexObject[] = [];
     const selectedJurisdictionsIds =
       newPlan && newPlan.plan_jurisdictions_ids
         ? [...newPlan.plan_jurisdictions_ids]
@@ -1176,7 +1175,7 @@ class IrsPlan extends React.Component<
         ...fillLayerConfig,
         id: adminFillLayerId,
         paint: {
-          'fill-color': adminFillColors[t],
+          'fill-color': adminLayerColors[t],
           'fill-opacity': adminFillOpacity,
         },
         source: {
