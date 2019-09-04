@@ -538,7 +538,9 @@ class IrsPlan extends React.Component<
   }
 
   // Jurisdiction Hierarchy Control
-  /** onTableBreadCrumbClick - handler for drilldown table breadcrumb clicks to reset the table hierarchy */
+  /** onTableBreadCrumbClick - handler for drilldown table breadcrumb clicks to reset the table hierarchy
+   * @param {MouseEvent} e - event object from clicking the table breadcrumb
+   */
   private onTableBreadCrumbClick = (e: MouseEvent) => {
     preventDefault(e);
     if (e && e.currentTarget && e.currentTarget.id) {
@@ -567,7 +569,7 @@ class IrsPlan extends React.Component<
     }
   };
   /** onResetDrilldownTableHierarchy - function for resetting drilldown table hierachy baseline
-   * @param Id - the id of the highest level parent_idto show in the table, or null to reset completely
+   * @param {string|null} Id - the id of the highest level parent_idto show in the table, or null to reset completely
    */
   private onResetDrilldownTableHierarchy(Id: string | null) {
     const id = Id !== 'null' ? Id : null;
@@ -593,7 +595,7 @@ class IrsPlan extends React.Component<
     );
   }
   /** onDrilldownClick - function to update the drilldown breadcrumbs when drilling down into the hierarchy
-   * @param id - the jurisdiction_id of the Jurisdiction clicked
+   * @param {string} id - the jurisdiction_id of the Jurisdiction clicked
    */
   private onDrilldownClick(id: string) {
     const { tableCrumbs } = this.state;
@@ -748,7 +750,7 @@ class IrsPlan extends React.Component<
 
   // Jurisdiction Selection Control (which jurisidcitions should be included in the plan)
   /** onToggleJurisdictionSelection - toggles selection of clicked Jurisdiction and all descendants
-   * @param id - the jurisdiction_id of the Jurisdiction being toggled
+   * @param {string} id - the jurisdiction_id of the Jurisdiction being toggled
    */
   private onToggleJurisdictionSelection(id: string) {
     const { newPlan: NewPlan, filteredJurisdictionIds, country } = this.state;
@@ -831,14 +833,18 @@ class IrsPlan extends React.Component<
       });
     }
   }
-  /** onTableCheckboxChange - handler for drilldown table checkbox click which calls this.onToggleJurisdictionSelection */
+  /** onTableCheckboxChange - handler for drilldown table checkbox click which calls this.onToggleJurisdictionSelection
+   * @param {any} e - event object from Drilldown table checkbox click
+   */
   private onTableCheckboxChange(e: any) {
     if (e && e.target) {
       const { value: id } = e.target;
       this.onToggleJurisdictionSelection(id);
     }
   }
-  /** onToggleAllCheckboxChange - handler for de/select all Jurisdictions checkbox which updates component state */
+  /** onToggleAllCheckboxChange - handler for de/select all Jurisdictions checkbox which updates component state
+   * @param {any} e - event object from drilldown table toggle-all checkbox click
+   */
   private onToggleAllCheckboxChange(e: any) {
     const { newPlan: NewPlan, filteredJurisdictionIds, focusJurisdictionId } = this.state;
     const { jurisdictionsById } = this.props;
@@ -942,8 +948,8 @@ class IrsPlan extends React.Component<
 
   // Getter methods
   /** getChildlessChildrenIds - hierarchy util to get all childless descendants of certain Jurisdictions
-   * @param filteredJurisdictions - list of Jurisdictions of which to find the childless descendants
-   * @returns list of jurisdiction_ids of childless descendants
+   * @param {Jurisdiction[]} filteredJurisdictions - list of Jurisdictions of which to find the childless descendants
+   * @returns {string[]} list of jurisdiction_ids of childless descendants
    */
   private getChildlessChildrenIds(filteredJurisdictions: Jurisdiction[]): string[] {
     const childlessChildrenIds = filteredJurisdictions.map(j => j.jurisdiction_id);
@@ -961,10 +967,10 @@ class IrsPlan extends React.Component<
     return childlessChildrenIds;
   }
   /** getDescendantJurisdictionIds - hierarchy util to get all descendants of certain Jurisdictions
-   * @param ParentIds - jurisdiction_ids of the parent jurisdictions for which to find descendants
-   * @param jurisdictionsById - list Jurisdictions through which to search for descendants
-   * @param doIncludeParentIds - boolean to determine whether or not to include ParentId strings in returned list
-   * @returns list of jurisdiction_ids of all descendants
+   * @param {string[]} ParentIds - jurisdiction_ids of the parent jurisdictions for which to find descendants
+   * @param {{[key:string]:Jurisdiction}} jurisdictionsById - list Jurisdictions through which to search for descendants
+   * @param {boolean} doIncludeParentIds - boolean to determine whether or not to include ParentId strings in returned list
+   * @returns {string[]} list of jurisdiction_ids of all descendants
    */
   private getDescendantJurisdictionIds(
     ParentIds: string[],
@@ -1001,11 +1007,10 @@ class IrsPlan extends React.Component<
     return decendantIds;
   }
   /** getDescendantJurisdictionIds - recursive hierarchy util to get all ancestors of certain Jurisdictions
-   * @param ChildIds - jurisdiction_ids of the child jurisdictions for which to find ancestors
-   * @param jurisdictions [array] - list Jurisdictions through which to search for descendants
-   * @param jurisdictions [object] - key/value map of jurisdictionsById
-   * @param doIncludeChildIds - boolean to determine whether or not to include ChildId strings in returned list
-   * @returns list of jurisdiction_ids of all ancestors
+   * @param {string[]} ChildIds - jurisdiction_ids of the child jurisdictions for which to find ancestors
+   * @param {Jurisdiction[] | {[key:string]:Jurisdiction}} jurisdictions- list or key/value map of Jurisdictions through which to search for descendants
+   * @param {boolean} doIncludeChildIds - to determine whether or not to include ChildId strings in returned list
+   * @returns {string[]} list of jurisdiction_ids of all ancestors
    */
   private getAncestorJurisdictionIds(
     ChildIds: string[],
@@ -1088,8 +1093,8 @@ class IrsPlan extends React.Component<
   }
 
   /** getGeographicLevelsFromJurisdictions - utility to derive all geographic levels
-   * @param filteredJurisdictions - array of Jurisdictions relevant to the country
-   * @returns array of geographic levels as numbers
+   * @param {Jurisdiction[]} filteredJurisdictions - array of Jurisdictions relevant to the country
+   * @returns {number[]} array of geographic levels as integers
    */
   private getGeographicLevelsFromJurisdictions(filteredJurisdictions: Jurisdiction[]): number[] {
     const geoGraphicLevels: number[] = [];
@@ -1106,7 +1111,9 @@ class IrsPlan extends React.Component<
     return geoGraphicLevels;
   }
 
-  /** getGisidaWrapperProps - GisidaWrapper prop builder building out layers and handlers for Gisida */
+  /** getGisidaWrapperProps - GisidaWrapper prop builder building out layers and handlers for Gisida
+   * @returns {GisidaProps|null} props object for the GisidaWrapper or null
+   */
   private getGisidaWrapperProps(): GisidaProps | null {
     const { country, isLoadingGeoms, filteredJurisdictionIds, newPlan } = this.state;
     const { jurisdictionsById } = this.props;
@@ -1397,9 +1404,10 @@ class IrsPlan extends React.Component<
   }
 
   /** onAdminFillClick - map click handler passed into Gisida for map drill down functionality
-   * @param e - Mapbox Event object
-   * @param country - JurisdictionsByCountry object containing basic hierarchy information per country
-   * @param geographicLevel - The hierarchical level of the feature being clicked
+   * @param {MouseEvent} e - Mapbox Event object
+   * @param {JurisdictionsByCountry} country - JurisdictionsByCountry object containing basic hierarchy information per country
+   * @param {string[]} adminLayerIds - The ids of Gisida admin-fill layers
+   * @param {string[]} jurisdictionLayerIds - The ids of Gisida (operational-)jurisdiction-fill layers
    */
   private onAdminFillClick(
     e: EventData,
@@ -1579,8 +1587,9 @@ class IrsPlan extends React.Component<
   }
 
   /** onDrillUpClick - map click handler passed into Gisida for resetting the drilldown hierarchy
-   * @param e - Mapbox Event object
-   * @param country - JurisdictionsByCountry object containing basic hierarchy information per country
+   * @param {EventData} e - Mapbox Event object
+   * @param {JurisdictionsByCountry} country - JurisdictionsByCountry object containing basic hierarchy information per country
+   * @param {Jurisdiction[]} filteredJurisdictions - filtered list of country-relevant Jurisdictions
    */
   private onDrillUpClick(
     e: EventData,
@@ -1677,8 +1686,8 @@ class IrsPlan extends React.Component<
   }
 
   /** getDrilldownPlanTableProps - getter for hierarchical DrilldownTable props
-   * @param props - component props
-   * @returns tableProps|null - compatible object for DrillDownTable props
+   * @param {IrsPlanState} state - component state
+   * @returns {DrillDownProps<any>|null} - compatible object for DrillDownTable props or null
    */
   private getDrilldownPlanTableProps(state: IrsPlanState): DrillDownProps<any> | null {
     const { filteredJurisdictionIds, newPlan, focusJurisdictionId, tableCrumbs } = state;
@@ -1824,8 +1833,9 @@ class IrsPlan extends React.Component<
   }
 
   /** util to check if Jurisdiction has any selected descendants
-   * @param id - the jurisdiction_id of the Jurisdiction being checked
-   * @returns boolean
+   * @param {string|null} id - the jurisdiction_id of the Jurisdiction being checked
+   * @param {string[]} selectedIds - the ids of Jurisdictions which are currently selected
+   * @returns {boolean}
    */
   private getIsJurisdictionPartiallySelected(id: string | null, selectedIds?: string[]): boolean {
     const { newPlan, filteredJurisdictionIds } = this.state;
@@ -1856,8 +1866,8 @@ class IrsPlan extends React.Component<
   }
 
   /** getBreadCrumbProps - get properties for HeaderBreadcrumbs component
-   * @param props - component props
-   * @param pageLabel - string for the current page lable
+   * @param {IrsPlanProps} props - component props
+   * @param {string} pageLabel - string for the current page lable
    * @returns breadCrumbProps - compatible object for HeaderBreadcrumbs props
    */
   private getBreadCrumbProps(props: IrsPlanProps, pageLabel: string) {
@@ -1883,8 +1893,7 @@ class IrsPlan extends React.Component<
   }
 
   /** onSavePlanButtonClick - extracts PlanPayload from newPlan and PUSHs or PUTs to OpenSRP
-   * @param e - MouseEvent
-   * @param isFinal - determines if the Plan should be saved as a draft or as a finalized plan
+   * @param {boolean} isFinal - determines if the Plan should be saved as a draft or as a finalized plan
    */
   private onSavePlanButtonClick(isFinal: boolean = false) {
     const { newPlan, childlessChildrenIds } = this.state;
