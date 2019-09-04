@@ -2103,7 +2103,3 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
   </Router>
 </Provider>
 `;
-
-exports[`containers/pages/FocusInvestigation/activeMap works with redux store (gisidawrapper component that loads jurisdiction without structures and tasks): GisidaWrapperMock props 1`] = `
-
-`;
