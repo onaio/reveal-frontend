@@ -178,6 +178,7 @@ exports[`containers/pages/IRS renders plans list correctly 1`] = `
             "url": "/focus-investigation/view",
           }
         }
+        pageTitle="IRS Plans"
         plansArray={
           Array [
             Object {
@@ -273,13 +274,13 @@ exports[`containers/pages/IRS renders plans list correctly 1`] = `
             <SideEffect(NullComponent)
               defer={true}
               encodeSpecialCharacters={true}
-              title="IRS"
+              title="IRS Plans"
               titleAttributes={Object {}}
             >
               <NullComponent
                 defer={true}
                 encodeSpecialCharacters={true}
-                title="IRS"
+                title="IRS Plans"
                 titleAttributes={Object {}}
               />
             </SideEffect(NullComponent)>
@@ -287,7 +288,7 @@ exports[`containers/pages/IRS renders plans list correctly 1`] = `
           <HeaderBreadcrumb
             currentPage={
               Object {
-                "label": "IRS",
+                "label": "IRS Plans",
                 "url": "/intervention/irs",
               }
             }
@@ -343,7 +344,7 @@ exports[`containers/pages/IRS renders plans list correctly 1`] = `
                         aria-current="page"
                         className="active breadcrumb-item"
                       >
-                        IRS
+                        IRS Plans
                       </li>
                     </BreadcrumbItem>
                   </ol>

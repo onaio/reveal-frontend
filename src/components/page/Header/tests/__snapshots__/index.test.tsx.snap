@@ -312,21 +312,21 @@ exports[`components/page/Header renders header correctly 1`] = `
                                           activeClassName="active"
                                           aria-current="page"
                                           className="nav-link"
-                                          to="/intervention/irs"
+                                          to="/intervention/irs/drafts"
                                         >
                                           <Route
-                                            path="\\\\/intervention\\\\/irs"
+                                            path="\\\\/intervention\\\\/irs\\\\/drafts"
                                           >
                                             <Link
                                               aria-current={null}
                                               className="nav-link"
                                               replace={false}
-                                              to="/intervention/irs"
+                                              to="/intervention/irs/drafts"
                                             >
                                               <a
                                                 aria-current={null}
                                                 className="nav-link"
-                                                href="/intervention/irs"
+                                                href="/intervention/irs/drafts"
                                                 onClick={[Function]}
                                               >
                                                 IRS
@@ -466,6 +466,47 @@ exports[`components/page/Header renders header correctly 1`] = `
                                                   onClick={[Function]}
                                                 >
                                                   Historical FI
+                                                </a>
+                                              </Link>
+                                            </Route>
+                                          </NavLink>
+                                        </button>
+                                      </DropdownItem>
+                                    </div>
+                                    <div>
+                                      <DropdownItem
+                                        tag="button"
+                                        toggle={true}
+                                      >
+                                        <button
+                                          className="dropdown-item"
+                                          onClick={[Function]}
+                                          role="menuitem"
+                                          tabIndex="0"
+                                          type="button"
+                                        >
+                                          <NavLink
+                                            activeClassName="active"
+                                            aria-current="page"
+                                            className="nav-link"
+                                            to="/intervention/irs"
+                                          >
+                                            <Route
+                                              path="\\\\/intervention\\\\/irs"
+                                            >
+                                              <Link
+                                                aria-current={null}
+                                                className="nav-link"
+                                                replace={false}
+                                                to="/intervention/irs"
+                                              >
+                                                <a
+                                                  aria-current={null}
+                                                  className="nav-link"
+                                                  href="/intervention/irs"
+                                                  onClick={[Function]}
+                                                >
+                                                  IRS
                                                 </a>
                                               </Link>
                                             </Route>
@@ -910,21 +951,21 @@ exports[`components/page/Header renders header correctly when authenticated 1`] 
                                           activeClassName="active"
                                           aria-current="page"
                                           className="nav-link"
-                                          to="/intervention/irs"
+                                          to="/intervention/irs/drafts"
                                         >
                                           <Route
-                                            path="\\\\/intervention\\\\/irs"
+                                            path="\\\\/intervention\\\\/irs\\\\/drafts"
                                           >
                                             <Link
                                               aria-current={null}
                                               className="nav-link"
                                               replace={false}
-                                              to="/intervention/irs"
+                                              to="/intervention/irs/drafts"
                                             >
                                               <a
                                                 aria-current={null}
                                                 className="nav-link"
-                                                href="/intervention/irs"
+                                                href="/intervention/irs/drafts"
                                                 onClick={[Function]}
                                               >
                                                 IRS
@@ -1064,6 +1105,47 @@ exports[`components/page/Header renders header correctly when authenticated 1`] 
                                                   onClick={[Function]}
                                                 >
                                                   Historical FI
+                                                </a>
+                                              </Link>
+                                            </Route>
+                                          </NavLink>
+                                        </button>
+                                      </DropdownItem>
+                                    </div>
+                                    <div>
+                                      <DropdownItem
+                                        tag="button"
+                                        toggle={true}
+                                      >
+                                        <button
+                                          className="dropdown-item"
+                                          onClick={[Function]}
+                                          role="menuitem"
+                                          tabIndex="0"
+                                          type="button"
+                                        >
+                                          <NavLink
+                                            activeClassName="active"
+                                            aria-current="page"
+                                            className="nav-link"
+                                            to="/intervention/irs"
+                                          >
+                                            <Route
+                                              path="\\\\/intervention\\\\/irs"
+                                            >
+                                              <Link
+                                                aria-current={null}
+                                                className="nav-link"
+                                                replace={false}
+                                                to="/intervention/irs"
+                                              >
+                                                <a
+                                                  aria-current={null}
+                                                  className="nav-link"
+                                                  href="/intervention/irs"
+                                                  onClick={[Function]}
+                                                >
+                                                  IRS
                                                 </a>
                                               </Link>
                                             </Route>
