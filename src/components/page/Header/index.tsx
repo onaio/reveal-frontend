@@ -29,6 +29,7 @@ import {
   HOME,
   INTERVENTION_IRS_DRAFTS_URL,
   INTERVENTION_IRS_URL,
+  IRS_REPORTING_TITLE,
   IRS_TITLE,
   LOGIN_URL,
   LOGOUT_URL,
@@ -167,7 +168,7 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
                             className="nav-link"
                             activeClassName="active"
                           >
-                            {IRS_TITLE}
+                            {IRS_REPORTING_TITLE}
                           </NavLink>
                         </DropdownItem>
                       </div>
