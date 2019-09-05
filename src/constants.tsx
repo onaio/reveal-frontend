@@ -212,6 +212,8 @@ export const FI_HISTORICAL = 'Historical FI';
 export type FI_HISTORICAL = typeof FI_HISTORICAL;
 export const IRS_TITLE = 'IRS';
 export type IRS_TITLE = typeof IRS_TITLE;
+export const IRS_REPORTING_TITLE = 'IRS Reporting';
+export type IRS_REPORTING_TITLE = typeof IRS_REPORTING_TITLE;
 
 // colors
 export const GREEN = 'Green';
