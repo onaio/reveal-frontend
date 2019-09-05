@@ -28,6 +28,7 @@ import {
   PLAN_COMPLETION_URL,
   PLAN_LIST_URL,
   PLAN_UPDATE_URL,
+  REPORT_IRS_PLAN_URL,
 } from '../constants';
 import ConnectedHeader from '../containers/ConnectedHeader';
 import ActiveFocusInvestigation from '../containers/pages/FocusInvestigation/active';
@@ -38,6 +39,7 @@ import SingleFI from '../containers/pages/FocusInvestigation/single';
 import Home from '../containers/pages/Home/Home';
 import IrsPlans from '../containers/pages/InterventionPlan/IRS';
 import IrsPlan from '../containers/pages/InterventionPlan/IRS/plan';
+import IrsReport from '../containers/pages/InterventionPlan/IRS/report';
 import NewPlan from '../containers/pages/InterventionPlan/NewPlan/General';
 import NewIRSPlan from '../containers/pages/InterventionPlan/NewPlan/IRS';
 import ConnectedPlanDefinitionList from '../containers/pages/InterventionPlan/PlanDefinitionList';
@@ -106,6 +108,14 @@ class App extends Component {
                 exact={true}
                 path={`${ACTIVE_IRS_PLAN_URL}/:id`}
                 component={IrsPlan}
+              />
+
+              {/* IRS Reporting plan table view */}
+              <ConnectedPrivateRoute
+                disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                exact={true}
+                path={`${REPORT_IRS_PLAN_URL}/:id`}
+                component={IrsReport}
               />
 
               {/* IRS Reporting Map view */}
