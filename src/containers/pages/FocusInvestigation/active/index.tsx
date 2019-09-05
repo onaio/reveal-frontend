@@ -44,6 +44,7 @@ import {
   FOCUS_INVESTIGATIONS,
   HOME,
   HOME_URL,
+  IN,
   NAME,
   NEW_PLAN_URL,
   REACTIVE,
@@ -169,7 +170,7 @@ class ActiveFocusInvestigation extends React.Component<
     }
     const routineReactivePlans: FlexObject[] = [];
     const pageTitle = jurisdictionName
-      ? `${CURRENT_FOCUS_INVESTIGATION} in ${jurisdictionName}`
+      ? `${CURRENT_FOCUS_INVESTIGATION} ${IN} ${jurisdictionName}`
       : CURRENT_FOCUS_INVESTIGATION;
     return (
       <div>
