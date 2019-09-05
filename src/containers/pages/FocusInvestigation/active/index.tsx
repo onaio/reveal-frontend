@@ -22,11 +22,7 @@ import HeaderBreadCrumb, {
 import Loading from '../../../../components/page/Loading';
 import NullDataTable from '../../../../components/Table/NullDataTable';
 import { SUPERSET_PLANS_SLICE } from '../../../../configs/env';
-import {
-  emptyCurrentReactivePlans,
-  FIClassifications,
-  locationHierarchy,
-} from '../../../../configs/settings';
+import { FIClassifications, locationHierarchy } from '../../../../configs/settings';
 import {
   CASE_CLASSIFICATION_HEADER,
   CASE_NOTIF_DATE_HEADER,
@@ -46,7 +42,6 @@ import {
   HOME_URL,
   IN,
   NAME,
-  NEW_PLAN_URL,
   REACTIVE,
   ROUTINE,
   START_DATE,
