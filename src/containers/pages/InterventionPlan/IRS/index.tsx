@@ -11,12 +11,16 @@ import DrillDownTable from '@onaio/drill-down-table';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 
 import {
+  CREATE_NEW_PLAN,
+  DRAFT,
   DRAFTS_PARENTHESIS,
   HOME,
   HOME_URL,
   INTERVENTION_IRS_DRAFTS_URL,
   INTERVENTION_IRS_URL,
   IRS_PLAN_TYPE,
+  NEW,
+  PLAN,
   REPORT,
 } from '../../../../constants';
 
@@ -128,7 +132,7 @@ class IrsPlans extends React.Component<IrsPlansProps & RouteComponentProps<Route
           {
             Cell: (cell: CellInfo) => {
               const path =
-                (isReporting && REPORT) || cell.original.plan_status === 'draft' ? 'draft' : 'plan';
+                (isReporting && REPORT) || cell.original.plan_status === DRAFT ? DRAFT : PLAN;
               return (
                 <div>
                   <Link to={`${INTERVENTION_IRS_URL}/${path}/${cell.original.id}`}>
@@ -186,8 +190,8 @@ class IrsPlans extends React.Component<IrsPlansProps & RouteComponentProps<Route
         <h2 className="page-title">{pageTitle}</h2>
         <DrillDownTable {...tableProps} />
         <br />
-        <Button color="primary" tag={Link} to={`${INTERVENTION_IRS_URL}/new`}>
-          Create new plan
+        <Button color="primary" tag={Link} to={`${INTERVENTION_IRS_URL}/${NEW}`}>
+          {CREATE_NEW_PLAN}
         </Button>
       </div>
     );

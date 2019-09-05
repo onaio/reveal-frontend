@@ -127,8 +127,14 @@ export const IRS_PLANS = 'IRS Plans';
 export type IRS_PLANS = typeof IRS_PLANS;
 export const COUNTRY = 'Country';
 export type COUNTRY = typeof COUNTRY;
+export const NEW = 'new';
+export type NEW = typeof NEW;
+export const DRAFT = 'draft';
+export type DRAFT = typeof DRAFT;
 export const REPORT = 'report';
 export type REPORT = typeof REPORT;
+export const PLAN = 'plan';
+export type PLAN = typeof PLAN;
 
 export const JURISDICTION_ID = 'jurisdiction_id';
 export type JURISDICTION_ID = typeof JURISDICTION_ID;
@@ -146,6 +152,8 @@ export const NAME = 'Name';
 export type NAME = typeof NAME;
 export const NEW_PLAN = 'New Plan';
 export type NEW_PLAN = typeof NEW_PLAN;
+export const CREATE_NEW_PLAN = 'Create New Plan';
+export type CREATE_NEW_PLAN = typeof CREATE_NEW_PLAN;
 
 export const DATE_COMPLETED = 'Date Completed';
 export type DATE_COMPLETED = typeof DATE_COMPLETED;
