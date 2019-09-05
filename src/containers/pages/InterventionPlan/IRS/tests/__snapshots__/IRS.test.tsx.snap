@@ -170,6 +170,7 @@ exports[`containers/pages/IRS renders plans list correctly 1`] = `
             "replace": [Function],
           }
         }
+        isReporting={true}
         location={[MockFunction]}
         match={
           Object {
@@ -1204,10 +1205,10 @@ exports[`containers/pages/IRS renders plans list correctly 1`] = `
                                       <div>
                                         <Link
                                           replace={false}
-                                          to="/intervention/irs/plan/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
+                                          to="/intervention/irs/draft/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
                                         >
                                           <a
-                                            href="/intervention/irs/plan/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
+                                            href="/intervention/irs/draft/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
                                             onClick={[Function]}
                                           >
                                             A1-Tha Luang Village 1 Focus 01
@@ -1462,10 +1463,10 @@ exports[`containers/pages/IRS renders plans list correctly 1`] = `
                                       <div>
                                         <Link
                                           replace={false}
-                                          to="/intervention/irs/plan/plan-id-2"
+                                          to="/intervention/irs/draft/plan-id-2"
                                         >
                                           <a
-                                            href="/intervention/irs/plan/plan-id-2"
+                                            href="/intervention/irs/draft/plan-id-2"
                                             onClick={[Function]}
                                           >
                                             A1-Tha Luang Village 1 Focus 01
@@ -1831,7 +1832,7 @@ exports[`containers/pages/IRS renders plans list correctly 1`] = `
                 href="/intervention/irs/new"
                 onClick={[Function]}
               >
-                Create new plan
+                Create New Plan
               </a>
             </Link>
           </Button>
