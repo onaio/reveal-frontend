@@ -60,6 +60,7 @@ class App extends Component {
         <Row id="main-page-row">
           <Col>
             <Switch>
+              {/* Home Page view */}
               <ConnectedPrivateRoute
                 disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                 exact={true}
@@ -67,7 +68,7 @@ class App extends Component {
                 component={Home}
               />
 
-              {/* Active IRS Plans */}
+              {/* Active IRS Plans list view */}
               <ConnectedPrivateRoute
                 disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                 exact={true}
@@ -75,7 +76,7 @@ class App extends Component {
                 component={IrsPlans}
               />
 
-              {/* Draft IRS Plans */}
+              {/* Draft IRS Plans list view */}
               <ConnectedPrivateRoute
                 disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                 exact={true}
@@ -83,6 +84,7 @@ class App extends Component {
                 component={IrsPlans}
               />
 
+              {/* New IRS Plan form view */}
               <ConnectedPrivateRoute
                 disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                 exact={true}
@@ -90,6 +92,7 @@ class App extends Component {
                 component={NewIRSPlan}
               />
 
+              {/* Draft IRS Plan Jurisdiction Selection view */}
               <ConnectedPrivateRoute
                 disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                 exact={true}
@@ -97,6 +100,7 @@ class App extends Component {
                 component={IrsPlan}
               />
 
+              {/* Draft IRS Plan Team Assignment view */}
               <ConnectedPrivateRoute
                 disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                 exact={true}
@@ -104,6 +108,7 @@ class App extends Component {
                 component={IrsPlan}
               />
 
+              {/* IRS Reporting Map view */}
               <ConnectedPrivateRoute
                 disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                 exact={true}
@@ -111,60 +116,70 @@ class App extends Component {
                 component={IrsPlan}
               />
 
+              {/* Focus Investigation Reporting list view */}
               <ConnectedPrivateRoute
                 disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                 exact={true}
                 path={FI_URL}
                 component={ActiveFocusInvestigation}
               />
+              {/* Focus Area detail view */}
               <ConnectedPrivateRoute
                 disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                 exact={true}
                 path={`${FI_SINGLE_URL}/:id`}
                 component={SingleFI}
               />
+              {/* Focus Investigation completion confirmation view */}
               <ConnectedPrivateRoute
                 disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                 exact={true}
                 path={`${PLAN_COMPLETION_URL}/:id`}
                 component={ConnectedPlanCompletion}
               />
+              {/* Focus Investigation Reporting map view */}
               <ConnectedPrivateRoute
                 disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                 exact={true}
                 path={`${FI_SINGLE_MAP_URL}/:id/`}
                 component={SingleActiveFIMap}
               />
+              {/* Focus Investigation Reporting map view (with goal layers) */}
               <ConnectedPrivateRoute
                 disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                 exact={true}
                 path={`${FI_SINGLE_MAP_URL}/:id/:goalId`}
                 component={SingleActiveFIMap}
               />
+              {/* Historical Focus Investigation list view */}
               <ConnectedPrivateRoute
                 disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                 exact={true}
                 path={FI_HISTORICAL_URL}
                 component={HistoricalFocusInvestigation}
               />
+              {/* Historical Focus Investigation plan view */}
               <ConnectedPrivateRoute
                 disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                 exact={true}
                 path={`${FI_HISTORICAL_URL}/:id`}
                 component={HistoricalFocusInvestigation}
               />
+              {/* New Focus Investigation Plan form view */}
               <ConnectedPrivateRoute
                 disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                 exact={true}
                 path={NEW_PLAN_URL}
                 component={NewPlan}
               />
+              {/* Edit Focus Investigation Plan form view */}
               <ConnectedPrivateRoute
                 disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                 exact={true}
                 path={`${PLAN_UPDATE_URL}/:id`}
                 component={ConnectedUpdatePlan}
               />
+              {/* Manage Plans list view */}
               <ConnectedPrivateRoute
                 disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                 exact={true}
