@@ -506,7 +506,7 @@ exports[`components/page/Header renders header correctly 1`] = `
                                                   href="/intervention/irs"
                                                   onClick={[Function]}
                                                 >
-                                                  IRS
+                                                  IRS Reporting
                                                 </a>
                                               </Link>
                                             </Route>
@@ -1145,7 +1145,7 @@ exports[`components/page/Header renders header correctly when authenticated 1`] 
                                                   href="/intervention/irs"
                                                   onClick={[Function]}
                                                 >
-                                                  IRS
+                                                  IRS Reporting
                                                 </a>
                                               </Link>
                                             </Route>

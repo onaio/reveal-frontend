@@ -549,7 +549,7 @@ exports[`App renders App correctly 1`] = `
                                                             href="/intervention/irs"
                                                             onClick={[Function]}
                                                           >
-                                                            IRS
+                                                            IRS Reporting
                                                           </a>
                                                         </Link>
                                                       </Route>

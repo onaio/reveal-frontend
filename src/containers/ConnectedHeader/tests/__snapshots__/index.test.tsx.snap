@@ -161,7 +161,7 @@ Object {
                   className="nav-link"
                   to="/intervention/irs"
                 >
-                  IRS
+                  IRS Reporting
                 </NavLink>
               </DropdownItem>
             </div>
@@ -377,7 +377,7 @@ Object {
                   className="nav-link"
                   to="/intervention/irs"
                 >
-                  IRS
+                  IRS Reporting
                 </NavLink>
               </DropdownItem>
             </div>
