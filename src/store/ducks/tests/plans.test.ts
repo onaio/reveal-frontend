@@ -48,7 +48,7 @@ describe('reducers/plans', () => {
   });
 
   it('should fetch Plans', () => {
-    store.dispatch(fetchPlans(fixtures.plans as any));
+    store.dispatch(fetchPlans(fixtures.plans as Plan[]));
     const allPlans = keyBy(fixtures.plans, (plan: Plan) => plan.id);
     const fiPlans = pickBy(allPlans, (e: Plan) => e.plan_intervention_type === InterventionType.FI);
     const irsPlans = pickBy(
