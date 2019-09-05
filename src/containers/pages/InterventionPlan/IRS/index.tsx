@@ -17,6 +17,7 @@ import {
   INTERVENTION_IRS_DRAFTS_URL,
   INTERVENTION_IRS_URL,
   IRS_PLAN_TYPE,
+  REPORT,
 } from '../../../../constants';
 
 import { RouteParams } from '../../../../helpers/utils';
@@ -52,6 +53,7 @@ const OpenSrpPlanService = new OpenSRPService('plans');
 /** IrsPlansProps - interface for IRS Plans page */
 export interface IrsPlansProps {
   fetchPlansActionCreator: typeof fetchPlanRecords;
+  isReporting: boolean;
   pageTitle: string;
   plansArray: PlanRecord[];
 }
@@ -59,6 +61,7 @@ export interface IrsPlansProps {
 /** defaultIrsPlansProps - default props for IRS Plans page */
 export const defaultIrsPlansProps: IrsPlansProps = {
   fetchPlansActionCreator: fetchPlanRecords,
+  isReporting: false,
   pageTitle: '',
   plansArray: [],
 };
@@ -100,7 +103,7 @@ class IrsPlans extends React.Component<IrsPlansProps & RouteComponentProps<Route
   }
 
   public render() {
-    const { pageTitle } = this.props;
+    const { isReporting, pageTitle } = this.props;
     const homePage = {
       label: HOME,
       url: HOME_URL,
@@ -124,7 +127,8 @@ class IrsPlans extends React.Component<IrsPlansProps & RouteComponentProps<Route
         columns: [
           {
             Cell: (cell: CellInfo) => {
-              const path = cell.original.plan_status === 'draft' ? 'draft' : 'plan';
+              const path =
+                (isReporting && REPORT) || cell.original.plan_status === 'draft' ? 'draft' : 'plan';
               return (
                 <div>
                   <Link to={`${INTERVENTION_IRS_URL}/${path}/${cell.original.id}`}>
@@ -202,6 +206,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
   const pageTitle = `${IRS_PLANS}${isDraftsList ? ` ${DRAFTS_PARENTHESIS}` : ''}`;
 
   const props = {
+    isReporting: !isDraftsList,
     pageTitle,
     plansArray: getPlanRecordsArray(state, InterventionType.IRS, planStatus),
     ...ownProps,
