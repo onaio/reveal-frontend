@@ -42,10 +42,13 @@ import supersetFetch from '../../../../../services/superset';
 import jurisdictionReducer, {
   ChildrenByParentId,
   fetchChildrenByParentId,
+  fetchJurisdictionIdsByPlanId,
   fetchJurisdictions,
   getChildrenByParentId as GetChildrenByParentId,
+  getJurisdictionIdsByPlanId,
   getJurisdictionsById,
   Jurisdiction,
+  JurisdictionIdsByPlanId,
   reducerName as jurisdictionReducerName,
 } from '../../../../../store/ducks/jurisdictions';
 import { getPlanRecordById, PlanRecord } from '../../../../../store/ducks/plans';
@@ -57,7 +60,9 @@ reducerRegistry.register(jurisdictionReducerName, jurisdictionReducer);
 export interface IrsReportProps {
   childrenByParentId: ChildrenByParentId;
   fetchChildrenByParentIdActionCreator: typeof fetchChildrenByParentId;
+  fetchJurisdictionIdsByPlanIdActionCreator: typeof fetchJurisdictionIdsByPlanId;
   fetchJurisdictionsActionCreator: typeof fetchJurisdictions;
+  jurisdictionIdsByPlanId: JurisdictionIdsByPlanId;
   jurisdictionsById: { [key: string]: Jurisdiction };
   planById: PlanRecord | null;
   planId: string;
@@ -68,7 +73,9 @@ export interface IrsReportProps {
 export const defaultIrsReportProps: IrsReportProps = {
   childrenByParentId: {},
   fetchChildrenByParentIdActionCreator: fetchChildrenByParentId,
+  fetchJurisdictionIdsByPlanIdActionCreator: fetchJurisdictionIdsByPlanId,
   fetchJurisdictionsActionCreator: fetchJurisdictions,
+  jurisdictionIdsByPlanId: {},
   jurisdictionsById: {},
   planById: null,
   planId: '',
@@ -109,9 +116,12 @@ class IrsReport extends React.Component<RouteComponentProps<RouteParams> & IrsRe
   public async componentDidMount() {
     const {
       fetchChildrenByParentIdActionCreator,
+      fetchJurisdictionIdsByPlanIdActionCreator,
       fetchJurisdictionsActionCreator,
+      jurisdictionIdsByPlanId,
       jurisdictionsById: JurisdictionsById,
       planById,
+      planId,
       supersetService,
     } = this.props;
 
@@ -149,10 +159,12 @@ class IrsReport extends React.Component<RouteComponentProps<RouteParams> & IrsRe
 
     if (planById && planById.plan_jurisdictions_ids) {
       // define ids of jurisdiction relevant to this plan - note: this is causing a delay when loading every time
-      const filteredJurisdictionIds = getAncestorJurisdictionIds(
-        [...planById.plan_jurisdictions_ids],
-        jurisdictionsArray
-      );
+      const filteredJurisdictionIds = jurisdictionIdsByPlanId[planId]
+        ? [...jurisdictionIdsByPlanId[planId]]
+        : getAncestorJurisdictionIds([...planById.plan_jurisdictions_ids], jurisdictionsArray);
+      if (!jurisdictionIdsByPlanId[planId]) {
+        fetchJurisdictionIdsByPlanIdActionCreator({ [planId]: [...filteredJurisdictionIds] });
+      }
 
       // determine if the plan's jurisdictions are included in childrenByParentId from the store
       let isChildrenByParentIdLoaded = false;
@@ -504,11 +516,13 @@ export { IrsReport };
  */
 const mapStateToProps = (state: Partial<Store>, ownProps: any): IrsReportProps => {
   const childrenByParentId = GetChildrenByParentId(state);
+  const jurisdictionIdsByPlanId = getJurisdictionIdsByPlanId(state);
   const jurisdictionsById = getJurisdictionsById(state);
   const planId = ownProps.match.params.id || '';
   const planById = planId.length ? getPlanRecordById(state, planId) : null;
   const props = {
     childrenByParentId,
+    jurisdictionIdsByPlanId,
     jurisdictionsById,
     planById,
     planId,
@@ -521,6 +535,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): IrsReportProps =
 /** map props to actions that may be dispatched by component */
 const mapDispatchToProps = {
   fetchChildrenByParentIdActionCreator: fetchChildrenByParentId,
+  fetchJurisdictionIdsByPlanIdActionCreator: fetchJurisdictionIdsByPlanId,
   fetchJurisdictionsActionCreator: fetchJurisdictions,
 };
 
