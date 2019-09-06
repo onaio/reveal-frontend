@@ -67,3 +67,23 @@ export const getChildrenByParentId = (
   }
   return childrenByParentId;
 };
+
+/** getChildlessChildrenIds - hierarchy util to get all childless descendants of certain Jurisdictions
+ * @param {Jurisdiction[]} filteredJurisdictions - list of Jurisdictions of which to find the childless descendants
+ * @returns {string[]} list of jurisdiction_ids of childless descendants
+ */
+export const getChildlessChildrenIds = (filteredJurisdictions: Jurisdiction[]): string[] => {
+  const childlessChildrenIds = filteredJurisdictions.map(j => j.jurisdiction_id);
+  let jndex = 0;
+
+  for (const jurisdiction of filteredJurisdictions) {
+    if (jurisdiction && jurisdiction.parent_id) {
+      jndex = childlessChildrenIds.indexOf(jurisdiction.parent_id);
+      if (jndex !== -1) {
+        childlessChildrenIds.splice(jndex, 1);
+      }
+    }
+  }
+
+  return childlessChildrenIds;
+};
