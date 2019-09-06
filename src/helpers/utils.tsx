@@ -22,6 +22,7 @@ import {
   CASE_CONFIRMATION_CODE,
   CASE_TRIGGERED_PLAN,
   FEATURE_COLLECTION,
+  FI_FILTER_URL,
   FI_SINGLE_MAP_URL,
   FI_SINGLE_URL,
   FOCUS_AREA_HEADER,
@@ -503,6 +504,10 @@ export function preventDefault(e: Event | MouseEvent | any) {
 export function stopPropagationAndPreventDefault(e: Event | MouseEvent | any) {
   preventDefault(e);
   stopPropagation(e);
+}
+
+export function getFilteredFIPlansURL(jurisdictionPath: string, planId: string): string {
+  return `${FI_FILTER_URL}/${jurisdictionPath}/${planId}`;
 }
 
 /** Returns Table columns Which require external dependencies (Cell, Link, CellInfo)
