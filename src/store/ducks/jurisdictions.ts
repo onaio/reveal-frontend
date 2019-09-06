@@ -89,8 +89,10 @@ interface RemoveChildrenByParentIdAction extends AnyAction {
 export type JurisdictionActionTypes =
   | FetchJurisdictionAction
   | FetchAllJurisdictionIdsAction
+  | FetchChildrenByParentIdAction
   | RemoveJurisdictionsAction
   | RemoveAllJurisdictionIdsAction
+  | RemoveChildrenByParentIdAction
   | AnyAction;
 
 /** interface to describe jurisdiction state */
