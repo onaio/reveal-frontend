@@ -1,4 +1,4 @@
-import { Jurisdiction } from '../store/ducks/jurisdictions';
+import { ChildrenByParentId, Jurisdiction } from '../store/ducks/jurisdictions';
 
 /** getDescendantJurisdictionIds - recursive hierarchy util to get all ancestors of certain Jurisdictions
  * @param {string[]} ChildIds - jurisdiction_ids of the child jurisdictions for which to find ancestors
@@ -46,11 +46,9 @@ export const getAncestorJurisdictionIds = (
 
 /** getChildrenByParentId - utility to decendant jurisdictions, jurisdictionsArray MUST be sorted by geographic_level from high to low
  * @param {Jurisdiction[]} jurisdictionsArray - the sorted list of all jurisdictions
- * @returns {{ [parentId: string]: string[] }} - object with references to all parent:child relationships
+ * @returns {ChildrenByParentId} - object with references to all parent:child relationships
  */
-export const getChildrenByParentId = (
-  jurisdictionsArray: Jurisdiction[]
-): { [parentId: string]: string[] } => {
+export const getChildrenByParentId = (jurisdictionsArray: Jurisdiction[]): ChildrenByParentId => {
   const childrenByParentId: { [key: string]: string[] } = {};
   for (const j of jurisdictionsArray) {
     if (j.parent_id) {

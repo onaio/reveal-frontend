@@ -40,7 +40,10 @@ import {
 } from '../../../../../helpers/utils';
 import supersetFetch from '../../../../../services/superset';
 import jurisdictionReducer, {
+  ChildrenByParentId,
+  fetchChildrenByParentId,
   fetchJurisdictions,
+  getChildrenByParentId as GetChildrenByParentId,
   getJurisdictionsById,
   Jurisdiction,
   reducerName as jurisdictionReducerName,
@@ -52,6 +55,8 @@ reducerRegistry.register(jurisdictionReducerName, jurisdictionReducer);
 
 /** interface to describe props for IrsReport component */
 export interface IrsReportProps {
+  childrenByParentId: ChildrenByParentId;
+  fetchChildrenByParentIdActionCreator: typeof fetchChildrenByParentId;
   fetchJurisdictionsActionCreator: typeof fetchJurisdictions;
   jurisdictionsById: { [key: string]: Jurisdiction };
   planById: PlanRecord | null;
@@ -61,6 +66,8 @@ export interface IrsReportProps {
 
 /** default props for IrsReport component */
 export const defaultIrsReportProps: IrsReportProps = {
+  childrenByParentId: {},
+  fetchChildrenByParentIdActionCreator: fetchChildrenByParentId,
   fetchJurisdictionsActionCreator: fetchJurisdictions,
   jurisdictionsById: {},
   planById: null,
@@ -101,6 +108,7 @@ class IrsReport extends React.Component<RouteComponentProps<RouteParams> & IrsRe
 
   public async componentDidMount() {
     const {
+      fetchChildrenByParentIdActionCreator,
       fetchJurisdictionsActionCreator,
       jurisdictionsById: JurisdictionsById,
       planById,
@@ -140,14 +148,32 @@ class IrsReport extends React.Component<RouteComponentProps<RouteParams> & IrsRe
       : keyBy(jurisdictionsArray, j => j.jurisdiction_id);
 
     if (planById && planById.plan_jurisdictions_ids) {
-      // build and store decendant jurisdictions, jurisdictionsArray MUST be sorted by geographic_level from high to low
-      const childrenByParentId = getChildrenByParentId(jurisdictionsArray);
-
-      // define level 0 Jurisdiction as parentlessParent
+      // define ids of jurisdiction relevant to this plan - note: this is causing a delay when loading every time
       const filteredJurisdictionIds = getAncestorJurisdictionIds(
         [...planById.plan_jurisdictions_ids],
         jurisdictionsArray
       );
+
+      // determine if the plan's jurisdictions are included in childrenByParentId from the store
+      let isChildrenByParentIdLoaded = false;
+      for (const j of filteredJurisdictionIds) {
+        if (this.props.childrenByParentId[j]) {
+          isChildrenByParentIdLoaded = true;
+          break;
+        }
+      }
+
+      // if needed, build and store decendant jurisdictions, jurisdictionsArray MUST be sorted by geographic_level from high to low
+      const childrenByParentId: ChildrenByParentId = isChildrenByParentIdLoaded
+        ? this.props.childrenByParentId
+        : getChildrenByParentId(jurisdictionsArray);
+
+      // if childrenByParentId was just built, add it to the store
+      if (!isChildrenByParentIdLoaded) {
+        fetchChildrenByParentIdActionCreator(childrenByParentId);
+      }
+
+      // define level 0 Jurisdiction as parentlessParent
       const parentlessParentId =
         filteredJurisdictionIds.find(
           a =>
@@ -477,10 +503,12 @@ export { IrsReport };
  * @returns {IrsReportProps}
  */
 const mapStateToProps = (state: Partial<Store>, ownProps: any): IrsReportProps => {
+  const childrenByParentId = GetChildrenByParentId(state);
   const jurisdictionsById = getJurisdictionsById(state);
   const planId = ownProps.match.params.id || '';
   const planById = planId.length ? getPlanRecordById(state, planId) : null;
   const props = {
+    childrenByParentId,
     jurisdictionsById,
     planById,
     planId,
@@ -492,6 +520,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): IrsReportProps =
 
 /** map props to actions that may be dispatched by component */
 const mapDispatchToProps = {
+  fetchChildrenByParentIdActionCreator: fetchChildrenByParentId,
   fetchJurisdictionsActionCreator: fetchJurisdictions,
 };
 
