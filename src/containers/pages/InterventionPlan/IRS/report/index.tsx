@@ -34,6 +34,7 @@ import {
 } from '../../../../../helpers/hierarchy';
 import {
   FlexObject,
+  preventDefault,
   RouteParams,
   stopPropagationAndPreventDefault,
 } from '../../../../../helpers/utils';
@@ -45,6 +46,7 @@ import jurisdictionReducer, {
   reducerName as jurisdictionReducerName,
 } from '../../../../../store/ducks/jurisdictions';
 import { getPlanRecordById, PlanRecord } from '../../../../../store/ducks/plans';
+import { TableCrumb } from '../plan';
 /** register the plans reducer */
 reducerRegistry.register(jurisdictionReducerName, jurisdictionReducer);
 
@@ -76,6 +78,7 @@ export interface IrsReportState {
   isLoadingHierarchy: boolean;
   isLoadingPlanData: boolean;
   reportTableProps: DrillDownProps<any> | null;
+  tableCrumbs: TableCrumb[];
 }
 
 export const defaultIrsReportState: IrsReportState = {
@@ -88,6 +91,7 @@ export const defaultIrsReportState: IrsReportState = {
   isLoadingHierarchy: true,
   isLoadingPlanData: false,
   reportTableProps: null,
+  tableCrumbs: [],
 };
 
 /** Reporting for Single Active IRS Plan */
@@ -166,6 +170,15 @@ class IrsReport extends React.Component<RouteComponentProps<RouteParams> & IrsRe
       const country: JurisdictionsByCountry | null =
         CountriesAdmin0[countryPcode as ADMN0_PCODE] || null;
 
+      // build first TableCrumb based on the country settings
+      const tableCrumbs: TableCrumb[] = [
+        {
+          active: true,
+          id: country && country.jurisdictionId.length ? country.jurisdictionId : null,
+          label: country ? country.ADMN0_EN : '',
+        },
+      ];
+
       // update the component state
       this.setState(
         {
@@ -175,6 +188,7 @@ class IrsReport extends React.Component<RouteComponentProps<RouteParams> & IrsRe
           filteredJurisdictionIds,
           focusJurisdictionId: parentlessParentId.length ? parentlessParentId : null,
           isLoadingHierarchy: false,
+          tableCrumbs,
         },
         () => {
           // use the updated component state to construct drilldown props
@@ -192,9 +206,9 @@ class IrsReport extends React.Component<RouteComponentProps<RouteParams> & IrsRe
 
   public render() {
     const { planById, planId } = this.props;
-    const { doRenderTable, isLoadingHierarchy, reportTableProps } = this.state;
+    const { doRenderTable, isLoadingHierarchy, reportTableProps, tableCrumbs } = this.state;
 
-    // Build Breadcrumbs
+    // Build page-level Breadcrumbs
     const homePage = {
       label: HOME,
       url: HOME_URL,
@@ -226,6 +240,34 @@ class IrsReport extends React.Component<RouteComponentProps<RouteParams> & IrsRe
       );
     }
 
+    // Build DrilldownTable breadcrumbs - todo: modularize via getter
+    const onTableBreadCrumbClick = (e: React.MouseEvent) => {
+      this.onTableBreadCrumbClick(e);
+    };
+    const tableBreadCrumbs = (
+      <ol className="table-bread-crumbs breadcrumb">
+        {tableCrumbs.map((crumb, i) => {
+          const { active, id, label } = crumb;
+          return (
+            <li key={i} className="breadcrumb-item">
+              {active ? (
+                label
+              ) : (
+                <a
+                  className={`table-bread-crumb-link`}
+                  href=""
+                  id={id || 'null'}
+                  onClick={onTableBreadCrumbClick}
+                >
+                  {label}
+                </a>
+              )}
+            </li>
+          );
+        })}
+      </ol>
+    );
+
     return (
       <div className="mb-5">
         <Helmet>
@@ -241,12 +283,21 @@ class IrsReport extends React.Component<RouteComponentProps<RouteParams> & IrsRe
                 <div style={{ textAlign: 'center' }}>Loading Location Hierarchy</div>
               </div>
             )}
-            {doRenderTable && reportTableProps && <DrillDownTable {...reportTableProps} />}
+            {doRenderTable && reportTableProps && (
+              <div>
+                {tableBreadCrumbs}
+                <DrillDownTable {...reportTableProps} />
+              </div>
+            )}
           </Col>
         </Row>
       </div>
     );
   }
+
+  /**********************
+   * GETTERS
+   * *********************/
 
   /** getDrilldownReportTableProps - getter for hierarchical DrilldownTable props
    * @param {IrsReportState} state - component state
@@ -271,7 +322,7 @@ class IrsReport extends React.Component<RouteComponentProps<RouteParams> & IrsRe
         if (this.state.childlessChildrenIds.includes(e.currentTarget.id)) {
           stopPropagationAndPreventDefault(e);
         } else {
-          // this.onDrilldownClick(e.currentTarget.id);
+          this.onDrilldownClick(e.currentTarget.id);
         }
       }
     };
@@ -339,6 +390,82 @@ class IrsReport extends React.Component<RouteComponentProps<RouteParams> & IrsRe
     };
 
     return tableProps;
+  }
+
+  /**********************
+   * EVENT HANDLERS
+   * *********************/
+
+  /** onTableBreadCrumbClick - handler for drilldown table breadcrumb clicks to reset the table hierarchy
+   * @param {MouseEvent} e - event object from clicking the table breadcrumb
+   */
+  private onTableBreadCrumbClick(e: React.MouseEvent) {
+    preventDefault(e);
+    if (e && e.currentTarget && e.currentTarget.id) {
+      // const clickedTableCrumb = this.state.tableCrumbs.find(c => c.id === e.currentTarget.id);
+      this.onResetDrilldownTableHierarchy(e.currentTarget.id);
+    }
+  }
+
+  /** onResetDrilldownTableHierarchy - function for resetting drilldown table hierachy baseline
+   * @param {string|null} Id - the id of the highest level parent_idto show in the table, or null to reset completely
+   */
+  private onResetDrilldownTableHierarchy(Id: string | null) {
+    const id = Id !== 'null' ? Id : null;
+    const { tableCrumbs } = this.state;
+    const nextActiveCrumbIndex = tableCrumbs.map(c => c.id).indexOf(id) + 1;
+    const nextCrumbs = tableCrumbs.map(c => ({ ...c, active: false }));
+    nextCrumbs.splice(nextActiveCrumbIndex);
+    nextCrumbs[nextCrumbs.length - 1].active = true;
+
+    this.setState(
+      {
+        doRenderTable: false,
+        focusJurisdictionId: id,
+        tableCrumbs: nextCrumbs,
+      },
+      () => {
+        const planTableProps = this.getDrilldownReportTableProps(this.state);
+        this.setState({
+          doRenderTable: true,
+          planTableProps,
+        });
+      }
+    );
+  }
+
+  /** onDrilldownClick - function to update the drilldown breadcrumbs when drilling down into the hierarchy
+   * @param {string} id - the jurisdiction_id of the Jurisdiction clicked
+   */
+  private onDrilldownClick(id: string) {
+    const { tableCrumbs } = this.state;
+    const { jurisdictionsById } = this.props;
+
+    // build new tableCrumb for Jurisdiction which was just clicked
+    const newCrumb: TableCrumb | null =
+      (jurisdictionsById[id] && {
+        active: true,
+        id,
+        label: jurisdictionsById[id].name || 'Jurisdiction',
+      }) ||
+      null;
+
+    if (newCrumb) {
+      // rebuild tableCrumbs
+      const newCrumbs: TableCrumb[] = tableCrumbs.map(c => ({
+        ...c,
+        active: false,
+      }));
+
+      // add the new breadcrumb to the list of breadcrumbs
+      newCrumbs.push(newCrumb);
+
+      // update component state with new focusJurisdictionId and tableCrumbs
+      this.setState({
+        focusJurisdictionId: (id as string) || null,
+        tableCrumbs: [...newCrumbs],
+      });
+    }
   }
 }
 

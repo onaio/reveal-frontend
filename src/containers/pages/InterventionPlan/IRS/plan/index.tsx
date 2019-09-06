@@ -133,7 +133,8 @@ export const defaultIrsPlanProps: IrsPlanProps = {
 };
 
 /** Interface for breadcrumb item */
-interface TableCrumb {
+export interface TableCrumb {
+  // todo: shift this out of here
   label: string;
   id: string | null;
   active: boolean;
