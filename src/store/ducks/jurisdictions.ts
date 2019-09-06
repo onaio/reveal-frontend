@@ -33,11 +33,20 @@ export interface AllJurisdictionIds {
   };
 }
 
+/** Interface descriing a list of all child ids of a given jurisdiction id */
+export interface ChildrenByParentId {
+  [key: string]: string[];
+}
+
 // action types
 export const FETCH_JURISDICTION = 'reveal/reducer/jurisdiction/FETCH_JURISDICTION';
 export const FETCH_ALL_JURISDICTION_IDS = 'reveal/reducer/jurisdiction/FETCH_ALL_JURISDICTION_IDS';
+export const FETCH_CHILDREN_BY_PARENT_ID =
+  'reveal/reducer/jurisdiction/FETCH_CHILDREN_BY_PARENT_ID';
 export const REMOVE_JURISDICTIONS = 'reveal/reducer/jurisdiction/REMOVE_JURISDICTIONS';
 export const REMOVE_ALL_JURISDICTION_IDS = 'reveal/reducer/jurisdiction/REMOVE_ALL_JURISDICTIONIDS';
+export const REMOVE_CHILDREN_BY_PARENT_ID =
+  'reveal/reducer/jurisdiction/REMOVE_CHILDREN_BY_PARENT_ID';
 
 /** fetch jurisdiction action */
 interface FetchJurisdictionAction extends AnyAction {
@@ -52,6 +61,12 @@ interface FetchAllJurisdictionIdsAction extends AnyAction {
   type: typeof FETCH_ALL_JURISDICTION_IDS;
 }
 
+/** fetch childrenByParentId action */
+interface FetchChildrenByParentIdAction extends AnyAction {
+  childrenByParentId: ChildrenByParentId;
+  type: typeof FETCH_CHILDREN_BY_PARENT_ID;
+}
+
 /** Remove jurisdictions action interface */
 interface RemoveJurisdictionsAction extends AnyAction {
   jurisdictionsById: {};
@@ -62,6 +77,12 @@ interface RemoveJurisdictionsAction extends AnyAction {
 interface RemoveAllJurisdictionIdsAction extends AnyAction {
   type: typeof REMOVE_ALL_JURISDICTION_IDS;
   allJurisdictionIds: {};
+}
+
+/** Remove childrenByParentId action interface */
+interface RemoveChildrenByParentIdAction extends AnyAction {
+  childrenByParentId: {};
+  type: typeof REMOVE_CHILDREN_BY_PARENT_ID;
 }
 
 /** jurisdiction action types */
@@ -75,6 +96,7 @@ export type JurisdictionActionTypes =
 /** interface to describe jurisdiction state */
 interface JurisdictionState {
   allJurisdictionIds: AllJurisdictionIds;
+  childrenByParentId: ChildrenByParentId;
   jurisdictionsById: { [key: string]: Jurisdiction };
 }
 
@@ -85,6 +107,7 @@ export type ImmutableJurisdictionState = JurisdictionState &
 /** initial state */
 const initialState: ImmutableJurisdictionState = SeamlessImmutable({
   allJurisdictionIds: {} as AllJurisdictionIds,
+  childrenByParentId: {},
   jurisdictionsById: {},
 });
 
@@ -112,6 +135,14 @@ export default function reducer(
         ...state,
         allJurisdictionIds: { ...state.allJurisdictionIds, ...action.allJurisdictionIds },
       });
+    case FETCH_CHILDREN_BY_PARENT_ID:
+      return SeamlessImmutable({
+        ...state,
+        childrenByParentId: {
+          ...state.childrenByParentId,
+          ...action.childrenByParentId,
+        },
+      });
     case REMOVE_JURISDICTIONS:
       return SeamlessImmutable({
         ...state,
@@ -121,6 +152,11 @@ export default function reducer(
       return SeamlessImmutable({
         ...state,
         allJurisdictionIds: action.allJurisdictionIds,
+      });
+    case REMOVE_CHILDREN_BY_PARENT_ID:
+      return SeamlessImmutable({
+        ...state,
+        childrenByParentId: action.childrenByParentId,
       });
     default:
       return state;
@@ -181,6 +217,16 @@ export const fetchAllJurisdictionIds = (jurisdictionIds: string[]) => ({
   type: FETCH_ALL_JURISDICTION_IDS,
 });
 
+/** fetch childrenByParentId creator
+ * @param {ChildrenByParentId} childrenByParentId
+ */
+export const fetchChildrenByParentId = (childrenByParentId: ChildrenByParentId) => {
+  return {
+    childrenByParentId,
+    type: FETCH_CHILDREN_BY_PARENT_ID,
+  };
+};
+
 // actions
 /** removeJurisdictions Action */
 export const removeJurisdictionsAction = {
@@ -192,6 +238,12 @@ export const removeJurisdictionsAction = {
 export const removeAllJurisdictionIdsAction: RemoveAllJurisdictionIdsAction = {
   allJurisdictionIds: {},
   type: REMOVE_ALL_JURISDICTION_IDS,
+};
+
+/** remove childrenByParentId Action */
+export const removeChildrenByParentIdAction: RemoveChildrenByParentIdAction = {
+  childrenByParentId: {},
+  type: REMOVE_CHILDREN_BY_PARENT_ID,
 };
 
 // selectors
@@ -249,4 +301,12 @@ export function getAllJurisdictionsIdArray(
       isLoaded ? j.isLoaded : !j.isLoaded
     )
   );
+}
+
+/** get the full childrenByParentId object
+ * @param {Partial<Store>} state - the redux store
+ * @returns {ChildrenByParentId} an object keyed by parentId contain ids of all descendant jurisdictions
+ */
+export function getChildrenByParentId(state: Partial<Store>): ChildrenByParentId {
+  return (state as any)[reducerName].childrenByParentId;
 }
