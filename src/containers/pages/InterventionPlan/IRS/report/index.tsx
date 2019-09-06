@@ -1,9 +1,12 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import DrillDownTable, { DrillDownProps, DropDownCell } from '@onaio/drill-down-table';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import { keyBy } from 'lodash';
 import * as React from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
+import { Link } from 'react-router-dom';
 import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
 import HeaderBreadcrumbs, {
@@ -17,16 +20,23 @@ import {
   JurisdictionsByCountry,
 } from '../../../../../configs/settings';
 import {
+  ACTIVE_IRS_PLAN_URL,
   HOME,
   HOME_URL,
   INTERVENTION_IRS_URL,
   IRS_REPORTING_TITLE,
+  MAP,
 } from '../../../../../constants';
 import {
   getAncestorJurisdictionIds,
+  getChildlessChildrenIds,
   getChildrenByParentId,
 } from '../../../../../helpers/hierarchy';
-import { FlexObject, RouteParams } from '../../../../../helpers/utils';
+import {
+  FlexObject,
+  RouteParams,
+  stopPropagationAndPreventDefault,
+} from '../../../../../helpers/utils';
 import supersetFetch from '../../../../../services/superset';
 import jurisdictionReducer, {
   fetchJurisdictions,
@@ -57,19 +67,27 @@ export const defaultIrsReportProps: IrsReportProps = {
 };
 
 export interface IrsReportState {
+  childlessChildrenIds: string[];
   childrenByParentId: { [key: string]: string[] };
   country: JurisdictionsByCountry | null;
+  doRenderTable: boolean;
   filteredJurisdictionIds: string[];
+  focusJurisdictionId: string | null;
   isLoadingHierarchy: boolean;
   isLoadingPlanData: boolean;
+  reportTableProps: DrillDownProps<any> | null;
 }
 
 export const defaultIrsReportState: IrsReportState = {
+  childlessChildrenIds: [],
   childrenByParentId: {},
   country: null,
+  doRenderTable: false,
   filteredJurisdictionIds: [],
+  focusJurisdictionId: null,
   isLoadingHierarchy: true,
   isLoadingPlanData: false,
+  reportTableProps: null,
 };
 
 /** Reporting for Single Active IRS Plan */
@@ -134,6 +152,10 @@ class IrsReport extends React.Component<RouteComponentProps<RouteParams> & IrsRe
             !jurisdictionsById[a].geographic_level
         ) || '';
 
+      const childlessChildrenIds = getChildlessChildrenIds(
+        filteredJurisdictionIds.map(j => jurisdictionsById[j])
+      );
+
       // define contry based on parentlessParentId
       const countryPcode: string | undefined = Object.keys(CountriesAdmin0).find(c => {
         const thisCountry: JurisdictionsByCountry = CountriesAdmin0[c as ADMN0_PCODE];
@@ -144,18 +166,34 @@ class IrsReport extends React.Component<RouteComponentProps<RouteParams> & IrsRe
       const country: JurisdictionsByCountry | null =
         CountriesAdmin0[countryPcode as ADMN0_PCODE] || null;
 
-      this.setState({
-        childrenByParentId,
-        country,
-        filteredJurisdictionIds,
-        isLoadingHierarchy: false,
-      });
+      // update the component state
+      this.setState(
+        {
+          childlessChildrenIds,
+          childrenByParentId,
+          country,
+          filteredJurisdictionIds,
+          focusJurisdictionId: parentlessParentId.length ? parentlessParentId : null,
+          isLoadingHierarchy: false,
+        },
+        () => {
+          // use the updated component state to construct drilldown props
+          const reportTableProps = this.getDrilldownReportTableProps(this.state);
+
+          // update component state with new reportTableProps
+          this.setState({
+            doRenderTable: true,
+            reportTableProps,
+          });
+        }
+      );
     }
   }
 
   public render() {
     const { planById, planId } = this.props;
-    const { isLoadingHierarchy } = this.state;
+    const { doRenderTable, isLoadingHierarchy, reportTableProps } = this.state;
+
     // Build Breadcrumbs
     const homePage = {
       label: HOME,
@@ -174,6 +212,7 @@ class IrsReport extends React.Component<RouteComponentProps<RouteParams> & IrsRe
       ],
     };
 
+    // todo - redirect somewhere useful
     if (!planById) {
       return (
         <div className="mb-5">
@@ -202,10 +241,104 @@ class IrsReport extends React.Component<RouteComponentProps<RouteParams> & IrsRe
                 <div style={{ textAlign: 'center' }}>Loading Location Hierarchy</div>
               </div>
             )}
+            {doRenderTable && reportTableProps && <DrillDownTable {...reportTableProps} />}
           </Col>
         </Row>
       </div>
     );
+  }
+
+  /** getDrilldownReportTableProps - getter for hierarchical DrilldownTable props
+   * @param {IrsReportState} state - component state
+   * @returns {DrillDownProps<any>|null} - compatible object for DrillDownTable props or null
+   */
+  private getDrilldownReportTableProps(state: IrsReportState): DrillDownProps<any> | null {
+    const { childlessChildrenIds, filteredJurisdictionIds, focusJurisdictionId } = state;
+    const { jurisdictionsById, planById, planId } = this.props;
+    const filteredJurisdictions = filteredJurisdictionIds.map(j => jurisdictionsById[j]);
+    if (!planById || !planById.plan_jurisdictions_ids) {
+      return null;
+    }
+
+    // a simple interface for the the drilldown table data extending Jurisdiciton - todo: add props from Superset data
+    interface JurisdictionRow extends Jurisdiction {
+      isChildless: boolean;
+    }
+
+    // table click handler when table row is clicked
+    const onDrilldownClick = (e: React.MouseEvent) => {
+      if (e && e.currentTarget && e.currentTarget.id) {
+        if (this.state.childlessChildrenIds.includes(e.currentTarget.id)) {
+          stopPropagationAndPreventDefault(e);
+        } else {
+          // this.onDrilldownClick(e.currentTarget.id);
+        }
+      }
+    };
+
+    // data to be used in the tableProps - todo: join data from Superset
+    const data: JurisdictionRow[] = filteredJurisdictions.map((j: Jurisdiction) => ({
+      ...j,
+      id: j.jurisdiction_id,
+      isChildless: childlessChildrenIds.includes(j.jurisdiction_id),
+    }));
+
+    // reporting specific columns - todo: add metrics from superset!
+    const columns = [
+      {
+        Header: 'Location',
+        columns: [
+          {
+            Header: '',
+            accessor: (j: JurisdictionRow) => (
+              <span
+                id={j.jurisdiction_id}
+                onClick={onDrilldownClick}
+                className={`plan-jurisdiction-name${!j.isChildless ? ' btn-link' : ''}`}
+              >
+                {j.isChildless && (
+                  <span>
+                    <Link to={`${ACTIVE_IRS_PLAN_URL}/${planId}/${MAP}/${j.jurisdiction_id}`}>
+                      <FontAwesomeIcon icon={['fas', MAP]} />
+                    </Link>
+                    &nbsp;&nbsp;
+                  </span>
+                )}
+
+                {j.name}
+              </span>
+            ),
+            id: 'name',
+          },
+        ],
+      },
+    ];
+
+    // determine if there should be pagination depending on number of rows
+    let showPagination: boolean = false;
+    if (focusJurisdictionId) {
+      const directDescendants = filteredJurisdictions.filter(
+        j => j.parent_id === focusJurisdictionId
+      );
+      showPagination = directDescendants.length > 20;
+    }
+
+    // define the actual DrillDownProps to be handed to the table
+    const tableProps: DrillDownProps<any> = {
+      CellComponent: DropDownCell,
+      columns,
+      data,
+      identifierField: 'jurisdiction_id',
+      linkerField: 'name',
+      minRows: 0,
+      parentIdentifierField: 'parent_id',
+      rootParentId: focusJurisdictionId,
+      showPageSizeOptions: false,
+      showPagination,
+      useDrillDownTrProps: true,
+    };
+
+    return tableProps;
   }
 }
 
