@@ -40,6 +40,7 @@ import Home from '../containers/pages/Home/Home';
 import IrsPlans from '../containers/pages/InterventionPlan/IRS';
 import IrsPlan from '../containers/pages/InterventionPlan/IRS/plan';
 import IrsReport from '../containers/pages/InterventionPlan/IRS/report';
+import IrsReportMap from '../containers/pages/InterventionPlan/IRS/reportMap';
 import NewPlan from '../containers/pages/InterventionPlan/NewPlan/General';
 import NewIRSPlan from '../containers/pages/InterventionPlan/NewPlan/IRS';
 import ConnectedPlanDefinitionList from '../containers/pages/InterventionPlan/PlanDefinitionList';
@@ -123,7 +124,7 @@ class App extends Component {
                 disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                 exact={true}
                 path={`${ACTIVE_IRS_PLAN_URL}/:id/${MAP}/:jurisdictionId`}
-                component={IrsPlan}
+                component={IrsReportMap}
               />
 
               {/* Focus Investigation Reporting list view */}
