@@ -23,7 +23,6 @@ import {
 import {
   CASE_TRIGGERED_PLAN,
   END_DATE,
-  FI_FILTER_URL,
   FI_SINGLE_MAP_URL,
   FI_SINGLE_URL,
   FI_URL,
@@ -47,7 +46,12 @@ import {
 import { popupHandler } from '../../../../../helpers/handlers';
 import { getGoalReport } from '../../../../../helpers/indicators';
 import ProgressBar from '../../../../../helpers/ProgressBar';
-import { FeatureCollection, FlexObject, RouteParams } from '../../../../../helpers/utils';
+import {
+  FeatureCollection,
+  FlexObject,
+  getFilteredFIPlansURL,
+  RouteParams,
+} from '../../../../../helpers/utils';
 import supersetFetch from '../../../../../services/superset';
 import goalsReducer, {
   fetchGoals,
@@ -244,7 +248,7 @@ class SingleActiveFIMap extends React.Component<
       // return a page object for each name path
       return {
         label: namePath,
-        url: `${FI_FILTER_URL}/${plan.jurisdiction_path[i]}/${plan.id}`,
+        url: getFilteredFIPlansURL(plan.jurisdiction_path[i], plan.id),
       };
     });
     breadCrumbProps.pages = [homePage, basePage, ...pages, secondLastPage];

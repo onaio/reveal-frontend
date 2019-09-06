@@ -40,7 +40,6 @@ import {
   COMPLETE_FOCUS_INVESTIGATION,
   CURRENT_FOCUS_INVESTIGATION,
   DISTRICT,
-  FI_FILTER_URL,
   FI_REASON,
   FI_SINGLE_URL,
   FI_STATUS,
@@ -58,6 +57,7 @@ import {
   defaultTableProps,
   extractPlan,
   FlexObject,
+  getFilteredFIPlansURL,
   getLocationColumns,
   jsxColumns,
   RouteParams,
@@ -220,7 +220,7 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
       // return a page object for each name path
       return {
         label: namePath,
-        url: `${FI_FILTER_URL}/${planById.jurisdiction_path[i]}/${planById.id}`,
+        url: getFilteredFIPlansURL(planById.jurisdiction_path[i], planById.id),
       };
     });
     breadCrumbProps.pages = [homePage, basePage, ...pages];
