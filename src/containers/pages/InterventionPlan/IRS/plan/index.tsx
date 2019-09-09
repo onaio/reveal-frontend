@@ -881,7 +881,7 @@ class IrsPlan extends React.Component<
   }
   /** onSaveEditNameButtonClick - handler disabling inline-editing */
   private onSaveEditNameButtonClick(e: MouseEvent) {
-    e.preventDefault();
+    preventDefault(e);
     this.setState({
       isEditingPlanName: false,
       previousPlanName: '',
