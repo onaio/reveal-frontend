@@ -402,11 +402,21 @@ class IrsReport extends React.Component<RouteComponentProps<RouteParams> & IrsRe
     };
 
     // data to be used in the tableProps - todo: join data from Superset
-    const data: any[] = filteredJurisdictions.map((j: Jurisdiction) => ({
-      ...j,
-      id: j.jurisdiction_id,
-      isChildless: childlessChildrenIds.includes(j.jurisdiction_id),
-    }));
+    const data: JurisdictionRow[] = filteredJurisdictions
+      .map((j: Jurisdiction) => ({
+        ...j,
+        id: j.jurisdiction_id,
+        isChildless: childlessChildrenIds.includes(j.jurisdiction_id),
+      }))
+      .sort((a: FlexObject, b: FlexObject) => {
+        if (a.name < b.name) {
+          return -1;
+        }
+        if (a.name > b.name) {
+          return 1;
+        }
+        return 0;
+      });
 
     // reporting specific columns - todo: add metrics from superset!
     const columns = [
@@ -484,8 +494,8 @@ class IrsReport extends React.Component<RouteComponentProps<RouteParams> & IrsRe
       minRows: 0,
       parentIdentifierField: 'parent_id',
       rootParentId: focusJurisdictionId,
-      showPageSizeOptions: false,
-      showPagination,
+      showPageSizeOptions: true,
+      showPagination: true,
       useDrillDownTrProps: true,
     };
 
