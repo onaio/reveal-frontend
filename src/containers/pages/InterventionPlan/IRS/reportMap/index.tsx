@@ -1,4 +1,5 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
+import superset from '@onaio/superset-connector';
 import * as React from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
@@ -13,17 +14,31 @@ import {
   HOME_URL,
   INTERVENTION_IRS_URL,
   IRS_REPORTING_TITLE,
+  JURISDICTION_ID,
   MAIN_PLAN,
   OPENSRP_LOCATION,
   REPORT_IRS_PLAN_URL,
+  STRUCTURE_LAYER,
 } from '../../../../../constants';
-import { FlexObject, RouteParams } from '../../../../../helpers/utils';
+import {
+  FeatureCollection,
+  FlexObject,
+  RouteParams,
+  wrapFeatureCollection,
+} from '../../../../../helpers/utils';
 import { OpenSRPService } from '../../../../../services/opensrp';
+import supersetFetch from '../../../../../services/superset';
 
 import GeojsonExtent from '@mapbox/geojson-extent';
+import { GREEN, GREY } from '../../../../../colors';
 import GisidaWrapper, { GisidaProps } from '../../../../../components/GisidaWrapper';
 import Loading from '../../../../../components/page/Loading';
-import { lineLayerConfig } from '../../../../../configs/settings';
+import { SUPERSET_STRUCTURES_SLICE } from '../../../../../configs/env';
+import {
+  circleLayerConfig,
+  fillLayerConfig,
+  lineLayerConfig,
+} from '../../../../../configs/settings';
 import jurisdictionReducer, {
   fetchJurisdictions,
   getJurisdictionById,
@@ -31,6 +46,14 @@ import jurisdictionReducer, {
   reducerName as jurisdictionReducerName,
 } from '../../../../../store/ducks/jurisdictions';
 import { getPlanRecordById, PlanRecord } from '../../../../../store/ducks/plans';
+import {
+  getStructuresFCByJurisdictionId,
+  setStructures,
+  Structure,
+  StructureGeoJSON,
+} from '../../../../../store/ducks/structures';
+import './../../../../../helpers/handlers/handlers.css';
+
 /** register the plans reducer */
 reducerRegistry.register(jurisdictionReducerName, jurisdictionReducer);
 
@@ -40,19 +63,23 @@ const OpenSrpLocationService = new OpenSRPService(OPENSRP_LOCATION);
 /** interface to describe props for IrsReportMap component */
 export interface IrsReportMapProps {
   fetchJurisdictionsActionCreator: typeof fetchJurisdictions;
+  fetchStructuresActionCreator: typeof setStructures;
   jurisdictionById: Jurisdiction | null;
   jurisdictionId: string;
   planById: PlanRecord | null;
   planId: string;
+  structures: FeatureCollection<StructureGeoJSON> | null;
 }
 
 /** default props for IrsReportMap component */
 export const defaultIrsReportMapProps = {
   fetchJurisdictionsActionCreator: fetchJurisdictions,
+  fetchStructuresActionCreator: setStructures,
   jurisdictionById: null,
   jurisdictionId: '',
   planById: null,
   planId: '',
+  structures: null,
 };
 
 /** Interface to describe IRS Report Map component state */
@@ -73,7 +100,11 @@ class IrsReportMap extends React.Component<
   public state = defaultIrsReportMapState;
 
   public async componentDidMount() {
-    const { fetchJurisdictionsActionCreator, jurisdictionId } = this.props;
+    const {
+      fetchJurisdictionsActionCreator,
+      fetchStructuresActionCreator,
+      jurisdictionId,
+    } = this.props;
     // get jurisdictionById
     const jurisdictionById =
       this.props.jurisdictionById && this.props.jurisdictionById.geojson
@@ -100,7 +131,28 @@ class IrsReportMap extends React.Component<
       fetchJurisdictionsActionCreator([jurisdictionById]);
     }
 
-    const gisidaWrapperProps = this.getGisidaWrapperProps(jurisdictionById);
+    /** define superset filter params for jurisdictions */
+    const structuresParams = superset.getFormData(3000, [
+      { comparator: jurisdictionId, operator: '==', subject: JURISDICTION_ID },
+    ]);
+    // reference or fetch structures per Jurisdiction
+    const structuresArray: Structure[] | null = this.props.structures
+      ? null
+      : await supersetFetch(SUPERSET_STRUCTURES_SLICE, structuresParams).then(
+          (structuresResults: Structure[]) => structuresResults
+        );
+    // save structures to store
+    if (!this.props.structures && structuresArray) {
+      fetchStructuresActionCreator(structuresArray);
+    }
+    // define structures feature collection for Gisida Layers
+    const structures: FeatureCollection<StructureGeoJSON> | null =
+      this.props.structures ||
+      (structuresArray && wrapFeatureCollection(structuresArray.map((s: Structure) => s.geojson)));
+
+    // define Gisida Wrapper pros
+    const gisidaWrapperProps = this.getGisidaWrapperProps(jurisdictionById, structures);
+
     this.setState({ gisidaWrapperProps });
   }
 
@@ -159,7 +211,10 @@ class IrsReportMap extends React.Component<
   /** getGisidaWrapperProps - GisidaWrapper prop builder building out layers and handlers for Gisida
    * @returns {GisidaProps|null} props object for the GisidaWrapper or null
    */
-  private getGisidaWrapperProps(jurisdictionById: Jurisdiction) {
+  private getGisidaWrapperProps(
+    jurisdictionById: Jurisdiction,
+    structures: FeatureCollection<StructureGeoJSON> | null
+  ): GisidaProps | null {
     if (!jurisdictionById.geojson) {
       return null;
     }
@@ -179,6 +234,82 @@ class IrsReportMap extends React.Component<
       visible: true,
     };
     layers.push(jurisdictionLineLayer);
+
+    // define default structures layer
+    if (structures) {
+      const layerType = structures.features[0].geometry && structures.features[0].geometry.type;
+      const structuresPopup = {
+        body: `<div>
+          <p class="heading">{{type}}</p>
+          <p>Status: {{status}}</p>
+        </div>`,
+        join: ['jurisdiction_id', 'jurisdiction_id'],
+      };
+
+      if (layerType === 'Point') {
+        // build circle layers if structures are points
+        const structureCircleLayer = {
+          ...circleLayerConfig,
+          id: `${STRUCTURE_LAYER}-circle`,
+          paint: {
+            ...circleLayerConfig.paint,
+            'circle-color': GREEN,
+            'circle-stroke-color': GREEN,
+            'circle-stroke-opacity': 1,
+          },
+          popup: structuresPopup,
+          source: {
+            ...circleLayerConfig.source,
+            data: {
+              data: JSON.stringify(structures),
+              type: 'stringified-geojson',
+            },
+            type: 'geojson',
+          },
+          visible: true,
+        };
+        layers.push(structureCircleLayer);
+      } else {
+        // build fill / line layers if structures are polygons
+        const structuresFillLayer = {
+          ...fillLayerConfig,
+          id: `${STRUCTURE_LAYER}-fill`,
+          paint: {
+            ...fillLayerConfig.paint,
+            'fill-color': GREY,
+            'fill-outline-color': GREY,
+          },
+          popup: structuresPopup,
+          source: {
+            ...fillLayerConfig.source,
+            data: {
+              ...fillLayerConfig.source.data,
+              data: JSON.stringify(structures),
+            },
+          },
+          visible: true,
+        };
+        layers.push(structuresFillLayer);
+
+        const structuresLineLayer = {
+          ...lineLayerConfig,
+          id: `${STRUCTURE_LAYER}-line`,
+          paint: {
+            'line-color': GREY,
+            'line-opacity': 1,
+            'line-width': 2,
+          },
+          source: {
+            ...lineLayerConfig.source,
+            data: {
+              ...lineLayerConfig.source.data,
+              data: JSON.stringify(structures),
+            },
+          },
+        };
+        layers.push(structuresLineLayer);
+      }
+    }
 
     // define bounds for gisida map position
     const bounds = GeojsonExtent({
@@ -212,11 +343,14 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): IrsReportMapProp
   const jurisdictionById = getJurisdictionById(state, jurisdictionId);
   const planId = ownProps.match.params.id || '';
   const planById = planId.length ? getPlanRecordById(state, planId) : null;
+  const structures = getStructuresFCByJurisdictionId(state, jurisdictionId);
+
   const props = {
     jurisdictionById,
     jurisdictionId,
     planById,
     planId,
+    structures: structures.features.length ? structures : null,
     ...ownProps,
   };
   return props as IrsReportMapProps;
@@ -225,6 +359,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): IrsReportMapProp
 /** map props to actions that may be dispatched by component */
 const mapDispatchToProps = {
   fetchJurisdictionsActionCreator: fetchJurisdictions,
+  fetchStructuresActionCreator: setStructures,
 };
 /** Create connected IrsReportMap */
 const ConnectedIrsReportMap = connect(
