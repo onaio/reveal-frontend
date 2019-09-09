@@ -397,6 +397,25 @@ export function roundToPrecision(n: number, precision: number = 0): number {
   const factor = Math.pow(10, precision);
   return Math.round(n * factor) / factor;
 }
+/**
+ * I think the main/original use case for having the below 3 functions:
+ * PreventDefault, stopPropagation, and stopPropagationAndPreventDefault
+ * is feeding them directly into component handler attributes:
+ *
+ * <Button onClick={preventDefault} />
+ *
+ * which was intended to be a bit DRYer than:
+ *
+ * function handleSpecificButtonClick(e) { e.preventDefault() }
+ * <Button onClick={handleButtonClick} />
+ *
+ * and to avoid the linting error Lambdas are forbidden in JSX attributes due
+ * to their rendering performance impact when doing:
+ *
+ * <Button onClick={(e) => { e.preventDefault() } />
+ *
+ *
+ */
 
 /** click handler that cancels an event's default behavior
  *
