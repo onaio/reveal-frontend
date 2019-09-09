@@ -874,7 +874,8 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
               className="col-md-4"
             >
               <LinkToNewPlans
-                classProp="focus-investigation btn btn-primary float-right mt-3 mb-3"
+                className="focus-investigation btn btn-primary float-right mt-3 mb-3"
+                text="Add Plan"
               >
                 <Link
                   className="focus-investigation btn btn-primary float-right mt-3 mb-3"
@@ -886,7 +887,7 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
                     href="/plans/new"
                     onClick={[Function]}
                   >
-                    Add Focus Investigation
+                    Add Plan
                   </a>
                 </Link>
               </LinkToNewPlans>

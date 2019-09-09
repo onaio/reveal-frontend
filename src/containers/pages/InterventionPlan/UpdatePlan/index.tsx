@@ -8,7 +8,15 @@ import { Store } from 'redux';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
 import { PlanDefinition } from '../../../../configs/settings';
-import { HOME, HOME_URL, NEW_PLAN_URL, PLAN_LIST_URL, PLANS } from '../../../../constants';
+import {
+  HOME,
+  HOME_URL,
+  NEW_PLAN_URL,
+  OPENSRP_PLANS,
+  PLAN_LIST_URL,
+  PLANS,
+  UPDATE_PLAN,
+} from '../../../../constants';
 import { OpenSRPService } from '../../../../services/opensrp';
 import planDefinitionReducer, {
   addPlanDefinition,
@@ -64,8 +72,8 @@ const UpdatePlan = (props: RouteComponentProps<RouteParams> & UpdatePlanProps) =
     return <Loading />;
   }
 
-  const apiService = new service('/plans');
-  const pageTitle: string = plan ? `Update Plan: ${plan.title}` : 'Update Plan';
+  const apiService = new service(OPENSRP_PLANS);
+  const pageTitle: string = plan ? `${UPDATE_PLAN}: ${plan.title}` : UPDATE_PLAN;
 
   const breadcrumbProps = {
     currentPage: {

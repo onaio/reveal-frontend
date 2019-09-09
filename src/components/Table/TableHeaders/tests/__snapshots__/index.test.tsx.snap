@@ -166,7 +166,8 @@ exports[`components/page/Header renders routine headers correctly 1`] = `
               className="col-6"
             >
               <LinkToNewPlans
-                classProp="focus-investigation btn btn-primary float-right mt-5"
+                className="focus-investigation btn btn-primary float-right mt-5"
+                text="Add Focus Investigation"
               >
                 <Link
                   className="focus-investigation btn btn-primary float-right mt-5"
