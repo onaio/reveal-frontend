@@ -13,12 +13,17 @@ import {
   HOME_URL,
   INTERVENTION_IRS_URL,
   IRS_REPORTING_TITLE,
+  MAIN_PLAN,
   OPENSRP_LOCATION,
   REPORT_IRS_PLAN_URL,
 } from '../../../../../constants';
-import { RouteParams } from '../../../../../helpers/utils';
+import { FlexObject, RouteParams } from '../../../../../helpers/utils';
 import { OpenSRPService } from '../../../../../services/opensrp';
 
+import GeojsonExtent from '@mapbox/geojson-extent';
+import GisidaWrapper, { GisidaProps } from '../../../../../components/GisidaWrapper';
+import Loading from '../../../../../components/page/Loading';
+import { lineLayerConfig } from '../../../../../configs/settings';
 import jurisdictionReducer, {
   fetchJurisdictions,
   getJurisdictionById,
@@ -50,12 +55,22 @@ export const defaultIrsReportMapProps = {
   planId: '',
 };
 
+/** Interface to describe IRS Report Map component state */
+export interface IrsReportMapState {
+  gisidaWrapperProps: GisidaProps | null;
+}
+/** Interface to describe IRS Report Map component state */
+export const defaultIrsReportMapState: IrsReportMapState = {
+  gisidaWrapperProps: null,
+};
+
 /** Reporting Map for Single Active IRS Plan-Jurisdiction */
 class IrsReportMap extends React.Component<
   RouteComponentProps<RouteParams> & IrsReportMapProps,
   {}
 > {
   public static defaultProps = defaultIrsReportMapProps;
+  public state = defaultIrsReportMapState;
 
   public async componentDidMount() {
     const { fetchJurisdictionsActionCreator, jurisdictionId } = this.props;
@@ -84,11 +99,14 @@ class IrsReportMap extends React.Component<
     ) {
       fetchJurisdictionsActionCreator([jurisdictionById]);
     }
+
+    const gisidaWrapperProps = this.getGisidaWrapperProps(jurisdictionById);
+    this.setState({ gisidaWrapperProps });
   }
 
   public render() {
     const { jurisdictionById, planById, planId } = this.props;
-
+    const { gisidaWrapperProps } = this.state;
     // Build page-level Breadcrumbs
     const breadCrumbProps: BreadCrumbProps = {
       currentPage: {
@@ -123,8 +141,62 @@ class IrsReportMap extends React.Component<
             </h2>
           </Col>
         </Row>
+        <Row>
+          <Col>
+            {gisidaWrapperProps ? (
+              <div className="map irs-plan-map">
+                <GisidaWrapper {...gisidaWrapperProps} />
+              </div>
+            ) : (
+              <Loading />
+            )}
+          </Col>
+        </Row>
       </div>
     );
+  }
+
+  /** getGisidaWrapperProps - GisidaWrapper prop builder building out layers and handlers for Gisida
+   * @returns {GisidaProps|null} props object for the GisidaWrapper or null
+   */
+  private getGisidaWrapperProps(jurisdictionById: Jurisdiction) {
+    if (!jurisdictionById.geojson) {
+      return null;
+    }
+    const layers: FlexObject[] = [];
+
+    // define line layer for Jurisdiction outline
+    const jurisdictionLineLayer = {
+      ...lineLayerConfig,
+      id: `${MAIN_PLAN}-${jurisdictionById.jurisdiction_id}`,
+      source: {
+        ...lineLayerConfig.source,
+        data: {
+          ...lineLayerConfig.source.data,
+          data: JSON.stringify(jurisdictionById.geojson),
+        },
+      },
+      visible: true,
+    };
+    layers.push(jurisdictionLineLayer);
+
+    // define bounds for gisida map position
+    const bounds = GeojsonExtent({
+      features: [jurisdictionById.geojson],
+      type: 'FeatureCollection',
+    });
+
+    // define the actual props object for GisidaWrapper
+    const gisidaWrapperProps: GisidaProps = {
+      bounds,
+      geoData: null,
+      handlers: [],
+      layers,
+      pointFeatureCollection: null,
+      polygonFeatureCollection: null,
+      structures: null,
+    };
+    return gisidaWrapperProps;
   }
 }
 
