@@ -150,13 +150,16 @@ export function extractActivityForForm(activityObj: PlanActivity): PlanActivityF
     actionTitle: activityObj.action.title || '',
     goalDescription: activityObj.goal.description || '',
     goalDue:
-      activityObj.goal.target[0].due && activityObj.goal.target[0].due !== ''
+      activityObj.goal.target &&
+      activityObj.goal.target[0].due &&
+      activityObj.goal.target[0].due !== ''
         ? parseISO(`${activityObj.goal.target[0].due}${DEFAULT_TIME}`)
         : moment()
             .add(DEFAULT_ACTIVITY_DURATION_DAYS, 'days')
             .toDate(),
     goalPriority: activityObj.goal.priority || goalPriorities[1],
-    goalValue: activityObj.goal.target[0].detail.detailQuantity.value || 0,
+    goalValue:
+      (activityObj.goal.target && activityObj.goal.target[0].detail.detailQuantity.value) || 0,
     timingPeriodEnd:
       activityObj.action.timingPeriod.end && activityObj.action.timingPeriod.end !== ''
         ? parseISO(`${activityObj.action.timingPeriod.end}${DEFAULT_TIME}`)
