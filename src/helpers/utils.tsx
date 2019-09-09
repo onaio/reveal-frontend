@@ -491,18 +491,49 @@ export function roundToPrecision(n: number, precision: number = 0): number {
   const factor = Math.pow(10, precision);
   return Math.round(n * factor) / factor;
 }
+/**
+ * I think the main/original use case for having the below 3 functions:
+ * PreventDefault, stopPropagation, and stopPropagationAndPreventDefault
+ * is feeding them directly into component handler attributes:
+ *
+ * <Button onClick={preventDefault} />
+ *
+ * which was intended to be a bit DRYer than:
+ *
+ * function handleSpecificButtonClick(e) { e.preventDefault() }
+ * <Button onClick={handleButtonClick} />
+ *
+ * and to avoid the linting error Lambdas are forbidden in JSX attributes due
+ * to their rendering performance impact when doing:
+ *
+ * <Button onClick={(e) => { e.preventDefault() } />
+ *
+ *
+ */
 
-export function stopPropagation(e: Event | MouseEvent | any) {
-  e.stopPropagation();
-}
-
-export function preventDefault(e: Event | MouseEvent | any) {
+/** click handler that cancels an event's default behavior
+ *
+ * @param {Event | MouseEvent} e - a synthetic event wrapper around native dom events
+ */
+export function preventDefault(e: MouseEvent) {
   e.preventDefault();
 }
 
-export function stopPropagationAndPreventDefault(e: Event | MouseEvent | any) {
-  preventDefault(e);
-  stopPropagation(e);
+/** click handler that cancels an event's default behavior
+ *
+ * @param {MouseEvent} e - a synthetic event wrapper around native dom events
+ */
+export function stopPropagation(e: MouseEvent) {
+  e.stopPropagation();
+}
+
+/** click handler that cancels both an event propagation and its default behavior
+ *
+ * @param {MouseEvent} e - a synthetic event wrapper around native dom events
+ */
+export function stopPropagationAndPreventDefault(e: MouseEvent) {
+  e.preventDefault();
+  e.stopPropagation();
 }
 
 /** Returns Table columns Which require external dependencies (Cell, Link, CellInfo)
