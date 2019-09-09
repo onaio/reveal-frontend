@@ -1,5 +1,5 @@
 import { mount, shallow } from 'enzyme';
-import toJson, { mountToJson } from 'enzyme-to-json';
+import toJson from 'enzyme-to-json';
 import React from 'react';
 import snapshotDiff from 'snapshot-diff';
 import Teamform from '..';
