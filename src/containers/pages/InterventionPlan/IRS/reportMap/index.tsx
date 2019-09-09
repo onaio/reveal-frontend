@@ -118,7 +118,7 @@ class IrsReportMap extends React.Component<
                 geographic_level: result && result.properties && result.properties.geographicLevel,
                 geojson: result && { ...result },
                 jurisdiction_id: result && result.id,
-                name: result && result.name,
+                name: result && result.properties && result.properties.name,
                 parent_id: result && result.properties && (result.properties.parentId || null),
               } as Jurisdiction)
           );
