@@ -193,15 +193,20 @@ class IrsReportMap extends React.Component<
             </h2>
           </Col>
         </Row>
-        <Row>
-          <Col>
+        <Row noGutters={true}>
+          <Col xs={9}>
             {gisidaWrapperProps ? (
-              <div className="map irs-plan-map">
+              <div className="map irs-reporting-map">
                 <GisidaWrapper {...gisidaWrapperProps} />
               </div>
             ) : (
               <Loading />
             )}
+          </Col>
+          <Col xs={3}>
+            <div className="mapSidebar">
+              <h5>Reporting Layers</h5>
+            </div>
           </Col>
         </Row>
       </div>
