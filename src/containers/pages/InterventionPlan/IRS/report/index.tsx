@@ -139,12 +139,26 @@ class IrsReport extends React.Component<RouteComponentProps<RouteParams> & IrsRe
             // GET FULL JURISDICTION HIERARCHY
             const jurArray: Jurisdiction[] = jurisdictionResults
               .map(j => {
-                const { id, parent_id, name, geographic_level } = j;
+                const {
+                  jurisdiction_id,
+                  jurisdiction_name,
+                  jurisdiction_path: jurisdictionPathStr,
+                  jurisdiction_parent_id,
+                  id,
+                  parent_id,
+                  name,
+                  geographic_level,
+                } = j;
+                const jurisdictionPath = jurisdictionPathStr && JSON.parse(jurisdictionPathStr);
+
                 const jurisdiction: Jurisdiction = {
-                  geographic_level: geographic_level || 0,
-                  jurisdiction_id: id,
-                  name: name || null,
-                  parent_id: parent_id || null,
+                  geographic_level:
+                    geographic_level ||
+                    (Array.isArray(jurisdictionPath) && jurisdictionPath.length) ||
+                    0,
+                  jurisdiction_id: id || jurisdiction_id,
+                  name: name || jurisdiction_name || null,
+                  parent_id: parent_id || jurisdiction_parent_id || null,
                 };
                 return jurisdiction;
               })
