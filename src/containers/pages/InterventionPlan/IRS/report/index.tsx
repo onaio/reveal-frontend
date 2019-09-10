@@ -140,6 +140,7 @@ class IrsReport extends React.Component<RouteComponentProps<RouteParams> & IrsRe
             const jurArray: Jurisdiction[] = jurisdictionResults
               .map(j => {
                 const {
+                  jurisdiction_depth,
                   jurisdiction_id,
                   jurisdiction_name,
                   jurisdiction_path: jurisdictionPathStr,
@@ -154,7 +155,7 @@ class IrsReport extends React.Component<RouteComponentProps<RouteParams> & IrsRe
                 const jurisdiction: Jurisdiction = {
                   geographic_level:
                     geographic_level ||
-                    (Array.isArray(jurisdictionPath) && jurisdictionPath.length) ||
+                    (!Number.isNaN(Number(jurisdiction_depth)) && Number(jurisdiction_depth)) ||
                     0,
                   jurisdiction_id: id || jurisdiction_id,
                   name: name || jurisdiction_name || null,
