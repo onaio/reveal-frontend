@@ -69,49 +69,49 @@ describe('containers/pages/IrsReportList', () => {
     );
   });
 
-  it('renders the IRS Reporting Drilldown Table correctly', () => {
-    const mock: any = jest.fn();
-    // mock.mockImplementation(() => Promise.resolve(jurisdictionsArray));
+  // it('renders the IRS Reporting Drilldown Table correctly', () => {
+  //   const mock: any = jest.fn();
+  //   // mock.mockImplementation(() => Promise.resolve(jurisdictionsArray));
 
-    const routeProps = {
-      history,
-      location: mock,
-      match: {
-        isExact: true,
-        params: { id: irsPlanDefinition1.identifier },
-        path: `${REPORT_IRS_PLAN_URL}/:id`,
-        url: `${REPORT_IRS_PLAN_URL}/0230f9e8-1f30-5e91-8693-4c993661785e`,
-      },
-    };
+  //   const routeProps = {
+  //     history,
+  //     location: mock,
+  //     match: {
+  //       isExact: true,
+  //       params: { id: irsPlanDefinition1.identifier },
+  //       path: `${REPORT_IRS_PLAN_URL}/:id`,
+  //       url: `${REPORT_IRS_PLAN_URL}/0230f9e8-1f30-5e91-8693-4c993661785e`,
+  //     },
+  //   };
 
-    const planById: PlanRecord | null = extractPlanRecordFromPlanPayload(
-      irsPlanDefinition1 as PlanPayload
-    );
-    const ownProps: IrsReportProps = {
-      ...defaultIrsReportProps,
-      childrenByParentId: { ...childrenByParentId },
-      jurisdictionIdsByPlanId: { ...jurisdictionIdsByPlanId },
-      jurisdictionsById: { ...jurisdictionsById },
-      planById,
-      planId: irsPlanDefinition1.identifier,
-    };
+  //   const planById: PlanRecord | null = extractPlanRecordFromPlanPayload(
+  //     irsPlanDefinition1 as PlanPayload
+  //   );
+  //   const ownProps: IrsReportProps = {
+  //     ...defaultIrsReportProps,
+  //     childrenByParentId: { ...childrenByParentId },
+  //     jurisdictionIdsByPlanId: { ...jurisdictionIdsByPlanId },
+  //     jurisdictionsById: { ...jurisdictionsById },
+  //     planById,
+  //     planId: irsPlanDefinition1.identifier,
+  //   };
 
-    store.dispatch(fetchJurisdictions(jurisdictionsArray));
-    store.dispatch(fetchChildrenByParentId(childrenByParentId));
-    store.dispatch(fetchJurisdictionIdsByPlanId(jurisdictionIdsByPlanId));
+  //   store.dispatch(fetchJurisdictions(jurisdictionsArray));
+  //   store.dispatch(fetchChildrenByParentId(childrenByParentId));
+  //   store.dispatch(fetchJurisdictionIdsByPlanId(jurisdictionIdsByPlanId));
 
-    const wrapper = mount(
-      <Provider store={store}>
-        <Router history={history}>
-          <IrsReport {...routeProps} {...ownProps} />
-        </Router>
-      </Provider>
-    );
+  //   const wrapper = mount(
+  //     <Provider store={store}>
+  //       <Router history={history}>
+  //         <IrsReport {...routeProps} {...ownProps} />
+  //       </Router>
+  //     </Provider>
+  //   );
 
-    expect(wrapper.find('h2.page-title')).toMatchSnapshot();
-    expect(wrapper.find('nav.reveal-breadcrumb')).toMatchSnapshot();
-    expect(wrapper.find('.table-bread-crumbs')).toMatchSnapshot();
-    expect(wrapper.find('.ReactTable .rt-thead.-headerGroups')).toMatchSnapshot();
-    expect(wrapper.find('.ReactTable .rt-tbody')).toMatchSnapshot();
-  });
+  //   expect(wrapper.find('h2.page-title')).toMatchSnapshot();
+  //   expect(wrapper.find('nav.reveal-breadcrumb')).toMatchSnapshot();
+  //   expect(wrapper.find('.table-bread-crumbs')).toMatchSnapshot();
+  //   expect(wrapper.find('.ReactTable .rt-thead.-headerGroups')).toMatchSnapshot();
+  //   expect(wrapper.find('.ReactTable .rt-tbody')).toMatchSnapshot();
+  // });
 });
