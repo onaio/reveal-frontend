@@ -1117,6 +1117,8 @@ class IrsPlan extends React.Component<
   }
 
   /** getGisidaWrapperProps - GisidaWrapper prop builder building out layers and handlers for Gisida
+   * @param {IrsPlanProps | null} props the most recent props the component has received
+   * @param {IrsPlanState} state the mostly recently dereived state of the component
    * @returns {GisidaProps|null} props object for the GisidaWrapper or null
    */
   private getGisidaWrapperProps(
