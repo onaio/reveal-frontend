@@ -156,14 +156,67 @@ interface IrsPlanState {
   tableCrumbs: TableCrumb[];
 }
 
+let selfIrsPlan: any;
+
 /** IrsPlan - component for IRS Plan page */
 class IrsPlan extends React.Component<
   RouteComponentProps<RouteParams> & IrsPlanProps,
   IrsPlanState
 > {
   public static defaultProps = defaultIrsPlanProps;
+
+  public static getDerivedStateFromProps(
+    props: IrsPlanProps,
+    state: IrsPlanState
+  ): IrsPlanState | null {
+    const {
+      childlessChildrenIds,
+      country,
+      isLoadingGeoms,
+      isLoadingJurisdictions,
+      newPlan,
+    } = state;
+    const { isFinalizedPlan, jurisdictionsById, planById } = props;
+
+    // update state after geometries are fetched from this.loadJurisdictionGeometries()
+    if (newPlan && childlessChildrenIds && country && isLoadingGeoms) {
+      const filteredJurisdictions = childlessChildrenIds.map(j => jurisdictionsById[j]);
+      const loadedJurisdictions = filteredJurisdictions.filter((j: Jurisdiction) => j.geojson);
+
+      if (loadedJurisdictions.length === filteredJurisdictions.length) {
+        const nextState: IrsPlanState = {
+          ...state,
+          isLoadingGeoms: false,
+        };
+        const gisidaWrapperProps = selfIrsPlan.getGisidaWrapperProps(props, nextState);
+        return {
+          ...nextState,
+          gisidaWrapperProps,
+        } as IrsPlanState;
+      }
+    }
+
+    // update state after Jurisdiction Hierarchy is fetched from SUPERSET_JURISDICTIONS_DATA_SLICE
+    if (!isFinalizedPlan && isLoadingJurisdictions && Object.keys(jurisdictionsById).length) {
+      return {
+        ...state,
+        isLoadingJurisdictions: false,
+      } as IrsPlanState;
+    }
+
+    // update state after fetching plan from OpenSRP
+    if (!newPlan && planById && planById.plan_jurisdictions_ids) {
+      return {
+        ...state,
+        newPlan: planById,
+      } as IrsPlanState;
+    }
+
+    return null;
+  }
   constructor(props: RouteComponentProps<RouteParams> & IrsPlanProps) {
     super(props);
+    selfIrsPlan = this;
     this.state = {
       childlessChildrenIds: [],
       childrenByParentId: {},
@@ -349,56 +402,6 @@ class IrsPlan extends React.Component<
         return fetchJurisdictionsActionCreator(jurisdictionsArray);
       }
     );
-  }
-
-  public componentWillReceiveProps(nextProps: IrsPlanProps) {
-    const {
-      childlessChildrenIds,
-      country,
-      isLoadingGeoms,
-      isLoadingJurisdictions,
-      newPlan,
-    } = this.state;
-    const { isFinalizedPlan, jurisdictionsById, planById } = nextProps;
-
-    // update state after geometries are fetched from this.loadJurisdictionGeometries()
-    if (newPlan && childlessChildrenIds && country && isLoadingGeoms) {
-      const filteredJurisdictions = childlessChildrenIds.map(j => jurisdictionsById[j]);
-      const loadedJurisdictions = filteredJurisdictions.filter((j: Jurisdiction) => j.geojson);
-
-      if (loadedJurisdictions.length === filteredJurisdictions.length) {
-        this.setState(
-          {
-            isBuildingGisidaProps: true,
-            isLoadingGeoms: false,
-          },
-          () => {
-            // build gisida wrapper props
-            const gisidaWrapperProps = this.getGisidaWrapperProps();
-            this.setState({
-              gisidaWrapperProps,
-              isBuildingGisidaProps: false,
-            });
-          }
-        );
-      }
-    }
-
-    // update state after Jurisdiction Hierarchy is fetched from SUPERSET_JURISDICTIONS_DATA_SLICE
-    if (
-      !isFinalizedPlan &&
-      isLoadingJurisdictions &&
-      Object.keys(jurisdictionsById).length !== Object.keys(this.props.jurisdictionsById).length
-    ) {
-      this.setState({ isLoadingJurisdictions: false });
-    }
-
-    // update state after fetching plan from OpenSRP
-    if (!newPlan && planById && planById.plan_jurisdictions_ids) {
-      this.setState({
-        newPlan: planById,
-      });
-    }
   }
 
   public render() {
@@ -1116,9 +1119,12 @@ class IrsPlan extends React.Component<
   /** getGisidaWrapperProps - GisidaWrapper prop builder building out layers and handlers for Gisida
    * @returns {GisidaProps|null} props object for the GisidaWrapper or null
    */
-  private getGisidaWrapperProps(): GisidaProps | null {
-    const { country, isLoadingGeoms, filteredJurisdictionIds, newPlan } = this.state;
-    const { jurisdictionsById } = this.props;
+  private getGisidaWrapperProps(
+    props?: IrsPlanProps | null,
+    state?: IrsPlanState
+  ): GisidaProps | null {
+    const { country, isLoadingGeoms, filteredJurisdictionIds, newPlan } = state || this.state;
+    const { jurisdictionsById } = props || this.props;
     const filteredJurisdictions = filteredJurisdictionIds.map(j => jurisdictionsById[j]);
 
     if (!country || isLoadingGeoms) {
