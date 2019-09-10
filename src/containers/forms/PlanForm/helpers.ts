@@ -1,6 +1,6 @@
 import { parseISO } from 'date-fns';
 import { FormikErrors } from 'formik';
-import { omit, pick } from 'lodash';
+import { findKey, omit, pick } from 'lodash';
 import moment from 'moment';
 import { FormEvent } from 'react';
 import * as Yup from 'yup';
@@ -36,7 +36,7 @@ import {
   UseContext,
 } from '../../../configs/settings';
 import { DATE, IS, NAME, REQUIRED } from '../../../constants';
-import { generateNameSpacedUUID } from '../../../helpers/utils';
+import { FlexObject, generateNameSpacedUUID } from '../../../helpers/utils';
 import { InterventionType, PlanStatus } from '../../../store/ducks/plans';
 
 /** separate FI and IRS activities */
@@ -142,6 +142,8 @@ export interface PlanFormFields {
  * @param activityObj - the plan activity object
  */
 export function extractActivityForForm(activityObj: PlanActivity): PlanActivityFormFields {
+  const planActivityKey: string =
+    findKey(planActivities, (a: PlanActivity) => a.action.code === activityObj.action.code) || '';
   return {
     actionCode: activityObj.action.code,
     actionDescription: activityObj.action.description || '',
@@ -159,7 +161,12 @@ export function extractActivityForForm(activityObj: PlanActivity): PlanActivityF
             .toDate(),
     goalPriority: activityObj.goal.priority || goalPriorities[1],
     goalValue:
-      (activityObj.goal.target && activityObj.goal.target[0].detail.detailQuantity.value) || 0,
+      (activityObj.goal.target && activityObj.goal.target[0].detail.detailQuantity.value) ||
+      (planActivityKey &&
+        (planActivities as FlexObject)[planActivityKey] &&
+        (planActivities as FlexObject)[planActivityKey].goal.target[0].detail.detailQuantity
+          .value) ||
+      1,
     timingPeriodEnd:
       activityObj.action.timingPeriod.end && activityObj.action.timingPeriod.end !== ''
         ? parseISO(`${activityObj.action.timingPeriod.end}${DEFAULT_TIME}`)
