@@ -21,6 +21,8 @@ export interface Jurisdiction {
   geographic_level?: number;
   geojson?: JurisdictionGeoJSON;
   jurisdiction_id: string;
+  jurisdiction_name_path?: string[];
+  jurisdiction_path?: string[];
   name?: string | null;
   parent_id?: string | null;
 }
