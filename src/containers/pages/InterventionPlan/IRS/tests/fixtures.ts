@@ -1,3 +1,9 @@
+import {
+  ChildrenByParentId,
+  Jurisdiction,
+  JurisdictionIdsByPlanId,
+} from '../../../../../store/ducks/jurisdictions';
+
 export const irsPlanDefinition1 = {
   action: [
     {
@@ -77,4 +83,39 @@ export const irsPlanRecord1 = {
   plan_status: 'draft',
   plan_title: 'IRS 2019-08-09',
   plan_version: '1',
+};
+
+export const jurisdiction1: Jurisdiction = {
+  jurisdiction_id: '3952',
+};
+export const jurisdictionsById: { [key: string]: Jurisdiction } = {
+  '0': { jurisdiction_id: '0', name: '0' },
+  '1A': { jurisdiction_id: '1A', name: '1A', parent_id: '0' },
+  '1Aa': { jurisdiction_id: '1Aa', name: '1Aa', parent_id: '1A' },
+  '1Ab': { jurisdiction_id: '1Ab', name: '1Ab', parent_id: '1A' },
+  '1B': { jurisdiction_id: '1B', name: '1B', parent_id: '0' },
+  '1Ba': { jurisdiction_id: '1Ba', name: '1Ba', parent_id: '1B' },
+  '1Bb': { jurisdiction_id: '1Bb', name: '1Bb', parent_id: '1B' },
+  '3952': { jurisdiction_id: '3952', name: '1B - 3952', parent_id: '1B' },
+};
+
+export const jurisdictionsArray: Jurisdiction[] = [
+  jurisdictionsById['0'],
+  jurisdictionsById['1A'],
+  jurisdictionsById['1B'],
+  jurisdictionsById['1Aa'],
+  jurisdictionsById['1Ab'],
+  jurisdictionsById['1Ba'],
+  jurisdictionsById['1Bb'],
+  jurisdictionsById['3952'],
+];
+
+export const childrenByParentId: ChildrenByParentId = {
+  '0': ['1A', '1B', '1Aa', '1Ab', '1Ba', '1Bb', '3952'],
+  '1A': ['1Aa', '1Ab'],
+  '1B': ['1Ba', '1Bb', '3952'],
+};
+
+export const jurisdictionIdsByPlanId: JurisdictionIdsByPlanId = {
+  [irsPlanRecord1.id]: ['1A', '1B', '1Aa', '1Ab', '1Ba', '1Bb', '3952'],
 };
