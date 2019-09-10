@@ -22,6 +22,7 @@ import {
   extractedActivitiesFromForms,
   planActivities,
   planActivityWithEmptyfields,
+  planActivityWithoutTargets,
   planFormValues,
   planFormValues2,
   values,
@@ -35,15 +36,26 @@ describe('containers/forms/PlanForm/helpers', () => {
     expect(extractActivityForForm(planActivityWithEmptyfields.BCC)).toEqual(
       expectedActivityEmptyField.BCC
     );
+    expect(extractActivityForForm(planActivityWithoutTargets.BCC)).toEqual(expectedActivity.BCC);
   });
 
-  it('check extractActivityForForm returns the correct value for IRS', () => {
+  it('check extractActivityForForm returns the correct value for bednetDistribution', () => {
     expect(extractActivityForForm(planActivities.bednetDistribution)).toEqual(
       expectedActivity.bednetDistribution
     );
     expect(extractActivityForForm(planActivityWithEmptyfields.bednetDistribution)).toEqual(
       expectedActivityEmptyField.bednetDistribution
     );
+    expect(extractActivityForForm(planActivityWithoutTargets.bednetDistribution)).toEqual(
+      expectedActivity.bednetDistribution
+    );
+  });
+  it('check extractActivityForForm returns the correct value for IRS', () => {
+    expect(extractActivityForForm(planActivities.IRS)).toEqual(expectedActivity.IRS);
+    expect(extractActivityForForm(planActivityWithEmptyfields.IRS)).toEqual(
+      expectedActivityEmptyField.IRS
+    );
+    expect(extractActivityForForm(planActivityWithoutTargets.IRS)).toEqual(expectedActivity.IRS);
   });
 
   it('check extractActivityForForm returns the correct value for bloodScreening', () => {
@@ -52,6 +64,9 @@ describe('containers/forms/PlanForm/helpers', () => {
     );
     expect(extractActivityForForm(planActivityWithEmptyfields.bloodScreening)).toEqual(
       expectedActivityEmptyField.bloodScreening
+    );
+    expect(extractActivityForForm(planActivityWithoutTargets.bloodScreening)).toEqual(
+      expectedActivity.bloodScreening
     );
   });
 
@@ -62,6 +77,9 @@ describe('containers/forms/PlanForm/helpers', () => {
     expect(extractActivityForForm(planActivityWithEmptyfields.caseConfirmation)).toEqual(
       expectedActivityEmptyField.caseConfirmation
     );
+    expect(extractActivityForForm(planActivityWithoutTargets.caseConfirmation)).toEqual(
+      expectedActivity.caseConfirmation
+    );
   });
 
   it('check extractActivityForForm returns the correct value for larvalDipping', () => {
@@ -71,11 +89,17 @@ describe('containers/forms/PlanForm/helpers', () => {
     expect(extractActivityForForm(planActivityWithEmptyfields.larvalDipping)).toEqual(
       expectedActivityEmptyField.larvalDipping
     );
+    expect(extractActivityForForm(planActivityWithoutTargets.familyRegistration)).toEqual(
+      expectedActivity.familyRegistration
+    );
   });
 
   it('check extractActivityForForm returns the correct value for familyRegistration', () => {
     expect(extractActivityForForm(planActivities.familyRegistration)).toEqual(
       expectedActivity.familyRegistration
+    );
+    expect(extractActivityForForm(planActivityWithoutTargets.larvalDipping)).toEqual(
+      expectedActivity.larvalDipping
     );
   });
 
@@ -85,6 +109,9 @@ describe('containers/forms/PlanForm/helpers', () => {
     );
     expect(extractActivityForForm(planActivityWithEmptyfields.mosquitoCollection)).toEqual(
       expectedActivityEmptyField.mosquitoCollection
+    );
+    expect(extractActivityForForm(planActivityWithoutTargets.mosquitoCollection)).toEqual(
+      expectedActivity.mosquitoCollection
     );
   });
 
