@@ -3,7 +3,7 @@ import { createBrowserHistory } from 'history';
 import MockDate from 'mockdate';
 import React from 'react';
 import { Router } from 'react-router';
-import { irsPlanDefinition1 } from '../../tests/fixtures';
+import { irsPlanDefinition1, irsPlanRecord1 } from '../../tests/fixtures';
 
 import { REPORT_IRS_PLAN_URL } from '../../../../../../constants';
 import {
@@ -36,9 +36,12 @@ describe('containers/pages/IrsReportList', () => {
       },
     };
 
+    // check extractPlanRecordFromPlanPayload functionality
     const planById: PlanRecord | null = extractPlanRecordFromPlanPayload(
       irsPlanDefinition1 as PlanPayload
     );
+    expect(planById).toEqual(irsPlanRecord1);
+
     const ownProps = {
       ...defaultIrsReportProps,
       planById,

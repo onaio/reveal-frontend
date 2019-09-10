@@ -64,3 +64,17 @@ export const irsPlanDefinition1 = {
   ],
   version: '1',
 };
+
+export const irsPlanRecord1 = {
+  id: '0230f9e8-1f30-5e91-8693-4c993661785e',
+  plan_date: '2019-08-09',
+  plan_effective_period_end: '2019-08-29',
+  plan_effective_period_start: '2019-08-09',
+  plan_fi_reason: '',
+  plan_fi_status: '',
+  plan_id: '0230f9e8-1f30-5e91-8693-4c993661785e',
+  plan_intervention_type: 'IRS',
+  plan_status: 'draft',
+  plan_title: 'IRS 2019-08-09',
+  plan_version: '1',
+};
