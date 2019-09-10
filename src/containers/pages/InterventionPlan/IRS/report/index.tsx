@@ -51,10 +51,16 @@ import jurisdictionReducer, {
   JurisdictionIdsByPlanId,
   reducerName as jurisdictionReducerName,
 } from '../../../../../store/ducks/jurisdictions';
-import { getPlanRecordById, PlanRecord } from '../../../../../store/ducks/plans';
+import plansReducer, {
+  getPlanRecordById,
+  PlanRecord,
+  reducerName as plansReducerName,
+} from '../../../../../store/ducks/plans';
+
 import { TableCrumb } from '../plan';
 /** register the plans reducer */
 reducerRegistry.register(jurisdictionReducerName, jurisdictionReducer);
+reducerRegistry.register(plansReducerName, plansReducer);
 
 /** interface to describe props for IrsReport component */
 export interface IrsReportProps {
