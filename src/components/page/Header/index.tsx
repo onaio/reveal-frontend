@@ -26,6 +26,7 @@ import {
   FI_HISTORICAL_URL,
   FI_URL,
   INTERVENTION_IRS_URL,
+  IRS_PLANS,
   LOGIN_URL,
   LOGOUT_URL,
   PLAN_LIST_URL,
@@ -115,7 +116,7 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
                           className="nav-link"
                           activeClassName="active"
                         >
-                          IRS
+                          {IRS_PLANS}
                         </NavLink>
                       </DropdownItem>
                     )}
