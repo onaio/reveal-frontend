@@ -40,6 +40,19 @@ export interface Structure {
   jurisdiction_id: string;
 }
 
+/** Extractor returing Structure from StructureGeoJSON
+ * @param {StructureGeoJSON} structureGeoJson
+ * @returns {Structure}
+ */
+export const extractStructureFromStructureGeoJSON = (
+  structureGeoJson: StructureGeoJSON
+): Structure =>
+  ({
+    geojson: structureGeoJson,
+    id: structureGeoJson.properties.jurisdiction_id,
+    jurisdiction_id: structureGeoJson.properties.jurisdiction_id,
+  } as Structure);
+
 // actions
 
 /** STRUCTURES_SET action type */
