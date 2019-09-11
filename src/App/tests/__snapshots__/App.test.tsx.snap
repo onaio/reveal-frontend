@@ -333,7 +333,7 @@ exports[`App renders App correctly 1`] = `
                                                           href="/plans/list"
                                                           onClick={[Function]}
                                                         >
-                                                          Manage Plans
+                                                          All  Plans
                                                         </a>
                                                       </Link>
                                                     </Route>
@@ -372,7 +372,46 @@ exports[`App renders App correctly 1`] = `
                                                           href="/intervention/irs"
                                                           onClick={[Function]}
                                                         >
-                                                          IRS
+                                                          IRS Plans
+                                                        </a>
+                                                      </Link>
+                                                    </Route>
+                                                  </NavLink>
+                                                </button>
+                                              </DropdownItem>
+                                              <DropdownItem
+                                                tag="button"
+                                                toggle={true}
+                                              >
+                                                <button
+                                                  className="dropdown-item"
+                                                  onClick={[Function]}
+                                                  role="menuitem"
+                                                  tabIndex="0"
+                                                  type="button"
+                                                >
+                                                  <NavLink
+                                                    activeClassName="active"
+                                                    aria-current="page"
+                                                    className="nav-link"
+                                                    to="/plans/new"
+                                                  >
+                                                    <Route
+                                                      path="\\\\/plans\\\\/new"
+                                                    >
+                                                      <Link
+                                                        aria-current={null}
+                                                        className="nav-link"
+                                                        replace={false}
+                                                        to="/plans/new"
+                                                      >
+                                                        <a
+                                                          aria-current={null}
+                                                          className="nav-link"
+                                                          href="/plans/new"
+                                                          onClick={[Function]}
+                                                        >
+                                                          Add Plan
                                                         </a>
                                                       </Link>
                                                     </Route>
@@ -436,86 +475,45 @@ exports[`App renders App correctly 1`] = `
                                               role="menu"
                                               tabIndex="-1"
                                             >
-                                              <div>
-                                                <DropdownItem
-                                                  tag="button"
-                                                  toggle={true}
+                                              <DropdownItem
+                                                tag="button"
+                                                toggle={true}
+                                              >
+                                                <button
+                                                  className="dropdown-item"
+                                                  onClick={[Function]}
+                                                  role="menuitem"
+                                                  tabIndex="0"
+                                                  type="button"
                                                 >
-                                                  <button
-                                                    className="dropdown-item"
-                                                    onClick={[Function]}
-                                                    role="menuitem"
-                                                    tabIndex="0"
-                                                    type="button"
+                                                  <NavLink
+                                                    activeClassName="active"
+                                                    aria-current="page"
+                                                    className="nav-link"
+                                                    to="/focus-investigation"
                                                   >
-                                                    <NavLink
-                                                      activeClassName="active"
-                                                      aria-current="page"
-                                                      className="nav-link"
-                                                      to="/focus-investigation"
+                                                    <Route
+                                                      path="\\\\/focus-investigation"
                                                     >
-                                                      <Route
-                                                        path="\\\\/focus-investigation"
+                                                      <Link
+                                                        aria-current={null}
+                                                        className="nav-link"
+                                                        replace={false}
+                                                        to="/focus-investigation"
                                                       >
-                                                        <Link
+                                                        <a
                                                           aria-current={null}
                                                           className="nav-link"
-                                                          replace={false}
-                                                          to="/focus-investigation"
+                                                          href="/focus-investigation"
+                                                          onClick={[Function]}
                                                         >
-                                                          <a
-                                                            aria-current={null}
-                                                            className="nav-link"
-                                                            href="/focus-investigation"
-                                                            onClick={[Function]}
-                                                          >
-                                                            Focus Investigation
-                                                          </a>
-                                                        </Link>
-                                                      </Route>
-                                                    </NavLink>
-                                                  </button>
-                                                </DropdownItem>
-                                                <DropdownItem
-                                                  tag="button"
-                                                  toggle={true}
-                                                >
-                                                  <button
-                                                    className="dropdown-item"
-                                                    onClick={[Function]}
-                                                    role="menuitem"
-                                                    tabIndex="0"
-                                                    type="button"
-                                                  >
-                                                    <NavLink
-                                                      activeClassName="active"
-                                                      aria-current="page"
-                                                      className="nav-link"
-                                                      to="/focus-investigation/historical"
-                                                    >
-                                                      <Route
-                                                        path="\\\\/focus-investigation\\\\/historical"
-                                                      >
-                                                        <Link
-                                                          aria-current={null}
-                                                          className="nav-link"
-                                                          replace={false}
-                                                          to="/focus-investigation/historical"
-                                                        >
-                                                          <a
-                                                            aria-current={null}
-                                                            className="nav-link"
-                                                            href="/focus-investigation/historical"
-                                                            onClick={[Function]}
-                                                          >
-                                                            Historical FI
-                                                          </a>
-                                                        </Link>
-                                                      </Route>
-                                                    </NavLink>
-                                                  </button>
-                                                </DropdownItem>
-                                              </div>
+                                                          Focus Investigation
+                                                        </a>
+                                                      </Link>
+                                                    </Route>
+                                                  </NavLink>
+                                                </button>
+                                              </DropdownItem>
                                             </div>
                                           </DropdownMenu>
                                         </li>

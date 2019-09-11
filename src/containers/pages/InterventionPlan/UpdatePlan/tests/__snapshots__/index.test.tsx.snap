@@ -51,7 +51,7 @@ exports[`components/InterventionPlan/UpdatePlan renders plan definition list cor
               href="/plans/list"
               onClick={[Function]}
             >
-              Manage Plans
+              All  Plans
             </a>
           </Link>
         </li>
