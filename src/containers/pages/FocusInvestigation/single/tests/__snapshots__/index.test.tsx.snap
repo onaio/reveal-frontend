@@ -663,11 +663,11 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
                 },
                 Object {
                   "label": "Chadiza",
-                  "url": "",
+                  "url": "/focus-investigation/filter/2939/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
                 },
                 Object {
                   "label": "Naviluli",
-                  "url": "",
+                  "url": "/focus-investigation/filter/2944/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
                 },
               ]
             }
@@ -735,7 +735,18 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
                       <li
                         className="breadcrumb-item"
                       >
-                        Chadiza
+                        <Link
+                          key="2"
+                          replace={false}
+                          to="/focus-investigation/filter/2939/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
+                        >
+                          <a
+                            href="/focus-investigation/filter/2939/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
+                            onClick={[Function]}
+                          >
+                            Chadiza
+                          </a>
+                        </Link>
                       </li>
                     </BreadcrumbItem>
                     <BreadcrumbItem
@@ -745,7 +756,18 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
                       <li
                         className="breadcrumb-item"
                       >
-                        Naviluli
+                        <Link
+                          key="3"
+                          replace={false}
+                          to="/focus-investigation/filter/2944/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
+                        >
+                          <a
+                            href="/focus-investigation/filter/2944/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
+                            onClick={[Function]}
+                          >
+                            Naviluli
+                          </a>
+                        </Link>
                       </li>
                     </BreadcrumbItem>
                     <BreadcrumbItem
@@ -5818,11 +5840,11 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
             },
             Object {
               "label": "Chadiza",
-              "url": "",
+              "url": "/focus-investigation/filter/2939/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
             },
             Object {
               "label": "Naviluli",
-              "url": "",
+              "url": "/focus-investigation/filter/2944/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
             },
           ]
         }
@@ -5890,7 +5912,18 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
                   <li
                     className="breadcrumb-item"
                   >
-                    Chadiza
+                    <Link
+                      key="2"
+                      replace={false}
+                      to="/focus-investigation/filter/2939/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
+                    >
+                      <a
+                        href="/focus-investigation/filter/2939/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
+                        onClick={[Function]}
+                      >
+                        Chadiza
+                      </a>
+                    </Link>
                   </li>
                 </BreadcrumbItem>
                 <BreadcrumbItem
@@ -5900,7 +5933,18 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
                   <li
                     className="breadcrumb-item"
                   >
-                    Naviluli
+                    <Link
+                      key="3"
+                      replace={false}
+                      to="/focus-investigation/filter/2944/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
+                    >
+                      <a
+                        href="/focus-investigation/filter/2944/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
+                        onClick={[Function]}
+                      >
+                        Naviluli
+                      </a>
+                    </Link>
                   </li>
                 </BreadcrumbItem>
                 <BreadcrumbItem
