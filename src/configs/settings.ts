@@ -757,7 +757,7 @@ export const extractReportingJurisdiction = (
   }
   const jurisdiction: FlexObject = { ...j };
   for (const prop of irsReportingCongif[sliceId].sliceProps) {
-    if (datum[prop]) {
+    if (typeof datum[prop] !== 'undefined') {
       jurisdiction[prop] = datum[prop];
     }
   }
