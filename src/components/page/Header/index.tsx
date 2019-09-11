@@ -23,15 +23,18 @@ import {
   WEBSITE_NAME,
 } from '../../../configs/env';
 import {
+  ADD_PLAN,
   FI_HISTORICAL_URL,
   FI_URL,
   INTERVENTION_IRS_URL,
   IRS_PLANS,
   LOGIN_URL,
   LOGOUT_URL,
+  NEW_PLAN_URL,
   PLAN_LIST_URL,
   PLANS,
 } from '../../../constants';
+import LinkToNewPlans from '../../LinkToNewPlans';
 import './Header.css';
 
 /** interface for Header state */
@@ -120,6 +123,11 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
                         </NavLink>
                       </DropdownItem>
                     )}
+                    <DropdownItem>
+                      <NavLink to={NEW_PLAN_URL} className="nav-link" activeClassName="active">
+                        {ADD_PLAN}
+                      </NavLink>
+                    </DropdownItem>
                   </DropdownMenu>
                 </UncontrolledDropdown>
               )}
