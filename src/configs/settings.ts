@@ -734,14 +734,26 @@ export interface NamibiaIrsReportingJurisdiction extends Jurisdiction {
   structuressprayed: number;
   targetcoverage: number;
 }
-interface IrsReportingCongif {
-  [key: string]: {
-    juridictionTyper: (j: any) => JurisidictionTypes;
-    sliceProps: string[];
+export interface IrsReportingCongif {
+  drilldownColumnGetters: {
+    [key: string]: () => any;
   };
+  juridictionTyper: (j: any) => JurisidictionTypes;
+  sliceProps: string[];
 }
-const irsReportingCongif: IrsReportingCongif = {
+export const irsReportingCongif: { [key: string]: IrsReportingCongif } = {
   '550': {
+    drilldownColumnGetters: {
+      structuresfound: () => ({
+        Header: `Structures Targeted`,
+        columns: [
+          {
+            Header: '',
+            accessor: 'structuresfound',
+          },
+        ],
+      }),
+    },
     juridictionTyper: (j: any) => j as NamibiaIrsReportingJurisdiction,
     sliceProps: NamibiaIrsReportingProps,
   },
