@@ -1,6 +1,7 @@
 import { get, keyBy, keys, pickBy, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
 import SeamlessImmutable from 'seamless-immutable';
+import { JurisdictionTypes, JurisidictionTypes } from '../../configs/settings';
 import { FlexObject, GeoJSON, Geometry } from '../../helpers/utils';
 import store from '../../store';
 
@@ -125,7 +126,7 @@ interface JurisdictionState {
   allJurisdictionIds: AllJurisdictionIds;
   childrenByParentId: ChildrenByParentId;
   jurisdictionIdsByPlanId: JurisdictionIdsByPlanId;
-  jurisdictionsById: { [key: string]: Jurisdiction };
+  jurisdictionsById: { [key: string]: JurisdictionTypes };
 }
 
 /** immutable Jurisdiction state */
@@ -220,7 +221,7 @@ export const fetchJurisdictions = (jurisdictionList: Jurisdiction[] = []) => {
       j => j.id
     ),
     jurisdictionsById: keyBy(
-      jurisdictionList.map((item: Jurisdiction) => {
+      jurisdictionList.map((item: JurisidictionTypes) => {
         const previousItem = getJurisdictionById(store.getState(), item.jurisdiction_id);
         /** ensure geojson is parsed */
         if (typeof item.geojson === 'string') {
