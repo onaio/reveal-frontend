@@ -707,7 +707,8 @@ export const symbolLayerConfig = {
 export const adminLayerColors = ['black', 'red', 'orange', 'yellow', 'green'];
 export type adminLayerColorsType = typeof adminLayerColors[number];
 
-export type JurisidictionTypes = Jurisdiction | NamibiaIrsReportingJurisdiction;
+/** Flexible typings for all custom types which extend Jurisdiction */
+export type CustomJurisdictionTypes = NamibiaIrsReportingJurisdiction;
 
 export const NamibiaIrsReportingProps = [
   'foundcoverage',
@@ -738,7 +739,7 @@ export interface IrsReportingCongif {
   drilldownColumnGetters: {
     [key: string]: () => any;
   };
-  juridictionTyper: (j: any) => JurisidictionTypes;
+  juridictionTyper: (j: any) => Jurisdiction | CustomJurisdictionTypes;
   sliceProps: string[];
 }
 /* tslint:disable:object-literal-sort-keys */
