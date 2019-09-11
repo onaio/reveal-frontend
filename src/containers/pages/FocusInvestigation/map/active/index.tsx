@@ -5,7 +5,7 @@ import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { Link, NavLink } from 'react-router-dom';
-import { Badge, Button, Col, Row } from 'reactstrap';
+import { Badge, Col, Row } from 'reactstrap';
 import { Store } from 'redux';
 import GisidaWrapper from '../../../../../components/GisidaWrapper';
 import HeaderBreadcrumb, {
@@ -46,7 +46,12 @@ import {
 import { popupHandler } from '../../../../../helpers/handlers';
 import { getGoalReport } from '../../../../../helpers/indicators';
 import ProgressBar from '../../../../../helpers/ProgressBar';
-import { FeatureCollection, FlexObject, RouteParams } from '../../../../../helpers/utils';
+import {
+  FeatureCollection,
+  FlexObject,
+  getFilteredFIPlansURL,
+  RouteParams,
+} from '../../../../../helpers/utils';
 import supersetFetch from '../../../../../services/superset';
 import goalsReducer, {
   fetchGoals,
@@ -239,11 +244,11 @@ class SingleActiveFIMap extends React.Component<
     };
     const namePaths =
       plan.jurisdiction_name_path instanceof Array ? plan.jurisdiction_name_path : [];
-    const pages = namePaths.map(namePath => {
+    const pages = namePaths.map((namePath, i) => {
       // return a page object for each name path
       return {
         label: namePath,
-        url: '',
+        url: getFilteredFIPlansURL(plan.jurisdiction_path[i], plan.id),
       };
     });
     breadCrumbProps.pages = [homePage, basePage, ...pages, secondLastPage];
@@ -436,12 +441,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
     goals,
     jurisdiction,
     plan,
-    plansArray: getPlansArray(
-      state,
-      InterventionType.FI,
-      [PlanStatus.ACTIVE, PlanStatus.COMPLETE],
-      null
-    ),
+    plansArray: getPlansArray(state, InterventionType.FI, [PlanStatus.ACTIVE, PlanStatus.COMPLETE]),
     plansIdArray: getPlansIdArray(
       state,
       InterventionType.FI,

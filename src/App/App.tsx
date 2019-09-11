@@ -14,6 +14,7 @@ import { providers } from '../configs/settings';
 import {
   ACTIVE_IRS_PLAN_URL,
   DRAFT_IRS_PLAN_URL,
+  FI_FILTER_URL,
   FI_HISTORICAL_URL,
   FI_SINGLE_MAP_URL,
   FI_SINGLE_URL,
@@ -135,6 +136,12 @@ class App extends Component {
                 component={ActiveFocusInvestigation}
               />
               {/* Focus Area detail view */}
+              <ConnectedPrivateRoute
+                disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                exact={true}
+                path={`${FI_FILTER_URL}/:jurisdiction_parent_id/:plan_id?`}
+                component={ActiveFocusInvestigation}
+              />
               <ConnectedPrivateRoute
                 disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                 exact={true}

@@ -21,7 +21,6 @@ import {
   IrsReportingCongif,
   irsReportingCongif,
   JurisdictionsByCountry,
-  JurisidictionTypes,
 } from '../../../../../configs/settings';
 import {
   ACTIVE_IRS_PLAN_URL,
@@ -44,6 +43,7 @@ import {
 } from '../../../../../helpers/utils';
 import supersetFetch from '../../../../../services/superset';
 import jurisdictionReducer, {
+  AnyJurisdiction,
   ChildrenByParentId,
   fetchChildrenByParentId,
   fetchJurisdictionIdsByPlanId,
@@ -143,7 +143,7 @@ class IrsReport extends React.Component<RouteComponentProps<RouteParams> & IrsRe
           row_limit: 10000,
         }).then((jurisdictionResults: FlexObject[] = []) => {
           // GET FULL JURISDICTION HIERARCHY
-          const jurArray: JurisidictionTypes[] = jurisdictionResults
+          const jurArray: AnyJurisdiction[] = jurisdictionResults
             .map(j => {
               const {
                 jurisdiction_depth,

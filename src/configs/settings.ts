@@ -1,6 +1,9 @@
 /** This is the main configuration module */
 import { Providers } from '@onaio/gatekeeper';
 import { Expression, LngLatBoundsLike } from 'mapbox-gl';
+import { CellInfo } from 'react-table';
+import { GREEN, ORANGE, RED, YELLOW } from '../colors';
+import { getThresholdAdherenceIndicator } from '../helpers/indicators';
 import { FlexObject } from '../helpers/utils';
 import { Jurisdiction } from '../store/ducks/jurisdictions';
 import {
@@ -707,7 +710,8 @@ export const symbolLayerConfig = {
 export const adminLayerColors = ['black', 'red', 'orange', 'yellow', 'green'];
 export type adminLayerColorsType = typeof adminLayerColors[number];
 
-export type JurisidictionTypes = Jurisdiction | NamibiaIrsReportingJurisdiction;
+/** Flexible typings for all custom types which extend Jurisdiction */
+export type CustomJurisdictionTypes = NamibiaIrsReportingJurisdiction;
 
 export const NamibiaIrsReportingProps = [
   'foundcoverage',
@@ -734,11 +738,22 @@ export interface NamibiaIrsReportingJurisdiction extends Jurisdiction {
   structuressprayed: number;
   targetcoverage: number;
 }
+
+/** interface describing threshold configs for IRS report indicators */
+export interface IndicatorThresholds {
+  [key: string]: {
+    color: any;
+    orEquals?: boolean;
+    value: number;
+  };
+}
+
 export interface IrsReportingCongif {
   drilldownColumnGetters: {
     [key: string]: () => any;
   };
-  juridictionTyper: (j: any) => JurisidictionTypes;
+  indicatorThresholds: IndicatorThresholds;
+  juridictionTyper: (j: any) => Jurisdiction | CustomJurisdictionTypes;
   sliceProps: string[];
 }
 /* tslint:disable:object-literal-sort-keys */
@@ -768,8 +783,11 @@ export const irsReportingCongif: { [key: string]: IrsReportingCongif } = {
         columns: [
           {
             Header: '',
-            accessor: (d: any) => `${d.targetcoverage}%`,
-            id: 'targetcoverage',
+            // accessor: (d: any) => `${d.targetcoverage}%`,
+            // id: 'targetcoverage',
+            Cell: (cell: CellInfo) => getThresholdAdherenceIndicator(cell, '550'),
+            accessor: 'targetcoverage',
+            className: 'indicator centered',
           },
         ],
       }),
@@ -778,8 +796,9 @@ export const irsReportingCongif: { [key: string]: IrsReportingCongif } = {
         columns: [
           {
             Header: '',
-            accessor: (d: any) => `${d.foundcoverage}%`,
-            id: 'foundcoverage',
+            Cell: (cell: CellInfo) => getThresholdAdherenceIndicator(cell, '550'),
+            accessor: 'foundcoverage',
+            className: 'indicator centered',
           },
         ],
       }),
@@ -804,7 +823,7 @@ export const irsReportingCongif: { [key: string]: IrsReportingCongif } = {
           {
             Header: 'Following first visit',
             accessor: (d: any) => `${d.lockedfirst}%`,
-            id: 'refusalsfirst',
+            id: 'lockedfirst',
           },
           {
             Header: 'Following mop-up',
@@ -813,6 +832,25 @@ export const irsReportingCongif: { [key: string]: IrsReportingCongif } = {
           },
         ],
       }),
+    },
+    indicatorThresholds: {
+      GREEN_THRESHOLD: {
+        color: GREEN,
+        value: 1,
+      },
+      ORANGE_THRESHOLD: {
+        color: ORANGE,
+        value: 0.9,
+      },
+      RED_THRESHOLD: {
+        color: RED,
+        orEquals: true,
+        value: 0.75,
+      },
+      YELLOW_THRESHOLD: {
+        color: YELLOW,
+        value: 0.2,
+      },
     },
     juridictionTyper: (j: any) => j as NamibiaIrsReportingJurisdiction,
     sliceProps: NamibiaIrsReportingProps,
@@ -1160,10 +1198,6 @@ export const emptyCurrentRoutinePlans = [
   },
   {
     Header: 'End Date',
-    columns: [{}],
-  },
-  {
-    Header: 'Actions',
     columns: [{}],
   },
 ];
