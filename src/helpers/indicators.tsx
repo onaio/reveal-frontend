@@ -1,8 +1,16 @@
 import ElementMap from '@onaio/element-map';
+import { keys } from 'lodash';
 import * as React from 'react';
 import { CellInfo } from 'react-table';
-import { GREEN, ORANGE, RED, YELLOW } from '../colors';
-import { GREEN_THRESHOLD, ORANGE_THRESHOLD, YELLOW_THRESHOLD, ZERO } from '../configs/settings';
+import { GREEN, ORANGE, RED, WHITE, YELLOW } from '../colors';
+import {
+  GREEN_THRESHOLD,
+  IndicatorThresholds,
+  irsReportingCongif,
+  ORANGE_THRESHOLD,
+  YELLOW_THRESHOLD,
+  ZERO,
+} from '../configs/settings';
 import { BLOOD_SCREENING_CODE, CASE_CONFIRMATION_CODE, PERSONS, STRUCTURES } from '../constants';
 import { FlexObject, percentage, roundToPrecision } from '../helpers/utils';
 import { Goal } from '../store/ducks/goals';
@@ -142,5 +150,56 @@ export function renderClassificationRow(rowObject: FlexObject) {
     <tr key={rowObject.code} className="definitions">
       <ElementMap items={[rowObject.code, rowObject.name, rowObject.description]} HTMLTag="td" />
     </tr>
+  );
+}
+
+/** Determines the color of a indicator based on cell.value and threshold configs
+ * @param {CellInfo} cell - the ReactTable.Cell being rendered in an indicator drilldown table
+ * @param {IndicatorThresholds} thresholds - the threshold configuration from settings
+ * @returns {string} - the value coorisponding the cell.value according to the reporting config
+ */
+export function getThresholdColor(cell: CellInfo, thresholds: IndicatorThresholds) {
+  // get the keys of the thresholds and sort them by value
+  const thresholdKeys = keys(thresholds).sort((a, b) => thresholds[a].value - thresholds[b].value);
+
+  // loop through thresholds and evaluate value against cell.value
+  let k: string = '';
+  for (k of thresholdKeys) {
+    if (
+      thresholds[k].orEquals ? cell.value <= thresholds[k].value : cell.value < thresholds[k].value
+    ) {
+      return thresholds[k].color;
+    }
+  }
+
+  // if value is greater than the biggest threshold, assign it the biggest threshold's color
+  if (k.length) {
+    return thresholds[k].color;
+  }
+
+  // fallback to white
+  return WHITE;
+}
+
+/** Renders an indicator Cell based on cell.value and threshold configs
+ * @param {CellInfo} cell - the ReactTable.Cell being rendered in an indicator drilldown table
+ * @param {string} configId - the key vause used to get the custom reporting configs
+ * @returns {React.ReactElement} - the ReactTable.Cell element to be rendered for the indicator
+ */
+export function getThresholdAdherenceIndicator(cell: CellInfo, configId: string) {
+  // determine if cell.value is a number
+  const isNumber = !Number.isNaN(Number(cell.value));
+  // get thresholds config from settings
+  const thresholds: IndicatorThresholds | null =
+    isNumber && irsReportingCongif[configId]
+      ? irsReportingCongif[configId].indicatorThresholds
+      : null;
+  // determine cell background color
+  const cellColor = thresholds ? getThresholdColor(cell, thresholds) : WHITE;
+
+  return (
+    <div className="irs-report-indicator-container" style={{ backgroundColor: cellColor }}>
+      {isNumber ? percentage(cell.value) : 'NaN'}
+    </div>
   );
 }
