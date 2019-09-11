@@ -13,7 +13,7 @@ import HeaderBreadcrumbs, {
   BreadCrumbProps,
 } from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../../components/page/Loading';
-import { SUPERSET_JURISDICTIONS_DATA_SLICE } from '../../../../../configs/env';
+import { SUPERSET_IRS_REPORTING_JURISDICTIONS_DATA_SLICE } from '../../../../../configs/env';
 import {
   ADMN0_PCODE,
   CountriesAdmin0,
@@ -139,54 +139,52 @@ class IrsReport extends React.Component<RouteComponentProps<RouteParams> & IrsRe
     // get Jurisdicitons from Store or Superset
     const jurisdictionsArray = Object.keys(JurisdictionsById).length
       ? Object.keys(JurisdictionsById).map(j => JurisdictionsById[j])
-      : await supersetService(SUPERSET_JURISDICTIONS_DATA_SLICE, { row_limit: 10000 }).then(
-          (jurisdictionResults: FlexObject[] = []) => {
-            // GET FULL JURISDICTION HIERARCHY
-            const jurArray: JurisidictionTypes[] = jurisdictionResults
-              .map(j => {
-                const {
-                  jurisdiction_depth,
-                  jurisdiction_id,
-                  jurisdiction_name,
-                  jurisdiction_name_path: jurisdictionNamePathStr,
-                  jurisdiction_path: jurisdictionPathStr,
-                  jurisdiction_parent_id,
-                  id,
-                  parent_id,
-                  name,
-                  geographic_level,
-                } = j;
-                const jurisdictionPath = jurisdictionPathStr && JSON.parse(jurisdictionPathStr);
-                const jurisdictionNamePath =
-                  jurisdictionNamePathStr && JSON.parse(jurisdictionPathStr);
-                const jurisdiction: Jurisdiction = {
-                  geographic_level:
-                    geographic_level ||
-                    (!Number.isNaN(Number(jurisdiction_depth)) && Number(jurisdiction_depth)) ||
-                    0,
-                  jurisdiction_id: id || jurisdiction_id,
-                  jurisdiction_name_path: jurisdictionNamePath || [],
-                  jurisdiction_path: jurisdictionPath || [],
-                  name: name || jurisdiction_name || null,
-                  parent_id: parent_id || jurisdiction_parent_id || null,
-                };
+      : await supersetService(SUPERSET_IRS_REPORTING_JURISDICTIONS_DATA_SLICE, {
+          row_limit: 10000,
+        }).then((jurisdictionResults: FlexObject[] = []) => {
+          // GET FULL JURISDICTION HIERARCHY
+          const jurArray: JurisidictionTypes[] = jurisdictionResults
+            .map(j => {
+              const {
+                jurisdiction_depth,
+                jurisdiction_id,
+                jurisdiction_name,
+                jurisdiction_name_path: jurisdictionNamePathStr,
+                jurisdiction_path: jurisdictionPathStr,
+                jurisdiction_parent_id,
+                id,
+                parent_id,
+                name,
+                geographic_level,
+              } = j;
+              const jurisdictionPath = jurisdictionPathStr && JSON.parse(jurisdictionPathStr);
+              const jurisdictionNamePath =
+                jurisdictionNamePathStr && JSON.parse(jurisdictionPathStr);
+              const jurisdiction: Jurisdiction = {
+                geographic_level:
+                  geographic_level ||
+                  (!Number.isNaN(Number(jurisdiction_depth)) && Number(jurisdiction_depth)) ||
+                  0,
+                jurisdiction_id: id || jurisdiction_id,
+                jurisdiction_name_path: jurisdictionNamePath || [],
+                jurisdiction_path: jurisdictionPath || [],
+                name: name || jurisdiction_name || null,
+                parent_id: parent_id || jurisdiction_parent_id || null,
+              };
 
-                return extractReportingJurisdiction(
-                  jurisdiction,
-                  j as FlexObject,
-                  SUPERSET_JURISDICTIONS_DATA_SLICE
-                );
-              })
-              .sort((a, b) =>
-                a.geographic_level && b.geographic_level
-                  ? b.geographic_level - a.geographic_level
-                  : 0
+              return extractReportingJurisdiction(
+                jurisdiction,
+                j as FlexObject,
+                SUPERSET_IRS_REPORTING_JURISDICTIONS_DATA_SLICE
               );
+            })
+            .sort((a, b) =>
+              a.geographic_level && b.geographic_level ? b.geographic_level - a.geographic_level : 0
+            );
 
-            fetchJurisdictionsActionCreator(jurArray);
-            return jurArray;
-          }
-        );
+          fetchJurisdictionsActionCreator(jurArray);
+          return jurArray;
+        });
 
     const jurisdictionsById = Object.keys(JurisdictionsById).length
       ? JurisdictionsById
@@ -453,7 +451,7 @@ class IrsReport extends React.Component<RouteComponentProps<RouteParams> & IrsRe
 
     // define configuration for dynamic column generation
     const config: IrsReportingCongif | undefined =
-      irsReportingCongif[SUPERSET_JURISDICTIONS_DATA_SLICE];
+      irsReportingCongif[SUPERSET_IRS_REPORTING_JURISDICTIONS_DATA_SLICE];
     if (config) {
       const { drilldownColumnGetters } = config;
       // loop through all drilldown column getters
