@@ -196,7 +196,10 @@ class IrsReport extends React.Component<RouteComponentProps<RouteParams> & IrsRe
       // define ids of jurisdiction relevant to this plan - note: this is causing a delay when loading every time
       const filteredJurisdictionIds = jurisdictionIdsByPlanId[planId]
         ? [...jurisdictionIdsByPlanId[planId]]
-        : getAncestorJurisdictionIds([...planById.plan_jurisdictions_ids], jurisdictionsArray);
+        : getAncestorJurisdictionIds(
+            [...planById.plan_jurisdictions_ids],
+            jurisdictionsArray
+          ).filter(j => j && jurisdictionsById[j]);
       if (!jurisdictionIdsByPlanId[planId]) {
         fetchJurisdictionIdsByPlanIdActionCreator({ [planId]: [...filteredJurisdictionIds] });
       }
