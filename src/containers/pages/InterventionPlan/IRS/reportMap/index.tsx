@@ -30,10 +30,11 @@ import { OpenSRPService } from '../../../../../services/opensrp';
 import supersetFetch from '../../../../../services/superset';
 
 import GeojsonExtent from '@mapbox/geojson-extent';
+import { keyBy, keys } from 'lodash';
 import { GREEN, GREY } from '../../../../../colors';
 import GisidaWrapper, { GisidaProps } from '../../../../../components/GisidaWrapper';
 import Loading from '../../../../../components/page/Loading';
-import { SUPERSET_STRUCTURES_SLICE } from '../../../../../configs/env';
+import { SUPERSET_STRUCTURES_SLICE, SUPERSET_TASKS_SLICE } from '../../../../../configs/env';
 import {
   circleLayerConfig,
   fillLayerConfig,
@@ -52,10 +53,18 @@ import {
   Structure,
   StructureGeoJSON,
 } from '../../../../../store/ducks/structures';
+import tasksReducer, {
+  fetchTasks,
+  getTasksById,
+  getTasksByPlanJurisdictionIds,
+  reducerName as tasksReducerName,
+  Task,
+} from '../../../../../store/ducks/tasks';
 import './../../../../../helpers/handlers/handlers.css';
 
 /** register the plans reducer */
 reducerRegistry.register(jurisdictionReducerName, jurisdictionReducer);
+reducerRegistry.register(tasksReducerName, tasksReducer);
 
 /** initialize OpenSRP API services */
 const OpenSrpLocationService = new OpenSRPService(OPENSRP_LOCATION);
@@ -64,22 +73,26 @@ const OpenSrpLocationService = new OpenSRPService(OPENSRP_LOCATION);
 export interface IrsReportMapProps {
   fetchJurisdictionsActionCreator: typeof fetchJurisdictions;
   fetchStructuresActionCreator: typeof setStructures;
+  fetchTasksActionCreator: typeof fetchTasks;
   jurisdictionById: Jurisdiction | null;
   jurisdictionId: string;
   planById: PlanRecord | null;
   planId: string;
   structures: FeatureCollection<StructureGeoJSON> | null;
+  tasksById: { [key: string]: Task };
 }
 
 /** default props for IrsReportMap component */
-export const defaultIrsReportMapProps = {
+export const defaultIrsReportMapProps: IrsReportMapProps = {
   fetchJurisdictionsActionCreator: fetchJurisdictions,
   fetchStructuresActionCreator: setStructures,
+  fetchTasksActionCreator: fetchTasks,
   jurisdictionById: null,
   jurisdictionId: '',
   planById: null,
   planId: '',
   structures: null,
+  tasksById: {},
 };
 
 /** Interface to describe IRS Report Map component state */
@@ -103,7 +116,9 @@ class IrsReportMap extends React.Component<
     const {
       fetchJurisdictionsActionCreator,
       fetchStructuresActionCreator,
+      fetchTasksActionCreator,
       jurisdictionId,
+      planId,
     } = this.props;
     // get jurisdictionById
     const jurisdictionById =
@@ -149,6 +164,23 @@ class IrsReportMap extends React.Component<
     const structures: FeatureCollection<StructureGeoJSON> | null =
       this.props.structures ||
       (structuresArray && wrapFeatureCollection(structuresArray.map((s: Structure) => s.geojson)));
+
+    // define params for superset call for plan-location tasks
+    const taskParams = superset.getFormData(3000, [
+      { comparator: planId, operator: '==', subject: 'plan_id' },
+      { comparator: jurisdictionId, operator: '==', subject: JURISDICTION_ID },
+    ]);
+    // deine tasks relating to this jurisdiction and plan
+    const tasksArray = keys(this.props.tasksById).length
+      ? keys(this.props.tasksById).map(t => this.props.tasksById[t])
+      : await supersetFetch(SUPERSET_TASKS_SLICE, taskParams)
+          .then((result: Task[]) => result)
+          .catch(() => []);
+
+    // save tasks to store
+    if (!keys(this.props.tasksById).length && tasksArray && tasksArray.length) {
+      fetchTasksActionCreator(tasksArray);
+    }
 
     // define Gisida Wrapper pros
     const gisidaWrapperProps = this.getGisidaWrapperProps(jurisdictionById, structures);
@@ -349,13 +381,14 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): IrsReportMapProp
   const planId = ownProps.match.params.id || '';
   const planById = planId.length ? getPlanRecordById(state, planId) : null;
   const structures = getStructuresFCByJurisdictionId(state, jurisdictionId);
-
+  const tasksArray: Task[] = getTasksByPlanJurisdictionIds(state, planId, jurisdictionId) || [];
   const props = {
     jurisdictionById,
     jurisdictionId,
     planById,
     planId,
     structures: structures.features.length ? structures : null,
+    tasksById: keyBy(tasksArray, t => t.task_identifier) as { [key: string]: Task },
     ...ownProps,
   };
   return props as IrsReportMapProps;
@@ -365,6 +398,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): IrsReportMapProp
 const mapDispatchToProps = {
   fetchJurisdictionsActionCreator: fetchJurisdictions,
   fetchStructuresActionCreator: setStructures,
+  fetchTasksActionCreator: fetchTasks,
 };
 /** Create connected IrsReportMap */
 const ConnectedIrsReportMap = connect(
