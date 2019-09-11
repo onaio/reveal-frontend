@@ -6,6 +6,7 @@ import { GREEN, ORANGE, RED, YELLOW } from '../colors';
 import { getThresholdAdherenceIndicator } from '../helpers/indicators';
 import { FlexObject } from '../helpers/utils';
 import { Jurisdiction } from '../store/ducks/jurisdictions';
+import { Structure } from '../store/ducks/structures';
 import {
   DOMAIN_NAME,
   ENABLE_ONADATA_OAUTH,
@@ -712,6 +713,7 @@ export type adminLayerColorsType = typeof adminLayerColors[number];
 
 /** Flexible typings for all custom types which extend Jurisdiction */
 export type CustomJurisdictionTypes = NamibiaIrsReportingJurisdiction;
+export type CustomStructureTypes = NamibiaIrsReportingStructure;
 
 export const NamibiaIrsReportingProps = [
   'foundcoverage',
@@ -739,6 +741,19 @@ export interface NamibiaIrsReportingJurisdiction extends Jurisdiction {
   targetcoverage: number;
 }
 
+export interface NamibiaIrsReportingStructure extends Structure {
+  foundcoverage: number;
+  householdsnotaccessible: number;
+  lockedfirst: number;
+  lockedmopup: number;
+  refusalsfirst: number;
+  refusalsmopup: number;
+  sprayeffectiveness: number;
+  structuresfound: number;
+  structuressprayed: number;
+  targetcoverage: number;
+}
+
 /** interface describing threshold configs for IRS report indicators */
 export interface IndicatorThresholds {
   [key: string]: {
@@ -754,6 +769,7 @@ export interface IrsReportingCongif {
   };
   indicatorThresholds: IndicatorThresholds;
   juridictionTyper: (j: any) => Jurisdiction | CustomJurisdictionTypes;
+  structureTyper: (j: any) => Structure | CustomStructureTypes;
   sliceProps: string[];
 }
 /* tslint:disable:object-literal-sort-keys */
@@ -853,6 +869,7 @@ export const irsReportingCongif: { [key: string]: IrsReportingCongif } = {
       },
     },
     juridictionTyper: (j: any) => j as NamibiaIrsReportingJurisdiction,
+    structureTyper: (s: any) => s as NamibiaIrsReportingStructure,
     sliceProps: NamibiaIrsReportingProps,
   },
 };
@@ -874,6 +891,24 @@ export const extractReportingJurisdiction = (
   }
 
   return irsReportingCongif[sliceId].juridictionTyper(jurisdiction);
+};
+
+/** extractor for to get custom typed Structure entities */
+export const extractReportingStructure = (
+  s: Structure,
+  datum: FlexObject,
+  sliceId: string = '550'
+): NamibiaIrsReportingStructure | Structure => {
+  if (!irsReportingCongif[sliceId]) {
+    return s as Structure;
+  }
+  const structure: FlexObject = { ...s };
+  for (const prop of irsReportingCongif[sliceId].sliceProps) {
+    if (typeof datum[prop] !== 'undefined') {
+      structure[prop] = datum[prop];
+    }
+  }
+  return irsReportingCongif[sliceId].structureTyper(structure);
 };
 
 /** Interfaces describing administrative hierarchy via ISO 3166 admin codes */
