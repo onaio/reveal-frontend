@@ -1,6 +1,7 @@
 /** This is the main configuration module */
 import { Providers } from '@onaio/gatekeeper';
 import { Expression, LngLatBoundsLike } from 'mapbox-gl';
+import { GREEN, ORANGE, RED, YELLOW } from '../colors';
 import { FlexObject } from '../helpers/utils';
 import { Jurisdiction } from '../store/ducks/jurisdictions';
 import {
@@ -735,10 +736,21 @@ export interface NamibiaIrsReportingJurisdiction extends Jurisdiction {
   structuressprayed: number;
   targetcoverage: number;
 }
+
+/** interface describing threshold configs for IRS report indicators */
+export interface IndicatorThresholds {
+  [key: string]: {
+    color: any;
+    orEquals?: boolean;
+    value: number;
+  };
+}
+
 export interface IrsReportingCongif {
   drilldownColumnGetters: {
     [key: string]: () => any;
   };
+  indicatorThresholds: IndicatorThresholds;
   juridictionTyper: (j: any) => Jurisdiction | CustomJurisdictionTypes;
   sliceProps: string[];
 }
@@ -814,6 +826,25 @@ export const irsReportingCongif: { [key: string]: IrsReportingCongif } = {
           },
         ],
       }),
+    },
+    indicatorThresholds: {
+      GREEN_THRESHOLD: {
+        color: GREEN,
+        value: 1,
+      },
+      ORANGE_THRESHOLD: {
+        color: ORANGE,
+        value: 0.9,
+      },
+      RED_THRESHOLD: {
+        color: RED,
+        orEquals: true,
+        value: 0.75,
+      },
+      YELLOW_THRESHOLD: {
+        color: YELLOW,
+        value: 0.2,
+      },
     },
     juridictionTyper: (j: any) => j as NamibiaIrsReportingJurisdiction,
     sliceProps: NamibiaIrsReportingProps,
