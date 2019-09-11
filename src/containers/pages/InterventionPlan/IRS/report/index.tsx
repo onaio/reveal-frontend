@@ -17,7 +17,10 @@ import { SUPERSET_JURISDICTIONS_DATA_SLICE } from '../../../../../configs/env';
 import {
   ADMN0_PCODE,
   CountriesAdmin0,
+  extractReportingJurisdiction,
   JurisdictionsByCountry,
+  JurisidictionTypes,
+  NamibiaIrsReportingJurisdiction,
 } from '../../../../../configs/settings';
 import {
   ACTIVE_IRS_PLAN_URL,
@@ -137,7 +140,7 @@ class IrsReport extends React.Component<RouteComponentProps<RouteParams> & IrsRe
       : await supersetService(SUPERSET_JURISDICTIONS_DATA_SLICE, { row_limit: 10000 }).then(
           (jurisdictionResults: FlexObject[] = []) => {
             // GET FULL JURISDICTION HIERARCHY
-            const jurArray: Jurisdiction[] = jurisdictionResults
+            const jurArray: JurisidictionTypes[] = jurisdictionResults
               .map(j => {
                 const {
                   jurisdiction_depth,
@@ -165,7 +168,12 @@ class IrsReport extends React.Component<RouteComponentProps<RouteParams> & IrsRe
                   name: name || jurisdiction_name || null,
                   parent_id: parent_id || jurisdiction_parent_id || null,
                 };
-                return jurisdiction;
+
+                return extractReportingJurisdiction(
+                  jurisdiction,
+                  j as FlexObject,
+                  SUPERSET_JURISDICTIONS_DATA_SLICE
+                );
               })
               .sort((a, b) =>
                 a.geographic_level && b.geographic_level
