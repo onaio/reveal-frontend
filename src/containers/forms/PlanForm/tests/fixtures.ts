@@ -33,6 +33,19 @@ export const expectedActivity = {
     timingPeriodEnd,
     timingPeriodStart,
   },
+  IRS: {
+    actionCode: 'IRS',
+    actionDescription: 'Visit each structure in the operational area and attempt to spray',
+    actionIdentifier: '',
+    actionReason: 'Routine',
+    actionTitle: 'Spray Structures',
+    goalDescription: 'Spray structures in the operational area',
+    goalDue,
+    goalPriority: 'medium-priority',
+    goalValue: 90,
+    timingPeriodEnd,
+    timingPeriodStart,
+  },
   bednetDistribution: {
     actionCode: 'Bednet Distribution',
     actionDescription:
@@ -163,7 +176,7 @@ export const planActivityWithEmptyfields: PlanActivities = {
   IRS: {
     action: {
       code: 'IRS',
-      description: 'Visit each structure in the operational area and attempt to spray',
+      description: '',
       goalId: 'IRS',
       identifier: '',
       prefix: 7,
@@ -176,10 +189,10 @@ export const planActivityWithEmptyfields: PlanActivities = {
         end: '',
         start: '',
       },
-      title: 'Spray Structures',
+      title: '',
     },
     goal: {
-      description: 'Spray structures in the operational area',
+      description: '',
       id: 'IRS',
       priority: 'medium-priority',
       target: [
@@ -432,6 +445,19 @@ export const expectedActivityEmptyField = {
     goalDue,
     goalPriority: 'medium-priority',
     goalValue: 1,
+    timingPeriodEnd,
+    timingPeriodStart,
+  },
+  IRS: {
+    actionCode: 'IRS',
+    actionDescription: '',
+    actionIdentifier: '',
+    actionReason: 'Routine',
+    actionTitle: '',
+    goalDescription: '',
+    goalDue,
+    goalPriority: 'medium-priority',
+    goalValue: 90,
     timingPeriodEnd,
     timingPeriodStart,
   },
@@ -935,6 +961,77 @@ export const planActivities: PlanActivities = {
     },
   },
 };
+
+export const planActivityWithoutTargets = {
+  ...planActivities,
+  BCC: {
+    ...planActivities.BCC,
+    goal: {
+      description: 'Complete at least 1 BCC activity for the operational area',
+      id: 'BCC_Focus',
+      priority: 'medium-priority',
+    },
+  },
+  IRS: {
+    ...planActivities.IRS,
+    goal: {
+      description: 'Spray structures in the operational area',
+      id: 'IRS',
+      priority: 'medium-priority',
+    },
+  },
+  bednetDistribution: {
+    ...planActivities.bednetDistribution,
+    goal: {
+      description: 'Visit 100% of residential structures in the operational area and provide nets',
+      id: 'RACD_bednet_distribution',
+      priority: 'medium-priority',
+    },
+  },
+  bloodScreening: {
+    ...planActivities.bloodScreening,
+    goal: {
+      description:
+        'Visit all residential structures (100%) within a 1 km radius of a confirmed index case and test each registered person',
+      id: 'RACD_Blood_Screening',
+      priority: 'medium-priority',
+    },
+  },
+  caseConfirmation: {
+    ...planActivities.caseConfirmation,
+    goal: {
+      description: 'Confirm the index case',
+      id: 'Case_Confirmation',
+      priority: 'medium-priority',
+    },
+  },
+  familyRegistration: {
+    ...planActivities.familyRegistration,
+    goal: {
+      description:
+        'Register all families & family members in all residential structures enumerated (100%) within the operational area',
+      id: 'RACD_register_families',
+      priority: 'medium-priority',
+    },
+  },
+  larvalDipping: {
+    ...planActivities.larvalDipping,
+    goal: {
+      description: 'Perform a minimum of three larval dipping activities in the operational area',
+      id: 'Larval_Dipping',
+      priority: 'medium-priority',
+    },
+  },
+  mosquitoCollection: {
+    ...planActivities.mosquitoCollection,
+    goal: {
+      description:
+        'Set a minimum of three mosquito collection traps and complete the mosquito collection process',
+      id: 'Mosquito_Collection',
+      priority: 'medium-priority',
+    },
+  },
+} as PlanActivities;
 
 export const activities: PlanActivityFormFields[] = [
   {
