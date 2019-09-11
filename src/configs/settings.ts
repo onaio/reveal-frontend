@@ -805,7 +805,7 @@ export const irsReportingCongif: { [key: string]: IrsReportingCongif } = {
           {
             Header: 'Following first visit',
             accessor: (d: any) => `${d.lockedfirst}%`,
-            id: 'refusalsfirst',
+            id: 'lockedfirst',
           },
           {
             Header: 'Following mop-up',
