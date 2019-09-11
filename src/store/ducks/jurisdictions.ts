@@ -1,7 +1,7 @@
 import { get, keyBy, keys, pickBy, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
 import SeamlessImmutable from 'seamless-immutable';
-import { JurisdictionTypes, JurisidictionTypes } from '../../configs/settings';
+import { CustomJurisdictionTypes, JurisdictionTypes } from '../../configs/settings';
 import { FlexObject, GeoJSON, Geometry } from '../../helpers/utils';
 import store from '../../store';
 
@@ -27,6 +27,9 @@ export interface Jurisdiction {
   name?: string | null;
   parent_id?: string | null;
 }
+
+/** Typie to inclue all types of Jurisdiction entities */
+export type AnyJurisdiction = Jurisdiction | CustomJurisdictionTypes;
 
 /** Interface describing a list of loaded Jurisdictions */
 export interface AllJurisdictionIds {
@@ -126,7 +129,7 @@ interface JurisdictionState {
   allJurisdictionIds: AllJurisdictionIds;
   childrenByParentId: ChildrenByParentId;
   jurisdictionIdsByPlanId: JurisdictionIdsByPlanId;
-  jurisdictionsById: { [key: string]: JurisdictionTypes };
+  jurisdictionsById: { [key: string]: AnyJurisdiction };
 }
 
 /** immutable Jurisdiction state */
@@ -211,17 +214,17 @@ export default function reducer(
  * @param {Jurisdiction[]} jurisdictionList - array of jurisdiction objects
  * @returns {FetchJurisdictionAction} FetchJurisdictionAction
  */
-export const fetchJurisdictions = (jurisdictionList: Jurisdiction[] = []) => {
+export const fetchJurisdictions = (jurisdictionList: AnyJurisdiction[] = []) => {
   return {
     allJurisdictionIds: keyBy(
-      jurisdictionList.map((j: Jurisdiction) => ({
+      jurisdictionList.map((j: AnyJurisdiction) => ({
         id: j.jurisdiction_id,
         isLoaded: typeof j.geojson !== 'undefined',
       })),
       j => j.id
     ),
     jurisdictionsById: keyBy(
-      jurisdictionList.map((item: JurisidictionTypes) => {
+      jurisdictionList.map((item: AnyJurisdiction) => {
         const previousItem = getJurisdictionById(store.getState(), item.jurisdiction_id);
         /** ensure geojson is parsed */
         if (typeof item.geojson === 'string') {
