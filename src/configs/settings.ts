@@ -702,7 +702,7 @@ export const symbolLayerConfig = {
 };
 
 /** Default colors layer fill colors per administrative level */
-export const adminLayerColors = ['purple', 'blue', 'green', 'yellow', 'orange', 'red'];
+export const adminLayerColors = ['black', 'red', 'orange', 'yellow', 'green'];
 export type adminLayerColorsType = typeof adminLayerColors[number];
 
 /** Interfaces describing administrative hierarchy via ISO 3166 admin codes */
@@ -726,6 +726,14 @@ export interface ADMN3 extends ADMN2 {
 export const baseTilesetGeographicLevel: number = 1; // this tells the Jurisdiction Selection map at which geographic level to start rendering administrative fill layers
 export const JurisdictionLevels = ['administrative', 'operational'] as const;
 export type JurisdictionTypes = typeof JurisdictionLevels[number];
+export interface Tileset {
+  idField: string; // the feature property cooresponding with jurisdiction_id (for joining)
+  jurisdictionType: JurisdictionTypes; // Admin or OA/FA/SA
+  labelField?: string; // the feature property cooresponding with the display name
+  layer: string; // the Mapbox tileset-layer name
+  parentIdField: string; // the feature property cooresponding with parent_id (for joining)
+  url: string; // the Mapbox tileset url
+}
 /** interface descbribing basic country level information */
 export interface JurisdictionsByCountry extends ADMN0 {
   // the GPS extents of given geometry(s)
@@ -742,14 +750,7 @@ export interface JurisdictionsByCountry extends ADMN0 {
   id?: string;
 
   // list of tilesets used for administrative boundaries
-  tilesets?: Array<{
-    idField: string; // the feature property cooresponding with jurisdiction_id (for joining)
-    jurisdictionType: JurisdictionTypes; // Admin or OA/FA/SA
-    labelField?: string; // the feature property cooresponding with the display name
-    layer: string; // the Mapbox tileset-layer name
-    parentIdField: string; // the feature property cooresponding with parent_id (for joining)
-    url: string; // the Mapbox tileset url
-  }>;
+  tilesets?: Tileset[];
 }
 /** Country Jurisdictions definition for Zambia */
 export const ZambiaAdmin0: JurisdictionsByCountry = {

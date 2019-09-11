@@ -62,8 +62,8 @@ exports[`containers/pages/IRS/plan renders IRS Plan page correctly 1`] = `
           "params": Object {
             "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
           },
-          "path": "/focus-investigation/view/plan/:id",
-          "url": "/focus-investigation/view/plan/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
+          "path": "/intervention/irs/plan/:id",
+          "url": "/intervention/irs/plan/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
         }
       }
     >
@@ -104,8 +104,8 @@ exports[`containers/pages/IRS/plan renders IRS Plan page correctly 1`] = `
             "params": Object {
               "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
             },
-            "path": "/focus-investigation/view/plan/:id",
-            "url": "/focus-investigation/view/plan/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
+            "path": "/intervention/irs/plan/:id",
+            "url": "/intervention/irs/plan/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
           }
         }
         planById={null}

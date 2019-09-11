@@ -12,6 +12,8 @@ import { WEBSITE_NAME } from '../configs/env';
 import { DISABLE_LOGIN_PROTECTION } from '../configs/env';
 import { providers } from '../configs/settings';
 import {
+  ACTIVE_IRS_PLAN_URL,
+  DRAFT_IRS_PLAN_URL,
   FI_FILTER_URL,
   FI_HISTORICAL_URL,
   FI_SINGLE_MAP_URL,
@@ -80,14 +82,14 @@ class App extends Component {
               <ConnectedPrivateRoute
                 disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                 exact={true}
-                path={`${INTERVENTION_IRS_URL}/draft/:id`}
+                path={`${DRAFT_IRS_PLAN_URL}/:id`}
                 component={IrsPlan}
               />
 
               <ConnectedPrivateRoute
                 disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                 exact={true}
-                path={`${INTERVENTION_IRS_URL}/plan/:id`}
+                path={`${ACTIVE_IRS_PLAN_URL}/:id`}
                 component={IrsPlan}
               />
 
