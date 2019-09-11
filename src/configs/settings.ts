@@ -1028,10 +1028,6 @@ export const emptyCurrentRoutinePlans = [
     Header: 'End Date',
     columns: [{}],
   },
-  {
-    Header: 'Actions',
-    columns: [{}],
-  },
 ];
 /** current reactive columns with data */
 export const currentReactivePlansColumns = [

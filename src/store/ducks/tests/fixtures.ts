@@ -1,6 +1,7 @@
 import { clone, cloneDeep } from 'lodash';
+import { InterventionType, Plan, PlanStatus } from '../plans';
 
-export const plan1 = {
+export const plan1: Plan = {
   id: 'ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f',
   jurisdiction_depth: 2,
   jurisdiction_id: '450fc15b-5bd2-468a-927a-49cb10d3bcac',
@@ -14,13 +15,13 @@ export const plan1 = {
   plan_fi_reason: 'Routine',
   plan_fi_status: 'A1',
   plan_id: '10f9e9fa-ce34-4b27-a961-72fab5206ab6',
-  plan_intervention_type: 'FI',
-  plan_status: 'active',
+  plan_intervention_type: InterventionType.FI,
+  plan_status: PlanStatus.ACTIVE,
   plan_title: 'A1-Tha Luang Village 1 Focus 01',
   plan_version: '1',
 };
 
-export const plan2 = {
+export const plan2: Plan = {
   id: 'plan-id-2',
   jurisdiction_depth: 2,
   jurisdiction_id: '3378',
@@ -34,8 +35,8 @@ export const plan2 = {
   plan_fi_reason: 'Case-triggered',
   plan_fi_status: 'A1',
   plan_id: 'plan-id-2',
-  plan_intervention_type: 'IRS',
-  plan_status: 'active',
+  plan_intervention_type: InterventionType.IRS,
+  plan_status: PlanStatus.ACTIVE,
   plan_title: 'A1-Tha Luang Village 1 Focus 01',
   plan_version: '1',
 };
@@ -54,8 +55,8 @@ export const draftPlan = {
   plan_fi_reason: 'Case-triggered',
   plan_fi_status: 'A1',
   plan_id: 'plan-id-2',
-  plan_intervention_type: 'IRS',
-  plan_status: 'draft',
+  plan_intervention_type: InterventionType.IRS,
+  plan_status: PlanStatus.DRAFT,
   plan_title: 'A1-Tha Luang Village 1 Focus 01',
   plan_version: '1',
 };
@@ -190,7 +191,7 @@ export const plan99 = {
   plan_version: '1',
 };
 
-export const plans = [plan1, plan2, draftPlan];
+export const plans: Plan[] = [plan1, plan2, draftPlan];
 
 export const plansIdArray = [plan1.plan_id];
 
