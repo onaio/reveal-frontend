@@ -20,6 +20,7 @@ import HeaderBreadCrumb, {
   BreadCrumbProps,
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
+import NullDataTable from '../../../../components/Table/NullDataTable';
 import { SUPERSET_PLANS_SLICE } from '../../../../configs/env';
 import { FIClassifications, locationHierarchy } from '../../../../configs/settings';
 import {
@@ -38,8 +39,8 @@ import {
   FOCUS_INVESTIGATIONS,
   HOME,
   HOME_URL,
+  IN,
   NAME,
-  NEW_PLAN_URL,
   REACTIVE,
   ROUTINE,
   START_DATE,
@@ -47,15 +48,12 @@ import {
 } from '../../../../constants';
 import { renderClassificationRow } from '../../../../helpers/indicators';
 import '../../../../helpers/tables.css';
-import {
-  extractPlan,
-  getLocationColumns,
-  RouteParams,
-  transformValues,
-} from '../../../../helpers/utils';
+import { defaultTableProps, getFilteredFIPlansURL } from '../../../../helpers/utils';
+import { extractPlan, getLocationColumns, transformValues } from '../../../../helpers/utils';
 import supersetFetch from '../../../../services/superset';
 import plansReducer, {
   fetchPlans,
+  getPlanById,
   getPlansArray,
   InterventionType,
   Plan,
@@ -68,18 +66,25 @@ import './style.css';
 /** register the plans reducer */
 reducerRegistry.register(plansReducerName, plansReducer);
 
+export interface RouteParams {
+  jurisdiction_parent_id: string;
+  plan_id: string;
+}
+
 /** interface to describe props for ActiveFI component */
 export interface ActiveFIProps {
   caseTriggeredPlans: Plan[] | null;
   fetchPlansActionCreator: typeof fetchPlans;
   routinePlans: Plan[] | null;
   supersetService: typeof supersetFetch;
+  plan: Plan | null;
 }
 
 /** default props for ActiveFI component */
 export const defaultActiveFIProps: ActiveFIProps = {
   caseTriggeredPlans: null,
   fetchPlansActionCreator: fetchPlans,
+  plan: null,
   routinePlans: null,
   supersetService: supersetFetch,
 };
@@ -114,27 +119,60 @@ class ActiveFocusInvestigation extends React.Component<
       },
       pages: [],
     };
-    const homePage = {
-      label: `${HOME}`,
-      url: `${HOME_URL}`,
-    };
-    breadcrumbProps.pages = [homePage];
 
-    const { caseTriggeredPlans, routinePlans } = this.props;
+    const basePage = {
+      label: FOCUS_INVESTIGATIONS,
+      url: FI_URL,
+    };
+    const homePage = {
+      label: HOME,
+      url: HOME_URL,
+    };
+
+    const { caseTriggeredPlans, routinePlans, plan } = this.props;
+    // We need to initialize jurisdictionName to a falsy value
+    let jurisdictionName = null;
+
+    // get the current page index
+    if (plan) {
+      const currentPageIndex: number = plan.jurisdiction_path.indexOf(
+        this.props.match.params.jurisdiction_parent_id
+      );
+      breadcrumbProps.currentPage = {
+        label: plan.jurisdiction_name_path[currentPageIndex],
+        url: '',
+      };
+      jurisdictionName = plan.jurisdiction_name_path[currentPageIndex];
+      const labels = plan.jurisdiction_name_path.slice(0, currentPageIndex);
+      breadcrumbProps.pages = labels.map((label, i) => {
+        return {
+          label,
+          url: getFilteredFIPlansURL(plan.jurisdiction_path[i], plan.id),
+        };
+      });
+      breadcrumbProps.pages = [homePage, basePage, ...breadcrumbProps.pages];
+    } else {
+      breadcrumbProps.pages = [homePage];
+    }
+
     if (
-      (caseTriggeredPlans && caseTriggeredPlans.length === 0) ||
+      caseTriggeredPlans &&
+      caseTriggeredPlans.length === 0 &&
       (routinePlans && routinePlans.length === 0)
     ) {
       return <Loading />;
     }
     const routineReactivePlans: FlexObject[] = [];
+    const pageTitle = jurisdictionName
+      ? `${CURRENT_FOCUS_INVESTIGATION} ${IN} ${jurisdictionName}`
+      : CURRENT_FOCUS_INVESTIGATION;
     return (
       <div>
         <Helmet>
-          <title>{CURRENT_FOCUS_INVESTIGATION}</title>
+          <title>{pageTitle}</title>
         </Helmet>
         <HeaderBreadCrumb {...breadcrumbProps} />
-        <h2 className="mb-3 mt-5 page-title">{CURRENT_FOCUS_INVESTIGATION}</h2>
+        <h2 className="mb-3 mt-5 page-title">{pageTitle}</h2>
         <hr />
         <Form inline={true} onSubmit={this.handleSubmit}>
           <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
@@ -149,7 +187,8 @@ class ActiveFocusInvestigation extends React.Component<
             Search
           </Button>
         </Form>
-        {[caseTriggeredPlans, routinePlans].forEach((plansArray: Plan[] | null) => {
+        {[caseTriggeredPlans, routinePlans].forEach((plansArray: Plan[] | null, i) => {
+          const locationColumns: Column[] = getLocationColumns(locationHierarchy, true);
           if (plansArray && plansArray.length) {
             const thePlans = plansArray.map((item: Plan) => {
               let thisItem = extractPlan(item);
@@ -158,10 +197,9 @@ class ActiveFocusInvestigation extends React.Component<
               thisItem = transformValues(thisItem, propertiesToTransform);
               return thisItem;
             });
-            const locationColumns: Column[] = getLocationColumns(locationHierarchy, true);
             /**  Handle Columns Unique for Routine and Reactive Tables */
             const columnsBasedOnReason = [];
-            plansArray.every(d => d.plan_fi_reason === CASE_TRIGGERED)
+            plansArray.every((singlePlan: Plan) => singlePlan.plan_fi_reason === CASE_TRIGGERED)
               ? columnsBasedOnReason.push(
                   {
                     Header: CASE_NOTIF_DATE_HEADER,
@@ -315,6 +353,39 @@ class ActiveFocusInvestigation extends React.Component<
                 <DrillDownTable {...tableProps} />
               </div>
             );
+          } else {
+            const header = i ? ROUTINE : REACTIVE;
+            const emptyPlansColumns = [
+              {
+                Header: NAME,
+                columns: [{ minWidth: 180 }],
+              },
+              ...locationColumns,
+              {
+                Header: FOCUS_AREA_HEADER,
+                columns: [{ minWidth: 180 }],
+              },
+              {
+                Header: STATUS_HEADER,
+                columns: [{ maxWidth: 60 }],
+              },
+
+              {
+                Header: CASE_NOTIF_DATE_HEADER,
+                columns: [{ maxWidth: 90 }],
+              },
+              {
+                Header: CASE_CLASSIFICATION_HEADER,
+                columns: [{}],
+              },
+            ];
+            const tableProps = {
+              ...defaultTableProps,
+              columns: emptyPlansColumns,
+            };
+            routineReactivePlans.push(
+              <NullDataTable tableProps={tableProps} reasonType={header} key={`${'current'}`} />
+            );
           }
         })}
         {routineReactivePlans}
@@ -333,26 +404,39 @@ export { ActiveFocusInvestigation };
 
 /** interface to describe props from mapStateToProps */
 interface DispatchedStateProps {
+  plan: Plan | null;
   caseTriggeredPlans: Plan[] | null;
   routinePlans: Plan[] | null;
 }
 
 /** map state to props */
-const mapStateToProps = (state: Partial<Store>): DispatchedStateProps => {
+const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateProps => {
+  const planId =
+    ownProps.match.params && ownProps.match.params.plan_id ? ownProps.match.params.plan_id : null;
+  const plan = planId ? getPlanById(state, planId) : null;
+  const jurisdictionParentId =
+    ownProps.match.params && ownProps.match.params.jurisdiction_parent_id
+      ? ownProps.match.params.jurisdiction_parent_id
+      : null;
   const caseTriggeredPlans = getPlansArray(
     state,
     InterventionType.FI,
     [PlanStatus.ACTIVE, PlanStatus.COMPLETE],
-    CASE_TRIGGERED
+    CASE_TRIGGERED,
+    [],
+    jurisdictionParentId
   );
   const routinePlans = getPlansArray(
     state,
     InterventionType.FI,
     [PlanStatus.ACTIVE, PlanStatus.COMPLETE],
-    ROUTINE
+    ROUTINE,
+    [],
+    jurisdictionParentId
   );
   return {
     caseTriggeredPlans,
+    plan,
     routinePlans,
   };
 };

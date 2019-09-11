@@ -1,7 +1,7 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import { cloneDeep, keyBy, keys, pickBy, values } from 'lodash';
 import { FlushThunks } from 'redux-testkit';
-import { REACTIVE, ROUTINE } from '../../../constants';
+import { FIReasons } from '../../../configs/settings';
 import store from '../../index';
 import reducer, {
   fetchPlanRecords,
@@ -44,10 +44,11 @@ describe('reducers/plans', () => {
     expect(getPlanRecordsIdArray(store.getState())).toEqual([]);
     expect(getPlanRecordsArray(store.getState())).toEqual([]);
     expect(getPlanRecordById(store.getState(), 'somId')).toEqual(null);
+    expect(getPlansArray(store.getState())).toEqual([]);
   });
 
   it('should fetch Plans', () => {
-    store.dispatch(fetchPlans(fixtures.plans));
+    store.dispatch(fetchPlans(fixtures.plans as Plan[]));
     const allPlans = keyBy(fixtures.plans, (plan: Plan) => plan.id);
     const fiPlans = pickBy(allPlans, (e: Plan) => e.plan_intervention_type === InterventionType.FI);
     const irsPlans = pickBy(
@@ -56,7 +57,7 @@ describe('reducers/plans', () => {
     );
     const routinePlans = values(cloneDeep(store.getState().plans.plansById)).filter(
       (plan: Plan) =>
-        plan.plan_intervention_type === InterventionType.FI && plan.plan_fi_reason === ROUTINE
+        plan.plan_intervention_type === InterventionType.FI && plan.plan_fi_reason === FIReasons[0]
     );
 
     const filteredByJurisdictionPlans = values(
@@ -66,10 +67,10 @@ describe('reducers/plans', () => {
     );
 
     const reactivePlans = values(cloneDeep(store.getState().plans.plansById)).filter(
-      (plan: Plan) => plan.plan_fi_reason === REACTIVE
+      (plan: Plan) => plan.plan_fi_reason === FIReasons[1]
     );
     const reactiveDraftPlans = values(cloneDeep(store.getState().plans.plansById)).filter(
-      (plan: Plan) => plan.plan_fi_reason === REACTIVE && plan.plan_status === 'draft'
+      (plan: Plan) => plan.plan_fi_reason === FIReasons[1] && plan.plan_status === 'draft'
     );
     expect(getPlansById(store.getState(), InterventionType.FI, [], null)).toEqual(fiPlans);
     expect(getPlansById(store.getState(), InterventionType.IRS, [], null)).toEqual(irsPlans);
@@ -81,23 +82,81 @@ describe('reducers/plans', () => {
     expect(getPlansArray(store.getState(), InterventionType.IRS, [], null)).toEqual(
       values(irsPlans)
     );
-    expect(getPlansArray(store.getState(), InterventionType.FI, [], REACTIVE)).toEqual(
+    expect(getPlansArray(store.getState(), InterventionType.FI, [], FIReasons[1])).toEqual(
       values(reactivePlans)
     );
-    expect(getPlansArray(store.getState(), InterventionType.FI, [], ROUTINE)).toEqual(
+    expect(getPlansArray(store.getState(), InterventionType.FI, [], FIReasons[0])).toEqual(
       values(routinePlans)
     );
     expect(getPlansArray(store.getState(), InterventionType.FI, [PlanStatus.DRAFT], null)).toEqual(
       values(reactiveDraftPlans)
     );
-    expect(
-      getPlansArray(store.getState(), InterventionType.FI, [], ROUTINE, [
-        '450fc15b-5bd2-468a-927a-49cb10d3bcac',
-      ])
-    ).toEqual(values(filteredByJurisdictionPlans));
+
+    // getPlansArray gets does not filter plans by location when no location is passed
+    // you can pass only the state and getPlansArray will return all fiPlans in the store
+    expect(getPlansArray(store.getState(), InterventionType.FI, [], null)).toEqual(values(fiPlans));
+    expect(getPlansArray(store.getState(), InterventionType.IRS, [], null)).toEqual(
+      values(irsPlans)
+    );
+    expect(getPlansArray(store.getState(), InterventionType.FI, [], FIReasons[1])).toEqual(
+      values(reactivePlans)
+    );
+    expect(getPlansArray(store.getState(), InterventionType.FI, [], FIReasons[0])).toEqual(
+      values(routinePlans)
+    );
+    expect(getPlansArray(store.getState(), InterventionType.FI, [PlanStatus.DRAFT], null)).toEqual(
+      values(reactiveDraftPlans)
+    );
+
     expect(getPlanById(store.getState(), 'ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f')).toEqual(
       allPlans['ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f']
     );
+  });
+
+  it('filters correctly when jurisdiction_parent_id is provided', () => {
+    store.dispatch(fetchPlans(fixtures.plans as any));
+    const allPlans = keyBy(fixtures.plans, (plan: Plan) => plan.id);
+    // filter irs plans based on location
+    const filteredIRSPlans = pickBy(
+      allPlans,
+      (e: Plan) =>
+        e.plan_intervention_type === InterventionType.IRS && e.jurisdiction_path.includes('2977')
+    );
+    // filter fi plans based on a location
+    const filteredFIPlans = pickBy(
+      allPlans,
+      (e: Plan) =>
+        e.plan_intervention_type === InterventionType.FI && e.jurisdiction_path.includes('2944')
+    );
+    // filter routine fi plans based on a location
+    const filteredRoutineFIPlans = pickBy(
+      allPlans,
+      (e: Plan) =>
+        e.plan_intervention_type === InterventionType.FI &&
+        e.plan_fi_reason === FIReasons[0] &&
+        e.jurisdiction_path.includes('2939')
+    );
+    // filter case-triggered irs plans based on a location
+    const filteredCaseTriggeredIRSPlans = pickBy(
+      allPlans,
+      (e: Plan) =>
+        e.plan_intervention_type === InterventionType.IRS &&
+        e.plan_fi_reason === FIReasons[1] &&
+        e.jurisdiction_path.includes('2989')
+    );
+    // getPlansArray gets filters plans by location when no location is passed
+    expect(getPlansArray(store.getState(), InterventionType.IRS, [], null, [], '2977')).toEqual(
+      values(filteredIRSPlans)
+    );
+    expect(getPlansArray(store.getState(), InterventionType.FI, [], null, [], '2944')).toEqual(
+      values(filteredFIPlans)
+    );
+    expect(
+      getPlansArray(store.getState(), InterventionType.IRS, [], FIReasons[1], [], '2989')
+    ).toEqual(values(filteredCaseTriggeredIRSPlans));
+    expect(
+      getPlansArray(store.getState(), InterventionType.FI, [], FIReasons[0], [], '2939')
+    ).toEqual(values(filteredRoutineFIPlans));
   });
 
   it('should fetch PlanRecords', () => {
