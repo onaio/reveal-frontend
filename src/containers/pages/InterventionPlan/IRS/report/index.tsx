@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import DrillDownTable, { DrillDownProps, DropDownCell } from '@onaio/drill-down-table';
 import reducerRegistry from '@onaio/redux-reducer-registry';
-import { keyBy } from 'lodash';
+import { keyBy, keys } from 'lodash';
 import * as React from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
@@ -17,7 +17,11 @@ import { SUPERSET_JURISDICTIONS_DATA_SLICE } from '../../../../../configs/env';
 import {
   ADMN0_PCODE,
   CountriesAdmin0,
+  extractReportingJurisdiction,
+  IrsReportingCongif,
+  irsReportingCongif,
   JurisdictionsByCountry,
+  JurisidictionTypes,
 } from '../../../../../configs/settings';
 import {
   ACTIVE_IRS_PLAN_URL,
@@ -51,10 +55,17 @@ import jurisdictionReducer, {
   JurisdictionIdsByPlanId,
   reducerName as jurisdictionReducerName,
 } from '../../../../../store/ducks/jurisdictions';
-import { getPlanRecordById, PlanRecord } from '../../../../../store/ducks/plans';
+import plansReducer, {
+  getPlanRecordById,
+  PlanRecord,
+  reducerName as plansReducerName,
+} from '../../../../../store/ducks/plans';
+
 import { TableCrumb } from '../plan';
+import './style.css';
 /** register the plans reducer */
 reducerRegistry.register(jurisdictionReducerName, jurisdictionReducer);
+reducerRegistry.register(plansReducerName, plansReducer);
 
 /** interface to describe props for IrsReport component */
 export interface IrsReportProps {
@@ -131,16 +142,40 @@ class IrsReport extends React.Component<RouteComponentProps<RouteParams> & IrsRe
       : await supersetService(SUPERSET_JURISDICTIONS_DATA_SLICE, { row_limit: 10000 }).then(
           (jurisdictionResults: FlexObject[] = []) => {
             // GET FULL JURISDICTION HIERARCHY
-            const jurArray: Jurisdiction[] = jurisdictionResults
+            const jurArray: JurisidictionTypes[] = jurisdictionResults
               .map(j => {
-                const { id, parent_id, name, geographic_level } = j;
+                const {
+                  jurisdiction_depth,
+                  jurisdiction_id,
+                  jurisdiction_name,
+                  jurisdiction_name_path: jurisdictionNamePathStr,
+                  jurisdiction_path: jurisdictionPathStr,
+                  jurisdiction_parent_id,
+                  id,
+                  parent_id,
+                  name,
+                  geographic_level,
+                } = j;
+                const jurisdictionPath = jurisdictionPathStr && JSON.parse(jurisdictionPathStr);
+                const jurisdictionNamePath =
+                  jurisdictionNamePathStr && JSON.parse(jurisdictionPathStr);
                 const jurisdiction: Jurisdiction = {
-                  geographic_level: geographic_level || 0,
-                  jurisdiction_id: id,
-                  name: name || null,
-                  parent_id: parent_id || null,
+                  geographic_level:
+                    geographic_level ||
+                    (!Number.isNaN(Number(jurisdiction_depth)) && Number(jurisdiction_depth)) ||
+                    0,
+                  jurisdiction_id: id || jurisdiction_id,
+                  jurisdiction_name_path: jurisdictionNamePath || [],
+                  jurisdiction_path: jurisdictionPath || [],
+                  name: name || jurisdiction_name || null,
+                  parent_id: parent_id || jurisdiction_parent_id || null,
                 };
-                return jurisdiction;
+
+                return extractReportingJurisdiction(
+                  jurisdiction,
+                  j as FlexObject,
+                  SUPERSET_JURISDICTIONS_DATA_SLICE
+                );
               })
               .sort((a, b) =>
                 a.geographic_level && b.geographic_level
@@ -322,7 +357,7 @@ class IrsReport extends React.Component<RouteComponentProps<RouteParams> & IrsRe
               </div>
             )}
             {doRenderTable && reportTableProps && (
-              <div>
+              <div className="irs-report-table">
                 {tableBreadCrumbs}
                 <DrillDownTable {...reportTableProps} />
               </div>
@@ -366,7 +401,7 @@ class IrsReport extends React.Component<RouteComponentProps<RouteParams> & IrsRe
     };
 
     // data to be used in the tableProps - todo: join data from Superset
-    const data: JurisdictionRow[] = filteredJurisdictions
+    const data: any[] = filteredJurisdictions
       .map((j: Jurisdiction) => ({
         ...j,
         id: j.jurisdiction_id,
@@ -389,7 +424,7 @@ class IrsReport extends React.Component<RouteComponentProps<RouteParams> & IrsRe
         columns: [
           {
             Header: '',
-            accessor: (j: JurisdictionRow) => (
+            accessor: (j: any) => (
               <span
                 id={j.jurisdiction_id}
                 onClick={onDrilldownClick}
@@ -412,6 +447,41 @@ class IrsReport extends React.Component<RouteComponentProps<RouteParams> & IrsRe
         ],
       },
     ];
+
+    // define configuration for dynamic column generation
+    const config: IrsReportingCongif | undefined =
+      irsReportingCongif[SUPERSET_JURISDICTIONS_DATA_SLICE];
+    if (config) {
+      const { drilldownColumnGetters } = config;
+      // loop through all drilldown column getters
+      for (const prop of keys(drilldownColumnGetters)) {
+        // define column getter for this column
+        const getColumn = drilldownColumnGetters[prop];
+        // define column props
+        const reportColumn = (getColumn && getColumn()) || {
+          Header: prop,
+          columns: [
+            {
+              Header: '',
+              accessor: prop,
+            },
+          ],
+        };
+        // add column columns for drilldown table props
+        if (reportColumn) {
+          columns.push(reportColumn);
+        }
+      }
+    }
+
+    // determine if there should be pagination depending on number of rows
+    let showPagination: boolean = false;
+    if (focusJurisdictionId) {
+      const directDescendants = filteredJurisdictions.filter(
+        j => j.parent_id === focusJurisdictionId
+      );
+      showPagination = directDescendants.length > 20;
+    }
 
     // define the actual DrillDownProps to be handed to the table
     const tableProps: DrillDownProps<any> = {

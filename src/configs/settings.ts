@@ -1,6 +1,8 @@
 /** This is the main configuration module */
 import { Providers } from '@onaio/gatekeeper';
 import { Expression, LngLatBoundsLike } from 'mapbox-gl';
+import { FlexObject } from '../helpers/utils';
+import { Jurisdiction } from '../store/ducks/jurisdictions';
 import {
   DOMAIN_NAME,
   ENABLE_ONADATA_OAUTH,
@@ -704,6 +706,137 @@ export const symbolLayerConfig = {
 /** Default colors layer fill colors per administrative level */
 export const adminLayerColors = ['black', 'red', 'orange', 'yellow', 'green'];
 export type adminLayerColorsType = typeof adminLayerColors[number];
+
+export type JurisidictionTypes = Jurisdiction | NamibiaIrsReportingJurisdiction;
+
+export const NamibiaIrsReportingProps = [
+  'foundcoverage',
+  'householdsnotaccessible',
+  'lockedfirst',
+  'lockedmopup',
+  'refusalsfirst',
+  'refusalsmopup',
+  'sprayeffectiveness',
+  'structuresfound',
+  'structuressprayed',
+  'targetcoverage',
+];
+
+export interface NamibiaIrsReportingJurisdiction extends Jurisdiction {
+  foundcoverage: number;
+  householdsnotaccessible: number;
+  lockedfirst: number;
+  lockedmopup: number;
+  refusalsfirst: number;
+  refusalsmopup: number;
+  sprayeffectiveness: number;
+  structuresfound: number;
+  structuressprayed: number;
+  targetcoverage: number;
+}
+export interface IrsReportingCongif {
+  drilldownColumnGetters: {
+    [key: string]: () => any;
+  };
+  juridictionTyper: (j: any) => JurisidictionTypes;
+  sliceProps: string[];
+}
+/* tslint:disable:object-literal-sort-keys */
+export const irsReportingCongif: { [key: string]: IrsReportingCongif } = {
+  '550': {
+    drilldownColumnGetters: {
+      structuresfound: () => ({
+        Header: `Structures Found`,
+        columns: [
+          {
+            Header: '',
+            accessor: 'structuresfound',
+          },
+        ],
+      }),
+      structuressprayed: () => ({
+        Header: `Structures Sprayed`,
+        columns: [
+          {
+            Header: '',
+            accessor: 'structuressprayed',
+          },
+        ],
+      }),
+      targetcoverage: () => ({
+        Header: `Target Coverage`,
+        columns: [
+          {
+            Header: '',
+            accessor: (d: any) => `${d.targetcoverage}%`,
+            id: 'targetcoverage',
+          },
+        ],
+      }),
+      foundcoverage: () => ({
+        Header: 'Found Coverage',
+        columns: [
+          {
+            Header: '',
+            accessor: (d: any) => `${d.foundcoverage}%`,
+            id: 'foundcoverage',
+          },
+        ],
+      }),
+      refusals: () => ({
+        Header: 'Refusals',
+        columns: [
+          {
+            Header: 'Following first visit',
+            accessor: (d: any) => `${d.refusalsfirst}%`,
+            id: 'refusalsfirst',
+          },
+          {
+            Header: 'Following mop-up',
+            accessor: (d: any) => `${d.refusalsmopup}%`,
+            id: 'refusalsmopup',
+          },
+        ],
+      }),
+      locked: () => ({
+        Header: 'Locked',
+        columns: [
+          {
+            Header: 'Following first visit',
+            accessor: (d: any) => `${d.lockedfirst}%`,
+            id: 'refusalsfirst',
+          },
+          {
+            Header: 'Following mop-up',
+            accessor: (d: any) => `${d.lockedmopup}%`,
+            id: 'lockedmopup',
+          },
+        ],
+      }),
+    },
+    juridictionTyper: (j: any) => j as NamibiaIrsReportingJurisdiction,
+    sliceProps: NamibiaIrsReportingProps,
+  },
+};
+/* tslint:enable:object-literal-sort-keys */
+
+export const extractReportingJurisdiction = (
+  j: Jurisdiction,
+  datum: FlexObject,
+  sliceId: string = '550'
+): NamibiaIrsReportingJurisdiction | Jurisdiction => {
+  if (!irsReportingCongif[sliceId]) {
+    return j as Jurisdiction;
+  }
+  const jurisdiction: FlexObject = { ...j };
+  for (const prop of irsReportingCongif[sliceId].sliceProps) {
+    if (typeof datum[prop] !== 'undefined') {
+      jurisdiction[prop] = datum[prop];
+    }
+  }
+
+  return irsReportingCongif[sliceId].juridictionTyper(jurisdiction);
+};
 
 /** Interfaces describing administrative hierarchy via ISO 3166 admin codes */
 export interface ADMN0 {
