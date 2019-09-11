@@ -16,6 +16,10 @@ export type ENABLE_IRS = typeof ENABLE_IRS;
 export const ENABLE_FI = process.env.REACT_APP_ENABLE_FI === 'true';
 export type ENABLE_FI = typeof ENABLE_FI;
 
+/** Do you want to enable the HISTORIC_FI? */
+export const ENABLE_HISTORIC_FI = process.env.REACT_APP_ENABLE_HISTORIC_FI === 'false';
+export type ENABLE_HISTORIC_FI = typeof ENABLE_HISTORIC_FI;
+
 /** Do you want to enable the users page? */
 export const ENABLE_USERS = process.env.REACT_APP_ENABLE_USERS === 'true';
 export type ENABLE_USERS = typeof ENABLE_USERS;

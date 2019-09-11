@@ -18,6 +18,7 @@ import logo from '../../../assets/images/logo.png';
 import {
   ENABLE_ABOUT,
   ENABLE_FI,
+  ENABLE_HISTORIC_FI,
   ENABLE_IRS,
   ENABLE_USERS,
   WEBSITE_NAME,
@@ -145,22 +146,22 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
                   </DropdownToggle>
                   <DropdownMenu right={true}>
                     {ENABLE_FI && (
-                      <div>
-                        <DropdownItem>
-                          <NavLink to={FI_URL} className="nav-link" activeClassName="active">
-                            Focus Investigation
-                          </NavLink>
-                        </DropdownItem>
-                        <DropdownItem>
-                          <NavLink
-                            to={FI_HISTORICAL_URL}
-                            className="nav-link"
-                            activeClassName="active"
-                          >
-                            Historical FI
-                          </NavLink>
-                        </DropdownItem>
-                      </div>
+                      <DropdownItem>
+                        <NavLink to={FI_URL} className="nav-link" activeClassName="active">
+                          Focus Investigation
+                        </NavLink>
+                      </DropdownItem>
+                    )}
+                    {ENABLE_HISTORIC_FI && (
+                      <DropdownItem>
+                        <NavLink
+                          to={FI_HISTORICAL_URL}
+                          className="nav-link"
+                          activeClassName="active"
+                        >
+                          Historical FI
+                        </NavLink>
+                      </DropdownItem>
                     )}
                   </DropdownMenu>
                 </UncontrolledDropdown>
