@@ -1,7 +1,9 @@
 /** This is the main configuration module */
 import { Providers } from '@onaio/gatekeeper';
 import { Expression, LngLatBoundsLike } from 'mapbox-gl';
+import { CellInfo } from 'react-table';
 import { GREEN, ORANGE, RED, YELLOW } from '../colors';
+import { getThresholdAdherenceIndicator } from '../helpers/indicators';
 import { FlexObject } from '../helpers/utils';
 import { Jurisdiction } from '../store/ducks/jurisdictions';
 import {
@@ -781,8 +783,11 @@ export const irsReportingCongif: { [key: string]: IrsReportingCongif } = {
         columns: [
           {
             Header: '',
-            accessor: (d: any) => `${d.targetcoverage}%`,
-            id: 'targetcoverage',
+            // accessor: (d: any) => `${d.targetcoverage}%`,
+            // id: 'targetcoverage',
+            Cell: (cell: CellInfo) => getThresholdAdherenceIndicator(cell, '550'),
+            accessor: 'targetcoverage',
+            className: 'indicator centered',
           },
         ],
       }),
@@ -791,8 +796,9 @@ export const irsReportingCongif: { [key: string]: IrsReportingCongif } = {
         columns: [
           {
             Header: '',
-            accessor: (d: any) => `${d.foundcoverage}%`,
-            id: 'foundcoverage',
+            Cell: (cell: CellInfo) => getThresholdAdherenceIndicator(cell, '550'),
+            accessor: 'foundcoverage',
+            className: 'indicator centered',
           },
         ],
       }),
