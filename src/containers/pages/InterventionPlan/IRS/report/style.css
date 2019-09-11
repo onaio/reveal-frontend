@@ -1,0 +1,8 @@
+.irs-report-table .ReactTable .rt-thead.-headerGroups .rt-th {
+  white-space: normal;
+}
+
+.irs-report-table .ReactTable .rt-thead.-header .rt-th {
+  font-weight: normal;
+  white-space: normal;
+}

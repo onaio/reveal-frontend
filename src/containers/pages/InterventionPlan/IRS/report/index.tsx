@@ -62,6 +62,7 @@ import plansReducer, {
 } from '../../../../../store/ducks/plans';
 
 import { TableCrumb } from '../plan';
+import './style.css';
 /** register the plans reducer */
 reducerRegistry.register(jurisdictionReducerName, jurisdictionReducer);
 reducerRegistry.register(plansReducerName, plansReducer);
@@ -356,7 +357,7 @@ class IrsReport extends React.Component<RouteComponentProps<RouteParams> & IrsRe
               </div>
             )}
             {doRenderTable && reportTableProps && (
-              <div>
+              <div className="irs-report-table">
                 {tableBreadCrumbs}
                 <DrillDownTable {...reportTableProps} />
               </div>
