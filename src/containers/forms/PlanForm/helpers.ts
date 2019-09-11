@@ -26,6 +26,7 @@ import {
   PlanActionCodesType,
   planActivities,
   PlanActivity,
+  PlanActivityTitlesType,
   PlanDefinition,
   PlanGoal,
   PlanGoalDetail,
@@ -36,7 +37,7 @@ import {
   UseContext,
 } from '../../../configs/settings';
 import { DATE, IS, NAME, REQUIRED } from '../../../constants';
-import { FlexObject, generateNameSpacedUUID } from '../../../helpers/utils';
+import { generateNameSpacedUUID } from '../../../helpers/utils';
 import { InterventionType, PlanStatus } from '../../../store/ducks/plans';
 
 /** separate FI and IRS activities */
@@ -163,9 +164,9 @@ export function extractActivityForForm(activityObj: PlanActivity): PlanActivityF
     goalValue:
       (activityObj.goal.target && activityObj.goal.target[0].detail.detailQuantity.value) ||
       (planActivityKey &&
-        (planActivities as FlexObject)[planActivityKey] &&
-        (planActivities as FlexObject)[planActivityKey].goal.target[0].detail.detailQuantity
-          .value) ||
+        planActivities[planActivityKey as PlanActivityTitlesType] &&
+        planActivities[planActivityKey as PlanActivityTitlesType].goal.target[0].detail
+          .detailQuantity.value) ||
       1,
     timingPeriodEnd:
       activityObj.action.timingPeriod.end && activityObj.action.timingPeriod.end !== ''
