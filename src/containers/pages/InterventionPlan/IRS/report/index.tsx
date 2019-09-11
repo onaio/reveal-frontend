@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import DrillDownTable, { DrillDownProps, DropDownCell } from '@onaio/drill-down-table';
 import reducerRegistry from '@onaio/redux-reducer-registry';
-import { keyBy } from 'lodash';
+import { keyBy, keys } from 'lodash';
 import * as React from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
@@ -18,9 +18,10 @@ import {
   ADMN0_PCODE,
   CountriesAdmin0,
   extractReportingJurisdiction,
+  IrsReportingCongif,
+  irsReportingCongif,
   JurisdictionsByCountry,
   JurisidictionTypes,
-  NamibiaIrsReportingJurisdiction,
 } from '../../../../../configs/settings';
 import {
   ACTIVE_IRS_PLAN_URL,
@@ -399,7 +400,7 @@ class IrsReport extends React.Component<RouteComponentProps<RouteParams> & IrsRe
     };
 
     // data to be used in the tableProps - todo: join data from Superset
-    const data: JurisdictionRow[] = filteredJurisdictions.map((j: Jurisdiction) => ({
+    const data: any[] = filteredJurisdictions.map((j: Jurisdiction) => ({
       ...j,
       id: j.jurisdiction_id,
       isChildless: childlessChildrenIds.includes(j.jurisdiction_id),
@@ -412,7 +413,7 @@ class IrsReport extends React.Component<RouteComponentProps<RouteParams> & IrsRe
         columns: [
           {
             Header: '',
-            accessor: (j: JurisdictionRow) => (
+            accessor: (j: any) => (
               <span
                 id={j.jurisdiction_id}
                 onClick={onDrilldownClick}
@@ -435,6 +436,32 @@ class IrsReport extends React.Component<RouteComponentProps<RouteParams> & IrsRe
         ],
       },
     ];
+
+    // define configuration for dynamic column generation
+    const config: IrsReportingCongif | undefined =
+      irsReportingCongif[SUPERSET_JURISDICTIONS_DATA_SLICE];
+    if (config) {
+      const { drilldownColumnGetters } = config;
+      // loop through all drilldown column getters
+      for (const prop of keys(drilldownColumnGetters)) {
+        // define column getter for this column
+        const getColumn = drilldownColumnGetters[prop];
+        // define column props
+        const reportColumn = (getColumn && getColumn()) || {
+          Header: prop,
+          columns: [
+            {
+              Header: '',
+              accessor: prop,
+            },
+          ],
+        };
+        // add column columns for drilldown table props
+        if (reportColumn) {
+          columns.push(reportColumn);
+        }
+      }
+    }
 
     // determine if there should be pagination depending on number of rows
     let showPagination: boolean = false;
