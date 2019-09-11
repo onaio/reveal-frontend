@@ -741,15 +741,75 @@ export interface IrsReportingCongif {
   juridictionTyper: (j: any) => JurisidictionTypes;
   sliceProps: string[];
 }
+/* tslint:disable:object-literal-sort-keys */
 export const irsReportingCongif: { [key: string]: IrsReportingCongif } = {
   '550': {
     drilldownColumnGetters: {
       structuresfound: () => ({
-        Header: `Structures Targeted`,
+        Header: `Structures Found`,
         columns: [
           {
             Header: '',
             accessor: 'structuresfound',
+          },
+        ],
+      }),
+      structuressprayed: () => ({
+        Header: `Structures Sprayed`,
+        columns: [
+          {
+            Header: '',
+            accessor: 'structuressprayed',
+          },
+        ],
+      }),
+      targetcoverage: () => ({
+        Header: `Target Coverage`,
+        columns: [
+          {
+            Header: '',
+            accessor: (d: any) => `${d.targetcoverage}%`,
+            id: 'targetcoverage',
+          },
+        ],
+      }),
+      foundcoverage: () => ({
+        Header: 'Found Coverage',
+        columns: [
+          {
+            Header: '',
+            accessor: (d: any) => `${d.foundcoverage}%`,
+            id: 'foundcoverage',
+          },
+        ],
+      }),
+      refusals: () => ({
+        Header: 'Refusals',
+        columns: [
+          {
+            Header: 'Following first visit',
+            accessor: (d: any) => `${d.refusalsfirst}%`,
+            id: 'refusalsfirst',
+          },
+          {
+            Header: 'Following mop-up',
+            accessor: (d: any) => `${d.refusalsmopup}%`,
+            id: 'refusalsmopup',
+          },
+        ],
+      }),
+      locked: () => ({
+        Header: 'Locked',
+        columns: [
+          {
+            Header: 'Following first visit',
+            accessor: (d: any) => `${d.lockedfirst}%`,
+            id: 'refusalsfirst',
+          },
+          {
+            Header: 'Following mop-up',
+            accessor: (d: any) => `${d.lockedmopup}%`,
+            id: 'lockedmopup',
           },
         ],
       }),
@@ -758,6 +818,7 @@ export const irsReportingCongif: { [key: string]: IrsReportingCongif } = {
     sliceProps: NamibiaIrsReportingProps,
   },
 };
+/* tslint:enable:object-literal-sort-keys */
 
 export const extractReportingJurisdiction = (
   j: Jurisdiction,
