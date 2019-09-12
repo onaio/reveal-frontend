@@ -767,6 +767,9 @@ export interface IrsReportingCongif {
   drilldownColumnGetters: {
     [key: string]: () => any;
   };
+  indicatorExtractors?: {
+    [key: string]: (jurisdiction: FlexObject) => number;
+  };
   indicatorThresholds: IndicatorThresholds;
   juridictionTyper: (j: any) => Jurisdiction | CustomJurisdictionTypes;
   structureTyper: (j: any) => Structure | CustomStructureTypes;
@@ -849,6 +852,19 @@ export const irsReportingCongif: { [key: string]: IrsReportingCongif } = {
         ],
       }),
     },
+    indicatorExtractors: {
+      foundcoverage: (datum: FlexObject) => {
+        if (datum.foundcoverage) {
+          return datum.foundcoverage;
+        } else if (datum.structuresfound) {
+          const foundcoverage = datum.structuressprayed / datum.structuresfound;
+          if (!Number.isNaN(Number(foundcoverage))) {
+            return foundcoverage;
+          }
+        }
+        return 0;
+      },
+    },
     indicatorThresholds: {
       GREEN_THRESHOLD: {
         color: GREEN,
@@ -885,8 +901,9 @@ export const extractReportingJurisdiction = (
   }
   const jurisdiction: FlexObject = { ...j };
   for (const prop of irsReportingCongif[sliceId].sliceProps) {
+    const extractors = irsReportingCongif[sliceId].indicatorExtractors || {};
     if (typeof datum[prop] !== 'undefined') {
-      jurisdiction[prop] = datum[prop];
+      jurisdiction[prop] = extractors[prop] ? extractors[prop](datum) : datum[prop];
     }
   }
 
