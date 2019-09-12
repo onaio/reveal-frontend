@@ -769,7 +769,6 @@ export const irsReportingCongif: { [key: string]: IrsReportingCongif } = {
           {
             Header: '',
             accessor: 'structuresfound',
-            className: 'centered',
           },
         ],
       }),
@@ -779,7 +778,6 @@ export const irsReportingCongif: { [key: string]: IrsReportingCongif } = {
           {
             Header: '',
             accessor: 'structuressprayed',
-            className: 'centered',
           },
         ],
       }),
