@@ -769,6 +769,7 @@ export const irsReportingCongif: { [key: string]: IrsReportingCongif } = {
           {
             Header: '',
             accessor: 'structuresfound',
+            className: 'centered',
           },
         ],
       }),
@@ -778,6 +779,7 @@ export const irsReportingCongif: { [key: string]: IrsReportingCongif } = {
           {
             Header: '',
             accessor: 'structuressprayed',
+            className: 'centered',
           },
         ],
       }),
@@ -812,11 +814,13 @@ export const irsReportingCongif: { [key: string]: IrsReportingCongif } = {
             Header: 'Following first visit',
             accessor: (d: any) => `${d.refusalsfirst}%`,
             id: 'refusalsfirst',
+            className: 'centered',
           },
           {
             Header: 'Following mop-up',
             accessor: (d: any) => `${d.refusalsmopup}%`,
             id: 'refusalsmopup',
+            className: 'centered',
           },
         ],
       }),
@@ -827,11 +831,13 @@ export const irsReportingCongif: { [key: string]: IrsReportingCongif } = {
             Header: 'Following first visit',
             accessor: (d: any) => `${d.lockedfirst}%`,
             id: 'lockedfirst',
+            className: 'centered',
           },
           {
             Header: 'Following mop-up',
             accessor: (d: any) => `${d.lockedmopup}%`,
             id: 'lockedmopup',
+            className: 'centered',
           },
         ],
       }),
