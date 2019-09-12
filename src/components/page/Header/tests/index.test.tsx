@@ -42,7 +42,55 @@ describe('components/page/Header', () => {
         <HeaderComponent {...props} />
       </Router>
     );
-    expect(toJson(wrapper)).toMatchSnapshot();
+
+    expect(toJson(wrapper.find('Navbar').find('Link.navbar-brand'))).toMatchSnapshot('reveal logo');
+    expect(
+      toJson(
+        wrapper
+          .find('Collapse')
+          .find('Transition')
+          .find('Nav')
+          .find("a[href*='login']")
+      )
+    ).toMatchSnapshot('login link');
+    expect(
+      toJson(
+        wrapper
+          .find('Collapse')
+          .find('Transition')
+          .find('Nav')
+          .find("a[href='/']")
+      )
+    ).toMatchSnapshot('home');
+    expect(
+      toJson(
+        wrapper
+          .find('Collapse')
+          .find('Transition')
+          .find('Nav')
+          .find("a[href='/404']")
+      )
+    ).toMatchSnapshot('users and about');
+    expect(
+      toJson(
+        wrapper
+          .find('Collapse')
+          .find('Transition')
+          .find('Nav')
+          .at(0)
+          .find('DropdownToggle')
+      )
+    ).toMatchSnapshot('Dropdown');
+    expect(
+      toJson(
+        wrapper
+          .find('Collapse')
+          .find('Transition')
+          .find('Nav')
+          .at(0)
+          .find('DropdownToggle')
+      )
+    ).toMatchSnapshot('DropDownMenu');
     wrapper.unmount();
   });
 
@@ -60,7 +108,55 @@ describe('components/page/Header', () => {
         <HeaderComponent {...props} />
       </Router>
     );
-    expect(toJson(wrapper)).toMatchSnapshot();
+
+    expect(toJson(wrapper.find('Navbar').find('Link.navbar-brand'))).toMatchSnapshot('reveal logo');
+    expect(
+      toJson(
+        wrapper
+          .find('Collapse')
+          .find('Transition')
+          .find('Nav')
+          .find("a[href*='logout']")
+      )
+    ).toMatchSnapshot('logout link');
+    expect(
+      toJson(
+        wrapper
+          .find('Collapse')
+          .find('Transition')
+          .find('Nav')
+          .find("a[href='/']")
+      )
+    ).toMatchSnapshot('home');
+    expect(
+      toJson(
+        wrapper
+          .find('Collapse')
+          .find('Transition')
+          .find('Nav')
+          .find("a[href='/404']")
+      )
+    ).toMatchSnapshot('users and about');
+    expect(
+      toJson(
+        wrapper
+          .find('Collapse')
+          .find('Transition')
+          .find('Nav')
+          .at(0)
+          .find('DropdownToggle')
+      )
+    ).toMatchSnapshot('Dropdown');
+    expect(
+      toJson(
+        wrapper
+          .find('Collapse')
+          .find('Transition')
+          .find('Nav')
+          .at(0)
+          .find('DropdownToggle')
+      )
+    ).toMatchSnapshot('DropDownMenu');
     wrapper.unmount();
   });
 });

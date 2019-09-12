@@ -1,37 +1,140 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`components/page/Header renders header correctly 1`] = `
-<Router
-  history={
-    Object {
-      "action": "POP",
-      "block": [Function],
-      "createHref": [Function],
-      "go": [Function],
-      "goBack": [Function],
-      "goForward": [Function],
-      "length": 1,
-      "listen": [Function],
-      "location": Object {
-        "hash": "",
-        "pathname": "/",
-        "search": "",
-        "state": undefined,
-      },
-      "push": [Function],
-      "replace": [Function],
-    }
-  }
+exports[`components/page/Header renders header correctly when authenticated: DropDownMenu 1`] = `
+Array [
+  <DropdownToggle
+    aria-haspopup={true}
+    caret={true}
+    className="nav-link"
+    color="secondary"
+    nav={true}
+  >
+    <a
+      aria-expanded={false}
+      aria-haspopup={true}
+      className="nav-link dropdown-toggle nav-link"
+      href="#"
+      onClick={[Function]}
+    >
+      Planning
+    </a>
+  </DropdownToggle>,
+  <DropdownToggle
+    aria-haspopup={true}
+    caret={true}
+    className="nav-link"
+    color="secondary"
+    nav={true}
+  >
+    <a
+      aria-expanded={false}
+      aria-haspopup={true}
+      className="nav-link dropdown-toggle nav-link"
+      href="#"
+      onClick={[Function]}
+    >
+      Reporting
+    </a>
+  </DropdownToggle>,
+]
+`;
+
+exports[`components/page/Header renders header correctly when authenticated: Dropdown 1`] = `
+Array [
+  <DropdownToggle
+    aria-haspopup={true}
+    caret={true}
+    className="nav-link"
+    color="secondary"
+    nav={true}
+  >
+    <a
+      aria-expanded={false}
+      aria-haspopup={true}
+      className="nav-link dropdown-toggle nav-link"
+      href="#"
+      onClick={[Function]}
+    >
+      Planning
+    </a>
+  </DropdownToggle>,
+  <DropdownToggle
+    aria-haspopup={true}
+    caret={true}
+    className="nav-link"
+    color="secondary"
+    nav={true}
+  >
+    <a
+      aria-expanded={false}
+      aria-haspopup={true}
+      className="nav-link dropdown-toggle nav-link"
+      href="#"
+      onClick={[Function]}
+    >
+      Reporting
+    </a>
+  </DropdownToggle>,
+]
+`;
+
+exports[`components/page/Header renders header correctly when authenticated: home 1`] = `
+<a
+  aria-current="page"
+  className="nav-link active active"
+  href="/"
+  onClick={[Function]}
+  style={Object {}}
 >
-  <withRouter(HeaderComponent)
-    authenticated={false}
-    user={
-      Object {
-        "email": "",
-        "name": "",
-        "username": "",
-      }
-    }
+  Home
+</a>
+`;
+
+exports[`components/page/Header renders header correctly when authenticated: logout link 1`] = `
+<a
+  aria-current={null}
+  className="nav-link"
+  href="/logout"
+  onClick={[Function]}
+>
+  Sign Out
+</a>
+`;
+
+exports[`components/page/Header renders header correctly when authenticated: reveal logo 1`] = `
+<Link
+  className="navbar-brand"
+  replace={false}
+  to="/"
+>
+  <a
+    className="navbar-brand"
+    href="/"
+    onClick={[Function]}
+  >
+    <img
+      alt="Reveal"
+      src="logo.png"
+    />
+  </a>
+</Link>
+`;
+
+exports[`components/page/Header renders header correctly when authenticated: users and about 1`] = `
+Array [
+  <a
+    aria-current={null}
+    className="nav-link"
+    href="/404"
+    onClick={[Function]}
+  >
+    Users
+  </a>,
+  <a
+    aria-current={null}
+    className="nav-link"
+    href="/404"
+    onClick={[Function]}
   >
     <Route>
       <HeaderComponent
@@ -593,40 +696,146 @@ exports[`components/page/Header renders header correctly 1`] = `
     </Route>
   </withRouter(HeaderComponent)>
 </Router>
+    About
+  </a>,
+]
 `;
 
-exports[`components/page/Header renders header correctly when authenticated 1`] = `
-<Router
-  history={
-    Object {
-      "action": "POP",
-      "block": [Function],
-      "createHref": [Function],
-      "go": [Function],
-      "goBack": [Function],
-      "goForward": [Function],
-      "length": 1,
-      "listen": [Function],
-      "location": Object {
-        "hash": "",
-        "pathname": "/",
-        "search": "",
-        "state": undefined,
-      },
-      "push": [Function],
-      "replace": [Function],
-    }
-  }
+exports[`components/page/Header renders header correctly: DropDownMenu 1`] = `
+Array [
+  <DropdownToggle
+    aria-haspopup={true}
+    caret={true}
+    className="nav-link"
+    color="secondary"
+    nav={true}
+  >
+    <a
+      aria-expanded={false}
+      aria-haspopup={true}
+      className="nav-link dropdown-toggle nav-link"
+      href="#"
+      onClick={[Function]}
+    >
+      Planning
+    </a>
+  </DropdownToggle>,
+  <DropdownToggle
+    aria-haspopup={true}
+    caret={true}
+    className="nav-link"
+    color="secondary"
+    nav={true}
+  >
+    <a
+      aria-expanded={false}
+      aria-haspopup={true}
+      className="nav-link dropdown-toggle nav-link"
+      href="#"
+      onClick={[Function]}
+    >
+      Reporting
+    </a>
+  </DropdownToggle>,
+]
+`;
+
+exports[`components/page/Header renders header correctly: Dropdown 1`] = `
+Array [
+  <DropdownToggle
+    aria-haspopup={true}
+    caret={true}
+    className="nav-link"
+    color="secondary"
+    nav={true}
+  >
+    <a
+      aria-expanded={false}
+      aria-haspopup={true}
+      className="nav-link dropdown-toggle nav-link"
+      href="#"
+      onClick={[Function]}
+    >
+      Planning
+    </a>
+  </DropdownToggle>,
+  <DropdownToggle
+    aria-haspopup={true}
+    caret={true}
+    className="nav-link"
+    color="secondary"
+    nav={true}
+  >
+    <a
+      aria-expanded={false}
+      aria-haspopup={true}
+      className="nav-link dropdown-toggle nav-link"
+      href="#"
+      onClick={[Function]}
+    >
+      Reporting
+    </a>
+  </DropdownToggle>,
+]
+`;
+
+exports[`components/page/Header renders header correctly: home 1`] = `
+<a
+  aria-current="page"
+  className="nav-link active active"
+  href="/"
+  onClick={[Function]}
+  style={Object {}}
 >
-  <withRouter(HeaderComponent)
-    authenticated={true}
-    user={
-      Object {
-        "email": "bob@example.com",
-        "name": "Bobbie",
-        "username": "RobertBaratheon",
-      }
-    }
+  Home
+</a>
+`;
+
+exports[`components/page/Header renders header correctly: login link 1`] = `
+<a
+  aria-current={null}
+  className="nav-link"
+  href="/login"
+  onClick={[Function]}
+>
+  Login
+</a>
+`;
+
+exports[`components/page/Header renders header correctly: reveal logo 1`] = `
+<Link
+  className="navbar-brand"
+  replace={false}
+  to="/"
+>
+  <a
+    className="navbar-brand"
+    href="/"
+    onClick={[Function]}
+  >
+    <img
+      alt="Reveal"
+      src="logo.png"
+    />
+  </a>
+</Link>
+`;
+
+exports[`components/page/Header renders header correctly: users and about 1`] = `
+Array [
+  <a
+    aria-current={null}
+    className="nav-link"
+    href="/404"
+    onClick={[Function]}
+  >
+    Users
+  </a>,
+  <a
+    aria-current={null}
+    className="nav-link"
+    href="/404"
+    onClick={[Function]}
   >
     <Route>
       <HeaderComponent
@@ -1299,4 +1508,7 @@ exports[`components/page/Header renders header correctly when authenticated 1`] 
     </Route>
   </withRouter(HeaderComponent)>
 </Router>
+    About
+  </a>,
+]
 `;
