@@ -444,6 +444,7 @@ class IrsReport extends React.Component<RouteComponentProps<RouteParams> & IrsRe
               </span>
             ),
             id: 'name',
+            minWidth: 180,
           },
         ],
       },
