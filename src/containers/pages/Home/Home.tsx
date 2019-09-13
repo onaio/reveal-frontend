@@ -31,7 +31,7 @@ class Home extends React.Component<{}, {}> {
               <Link to={INTERVENTION_IRS_URL} className="intervention-link">
                 <Button
                   color="outline"
-                  className="btn-intervention btn-lg btn-block btn-outline-dark"
+                  className="btn-intervention btn-lg btn-block btn-outline-green"
                 >
                   IRS
                 </Button>
@@ -43,7 +43,7 @@ class Home extends React.Component<{}, {}> {
               <Link to={FI_URL} className="intervention-link">
                 <Button
                   color="outline"
-                  className="btn-intervention btn-lg btn-block btn-outline-dark"
+                  className="btn-intervention btn-lg btn-block btn-outline-green"
                 >
                   Focus Investigation
                 </Button>
