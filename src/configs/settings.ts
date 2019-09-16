@@ -2,11 +2,17 @@
 import { Providers } from '@onaio/gatekeeper';
 import { Expression, LngLatBoundsLike } from 'mapbox-gl';
 import { CellInfo } from 'react-table';
-import { GREEN, ORANGE, RED, YELLOW } from '../colors';
+import { GREEN, GREY, ORANGE, RED, YELLOW } from '../colors';
+import { STRUCTURE_LAYER } from '../constants';
 import { getThresholdAdherenceIndicator } from '../helpers/indicators';
-import { FlexObject, Geometry } from '../helpers/utils';
+import { FeatureCollection, FlexObject, Geometry } from '../helpers/utils';
 import { Jurisdiction } from '../store/ducks/jurisdictions';
-import { Structure, StructureGeoJSON, StructureProperties } from '../store/ducks/structures';
+import {
+  AnyStructureGeojson,
+  Structure,
+  StructureGeoJSON,
+  StructureProperties,
+} from '../store/ducks/structures';
 import {
   DOMAIN_NAME,
   ENABLE_ONADATA_OAUTH,
@@ -777,6 +783,7 @@ export interface IrsReportingCongif {
   indicatorThresholds: IndicatorThresholds;
   juridictionTyper: (j: any) => Jurisdiction | CustomJurisdictionTypes;
   structureIngester?: (s: FlexObject, sliceId: string) => Structure | CustomStructureTypes;
+  structuresLayerBuilder?: (s: FeatureCollection<AnyStructureGeojson>) => FlexObject[];
   structureTyper: (j: any) => Structure | CustomStructureTypes;
   sliceProps: string[];
   structureSliceProps?: string[];
@@ -907,6 +914,82 @@ export const irsReportingCongif: { [key: string]: IrsReportingCongif } = {
       };
 
       return extractReportingStructure(structure, structureResult, sliceId);
+    },
+    structuresLayerBuilder: (structures: FeatureCollection<AnyStructureGeojson>) => {
+      const structuresLayers: FlexObject[] = [];
+      const layerType = structures.features[0].geometry && structures.features[0].geometry.type;
+      const structuresPopup: FlexObject = {
+        body: `<div>
+          <p class="heading">{{structure_type}}</p>
+          <p>Status: {{business_status}}</p>
+        </div>`,
+        join: ['jurisdiction_id', 'jurisdiction_id'],
+      };
+
+      if (layerType === 'Point') {
+        // build circle layers if structures are points
+        const structureCircleLayer = {
+          ...circleLayerConfig,
+          id: `${STRUCTURE_LAYER}-circle`,
+          paint: {
+            ...circleLayerConfig.paint,
+            'circle-color': GREEN,
+            'circle-stroke-color': GREEN,
+            'circle-stroke-opacity': 1,
+          },
+          popup: structuresPopup,
+          source: {
+            ...circleLayerConfig.source,
+            data: {
+              data: JSON.stringify(structures),
+              type: 'stringified-geojson',
+            },
+            type: 'geojson',
+          },
+          visible: true,
+        };
+        structuresLayers.push(structureCircleLayer);
+      } else {
+        // build fill / line layers if structures are polygons
+        const structuresFillLayer = {
+          ...fillLayerConfig,
+          id: `${STRUCTURE_LAYER}-fill`,
+          paint: {
+            ...fillLayerConfig.paint,
+            'fill-color': GREY,
+            'fill-outline-color': GREY,
+          },
+          popup: structuresPopup,
+          source: {
+            ...fillLayerConfig.source,
+            data: {
+              ...fillLayerConfig.source.data,
+              data: JSON.stringify(structures),
+            },
+          },
+          visible: true,
+        };
+        structuresLayers.push(structuresFillLayer);
+
+        const structuresLineLayer = {
+          ...lineLayerConfig,
+          id: `${STRUCTURE_LAYER}-line`,
+          paint: {
+            'line-color': GREY,
+            'line-opacity': 1,
+            'line-width': 2,
+          },
+          source: {
+            ...lineLayerConfig.source,
+            data: {
+              ...lineLayerConfig.source.data,
+              data: JSON.stringify(structures),
+            },
+          },
+        };
+        structuresLayers.push(structuresLineLayer);
+      }
+      return structuresLayers;
     },
     structureTyper: (s: any) => s as NamibiaIrsReportingStructure,
     sliceProps: [
