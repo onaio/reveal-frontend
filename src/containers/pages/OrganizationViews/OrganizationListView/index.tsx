@@ -63,12 +63,6 @@ export type OrgsListViewPropsType = OrganizationsListViewProps & RouteComponentP
 const OrganizationListView = (props: OrgsListViewPropsType) => {
   const { organizations, serviceClass, fetchOrganizationsAction } = props;
 
-  // break early if organizations are absent
-  const isLoading = organizations.length < 1;
-  if (isLoading) {
-    return <Loading />;
-  }
-
   /** props to pass to the headerBreadCrumb */
   const breadcrumbProps: BreadCrumbProps = {
     currentPage: {
@@ -128,6 +122,12 @@ const OrganizationListView = (props: OrgsListViewPropsType) => {
   useEffect(() => {
     loadOrganizations(serviceClass);
   }, []);
+
+  // break early if organizations are absent
+  const isLoading = organizations.length < 1;
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <div>
