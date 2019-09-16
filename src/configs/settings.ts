@@ -4,9 +4,9 @@ import { Expression, LngLatBoundsLike } from 'mapbox-gl';
 import { CellInfo } from 'react-table';
 import { GREEN, ORANGE, RED, YELLOW } from '../colors';
 import { getThresholdAdherenceIndicator } from '../helpers/indicators';
-import { FlexObject } from '../helpers/utils';
+import { FlexObject, Geometry } from '../helpers/utils';
 import { Jurisdiction } from '../store/ducks/jurisdictions';
-import { Structure } from '../store/ducks/structures';
+import { Structure, StructureGeoJSON, StructureProperties } from '../store/ducks/structures';
 import {
   DOMAIN_NAME,
   ENABLE_ONADATA_OAUTH,
@@ -714,7 +714,10 @@ export type adminLayerColorsType = typeof adminLayerColors[number];
 /** Flexible typings for all custom types which extend Jurisdiction */
 export type CustomJurisdictionTypes = NamibiaIrsReportingJurisdiction;
 export type CustomStructureTypes = NamibiaIrsReportingStructure;
+export type CustomStructureProperties = NamibiaIrsReportingStructureProperties;
+export type CustomStructureGeoJSON = NamibiaIrsReportingStructureGeoJSON;
 
+/** an interface describing geojson properties of Namibia Irs Reporting Jurisdictions */
 export interface NamibiaIrsReportingJurisdiction extends Jurisdiction {
   foundcoverage: number;
   householdsnotaccessible: number;
@@ -728,17 +731,31 @@ export interface NamibiaIrsReportingJurisdiction extends Jurisdiction {
   targetcoverage: number;
 }
 
+/** an interface describing geojson properties of Namibia Irs Reporting Structures */
+export interface NamibiaIrsReportingStructureProperties {
+  business_status: string;
+  householdaccessible: string;
+  jurisdiction_id: string;
+  nsprayabletotal: number;
+  nsprayedtotalfirst: number;
+  nsprayedtotalmop: number;
+  structure_code: string;
+  structure_jurisdiction_id: string;
+  structure_name: string;
+  structure_type: string;
+  task_id: string;
+  unsprayedreasonfirst: string;
+  unsprayedreasonmop: string;
+}
+
+/** interface describing Namibia Irs Reporting Structures geojson */
+export interface NamibiaIrsReportingStructureGeoJSON extends StructureGeoJSON {
+  properties: NamibiaIrsReportingStructureProperties;
+}
+
+/** interface describing Namibia Irs Reporting Structures */
 export interface NamibiaIrsReportingStructure extends Structure {
-  foundcoverage: number;
-  householdsnotaccessible: number;
-  lockedfirst: number;
-  lockedmopup: number;
-  refusalsfirst: number;
-  refusalsmopup: number;
-  sprayeffectiveness: number;
-  structuresfound: number;
-  structuressprayed: number;
-  targetcoverage: number;
+  geojson: NamibiaIrsReportingStructureGeoJSON;
 }
 
 /** interface describing threshold configs for IRS report indicators */
@@ -761,6 +778,7 @@ export interface IrsReportingCongif {
   juridictionTyper: (j: any) => Jurisdiction | CustomJurisdictionTypes;
   structureTyper: (j: any) => Structure | CustomStructureTypes;
   sliceProps: string[];
+  structureSliceProps?: string[];
 }
 /* tslint:disable:object-literal-sort-keys */
 export const irsReportingCongif: { [key: string]: IrsReportingCongif } = {
@@ -921,13 +939,19 @@ export const extractReportingStructure = (
   if (!irsReportingCongif[sliceId]) {
     return s as Structure;
   }
-  const structure: FlexObject = { ...s };
-  for (const prop of irsReportingCongif[sliceId].sliceProps) {
-    if (typeof datum[prop] !== 'undefined') {
-      structure[prop] = datum[prop];
+
+  const { structureSliceProps } = irsReportingCongif[sliceId];
+  if (structureSliceProps) {
+    const structure: FlexObject = { ...s };
+    for (const prop of structureSliceProps) {
+      if (typeof datum[prop] !== 'undefined') {
+        structure[prop] = datum[prop];
+      }
     }
+    return irsReportingCongif[sliceId].structureTyper(structure);
   }
-  return irsReportingCongif[sliceId].structureTyper(structure);
+
+  return irsReportingCongif[sliceId].structureTyper(s);
 };
 
 /** Interfaces describing administrative hierarchy via ISO 3166 admin codes */

@@ -1,6 +1,11 @@
 import { keyBy, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
 import SeamlessImmutable from 'seamless-immutable';
+import {
+  CustomStructureGeoJSON,
+  CustomStructureProperties,
+  CustomStructureTypes,
+} from '../../configs/settings';
 import { FeatureCollection, Geometry, wrapFeatureCollection } from '../../helpers/utils';
 
 /** the reducer name */
@@ -27,7 +32,7 @@ export interface StructureProperties {
 export interface StructureGeoJSON {
   geometry: Geometry | null;
   id: string;
-  properties: StructureProperties;
+  properties: StructureProperties | CustomStructureProperties;
   type: string;
 }
 
@@ -39,6 +44,7 @@ export interface Structure {
   id: string;
   jurisdiction_id: string;
 }
+export type AnyStructure = Structure | CustomStructureTypes;
 
 // actions
 
@@ -64,7 +70,7 @@ export type StructureActionTypes = SetStructuresAction | RemoveStructuresAction 
 
 /** interface for Structure state */
 interface StructureState {
-  structuresById: { [key: string]: Structure };
+  structuresById: { [key: string]: AnyStructure };
 }
 
 /** immutable Structure state */
@@ -105,11 +111,11 @@ export default function reducer(
 /** set Structure creator
  * @param {Structure[]} structuresList - array of structure objects
  */
-export const setStructures = (structuresList: Structure[] = []): SetStructuresAction => {
+export const setStructures = (structuresList: AnyStructure[] = []): SetStructuresAction => {
   return {
     structuresById: keyBy(
       structuresList.map(
-        (structure: Structure): Structure => {
+        (structure: AnyStructure): Structure => {
           /** ensure geojson is parsed */
           if (typeof structure.geojson === 'string') {
             structure.geojson = JSON.parse(structure.geojson);
