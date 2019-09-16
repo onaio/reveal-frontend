@@ -828,11 +828,13 @@ export const irsReportingCongif: { [key: string]: IrsReportingCongif } = {
             Header: 'Following first visit',
             accessor: (d: any) => `${d.refusalsfirst}%`,
             id: 'refusalsfirst',
+            className: 'centered',
           },
           {
             Header: 'Following mop-up',
             accessor: (d: any) => `${d.refusalsmopup}%`,
             id: 'refusalsmopup',
+            className: 'centered',
           },
         ],
       }),
@@ -843,11 +845,13 @@ export const irsReportingCongif: { [key: string]: IrsReportingCongif } = {
             Header: 'Following first visit',
             accessor: (d: any) => `${d.lockedfirst}%`,
             id: 'lockedfirst',
+            className: 'centered',
           },
           {
             Header: 'Following mop-up',
             accessor: (d: any) => `${d.lockedmopup}%`,
             id: 'lockedmopup',
+            className: 'centered',
           },
         ],
       }),
@@ -867,20 +871,20 @@ export const irsReportingCongif: { [key: string]: IrsReportingCongif } = {
     },
     indicatorThresholds: {
       GREEN_THRESHOLD: {
-        color: GREEN,
+        color: '#2ECC40',
         value: 1,
       },
-      ORANGE_THRESHOLD: {
-        color: ORANGE,
+      YELLOW_THRESHOLD: {
+        color: '#FFDC00',
         value: 0.9,
       },
       RED_THRESHOLD: {
-        color: RED,
+        color: '#FF4136',
         orEquals: true,
         value: 0.75,
       },
-      YELLOW_THRESHOLD: {
-        color: YELLOW,
+      GREY_THRESHOLD: {
+        color: '#dddddd',
         value: 0.2,
       },
     },
