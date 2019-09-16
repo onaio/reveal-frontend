@@ -20,7 +20,7 @@ export interface Organization {
   id: number;
   identifier: string;
   name: string;
-  partOf?: 1;
+  partOf?: number;
   type?: { coding: OrganizationCoding[] };
 }
 
