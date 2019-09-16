@@ -36,6 +36,8 @@ export interface StructureGeoJSON {
   type: string;
 }
 
+export type AnyStructureGeojson = StructureGeoJSON | CustomStructureGeoJSON;
+
 /** interface for structure Object for
  * structure as received from the fetch request / superset
  */
