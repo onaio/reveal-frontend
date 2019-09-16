@@ -138,6 +138,14 @@ export const SEARCH = 'Search';
 export type SEARCH = typeof SEARCH;
 export const AREA = 'Area';
 export type AREA = typeof AREA;
+export const DETAILS = 'Details';
+export type DETAILS = typeof DETAILS;
+export const MEMBERS = 'Members';
+export type MEMBERS = typeof MEMBERS;
+export const IDENTIFIER = 'Identifier';
+export type IDENTIFIER = typeof IDENTIFIER;
+export const USERNAME = 'Username';
+export type USERNAME = typeof USERNAME;
 // TODO ? - do the below 2 belong here or ins a settings file
 export const ORGANIZATION_LABEL = TEAM;
 export type ORGANIZATION_LABEL = typeof ORGANIZATION_LABEL;
