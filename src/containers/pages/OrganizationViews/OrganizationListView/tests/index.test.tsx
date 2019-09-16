@@ -1,23 +1,26 @@
 import { mount } from 'enzyme';
 import toJson from 'enzyme-to-json';
+import flushPromises from 'flush-promises';
 import { createBrowserHistory } from 'history';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
-import { TEAM_LIST_URL } from '../../../../../constants';
+import { OPENSRP_ORGANIZATION_ENDPOINT, TEAM_LIST_URL } from '../../../../../constants';
 import store from '../../../../../store';
+import { fetchOrganizations } from '../../../../../store/ducks/organizations';
 import * as fixtures from '../../../../../store/ducks/tests/fixtures';
-import ConnectedOrgsListView, {
-  OrgsListViewPropsType,
-  TeamListView,
-} from '../../OrganizationListView';
+import ConnectedOrgsListView, { OrganizationListView } from '../../OrganizationListView';
+
+// tslint:disable-next-line: no-var-requires
+const fetch = require('jest-fetch-mock');
 
 const history = createBrowserHistory();
 
 describe('src/containers/TeamAssignment/TeamListview/', () => {
-  it('a  dumb TeamListView correctly', () => {
+  it('renders a dumb TeamListView correctly', () => {
+    fetch.once(JSON.stringify(fixtures.organizations));
     const mock: any = jest.fn();
-    const props: OrgsListViewPropsType = {
+    const props = {
       history,
       location: mock,
       match: {
@@ -26,16 +29,16 @@ describe('src/containers/TeamAssignment/TeamListview/', () => {
         path: TEAM_LIST_URL,
         url: TEAM_LIST_URL,
       },
-      teams: fixtures.organizations,
+      organizations: fixtures.organizations,
     };
     const wrapper = mount(
       <Router history={history}>
-        <TeamListView {...props} />
+        <OrganizationListView {...props} />
       </Router>
     );
 
     // should display a breadcrumb
-    expect(toJson(wrapper.find('HeaderBreadcrumb'))).toMatchSnapshot('Header Breadcrumb');
+    expect(toJson(wrapper.find('Breadcrumb'))).toMatchSnapshot('Breadcrumb');
 
     // should have link to add team
     expect(wrapper.find(`LinkAsButton`).length).toEqual(1);
@@ -50,10 +53,17 @@ describe('src/containers/TeamAssignment/TeamListview/', () => {
     wrapper.unmount();
   });
 
-  it('E2E flow for searching a team', () => {
-    // questions: how should search be done(probably initiate an api call)
+  it('Makes the expected calls to the opensrpService', async () => {
+    const mockList = jest.fn(async () => fixtures.organizations);
+    const classMock = jest.fn().mockImplementation(() => {
+      return {
+        list: mockList,
+      };
+    });
+    const fetchedOrgsMock = jest.fn(arg => fetchOrganizations(arg));
     const mock: any = jest.fn();
-    const props: OrgsListViewPropsType = {
+    const props = {
+      fetchOrganizationsAction: fetchedOrgsMock,
       history,
       location: mock,
       match: {
@@ -62,11 +72,38 @@ describe('src/containers/TeamAssignment/TeamListview/', () => {
         path: TEAM_LIST_URL,
         url: TEAM_LIST_URL,
       },
-      teams: fixtures.organizations,
+      organizations: fixtures.organizations,
+      serviceClass: classMock,
     };
     const wrapper = mount(
       <Router history={history}>
-        <TeamListView {...props} />
+        <OrganizationListView {...props} />
+      </Router>
+    );
+
+    await flushPromises();
+    expect(classMock).toBeCalledWith(OPENSRP_ORGANIZATION_ENDPOINT);
+    expect(mockList).toHaveBeenCalled();
+    expect(fetchedOrgsMock).toHaveBeenCalledWith(fixtures.organizations);
+  });
+
+  it('E2E flow for searching a team', () => {
+    // questions: how should search be done(probably initiate an api call)
+    const mock: any = jest.fn();
+    const props = {
+      history,
+      location: mock,
+      match: {
+        isExact: true,
+        params: { id: '' },
+        path: TEAM_LIST_URL,
+        url: TEAM_LIST_URL,
+      },
+      organizations: fixtures.organizations,
+    };
+    const wrapper = mount(
+      <Router history={history}>
+        <OrganizationListView {...props} />
       </Router>
     );
 
@@ -75,13 +112,14 @@ describe('src/containers/TeamAssignment/TeamListview/', () => {
     inlineSearchForm.simulate('submit');
 
     // now what?
-    //   expect.assertions(999);
+    expect.assertions(999);
     wrapper.unmount();
   });
 
   it('TeamListView works correctly when connected to store', () => {
-    // questions: how should search be done(probably initiate an api call)
+    fetch.once(JSON.stringify([]));
     const mock: any = jest.fn();
+    store.dispatch(fetchOrganizations(fixtures.organizations));
     const props = {
       history,
       location: mock,
@@ -101,8 +139,8 @@ describe('src/containers/TeamAssignment/TeamListview/', () => {
     );
 
     // check that store data is part of passed props
-    const foundProps = wrapper.find('TeamListView').props() as any;
-    expect(foundProps.teams).toEqual(fixtures.organizations);
+    const foundProps = wrapper.find('OrganizationListView').props() as any;
+    expect(foundProps.organizations).toEqual(fixtures.organizations);
     wrapper.unmount();
   });
 });
