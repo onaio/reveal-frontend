@@ -34,10 +34,17 @@ import { keyBy, keys } from 'lodash';
 import { GREEN, GREY } from '../../../../../colors';
 import GisidaWrapper, { GisidaProps } from '../../../../../components/GisidaWrapper';
 import Loading from '../../../../../components/page/Loading';
-import { SUPERSET_STRUCTURES_SLICE, SUPERSET_TASKS_SLICE } from '../../../../../configs/env';
+import {
+  SUPERSET_IRS_REPORTING_JURISDICTIONS_DATA_SLICE,
+  SUPERSET_IRS_REPORTING_STRUCTURES_DATA_SLICE,
+  SUPERSET_STRUCTURES_SLICE,
+  SUPERSET_TASKS_SLICE,
+} from '../../../../../configs/env';
 import {
   circleLayerConfig,
+  extractReportingStructure,
   fillLayerConfig,
+  irsReportingCongif,
   lineLayerConfig,
 } from '../../../../../configs/settings';
 import jurisdictionReducer, {
@@ -48,6 +55,7 @@ import jurisdictionReducer, {
 } from '../../../../../store/ducks/jurisdictions';
 import { getPlanRecordById, PlanRecord } from '../../../../../store/ducks/plans';
 import {
+  AnyStructure,
   getStructuresFCByJurisdictionId,
   setStructures,
   Structure,
@@ -151,11 +159,39 @@ class IrsReportMap extends React.Component<
       { comparator: jurisdictionId, operator: '==', subject: JURISDICTION_ID },
     ]);
     // reference or fetch structures per Jurisdiction
-    const structuresArray: Structure[] | null = this.props.structures
+    const structuresArray: AnyStructure[] | null = this.props.structures
       ? null
-      : await supersetFetch(SUPERSET_STRUCTURES_SLICE, structuresParams).then(
-          (structuresResults: Structure[]) => structuresResults
-        );
+      : await supersetFetch(SUPERSET_IRS_REPORTING_STRUCTURES_DATA_SLICE, structuresParams)
+          .then((structuresResults: FlexObject[]) => {
+            // if structures are not returned, return null
+            if (
+              !structuresResults ||
+              !structuresResults.length ||
+              !Array.isArray(structuresResults)
+            ) {
+              return null;
+            }
+
+            // if a structureIngester fn is specifed in the configs, use it
+            if (
+              irsReportingCongif &&
+              irsReportingCongif[SUPERSET_IRS_REPORTING_JURISDICTIONS_DATA_SLICE]
+            ) {
+              const { structureIngester } = irsReportingCongif[
+                SUPERSET_IRS_REPORTING_JURISDICTIONS_DATA_SLICE
+              ];
+              if (structureIngester) {
+                return structuresResults.map(s =>
+                  structureIngester(s, SUPERSET_IRS_REPORTING_JURISDICTIONS_DATA_SLICE)
+                ) as AnyStructure[];
+              }
+            }
+
+            // fallback to returning resutls as AnyStructre[]
+            return structuresResults as AnyStructure[];
+          })
+          .catch(() => null);
+
     // save structures to store
     if (!this.props.structures && structuresArray) {
       fetchStructuresActionCreator(structuresArray);
