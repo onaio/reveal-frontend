@@ -769,6 +769,15 @@ export interface IndicatorThresholds {
   };
 }
 
+/** interface describing configurations for reporting map sidebar indicators */
+export interface ReportingSidebarRow {
+  denominator: number;
+  description: string;
+  numerator: number;
+  title: string;
+  value: number;
+}
+
 export interface IrsReportingCongif {
   drilldownColumnGetters: {
     [key: string]: () => any;
@@ -778,6 +787,7 @@ export interface IrsReportingCongif {
   };
   indicatorThresholds: IndicatorThresholds;
   juridictionTyper: (j: any) => Jurisdiction | CustomJurisdictionTypes;
+  sidebarPropsBuilder?: (j: Jurisdiction | CustomJurisdictionTypes) => ReportingSidebarRow[];
   structureIngester?: (s: FlexObject, sliceId: string) => Structure | CustomStructureTypes;
   structuresLayerBuilder?: (s: FeatureCollection<AnyStructureGeojson>) => FlexObject[];
   structureTyper: (j: any) => Structure | CustomStructureTypes;
@@ -902,6 +912,30 @@ export const irsReportingCongif: { [key: string]: IrsReportingCongif } = {
       },
     },
     juridictionTyper: (j: any) => j as NamibiaIrsReportingJurisdiction,
+    sidebarPropsBuilder: (j: Jurisdiction | CustomJurisdictionTypes) => {
+      const jurisdiction = {
+        ...j,
+      } as NamibiaIrsReportingJurisdiction;
+
+      const rows: ReportingSidebarRow[] = [
+        {
+          denominator: jurisdiction ? jurisdiction.structurestargeted || 0 : 0,
+          description: 'Percent of residential structures sprayed',
+          numerator: jurisdiction ? jurisdiction.structuressprayed || 0 : 0,
+          value: jurisdiction ? Math.round((jurisdiction.targetcoverage || 0) * 100) : 0,
+          title: 'Target Coverage',
+        },
+        {
+          denominator: jurisdiction ? jurisdiction.structuresfound || 0 : 0,
+          description: 'Percent of residential structures found',
+          numerator: jurisdiction ? jurisdiction.structuressprayed || 0 : 0,
+          title: 'Found Coverage',
+          value: jurisdiction ? Math.round((jurisdiction.foundcoverage || 0) * 100) : 0,
+        },
+      ];
+
+      return rows as ReportingSidebarRow[];
+    },
     structureIngester: (structureResult: FlexObject, sliceId: string) => {
       const { geojson: geojsonStr, jurisdiction_id, structure_id } = structureResult;
 
