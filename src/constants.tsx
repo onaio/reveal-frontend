@@ -197,7 +197,7 @@ export const OPENSRP_PLANS = 'plans';
 export type OPENSRP_PLANS = typeof OPENSRP_PLANS;
 export const OPENSRP_PARENT_ID = 'parent_id';
 export type OPENSRP_PARENT_ID = typeof OPENSRP_PARENT_ID;
-export const OPENSRP_ORGANIZATION_ENDPOINT = '';
+export const OPENSRP_ORGANIZATION_ENDPOINT = 'organization';
 export type OPENSRP_ORGANIZATION_ENDPOINT = typeof OPENSRP_ORGANIZATION_ENDPOINT;
 
 // container pages title names
