@@ -6,10 +6,10 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
-import ConnectedSingleTeamView, { SingleTeamView } from '..';
 import { SINGLE_TEAM_URL, TEAM } from '../../../../../constants';
 import store from '../../../../../store';
 import * as fixtures from '../../../../../store/ducks/tests/fixtures';
+import ConnectedSingleTeamView, { SingleTeamView } from '../../SingleOrganizationView';
 
 const history = createBrowserHistory();
 

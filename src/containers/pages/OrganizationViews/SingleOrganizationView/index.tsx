@@ -29,10 +29,10 @@ import {
 } from '../../../../constants';
 import { RouteParams } from '../../../../helpers/utils';
 import teamsReducer, {
-  getTeamById,
+  getOrganizationById,
+  Organization,
   reducerName as teamsReducerName,
-  Team,
-} from '../../../../store/ducks/teams';
+} from '../../../../store/ducks/organizations';
 import * as fixtures from '../../../../store/ducks/tests/fixtures';
 
 reducerRegistry.register(teamsReducerName, teamsReducer);
@@ -47,7 +47,7 @@ interface TeamMember {
 
 /** interface to describe our custom created SingleTeamView props */
 interface SingleTeamViewProps {
-  team: Team | null;
+  team: Organization | null;
   teamMembers: TeamMember[];
 }
 
@@ -147,7 +147,7 @@ export { SingleTeamView };
 
 /** interface to describe props from mapStateToProps */
 interface MapStateToProps {
-  team: Team | null;
+  team: Organization | null;
   teamMembers: any;
 }
 

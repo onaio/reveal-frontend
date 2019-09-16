@@ -23,12 +23,12 @@ import {
   TEAMS,
 } from '../../../../constants';
 import { RouteParams } from '../../../../helpers/utils';
-import { Team } from '../../../../store/ducks/teams';
+import { Organization } from '../../../../store/ducks/organizations';
 import * as fixtures from '../../../../store/ducks/tests/fixtures';
 import TeamForm, { defaultInitialValues, TeamFormProps } from '../../../forms/TeamForm';
 
 export interface Props {
-  team: Team | null;
+  team: Organization | null;
 }
 
 export const defaultProps: Props = {
@@ -93,7 +93,7 @@ const mapStateToprops = (
 ): DispatchedProps => {
   let teamId = ownProps.match.params.id;
   teamId = teamId ? teamId : '';
-  const team = fixtures.teams.filter((tm: Team) => tm.identifier === teamId)[0];
+  const team = fixtures.teams.filter((tm: Organization) => tm.identifier === teamId)[0];
   return { team };
 };
 

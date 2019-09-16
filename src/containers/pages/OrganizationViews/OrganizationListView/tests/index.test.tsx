@@ -4,10 +4,13 @@ import { createBrowserHistory } from 'history';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
-import ConnectedTeamListView, { TeamListView, TeamListViewPropsType } from '..';
 import { TEAM_LIST_URL } from '../../../../../constants';
 import store from '../../../../../store';
 import * as fixtures from '../../../../../store/ducks/tests/fixtures';
+import ConnectedTeamListView, {
+  TeamListView,
+  TeamListViewPropsType,
+} from '../../OrganizationListView';
 
 const history = createBrowserHistory();
 

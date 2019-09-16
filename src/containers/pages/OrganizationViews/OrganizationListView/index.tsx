@@ -25,7 +25,10 @@ import {
   TEAM_LIST_URL,
   TEAMS,
 } from '../../../../constants';
-import teamsReducer, { reducerName as teamsReducerName, Team } from '../../../../store/ducks/teams';
+import teamsReducer, {
+  Organization,
+  reducerName as teamsReducerName,
+} from '../../../../store/ducks/organizations';
 import * as fixtures from '../../../../store/ducks/tests/fixtures';
 import './index.css';
 
@@ -33,7 +36,7 @@ reducerRegistry.register(teamsReducerName, teamsReducer);
 
 /** interface to describe our custom created SingleTeamView props */
 interface TeamListViewProps {
-  teams: Team[];
+  teams: Organization[];
 }
 
 /** the default props for SingleTeamView */
@@ -72,7 +75,7 @@ const TeamListView = (props: TeamListViewPropsType) => {
   };
 
   const listViewProps = {
-    data: teams.map((team: Team) => {
+    data: teams.map((team: Organization) => {
       return [
         <Link to={`${SINGLE_TEAM_URL}/${team.identifier}`} key={team.identifier}>
           {team.identifier}

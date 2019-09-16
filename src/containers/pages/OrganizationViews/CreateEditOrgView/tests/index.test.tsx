@@ -2,9 +2,9 @@ import { mount, shallow } from 'enzyme';
 import { createBrowserHistory } from 'history';
 import Helmet from 'react-helmet';
 import { Router } from 'react-router';
-import { CreateEditTeamView } from '..';
 import { EDIT_TEAM_URL, NEW_TEAM } from '../../../../../constants';
 import * as fixtures from '../../../../../store/ducks/tests/fixtures';
+import { CreateEditTeamView } from '../../CreateEditOrgView';
 
 const history = createBrowserHistory();
 
