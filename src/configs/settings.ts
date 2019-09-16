@@ -2,17 +2,12 @@
 import { Providers } from '@onaio/gatekeeper';
 import { Expression, LngLatBoundsLike } from 'mapbox-gl';
 import { CellInfo } from 'react-table';
-import { GREEN, GREY, ORANGE, RED, YELLOW } from '../colors';
+import { BLACK, GREY, TASK_BLUE, TASK_GREEN, TASK_RED, TASK_YELLOW } from '../colors';
 import { STRUCTURE_LAYER } from '../constants';
 import { getThresholdAdherenceIndicator } from '../helpers/indicators';
-import { FeatureCollection, FlexObject, Geometry } from '../helpers/utils';
+import { FeatureCollection, FlexObject } from '../helpers/utils';
 import { Jurisdiction } from '../store/ducks/jurisdictions';
-import {
-  AnyStructureGeojson,
-  Structure,
-  StructureGeoJSON,
-  StructureProperties,
-} from '../store/ducks/structures';
+import { AnyStructureGeojson, Structure, StructureGeoJSON } from '../store/ducks/structures';
 import {
   DOMAIN_NAME,
   ENABLE_ONADATA_OAUTH,
@@ -926,6 +921,19 @@ export const irsReportingCongif: { [key: string]: IrsReportingCongif } = {
         join: ['jurisdiction_id', 'jurisdiction_id'],
       };
 
+      const structureStatusColors = {
+        default: GREY,
+        property: 'business_status',
+        stops: [
+          ['Sprayed', TASK_GREEN],
+          ['Not Sprayed', TASK_RED],
+          ['Partially Sprayed', TASK_BLUE],
+          ['Not Visited', TASK_YELLOW],
+          ['Not Eligible', BLACK],
+        ],
+        type: 'categorical',
+      };
+
       if (layerType === 'Point') {
         // build circle layers if structures are points
         const structureCircleLayer = {
@@ -933,8 +941,8 @@ export const irsReportingCongif: { [key: string]: IrsReportingCongif } = {
           id: `${STRUCTURE_LAYER}-circle`,
           paint: {
             ...circleLayerConfig.paint,
-            'circle-color': GREEN,
-            'circle-stroke-color': GREEN,
+            'circle-color': structureStatusColors,
+            'circle-stroke-color': structureStatusColors,
             'circle-stroke-opacity': 1,
           },
           popup: structuresPopup,
@@ -956,8 +964,8 @@ export const irsReportingCongif: { [key: string]: IrsReportingCongif } = {
           id: `${STRUCTURE_LAYER}-fill`,
           paint: {
             ...fillLayerConfig.paint,
-            'fill-color': GREY,
-            'fill-outline-color': GREY,
+            'fill-color': structureStatusColors,
+            'fill-outline-color': structureStatusColors,
           },
           popup: structuresPopup,
           source: {
@@ -975,7 +983,7 @@ export const irsReportingCongif: { [key: string]: IrsReportingCongif } = {
           ...lineLayerConfig,
           id: `${STRUCTURE_LAYER}-line`,
           paint: {
-            'line-color': GREY,
+            'line-color': structureStatusColors,
             'line-opacity': 1,
             'line-width': 2,
           },
