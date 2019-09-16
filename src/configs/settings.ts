@@ -776,6 +776,7 @@ export interface IrsReportingCongif {
   };
   indicatorThresholds: IndicatorThresholds;
   juridictionTyper: (j: any) => Jurisdiction | CustomJurisdictionTypes;
+  structureIngester?: (s: FlexObject, sliceId: string) => Structure | CustomStructureTypes;
   structureTyper: (j: any) => Structure | CustomStructureTypes;
   sliceProps: string[];
   structureSliceProps?: string[];
@@ -894,6 +895,19 @@ export const irsReportingCongif: { [key: string]: IrsReportingCongif } = {
       },
     },
     juridictionTyper: (j: any) => j as NamibiaIrsReportingJurisdiction,
+    structureIngester: (structureResult: FlexObject, sliceId: string) => {
+      const { geojson: geojsonStr, jurisdiction_id, structure_id } = structureResult;
+
+      const geojson = JSON.parse(geojsonStr);
+
+      const structure: Structure = {
+        geojson,
+        id: structure_id,
+        jurisdiction_id,
+      };
+
+      return extractReportingStructure(structure, structureResult, sliceId);
+    },
     structureTyper: (s: any) => s as NamibiaIrsReportingStructure,
     sliceProps: [
       'foundcoverage',
