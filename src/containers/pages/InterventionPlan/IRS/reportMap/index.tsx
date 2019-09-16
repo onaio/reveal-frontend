@@ -56,6 +56,7 @@ import jurisdictionReducer, {
 import { getPlanRecordById, PlanRecord } from '../../../../../store/ducks/plans';
 import {
   AnyStructure,
+  AnyStructureGeojson,
   getStructuresFCByJurisdictionId,
   setStructures,
   Structure,
@@ -197,7 +198,7 @@ class IrsReportMap extends React.Component<
       fetchStructuresActionCreator(structuresArray);
     }
     // define structures feature collection for Gisida Layers
-    const structures: FeatureCollection<StructureGeoJSON> | null =
+    const structures: FeatureCollection<AnyStructureGeojson> | null =
       this.props.structures ||
       (structuresArray && wrapFeatureCollection(structuresArray.map((s: Structure) => s.geojson)));
 
@@ -286,7 +287,7 @@ class IrsReportMap extends React.Component<
    */
   private getGisidaWrapperProps(
     jurisdictionById: Jurisdiction,
-    structures: FeatureCollection<StructureGeoJSON> | null
+    structures: FeatureCollection<AnyStructureGeojson> | null
   ): GisidaProps | null {
     if (!jurisdictionById.geojson) {
       return null;
@@ -308,81 +309,13 @@ class IrsReportMap extends React.Component<
     };
     layers.push(jurisdictionLineLayer);
 
-    // define default structures layer
+    // Define structures layers
+    let structuresLayers: FlexObject[] = [];
     if (structures) {
-      const layerType = structures.features[0].geometry && structures.features[0].geometry.type;
-      const structuresPopup = {
-        body: `<div>
-          <p class="heading">{{type}}</p>
-          <p>Status: {{status}}</p>
-        </div>`,
-        join: ['jurisdiction_id', 'jurisdiction_id'],
-      };
-
-      if (layerType === 'Point') {
-        // build circle layers if structures are points
-        const structureCircleLayer = {
-          ...circleLayerConfig,
-          id: `${STRUCTURE_LAYER}-circle`,
-          paint: {
-            ...circleLayerConfig.paint,
-            'circle-color': GREEN,
-            'circle-stroke-color': GREEN,
-            'circle-stroke-opacity': 1,
-          },
-          popup: structuresPopup,
-          source: {
-            ...circleLayerConfig.source,
-            data: {
-              data: JSON.stringify(structures),
-              type: 'stringified-geojson',
-            },
-            type: 'geojson',
-          },
-          visible: true,
-        };
-        layers.push(structureCircleLayer);
-      } else {
-        // build fill / line layers if structures are polygons
-        const structuresFillLayer = {
-          ...fillLayerConfig,
-          id: `${STRUCTURE_LAYER}-fill`,
-          paint: {
-            ...fillLayerConfig.paint,
-            'fill-color': GREY,
-            'fill-outline-color': GREY,
-          },
-          popup: structuresPopup,
-          source: {
-            ...fillLayerConfig.source,
-            data: {
-              ...fillLayerConfig.source.data,
-              data: JSON.stringify(structures),
-            },
-          },
-          visible: true,
-        };
-        layers.push(structuresFillLayer);
-
-        const structuresLineLayer = {
-          ...lineLayerConfig,
-          id: `${STRUCTURE_LAYER}-line`,
-          paint: {
-            'line-color': GREY,
-            'line-opacity': 1,
-            'line-width': 2,
-          },
-          source: {
-            ...lineLayerConfig.source,
-            data: {
-              ...lineLayerConfig.source.data,
-              data: JSON.stringify(structures),
-            },
-          },
-        };
-        layers.push(structuresLineLayer);
-      }
+      structuresLayers = this.getDefaultStructuresLayers(structures);
     }
+
+    layers.concat(structuresLayers);
 
     // define bounds for gisida map position
     const bounds = GeojsonExtent({
@@ -401,6 +334,89 @@ class IrsReportMap extends React.Component<
       structures: null,
     };
     return gisidaWrapperProps;
+  }
+
+  /** fallback default layer builder for structures layers
+   * @param {FeatureCollection<AnyStructureGeojson>} structures - The structures to be used in the layers
+   * @returns {FlexObject[]} an array of layers to be used in the GisidaWrapperProps.layers
+   */
+  private getDefaultStructuresLayers(
+    structures: FeatureCollection<AnyStructureGeojson>
+  ): FlexObject[] {
+    const layers: FlexObject[] = [];
+    const layerType = structures.features[0].geometry && structures.features[0].geometry.type;
+    const structuresPopup = {
+      body: `<div>
+        <p class="heading">{{type}}</p>
+        <p>Status: {{status}}</p>
+      </div>`,
+      join: ['jurisdiction_id', 'jurisdiction_id'],
+    };
+
+    if (layerType === 'Point') {
+      // build circle layers if structures are points
+      const structureCircleLayer = {
+        ...circleLayerConfig,
+        id: `${STRUCTURE_LAYER}-circle`,
+        paint: {
+          ...circleLayerConfig.paint,
+          'circle-color': GREEN,
+          'circle-stroke-color': GREEN,
+          'circle-stroke-opacity': 1,
+        },
+        popup: structuresPopup,
+        source: {
+          ...circleLayerConfig.source,
+          data: {
+            data: JSON.stringify(structures),
+            type: 'stringified-geojson',
+          },
+          type: 'geojson',
+        },
+        visible: true,
+      };
+      layers.push(structureCircleLayer);
+    } else {
+      // build fill / line layers if structures are polygons
+      const structuresFillLayer = {
+        ...fillLayerConfig,
+        id: `${STRUCTURE_LAYER}-fill`,
+        paint: {
+          ...fillLayerConfig.paint,
+          'fill-color': GREY,
+          'fill-outline-color': GREY,
+        },
+        popup: structuresPopup,
+        source: {
+          ...fillLayerConfig.source,
+          data: {
+            ...fillLayerConfig.source.data,
+            data: JSON.stringify(structures),
+          },
+        },
+        visible: true,
+      };
+      layers.push(structuresFillLayer);
+
+      const structuresLineLayer = {
+        ...lineLayerConfig,
+        id: `${STRUCTURE_LAYER}-line`,
+        paint: {
+          'line-color': GREY,
+          'line-opacity': 1,
+          'line-width': 2,
+        },
+        source: {
+          ...lineLayerConfig.source,
+          data: {
+            ...lineLayerConfig.source.data,
+            data: JSON.stringify(structures),
+          },
+        },
+      };
+      layers.push(structuresLineLayer);
+    }
+    return layers;
   }
 }
 
