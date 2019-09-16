@@ -1,5 +1,5 @@
 import { clone, cloneDeep } from 'lodash';
-import { Team } from '../teams';
+import { Organization } from '../organizations';
 
 export const plan1 = {
   id: 'ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f',
@@ -1175,7 +1175,7 @@ export const CompleteRoutineTableProps = {
   useDrillDownTrProps: false,
 };
 
-export const team1: Team = {
+export const team1: Organization = {
   active: true,
   id: 1,
   identifier: 'fcc19470-d599-11e9-bb65-2a2ae2dbcce4',
@@ -1191,14 +1191,14 @@ export const team1: Team = {
   },
 };
 
-export const team2: Team = {
+export const team2: Organization = {
   active: true,
   id: 3,
   identifier: '4c506c98-d3a9-11e9-bb65-2a2ae2dbcce4',
   name: 'Demo Team',
 };
 
-export const team3: Team = {
+export const team3: Organization = {
   active: true,
   id: 2,
   identifier: 'd23f7350-d406-11e9-bb65-2a2ae2dbcce4',
@@ -1215,7 +1215,7 @@ export const team3: Team = {
   },
 };
 
-export const teams: Team[] = [team1, team2];
+export const teams: Organization[] = [team1, team2];
 
 export const teamMember1 = {
   identifier: '1',
