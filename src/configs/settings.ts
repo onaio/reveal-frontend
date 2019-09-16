@@ -715,19 +715,6 @@ export type adminLayerColorsType = typeof adminLayerColors[number];
 export type CustomJurisdictionTypes = NamibiaIrsReportingJurisdiction;
 export type CustomStructureTypes = NamibiaIrsReportingStructure;
 
-export const NamibiaIrsReportingProps = [
-  'foundcoverage',
-  'householdsnotaccessible',
-  'lockedfirst',
-  'lockedmopup',
-  'refusalsfirst',
-  'refusalsmopup',
-  'sprayeffectiveness',
-  'structuresfound',
-  'structuressprayed',
-  'targetcoverage',
-];
-
 export interface NamibiaIrsReportingJurisdiction extends Jurisdiction {
   foundcoverage: number;
   householdsnotaccessible: number;
@@ -890,7 +877,18 @@ export const irsReportingCongif: { [key: string]: IrsReportingCongif } = {
     },
     juridictionTyper: (j: any) => j as NamibiaIrsReportingJurisdiction,
     structureTyper: (s: any) => s as NamibiaIrsReportingStructure,
-    sliceProps: NamibiaIrsReportingProps,
+    sliceProps: [
+      'foundcoverage',
+      'householdsnotaccessible',
+      'lockedfirst',
+      'lockedmopup',
+      'refusalsfirst',
+      'refusalsmopup',
+      'sprayeffectiveness',
+      'structuresfound',
+      'structuressprayed',
+      'targetcoverage',
+    ],
   },
 };
 /* tslint:enable:object-literal-sort-keys */
