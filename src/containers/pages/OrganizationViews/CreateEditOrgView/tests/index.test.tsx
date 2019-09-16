@@ -28,7 +28,7 @@ describe('src/containers/pages/NewTeamView', () => {
         path: `${EDIT_TEAM_URL}/:id`,
         url: `${EDIT_TEAM_URL}/teamId`,
       },
-      team: fixtures.team1,
+      team: fixtures.organization1,
     };
     const wrapper = mount(
       <Router history={history}>

@@ -30,8 +30,8 @@ describe('src/containers/pages/TeamAssignment', () => {
         path: `${SINGLE_TEAM_URL}/:id`,
         url: `${SINGLE_TEAM_URL}/teamId`,
       },
-      team: fixtures.team1,
-      teamMembers: fixtures.teamMembers,
+      team: fixtures.organization1,
+      teamMembers: fixtures.organizationMembers,
     };
 
     shallow(
@@ -53,8 +53,8 @@ describe('src/containers/pages/TeamAssignment', () => {
         path: `${SINGLE_TEAM_URL}/:id`,
         url: `${SINGLE_TEAM_URL}/teamId`,
       },
-      team: fixtures.team1,
-      teamMembers: [fixtures.teamMember1],
+      team: fixtures.organization1,
+      teamMembers: [fixtures.organizationMember1],
     };
 
     const wrapper = mount(
@@ -104,7 +104,7 @@ describe('src/containers/pages/TeamAssignment', () => {
       </Provider>
     );
     const passedProps = wrapper.find(SingleTeamView).props() as any;
-    expect(passedProps.team).toEqual(fixtures.team1);
-    expect(passedProps.teamMembers).toEqual([fixtures.teamMember1]);
+    expect(passedProps.team).toEqual(fixtures.organization1);
+    expect(passedProps.teamMembers).toEqual([fixtures.organizationMember1]);
   });
 });

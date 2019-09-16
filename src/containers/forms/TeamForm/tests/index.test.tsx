@@ -31,7 +31,7 @@ describe('containers/forms/Teamform', () => {
 
   it('renders fields correctly in edit mode', () => {
     const props = {
-      initialValues: fixtures.team1,
+      initialValues: fixtures.organization1,
     };
     const createModeWrapper = mount(<TeamForm />);
     const editModewrapper = mount(<TeamForm {...props} />);

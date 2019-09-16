@@ -158,8 +158,10 @@ const mapStateToProps = (
 ): MapStateToProps => {
   let teamId = ownProps.match.params.id;
   teamId = teamId ? teamId : '';
-  const team = fixtures.teams.filter(tm => tm.identifier === teamId)[0]; // getTeamById(state, teamId);
-  const teamMembers = fixtures.teamMembers.filter(teamMember => teamMember.team === team.name);
+  const team = fixtures.organizations.filter(tm => tm.identifier === teamId)[0]; // getTeamById(state, teamId);
+  const teamMembers = fixtures.organizationMembers.filter(
+    teamMember => teamMember.team === team.name
+  );
   return {
     team,
     teamMembers,

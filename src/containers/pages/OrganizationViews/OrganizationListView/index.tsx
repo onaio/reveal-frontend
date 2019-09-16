@@ -1,4 +1,4 @@
-/** Team Assignment component for listing all teams */
+/** Organization Assignment component for listing all organizations */
 import ListView from '@onaio/list-view';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import * as React from 'react';
@@ -25,31 +25,31 @@ import {
   TEAM_LIST_URL,
   TEAMS,
 } from '../../../../constants';
-import teamsReducer, {
+import organizationsReducer, {
   Organization,
-  reducerName as teamsReducerName,
+  reducerName as organizationsReducerName,
 } from '../../../../store/ducks/organizations';
 import * as fixtures from '../../../../store/ducks/tests/fixtures';
 import './index.css';
 
-reducerRegistry.register(teamsReducerName, teamsReducer);
+reducerRegistry.register(organizationsReducerName, organizationsReducer);
 
-/** interface to describe our custom created SingleTeamView props */
+/** interface to describe our custom created SingleOrganizationView props */
 interface OrganizationsListViewProps {
-  teams: Organization[];
+  organizations: Organization[];
 }
 
-/** the default props for SingleTeamView */
+/** the default props for SingleOrganizationView */
 const defaultListViewProps: OrganizationsListViewProps = {
-  teams: [],
+  organizations: [],
 };
 
-/** the interface for all SingleTeamView props  */
+/** the interface for all SingleOrganizationView props  */
 export type OrgsListViewPropsType = OrganizationsListViewProps & RouteComponentProps;
 
 const OrganizationListView = (props: OrgsListViewPropsType) => {
-  const { teams } = props;
-  if (teams.length < 1) {
+  const { organizations } = props;
+  if (organizations.length < 1) {
     return <Loading />;
   }
   const breadcrumbProps: BreadCrumbProps = {
@@ -71,21 +71,21 @@ const OrganizationListView = (props: OrgsListViewPropsType) => {
   const inlineSearchFormProps: InlineSearchFormProps = {
     handleSubmit,
     inputId: 'search',
-    inputPlaceholder: 'Search teams',
+    inputPlaceholder: 'Search organizations',
   };
 
   const listViewProps = {
-    data: teams.map((team: Organization) => {
+    data: organizations.map((organization: Organization) => {
       return [
-        <Link to={`${SINGLE_TEAM_URL}/${team.identifier}`} key={team.identifier}>
-          {team.identifier}
+        <Link to={`${SINGLE_TEAM_URL}/${organization.identifier}`} key={organization.identifier}>
+          {organization.identifier}
         </Link>,
-        <Link to={`${SINGLE_TEAM_URL}/${team.identifier}`} key={team.identifier}>
-          {team.name}
+        <Link to={`${SINGLE_TEAM_URL}/${organization.identifier}`} key={organization.identifier}>
+          {organization.name}
         </Link>,
       ];
     }),
-    headerItems: ['#', 'Team Name', 'Area'],
+    headerItems: ['#', 'Organization Name', 'Area'],
     tableClass: 'table table-bordered',
   };
 
@@ -97,13 +97,13 @@ const OrganizationListView = (props: OrgsListViewPropsType) => {
   return (
     <div>
       <Helmet>
-        <title>{`${TEAMS}(${teams.length})`}</title>
+        <title>{`${TEAMS}(${organizations.length})`}</title>
       </Helmet>
       <HeaderBreadcrumb {...breadcrumbProps} />
       <Row id="header-row">
         <Col className="xs">
-          {/** ? Should this be the number of teams in store or in the api */}
-          <h2 className="mb-3 mt-5 page-title">{`${TEAMS}(${teams.length})`}</h2>
+          {/** ? Should this be the number of organizations in store or in the api */}
+          <h2 className="mb-3 mt-5 page-title">{`${TEAMS}(${organizations.length})`}</h2>
         </Col>
         <Col className="xs">
           <LinkAsButton {...linkAsButtonProps} />
@@ -119,13 +119,13 @@ const OrganizationListView = (props: OrgsListViewPropsType) => {
 
 OrganizationListView.defaultProps = defaultListViewProps;
 
-export { OrganizationListView as TeamListView };
+export { OrganizationListView };
 
 // connect to store
 
 const mapStateToProps = (state: Partial<Store>) => {
   return {
-    teams: fixtures.teams, // getTeamsArray(state),
+    organizations: fixtures.organizations, // getOrganizationsArray(state),
   };
 };
 

@@ -93,7 +93,7 @@ const mapStateToprops = (
 ): DispatchedProps => {
   let teamId = ownProps.match.params.id;
   teamId = teamId ? teamId : '';
-  const team = fixtures.teams.filter((tm: Organization) => tm.identifier === teamId)[0];
+  const team = fixtures.organizations.filter((tm: Organization) => tm.identifier === teamId)[0];
   return { team };
 };
 

@@ -1175,7 +1175,7 @@ export const CompleteRoutineTableProps = {
   useDrillDownTrProps: false,
 };
 
-export const team1: Organization = {
+export const organization1: Organization = {
   active: true,
   id: 1,
   identifier: 'fcc19470-d599-11e9-bb65-2a2ae2dbcce4',
@@ -1191,14 +1191,14 @@ export const team1: Organization = {
   },
 };
 
-export const team2: Organization = {
+export const organization2: Organization = {
   active: true,
   id: 3,
   identifier: '4c506c98-d3a9-11e9-bb65-2a2ae2dbcce4',
   name: 'Demo Team',
 };
 
-export const team3: Organization = {
+export const organization3: Organization = {
   active: true,
   id: 2,
   identifier: 'd23f7350-d406-11e9-bb65-2a2ae2dbcce4',
@@ -1215,20 +1215,20 @@ export const team3: Organization = {
   },
 };
 
-export const teams: Organization[] = [team1, team2];
+export const organizations: Organization[] = [organization1, organization2];
 
-export const teamMember1 = {
+export const organizationMember1 = {
   identifier: '1',
   name: 'Sam Sam',
   team: 'User_45',
   username: 'User_45_1',
 };
 
-export const teamMember2 = {
+export const organizationMember2 = {
   identifier: '2',
   name: 'Joe',
   team: 'South',
   username: 'Bob',
 };
 
-export const teamMembers = [teamMember1, teamMember2];
+export const organizationMembers = [organizationMember1, organizationMember2];

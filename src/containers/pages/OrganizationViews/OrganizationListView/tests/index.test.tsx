@@ -26,7 +26,7 @@ describe('src/containers/TeamAssignment/TeamListview/', () => {
         path: TEAM_LIST_URL,
         url: TEAM_LIST_URL,
       },
-      teams: fixtures.teams,
+      teams: fixtures.organizations,
     };
     const wrapper = mount(
       <Router history={history}>
@@ -62,7 +62,7 @@ describe('src/containers/TeamAssignment/TeamListview/', () => {
         path: TEAM_LIST_URL,
         url: TEAM_LIST_URL,
       },
-      teams: fixtures.teams,
+      teams: fixtures.organizations,
     };
     const wrapper = mount(
       <Router history={history}>
@@ -102,7 +102,7 @@ describe('src/containers/TeamAssignment/TeamListview/', () => {
 
     // check that store data is part of passed props
     const foundProps = wrapper.find('TeamListView').props() as any;
-    expect(foundProps.teams).toEqual(fixtures.teams);
+    expect(foundProps.teams).toEqual(fixtures.organizations);
     wrapper.unmount();
   });
 });
