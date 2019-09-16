@@ -1,10 +1,11 @@
 /** The Single Organizations view page:
  * lists details pertaining to a specific organization
  */
+import { FlexObject } from '@onaio/drill-down-table/dist/types/helpers/utils';
 import ListView from '@onaio/list-view';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import { capitalize, values } from 'lodash';
-import React from 'react';
+import React, { useEffect } from 'react';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
@@ -16,19 +17,26 @@ import HeaderBreadcrumb, {
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
 import {
+  DETAILS,
   EDIT_TEAM,
   EDIT_TEAM_URL,
   HOME,
   HOME_URL,
+  IDENTIFIER,
+  MEMBERS,
+  NAME,
+  OPENSRP_ORGANIZATION_ENDPOINT,
+  ORGANIZATIONS_LABEL,
   SINGLE_TEAM_URL,
-  TEAM,
-  TEAM_DETAILS,
   TEAM_LIST_URL,
-  TEAM_MEMBERS,
   TEAMS,
+  USERNAME,
 } from '../../../../constants';
 import { RouteParams } from '../../../../helpers/utils';
+import { OpenSRPService } from '../../../../services/opensrp';
+import store from '../../../../store';
 import organizationsReducer, {
+  fetchOrganizations,
   getOrganizationById,
   Organization,
   reducerName as organizationsReducerName,
@@ -49,19 +57,23 @@ interface OrganizationMember {
 interface SingleOrganizationViewProps {
   organization: Organization | null;
   organizationMembers: OrganizationMember[];
+  serviceClass: typeof OpenSRPService;
+  fetchOrganizationsAction: typeof fetchOrganizations;
 }
 
 /** the default props for SingleOrganizationView */
 const defaultProps: SingleOrganizationViewProps = {
+  fetchOrganizationsAction: fetchOrganizations,
   organization: null,
   organizationMembers: [],
+  serviceClass: OpenSRPService,
 };
 
 /** the interface for all SingleOrganizationView props  */
 type SingleOrgViewPropsType = SingleOrganizationViewProps & RouteComponentProps<RouteParams>;
 
 const SingleOrganizationView = (props: SingleOrgViewPropsType) => {
-  const { organization, organizationMembers } = props;
+  const { organization, organizationMembers, serviceClass, fetchOrganizationsAction } = props;
 
   // props //
 
@@ -72,8 +84,8 @@ const SingleOrganizationView = (props: SingleOrgViewPropsType) => {
   };
   const breadcrumbProps: BreadCrumbProps = {
     currentPage: {
-      label: organization.identifier,
-      url: `${SINGLE_TEAM_URL}/${organization.identifier}`,
+      label: organization!.identifier,
+      url: `${SINGLE_TEAM_URL}/${organization!.identifier}`,
     },
     pages: [],
   };
@@ -83,20 +95,34 @@ const SingleOrganizationView = (props: SingleOrgViewPropsType) => {
   };
   breadcrumbProps.pages = [homePage, basePage];
 
-  // listViewProps for organization members
+  // listViewProps for organization members // TODO - This is placeholder code
   const listViewProps = {
     data: organizationMembers.map((organizationMember: any) => values(organizationMember)),
-    headerItems: ['#', 'Username', 'Name', 'Organization'],
+    headerItems: [USERNAME, NAME, ORGANIZATIONS_LABEL],
     tableClass: 'table table-bordered',
   };
 
   // LinkAsButton Props
   const linkAsButtonProps = {
     text: EDIT_TEAM,
-    to: `${EDIT_TEAM_URL}/${organization.identifier}`,
+    to: `${EDIT_TEAM_URL}/${organization!.identifier}`,
   };
 
   // functions / methods //
+  const loadOrganization = async (service: typeof serviceClass, organizationId: string) => {
+    const serve = new service(OPENSRP_ORGANIZATION_ENDPOINT);
+
+    serve
+      .read(organizationId)
+      .then((response: Organization[]) => store.dispatch(fetchOrganizationsAction(response)))
+      .catch((err: Error) => {
+        /** still don't know what we should do with errors */
+      });
+  };
+
+  useEffect(() => {
+    loadOrganization(serviceClass, organization!.identifier);
+  }, []);
 
   if (!organization) {
     return <Loading />;
@@ -105,7 +131,7 @@ const SingleOrganizationView = (props: SingleOrgViewPropsType) => {
   return (
     <div>
       <Helmet>
-        <title>{`${TEAM} - ${organization.name}`}</title>
+        <title>{`${ORGANIZATIONS_LABEL} - ${organization.name}`}</title>
       </Helmet>
       <HeaderBreadcrumb {...breadcrumbProps} />
       <br />
@@ -119,26 +145,25 @@ const SingleOrganizationView = (props: SingleOrgViewPropsType) => {
       </Row>
       <hr />
       <div id="organization-details" className="card mb-3">
-        <div className="card-header">{TEAM_DETAILS}</div>
+        <div className="card-header">{`${ORGANIZATIONS_LABEL} ${DETAILS}`}</div>
         <div className="card-body">
-          {/* the below display should be in 2 cols */}
-          {/* If automated how do we preserve the display order */}
           <Row>
-            {['identifier', 'name', 'description'].map(element => {
-              return (
-                <Col className="col-6" key={element} id={element}>
-                  <Row>
-                    <Col className="text-muted mb-4 col-6">{capitalize(element)}</Col>
-                    <Col className=" mb-4 col-6">{(organization as any)[element]}</Col>
-                  </Row>
-                </Col>
-              );
-            })}
-            {/* */}
+            <Col className="col-6">
+              <Row>
+                <Col className="text-muted mb-4 col-6">{IDENTIFIER}</Col>
+                <Col className=" mb-4 col-6">{organization.identifier}</Col>
+              </Row>
+            </Col>
+            <Col className="col-6">
+              <Row>
+                <Col className="text-muted mb-4 col-6">{NAME}</Col>
+                <Col className=" mb-4 col-6">{organization.name}</Col>
+              </Row>
+            </Col>
           </Row>
         </div>
       </div>
-      <h3 className="mb-3 mt-5">{TEAM_MEMBERS}</h3>
+      <h3 className="mb-3 mt-5">{`${ORGANIZATIONS_LABEL} ${MEMBERS}`}</h3>
       <ListView {...listViewProps} />
     </div>
   );
