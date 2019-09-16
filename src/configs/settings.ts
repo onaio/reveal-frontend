@@ -729,6 +729,7 @@ export interface NamibiaIrsReportingJurisdiction extends Jurisdiction {
   sprayeffectiveness: number;
   structuresfound: number;
   structuressprayed: number;
+  structurestargeted: number;
   targetcoverage: number;
 }
 
@@ -876,6 +877,10 @@ export const irsReportingCongif: { [key: string]: IrsReportingCongif } = {
         }
         return 0;
       },
+      structurestargeted: (datum: FlexObject) => {
+        const structurestargeted = (100 / datum.targetcoverage) * datum.structuressprayed * 100;
+        return Math.round(structurestargeted);
+      },
     },
     indicatorThresholds: {
       GREEN_THRESHOLD: {
@@ -1010,6 +1015,7 @@ export const irsReportingCongif: { [key: string]: IrsReportingCongif } = {
       'sprayeffectiveness',
       'structuresfound',
       'structuressprayed',
+      'structurestargeted',
       'targetcoverage',
     ],
   },
