@@ -1,5 +1,5 @@
-/** The Single Teams view page:
- * lists details pertaining to a specific team
+/** The Single Organizations view page:
+ * lists details pertaining to a specific organization
  */
 import ListView from '@onaio/list-view';
 import reducerRegistry from '@onaio/redux-reducer-registry';
@@ -28,53 +28,52 @@ import {
   TEAMS,
 } from '../../../../constants';
 import { RouteParams } from '../../../../helpers/utils';
-import teamsReducer, {
+import organizationsReducer, {
   getOrganizationById,
   Organization,
-  reducerName as teamsReducerName,
+  reducerName as organizationsReducerName,
 } from '../../../../store/ducks/organizations';
 import * as fixtures from '../../../../store/ducks/tests/fixtures';
 
-reducerRegistry.register(teamsReducerName, teamsReducer);
+reducerRegistry.register(organizationsReducerName, organizationsReducer);
 
-/** Placeholder interface for a teamMember object schema */
-interface TeamMember {
+/** Placeholder interface for a organizationMember object schema */
+interface OrganizationMember {
   identifier: string;
   name: string;
-  team: string;
+  organization: string;
   username: string;
 }
 
-/** interface to describe our custom created SingleTeamView props */
-interface SingleTeamViewProps {
-  team: Organization | null;
-  teamMembers: TeamMember[];
+/** interface to describe props for SingleOrganizationView */
+interface SingleOrganizationViewProps {
+  organization: Organization | null;
+  organizationMembers: OrganizationMember[];
 }
 
-/** the default props for SingleTeamView */
-const defaultProps: SingleTeamViewProps = {
-  team: null,
-  teamMembers: [],
+/** the default props for SingleOrganizationView */
+const defaultProps: SingleOrganizationViewProps = {
+  organization: null,
+  organizationMembers: [],
 };
 
-/** the interface for all SingleTeamView props  */
-type SingleTeamViewPropsType = SingleTeamViewProps & RouteComponentProps<RouteParams>;
+/** the interface for all SingleOrganizationView props  */
+type SingleOrgViewPropsType = SingleOrganizationViewProps & RouteComponentProps<RouteParams>;
 
-const SingleTeamView = (props: SingleTeamViewPropsType) => {
-  const { team, teamMembers } = props;
+const SingleOrganizationView = (props: SingleOrgViewPropsType) => {
+  const { organization, organizationMembers } = props;
 
-  if (!team) {
-    return <Loading />;
-  }
+  // props //
 
+  // props for the header breadcrumb
   const basePage = {
     label: TEAMS,
     url: TEAM_LIST_URL,
   };
   const breadcrumbProps: BreadCrumbProps = {
     currentPage: {
-      label: team.identifier,
-      url: `${SINGLE_TEAM_URL}/${team.identifier}`,
+      label: organization.identifier,
+      url: `${SINGLE_TEAM_URL}/${organization.identifier}`,
     },
     pages: [],
   };
@@ -84,36 +83,42 @@ const SingleTeamView = (props: SingleTeamViewPropsType) => {
   };
   breadcrumbProps.pages = [homePage, basePage];
 
-  // listViewProps for team members
+  // listViewProps for organization members
   const listViewProps = {
-    data: teamMembers.map((teamMember: any) => values(teamMember)),
-    headerItems: ['#', 'Username', 'Name', 'Team'],
+    data: organizationMembers.map((organizationMember: any) => values(organizationMember)),
+    headerItems: ['#', 'Username', 'Name', 'Organization'],
     tableClass: 'table table-bordered',
   };
 
   // LinkAsButton Props
   const linkAsButtonProps = {
     text: EDIT_TEAM,
-    to: `${EDIT_TEAM_URL}/${team.identifier}`,
+    to: `${EDIT_TEAM_URL}/${organization.identifier}`,
   };
+
+  // functions / methods //
+
+  if (!organization) {
+    return <Loading />;
+  }
 
   return (
     <div>
       <Helmet>
-        <title>{`${TEAM} - ${team.name}`}</title>
+        <title>{`${TEAM} - ${organization.name}`}</title>
       </Helmet>
       <HeaderBreadcrumb {...breadcrumbProps} />
       <br />
       <Row>
         <Col className="xs">
-          <h2 className="mb-3 mt-5 page-title">{team.name}</h2>
+          <h2 className="mb-3 mt-5 page-title">{organization.name}</h2>
         </Col>
         <Col className="link-as-button xs">
           <LinkAsButton {...linkAsButtonProps} />
         </Col>
       </Row>
       <hr />
-      <div id="team-details" className="card mb-3">
+      <div id="organization-details" className="card mb-3">
         <div className="card-header">{TEAM_DETAILS}</div>
         <div className="card-body">
           {/* the below display should be in 2 cols */}
@@ -124,7 +129,7 @@ const SingleTeamView = (props: SingleTeamViewPropsType) => {
                 <Col className="col-6" key={element} id={element}>
                   <Row>
                     <Col className="text-muted mb-4 col-6">{capitalize(element)}</Col>
-                    <Col className=" mb-4 col-6">{(team as any)[element]}</Col>
+                    <Col className=" mb-4 col-6">{(organization as any)[element]}</Col>
                   </Row>
                 </Col>
               );
@@ -139,36 +144,36 @@ const SingleTeamView = (props: SingleTeamViewPropsType) => {
   );
 };
 
-SingleTeamView.defualtProps = defaultProps;
+SingleOrganizationView.defaultProps = defaultProps;
 
-export { SingleTeamView };
+export { SingleOrganizationView };
 
 // connecting the component to the store
 
 /** interface to describe props from mapStateToProps */
 interface MapStateToProps {
-  team: Organization | null;
-  teamMembers: any;
+  organization: Organization | null;
+  organizationMembers: any;
 }
 
-/** Maps a prop to a selector from the teams dux module */
+/** Maps a prop to a selector from the organizations dux module */
 const mapStateToProps = (
   state: Partial<Store>,
-  ownProps: SingleTeamViewPropsType
+  ownProps: SingleOrgViewPropsType
 ): MapStateToProps => {
-  let teamId = ownProps.match.params.id;
-  teamId = teamId ? teamId : '';
-  const team = fixtures.organizations.filter(tm => tm.identifier === teamId)[0]; // getTeamById(state, teamId);
-  const teamMembers = fixtures.organizationMembers.filter(
-    teamMember => teamMember.team === team.name
+  let organizationId = ownProps.match.params.id;
+  organizationId = organizationId ? organizationId : '';
+  const organization = fixtures.organizations.filter(tm => tm.identifier === organizationId)[0]; // getOrganizationById(state, organizationId);
+  const organizationMembers = fixtures.organizationMembers.filter(
+    organizationMember => organizationMember.organization === organization.name
   );
   return {
-    team,
-    teamMembers,
+    organization,
+    organizationMembers,
   };
 };
 
 /** The connected component */
-const ConnectedSingleTeamView = connect(mapStateToProps)(SingleTeamView);
+const ConnectedSingleOrgView = connect(mapStateToProps)(SingleOrganizationView);
 
-export default ConnectedSingleTeamView;
+export default ConnectedSingleOrgView;

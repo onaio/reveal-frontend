@@ -9,7 +9,7 @@ import { Router } from 'react-router';
 import { SINGLE_TEAM_URL, TEAM } from '../../../../../constants';
 import store from '../../../../../store';
 import * as fixtures from '../../../../../store/ducks/tests/fixtures';
-import ConnectedSingleTeamView, { SingleTeamView } from '../../SingleOrganizationView';
+import ConnectedSingleOrgView, { SingleOrganizationView } from '../../SingleOrganizationView';
 
 const history = createBrowserHistory();
 
@@ -36,7 +36,7 @@ describe('src/containers/pages/TeamAssignment', () => {
 
     shallow(
       <Router history={history}>
-        <SingleTeamView {...props} />
+        <SingleOrganizationView {...props} />
       </Router>
     );
   });
@@ -59,7 +59,7 @@ describe('src/containers/pages/TeamAssignment', () => {
 
     const wrapper = mount(
       <Router history={history}>
-        <SingleTeamView {...props} />
+        <SingleOrganizationView {...props} />
       </Router>
     );
 
@@ -99,11 +99,11 @@ describe('src/containers/pages/TeamAssignment', () => {
     const wrapper = mount(
       <Provider store={store}>
         <Router history={history}>
-          <ConnectedSingleTeamView {...props} />
+          <ConnectedSingleOrgView {...props} />
         </Router>
       </Provider>
     );
-    const passedProps = wrapper.find(SingleTeamView).props() as any;
+    const passedProps = wrapper.find(SingleOrganizationView).props() as any;
     expect(passedProps.team).toEqual(fixtures.organization1);
     expect(passedProps.teamMembers).toEqual([fixtures.organizationMember1]);
   });
