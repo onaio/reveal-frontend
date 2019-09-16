@@ -44,7 +44,6 @@ import {
   fillLayerConfig,
   irsReportingCongif,
   lineLayerConfig,
-  ReportingSidebarRow,
 } from '../../../../../configs/settings';
 import ProgressBar from '../../../../../helpers/ProgressBar';
 import jurisdictionReducer, {
@@ -107,12 +106,10 @@ export const defaultIrsReportMapProps: IrsReportMapProps = {
 /** Interface to describe IRS Report Map component state */
 export interface IrsReportMapState {
   gisidaWrapperProps: GisidaProps | null;
-  sidebarIndicatorRowProps: ReportingSidebarRow[];
 }
 /** Interface to describe IRS Report Map component state */
 export const defaultIrsReportMapState: IrsReportMapState = {
   gisidaWrapperProps: null,
-  sidebarIndicatorRowProps: [],
 };
 
 /** Reporting Map for Single Active IRS Plan-Jurisdiction */
@@ -156,15 +153,6 @@ class IrsReportMap extends React.Component<
     ) {
       fetchJurisdictionsActionCreator([jurisdictionById]);
     }
-
-    const config =
-      irsReportingCongif &&
-      irsReportingCongif[SUPERSET_IRS_REPORTING_JURISDICTIONS_DATA_SLICE] &&
-      irsReportingCongif[SUPERSET_IRS_REPORTING_JURISDICTIONS_DATA_SLICE];
-    const { sidebarPropsBuilder } = config;
-    const sidebarIndicatorRowProps = sidebarPropsBuilder
-      ? sidebarPropsBuilder(jurisdictionById)
-      : [];
 
     /** define superset filter params for jurisdictions */
     const structuresParams = superset.getFormData(3000, [
@@ -233,12 +221,12 @@ class IrsReportMap extends React.Component<
     // define Gisida Wrapper pros
     const gisidaWrapperProps = this.getGisidaWrapperProps(jurisdictionById, structures);
 
-    this.setState({ gisidaWrapperProps, sidebarIndicatorRowProps });
+    this.setState({ gisidaWrapperProps });
   }
 
   public render() {
     const { jurisdictionById, planById, planId } = this.props;
-    const { gisidaWrapperProps, sidebarIndicatorRowProps } = this.state;
+    const { gisidaWrapperProps } = this.state;
     // Build page-level Breadcrumbs
     const breadCrumbProps: BreadCrumbProps = {
       currentPage: {
@@ -259,6 +247,15 @@ class IrsReportMap extends React.Component<
         },
       ],
     };
+
+    const { indicatorThresholds } =
+      irsReportingCongif && irsReportingCongif[SUPERSET_IRS_REPORTING_JURISDICTIONS_DATA_SLICE];
+
+    const config =
+      irsReportingCongif && irsReportingCongif[SUPERSET_IRS_REPORTING_JURISDICTIONS_DATA_SLICE];
+    const { sidebarPropsBuilder } = config;
+    const sidebarIndicatorRowProps =
+      sidebarPropsBuilder && jurisdictionById ? sidebarPropsBuilder(jurisdictionById) : [];
 
     return (
       <div className="mb-5">
@@ -292,7 +289,10 @@ class IrsReportMap extends React.Component<
                 <div className="responseItem" key={i}>
                   <h6>{row.title}</h6>
                   <p className="indicator-description">{row.description}</p>
-                  <ProgressBar value={row.value} />
+                  <ProgressBar
+                    indicatorThresholds={indicatorThresholds || null}
+                    value={row.value}
+                  />
                   <p className="indicator-breakdown">
                     Progress: {row.numerator} of {row.denominator} structures ({row.value}%)
                   </p>
