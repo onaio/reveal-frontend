@@ -156,18 +156,22 @@ export function renderClassificationRow(rowObject: FlexObject) {
 /** Determines the color of a indicator based on cell.value and threshold configs
  * @param {CellInfo} cell - the ReactTable.Cell being rendered in an indicator drilldown table
  * @param {IndicatorThresholds} thresholds - the threshold configuration from settings
+ * @param {boolean} doMakeDecimal -  determines if the cell value needs to be divided by 100
  * @returns {string} - the value coorisponding the cell.value according to the reporting config
  */
-export function getThresholdColor(cell: CellInfo, thresholds: IndicatorThresholds) {
+export function getThresholdColor(
+  cell: CellInfo,
+  thresholds: IndicatorThresholds,
+  doMakeDecimal: boolean = false
+) {
   // get the keys of the thresholds and sort them by value
   const thresholdKeys = keys(thresholds).sort((a, b) => thresholds[a].value - thresholds[b].value);
+  const value = doMakeDecimal ? cell.value / 100 : cell.value;
 
   // loop through thresholds and evaluate value against cell.value
   let k: string = '';
   for (k of thresholdKeys) {
-    if (
-      thresholds[k].orEquals ? cell.value <= thresholds[k].value : cell.value < thresholds[k].value
-    ) {
+    if (thresholds[k].orEquals ? value <= thresholds[k].value : value < thresholds[k].value) {
       return thresholds[k].color;
     }
   }
