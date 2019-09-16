@@ -7,9 +7,9 @@ import { Router } from 'react-router';
 import { TEAM_LIST_URL } from '../../../../../constants';
 import store from '../../../../../store';
 import * as fixtures from '../../../../../store/ducks/tests/fixtures';
-import ConnectedTeamListView, {
+import ConnectedOrgsListView, {
+  OrgsListViewPropsType,
   TeamListView,
-  TeamListViewPropsType,
 } from '../../OrganizationListView';
 
 const history = createBrowserHistory();
@@ -17,7 +17,7 @@ const history = createBrowserHistory();
 describe('src/containers/TeamAssignment/TeamListview/', () => {
   it('a  dumb TeamListView correctly', () => {
     const mock: any = jest.fn();
-    const props: TeamListViewPropsType = {
+    const props: OrgsListViewPropsType = {
       history,
       location: mock,
       match: {
@@ -53,7 +53,7 @@ describe('src/containers/TeamAssignment/TeamListview/', () => {
   it('E2E flow for searching a team', () => {
     // questions: how should search be done(probably initiate an api call)
     const mock: any = jest.fn();
-    const props: TeamListViewPropsType = {
+    const props: OrgsListViewPropsType = {
       history,
       location: mock,
       match: {
@@ -95,7 +95,7 @@ describe('src/containers/TeamAssignment/TeamListview/', () => {
     const wrapper = mount(
       <Provider store={store}>
         <Router history={history}>
-          <ConnectedTeamListView {...props} />
+          <ConnectedOrgsListView {...props} />
         </Router>
       </Provider>
     );

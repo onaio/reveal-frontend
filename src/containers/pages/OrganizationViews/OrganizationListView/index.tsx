@@ -35,19 +35,19 @@ import './index.css';
 reducerRegistry.register(teamsReducerName, teamsReducer);
 
 /** interface to describe our custom created SingleTeamView props */
-interface TeamListViewProps {
+interface OrganizationsListViewProps {
   teams: Organization[];
 }
 
 /** the default props for SingleTeamView */
-const defaultListViewProps: TeamListViewProps = {
+const defaultListViewProps: OrganizationsListViewProps = {
   teams: [],
 };
 
 /** the interface for all SingleTeamView props  */
-export type TeamListViewPropsType = TeamListViewProps & RouteComponentProps;
+export type OrgsListViewPropsType = OrganizationsListViewProps & RouteComponentProps;
 
-const TeamListView = (props: TeamListViewPropsType) => {
+const OrganizationListView = (props: OrgsListViewPropsType) => {
   const { teams } = props;
   if (teams.length < 1) {
     return <Loading />;
@@ -83,8 +83,6 @@ const TeamListView = (props: TeamListViewPropsType) => {
         <Link to={`${SINGLE_TEAM_URL}/${team.identifier}`} key={team.identifier}>
           {team.name}
         </Link>,
-        ,
-        team.jurisdictions,
       ];
     }),
     headerItems: ['#', 'Team Name', 'Area'],
@@ -119,9 +117,9 @@ const TeamListView = (props: TeamListViewPropsType) => {
   );
 };
 
-TeamListView.defaultProps = defaultListViewProps;
+OrganizationListView.defaultProps = defaultListViewProps;
 
-export { TeamListView };
+export { OrganizationListView as TeamListView };
 
 // connect to store
 
@@ -131,6 +129,7 @@ const mapStateToProps = (state: Partial<Store>) => {
   };
 };
 
-const ConnectedTeamListView = connect(mapStateToProps)(TeamListView);
+/** connects the organization list view to store */
+const ConnectedOrgsListView = connect(mapStateToProps)(OrganizationListView);
 
-export default ConnectedTeamListView;
+export default ConnectedOrgsListView;
