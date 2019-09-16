@@ -69,6 +69,7 @@ import tasksReducer, {
   Task,
 } from '../../../../../store/ducks/tasks';
 import './../../../../../helpers/handlers/handlers.css';
+import './style.css';
 
 /** register the plans reducer */
 reducerRegistry.register(jurisdictionReducerName, jurisdictionReducer);

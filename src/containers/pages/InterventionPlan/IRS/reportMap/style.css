@@ -1,0 +1,13 @@
+.mapSidebar .responseItem .indicator-description {
+  font-size: 0.625rem;
+  margin-bottom: 0.5rem;
+}
+
+.mapSidebar .responseItem .indicator-breakdown {
+  font-size: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.mapSidebar .responseItem .progress {
+  margin-bottom: 0.75rem !important;
+}
