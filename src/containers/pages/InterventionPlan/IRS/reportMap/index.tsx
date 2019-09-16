@@ -37,12 +37,10 @@ import Loading from '../../../../../components/page/Loading';
 import {
   SUPERSET_IRS_REPORTING_JURISDICTIONS_DATA_SLICE,
   SUPERSET_IRS_REPORTING_STRUCTURES_DATA_SLICE,
-  SUPERSET_STRUCTURES_SLICE,
   SUPERSET_TASKS_SLICE,
 } from '../../../../../configs/env';
 import {
   circleLayerConfig,
-  extractReportingStructure,
   fillLayerConfig,
   irsReportingCongif,
   lineLayerConfig,
@@ -311,11 +309,26 @@ class IrsReportMap extends React.Component<
 
     // Define structures layers
     let structuresLayers: FlexObject[] = [];
-    if (structures) {
+
+    if (
+      structures &&
+      irsReportingCongif &&
+      irsReportingCongif[SUPERSET_IRS_REPORTING_JURISDICTIONS_DATA_SLICE] &&
+      irsReportingCongif[SUPERSET_IRS_REPORTING_JURISDICTIONS_DATA_SLICE].structuresLayerBuilder
+    ) {
+      const { structuresLayerBuilder } = irsReportingCongif[
+        SUPERSET_IRS_REPORTING_JURISDICTIONS_DATA_SLICE
+      ];
+      if (structuresLayerBuilder) {
+        structuresLayers = structuresLayerBuilder(structures);
+      }
+    } else if (structures) {
       structuresLayers = this.getDefaultStructuresLayers(structures);
     }
 
-    layers.concat(structuresLayers);
+    for (const structureLayer of structuresLayers) {
+      layers.push(structureLayer);
+    }
 
     // define bounds for gisida map position
     const bounds = GeojsonExtent({
