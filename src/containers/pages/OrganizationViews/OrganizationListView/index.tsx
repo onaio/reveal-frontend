@@ -1,7 +1,7 @@
 /** Organization Assignment component for listing all organizations */
 import ListView from '@onaio/list-view';
 import reducerRegistry from '@onaio/redux-reducer-registry';
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
@@ -17,15 +17,24 @@ import HeaderBreadcrumb, {
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
 import {
+  AREA,
   CREATE_TEAM_URL,
   HOME,
   HOME_URL,
+  NAME,
   NEW_TEAM,
+  OPENSRP_ORGANIZATION_ENDPOINT,
+  ORGANIZATION_LABEL,
+  ORGANIZATIONS_LABEL,
+  SEARCH,
   SINGLE_TEAM_URL,
   TEAM_LIST_URL,
-  TEAMS,
 } from '../../../../constants';
+import { OpenSRPService } from '../../../../services/opensrp';
+import store from '../../../../store';
 import organizationsReducer, {
+  fetchOrganizations,
+  getOrganizationsArray,
   Organization,
   reducerName as organizationsReducerName,
 } from '../../../../store/ducks/organizations';
@@ -36,25 +45,34 @@ reducerRegistry.register(organizationsReducerName, organizationsReducer);
 
 /** interface to describe our custom created SingleOrganizationView props */
 interface OrganizationsListViewProps {
+  fetchOrganizationsAction: typeof fetchOrganizations;
   organizations: Organization[];
+  serviceClass: typeof OpenSRPService;
 }
 
 /** the default props for SingleOrganizationView */
 const defaultListViewProps: OrganizationsListViewProps = {
+  fetchOrganizationsAction: fetchOrganizations,
   organizations: [],
+  serviceClass: OpenSRPService,
 };
 
 /** the interface for all SingleOrganizationView props  */
 export type OrgsListViewPropsType = OrganizationsListViewProps & RouteComponentProps;
 
 const OrganizationListView = (props: OrgsListViewPropsType) => {
-  const { organizations } = props;
-  if (organizations.length < 1) {
+  const { organizations, serviceClass, fetchOrganizationsAction } = props;
+
+  // break early if organizations are absent
+  const isLoading = organizations.length < 1;
+  if (isLoading) {
     return <Loading />;
   }
+
+  /** props to pass to the headerBreadCrumb */
   const breadcrumbProps: BreadCrumbProps = {
     currentPage: {
-      label: TEAMS,
+      label: ORGANIZATIONS_LABEL,
       url: TEAM_LIST_URL,
     },
     pages: [],
@@ -65,45 +83,64 @@ const OrganizationListView = (props: OrgsListViewPropsType) => {
   };
   breadcrumbProps.pages = [homePage];
 
-  // tslint:disable-next-line: no-empty
-  function handleSubmit(event: React.FormEvent) {}
+  // props for the inline search form, used to search an organization via an api call
 
   const inlineSearchFormProps: InlineSearchFormProps = {
     handleSubmit,
     inputId: 'search',
-    inputPlaceholder: 'Search organizations',
+    inputPlaceholder: `${SEARCH} ${ORGANIZATION_LABEL}`,
   };
 
   const listViewProps = {
     data: organizations.map((organization: Organization) => {
       return [
         <Link to={`${SINGLE_TEAM_URL}/${organization.identifier}`} key={organization.identifier}>
-          {organization.identifier}
-        </Link>,
-        <Link to={`${SINGLE_TEAM_URL}/${organization.identifier}`} key={organization.identifier}>
           {organization.name}
         </Link>,
       ];
     }),
-    headerItems: ['#', 'Organization Name', 'Area'],
+    headerItems: [`${ORGANIZATION_LABEL} ${NAME}`, `${AREA}`],
     tableClass: 'table table-bordered',
   };
 
+  // props for the link displayed as button: used to add new organization
   const linkAsButtonProps = {
     text: NEW_TEAM,
     to: CREATE_TEAM_URL,
   };
 
+  // functions/methods
+
+  /** function to handle the submit on the inline search form */
+  // tslint:disable-next-line: no-empty
+  function handleSubmit(event: React.FormEvent) {}
+
+  const loadOrganizations = async (service: typeof serviceClass) => {
+    const serve = new service(OPENSRP_ORGANIZATION_ENDPOINT);
+    serve
+      .list()
+      .then((response: Organization[]) => store.dispatch(fetchOrganizationsAction(response)))
+      .catch((err: Error) => {
+        /** TODO - find something to do with error */
+      });
+  };
+
+  useEffect(() => {
+    loadOrganizations(serviceClass);
+  }, []);
+
   return (
     <div>
       <Helmet>
-        <title>{`${TEAMS}(${organizations.length})`}</title>
+        <title>{`${ORGANIZATION_LABEL}(${organizations.length})`}</title>
       </Helmet>
       <HeaderBreadcrumb {...breadcrumbProps} />
       <Row id="header-row">
         <Col className="xs">
           {/** ? Should this be the number of organizations in store or in the api */}
-          <h2 className="mb-3 mt-5 page-title">{`${TEAMS}(${organizations.length})`}</h2>
+          <h2 className="mb-3 mt-5 page-title">{`${ORGANIZATION_LABEL}(${
+            organizations.length
+          })`}</h2>
         </Col>
         <Col className="xs">
           <LinkAsButton {...linkAsButtonProps} />
@@ -125,7 +162,7 @@ export { OrganizationListView };
 
 const mapStateToProps = (state: Partial<Store>) => {
   return {
-    organizations: fixtures.organizations, // getOrganizationsArray(state),
+    organizations: getOrganizationsArray(state),
   };
 };
 

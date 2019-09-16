@@ -132,6 +132,17 @@ export const TEAM_DETAILS = 'Team Details';
 export type TEAM_DETAILS = typeof TEAM_DETAILS;
 export const TEAM_MEMBERS = 'Team Members';
 export type TEAM_MEMBERS = typeof TEAM_MEMBERS;
+export const ORGANIZATION = 'Organization';
+export type ORGANIZATION = typeof ORGANIZATION;
+export const SEARCH = 'Search';
+export type SEARCH = typeof SEARCH;
+export const AREA = 'Area';
+export type AREA = typeof AREA;
+// TODO ? - do the below 2 belong here or ins a settings file
+export const ORGANIZATION_LABEL = TEAM;
+export type ORGANIZATION_LABEL = typeof ORGANIZATION_LABEL;
+export const ORGANIZATIONS_LABEL = TEAMS;
+export type ORGANIZATIONS_LABEL = typeof ORGANIZATIONS_LABEL;
 
 export const JURISDICTION_ID = 'jurisdiction_id';
 export type JURISDICTION_ID = typeof JURISDICTION_ID;
