@@ -217,12 +217,10 @@ class IrsReportMap extends React.Component<
       ],
     };
 
-    const { indicatorThresholds } =
-      irsReportingCongif && irsReportingCongif[SUPERSET_IRS_REPORTING_JURISDICTIONS_DATA_SLICE];
-
     const config =
-      irsReportingCongif && irsReportingCongif[SUPERSET_IRS_REPORTING_JURISDICTIONS_DATA_SLICE];
-    const { sidebarPropsBuilder } = config;
+      (irsReportingCongif && irsReportingCongif[SUPERSET_IRS_REPORTING_JURISDICTIONS_DATA_SLICE]) ||
+      {};
+    const { indicatorThresholds, sidebarPropsBuilder } = config;
     const sidebarIndicatorRowProps =
       sidebarPropsBuilder && jurisdictionById ? sidebarPropsBuilder(jurisdictionById) : [];
 
