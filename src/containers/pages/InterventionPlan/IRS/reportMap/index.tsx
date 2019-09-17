@@ -324,11 +324,16 @@ class IrsReportMap extends React.Component<
       layers.push(structureLayer);
     }
 
+    // define feature collection of all geoms being rendered
+    const featureCollection =
+      !structures || !structures.features || !structures.features.length
+        ? { features: [jurisdictionById.geojson], type: 'FeatureCollection' }
+        : {
+            ...structures,
+            features: [...structures.features, jurisdictionById.geojson],
+          };
     // define bounds for gisida map position
-    const bounds = GeojsonExtent({
-      features: [jurisdictionById.geojson],
-      type: 'FeatureCollection',
-    });
+    const bounds = GeojsonExtent(featureCollection);
 
     // define the actual props object for GisidaWrapper
     const gisidaWrapperProps: GisidaProps = {
