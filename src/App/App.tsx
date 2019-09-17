@@ -42,9 +42,9 @@ import NewPlan from '../containers/pages/InterventionPlan/NewPlan/General';
 import NewIRSPlan from '../containers/pages/InterventionPlan/NewPlan/IRS';
 import ConnectedPlanDefinitionList from '../containers/pages/InterventionPlan/PlanDefinitionList';
 import ConnectedUpdatePlan from '../containers/pages/InterventionPlan/UpdatePlan';
-import ConnectedCreateEditTeamView from '../containers/pages/TeamAssignment/CreateEditTeamView';
-import ConnectedSingleTeamView from '../containers/pages/TeamAssignment/SingleTeamView';
-import ConnectedTeamListView from '../containers/pages/TeamAssignment/TeamListView';
+import ConnectedCreateEditTeamView from '../containers/pages/OrganizationViews/CreateEditOrgView';
+import ConnectedOrgsListView from '../containers/pages/OrganizationViews/OrganizationListView';
+import ConnectedOrgTeamView from '../containers/pages/OrganizationViews/SingleOrganizationView';
 import { oAuthUserInfoGetter } from '../helpers/utils';
 
 library.add(faMap);
@@ -173,13 +173,13 @@ class App extends Component {
                 disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                 exact={true}
                 path={`${SINGLE_TEAM_URL}/:id`}
-                component={ConnectedSingleTeamView}
+                component={ConnectedOrgTeamView}
               />
               <ConnectedPrivateRoute
                 disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                 exact={true}
                 path={TEAM_LIST_URL}
-                component={ConnectedTeamListView}
+                component={ConnectedOrgsListView}
               />
               {/* tslint:disable jsx-no-lambda */}
               <Route
