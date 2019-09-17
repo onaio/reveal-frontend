@@ -11,6 +11,19 @@
   border-color: #cccccc;
 }
 
+.btn-outline-green.btn-intervention {
+  color: #007742;
+  background-color: #ffffff;
+  border: 2px solid #007742;
+  border-radius: 5px;
+  box-shadow: 0 1px 3px 0 #d7d7e0;
+}
+
+.btn-outline-green:hover {
+  color: #fff;
+  background-color: #007742;
+}
+
 .welcome-box {
   margin-top: 75px;
 }
