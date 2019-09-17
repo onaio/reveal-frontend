@@ -761,7 +761,7 @@ export interface IrsReportingCongif {
 }
 /* tslint:disable:object-literal-sort-keys */
 export const irsReportingCongif: { [key: string]: IrsReportingCongif } = {
-  '550': {
+  [process.env.REACT_APP_SUPERSET_IRS_REPORTING_JURISDICTIONS_DATA_SLICE_NA as string]: {
     drilldownColumnGetters: {
       structuresfound: () => ({
         Header: `Structures Found`,
