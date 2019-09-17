@@ -4,7 +4,7 @@ exports[`components/ConnectedHeader renders the ConnectedHeader component 1`] = 
 Object {
   "children": Array [
     <nav
-      className="navbar navbar-expand-md navbar-light bg-light"
+      className="navbar navbar-expand-md navbar-light"
     >
       <Link
         className="navbar-brand"
@@ -209,7 +209,6 @@ Object {
       </Nav>
     </Collapse>,
   ],
-  "color": "light",
   "expand": "md",
   "light": true,
   "tag": "nav",
@@ -220,7 +219,7 @@ exports[`components/ConnectedHeader renders the ConnectedHeader when logged in 1
 Object {
   "children": Array [
     <nav
-      className="navbar navbar-expand-md navbar-light bg-light"
+      className="navbar navbar-expand-md navbar-light"
     >
       <Link
         className="navbar-brand"
@@ -473,7 +472,6 @@ Object {
       </Nav>
     </Collapse>,
   ],
-  "color": "light",
   "expand": "md",
   "light": true,
   "tag": "nav",
