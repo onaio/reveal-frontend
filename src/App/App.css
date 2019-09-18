@@ -65,3 +65,8 @@ fieldset[disabled] .gatekeeper-btn.active {
   color: #28a745;
   background-color: #ffffff;
 }
+
+.white-nav-bordered {
+  background-color: #ffffff;
+  box-shadow: 0 1px 0px 0 rgba(195, 203, 222, 0.59);
+}

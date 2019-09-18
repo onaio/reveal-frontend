@@ -13,5 +13,9 @@
 }
 
 .reveal-breadcrumb .breadcrumb {
-  background-color: #eceeef;
+  background: none;
+}
+
+.breadcrumb a {
+  color: #007742;
 }

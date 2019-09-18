@@ -29,6 +29,7 @@ body {
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: #f5f6fa;
 }
 
 code {
@@ -44,4 +45,17 @@ code {
 
 .grey-bg {
   background: #f5f6fa;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #007742;
+  border: 2px solid #007742;
+  border-radius: 5px;
+}
+
+.btn-primary:hover {
+  background-color: #007742;
+  border: 2px solid #007742;
+  box-shadow: 0 5px 14px 0 #67a7876b;
 }
