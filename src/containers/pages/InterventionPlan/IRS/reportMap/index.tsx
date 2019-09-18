@@ -218,7 +218,11 @@ class IrsReportMap extends React.Component<
     const config =
       (irsReportingCongif && irsReportingCongif[SUPERSET_IRS_REPORTING_STRUCTURES_DATA_SLICE]) ||
       {};
-    const { indicatorThresholds, sidebarPropsBuilder } = config as IrsReportingStructuresConfig;
+    const {
+      indicatorThresholds,
+      sidebarLegendStops,
+      sidebarPropsBuilder,
+    } = config as IrsReportingStructuresConfig;
     const sidebarIndicatorRowProps =
       sidebarPropsBuilder && jurisdictionById ? sidebarPropsBuilder(jurisdictionById) : [];
 
@@ -249,6 +253,19 @@ class IrsReportMap extends React.Component<
             <div className="mapSidebar">
               <h5>{jurisdictionById && jurisdictionById.name}</h5>
               <hr />
+
+              {sidebarLegendStops && (
+                <div className="mapLegend">
+                  <h6>Legend</h6>
+                  {sidebarLegendStops.map((stop, i) => (
+                    <div className="sidebar-legend-item" key={i}>
+                      <span className="sidebar-legend-color" style={{ backgroundColor: stop[1] }} />
+                      <span className="sidebar-legend-label">{stop[0]}</span>
+                    </div>
+                  ))}
+                  <hr />
+                </div>
+              )}
 
               {sidebarIndicatorRowProps.map((row, i) => (
                 <div className="responseItem" key={i}>

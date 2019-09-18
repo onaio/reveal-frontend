@@ -11,3 +11,17 @@
 .mapSidebar .responseItem .progress {
   margin-bottom: 0.75rem !important;
 }
+
+.mapSidebar .mapLegend .sidebar-legend-color {
+  display: inline-block;
+  height: 1rem;
+  width: 1rem;
+  vertical-align: middle;
+  margin-right: 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.75);
+}
+
+.mapSidebar .mapLegend .sidebar-legend-label {
+  display: inline-block;
+  font-size: 0.75rem;
+}
