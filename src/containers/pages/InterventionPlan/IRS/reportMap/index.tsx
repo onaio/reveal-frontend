@@ -33,14 +33,12 @@ import GeojsonExtent from '@mapbox/geojson-extent';
 import { GREEN, GREY } from '../../../../../colors';
 import GisidaWrapper, { GisidaProps } from '../../../../../components/GisidaWrapper';
 import Loading from '../../../../../components/page/Loading';
-import {
-  SUPERSET_IRS_REPORTING_JURISDICTIONS_DATA_SLICE,
-  SUPERSET_IRS_REPORTING_STRUCTURES_DATA_SLICE,
-} from '../../../../../configs/env';
+import { SUPERSET_IRS_REPORTING_STRUCTURES_DATA_SLICE } from '../../../../../configs/env';
 import {
   circleLayerConfig,
   fillLayerConfig,
   irsReportingCongif,
+  IrsReportingStructuresConfig,
   lineLayerConfig,
 } from '../../../../../configs/settings';
 import ProgressBar from '../../../../../helpers/ProgressBar';
@@ -161,14 +159,14 @@ class IrsReportMap extends React.Component<
             // if a structureIngester fn is specifed in the configs, use it
             if (
               irsReportingCongif &&
-              irsReportingCongif[SUPERSET_IRS_REPORTING_JURISDICTIONS_DATA_SLICE]
+              irsReportingCongif[SUPERSET_IRS_REPORTING_STRUCTURES_DATA_SLICE]
             ) {
               const { structureIngester } = irsReportingCongif[
-                SUPERSET_IRS_REPORTING_JURISDICTIONS_DATA_SLICE
-              ];
+                SUPERSET_IRS_REPORTING_STRUCTURES_DATA_SLICE
+              ] as IrsReportingStructuresConfig;
               if (structureIngester) {
                 return structuresResults.map(s =>
-                  structureIngester(s, SUPERSET_IRS_REPORTING_JURISDICTIONS_DATA_SLICE)
+                  structureIngester(s, SUPERSET_IRS_REPORTING_STRUCTURES_DATA_SLICE)
                 ) as AnyStructure[];
               }
             }
@@ -218,9 +216,9 @@ class IrsReportMap extends React.Component<
     };
 
     const config =
-      (irsReportingCongif && irsReportingCongif[SUPERSET_IRS_REPORTING_JURISDICTIONS_DATA_SLICE]) ||
+      (irsReportingCongif && irsReportingCongif[SUPERSET_IRS_REPORTING_STRUCTURES_DATA_SLICE]) ||
       {};
-    const { indicatorThresholds, sidebarPropsBuilder } = config;
+    const { indicatorThresholds, sidebarPropsBuilder } = config as IrsReportingStructuresConfig;
     const sidebarIndicatorRowProps =
       sidebarPropsBuilder && jurisdictionById ? sidebarPropsBuilder(jurisdictionById) : [];
 
@@ -305,12 +303,14 @@ class IrsReportMap extends React.Component<
     if (
       structures &&
       irsReportingCongif &&
-      irsReportingCongif[SUPERSET_IRS_REPORTING_JURISDICTIONS_DATA_SLICE] &&
-      irsReportingCongif[SUPERSET_IRS_REPORTING_JURISDICTIONS_DATA_SLICE].structuresLayerBuilder
+      irsReportingCongif[SUPERSET_IRS_REPORTING_STRUCTURES_DATA_SLICE] &&
+      (irsReportingCongif[
+        SUPERSET_IRS_REPORTING_STRUCTURES_DATA_SLICE
+      ] as IrsReportingStructuresConfig).structuresLayerBuilder
     ) {
       const { structuresLayerBuilder } = irsReportingCongif[
-        SUPERSET_IRS_REPORTING_JURISDICTIONS_DATA_SLICE
-      ];
+        SUPERSET_IRS_REPORTING_STRUCTURES_DATA_SLICE
+      ] as IrsReportingStructuresConfig;
       if (structuresLayerBuilder) {
         structuresLayers = structuresLayerBuilder(structures);
       }

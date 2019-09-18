@@ -18,8 +18,8 @@ import {
   ADMN0_PCODE,
   CountriesAdmin0,
   extractReportingJurisdiction,
-  IrsReportingCongif,
   irsReportingCongif,
+  IrsReportingJurisdictionConfig,
   JurisdictionsByCountry,
 } from '../../../../../configs/settings';
 import {
@@ -451,8 +451,9 @@ class IrsReport extends React.Component<RouteComponentProps<RouteParams> & IrsRe
     ];
 
     // define configuration for dynamic column generation
-    const config: IrsReportingCongif | undefined =
-      irsReportingCongif[SUPERSET_IRS_REPORTING_JURISDICTIONS_DATA_SLICE];
+    const config = irsReportingCongif[
+      SUPERSET_IRS_REPORTING_JURISDICTIONS_DATA_SLICE
+    ] as IrsReportingJurisdictionConfig;
     if (config) {
       const { drilldownColumnGetters } = config;
       // loop through all drilldown column getters

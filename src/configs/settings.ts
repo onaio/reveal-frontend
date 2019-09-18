@@ -778,24 +778,81 @@ export interface ReportingSidebarRow {
   value: number;
 }
 
+/** interface describing indicator extractors for IRS reporting configs */
+export interface IndicatorExtractors {
+  [key: string]: (jurisdiction: FlexObject) => number;
+}
+
+/** interface descrbing base configs for irs reporting configurations */
 export interface IrsReportingCongif {
+  indicatorExtractors?: IndicatorExtractors;
+  indicatorThresholds: IndicatorThresholds;
+}
+
+/** interface describing IRS configurations regarding Jurisdictions */
+export interface IrsReportingJurisdictionConfig extends IrsReportingCongif {
   drilldownColumnGetters: {
     [key: string]: () => any;
   };
-  indicatorExtractors?: {
-    [key: string]: (jurisdiction: FlexObject) => number;
-  };
-  indicatorThresholds: IndicatorThresholds;
+  jurisdictionSliceProps: string[];
   jurisdictionTyper: (j: any) => Jurisdiction | CustomJurisdictionTypes;
+}
+
+/** interface describing IRS configurations regarding Structures */
+export interface IrsReportingStructuresConfig extends IrsReportingCongif {
   sidebarPropsBuilder?: (j: Jurisdiction | CustomJurisdictionTypes) => ReportingSidebarRow[];
   structureIngester?: (s: FlexObject, sliceId: string) => Structure | CustomStructureTypes;
   structuresLayerBuilder?: (s: FeatureCollection<AnyStructureGeojson>) => FlexObject[];
-  structureTyper: (j: any) => Structure | CustomStructureTypes;
-  sliceProps: string[];
   structureSliceProps?: string[];
+  structureTyper: (j: any) => Structure | CustomStructureTypes;
 }
+
+/** Indicator extractors for NA (Namibia) */
+const indicatorExtractorsNA: IndicatorExtractors = {
+  foundcoverage: (datum: FlexObject) => {
+    if (datum.foundcoverage) {
+      return datum.foundcoverage;
+    } else if (datum.structuresfound) {
+      const foundcoverage = datum.structuressprayed / datum.structuresfound;
+      if (!Number.isNaN(Number(foundcoverage))) {
+        return foundcoverage;
+      }
+    }
+    return 0;
+  },
+  structurestargeted: (datum: FlexObject) => {
+    const structurestargeted = (100 / datum.targetcoverage) * datum.structuressprayed * 100;
+    return Math.round(structurestargeted);
+  },
+};
+
+/** Indicator Thresholds for NA (Namibia) */
+const indicatorThresholdsNA: IndicatorThresholds = {
+  GREEN_THRESHOLD: {
+    color: '#2ECC40',
+    value: 1,
+  },
+  GREY_THRESHOLD: {
+    color: '#dddddd',
+    value: 0.2,
+  },
+  RED_THRESHOLD: {
+    color: '#FF4136',
+    orEquals: true,
+    value: 0.75,
+  },
+  YELLOW_THRESHOLD: {
+    color: '#FFDC00',
+    value: 0.9,
+  },
+};
+
 /* tslint:disable:object-literal-sort-keys */
-export const irsReportingCongif: { [key: string]: IrsReportingCongif } = {
+/** The actual configuration object controlling how IRS Reporting is handled for different clients */
+export const irsReportingCongif: {
+  [key: string]: IrsReportingJurisdictionConfig | IrsReportingStructuresConfig;
+} = {
+  // Namibia Jurisdiction Configs
   [process.env.REACT_APP_SUPERSET_IRS_REPORTING_JURISDICTIONS_DATA_SLICE_NA as string]: {
     drilldownColumnGetters: {
       structuresfound: () => ({
@@ -875,43 +932,28 @@ export const irsReportingCongif: { [key: string]: IrsReportingCongif } = {
         ],
       }),
     },
-    indicatorExtractors: {
-      foundcoverage: (datum: FlexObject) => {
-        if (datum.foundcoverage) {
-          return datum.foundcoverage;
-        } else if (datum.structuresfound) {
-          const foundcoverage = datum.structuressprayed / datum.structuresfound;
-          if (!Number.isNaN(Number(foundcoverage))) {
-            return foundcoverage;
-          }
-        }
-        return 0;
-      },
-      structurestargeted: (datum: FlexObject) => {
-        const structurestargeted = (100 / datum.targetcoverage) * datum.structuressprayed * 100;
-        return Math.round(structurestargeted);
-      },
-    },
-    indicatorThresholds: {
-      GREEN_THRESHOLD: {
-        color: '#2ECC40',
-        value: 1,
-      },
-      YELLOW_THRESHOLD: {
-        color: '#FFDC00',
-        value: 0.9,
-      },
-      RED_THRESHOLD: {
-        color: '#FF4136',
-        orEquals: true,
-        value: 0.75,
-      },
-      GREY_THRESHOLD: {
-        color: '#dddddd',
-        value: 0.2,
-      },
-    },
+    indicatorExtractors: indicatorExtractorsNA,
+    indicatorThresholds: indicatorThresholdsNA,
     jurisdictionTyper: (j: any) => j as NamibiaIrsReportingJurisdiction,
+    jurisdictionSliceProps: [
+      'foundcoverage',
+      'householdsnotaccessible',
+      'lockedfirst',
+      'lockedmopup',
+      'refusalsfirst',
+      'refusalsmopup',
+      'sprayeffectiveness',
+      'structuresfound',
+      'structuressprayed',
+      'structurestargeted',
+      'targetcoverage',
+    ],
+  } as IrsReportingJurisdictionConfig,
+
+  // Namibia Structures Configs
+  [process.env.REACT_APP_SUPERSET_IRS_REPORTING_STRUCTURES_DATA_SLICE_NA as string]: {
+    indicatorExtractors: indicatorExtractorsNA,
+    indicatorThresholds: indicatorThresholdsNA,
     sidebarPropsBuilder: (j: Jurisdiction | CustomJurisdictionTypes) => {
       const jurisdiction = {
         ...j,
@@ -1039,20 +1081,7 @@ export const irsReportingCongif: { [key: string]: IrsReportingCongif } = {
       return structuresLayers;
     },
     structureTyper: (s: any) => s as NamibiaIrsReportingStructure,
-    sliceProps: [
-      'foundcoverage',
-      'householdsnotaccessible',
-      'lockedfirst',
-      'lockedmopup',
-      'refusalsfirst',
-      'refusalsmopup',
-      'sprayeffectiveness',
-      'structuresfound',
-      'structuressprayed',
-      'structurestargeted',
-      'targetcoverage',
-    ],
-  },
+  } as IrsReportingStructuresConfig,
 };
 /* tslint:enable:object-literal-sort-keys */
 
@@ -1061,31 +1090,32 @@ export const extractReportingJurisdiction = (
   datum: FlexObject,
   sliceId: string = '550'
 ): NamibiaIrsReportingJurisdiction | Jurisdiction => {
-  if (!irsReportingCongif[sliceId]) {
+  const config = irsReportingCongif[sliceId] as IrsReportingJurisdictionConfig;
+  if (!config) {
     return j as Jurisdiction;
   }
   const jurisdiction: FlexObject = { ...j };
-  for (const prop of irsReportingCongif[sliceId].sliceProps) {
-    const extractors = irsReportingCongif[sliceId].indicatorExtractors || {};
+  for (const prop of config.jurisdictionSliceProps) {
+    const extractors = config.indicatorExtractors || {};
     if (typeof datum[prop] !== 'undefined') {
       jurisdiction[prop] = extractors[prop] ? extractors[prop](datum) : datum[prop];
     }
   }
-
-  return irsReportingCongif[sliceId].jurisdictionTyper(jurisdiction);
+  return config.jurisdictionTyper(jurisdiction);
 };
 
 /** extractor for to get custom typed Structure entities */
 export const extractReportingStructure = (
   s: Structure,
   datum: FlexObject,
-  sliceId: string = '550'
+  sliceId: string = '551'
 ): NamibiaIrsReportingStructure | Structure => {
-  if (!irsReportingCongif[sliceId]) {
+  const config = irsReportingCongif[sliceId] as IrsReportingStructuresConfig;
+  if (!config) {
     return s as Structure;
   }
 
-  const { structureSliceProps } = irsReportingCongif[sliceId];
+  const { structureSliceProps } = config;
   if (structureSliceProps) {
     const structure: FlexObject = { ...s };
     for (const prop of structureSliceProps) {
@@ -1093,10 +1123,10 @@ export const extractReportingStructure = (
         structure[prop] = datum[prop];
       }
     }
-    return irsReportingCongif[sliceId].structureTyper(structure);
+    return config.structureTyper(structure);
   }
 
-  return irsReportingCongif[sliceId].structureTyper(s);
+  return config.structureTyper(s);
 };
 
 /** Interfaces describing administrative hierarchy via ISO 3166 admin codes */
