@@ -77,20 +77,21 @@ const OrganizationListView = (props: OrgsListViewPropsType) => {
   };
   breadcrumbProps.pages = [homePage];
 
-  // props for the inline search form, used to search an organization via an api call
-
+  /** props for the inline search form, used to search an organization via an api call */
   const inlineSearchFormProps: InlineSearchFormProps = {
     handleSubmit,
     inputId: 'search',
     inputPlaceholder: `${SEARCH} ${ORGANIZATION_LABEL}`,
   };
 
+  /** Props for the organization's listing table */
   const listViewProps = {
     data: organizations.map((organization: Organization) => {
       return [
         <Link to={`${SINGLE_TEAM_URL}/${organization.identifier}`} key={organization.identifier}>
           {organization.name}
         </Link>,
+        '',
       ];
     }),
     headerItems: [`${ORGANIZATION_LABEL} ${NAME}`, `${AREA}`],
