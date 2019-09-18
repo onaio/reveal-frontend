@@ -800,6 +800,7 @@ export interface IrsReportingJurisdictionConfig extends IrsReportingCongif {
 
 /** interface describing IRS configurations regarding Structures */
 export interface IrsReportingStructuresConfig extends IrsReportingCongif {
+  sidebarLegendStops?: Array<[string, string]>;
   sidebarPropsBuilder?: (j: Jurisdiction | CustomJurisdictionTypes) => ReportingSidebarRow[];
   structureIngester?: (s: FlexObject, sliceId: string) => Structure | CustomStructureTypes;
   structuresLayerBuilder?: (s: FeatureCollection<AnyStructureGeojson>) => FlexObject[];
@@ -963,6 +964,7 @@ export const irsReportingCongif: {
   [process.env.REACT_APP_SUPERSET_IRS_REPORTING_STRUCTURES_DATA_SLICE_NA as string]: {
     indicatorExtractors: indicatorExtractorsNA,
     indicatorThresholds: indicatorThresholdsNA,
+    sidebarLegendStops: indicatorStopsNA,
     sidebarPropsBuilder: (j: Jurisdiction | CustomJurisdictionTypes) => {
       const jurisdiction = {
         ...j,
