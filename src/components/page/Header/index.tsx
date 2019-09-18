@@ -108,13 +108,11 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
                     {PLANNING}
                   </DropdownToggle>
                   <DropdownMenu right={true}>
-                    {ENABLE_FI && (
-                      <DropdownItem>
-                        <NavLink to={PLAN_LIST_URL} className="nav-link" activeClassName="active">
-                          {PLANS}
-                        </NavLink>
-                      </DropdownItem>
-                    )}
+                    <DropdownItem>
+                      <NavLink to={PLAN_LIST_URL} className="nav-link" activeClassName="active">
+                        {PLANS}
+                      </NavLink>
+                    </DropdownItem>
                     {ENABLE_IRS && (
                       <DropdownItem>
                         <NavLink
