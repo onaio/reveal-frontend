@@ -786,7 +786,7 @@ export interface IrsReportingCongif {
     [key: string]: (jurisdiction: FlexObject) => number;
   };
   indicatorThresholds: IndicatorThresholds;
-  juridictionTyper: (j: any) => Jurisdiction | CustomJurisdictionTypes;
+  jurisdictionTyper: (j: any) => Jurisdiction | CustomJurisdictionTypes;
   sidebarPropsBuilder?: (j: Jurisdiction | CustomJurisdictionTypes) => ReportingSidebarRow[];
   structureIngester?: (s: FlexObject, sliceId: string) => Structure | CustomStructureTypes;
   structuresLayerBuilder?: (s: FeatureCollection<AnyStructureGeojson>) => FlexObject[];
@@ -911,7 +911,7 @@ export const irsReportingCongif: { [key: string]: IrsReportingCongif } = {
         value: 0.2,
       },
     },
-    juridictionTyper: (j: any) => j as NamibiaIrsReportingJurisdiction,
+    jurisdictionTyper: (j: any) => j as NamibiaIrsReportingJurisdiction,
     sidebarPropsBuilder: (j: Jurisdiction | CustomJurisdictionTypes) => {
       const jurisdiction = {
         ...j,
@@ -1072,7 +1072,7 @@ export const extractReportingJurisdiction = (
     }
   }
 
-  return irsReportingCongif[sliceId].juridictionTyper(jurisdiction);
+  return irsReportingCongif[sliceId].jurisdictionTyper(jurisdiction);
 };
 
 /** extractor for to get custom typed Structure entities */
