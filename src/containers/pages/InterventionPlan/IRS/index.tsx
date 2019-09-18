@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { Link } from 'react-router-dom';
 import { CellInfo, Column } from 'react-table';
-import { Button } from 'reactstrap';
+import { Badge, Button } from 'reactstrap';
 import { Store } from 'redux';
 
 import DrillDownTable from '@onaio/drill-down-table';
@@ -142,6 +142,13 @@ class IrsPlans extends React.Component<IrsPlansProps & RouteComponentProps<Route
         Header: 'Status',
         columns: [
           {
+            Cell: (cell: CellInfo) => {
+              return (
+                <Badge className={`status-badge ${cell.original.plan_status}`} pill={true}>
+                  {cell.original.plan_status}
+                </Badge>
+              );
+            },
             Header: '',
             accessor: 'plan_status',
           },
