@@ -847,6 +847,15 @@ const indicatorThresholdsNA: IndicatorThresholds = {
   },
 };
 
+/** Indicator color stops for NA (Namibia) */
+const indicatorStopsNA: Array<[string, string]> = [
+  ['Sprayed', TASK_GREEN],
+  ['Not Sprayed', TASK_RED],
+  ['Partially Sprayed', TASK_BLUE],
+  ['Not Visited', TASK_YELLOW],
+  ['Not Eligible', BLACK],
+];
+
 /* tslint:disable:object-literal-sort-keys */
 /** The actual configuration object controlling how IRS Reporting is handled for different clients */
 export const irsReportingCongif: {
@@ -1005,13 +1014,7 @@ export const irsReportingCongif: {
       const structureStatusColors = {
         default: GREY,
         property: 'business_status',
-        stops: [
-          ['Sprayed', TASK_GREEN],
-          ['Not Sprayed', TASK_RED],
-          ['Partially Sprayed', TASK_BLUE],
-          ['Not Visited', TASK_YELLOW],
-          ['Not Eligible', BLACK],
-        ],
+        stops: indicatorStopsNA,
         type: 'categorical',
       };
 
