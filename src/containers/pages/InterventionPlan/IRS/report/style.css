@@ -1,3 +1,7 @@
+.mark-plan-as-complete-column {
+  text-align: right;
+}
+
 .irs-report-table .ReactTable .rt-thead.-headerGroups .rt-th {
   white-space: normal;
 }

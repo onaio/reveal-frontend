@@ -27,8 +27,10 @@ import {
   HOME,
   HOME_URL,
   INTERVENTION_IRS_URL,
+  IRS_PLAN_COMPLETION_URL,
   IRS_REPORTING_TITLE,
   MAP,
+  MARK_AS_COMPLETE,
 } from '../../../../../constants';
 import {
   getAncestorJurisdictionIds,
@@ -58,6 +60,7 @@ import jurisdictionReducer, {
 import plansReducer, {
   getPlanRecordById,
   PlanRecord,
+  PlanStatus,
   reducerName as plansReducerName,
 } from '../../../../../store/ducks/plans';
 
@@ -342,29 +345,56 @@ class IrsReport extends React.Component<RouteComponentProps<RouteParams> & IrsRe
       </ol>
     );
 
+    // mark Plan as complete button
+    const markCompleteLink =
+      planById && planById.plan_status === PlanStatus.ACTIVE ? (
+        <Link
+          className="btn btn-primary"
+          to={`${IRS_PLAN_COMPLETION_URL}/${planById.id}`}
+          color="primary"
+        >
+          {MARK_AS_COMPLETE}
+        </Link>
+      ) : null;
+
     return (
       <div className="mb-5">
         <Helmet>
           <title>IRS Reporting | {planById.plan_title}</title>
         </Helmet>
+
         <HeaderBreadcrumbs {...breadCrumbProps} />
+
         <Row>
-          <Col>
+          <Col xs="8">
             <h2 className="page-title">IRS Plan: {planById.plan_title}</h2>
-            {isLoadingHierarchy && (
+          </Col>
+          <Col xs="4" className="mark-plan-as-complete-column">
+            {!isLoadingHierarchy && markCompleteLink}
+          </Col>
+        </Row>
+
+        {isLoadingHierarchy && (
+          <Row>
+            <Col>
               <div>
                 <Loading />
                 <div style={{ textAlign: 'center' }}>Loading Location Hierarchy</div>
               </div>
-            )}
-            {doRenderTable && reportTableProps && (
+            </Col>
+          </Row>
+        )}
+
+        {doRenderTable && reportTableProps && (
+          <Row>
+            <Col>
               <div className="irs-report-table">
                 {tableBreadCrumbs}
                 <DrillDownTable {...reportTableProps} />
               </div>
-            )}
-          </Col>
-        </Row>
+            </Col>
+          </Row>
+        )}
       </div>
     );
   }
