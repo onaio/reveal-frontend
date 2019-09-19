@@ -17,10 +17,13 @@ import HeaderBreadcrumb, {
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
 import {
-  AREA,
+  ACTIONS,
+  COUNT,
   CREATE_TEAM_URL,
   HOME,
   HOME_URL,
+  IDENTIFIER,
+  LOCATION,
   NAME,
   NEW_TEAM,
   OPENSRP_ORGANIZATION_ENDPOINT,
@@ -29,6 +32,7 @@ import {
   SEARCH,
   SINGLE_TEAM_URL,
   TEAM_LIST_URL,
+  VIEW,
 } from '../../../../constants';
 import { OpenSRPService } from '../../../../services/opensrp';
 import store from '../../../../store';
@@ -88,13 +92,23 @@ const OrganizationListView = (props: OrgsListViewPropsType) => {
   const listViewProps = {
     data: organizations.map((organization: Organization) => {
       return [
-        <Link to={`${SINGLE_TEAM_URL}/${organization.identifier}`} key={organization.identifier}>
+        <Link
+          to={`${SINGLE_TEAM_URL}/${organization.identifier}`}
+          key={`orgName-${organization.identifier}`}
+          className="organization-name-link"
+        >
           {organization.name}
         </Link>,
-        '',
+        organization.identifier,
+        <Link
+          to={`${SINGLE_TEAM_URL}/${organization.identifier}`}
+          key={`action-${organization.identifier}`}
+        >
+          {VIEW}
+        </Link>,
       ];
     }),
-    headerItems: [`${ORGANIZATION_LABEL} ${NAME}`, `${AREA}`],
+    headerItems: [`${ORGANIZATION_LABEL} ${NAME}`, `${IDENTIFIER}`, `${ACTIONS}`],
     tableClass: 'table table-bordered',
   };
 

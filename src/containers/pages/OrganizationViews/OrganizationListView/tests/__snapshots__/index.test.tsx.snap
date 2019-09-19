@@ -62,10 +62,18 @@ exports[`src/containers/TeamAssignment/TeamListview/ renders a dumb TeamListView
     items={
       Array [
         <Link
+          className="organization-name-link"
           replace={false}
           to="/teams/view/fcc19470-d599-11e9-bb65-2a2ae2dbcce4"
         >
           The Luang
+        </Link>,
+        "fcc19470-d599-11e9-bb65-2a2ae2dbcce4",
+        <Link
+          replace={false}
+          to="/teams/view/fcc19470-d599-11e9-bb65-2a2ae2dbcce4"
+        >
+          view
         </Link>,
       ]
     }
@@ -75,7 +83,32 @@ exports[`src/containers/TeamAssignment/TeamListview/ renders a dumb TeamListView
       key="0"
     >
       <Link
-        key="fcc19470-d599-11e9-bb65-2a2ae2dbcce4"
+        className="organization-name-link"
+        key="orgName-fcc19470-d599-11e9-bb65-2a2ae2dbcce4"
+        replace={false}
+        to="/teams/view/fcc19470-d599-11e9-bb65-2a2ae2dbcce4"
+      >
+        <a
+          className="organization-name-link"
+          href="/teams/view/fcc19470-d599-11e9-bb65-2a2ae2dbcce4"
+          onClick={[Function]}
+        >
+          The Luang
+        </a>
+      </Link>
+    </td>
+    <td
+      className="listview-th"
+      key="1"
+    >
+      fcc19470-d599-11e9-bb65-2a2ae2dbcce4
+    </td>
+    <td
+      className="listview-th"
+      key="2"
+    >
+      <Link
+        key="action-fcc19470-d599-11e9-bb65-2a2ae2dbcce4"
         replace={false}
         to="/teams/view/fcc19470-d599-11e9-bb65-2a2ae2dbcce4"
       >
@@ -83,7 +116,7 @@ exports[`src/containers/TeamAssignment/TeamListview/ renders a dumb TeamListView
           href="/teams/view/fcc19470-d599-11e9-bb65-2a2ae2dbcce4"
           onClick={[Function]}
         >
-          The Luang
+          view
         </a>
       </Link>
     </td>
