@@ -136,8 +136,12 @@ export const ORGANIZATION = 'Organization';
 export type ORGANIZATION = typeof ORGANIZATION;
 export const SEARCH = 'Search';
 export type SEARCH = typeof SEARCH;
-export const AREA = 'Area';
-export type AREA = typeof AREA;
+export const COUNT = 'Count';
+export const SUPERVISOR = 'Supervisor';
+export type SUPERVISOR = typeof SUPERVISOR;
+export const ACTIONS = 'Actions';
+export type ACTIONS = typeof ACTIONS;
+export type COUNT = typeof COUNT;
 export const DETAILS = 'Details';
 export type DETAILS = typeof DETAILS;
 export const MEMBERS = 'Members';
@@ -146,7 +150,7 @@ export const IDENTIFIER = 'Identifier';
 export type IDENTIFIER = typeof IDENTIFIER;
 export const USERNAME = 'Username';
 export type USERNAME = typeof USERNAME;
-// TODO ? - do the below 2 belong here or ins a settings file
+// TODO ? - do the below 2 belong here or in a settings file
 export const ORGANIZATION_LABEL = TEAM;
 export type ORGANIZATION_LABEL = typeof ORGANIZATION_LABEL;
 export const ORGANIZATIONS_LABEL = TEAMS;
