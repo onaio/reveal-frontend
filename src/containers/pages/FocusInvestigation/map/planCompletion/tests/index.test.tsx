@@ -229,7 +229,7 @@ describe('@containers/pages/map/planCompletion/', () => {
     cancelButton.simulate('click');
     // check that history url after clicking cancel points to singleFi url
     discoWrapper.update();
-    expect(discoWrapper.props().children.props.history.action).toEqual('PUSH');
+    expect(discoWrapper.props().children.props.history.action).toEqual('REPLACE');
     expect(discoWrapper.props().children.props.history.location.pathname).toEqual(
       `${FI_SINGLE_MAP_URL}/${fixtures.plan1.id}`
     );

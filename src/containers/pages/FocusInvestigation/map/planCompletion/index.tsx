@@ -11,10 +11,13 @@ import {
   COMPLETE,
   CONFIRM,
   FI_SINGLE_MAP_URL,
+  INTERVENTION_IRS_URL,
+  IRS_CODE,
   MARK,
   MARK_AS_COMPLETE,
   OPENSRP_PLANS,
   PLAN_LIST_URL,
+  REPORT,
 } from '../../../../../constants';
 import { FlexObject } from '../../../../../helpers/utils';
 import { OpenSRPService } from '../../../../../services/opensrp';
@@ -57,7 +60,11 @@ export class PlanCompletion extends React.Component<
 
   /** click handler for cancelling mark as complete action */
   public cancelClickHandler = (event: any) => {
-    this.props.history.goBack();
+    const cancelPath =
+      this.props.plan!.plan_intervention_type === IRS_CODE
+        ? `${INTERVENTION_IRS_URL}/${REPORT}/${this.props.plan!.id}`
+        : `${FI_SINGLE_MAP_URL}/${this.props.plan!.id}`;
+    this.props.history.replace(cancelPath);
   };
 
   /** Click Handler : changes status of a plan to complete and syncs
