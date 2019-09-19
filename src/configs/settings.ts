@@ -1027,7 +1027,7 @@ export const irsReportingCongif: {
           id: `${STRUCTURE_LAYER}-circle`,
           paint: {
             ...circleLayerConfig.paint,
-            'circle-radius': ['interpolate', ['linear'], ['zoom'], 14, 5, 16, 10, 20, 15],
+            'circle-radius': ['interpolate', ['linear'], ['zoom'], 13, 2, 14, 5, 16, 10, 20, 15],
             'circle-color': structureStatusColors,
             'circle-stroke-color': structureStatusColors,
             'circle-stroke-opacity': 1,
