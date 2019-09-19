@@ -21,6 +21,7 @@ import {
   FI_URL,
   INTERVENTION_IRS_DRAFTS_URL,
   INTERVENTION_IRS_URL,
+  IRS_PLAN_COMPLETION_URL,
   LOGIN_URL,
   LOGOUT_URL,
   MAP,
@@ -127,6 +128,14 @@ class App extends Component {
                   exact={true}
                   path={`${ACTIVE_IRS_PLAN_URL}/:id/${MAP}/:jurisdictionId`}
                   component={IrsReportMap}
+                />
+
+                {/* Focus Investigation completion confirmation view */}
+                <ConnectedPrivateRoute
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${IRS_PLAN_COMPLETION_URL}/:id`}
+                  component={ConnectedPlanCompletion}
                 />
 
                 {/* Focus Investigation Reporting list view */}
