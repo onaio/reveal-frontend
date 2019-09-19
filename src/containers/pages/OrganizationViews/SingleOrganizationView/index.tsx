@@ -188,10 +188,8 @@ const mapStateToProps = (
 ): MapStateToProps => {
   let organizationId = ownProps.match.params.id;
   organizationId = organizationId ? organizationId : '';
-  const organization = fixtures.organizations.filter(tm => tm.identifier === organizationId)[0]; // getOrganizationById(state, organizationId);
-  const organizationMembers = fixtures.organizationMembers.filter(
-    organizationMember => organizationMember.organization === organization.name
-  );
+  const organization = getOrganizationById(state, organizationId);
+  const organizationMembers: OrganizationMember[] = [];
   return {
     organization,
     organizationMembers,
