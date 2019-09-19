@@ -36,6 +36,12 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
+a {
+  color: #007742;
+  text-decoration: none;
+  background-color: transparent;
+}
+
 .navbar-light .navbar-nav .active > .nav-link,
 .navbar-light .navbar-nav .nav-link.active,
 .navbar-light .navbar-nav .nav-link.show,
@@ -58,4 +64,37 @@ code {
   background-color: #007742;
   border: 2px solid #007742;
   box-shadow: 0 5px 14px 0 #67a7876b;
+}
+
+/* TABLES */
+
+.ReactTable {
+  padding: 24px;
+  background-color: #ffffff;
+  border-radius: 5px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.ReactTable .rt-tbody .rt-td {
+  border-right: 1px solid rgba(0, 0, 0, 0.02);
+  padding: 8px 0px;
+}
+
+span.status-badge.active {
+  color: #007742;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 19px;
+  background-color: #b5ffa8;
+}
+
+span.status-badge.draft {
+  color: #13171a;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 19px;
+  background-color: #d5d9e0;
 }

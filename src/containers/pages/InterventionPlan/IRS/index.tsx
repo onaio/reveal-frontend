@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { Link } from 'react-router-dom';
 import { CellInfo, Column } from 'react-table';
-import { Badge, Button } from 'reactstrap';
+import { Badge, Button, Col, Container, Row } from 'reactstrap';
 import { Store } from 'redux';
 
 import DrillDownTable from '@onaio/drill-down-table';
@@ -176,12 +176,19 @@ class IrsPlans extends React.Component<IrsPlansProps & RouteComponentProps<Route
           <title>{IRS_TITLE}</title>
         </Helmet>
         <HeaderBreadcrumbs {...breadCrumbProps} />
-        <h2 className="page-title">{IRS_PLANS}</h2>
+        <Container>
+          <Row>
+            <Col md="8">
+              <h2 className="page-title">{IRS_PLANS}</h2>
+            </Col>
+            <Col md="4" className="text-right">
+              <Button color="primary" tag={Link} to={`${INTERVENTION_IRS_URL}/new`}>
+                Create new plan
+              </Button>
+            </Col>
+          </Row>
+        </Container>
         <DrillDownTable {...tableProps} />
-        <br />
-        <Button color="primary" tag={Link} to={`${INTERVENTION_IRS_URL}/new`}>
-          Create new plan
-        </Button>
       </div>
     );
   }
