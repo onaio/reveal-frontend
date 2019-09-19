@@ -150,6 +150,8 @@ export const IDENTIFIER = 'Identifier';
 export type IDENTIFIER = typeof IDENTIFIER;
 export const USERNAME = 'Username';
 export type USERNAME = typeof USERNAME;
+export const VIEW = 'view';
+export type VIEW = typeof VIEW;
 // TODO ? - do the below 2 belong here or in a settings file
 export const ORGANIZATION_LABEL = TEAM;
 export type ORGANIZATION_LABEL = typeof ORGANIZATION_LABEL;
