@@ -21,14 +21,16 @@ import { OpenSRPService } from '../../../../../services/opensrp';
 import {
   fetchPlans,
   getPlanById,
+  getPlanRecordById,
   Plan,
   PlanPayload,
+  PlanRecord,
   PlanStatus,
 } from '../../../../../store/ducks/plans';
 
 /** Props interface for the plan completion component page */
 export interface PlanCompletionProps {
-  plan: Plan | null;
+  plan: Plan | PlanRecord | null;
   fetchPlansActionCreator: typeof fetchPlans;
   serviceClass: typeof OpenSRPService;
 }
@@ -55,7 +57,7 @@ export class PlanCompletion extends React.Component<
 
   /** click handler for cancelling mark as complete action */
   public cancelClickHandler = (event: any) => {
-    this.props.history.replace(`${FI_SINGLE_MAP_URL}/${this.props.plan!.id}`);
+    this.props.history.goBack();
   };
 
   /** Click Handler : changes status of a plan to complete and syncs
@@ -146,7 +148,9 @@ export class PlanCompletion extends React.Component<
  * @param {any} ownprops - components props
  */
 const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
-  const plan = getPlanById(state, ownProps.match.params.id);
+  const plan =
+    getPlanById(state, ownProps.match.params.id) ||
+    getPlanRecordById(state, ownProps.match.params.id);
   return {
     plan,
   };
