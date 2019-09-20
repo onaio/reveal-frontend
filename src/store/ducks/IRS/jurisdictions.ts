@@ -156,7 +156,7 @@ export default function reducer(
  */
 export function getIRSJurisdictionsById(
   state: Partial<Store>,
-  planId: string,
+  planId: string | null = null,
   parentId: string | null = null
 ): { [key: string]: IRSJurisdiction } {
   return keyBy(getIRSJurisdictionsArray(state, planId, parentId), 'id');
@@ -182,11 +182,13 @@ export function getIRSJurisdictionById(
  */
 export function getIRSJurisdictionsArray(
   state: Partial<Store>,
-  planId: string,
+  planId: string | null = null,
   parentId: string | null = null
 ): IRSJurisdiction[] {
   let result = values((state as any)[reducerName].IRSJurisdictionsById);
-  result = result.filter((e: IRSJurisdiction) => e.plan_id === planId);
+  if (planId) {
+    result = result.filter((e: IRSJurisdiction) => e.plan_id === planId);
+  }
   if (parentId) {
     return result.filter((e: IRSJurisdiction) => e.jurisdiction_parent_id === parentId);
   }
