@@ -38,7 +38,7 @@ export const plans = [
 ];
 
 // tslint:disable: object-literal-sort-keys
-export const namibiaIRSJurisdiction = [
+export const namibiaIRSJurisdictions = [
   {
     foundcoverage: 0,
     householdsnotaccessible: 0,
