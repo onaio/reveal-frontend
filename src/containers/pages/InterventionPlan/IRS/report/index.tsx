@@ -141,8 +141,9 @@ class IrsReport extends React.Component<RouteComponentProps<RouteParams> & IrsRe
 
     const topJurIdFromPlan: string | null | undefined =
       planById && (planById as Plan).jurisdiction_root_parent_ids![0];
-
+    console.log('topJurIdFromPlan',topJurIdFromPlan)
     const jurArr = topJurIdFromPlan ? getLocationTree(topJurIdFromPlan) || [] : [];
+    console.log('jurArr',jurArr)
     const planJurArrParams = superset.getFormData(5000, [
       { comparator: planId, operator: '==', subject: 'plan_id' },
     ]);
@@ -189,19 +190,21 @@ class IrsReport extends React.Component<RouteComponentProps<RouteParams> & IrsRe
             })
         : []
     );
-
+    console.log('planJurArr', planJurArr)
     const planJurByIds = keyBy(planJurArr, j => j.jurisdiction_id);
-
+    console.log('planJurByIds', planJurByIds)
     const jurisdictionsArray = jurArr.map(
       (j: AnyJurisdiction) => planJurByIds[j.jurisdiction_id] || j
     );
+    console.log('jurisdictionsArray', jurisdictionsArray)
     fetchJurisdictionsActionCreator(jurisdictionsArray);
 
     const jurisdictionsById = keyBy(jurisdictionsArray, j => j.jurisdiction_id);
-
+    console.log('jurisdictionsById', jurisdictionsById)
     const childlessChildrenIds = getChildlessChildrenIds(jurisdictionsArray).filter(
       j => j && planJurByIds[j]
     );
+    console.log('childlessChildrenIds', childlessChildrenIds)
 
     if (planById && childlessChildrenIds) {
       // define ids of jurisdiction relevant to this plan - note: this is causing a delay when loading every time
@@ -210,6 +213,7 @@ class IrsReport extends React.Component<RouteComponentProps<RouteParams> & IrsRe
         : getAncestorJurisdictionIds([...childlessChildrenIds], jurisdictionsArray).filter(
             j => j && jurisdictionsById[j]
           );
+      console.log('filteredJurisdictionIds', filteredJurisdictionIds)
       if (!jurisdictionIdsByPlanId[planId]) {
         fetchJurisdictionIdsByPlanIdActionCreator({ [planId]: [...filteredJurisdictionIds] });
       }
