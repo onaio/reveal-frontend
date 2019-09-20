@@ -41,3 +41,5 @@ export const TASK_RED = '#F12525';
 export type TASK_RED = typeof TASK_RED;
 export const TASK_YELLOW = '#FFCA16';
 export type TASK_YELLOW = typeof TASK_YELLOW;
+export const TASK_ORANGE = '#FF851B';
+export type TASK_ORANGE = typeof TASK_ORANGE;

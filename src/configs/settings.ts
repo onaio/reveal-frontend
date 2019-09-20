@@ -2,7 +2,7 @@
 import { Providers } from '@onaio/gatekeeper';
 import { Expression, LngLatBoundsLike } from 'mapbox-gl';
 import { CellInfo } from 'react-table';
-import { BLACK, GREY, TASK_BLUE, TASK_GREEN, TASK_RED, TASK_YELLOW } from '../colors';
+import { BLACK, GREY, TASK_GREEN, TASK_ORANGE, TASK_RED, TASK_YELLOW } from '../colors';
 import { STRUCTURE_LAYER } from '../constants';
 import { getThresholdAdherenceIndicator } from '../helpers/indicators';
 import { FeatureCollection, FlexObject } from '../helpers/utils';
@@ -849,7 +849,7 @@ const indicatorThresholdsNA: IndicatorThresholds = {
 const indicatorStopsNA: Array<[string, string]> = [
   ['Sprayed', TASK_GREEN],
   ['Not Sprayed', TASK_RED],
-  ['Partially Sprayed', TASK_BLUE],
+  ['Partially Sprayed', TASK_ORANGE],
   ['Not Visited', TASK_YELLOW],
   ['Not Eligible', BLACK],
 ];
