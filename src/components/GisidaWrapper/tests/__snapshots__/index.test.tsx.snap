@@ -577,7 +577,6 @@ exports[`components/GisidaWrapper renders map component with FeatureCollection 4
 Object {
   "activeLayerId": "Mosquito_Collection_Min_3_Traps-fill-line",
   "activeLayerIds": Array [
-    "main-plan-layer-450fc15b-5bd2-468a-927a-49cb10d3bcac",
     "main-plan-layer-304cbcd4-0850-404a-a8b1-486b02f7b84d",
     "Mosquito_Collection_Min_3_Traps-symbol",
     "Mosquito_Collection_Min_3_Traps-point",
@@ -2332,7 +2331,7 @@ Object {
         "visible": true,
       },
       "type": "line",
-      "visible": true,
+      "visible": false,
     },
     "structure-layer": Object {
       "filters": Object {},
