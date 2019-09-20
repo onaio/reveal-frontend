@@ -390,7 +390,7 @@ export const fetchPlans = (plansList: Plan[] = []): FetchPlansAction => ({
       plan = transformValues<Plan>(plan, ['plan_fi_reason', 'plan_fi_status']);
       return plan;
     }),
-    plan => plan.id
+    plan => plan.id || plan.plan_id
   ),
   type: PLANS_FETCHED,
 });
