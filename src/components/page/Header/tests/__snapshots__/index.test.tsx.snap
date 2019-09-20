@@ -80,8 +80,11 @@ exports[`components/page/Header renders header correctly 1`] = `
           }
         }
       >
-        <div>
+        <div
+          className="row white-nav-bordered "
+        >
           <Navbar
+            color=""
             expand="md"
             light={true}
             tag="nav"
@@ -677,8 +680,11 @@ exports[`components/page/Header renders header correctly when authenticated 1`] 
           }
         }
       >
-        <div>
+        <div
+          className="row white-nav-bordered "
+        >
           <Navbar
+            color=""
             expand="md"
             light={true}
             tag="nav"

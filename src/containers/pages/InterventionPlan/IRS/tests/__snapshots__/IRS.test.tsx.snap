@@ -351,11 +351,86 @@ exports[`containers/pages/IRS renders plans list correctly 1`] = `
               </Breadcrumb>
             </div>
           </HeaderBreadcrumb>
-          <h2
-            className="page-title"
+          <Container
+            tag="div"
           >
-            IRS Plans
-          </h2>
+            <div
+              className="container"
+            >
+              <Row
+                tag="div"
+              >
+                <div
+                  className="row"
+                >
+                  <Col
+                    md="8"
+                    tag="div"
+                    widths={
+                      Array [
+                        "xs",
+                        "sm",
+                        "md",
+                        "lg",
+                        "xl",
+                      ]
+                    }
+                  >
+                    <div
+                      className="col-md-8"
+                    >
+                      <h2
+                        className="page-title"
+                      >
+                        IRS Plans
+                      </h2>
+                    </div>
+                  </Col>
+                  <Col
+                    className="text-right"
+                    md="4"
+                    tag="div"
+                    widths={
+                      Array [
+                        "xs",
+                        "sm",
+                        "md",
+                        "lg",
+                        "xl",
+                      ]
+                    }
+                  >
+                    <div
+                      className="text-right col-md-4"
+                    >
+                      <Button
+                        color="primary"
+                        tag={[Function]}
+                        to="/intervention/irs/new"
+                      >
+                        <Link
+                          aria-label={null}
+                          className="btn btn-primary"
+                          onClick={[Function]}
+                          replace={false}
+                          to="/intervention/irs/new"
+                        >
+                          <a
+                            aria-label={null}
+                            className="btn btn-primary"
+                            href="/intervention/irs/new"
+                            onClick={[Function]}
+                          >
+                            Create new plan
+                          </a>
+                        </Link>
+                      </Button>
+                    </div>
+                  </Col>
+                </div>
+              </Row>
+            </div>
+          </Container>
           <DrillDownTable
             CellComponent={[Function]}
             columns={
@@ -384,6 +459,7 @@ exports[`containers/pages/IRS renders plans list correctly 1`] = `
                   "Header": "Status",
                   "columns": Array [
                     Object {
+                      "Cell": [Function],
                       "Header": "",
                       "accessor": "plan_status",
                     },
@@ -563,6 +639,7 @@ exports[`containers/pages/IRS renders plans list correctly 1`] = `
                     "Header": "Status",
                     "columns": Array [
                       Object {
+                        "Cell": [Function],
                         "Header": "",
                         "accessor": "plan_status",
                       },
@@ -1267,7 +1344,164 @@ exports[`containers/pages/IRS renders plans list correctly 1`] = `
                                       }
                                     }
                                   >
-                                    active
+                                    <Cell
+                                      classes={
+                                        Array [
+                                          undefined,
+                                          "",
+                                          undefined,
+                                        ]
+                                      }
+                                      column={
+                                        Object {
+                                          "Aggregated": undefined,
+                                          "Cell": [Function],
+                                          "Expander": undefined,
+                                          "Filter": undefined,
+                                          "Footer": undefined,
+                                          "Header": "",
+                                          "Pivot": undefined,
+                                          "PivotValue": undefined,
+                                          "Placeholder": undefined,
+                                          "accessor": [Function],
+                                          "aggregate": undefined,
+                                          "className": "",
+                                          "filterAll": false,
+                                          "filterMethod": undefined,
+                                          "filterable": undefined,
+                                          "footerClassName": "",
+                                          "footerStyle": Object {},
+                                          "getFooterProps": [Function],
+                                          "getHeaderProps": [Function],
+                                          "getProps": [Function],
+                                          "headerClassName": "",
+                                          "headerStyle": Object {},
+                                          "id": "plan_status",
+                                          "minResizeWidth": 11,
+                                          "minWidth": 100,
+                                          "parentColumn": Object {
+                                            "Header": "Status",
+                                            "columns": Array [
+                                              Object {
+                                                "Cell": [Function],
+                                                "Header": "",
+                                                "accessor": "plan_status",
+                                              },
+                                            ],
+                                          },
+                                          "resizable": undefined,
+                                          "show": true,
+                                          "sortMethod": undefined,
+                                          "sortable": undefined,
+                                          "style": Object {},
+                                        }
+                                      }
+                                      columnProps={
+                                        Object {
+                                          "className": undefined,
+                                          "rest": Object {},
+                                          "style": undefined,
+                                        }
+                                      }
+                                      index={0}
+                                      level={0}
+                                      nestingPath={
+                                        Array [
+                                          0,
+                                        ]
+                                      }
+                                      original={
+                                        Object {
+                                          "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
+                                          "jurisdiction_depth": 2,
+                                          "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
+                                          "jurisdiction_name": "NVI_439",
+                                          "jurisdiction_name_path": Array [
+                                            "Chadiza",
+                                            "Naviluli",
+                                          ],
+                                          "jurisdiction_parent_id": "2944",
+                                          "jurisdiction_path": Array [
+                                            "2939",
+                                            "2944",
+                                          ],
+                                          "plan_date": "2019-06-18",
+                                          "plan_effective_period_end": "2019-06-18",
+                                          "plan_effective_period_start": "2019-07-31",
+                                          "plan_fi_reason": "Routine",
+                                          "plan_fi_status": "A1",
+                                          "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+                                          "plan_intervention_type": "FI",
+                                          "plan_status": "active",
+                                          "plan_title": "A1-Tha Luang Village 1 Focus 01",
+                                          "plan_version": "1",
+                                        }
+                                      }
+                                      page={0}
+                                      pageSize={20}
+                                      resized={Array []}
+                                      row={
+                                        Object {
+                                          "_index": 0,
+                                          "_nestingLevel": 0,
+                                          "_original": Object {
+                                            "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
+                                            "jurisdiction_depth": 2,
+                                            "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
+                                            "jurisdiction_name": "NVI_439",
+                                            "jurisdiction_name_path": Array [
+                                              "Chadiza",
+                                              "Naviluli",
+                                            ],
+                                            "jurisdiction_parent_id": "2944",
+                                            "jurisdiction_path": Array [
+                                              "2939",
+                                              "2944",
+                                            ],
+                                            "plan_date": "2019-06-18",
+                                            "plan_effective_period_end": "2019-06-18",
+                                            "plan_effective_period_start": "2019-07-31",
+                                            "plan_fi_reason": "Routine",
+                                            "plan_fi_status": "A1",
+                                            "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+                                            "plan_intervention_type": "FI",
+                                            "plan_status": "active",
+                                            "plan_title": "A1-Tha Luang Village 1 Focus 01",
+                                            "plan_version": "1",
+                                          },
+                                          "_subRows": undefined,
+                                          "_viewIndex": 0,
+                                          "plan_date": "2019-06-18",
+                                          "plan_status": "active",
+                                          "plan_title": "A1-Tha Luang Village 1 Focus 01",
+                                        }
+                                      }
+                                      show={true}
+                                      styles={Object {}}
+                                      tdProps={
+                                        Object {
+                                          "className": undefined,
+                                          "rest": Object {},
+                                          "style": undefined,
+                                        }
+                                      }
+                                      value="active"
+                                      viewIndex={0}
+                                      width={100}
+                                    >
+                                      <Badge
+                                        className="status-badge active"
+                                        color="secondary"
+                                        pill={true}
+                                        tag="span"
+                                      >
+                                        <span
+                                          className="status-badge active badge badge-secondary badge-pill"
+                                        >
+                                          active
+                                        </span>
+                                      </Badge>
+                                    </Cell>
                                   </div>
                                 </TdComponent>
                               </div>
@@ -1525,7 +1759,164 @@ exports[`containers/pages/IRS renders plans list correctly 1`] = `
                                       }
                                     }
                                   >
-                                    active
+                                    <Cell
+                                      classes={
+                                        Array [
+                                          undefined,
+                                          "",
+                                          undefined,
+                                        ]
+                                      }
+                                      column={
+                                        Object {
+                                          "Aggregated": undefined,
+                                          "Cell": [Function],
+                                          "Expander": undefined,
+                                          "Filter": undefined,
+                                          "Footer": undefined,
+                                          "Header": "",
+                                          "Pivot": undefined,
+                                          "PivotValue": undefined,
+                                          "Placeholder": undefined,
+                                          "accessor": [Function],
+                                          "aggregate": undefined,
+                                          "className": "",
+                                          "filterAll": false,
+                                          "filterMethod": undefined,
+                                          "filterable": undefined,
+                                          "footerClassName": "",
+                                          "footerStyle": Object {},
+                                          "getFooterProps": [Function],
+                                          "getHeaderProps": [Function],
+                                          "getProps": [Function],
+                                          "headerClassName": "",
+                                          "headerStyle": Object {},
+                                          "id": "plan_status",
+                                          "minResizeWidth": 11,
+                                          "minWidth": 100,
+                                          "parentColumn": Object {
+                                            "Header": "Status",
+                                            "columns": Array [
+                                              Object {
+                                                "Cell": [Function],
+                                                "Header": "",
+                                                "accessor": "plan_status",
+                                              },
+                                            ],
+                                          },
+                                          "resizable": undefined,
+                                          "show": true,
+                                          "sortMethod": undefined,
+                                          "sortable": undefined,
+                                          "style": Object {},
+                                        }
+                                      }
+                                      columnProps={
+                                        Object {
+                                          "className": undefined,
+                                          "rest": Object {},
+                                          "style": undefined,
+                                        }
+                                      }
+                                      index={1}
+                                      level={0}
+                                      nestingPath={
+                                        Array [
+                                          1,
+                                        ]
+                                      }
+                                      original={
+                                        Object {
+                                          "id": "plan-id-2",
+                                          "jurisdiction_depth": 2,
+                                          "jurisdiction_id": "3378",
+                                          "jurisdiction_name": "TLv1_02",
+                                          "jurisdiction_name_path": Array [
+                                            "Canton Tha Luang",
+                                            "Tha Luang Village",
+                                          ],
+                                          "jurisdiction_parent_id": "2977",
+                                          "jurisdiction_path": Array [
+                                            "2989",
+                                            "2977",
+                                          ],
+                                          "plan_date": "2019-06-18",
+                                          "plan_effective_period_end": "2019-06-18",
+                                          "plan_effective_period_start": "2019-07-31",
+                                          "plan_fi_reason": "Case-triggered",
+                                          "plan_fi_status": "A1",
+                                          "plan_id": "plan-id-2",
+                                          "plan_intervention_type": "IRS",
+                                          "plan_status": "active",
+                                          "plan_title": "A1-Tha Luang Village 1 Focus 01",
+                                          "plan_version": "1",
+                                        }
+                                      }
+                                      page={0}
+                                      pageSize={20}
+                                      resized={Array []}
+                                      row={
+                                        Object {
+                                          "_index": 1,
+                                          "_nestingLevel": 0,
+                                          "_original": Object {
+                                            "id": "plan-id-2",
+                                            "jurisdiction_depth": 2,
+                                            "jurisdiction_id": "3378",
+                                            "jurisdiction_name": "TLv1_02",
+                                            "jurisdiction_name_path": Array [
+                                              "Canton Tha Luang",
+                                              "Tha Luang Village",
+                                            ],
+                                            "jurisdiction_parent_id": "2977",
+                                            "jurisdiction_path": Array [
+                                              "2989",
+                                              "2977",
+                                            ],
+                                            "plan_date": "2019-06-18",
+                                            "plan_effective_period_end": "2019-06-18",
+                                            "plan_effective_period_start": "2019-07-31",
+                                            "plan_fi_reason": "Case-triggered",
+                                            "plan_fi_status": "A1",
+                                            "plan_id": "plan-id-2",
+                                            "plan_intervention_type": "IRS",
+                                            "plan_status": "active",
+                                            "plan_title": "A1-Tha Luang Village 1 Focus 01",
+                                            "plan_version": "1",
+                                          },
+                                          "_subRows": undefined,
+                                          "_viewIndex": 1,
+                                          "plan_date": "2019-06-18",
+                                          "plan_status": "active",
+                                          "plan_title": "A1-Tha Luang Village 1 Focus 01",
+                                        }
+                                      }
+                                      show={true}
+                                      styles={Object {}}
+                                      tdProps={
+                                        Object {
+                                          "className": undefined,
+                                          "rest": Object {},
+                                          "style": undefined,
+                                        }
+                                      }
+                                      value="active"
+                                      viewIndex={1}
+                                      width={100}
+                                    >
+                                      <Badge
+                                        className="status-badge active"
+                                        color="secondary"
+                                        pill={true}
+                                        tag="span"
+                                      >
+                                        <span
+                                          className="status-badge active badge badge-secondary badge-pill"
+                                        >
+                                          active
+                                        </span>
+                                      </Badge>
+                                    </Cell>
                                   </div>
                                 </TdComponent>
                               </div>
@@ -1783,7 +2174,164 @@ exports[`containers/pages/IRS renders plans list correctly 1`] = `
                                       }
                                     }
                                   >
-                                    draft
+                                    <Cell
+                                      classes={
+                                        Array [
+                                          undefined,
+                                          "",
+                                          undefined,
+                                        ]
+                                      }
+                                      column={
+                                        Object {
+                                          "Aggregated": undefined,
+                                          "Cell": [Function],
+                                          "Expander": undefined,
+                                          "Filter": undefined,
+                                          "Footer": undefined,
+                                          "Header": "",
+                                          "Pivot": undefined,
+                                          "PivotValue": undefined,
+                                          "Placeholder": undefined,
+                                          "accessor": [Function],
+                                          "aggregate": undefined,
+                                          "className": "",
+                                          "filterAll": false,
+                                          "filterMethod": undefined,
+                                          "filterable": undefined,
+                                          "footerClassName": "",
+                                          "footerStyle": Object {},
+                                          "getFooterProps": [Function],
+                                          "getHeaderProps": [Function],
+                                          "getProps": [Function],
+                                          "headerClassName": "",
+                                          "headerStyle": Object {},
+                                          "id": "plan_status",
+                                          "minResizeWidth": 11,
+                                          "minWidth": 100,
+                                          "parentColumn": Object {
+                                            "Header": "Status",
+                                            "columns": Array [
+                                              Object {
+                                                "Cell": [Function],
+                                                "Header": "",
+                                                "accessor": "plan_status",
+                                              },
+                                            ],
+                                          },
+                                          "resizable": undefined,
+                                          "show": true,
+                                          "sortMethod": undefined,
+                                          "sortable": undefined,
+                                          "style": Object {},
+                                        }
+                                      }
+                                      columnProps={
+                                        Object {
+                                          "className": undefined,
+                                          "rest": Object {},
+                                          "style": undefined,
+                                        }
+                                      }
+                                      index={2}
+                                      level={0}
+                                      nestingPath={
+                                        Array [
+                                          2,
+                                        ]
+                                      }
+                                      original={
+                                        Object {
+                                          "id": "draftPlan-id-2",
+                                          "jurisdiction_depth": 41,
+                                          "jurisdiction_id": "3380",
+                                          "jurisdiction_name": "TLv1_02",
+                                          "jurisdiction_name_path": Array [
+                                            "Canton Tha Luang",
+                                            "Tha Luang Village",
+                                          ],
+                                          "jurisdiction_parent_id": "2977",
+                                          "jurisdiction_path": Array [
+                                            "2989",
+                                            "2977",
+                                          ],
+                                          "plan_date": "2019-06-18",
+                                          "plan_effective_period_end": "2019-06-18",
+                                          "plan_effective_period_start": "2019-07-31",
+                                          "plan_fi_reason": "Case-triggered",
+                                          "plan_fi_status": "A1",
+                                          "plan_id": "plan-id-2",
+                                          "plan_intervention_type": "IRS",
+                                          "plan_status": "draft",
+                                          "plan_title": "A1-Tha Luang Village 1 Focus 01",
+                                          "plan_version": "1",
+                                        }
+                                      }
+                                      page={0}
+                                      pageSize={20}
+                                      resized={Array []}
+                                      row={
+                                        Object {
+                                          "_index": 2,
+                                          "_nestingLevel": 0,
+                                          "_original": Object {
+                                            "id": "draftPlan-id-2",
+                                            "jurisdiction_depth": 41,
+                                            "jurisdiction_id": "3380",
+                                            "jurisdiction_name": "TLv1_02",
+                                            "jurisdiction_name_path": Array [
+                                              "Canton Tha Luang",
+                                              "Tha Luang Village",
+                                            ],
+                                            "jurisdiction_parent_id": "2977",
+                                            "jurisdiction_path": Array [
+                                              "2989",
+                                              "2977",
+                                            ],
+                                            "plan_date": "2019-06-18",
+                                            "plan_effective_period_end": "2019-06-18",
+                                            "plan_effective_period_start": "2019-07-31",
+                                            "plan_fi_reason": "Case-triggered",
+                                            "plan_fi_status": "A1",
+                                            "plan_id": "plan-id-2",
+                                            "plan_intervention_type": "IRS",
+                                            "plan_status": "draft",
+                                            "plan_title": "A1-Tha Luang Village 1 Focus 01",
+                                            "plan_version": "1",
+                                          },
+                                          "_subRows": undefined,
+                                          "_viewIndex": 2,
+                                          "plan_date": "2019-06-18",
+                                          "plan_status": "draft",
+                                          "plan_title": "A1-Tha Luang Village 1 Focus 01",
+                                        }
+                                      }
+                                      show={true}
+                                      styles={Object {}}
+                                      tdProps={
+                                        Object {
+                                          "className": undefined,
+                                          "rest": Object {},
+                                          "style": undefined,
+                                        }
+                                      }
+                                      value="draft"
+                                      viewIndex={2}
+                                      width={100}
+                                    >
+                                      <Badge
+                                        className="status-badge draft"
+                                        color="secondary"
+                                        pill={true}
+                                        tag="span"
+                                      >
+                                        <span
+                                          className="status-badge draft badge badge-secondary badge-pill"
+                                        >
+                                          draft
+                                        </span>
+                                      </Badge>
+                                    </Cell>
                                   </div>
                                 </TdComponent>
                               </div>
@@ -1811,29 +2359,6 @@ exports[`containers/pages/IRS renders plans list correctly 1`] = `
               </div>
             </ReactTable>
           </DrillDownTable>
-          <br />
-          <Button
-            color="primary"
-            tag={[Function]}
-            to="/intervention/irs/new"
-          >
-            <Link
-              aria-label={null}
-              className="btn btn-primary"
-              onClick={[Function]}
-              replace={false}
-              to="/intervention/irs/new"
-            >
-              <a
-                aria-label={null}
-                className="btn btn-primary"
-                href="/intervention/irs/new"
-                onClick={[Function]}
-              >
-                Create new plan
-              </a>
-            </Link>
-          </Button>
         </div>
       </IrsPlans>
     </Connect(IrsPlans)>

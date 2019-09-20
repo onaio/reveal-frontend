@@ -72,7 +72,7 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
     const path = this.props.location.pathname;
     return (
       <div className="row white-nav-bordered ">
-        <Navbar color="" light={true} expand="md">
+        <Navbar light={true} expand="md">
           <nav className="navbar navbar-expand-md navbar-light">
             <Link to="/" className="navbar-brand">
               <img src={logo} alt={WEBSITE_NAME} />

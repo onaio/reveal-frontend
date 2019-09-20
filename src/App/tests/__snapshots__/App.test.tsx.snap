@@ -124,8 +124,11 @@ exports[`App renders App correctly 1`] = `
                     }
                   }
                 >
-                  <div>
+                  <div
+                    className="row white-nav-bordered "
+                  >
                     <Navbar
+                      color=""
                       expand="md"
                       light={true}
                       tag="nav"

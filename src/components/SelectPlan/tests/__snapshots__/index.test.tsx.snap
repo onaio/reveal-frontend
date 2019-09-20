@@ -361,6 +361,7 @@ exports[`components/page/Header renders header correctly 1`] = `
               }
             >
               <EmotionCssPropInternal
+                __EMOTION_LABEL_PLEASE_DO_NOT_USE__="SelectContainer"
                 __EMOTION_TYPE_PLEASE_DO_NOT_USE__="div"
                 className=""
                 css={
@@ -496,6 +497,7 @@ exports[`components/page/Header renders header correctly 1`] = `
                     }
                   >
                     <EmotionCssPropInternal
+                      __EMOTION_LABEL_PLEASE_DO_NOT_USE__="Control"
                       __EMOTION_TYPE_PLEASE_DO_NOT_USE__="div"
                       className=""
                       css={
@@ -769,6 +771,7 @@ exports[`components/page/Header renders header correctly 1`] = `
                                 }
                               >
                                 <EmotionCssPropInternal
+                                  __EMOTION_LABEL_PLEASE_DO_NOT_USE__="Placeholder"
                                   __EMOTION_TYPE_PLEASE_DO_NOT_USE__="div"
                                   className=""
                                   css={
@@ -895,6 +898,7 @@ exports[`components/page/Header renders header correctly 1`] = `
                                 value=""
                               >
                                 <EmotionCssPropInternal
+                                  __EMOTION_LABEL_PLEASE_DO_NOT_USE__="Input"
                                   __EMOTION_TYPE_PLEASE_DO_NOT_USE__="div"
                                   css={
                                     Object {
@@ -908,7 +912,7 @@ exports[`components/page/Header renders header correctly 1`] = `
                                   }
                                 >
                                   <div
-                                    className="css-1g6gooi"
+                                    className="css-w8afj7-Input"
                                   >
                                     <AutosizeInput
                                       aria-autocomplete="list"
@@ -1108,6 +1112,7 @@ exports[`components/page/Header renders header correctly 1`] = `
                           }
                         >
                           <EmotionCssPropInternal
+                            __EMOTION_LABEL_PLEASE_DO_NOT_USE__="IndicatorsContainer"
                             __EMOTION_TYPE_PLEASE_DO_NOT_USE__="div"
                             className=""
                             css={
@@ -1121,7 +1126,7 @@ exports[`components/page/Header renders header correctly 1`] = `
                             }
                           >
                             <div
-                              className=" css-1wy0on6"
+                              className=" css-1g48xl4-IndicatorsContainer"
                             >
                               <IndicatorSeparator
                                 clearValue={[Function]}
@@ -1233,6 +1238,7 @@ exports[`components/page/Header renders header correctly 1`] = `
                                 }
                               >
                                 <EmotionCssPropInternal
+                                  __EMOTION_LABEL_PLEASE_DO_NOT_USE__="IndicatorSeparator"
                                   __EMOTION_TYPE_PLEASE_DO_NOT_USE__="span"
                                   className=""
                                   css={
@@ -1369,6 +1375,7 @@ exports[`components/page/Header renders header correctly 1`] = `
                                 }
                               >
                                 <EmotionCssPropInternal
+                                  __EMOTION_LABEL_PLEASE_DO_NOT_USE__="DropdownIndicator"
                                   __EMOTION_TYPE_PLEASE_DO_NOT_USE__="div"
                                   aria-hidden="true"
                                   className=""
@@ -1399,6 +1406,7 @@ exports[`components/page/Header renders header correctly 1`] = `
                                         size={20}
                                       >
                                         <EmotionCssPropInternal
+                                          __EMOTION_LABEL_PLEASE_DO_NOT_USE__="Svg"
                                           __EMOTION_TYPE_PLEASE_DO_NOT_USE__="svg"
                                           aria-hidden="true"
                                           css={
@@ -1415,7 +1423,7 @@ exports[`components/page/Header renders header correctly 1`] = `
                                         >
                                           <svg
                                             aria-hidden="true"
-                                            className="css-19bqh2r"
+                                            className="css-tj5bde-Svg"
                                             focusable="false"
                                             height={20}
                                             viewBox="0 0 20 20"
@@ -1809,6 +1817,7 @@ exports[`components/page/Header renders header correctly when authenticated 1`] 
               }
             >
               <EmotionCssPropInternal
+                __EMOTION_LABEL_PLEASE_DO_NOT_USE__="SelectContainer"
                 __EMOTION_TYPE_PLEASE_DO_NOT_USE__="div"
                 className=""
                 css={
@@ -1944,6 +1953,7 @@ exports[`components/page/Header renders header correctly when authenticated 1`] 
                     }
                   >
                     <EmotionCssPropInternal
+                      __EMOTION_LABEL_PLEASE_DO_NOT_USE__="Control"
                       __EMOTION_TYPE_PLEASE_DO_NOT_USE__="div"
                       className=""
                       css={
@@ -2217,6 +2227,7 @@ exports[`components/page/Header renders header correctly when authenticated 1`] 
                                 }
                               >
                                 <EmotionCssPropInternal
+                                  __EMOTION_LABEL_PLEASE_DO_NOT_USE__="Placeholder"
                                   __EMOTION_TYPE_PLEASE_DO_NOT_USE__="div"
                                   className=""
                                   css={
@@ -2343,6 +2354,7 @@ exports[`components/page/Header renders header correctly when authenticated 1`] 
                                 value=""
                               >
                                 <EmotionCssPropInternal
+                                  __EMOTION_LABEL_PLEASE_DO_NOT_USE__="Input"
                                   __EMOTION_TYPE_PLEASE_DO_NOT_USE__="div"
                                   css={
                                     Object {
@@ -2356,7 +2368,7 @@ exports[`components/page/Header renders header correctly when authenticated 1`] 
                                   }
                                 >
                                   <div
-                                    className="css-1g6gooi"
+                                    className="css-w8afj7-Input"
                                   >
                                     <AutosizeInput
                                       aria-autocomplete="list"
@@ -2556,6 +2568,7 @@ exports[`components/page/Header renders header correctly when authenticated 1`] 
                           }
                         >
                           <EmotionCssPropInternal
+                            __EMOTION_LABEL_PLEASE_DO_NOT_USE__="IndicatorsContainer"
                             __EMOTION_TYPE_PLEASE_DO_NOT_USE__="div"
                             className=""
                             css={
@@ -2569,7 +2582,7 @@ exports[`components/page/Header renders header correctly when authenticated 1`] 
                             }
                           >
                             <div
-                              className=" css-1wy0on6"
+                              className=" css-1g48xl4-IndicatorsContainer"
                             >
                               <IndicatorSeparator
                                 clearValue={[Function]}
@@ -2681,6 +2694,7 @@ exports[`components/page/Header renders header correctly when authenticated 1`] 
                                 }
                               >
                                 <EmotionCssPropInternal
+                                  __EMOTION_LABEL_PLEASE_DO_NOT_USE__="IndicatorSeparator"
                                   __EMOTION_TYPE_PLEASE_DO_NOT_USE__="span"
                                   className=""
                                   css={
@@ -2817,6 +2831,7 @@ exports[`components/page/Header renders header correctly when authenticated 1`] 
                                 }
                               >
                                 <EmotionCssPropInternal
+                                  __EMOTION_LABEL_PLEASE_DO_NOT_USE__="DropdownIndicator"
                                   __EMOTION_TYPE_PLEASE_DO_NOT_USE__="div"
                                   aria-hidden="true"
                                   className=""
@@ -2847,6 +2862,7 @@ exports[`components/page/Header renders header correctly when authenticated 1`] 
                                         size={20}
                                       >
                                         <EmotionCssPropInternal
+                                          __EMOTION_LABEL_PLEASE_DO_NOT_USE__="Svg"
                                           __EMOTION_TYPE_PLEASE_DO_NOT_USE__="svg"
                                           aria-hidden="true"
                                           css={
@@ -2863,7 +2879,7 @@ exports[`components/page/Header renders header correctly when authenticated 1`] 
                                         >
                                           <svg
                                             aria-hidden="true"
-                                            className="css-19bqh2r"
+                                            className="css-tj5bde-Svg"
                                             focusable="false"
                                             height={20}
                                             viewBox="0 0 20 20"

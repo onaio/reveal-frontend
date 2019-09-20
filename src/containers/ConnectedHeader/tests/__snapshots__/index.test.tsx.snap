@@ -194,6 +194,7 @@ Object {
       </Nav>
     </Collapse>,
   ],
+  "color": "",
   "expand": "md",
   "light": true,
   "tag": "nav",
@@ -442,6 +443,7 @@ Object {
       </Nav>
     </Collapse>,
   ],
+  "color": "",
   "expand": "md",
   "light": true,
   "tag": "nav",
