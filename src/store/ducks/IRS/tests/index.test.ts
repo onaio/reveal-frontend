@@ -12,7 +12,7 @@ import reducer, {
   IRSPlan,
   reducerName,
   removeIRSPlans,
-} from '../index';
+} from '../plans';
 import * as fixtures from './fixtures';
 
 reducerRegistry.register(reducerName, reducer);
