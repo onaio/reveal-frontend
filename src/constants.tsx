@@ -198,6 +198,8 @@ export const PLAN_COMPLETION_URL = '/focus-investigation/view/complete';
 export type PLAN_COMPLETION_URL = typeof PLAN_COMPLETION_URL;
 export const PLAN_UPDATE_URL = '/plans/update';
 export type PLAN_UPDATE_URL = typeof PLAN_UPDATE_URL;
+export const IRS_REPORTS_URL = '/irs/reports';
+export type IRS_REPORTS_URL = typeof IRS_REPORTS_URL;
 
 // OpenSRP API strings
 export const OPENSRP_FIND_BY_PROPERTIES = 'findByProperties';
