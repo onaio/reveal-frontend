@@ -192,10 +192,23 @@ class IrsReport extends React.Component<RouteComponentProps<RouteParams> & IrsRe
     );
 
     const planJurByIds = keyBy(planJurArr, j => j.jurisdiction_id);
-    const jurisdictionsArray = jurArr.map(
-      (j: AnyJurisdiction) => planJurByIds[j.jurisdiction_id] || j
-    );
 
+    const jurisdictionsArray: AnyJurisdiction[] = jurArr.map((j: AnyJurisdiction) => {
+      if (planJurByIds[j.jurisdiction_id]) {
+        const ID =
+          planJurByIds[j.jurisdiction_id].jurisdiction_id ||
+          (planJurByIds[j.jurisdiction_id] as any).id;
+        return {
+          ...planJurByIds[j.jurisdiction_id],
+          jurisdiction_id: ID,
+        };
+      }
+      const id = j.jurisdiction_id || (j as any).id;
+      return {
+        ...j,
+        jurisdiction_id: id,
+      };
+    });
     fetchJurisdictionsActionCreator(jurisdictionsArray);
 
     const jurisdictionsById = keyBy(jurisdictionsArray, j => j.jurisdiction_id);
