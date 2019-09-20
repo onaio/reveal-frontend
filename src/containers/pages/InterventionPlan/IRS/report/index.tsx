@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import DrillDownTable, { DrillDownProps, DropDownCell } from '@onaio/drill-down-table';
 import reducerRegistry from '@onaio/redux-reducer-registry';
+import superset from '@onaio/superset-connector';
 import { keyBy, keys } from 'lodash';
 import * as React from 'react';
 import { Helmet } from 'react-helmet';
@@ -56,11 +57,14 @@ import jurisdictionReducer, {
   reducerName as jurisdictionReducerName,
 } from '../../../../../store/ducks/jurisdictions';
 import plansReducer, {
+  getPlanById,
   getPlanRecordById,
+  Plan,
   PlanRecord,
   reducerName as plansReducerName,
 } from '../../../../../store/ducks/plans';
 
+import { getLocationTree } from '../../../../../configs/locationTrees';
 import { TableCrumb } from '../plan';
 import './style.css';
 /** register the plans reducer */
@@ -75,7 +79,7 @@ export interface IrsReportProps {
   fetchJurisdictionsActionCreator: typeof fetchJurisdictions;
   jurisdictionIdsByPlanId: JurisdictionIdsByPlanId;
   jurisdictionsById: { [key: string]: Jurisdiction };
-  planById: PlanRecord | null;
+  planById: PlanRecord | Plan | null;
   planId: string;
   supersetService: typeof supersetFetch;
 }
@@ -130,20 +134,25 @@ class IrsReport extends React.Component<RouteComponentProps<RouteParams> & IrsRe
       fetchJurisdictionIdsByPlanIdActionCreator,
       fetchJurisdictionsActionCreator,
       jurisdictionIdsByPlanId,
-      jurisdictionsById: JurisdictionsById,
       planById,
       planId,
       supersetService,
     } = this.props;
 
-    // get Jurisdicitons from Store or Superset
-    const jurisdictionsArray = Object.keys(JurisdictionsById).length
-      ? Object.keys(JurisdictionsById).map(j => JurisdictionsById[j])
-      : await supersetService(SUPERSET_IRS_REPORTING_JURISDICTIONS_DATA_SLICE, {
-          row_limit: 10000,
-        }).then((jurisdictionResults: FlexObject[] = []) => {
-          // GET FULL JURISDICTION HIERARCHY
-          const jurArray: AnyJurisdiction[] = jurisdictionResults
+    const topJurIdFromPlan: string | null | undefined =
+      planById && (planById as Plan).jurisdiction_root_parent_ids![0];
+
+    const jurArr = topJurIdFromPlan ? getLocationTree(topJurIdFromPlan) || [] : [];
+    const planJurArrParams = superset.getFormData(5000, [
+      { comparator: planId, operator: '==', subject: 'plan_id' },
+    ]);
+    const planJurArr = await supersetService(
+      SUPERSET_IRS_REPORTING_JURISDICTIONS_DATA_SLICE,
+      planJurArrParams
+    ).then((planJurs: any[]) =>
+      planJurs
+        ? planJurs
+            .filter(j => !!j && !!j.jurisdiction_id)
             .map(j => {
               const {
                 jurisdiction_depth,
@@ -165,7 +174,7 @@ class IrsReport extends React.Component<RouteComponentProps<RouteParams> & IrsRe
                   geographic_level ||
                   (!Number.isNaN(Number(jurisdiction_depth)) && Number(jurisdiction_depth)) ||
                   0,
-                jurisdiction_id: id || jurisdiction_id,
+                jurisdiction_id: jurisdiction_id || id,
                 jurisdiction_name_path: jurisdictionNamePath || [],
                 jurisdiction_path: jurisdictionPath || [],
                 name: name || jurisdiction_name || null,
@@ -178,26 +187,29 @@ class IrsReport extends React.Component<RouteComponentProps<RouteParams> & IrsRe
                 SUPERSET_IRS_REPORTING_JURISDICTIONS_DATA_SLICE
               );
             })
-            .sort((a, b) =>
-              a.geographic_level && b.geographic_level ? b.geographic_level - a.geographic_level : 0
-            );
+        : []
+    );
 
-          fetchJurisdictionsActionCreator(jurArray);
-          return jurArray;
-        });
+    const planJurByIds = keyBy(planJurArr, j => j.jurisdiction_id);
 
-    const jurisdictionsById = Object.keys(JurisdictionsById).length
-      ? JurisdictionsById
-      : keyBy(jurisdictionsArray, j => j.jurisdiction_id);
+    const jurisdictionsArray = jurArr.map(
+      (j: AnyJurisdiction) => planJurByIds[j.jurisdiction_id] || j
+    );
+    fetchJurisdictionsActionCreator(jurisdictionsArray);
 
-    if (planById && planById.plan_jurisdictions_ids) {
+    const jurisdictionsById = keyBy(jurisdictionsArray, j => j.jurisdiction_id);
+
+    const childlessChildrenIds = getChildlessChildrenIds(jurisdictionsArray).filter(
+      j => j && planJurByIds[j]
+    );
+
+    if (planById && childlessChildrenIds) {
       // define ids of jurisdiction relevant to this plan - note: this is causing a delay when loading every time
       const filteredJurisdictionIds = jurisdictionIdsByPlanId[planId]
         ? [...jurisdictionIdsByPlanId[planId]]
-        : getAncestorJurisdictionIds(
-            [...planById.plan_jurisdictions_ids],
-            jurisdictionsArray
-          ).filter(j => j && jurisdictionsById[j]);
+        : getAncestorJurisdictionIds([...childlessChildrenIds], jurisdictionsArray).filter(
+            j => j && jurisdictionsById[j]
+          );
       if (!jurisdictionIdsByPlanId[planId]) {
         fetchJurisdictionIdsByPlanIdActionCreator({ [planId]: [...filteredJurisdictionIds] });
       }
@@ -223,16 +235,14 @@ class IrsReport extends React.Component<RouteComponentProps<RouteParams> & IrsRe
 
       // define level 0 Jurisdiction as parentlessParent
       const parentlessParentId =
+        topJurIdFromPlan ||
         filteredJurisdictionIds.find(
           a =>
             jurisdictionsById[a] &&
             !jurisdictionsById[a].parent_id &&
             !jurisdictionsById[a].geographic_level
-        ) || '';
-
-      const childlessChildrenIds = getChildlessChildrenIds(
-        filteredJurisdictionIds.map(j => jurisdictionsById[j])
-      );
+        ) ||
+        '';
 
       // define contry based on parentlessParentId
       const countryPcode: string | undefined = Object.keys(CountriesAdmin0).find(c => {
@@ -381,7 +391,7 @@ class IrsReport extends React.Component<RouteComponentProps<RouteParams> & IrsRe
     const { childlessChildrenIds, filteredJurisdictionIds, focusJurisdictionId } = state;
     const { jurisdictionsById, planById, planId } = this.props;
     const filteredJurisdictions = filteredJurisdictionIds.map(j => jurisdictionsById[j]);
-    if (!planById || !planById.plan_jurisdictions_ids) {
+    if (!planById || !childlessChildrenIds) {
       return null;
     }
 
@@ -594,7 +604,9 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): IrsReportProps =
   const jurisdictionIdsByPlanId = getJurisdictionIdsByPlanId(state);
   const jurisdictionsById = getJurisdictionsById(state);
   const planId = ownProps.match.params.id || '';
-  const planById = planId.length ? getPlanRecordById(state, planId) : null;
+  const planById = planId.length
+    ? getPlanRecordById(state, planId) || getPlanById(state, planId)
+    : null;
   const props = {
     childrenByParentId,
     jurisdictionIdsByPlanId,

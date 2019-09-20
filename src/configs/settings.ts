@@ -730,7 +730,7 @@ export interface NamibiaIrsReportingJurisdiction extends Jurisdiction {
   structuresfound: number;
   structuressprayed: number;
   structurestargeted: number;
-  targetcoverage: number;
+  target_2019: number;
 }
 
 /** an interface describing geojson properties of Namibia Irs Reporting Structures */
@@ -821,10 +821,6 @@ const indicatorExtractorsNA: IndicatorExtractors = {
     }
     return 0;
   },
-  structurestargeted: (datum: FlexObject) => {
-    const structurestargeted = (100 / datum.targetcoverage) * datum.structuressprayed * 100;
-    return Math.round(structurestargeted);
-  },
 };
 
 /** Indicator Thresholds for NA (Namibia) */
@@ -856,7 +852,6 @@ const indicatorStopsNA: Array<[string, string]> = [
   ['Not Visited', TASK_YELLOW],
   ['Not Eligible', BLACK],
 ];
-
 /* tslint:disable:object-literal-sort-keys */
 /** The actual configuration object controlling how IRS Reporting is handled for different clients */
 export const irsReportingCongif: {
@@ -883,14 +878,23 @@ export const irsReportingCongif: {
           },
         ],
       }),
+      target_2019: () => ({
+        Header: 'Structures Targeted',
+        columns: [
+          {
+            Header: '',
+            accessor: 'target_2019',
+          },
+        ],
+      }),
       targetcoverage: () => ({
         Header: `Target Coverage`,
         columns: [
           {
             Header: '',
-            // accessor: (d: any) => `${d.targetcoverage}%`,
-            // id: 'targetcoverage',
-            Cell: (cell: CellInfo) => getThresholdAdherenceIndicator(cell, '550'),
+            Cell: (cell: CellInfo) =>
+              getThresholdAdherenceIndicator(cell, process.env
+                .REACT_APP_SUPERSET_IRS_REPORTING_JURISDICTIONS_DATA_SLICE_NA as string),
             accessor: 'targetcoverage',
             className: 'indicator centered',
           },
@@ -901,7 +905,9 @@ export const irsReportingCongif: {
         columns: [
           {
             Header: '',
-            Cell: (cell: CellInfo) => getThresholdAdherenceIndicator(cell, '550'),
+            Cell: (cell: CellInfo) =>
+              getThresholdAdherenceIndicator(cell, process.env
+                .REACT_APP_SUPERSET_IRS_REPORTING_JURISDICTIONS_DATA_SLICE_NA as string),
             accessor: 'foundcoverage',
             className: 'indicator centered',
           },
@@ -957,6 +963,7 @@ export const irsReportingCongif: {
       'structuressprayed',
       'structurestargeted',
       'targetcoverage',
+      'target_2019',
     ],
   } as IrsReportingJurisdictionConfig,
 
@@ -975,7 +982,7 @@ export const irsReportingCongif: {
           denominator: jurisdiction ? jurisdiction.structurestargeted || 0 : 0,
           description: 'Percent of residential structures sprayed',
           numerator: jurisdiction ? jurisdiction.structuressprayed || 0 : 0,
-          value: jurisdiction ? Math.round((jurisdiction.targetcoverage || 0) * 100) : 0,
+          value: jurisdiction ? Math.round((jurisdiction.target_2019 || 0) * 100) : 0,
           title: 'Target Coverage',
         },
         {
