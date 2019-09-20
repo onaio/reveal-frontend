@@ -142,12 +142,12 @@ class IrsReport extends React.Component<RouteComponentProps<RouteParams> & IrsRe
     const topJurIdFromPlan: string | null | undefined =
       planById && (planById as Plan).jurisdiction_root_parent_ids![0];
 
-    const jurArr = topJurIdFromPlan ? getLocationTree(topJurIdFromPlan) || [] : [];
+    // const jurArr = topJurIdFromPlan ? getLocationTree(topJurIdFromPlan) || [] : [];
 
     const planJurArrParams = superset.getFormData(5000, [
       { comparator: planId, operator: '==', subject: 'plan_id' },
     ]);
-    const planJurArr = await supersetService(
+    const jurisdictionsArray = await supersetService(
       SUPERSET_IRS_REPORTING_JURISDICTIONS_DATA_SLICE,
       planJurArrParams
     ).then((planJurs: any[]) =>
@@ -191,31 +191,11 @@ class IrsReport extends React.Component<RouteComponentProps<RouteParams> & IrsRe
         : []
     );
 
-    const planJurByIds = keyBy(planJurArr, j => j.jurisdiction_id);
-
-    const jurisdictionsArray: AnyJurisdiction[] = jurArr.map((j: AnyJurisdiction) => {
-      if (planJurByIds[j.jurisdiction_id]) {
-        const ID =
-          planJurByIds[j.jurisdiction_id].jurisdiction_id ||
-          (planJurByIds[j.jurisdiction_id] as any).id;
-        return {
-          ...planJurByIds[j.jurisdiction_id],
-          jurisdiction_id: ID,
-        };
-      }
-      const id = j.jurisdiction_id || (j as any).id;
-      return {
-        ...j,
-        jurisdiction_id: id,
-      };
-    });
     fetchJurisdictionsActionCreator(jurisdictionsArray);
 
     const jurisdictionsById = keyBy(jurisdictionsArray, j => j.jurisdiction_id);
 
-    const childlessChildrenIds = getChildlessChildrenIds(jurisdictionsArray).filter(
-      j => j && planJurByIds[j]
-    );
+    const childlessChildrenIds = getChildlessChildrenIds(jurisdictionsArray);
 
     if (planById && childlessChildrenIds) {
       // define ids of jurisdiction relevant to this plan - note: this is causing a delay when loading every time
