@@ -1,4 +1,4 @@
-export const IRSPlans = [
+export const plans = [
   {
     jurisdiction_root_parent_ids: ['f45b9380-c970-4dd1-8533-9e95ab12f128'],
     plan_date: '2019-09-05',
