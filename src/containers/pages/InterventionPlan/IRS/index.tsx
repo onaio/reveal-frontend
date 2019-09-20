@@ -49,6 +49,7 @@ import HeaderBreadcrumbs, {
   BreadCrumbProps,
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
+import { SUPERSET_IRS_REPORTING_PLANS_SLICE } from '../../../../configs/env';
 import { useContextCodes } from '../../../../configs/settings';
 import { IRS_PLANS, IRS_TITLE } from '../../../../constants';
 import supersetFetch from '../../../../services/superset';
@@ -94,7 +95,9 @@ class IrsPlans extends React.Component<IrsPlansProps & RouteComponentProps<Route
     ]);
     if (isReporting) {
       // use superset enpoint in reporting
-      const plansArray = await supersetFetch('555', plansParams).then((plans: Plan[]) => plans);
+      const plansArray = await supersetFetch(SUPERSET_IRS_REPORTING_PLANS_SLICE, plansParams).then(
+        (plans: Plan[]) => plans
+      );
       fetchPlansActionCreator(plansArray);
     } else {
       // Use openSRP endpoint in planning
