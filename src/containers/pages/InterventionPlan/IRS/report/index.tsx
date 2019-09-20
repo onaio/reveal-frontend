@@ -64,7 +64,6 @@ import plansReducer, {
   reducerName as plansReducerName,
 } from '../../../../../store/ducks/plans';
 
-import { getLocationTree } from '../../../../../configs/locationTrees';
 import { TableCrumb } from '../plan';
 import './style.css';
 /** register the plans reducer */
@@ -141,8 +140,6 @@ class IrsReport extends React.Component<RouteComponentProps<RouteParams> & IrsRe
 
     const topJurIdFromPlan: string | null | undefined =
       planById && (planById as Plan).jurisdiction_root_parent_ids![0];
-
-    // const jurArr = topJurIdFromPlan ? getLocationTree(topJurIdFromPlan) || [] : [];
 
     const planJurArrParams = superset.getFormData(5000, [
       { comparator: planId, operator: '==', subject: 'plan_id' },
