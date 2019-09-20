@@ -187,8 +187,12 @@ class IrsPlans extends React.Component<IrsPlansProps & RouteComponentProps<Route
               </Button>
             </Col>
           </Row>
+          <Row>
+            <Col md="12">
+              <DrillDownTable {...tableProps} />
+            </Col>
+          </Row>
         </Container>
-        <DrillDownTable {...tableProps} />
       </div>
     );
   }
