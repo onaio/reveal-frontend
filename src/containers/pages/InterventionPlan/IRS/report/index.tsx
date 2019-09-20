@@ -138,9 +138,10 @@ class IrsReport extends React.Component<RouteComponentProps<RouteParams> & IrsRe
       supersetService,
     } = this.props;
 
+    // get level 0 jurisdiction id from Plan
     const topJurIdFromPlan: string | null | undefined =
       planById && (planById as Plan).jurisdiction_root_parent_ids![0];
-
+    // get all plan jurisidctions from juridisctions branch
     const planJurArrParams = superset.getFormData(5000, [
       { comparator: planId, operator: '==', subject: 'plan_id' },
     ]);
@@ -188,10 +189,17 @@ class IrsReport extends React.Component<RouteComponentProps<RouteParams> & IrsRe
         : []
     );
 
+    // save Plan-Jurisdictions in JurisdictionsById
     fetchJurisdictionsActionCreator(jurisdictionsArray);
 
+    // define JurisdictionsById to finish init
     const jurisdictionsById = keyBy(jurisdictionsArray, j => j.jurisdiction_id);
 
+    /** todo
+     * under the assumption that we will have the entire location tree for the plan,
+     * we don't need to find childlessChrildren and their ancestors,
+     * so we can cut some things out below!
+     */
     const childlessChildrenIds = getChildlessChildrenIds(jurisdictionsArray);
 
     if (planById && childlessChildrenIds) {
