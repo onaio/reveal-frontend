@@ -23,7 +23,10 @@ export interface IRSJurisdictionProps {
   service: typeof supersetFetch;
 }
 
-const data = superset.processData(JSON.parse(fixtures.supersetJSON)) || [];
+const data = superset.processData(fixtures.supersetJSON) || [];
+// const data = [];
+const x = fixtures.supersetJSON;
+// debugger;
 
 /** Renders IRS Jurisdictions reports */
 const IRSJurisdictions = (props: IRSJurisdictionProps & RouteComponentProps<RouteParams>) => {
@@ -31,17 +34,34 @@ const IRSJurisdictions = (props: IRSJurisdictionProps & RouteComponentProps<Rout
 
   const tableProps = {
     CellComponent: DrillDownTableLinkedCell,
+    columns: [
+      {
+        Header: 'Name',
+        accessor: 'jurisdiction_name',
+        // className: 'centered',
+      },
+      {
+        Header: 'Found',
+        accessor: 'structuresfound',
+        // className: 'centered',
+      },
+      {
+        Header: 'Sprayed',
+        accessor: 'structuressprayed',
+        // className: 'centered',
+      },
+    ],
     data,
-    extraCellProps: { urlPath: IRS_REPORTS_URL },
-    identifierField: 'jurisdiction_name',
+    extraCellProps: { urlPath: 'xxx' },
+    identifierField: 'jurisdiction_id',
     linkerField: 'jurisdiction_name',
-    minRows: 0,
+    minRows: 10,
     parentIdentifierField: 'jurisdiction_parent_id',
-    rootParentId: id || null,
-    shouldUseEffect: true,
-    showPageSizeOptions: true,
-    showPagination: true,
-    useDrillDownTrProps: false,
+    rootParentId: '',
+    shouldUseEffect: false,
+    // showPageSizeOptions: true,
+    // showPagination: true,
+    useDrillDownTrProps: true,
   };
 
   return (
