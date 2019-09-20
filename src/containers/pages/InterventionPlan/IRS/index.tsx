@@ -9,6 +9,7 @@ import { Store } from 'redux';
 
 import DrillDownTable from '@onaio/drill-down-table';
 import reducerRegistry from '@onaio/redux-reducer-registry';
+import superset from '@onaio/superset-connector';
 
 import {
   CREATE_NEW_PLAN,
@@ -29,8 +30,12 @@ import { OpenSRPService } from '../../../../services/opensrp';
 import plansReducer, {
   extractPlanRecordResponseFromPlanPayload,
   fetchPlanRecords,
+  fetchPlans,
   getPlanRecordsArray,
+  getPlansArray,
+  getPlansById,
   InterventionType,
+  Plan,
   PlanPayload,
   PlanRecord,
   PlanRecordResponse,
@@ -46,6 +51,7 @@ import HeaderBreadcrumbs, {
 import Loading from '../../../../components/page/Loading';
 import { useContextCodes } from '../../../../configs/settings';
 import { IRS_PLANS, IRS_TITLE } from '../../../../constants';
+import supersetFetch from '../../../../services/superset';
 import './../../../../styles/css/drill-down-table.css';
 
 /** register the plans reducer */
@@ -56,7 +62,8 @@ const OpenSrpPlanService = new OpenSRPService('plans');
 
 /** IrsPlansProps - interface for IRS Plans page */
 export interface IrsPlansProps {
-  fetchPlansActionCreator: typeof fetchPlanRecords;
+  fetchPlanRecordsActionCreator: typeof fetchPlanRecords;
+  fetchPlansActionCreator: typeof fetchPlans;
   isReporting: boolean;
   pageTitle: string;
   plansArray: PlanRecord[];
@@ -64,7 +71,8 @@ export interface IrsPlansProps {
 
 /** defaultIrsPlansProps - default props for IRS Plans page */
 export const defaultIrsPlansProps: IrsPlansProps = {
-  fetchPlansActionCreator: fetchPlanRecords,
+  fetchPlanRecordsActionCreator: fetchPlanRecords,
+  fetchPlansActionCreator: fetchPlans,
   isReporting: false,
   pageTitle: '',
   plansArray: [],
@@ -77,33 +85,43 @@ class IrsPlans extends React.Component<IrsPlansProps & RouteComponentProps<Route
     super(props);
   }
 
-  public componentDidMount() {
-    const { fetchPlansActionCreator } = this.props;
+  public async componentDidMount() {
+    const { isReporting, fetchPlanRecordsActionCreator, fetchPlansActionCreator } = this.props;
 
-    OpenSrpPlanService.list()
-      .then(plans => {
-        // filter for IRS plans
-        const irsPlans = plans.filter((p: PlanPayload) => {
-          for (const u of p.useContext) {
-            if (u.code === useContextCodes[0]) {
-              if (u.valueCodableConcept === IRS_PLAN_TYPE) {
-                return true;
-              } else {
-                return false;
+    /** define superset filter params for jurisdictions */
+    const plansParams = superset.getFormData(3000, [
+      { comparator: 'IRS', operator: '==', subject: 'plan_intervention_type' },
+    ]);
+    if (isReporting) {
+      // use superset enpoint in reporting
+      const plansArray = await supersetFetch('555', plansParams).then((plans: Plan[]) => plans);
+      fetchPlansActionCreator(plansArray);
+    } else {
+      // Use openSRP endpoint in planning
+      OpenSrpPlanService.list()
+        .then(plans => {
+          // filter for IRS plans
+          const irsPlans = plans.filter((p: PlanPayload) => {
+            for (const u of p.useContext) {
+              if (u.code === useContextCodes[0]) {
+                if (u.valueCodableConcept === IRS_PLAN_TYPE) {
+                  return true;
+                } else {
+                  return false;
+                }
               }
             }
-          }
-          return false;
+            return false;
+          });
+          const irsPlanRecords: PlanRecordResponse[] = irsPlans.map(
+            extractPlanRecordResponseFromPlanPayload
+          );
+          return fetchPlanRecordsActionCreator(irsPlanRecords);
+        })
+        .catch(err => {
+          // console.log('ERR', err)
         });
-        const irsPlanRecords: PlanRecordResponse[] = irsPlans.map(
-          extractPlanRecordResponseFromPlanPayload
-        );
-
-        return fetchPlansActionCreator(irsPlanRecords);
-      })
-      .catch(err => {
-        // console.log('ERR', err)
-      });
+    }
   }
 
   public render() {
@@ -138,7 +156,10 @@ class IrsPlans extends React.Component<IrsPlansProps & RouteComponentProps<Route
                 : PLAN;
               return (
                 <div>
-                  <Link to={`${INTERVENTION_IRS_URL}/${path}/${cell.original.id}`}>
+                  <Link
+                    to={`${INTERVENTION_IRS_URL}/${path}/${cell.original.id ||
+                      cell.original.plan_id}`}
+                  >
                     {cell.value}
                   </Link>
                 </div>
@@ -211,17 +232,22 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
   const isDraftsList = ownProps.path === INTERVENTION_IRS_DRAFTS_URL;
   const planStatus = isDraftsList ? [PlanStatus.DRAFT] : [PlanStatus.ACTIVE];
   const pageTitle = `${IRS_PLANS}${isDraftsList ? ` ${DRAFTS_PARENTHESIS}` : ''}`;
+  const plansRecordsArray = getPlanRecordsArray(state, InterventionType.IRS, planStatus);
+  const plansArray = getPlansArray(state, InterventionType.IRS, planStatus);
 
   const props = {
     isReporting: !isDraftsList,
     pageTitle,
-    plansArray: getPlanRecordsArray(state, InterventionType.IRS, planStatus),
+    plansArray: plansRecordsArray.length ? plansRecordsArray : plansArray,
     ...ownProps,
   };
   return props;
 };
 
-const mapDispatchToProps = { fetchPlansActionCreator: fetchPlanRecords };
+const mapDispatchToProps = {
+  fetchPlanRecordsActionCreator: fetchPlanRecords,
+  fetchPlansActionCreator: fetchPlans,
+};
 
 const ConnectedIrsPlans = connect(
   mapStateToProps,
