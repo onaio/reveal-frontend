@@ -48,7 +48,7 @@ import jurisdictionReducer, {
   Jurisdiction,
   reducerName as jurisdictionReducerName,
 } from '../../../../../store/ducks/jurisdictions';
-import { getPlanRecordById, PlanRecord } from '../../../../../store/ducks/plans';
+import { getPlanById, getPlanRecordById, PlanRecord } from '../../../../../store/ducks/plans';
 import {
   AnyStructure,
   AnyStructureGeojson,
@@ -459,7 +459,9 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): IrsReportMapProp
   const jurisdictionId = ownProps.match.params.jurisdictionId || '';
   const jurisdictionById = getJurisdictionById(state, jurisdictionId);
   const planId = ownProps.match.params.id || '';
-  const planById = planId.length ? getPlanRecordById(state, planId) : null;
+  const planById = planId.length
+    ? getPlanRecordById(state, planId) || getPlanById(state, planId)
+    : null;
   const structures = getStructuresFCByJurisdictionId(state, jurisdictionId);
   const props = {
     jurisdictionById,
