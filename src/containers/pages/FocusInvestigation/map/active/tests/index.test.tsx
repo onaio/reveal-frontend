@@ -155,11 +155,6 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
       fixtures.jurisdictions[0]
     );
 
-    // plansByFocusArea
-    expect((singleActiveWrapperProps as MapSingleFIProps).plansByFocusArea).toEqual([
-      fixtures.plan1,
-    ]);
-
     // structures
     expect((singleActiveWrapperProps as MapSingleFIProps).structures).toBeNull();
 
@@ -309,10 +304,10 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
         </Router>
       </Provider>
     );
-    expect(getPlansArrayMock).toBeCalledTimes(1);
+    expect(getPlansArrayMock).toBeCalledTimes(2);
 
     // define expected results
-    const plansArrayExpected = [
+    const plansArrayExpected1 = [
       existingState,
       'FI',
       ['active', 'complete'],
@@ -320,8 +315,8 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
       [],
       '450fc15b-5bd2-468a-927a-49cb10d3bcac',
     ];
+    const plansArrayExpected2 = [existingState, 'FI', ['active', 'complete']];
     const planByIdExpected = [existingState, 'ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f'];
-    const currentGoalExpected = [existingState];
     const goalPlanJurisdictionexpected = [
       existingState,
       '10f9e9fa-ce34-4b27-a961-72fab5206ab6',
@@ -336,7 +331,8 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
     const jurisdictionIdExpected = [existingState, '450fc15b-5bd2-468a-927a-49cb10d3bcac'];
 
     // perform the actual assertions
-    expect(getPlansArrayMock.mock.calls[0]).toEqual(plansArrayExpected);
+    expect(getPlansArrayMock.mock.calls[0]).toEqual(plansArrayExpected1);
+    expect(getPlansArrayMock.mock.calls[1]).toEqual(plansArrayExpected2);
     expect(planByIdMock.mock.calls[0]).toEqual(planByIdExpected);
     expect(goalPlanJurisdictionMock.mock.calls[0]).toEqual(goalPlanJurisdictionexpected);
     expect(plansIdArrayMock.mock.calls[0]).toEqual(getPlansIdArrayExpected);
