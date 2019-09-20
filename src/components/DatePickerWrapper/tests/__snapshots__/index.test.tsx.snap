@@ -253,7 +253,7 @@ exports[`components/DatePickerWrapper matches snapshot 1`] = `
   selected={2015-01-29T09:46:45.305Z}
   type="date"
 >
-  <t
+  <DatePicker
     allowSameDay={false}
     className="form-control"
     dateFormat="yyyy-MM-dd"
@@ -506,8 +506,7 @@ exports[`components/DatePickerWrapper matches snapshot 1`] = `
     id="start"
     inlineFocusSelectedMonth={false}
     monthsShown={1}
-    nextMonthButtonLabel="Next Month"
-    nextYearButtonLabel="Next Year"
+    nextMonthButtonLabel="Next month"
     onBlur={[Function]}
     onChange={[MockFunction]}
     onClickOutside={[Function]}
@@ -520,14 +519,12 @@ exports[`components/DatePickerWrapper matches snapshot 1`] = `
     onYearChange={[Function]}
     preventOpenOnFocus={false}
     previousMonthButtonLabel="Previous Month"
-    previousYearButtonLabel="Previous Year"
     readOnly={false}
     renderDayContents={[Function]}
     required={true}
     selected={2015-01-29T09:46:45.305Z}
     shouldCloseOnSelect={true}
     showMonthYearPicker={false}
-    showQuarterYearPicker={false}
     showTimeInput={false}
     showTimeSelect={false}
     strictParsing={false}
@@ -537,7 +534,7 @@ exports[`components/DatePickerWrapper matches snapshot 1`] = `
     type="date"
     withPortal={false}
   >
-    <t
+    <PopperComponent
       hidePopper={true}
       popperComponent={null}
       popperModifiers={
@@ -602,8 +599,8 @@ exports[`components/DatePickerWrapper matches snapshot 1`] = `
           </InnerReference>
         </Reference>
       </Manager>
-    </t>
-  </t>
+    </PopperComponent>
+  </DatePicker>
 </DatePickerWrapper>
 `;
 
@@ -721,7 +718,7 @@ exports[`components/DatePickerWrapper matches snapshot with FieldComponent 1`] =
         required={true}
         type="date"
       >
-        <t
+        <DatePicker
           allowSameDay={false}
           dateFormat="yyyy-MM-dd"
           dateFormatCalendar="LLLL yyyy"
@@ -775,8 +772,7 @@ exports[`components/DatePickerWrapper matches snapshot with FieldComponent 1`] =
           id="start"
           inlineFocusSelectedMonth={false}
           monthsShown={1}
-          nextMonthButtonLabel="Next Month"
-          nextYearButtonLabel="Next Year"
+          nextMonthButtonLabel="Next month"
           onBlur={[Function]}
           onChange={[MockFunction]}
           onClickOutside={[Function]}
@@ -789,13 +785,11 @@ exports[`components/DatePickerWrapper matches snapshot with FieldComponent 1`] =
           onYearChange={[Function]}
           preventOpenOnFocus={false}
           previousMonthButtonLabel="Previous Month"
-          previousYearButtonLabel="Previous Year"
           readOnly={false}
           renderDayContents={[Function]}
           required={true}
           shouldCloseOnSelect={true}
           showMonthYearPicker={false}
-          showQuarterYearPicker={false}
           showTimeInput={false}
           showTimeSelect={false}
           strictParsing={false}
@@ -805,7 +799,7 @@ exports[`components/DatePickerWrapper matches snapshot with FieldComponent 1`] =
           type="date"
           withPortal={false}
         >
-          <t
+          <PopperComponent
             hidePopper={true}
             popperComponent={null}
             popperModifiers={
@@ -870,8 +864,8 @@ exports[`components/DatePickerWrapper matches snapshot with FieldComponent 1`] =
                 </InnerReference>
               </Reference>
             </Manager>
-          </t>
-        </t>
+          </PopperComponent>
+        </DatePicker>
       </DatePickerWrapper>
     </FieldInner>
   </FormikConnect(FieldInner)>

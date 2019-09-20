@@ -838,7 +838,6 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
                             }
                           >
                             <EmotionCssPropInternal
-                              __EMOTION_LABEL_PLEASE_DO_NOT_USE__="SelectContainer"
                               __EMOTION_TYPE_PLEASE_DO_NOT_USE__="div"
                               className=""
                               css={
@@ -954,7 +953,6 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
                                   }
                                 >
                                   <EmotionCssPropInternal
-                                    __EMOTION_LABEL_PLEASE_DO_NOT_USE__="Control"
                                     __EMOTION_TYPE_PLEASE_DO_NOT_USE__="div"
                                     className=""
                                     css={
@@ -1188,7 +1186,6 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
                                               }
                                             >
                                               <EmotionCssPropInternal
-                                                __EMOTION_LABEL_PLEASE_DO_NOT_USE__="Placeholder"
                                                 __EMOTION_TYPE_PLEASE_DO_NOT_USE__="div"
                                                 className=""
                                                 css={
@@ -1306,7 +1303,6 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
                                               value=""
                                             >
                                               <EmotionCssPropInternal
-                                                __EMOTION_LABEL_PLEASE_DO_NOT_USE__="Input"
                                                 __EMOTION_TYPE_PLEASE_DO_NOT_USE__="div"
                                                 css={
                                                   Object {
@@ -1320,7 +1316,7 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
                                                 }
                                               >
                                                 <div
-                                                  className="css-w8afj7-Input"
+                                                  className="css-1g6gooi"
                                                 >
                                                   <AutosizeInput
                                                     aria-autocomplete="list"
@@ -1500,7 +1496,6 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
                                         }
                                       >
                                         <EmotionCssPropInternal
-                                          __EMOTION_LABEL_PLEASE_DO_NOT_USE__="IndicatorsContainer"
                                           __EMOTION_TYPE_PLEASE_DO_NOT_USE__="div"
                                           className=""
                                           css={
@@ -1514,7 +1509,7 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
                                           }
                                         >
                                           <div
-                                            className=" css-1g48xl4-IndicatorsContainer"
+                                            className=" css-1wy0on6"
                                           >
                                             <IndicatorSeparator
                                               clearValue={[Function]}
@@ -1606,7 +1601,6 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
                                               }
                                             >
                                               <EmotionCssPropInternal
-                                                __EMOTION_LABEL_PLEASE_DO_NOT_USE__="IndicatorSeparator"
                                                 __EMOTION_TYPE_PLEASE_DO_NOT_USE__="span"
                                                 className=""
                                                 css={
@@ -1723,7 +1717,6 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
                                               }
                                             >
                                               <EmotionCssPropInternal
-                                                __EMOTION_LABEL_PLEASE_DO_NOT_USE__="DropdownIndicator"
                                                 __EMOTION_TYPE_PLEASE_DO_NOT_USE__="div"
                                                 aria-hidden="true"
                                                 className=""
@@ -1754,7 +1747,6 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
                                                       size={20}
                                                     >
                                                       <EmotionCssPropInternal
-                                                        __EMOTION_LABEL_PLEASE_DO_NOT_USE__="Svg"
                                                         __EMOTION_TYPE_PLEASE_DO_NOT_USE__="svg"
                                                         aria-hidden="true"
                                                         css={
@@ -1771,7 +1763,7 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
                                                       >
                                                         <svg
                                                           aria-hidden="true"
-                                                          className="css-tj5bde-Svg"
+                                                          className="css-19bqh2r"
                                                           focusable="false"
                                                           height={20}
                                                           viewBox="0 0 20 20"
@@ -3534,7 +3526,6 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store (g
                                 }
                               >
                                 <EmotionCssPropInternal
-                                  __EMOTION_LABEL_PLEASE_DO_NOT_USE__="SelectContainer"
                                   __EMOTION_TYPE_PLEASE_DO_NOT_USE__="div"
                                   className=""
                                   css={
@@ -3662,7 +3653,6 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store (g
                                       }
                                     >
                                       <EmotionCssPropInternal
-                                        __EMOTION_LABEL_PLEASE_DO_NOT_USE__="Control"
                                         __EMOTION_TYPE_PLEASE_DO_NOT_USE__="div"
                                         className=""
                                         css={
@@ -3920,7 +3910,6 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store (g
                                                   }
                                                 >
                                                   <EmotionCssPropInternal
-                                                    __EMOTION_LABEL_PLEASE_DO_NOT_USE__="Placeholder"
                                                     __EMOTION_TYPE_PLEASE_DO_NOT_USE__="div"
                                                     className=""
                                                     css={
@@ -4043,7 +4032,6 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store (g
                                                   value=""
                                                 >
                                                   <EmotionCssPropInternal
-                                                    __EMOTION_LABEL_PLEASE_DO_NOT_USE__="Input"
                                                     __EMOTION_TYPE_PLEASE_DO_NOT_USE__="div"
                                                     css={
                                                       Object {
@@ -4057,7 +4045,7 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store (g
                                                     }
                                                   >
                                                     <div
-                                                      className="css-w8afj7-Input"
+                                                      className="css-1g6gooi"
                                                     >
                                                       <AutosizeInput
                                                         aria-autocomplete="list"
@@ -4249,7 +4237,6 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store (g
                                             }
                                           >
                                             <EmotionCssPropInternal
-                                              __EMOTION_LABEL_PLEASE_DO_NOT_USE__="IndicatorsContainer"
                                               __EMOTION_TYPE_PLEASE_DO_NOT_USE__="div"
                                               className=""
                                               css={
@@ -4263,7 +4250,7 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store (g
                                               }
                                             >
                                               <div
-                                                className=" css-1g48xl4-IndicatorsContainer"
+                                                className=" css-1wy0on6"
                                               >
                                                 <IndicatorSeparator
                                                   clearValue={[Function]}
@@ -4367,7 +4354,6 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store (g
                                                   }
                                                 >
                                                   <EmotionCssPropInternal
-                                                    __EMOTION_LABEL_PLEASE_DO_NOT_USE__="IndicatorSeparator"
                                                     __EMOTION_TYPE_PLEASE_DO_NOT_USE__="span"
                                                     className=""
                                                     css={
@@ -4496,7 +4482,6 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store (g
                                                   }
                                                 >
                                                   <EmotionCssPropInternal
-                                                    __EMOTION_LABEL_PLEASE_DO_NOT_USE__="DropdownIndicator"
                                                     __EMOTION_TYPE_PLEASE_DO_NOT_USE__="div"
                                                     aria-hidden="true"
                                                     className=""
@@ -4527,7 +4512,6 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store (g
                                                           size={20}
                                                         >
                                                           <EmotionCssPropInternal
-                                                            __EMOTION_LABEL_PLEASE_DO_NOT_USE__="Svg"
                                                             __EMOTION_TYPE_PLEASE_DO_NOT_USE__="svg"
                                                             aria-hidden="true"
                                                             css={
@@ -4544,7 +4528,7 @@ exports[`containers/pages/FocusInvestigation/activeMap works with redux store (g
                                                           >
                                                             <svg
                                                               aria-hidden="true"
-                                                              className="css-tj5bde-Svg"
+                                                              className="css-19bqh2r"
                                                               focusable="false"
                                                               height={20}
                                                               viewBox="0 0 20 20"
