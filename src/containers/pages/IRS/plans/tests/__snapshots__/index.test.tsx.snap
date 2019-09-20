@@ -1,0 +1,101 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components/IRS Reports/IRSPlansList renders plan definition list correctly: breadcrumbs 1`] = `
+Array [
+  <li
+    className="breadcrumb-item"
+  >
+    <Link
+      key="0"
+      replace={false}
+      to="/"
+    >
+      <a
+        href="/"
+        onClick={[Function]}
+      >
+        Home
+      </a>
+    </Link>
+  </li>,
+  <li
+    aria-current="page"
+    className="active breadcrumb-item"
+  >
+    IRS Plans
+  </li>,
+]
+`;
+
+exports[`components/IRS Reports/IRSPlansList renders plan definition list correctly: page title 1`] = `
+<h3
+  className="mt-3 mb-3 page-title"
+>
+  IRS Plans
+</h3>
+`;
+
+exports[`components/IRS Reports/IRSPlansList renders plan definition list correctly: table headers 1`] = `
+<th
+  className="listview-td"
+  key="0"
+>
+  Title
+</th>
+`;
+
+exports[`components/IRS Reports/IRSPlansList renders plan definition list correctly: table rows 1`] = `
+Array [
+  <td
+    className="listview-th"
+    key="0"
+  >
+    <Link
+      key="727c3d40-e118-564a-b231-aac633e6abce"
+      replace={false}
+      to="/irs/reports/727c3d40-e118-564a-b231-aac633e6abce"
+    >
+      <a
+        href="/irs/reports/727c3d40-e118-564a-b231-aac633e6abce"
+        onClick={[Function]}
+      >
+        IRS 2019-09-05 TEST
+      </a>
+    </Link>
+  </td>,
+  <td
+    className="listview-th"
+    key="0"
+  >
+    <Link
+      key="02e358ed-87fe-5720-8782-0afe28cb7e8c"
+      replace={false}
+      to="/irs/reports/02e358ed-87fe-5720-8782-0afe28cb7e8c"
+    >
+      <a
+        href="/irs/reports/02e358ed-87fe-5720-8782-0afe28cb7e8c"
+        onClick={[Function]}
+      >
+        IRS 2019-08-30m
+      </a>
+    </Link>
+  </td>,
+  <td
+    className="listview-th"
+    key="0"
+  >
+    <Link
+      key="c6e59ec1-8c54-5fdf-acf3-ee3692983f38"
+      replace={false}
+      to="/irs/reports/c6e59ec1-8c54-5fdf-acf3-ee3692983f38"
+    >
+      <a
+        href="/irs/reports/c6e59ec1-8c54-5fdf-acf3-ee3692983f38"
+        onClick={[Function]}
+      >
+        Berg Namibia 2019
+      </a>
+    </Link>
+  </td>,
+]
+`;
