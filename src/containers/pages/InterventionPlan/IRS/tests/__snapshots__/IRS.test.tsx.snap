@@ -149,6 +149,7 @@ exports[`containers/pages/IRS renders plans list correctly 1`] = `
       }
     >
       <IrsPlans
+        fetchPlanRecordsActionCreator={[Function]}
         fetchPlansActionCreator={[Function]}
         history={
           Object {
