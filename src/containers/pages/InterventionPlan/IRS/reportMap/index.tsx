@@ -140,6 +140,7 @@ class IrsReportMap extends React.Component<
 
     /** define superset filter params for jurisdictions */
     const structuresParams = superset.getFormData(3000, [
+      { comparator: planId, operator: '==', subject: 'plan_id' },
       { comparator: jurisdictionId, operator: '==', subject: JURISDICTION_ID },
     ]);
     // reference or fetch structures per Jurisdiction

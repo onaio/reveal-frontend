@@ -731,6 +731,7 @@ export interface NamibiaIrsReportingJurisdiction extends Jurisdiction {
   structuressprayed: number;
   structurestargeted: number;
   target_2019: number;
+  targetcoverage: number;
 }
 
 /** an interface describing geojson properties of Namibia Irs Reporting Structures */
@@ -979,10 +980,10 @@ export const irsReportingCongif: {
 
       const rows: ReportingSidebarRow[] = [
         {
-          denominator: jurisdiction ? jurisdiction.structurestargeted || 0 : 0,
+          denominator: jurisdiction ? jurisdiction.target_2019 || 0 : 0,
           description: 'Percent of residential structures sprayed',
           numerator: jurisdiction ? jurisdiction.structuressprayed || 0 : 0,
-          value: jurisdiction ? Math.round((jurisdiction.target_2019 || 0) * 100) : 0,
+          value: jurisdiction ? Math.round((jurisdiction.targetcoverage || 0) * 100) : 0,
           title: 'Target Coverage',
         },
         {
