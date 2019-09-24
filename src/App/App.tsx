@@ -46,6 +46,7 @@ import NewPlan from '../containers/pages/InterventionPlan/NewPlan/General';
 import NewIRSPlan from '../containers/pages/InterventionPlan/NewPlan/IRS';
 import ConnectedPlanDefinitionList from '../containers/pages/InterventionPlan/PlanDefinitionList';
 import ConnectedUpdatePlan from '../containers/pages/InterventionPlan/UpdatePlan';
+import { IRSJurisdictions } from '../containers/pages/IRS/JurisdictionsReport';
 import { oAuthUserInfoGetter } from '../helpers/utils';
 
 library.add(faMap);
@@ -204,6 +205,12 @@ class App extends Component {
                   exact={true}
                   path={PLAN_LIST_URL}
                   component={ConnectedPlanDefinitionList}
+                />
+                <ConnectedPrivateRoute
+                  disableLoginProtection={true}
+                  exact={true}
+                  path="/xxx"
+                  component={IRSJurisdictions}
                 />
                 {/* tslint:disable jsx-no-lambda */}
                 <Route
