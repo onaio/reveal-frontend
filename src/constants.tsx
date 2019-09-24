@@ -152,6 +152,14 @@ export const USERNAME = 'Username';
 export type USERNAME = typeof USERNAME;
 export const VIEW = 'view';
 export type VIEW = typeof VIEW;
+export const PRACTITIONER = 'Practitioner';
+export type PRACTITIONER = typeof PRACTITIONER;
+export const ID = 'Id';
+export type ID = typeof ID;
+export const SAVE = 'Save';
+export type SAVE = typeof SAVE;
+export const ACTIVE = 'Active';
+export type ACTIVE = typeof ACTIVE;
 // TODO ? - do the below 2 belong here or in a settings file
 export const ORGANIZATION_LABEL = TEAM;
 export type ORGANIZATION_LABEL = typeof ORGANIZATION_LABEL;
@@ -214,6 +222,10 @@ export const TEAM_LIST_URL = '/teams';
 export type TEAMS_LIST_URL = typeof TEAM_LIST_URL;
 
 // OpenSRP API strings
+export const OPENSRP_PRACTITIONER_ENDPOINT = 'practitioner';
+export type OPENSRP_PRACTITIONER_ENDPOINT = typeof OPENSRP_PRACTITIONER_ENDPOINT;
+export const OPENSRP_PRACTITIONER_ROLE_ENDPOINT = 'practitionerRole';
+export type OPENSRP_PRACTITIONER_ROLE_ENDPOINT = typeof OPENSRP_PRACTITIONER_ROLE_ENDPOINT;
 export const OPENSRP_FIND_BY_PROPERTIES = 'findByProperties';
 export type OPENSRP_FIND_BY_PROPERTIES = typeof OPENSRP_FIND_BY_PROPERTIES;
 export const OPENSRP_LOCATION = 'location';
