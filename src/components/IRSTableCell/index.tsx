@@ -1,0 +1,18 @@
+import { DropDownCellProps } from '@onaio/drill-down-table';
+import React from 'react';
+import { Link } from 'react-router-dom';
+
+/** Interface for linked cell props */
+export interface LinkedCellProps extends DropDownCellProps {
+  urlPath?: string;
+}
+
+/** Component that will be rendered in drop-down table cells showing a link
+ * that moves you to the next hierarchical level.
+ */
+const IRSTableCell: React.ElementType<LinkedCellProps> = (props: LinkedCellProps) => {
+  const { cellValue, hasChildren, urlPath } = props;
+  return <div>{hasChildren ? <Link to={urlPath || ''}>{cellValue}</Link> : cellValue}</div>;
+};
+
+export default IRSTableCell;
