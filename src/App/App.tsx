@@ -21,6 +21,7 @@ import {
   FI_URL,
   INTERVENTION_IRS_DRAFTS_URL,
   INTERVENTION_IRS_URL,
+  IRS_REPORTS_URL,
   LOGIN_URL,
   LOGOUT_URL,
   MAP,
@@ -209,7 +210,13 @@ class App extends Component {
                 <ConnectedPrivateRoute
                   disableLoginProtection={true}
                   exact={true}
-                  path="/xxx"
+                  path={IRS_REPORTS_URL}
+                  component={IRSJurisdictions}
+                />
+                <ConnectedPrivateRoute
+                  disableLoginProtection={true}
+                  exact={true}
+                  path={`${IRS_REPORTS_URL}/:id`}
                   component={IRSJurisdictions}
                 />
                 {/* tslint:disable jsx-no-lambda */}
