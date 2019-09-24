@@ -24,7 +24,6 @@ export interface TeamFormProps {
   /** list of fields to disable */
   disabledFields: string[];
   initialValues: TeamFormFields;
-  /** redirect to this url after form submission */
   redirectAfterAction: string;
 }
 
@@ -33,11 +32,11 @@ export const defaultInitialValues: TeamFormFields = {
   name: '',
 };
 
-// TODO - need to figure out how after creating a new team its saved to store
+// TODO - need to figure out how after creating, a new team its saved to store
 /** Team form component */
 const TeamForm = (props: TeamFormProps) => {
   /** track when redirection from this form page should occur */
-  const [ifDoneHere, setifDoneHere] = useState<boolean>(false);
+  const [ifDoneHere, setIfDoneHere] = useState<boolean>(false);
   const { initialValues, redirectAfterAction, disabledFields } = props;
   const [globalError, setGlobalError] = useState<string>('');
 
@@ -59,7 +58,7 @@ const TeamForm = (props: TeamFormProps) => {
               .update(values)
               .then(() => {
                 setSubmitting(false);
-                setifDoneHere(true);
+                setIfDoneHere(true);
               })
               .catch((e: Error) => {
                 setGlobalError(e.message);
@@ -70,7 +69,7 @@ const TeamForm = (props: TeamFormProps) => {
               .create(values)
               .then(() => {
                 setSubmitting(false);
-                setifDoneHere(true);
+                setIfDoneHere(true);
               })
               .catch((e: Error) => {
                 setGlobalError(e.message);
