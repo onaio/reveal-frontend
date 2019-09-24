@@ -1,4 +1,4 @@
-import DrillDownTable, { hasChildrenFunc } from '@onaio/drill-down-table';
+import DrillDownTable from '@onaio/drill-down-table';
 import superset from '@onaio/superset-connector';
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
@@ -16,7 +16,6 @@ import './style.css';
 import * as fixtures from './tests/fixtures';
 
 export interface IRSJurisdictionProps {
-  hasChildren: typeof hasChildrenFunc;
   service: typeof supersetFetch;
 }
 
@@ -116,8 +115,6 @@ const IRSJurisdictions = (props: IRSJurisdictionProps & RouteComponentProps<Rout
 
   return (
     <div key={id || '0'}>
-      {' '}
-      {/** force re-rendering when id changes */}
       <Helmet>
         <title>{currentTitle}</title>
       </Helmet>
@@ -135,7 +132,6 @@ const IRSJurisdictions = (props: IRSJurisdictionProps & RouteComponentProps<Rout
 };
 
 const defaultProps: IRSJurisdictionProps = {
-  hasChildren: hasChildrenFunc,
   service: supersetFetch,
 };
 
