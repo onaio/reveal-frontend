@@ -9,6 +9,7 @@ export const NamibiaColumns = [
       {
         Header: '',
         accessor: 'jurisdiction_name',
+        minWidth: 180,
       },
     ],
   },
