@@ -1,22 +1,18 @@
-// this is the FocusInvestigation "historical" page component
 import DrillDownTable from '@onaio/drill-down-table';
 import superset from '@onaio/superset-connector';
 import * as React from 'react';
 import { Helmet } from 'react-helmet';
 import { RouteComponentProps } from 'react-router';
-import { CellInfo } from 'react-table';
 import 'react-table/react-table.css';
-import { Table } from 'reactstrap';
-import DrillDownTableLinkedCell from '../../../../components/DrillDownTableLinkedCell';
-import ResponseAdherence from '../../../../components/formatting/ResponseAdherence';
-import NotFound from '../../../../components/NotFound';
+import { Col, Row } from 'reactstrap';
+import IRSTableCell from '../../../../components/IRSTableCell';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
-import { FIClassifications } from '../../../../configs/settings';
-import { HOME, HOME_URL, IRS_PLANS, IRS_REPORTS_URL } from '../../../../constants';
-import { getFIAdherenceIndicator, renderClassificationRow } from '../../../../helpers/indicators';
+import { HOME, HOME_URL } from '../../../../constants';
 import '../../../../helpers/tables.css';
-import { FlexObject, percentage, RouteParams } from '../../../../helpers/utils';
+import { RouteParams } from '../../../../helpers/utils';
 import supersetFetch from '../../../../services/superset';
+import { NamibiaColumns } from './helpers';
+import './style.css';
 import * as fixtures from './tests/fixtures';
 
 export interface IRSJurisdictionProps {
@@ -24,49 +20,55 @@ export interface IRSJurisdictionProps {
 }
 
 const data = superset.processData(fixtures.supersetJSON) || [];
-// const data = [];
-const x = fixtures.supersetJSON;
-// debugger;
 
 /** Renders IRS Jurisdictions reports */
 const IRSJurisdictions = (props: IRSJurisdictionProps & RouteComponentProps<RouteParams>) => {
-  const id = null;
+  const pageTitle = 'IRS Reports';
 
-  const tableProps = {
-    CellComponent: DrillDownTableLinkedCell,
-    columns: [
+  const breadcrumbProps = {
+    currentPage: {
+      label: pageTitle,
+      url: 'xxx',
+    },
+    pages: [
       {
-        Header: 'Name',
-        accessor: 'jurisdiction_name',
-        // className: 'centered',
-      },
-      {
-        Header: 'Found',
-        accessor: 'structuresfound',
-        // className: 'centered',
-      },
-      {
-        Header: 'Sprayed',
-        accessor: 'structuressprayed',
-        // className: 'centered',
+        label: HOME,
+        url: HOME_URL,
       },
     ],
+  };
+
+  const tableProps = {
+    CellComponent: IRSTableCell,
+    columns: NamibiaColumns,
     data,
     extraCellProps: { urlPath: 'xxx' },
     identifierField: 'jurisdiction_id',
     linkerField: 'jurisdiction_name',
-    minRows: 10,
+    minRows: 0,
     parentIdentifierField: 'jurisdiction_parent_id',
+    resizable: true,
     rootParentId: '',
     shouldUseEffect: false,
-    // showPageSizeOptions: true,
-    // showPagination: true,
+    showPageSizeOptions: true,
+    showPagination: true,
     useDrillDownTrProps: true,
   };
 
   return (
     <div>
-      <DrillDownTable {...tableProps} />
+      <Helmet>
+        <title>{pageTitle}</title>
+      </Helmet>
+      <HeaderBreadcrumb {...breadcrumbProps} />
+      <Row>
+        <Col>
+          <h3 className="mb-3 page-title">{pageTitle}</h3>
+          <div className="irs-report-table">
+            <DrillDownTable {...tableProps} />
+          </div>
+        </Col>
+      </Row>
     </div>
   );
 };
