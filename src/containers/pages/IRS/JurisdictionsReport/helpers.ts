@@ -1,5 +1,6 @@
 import { CellInfo } from 'react-table';
 import { getIRSThresholdAdherenceIndicator } from '../../../../helpers/indicators';
+import { FlexObject } from '../../../../helpers/utils';
 
 export const NamibiaColumns = [
   {
@@ -95,3 +96,22 @@ export const NamibiaColumns = [
     ],
   },
 ];
+
+export function getTree(
+  tree: FlexObject[],
+  item: FlexObject,
+  result: FlexObject[] = []
+): FlexObject[] {
+  if (item.jurisdiction_parent_id === null && !result.includes(item)) {
+    result.push(item);
+  } else {
+    const parentItems = tree.filter(el => el.jurisdiction_id === item.jurisdiction_parent_id);
+    if (parentItems.length > 0) {
+      if (!result.includes(parentItems[0])) {
+        result.push(parentItems[0]);
+      }
+      return getTree(tree, parentItems[0], result);
+    }
+  }
+  return result;
+}
