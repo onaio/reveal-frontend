@@ -825,7 +825,7 @@ const indicatorExtractorsNA: IndicatorExtractors = {
 };
 
 /** Indicator Thresholds for NA (Namibia) */
-const indicatorThresholdsNA: IndicatorThresholds = {
+export const indicatorThresholdsNA: IndicatorThresholds = {
   GREEN_THRESHOLD: {
     color: '#2ECC40',
     value: 1,
