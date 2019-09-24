@@ -4,19 +4,41 @@ import { Redirect } from 'react-router';
 import { Button, Label } from 'reactstrap';
 import { FormGroup } from 'reactstrap';
 import * as Yup from 'yup';
-import { OPENSRP_ORGANIZATION_ENDPOINT, REQUIRED, SAVING, TEAM_LIST_URL } from '../../../constants';
+import {
+  OPENSRP_ORGANIZATION_ENDPOINT,
+  OPENSRP_PRACTITIONER_ROLE_ENDPOINT,
+  REQUIRED,
+  SAVING,
+  TEAM_LIST_URL,
+} from '../../../constants';
 import { OpenSRPService } from '../../../services/opensrp';
+
+/** default type value for organizations */
+const defaultOrganizationType = {
+  type: {
+    coding: [
+      {
+        code: 'team',
+        display: 'Team',
+        system: 'http://terminology.hl7.org/CodeSystem/organization-type',
+      },
+    ],
+  },
+};
 
 /** yup validation schema for teams Form input */
 export const TeamSchema = Yup.object().shape({
+  active: Yup.boolean(),
   identifier: Yup.string(),
   name: Yup.string().required(REQUIRED),
 });
 
 /** interface for data fields for team's form */
 interface TeamFormFields {
+  active: boolean;
   identifier: string;
   name: string;
+  type?: any;
 }
 
 /** interface for Team form props */
@@ -28,11 +50,13 @@ export interface TeamFormProps {
 }
 
 export const defaultInitialValues: TeamFormFields = {
+  active: false,
   identifier: '',
   name: '',
+  type: defaultOrganizationType,
 };
 
-// TODO - need to figure out how after creating, a new team its saved to store
+// TODO - indicator that a team has been added to store
 /** Team form component */
 const TeamForm = (props: TeamFormProps) => {
   /** track when redirection from this form page should occur */
@@ -51,10 +75,13 @@ const TeamForm = (props: TeamFormProps) => {
         validationSchema={TeamSchema}
         // tslint:disable-next-line: jsx-no-lambda
         onSubmit={(values, { setSubmitting }) => {
-          const apiService = new OpenSRPService(OPENSRP_ORGANIZATION_ENDPOINT);
+          const organizationService = new OpenSRPService(OPENSRP_ORGANIZATION_ENDPOINT);
+          const practitionerRoleService = new OpenSRPService(OPENSRP_PRACTITIONER_ROLE_ENDPOINT);
+          const OrganizationId = '';
 
           if (editMode) {
-            apiService
+            // 2 calls for each for updating team information and updating practitioner_role table
+            organizationService
               .update(values)
               .then(() => {
                 setSubmitting(false);
@@ -65,7 +92,7 @@ const TeamForm = (props: TeamFormProps) => {
                 setSubmitting(false);
               });
           } else {
-            apiService
+            organizationService
               .create(values)
               .then(() => {
                 setSubmitting(false);
@@ -78,25 +105,10 @@ const TeamForm = (props: TeamFormProps) => {
           }
         }}
       >
-        {({ errors, isSubmitting }) => (
+        {({ errors, isSubmitting, setFieldValue, values }) => (
           <Form className="mb-5">
             <FormGroup className="non-field-errors">
               {globalError !== '' && <p className="form-text text-danger">{globalError}</p>}
-            </FormGroup>
-            <FormGroup>
-              <Label>Team Id</Label>
-              <Field
-                type="text"
-                name="identifier"
-                id="identifier"
-                disabled={disabledFields.includes('identifier')}
-                className={errors.identifier ? `form-control is-invalid` : `form-control`}
-              />
-              <ErrorMessage
-                component="small"
-                name="identifier"
-                className="form-text text-danger identifier-error"
-              />
             </FormGroup>
             <FormGroup>
               <Label>Name</Label>
@@ -112,6 +124,41 @@ const TeamForm = (props: TeamFormProps) => {
                 component="small"
                 className="form-text text-danger name-error"
               />
+            </FormGroup>
+            <FormGroup>
+              <Label>Active</Label>
+              <br />
+              <div className="btn-group btn-group-toggle" data-toggle="buttons">
+                <label
+                  className={`btn btn-outline-secondary ${values.active === false ? 'active' : ''}`}
+                >
+                  <Field
+                    type="radio"
+                    name="active"
+                    id="option2"
+                    // tslint:disable-next-line: jsx-no-lambda
+                    onChange={() => setFieldValue('active', false)}
+                  />{' '}
+                  no
+                </label>
+                <label
+                  className={`btn btn-outline-primary ${values.active === true ? 'active' : ''}`}
+                >
+                  <Field
+                    type="radio"
+                    name="active"
+                    id="option1"
+                    // tslint:disable-next-line: jsx-no-lambda
+                    onChange={() => setFieldValue('active', true)}
+                  />{' '}
+                  yes
+                </label>
+                <ErrorMessage
+                  name="active"
+                  component="small"
+                  className="form-text text-danger name-error"
+                />
+              </div>
             </FormGroup>
             <hr className="mb-2" />
             <Button
