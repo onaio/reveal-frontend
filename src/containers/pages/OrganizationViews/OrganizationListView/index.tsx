@@ -18,12 +18,10 @@ import HeaderBreadcrumb, {
 import Loading from '../../../../components/page/Loading';
 import {
   ACTIONS,
-  COUNT,
   CREATE_TEAM_URL,
   HOME,
   HOME_URL,
   IDENTIFIER,
-  LOCATION,
   NAME,
   NEW_TEAM,
   OPENSRP_ORGANIZATION_ENDPOINT,
@@ -42,7 +40,6 @@ import organizationsReducer, {
   Organization,
   reducerName as organizationsReducerName,
 } from '../../../../store/ducks/organizations';
-import * as fixtures from '../../../../store/ducks/tests/fixtures';
 import './index.css';
 
 reducerRegistry.register(organizationsReducerName, organizationsReducer);
