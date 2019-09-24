@@ -90,7 +90,6 @@ const IRSJurisdictions = (props: IRSJurisdictionProps & RouteComponentProps<Rout
         onClick: (e: any, handleOriginal: any) => {
           if (column.id === 'jurisdiction_name') {
             setId(rowInfo.original.jurisdiction_id);
-            props.history.push(`${IRS_REPORTS_URL}/${rowInfo.original.jurisdiction_id}`);
           }
           if (handleOriginal) {
             handleOriginal();
