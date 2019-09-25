@@ -45,6 +45,8 @@ export interface FlexObject {
 export interface RouteParams {
   goalId?: string;
   id?: string;
+  jurisdictionId?: string;
+  planId?: string;
 }
 
 /** Geometry object interface */
