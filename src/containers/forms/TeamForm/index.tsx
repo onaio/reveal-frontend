@@ -1,4 +1,5 @@
 import { ErrorMessage, Field, Form, Formik } from 'formik';
+import moment from 'moment';
 import React, { useState } from 'react';
 import { Redirect } from 'react-router';
 import { Button, Label } from 'reactstrap';
@@ -11,7 +12,10 @@ import {
   SAVING,
   TEAM_LIST_URL,
 } from '../../../constants';
+import { generateNameSpacedUUID } from '../../../helpers/utils';
 import { OpenSRPService } from '../../../services/opensrp';
+
+const TeamFormNameSpace = '9a4c8cb0-df70-11e9-b38b-57f114a50538';
 
 /** default type value for organizations */
 const defaultOrganizationType = {
@@ -43,7 +47,6 @@ interface TeamFormFields {
 
 /** interface for Team form props */
 export interface TeamFormProps {
-  /** list of fields to disable */
   disabledFields: string[];
   initialValues: TeamFormFields;
   redirectAfterAction: string;
@@ -56,7 +59,7 @@ export const defaultInitialValues: TeamFormFields = {
   type: defaultOrganizationType,
 };
 
-// TODO - indicator that a team has been added to store
+// TODO - indicator that a team has been added to store??
 /** Team form component */
 const TeamForm = (props: TeamFormProps) => {
   /** track when redirection from this form page should occur */
@@ -64,7 +67,7 @@ const TeamForm = (props: TeamFormProps) => {
   const { initialValues, redirectAfterAction, disabledFields } = props;
   const [globalError, setGlobalError] = useState<string>('');
 
-  /** editmode set to true if we are updating a team data. */
+  /** edit mode set to true if we are updating a team data. */
   const editMode: boolean = initialValues.identifier !== '';
 
   return (
@@ -74,10 +77,12 @@ const TeamForm = (props: TeamFormProps) => {
         initialValues={initialValues}
         validationSchema={TeamSchema}
         // tslint:disable-next-line: jsx-no-lambda
-        onSubmit={(values, { setSubmitting }) => {
+        onSubmit={(values, { setSubmitting, setFieldValue }) => {
           const organizationService = new OpenSRPService(OPENSRP_ORGANIZATION_ENDPOINT);
-          const practitionerRoleService = new OpenSRPService(OPENSRP_PRACTITIONER_ROLE_ENDPOINT);
-          const OrganizationId = '';
+          setFieldValue(
+            'identifier',
+            generateNameSpacedUUID(`${moment().toString()}`, TeamFormNameSpace)
+          );
 
           if (editMode) {
             // 2 calls for each for updating team information and updating practitioner_role table
