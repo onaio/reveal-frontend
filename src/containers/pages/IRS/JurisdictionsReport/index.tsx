@@ -11,7 +11,7 @@ import { HOME, HOME_URL, IRS_REPORTING_TITLE, IRS_REPORTS_URL } from '../../../.
 import '../../../../helpers/tables.css';
 import { FlexObject, RouteParams } from '../../../../helpers/utils';
 import supersetFetch from '../../../../services/superset';
-import { getTree, NamibiaColumns } from './helpers';
+import { getTree, ZambiaFocusAreasColumns, ZambiaJurisdictionsColumns } from './helpers';
 import './style.css';
 import * as fixtures from './tests/fixtures';
 
@@ -19,7 +19,10 @@ export interface IRSJurisdictionProps {
   service: typeof supersetFetch;
 }
 
-const data = superset.processData(fixtures.supersetJSON) || [];
+const data1 = superset.processData(fixtures.ZambiaJurisdictionsJSON) || [];
+const data2 = superset.processData(fixtures.ZambiaFocusAreasJSON) || [];
+
+const data = [...data1, ...data2];
 
 /** Renders IRS Jurisdictions reports */
 const IRSJurisdictions = (props: IRSJurisdictionProps & RouteComponentProps<RouteParams>) => {
@@ -79,11 +82,20 @@ const IRSJurisdictions = (props: IRSJurisdictionProps & RouteComponentProps<Rout
     currentJurisdictionName = theObject[0].jurisdiction_name;
   }
 
+  const currLevelData = data.filter(el => el.jurisdiction_parent_id === id);
+
+  let columnsToUse = ZambiaJurisdictionsColumns;
+  if (currLevelData && currLevelData.length > 0) {
+    if (currLevelData[0].jurisdiction_depth === 2) {
+      columnsToUse = ZambiaFocusAreasColumns;
+    }
+  }
+
   const tableProps = {
     CellComponent: IRSTableCell,
-    columns: NamibiaColumns,
+    columns: columnsToUse,
     data,
-    defaultPageSize: 500,
+    defaultPageSize: data.length,
     extraCellProps: { urlPath: IRS_REPORTS_URL },
     getTdProps: (state: any, rowInfo: any, column: any, instance: any) => {
       return {
