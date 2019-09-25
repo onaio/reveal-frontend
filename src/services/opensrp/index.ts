@@ -4,7 +4,7 @@ import store from '../../store';
 import { getAccessToken } from '../../store/selectors';
 
 /** allowed http methods */
-type HTTPMethod = 'GET' | 'POST' | 'PUT';
+type HTTPMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
 
 /** get default HTTP headers for OpenSRP service */
 export function getDefaultHeaders(
@@ -187,5 +187,33 @@ export class OpenSRPService {
     }
 
     return await response.json();
+  }
+
+  /** delete method
+   * Send a DELETE request to the general endpoint containing the object data
+   * Successful requests will result in a HTTP status 202,
+   * This does not necessarily mean the object was deleted,
+   * @param {T} data - the data to be DELETE-ed
+   * @param {params} params - the url params object
+   * @param {HTTPMethod} method - the HTTP method
+   * @returns the object returned by API
+   */
+  public async delete<T>(data: T, params: paramsType = null, method: HTTPMethod = 'DELETE') {
+    const url = getURL(this.generalURL, params);
+    const payload = {
+      ...getPayload(method),
+      'Cache-Control': 'no-cache',
+      Pragma: 'no-cache',
+      body: JSON.stringify(data),
+    };
+    const response = await fetch(url, payload);
+
+    if (!response.ok || response.status !== 202) {
+      throw new Error(
+        `OpenSRPService delete on ${this.endpoint} failed, HTTP status ${response.status}`
+      );
+    }
+
+    return {};
   }
 }
