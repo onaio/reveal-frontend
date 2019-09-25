@@ -17,6 +17,7 @@ import HeaderBreadcrumb, {
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
 import {
+  ACTIONS,
   DETAILS,
   EDIT_TEAM,
   EDIT_TEAM_URL,
@@ -32,7 +33,7 @@ import {
   TEAMS,
   USERNAME,
 } from '../../../../constants';
-import { RouteParams } from '../../../../helpers/utils';
+import { generateNameSpacedUUID, RouteParams } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
 import store from '../../../../store';
 import organizationsReducer, {
@@ -46,17 +47,16 @@ import * as fixtures from '../../../../store/ducks/tests/fixtures';
 reducerRegistry.register(organizationsReducerName, organizationsReducer);
 
 /** Placeholder interface for a organizationMember object schema */
-interface OrganizationMember {
+interface Practitioner {
   identifier: string;
   name: string;
-  organization: string;
   username: string;
 }
 
 /** interface to describe props for SingleOrganizationView */
 interface SingleOrganizationViewProps {
   organization: Organization | null;
-  organizationMembers: OrganizationMember[];
+  practitioners: Practitioner[];
   serviceClass: typeof OpenSRPService;
   fetchOrganizationsAction: typeof fetchOrganizations;
 }
@@ -65,7 +65,7 @@ interface SingleOrganizationViewProps {
 const defaultProps: SingleOrganizationViewProps = {
   fetchOrganizationsAction: fetchOrganizations,
   organization: null,
-  organizationMembers: [],
+  practitioners: [],
   serviceClass: OpenSRPService,
 };
 
@@ -73,7 +73,7 @@ const defaultProps: SingleOrganizationViewProps = {
 type SingleOrgViewPropsType = SingleOrganizationViewProps & RouteComponentProps<RouteParams>;
 
 const SingleOrganizationView = (props: SingleOrgViewPropsType) => {
-  const { organization, organizationMembers, serviceClass, fetchOrganizationsAction } = props;
+  const { organization, practitioners, serviceClass, fetchOrganizationsAction } = props;
 
   // props //
 
@@ -97,8 +97,22 @@ const SingleOrganizationView = (props: SingleOrgViewPropsType) => {
 
   // listViewProps for organization members // TODO - This is placeholder code
   const listViewProps = {
-    data: organizationMembers.map((organizationMember: any) => values(organizationMember)),
-    headerItems: [USERNAME, NAME, ORGANIZATIONS_LABEL],
+    data: [
+      ...practitioners.map((practitioner: any) => [
+        practitioner.username,
+        practitioner.name,
+        <a
+          className={`remove-link`}
+          key={practitioner.identifier}
+          // tslint:disable-next-line: jsx-no-lambda
+          onClick={e => handleRemovePractitioner(practitioner.identifier, e)}
+        >
+          View
+        </a>,
+      ]),
+      /** link to remove this practitioner from this organization, effectively delete this practitioner role */
+    ],
+    headerItems: [USERNAME, NAME, ACTIONS],
     tableClass: 'table table-bordered',
   };
 
@@ -109,6 +123,55 @@ const SingleOrganizationView = (props: SingleOrgViewPropsType) => {
   };
 
   // functions / methods //
+
+  const handleRemovePractitioner = (practitionerId: string, event: React.MouseEvent) => {
+    event.preventDefault();
+    unassignPractitioner(OpenSRPService, organization!.identifier, practitionerId);
+  };
+
+  /** removes/unassigns a practitioner from an organization */
+  const unassignPractitioner = async (
+    service: typeof serviceClass,
+    organizationId: string,
+    practitionerId: string
+  ) => {
+    const serve = new service(`/practitionerRole`);
+
+    serve
+      .delete()
+      .then(() => {
+        // probably remove the practitioner link from store if saved, then rerender
+      })
+      .catch((err: Error) => {
+        /** Do something with error */
+      });
+  };
+
+  /** Assigning a practitioner to an organization */
+  const assignPractitioner = async (
+    service: typeof serviceClass,
+    organizationId: string,
+    // tslint:disable-next-line: no-shadowed-variable
+    practitioners: Practitioner[]
+  ) => {
+    const serve = new service(`/practitionerRole`);
+    // make the  post request and on success, add the practitioners records to the store, rerender
+
+    const code = {
+      text: 'Community Health worker',
+    };
+    const payload = practitioners.map(practitioner => ({
+      active: true,
+      code,
+      identifier: generateNameSpacedUUID('', ''),
+      organization: organizationId,
+      practitioner: practitioner.identifier,
+    }));
+    serve.create(payload).then(() => {
+      /** save practitioners to store, rerender */
+    });
+  };
+  /** */
   const loadOrganization = async (service: typeof serviceClass, organizationId: string) => {
     const serve = new service(OPENSRP_ORGANIZATION_ENDPOINT);
 
@@ -178,7 +241,7 @@ export { SingleOrganizationView };
 /** interface to describe props from mapStateToProps */
 interface MapStateToProps {
   organization: Organization | null;
-  organizationMembers: any;
+  practitioners: any;
 }
 
 /** Maps a prop to a selector from the organizations dux module */
@@ -189,10 +252,10 @@ const mapStateToProps = (
   let organizationId = ownProps.match.params.id;
   organizationId = organizationId ? organizationId : '';
   const organization = getOrganizationById(state, organizationId);
-  const organizationMembers: OrganizationMember[] = [];
+  const practitioners: Practitioner[] = [];
   return {
     organization,
-    organizationMembers,
+    practitioners,
   };
 };
 
