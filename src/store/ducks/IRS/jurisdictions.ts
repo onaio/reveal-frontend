@@ -29,6 +29,36 @@ export interface NamibiaIRSJurisdiction extends IRSJurisdiction {
   target_2019: number;
 }
 
+export interface ZambiaIRSJurisdiction extends IRSJurisdiction {
+  totstruct: number;
+  rooms_eligible: number;
+  rooms_sprayed: number;
+  sprayed_rooms_eligible: number;
+  sprayed_rooms_sprayed: number;
+  foundstruct: number;
+  sprayedstruct: number;
+  totareas: number;
+  targareas: number;
+  targstruct: number;
+  perctvisareaseffect: number;
+  spraycovtarg: number;
+  roomcov: number;
+}
+
+export interface ZambiaIRSFocusArea extends IRSJurisdiction {
+  totstruct: number;
+  rooms_eligible: number;
+  rooms_sprayed: number;
+  sprayed_rooms_eligible: number;
+  sprayed_rooms_sprayed: number;
+  foundstruct: number;
+  sprayedstruct: number;
+  spraycov: number;
+  spraytarg: number;
+  spraysuccess: number;
+  roomcov: number;
+}
+
 // actions
 
 /** IRS_JURISDICTION_FETCHED action type */
