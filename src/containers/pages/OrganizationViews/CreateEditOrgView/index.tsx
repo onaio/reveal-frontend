@@ -61,7 +61,7 @@ const CreateEditTeamView = (props: CreateEditTeamViewTypes) => {
   breadcrumbProps.pages = [homePage, basePage];
 
   const teamFormProps: TeamFormProps = {
-    disabledFields: ['identifier'],
+    disabledFields: [],
     initialValues: editing ? team! : defaultInitialValues,
     redirectAfterAction: TEAM_LIST_URL,
   };
