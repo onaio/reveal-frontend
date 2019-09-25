@@ -136,24 +136,12 @@ class App extends Component {
                   path={`${REPORT_IRS_PLAN_URL}/:planId/:jurisdictionId`}
                   component={ConnectedIRSJurisdictions}
                 />
-                {/* <ConnectedPrivateRoute
-                  disableLoginProtection={true}
-                  exact={true}
-                  path={IRS_REPORTS_URL}
-                  component={IRSJurisdictions}
-                />
-                <ConnectedPrivateRoute
-                  disableLoginProtection={true}
-                  exact={true}
-                  path={`${IRS_REPORTS_URL}/:id`}
-                  component={IRSJurisdictions}
-                /> */}
 
                 {/* IRS Reporting Map view */}
                 <ConnectedPrivateRoute
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
-                  path={`${ACTIVE_IRS_PLAN_URL}/:id/${MAP}/:jurisdictionId`}
+                  path={`${REPORT_IRS_PLAN_URL}/:id/${MAP}/:jurisdictionId`}
                   component={IrsReportMap}
                 />
 
