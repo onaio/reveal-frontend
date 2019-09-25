@@ -2,6 +2,7 @@ import { CellInfo } from 'react-table';
 import { getIRSThresholdAdherenceIndicator } from '../../../../helpers/indicators';
 import { FlexObject } from '../../../../helpers/utils';
 
+/** columns for Namibia IRS jurisdictions */
 export const NamibiaColumns = [
   {
     Header: 'Name',
@@ -98,6 +99,7 @@ export const NamibiaColumns = [
   },
 ];
 
+/** columns for Zambia IRS jurisdictions */
 export const ZambiaJurisdictionsColumns = [
   {
     Header: 'Name',
@@ -189,6 +191,7 @@ export const ZambiaJurisdictionsColumns = [
   },
 ];
 
+/** columns for Namibia IRS focus (spray) areas */
 export const ZambiaFocusAreasColumns = [
   {
     Header: 'Name',
@@ -273,6 +276,12 @@ export const ZambiaFocusAreasColumns = [
   },
 ];
 
+/** extract hierarchical tree of jurisdictions as a list, with the highest
+ * level item in the hierarchy as the 0th element
+ * @param {FlexObject[]} tree - the data set
+ * @param {FlexObject} item - the item in question
+ * @returns {FlexObject[]} - the hierarchy for the item in question
+ */
 export function getTree(
   tree: FlexObject[],
   item: FlexObject,
