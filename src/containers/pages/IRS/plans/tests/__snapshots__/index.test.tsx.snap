@@ -36,12 +36,38 @@ exports[`components/IRS Reports/IRSPlansList renders plan definition list correc
 `;
 
 exports[`components/IRS Reports/IRSPlansList renders plan definition list correctly: table headers 1`] = `
-<th
-  className="listview-td"
-  key="0"
->
-  Title
-</th>
+Array [
+  <th
+    className="listview-td"
+    key="0"
+  >
+    Title
+  </th>,
+  <th
+    className="listview-td"
+    key="1"
+  >
+    Date Created
+  </th>,
+  <th
+    className="listview-td"
+    key="2"
+  >
+    Start Date
+  </th>,
+  <th
+    className="listview-td"
+    key="3"
+  >
+    End Date
+  </th>,
+  <th
+    className="listview-td"
+    key="4"
+  >
+    Status
+  </th>,
+]
 `;
 
 exports[`components/IRS Reports/IRSPlansList renders plan definition list correctly: table rows 1`] = `
@@ -53,10 +79,10 @@ Array [
     <Link
       key="727c3d40-e118-564a-b231-aac633e6abce"
       replace={false}
-      to="/irs/reports/727c3d40-e118-564a-b231-aac633e6abce"
+      to="/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce"
     >
       <a
-        href="/irs/reports/727c3d40-e118-564a-b231-aac633e6abce"
+        href="/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce"
         onClick={[Function]}
       >
         IRS 2019-09-05 TEST
@@ -65,15 +91,39 @@ Array [
   </td>,
   <td
     className="listview-th"
+    key="1"
+  >
+    2019-09-05
+  </td>,
+  <td
+    className="listview-th"
+    key="2"
+  >
+    2019-09-05
+  </td>,
+  <td
+    className="listview-th"
+    key="3"
+  >
+    2019-09-25
+  </td>,
+  <td
+    className="listview-th"
+    key="4"
+  >
+    retired
+  </td>,
+  <td
+    className="listview-th"
     key="0"
   >
     <Link
       key="02e358ed-87fe-5720-8782-0afe28cb7e8c"
       replace={false}
-      to="/irs/reports/02e358ed-87fe-5720-8782-0afe28cb7e8c"
+      to="/intervention/irs/report/02e358ed-87fe-5720-8782-0afe28cb7e8c"
     >
       <a
-        href="/irs/reports/02e358ed-87fe-5720-8782-0afe28cb7e8c"
+        href="/intervention/irs/report/02e358ed-87fe-5720-8782-0afe28cb7e8c"
         onClick={[Function]}
       >
         IRS 2019-08-30m
@@ -82,20 +132,68 @@ Array [
   </td>,
   <td
     className="listview-th"
+    key="1"
+  >
+    2019-08-30
+  </td>,
+  <td
+    className="listview-th"
+    key="2"
+  >
+    2019-08-30
+  </td>,
+  <td
+    className="listview-th"
+    key="3"
+  >
+    2019-09-14
+  </td>,
+  <td
+    className="listview-th"
+    key="4"
+  >
+    active
+  </td>,
+  <td
+    className="listview-th"
     key="0"
   >
     <Link
       key="c6e59ec1-8c54-5fdf-acf3-ee3692983f38"
       replace={false}
-      to="/irs/reports/c6e59ec1-8c54-5fdf-acf3-ee3692983f38"
+      to="/intervention/irs/report/c6e59ec1-8c54-5fdf-acf3-ee3692983f38"
     >
       <a
-        href="/irs/reports/c6e59ec1-8c54-5fdf-acf3-ee3692983f38"
+        href="/intervention/irs/report/c6e59ec1-8c54-5fdf-acf3-ee3692983f38"
         onClick={[Function]}
       >
         Berg Namibia 2019
       </a>
     </Link>
+  </td>,
+  <td
+    className="listview-th"
+    key="1"
+  >
+    2019-08-29
+  </td>,
+  <td
+    className="listview-th"
+    key="2"
+  >
+    2019-08-29
+  </td>,
+  <td
+    className="listview-th"
+    key="3"
+  >
+    2019-09-18
+  </td>,
+  <td
+    className="listview-th"
+    key="4"
+  >
+    active
   </td>,
 ]
 `;
