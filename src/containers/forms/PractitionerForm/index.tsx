@@ -188,3 +188,5 @@ const PractitionerForm = (props: PractitionerFormProps) => {
     </div>
   );
 };
+
+export default PractitionerForm;
