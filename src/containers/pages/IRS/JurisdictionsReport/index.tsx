@@ -1,6 +1,6 @@
 import DrillDownTable, { hasChildrenFunc } from '@onaio/drill-down-table';
 import reducerRegistry from '@onaio/redux-reducer-registry';
-import superset from '@onaio/superset-connector';
+import superset, { SupersetFormData } from '@onaio/superset-connector';
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
@@ -11,7 +11,10 @@ import { Store } from 'redux';
 import IRSTableCell from '../../../../components/IRSTableCell';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
-import { SUPERSET_IRS_REPORTING_PLANS_SLICE } from '../../../../configs/env';
+import {
+  SUPERSET_IRS_REPORTING_JURISDICTIONS_DATA_SLICES,
+  SUPERSET_IRS_REPORTING_PLANS_SLICE,
+} from '../../../../configs/env';
 import { HOME, HOME_URL, IRS_REPORTING_TITLE, REPORT_IRS_PLAN_URL } from '../../../../constants';
 import '../../../../helpers/tables.css';
 import { FlexObject, RouteParams } from '../../../../helpers/utils';
@@ -34,6 +37,8 @@ import './style.css';
 /** register the reducers */
 reducerRegistry.register(IRSPlansReducerName, IRSPlansReducer);
 reducerRegistry.register(IRSJurisdictionsReducerName, IRSJurisdictionsReducer);
+
+const slices = SUPERSET_IRS_REPORTING_JURISDICTIONS_DATA_SLICES.split(',');
 
 export interface IRSJurisdictionProps {
   fetchJurisdictions: typeof fetchIRSJurisdictions;
@@ -63,7 +68,7 @@ const IRSJurisdictions = (props: IRSJurisdictionProps & RouteComponentProps<Rout
   async function loadData() {
     try {
       setLoading(!plan || !jurisdictions || jurisdictions.length < 1); // set loading when there is no data
-      let params = null;
+      let params: SupersetFormData | null = null;
       if (planId) {
         params = superset.getFormData(3000, [
           { comparator: planId, operator: '==', subject: 'plan_id' },
@@ -74,12 +79,11 @@ const IRSJurisdictions = (props: IRSJurisdictionProps & RouteComponentProps<Rout
         fetchPlans(result)
       );
 
-      await service('556', params).then((result: IRSJurisdiction[]) =>
-        fetchJurisdictions('556', result)
-      );
-      await service('557', params).then((result: IRSJurisdiction[]) =>
-        fetchJurisdictions('557', result)
-      );
+      slices.forEach(async slice => {
+        await service(slice, params).then((result: IRSJurisdiction[]) =>
+          fetchJurisdictions(slice, result)
+        );
+      });
     } catch (e) {
       // do something with the error?
     } finally {
@@ -250,10 +254,12 @@ interface DispatchedStateProps {
 const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateProps => {
   const planId = ownProps.match.params.planId || null;
   const plan = getIRSPlanById(state, planId);
-  const jurisdictions = [
-    ...getIRSJurisdictionsArray(state, '556', planId),
-    ...getIRSJurisdictionsArray(state, '557', planId),
-  ];
+  let jurisdictions: IRSJurisdiction[] = [];
+
+  slices.forEach(
+    slice => (jurisdictions = jurisdictions.concat(getIRSJurisdictionsArray(state, slice, planId)))
+  );
+
   return {
     jurisdictions,
     plan,
