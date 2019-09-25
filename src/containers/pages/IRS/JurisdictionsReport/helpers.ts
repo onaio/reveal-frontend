@@ -98,6 +98,181 @@ export const NamibiaColumns = [
   },
 ];
 
+export const ZambiaJurisdictionsColumns = [
+  {
+    Header: 'Name',
+    columns: [
+      {
+        Header: '',
+        accessor: 'jurisdiction_name',
+        minWidth: 180,
+      },
+    ],
+  },
+  {
+    Header: 'Total Spray Areas',
+    columns: [
+      {
+        Header: '',
+        accessor: 'totareas',
+      },
+    ],
+  },
+  {
+    Header: 'Targeted Spray Areas',
+    columns: [
+      {
+        Header: '',
+        accessor: 'targareas',
+      },
+    ],
+  },
+  {
+    Header: '% visited Spray Areas Effectively sprayed',
+    columns: [
+      {
+        Cell: (cell: CellInfo) => getIRSThresholdAdherenceIndicator(cell),
+        Header: '',
+        accessor: 'perctvisareaseffect',
+        className: 'indicator centered',
+      },
+    ],
+  },
+  {
+    Header: 'Total Structures',
+    columns: [
+      {
+        Header: '',
+        accessor: 'totstruct',
+      },
+    ],
+  },
+  {
+    Header: 'Targeted Structures',
+    columns: [
+      {
+        Header: '',
+        accessor: 'targstruct',
+      },
+    ],
+  },
+  {
+    Header: 'Sprayed Structures',
+    columns: [
+      {
+        Header: '',
+        accessor: 'sprayedstruct',
+      },
+    ],
+  },
+  {
+    Header: 'Spray coverage of targeted (Progress)',
+    columns: [
+      {
+        Cell: (cell: CellInfo) => getIRSThresholdAdherenceIndicator(cell),
+        Header: '',
+        accessor: 'spraycovtarg',
+        className: 'indicator centered',
+      },
+    ],
+  },
+  {
+    Header: 'Room coverage of structures sprayed',
+    columns: [
+      {
+        Cell: (cell: CellInfo) => getIRSThresholdAdherenceIndicator(cell),
+        Header: '',
+        accessor: 'roomcov',
+        className: 'indicator centered',
+      },
+    ],
+  },
+];
+
+export const ZambiaFocusAreasColumns = [
+  {
+    Header: 'Name',
+    columns: [
+      {
+        Header: '',
+        accessor: 'jurisdiction_name',
+        minWidth: 180,
+      },
+    ],
+  },
+  {
+    Header: 'Structures on the ground',
+    columns: [
+      {
+        Header: '',
+        accessor: 'totstruct',
+      },
+    ],
+  },
+  {
+    Header: 'Found',
+    columns: [
+      {
+        Header: '',
+        accessor: 'foundstruct',
+      },
+    ],
+  },
+  {
+    Header: 'Sprayed',
+    columns: [
+      {
+        Header: '',
+        accessor: 'sprayedstruct',
+      },
+    ],
+  },
+  {
+    Header: 'Spray Coverage (Effectiveness)',
+    columns: [
+      {
+        Cell: (cell: CellInfo) => getIRSThresholdAdherenceIndicator(cell),
+        Header: '',
+        accessor: 'spraycov',
+        className: 'indicator centered',
+      },
+    ],
+  },
+  {
+    Header: 'Found Coverage',
+    columns: [
+      {
+        Cell: (cell: CellInfo) => getIRSThresholdAdherenceIndicator(cell),
+        Header: '',
+        accessor: 'spraytarg',
+        className: 'indicator centered',
+      },
+    ],
+  },
+  {
+    Header: 'Spray Success Rate (PMI SC)',
+    columns: [
+      {
+        Cell: (cell: CellInfo) => getIRSThresholdAdherenceIndicator(cell),
+        Header: '',
+        accessor: 'spraysuccess',
+        className: 'indicator centered',
+      },
+    ],
+  },
+  {
+    Header: 'Room coverage of structures sprayed',
+    columns: [
+      {
+        Cell: (cell: CellInfo) => getIRSThresholdAdherenceIndicator(cell),
+        Header: '',
+        accessor: 'roomcov',
+        className: 'indicator centered',
+      },
+    ],
+  },
+];
+
 export function getTree(
   tree: FlexObject[],
   item: FlexObject,
