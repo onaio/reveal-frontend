@@ -42,13 +42,19 @@ import {
   lineLayerConfig,
 } from '../../../../../configs/settings';
 import ProgressBar from '../../../../../helpers/ProgressBar';
+import IRSPlansReducer, {
+  fetchIRSPlans,
+  getIRSPlanById,
+  IRSPlan,
+  reducerName as IRSPlansReducerName,
+} from '../../../../../store/ducks/IRS/plans';
 import jurisdictionReducer, {
   fetchJurisdictions,
   getJurisdictionById,
   Jurisdiction,
   reducerName as jurisdictionReducerName,
 } from '../../../../../store/ducks/jurisdictions';
-import { getPlanById, getPlanRecordById, PlanRecord } from '../../../../../store/ducks/plans';
+// import { getPlanById, getPlanRecordById, PlanRecord } from '../../../../../store/ducks/plans';
 import {
   AnyStructure,
   AnyStructureGeojson,
@@ -72,7 +78,7 @@ export interface IrsReportMapProps {
   fetchStructuresActionCreator: typeof setStructures;
   jurisdictionById: Jurisdiction | null;
   jurisdictionId: string;
-  planById: PlanRecord | null;
+  planById: IRSPlan | null;
   planId: string;
   structures: FeatureCollection<StructureGeoJSON> | null;
 }
@@ -459,9 +465,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): IrsReportMapProp
   const jurisdictionId = ownProps.match.params.jurisdictionId || '';
   const jurisdictionById = getJurisdictionById(state, jurisdictionId);
   const planId = ownProps.match.params.id || '';
-  const planById = planId.length
-    ? getPlanRecordById(state, planId) || getPlanById(state, planId)
-    : null;
+  const planById = planId.length ? getIRSPlanById(state, planId) : null;
   const structures = getStructuresFCByJurisdictionId(state, jurisdictionId);
   const props = {
     jurisdictionById,
