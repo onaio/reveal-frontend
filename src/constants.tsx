@@ -220,6 +220,10 @@ export const SINGLE_TEAM_URL = '/teams/view';
 export type SINGLE_TEAM_URL = typeof SINGLE_TEAM_URL;
 export const TEAM_LIST_URL = '/teams';
 export type TEAMS_LIST_URL = typeof TEAM_LIST_URL;
+export const CREATE_PRACTITIONER_URL = '/practitioners/new';
+export type CREATE_PRACTITIONER_URL = typeof CREATE_PRACTITIONER_URL;
+export const EDIT_PRACTITIONER_URL = '/practitioners/edit';
+export type EDIT_PRACTITIONER_URL = typeof EDIT_TEAM_URL;
 
 // OpenSRP API strings
 export const OPENSRP_PRACTITIONER_ENDPOINT = 'practitioner';
