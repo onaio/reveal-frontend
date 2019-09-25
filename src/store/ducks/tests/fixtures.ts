@@ -1217,18 +1217,26 @@ export const organization3: Organization = {
 
 export const organizations: Organization[] = [organization1, organization2];
 
-export const organizationMember1 = {
-  identifier: '1',
-  name: 'Sam Sam',
-  team: 'User_45',
-  username: 'User_45_1',
+export const practitioner1 = {
+  active: true,
+  identifier: 'p5id',
+  name: 'tlv2_name',
+  userId: '8af3b7ce-e3fa-420f-8de6-e7c36e08f0bc',
+  username: 'tlv2',
+};
+export const practitioner2 = {
+  active: true,
+  identifier: 'd7c9c000-e9b3-427a-890e-49c301aa48e6',
+  name: 'Biophics Tester',
+  userId: '8df27310-c7ef-4bb2-b77f-3b9f4bd23713',
+  username: 'tak',
+};
+export const practitioner3 = {
+  active: true,
+  identifier: '437cc699-cfa7-414c-ba27-1668b6b517e6',
+  name: 'Test User Lusaka',
+  userId: 'cad04f1e-9b05-4eac-92ce-4b38aa478644',
+  username: 'lusaka',
 };
 
-export const organizationMember2 = {
-  identifier: '2',
-  name: 'Joe',
-  team: 'South',
-  username: 'Bob',
-};
-
-export const organizationMembers = [organizationMember1, organizationMember2];
+export const practitioners = [practitioner1, practitioner2, practitioner3];
