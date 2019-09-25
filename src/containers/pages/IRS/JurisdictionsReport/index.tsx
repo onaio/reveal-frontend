@@ -13,6 +13,7 @@ import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/Heade
 import Loading from '../../../../components/page/Loading';
 import {
   SUPERSET_IRS_REPORTING_JURISDICTIONS_DATA_SLICES,
+  SUPERSET_IRS_REPORTING_JURISDICTIONS_FOCUS_AREA_LEVEL,
   SUPERSET_IRS_REPORTING_PLANS_SLICE,
 } from '../../../../configs/env';
 import { HOME, HOME_URL, IRS_REPORTING_TITLE, REPORT_IRS_PLAN_URL } from '../../../../constants';
@@ -178,7 +179,9 @@ const IRSJurisdictions = (props: IRSJurisdictionProps & RouteComponentProps<Rout
 
   let columnsToUse = ZambiaJurisdictionsColumns;
   if (currLevelData && currLevelData.length > 0) {
-    if (currLevelData[0].jurisdiction_depth === 2) {
+    if (
+      currLevelData[0].jurisdiction_depth === +SUPERSET_IRS_REPORTING_JURISDICTIONS_FOCUS_AREA_LEVEL
+    ) {
       columnsToUse = ZambiaFocusAreasColumns;
     }
   }
