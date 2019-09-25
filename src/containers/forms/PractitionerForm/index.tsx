@@ -1,5 +1,5 @@
 import { faFileDownload } from '@fortawesome/free-solid-svg-icons';
-import { ErrorMessage, Field, Form, Formik } from 'formik';
+import { ErrorMessage, Field, Form, Formik, yupToFormErrors } from 'formik';
 import React, { useState } from 'react';
 import { Redirect } from 'react-router';
 import { valueContainerCSS } from 'react-select/src/components/containers';
@@ -16,25 +16,34 @@ import {
   SAVE,
   SAVING,
 } from '../../../constants';
+import { generateNameSpacedUUID } from '../../../helpers/utils';
 import { OpenSRPService } from '../../../services/opensrp';
+
+const PractitionerFormNameSpace = '78295ac0-df73-11e9-a54b-dbf5e5b2d668';
 
 export interface PractitionerFormFields {
   identifier: string;
   active: boolean;
   name: string;
-  // userUuid: string; //TODO - add userid select field
+  userId: string;
+  username: string;
 }
 
 /** Initial values for practitioner's form */
 export const defaultInitialValues = {
+  active: false,
   identifier: '',
   name: '',
+  userId: '',
+  username: '',
 };
 
 export const PractitionerSchema = Yup.object().shape({
   active: Yup.boolean(),
   identifier: Yup.string(),
   name: Yup.string().required(REQUIRED),
+  userId: Yup.string().required(REQUIRED),
+  username: Yup.string().required(REQUIRED),
 });
 
 /** interface for props to Practitioner form */
@@ -60,7 +69,8 @@ const PractitionerForm = (props: PractitionerFormProps) => {
         initialValues={initialValues}
         validationSchema={PractitionerSchema}
         // tslint:disable-next-line: jsx-no-lambda
-        onSubmit={(values, { setSubmitting }) => {
+        onSubmit={(values, { setSubmitting, setFieldValue }) => {
+          setFieldValue('identifier', generateNameSpacedUUID(``, PractitionerFormNameSpace));
           const apiService = new OpenSRPService(OPENSRP_PRACTITIONER_ENDPOINT);
 
           if (editMode) {
@@ -93,21 +103,7 @@ const PractitionerForm = (props: PractitionerFormProps) => {
             <FormGroup className="non-field-errors">
               {globalError !== '' && <p className="form-text text-danger">{globalError}</p>}
             </FormGroup>
-            <FormGroup>
-              <Label>{`${PRACTITIONER} ${ID}`}</Label>
-              <Field
-                type="text"
-                name="identifier"
-                id="identifier"
-                disabled={disabledFields.includes('identifier')}
-                className={errors.identifier ? `form-control is-invalid` : `form-control`}
-              />
-              <ErrorMessage
-                component="small"
-                name="identifier"
-                className="form-text text-danger identifier-error"
-              />
-            </FormGroup>
+
             <FormGroup>
               <Label>{`${NAME}`}</Label>
               <Field
@@ -125,46 +121,55 @@ const PractitionerForm = (props: PractitionerFormProps) => {
             </FormGroup>
 
             <FormGroup>
-              <Label>{`${ACTIVE}`}</Label>
-              <div className="btn-group btn-group-toggle" data-toggle="buttons">
-                <Field name="active">
-                  <Label class="btn btn-outline-primary">
-                    <input
-                      type="radio"
-                      name="active"
-                      id="yes"
-                      checked={values.active === true}
-                      // tslint:disable-next-line: jsx-no-lambda
-                      onChange={() => setFieldValue('active', true)}
-                    />{' '}
-                    yes
-                  </Label>
-                  <Label class="btn btn-outline-primary">
-                    <input
-                      type="radio"
-                      name="active"
-                      id="no"
-                      checked={values.active === true}
-                      // tslint:disable-next-line: jsx-no-lambda
-                      onChange={() => setFieldValue('active', false)}
-                    />{' '}
-                    no
-                  </Label>
-                </Field>
-              </div>
-
+              <Label>Username</Label>
               <Field
                 type="text"
-                name="name"
-                id="name"
-                disabled={disabledFields.includes('name')}
-                className={errors.name ? `form-control is-invalid` : `form-control`}
+                name="username"
+                id="username"
+                disabled={disabledFields.includes('username')}
+                className={errors.identifier ? `form-control is-invalid` : `form-control`}
               />
               <ErrorMessage
-                name="active"
                 component="small"
-                className="form-text text-danger name-error"
+                name="username"
+                className="form-text text-danger identifier-error"
               />
+            </FormGroup>
+
+            <FormGroup>
+              <Label>Active</Label>
+              <br />
+              <div className="btn-group btn-group-toggle" data-toggle="buttons">
+                <label
+                  className={`btn btn-outline-secondary ${values.active === false ? 'active' : ''}`}
+                >
+                  <Field
+                    type="radio"
+                    name="active"
+                    id="option2"
+                    // tslint:disable-next-line: jsx-no-lambda
+                    onChange={() => setFieldValue('active', false)}
+                  />{' '}
+                  no
+                </label>
+                <label
+                  className={`btn btn-outline-primary ${values.active === true ? 'active' : ''}`}
+                >
+                  <Field
+                    type="radio"
+                    name="active"
+                    id="option1"
+                    // tslint:disable-next-line: jsx-no-lambda
+                    onChange={() => setFieldValue('active', true)}
+                  />{' '}
+                  yes
+                </label>
+                <ErrorMessage
+                  name="active"
+                  component="small"
+                  className="form-text text-danger name-error"
+                />
+              </div>
             </FormGroup>
 
             <hr className="mb-2" />
