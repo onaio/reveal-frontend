@@ -5,10 +5,13 @@ import { FlexObject } from '@onaio/drill-down-table/dist/types/helpers/utils';
 import ListView from '@onaio/list-view';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import { capitalize, values } from 'lodash';
+import React, { useState } from 'react';
 import React, { useEffect } from 'react';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
+import AsyncSelect from 'react-select/async';
+import { ValueType } from 'react-select/src/types';
 import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
 import LinkAsButton from '../../../../components/LinkAsButton';
@@ -33,6 +36,7 @@ import {
   TEAMS,
   USERNAME,
 } from '../../../../constants';
+import PractitionerSelect from '../../../../containers/forms/PractitionerSelect';
 import { generateNameSpacedUUID, RouteParams } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
 import store from '../../../../store';
@@ -43,6 +47,8 @@ import organizationsReducer, {
   reducerName as organizationsReducerName,
 } from '../../../../store/ducks/organizations';
 import * as fixtures from '../../../../store/ducks/tests/fixtures';
+import { OPENSRP_PRACTITIONER_ENDPOINT } from '../../../constants';
+import { OpenSRPService } from '../../../services/opensrp';
 
 reducerRegistry.register(organizationsReducerName, organizationsReducer);
 
@@ -124,6 +130,25 @@ const SingleOrganizationView = (props: SingleOrgViewPropsType) => {
 
   // functions / methods //
 
+  const formatOptions = (entries: any[]): Array<{ label: string; value: string }> => {
+    return entries.map(entry => ({ label: entry.username, value: entry.identifier }));
+  };
+
+  // track selected options that are in state
+  const [selectedOptions, setSelectedOptions] = useState([]);
+
+  const changeHandler = (values: ValueType<Array<{ label: string; value: string }>>) => {
+    // list of ids
+    const selectedOptionsIds = values!.map(value => value.value);
+    setSelectedOptions(selectedOptionsIds);
+  };
+
+  const promiseOptions = async () => {
+    const serve = new serviceClass(OPENSRP_PRACTITIONER_ENDPOINT);
+    const options = await serve.list();
+    return formatOptions(options);
+  };
+
   const handleRemovePractitioner = (practitionerId: string, event: React.MouseEvent) => {
     event.preventDefault();
     unassignPractitioner(OpenSRPService, organization!.identifier, practitionerId);
@@ -193,6 +218,11 @@ const SingleOrganizationView = (props: SingleOrgViewPropsType) => {
     return <Loading />;
   }
 
+  const handleAssign = () => {
+    const assignedIds = selectedOptions.map(option => option.value);
+    assignPractitioner(OpenSRPService, organization.identifier, assignedIds);
+  };
+
   return (
     <div>
       <Helmet>
@@ -230,6 +260,21 @@ const SingleOrganizationView = (props: SingleOrgViewPropsType) => {
       </div>
       <h3 className="mb-3 mt-5">{`${ORGANIZATIONS_LABEL} ${MEMBERS}`}</h3>
       <ListView {...listViewProps} />
+      <hr />
+      <form className="form">
+        {/* onchange setState, on submit, call handleAdd */}
+        <AsyncSelect
+          value={selectedOptions}
+          isMulti={true}
+          cacheOptions={true}
+          defaultOptions={true}
+          loadOptions={promiseOptions}
+          onChange={changeHandler}
+        />{' '}
+        <a className="btn" onclick={handleAssign}>
+          Add Practitioner
+        </a>
+      </form>
     </div>
   );
 };
