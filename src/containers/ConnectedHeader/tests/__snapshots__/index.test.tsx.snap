@@ -159,7 +159,7 @@ Object {
                   activeClassName="active"
                   aria-current="page"
                   className="nav-link"
-                  to="/intervention/irs"
+                  to="/intervention/irs/report"
                 >
                   IRS Reporting
                 </NavLink>
@@ -374,7 +374,7 @@ Object {
                   activeClassName="active"
                   aria-current="page"
                   className="nav-link"
-                  to="/intervention/irs"
+                  to="/intervention/irs/report"
                 >
                   IRS Reporting
                 </NavLink>

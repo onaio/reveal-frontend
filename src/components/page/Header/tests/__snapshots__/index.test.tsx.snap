@@ -488,21 +488,21 @@ exports[`components/page/Header renders header correctly 1`] = `
                                             activeClassName="active"
                                             aria-current="page"
                                             className="nav-link"
-                                            to="/intervention/irs"
+                                            to="/intervention/irs/report"
                                           >
                                             <Route
-                                              path="\\\\/intervention\\\\/irs"
+                                              path="\\\\/intervention\\\\/irs\\\\/report"
                                             >
                                               <Link
                                                 aria-current={null}
                                                 className="nav-link"
                                                 replace={false}
-                                                to="/intervention/irs"
+                                                to="/intervention/irs/report"
                                               >
                                                 <a
                                                   aria-current={null}
                                                   className="nav-link"
-                                                  href="/intervention/irs"
+                                                  href="/intervention/irs/report"
                                                   onClick={[Function]}
                                                 >
                                                   IRS Reporting
@@ -1126,21 +1126,21 @@ exports[`components/page/Header renders header correctly when authenticated 1`] 
                                             activeClassName="active"
                                             aria-current="page"
                                             className="nav-link"
-                                            to="/intervention/irs"
+                                            to="/intervention/irs/report"
                                           >
                                             <Route
-                                              path="\\\\/intervention\\\\/irs"
+                                              path="\\\\/intervention\\\\/irs\\\\/report"
                                             >
                                               <Link
                                                 aria-current={null}
                                                 className="nav-link"
                                                 replace={false}
-                                                to="/intervention/irs"
+                                                to="/intervention/irs/report"
                                               >
                                                 <a
                                                   aria-current={null}
                                                   className="nav-link"
-                                                  href="/intervention/irs"
+                                                  href="/intervention/irs/report"
                                                   onClick={[Function]}
                                                 >
                                                   IRS Reporting
