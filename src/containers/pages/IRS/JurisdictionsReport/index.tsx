@@ -30,7 +30,6 @@ import IRSPlansReducer, {
 } from '../../../../store/ducks/IRS/plans';
 import { getTree, ZambiaFocusAreasColumns, ZambiaJurisdictionsColumns } from './helpers';
 import './style.css';
-import * as fixtures from './tests/fixtures';
 
 /** register the reducers */
 reducerRegistry.register(IRSPlansReducerName, IRSPlansReducer);
