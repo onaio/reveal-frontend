@@ -21,7 +21,6 @@ import {
   FI_URL,
   INTERVENTION_IRS_DRAFTS_URL,
   INTERVENTION_IRS_URL,
-  IRS_REPORTS_URL,
   LOGIN_URL,
   LOGOUT_URL,
   MAP,
@@ -47,7 +46,10 @@ import NewPlan from '../containers/pages/InterventionPlan/NewPlan/General';
 import NewIRSPlan from '../containers/pages/InterventionPlan/NewPlan/IRS';
 import ConnectedPlanDefinitionList from '../containers/pages/InterventionPlan/PlanDefinitionList';
 import ConnectedUpdatePlan from '../containers/pages/InterventionPlan/UpdatePlan';
-import { IRSJurisdictions } from '../containers/pages/IRS/JurisdictionsReport';
+import ConnectedIRSJurisdictions, {
+  IRSJurisdictions,
+} from '../containers/pages/IRS/JurisdictionsReport';
+import ConnectedIRSPlansList from '../containers/pages/IRS/plans';
 import { oAuthUserInfoGetter } from '../helpers/utils';
 
 library.add(faMap);
@@ -119,9 +121,33 @@ class App extends Component {
                 <ConnectedPrivateRoute
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
-                  path={`${REPORT_IRS_PLAN_URL}/:id`}
-                  component={IrsReport}
+                  path={REPORT_IRS_PLAN_URL}
+                  component={ConnectedIRSPlansList}
                 />
+                <ConnectedPrivateRoute
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${REPORT_IRS_PLAN_URL}/:planId`}
+                  component={ConnectedIRSJurisdictions}
+                />
+                <ConnectedPrivateRoute
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${REPORT_IRS_PLAN_URL}/:planId/:jurisdictionId`}
+                  component={ConnectedIRSJurisdictions}
+                />
+                {/* <ConnectedPrivateRoute
+                  disableLoginProtection={true}
+                  exact={true}
+                  path={IRS_REPORTS_URL}
+                  component={IRSJurisdictions}
+                />
+                <ConnectedPrivateRoute
+                  disableLoginProtection={true}
+                  exact={true}
+                  path={`${IRS_REPORTS_URL}/:id`}
+                  component={IRSJurisdictions}
+                /> */}
 
                 {/* IRS Reporting Map view */}
                 <ConnectedPrivateRoute
@@ -206,18 +232,6 @@ class App extends Component {
                   exact={true}
                   path={PLAN_LIST_URL}
                   component={ConnectedPlanDefinitionList}
-                />
-                <ConnectedPrivateRoute
-                  disableLoginProtection={true}
-                  exact={true}
-                  path={IRS_REPORTS_URL}
-                  component={IRSJurisdictions}
-                />
-                <ConnectedPrivateRoute
-                  disableLoginProtection={true}
-                  exact={true}
-                  path={`${IRS_REPORTS_URL}/:id`}
-                  component={IRSJurisdictions}
                 />
                 {/* tslint:disable jsx-no-lambda */}
                 <Route
