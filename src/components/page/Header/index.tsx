@@ -36,6 +36,7 @@ import {
   PLAN_LIST_URL,
   PLANNING,
   PLANS,
+  REPORT_IRS_PLAN_URL,
   REPORTING,
 } from '../../../constants';
 import './Header.css';
@@ -162,7 +163,7 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
                       <div>
                         <DropdownItem>
                           <NavLink
-                            to={INTERVENTION_IRS_URL}
+                            to={REPORT_IRS_PLAN_URL}
                             className="nav-link"
                             activeClassName="active"
                           >
