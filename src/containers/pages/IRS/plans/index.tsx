@@ -9,7 +9,7 @@ import { Store } from 'redux';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
 import { SUPERSET_IRS_REPORTING_PLANS_SLICE } from '../../../../configs/env';
-import { HOME, HOME_URL, IRS_PLANS, IRS_REPORTS_URL } from '../../../../constants';
+import { HOME, HOME_URL, IRS_PLANS, REPORT_IRS_PLAN_URL } from '../../../../constants';
 import supersetFetch from '../../../../services/superset';
 import IRSPlansReducer, {
   fetchIRSPlans,
@@ -38,7 +38,7 @@ const IRSPlansList = (props: PlanListProps) => {
   const breadcrumbProps = {
     currentPage: {
       label: pageTitle,
-      url: IRS_REPORTS_URL,
+      url: REPORT_IRS_PLAN_URL,
     },
     pages: [
       {
@@ -73,12 +73,16 @@ const IRSPlansList = (props: PlanListProps) => {
   const listViewProps = {
     data: plans.map(planObj => {
       return [
-        <Link to={`${IRS_REPORTS_URL}/${planObj.plan_id}`} key={planObj.plan_id}>
+        <Link to={`${REPORT_IRS_PLAN_URL}/${planObj.plan_id}`} key={planObj.plan_id}>
           {planObj.plan_title}
         </Link>,
+        planObj.plan_date,
+        planObj.plan_effective_period_start,
+        planObj.plan_effective_period_end,
+        planObj.plan_status,
       ];
     }),
-    headerItems: ['Title'],
+    headerItems: ['Title', 'Date Created', 'Start Date', 'End Date', 'Status'],
     tableClass: 'table table-bordered plans-list',
   };
 
