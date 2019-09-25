@@ -137,8 +137,10 @@ const SingleOrganizationView = (props: SingleOrgViewPropsType) => {
   ) => {
     const serve = new service(`/practitionerRole`);
 
+    const payload = {}; // this needs to be a practitionerRole object,
+
     serve
-      .delete()
+      .delete(payload)
       .then(() => {
         // probably remove the practitioner link from store if saved, then rerender
       })
