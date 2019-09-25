@@ -8,11 +8,13 @@ import { Helmet } from 'react-helmet';
 import { Route, Switch } from 'react-router';
 import { Col, Container, Row } from 'reactstrap';
 import Loading from '../components/page/Loading';
-import { WEBSITE_NAME } from '../configs/env';
 import { DISABLE_LOGIN_PROTECTION } from '../configs/env';
+import { WEBSITE_NAME } from '../configs/env';
 import { providers } from '../configs/settings';
 import {
+  CREATE_PRACTITIONER_URL,
   CREATE_TEAM_URL,
+  EDIT_PRACTITIONER_URL,
   EDIT_TEAM_URL,
   FI_HISTORICAL_URL,
   FI_SINGLE_MAP_URL,
@@ -45,6 +47,7 @@ import ConnectedUpdatePlan from '../containers/pages/InterventionPlan/UpdatePlan
 import ConnectedCreateEditTeamView from '../containers/pages/OrganizationViews/CreateEditOrgView';
 import ConnectedOrgsListView from '../containers/pages/OrganizationViews/OrganizationListView';
 import ConnectedOrgTeamView from '../containers/pages/OrganizationViews/SingleOrganizationView';
+import ConnectedCreateEditPractitioner from '../containers/pages/PractitionersView/CreateEditPractitioner';
 import { oAuthUserInfoGetter } from '../helpers/utils';
 
 library.add(faMap);
@@ -180,6 +183,18 @@ class App extends Component {
                 exact={true}
                 path={TEAM_LIST_URL}
                 component={ConnectedOrgsListView}
+              />
+              <ConnectedPrivateRoute
+                disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                exact={true}
+                path={CREATE_PRACTITIONER_URL}
+                component={ConnectedCreateEditPractitioner}
+              />
+              <ConnectedPrivateRoute
+                disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                exact={true}
+                path={`${EDIT_PRACTITIONER_URL}/:id`}
+                component={ConnectedCreateEditPractitioner}
               />
               {/* tslint:disable jsx-no-lambda */}
               <Route
