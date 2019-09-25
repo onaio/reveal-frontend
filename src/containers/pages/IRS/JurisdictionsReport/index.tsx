@@ -1,50 +1,102 @@
 import DrillDownTable from '@onaio/drill-down-table';
+import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset from '@onaio/superset-connector';
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
+import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import 'react-table/react-table.css';
 import { Col, Row } from 'reactstrap';
+import { Store } from 'redux';
 import IRSTableCell from '../../../../components/IRSTableCell';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
-import { HOME, HOME_URL, IRS_REPORTING_TITLE, IRS_REPORTS_URL } from '../../../../constants';
+import Loading from '../../../../components/page/Loading';
+import { SUPERSET_IRS_REPORTING_PLANS_SLICE } from '../../../../configs/env';
+import { HOME, HOME_URL, IRS_REPORTING_TITLE, REPORT_IRS_PLAN_URL } from '../../../../constants';
 import '../../../../helpers/tables.css';
 import { FlexObject, RouteParams } from '../../../../helpers/utils';
 import supersetFetch from '../../../../services/superset';
+import IRSPlansReducer, {
+  fetchIRSPlans,
+  getIRSPlanById,
+  IRSPlan,
+  reducerName as IRSPlansReducerName,
+} from '../../../../store/ducks/IRS/plans';
 import { getTree, ZambiaFocusAreasColumns, ZambiaJurisdictionsColumns } from './helpers';
 import './style.css';
 import * as fixtures from './tests/fixtures';
 
+/** register the plan definitions reducer */
+reducerRegistry.register(IRSPlansReducerName, IRSPlansReducer);
+
 export interface IRSJurisdictionProps {
+  fetchPlans: typeof fetchIRSPlans;
+  plan: IRSPlan | null;
   service: typeof supersetFetch;
 }
 
 const data1 = superset.processData(fixtures.ZambiaJurisdictionsJSON) || [];
 const data2 = superset.processData(fixtures.ZambiaFocusAreasJSON) || [];
-
 const data = [...data1, ...data2];
 
 /** Renders IRS Jurisdictions reports */
 const IRSJurisdictions = (props: IRSJurisdictionProps & RouteComponentProps<RouteParams>) => {
-  const [id, setId] = useState<string | null>(
-    props.match && props.match.params && props.match.params.id ? props.match.params.id : null
+  const [jurisdictionId, setJurisdictionId] = useState<string | null>(
+    props.match && props.match.params && props.match.params.jurisdictionId
+      ? props.match.params.jurisdictionId
+      : null
   );
+  const [loading, setLoading] = useState<boolean>(true);
+
+  let planId: string | null = null;
+  if (props.match && props.match.params && props.match.params.planId) {
+    planId = props.match.params.planId;
+  }
+  const { fetchPlans, plan, service } = props;
+
+  /** async function to load the data */
+  async function loadData() {
+    try {
+      setLoading(!plan); // set loading when there is no plan
+      let fetchPlansParams = null;
+      if (planId) {
+        fetchPlansParams = superset.getFormData(1, [
+          { comparator: planId, operator: '==', subject: 'plan_id' },
+        ]);
+      }
+
+      await service(SUPERSET_IRS_REPORTING_PLANS_SLICE, fetchPlansParams).then(
+        (result: IRSPlan[]) => fetchPlans(result)
+      );
+    } catch (e) {
+      // do something with the error?
+    } finally {
+      setLoading(false);
+    }
+  }
 
   useEffect(() => {
-    if (props.match && props.match.params && props.match.params.id) {
-      setId(props.match.params.id);
+    loadData();
+  }, []);
+
+  useEffect(() => {
+    if (props.match && props.match.params && props.match.params.jurisdictionId) {
+      setJurisdictionId(props.match.params.jurisdictionId);
     } else {
-      setId(null);
+      setJurisdictionId(null);
     }
-  }, [props.match.params.id]);
+  }, [props.match.params.jurisdictionId]);
 
-  const pageTitle = IRS_REPORTING_TITLE;
+  if (loading === true) {
+    return <Loading />;
+  }
 
+  let pageTitle = IRS_REPORTING_TITLE;
+  let baseURL = REPORT_IRS_PLAN_URL;
   const basePage = {
     label: pageTitle,
-    url: IRS_REPORTS_URL,
+    url: REPORT_IRS_PLAN_URL,
   };
-
   const breadcrumbProps = {
     currentPage: basePage,
     pages: [
@@ -55,7 +107,18 @@ const IRSJurisdictions = (props: IRSJurisdictionProps & RouteComponentProps<Rout
     ],
   };
 
-  const theObject = data.filter((el: FlexObject) => el.jurisdiction_id === id);
+  if (plan) {
+    pageTitle = `${IRS_REPORTING_TITLE}: ${plan.plan_title}`;
+    baseURL = `${REPORT_IRS_PLAN_URL}/${plan.plan_id}`;
+    const planPage = {
+      label: plan.plan_title,
+      url: baseURL,
+    };
+    breadcrumbProps.currentPage = planPage;
+    breadcrumbProps.pages.push(basePage);
+  }
+
+  const theObject = data.filter((el: FlexObject) => el.jurisdiction_id === jurisdictionId);
 
   let currentJurisdictionName: string | null = null;
   if (theObject && theObject.length > 0) {
@@ -64,7 +127,7 @@ const IRSJurisdictions = (props: IRSJurisdictionProps & RouteComponentProps<Rout
     const pages = theTree.map(el => {
       return {
         label: el.jurisdiction_name,
-        url: `${IRS_REPORTS_URL}/${el.jurisdiction_id}`,
+        url: `${baseURL}/${el.jurisdiction_id}`,
       };
     });
 
@@ -75,14 +138,14 @@ const IRSJurisdictions = (props: IRSJurisdictionProps & RouteComponentProps<Rout
 
     const currentPage = {
       label: theObject[0].jurisdiction_name,
-      url: `${IRS_REPORTS_URL}/${theObject[0].jurisdiction_id}`,
+      url: `${baseURL}/${theObject[0].jurisdiction_id}`,
     };
     breadcrumbProps.currentPage = currentPage;
 
     currentJurisdictionName = theObject[0].jurisdiction_name;
   }
 
-  const currLevelData = data.filter(el => el.jurisdiction_parent_id === id);
+  const currLevelData = data.filter(el => el.jurisdiction_parent_id === jurisdictionId);
 
   let columnsToUse = ZambiaJurisdictionsColumns;
   if (currLevelData && currLevelData.length > 0) {
@@ -96,12 +159,12 @@ const IRSJurisdictions = (props: IRSJurisdictionProps & RouteComponentProps<Rout
     columns: columnsToUse,
     data,
     defaultPageSize: data.length,
-    extraCellProps: { urlPath: IRS_REPORTS_URL },
+    extraCellProps: { urlPath: baseURL },
     getTdProps: (state: any, rowInfo: any, column: any, instance: any) => {
       return {
         onClick: (e: any, handleOriginal: any) => {
           if (column.id === 'jurisdiction_name') {
-            setId(rowInfo.original.jurisdiction_id);
+            setJurisdictionId(rowInfo.original.jurisdiction_id);
           }
           if (handleOriginal) {
             handleOriginal();
@@ -114,7 +177,7 @@ const IRSJurisdictions = (props: IRSJurisdictionProps & RouteComponentProps<Rout
     minRows: 0,
     parentIdentifierField: 'jurisdiction_parent_id',
     resizable: true,
-    rootParentId: id || '',
+    rootParentId: jurisdictionId || '',
     shouldUseEffect: false,
     showPagination: false,
     useDrillDownTrProps: false,
@@ -125,7 +188,7 @@ const IRSJurisdictions = (props: IRSJurisdictionProps & RouteComponentProps<Rout
     : pageTitle;
 
   return (
-    <div key={id || '0'}>
+    <div key={jurisdictionId || '0'}>
       <Helmet>
         <title>{currentTitle}</title>
       </Helmet>
@@ -143,9 +206,37 @@ const IRSJurisdictions = (props: IRSJurisdictionProps & RouteComponentProps<Rout
 };
 
 const defaultProps: IRSJurisdictionProps = {
+  fetchPlans: fetchIRSPlans,
+  plan: null,
   service: supersetFetch,
 };
 
 IRSJurisdictions.defaultProps = defaultProps;
 
 export { IRSJurisdictions };
+
+/** Connect the component to the store */
+
+/** interface to describe props from mapStateToProps */
+interface DispatchedStateProps {
+  plan: IRSPlan | null;
+}
+
+/** map state to props */
+const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateProps => {
+  const plan = getIRSPlanById(state, ownProps.match.params.planId);
+  return {
+    plan,
+  };
+};
+
+/** map dispatch to props */
+const mapDispatchToProps = { fetchPlans: fetchIRSPlans };
+
+/** Connected ActiveFI component */
+const ConnectedIRSJurisdictions = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(IRSJurisdictions);
+
+export default ConnectedIRSJurisdictions;
