@@ -14,20 +14,19 @@ import {
 } from '../../../constants';
 import { generateNameSpacedUUID } from '../../../helpers/utils';
 import { OpenSRPService } from '../../../services/opensrp';
+import { DisplayFormikState } from '../helpers';
 
 const TeamFormNameSpace = '9a4c8cb0-df70-11e9-b38b-57f114a50538';
 
 /** default type value for organizations */
 const defaultOrganizationType = {
-  type: {
-    coding: [
-      {
-        code: 'team',
-        display: 'Team',
-        system: 'http://terminology.hl7.org/CodeSystem/organization-type',
-      },
-    ],
-  },
+  coding: [
+    {
+      code: 'team',
+      display: 'Team',
+      system: 'http://terminology.hl7.org/CodeSystem/organization-type',
+    },
+  ],
 };
 
 /** yup validation schema for teams Form input */
@@ -112,6 +111,7 @@ const TeamForm = (props: TeamFormProps) => {
       >
         {({ errors, isSubmitting, setFieldValue, values }) => (
           <Form className="mb-5">
+            <DisplayFormikState {...values} />
             <FormGroup className="non-field-errors">
               {globalError !== '' && <p className="form-text text-danger">{globalError}</p>}
             </FormGroup>
