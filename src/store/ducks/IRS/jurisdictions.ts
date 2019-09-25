@@ -74,21 +74,21 @@ export const ADD_IRS_JURISDICTION = 'reveal/reducer/IRS/IRSJurisdiction/ADD_IRS_
 
 /** interface for fetch IRSJurisdictions action */
 interface FetchIRSJurisdictionsAction extends AnyAction {
-  objects: { [key: string]: NamibiaIRSJurisdiction };
+  objects: { [key: string]: IRSJurisdiction };
   reducerKey: string;
   type: typeof IRS_JURISDICTIONS_FETCHED;
 }
 
 /** interface for removing IRSJurisdictions action */
 interface RemoveIRSJurisdictionsAction extends AnyAction {
-  objects: { [key: string]: NamibiaIRSJurisdiction };
+  objects: { [key: string]: IRSJurisdiction };
   reducerKey: string;
   type: typeof REMOVE_IRS_JURISDICTIONS;
 }
 
 /** interface for adding a single IRSJurisdictions action */
 interface AddIRSJurisdictionAction extends AnyAction {
-  obj: NamibiaIRSJurisdiction;
+  obj: IRSJurisdiction;
   reducerKey: string;
   type: typeof ADD_IRS_JURISDICTION;
 }
@@ -109,7 +109,7 @@ export type IRSJurisdictionActionTypes =
  */
 export const fetchIRSJurisdictions = (
   reducerKey: string = 'IRSJurisdictionsById',
-  objList: NamibiaIRSJurisdiction[] = []
+  objList: IRSJurisdiction[] = []
 ): FetchIRSJurisdictionsAction => ({
   objects: keyBy(objList, 'id'),
   reducerKey,
@@ -132,7 +132,7 @@ export const removeIRSJurisdictions = (reducerKey: string = 'IRSJurisdictionsByI
  */
 export const addIRSJurisdiction = (
   reducerKey: string = 'IRSJurisdictionsById',
-  obj: NamibiaIRSJurisdiction
+  obj: IRSJurisdiction
 ): AddIRSJurisdictionAction => ({
   obj,
   reducerKey,
