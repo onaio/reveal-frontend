@@ -68,19 +68,27 @@ const IRSJurisdictions = (props: IRSJurisdictionProps & RouteComponentProps<Rout
   async function loadData() {
     try {
       setLoading(!plan || !jurisdictions || jurisdictions.length < 1); // set loading when there is no data
-      let params: SupersetFormData | null = null;
+      let fetchPlansParams: SupersetFormData | null = null;
       if (planId) {
-        params = superset.getFormData(3000, [
+        fetchPlansParams = superset.getFormData(1, [
           { comparator: planId, operator: '==', subject: 'plan_id' },
         ]);
       }
 
-      await service(SUPERSET_IRS_REPORTING_PLANS_SLICE, params).then((result: IRSPlan[]) =>
-        fetchPlans(result)
+      await service(SUPERSET_IRS_REPORTING_PLANS_SLICE, fetchPlansParams).then(
+        (result: IRSPlan[]) => fetchPlans(result)
       );
 
       slices.forEach(async slice => {
-        await service(slice, params).then((result: IRSJurisdiction[]) =>
+        let fetchJurisdictionsParams: SupersetFormData | null = null;
+        if (planId) {
+          fetchJurisdictionsParams = superset.getFormData(
+            3000,
+            [{ comparator: planId, operator: '==', subject: 'plan_id' }],
+            { jurisdiction_depth: true }
+          );
+        }
+        await service(slice, fetchJurisdictionsParams).then((result: IRSJurisdiction[]) =>
           fetchJurisdictions(slice, result)
         );
       });
