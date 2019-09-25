@@ -1,4 +1,4 @@
-import DrillDownTable from '@onaio/drill-down-table';
+import DrillDownTable, { hasChildrenFunc } from '@onaio/drill-down-table';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset from '@onaio/superset-connector';
 import React, { useEffect, useState } from 'react';
@@ -16,6 +16,12 @@ import { HOME, HOME_URL, IRS_REPORTING_TITLE, REPORT_IRS_PLAN_URL } from '../../
 import '../../../../helpers/tables.css';
 import { FlexObject, RouteParams } from '../../../../helpers/utils';
 import supersetFetch from '../../../../services/superset';
+import IRSJurisdictionsReducer, {
+  fetchIRSJurisdictions,
+  getIRSJurisdictionsArray,
+  IRSJurisdiction,
+  reducerName as IRSJurisdictionsReducerName,
+} from '../../../../store/ducks/IRS/jurisdictions';
 import IRSPlansReducer, {
   fetchIRSPlans,
   getIRSPlanById,
@@ -26,18 +32,18 @@ import { getTree, ZambiaFocusAreasColumns, ZambiaJurisdictionsColumns } from './
 import './style.css';
 import * as fixtures from './tests/fixtures';
 
-/** register the plan definitions reducer */
+/** register the reducers */
 reducerRegistry.register(IRSPlansReducerName, IRSPlansReducer);
+reducerRegistry.register(IRSJurisdictionsReducerName, IRSJurisdictionsReducer);
 
 export interface IRSJurisdictionProps {
+  fetchJurisdictions: typeof fetchIRSJurisdictions;
   fetchPlans: typeof fetchIRSPlans;
+  hasChildren: typeof hasChildrenFunc;
+  jurisdictions: IRSJurisdiction[] | null;
   plan: IRSPlan | null;
   service: typeof supersetFetch;
 }
-
-const data1 = superset.processData(fixtures.ZambiaJurisdictionsJSON) || [];
-const data2 = superset.processData(fixtures.ZambiaFocusAreasJSON) || [];
-const data = [...data1, ...data2];
 
 /** Renders IRS Jurisdictions reports */
 const IRSJurisdictions = (props: IRSJurisdictionProps & RouteComponentProps<RouteParams>) => {
@@ -52,21 +58,28 @@ const IRSJurisdictions = (props: IRSJurisdictionProps & RouteComponentProps<Rout
   if (props.match && props.match.params && props.match.params.planId) {
     planId = props.match.params.planId;
   }
-  const { fetchPlans, plan, service } = props;
+  const { fetchJurisdictions, fetchPlans, hasChildren, jurisdictions, plan, service } = props;
 
   /** async function to load the data */
   async function loadData() {
     try {
-      setLoading(!plan); // set loading when there is no plan
-      let fetchPlansParams = null;
+      setLoading(!plan || !jurisdictions || jurisdictions.length < 1); // set loading when there is no data
+      let params = null;
       if (planId) {
-        fetchPlansParams = superset.getFormData(1, [
+        params = superset.getFormData(3000, [
           { comparator: planId, operator: '==', subject: 'plan_id' },
         ]);
       }
 
-      await service(SUPERSET_IRS_REPORTING_PLANS_SLICE, fetchPlansParams).then(
-        (result: IRSPlan[]) => fetchPlans(result)
+      await service(SUPERSET_IRS_REPORTING_PLANS_SLICE, params).then((result: IRSPlan[]) =>
+        fetchPlans(result)
+      );
+
+      await service('556', params).then((result: IRSJurisdiction[]) =>
+        fetchJurisdictions('556', result)
+      );
+      await service('557', params).then((result: IRSJurisdiction[]) =>
+        fetchJurisdictions('557', result)
       );
     } catch (e) {
       // do something with the error?
@@ -91,6 +104,10 @@ const IRSJurisdictions = (props: IRSJurisdictionProps & RouteComponentProps<Rout
     return <Loading />;
   }
 
+  const data = jurisdictions || [];
+
+  const parentNodes = data.map((el: FlexObject) => el.jurisdiction_parent_id);
+
   let pageTitle = IRS_REPORTING_TITLE;
   let baseURL = REPORT_IRS_PLAN_URL;
   const basePage = {
@@ -107,10 +124,11 @@ const IRSJurisdictions = (props: IRSJurisdictionProps & RouteComponentProps<Rout
     ],
   };
 
+  let planPage = basePage;
   if (plan) {
     pageTitle = `${IRS_REPORTING_TITLE}: ${plan.plan_title}`;
     baseURL = `${REPORT_IRS_PLAN_URL}/${plan.plan_id}`;
-    const planPage = {
+    planPage = {
       label: plan.plan_title,
       url: baseURL,
     };
@@ -131,7 +149,7 @@ const IRSJurisdictions = (props: IRSJurisdictionProps & RouteComponentProps<Rout
       };
     });
 
-    breadcrumbProps.pages.push(basePage);
+    breadcrumbProps.pages.push(planPage);
 
     const newPages = breadcrumbProps.pages.concat(pages);
     breadcrumbProps.pages = newPages;
@@ -163,7 +181,10 @@ const IRSJurisdictions = (props: IRSJurisdictionProps & RouteComponentProps<Rout
     getTdProps: (state: any, rowInfo: any, column: any, instance: any) => {
       return {
         onClick: (e: any, handleOriginal: any) => {
-          if (column.id === 'jurisdiction_name') {
+          if (
+            column.id === 'jurisdiction_name' &&
+            hasChildren(rowInfo, parentNodes, 'jurisdiction_id')
+          ) {
             setJurisdictionId(rowInfo.original.jurisdiction_id);
           }
           if (handleOriginal) {
@@ -188,7 +209,7 @@ const IRSJurisdictions = (props: IRSJurisdictionProps & RouteComponentProps<Rout
     : pageTitle;
 
   return (
-    <div key={jurisdictionId || '0'}>
+    <div key={`${jurisdictionId || '0'}-${data.length}`}>
       <Helmet>
         <title>{currentTitle}</title>
       </Helmet>
@@ -206,7 +227,10 @@ const IRSJurisdictions = (props: IRSJurisdictionProps & RouteComponentProps<Rout
 };
 
 const defaultProps: IRSJurisdictionProps = {
+  fetchJurisdictions: fetchIRSJurisdictions,
   fetchPlans: fetchIRSPlans,
+  hasChildren: hasChildrenFunc,
+  jurisdictions: null,
   plan: null,
   service: supersetFetch,
 };
@@ -220,18 +244,25 @@ export { IRSJurisdictions };
 /** interface to describe props from mapStateToProps */
 interface DispatchedStateProps {
   plan: IRSPlan | null;
+  jurisdictions: IRSJurisdiction[] | null;
 }
 
 /** map state to props */
 const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateProps => {
-  const plan = getIRSPlanById(state, ownProps.match.params.planId);
+  const planId = ownProps.match.params.planId || null;
+  const plan = getIRSPlanById(state, planId);
+  const jurisdictions = [
+    ...getIRSJurisdictionsArray(state, '556', planId),
+    ...getIRSJurisdictionsArray(state, '557', planId),
+  ];
   return {
+    jurisdictions,
     plan,
   };
 };
 
 /** map dispatch to props */
-const mapDispatchToProps = { fetchPlans: fetchIRSPlans };
+const mapDispatchToProps = { fetchJurisdictions: fetchIRSJurisdictions, fetchPlans: fetchIRSPlans };
 
 /** Connected ActiveFI component */
 const ConnectedIRSJurisdictions = connect(
