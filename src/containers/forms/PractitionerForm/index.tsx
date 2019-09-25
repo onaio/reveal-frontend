@@ -2,6 +2,7 @@ import { faFileDownload } from '@fortawesome/free-solid-svg-icons';
 import { ErrorMessage, Field, Form, Formik, yupToFormErrors } from 'formik';
 import React, { useState } from 'react';
 import { Redirect } from 'react-router';
+import AsyncSelect from 'react-select/async';
 import { valueContainerCSS } from 'react-select/src/components/containers';
 import { Button, Label } from 'reactstrap';
 import { FormGroup } from 'reactstrap';
@@ -18,8 +19,44 @@ import {
 } from '../../../constants';
 import { generateNameSpacedUUID } from '../../../helpers/utils';
 import { OpenSRPService } from '../../../services/opensrp';
-
 const PractitionerFormNameSpace = '78295ac0-df73-11e9-a54b-dbf5e5b2d668';
+
+interface UserIdSelectProps {
+  serviceClass: typeof OpenSRPService;
+  onChangeHandler?: (value: string) => void;
+}
+const defaultUserIdSelectProps = {
+  serviceClass: OpenSRPService,
+};
+
+const UserIdSelect: React.FC<UserIdSelectProps> = props => {
+  const { serviceClass, onChangeHandler } = props;
+  const formatOptions = (entries: any[]): Array<{ label: string; value: string }> => {
+    return entries.map(entry => ({ label: entry.username, value: entry.identifier }));
+  };
+
+  const changeHandler = (value: any) => {
+    if (typeof onChangeHandler !== 'undefined') {
+      onChangeHandler(value.label);
+    }
+  };
+
+  const promiseOptions = async () => {
+    const serve = new serviceClass('');
+    const options = await serve.list();
+    return formatOptions(options);
+  };
+  return (
+    <AsyncSelect
+      cacheOptions={true}
+      defaultOptions={true}
+      loadOptions={promiseOptions}
+      onChange={changeHandler}
+    />
+  );
+};
+
+UserIdSelect.defaultProps = defaultUserIdSelectProps;
 
 export interface PractitionerFormFields {
   identifier: string;
@@ -134,6 +171,22 @@ const PractitionerForm = (props: PractitionerFormProps) => {
                 name="username"
                 className="form-text text-danger identifier-error"
               />
+            </FormGroup>
+            <FormGroup>
+              <Label for={`userId`}>UserId</Label>
+              <Field
+                required={true}
+                component={UserIdSelect}
+                onChangeHandler={setFieldValue}
+                name={`userId`}
+                id={`userId`}
+                placeholder={`Select username form openMRS`}
+                aria-label={`Select username form openMRS`}
+                disabled={disabledFields.includes('userId')}
+                className={errors.userId ? 'is-invalid async-select' : 'async-select'}
+              />
+
+              <ErrorMessage name={`userId`} component="small" className="form-text text-danger" />
             </FormGroup>
 
             <FormGroup>
