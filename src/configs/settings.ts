@@ -848,7 +848,6 @@ export const indicatorThresholdsNA: IndicatorThresholds = {
 /** Indicator color stops for NA (Namibia) */
 const indicatorStopsNA: Array<[string, string]> = [
   ['Complete', TASK_GREEN],
-  ['Sprayed', TASK_GREEN],
   ['Not Sprayed', TASK_RED],
   ['Partially Sprayed', TASK_ORANGE],
   ['Not Visited', TASK_YELLOW],
@@ -981,18 +980,25 @@ export const irsReportingCongif: {
 
       const rows: ReportingSidebarRow[] = [
         {
-          denominator: jurisdiction ? jurisdiction.target_2019 || 0 : 0,
-          description: 'Percent of structures sprayed over targeted',
-          numerator: jurisdiction ? jurisdiction.structuressprayed || 0 : 0,
-          value: jurisdiction ? Math.round((jurisdiction.targetcoverage || 0) * 100) : 0,
-          title: 'Target Coverage',
+          denominator: jurisdiction ? (jurisdiction as any).totstruct || 0 : 0,
+          description: 'Percent of structures sprayed over found',
+          numerator: jurisdiction ? (jurisdiction as any).foundstruct || 0 : 0,
+          title: 'Found Coverage',
+          value: jurisdiction ? Math.round(((jurisdiction as any).spraytarg || 0) * 100) : 0,
         },
         {
-          denominator: jurisdiction ? jurisdiction.structuresfound || 0 : 0,
+          denominator: jurisdiction ? (jurisdiction as any).totstruct || 0 : 0,
+          description: 'Percent of structures sprayed over total',
+          numerator: jurisdiction ? (jurisdiction as any).sprayedstruct || 0 : 0,
+          value: jurisdiction ? Math.round(((jurisdiction as any).spraycov || 0) * 100) : 0,
+          title: 'Spray Coverage (Effectiveness)',
+        },
+        {
+          denominator: jurisdiction ? (jurisdiction as any).foundstruct || 0 : 0,
           description: 'Percent of structures sprayed over found',
-          numerator: jurisdiction ? jurisdiction.structuressprayed || 0 : 0,
-          title: 'Found Coverage',
-          value: jurisdiction ? Math.round((jurisdiction.foundcoverage || 0) * 100) : 0,
+          numerator: jurisdiction ? (jurisdiction as any).sprayedstruct || 0 : 0,
+          value: jurisdiction ? Math.round(((jurisdiction as any).spraysuccess || 0) * 100) : 0,
+          title: 'Spray Success Rate (PMI SC)',
         },
       ];
 
