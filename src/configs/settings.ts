@@ -847,6 +847,7 @@ export const indicatorThresholdsNA: IndicatorThresholds = {
 
 /** Indicator color stops for NA (Namibia) */
 const indicatorStopsNA: Array<[string, string]> = [
+  ['Complete', TASK_GREEN],
   ['Sprayed', TASK_GREEN],
   ['Not Sprayed', TASK_RED],
   ['Partially Sprayed', TASK_ORANGE],
