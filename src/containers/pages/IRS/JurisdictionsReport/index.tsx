@@ -41,6 +41,7 @@ reducerRegistry.register(IRSJurisdictionsReducerName, IRSJurisdictionsReducer);
 
 const slices = SUPERSET_IRS_REPORTING_JURISDICTIONS_DATA_SLICES.split(',');
 
+/** IRS Jurisdictions props */
 export interface IRSJurisdictionProps {
   fetchJurisdictions: typeof fetchIRSJurisdictions;
   fetchPlans: typeof fetchIRSPlans;
