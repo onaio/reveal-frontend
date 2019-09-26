@@ -501,14 +501,15 @@ class IrsReport extends React.Component<RouteComponentProps<RouteParams> & IrsRe
       CellComponent: DropDownCell,
       columns,
       data,
+      defaultPageSize: data.length,
       identifierField: 'jurisdiction_id',
       linkerField: 'name',
       minRows: 0,
       parentIdentifierField: 'parent_id',
       resizable: true,
       rootParentId: focusJurisdictionId,
-      showPageSizeOptions: true,
-      showPagination: true,
+      showPageSizeOptions: false,
+      showPagination: false,
       useDrillDownTrProps: true,
     };
 
