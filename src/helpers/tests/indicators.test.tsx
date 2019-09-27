@@ -63,49 +63,70 @@ describe('helpers/indicators', () => {
       goalUnit: 'each',
       percentAchieved: 0,
       prettyPercentAchieved: '0%',
+      prettyTargetPercentage: '0%',
+      targetPercentage: 0,
       targetValue: 1,
+      task_count: 0,
     });
     expect(getGoalReport(fixtures.goal2)).toEqual({
       achievedValue: 0,
       goalUnit: 'each',
       percentAchieved: 0,
       prettyPercentAchieved: '0%',
+      prettyTargetPercentage: '100%',
+      targetPercentage: 1,
       targetValue: 3,
+      task_count: 2,
     });
     expect(getGoalReport(fixtures.goal3)).toEqual({
       achievedValue: 0,
-      goalUnit: PERSONS,
+      goalUnit: 'person(s)',
       percentAchieved: 0,
       prettyPercentAchieved: '0%',
+      prettyTargetPercentage: '0%',
+      targetPercentage: 0,
       targetValue: 100,
+      task_count: 0,
     });
     expect(getGoalReport(fixtures.goal4)).toEqual({
       achievedValue: 3,
       goalUnit: 'traps',
       percentAchieved: 1,
       prettyPercentAchieved: '100%',
+      prettyTargetPercentage: '17%',
+      targetPercentage: 0.16666666666666666,
       targetValue: 3,
+      task_count: 18,
     });
     expect(getGoalReport(fixtures.goal5)).toEqual({
       achievedValue: 4,
-      goalUnit: STRUCTURES,
+      goalUnit: 'structure(s)',
       percentAchieved: 0.27,
       prettyPercentAchieved: '27%',
+      prettyTargetPercentage: '100%',
+      targetPercentage: 1,
       targetValue: 15,
+      task_count: 15,
     });
     expect(getGoalReport(fixtures.goal6)).toEqual({
       achievedValue: 4,
-      goalUnit: STRUCTURES,
+      goalUnit: 'structure(s)',
       percentAchieved: 0.36,
       prettyPercentAchieved: '36%',
+      prettyTargetPercentage: '73%',
+      targetPercentage: 0.7333333333333333,
       targetValue: 11,
+      task_count: 15,
     });
     expect(getGoalReport(fixtures.goal7)).toEqual({
       achievedValue: 3,
-      goalUnit: STRUCTURES,
+      goalUnit: 'structure(s)',
       percentAchieved: 0.6,
       prettyPercentAchieved: '60%',
+      prettyTargetPercentage: '83%',
+      targetPercentage: 0.8333333333333334,
       targetValue: 5,
+      task_count: 6,
     });
   });
 });
