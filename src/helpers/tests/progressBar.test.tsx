@@ -27,10 +27,12 @@ describe('src/helpers/progressBar', () => {
     expect(toJson(markerWrapper)).toMatchSnapshot('marker');
     expect(markerWrapper.props().style).toEqual({
       backgroundColor: '#F00',
-      height: 'inherit',
+      height: '25px',
       left: '20%',
       position: 'absolute',
+      top: '-5px',
       width: '5px',
+      zIndex: 1,
     });
   });
 });
