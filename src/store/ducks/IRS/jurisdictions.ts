@@ -111,7 +111,34 @@ export const fetchIRSJurisdictions = (
   reducerKey: string = 'IRSJurisdictionsById',
   objList: IRSJurisdiction[] = []
 ): FetchIRSJurisdictionsAction => ({
-  objects: keyBy(objList, 'id'),
+  objects: keyBy(
+    objList.map(
+      (obj: IRSJurisdiction): IRSJurisdiction => {
+        /** ensure geojson is parsed */
+        if ((obj as any).geojson && typeof (obj as any).geojson === 'string') {
+          (obj as any).geojson = JSON.parse((obj as any).geojson);
+        }
+        /** ensure geometry is parsed */
+        if (
+          (obj as any).geojson &&
+          (obj as any).geojson.geometry &&
+          typeof (obj as any).geojson.geometry === 'string'
+        ) {
+          (obj as any).geojson.geometry = JSON.parse((obj as any).geojson.geometry);
+        }
+        /** ensure jurisdiction_name_path is parsed */
+        if (typeof obj.jurisdiction_name_path === 'string') {
+          obj.jurisdiction_name_path = JSON.parse(obj.jurisdiction_name_path);
+        }
+        /** ensure jurisdiction_path is parsed */
+        if (typeof obj.jurisdiction_path === 'string') {
+          obj.jurisdiction_path = JSON.parse(obj.jurisdiction_path);
+        }
+        return obj as IRSJurisdiction;
+      }
+    ),
+    'id'
+  ),
   reducerKey,
   type: IRS_JURISDICTIONS_FETCHED,
 });
