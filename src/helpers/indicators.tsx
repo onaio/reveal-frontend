@@ -82,7 +82,7 @@ export function getGoalReport(goal: Goal): GoalReport {
     targetValue = targetValue === 0 ? goal.goal_value : targetValue;
   }
 
-  const targetPercentage = goal.task_count > 0 ? targetValue / goal.task_count : 0;
+  const targetPercentage = Math.min(goal.task_count > 0 ? targetValue / goal.task_count : 0, 1);
 
   return {
     achievedValue: goal.completed_task_count,
