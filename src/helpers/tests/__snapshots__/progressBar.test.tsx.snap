@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`src/helpers/progressBar renders markers correctly: marker 1`] = `
+<div
+  className="marker"
+  id="marker"
+  style={
+    Object {
+      "backgroundColor": "#F00",
+      "height": "inherit",
+      "left": "20%",
+      "position": "absolute",
+      "width": "5px",
+    }
+  }
+>
+   
+</div>
+`;
+
+exports[`src/helpers/progressBar renders progressBar without marker as expected: marker 1`] = `null`;
