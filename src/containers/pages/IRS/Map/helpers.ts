@@ -30,7 +30,7 @@ export const structuresLayerBuilder = (
           <p class="heading">{{structure_type}}</p>
           <p>Status: {{business_status}}</p>
         </div>`,
-    join: ['jurisdiction_id', 'jurisdiction_id'],
+    join: ['structure_jurisdiction_id', 'structure_jurisdiction_id'],
   };
 
   const structureStatusColors = {
