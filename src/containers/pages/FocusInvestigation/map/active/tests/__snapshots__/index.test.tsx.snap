@@ -2235,11 +2235,9 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFi ma
                   value={0}
                 >
                   <div
-                    className="progress"
+                    className="marked-progress-bar"
                     style={
                       Object {
-                        "height": "10px",
-                        "marginBottom": "15px",
                         "position": "relative",
                       }
                     }
@@ -2250,28 +2248,41 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFi ma
                       style={
                         Object {
                           "backgroundColor": "#F00",
-                          "height": "inherit",
+                          "height": "25px",
                           "left": "0%",
                           "position": "absolute",
+                          "top": "-5px",
                           "width": "5px",
+                          "zIndex": 1,
                         }
                       }
                     >
                        
                     </div>
                     <div
-                      aria-valuemax={1}
-                      aria-valuemin={0}
-                      aria-valuenow={0}
-                      className="progress-bar"
-                      role="progressbar"
+                      className="progress"
                       style={
                         Object {
-                          "backgroundColor": "#ff3",
-                          "width": "0%",
+                          "height": "10px",
+                          "marginBottom": "15px",
+                          "position": "relative",
                         }
                       }
-                    />
+                    >
+                      <div
+                        aria-valuemax={1}
+                        aria-valuemin={0}
+                        aria-valuenow={0}
+                        className="progress-bar"
+                        role="progressbar"
+                        style={
+                          Object {
+                            "backgroundColor": "#ff3",
+                            "width": "0%",
+                          }
+                        }
+                      />
+                    </div>
                   </div>
                 </ProgressBar>
               </div>
