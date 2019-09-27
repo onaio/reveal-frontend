@@ -1,12 +1,12 @@
 import GeojsonExtent from '@mapbox/geojson-extent';
 import { BLACK, GREY, TASK_GREEN, TASK_ORANGE, TASK_RED, TASK_YELLOW } from '../../../../colors';
 import { GisidaProps } from '../../../../components/GisidaWrapper';
-import { Page } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import { circleLayerConfig, fillLayerConfig, lineLayerConfig } from '../../../../configs/settings';
 import { MAIN_PLAN, STRUCTURE_LAYER } from '../../../../constants';
 import { FlexObject } from '../../../../helpers/utils';
 import { IRSJurisdiction } from '../../../../store/ducks/IRS/jurisdictions';
 import { StructureFeatureCollection } from '../../../../store/ducks/IRS/structures';
+import { Jurisdiction } from '../../../../store/ducks/jurisdictions';
 
 /** Default indicator stops */
 const defaultIndicatorStops = [
@@ -110,12 +110,12 @@ export const structuresLayerBuilder = (
 };
 
 /** Get Gisida Wrapper Props
- * @param {FlexObject} jurisdiction - the jurisdiction (with geojson field)
+ * @param {Jurisdiction} jurisdiction - the jurisdiction (with geojson field)
  * @param {StructureFeatureCollection} structures - Feature Collection of structures
  * @param {string[][]} indicatorStops - the indicator stops
  */
 export const getGisidaWrapperProps = (
-  jurisdiction: FlexObject,
+  jurisdiction: Jurisdiction,
   structures: StructureFeatureCollection | null,
   indicatorStops: string[][] = defaultIndicatorStops
 ): GisidaProps | null => {
