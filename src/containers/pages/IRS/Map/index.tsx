@@ -27,10 +27,9 @@ import {
 import ProgressBar from '../../../../helpers/ProgressBar';
 import { RouteParams } from '../../../../helpers/utils';
 import supersetFetch from '../../../../services/superset';
-import store from '../../../../store';
 import IRSJurisdictionsReducer, {
   fetchIRSJurisdictions,
-  getIRSJurisdictionsArray,
+  getIRSJurisdictionByJurisdictionId,
   IRSJurisdiction,
   reducerName as IRSJurisdictionsReducerName,
 } from '../../../../store/ducks/IRS/jurisdictions';
@@ -47,14 +46,12 @@ import genericStructuresReducer, {
   reducerName as genericStructuresReducerName,
   StructureFeatureCollection,
 } from '../../../../store/ducks/IRS/structures';
-import { plans } from '../../../../store/ducks/IRS/tests/fixtures';
 import jurisdictionReducer, {
   fetchJurisdictions,
   getJurisdictionById,
   Jurisdiction,
   reducerName as jurisdictionReducerName,
 } from '../../../../store/ducks/jurisdictions';
-import * as fixtures from '../JurisdictionsReport/tests/fixtures';
 import { getGisidaWrapperProps, getJurisdictionBreadcrumbs } from './helpers';
 import './style.css';
 
@@ -65,45 +62,7 @@ reducerRegistry.register(IRSJurisdictionsReducerName, IRSJurisdictionsReducer);
 reducerRegistry.register(genericStructuresReducerName, genericStructuresReducer);
 
 const slices = SUPERSET_IRS_REPORTING_JURISDICTIONS_DATA_SLICES.split(',');
-
-const ifocusAreas = superset.processData(fixtures.ZambiaFocusAreasJSON) || [];
-const ifocusArea = ifocusAreas
-  .map((structure: IRSJurisdiction) => {
-    /** ensure jurisdiction_name_path is parsed */
-    if (typeof structure.jurisdiction_name_path === 'string') {
-      structure.jurisdiction_name_path = JSON.parse(structure.jurisdiction_name_path);
-    }
-    /** ensure jurisdiction_path is parsed */
-    if (typeof structure.jurisdiction_path === 'string') {
-      structure.jurisdiction_path = JSON.parse(structure.jurisdiction_path);
-    }
-    return structure as IRSJurisdiction;
-  })
-  .filter(e => e.jurisdiction_id === '0dc2d15b-be1d-45d3-93d8-043a3a916f30')[0];
-let ijurisdictions = superset.processData(fixtures.ZambiaAkros1JSON) || [];
-ijurisdictions = ijurisdictions.map((structure: any) => {
-  /** ensure geojson is parsed */
-  if (typeof structure.geojson === 'string') {
-    structure.geojson = JSON.parse(structure.geojson);
-  }
-  /** ensure geometry is parsed */
-  if (typeof structure.geojson.geometry === 'string') {
-    structure.geojson.geometry = JSON.parse(structure.geojson.geometry);
-  }
-  /** ensure jurisdiction_name_path is parsed */
-  if (typeof structure.jurisdiction_name_path === 'string') {
-    structure.jurisdiction_name_path = JSON.parse(structure.jurisdiction_name_path);
-  }
-  /** ensure jurisdiction_path is parsed */
-  if (typeof structure.jurisdiction_path === 'string') {
-    structure.jurisdiction_path = JSON.parse(structure.jurisdiction_path);
-  }
-  return structure as GenericStructure;
-});
-const ijurisdiction = ijurisdictions[0];
-const istructures = superset.processData(fixtures.ZambiaStructuresJSON) || [];
-
-store.dispatch(fetchGenericStructures('zm-structures', istructures as GenericStructure[]));
+const focusAreaSlice = slices.pop();
 
 /** interface for IRSReportingMap */
 interface IRSReportingMapProps {
@@ -160,6 +119,46 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
   async function loadData() {
     try {
       setLoading(!focusArea || !jurisdiction || !plan || !structures); // set loading when there is no data
+
+      let fetchLocationParams: SupersetFormData | null = null;
+      if (jurisdictionId) {
+        fetchLocationParams = superset.getFormData(1, [
+          { comparator: jurisdictionId, operator: '==', subject: 'jurisdiction_id' },
+        ]);
+      }
+
+      // get the jurisdiction
+      await service(SUPERSET_JURISDICTIONS_SLICE, fetchLocationParams).then(
+        (result: Jurisdiction[]) => fetchJurisdictionsAction(result)
+      );
+
+      let fetchStructureParams: SupersetFormData | null = null;
+      if (jurisdictionId) {
+        fetchStructureParams = superset.getFormData(3000, [
+          { comparator: jurisdictionId, operator: '==', subject: 'jurisdiction_id' },
+        ]);
+      }
+
+      // get the structures
+      await service(SUPERSET_IRS_REPORTING_STRUCTURES_DATA_SLICE, fetchStructureParams).then(
+        (result: GenericStructure[]) =>
+          fetchStructures(SUPERSET_IRS_REPORTING_STRUCTURES_DATA_SLICE, result)
+      );
+
+      if (focusAreaSlice) {
+        let fetchFocusAreaParams: SupersetFormData | null = null;
+        if (jurisdictionId && planId) {
+          fetchFocusAreaParams = superset.getFormData(1, [
+            { comparator: jurisdictionId, operator: '==', subject: 'jurisdiction_id' },
+            { comparator: planId, operator: '==', subject: 'plan_id' },
+          ]);
+        }
+        // get the focus area
+        await service(focusAreaSlice, fetchFocusAreaParams).then((result: IRSJurisdiction[]) =>
+          fetchFocusAreas(focusAreaSlice, result)
+        );
+      }
+
       let fetchPlansParams: SupersetFormData | null = null;
       if (planId) {
         fetchPlansParams = superset.getFormData(1, [
@@ -171,34 +170,6 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
       await service(SUPERSET_IRS_REPORTING_PLANS_SLICE, fetchPlansParams).then(
         (result: IRSPlan[]) => fetchPlans(result)
       );
-
-      let fetchLocationParams: SupersetFormData | null = null;
-      if (jurisdictionId) {
-        fetchLocationParams = superset.getFormData(
-          3000,
-          [{ comparator: jurisdictionId, operator: '==', subject: 'jurisdiction_id' }],
-          { jurisdiction_depth: true }
-        );
-      }
-
-      // get the jurisdiction
-      await service(SUPERSET_JURISDICTIONS_SLICE, fetchLocationParams).then(
-        (result: Jurisdiction[]) => fetchJurisdictionsAction(result)
-      );
-
-      // get the structures
-      await service(SUPERSET_IRS_REPORTING_STRUCTURES_DATA_SLICE, fetchLocationParams).then(
-        (result: GenericStructure[]) =>
-          fetchGenericStructures(SUPERSET_IRS_REPORTING_STRUCTURES_DATA_SLICE, result)
-      );
-
-      const focusAreaSlice = slices.pop();
-      if (focusAreaSlice) {
-        // get the focus area
-        await service(focusAreaSlice, fetchLocationParams).then((result: IRSJurisdiction[]) =>
-          fetchFocusAreas(focusAreaSlice, result)
-        );
-      }
     } catch (e) {
       // do something with the error?
     } finally {
@@ -363,3 +334,53 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
 IRSReportingMap.defaultProps = defaultProps;
 
 export { IRSReportingMap };
+
+/** Connect the component to the store */
+
+/** interface to describe props from mapStateToProps */
+interface DispatchedStateProps {
+  focusArea: IRSJurisdiction | null;
+  plan: IRSPlan | null;
+  jurisdiction: Jurisdiction | null;
+  structures: StructureFeatureCollection;
+}
+
+/** map state to props */
+const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateProps => {
+  const planId = ownProps.match.params.planId || null;
+  const jurisdictionId = ownProps.match.params.jurisdictionId || null;
+  const plan = getIRSPlanById(state, planId);
+  const jurisdiction = getJurisdictionById(state, jurisdictionId);
+  const structures = getGenericStructures(
+    state,
+    SUPERSET_IRS_REPORTING_STRUCTURES_DATA_SLICE,
+    jurisdictionId
+  );
+  let focusArea = null;
+  if (focusAreaSlice && jurisdictionId) {
+    focusArea = getIRSJurisdictionByJurisdictionId(state, focusAreaSlice, jurisdictionId);
+  }
+
+  return {
+    focusArea,
+    jurisdiction,
+    plan,
+    structures,
+  };
+};
+
+/** map dispatch to props */
+const mapDispatchToProps = {
+  fetchFocusAreas: fetchIRSJurisdictions,
+  fetchJurisdictionsAction: fetchJurisdictions,
+  fetchPlans: fetchIRSPlans,
+  fetchStructures: fetchGenericStructures,
+};
+
+/** Connected IRSReportingMap component */
+const ConnectedIRSReportingMap = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(IRSReportingMap);
+
+export default ConnectedIRSReportingMap;
