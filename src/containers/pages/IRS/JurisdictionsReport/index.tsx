@@ -32,6 +32,7 @@ import IRSPlansReducer, {
   IRSPlan,
   reducerName as IRSPlansReducerName,
 } from '../../../../store/ducks/IRS/plans';
+import { getJurisdictionBreadcrumbs } from '../Map/helpers';
 import { getTree, ZambiaFocusAreasColumns, ZambiaJurisdictionsColumns } from './helpers';
 import './style.css';
 
@@ -153,14 +154,7 @@ const IRSJurisdictions = (props: IRSJurisdictionProps & RouteComponentProps<Rout
 
   let currentJurisdictionName: string | null = null;
   if (theObject && theObject.length > 0) {
-    const theTree = getTree(data, theObject[0]);
-    theTree.reverse();
-    const pages = theTree.map(el => {
-      return {
-        label: el.jurisdiction_name,
-        url: `${baseURL}/${el.jurisdiction_id}`,
-      };
-    });
+    const pages = getJurisdictionBreadcrumbs(theObject[0], baseURL);
 
     breadcrumbProps.pages.push(planPage);
 
