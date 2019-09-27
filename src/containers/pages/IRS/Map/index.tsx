@@ -1,29 +1,14 @@
-import GeojsonExtent from '@mapbox/geojson-extent';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset from '@onaio/superset-connector';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Col, Row } from 'reactstrap';
 import { BLACK, TASK_GREEN, TASK_ORANGE, TASK_RED, TASK_YELLOW } from '../../../../colors';
-import GisidaWrapper, { GisidaProps } from '../../../../components/GisidaWrapper';
+import GisidaWrapper from '../../../../components/GisidaWrapper';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
-import {
-  circleLayerConfig,
-  fillLayerConfig,
-  irsReportingCongif,
-  IrsReportingStructuresConfig,
-  lineLayerConfig,
-} from '../../../../configs/settings';
-import {
-  HOME,
-  HOME_URL,
-  IRS_REPORTING_TITLE,
-  MAIN_PLAN,
-  REPORT_IRS_PLAN_URL,
-} from '../../../../constants';
+import { HOME, HOME_URL, IRS_REPORTING_TITLE, REPORT_IRS_PLAN_URL } from '../../../../constants';
 import ProgressBar from '../../../../helpers/ProgressBar';
-import { FlexObject, wrapFeatureCollection } from '../../../../helpers/utils';
 import store from '../../../../store';
 import { IRSJurisdiction } from '../../../../store/ducks/IRS/jurisdictions';
 import IRSPlansReducer, {
@@ -33,17 +18,15 @@ import IRSPlansReducer, {
   reducerName as IRSPlansReducerName,
 } from '../../../../store/ducks/IRS/plans';
 import genericStructuresReducer, {
-  addGenericStructure,
   fetchGenericStructures,
   GenericStructure,
   getGenericStructures,
   reducerName as genericStructuresReducerName,
-  removeGenericStructures,
   StructureFeatureCollection,
 } from '../../../../store/ducks/IRS/structures';
 import { plans } from '../../../../store/ducks/IRS/tests/fixtures';
 import * as fixtures from '../JurisdictionsReport/tests/fixtures';
-import { structuresLayerBuilder } from './helpers';
+import { getGisidaWrapperProps } from './helpers';
 import './style.css';
 
 reducerRegistry.register(genericStructuresReducerName, genericStructuresReducer);
@@ -85,6 +68,7 @@ const defaultProps: IRSReportingMapProps = {
   structures: getGenericStructures(store.getState(), 'zm-structures', ifocusArea.jurisdiction_id),
 };
 
+/** The IRS Reporting Map component */
 const IRSReportingMap = (props: IRSReportingMapProps) => {
   const { focusArea, jurisdiction, plan, structures } = props;
 
@@ -155,52 +139,7 @@ const IRSReportingMap = (props: IRSReportingMapProps) => {
     },
   };
 
-  const layers: FlexObject[] = [];
-
-  // define line layer for Jurisdiction outline
-  const jurisdictionLineLayer = {
-    ...lineLayerConfig,
-    id: `${MAIN_PLAN}-${jurisdiction.jurisdiction_id}`,
-    source: {
-      ...lineLayerConfig.source,
-      data: {
-        ...lineLayerConfig.source.data,
-        data: JSON.stringify((jurisdiction as any).geojson),
-      },
-    },
-    visible: true,
-  };
-  layers.push(jurisdictionLineLayer);
-
-  // Define structures layers
-  let structuresLayers: FlexObject[] = [];
-
-  structuresLayers = structuresLayerBuilder(structures);
-
-  // define feature collection of all geoms being rendered
-  const featureCollection =
-    !structures || !structures.features || !structures.features.length
-      ? { features: [(jurisdiction as any).geojson], type: 'FeatureCollection' }
-      : {
-          ...structures,
-          features: [...structures.features, (jurisdiction as any).geojson],
-        };
-  // define bounds for gisida map position
-  const bounds = GeojsonExtent(featureCollection);
-
-  for (const structureLayer of structuresLayers) {
-    layers.push(structureLayer);
-  }
-
-  const gisidaWrapperProps: GisidaProps = {
-    bounds,
-    geoData: null,
-    handlers: [],
-    layers,
-    pointFeatureCollection: null,
-    polygonFeatureCollection: null,
-    structures: null,
-  };
+  const gisidaWrapperProps = getGisidaWrapperProps(jurisdiction, structures);
 
   return (
     <div>
@@ -215,9 +154,13 @@ const IRSReportingMap = (props: IRSReportingMapProps) => {
       </Row>
       <Row noGutters={true}>
         <Col xs={9}>
-          <div className="map irs-reporting-map">
-            <GisidaWrapper {...gisidaWrapperProps} />
-          </div>
+          {gisidaWrapperProps ? (
+            <div className="map irs-reporting-map">
+              <GisidaWrapper {...gisidaWrapperProps} />
+            </div>
+          ) : (
+            <div>Could not load the map</div>
+          )}
         </Col>
         <Col xs={3}>
           <div className="mapSidebar">
