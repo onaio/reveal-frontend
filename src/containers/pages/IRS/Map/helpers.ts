@@ -1,16 +1,13 @@
+import GeojsonExtent from '@mapbox/geojson-extent';
 import { BLACK, GREY, TASK_GREEN, TASK_ORANGE, TASK_RED, TASK_YELLOW } from '../../../../colors';
-import {
-  circleLayerConfig,
-  fillLayerConfig,
-  irsReportingCongif,
-  IrsReportingStructuresConfig,
-  lineLayerConfig,
-} from '../../../../configs/settings';
-import { STRUCTURE_LAYER } from '../../../../constants';
+import { GisidaProps } from '../../../../components/GisidaWrapper';
+import { circleLayerConfig, fillLayerConfig, lineLayerConfig } from '../../../../configs/settings';
+import { MAIN_PLAN, STRUCTURE_LAYER } from '../../../../constants';
 import { FlexObject } from '../../../../helpers/utils';
 import { StructureFeatureCollection } from '../../../../store/ducks/IRS/structures';
 
-const indicatorStopsNA = [
+/** Default indicator stops */
+const defaultIndicatorStops = [
   ['Complete', TASK_GREEN],
   ['Not Sprayed', TASK_RED],
   ['Partially Sprayed', TASK_ORANGE],
@@ -18,7 +15,14 @@ const indicatorStopsNA = [
   ['Not Eligible', BLACK],
 ];
 
-export const structuresLayerBuilder = (structures: StructureFeatureCollection) => {
+/** Utility function to build structure layer
+ * @param {StructureFeatureCollection} structures - Feature Collection of structures
+ * @param {string[][]} indicatorStops - the indicator stops
+ */
+export const structuresLayerBuilder = (
+  structures: StructureFeatureCollection,
+  indicatorStops: string[][] = defaultIndicatorStops
+) => {
   const structuresLayers: FlexObject[] = [];
   const layerType = structures.features[0].geometry && structures.features[0].geometry.type;
   const structuresPopup: FlexObject = {
@@ -32,7 +36,7 @@ export const structuresLayerBuilder = (structures: StructureFeatureCollection) =
   const structureStatusColors = {
     default: GREY,
     property: 'business_status',
-    stops: indicatorStopsNA,
+    stops: indicatorStops,
     type: 'categorical',
   };
 
@@ -101,4 +105,65 @@ export const structuresLayerBuilder = (structures: StructureFeatureCollection) =
     structuresLayers.push(structuresLineLayer);
   }
   return structuresLayers;
+};
+
+/** Get Gisida Wrapper Props
+ * @param {FlexObject} jurisdiction - the jurisdiction (with geojson field)
+ * @param {StructureFeatureCollection} structures - Feature Collection of structures
+ */
+export const getGisidaWrapperProps = (
+  jurisdiction: FlexObject,
+  structures: StructureFeatureCollection | null
+): GisidaProps | null => {
+  if (!jurisdiction.geojson) {
+    return null;
+  }
+  const layers: FlexObject[] = [];
+
+  // define line layer for Jurisdiction outline
+  const jurisdictionLineLayer = {
+    ...lineLayerConfig,
+    id: `${MAIN_PLAN}-${jurisdiction.jurisdiction_id}`,
+    source: {
+      ...lineLayerConfig.source,
+      data: {
+        ...lineLayerConfig.source.data,
+        data: JSON.stringify(jurisdiction.geojson),
+      },
+    },
+    visible: true,
+  };
+  layers.push(jurisdictionLineLayer);
+
+  // Define structures layers
+  let structuresLayers: FlexObject[] = [];
+  if (structures) {
+    structuresLayers = structuresLayerBuilder(structures);
+  }
+
+  // define feature collection of all geoms being rendered
+  const featureCollection =
+    !structures || !structures.features || !structures.features.length
+      ? { features: [jurisdiction.geojson], type: 'FeatureCollection' }
+      : {
+          ...structures,
+          features: [...structures.features, jurisdiction.geojson],
+        };
+  // define bounds for gisida map position
+  const bounds = GeojsonExtent(featureCollection);
+
+  for (const structureLayer of structuresLayers) {
+    layers.push(structureLayer);
+  }
+
+  const gisidaWrapperProps: GisidaProps = {
+    bounds,
+    geoData: null,
+    handlers: [],
+    layers,
+    pointFeatureCollection: null,
+    polygonFeatureCollection: null,
+    structures: null,
+  };
+  return gisidaWrapperProps;
 };
