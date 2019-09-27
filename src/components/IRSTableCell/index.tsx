@@ -20,7 +20,7 @@ const IRSTableCell: React.ElementType<LinkedCellProps> = (props: LinkedCellProps
   ) : (
     <span>
       <span className="plan-jurisdiction-name btn-link">
-        <Link to={`${urlPath}/${MAP}/${cell.original.jurisdiction_id}`}>
+        <Link to={`${urlPath}/${cell.original.jurisdiction_id}/${MAP}`}>
           <FontAwesomeIcon icon={['fas', MAP]} />
         </Link>
         &nbsp;&nbsp;
