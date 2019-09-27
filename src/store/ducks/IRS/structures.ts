@@ -84,7 +84,22 @@ export const fetchGenericStructures = (
   reducerKey: string = 'GenericStructuresById',
   objList: GenericStructure[] = []
 ): FetchGenericStructuresAction => ({
-  objects: keyBy(objList, 'structure_id'),
+  objects: keyBy(
+    objList.map(
+      (structure: GenericStructure): GenericStructure => {
+        /** ensure geojson is parsed */
+        if (typeof structure.geojson === 'string') {
+          structure.geojson = JSON.parse(structure.geojson);
+        }
+        /** ensure geometry is parsed */
+        if (typeof structure.geojson.geometry === 'string') {
+          structure.geojson.geometry = JSON.parse(structure.geojson.geometry);
+        }
+        return structure as GenericStructure;
+      }
+    ),
+    'structure_id'
+  ),
   reducerKey,
   type: GENERIC_STRUCTURES_FETCHED,
 });
