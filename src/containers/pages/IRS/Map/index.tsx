@@ -7,7 +7,13 @@ import { BLACK, TASK_GREEN, TASK_ORANGE, TASK_RED, TASK_YELLOW } from '../../../
 import GisidaWrapper from '../../../../components/GisidaWrapper';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
-import { HOME, HOME_URL, IRS_REPORTING_TITLE, REPORT_IRS_PLAN_URL } from '../../../../constants';
+import {
+  HOME,
+  HOME_URL,
+  IRS_REPORTING_TITLE,
+  MAP,
+  REPORT_IRS_PLAN_URL,
+} from '../../../../constants';
 import ProgressBar from '../../../../helpers/ProgressBar';
 import store from '../../../../store';
 import { IRSJurisdiction } from '../../../../store/ducks/IRS/jurisdictions';
@@ -26,15 +32,25 @@ import genericStructuresReducer, {
 } from '../../../../store/ducks/IRS/structures';
 import { plans } from '../../../../store/ducks/IRS/tests/fixtures';
 import * as fixtures from '../JurisdictionsReport/tests/fixtures';
-import { getGisidaWrapperProps } from './helpers';
+import { getGisidaWrapperProps, getJurisdictionBreadcrumbs } from './helpers';
 import './style.css';
 
 reducerRegistry.register(genericStructuresReducerName, genericStructuresReducer);
 
 const ifocusAreas = superset.processData(fixtures.ZambiaFocusAreasJSON) || [];
-const ifocusArea = ifocusAreas.filter(
-  e => e.jurisdiction_id === '0dc2d15b-be1d-45d3-93d8-043a3a916f30'
-)[0];
+const ifocusArea = ifocusAreas
+  .map((structure: IRSJurisdiction) => {
+    /** ensure jurisdiction_name_path is parsed */
+    if (typeof structure.jurisdiction_name_path === 'string') {
+      structure.jurisdiction_name_path = JSON.parse(structure.jurisdiction_name_path);
+    }
+    /** ensure jurisdiction_path is parsed */
+    if (typeof structure.jurisdiction_path === 'string') {
+      structure.jurisdiction_path = JSON.parse(structure.jurisdiction_path);
+    }
+    return structure as IRSJurisdiction;
+  })
+  .filter(e => e.jurisdiction_id === '0dc2d15b-be1d-45d3-93d8-043a3a916f30')[0];
 let ijurisdictions = superset.processData(fixtures.ZambiaAkros1JSON) || [];
 ijurisdictions = ijurisdictions.map((structure: any) => {
   /** ensure geojson is parsed */
@@ -44,6 +60,14 @@ ijurisdictions = ijurisdictions.map((structure: any) => {
   /** ensure geometry is parsed */
   if (typeof structure.geojson.geometry === 'string') {
     structure.geojson.geometry = JSON.parse(structure.geojson.geometry);
+  }
+  /** ensure jurisdiction_name_path is parsed */
+  if (typeof structure.jurisdiction_name_path === 'string') {
+    structure.jurisdiction_name_path = JSON.parse(structure.jurisdiction_name_path);
+  }
+  /** ensure jurisdiction_path is parsed */
+  if (typeof structure.jurisdiction_path === 'string') {
+    structure.jurisdiction_path = JSON.parse(structure.jurisdiction_path);
   }
   return structure as GenericStructure;
 });
@@ -72,20 +96,37 @@ const defaultProps: IRSReportingMapProps = {
 const IRSReportingMap = (props: IRSReportingMapProps) => {
   const { focusArea, jurisdiction, plan, structures } = props;
 
+  const baseURL = `${REPORT_IRS_PLAN_URL}/${plan.plan_id}`;
+  const focusAreaURL = `${baseURL}/${focusArea.jurisdiction_id}`;
+
   const pageTitle = plan.plan_title;
-  const basePage = {
-    label: IRS_REPORTING_TITLE,
-    url: REPORT_IRS_PLAN_URL,
-  };
+
   const breadcrumbProps = {
-    currentPage: basePage,
+    currentPage: {
+      label: `${focusArea.jurisdiction_name} ${MAP}`,
+      url: `${focusAreaURL}/map`,
+    },
     pages: [
       {
         label: HOME,
         url: HOME_URL,
       },
+      {
+        label: IRS_REPORTING_TITLE,
+        url: baseURL,
+      },
     ],
   };
+
+  const jurisdictionBreadCrumbs = getJurisdictionBreadcrumbs(focusArea, baseURL);
+
+  jurisdictionBreadCrumbs.push({
+    label: focusArea.jurisdiction_name,
+    url: `${baseURL}/${focusArea.jurisdiction_id}`,
+  });
+
+  const newPages = breadcrumbProps.pages.concat(jurisdictionBreadCrumbs);
+  breadcrumbProps.pages = newPages;
 
   const sidebarLegendStops = [
     ['Complete', TASK_GREEN],
