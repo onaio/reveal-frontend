@@ -245,8 +245,24 @@ export function getIRSJurisdictionById(
   state: Partial<Store>,
   reducerKey: string = 'IRSJurisdictionsById',
   id: string
-): NamibiaIRSJurisdiction | null {
+): IRSJurisdiction | null {
   return get((state as any)[reducerName][reducerKey], id) || null;
+}
+
+/** get one IRSJurisdiction using its jurisdiction_id
+ * @param {Partial<Store>} state - the redux store
+ * @param {string} reducerKey - they reducer key
+ * @param {string} jurisdictionId - the IRSJurisdiction id
+ * @returns {IRSJurisdiction|null} a IRSJurisdiction object or null
+ */
+export function getIRSJurisdictionByJurisdictionId(
+  state: Partial<Store>,
+  reducerKey: string = 'IRSJurisdictionsById',
+  jurisdictionId: string
+): IRSJurisdiction | null {
+  return values((state as any)[reducerName][reducerKey]).filter(
+    (e: IRSJurisdiction) => e.jurisdiction_id === jurisdictionId
+  )[0];
 }
 
 /** get an array of IRSJurisdiction objects
