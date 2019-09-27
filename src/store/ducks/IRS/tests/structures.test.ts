@@ -95,32 +95,29 @@ describe('reducers/IRS/GenericStructure', () => {
     });
   });
 
-  // it('Fetching plans does not replace GenericStructuresById', () => {
-  //   // fetch two generic structure objects
-  //   store.dispatch(
-  //     fetchGenericStructures('zm-structures', [
-  //       structureData[0],
-  //       structureData[1],
-  //     ] as NamibiaGenericStructure[])
-  //   );
-  //   // we should have them in the store
-  //   expect(getGenericStructuresArray(store.getState(), 'zm-structures')).toEqual([
-  //     structureData[0],
-  //     structureData[1],
-  //   ]);
-  //   // fetch one more generic structure objects
-  //   store.dispatch(
-  //     fetchGenericStructures('zm-structures', [
-  //       structureData[2],
-  //     ] as NamibiaGenericStructure[])
-  //   );
-  //   // we should now have a total of three generic structure objects in the store
-  //   expect(getGenericStructuresArray(store.getState(), 'zm-structures')).toEqual([
-  //     structureData[0],
-  //     structureData[1],
-  //     structureData[2],
-  //   ]);
-  // });
+  it('Fetching stcuctures does not replace the store', () => {
+    // fetch two generic structure objects
+    store.dispatch(
+      fetchGenericStructures('zm-structures', [
+        structureData[0],
+        structureData[1],
+      ] as GenericStructure[])
+    );
+    // we should have them in the store
+    expect(getGenericStructures(store.getState(), 'zm-structures')).toEqual({
+      features: [structureData[0].geojson, structureData[1].geojson],
+      type: 'FeatureCollection',
+    });
+    // fetch one more generic structure objects
+    store.dispatch(
+      fetchGenericStructures('zm-structures', [structureData[11]] as GenericStructure[])
+    );
+    // we should now have a total of three generic structure objects in the store
+    expect(getGenericStructures(store.getState(), 'zm-structures')).toEqual({
+      features: [structureData[0].geojson, structureData[1].geojson, structureData[11].geojson],
+      type: 'FeatureCollection',
+    });
+  });
 
   // it('You can add one generic structure object to the store', () => {
   //   // reset
