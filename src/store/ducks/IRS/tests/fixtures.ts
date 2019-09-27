@@ -141,3 +141,5 @@ export const namibiaIRSJurisdictions = [
     target_2019: 0,
   },
 ];
+/* tslint:disable-next-line no-var-requires */
+export const ZambiaStructures = require('../../../../containers/pages/IRS/JurisdictionsReport/tests/zambia_structures.json');
