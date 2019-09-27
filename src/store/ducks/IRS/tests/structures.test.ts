@@ -95,7 +95,7 @@ describe('reducers/IRS/GenericStructure', () => {
     });
   });
 
-  it('Fetching stcuctures does not replace the store', () => {
+  it('Fetching structures does not replace the store', () => {
     // fetch two generic structure objects
     store.dispatch(
       fetchGenericStructures('zm-structures', [
@@ -119,41 +119,34 @@ describe('reducers/IRS/GenericStructure', () => {
     });
   });
 
-  // it('You can add one generic structure object to the store', () => {
-  //   // reset
-  //   store.dispatch(removeGenericStructures('zm-structures'));
+  it('You can add one generic structure object to the store', () => {
+    // reset
+    store.dispatch(removeGenericStructures('zm-structures'));
 
-  //   // add one generic structure objects
-  //   store.dispatch(
-  //     addGenericStructure('zm-structures', fixtures
-  //       .namibiaGenericStructures[2] as NamibiaGenericStructure)
-  //   );
-  //   // we should have it in the store
-  //   expect(getGenericStructuresArray(store.getState(), 'zm-structures')).toEqual([
-  //     structureData[2],
-  //   ]);
+    // add one generic structure objects
+    store.dispatch(addGenericStructure('zm-structures', structureData[2] as GenericStructure));
+    // we should have it in the store
+    expect(getGenericStructures(store.getState(), 'zm-structures')).toEqual({
+      features: [structureData[2].geojson],
+      type: 'FeatureCollection',
+    });
 
-  //   // fetch one more generic structure objects
-  //   store.dispatch(
-  //     addGenericStructure('zm-structures', fixtures
-  //       .namibiaGenericStructures[1] as NamibiaGenericStructure)
-  //   );
-  //   // we should now have a total of three generic structure objects in the store
-  //   expect(getGenericStructuresArray(store.getState(), 'zm-structures')).toEqual([
-  //     structureData[2],
-  //     structureData[1],
-  //   ]);
+    // fetch one more generic structure objects
+    store.dispatch(addGenericStructure('zm-structures', structureData[1] as GenericStructure));
 
-  //   // add an existing plan again
-  //   store.dispatch(
-  //     addGenericStructure('zm-structures', fixtures
-  //       .namibiaGenericStructures[2] as NamibiaGenericStructure)
-  //   );
-  //   // nothing should have changed in the store
-  //   // we should now have a total of three generic structure objects in the store
-  //   expect(getGenericStructuresArray(store.getState(), 'zm-structures')).toEqual([
-  //     structureData[2],
-  //     structureData[1],
-  //   ]);
-  // });
+    // we should now have a total of three generic structure objects in the store
+    expect(getGenericStructures(store.getState(), 'zm-structures')).toEqual({
+      features: [structureData[2].geojson, structureData[1].geojson],
+      type: 'FeatureCollection',
+    });
+
+    // add an existing generic structure again
+    store.dispatch(addGenericStructure('zm-structures', structureData[2] as GenericStructure));
+    // nothing should have changed in the store
+    // we should now have a total of three generic structure objects in the store
+    expect(getGenericStructures(store.getState(), 'zm-structures')).toEqual({
+      features: [structureData[2].geojson, structureData[1].geojson],
+      type: 'FeatureCollection',
+    });
+  });
 });
