@@ -54,8 +54,11 @@ export interface GoalReport {
   achievedValue: number /** the achieved value */;
   percentAchieved: number /** progress towards goal achievement */;
   prettyPercentAchieved: string /** pretty string of percentAchieved */;
+  targetPercentage: number /** target Value as a percent of all tasks */;
+  prettyTargetPercentage: string /** targetPercentage as a formated string */;
   targetValue: number /** the target value */;
   goalUnit: string /** goal_unit */;
+  task_count: number /** the total number of tasks */;
 }
 
 /** Utility function to get an object containing values for goal indicators
@@ -79,12 +82,17 @@ export function getGoalReport(goal: Goal): GoalReport {
     targetValue = targetValue === 0 ? goal.goal_value : targetValue;
   }
 
+  const targetPercentage = goal.task_count > 0 ? targetValue / goal.task_count : 0;
+
   return {
     achievedValue: goal.completed_task_count,
     goalUnit,
     percentAchieved,
     prettyPercentAchieved: percentage(percentAchieved),
+    prettyTargetPercentage: percentage(targetPercentage),
+    targetPercentage,
     targetValue,
+    task_count: goal.task_count,
   };
 }
 
