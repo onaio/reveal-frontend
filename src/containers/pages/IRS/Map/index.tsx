@@ -1,12 +1,22 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
-import superset from '@onaio/superset-connector';
-import React from 'react';
+import superset, { SupersetFormData } from '@onaio/superset-connector';
+import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
+import { connect } from 'react-redux';
+import { RouteComponentProps } from 'react-router';
 import { Col, Row } from 'reactstrap';
+import { Store } from 'redux';
 import { BLACK, TASK_GREEN, TASK_ORANGE, TASK_RED, TASK_YELLOW } from '../../../../colors';
 import GisidaWrapper from '../../../../components/GisidaWrapper';
+import NotFound from '../../../../components/NotFound';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
+import {
+  SUPERSET_IRS_REPORTING_JURISDICTIONS_DATA_SLICES,
+  SUPERSET_IRS_REPORTING_PLANS_SLICE,
+  SUPERSET_IRS_REPORTING_STRUCTURES_DATA_SLICE,
+  SUPERSET_JURISDICTIONS_SLICE,
+} from '../../../../configs/env';
 import {
   HOME,
   HOME_URL,
@@ -15,8 +25,15 @@ import {
   REPORT_IRS_PLAN_URL,
 } from '../../../../constants';
 import ProgressBar from '../../../../helpers/ProgressBar';
+import { RouteParams } from '../../../../helpers/utils';
+import supersetFetch from '../../../../services/superset';
 import store from '../../../../store';
-import { IRSJurisdiction } from '../../../../store/ducks/IRS/jurisdictions';
+import IRSJurisdictionsReducer, {
+  fetchIRSJurisdictions,
+  getIRSJurisdictionsArray,
+  IRSJurisdiction,
+  reducerName as IRSJurisdictionsReducerName,
+} from '../../../../store/ducks/IRS/jurisdictions';
 import IRSPlansReducer, {
   fetchIRSPlans,
   getIRSPlanById,
@@ -31,11 +48,23 @@ import genericStructuresReducer, {
   StructureFeatureCollection,
 } from '../../../../store/ducks/IRS/structures';
 import { plans } from '../../../../store/ducks/IRS/tests/fixtures';
+import jurisdictionReducer, {
+  fetchJurisdictions,
+  getJurisdictionById,
+  Jurisdiction,
+  reducerName as jurisdictionReducerName,
+} from '../../../../store/ducks/jurisdictions';
 import * as fixtures from '../JurisdictionsReport/tests/fixtures';
 import { getGisidaWrapperProps, getJurisdictionBreadcrumbs } from './helpers';
 import './style.css';
 
+/** register the reducers */
+reducerRegistry.register(IRSPlansReducerName, IRSPlansReducer);
+reducerRegistry.register(jurisdictionReducerName, jurisdictionReducer);
+reducerRegistry.register(IRSJurisdictionsReducerName, IRSJurisdictionsReducer);
 reducerRegistry.register(genericStructuresReducerName, genericStructuresReducer);
+
+const slices = SUPERSET_IRS_REPORTING_JURISDICTIONS_DATA_SLICES.split(',');
 
 const ifocusAreas = superset.processData(fixtures.ZambiaFocusAreasJSON) || [];
 const ifocusArea = ifocusAreas
@@ -78,23 +107,116 @@ store.dispatch(fetchGenericStructures('zm-structures', istructures as GenericStr
 
 /** interface for IRSReportingMap */
 interface IRSReportingMapProps {
-  focusArea: IRSJurisdiction;
-  jurisdiction: IRSJurisdiction;
-  plan: IRSPlan;
-  structures: StructureFeatureCollection;
+  fetchFocusAreas: typeof fetchIRSJurisdictions;
+  fetchJurisdictionsAction: typeof fetchJurisdictions;
+  fetchPlans: typeof fetchIRSPlans;
+  fetchStructures: typeof fetchGenericStructures;
+  focusArea: IRSJurisdiction | null;
+  jurisdiction: Jurisdiction | null;
+  plan: IRSPlan | null;
+  service: typeof supersetFetch;
+  structures: StructureFeatureCollection | null;
 }
 
 /** IRSReportingMap default props */
 const defaultProps: IRSReportingMapProps = {
-  focusArea: ifocusArea,
-  jurisdiction: ijurisdiction,
-  plan: plans[0] as IRSPlan,
-  structures: getGenericStructures(store.getState(), 'zm-structures', ifocusArea.jurisdiction_id),
+  fetchFocusAreas: fetchIRSJurisdictions,
+  fetchJurisdictionsAction: fetchJurisdictions,
+  fetchPlans: fetchIRSPlans,
+  fetchStructures: fetchGenericStructures,
+  focusArea: null,
+  jurisdiction: null,
+  plan: null,
+  service: supersetFetch,
+  structures: null,
 };
 
 /** The IRS Reporting Map component */
-const IRSReportingMap = (props: IRSReportingMapProps) => {
-  const { focusArea, jurisdiction, plan, structures } = props;
+const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<RouteParams>) => {
+  const [loading, setLoading] = useState<boolean>(true);
+  const {
+    fetchFocusAreas,
+    fetchJurisdictionsAction,
+    fetchPlans,
+    focusArea,
+    fetchStructures,
+    jurisdiction,
+    plan,
+    service,
+    structures,
+  } = props;
+
+  let planId: string | null = null;
+  if (props.match && props.match.params && props.match.params.planId) {
+    planId = props.match.params.planId;
+  }
+
+  let jurisdictionId: string | null = null;
+  if (props.match && props.match.params && props.match.params.jurisdictionId) {
+    jurisdictionId = props.match.params.jurisdictionId;
+  }
+
+  /** async function to load the data */
+  async function loadData() {
+    try {
+      setLoading(!focusArea || !jurisdiction || !plan || !structures); // set loading when there is no data
+      let fetchPlansParams: SupersetFormData | null = null;
+      if (planId) {
+        fetchPlansParams = superset.getFormData(1, [
+          { comparator: planId, operator: '==', subject: 'plan_id' },
+        ]);
+      }
+
+      // get the plan
+      await service(SUPERSET_IRS_REPORTING_PLANS_SLICE, fetchPlansParams).then(
+        (result: IRSPlan[]) => fetchPlans(result)
+      );
+
+      let fetchLocationParams: SupersetFormData | null = null;
+      if (jurisdictionId) {
+        fetchLocationParams = superset.getFormData(
+          3000,
+          [{ comparator: jurisdictionId, operator: '==', subject: 'jurisdiction_id' }],
+          { jurisdiction_depth: true }
+        );
+      }
+
+      // get the jurisdiction
+      await service(SUPERSET_JURISDICTIONS_SLICE, fetchLocationParams).then(
+        (result: Jurisdiction[]) => fetchJurisdictionsAction(result)
+      );
+
+      // get the structures
+      await service(SUPERSET_IRS_REPORTING_STRUCTURES_DATA_SLICE, fetchLocationParams).then(
+        (result: GenericStructure[]) =>
+          fetchGenericStructures(SUPERSET_IRS_REPORTING_STRUCTURES_DATA_SLICE, result)
+      );
+
+      const focusAreaSlice = slices.pop();
+      if (focusAreaSlice) {
+        // get the focus area
+        await service(focusAreaSlice, fetchLocationParams).then((result: IRSJurisdiction[]) =>
+          fetchFocusAreas(focusAreaSlice, result)
+        );
+      }
+    } catch (e) {
+      // do something with the error?
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  if (!jurisdictionId || !planId) {
+    return <NotFound />;
+  }
+
+  if (loading === true || (!focusArea || !jurisdiction || !plan || !structures)) {
+    return <Loading />;
+  }
 
   const baseURL = `${REPORT_IRS_PLAN_URL}/${plan.plan_id}`;
   const focusAreaURL = `${baseURL}/${focusArea.jurisdiction_id}`;
