@@ -163,7 +163,7 @@ export default function reducer(
           ...state,
           [action.reducerKey]: {
             ...state[action.reducerKey],
-            [action.obj.id as string]: action.obj,
+            [action.obj.structure_id as string]: action.obj,
           },
         });
       }
