@@ -49,6 +49,7 @@ import ConnectedUpdatePlan from '../containers/pages/InterventionPlan/UpdatePlan
 import ConnectedIRSJurisdictions, {
   IRSJurisdictions,
 } from '../containers/pages/IRS/JurisdictionsReport';
+import ConnectedIRSReportingMap, { IRSReportingMap } from '../containers/pages/IRS/Map';
 import ConnectedIRSPlansList from '../containers/pages/IRS/plans';
 import { oAuthUserInfoGetter } from '../helpers/utils';
 
@@ -136,13 +137,12 @@ class App extends Component {
                   path={`${REPORT_IRS_PLAN_URL}/:planId/:jurisdictionId`}
                   component={ConnectedIRSJurisdictions}
                 />
-
                 {/* IRS Reporting Map view */}
                 <ConnectedPrivateRoute
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
-                  path={`${REPORT_IRS_PLAN_URL}/:id/${MAP}/:jurisdictionId`}
-                  component={IrsReportMap}
+                  path={`${REPORT_IRS_PLAN_URL}/:planId/:jurisdictionId/${MAP}`}
+                  component={ConnectedIRSReportingMap}
                 />
 
                 {/* Focus Investigation Reporting list view */}
