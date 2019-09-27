@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap correctly & changes page title 1`] = `
+exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFi map correctly 1`] = `
 <Router
   history={
     Object {
@@ -2214,7 +2214,7 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
                    
                   of
                    
-                  100
+                  0
                    
                   person(s)
                    (
@@ -2225,6 +2225,11 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
                 <ProgressBar
                   decimalPoints={0}
                   height="10px"
+                  marker={
+                    Object {
+                      "markAt": "0%",
+                    }
+                  }
                   max={1}
                   min={0}
                   value={0}
@@ -2235,9 +2240,25 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
                       Object {
                         "height": "10px",
                         "marginBottom": "15px",
+                        "position": "relative",
                       }
                     }
                   >
+                    <div
+                      className="marker"
+                      id="marker"
+                      style={
+                        Object {
+                          "backgroundColor": "#F00",
+                          "height": "inherit",
+                          "left": "0%",
+                          "position": "absolute",
+                          "width": "5px",
+                        }
+                      }
+                    >
+                       
+                    </div>
                     <div
                       aria-valuemax={1}
                       aria-valuemin={0}
@@ -2263,7 +2284,7 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
 </Router>
 `;
 
-exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap correctly & changes page title 2`] = `
+exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFi map correctly 2`] = `
 Object {
   "currentGoal": "RACD_blood_screening_1km_radius",
   "geoData": Object {

@@ -57,7 +57,7 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
     );
   });
 
-  it('renders SingleActiveFimap correctly & changes page title', () => {
+  it('renders SingleActiveFi map correctly', () => {
     const mock: any = jest.fn();
     const supersetServiceMock: any = jest.fn(async () => []);
     const props = {
@@ -87,6 +87,10 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
     expect(helmet.title).toEqual('Focus Investigation: A1-Tha Luang Village 1 Focus 01');
     expect(toJson(wrapper)).toMatchSnapshot();
     expect(wrapper.find('GisidaWrapperMock').props()).toMatchSnapshot();
+
+    // markers on the progressBar
+    const markerWrapper = wrapper.find('#marker');
+    expect(markerWrapper.length).toBeGreaterThanOrEqual(1);
     wrapper.unmount();
   });
 
