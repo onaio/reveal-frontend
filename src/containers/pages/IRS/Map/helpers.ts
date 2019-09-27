@@ -1,9 +1,11 @@
 import GeojsonExtent from '@mapbox/geojson-extent';
 import { BLACK, GREY, TASK_GREEN, TASK_ORANGE, TASK_RED, TASK_YELLOW } from '../../../../colors';
 import { GisidaProps } from '../../../../components/GisidaWrapper';
+import { Page } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import { circleLayerConfig, fillLayerConfig, lineLayerConfig } from '../../../../configs/settings';
 import { MAIN_PLAN, STRUCTURE_LAYER } from '../../../../constants';
 import { FlexObject } from '../../../../helpers/utils';
+import { IRSJurisdiction } from '../../../../store/ducks/IRS/jurisdictions';
 import { StructureFeatureCollection } from '../../../../store/ducks/IRS/structures';
 
 /** Default indicator stops */
@@ -168,4 +170,30 @@ export const getGisidaWrapperProps = (
     structures: null,
   };
   return gisidaWrapperProps;
+};
+
+/** Get breadcrumbs for a jurisdiction object
+ * This uses the jurisdiction_name_path and jurisdiction_path fields to get
+ * the breadcrumbs of the parents of a given jurisdiction object
+ * @param {IRSJurisdiction} jurisdiction - the jurisdiction in question
+ * @param {string} urlPath - the url path that we append the jurisdiction id to
+ */
+export const getJurisdictionBreadcrumbs = (
+  jurisdiction: IRSJurisdiction,
+  urlPath: string = '/'
+) => {
+  const result = [];
+
+  for (let i = 0; i < jurisdiction.jurisdiction_name_path.length; i++) {
+    let url = urlPath;
+    if (jurisdiction.jurisdiction_path[i]) {
+      url = `${urlPath}/${jurisdiction.jurisdiction_path[i]}`;
+    }
+    result.push({
+      label: jurisdiction.jurisdiction_name_path[i],
+      url,
+    });
+  }
+
+  return result;
 };
