@@ -110,10 +110,12 @@ export const structuresLayerBuilder = (
 /** Get Gisida Wrapper Props
  * @param {FlexObject} jurisdiction - the jurisdiction (with geojson field)
  * @param {StructureFeatureCollection} structures - Feature Collection of structures
+ * @param {string[][]} indicatorStops - the indicator stops
  */
 export const getGisidaWrapperProps = (
   jurisdiction: FlexObject,
-  structures: StructureFeatureCollection | null
+  structures: StructureFeatureCollection | null,
+  indicatorStops: string[][] = defaultIndicatorStops
 ): GisidaProps | null => {
   if (!jurisdiction.geojson) {
     return null;
@@ -138,7 +140,7 @@ export const getGisidaWrapperProps = (
   // Define structures layers
   let structuresLayers: FlexObject[] = [];
   if (structures) {
-    structuresLayers = structuresLayerBuilder(structures);
+    structuresLayers = structuresLayerBuilder(structures, indicatorStops);
   }
 
   // define feature collection of all geoms being rendered
