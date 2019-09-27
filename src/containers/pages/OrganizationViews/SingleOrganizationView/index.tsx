@@ -5,8 +5,7 @@ import { FlexObject } from '@onaio/drill-down-table/dist/types/helpers/utils';
 import ListView from '@onaio/list-view';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import { capitalize, values } from 'lodash';
-import React, { useState } from 'react';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
@@ -36,6 +35,7 @@ import {
   TEAMS,
   USERNAME,
 } from '../../../../constants';
+import { OPENSRP_PRACTITIONER_ENDPOINT } from '../../../../constants';
 import PractitionerSelect from '../../../../containers/forms/PractitionerSelect';
 import { generateNameSpacedUUID, RouteParams } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
@@ -47,8 +47,6 @@ import organizationsReducer, {
   reducerName as organizationsReducerName,
 } from '../../../../store/ducks/organizations';
 import * as fixtures from '../../../../store/ducks/tests/fixtures';
-import { OPENSRP_PRACTITIONER_ENDPOINT } from '../../../constants';
-import { OpenSRPService } from '../../../services/opensrp';
 
 reducerRegistry.register(organizationsReducerName, organizationsReducer);
 
@@ -107,16 +105,18 @@ const SingleOrganizationView = (props: SingleOrgViewPropsType) => {
       ...practitioners.map((practitioner: any) => [
         practitioner.username,
         practitioner.name,
+        /** link to remove this practitioner from this organization,
+         *  effectively delete this practitioner role
+         */
         <a
-          className={`remove-link`}
+          className="remove-link"
           key={practitioner.identifier}
-          // tslint:disable-next-line: jsx-no-lambda
-          onClick={e => handleRemovePractitioner(practitioner.identifier, e)}
+          // tslint:disable-next-line: jsx-no-lambda tslint:disable-next-line: no-empty
+          onClick={e => {}}
         >
           View
         </a>,
       ]),
-      /** link to remove this practitioner from this organization, effectively delete this practitioner role */
     ],
     headerItems: [USERNAME, NAME, ACTIONS],
     tableClass: 'table table-bordered',
@@ -130,74 +130,74 @@ const SingleOrganizationView = (props: SingleOrgViewPropsType) => {
 
   // functions / methods //
 
-  const formatOptions = (entries: any[]): Array<{ label: string; value: string }> => {
-    return entries.map(entry => ({ label: entry.username, value: entry.identifier }));
-  };
+  // const formatOptions = (entries: any[]): Array<{ label: string; value: string }> => {
+  //   return entries.map(entry => ({ label: entry.username, value: entry.identifier }));
+  // };
 
-  // track selected options that are in state
-  const [selectedOptions, setSelectedOptions] = useState([]);
+  // // track selected options that are in state
+  // const [selectedOptions, setSelectedOptions] = useState([]);
 
-  const changeHandler = (values: ValueType<Array<{ label: string; value: string }>>) => {
-    // list of ids
-    const selectedOptionsIds = values!.map(value => value.value);
-    setSelectedOptions(selectedOptionsIds);
-  };
+  // const changeHandler = (values: ValueType<Array<{ label: string; value: string }>>) => {
+  //   // list of ids
+  //   const selectedOptionsIds = values!.map(value => value.value);
+  //   setSelectedOptions(selectedOptionsIds);
+  // };
 
-  const promiseOptions = async () => {
-    const serve = new serviceClass(OPENSRP_PRACTITIONER_ENDPOINT);
-    const options = await serve.list();
-    return formatOptions(options);
-  };
+  // const promiseOptions = async () => {
+  //   const serve = new serviceClass(OPENSRP_PRACTITIONER_ENDPOINT);
+  //   const options = await serve.list();
+  //   return formatOptions(options);
+  // };
 
-  const handleRemovePractitioner = (practitionerId: string, event: React.MouseEvent) => {
-    event.preventDefault();
-    unassignPractitioner(OpenSRPService, organization!.identifier, practitionerId);
-  };
+  // const handleRemovePractitioner = (practitionerId: string, event: React.MouseEvent) => {
+  //   event.preventDefault();
+  //   unassignPractitioner(OpenSRPService, organization!.identifier, practitionerId);
+  // };
 
-  /** removes/unassigns a practitioner from an organization */
-  const unassignPractitioner = async (
-    service: typeof serviceClass,
-    organizationId: string,
-    practitionerId: string
-  ) => {
-    const serve = new service(`/practitionerRole`);
+  // /** removes/unassigns a practitioner from an organization */
+  // const unassignPractitioner = async (
+  //   service: typeof serviceClass,
+  //   organizationId: string,
+  //   practitionerId: string
+  // ) => {
+  //   const serve = new service(`/practitionerRole`);
 
-    const payload = {}; // this needs to be a practitionerRole object,
+  //   const payload = {}; // this needs to be a practitionerRole object,
 
-    serve
-      .delete(payload)
-      .then(() => {
-        // probably remove the practitioner link from store if saved, then rerender
-      })
-      .catch((err: Error) => {
-        /** Do something with error */
-      });
-  };
+  //   serve
+  //     .delete(payload)
+  //     .then(() => {
+  //       // probably remove the practitioner link from store if saved, then rerender
+  //     })
+  //     .catch((err: Error) => {
+  //       /** Do something with error */
+  //     });
+  // };
 
   /** Assigning a practitioner to an organization */
-  const assignPractitioner = async (
-    service: typeof serviceClass,
-    organizationId: string,
-    // tslint:disable-next-line: no-shadowed-variable
-    practitioners: Practitioner[]
-  ) => {
-    const serve = new service(`/practitionerRole`);
-    // make the  post request and on success, add the practitioners records to the store, rerender
+  // const assignPractitioner = async (
+  //   service: typeof serviceClass,
+  //   organizationId: string,
+  //   // tslint:disable-next-line: no-shadowed-variable
+  //   practitioners: Practitioner[]
+  // ) => {
+  //   const serve = new service(`/practitionerRole`);
+  //   // make the  post request and on success, add the practitioners records to the store, rerender
 
-    const code = {
-      text: 'Community Health worker',
-    };
-    const payload = practitioners.map(practitioner => ({
-      active: true,
-      code,
-      identifier: generateNameSpacedUUID('', ''),
-      organization: organizationId,
-      practitioner: practitioner.identifier,
-    }));
-    serve.create(payload).then(() => {
-      /** save practitioners to store, rerender */
-    });
-  };
+  //   const code = {
+  //     text: 'Community Health worker',
+  //   };
+  //   const payload = practitioners.map(practitioner => ({
+  //     active: true,
+  //     code,
+  //     identifier: generateNameSpacedUUID('', ''),
+  //     organization: organizationId,
+  //     practitioner: practitioner.identifier,
+  //   }));
+  //   serve.create(payload).then(() => {
+  //     /** save practitioners to store, rerender */
+  //   });
+  // };
   /** */
   const loadOrganization = async (service: typeof serviceClass, organizationId: string) => {
     const serve = new service(OPENSRP_ORGANIZATION_ENDPOINT);
@@ -218,10 +218,10 @@ const SingleOrganizationView = (props: SingleOrgViewPropsType) => {
     return <Loading />;
   }
 
-  const handleAssign = () => {
-    const assignedIds = selectedOptions.map(option => option.value);
-    assignPractitioner(OpenSRPService, organization.identifier, assignedIds);
-  };
+  // const handleAssign = () => {
+  //   const assignedIds = selectedOptions.map(option => option.value);
+  //   assignPractitioner(OpenSRPService, organization.identifier, assignedIds);
+  // };
 
   return (
     <div>
@@ -263,17 +263,17 @@ const SingleOrganizationView = (props: SingleOrgViewPropsType) => {
       <hr />
       <form className="form">
         {/* onchange setState, on submit, call handleAdd */}
-        <AsyncSelect
+        {/* <AsyncSelect
           value={selectedOptions}
           isMulti={true}
           cacheOptions={true}
           defaultOptions={true}
           loadOptions={promiseOptions}
           onChange={changeHandler}
-        />{' '}
-        <a className="btn" onclick={handleAssign}>
+        />{' '} */}
+        {/* <a className="btn" onclick={handleAssign}>
           Add Practitioner
-        </a>
+        </a> */}
       </form>
     </div>
   );

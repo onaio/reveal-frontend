@@ -10,7 +10,7 @@ import LinkAsButton from '../../../../components/LinkAsButton';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
 import { PlanDefinition } from '../../../../configs/settings';
-import { HOME, HOME_URL, PLAN_LIST_URL, PLAN_UPDATE_URL, PLANS } from '../../../../constants';
+import { ASSIGN, ASSIGN_ORGANIZATION_URL, HOME, HOME_URL, ORGANIZATION_LABEL, PLAN_LIST_URL, PLAN_UPDATE_URL, PLANS } from '../../../../constants';
 import { OpenSRPService } from '../../../../services/opensrp';
 import planDefinitionReducer, {
   fetchPlanDefinitions,
@@ -82,9 +82,13 @@ const PlanDefinitionList = (props: PlanListProps) => {
         typeUseContext.length > 0 ? typeUseContext[0].valueCodableConcept : '',
         planObj.status,
         planObj.date,
+        <Link
+          to={`${ASSIGN_ORGANIZATION_URL}/${planObj.identifier}`}
+          key={planObj.identifier}
+        >{`${ASSIGN} ${ORGANIZATION_LABEL}`}</Link>,
       ];
     }),
-    headerItems: ['Title', 'Intervention Type', 'Status', 'Last Modified'],
+    headerItems: ['Title', 'Intervention Type', 'Status', 'Last Modified', 'Assign Teams'],
     tableClass: 'table table-bordered plans-list',
   };
 
