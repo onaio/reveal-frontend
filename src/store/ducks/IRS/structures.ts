@@ -32,6 +32,11 @@ export interface GenericStructure {
   task_id: string | null;
 }
 
+/** Structures feature collection type  */
+export type StructureFeatureCollection = FeatureCollection<
+  Feature<Geometry, GenericStructureProperties>
+>;
+
 // actions
 
 /** GENERIC_STRUCTURE_FETCHED action type */
@@ -191,7 +196,7 @@ export function getGenericStructures(
   reducerKey: string = 'GenericStructuresById',
   jurisdictionId: string | null = null,
   planId: string | null = null
-): FeatureCollection<Feature<Geometry, GenericStructureProperties>> {
+): StructureFeatureCollection {
   let structures = values((state as any)[reducerName][reducerKey]);
   if (jurisdictionId) {
     structures = structures.filter(
