@@ -40,16 +40,12 @@ import SingleFI from '../containers/pages/FocusInvestigation/single';
 import Home from '../containers/pages/Home/Home';
 import IrsPlans from '../containers/pages/InterventionPlan/IRS';
 import IrsPlan from '../containers/pages/InterventionPlan/IRS/plan';
-import IrsReport from '../containers/pages/InterventionPlan/IRS/report';
-import IrsReportMap from '../containers/pages/InterventionPlan/IRS/reportMap';
 import NewPlan from '../containers/pages/InterventionPlan/NewPlan/General';
 import NewIRSPlan from '../containers/pages/InterventionPlan/NewPlan/IRS';
 import ConnectedPlanDefinitionList from '../containers/pages/InterventionPlan/PlanDefinitionList';
 import ConnectedUpdatePlan from '../containers/pages/InterventionPlan/UpdatePlan';
-import ConnectedIRSJurisdictions, {
-  IRSJurisdictions,
-} from '../containers/pages/IRS/JurisdictionsReport';
-import ConnectedIRSReportingMap, { IRSReportingMap } from '../containers/pages/IRS/Map';
+import ConnectedJurisdictionReport from '../containers/pages/IRS/JurisdictionsReport';
+import ConnectedIRSReportingMap from '../containers/pages/IRS/Map';
 import ConnectedIRSPlansList from '../containers/pages/IRS/plans';
 import { oAuthUserInfoGetter } from '../helpers/utils';
 
@@ -129,13 +125,13 @@ class App extends Component {
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={`${REPORT_IRS_PLAN_URL}/:planId`}
-                  component={ConnectedIRSJurisdictions}
+                  component={ConnectedJurisdictionReport}
                 />
                 <ConnectedPrivateRoute
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={`${REPORT_IRS_PLAN_URL}/:planId/:jurisdictionId`}
-                  component={ConnectedIRSJurisdictions}
+                  component={ConnectedJurisdictionReport}
                 />
                 {/* IRS Reporting Map view */}
                 <ConnectedPrivateRoute
