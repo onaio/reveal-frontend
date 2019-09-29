@@ -197,3 +197,17 @@ export const getJurisdictionBreadcrumbs = (
 
   return result;
 };
+
+/** Get indicator rows */
+export const getIndicatorRows = (defaultRows: any[], focusArea: FlexObject) => {
+  return defaultRows.map((row: any) => {
+    return {
+      ...row,
+      ...{
+        denominator: focusArea ? (focusArea as any)[row.denominator] || 0 : 0,
+        numerator: focusArea ? (focusArea as any)[row.numerator] || 0 : 0,
+        value: focusArea ? (focusArea as any)[row.value] || 0 : 0,
+      },
+    };
+  });
+};
