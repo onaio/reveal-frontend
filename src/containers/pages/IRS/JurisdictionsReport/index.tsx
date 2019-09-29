@@ -33,7 +33,7 @@ import IRSPlansReducer, {
   reducerName as IRSPlansReducerName,
 } from '../../../../store/ducks/generic/plans';
 import { getJurisdictionBreadcrumbs } from '../Map/helpers';
-import { getTree, ZambiaFocusAreasColumns, ZambiaJurisdictionsColumns } from './helpers';
+import { ZambiaFocusAreasColumns, ZambiaJurisdictionsColumns } from './helpers';
 import './style.css';
 
 /** register the reducers */
