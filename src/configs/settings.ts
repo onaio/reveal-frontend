@@ -1125,6 +1125,18 @@ export const extractReportingJurisdiction = (
   return config.jurisdictionTyper(jurisdiction);
 };
 
+/** IRS Reporting interfaces */
+export interface IndicatorRowItem {
+  denominator: string | number;
+  description: string;
+  numerator: string | number;
+  title: string;
+  value: string | number;
+}
+
+export type IndicatorRows = IndicatorRowItem[];
+/** END IRS Reporting interfaces */
+
 /** IRS Reporting configs */
 export const sidebarLegendStopsIRS: string[][] = [
   ['Complete', TASK_GREEN],
@@ -1134,7 +1146,7 @@ export const sidebarLegendStopsIRS: string[][] = [
   ['Not Eligible', BLACK],
 ];
 
-export const sidebarIndicatorRowsIRS = [
+export const sidebarIndicatorRowsIRS: IndicatorRows = [
   {
     denominator: 'totstruct',
     description: 'Percent of structures sprayed over found',
