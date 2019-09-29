@@ -165,9 +165,10 @@ exports[`components/page/Header renders routine headers correctly 1`] = `
             <div
               className="col-6"
             >
-              <LinkToNewPlans
-                className="focus-investigation btn btn-primary float-right mt-5"
+              <LinkAsButton
+                classNameProp="focus-investigation btn btn-primary float-right mt-5"
                 text="Add Focus Investigation"
+                to="/plans/new"
               >
                 <Link
                   className="focus-investigation btn btn-primary float-right mt-5"
@@ -182,7 +183,7 @@ exports[`components/page/Header renders routine headers correctly 1`] = `
                     Add Focus Investigation
                   </a>
                 </Link>
-              </LinkToNewPlans>
+              </LinkAsButton>
             </div>
           </Col>
         </div>
