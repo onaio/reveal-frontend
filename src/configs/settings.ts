@@ -1125,6 +1125,60 @@ export const extractReportingJurisdiction = (
   return config.jurisdictionTyper(jurisdiction);
 };
 
+/** IRS Reporting configs */
+export const sidebarLegendStopsIRS: string[][] = [
+  ['Complete', TASK_GREEN],
+  ['Not Sprayed', TASK_RED],
+  ['Partially Sprayed', TASK_ORANGE],
+  ['Not Visited', TASK_YELLOW],
+  ['Not Eligible', BLACK],
+];
+
+export const sidebarIndicatorRowsIRS = [
+  {
+    denominator: 'totstruct',
+    description: 'Percent of structures sprayed over found',
+    numerator: 'foundstruct',
+    title: 'Found Coverage',
+    value: 'spraytarg',
+  },
+  {
+    denominator: 'totstruct',
+    description: 'Percent of structures sprayed over total',
+    numerator: 'sprayedstruct',
+    title: 'Spray Coverage (Effectiveness)',
+    value: 'spraycov',
+  },
+  {
+    denominator: 'foundstruct',
+    description: 'Percent of structures sprayed over found',
+    numerator: 'sprayedstruct',
+    title: 'Spray Success Rate (PMI SC)',
+    value: 'spraysuccess',
+  },
+];
+
+export const indicatorThresholdsIRS = {
+  GREEN_THRESHOLD: {
+    color: '#2ECC40',
+    value: 1,
+  },
+  GREY_THRESHOLD: {
+    color: '#dddddd',
+    value: 0.2,
+  },
+  RED_THRESHOLD: {
+    color: '#FF4136',
+    orEquals: true,
+    value: 0.75,
+  },
+  YELLOW_THRESHOLD: {
+    color: '#FFDC00',
+    value: 0.9,
+  },
+};
+/** END IRS Reporting configs */
+
 /** extractor for to get custom typed Structure entities */
 export const extractReportingStructure = (
   s: Structure,
