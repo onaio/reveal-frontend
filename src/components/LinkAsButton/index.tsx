@@ -20,7 +20,7 @@ const LinkAsButton = (props: Props) => {
 };
 
 const defaultProps: Props = {
-  classNameProp: 'btn btn-primary float-right mt-5',
+  classNameProp: 'focus-investigation btn btn-primary float-right mt-5',
   text: 'Add Focus Investigation',
   to: NEW_PLAN_URL,
 };
