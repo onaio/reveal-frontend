@@ -6,7 +6,6 @@ import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
-import { BLACK, TASK_GREEN, TASK_ORANGE, TASK_RED, TASK_YELLOW } from '../../../../colors';
 import GisidaWrapper from '../../../../components/GisidaWrapper';
 import NotFound from '../../../../components/NotFound';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
@@ -17,6 +16,11 @@ import {
   SUPERSET_IRS_REPORTING_STRUCTURES_DATA_SLICE,
   SUPERSET_JURISDICTIONS_SLICE,
 } from '../../../../configs/env';
+import {
+  indicatorThresholdsIRS,
+  sidebarIndicatorRowsIRS,
+  sidebarLegendStopsIRS,
+} from '../../../../configs/settings';
 import {
   HOME,
   HOME_URL,
@@ -52,7 +56,7 @@ import jurisdictionReducer, {
   Jurisdiction,
   reducerName as jurisdictionReducerName,
 } from '../../../../store/ducks/jurisdictions';
-import { getGisidaWrapperProps, getJurisdictionBreadcrumbs } from './helpers';
+import { getGisidaWrapperProps, getIndicatorRows, getJurisdictionBreadcrumbs } from './helpers';
 import './style.css';
 
 /** register the reducers */
@@ -221,57 +225,7 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
   const newPages = breadcrumbProps.pages.concat(jurisdictionBreadCrumbs);
   breadcrumbProps.pages = newPages;
 
-  const sidebarLegendStops = [
-    ['Complete', TASK_GREEN],
-    ['Not Sprayed', TASK_RED],
-    ['Partially Sprayed', TASK_ORANGE],
-    ['Not Visited', TASK_YELLOW],
-    ['Not Eligible', BLACK],
-  ];
-
-  const sidebarIndicatorRows = [
-    {
-      denominator: focusArea ? (focusArea as any).totstruct || 0 : 0,
-      description: 'Percent of structures sprayed over found',
-      numerator: focusArea ? (focusArea as any).foundstruct || 0 : 0,
-      title: 'Found Coverage',
-      value: focusArea ? Math.round(((focusArea as any).spraytarg || 0) * 100) : 0,
-    },
-    {
-      denominator: focusArea ? (focusArea as any).totstruct || 0 : 0,
-      description: 'Percent of structures sprayed over total',
-      numerator: focusArea ? (focusArea as any).sprayedstruct || 0 : 0,
-      title: 'Spray Coverage (Effectiveness)',
-      value: focusArea ? Math.round(((focusArea as any).spraycov || 0) * 100) : 0,
-    },
-    {
-      denominator: focusArea ? (focusArea as any).foundstruct || 0 : 0,
-      description: 'Percent of structures sprayed over found',
-      numerator: focusArea ? (focusArea as any).sprayedstruct || 0 : 0,
-      title: 'Spray Success Rate (PMI SC)',
-      value: focusArea ? Math.round(((focusArea as any).spraysuccess || 0) * 100) : 0,
-    },
-  ];
-
-  const indicatorThresholds = {
-    GREEN_THRESHOLD: {
-      color: '#2ECC40',
-      value: 1,
-    },
-    GREY_THRESHOLD: {
-      color: '#dddddd',
-      value: 0.2,
-    },
-    RED_THRESHOLD: {
-      color: '#FF4136',
-      orEquals: true,
-      value: 0.75,
-    },
-    YELLOW_THRESHOLD: {
-      color: '#FFDC00',
-      value: 0.9,
-    },
-  };
+  const sidebarIndicatorRows = getIndicatorRows(sidebarIndicatorRowsIRS, focusArea);
 
   const gisidaWrapperProps = getGisidaWrapperProps(jurisdiction, structures);
 
@@ -301,10 +255,10 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
             <h5>{focusArea && focusArea.jurisdiction_name}</h5>
             <hr />
 
-            {sidebarLegendStops && (
+            {sidebarLegendStopsIRS && (
               <div className="mapLegend">
                 <h6>Legend</h6>
-                {sidebarLegendStops.map((stop, i) => (
+                {sidebarLegendStopsIRS.map((stop, i) => (
                   <div className="sidebar-legend-item" key={i}>
                     <span className="sidebar-legend-color" style={{ backgroundColor: stop[1] }} />
                     <span className="sidebar-legend-label">{stop[0]}</span>
@@ -318,7 +272,10 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
               <div className="responseItem" key={i}>
                 <h6>{row.title}</h6>
                 <p className="indicator-description">{row.description}</p>
-                <ProgressBar indicatorThresholds={indicatorThresholds || null} value={row.value} />
+                <ProgressBar
+                  indicatorThresholds={indicatorThresholdsIRS || null}
+                  value={row.value}
+                />
                 <p className="indicator-breakdown">
                   Progress: {row.numerator} of {row.denominator} structures ({row.value}%)
                 </p>
