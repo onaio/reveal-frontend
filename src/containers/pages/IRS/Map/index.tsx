@@ -27,11 +27,11 @@ import {
 import ProgressBar from '../../../../helpers/ProgressBar';
 import { RouteParams } from '../../../../helpers/utils';
 import supersetFetch from '../../../../services/superset';
-import IRSJurisdictionsReducer, {
-  fetchIRSJurisdictions,
-  getIRSJurisdictionByJurisdictionId,
-  IRSJurisdiction,
-  reducerName as IRSJurisdictionsReducerName,
+import GenericJurisdictionsReducer, {
+  fetchGenericJurisdictions,
+  GenericJurisdiction,
+  getGenericJurisdictionByJurisdictionId,
+  reducerName as GenericJurisdictionsReducerName,
 } from '../../../../store/ducks/generic/jurisdictions';
 import IRSPlansReducer, {
   fetchIRSPlans,
@@ -58,7 +58,7 @@ import './style.css';
 /** register the reducers */
 reducerRegistry.register(IRSPlansReducerName, IRSPlansReducer);
 reducerRegistry.register(jurisdictionReducerName, jurisdictionReducer);
-reducerRegistry.register(IRSJurisdictionsReducerName, IRSJurisdictionsReducer);
+reducerRegistry.register(GenericJurisdictionsReducerName, GenericJurisdictionsReducer);
 reducerRegistry.register(genericStructuresReducerName, genericStructuresReducer);
 
 const slices = SUPERSET_IRS_REPORTING_JURISDICTIONS_DATA_SLICES.split(',');
@@ -66,11 +66,11 @@ const focusAreaSlice = slices.pop();
 
 /** interface for IRSReportingMap */
 interface IRSReportingMapProps {
-  fetchFocusAreas: typeof fetchIRSJurisdictions;
+  fetchFocusAreas: typeof fetchGenericJurisdictions;
   fetchJurisdictionsAction: typeof fetchJurisdictions;
   fetchPlans: typeof fetchIRSPlans;
   fetchStructures: typeof fetchGenericStructures;
-  focusArea: IRSJurisdiction | null;
+  focusArea: GenericJurisdiction | null;
   jurisdiction: Jurisdiction | null;
   plan: IRSPlan | null;
   service: typeof supersetFetch;
@@ -79,7 +79,7 @@ interface IRSReportingMapProps {
 
 /** IRSReportingMap default props */
 const defaultProps: IRSReportingMapProps = {
-  fetchFocusAreas: fetchIRSJurisdictions,
+  fetchFocusAreas: fetchGenericJurisdictions,
   fetchJurisdictionsAction: fetchJurisdictions,
   fetchPlans: fetchIRSPlans,
   fetchStructures: fetchGenericStructures,
@@ -154,7 +154,7 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
           ]);
         }
         // get the focus area
-        await service(focusAreaSlice, fetchFocusAreaParams).then((result: IRSJurisdiction[]) =>
+        await service(focusAreaSlice, fetchFocusAreaParams).then((result: GenericJurisdiction[]) =>
           fetchFocusAreas(focusAreaSlice, result)
         );
       }
@@ -339,7 +339,7 @@ export { IRSReportingMap };
 
 /** interface to describe props from mapStateToProps */
 interface DispatchedStateProps {
-  focusArea: IRSJurisdiction | null;
+  focusArea: GenericJurisdiction | null;
   plan: IRSPlan | null;
   jurisdiction: Jurisdiction | null;
   structures: StructureFeatureCollection;
@@ -358,7 +358,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
   );
   let focusArea = null;
   if (focusAreaSlice && jurisdictionId) {
-    focusArea = getIRSJurisdictionByJurisdictionId(state, focusAreaSlice, jurisdictionId);
+    focusArea = getGenericJurisdictionByJurisdictionId(state, focusAreaSlice, jurisdictionId);
   }
 
   return {
@@ -371,7 +371,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
 
 /** map dispatch to props */
 const mapDispatchToProps = {
-  fetchFocusAreas: fetchIRSJurisdictions,
+  fetchFocusAreas: fetchGenericJurisdictions,
   fetchJurisdictionsAction: fetchJurisdictions,
   fetchPlans: fetchIRSPlans,
   fetchStructures: fetchGenericStructures,

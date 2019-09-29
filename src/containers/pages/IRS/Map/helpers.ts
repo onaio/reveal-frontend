@@ -4,7 +4,7 @@ import { GisidaProps } from '../../../../components/GisidaWrapper';
 import { circleLayerConfig, fillLayerConfig, lineLayerConfig } from '../../../../configs/settings';
 import { MAIN_PLAN, STRUCTURE_LAYER } from '../../../../constants';
 import { FlexObject } from '../../../../helpers/utils';
-import { IRSJurisdiction } from '../../../../store/ducks/generic/jurisdictions';
+import { GenericJurisdiction } from '../../../../store/ducks/generic/jurisdictions';
 import { StructureFeatureCollection } from '../../../../store/ducks/generic/structures';
 import { Jurisdiction } from '../../../../store/ducks/jurisdictions';
 
@@ -175,11 +175,11 @@ export const getGisidaWrapperProps = (
 /** Get breadcrumbs for a jurisdiction object
  * This uses the jurisdiction_name_path and jurisdiction_path fields to get
  * the breadcrumbs of the parents of a given jurisdiction object
- * @param {IRSJurisdiction} jurisdiction - the jurisdiction in question
+ * @param {GenericJurisdiction} jurisdiction - the jurisdiction in question
  * @param {string} urlPath - the url path that we append the jurisdiction id to
  */
 export const getJurisdictionBreadcrumbs = (
-  jurisdiction: IRSJurisdiction,
+  jurisdiction: GenericJurisdiction,
   urlPath: string = '/'
 ) => {
   const result = [];

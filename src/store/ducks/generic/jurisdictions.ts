@@ -3,10 +3,10 @@ import { AnyAction, Store } from 'redux';
 import SeamlessImmutable from 'seamless-immutable';
 
 /** the reducer name */
-export const reducerName = 'IRSJurisdictions';
+export const reducerName = 'GenericJurisdictions';
 
-/** IRSJurisdiction interface */
-export interface IRSJurisdiction {
+/** GenericJurisdiction interface */
+export interface GenericJurisdiction {
   id: string;
   jurisdiction_depth: number;
   jurisdiction_id: string;
@@ -17,7 +17,7 @@ export interface IRSJurisdiction {
   plan_id: string;
 }
 
-export interface NamibiaIRSJurisdiction extends IRSJurisdiction {
+export interface NamibiaJurisdiction extends GenericJurisdiction {
   lockedfirst: number;
   lockedmopup: number;
   refusalsfirst: number;
@@ -29,7 +29,7 @@ export interface NamibiaIRSJurisdiction extends IRSJurisdiction {
   target_2019: number;
 }
 
-export interface ZambiaIRSJurisdiction extends IRSJurisdiction {
+export interface ZambiaJurisdiction extends GenericJurisdiction {
   totstruct: number;
   rooms_eligible: number;
   rooms_sprayed: number;
@@ -45,7 +45,7 @@ export interface ZambiaIRSJurisdiction extends IRSJurisdiction {
   roomcov: number;
 }
 
-export interface ZambiaIRSFocusArea extends IRSJurisdiction {
+export interface ZambiaIRSFocusArea extends GenericJurisdiction {
   totstruct: number;
   rooms_eligible: number;
   rooms_sprayed: number;
@@ -61,43 +61,44 @@ export interface ZambiaIRSFocusArea extends IRSJurisdiction {
 
 // actions
 
-/** IRS_JURISDICTION_FETCHED action type */
-export const IRS_JURISDICTIONS_FETCHED =
-  'reveal/reducer/IRS/IRSJurisdiction/IRS_JURISDICTIONS_FETCHED';
+/** GENERIC_JURISDICTION_FETCHED action type */
+export const GENERIC_JURISDICTIONS_FETCHED =
+  'reveal/reducer/IRS/GenericJurisdiction/GENERIC_JURISDICTIONS_FETCHED';
 
-/** IRS_JURISDICTION_FETCHED action type */
-export const REMOVE_IRS_JURISDICTIONS =
-  'reveal/reducer/IRS/IRSJurisdiction/REMOVE_IRS_JURISDICTIONS';
+/** GENERIC_JURISDICTION_FETCHED action type */
+export const REMOVE_GENERIC_JURISDICTIONS =
+  'reveal/reducer/IRS/GenericJurisdiction/REMOVE_GENERIC_JURISDICTIONS';
 
-/** IRS_JURISDICTION_FETCHED action type */
-export const ADD_IRS_JURISDICTION = 'reveal/reducer/IRS/IRSJurisdiction/ADD_IRS_JURISDICTION';
+/** GENERIC_JURISDICTION_FETCHED action type */
+export const ADD_GENERIC_JURISDICTION =
+  'reveal/reducer/IRS/GenericJurisdiction/ADD_GENERIC_JURISDICTION';
 
-/** interface for fetch IRSJurisdictions action */
-interface FetchIRSJurisdictionsAction extends AnyAction {
-  objects: { [key: string]: IRSJurisdiction };
+/** interface for fetch GenericJurisdictions action */
+interface FetchGenericJurisdictionsAction extends AnyAction {
+  objects: { [key: string]: GenericJurisdiction };
   reducerKey: string;
-  type: typeof IRS_JURISDICTIONS_FETCHED;
+  type: typeof GENERIC_JURISDICTIONS_FETCHED;
 }
 
-/** interface for removing IRSJurisdictions action */
-interface RemoveIRSJurisdictionsAction extends AnyAction {
-  objects: { [key: string]: IRSJurisdiction };
+/** interface for removing GenericJurisdictions action */
+interface RemoveGenericJurisdictionsAction extends AnyAction {
+  objects: { [key: string]: GenericJurisdiction };
   reducerKey: string;
-  type: typeof REMOVE_IRS_JURISDICTIONS;
+  type: typeof REMOVE_GENERIC_JURISDICTIONS;
 }
 
-/** interface for adding a single IRSJurisdictions action */
-interface AddIRSJurisdictionAction extends AnyAction {
-  obj: IRSJurisdiction;
+/** interface for adding a single GenericJurisdictions action */
+interface AddGenericJurisdictionAction extends AnyAction {
+  obj: GenericJurisdiction;
   reducerKey: string;
-  type: typeof ADD_IRS_JURISDICTION;
+  type: typeof ADD_GENERIC_JURISDICTION;
 }
 
-/** Create type for IRSJurisdiction reducer actions */
-export type IRSJurisdictionActionTypes =
-  | FetchIRSJurisdictionsAction
-  | RemoveIRSJurisdictionsAction
-  | AddIRSJurisdictionAction
+/** Create type for GenericJurisdiction reducer actions */
+export type GenericJurisdictionActionTypes =
+  | FetchGenericJurisdictionsAction
+  | RemoveGenericJurisdictionsAction
+  | AddGenericJurisdictionAction
   | AnyAction;
 
 // action creators
@@ -105,15 +106,15 @@ export type IRSJurisdictionActionTypes =
 /**
  * Fetch Plan Definitions action creator
  * @param {string} reducerKey - they reducer key
- * @param {IRSJurisdiction[]} objList - list of plan definition objects
+ * @param {GenericJurisdiction[]} objList - list of plan definition objects
  */
-export const fetchIRSJurisdictions = (
-  reducerKey: string = 'IRSJurisdictionsById',
-  objList: IRSJurisdiction[] = []
-): FetchIRSJurisdictionsAction => ({
+export const fetchGenericJurisdictions = (
+  reducerKey: string = 'GenericJurisdictionsById',
+  objList: GenericJurisdiction[] = []
+): FetchGenericJurisdictionsAction => ({
   objects: keyBy(
     objList.map(
-      (obj: IRSJurisdiction): IRSJurisdiction => {
+      (obj: GenericJurisdiction): GenericJurisdiction => {
         /** ensure geojson is parsed */
         if ((obj as any).geojson && typeof (obj as any).geojson === 'string') {
           (obj as any).geojson = JSON.parse((obj as any).geojson);
@@ -134,61 +135,61 @@ export const fetchIRSJurisdictions = (
         if (typeof obj.jurisdiction_path === 'string') {
           obj.jurisdiction_path = JSON.parse(obj.jurisdiction_path);
         }
-        return obj as IRSJurisdiction;
+        return obj as GenericJurisdiction;
       }
     ),
     'id'
   ),
   reducerKey,
-  type: IRS_JURISDICTIONS_FETCHED,
+  type: GENERIC_JURISDICTIONS_FETCHED,
 });
 
 /** Reset plan definitions state action creator
  * @param {string} reducerKey - they reducer key
  */
-export const removeIRSJurisdictions = (reducerKey: string = 'IRSJurisdictionsById') => ({
+export const removeGenericJurisdictions = (reducerKey: string = 'GenericJurisdictionsById') => ({
   objects: {},
   reducerKey,
-  type: REMOVE_IRS_JURISDICTIONS,
+  type: REMOVE_GENERIC_JURISDICTIONS,
 });
 
 /**
  * Add one Plan Definition action creator
- * @param {IRSJurisdiction} obj - the plan definition object
+ * @param {GenericJurisdiction} obj - the plan definition object
  * @param {string} reducerKey - they reducer key
  */
-export const addIRSJurisdiction = (
-  reducerKey: string = 'IRSJurisdictionsById',
-  obj: IRSJurisdiction
-): AddIRSJurisdictionAction => ({
+export const addGenericJurisdiction = (
+  reducerKey: string = 'GenericJurisdictionsById',
+  obj: GenericJurisdiction
+): AddGenericJurisdictionAction => ({
   obj,
   reducerKey,
-  type: ADD_IRS_JURISDICTION,
+  type: ADD_GENERIC_JURISDICTION,
 });
 
 // the reducer
 
-/** interface for IRSJurisdiction state */
-interface IRSJurisdictionState {
+/** interface for GenericJurisdiction state */
+interface GenericJurisdictionState {
   [key: string]: {
-    [key: string]: NamibiaIRSJurisdiction | ZambiaIRSJurisdiction | ZambiaIRSJurisdiction;
+    [key: string]: NamibiaJurisdiction | ZambiaJurisdiction | ZambiaJurisdiction;
   };
 }
 
-/** immutable IRSJurisdiction state */
-export type ImmutableIRSJurisdictionState = IRSJurisdictionState &
-  SeamlessImmutable.ImmutableObject<IRSJurisdictionState>;
+/** immutable GenericJurisdiction state */
+export type ImmutableGenericJurisdictionState = GenericJurisdictionState &
+  SeamlessImmutable.ImmutableObject<GenericJurisdictionState>;
 
-/** initial IRSJurisdiction state */
-const initialState: ImmutableIRSJurisdictionState = SeamlessImmutable({});
+/** initial GenericJurisdiction state */
+const initialState: ImmutableGenericJurisdictionState = SeamlessImmutable({});
 
-/** the IRSJurisdiction reducer function */
+/** the GenericJurisdiction reducer function */
 export default function reducer(
   state: any = initialState,
-  action: IRSJurisdictionActionTypes
-): ImmutableIRSJurisdictionState {
+  action: GenericJurisdictionActionTypes
+): ImmutableGenericJurisdictionState {
   switch (action.type) {
-    case IRS_JURISDICTIONS_FETCHED:
+    case GENERIC_JURISDICTIONS_FETCHED:
       if (action.objects) {
         return SeamlessImmutable({
           ...state,
@@ -196,8 +197,8 @@ export default function reducer(
         });
       }
       return state;
-    case ADD_IRS_JURISDICTION:
-      if (action.obj as IRSJurisdiction) {
+    case ADD_GENERIC_JURISDICTION:
+      if (action.obj as GenericJurisdiction) {
         return SeamlessImmutable({
           ...state,
           [action.reducerKey]: {
@@ -207,7 +208,7 @@ export default function reducer(
         });
       }
       return state;
-    case REMOVE_IRS_JURISDICTIONS:
+    case REMOVE_GENERIC_JURISDICTIONS:
       return SeamlessImmutable({
         ...state,
         [action.reducerKey]: action.objects,
@@ -219,71 +220,71 @@ export default function reducer(
 
 // selectors
 
-/** get IRSJurisdictions by id
+/** get GenericJurisdictions by id
  * @param {Partial<Store>} state - the redux store
  * @param {string} reducerKey - they reducer key
  * @param {string} planId - the plan id
  * @param {string} parentId - the parent id
- * @returns {{ [key: string]: IRSJurisdiction }} IRSJurisdictions by id
+ * @returns {{ [key: string]: GenericJurisdiction }} GenericJurisdictions by id
  */
-export function getIRSJurisdictionsById(
+export function getGenericJurisdictionsById(
   state: Partial<Store>,
-  reducerKey: string = 'IRSJurisdictionsById',
+  reducerKey: string = 'GenericJurisdictionsById',
   planId: string | null = null,
   parentId: string | null = null
-): { [key: string]: IRSJurisdiction } {
-  return keyBy(getIRSJurisdictionsArray(state, reducerKey, planId, parentId), 'id');
+): { [key: string]: GenericJurisdiction } {
+  return keyBy(getGenericJurisdictionsArray(state, reducerKey, planId, parentId), 'id');
 }
 
-/** get one IRSJurisdiction using its id
+/** get one GenericJurisdiction using its id
  * @param {Partial<Store>} state - the redux store
  * @param {string} reducerKey - they reducer key
- * @param {string} id - the IRSJurisdiction id
- * @returns {IRSJurisdiction|null} a IRSJurisdiction object or null
+ * @param {string} id - the GenericJurisdiction id
+ * @returns {GenericJurisdiction|null} a GenericJurisdiction object or null
  */
-export function getIRSJurisdictionById(
+export function getGenericJurisdictionById(
   state: Partial<Store>,
-  reducerKey: string = 'IRSJurisdictionsById',
+  reducerKey: string = 'GenericJurisdictionsById',
   id: string
-): IRSJurisdiction | null {
+): GenericJurisdiction | null {
   return get((state as any)[reducerName][reducerKey], id) || null;
 }
 
-/** get one IRSJurisdiction using its jurisdiction_id
+/** get one GenericJurisdiction using its jurisdiction_id
  * @param {Partial<Store>} state - the redux store
  * @param {string} reducerKey - they reducer key
- * @param {string} jurisdictionId - the IRSJurisdiction id
- * @returns {IRSJurisdiction|null} a IRSJurisdiction object or null
+ * @param {string} jurisdictionId - the GenericJurisdiction id
+ * @returns {GenericJurisdiction|null} a GenericJurisdiction object or null
  */
-export function getIRSJurisdictionByJurisdictionId(
+export function getGenericJurisdictionByJurisdictionId(
   state: Partial<Store>,
-  reducerKey: string = 'IRSJurisdictionsById',
+  reducerKey: string = 'GenericJurisdictionsById',
   jurisdictionId: string
-): IRSJurisdiction | null {
+): GenericJurisdiction | null {
   return values((state as any)[reducerName][reducerKey]).filter(
-    (e: IRSJurisdiction) => e.jurisdiction_id === jurisdictionId
+    (e: GenericJurisdiction) => e.jurisdiction_id === jurisdictionId
   )[0];
 }
 
-/** get an array of IRSJurisdiction objects
+/** get an array of GenericJurisdiction objects
  * @param {Partial<Store>} state - the redux store
  * @param {string} reducerKey - they reducer key
  * @param {string} planId - the plan id
  * @param {string} parentId - the parent id
- * @returns {IRSJurisdiction[]} an array of IRSJurisdiction objects
+ * @returns {GenericJurisdiction[]} an array of GenericJurisdiction objects
  */
-export function getIRSJurisdictionsArray(
+export function getGenericJurisdictionsArray(
   state: Partial<Store>,
-  reducerKey: string = 'IRSJurisdictionsById',
+  reducerKey: string = 'GenericJurisdictionsById',
   planId: string | null = null,
   parentId: string | null = null
-): IRSJurisdiction[] {
+): GenericJurisdiction[] {
   let result = values((state as any)[reducerName][reducerKey]);
   if (planId) {
-    result = result.filter((e: IRSJurisdiction) => e.plan_id === planId);
+    result = result.filter((e: GenericJurisdiction) => e.plan_id === planId);
   }
   if (parentId) {
-    return result.filter((e: IRSJurisdiction) => e.jurisdiction_parent_id === parentId);
+    return result.filter((e: GenericJurisdiction) => e.jurisdiction_parent_id === parentId);
   }
   return result;
 }

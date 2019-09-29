@@ -20,11 +20,11 @@ import { HOME, HOME_URL, IRS_REPORTING_TITLE, REPORT_IRS_PLAN_URL } from '../../
 import '../../../../helpers/tables.css';
 import { FlexObject, RouteParams } from '../../../../helpers/utils';
 import supersetFetch from '../../../../services/superset';
-import IRSJurisdictionsReducer, {
-  fetchIRSJurisdictions,
-  getIRSJurisdictionsArray,
-  IRSJurisdiction,
-  reducerName as IRSJurisdictionsReducerName,
+import GenericJurisdictionsReducer, {
+  fetchGenericJurisdictions,
+  GenericJurisdiction,
+  getGenericJurisdictionsArray,
+  reducerName as GenericJurisdictionsReducerName,
 } from '../../../../store/ducks/generic/jurisdictions';
 import IRSPlansReducer, {
   fetchIRSPlans,
@@ -38,22 +38,22 @@ import './style.css';
 
 /** register the reducers */
 reducerRegistry.register(IRSPlansReducerName, IRSPlansReducer);
-reducerRegistry.register(IRSJurisdictionsReducerName, IRSJurisdictionsReducer);
+reducerRegistry.register(GenericJurisdictionsReducerName, GenericJurisdictionsReducer);
 
 const slices = SUPERSET_IRS_REPORTING_JURISDICTIONS_DATA_SLICES.split(',');
 
 /** IRS Jurisdictions props */
-export interface IRSJurisdictionProps {
-  fetchJurisdictions: typeof fetchIRSJurisdictions;
+export interface GenericJurisdictionProps {
+  fetchJurisdictions: typeof fetchGenericJurisdictions;
   fetchPlans: typeof fetchIRSPlans;
   hasChildren: typeof hasChildrenFunc;
-  jurisdictions: IRSJurisdiction[] | null;
+  jurisdictions: GenericJurisdiction[] | null;
   plan: IRSPlan | null;
   service: typeof supersetFetch;
 }
 
 /** Renders IRS Jurisdictions reports */
-const IRSJurisdictions = (props: IRSJurisdictionProps & RouteComponentProps<RouteParams>) => {
+const JurisdictionReport = (props: GenericJurisdictionProps & RouteComponentProps<RouteParams>) => {
   const [jurisdictionId, setJurisdictionId] = useState<string | null>(
     props.match && props.match.params && props.match.params.jurisdictionId
       ? props.match.params.jurisdictionId
@@ -91,7 +91,7 @@ const IRSJurisdictions = (props: IRSJurisdictionProps & RouteComponentProps<Rout
             { jurisdiction_depth: true }
           );
         }
-        await service(slice, fetchJurisdictionsParams).then((result: IRSJurisdiction[]) =>
+        await service(slice, fetchJurisdictionsParams).then((result: GenericJurisdiction[]) =>
           fetchJurisdictions(slice, result)
         );
       });
@@ -235,8 +235,8 @@ const IRSJurisdictions = (props: IRSJurisdictionProps & RouteComponentProps<Rout
   );
 };
 
-const defaultProps: IRSJurisdictionProps = {
-  fetchJurisdictions: fetchIRSJurisdictions,
+const defaultProps: GenericJurisdictionProps = {
+  fetchJurisdictions: fetchGenericJurisdictions,
   fetchPlans: fetchIRSPlans,
   hasChildren: hasChildrenFunc,
   jurisdictions: null,
@@ -244,26 +244,27 @@ const defaultProps: IRSJurisdictionProps = {
   service: supersetFetch,
 };
 
-IRSJurisdictions.defaultProps = defaultProps;
+JurisdictionReport.defaultProps = defaultProps;
 
-export { IRSJurisdictions };
+export { JurisdictionReport };
 
 /** Connect the component to the store */
 
 /** interface to describe props from mapStateToProps */
 interface DispatchedStateProps {
   plan: IRSPlan | null;
-  jurisdictions: IRSJurisdiction[] | null;
+  jurisdictions: GenericJurisdiction[] | null;
 }
 
 /** map state to props */
 const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateProps => {
   const planId = ownProps.match.params.planId || null;
   const plan = getIRSPlanById(state, planId);
-  let jurisdictions: IRSJurisdiction[] = [];
+  let jurisdictions: GenericJurisdiction[] = [];
 
   slices.forEach(
-    slice => (jurisdictions = jurisdictions.concat(getIRSJurisdictionsArray(state, slice, planId)))
+    slice =>
+      (jurisdictions = jurisdictions.concat(getGenericJurisdictionsArray(state, slice, planId)))
   );
 
   return {
@@ -273,12 +274,15 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
 };
 
 /** map dispatch to props */
-const mapDispatchToProps = { fetchJurisdictions: fetchIRSJurisdictions, fetchPlans: fetchIRSPlans };
+const mapDispatchToProps = {
+  fetchJurisdictions: fetchGenericJurisdictions,
+  fetchPlans: fetchIRSPlans,
+};
 
 /** Connected ActiveFI component */
-const ConnectedIRSJurisdictions = connect(
+const ConnectedJurisdictionReport = connect(
   mapStateToProps,
   mapDispatchToProps
-)(IRSJurisdictions);
+)(JurisdictionReport);
 
-export default ConnectedIRSJurisdictions;
+export default ConnectedJurisdictionReport;
