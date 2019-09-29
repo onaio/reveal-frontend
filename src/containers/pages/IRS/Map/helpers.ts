@@ -1,7 +1,13 @@
 import GeojsonExtent from '@mapbox/geojson-extent';
 import { BLACK, GREY, TASK_GREEN, TASK_ORANGE, TASK_RED, TASK_YELLOW } from '../../../../colors';
 import { GisidaProps } from '../../../../components/GisidaWrapper';
-import { circleLayerConfig, fillLayerConfig, lineLayerConfig } from '../../../../configs/settings';
+import {
+  circleLayerConfig,
+  fillLayerConfig,
+  IndicatorRowItem,
+  IndicatorRows,
+  lineLayerConfig,
+} from '../../../../configs/settings';
 import { MAIN_PLAN, STRUCTURE_LAYER } from '../../../../constants';
 import { FlexObject } from '../../../../helpers/utils';
 import { GenericJurisdiction } from '../../../../store/ducks/generic/jurisdictions';
@@ -199,8 +205,8 @@ export const getJurisdictionBreadcrumbs = (
 };
 
 /** Get indicator rows */
-export const getIndicatorRows = (defaultRows: any[], focusArea: FlexObject) => {
-  return defaultRows.map((row: any) => {
+export const getIndicatorRows = (defaultRows: IndicatorRows, focusArea: FlexObject) => {
+  return defaultRows.map((row: IndicatorRowItem) => {
     return {
       ...row,
       ...{
