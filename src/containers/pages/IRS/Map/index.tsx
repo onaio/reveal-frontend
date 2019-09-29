@@ -32,20 +32,20 @@ import IRSJurisdictionsReducer, {
   getIRSJurisdictionByJurisdictionId,
   IRSJurisdiction,
   reducerName as IRSJurisdictionsReducerName,
-} from '../../../../store/ducks/IRS/jurisdictions';
+} from '../../../../store/ducks/generic/jurisdictions';
 import IRSPlansReducer, {
   fetchIRSPlans,
   getIRSPlanById,
   IRSPlan,
   reducerName as IRSPlansReducerName,
-} from '../../../../store/ducks/IRS/plans';
+} from '../../../../store/ducks/generic/plans';
 import genericStructuresReducer, {
   fetchGenericStructures,
   GenericStructure,
   getGenericStructures,
   reducerName as genericStructuresReducerName,
   StructureFeatureCollection,
-} from '../../../../store/ducks/IRS/structures';
+} from '../../../../store/ducks/generic/structures';
 import jurisdictionReducer, {
   fetchJurisdictions,
   getJurisdictionById,

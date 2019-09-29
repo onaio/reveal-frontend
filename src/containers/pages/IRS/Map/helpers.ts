@@ -4,8 +4,8 @@ import { GisidaProps } from '../../../../components/GisidaWrapper';
 import { circleLayerConfig, fillLayerConfig, lineLayerConfig } from '../../../../configs/settings';
 import { MAIN_PLAN, STRUCTURE_LAYER } from '../../../../constants';
 import { FlexObject } from '../../../../helpers/utils';
-import { IRSJurisdiction } from '../../../../store/ducks/IRS/jurisdictions';
-import { StructureFeatureCollection } from '../../../../store/ducks/IRS/structures';
+import { IRSJurisdiction } from '../../../../store/ducks/generic/jurisdictions';
+import { StructureFeatureCollection } from '../../../../store/ducks/generic/structures';
 import { Jurisdiction } from '../../../../store/ducks/jurisdictions';
 
 /** Default indicator stops */

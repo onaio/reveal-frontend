@@ -47,7 +47,7 @@ import IRSPlansReducer, {
   getIRSPlanById,
   IRSPlan,
   reducerName as IRSPlansReducerName,
-} from '../../../../../store/ducks/IRS/plans';
+} from '../../../../../store/ducks/generic/plans';
 import jurisdictionReducer, {
   fetchJurisdictions,
   getJurisdictionById,

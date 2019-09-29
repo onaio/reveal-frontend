@@ -25,13 +25,13 @@ import IRSJurisdictionsReducer, {
   getIRSJurisdictionsArray,
   IRSJurisdiction,
   reducerName as IRSJurisdictionsReducerName,
-} from '../../../../store/ducks/IRS/jurisdictions';
+} from '../../../../store/ducks/generic/jurisdictions';
 import IRSPlansReducer, {
   fetchIRSPlans,
   getIRSPlanById,
   IRSPlan,
   reducerName as IRSPlansReducerName,
-} from '../../../../store/ducks/IRS/plans';
+} from '../../../../store/ducks/generic/plans';
 import { getJurisdictionBreadcrumbs } from '../Map/helpers';
 import { getTree, ZambiaFocusAreasColumns, ZambiaJurisdictionsColumns } from './helpers';
 import './style.css';

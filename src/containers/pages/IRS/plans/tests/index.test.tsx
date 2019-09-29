@@ -4,8 +4,8 @@ import { createBrowserHistory } from 'history';
 import React from 'react';
 import { Router } from 'react-router';
 import { IRSPlansList } from '../';
-import { IRSPlan } from '../../../../../store/ducks/IRS/plans';
-import * as fixtures from '../../../../../store/ducks/IRS/tests/fixtures';
+import { IRSPlan } from '../../../../../store/ducks/generic/plans';
+import * as fixtures from '../../../../../store/ducks/generic/tests/fixtures';
 
 /* tslint:disable-next-line no-var-requires */
 const fetch = require('jest-fetch-mock');

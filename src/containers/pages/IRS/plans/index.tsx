@@ -16,7 +16,7 @@ import IRSPlansReducer, {
   getIRSPlansArray,
   IRSPlan,
   reducerName as IRSPlansReducerName,
-} from '../../../../store/ducks/IRS/plans';
+} from '../../../../store/ducks/generic/plans';
 
 /** register the plan definitions reducer */
 reducerRegistry.register(IRSPlansReducerName, IRSPlansReducer);
