@@ -272,7 +272,15 @@ describe('components/IRS Reports/JurisdictionReport', () => {
         .text()
     ).toEqual('IRS 2019-09-05 TEST');
     expect(wrapper.find('HeaderBreadcrumb a').length).toEqual(2);
-    expect(toJson(wrapper.find('h3.page-title'))).toMatchSnapshot();
+    expect(wrapper.find('h3.page-title').text()).toEqual('IRS Reporting: IRS 2019-09-05 TEST');
+    expect(wrapper.find('DrillDownTable').props()).toMatchSnapshot({
+      columns: expect.any(Object) /** just for purposes of making snapshot smaller */,
+      data: expect.any(Object) /** just for purposes of making snapshot smaller */,
+    });
+    expect(wrapper.find('DrillDownTable').props().data).toEqual(jurisdictions);
+    expect((wrapper.find('DrillDownTable').props() as any).columns).toEqual(
+      IRSTableColumns.zambiaJurisdictions2019
+    );
 
     // Zambia URL
     expect(
