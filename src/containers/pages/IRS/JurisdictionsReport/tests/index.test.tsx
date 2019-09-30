@@ -38,6 +38,7 @@ import jurisdictionReducer, {
   reducerName as jurisdictionReducerName,
 } from '../../../../../store/ducks/jurisdictions';
 import * as fixtures from '../../JurisdictionsReport/tests/fixtures';
+import { IRSTableColumns } from '../helpers';
 
 /* tslint:disable-next-line no-var-requires */
 const fetch = require('jest-fetch-mock');
@@ -146,9 +147,13 @@ describe('components/IRS Reports/JurisdictionReport', () => {
     expect(toJson(wrapper.find('h3.page-title'))).toMatchSnapshot('page title');
     expect(helmet.title).toEqual('IRS Reporting: IRS 2019-09-05 TEST');
     expect(wrapper.find('DrillDownTable').props()).toMatchSnapshot({
+      columns: expect.any(Object) /** just for purposes of making snapshot smaller */,
       data: expect.any(Object) /** just for purposes of making snapshot smaller */,
     });
     expect(wrapper.find('DrillDownTable').props().data).toEqual(jurisdictions);
+    expect((wrapper.find('DrillDownTable').props() as any).columns).toEqual(
+      IRSTableColumns.zambiaJurisdictions2019
+    );
     expect(supersetServiceMock.mock.calls).toEqual([
       [
         '13',
@@ -291,6 +296,17 @@ describe('components/IRS Reports/JurisdictionReport', () => {
         .last()
         .text()
     ).toEqual('Zambia');
+    expect(wrapper.find('h3.page-title').text()).toEqual(
+      'IRS Reporting: IRS 2019-09-05 TEST: Zambia'
+    );
+    expect(wrapper.find('DrillDownTable').props()).toMatchSnapshot({
+      columns: expect.any(Object) /** just for purposes of making snapshot smaller */,
+      data: expect.any(Object) /** just for purposes of making snapshot smaller */,
+    });
+    expect(wrapper.find('DrillDownTable').props().data).toEqual(jurisdictions);
+    expect((wrapper.find('DrillDownTable').props() as any).columns).toEqual(
+      IRSTableColumns.zambiaJurisdictions2019
+    );
 
     // Lusaka URL
     expect(
@@ -314,6 +330,17 @@ describe('components/IRS Reports/JurisdictionReport', () => {
         .last()
         .text()
     ).toEqual('Lusaka');
+    expect(wrapper.find('h3.page-title').text()).toEqual(
+      'IRS Reporting: IRS 2019-09-05 TEST: Lusaka'
+    );
+    expect(wrapper.find('DrillDownTable').props()).toMatchSnapshot({
+      columns: expect.any(Object) /** just for purposes of making snapshot smaller */,
+      data: expect.any(Object) /** just for purposes of making snapshot smaller */,
+    });
+    expect(wrapper.find('DrillDownTable').props().data).toEqual(jurisdictions);
+    expect((wrapper.find('DrillDownTable').props() as any).columns).toEqual(
+      IRSTableColumns.zambiaJurisdictions2019
+    );
 
     // Lusaka Test
     expect(
@@ -337,6 +364,17 @@ describe('components/IRS Reports/JurisdictionReport', () => {
         .last()
         .text()
     ).toEqual('Lusaka_Test');
+    expect(wrapper.find('h3.page-title').text()).toEqual(
+      'IRS Reporting: IRS 2019-09-05 TEST: Lusaka_Test'
+    );
+    expect(wrapper.find('DrillDownTable').props()).toMatchSnapshot({
+      columns: expect.any(Object) /** just for purposes of making snapshot smaller */,
+      data: expect.any(Object) /** just for purposes of making snapshot smaller */,
+    });
+    expect(wrapper.find('DrillDownTable').props().data).toEqual(jurisdictions);
+    expect((wrapper.find('DrillDownTable').props() as any).columns).toEqual(
+      IRSTableColumns.zambiaJurisdictions2019
+    );
 
     // Lusaka HFC
     expect(
@@ -360,6 +398,17 @@ describe('components/IRS Reports/JurisdictionReport', () => {
         .last()
         .text()
     ).toEqual('Lusaka HFC');
+    expect(wrapper.find('h3.page-title').text()).toEqual(
+      'IRS Reporting: IRS 2019-09-05 TEST: Lusaka HFC'
+    );
+    expect(wrapper.find('DrillDownTable').props()).toMatchSnapshot({
+      columns: expect.any(Object) /** just for purposes of making snapshot smaller */,
+      data: expect.any(Object) /** just for purposes of making snapshot smaller */,
+    });
+    expect(wrapper.find('DrillDownTable').props().data).toEqual(jurisdictions);
+    expect((wrapper.find('DrillDownTable').props() as any).columns).toEqual(
+      IRSTableColumns.zambiaFocusArea2019
+    );
 
     expect(wrapper.find('DrillDownTable a').length).toEqual(7);
     expect(
