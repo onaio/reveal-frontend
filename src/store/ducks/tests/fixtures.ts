@@ -1,4 +1,5 @@
 import { clone, cloneDeep } from 'lodash';
+import { Organization } from '../organizations';
 import { InterventionType, Plan, PlanStatus } from '../plans';
 
 export const plan1: Plan = {
@@ -1174,3 +1175,69 @@ export const CompleteRoutineTableProps = {
   showPagination: false,
   useDrillDownTrProps: false,
 };
+
+export const organization1: Organization = {
+  active: true,
+  id: 1,
+  identifier: 'fcc19470-d599-11e9-bb65-2a2ae2dbcce4',
+  name: 'The Luang',
+  type: {
+    coding: [
+      {
+        code: 'team',
+        display: 'Team',
+        system: 'http://terminology.hl7.org/CodeSystem/organization-type',
+      },
+    ],
+  },
+};
+
+export const organization2: Organization = {
+  active: true,
+  id: 3,
+  identifier: '4c506c98-d3a9-11e9-bb65-2a2ae2dbcce4',
+  name: 'Demo Team',
+};
+
+export const organization3: Organization = {
+  active: true,
+  id: 2,
+  identifier: 'd23f7350-d406-11e9-bb65-2a2ae2dbcce4',
+  name: 'Takang 1',
+  partOf: 1,
+  type: {
+    coding: [
+      {
+        code: 'team',
+        display: 'Team',
+        system: 'http://terminology.hl7.org/CodeSystem/organization-type',
+      },
+    ],
+  },
+};
+
+export const organizations: Organization[] = [organization1, organization2];
+
+export const practitioner1 = {
+  active: true,
+  identifier: 'p5id',
+  name: 'tlv2_name',
+  userId: '8af3b7ce-e3fa-420f-8de6-e7c36e08f0bc',
+  username: 'tlv2',
+};
+export const practitioner2 = {
+  active: true,
+  identifier: 'd7c9c000-e9b3-427a-890e-49c301aa48e6',
+  name: 'Biophics Tester',
+  userId: '8df27310-c7ef-4bb2-b77f-3b9f4bd23713',
+  username: 'tak',
+};
+export const practitioner3 = {
+  active: true,
+  identifier: '437cc699-cfa7-414c-ba27-1668b6b517e6',
+  name: 'Test User Lusaka',
+  userId: 'cad04f1e-9b05-4eac-92ce-4b38aa478644',
+  username: 'lusaka',
+};
+
+export const practitioners = [practitioner1, practitioner2, practitioner3];
