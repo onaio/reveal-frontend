@@ -236,7 +236,7 @@ describe('components/IRS Reports/IRSReportingMap', () => {
         },
       ],
     ]);
-
+    expect(supersetServiceMock).toHaveBeenCalledTimes(4);
     wrapper.unmount();
   });
 });
