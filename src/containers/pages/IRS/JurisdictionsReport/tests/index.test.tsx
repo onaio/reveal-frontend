@@ -423,13 +423,13 @@ describe('components/IRS Reports/JurisdictionReport', () => {
       '  Helen Kaunda Settlement',
     ]);
     expect(wrapper.find('DrillDownTable a').map(e => e.props().href)).toEqual([
-      '/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce/a049c269-6c06-47ef-b5b3-4f5f7736d97d/map',
-      '/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce/7aee968f-6b1f-427d-bba3-fa292937532b/map',
-      '/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce/67f2211d-0cfc-4bde-be0e-bf8b5b3e0c2c/map',
-      '/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce/d7e42fb9-381c-4fc6-a4c1-7e112076c559/map',
-      '/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce/0dc2d15b-be1d-45d3-93d8-043a3a916f30/map',
-      '/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce/0b142aff-341c-4d15-878e-55942bc873aa/map',
-      '/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce/fdc73ce5-650a-4246-a2b3-a6665adc8249/map',
+      `${baseURL}/a049c269-6c06-47ef-b5b3-4f5f7736d97d/map`,
+      `${baseURL}/7aee968f-6b1f-427d-bba3-fa292937532b/map`,
+      `${baseURL}/67f2211d-0cfc-4bde-be0e-bf8b5b3e0c2c/map`,
+      `${baseURL}/d7e42fb9-381c-4fc6-a4c1-7e112076c559/map`,
+      `${baseURL}/0dc2d15b-be1d-45d3-93d8-043a3a916f30/map`,
+      `${baseURL}/0b142aff-341c-4d15-878e-55942bc873aa/map`,
+      `${baseURL}/fdc73ce5-650a-4246-a2b3-a6665adc8249/map`,
     ]);
   });
 });
