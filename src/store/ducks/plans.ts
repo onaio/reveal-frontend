@@ -64,7 +64,6 @@ export interface Plan extends PlanRecord {
   jurisdiction_name_path: string[];
   jurisdiction_parent_id: string;
   jurisdiction_path: string[];
-  jurisdiction_root_parent_ids?: string[];
 }
 
 /** UseContext - interface for PlanPayload.useContext[] items */
@@ -384,13 +383,10 @@ export const fetchPlans = (plansList: Plan[] = []): FetchPlansAction => ({
       if (typeof plan.jurisdiction_path === 'string') {
         plan.jurisdiction_path = JSON.parse(plan.jurisdiction_path);
       }
-      if (typeof plan.jurisdiction_root_parent_ids === 'string') {
-        plan.jurisdiction_root_parent_ids = JSON.parse(plan.jurisdiction_root_parent_ids);
-      }
       plan = transformValues<Plan>(plan, ['plan_fi_reason', 'plan_fi_status']);
       return plan;
     }),
-    plan => plan.id || plan.plan_id
+    plan => plan.id
   ),
   type: PLANS_FETCHED,
 });
