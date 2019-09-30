@@ -19,6 +19,7 @@ import {
   ENABLE_ABOUT,
   ENABLE_FI,
   ENABLE_IRS,
+  ENABLE_TEAMS,
   ENABLE_USERS,
   WEBSITE_NAME,
 } from '../../../configs/env';
@@ -33,11 +34,13 @@ import {
   IRS_TITLE,
   LOGIN_URL,
   LOGOUT_URL,
+  ORGANIZATIONS_LABEL,
   PLAN_LIST_URL,
   PLANNING,
   PLANS,
   REPORT_IRS_PLAN_URL,
   REPORTING,
+  TEAM_LIST_URL,
 } from '../../../constants';
 import './Header.css';
 
@@ -174,6 +177,13 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
                     )}
                   </DropdownMenu>
                 </UncontrolledDropdown>
+              )}
+              {ENABLE_TEAMS && (
+                <NavItem>
+                  <NavLink to={`${TEAM_LIST_URL}`} className="nav-link" activeClassName="active">
+                    {ORGANIZATIONS_LABEL}
+                  </NavLink>
+                </NavItem>
               )}
 
               {ENABLE_USERS && (
