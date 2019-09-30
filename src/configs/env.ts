@@ -24,6 +24,10 @@ export type ENABLE_USERS = typeof ENABLE_USERS;
 export const ENABLE_ABOUT = process.env.REACT_APP_ENABLE_ABOUT === 'true';
 export type ENABLE_ABOUT = typeof ENABLE_ABOUT;
 
+/** Do you want to enable views dealing with teams */
+export const ENABLE_TEAMS = process.env.REACT_APP_ENABLE_TEAMS === 'true';
+export type ENABLE_TEAMS = typeof ENABLE_TEAMS;
+
 /** Do you want to disable login protection? */
 export const DISABLE_LOGIN_PROTECTION = process.env.REACT_APP_DISABLE_LOGIN_PROTECTION === 'true';
 export type DISABLE_LOGIN_PROTECTION = typeof DISABLE_LOGIN_PROTECTION;
