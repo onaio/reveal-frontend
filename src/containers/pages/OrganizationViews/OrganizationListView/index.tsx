@@ -149,7 +149,6 @@ const OrganizationListView = (props: OrgsListViewPropsType) => {
       <HeaderBreadcrumb {...breadcrumbProps} />
       <Row id="header-row">
         <Col className="xs">
-          {/** ? Should this be the number of organizations in store or in the api */}
           <h2 className="mb-3 mt-5 page-title">{`${ORGANIZATION_LABEL}(${
             organizations.length
           })`}</h2>
