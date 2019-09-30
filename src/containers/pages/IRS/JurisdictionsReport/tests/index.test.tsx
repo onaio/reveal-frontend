@@ -145,6 +145,10 @@ describe('components/IRS Reports/JurisdictionReport', () => {
     expect(toJson(wrapper.find('BreadcrumbItem li'))).toMatchSnapshot('breadcrumbs');
     expect(toJson(wrapper.find('h3.page-title'))).toMatchSnapshot('page title');
     expect(helmet.title).toEqual('IRS Reporting: IRS 2019-09-05 TEST');
+    expect(wrapper.find('DrillDownTable').props()).toMatchSnapshot({
+      data: expect.any(Object) /** just for purposes of making snapshot smaller */,
+    });
+    expect(wrapper.find('DrillDownTable').props().data).toEqual(jurisdictions);
     expect(supersetServiceMock.mock.calls).toEqual([
       [
         '13',
