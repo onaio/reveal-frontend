@@ -2,8 +2,10 @@ import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset from '@onaio/superset-connector';
 import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
+import flushPromises from 'flush-promises';
 import { createBrowserHistory } from 'history';
 import React from 'react';
+import { Helmet } from 'react-helmet';
 import { Router } from 'react-router';
 import { IRSReportingMap } from '../';
 import { INTERVENTION_IRS_URL, IRS_REPORTING_TITLE, MAP } from '../../../../../constants';
@@ -35,6 +37,7 @@ import jurisdictionReducer, {
   reducerName as jurisdictionReducerName,
 } from '../../../../../store/ducks/jurisdictions';
 import * as fixtures from '../../JurisdictionsReport/tests/fixtures';
+import { getGisidaWrapperProps } from '../helpers';
 
 /* tslint:disable-next-line no-var-requires */
 const fetch = require('jest-fetch-mock');
@@ -97,17 +100,31 @@ describe('components/IRS Reports/IRSReportingMap', () => {
     );
   });
 
-  it('renders plan definition list correctly', () => {
+  it('renders IRSReportingMap correctly', async () => {
     fetch.mockResponseOnce(JSON.stringify({}));
     const mock: any = jest.fn();
+
+    const focusArea = getGenericJurisdictionByJurisdictionId(
+      store.getState(),
+      'zm-focusAreas',
+      '0dc2d15b-be1d-45d3-93d8-043a3a916f30'
+    );
+
+    const structures = getGenericStructures(
+      store.getState(),
+      'zm-structures',
+      '0dc2d15b-be1d-45d3-93d8-043a3a916f30'
+    );
+
+    const jurisdiction = getJurisdictionById(
+      store.getState(),
+      '0dc2d15b-be1d-45d3-93d8-043a3a916f30'
+    );
+
     const props = {
-      focusArea: getGenericJurisdictionByJurisdictionId(
-        store.getState(),
-        'zm-focusAreas',
-        '0dc2d15b-be1d-45d3-93d8-043a3a916f30'
-      ),
+      focusArea,
       history,
-      jurisdiction: getJurisdictionById(store.getState(), '0dc2d15b-be1d-45d3-93d8-043a3a916f30'),
+      jurisdiction,
       location: mock,
       match: {
         isExact: true,
@@ -121,19 +138,24 @@ describe('components/IRS Reports/IRSReportingMap', () => {
         }/0dc2d15b-be1d-45d3-93d8-043a3a916f30/${MAP}`,
       },
       plan: plans[0] as IRSPlan,
-      structures: getGenericStructures(
-        store.getState(),
-        'zm-structures',
-        '0dc2d15b-be1d-45d3-93d8-043a3a916f30'
-      ),
+      structures,
     };
     const wrapper = mount(
       <Router history={history}>
         <IRSReportingMap {...props} />
       </Router>
     );
+    const helmet = Helmet.peek();
+    await flushPromises();
     expect(toJson(wrapper.find('BreadcrumbItem li'))).toMatchSnapshot('breadcrumbs');
     expect(toJson(wrapper.find('h3.page-title'))).toMatchSnapshot('page title');
+    expect(helmet.title).toEqual('IRS 2019-09-05 TEST');
+    expect(toJson(wrapper.find('mapSidebar h5'))).toMatchSnapshot('Sidebar title');
+    expect(toJson(wrapper.find('sidebar-legend-item'))).toMatchSnapshot('Legend items');
+    expect(toJson(wrapper.find('responseItem'))).toMatchSnapshot('Response items');
+    expect(wrapper.find('GisidaWrapper').props()).toEqual(
+      getGisidaWrapperProps(jurisdiction as Jurisdiction, structures)
+    );
     wrapper.unmount();
   });
 });
