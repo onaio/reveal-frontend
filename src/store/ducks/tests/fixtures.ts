@@ -1,5 +1,4 @@
 import { clone, cloneDeep } from 'lodash';
-import { Organization } from '../organizations';
 import { InterventionType, Plan, PlanStatus } from '../plans';
 
 export const plan1: Plan = {
@@ -1176,7 +1175,7 @@ export const CompleteRoutineTableProps = {
   useDrillDownTrProps: false,
 };
 
-export const organization1: Organization = {
+export const organization1: any = {
   active: true,
   id: 1,
   identifier: 'fcc19470-d599-11e9-bb65-2a2ae2dbcce4',
@@ -1192,14 +1191,14 @@ export const organization1: Organization = {
   },
 };
 
-export const organization2: Organization = {
+export const organization2: any = {
   active: true,
   id: 3,
   identifier: '4c506c98-d3a9-11e9-bb65-2a2ae2dbcce4',
   name: 'Demo Team',
 };
 
-export const organization3: Organization = {
+export const organization3: any = {
   active: true,
   id: 2,
   identifier: 'd23f7350-d406-11e9-bb65-2a2ae2dbcce4',
@@ -1216,7 +1215,7 @@ export const organization3: Organization = {
   },
 };
 
-export const organizations: Organization[] = [organization1, organization2];
+export const organizations: any[] = [organization1, organization2];
 
 export const practitioner1 = {
   active: true,
