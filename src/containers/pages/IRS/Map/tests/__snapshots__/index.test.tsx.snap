@@ -395,26 +395,10 @@ Array [
     </Link>
   </li>,
   <li
-    className="breadcrumb-item"
-  >
-    <Link
-      key="6"
-      replace={false}
-      to="/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce/0dc2d15b-be1d-45d3-93d8-043a3a916f30"
-    >
-      <a
-        href="/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce/0dc2d15b-be1d-45d3-93d8-043a3a916f30"
-        onClick={[Function]}
-      >
-        Akros_1
-      </a>
-    </Link>
-  </li>,
-  <li
     aria-current="page"
     className="active breadcrumb-item"
   >
-    Akros_1 map
+    Akros_1
   </li>,
 ]
 `;
