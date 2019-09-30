@@ -150,9 +150,15 @@ describe('components/IRS Reports/IRSReportingMap', () => {
     expect(toJson(wrapper.find('BreadcrumbItem li'))).toMatchSnapshot('breadcrumbs');
     expect(toJson(wrapper.find('h3.page-title'))).toMatchSnapshot('page title');
     expect(helmet.title).toEqual('IRS 2019-09-05 TEST');
-    expect(toJson(wrapper.find('mapSidebar h5'))).toMatchSnapshot('Sidebar title');
-    expect(toJson(wrapper.find('sidebar-legend-item'))).toMatchSnapshot('Legend items');
-    expect(toJson(wrapper.find('responseItem'))).toMatchSnapshot('Response items');
+    expect(toJson(wrapper.find('.mapSidebar h5'))).toMatchSnapshot('Sidebar title');
+    expect(toJson(wrapper.find('.sidebar-legend-item'))).toMatchSnapshot('Legend items');
+    expect(toJson(wrapper.find('.responseItem h6'))).toMatchSnapshot('Response item titles');
+    expect(toJson(wrapper.find('.responseItem p.indicator-description'))).toMatchSnapshot(
+      'Response item descriptions'
+    );
+    expect(toJson(wrapper.find('.responseItem ProgressBar'))).toMatchSnapshot(
+      'Response item ProgressBar'
+    );
     expect(wrapper.find('GisidaWrapper').props()).toEqual(
       getGisidaWrapperProps(jurisdiction as Jurisdiction, structures)
     );
