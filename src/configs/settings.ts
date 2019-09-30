@@ -1,4 +1,16 @@
-/** This is the main configuration module */
+/** This is the main configuration module
+ *
+ * **** IMPORT RULES ****
+ * To avoid circular imports or anything of that nature, the only imports from the Reveal
+ * code base allowed in this module are from the following modules:
+ *  - constants
+ *  - envs
+ *  - colors
+ *
+ * **** CODE RULES ****
+ * To keep things simple, the code in this module should be simple statements.  Use of
+ * functions is discouraged and should only be done if there is no other way.
+ */
 import { Providers } from '@onaio/gatekeeper';
 import { Expression, LngLatBoundsLike } from 'mapbox-gl';
 import { CellInfo } from 'react-table';
