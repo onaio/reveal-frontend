@@ -97,4 +97,104 @@ describe('components/IRS Reports/JurisdictionReport', () => {
       </Router>
     );
   });
+
+  it('renders correctly', async () => {
+    fetch.mockResponseOnce(JSON.stringify({}));
+    const mock: any = jest.fn();
+
+    const supersetServiceMock: any = jest.fn();
+    supersetServiceMock.mockImplementation(async () => []);
+
+    let jurisdictions =
+      getGenericJurisdictionsArray(
+        store.getState(),
+        'zm-jurisdictions',
+        '9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d'
+      ) || [];
+    jurisdictions = jurisdictions.concat(
+      getGenericJurisdictionsArray(
+        store.getState(),
+        'zm-focusAreas',
+        '9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d'
+      )
+    );
+
+    const props = {
+      history,
+      jurisdictions,
+      location: mock,
+      match: {
+        isExact: true,
+        params: {
+          planId: (plans[0] as IRSPlan).plan_id,
+        },
+        path: `${INTERVENTION_IRS_URL}/:planId`,
+        url: `${INTERVENTION_IRS_URL}/${(plans[0] as IRSPlan).plan_id}`,
+      },
+      plan: plans[0] as IRSPlan,
+      service: supersetServiceMock,
+    };
+
+    const wrapper = mount(
+      <Router history={history}>
+        <JurisdictionReport {...props} />
+      </Router>
+    );
+    const helmet = Helmet.peek();
+    await flushPromises();
+    expect(toJson(wrapper.find('BreadcrumbItem li'))).toMatchSnapshot('breadcrumbs');
+    expect(toJson(wrapper.find('h3.page-title'))).toMatchSnapshot('page title');
+    expect(helmet.title).toEqual('IRS Reporting: IRS 2019-09-05 TEST');
+    expect(supersetServiceMock.mock.calls).toEqual([
+      [
+        '13',
+        {
+          adhoc_filters: [
+            {
+              clause: 'WHERE',
+              comparator: '727c3d40-e118-564a-b231-aac633e6abce',
+              expressionType: 'SIMPLE',
+              operator: '==',
+              subject: 'plan_id',
+            },
+          ],
+          row_limit: 1,
+        },
+      ],
+      [
+        '11',
+        {
+          adhoc_filters: [
+            {
+              clause: 'WHERE',
+              comparator: '727c3d40-e118-564a-b231-aac633e6abce',
+              expressionType: 'SIMPLE',
+              operator: '==',
+              subject: 'plan_id',
+            },
+          ],
+          order_by_cols: ['["jurisdiction_depth",+true]'],
+          row_limit: 3000,
+        },
+      ],
+      [
+        '12',
+        {
+          adhoc_filters: [
+            {
+              clause: 'WHERE',
+              comparator: '727c3d40-e118-564a-b231-aac633e6abce',
+              expressionType: 'SIMPLE',
+              operator: '==',
+              subject: 'plan_id',
+            },
+          ],
+          order_by_cols: ['["jurisdiction_depth",+true]'],
+          row_limit: 3000,
+        },
+      ],
+    ]);
+    expect(supersetServiceMock).toHaveBeenCalledTimes(3);
+    wrapper.unmount();
+  });
 });
