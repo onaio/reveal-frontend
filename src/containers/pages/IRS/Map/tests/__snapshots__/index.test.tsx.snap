@@ -1,0 +1,132 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components/IRS Reports/IRSReportingMap renders plan definition list correctly: breadcrumbs 1`] = `
+Array [
+  <li
+    className="breadcrumb-item"
+  >
+    <Link
+      key="0"
+      replace={false}
+      to="/"
+    >
+      <a
+        href="/"
+        onClick={[Function]}
+      >
+        Home
+      </a>
+    </Link>
+  </li>,
+  <li
+    className="breadcrumb-item"
+  >
+    <Link
+      key="1"
+      replace={false}
+      to="/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce"
+    >
+      <a
+        href="/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce"
+        onClick={[Function]}
+      >
+        IRS Reporting
+      </a>
+    </Link>
+  </li>,
+  <li
+    className="breadcrumb-item"
+  >
+    <Link
+      key="2"
+      replace={false}
+      to="/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce/22bc44dd-752d-4c20-8761-617361b4f1e7"
+    >
+      <a
+        href="/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce/22bc44dd-752d-4c20-8761-617361b4f1e7"
+        onClick={[Function]}
+      >
+        Zambia
+      </a>
+    </Link>
+  </li>,
+  <li
+    className="breadcrumb-item"
+  >
+    <Link
+      key="3"
+      replace={false}
+      to="/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce/fd5a22ba-fa0e-4fdc-ae1c-1db8965b7b43"
+    >
+      <a
+        href="/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce/fd5a22ba-fa0e-4fdc-ae1c-1db8965b7b43"
+        onClick={[Function]}
+      >
+        Lusaka
+      </a>
+    </Link>
+  </li>,
+  <li
+    className="breadcrumb-item"
+  >
+    <Link
+      key="4"
+      replace={false}
+      to="/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce/8f1fd4cf-264d-4ed6-8838-e538c5845d46"
+    >
+      <a
+        href="/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce/8f1fd4cf-264d-4ed6-8838-e538c5845d46"
+        onClick={[Function]}
+      >
+        Lusaka_Test
+      </a>
+    </Link>
+  </li>,
+  <li
+    className="breadcrumb-item"
+  >
+    <Link
+      key="5"
+      replace={false}
+      to="/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce/2bf9915d-8725-4061-983d-5938802ac0f0"
+    >
+      <a
+        href="/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce/2bf9915d-8725-4061-983d-5938802ac0f0"
+        onClick={[Function]}
+      >
+        Lusaka HFC
+      </a>
+    </Link>
+  </li>,
+  <li
+    className="breadcrumb-item"
+  >
+    <Link
+      key="6"
+      replace={false}
+      to="/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce/0dc2d15b-be1d-45d3-93d8-043a3a916f30"
+    >
+      <a
+        href="/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce/0dc2d15b-be1d-45d3-93d8-043a3a916f30"
+        onClick={[Function]}
+      >
+        Akros_1
+      </a>
+    </Link>
+  </li>,
+  <li
+    aria-current="page"
+    className="active breadcrumb-item"
+  >
+    Akros_1 map
+  </li>,
+]
+`;
+
+exports[`components/IRS Reports/IRSReportingMap renders plan definition list correctly: page title 1`] = `
+<h3
+  className="mb-3 page-title"
+>
+  IRS 2019-09-05 TEST
+</h3>
+`;
