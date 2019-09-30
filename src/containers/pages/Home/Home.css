@@ -1,17 +1,17 @@
-.btn-intervention {
+.btn-home-call-to-action {
   min-height: 234px;
 }
 
-.intervention-link,
-.intervention-link:hover {
+.home-link,
+.home-link:hover {
   text-decoration: none;
 }
 
-.btn-outline-dark.btn-intervention {
+.btn-outline-green.btn-home-call-to-action {
   border-color: #cccccc;
 }
 
-.btn-outline-green.btn-intervention {
+.btn-outline-green.btn-home-call-to-action {
   color: #007742;
   background-color: #ffffff;
   border: 2px solid #007742;
@@ -30,4 +30,8 @@
 
 .intervention-box {
   margin-top: 55px;
+}
+
+.intervention-box div.col-md-6 {
+  margin-bottom: 20px;
 }
