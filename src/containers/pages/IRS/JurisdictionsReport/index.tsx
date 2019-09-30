@@ -12,6 +12,8 @@ import IRSTableCell from '../../../../components/IRSTableCell';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
 import {
+  SUPERSET_IRS_REPORTING_FOCUS_AREAS_COLUMNS,
+  SUPERSET_IRS_REPORTING_JURISDICTIONS_COLUMNS,
   SUPERSET_IRS_REPORTING_JURISDICTIONS_DATA_SLICES,
   SUPERSET_IRS_REPORTING_JURISDICTIONS_FOCUS_AREA_LEVEL,
   SUPERSET_IRS_REPORTING_PLANS_SLICE,
@@ -33,7 +35,7 @@ import IRSPlansReducer, {
   reducerName as IRSPlansReducerName,
 } from '../../../../store/ducks/generic/plans';
 import { getJurisdictionBreadcrumbs } from '../Map/helpers';
-import { ZambiaFocusAreasColumns, ZambiaJurisdictionsColumns } from './helpers';
+import { IRSTableColumns } from './helpers';
 import './style.css';
 
 /** register the reducers */
@@ -172,12 +174,12 @@ const JurisdictionReport = (props: GenericJurisdictionProps & RouteComponentProp
 
   const currLevelData = data.filter(el => el.jurisdiction_parent_id === jurisdictionId);
 
-  let columnsToUse = ZambiaJurisdictionsColumns;
+  let columnsToUse = IRSTableColumns[SUPERSET_IRS_REPORTING_JURISDICTIONS_COLUMNS];
   if (currLevelData && currLevelData.length > 0) {
     if (
       currLevelData[0].jurisdiction_depth === +SUPERSET_IRS_REPORTING_JURISDICTIONS_FOCUS_AREA_LEVEL
     ) {
-      columnsToUse = ZambiaFocusAreasColumns;
+      columnsToUse = IRSTableColumns[SUPERSET_IRS_REPORTING_FOCUS_AREAS_COLUMNS];
     }
   }
 
