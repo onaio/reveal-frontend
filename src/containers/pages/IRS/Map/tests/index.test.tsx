@@ -104,6 +104,9 @@ describe('components/IRS Reports/IRSReportingMap', () => {
     fetch.mockResponseOnce(JSON.stringify({}));
     const mock: any = jest.fn();
 
+    const supersetServiceMock: any = jest.fn();
+    supersetServiceMock.mockImplementation(async () => []);
+
     const focusArea = getGenericJurisdictionByJurisdictionId(
       store.getState(),
       'zm-focusAreas',
@@ -138,6 +141,7 @@ describe('components/IRS Reports/IRSReportingMap', () => {
         }/0dc2d15b-be1d-45d3-93d8-043a3a916f30/${MAP}`,
       },
       plan: plans[0] as IRSPlan,
+      service: supersetServiceMock,
       structures,
     };
     const wrapper = mount(
@@ -162,6 +166,77 @@ describe('components/IRS Reports/IRSReportingMap', () => {
     expect(wrapper.find('GisidaWrapper').props()).toEqual(
       getGisidaWrapperProps(jurisdiction as Jurisdiction, structures)
     );
+
+    expect(supersetServiceMock.mock.calls).toEqual([
+      [
+        '459',
+        {
+          adhoc_filters: [
+            {
+              clause: 'WHERE',
+              comparator: '0dc2d15b-be1d-45d3-93d8-043a3a916f30',
+              expressionType: 'SIMPLE',
+              operator: '==',
+              subject: 'jurisdiction_id',
+            },
+          ],
+          row_limit: 1,
+        },
+      ],
+      [
+        '551',
+        {
+          adhoc_filters: [
+            {
+              clause: 'WHERE',
+              comparator: '0dc2d15b-be1d-45d3-93d8-043a3a916f30',
+              expressionType: 'SIMPLE',
+              operator: '==',
+              subject: 'jurisdiction_id',
+            },
+          ],
+          row_limit: 3000,
+        },
+      ],
+      [
+        '557',
+        {
+          adhoc_filters: [
+            {
+              clause: 'WHERE',
+              comparator: '0dc2d15b-be1d-45d3-93d8-043a3a916f30',
+              expressionType: 'SIMPLE',
+              operator: '==',
+              subject: 'jurisdiction_id',
+            },
+            {
+              clause: 'WHERE',
+              comparator: '727c3d40-e118-564a-b231-aac633e6abce',
+              expressionType: 'SIMPLE',
+              operator: '==',
+              subject: 'plan_id',
+            },
+          ],
+          row_limit: 1,
+        },
+      ],
+      [
+        '555',
+        {
+          adhoc_filters: [
+            {
+              clause: 'WHERE',
+              comparator: '727c3d40-e118-564a-b231-aac633e6abce',
+              expressionType: 'SIMPLE',
+              operator: '==',
+              subject: 'plan_id',
+            },
+          ],
+          row_limit: 1,
+        },
+      ],
+    ]);
+
     wrapper.unmount();
   });
 });
