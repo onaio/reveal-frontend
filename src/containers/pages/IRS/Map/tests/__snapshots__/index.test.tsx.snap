@@ -1,6 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`components/IRS Reports/IRSReportingMap renders plan definition list correctly: breadcrumbs 1`] = `
+exports[`components/IRS Reports/IRSReportingMap renders IRSReportingMap correctly: Legend items 1`] = `null`;
+
+exports[`components/IRS Reports/IRSReportingMap renders IRSReportingMap correctly: Response items 1`] = `null`;
+
+exports[`components/IRS Reports/IRSReportingMap renders IRSReportingMap correctly: Sidebar title 1`] = `null`;
+
+exports[`components/IRS Reports/IRSReportingMap renders IRSReportingMap correctly: breadcrumbs 1`] = `
 Array [
   <li
     className="breadcrumb-item"
@@ -123,7 +129,7 @@ Array [
 ]
 `;
 
-exports[`components/IRS Reports/IRSReportingMap renders plan definition list correctly: page title 1`] = `
+exports[`components/IRS Reports/IRSReportingMap renders IRSReportingMap correctly: page title 1`] = `
 <h3
   className="mb-3 page-title"
 >
