@@ -42,6 +42,8 @@ import { getGisidaWrapperProps } from '../helpers';
 /* tslint:disable-next-line no-var-requires */
 const fetch = require('jest-fetch-mock');
 
+jest.mock('../../../../../configs/env');
+
 /** register the reducers */
 reducerRegistry.register(IRSPlansReducerName, IRSPlansReducer);
 reducerRegistry.register(jurisdictionReducerName, jurisdictionReducer);
@@ -169,7 +171,7 @@ describe('components/IRS Reports/IRSReportingMap', () => {
 
     expect(supersetServiceMock.mock.calls).toEqual([
       [
-        '459',
+        1,
         {
           adhoc_filters: [
             {
@@ -184,7 +186,7 @@ describe('components/IRS Reports/IRSReportingMap', () => {
         },
       ],
       [
-        '551',
+        '14',
         {
           adhoc_filters: [
             {
@@ -199,7 +201,7 @@ describe('components/IRS Reports/IRSReportingMap', () => {
         },
       ],
       [
-        '557',
+        '12',
         {
           adhoc_filters: [
             {
@@ -221,7 +223,7 @@ describe('components/IRS Reports/IRSReportingMap', () => {
         },
       ],
       [
-        '555',
+        '13',
         {
           adhoc_filters: [
             {
