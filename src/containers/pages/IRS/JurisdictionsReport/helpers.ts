@@ -1,4 +1,4 @@
-import { CellInfo } from 'react-table';
+import { CellInfo, Column } from 'react-table';
 import { getIRSThresholdAdherenceIndicator } from '../../../../helpers/indicators';
 import { FlexObject } from '../../../../helpers/utils';
 
@@ -275,6 +275,12 @@ export const ZambiaFocusAreasColumns = [
     ],
   },
 ];
+
+export const IRSTableColumns: { [key: string]: Column[] } = {
+  namibia2019: NamibiaColumns,
+  zambiaFocusArea2019: ZambiaFocusAreasColumns,
+  zambiaJurisdictions2019: ZambiaJurisdictionsColumns,
+};
 
 /** extract hierarchical tree of jurisdictions as a list, with the highest
  * level item in the hierarchy as the 0th element
