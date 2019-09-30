@@ -168,7 +168,9 @@ export const getGisidaWrapperProps = (
 
   const gisidaWrapperProps: GisidaProps = {
     bounds,
+    currentGoal: null,
     geoData: null,
+    goal: null,
     handlers: [],
     layers,
     pointFeatureCollection: null,
