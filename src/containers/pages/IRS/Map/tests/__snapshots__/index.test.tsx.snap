@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`components/IRS Reports/IRSReportingMap renders IRSReportingMap correctly: Legend items 1`] = `
+exports[`components/IRS Reports/IRSReportingMap renders correctly: Legend items 1`] = `
 Array [
   <div
     className="sidebar-legend-item"
@@ -95,7 +95,7 @@ Array [
 ]
 `;
 
-exports[`components/IRS Reports/IRSReportingMap renders IRSReportingMap correctly: Response item ProgressBar 1`] = `
+exports[`components/IRS Reports/IRSReportingMap renders correctly: Response item ProgressBar 1`] = `
 Array [
   <ProgressBar
     decimalPoints={0}
@@ -256,7 +256,7 @@ Array [
 ]
 `;
 
-exports[`components/IRS Reports/IRSReportingMap renders IRSReportingMap correctly: Response item descriptions 1`] = `
+exports[`components/IRS Reports/IRSReportingMap renders correctly: Response item descriptions 1`] = `
 Array [
   <p
     className="indicator-description"
@@ -276,7 +276,7 @@ Array [
 ]
 `;
 
-exports[`components/IRS Reports/IRSReportingMap renders IRSReportingMap correctly: Response item titles 1`] = `
+exports[`components/IRS Reports/IRSReportingMap renders correctly: Response item titles 1`] = `
 Array [
   <h6>
     Found Coverage
@@ -290,13 +290,13 @@ Array [
 ]
 `;
 
-exports[`components/IRS Reports/IRSReportingMap renders IRSReportingMap correctly: Sidebar title 1`] = `
+exports[`components/IRS Reports/IRSReportingMap renders correctly: Sidebar title 1`] = `
 <h5>
   Akros_1
 </h5>
 `;
 
-exports[`components/IRS Reports/IRSReportingMap renders IRSReportingMap correctly: breadcrumbs 1`] = `
+exports[`components/IRS Reports/IRSReportingMap renders correctly: breadcrumbs 1`] = `
 Array [
   <li
     className="breadcrumb-item"
@@ -403,7 +403,7 @@ Array [
 ]
 `;
 
-exports[`components/IRS Reports/IRSReportingMap renders IRSReportingMap correctly: page title 1`] = `
+exports[`components/IRS Reports/IRSReportingMap renders correctly: page title 1`] = `
 <h3
   className="mb-3 page-title"
 >

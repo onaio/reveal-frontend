@@ -102,7 +102,7 @@ describe('components/IRS Reports/IRSReportingMap', () => {
     );
   });
 
-  it('renders IRSReportingMap correctly', async () => {
+  it('renders correctly', async () => {
     fetch.mockResponseOnce(JSON.stringify({}));
     const mock: any = jest.fn();
 
