@@ -3,20 +3,20 @@ import { keyBy } from 'lodash';
 import { FlushThunks } from 'redux-testkit';
 import store from '../../..';
 import reducer, {
-  addIRSJurisdiction,
-  fetchIRSJurisdictions,
-  getIRSJurisdictionById,
-  getIRSJurisdictionsArray,
-  getIRSJurisdictionsById,
-  NamibiaIRSJurisdiction,
+  addGenericJurisdiction,
+  fetchGenericJurisdictions,
+  getGenericJurisdictionById,
+  getGenericJurisdictionsArray,
+  getGenericJurisdictionsById,
+  NamibiaJurisdiction,
   reducerName,
-  removeIRSJurisdictions,
+  removeGenericJurisdictions,
 } from '../jurisdictions';
 import * as fixtures from './fixtures';
 
 reducerRegistry.register(reducerName, reducer);
 
-describe('reducers/IRS/IRSJurisdiction', () => {
+describe('reducers/IRS/GenericJurisdiction', () => {
   let flushThunks;
 
   beforeEach(() => {
@@ -25,36 +25,36 @@ describe('reducers/IRS/IRSJurisdiction', () => {
   });
 
   it('should have initial state', () => {
-    expect(getIRSJurisdictionsArray(store.getState())).toEqual([]);
+    expect(getGenericJurisdictionsArray(store.getState())).toEqual([]);
     expect(
-      getIRSJurisdictionById(
+      getGenericJurisdictionById(
         store.getState(),
         'na-jurisdictions',
         '356b6b84-fc36-4389-a44a-2b038ed2f38d'
       )
     ).toEqual(null);
-    expect(getIRSJurisdictionsById(store.getState(), 'na-jurisdictions')).toEqual({});
+    expect(getGenericJurisdictionsById(store.getState(), 'na-jurisdictions')).toEqual({});
   });
 
   it('Fetches IRS jurisdictions correctly', () => {
     // action creators dispatch
     store.dispatch(
-      fetchIRSJurisdictions(
+      fetchGenericJurisdictions(
         'na-jurisdictions',
-        fixtures.namibiaIRSJurisdictions as NamibiaIRSJurisdiction[]
+        fixtures.namibiaIRSJurisdictions as NamibiaJurisdiction[]
       )
     );
 
-    expect(getIRSJurisdictionsById(store.getState(), 'na-jurisdictions')).toEqual(
+    expect(getGenericJurisdictionsById(store.getState(), 'na-jurisdictions')).toEqual(
       keyBy(fixtures.namibiaIRSJurisdictions, 'id')
     );
 
-    expect(getIRSJurisdictionsArray(store.getState(), 'na-jurisdictions')).toEqual(
+    expect(getGenericJurisdictionsArray(store.getState(), 'na-jurisdictions')).toEqual(
       fixtures.namibiaIRSJurisdictions
     );
 
     expect(
-      getIRSJurisdictionById(
+      getGenericJurisdictionById(
         store.getState(),
         'na-jurisdictions',
         '0001ca08-c9b7-5ea5-acc5-dc9b2fce5d24'
@@ -63,7 +63,7 @@ describe('reducers/IRS/IRSJurisdiction', () => {
 
     // filtering
     expect(
-      getIRSJurisdictionsArray(
+      getGenericJurisdictionsArray(
         store.getState(),
         'na-jurisdictions',
         'da451786-a760-4947-870c-7c9c0a818574'
@@ -71,7 +71,7 @@ describe('reducers/IRS/IRSJurisdiction', () => {
     ).toEqual([fixtures.namibiaIRSJurisdictions[0], fixtures.namibiaIRSJurisdictions[3]]);
     // filter by plan id
     expect(
-      getIRSJurisdictionsArray(
+      getGenericJurisdictionsArray(
         store.getState(),
         'na-jurisdictions',
         null,
@@ -79,7 +79,7 @@ describe('reducers/IRS/IRSJurisdiction', () => {
       )
     ).toEqual([fixtures.namibiaIRSJurisdictions[1]]);
     expect(
-      getIRSJurisdictionsArray(
+      getGenericJurisdictionsArray(
         store.getState(),
         'na-jurisdictions',
         'da451786-a760-4947-870c-7c9c0a818574',
@@ -88,7 +88,7 @@ describe('reducers/IRS/IRSJurisdiction', () => {
     ).toEqual([fixtures.namibiaIRSJurisdictions[0]]);
 
     expect(
-      getIRSJurisdictionsById(
+      getGenericJurisdictionsById(
         store.getState(),
         'na-jurisdictions',
         'da451786-a760-4947-870c-7c9c0a818574',
@@ -97,31 +97,31 @@ describe('reducers/IRS/IRSJurisdiction', () => {
     ).toEqual(keyBy([fixtures.namibiaIRSJurisdictions[0]], 'id'));
 
     // reset
-    store.dispatch(removeIRSJurisdictions('na-jurisdictions'));
-    expect(getIRSJurisdictionsArray(store.getState(), 'na-jurisdictions')).toEqual([]);
+    store.dispatch(removeGenericJurisdictions('na-jurisdictions'));
+    expect(getGenericJurisdictionsArray(store.getState(), 'na-jurisdictions')).toEqual([]);
   });
 
-  it('Fetching plans does not replace IRSJurisdictionsById', () => {
+  it('Fetching plans does not replace GenericJurisdictionsById', () => {
     // fetch two IRS jurisdiction objects
     store.dispatch(
-      fetchIRSJurisdictions('na-jurisdictions', [
+      fetchGenericJurisdictions('na-jurisdictions', [
         fixtures.namibiaIRSJurisdictions[0],
         fixtures.namibiaIRSJurisdictions[1],
-      ] as NamibiaIRSJurisdiction[])
+      ] as NamibiaJurisdiction[])
     );
     // we should have them in the store
-    expect(getIRSJurisdictionsArray(store.getState(), 'na-jurisdictions')).toEqual([
+    expect(getGenericJurisdictionsArray(store.getState(), 'na-jurisdictions')).toEqual([
       fixtures.namibiaIRSJurisdictions[0],
       fixtures.namibiaIRSJurisdictions[1],
     ]);
     // fetch one more IRS jurisdiction objects
     store.dispatch(
-      fetchIRSJurisdictions('na-jurisdictions', [
+      fetchGenericJurisdictions('na-jurisdictions', [
         fixtures.namibiaIRSJurisdictions[2],
-      ] as NamibiaIRSJurisdiction[])
+      ] as NamibiaJurisdiction[])
     );
     // we should now have a total of three IRS jurisdiction objects in the store
-    expect(getIRSJurisdictionsArray(store.getState(), 'na-jurisdictions')).toEqual([
+    expect(getGenericJurisdictionsArray(store.getState(), 'na-jurisdictions')).toEqual([
       fixtures.namibiaIRSJurisdictions[0],
       fixtures.namibiaIRSJurisdictions[1],
       fixtures.namibiaIRSJurisdictions[2],
@@ -130,37 +130,37 @@ describe('reducers/IRS/IRSJurisdiction', () => {
 
   it('You can add one IRS jurisdiction object to the store', () => {
     // reset
-    store.dispatch(removeIRSJurisdictions('na-jurisdictions'));
+    store.dispatch(removeGenericJurisdictions('na-jurisdictions'));
 
     // add one IRS jurisdiction objects
     store.dispatch(
-      addIRSJurisdiction('na-jurisdictions', fixtures
-        .namibiaIRSJurisdictions[2] as NamibiaIRSJurisdiction)
+      addGenericJurisdiction('na-jurisdictions', fixtures
+        .namibiaIRSJurisdictions[2] as NamibiaJurisdiction)
     );
     // we should have it in the store
-    expect(getIRSJurisdictionsArray(store.getState(), 'na-jurisdictions')).toEqual([
+    expect(getGenericJurisdictionsArray(store.getState(), 'na-jurisdictions')).toEqual([
       fixtures.namibiaIRSJurisdictions[2],
     ]);
 
     // fetch one more IRS jurisdiction objects
     store.dispatch(
-      addIRSJurisdiction('na-jurisdictions', fixtures
-        .namibiaIRSJurisdictions[1] as NamibiaIRSJurisdiction)
+      addGenericJurisdiction('na-jurisdictions', fixtures
+        .namibiaIRSJurisdictions[1] as NamibiaJurisdiction)
     );
     // we should now have a total of three IRS jurisdiction objects in the store
-    expect(getIRSJurisdictionsArray(store.getState(), 'na-jurisdictions')).toEqual([
+    expect(getGenericJurisdictionsArray(store.getState(), 'na-jurisdictions')).toEqual([
       fixtures.namibiaIRSJurisdictions[2],
       fixtures.namibiaIRSJurisdictions[1],
     ]);
 
     // add an existing plan again
     store.dispatch(
-      addIRSJurisdiction('na-jurisdictions', fixtures
-        .namibiaIRSJurisdictions[2] as NamibiaIRSJurisdiction)
+      addGenericJurisdiction('na-jurisdictions', fixtures
+        .namibiaIRSJurisdictions[2] as NamibiaJurisdiction)
     );
     // nothing should have changed in the store
     // we should now have a total of three IRS jurisdiction objects in the store
-    expect(getIRSJurisdictionsArray(store.getState(), 'na-jurisdictions')).toEqual([
+    expect(getGenericJurisdictionsArray(store.getState(), 'na-jurisdictions')).toEqual([
       fixtures.namibiaIRSJurisdictions[2],
       fixtures.namibiaIRSJurisdictions[1],
     ]);
