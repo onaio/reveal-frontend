@@ -172,7 +172,7 @@ export const addGenericJurisdiction = (
 /** interface for GenericJurisdiction state */
 interface GenericJurisdictionState {
   [key: string]: {
-    [key: string]: NamibiaJurisdiction | ZambiaJurisdiction | ZambiaJurisdiction;
+    [key: string]: NamibiaJurisdiction | ZambiaJurisdiction | ZambiaIRSFocusArea;
   };
 }
 
