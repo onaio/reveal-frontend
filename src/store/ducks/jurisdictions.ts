@@ -1,7 +1,6 @@
 import { get, keyBy, keys, pickBy, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
 import SeamlessImmutable from 'seamless-immutable';
-import { CustomJurisdictionTypes, JurisdictionTypes } from '../../configs/settings';
 import { FlexObject, GeoJSON, Geometry } from '../../helpers/utils';
 import store from '../../store';
 
@@ -22,14 +21,9 @@ export interface Jurisdiction {
   geographic_level?: number;
   geojson?: JurisdictionGeoJSON;
   jurisdiction_id: string;
-  jurisdiction_name_path?: string[];
-  jurisdiction_path?: string[];
   name?: string | null;
   parent_id?: string | null;
 }
-
-/** Typie to inclue all types of Jurisdiction entities */
-export type AnyJurisdiction = Jurisdiction | CustomJurisdictionTypes;
 
 /** Interface describing a list of loaded Jurisdictions */
 export interface AllJurisdictionIds {
@@ -39,29 +33,11 @@ export interface AllJurisdictionIds {
   };
 }
 
-/** Interface descriing a list of all child ids of a given jurisdiction id */
-export interface ChildrenByParentId {
-  [key: string]: string[];
-}
-
-/** Interface descriing a list of all jurisdictions ids of a plan id */
-export interface JurisdictionIdsByPlanId {
-  [key: string]: string[];
-}
-
 // action types
 export const FETCH_JURISDICTION = 'reveal/reducer/jurisdiction/FETCH_JURISDICTION';
 export const FETCH_ALL_JURISDICTION_IDS = 'reveal/reducer/jurisdiction/FETCH_ALL_JURISDICTION_IDS';
-export const FETCH_CHILDREN_BY_PARENT_ID =
-  'reveal/reducer/jurisdiction/FETCH_CHILDREN_BY_PARENT_ID';
-export const FETCH_JURISIDCTIONS_BY_PLAN_ID =
-  'reveal/reducer/jurisdiction/FETCH_JURISIDCTIONS_BY_PLAN_ID';
 export const REMOVE_JURISDICTIONS = 'reveal/reducer/jurisdiction/REMOVE_JURISDICTIONS';
 export const REMOVE_ALL_JURISDICTION_IDS = 'reveal/reducer/jurisdiction/REMOVE_ALL_JURISDICTIONIDS';
-export const REMOVE_CHILDREN_BY_PARENT_ID =
-  'reveal/reducer/jurisdiction/REMOVE_CHILDREN_BY_PARENT_ID';
-export const REMOVE_JURISIDCTIONS_BY_PLAN_ID =
-  'reveal/reducer/jurisdiction/REMOVE_JURISIDCTIONS_BY_PLAN_ID';
 
 /** fetch jurisdiction action */
 interface FetchJurisdictionAction extends AnyAction {
@@ -76,18 +52,6 @@ interface FetchAllJurisdictionIdsAction extends AnyAction {
   type: typeof FETCH_ALL_JURISDICTION_IDS;
 }
 
-/** fetch childrenByParentId action */
-interface FetchChildrenByParentIdAction extends AnyAction {
-  childrenByParentId: ChildrenByParentId;
-  type: typeof FETCH_CHILDREN_BY_PARENT_ID;
-}
-
-/** fetch jurisdictionIdsByPlanId action */
-interface FetchJurisdictionIdsByPlanId extends AnyAction {
-  jurisdictionIdsByPlanId: JurisdictionIdsByPlanId;
-  type: typeof FETCH_JURISIDCTIONS_BY_PLAN_ID;
-}
-
 /** Remove jurisdictions action interface */
 interface RemoveJurisdictionsAction extends AnyAction {
   jurisdictionsById: {};
@@ -100,36 +64,18 @@ interface RemoveAllJurisdictionIdsAction extends AnyAction {
   allJurisdictionIds: {};
 }
 
-/** Remove childrenByParentId action interface */
-interface RemoveChildrenByParentIdAction extends AnyAction {
-  childrenByParentId: {};
-  type: typeof REMOVE_CHILDREN_BY_PARENT_ID;
-}
-
-/** Remove jurisdictionIdsByPlanId action interface */
-interface RemoveJurisdictionIdsByPlanId extends AnyAction {
-  jurisdictionIdsByPlanId: {};
-  type: typeof REMOVE_JURISIDCTIONS_BY_PLAN_ID;
-}
-
 /** jurisdiction action types */
 export type JurisdictionActionTypes =
   | FetchJurisdictionAction
   | FetchAllJurisdictionIdsAction
-  | FetchChildrenByParentIdAction
-  | FetchJurisdictionIdsByPlanId
   | RemoveJurisdictionsAction
   | RemoveAllJurisdictionIdsAction
-  | RemoveChildrenByParentIdAction
-  | RemoveJurisdictionIdsByPlanId
   | AnyAction;
 
 /** interface to describe jurisdiction state */
 interface JurisdictionState {
   allJurisdictionIds: AllJurisdictionIds;
-  childrenByParentId: ChildrenByParentId;
-  jurisdictionIdsByPlanId: JurisdictionIdsByPlanId;
-  jurisdictionsById: { [key: string]: AnyJurisdiction };
+  jurisdictionsById: { [key: string]: Jurisdiction };
 }
 
 /** immutable Jurisdiction state */
@@ -139,8 +85,6 @@ export type ImmutableJurisdictionState = JurisdictionState &
 /** initial state */
 const initialState: ImmutableJurisdictionState = SeamlessImmutable({
   allJurisdictionIds: {} as AllJurisdictionIds,
-  childrenByParentId: {},
-  jurisdictionIdsByPlanId: {},
   jurisdictionsById: {},
 });
 
@@ -168,22 +112,6 @@ export default function reducer(
         ...state,
         allJurisdictionIds: { ...state.allJurisdictionIds, ...action.allJurisdictionIds },
       });
-    case FETCH_CHILDREN_BY_PARENT_ID:
-      return SeamlessImmutable({
-        ...state,
-        childrenByParentId: {
-          ...state.childrenByParentId,
-          ...action.childrenByParentId,
-        },
-      });
-    case FETCH_JURISIDCTIONS_BY_PLAN_ID:
-      return SeamlessImmutable({
-        ...state,
-        jurisdictionIdsByPlanId: {
-          ...state.jurisdictionIdsByPlanId,
-          ...action.jurisdictionIdsByPlanId,
-        },
-      });
     case REMOVE_JURISDICTIONS:
       return SeamlessImmutable({
         ...state,
@@ -193,16 +121,6 @@ export default function reducer(
       return SeamlessImmutable({
         ...state,
         allJurisdictionIds: action.allJurisdictionIds,
-      });
-    case REMOVE_CHILDREN_BY_PARENT_ID:
-      return SeamlessImmutable({
-        ...state,
-        childrenByParentId: action.childrenByParentId,
-      });
-    case REMOVE_JURISIDCTIONS_BY_PLAN_ID:
-      return SeamlessImmutable({
-        ...state,
-        jurisdictionIdsByPlanId: action.jurisdictionIdsByPlanId,
       });
     default:
       return state;
@@ -214,17 +132,17 @@ export default function reducer(
  * @param {Jurisdiction[]} jurisdictionList - array of jurisdiction objects
  * @returns {FetchJurisdictionAction} FetchJurisdictionAction
  */
-export const fetchJurisdictions = (jurisdictionList: AnyJurisdiction[] = []) => {
+export const fetchJurisdictions = (jurisdictionList: Jurisdiction[] = []) => {
   return {
     allJurisdictionIds: keyBy(
-      jurisdictionList.map((j: AnyJurisdiction) => ({
+      jurisdictionList.map((j: Jurisdiction) => ({
         id: j.jurisdiction_id,
         isLoaded: typeof j.geojson !== 'undefined',
       })),
       j => j.id
     ),
     jurisdictionsById: keyBy(
-      jurisdictionList.map((item: AnyJurisdiction) => {
+      jurisdictionList.map((item: Jurisdiction) => {
         const previousItem = getJurisdictionById(store.getState(), item.jurisdiction_id);
         /** ensure geojson is parsed */
         if (typeof item.geojson === 'string') {
@@ -263,26 +181,6 @@ export const fetchAllJurisdictionIds = (jurisdictionIds: string[]) => ({
   type: FETCH_ALL_JURISDICTION_IDS,
 });
 
-/** fetch childrenByParentId creator
- * @param {ChildrenByParentId} childrenByParentId
- */
-export const fetchChildrenByParentId = (childrenByParentId: ChildrenByParentId) => {
-  return {
-    childrenByParentId,
-    type: FETCH_CHILDREN_BY_PARENT_ID,
-  };
-};
-
-/** fetch JurisdictionIdsByPlanId creator
- * @param {JurisdictionIdsByPlanId} childrenByParentId
- */
-export const fetchJurisdictionIdsByPlanId = (jurisdictionIdsByPlanId: JurisdictionIdsByPlanId) => {
-  return {
-    jurisdictionIdsByPlanId,
-    type: FETCH_JURISIDCTIONS_BY_PLAN_ID,
-  };
-};
-
 // actions
 /** removeJurisdictions Action */
 export const removeJurisdictionsAction = {
@@ -294,18 +192,6 @@ export const removeJurisdictionsAction = {
 export const removeAllJurisdictionIdsAction: RemoveAllJurisdictionIdsAction = {
   allJurisdictionIds: {},
   type: REMOVE_ALL_JURISDICTION_IDS,
-};
-
-/** remove childrenByParentId Action */
-export const removeChildrenByParentIdAction: RemoveChildrenByParentIdAction = {
-  childrenByParentId: {},
-  type: REMOVE_CHILDREN_BY_PARENT_ID,
-};
-
-/** remove childrenByParentId Action */
-export const removeJurisdictionIdsByPlanId: RemoveJurisdictionIdsByPlanId = {
-  jurisdictionIdsByPlanId: {},
-  type: REMOVE_JURISIDCTIONS_BY_PLAN_ID,
 };
 
 // selectors
@@ -363,20 +249,4 @@ export function getAllJurisdictionsIdArray(
       isLoaded ? j.isLoaded : !j.isLoaded
     )
   );
-}
-
-/** get the full childrenByParentId object
- * @param {Partial<Store>} state - the redux store
- * @returns {ChildrenByParentId} an object keyed by parentId contain ids of all descendant jurisdictions
- */
-export function getChildrenByParentId(state: Partial<Store>): ChildrenByParentId {
-  return (state as any)[reducerName].childrenByParentId;
-}
-
-/** get the full jurisdictionIdsByPlanId object
- * @param {Partial<Store>} state - the redux store
- * @returns {JurisdictionIdsByPlanId} an object keyed by planId containing ids of all relevant jurisdictions
- */
-export function getJurisdictionIdsByPlanId(state: Partial<Store>): JurisdictionIdsByPlanId {
-  return (state as any)[reducerName].jurisdictionIdsByPlanId;
 }

@@ -1,8 +1,4 @@
-import {
-  ChildrenByParentId,
-  Jurisdiction,
-  JurisdictionIdsByPlanId,
-} from '../../../../../store/ducks/jurisdictions';
+import { Jurisdiction } from '../../../../../store/ducks/jurisdictions';
 
 export const irsPlanDefinition1 = {
   action: [
@@ -110,12 +106,12 @@ export const jurisdictionsArray: Jurisdiction[] = [
   jurisdictionsById['3952'],
 ];
 
-export const childrenByParentId: ChildrenByParentId = {
+export const childrenByParentId = {
   '0': ['1A', '1B', '1Aa', '1Ab', '1Ba', '1Bb', '3952'],
   '1A': ['1Aa', '1Ab'],
   '1B': ['1Ba', '1Bb', '3952'],
 };
 
-export const jurisdictionIdsByPlanId: JurisdictionIdsByPlanId = {
+export const jurisdictionIdsByPlanId = {
   [irsPlanRecord1.id]: ['1A', '1B', '1Aa', '1Ab', '1Ba', '1Bb', '3952'],
 };
