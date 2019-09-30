@@ -21,13 +21,7 @@ import {
   sidebarIndicatorRowsIRS,
   sidebarLegendStopsIRS,
 } from '../../../../configs/settings';
-import {
-  HOME,
-  HOME_URL,
-  IRS_REPORTING_TITLE,
-  MAP,
-  REPORT_IRS_PLAN_URL,
-} from '../../../../constants';
+import { HOME, HOME_URL, IRS_REPORTING_TITLE, REPORT_IRS_PLAN_URL } from '../../../../constants';
 import ProgressBar from '../../../../helpers/ProgressBar';
 import { RouteParams } from '../../../../helpers/utils';
 import supersetFetch from '../../../../services/superset';
@@ -200,7 +194,7 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
 
   const breadcrumbProps = {
     currentPage: {
-      label: `${focusArea.jurisdiction_name} ${MAP}`,
+      label: `${focusArea.jurisdiction_name}`,
       url: `${focusAreaURL}/map`,
     },
     pages: [
@@ -216,11 +210,6 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
   };
 
   const jurisdictionBreadCrumbs = getJurisdictionBreadcrumbs(focusArea, baseURL);
-
-  jurisdictionBreadCrumbs.push({
-    label: focusArea.jurisdiction_name,
-    url: `${baseURL}/${focusArea.jurisdiction_id}`,
-  });
 
   const newPages = breadcrumbProps.pages.concat(jurisdictionBreadCrumbs);
   breadcrumbProps.pages = newPages;
