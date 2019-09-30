@@ -1,5 +1,118 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`components/IRS Reports/JurisdictionReport renders correctly 1`] = `
+Object {
+  "CellComponent": [Function],
+  "columns": Array [
+    Object {
+      "Header": "Name",
+      "columns": Array [
+        Object {
+          "Cell": [Function],
+          "Header": "",
+          "accessor": "jurisdiction_name",
+          "minWidth": 180,
+        },
+      ],
+    },
+    Object {
+      "Header": "Total Spray Areas",
+      "columns": Array [
+        Object {
+          "Header": "",
+          "accessor": "totareas",
+        },
+      ],
+    },
+    Object {
+      "Header": "Targeted Spray Areas",
+      "columns": Array [
+        Object {
+          "Header": "",
+          "accessor": "targareas",
+        },
+      ],
+    },
+    Object {
+      "Header": "% visited Spray Areas Effectively sprayed",
+      "columns": Array [
+        Object {
+          "Cell": [Function],
+          "Header": "",
+          "accessor": "perctvisareaseffect",
+          "className": "indicator centered",
+        },
+      ],
+    },
+    Object {
+      "Header": "Total Structures",
+      "columns": Array [
+        Object {
+          "Header": "",
+          "accessor": "totstruct",
+        },
+      ],
+    },
+    Object {
+      "Header": "Targeted Structures",
+      "columns": Array [
+        Object {
+          "Header": "",
+          "accessor": "targstruct",
+        },
+      ],
+    },
+    Object {
+      "Header": "Sprayed Structures",
+      "columns": Array [
+        Object {
+          "Header": "",
+          "accessor": "sprayedstruct",
+        },
+      ],
+    },
+    Object {
+      "Header": "Spray coverage of targeted (Progress)",
+      "columns": Array [
+        Object {
+          "Cell": [Function],
+          "Header": "",
+          "accessor": "spraycovtarg",
+          "className": "indicator centered",
+        },
+      ],
+    },
+    Object {
+      "Header": "Room coverage of structures sprayed",
+      "columns": Array [
+        Object {
+          "Cell": [Function],
+          "Header": "",
+          "accessor": "roomcov",
+          "className": "indicator centered",
+        },
+      ],
+    },
+  ],
+  "data": Any<Object>,
+  "defaultPageSize": 154,
+  "extraCellProps": Object {
+    "urlPath": "/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce",
+  },
+  "getTdProps": [Function],
+  "hasChildren": [Function],
+  "identifierField": "jurisdiction_id",
+  "linkerField": "jurisdiction_name",
+  "minRows": 0,
+  "parentIdentifierField": "jurisdiction_parent_id",
+  "resizable": true,
+  "rootParentId": "",
+  "shouldUseEffect": false,
+  "showPagination": false,
+  "useDrillDownTrProps": false,
+}
+`;
+
 exports[`components/IRS Reports/JurisdictionReport renders correctly: breadcrumbs 1`] = `
 Array [
   <li
