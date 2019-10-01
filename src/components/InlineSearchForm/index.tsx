@@ -14,17 +14,20 @@ const defaultInitialValues: FieldProps = {
   searchText: '',
 };
 
+/** Props for inlineSearch component */
 export interface Props {
   handleSubmit?: (values: FieldProps) => void;
   inputId: string;
   inputPlaceholder: string;
 }
 
+/** default values for props for this component */
 const defaultProps: Props = {
   inputId: 'search',
   inputPlaceholder: 'Search',
 };
 
+/** the InlineSearchForm component */
 const InlineSearchForm = (props: Props) => {
   const { handleSubmit, inputPlaceholder, inputId } = props;
   return (
