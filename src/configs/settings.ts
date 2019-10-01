@@ -1,6 +1,19 @@
-/** This is the main configuration module */
+/** This is the main configuration module
+ *
+ * **** IMPORT RULES ****
+ * To avoid circular imports or anything of that nature, the only imports from the Reveal
+ * code base allowed in this module are from the following modules:
+ *  - constants
+ *  - envs
+ *  - colors
+ *
+ * **** CODE RULES ****
+ * To keep things simple, the code in this module should be simple statements.  Use of
+ * functions is discouraged and should only be done if there is no other way.
+ */
 import { Providers } from '@onaio/gatekeeper';
 import { Expression, LngLatBoundsLike } from 'mapbox-gl';
+import { BLACK, TASK_GREEN, TASK_ORANGE, TASK_RED, TASK_YELLOW } from '../colors';
 import {
   DOMAIN_NAME,
   ENABLE_ONADATA_OAUTH,
@@ -705,6 +718,119 @@ export const symbolLayerConfig = {
 export const adminLayerColors = ['black', 'red', 'orange', 'yellow', 'green'];
 export type adminLayerColorsType = typeof adminLayerColors[number];
 
+/** interface describing threshold configs for IRS report indicators */
+export interface IndicatorThresholds {
+  [key: string]: {
+    color: any;
+    orEquals?: boolean;
+    value: number;
+  };
+}
+
+/** Indicator Thresholds for NA (Namibia) */
+export const indicatorThresholdsNA: IndicatorThresholds = {
+  GREEN_THRESHOLD: {
+    color: '#2ECC40',
+    value: 1,
+  },
+  GREY_THRESHOLD: {
+    color: '#dddddd',
+    value: 0.2,
+  },
+  RED_THRESHOLD: {
+    color: '#FF4136',
+    orEquals: true,
+    value: 0.75,
+  },
+  YELLOW_THRESHOLD: {
+    color: '#FFDC00',
+    value: 0.9,
+  },
+};
+
+/** interface describing base configs for irs reporting configurations */
+export interface IrsReportingConfig {
+  indicatorThresholds: IndicatorThresholds;
+}
+
+/* tslint:disable:object-literal-sort-keys */
+/** The actual configuration object controlling how IRS Reporting is handled for different clients */
+export const irsReportingCongif: {
+  [key: string]: IrsReportingConfig;
+} = {
+  // Namibia Structures Configs
+  [process.env.REACT_APP_SUPERSET_IRS_REPORTING_STRUCTURES_DATA_SLICE_NA as string]: {
+    indicatorThresholds: indicatorThresholdsNA,
+  } as IrsReportingConfig,
+};
+/* tslint:enable:object-literal-sort-keys */
+
+/** IRS Reporting interfaces */
+export interface IndicatorRowItem {
+  denominator: string | number;
+  description: string;
+  numerator: string | number;
+  title: string;
+  value: string | number;
+}
+
+export type IndicatorRows = IndicatorRowItem[];
+/** END IRS Reporting interfaces */
+
+/** IRS Reporting configs */
+export const sidebarLegendStopsIRS: string[][] = [
+  ['Complete', TASK_GREEN],
+  ['Not Sprayed', TASK_RED],
+  ['Partially Sprayed', TASK_ORANGE],
+  ['Not Visited', TASK_YELLOW],
+  ['Not Eligible', BLACK],
+];
+
+export const sidebarIndicatorRowsIRS: IndicatorRows = [
+  {
+    denominator: 'totstruct',
+    description: 'Percent of structures sprayed over found',
+    numerator: 'foundstruct',
+    title: 'Found Coverage',
+    value: 'spraytarg',
+  },
+  {
+    denominator: 'totstruct',
+    description: 'Percent of structures sprayed over total',
+    numerator: 'sprayedstruct',
+    title: 'Spray Coverage (Effectiveness)',
+    value: 'spraycov',
+  },
+  {
+    denominator: 'foundstruct',
+    description: 'Percent of structures sprayed over found',
+    numerator: 'sprayedstruct',
+    title: 'Spray Success Rate (PMI SC)',
+    value: 'spraysuccess',
+  },
+];
+
+export const indicatorThresholdsIRS = {
+  GREEN_THRESHOLD: {
+    color: '#2ECC40',
+    value: 1,
+  },
+  GREY_THRESHOLD: {
+    color: '#dddddd',
+    value: 0.2,
+  },
+  RED_THRESHOLD: {
+    color: '#FF4136',
+    orEquals: true,
+    value: 0.75,
+  },
+  YELLOW_THRESHOLD: {
+    color: '#FFDC00',
+    value: 0.9,
+  },
+};
+/** END IRS Reporting configs */
+
 /** Interfaces describing administrative hierarchy via ISO 3166 admin codes */
 export interface ADMN0 {
   ADMN0_PCODE: string;
@@ -727,14 +853,14 @@ export const baseTilesetGeographicLevel: number = 1; // this tells the Jurisdict
 export const JurisdictionLevels = ['administrative', 'operational'] as const;
 export type JurisdictionTypes = typeof JurisdictionLevels[number];
 export interface Tileset {
-  idField: string; // the feature property cooresponding with jurisdiction_id (for joining)
+  idField: string; // the feature property corresponding with jurisdiction_id (for joining)
   jurisdictionType: JurisdictionTypes; // Admin or OA/FA/SA
-  labelField?: string; // the feature property cooresponding with the display name
+  labelField?: string; // the feature property corresponding with the display name
   layer: string; // the Mapbox tileset-layer name
-  parentIdField: string; // the feature property cooresponding with parent_id (for joining)
+  parentIdField: string; // the feature property corresponding with parent_id (for joining)
   url: string; // the Mapbox tileset url
 }
-/** interface descbribing basic country level information */
+/** interface describing basic country level information */
 export interface JurisdictionsByCountry extends ADMN0 {
   // the GPS extents of given geometry(s)
   bounds?: LngLatBoundsLike;

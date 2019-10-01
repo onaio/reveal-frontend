@@ -97,7 +97,7 @@ Object {
                 activeClassName="active"
                 aria-current="page"
                 className="nav-link"
-                to="/intervention/irs"
+                to="/intervention/irs/drafts"
               >
                 IRS
               </NavLink>
@@ -147,6 +147,21 @@ Object {
                   to="/focus-investigation/historical"
                 >
                   Historical FI
+                </NavLink>
+              </DropdownItem>
+            </div>
+            <div>
+              <DropdownItem
+                tag="button"
+                toggle={true}
+              >
+                <NavLink
+                  activeClassName="active"
+                  aria-current="page"
+                  className="nav-link"
+                  to="/intervention/irs/report"
+                >
+                  IRS Reporting
                 </NavLink>
               </DropdownItem>
             </div>
@@ -297,7 +312,7 @@ Object {
                 activeClassName="active"
                 aria-current="page"
                 className="nav-link"
-                to="/intervention/irs"
+                to="/intervention/irs/drafts"
               >
                 IRS
               </NavLink>
@@ -347,6 +362,21 @@ Object {
                   to="/focus-investigation/historical"
                 >
                   Historical FI
+                </NavLink>
+              </DropdownItem>
+            </div>
+            <div>
+              <DropdownItem
+                tag="button"
+                toggle={true}
+              >
+                <NavLink
+                  activeClassName="active"
+                  aria-current="page"
+                  className="nav-link"
+                  to="/intervention/irs/report"
+                >
+                  IRS Reporting
                 </NavLink>
               </DropdownItem>
             </div>

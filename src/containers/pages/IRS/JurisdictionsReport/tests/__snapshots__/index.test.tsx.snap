@@ -1,0 +1,190 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components/IRS Reports/JurisdictionReport drills down correctly 1`] = `
+Object {
+  "CellComponent": [Function],
+  "columns": Any<Object>,
+  "data": Any<Object>,
+  "defaultPageSize": 154,
+  "extraCellProps": Object {
+    "urlPath": "/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce",
+  },
+  "getTdProps": [Function],
+  "hasChildren": [Function],
+  "identifierField": "jurisdiction_id",
+  "linkerField": "jurisdiction_name",
+  "minRows": 0,
+  "parentIdentifierField": "jurisdiction_parent_id",
+  "resizable": true,
+  "rootParentId": "",
+  "shouldUseEffect": false,
+  "showPagination": false,
+  "useDrillDownTrProps": false,
+}
+`;
+
+exports[`components/IRS Reports/JurisdictionReport drills down correctly 2`] = `
+Object {
+  "CellComponent": [Function],
+  "columns": Any<Object>,
+  "data": Any<Object>,
+  "defaultPageSize": 154,
+  "extraCellProps": Object {
+    "urlPath": "/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce",
+  },
+  "getTdProps": [Function],
+  "hasChildren": [Function],
+  "identifierField": "jurisdiction_id",
+  "linkerField": "jurisdiction_name",
+  "minRows": 0,
+  "parentIdentifierField": "jurisdiction_parent_id",
+  "resizable": true,
+  "rootParentId": "22bc44dd-752d-4c20-8761-617361b4f1e7",
+  "shouldUseEffect": false,
+  "showPagination": false,
+  "useDrillDownTrProps": false,
+}
+`;
+
+exports[`components/IRS Reports/JurisdictionReport drills down correctly 3`] = `
+Object {
+  "CellComponent": [Function],
+  "columns": Any<Object>,
+  "data": Any<Object>,
+  "defaultPageSize": 154,
+  "extraCellProps": Object {
+    "urlPath": "/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce",
+  },
+  "getTdProps": [Function],
+  "hasChildren": [Function],
+  "identifierField": "jurisdiction_id",
+  "linkerField": "jurisdiction_name",
+  "minRows": 0,
+  "parentIdentifierField": "jurisdiction_parent_id",
+  "resizable": true,
+  "rootParentId": "fd5a22ba-fa0e-4fdc-ae1c-1db8965b7b43",
+  "shouldUseEffect": false,
+  "showPagination": false,
+  "useDrillDownTrProps": false,
+}
+`;
+
+exports[`components/IRS Reports/JurisdictionReport drills down correctly 4`] = `
+Object {
+  "CellComponent": [Function],
+  "columns": Any<Object>,
+  "data": Any<Object>,
+  "defaultPageSize": 154,
+  "extraCellProps": Object {
+    "urlPath": "/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce",
+  },
+  "getTdProps": [Function],
+  "hasChildren": [Function],
+  "identifierField": "jurisdiction_id",
+  "linkerField": "jurisdiction_name",
+  "minRows": 0,
+  "parentIdentifierField": "jurisdiction_parent_id",
+  "resizable": true,
+  "rootParentId": "8f1fd4cf-264d-4ed6-8838-e538c5845d46",
+  "shouldUseEffect": false,
+  "showPagination": false,
+  "useDrillDownTrProps": false,
+}
+`;
+
+exports[`components/IRS Reports/JurisdictionReport drills down correctly 5`] = `
+Object {
+  "CellComponent": [Function],
+  "columns": Any<Object>,
+  "data": Any<Object>,
+  "defaultPageSize": 154,
+  "extraCellProps": Object {
+    "urlPath": "/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce",
+  },
+  "getTdProps": [Function],
+  "hasChildren": [Function],
+  "identifierField": "jurisdiction_id",
+  "linkerField": "jurisdiction_name",
+  "minRows": 0,
+  "parentIdentifierField": "jurisdiction_parent_id",
+  "resizable": true,
+  "rootParentId": "2bf9915d-8725-4061-983d-5938802ac0f0",
+  "shouldUseEffect": false,
+  "showPagination": false,
+  "useDrillDownTrProps": false,
+}
+`;
+
+exports[`components/IRS Reports/JurisdictionReport renders correctly 1`] = `
+Object {
+  "CellComponent": [Function],
+  "columns": Any<Object>,
+  "data": Any<Object>,
+  "defaultPageSize": 154,
+  "extraCellProps": Object {
+    "urlPath": "/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce",
+  },
+  "getTdProps": [Function],
+  "hasChildren": [Function],
+  "identifierField": "jurisdiction_id",
+  "linkerField": "jurisdiction_name",
+  "minRows": 0,
+  "parentIdentifierField": "jurisdiction_parent_id",
+  "resizable": true,
+  "rootParentId": "",
+  "shouldUseEffect": false,
+  "showPagination": false,
+  "useDrillDownTrProps": false,
+}
+`;
+
+exports[`components/IRS Reports/JurisdictionReport renders correctly: breadcrumbs 1`] = `
+Array [
+  <li
+    className="breadcrumb-item"
+  >
+    <Link
+      key="0"
+      replace={false}
+      to="/"
+    >
+      <a
+        href="/"
+        onClick={[Function]}
+      >
+        Home
+      </a>
+    </Link>
+  </li>,
+  <li
+    className="breadcrumb-item"
+  >
+    <Link
+      key="1"
+      replace={false}
+      to="/intervention/irs/report"
+    >
+      <a
+        href="/intervention/irs/report"
+        onClick={[Function]}
+      >
+        IRS Reporting
+      </a>
+    </Link>
+  </li>,
+  <li
+    aria-current="page"
+    className="active breadcrumb-item"
+  >
+    IRS 2019-09-05 TEST
+  </li>,
+]
+`;
+
+exports[`components/IRS Reports/JurisdictionReport renders correctly: page title 1`] = `
+<h3
+  className="mb-3 page-title"
+>
+  IRS Reporting: IRS 2019-09-05 TEST
+</h3>
+`;

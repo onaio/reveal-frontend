@@ -168,6 +168,7 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
   <ProgressBar
     decimalPoints={0}
     height="10px"
+    indicatorThresholds={null}
     max={1}
     min={0}
     value={0}

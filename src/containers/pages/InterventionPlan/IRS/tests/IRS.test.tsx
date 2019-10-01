@@ -6,7 +6,7 @@ import { Helmet } from 'react-helmet';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import ConnectedIrsPlans, { IrsPlans } from '..';
-import { IRS_TITLE } from '../../../../../constants';
+import { IRS_PLANS } from '../../../../../constants';
 import { FI_SINGLE_URL } from '../../../../../constants';
 import store from '../../../../../store';
 import { Plan } from '../../../../../store/ducks/plans';
@@ -64,7 +64,7 @@ describe('containers/pages/IRS', () => {
       </Provider>
     );
     const helmet = Helmet.peek();
-    expect(helmet.title).toEqual(IRS_TITLE);
+    expect(helmet.title).toEqual(IRS_PLANS);
     expect(toJson(wrapper)).toMatchSnapshot();
     wrapper.unmount();
   });
