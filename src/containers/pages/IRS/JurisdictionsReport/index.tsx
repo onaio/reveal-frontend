@@ -57,9 +57,7 @@ export interface GenericJurisdictionProps {
 /** Renders IRS Jurisdictions reports */
 const JurisdictionReport = (props: GenericJurisdictionProps & RouteComponentProps<RouteParams>) => {
   const [jurisdictionId, setJurisdictionId] = useState<string | null>(
-    props.match && props.match.params && props.match.params.jurisdictionId
-      ? props.match.params.jurisdictionId
-      : null
+    (props.match && props.match.params && props.match.params.jurisdictionId) || null
   );
   const [loading, setLoading] = useState<boolean>(true);
 
