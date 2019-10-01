@@ -2,8 +2,6 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import { keyBy, values } from 'lodash';
 import { Reducer, Selector } from 'redux-testkit';
-import store from '../../../..';
-import * as fixtures from '../../../tests/fixtures';
 import reducer, {
   fetchPractitionerRoles,
   fetchPractitioners,
@@ -15,7 +13,9 @@ import reducer, {
   reducerName,
   removePractitionerRolesAction,
   removePractitionersAction,
-} from '../practitioners';
+} from '..';
+import store from '../../../..';
+import * as fixtures from '../../../tests/fixtures';
 
 reducerRegistry.register(reducerName, reducer);
 
