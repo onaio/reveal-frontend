@@ -293,6 +293,9 @@ export function getTree(
   item: FlexObject,
   result: FlexObject[] = []
 ): FlexObject[] {
+  // note - this function is tail-recursive but we may need to consider
+  // javascript interpreters which don't support tail call optimization,
+  // as this might have unintended performac issues
   if (item.jurisdiction_parent_id === null && !result.includes(item)) {
     result.push(item);
   } else {
