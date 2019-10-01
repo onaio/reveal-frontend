@@ -96,7 +96,7 @@ const JurisdictionReport = (props: GenericJurisdictionProps & RouteComponentProp
         );
       });
     } catch (e) {
-      // do something with the error?
+      // todo - handle error https://github.com/onaio/reveal-frontend/issues/300
     } finally {
       setLoading(false);
     }
