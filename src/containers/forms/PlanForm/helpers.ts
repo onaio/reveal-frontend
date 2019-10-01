@@ -14,31 +14,33 @@ import {
 } from '../../../configs/env';
 import {
   actionReasons,
-  ActionReasonType,
   FIClassifications,
   FIReasons,
-  FIReasonType,
-  FIStatusType,
   goalPriorities,
-  GoalPriorityType,
   PlanAction,
   PlanActionCodes,
-  PlanActionCodesType,
   planActivities,
   PlanActivity,
-  PlanActivityTitlesType,
   PlanDefinition,
   PlanGoal,
   PlanGoalDetail,
   PlanGoaldetailQuantity,
   PlanGoalTarget,
   taskGenerationStatuses,
-  taskGenerationStatusType,
   UseContext,
 } from '../../../configs/settings';
 import { DATE, IS, NAME, REQUIRED } from '../../../constants';
 import { generateNameSpacedUUID } from '../../../helpers/utils';
 import { InterventionType, PlanStatus } from '../../../store/ducks/plans';
+import {
+  ActionReasonType,
+  FIReasonType,
+  FIStatusType,
+  GoalPriorityType,
+  PlanActionCodesType,
+  PlanActivityTitlesType,
+  taskGenerationStatusType,
+} from './types';
 
 /** separate FI and IRS activities */
 export const FIActivities = omit(planActivities, ['IRS']);

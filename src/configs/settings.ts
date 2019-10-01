@@ -14,6 +14,13 @@
 import { Providers } from '@onaio/gatekeeper';
 import { Expression, LngLatBoundsLike } from 'mapbox-gl';
 import {
+  ActionReasonType,
+  GoalPriorityType,
+  PlanActionCodesType,
+  PlanActivities,
+  UseContextCodesType,
+} from '../containers/forms/PlanForm/types';
+import {
   DOMAIN_NAME,
   ENABLE_ONADATA_OAUTH,
   ENABLE_OPENSRP_OAUTH,
@@ -29,7 +36,7 @@ import {
   OPENSRP_USER_URL,
 } from './env';
 
-/** Interfaces and Types */
+/** Interfaces */
 
 /** Interface for a Focus Investigation Classification */
 export interface Classification {
@@ -106,19 +113,15 @@ export const locationHierarchy: LocationItem[] = [
 /** Focus investigation configs */
 /** Allowed FI Status values */
 export const FIStatuses = ['A1', 'A2', 'B1', 'B2'] as const;
-export type FIStatusType = typeof FIStatuses[number];
 
 /** Allowed FI Status values */
 export const FIReasons = ['Routine', 'Case Triggered'] as const;
-export type FIReasonType = typeof FIReasons[number];
 
 /** Allowed goal priority values */
 export const goalPriorities = ['low-priority', 'medium-priority', 'high-priority'] as const;
-export type GoalPriorityType = typeof goalPriorities[number];
 
 /** Allowed action Reason values */
 export const actionReasons = ['Investigation', 'Routine'] as const;
-export type ActionReasonType = typeof actionReasons[number];
 
 /** Allowed useContext Code values */
 export const useContextCodes = [
@@ -129,7 +132,6 @@ export const useContextCodes = [
   'caseNum',
   'taskGenerationStatus',
 ] as const;
-export type UseContextCodesType = typeof useContextCodes[number];
 
 /** Plan activity code values */
 export const PlanActionCodes = [
@@ -142,11 +144,9 @@ export const PlanActionCodes = [
   'Larval Dipping',
   'Mosquito Collection',
 ] as const;
-export type PlanActionCodesType = typeof PlanActionCodes[number];
 
 /** Allowed taskGenerationStatus values */
 export const taskGenerationStatuses = ['True', 'False'] as const;
-export type taskGenerationStatusType = typeof taskGenerationStatuses[number];
 
 /** Plan Action Timing Period */
 export interface PlanActionTimingPeriod {
@@ -217,10 +217,6 @@ export const PlanActivityTitles = [
   'BCC',
   'IRS',
 ] as const;
-export type PlanActivityTitlesType = typeof PlanActivityTitles[number];
-
-/** type to describe plan activities */
-export type PlanActivities = { [K in PlanActivityTitlesType]: PlanActivity };
 
 /** default plan activities */
 export const planActivities: PlanActivities = {
