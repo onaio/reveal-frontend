@@ -13,13 +13,7 @@
  */
 import { Providers } from '@onaio/gatekeeper';
 import { Expression, LngLatBoundsLike } from 'mapbox-gl';
-import { CellInfo } from 'react-table';
-import { BLACK, GREY, TASK_GREEN, TASK_ORANGE, TASK_RED, TASK_YELLOW } from '../colors';
-import { STRUCTURE_LAYER } from '../constants';
-import { getThresholdAdherenceIndicator } from '../helpers/indicators';
-import { FeatureCollection, FlexObject } from '../helpers/utils';
-import { Jurisdiction } from '../store/ducks/jurisdictions';
-import { Structure, StructureGeoJSON } from '../store/ducks/structures';
+import { BLACK, TASK_GREEN, TASK_ORANGE, TASK_RED, TASK_YELLOW } from '../colors';
 import {
   DOMAIN_NAME,
   ENABLE_ONADATA_OAUTH,
@@ -754,7 +748,7 @@ export const indicatorThresholdsNA: IndicatorThresholds = {
   },
 };
 
-/** interface descrbing base configs for irs reporting configurations */
+/** interface describing base configs for irs reporting configurations */
 export interface IrsReportingConfig {
   indicatorThresholds: IndicatorThresholds;
 }
@@ -859,14 +853,14 @@ export const baseTilesetGeographicLevel: number = 1; // this tells the Jurisdict
 export const JurisdictionLevels = ['administrative', 'operational'] as const;
 export type JurisdictionTypes = typeof JurisdictionLevels[number];
 export interface Tileset {
-  idField: string; // the feature property cooresponding with jurisdiction_id (for joining)
+  idField: string; // the feature property corresponding with jurisdiction_id (for joining)
   jurisdictionType: JurisdictionTypes; // Admin or OA/FA/SA
-  labelField?: string; // the feature property cooresponding with the display name
+  labelField?: string; // the feature property corresponding with the display name
   layer: string; // the Mapbox tileset-layer name
-  parentIdField: string; // the feature property cooresponding with parent_id (for joining)
+  parentIdField: string; // the feature property corresponding with parent_id (for joining)
   url: string; // the Mapbox tileset url
 }
-/** interface descbribing basic country level information */
+/** interface describing basic country level information */
 export interface JurisdictionsByCountry extends ADMN0 {
   // the GPS extents of given geometry(s)
   bounds?: LngLatBoundsLike;
