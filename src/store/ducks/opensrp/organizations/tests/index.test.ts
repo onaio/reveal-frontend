@@ -1,7 +1,6 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import { keyBy } from 'lodash';
 import { FlushThunks } from 'redux-testkit';
-import store from '../../index';
 import reducer, {
   fetchOrganizations,
   getOrganizationById,
@@ -10,8 +9,9 @@ import reducer, {
   Organization,
   reducerName,
   removeOrganizationsAction,
-} from '../organizations';
-import * as fixtures from './fixtures';
+} from '..';
+import store from '../../../../index';
+import * as fixtures from '../../../tests/fixtures';
 
 reducerRegistry.register(reducerName, reducer);
 

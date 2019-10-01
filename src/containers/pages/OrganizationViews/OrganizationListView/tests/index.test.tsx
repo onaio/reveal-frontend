@@ -10,8 +10,8 @@ import store from '../../../../../store';
 import {
   fetchOrganizations,
   removeOrganizationsAction,
-} from '../../../../../store/ducks/organizations';
-import * as orgDucks from '../../../../../store/ducks/organizations';
+} from '../../../../../store/ducks/opensrp/organizations';
+import * as orgDucks from '../../../../../store/ducks/opensrp/organizations';
 import * as fixtures from '../../../../../store/ducks/tests/fixtures';
 import ConnectedOrgsListView, { OrganizationListView } from '../../OrganizationListView';
 import { state } from './fixtures';
