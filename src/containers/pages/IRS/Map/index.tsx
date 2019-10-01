@@ -204,6 +204,10 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
       },
       {
         label: IRS_REPORTING_TITLE,
+        url: REPORT_IRS_PLAN_URL,
+      },
+      {
+        label: plan.plan_title,
         url: baseURL,
       },
     ],
