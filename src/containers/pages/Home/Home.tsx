@@ -36,7 +36,7 @@ class Home extends React.Component<{}, {}> {
               <Link to={INTERVENTION_IRS_URL} className="home-link">
                 <Button
                   color="outline"
-                  className="btn-home-call-to-action btn-lg btn-block btn-outline-green"
+                  className="btn-intervention btn-lg btn-block btn-outline-green"
                 >
                   IRS
                 </Button>
@@ -48,7 +48,7 @@ class Home extends React.Component<{}, {}> {
               <Link to={FI_URL} className="home-link">
                 <Button
                   color="outline"
-                  className="btn-home-call-to-action btn-lg btn-block btn-outline-green"
+                  className="btn-intervention btn-lg btn-block btn-outline-green"
                 >
                   Focus Investigation
                 </Button>
@@ -60,7 +60,7 @@ class Home extends React.Component<{}, {}> {
               <Link to={TEAM_LIST_URL} className="home-link">
                 <Button
                   color="outline"
-                  className="btn-home-call-to-action btn-lg btn-block btn-outline-green"
+                  className="btn-intervention btn-lg btn-block btn-outline-green"
                 >
                   {ORGANIZATIONS_LABEL}
                 </Button>

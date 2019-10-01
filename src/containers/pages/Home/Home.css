@@ -1,4 +1,4 @@
-.btn-home-call-to-action {
+.btn-intervention {
   min-height: 234px;
 }
 
@@ -7,11 +7,11 @@
   text-decoration: none;
 }
 
-.btn-outline-green.btn-home-call-to-action {
+.btn-outline-green.btn-intervention {
   border-color: #cccccc;
 }
 
-.btn-outline-green.btn-home-call-to-action {
+.btn-outline-green.btn-intervention {
   color: #007742;
   background-color: #ffffff;
   border: 2px solid #007742;

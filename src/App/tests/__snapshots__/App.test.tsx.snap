@@ -949,13 +949,13 @@ exports[`App renders App correctly 1`] = `
                                               onClick={[Function]}
                                             >
                                               <Button
-                                                className="btn-home-call-to-action btn-lg btn-block btn-outline-green"
+                                                className="btn-intervention btn-lg btn-block btn-outline-green"
                                                 color="outline"
                                                 tag="button"
                                               >
                                                 <button
                                                   aria-label={null}
-                                                  className="btn-home-call-to-action btn-lg btn-block btn-outline-green btn btn-outline"
+                                                  className="btn-intervention btn-lg btn-block btn-outline-green btn btn-outline"
                                                   onClick={[Function]}
                                                 >
                                                   IRS
@@ -992,13 +992,13 @@ exports[`App renders App correctly 1`] = `
                                               onClick={[Function]}
                                             >
                                               <Button
-                                                className="btn-home-call-to-action btn-lg btn-block btn-outline-green"
+                                                className="btn-intervention btn-lg btn-block btn-outline-green"
                                                 color="outline"
                                                 tag="button"
                                               >
                                                 <button
                                                   aria-label={null}
-                                                  className="btn-home-call-to-action btn-lg btn-block btn-outline-green btn btn-outline"
+                                                  className="btn-intervention btn-lg btn-block btn-outline-green btn btn-outline"
                                                   onClick={[Function]}
                                                 >
                                                   Focus Investigation
@@ -1035,13 +1035,13 @@ exports[`App renders App correctly 1`] = `
                                               onClick={[Function]}
                                             >
                                               <Button
-                                                className="btn-home-call-to-action btn-lg btn-block btn-outline-green"
+                                                className="btn-intervention btn-lg btn-block btn-outline-green"
                                                 color="outline"
                                                 tag="button"
                                               >
                                                 <button
                                                   aria-label={null}
-                                                  className="btn-home-call-to-action btn-lg btn-block btn-outline-green btn btn-outline"
+                                                  className="btn-intervention btn-lg btn-block btn-outline-green btn btn-outline"
                                                   onClick={[Function]}
                                                 >
                                                   Teams
