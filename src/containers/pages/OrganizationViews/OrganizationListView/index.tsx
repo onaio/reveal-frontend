@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
 import InlineSearchForm, {
+  FieldProps,
   Props as InlineSearchFormProps,
 } from '../../../../components/InlineSearchForm';
 import LinkAsButton from '../../../../components/LinkAsButton';
@@ -119,7 +120,7 @@ const OrganizationListView = (props: OrgsListViewPropsType) => {
 
   /** function to handle the submit on the inline search form */
   // tslint:disable-next-line: no-empty
-  function handleSubmit(event: React.FormEvent) {}
+  function handleSubmit(data: FieldProps) {}
 
   const loadOrganizations = async (service: typeof serviceClass) => {
     const serve = new service(OPENSRP_ORGANIZATION_ENDPOINT);
