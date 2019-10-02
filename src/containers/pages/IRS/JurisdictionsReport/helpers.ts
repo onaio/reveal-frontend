@@ -281,31 +281,3 @@ export const IRSTableColumns: { [key: string]: Column[] } = {
   zambiaFocusArea2019: ZambiaFocusAreasColumns,
   zambiaJurisdictions2019: ZambiaJurisdictionsColumns,
 };
-
-/** extract hierarchical tree of jurisdictions as a list, with the highest
- * level item in the hierarchy as the 0th element
- * @param {FlexObject[]} tree - the data set
- * @param {FlexObject} item - the item in question
- * @returns {FlexObject[]} - the hierarchy for the item in question
- */
-export function getTree(
-  tree: FlexObject[],
-  item: FlexObject,
-  result: FlexObject[] = []
-): FlexObject[] {
-  // note - this function is tail-recursive but we may need to consider
-  // javascript interpreters which don't support tail call optimization,
-  // as this might have unintended performac issues
-  if (item.jurisdiction_parent_id === null && !result.includes(item)) {
-    result.push(item);
-  } else {
-    const parentItems = tree.filter(el => el.jurisdiction_id === item.jurisdiction_parent_id);
-    if (parentItems.length > 0) {
-      if (!result.includes(parentItems[0])) {
-        result.push(parentItems[0]);
-      }
-      return getTree(tree, parentItems[0], result);
-    }
-  }
-  return result;
-}
