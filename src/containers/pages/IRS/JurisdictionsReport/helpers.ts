@@ -79,6 +79,7 @@ export const NamibiaColumns = [
         id: 'refusalsmopup',
       },
     ],
+    headerClassName: 'centered',
   },
   {
     Header: 'Locked',
@@ -96,6 +97,7 @@ export const NamibiaColumns = [
         id: 'lockedmopup',
       },
     ],
+    headerClassName: 'centered',
   },
 ];
 

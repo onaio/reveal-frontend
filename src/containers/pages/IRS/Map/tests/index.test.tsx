@@ -183,7 +183,7 @@ describe('components/IRS Reports/IRSReportingMap', () => {
     await flushPromises();
     expect(toJson(wrapper.find('BreadcrumbItem li'))).toMatchSnapshot('breadcrumbs');
     expect(toJson(wrapper.find('h3.page-title'))).toMatchSnapshot('page title');
-    expect(helmet.title).toEqual('IRS 2019-09-05 TEST');
+    expect(helmet.title).toEqual('IRS 2019-09-05 TEST: Akros_1');
     expect(toJson(wrapper.find('.mapSidebar h5'))).toMatchSnapshot('Sidebar title');
     expect(toJson(wrapper.find('.sidebar-legend-item'))).toMatchSnapshot('Legend items');
     expect(toJson(wrapper.find('.responseItem h6'))).toMatchSnapshot('Response item titles');
