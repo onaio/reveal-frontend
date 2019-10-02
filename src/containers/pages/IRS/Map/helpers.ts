@@ -8,17 +8,20 @@ import { GenericJurisdiction } from '../../../../store/ducks/generic/jurisdictio
 import { StructureFeatureCollection } from '../../../../store/ducks/generic/structures';
 import { Jurisdiction } from '../../../../store/ducks/jurisdictions';
 
+/** The default indicator stop */
+export const defaultIndicatorStop = [
+  ['Sprayed', TASK_GREEN],
+  ['Not Sprayed', TASK_RED],
+  ['Partially Sprayed', TASK_ORANGE],
+  ['Not Visited', TASK_YELLOW],
+  ['Not Eligible', BLACK],
+];
+
 /** IRS Indicator stops
  * These are all the indicator stops for IRS that we know about.
  */
 export const IRSIndicatorStops: { [key: string]: string[][] } = {
-  namibia2019: [
-    ['Sprayed', TASK_GREEN],
-    ['Not Sprayed', TASK_RED],
-    ['Partially Sprayed', TASK_ORANGE],
-    ['Not Visited', TASK_YELLOW],
-    ['Not Eligible', BLACK],
-  ],
+  namibia2019: defaultIndicatorStop,
   zambia2019: [
     ['Complete', TASK_GREEN],
     ['Not Sprayed', TASK_RED],
@@ -91,7 +94,7 @@ export const IRSIndicatorRows: { [key: string]: IndicatorRows } = {
  */
 export const structuresLayerBuilder = (
   structures: StructureFeatureCollection,
-  indicatorStops: string[][]
+  indicatorStops: string[][] = defaultIndicatorStop
 ) => {
   const structuresLayers: FlexObject[] = [];
   const layerType = structures.features[0].geometry && structures.features[0].geometry.type;
@@ -185,7 +188,7 @@ export const structuresLayerBuilder = (
 export const getGisidaWrapperProps = (
   jurisdiction: Jurisdiction,
   structures: StructureFeatureCollection | null,
-  indicatorStops: string[][]
+  indicatorStops: string[][] = defaultIndicatorStop
 ): GisidaProps | null => {
   if (!jurisdiction.geojson) {
     return null;
