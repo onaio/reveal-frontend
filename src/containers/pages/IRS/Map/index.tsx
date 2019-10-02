@@ -287,7 +287,7 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
                         <p className="indicator-description">{row.description}</p>
                         <ProgressBar
                           indicatorThresholds={indicatorThresholdsIRS || null}
-                          value={row.value}
+                          value={row.value as number}
                         />
                         <p className="indicator-breakdown">
                           Progress: {row.numerator} of {row.denominator} structures ({row.value}%)

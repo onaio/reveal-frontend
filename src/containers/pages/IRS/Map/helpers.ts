@@ -102,6 +102,7 @@ export const IRSIndicatorRows: { [key: string]: IndicatorRows } = {
       description: 'Percent of rooms sprayed over eligible',
       numerator: 'sprayed_rooms_sprayed',
       title: 'Spray Coverage (Rooms)',
+      type: 'progressBar',
       value: 'roomcov',
     },
   ],
