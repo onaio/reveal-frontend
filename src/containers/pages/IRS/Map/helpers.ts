@@ -31,13 +31,16 @@ export const IRSIndicatorStops: { [key: string]: string[][] } = {
   ],
 };
 
+/** interface to describe function which processess an indicator property */
+export type IndicatorPropIngestor = (obj: any) => string | number;
+
 /** interface to describe and indicator row item */
 export interface IndicatorRowItem {
   denominator: string | number;
   description: string;
   numerator: string | number;
   title: string;
-  value: string | number;
+  value: string | number | IndicatorPropIngestor;
 }
 
 /** the indicator row type */
@@ -49,18 +52,18 @@ export type IndicatorRows = IndicatorRowItem[];
 export const IRSIndicatorRows: { [key: string]: IndicatorRows } = {
   namibia2019: [
     {
-      denominator: 'structurestargeted',
+      denominator: 'target_2019',
       description: 'Percent of structures sprayed over targeted',
       numerator: 'structuressprayed',
       title: 'Target Coverage',
-      value: 'targetcoverage',
+      value: (row: any) => Math.round(row.targetcoverage * 100),
     },
     {
       denominator: 'structuresfound',
       description: 'Percent of structures sprayed over found',
       numerator: 'structuressprayed',
       title: 'Found Coverage',
-      value: 'foundcoverage',
+      value: (row: any) => Math.round(row.foundcoverage * 100),
     },
   ],
   zambia2019: [
@@ -278,12 +281,16 @@ export const getJurisdictionBreadcrumbs = (
 /** Get indicator rows */
 export const getIndicatorRows = (defaultRows: IndicatorRows, focusArea: FlexObject) => {
   return defaultRows.map((row: IndicatorRowItem) => {
+    const value = focusArea
+      ? (typeof row.value === 'function' && row.value(focusArea as any)) ||
+        (focusArea as any)[row.value as string | number]
+      : 0;
     return {
       ...row,
       ...{
         denominator: focusArea ? (focusArea as any)[row.denominator] || 0 : 0,
         numerator: focusArea ? (focusArea as any)[row.numerator] || 0 : 0,
-        value: focusArea ? (focusArea as any)[row.value] || 0 : 0,
+        value,
       },
     };
   });
