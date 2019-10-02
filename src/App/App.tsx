@@ -33,7 +33,6 @@ import {
 } from '../constants';
 import ConnectedHeader from '../containers/ConnectedHeader';
 import ActiveFocusInvestigation from '../containers/pages/FocusInvestigation/active';
-import HistoricalFocusInvestigation from '../containers/pages/FocusInvestigation/historical';
 import SingleActiveFIMap from '../containers/pages/FocusInvestigation/map/active';
 import ConnectedPlanCompletion from '../containers/pages/FocusInvestigation/map/planCompletion';
 import SingleFI from '../containers/pages/FocusInvestigation/single';
@@ -181,20 +180,6 @@ class App extends Component {
                   exact={true}
                   path={`${FI_SINGLE_MAP_URL}/:id/:goalId`}
                   component={SingleActiveFIMap}
-                />
-                {/* Historical Focus Investigation list view */}
-                <ConnectedPrivateRoute
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
-                  exact={true}
-                  path={FI_HISTORICAL_URL}
-                  component={HistoricalFocusInvestigation}
-                />
-                {/* Historical Focus Investigation plan view */}
-                <ConnectedPrivateRoute
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
-                  exact={true}
-                  path={`${FI_HISTORICAL_URL}/:id`}
-                  component={HistoricalFocusInvestigation}
                 />
                 {/* New Focus Investigation Plan form view */}
                 <ConnectedPrivateRoute
