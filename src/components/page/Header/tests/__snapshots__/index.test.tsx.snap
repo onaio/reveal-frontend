@@ -432,45 +432,6 @@ exports[`components/page/Header renders header correctly 1`] = `
                                           </NavLink>
                                         </button>
                                       </DropdownItem>
-                                      <DropdownItem
-                                        tag="button"
-                                        toggle={true}
-                                      >
-                                        <button
-                                          className="dropdown-item"
-                                          onClick={[Function]}
-                                          role="menuitem"
-                                          tabIndex="0"
-                                          type="button"
-                                        >
-                                          <NavLink
-                                            activeClassName="active"
-                                            aria-current="page"
-                                            className="nav-link"
-                                            to="/focus-investigation/historical"
-                                          >
-                                            <Route
-                                              path="\\\\/focus-investigation\\\\/historical"
-                                            >
-                                              <Link
-                                                aria-current={null}
-                                                className="nav-link"
-                                                replace={false}
-                                                to="/focus-investigation/historical"
-                                              >
-                                                <a
-                                                  aria-current={null}
-                                                  className="nav-link"
-                                                  href="/focus-investigation/historical"
-                                                  onClick={[Function]}
-                                                >
-                                                  Historical FI
-                                                </a>
-                                              </Link>
-                                            </Route>
-                                          </NavLink>
-                                        </button>
-                                      </DropdownItem>
                                     </div>
                                     <div>
                                       <DropdownItem
@@ -1064,45 +1025,6 @@ exports[`components/page/Header renders header correctly when authenticated 1`] 
                                                   onClick={[Function]}
                                                 >
                                                   Focus Investigation
-                                                </a>
-                                              </Link>
-                                            </Route>
-                                          </NavLink>
-                                        </button>
-                                      </DropdownItem>
-                                      <DropdownItem
-                                        tag="button"
-                                        toggle={true}
-                                      >
-                                        <button
-                                          className="dropdown-item"
-                                          onClick={[Function]}
-                                          role="menuitem"
-                                          tabIndex="0"
-                                          type="button"
-                                        >
-                                          <NavLink
-                                            activeClassName="active"
-                                            aria-current="page"
-                                            className="nav-link"
-                                            to="/focus-investigation/historical"
-                                          >
-                                            <Route
-                                              path="\\\\/focus-investigation\\\\/historical"
-                                            >
-                                              <Link
-                                                aria-current={null}
-                                                className="nav-link"
-                                                replace={false}
-                                                to="/focus-investigation/historical"
-                                              >
-                                                <a
-                                                  aria-current={null}
-                                                  className="nav-link"
-                                                  href="/focus-investigation/historical"
-                                                  onClick={[Function]}
-                                                >
-                                                  Historical FI
                                                 </a>
                                               </Link>
                                             </Route>
