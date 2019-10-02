@@ -291,7 +291,7 @@ export const getIndicatorRows = (defaultRows: IndicatorRows, focusArea: FlexObje
       ...{
         denominator: focusArea ? (focusArea as any)[row.denominator] || 0 : 0,
         numerator: focusArea ? (focusArea as any)[row.numerator] || 0 : 0,
-        value: (Number.isInteger(value) && value) || Math.round(value * 100),
+        value: Math.round(value * 100),
       },
     };
   });
