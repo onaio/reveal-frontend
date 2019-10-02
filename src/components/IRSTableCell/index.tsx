@@ -23,9 +23,9 @@ const IRSTableCell: React.ElementType<LinkedCellProps> = (props: LinkedCellProps
         <Link to={`${urlPath}/${cell.original.jurisdiction_id}/${MAP}`}>
           <FontAwesomeIcon icon={['fas', MAP]} />
         </Link>
-        &nbsp;&nbsp;
       </span>
-      {cellValue}
+      &nbsp;&nbsp;
+      <Link to={`${urlPath}/${cell.original.jurisdiction_id}/${MAP}`}>{cellValue}</Link>
     </span>
   );
   return <div>{hasChildren ? <Link to={url}>{cellValue}</Link> : val}</div>;
