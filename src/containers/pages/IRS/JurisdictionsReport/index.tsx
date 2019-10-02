@@ -1,6 +1,7 @@
 import DrillDownTable, { hasChildrenFunc } from '@onaio/drill-down-table';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset, { SupersetFormData } from '@onaio/superset-connector';
+import { get } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
@@ -172,18 +173,18 @@ const JurisdictionReport = (props: GenericJurisdictionProps & RouteComponentProp
 
   const currLevelData = data.filter(el => el.jurisdiction_parent_id === jurisdictionId);
 
-  let columnsToUse = IRSTableColumns[SUPERSET_IRS_REPORTING_JURISDICTIONS_COLUMNS];
+  let columnsToUse = get(IRSTableColumns, SUPERSET_IRS_REPORTING_JURISDICTIONS_COLUMNS, null);
   if (currLevelData && currLevelData.length > 0) {
     if (
       currLevelData[0].jurisdiction_depth === +SUPERSET_IRS_REPORTING_JURISDICTIONS_FOCUS_AREA_LEVEL
     ) {
-      columnsToUse = IRSTableColumns[SUPERSET_IRS_REPORTING_FOCUS_AREAS_COLUMNS];
+      columnsToUse = get(IRSTableColumns, SUPERSET_IRS_REPORTING_FOCUS_AREAS_COLUMNS, null);
     }
   }
 
   const tableProps = {
+    ...(columnsToUse && { columns: columnsToUse }),
     CellComponent: IRSTableCell,
-    columns: columnsToUse,
     data,
     defaultPageSize: data.length,
     extraCellProps: { urlPath: baseURL },
