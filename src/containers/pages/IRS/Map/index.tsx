@@ -278,19 +278,26 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
             )}
 
             {sidebarIndicatorRows &&
-              sidebarIndicatorRows.map((row, i) => (
-                <div className="responseItem" key={i}>
-                  <h6>{row.title}</h6>
-                  <p className="indicator-description">{row.description}</p>
-                  <ProgressBar
-                    indicatorThresholds={indicatorThresholdsIRS || null}
-                    value={row.value}
-                  />
-                  <p className="indicator-breakdown">
-                    Progress: {row.numerator} of {row.denominator} structures ({row.value}%)
-                  </p>
-                </div>
-              ))}
+              sidebarIndicatorRows.map((row, i) => {
+                switch (row.type) {
+                  case 'progressBar':
+                    return (
+                      <div className="responseItem" key={i}>
+                        <h6>{row.title}</h6>
+                        <p className="indicator-description">{row.description}</p>
+                        <ProgressBar
+                          indicatorThresholds={indicatorThresholdsIRS || null}
+                          value={row.value}
+                        />
+                        <p className="indicator-breakdown">
+                          Progress: {row.numerator} of {row.denominator} structures ({row.value}%)
+                        </p>
+                      </div>
+                    );
+                  default:
+                    return null;
+                }
+              })}
           </div>
         </Col>
       </Row>

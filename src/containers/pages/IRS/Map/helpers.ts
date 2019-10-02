@@ -33,15 +33,22 @@ export const IRSIndicatorStops: { [key: string]: string[][] } = {
 
 /** interface to describe and indicator row item */
 export interface IndicatorRowItem {
-  denominator: string | number;
   description: string;
-  numerator: string | number;
   title: string;
+  type: 'progressBar';
   value: string | number;
 }
 
+export interface ProgressBarIndicatorRowItem extends IndicatorRowItem {
+  denominator: string | number;
+  numerator: string | number;
+  type: 'progressBar';
+}
+
+export type AnyIndicatorRowItem = ProgressBarIndicatorRowItem;
+
 /** the indicator row type */
-export type IndicatorRows = IndicatorRowItem[];
+export type IndicatorRows = AnyIndicatorRowItem[];
 
 /** IRS Indicator rows
  * These are all the indicator rows for IRS that we know about.
@@ -53,6 +60,7 @@ export const IRSIndicatorRows: { [key: string]: IndicatorRows } = {
       description: 'Percent of structures sprayed over targeted',
       numerator: 'structuressprayed',
       title: 'Target Coverage',
+      type: 'progressBar',
       value: 'targetcoverage',
     },
     {
@@ -60,6 +68,7 @@ export const IRSIndicatorRows: { [key: string]: IndicatorRows } = {
       description: 'Percent of structures sprayed over found',
       numerator: 'structuressprayed',
       title: 'Found Coverage',
+      type: 'progressBar',
       value: 'foundcoverage',
     },
   ],
@@ -69,6 +78,7 @@ export const IRSIndicatorRows: { [key: string]: IndicatorRows } = {
       description: 'Percent of structures sprayed over total',
       numerator: 'sprayedstruct',
       title: 'Spray Coverage (Effectiveness)',
+      type: 'progressBar',
       value: 'spraycov',
     },
     {
@@ -76,6 +86,7 @@ export const IRSIndicatorRows: { [key: string]: IndicatorRows } = {
       description: 'Percent of structures sprayed over found',
       numerator: 'foundstruct',
       title: 'Found Coverage',
+      type: 'progressBar',
       value: 'spraytarg',
     },
     {
@@ -83,6 +94,7 @@ export const IRSIndicatorRows: { [key: string]: IndicatorRows } = {
       description: 'Percent of structures sprayed over found',
       numerator: 'sprayedstruct',
       title: 'Spray Success Rate (PMI SC)',
+      type: 'progressBar',
       value: 'spraysuccess',
     },
   ],
@@ -275,16 +287,24 @@ export const getJurisdictionBreadcrumbs = (
   return result;
 };
 
-/** Get indicator rows */
-export const getIndicatorRows = (defaultRows: IndicatorRows, focusArea: FlexObject) => {
-  return defaultRows.map((row: IndicatorRowItem) => {
-    return {
-      ...row,
-      ...{
-        denominator: focusArea ? (focusArea as any)[row.denominator] || 0 : 0,
-        numerator: focusArea ? (focusArea as any)[row.numerator] || 0 : 0,
-        value: focusArea ? (focusArea as any)[row.value] || 0 : 0,
-      },
-    };
+/** Get indicator rows, apply buisiness logic as needed
+ * @param {IndicatorRows} defaultRows
+ * @param {FlexObject} focusArea
+ * @returns {IndicatorRows}
+ */
+export const getIndicatorRows = (defaultRows: IndicatorRows, focusArea: FlexObject) =>
+  defaultRows.map((row: AnyIndicatorRowItem) => {
+    switch (row.type) {
+      case 'progressBar':
+        return {
+          ...row,
+          ...{
+            denominator: focusArea ? (focusArea as any)[row.denominator] || 0 : 0,
+            numerator: focusArea ? (focusArea as any)[row.numerator] || 0 : 0,
+            value: focusArea ? (focusArea as any)[row.value] || 0 : 0,
+          },
+        };
+      default:
+        return { ...row };
+    }
   });
-};
