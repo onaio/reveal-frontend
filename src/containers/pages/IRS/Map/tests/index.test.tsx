@@ -8,30 +8,22 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Router } from 'react-router';
 import { IRSReportingMap } from '../';
-import {
-  SUPERSET_IRS_REPORTING_INDICATOR_ROWS,
-  SUPERSET_IRS_REPORTING_INDICATOR_STOPS,
-} from '../../../../../configs/env';
-import { INTERVENTION_IRS_URL, IRS_REPORTING_TITLE, MAP } from '../../../../../constants';
+import { SUPERSET_IRS_REPORTING_INDICATOR_STOPS } from '../../../../../configs/env';
+import { INTERVENTION_IRS_URL, MAP } from '../../../../../constants';
 import store from '../../../../../store';
 import GenericJurisdictionsReducer, {
   fetchGenericJurisdictions,
-  GenericJurisdiction,
   getGenericJurisdictionByJurisdictionId,
   reducerName as GenericJurisdictionsReducerName,
 } from '../../../../../store/ducks/generic/jurisdictions';
 import IRSPlansReducer, {
-  fetchIRSPlans,
-  getIRSPlanById,
   IRSPlan,
   reducerName as IRSPlansReducerName,
 } from '../../../../../store/ducks/generic/plans';
 import genericStructuresReducer, {
   fetchGenericStructures,
-  GenericStructure,
   getGenericStructures,
   reducerName as genericStructuresReducerName,
-  StructureFeatureCollection,
 } from '../../../../../store/ducks/generic/structures';
 import { plans } from '../../../../../store/ducks/generic/tests/fixtures';
 import jurisdictionReducer, {
