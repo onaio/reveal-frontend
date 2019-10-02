@@ -8,6 +8,9 @@ import { GenericJurisdiction } from '../../../../store/ducks/generic/jurisdictio
 import { StructureFeatureCollection } from '../../../../store/ducks/generic/structures';
 import { Jurisdiction } from '../../../../store/ducks/jurisdictions';
 
+/** IRS Indicator stops
+ * These are all the indicator stops for IRS that we know about.
+ */
 export const IRSIndicatorStops: { [key: string]: string[][] } = {
   namibia2019: [
     ['Sprayed', TASK_GREEN],
@@ -25,6 +28,7 @@ export const IRSIndicatorStops: { [key: string]: string[][] } = {
   ],
 };
 
+/** interface to describe and indicator row item */
 export interface IndicatorRowItem {
   denominator: string | number;
   description: string;
@@ -33,8 +37,12 @@ export interface IndicatorRowItem {
   value: string | number;
 }
 
+/** the indicator row type */
 export type IndicatorRows = IndicatorRowItem[];
 
+/** IRS Indicator rows
+ * These are all the indicator rows for IRS that we know about.
+ */
 export const IRSIndicatorRows: { [key: string]: IndicatorRows } = {
   namibia2019: [
     {
