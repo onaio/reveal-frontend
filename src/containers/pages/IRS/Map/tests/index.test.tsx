@@ -8,26 +8,22 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Router } from 'react-router';
 import { IRSReportingMap } from '../';
-import { INTERVENTION_IRS_URL, IRS_REPORTING_TITLE, MAP } from '../../../../../constants';
+import { SUPERSET_IRS_REPORTING_INDICATOR_STOPS } from '../../../../../configs/env';
+import { INTERVENTION_IRS_URL, MAP } from '../../../../../constants';
 import store from '../../../../../store';
 import GenericJurisdictionsReducer, {
   fetchGenericJurisdictions,
-  GenericJurisdiction,
   getGenericJurisdictionByJurisdictionId,
   reducerName as GenericJurisdictionsReducerName,
 } from '../../../../../store/ducks/generic/jurisdictions';
 import IRSPlansReducer, {
-  fetchIRSPlans,
-  getIRSPlanById,
   IRSPlan,
   reducerName as IRSPlansReducerName,
 } from '../../../../../store/ducks/generic/plans';
 import genericStructuresReducer, {
   fetchGenericStructures,
-  GenericStructure,
   getGenericStructures,
   reducerName as genericStructuresReducerName,
-  StructureFeatureCollection,
 } from '../../../../../store/ducks/generic/structures';
 import { plans } from '../../../../../store/ducks/generic/tests/fixtures';
 import jurisdictionReducer, {
@@ -37,7 +33,7 @@ import jurisdictionReducer, {
   reducerName as jurisdictionReducerName,
 } from '../../../../../store/ducks/jurisdictions';
 import * as fixtures from '../../JurisdictionsReport/tests/fixtures';
-import { getGisidaWrapperProps } from '../helpers';
+import { getGisidaWrapperProps, IRSIndicatorStops } from '../helpers';
 
 /* tslint:disable-next-line no-var-requires */
 const fetch = require('jest-fetch-mock');
@@ -197,8 +193,10 @@ describe('components/IRS Reports/IRSReportingMap', () => {
     expect(toJson(wrapper.find('.responseItem ProgressBar'))).toMatchSnapshot(
       'Response item ProgressBar'
     );
+
+    const indicatorStops = IRSIndicatorStops[SUPERSET_IRS_REPORTING_INDICATOR_STOPS];
     expect(wrapper.find('GisidaWrapper').props()).toEqual(
-      getGisidaWrapperProps(jurisdiction as Jurisdiction, structures)
+      getGisidaWrapperProps(jurisdiction as Jurisdiction, structures, indicatorStops)
     );
 
     expect(supersetServiceMock.mock.calls).toEqual([

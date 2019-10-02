@@ -1,5 +1,6 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset, { SupersetFormData } from '@onaio/superset-connector';
+import { get } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
@@ -11,16 +12,14 @@ import NotFound from '../../../../components/NotFound';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
 import {
+  SUPERSET_IRS_REPORTING_INDICATOR_ROWS,
+  SUPERSET_IRS_REPORTING_INDICATOR_STOPS,
   SUPERSET_IRS_REPORTING_JURISDICTIONS_DATA_SLICES,
   SUPERSET_IRS_REPORTING_PLANS_SLICE,
   SUPERSET_IRS_REPORTING_STRUCTURES_DATA_SLICE,
   SUPERSET_JURISDICTIONS_SLICE,
 } from '../../../../configs/env';
-import {
-  indicatorThresholdsIRS,
-  sidebarIndicatorRowsIRS,
-  sidebarLegendStopsIRS,
-} from '../../../../configs/settings';
+import { indicatorThresholdsIRS } from '../../../../configs/settings';
 import { HOME, HOME_URL, IRS_REPORTING_TITLE, REPORT_IRS_PLAN_URL } from '../../../../constants';
 import ProgressBar from '../../../../helpers/ProgressBar';
 import { RouteParams } from '../../../../helpers/utils';
@@ -50,7 +49,14 @@ import jurisdictionReducer, {
   Jurisdiction,
   reducerName as jurisdictionReducerName,
 } from '../../../../store/ducks/jurisdictions';
-import { getGisidaWrapperProps, getIndicatorRows, getJurisdictionBreadcrumbs } from './helpers';
+import {
+  defaultIndicatorStop,
+  getGisidaWrapperProps,
+  getIndicatorRows,
+  getJurisdictionBreadcrumbs,
+  IRSIndicatorRows,
+  IRSIndicatorStops,
+} from './helpers';
 import './style.css';
 
 /** register the reducers */
@@ -218,9 +224,19 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
   const newPages = breadcrumbProps.pages.concat(jurisdictionBreadCrumbs);
   breadcrumbProps.pages = newPages;
 
-  const sidebarIndicatorRows = getIndicatorRows(sidebarIndicatorRowsIRS, focusArea);
+  const indicatorRows = get(IRSIndicatorRows, SUPERSET_IRS_REPORTING_INDICATOR_ROWS, null);
+  let sidebarIndicatorRows = null;
+  if (indicatorRows !== null) {
+    sidebarIndicatorRows = getIndicatorRows(indicatorRows, focusArea);
+  }
 
-  const gisidaWrapperProps = getGisidaWrapperProps(jurisdiction, structures);
+  const indicatorStops = get(
+    IRSIndicatorStops,
+    SUPERSET_IRS_REPORTING_INDICATOR_STOPS,
+    defaultIndicatorStop
+  );
+
+  const gisidaWrapperProps = getGisidaWrapperProps(jurisdiction, structures, indicatorStops);
 
   return (
     <div>
@@ -248,10 +264,10 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
             <h5>{focusArea && focusArea.jurisdiction_name}</h5>
             <hr />
 
-            {sidebarLegendStopsIRS && (
+            {indicatorStops && (
               <div className="mapLegend">
                 <h6>Legend</h6>
-                {sidebarLegendStopsIRS.map((stop, i) => (
+                {indicatorStops.map((stop, i) => (
                   <div className="sidebar-legend-item" key={i}>
                     <span className="sidebar-legend-color" style={{ backgroundColor: stop[1] }} />
                     <span className="sidebar-legend-label">{stop[0]}</span>
@@ -261,19 +277,20 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
               </div>
             )}
 
-            {sidebarIndicatorRows.map((row, i) => (
-              <div className="responseItem" key={i}>
-                <h6>{row.title}</h6>
-                <p className="indicator-description">{row.description}</p>
-                <ProgressBar
-                  indicatorThresholds={indicatorThresholdsIRS || null}
-                  value={row.value}
-                />
-                <p className="indicator-breakdown">
-                  Progress: {row.numerator} of {row.denominator} structures ({row.value}%)
-                </p>
-              </div>
-            ))}
+            {sidebarIndicatorRows &&
+              sidebarIndicatorRows.map((row, i) => (
+                <div className="responseItem" key={i}>
+                  <h6>{row.title}</h6>
+                  <p className="indicator-description">{row.description}</p>
+                  <ProgressBar
+                    indicatorThresholds={indicatorThresholdsIRS || null}
+                    value={row.value}
+                  />
+                  <p className="indicator-breakdown">
+                    Progress: {row.numerator} of {row.denominator} structures ({row.value}%)
+                  </p>
+                </div>
+              ))}
           </div>
         </Col>
       </Row>

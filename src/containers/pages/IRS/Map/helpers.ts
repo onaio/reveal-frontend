@@ -1,27 +1,92 @@
 import GeojsonExtent from '@mapbox/geojson-extent';
 import { BLACK, GREY, TASK_GREEN, TASK_ORANGE, TASK_RED, TASK_YELLOW } from '../../../../colors';
 import { GisidaProps } from '../../../../components/GisidaWrapper';
-import {
-  circleLayerConfig,
-  fillLayerConfig,
-  IndicatorRowItem,
-  IndicatorRows,
-  lineLayerConfig,
-} from '../../../../configs/settings';
+import { circleLayerConfig, fillLayerConfig, lineLayerConfig } from '../../../../configs/settings';
 import { MAIN_PLAN, STRUCTURE_LAYER } from '../../../../constants';
 import { FlexObject } from '../../../../helpers/utils';
 import { GenericJurisdiction } from '../../../../store/ducks/generic/jurisdictions';
 import { StructureFeatureCollection } from '../../../../store/ducks/generic/structures';
 import { Jurisdiction } from '../../../../store/ducks/jurisdictions';
 
-/** Default indicator stops */
-const defaultIndicatorStops = [
-  ['Complete', TASK_GREEN],
+/** The default indicator stop */
+export const defaultIndicatorStop = [
+  ['Sprayed', TASK_GREEN],
   ['Not Sprayed', TASK_RED],
   ['Partially Sprayed', TASK_ORANGE],
   ['Not Visited', TASK_YELLOW],
   ['Not Eligible', BLACK],
 ];
+
+/** IRS Indicator stops
+ * These are all the indicator stops for IRS that we know about.
+ */
+export const IRSIndicatorStops: { [key: string]: string[][] } = {
+  namibia2019: defaultIndicatorStop,
+  zambia2019: [
+    ['Complete', TASK_GREEN],
+    ['Not Sprayed', TASK_RED],
+    ['Partially Sprayed', TASK_ORANGE],
+    ['Not Visited', TASK_YELLOW],
+    ['Not Eligible', BLACK],
+  ],
+};
+
+/** interface to describe and indicator row item */
+export interface IndicatorRowItem {
+  denominator: string | number;
+  description: string;
+  numerator: string | number;
+  title: string;
+  value: string | number;
+}
+
+/** the indicator row type */
+export type IndicatorRows = IndicatorRowItem[];
+
+/** IRS Indicator rows
+ * These are all the indicator rows for IRS that we know about.
+ */
+export const IRSIndicatorRows: { [key: string]: IndicatorRows } = {
+  namibia2019: [
+    {
+      denominator: 'structurestargeted',
+      description: 'Percent of structures sprayed over targeted',
+      numerator: 'structuressprayed',
+      title: 'Target Coverage',
+      value: 'targetcoverage',
+    },
+    {
+      denominator: 'structuresfound',
+      description: 'Percent of structures sprayed over found',
+      numerator: 'structuressprayed',
+      title: 'Found Coverage',
+      value: 'foundcoverage',
+    },
+  ],
+  zambia2019: [
+    {
+      denominator: 'totstruct',
+      description: 'Percent of structures sprayed over total',
+      numerator: 'sprayedstruct',
+      title: 'Spray Coverage (Effectiveness)',
+      value: 'spraycov',
+    },
+    {
+      denominator: 'totstruct',
+      description: 'Percent of structures sprayed over found',
+      numerator: 'foundstruct',
+      title: 'Found Coverage',
+      value: 'spraytarg',
+    },
+    {
+      denominator: 'foundstruct',
+      description: 'Percent of structures sprayed over found',
+      numerator: 'sprayedstruct',
+      title: 'Spray Success Rate (PMI SC)',
+      value: 'spraysuccess',
+    },
+  ],
+};
 
 /** Utility function to build structure layer
  * @param {StructureFeatureCollection} structures - Feature Collection of structures
@@ -29,7 +94,7 @@ const defaultIndicatorStops = [
  */
 export const structuresLayerBuilder = (
   structures: StructureFeatureCollection,
-  indicatorStops: string[][] = defaultIndicatorStops
+  indicatorStops: string[][] = defaultIndicatorStop
 ) => {
   const structuresLayers: FlexObject[] = [];
   const layerType =
@@ -127,7 +192,7 @@ export const structuresLayerBuilder = (
 export const getGisidaWrapperProps = (
   jurisdiction: Jurisdiction,
   structures: StructureFeatureCollection | null,
-  indicatorStops: string[][] = defaultIndicatorStops
+  indicatorStops: string[][] = defaultIndicatorStop
 ): GisidaProps | null => {
   if (!jurisdiction.geojson) {
     return null;
