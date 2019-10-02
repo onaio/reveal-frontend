@@ -136,19 +136,6 @@ Object {
                   Focus Investigation
                 </NavLink>
               </DropdownItem>
-              <DropdownItem
-                tag="button"
-                toggle={true}
-              >
-                <NavLink
-                  activeClassName="active"
-                  aria-current="page"
-                  className="nav-link"
-                  to="/focus-investigation/historical"
-                >
-                  Historical FI
-                </NavLink>
-              </DropdownItem>
             </div>
             <div>
               <DropdownItem
@@ -349,19 +336,6 @@ Object {
                   to="/focus-investigation"
                 >
                   Focus Investigation
-                </NavLink>
-              </DropdownItem>
-              <DropdownItem
-                tag="button"
-                toggle={true}
-              >
-                <NavLink
-                  activeClassName="active"
-                  aria-current="page"
-                  className="nav-link"
-                  to="/focus-investigation/historical"
-                >
-                  Historical FI
                 </NavLink>
               </DropdownItem>
             </div>
