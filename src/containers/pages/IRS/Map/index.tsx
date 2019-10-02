@@ -196,7 +196,7 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
   const baseURL = `${REPORT_IRS_PLAN_URL}/${plan.plan_id}`;
   const focusAreaURL = `${baseURL}/${focusArea.jurisdiction_id}`;
 
-  const pageTitle = plan.plan_title;
+  const pageTitle = `${plan.plan_title}: ${focusArea.jurisdiction_name}`;
 
   const breadcrumbProps = {
     currentPage: {

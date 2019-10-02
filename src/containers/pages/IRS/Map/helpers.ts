@@ -49,7 +49,7 @@ export type IndicatorRows = IndicatorRowItem[];
 export const IRSIndicatorRows: { [key: string]: IndicatorRows } = {
   namibia2019: [
     {
-      denominator: 'structurestargeted',
+      denominator: 'target_2019',
       description: 'Percent of structures sprayed over targeted',
       numerator: 'structuressprayed',
       title: 'Target Coverage',
@@ -84,6 +84,13 @@ export const IRSIndicatorRows: { [key: string]: IndicatorRows } = {
       numerator: 'sprayedstruct',
       title: 'Spray Success Rate (PMI SC)',
       value: 'spraysuccess',
+    },
+    {
+      denominator: 'sprayed_rooms_eligible',
+      description: 'Percent of rooms sprayed over eligible',
+      numerator: 'sprayed_rooms_sprayed',
+      title: 'Spray Coverage (Rooms)',
+      value: 'roomcov',
     },
   ],
 };
@@ -278,12 +285,13 @@ export const getJurisdictionBreadcrumbs = (
 /** Get indicator rows */
 export const getIndicatorRows = (defaultRows: IndicatorRows, focusArea: FlexObject) => {
   return defaultRows.map((row: IndicatorRowItem) => {
+    const value = focusArea ? (focusArea as any)[row.value] || 0 : 0;
     return {
       ...row,
       ...{
         denominator: focusArea ? (focusArea as any)[row.denominator] || 0 : 0,
         numerator: focusArea ? (focusArea as any)[row.numerator] || 0 : 0,
-        value: focusArea ? (focusArea as any)[row.value] || 0 : 0,
+        value: (Number.isInteger(value) && value) || Math.round(value * 100),
       },
     };
   });
