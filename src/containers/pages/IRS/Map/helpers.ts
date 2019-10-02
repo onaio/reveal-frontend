@@ -76,7 +76,7 @@ export const structuresLayerBuilder = (
       visible: true,
     };
     structuresLayers.push(structureCircleLayer);
-  } else {
+  } else if (layerType) {
     // build fill / line layers if structures are polygons
     const structuresFillLayer = {
       ...fillLayerConfig,
