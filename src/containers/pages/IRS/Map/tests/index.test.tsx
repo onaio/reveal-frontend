@@ -102,6 +102,38 @@ describe('components/IRS Reports/IRSReportingMap', () => {
     );
   });
 
+  it('renders without structures', () => {
+    const mock: any = jest.fn();
+    const props = {
+      focusArea: getGenericJurisdictionByJurisdictionId(
+        store.getState(),
+        'zm-focusAreas',
+        '0dc2d15b-be1d-45d3-93d8-043a3a916f30'
+      ),
+      history,
+      jurisdiction: getJurisdictionById(store.getState(), '0dc2d15b-be1d-45d3-93d8-043a3a916f30'),
+      location: mock,
+      match: {
+        isExact: true,
+        params: {
+          jurisdictionId: '0dc2d15b-be1d-45d3-93d8-043a3a916f30',
+          planId: (plans[0] as IRSPlan).plan_id,
+        },
+        path: `${INTERVENTION_IRS_URL}/:planId/:jurisdictionId/${MAP}`,
+        url: `${INTERVENTION_IRS_URL}/${
+          (plans[0] as IRSPlan).plan_id
+        }/0dc2d15b-be1d-45d3-93d8-043a3a916f30/${MAP}`,
+      },
+      plan: plans[0] as IRSPlan,
+      structures: {} as StructureFeatureCollection,
+    };
+    shallow(
+      <Router history={history}>
+        <IRSReportingMap {...props} />
+      </Router>
+    );
+  });
+
   it('renders correctly', async () => {
     fetch.mockResponseOnce(JSON.stringify({}));
     const mock: any = jest.fn();
