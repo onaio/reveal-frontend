@@ -765,51 +765,9 @@ export const irsReportingCongif: {
 };
 /* tslint:enable:object-literal-sort-keys */
 
-/** IRS Reporting interfaces */
-export interface IndicatorRowItem {
-  denominator: string | number;
-  description: string;
-  numerator: string | number;
-  title: string;
-  value: string | number;
-}
-
-export type IndicatorRows = IndicatorRowItem[];
 /** END IRS Reporting interfaces */
 
 /** IRS Reporting configs */
-export const sidebarLegendStopsIRS: string[][] = [
-  ['Complete', TASK_GREEN],
-  ['Not Sprayed', TASK_RED],
-  ['Partially Sprayed', TASK_ORANGE],
-  ['Not Visited', TASK_YELLOW],
-  ['Not Eligible', BLACK],
-];
-
-export const sidebarIndicatorRowsIRS: IndicatorRows = [
-  {
-    denominator: 'totstruct',
-    description: 'Percent of structures sprayed over found',
-    numerator: 'foundstruct',
-    title: 'Found Coverage',
-    value: 'spraytarg',
-  },
-  {
-    denominator: 'totstruct',
-    description: 'Percent of structures sprayed over total',
-    numerator: 'sprayedstruct',
-    title: 'Spray Coverage (Effectiveness)',
-    value: 'spraycov',
-  },
-  {
-    denominator: 'foundstruct',
-    description: 'Percent of structures sprayed over found',
-    numerator: 'sprayedstruct',
-    title: 'Spray Success Rate (PMI SC)',
-    value: 'spraysuccess',
-  },
-];
-
 export const indicatorThresholdsIRS = {
   GREEN_THRESHOLD: {
     color: '#2ECC40',
