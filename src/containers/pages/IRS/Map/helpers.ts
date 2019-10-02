@@ -32,7 +32,11 @@ export const structuresLayerBuilder = (
   indicatorStops: string[][] = defaultIndicatorStops
 ) => {
   const structuresLayers: FlexObject[] = [];
-  const layerType = structures.features[0].geometry && structures.features[0].geometry.type;
+  const layerType =
+    structures.features &&
+    structures.features[0] &&
+    structures.features[0].geometry &&
+    structures.features[0].geometry.type;
   const structuresPopup: FlexObject = {
     body: `<div>
           <p class="heading">{{structure_type}}</p>
