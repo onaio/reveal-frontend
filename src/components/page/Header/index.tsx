@@ -23,8 +23,6 @@ import {
   WEBSITE_NAME,
 } from '../../../configs/env';
 import {
-  FI_HISTORICAL,
-  FI_HISTORICAL_URL,
   FI_URL,
   HOME,
   INTERVENTION_IRS_DRAFTS_URL,
@@ -134,9 +132,7 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
                   <DropdownToggle
                     nav={true}
                     caret={true}
-                    className={
-                      path === FI_URL || path === FI_HISTORICAL_URL ? 'nav-link active' : 'nav-link'
-                    }
+                    className={path === FI_URL ? 'nav-link active' : 'nav-link'}
                   >
                     {REPORTING}
                   </DropdownToggle>
@@ -146,15 +142,6 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
                         <DropdownItem>
                           <NavLink to={FI_URL} className="nav-link" activeClassName="active">
                             Focus Investigation
-                          </NavLink>
-                        </DropdownItem>
-                        <DropdownItem>
-                          <NavLink
-                            to={FI_HISTORICAL_URL}
-                            className="nav-link"
-                            activeClassName="active"
-                          >
-                            {FI_HISTORICAL}
                           </NavLink>
                         </DropdownItem>
                       </div>
