@@ -11,16 +11,14 @@ import NotFound from '../../../../components/NotFound';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
 import {
+  SUPERSET_IRS_REPORTING_INDICATOR_ROWS,
+  SUPERSET_IRS_REPORTING_INDICATOR_STOPS,
   SUPERSET_IRS_REPORTING_JURISDICTIONS_DATA_SLICES,
   SUPERSET_IRS_REPORTING_PLANS_SLICE,
   SUPERSET_IRS_REPORTING_STRUCTURES_DATA_SLICE,
   SUPERSET_JURISDICTIONS_SLICE,
 } from '../../../../configs/env';
-import {
-  indicatorThresholdsIRS,
-  sidebarIndicatorRowsIRS,
-  sidebarLegendStopsIRS,
-} from '../../../../configs/settings';
+import { indicatorThresholdsIRS } from '../../../../configs/settings';
 import { HOME, HOME_URL, IRS_REPORTING_TITLE, REPORT_IRS_PLAN_URL } from '../../../../constants';
 import ProgressBar from '../../../../helpers/ProgressBar';
 import { RouteParams } from '../../../../helpers/utils';
@@ -50,7 +48,13 @@ import jurisdictionReducer, {
   Jurisdiction,
   reducerName as jurisdictionReducerName,
 } from '../../../../store/ducks/jurisdictions';
-import { getGisidaWrapperProps, getIndicatorRows, getJurisdictionBreadcrumbs } from './helpers';
+import {
+  getGisidaWrapperProps,
+  getIndicatorRows,
+  getJurisdictionBreadcrumbs,
+  IRSIndicatorRows,
+  IRSIndicatorStops,
+} from './helpers';
 import './style.css';
 
 /** register the reducers */
@@ -218,9 +222,12 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
   const newPages = breadcrumbProps.pages.concat(jurisdictionBreadCrumbs);
   breadcrumbProps.pages = newPages;
 
-  const sidebarIndicatorRows = getIndicatorRows(sidebarIndicatorRowsIRS, focusArea);
+  const indicatorRows = IRSIndicatorRows[SUPERSET_IRS_REPORTING_INDICATOR_ROWS];
+  const sidebarIndicatorRows = getIndicatorRows(indicatorRows, focusArea);
 
-  const gisidaWrapperProps = getGisidaWrapperProps(jurisdiction, structures);
+  const indicatorStops = IRSIndicatorStops[SUPERSET_IRS_REPORTING_INDICATOR_STOPS];
+
+  const gisidaWrapperProps = getGisidaWrapperProps(jurisdiction, structures, indicatorStops);
 
   return (
     <div>
@@ -248,10 +255,10 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
             <h5>{focusArea && focusArea.jurisdiction_name}</h5>
             <hr />
 
-            {sidebarLegendStopsIRS && (
+            {indicatorStops && (
               <div className="mapLegend">
                 <h6>Legend</h6>
-                {sidebarLegendStopsIRS.map((stop, i) => (
+                {indicatorStops.map((stop, i) => (
                   <div className="sidebar-legend-item" key={i}>
                     <span className="sidebar-legend-color" style={{ backgroundColor: stop[1] }} />
                     <span className="sidebar-legend-label">{stop[0]}</span>
