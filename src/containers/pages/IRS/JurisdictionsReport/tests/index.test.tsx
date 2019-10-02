@@ -418,7 +418,7 @@ describe('components/IRS Reports/JurisdictionReport', () => {
       IRSTableColumns.zambiaFocusArea2019
     );
 
-    expect(wrapper.find('DrillDownTable a').length).toEqual(7);
+    expect(wrapper.find('DrillDownTable a').length).toEqual(14);
     expect(
       wrapper.find('DrillDownTable .plan-jurisdiction-name.main-span').map(e => e.text())
     ).toEqual([
@@ -432,11 +432,18 @@ describe('components/IRS Reports/JurisdictionReport', () => {
     ]);
     expect(wrapper.find('DrillDownTable a').map(e => e.props().href)).toEqual([
       `${baseURL}/a049c269-6c06-47ef-b5b3-4f5f7736d97d/map`,
+      `${baseURL}/a049c269-6c06-47ef-b5b3-4f5f7736d97d/map`,
+      `${baseURL}/7aee968f-6b1f-427d-bba3-fa292937532b/map`,
       `${baseURL}/7aee968f-6b1f-427d-bba3-fa292937532b/map`,
       `${baseURL}/67f2211d-0cfc-4bde-be0e-bf8b5b3e0c2c/map`,
+      `${baseURL}/67f2211d-0cfc-4bde-be0e-bf8b5b3e0c2c/map`,
+      `${baseURL}/d7e42fb9-381c-4fc6-a4c1-7e112076c559/map`,
       `${baseURL}/d7e42fb9-381c-4fc6-a4c1-7e112076c559/map`,
       `${baseURL}/0dc2d15b-be1d-45d3-93d8-043a3a916f30/map`,
+      `${baseURL}/0dc2d15b-be1d-45d3-93d8-043a3a916f30/map`,
       `${baseURL}/0b142aff-341c-4d15-878e-55942bc873aa/map`,
+      `${baseURL}/0b142aff-341c-4d15-878e-55942bc873aa/map`,
+      `${baseURL}/fdc73ce5-650a-4246-a2b3-a6665adc8249/map`,
       `${baseURL}/fdc73ce5-650a-4246-a2b3-a6665adc8249/map`,
     ]);
   });
