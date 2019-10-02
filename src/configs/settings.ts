@@ -13,7 +13,6 @@
  */
 import { Providers } from '@onaio/gatekeeper';
 import { Expression, LngLatBoundsLike } from 'mapbox-gl';
-import { BLACK, TASK_GREEN, TASK_ORANGE, TASK_RED, TASK_YELLOW } from '../colors';
 import {
   DOMAIN_NAME,
   ENABLE_ONADATA_OAUTH,
