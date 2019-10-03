@@ -178,6 +178,8 @@ export const ASSIGN = 'Assign';
 export type ASSIGN = typeof ASSIGN;
 export const ASSIGNMENT = 'Assignment';
 export type ASSIGNMENT = typeof ASSIGNMENT;
+export const YES = 'Yes';
+export type YES = typeof YES;
 // TODO ? - do the below 2 belong here or in a settings file
 export const ORGANIZATION_LABEL = TEAM;
 export type ORGANIZATION_LABEL = typeof ORGANIZATION_LABEL;
