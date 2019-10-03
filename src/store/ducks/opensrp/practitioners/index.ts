@@ -54,7 +54,6 @@ interface FetchPractitionerRolesAction extends AnyAction {
 /** interface for actions that remove PractitionerRoles */
 interface RemovePractitionerRolesAction extends AnyAction {
   practitionerRoles: {};
-  practitionersById: {};
   type: typeof REMOVE_PRACTITIONER_ROLES;
 }
 
@@ -117,7 +116,6 @@ export const fetchPractitionerRoles = (
 /** Action to remove all PractitionerRoles from store */
 export const removePractitionerRolesAction: RemovePractitionerRolesAction = {
   practitionerRoles: {},
-  practitionersById: {},
   type: REMOVE_PRACTITIONER_ROLES,
 };
 
@@ -171,7 +169,6 @@ export default function reducer(
       return SeamlessImmutable({
         ...state,
         practitionerRoles: action.practitionerRoles,
-        practitionersById: { ...state.practitionersById, ...action.practitionersById },
       });
     default:
       return state;
