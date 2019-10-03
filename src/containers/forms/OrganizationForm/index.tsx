@@ -6,12 +6,16 @@ import { Button, Label } from 'reactstrap';
 import { FormGroup } from 'reactstrap';
 import * as Yup from 'yup';
 import {
+  ACTIVE,
+  NAME,
+  NO,
   OPENSRP_ORGANIZATION_ENDPOINT,
   ORGANIZATION_LABEL,
   REQUIRED,
   SAVE,
   SAVING,
   TEAM_LIST_URL,
+  YES,
 } from '../../../constants';
 import { generateNameSpacedUUID } from '../../../helpers/utils';
 import { OpenSRPService } from '../../../services/opensrp';
@@ -115,7 +119,7 @@ const OrganizationForm = (props: OrganizationFormProps) => {
               {globalError !== '' && <p className="form-text text-danger">{globalError}</p>}
             </FormGroup>
             <FormGroup>
-              <Label>Name</Label>
+              <Label>{NAME}</Label>
               <Field
                 type="text"
                 name="name"
@@ -130,7 +134,7 @@ const OrganizationForm = (props: OrganizationFormProps) => {
               />
             </FormGroup>
             <FormGroup>
-              <Label>Active</Label>
+              <Label>{ACTIVE}</Label>
               <br />
               <div className="btn-group btn-group-toggle" data-toggle="buttons">
                 <label
@@ -139,11 +143,11 @@ const OrganizationForm = (props: OrganizationFormProps) => {
                   <Field
                     type="radio"
                     name="active"
-                    id="option2"
+                    id="no"
                     // tslint:disable-next-line: jsx-no-lambda
                     onChange={() => setFieldValue('active', false)}
                   />{' '}
-                  no
+                  {NO}
                 </label>
                 <label
                   className={`btn btn-outline-primary ${values.active === true ? 'active' : ''}`}
@@ -151,16 +155,16 @@ const OrganizationForm = (props: OrganizationFormProps) => {
                   <Field
                     type="radio"
                     name="active"
-                    id="option1"
+                    id="yes"
                     // tslint:disable-next-line: jsx-no-lambda
                     onChange={() => setFieldValue('active', true)}
                   />{' '}
-                  yes
+                  {YES}
                 </label>
                 <ErrorMessage
                   name="active"
                   component="small"
-                  className="form-text text-danger name-error"
+                  className="form-text text-danger active-error"
                 />
               </div>
             </FormGroup>
@@ -182,7 +186,7 @@ const OrganizationForm = (props: OrganizationFormProps) => {
 };
 
 const defaultProps: OrganizationFormProps = {
-  disabledFields: ['identifier'],
+  disabledFields: [],
   initialValues: defaultInitialValues,
   redirectAfterAction: TEAM_LIST_URL,
 };
