@@ -6,6 +6,7 @@ import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import {
   EDIT_ORGANIZATION_URL,
+  EDIT_TEAM,
   NEW_TEAM,
   OPENSRP_ORGANIZATION_ENDPOINT,
 } from '../../../../../constants';
@@ -25,27 +26,7 @@ describe('src/containers/pages/NewTeamView', () => {
     store.dispatch(orgDucks.removeOrganizations);
   });
 
-  it('renders NewTeamView without crashing', () => {
-    const mock: any = jest.fn();
-    const props = {
-      history,
-      location: mock,
-      match: {
-        isExact: true,
-        params: { id: '' },
-        path: `${EDIT_ORGANIZATION_URL}/:id`,
-        url: `${EDIT_ORGANIZATION_URL}/teamId`,
-      },
-      team: fixtures.organization1,
-    };
-    shallow(
-      <Router history={history}>
-        <CreateEditTeamView {...props} />
-      </Router>
-    );
-  });
-
-  it('renders NewTeamsView correctly', () => {
+  it('renders EditTeamView without crashing', () => {
     fetch.once(JSON.stringify([]));
     const mock: any = jest.fn();
     const props = {
@@ -57,7 +38,28 @@ describe('src/containers/pages/NewTeamView', () => {
         path: `${EDIT_ORGANIZATION_URL}/:id`,
         url: `${EDIT_ORGANIZATION_URL}/teamId`,
       },
-      team: fixtures.organization1,
+      organization: fixtures.organization1,
+    };
+    shallow(
+      <Router history={history}>
+        <CreateEditTeamView {...props} />
+      </Router>
+    );
+  });
+
+  it('renders EditTeamsView correctly', () => {
+    fetch.once(JSON.stringify([]));
+    const mock: any = jest.fn();
+    const props = {
+      history,
+      location: mock,
+      match: {
+        isExact: true,
+        params: { id: '' },
+        path: `${EDIT_ORGANIZATION_URL}/:id`,
+        url: `${EDIT_ORGANIZATION_URL}/teamId`,
+      },
+      organization: fixtures.organization1,
     };
     const wrapper = mount(
       <Router history={history}>
@@ -71,7 +73,7 @@ describe('src/containers/pages/NewTeamView', () => {
 
     // page title
     const helmet = Helmet.peek();
-    expect(helmet.title).toEqual(NEW_TEAM);
+    expect(helmet.title).toEqual(EDIT_TEAM);
 
     // breadcrumb
     const breadcrumbWrapper = wrapper.find('Breadcrumb');
@@ -98,8 +100,8 @@ describe('src/containers/pages/NewTeamView', () => {
         path: `${EDIT_ORGANIZATION_URL}/:id`,
         url: `${EDIT_ORGANIZATION_URL}/teamId`,
       },
+      organization: fixtures.organization1,
       serviceClass: serviceMock,
-      team: fixtures.organization1,
     };
     mount(
       <Router history={history}>
@@ -163,6 +165,44 @@ describe('src/containers/pages/NewTeamView', () => {
     );
 
     const connectedProps = wrapper.find('ConnectedCreateEditTeamView').props();
-    expect(connectedProps.organization).toEqual(fixtures.organization1);
+    expect((connectedProps as any).organization).toEqual(fixtures.organization1);
+  });
+
+  it('renders page correctly on create Organization view', () => {
+    // see it renders form when organization is null
+    const mock: any = jest.fn();
+    const props = {
+      history,
+      location: mock,
+      match: {
+        isExact: true,
+        params: { id: '' },
+        path: `${EDIT_ORGANIZATION_URL}/:id`,
+        url: `${EDIT_ORGANIZATION_URL}/teamId`,
+      },
+    };
+    const wrapper = mount(
+      <Router history={history}>
+        <CreateEditTeamView {...props} />
+      </Router>
+    );
+    // look for crucial components or pages that should be displayed
+
+    // expect a form
+    expect(wrapper.find('form').length).toEqual(1);
+
+    // page title
+    const helmet = Helmet.peek();
+    expect(helmet.title).toEqual(NEW_TEAM);
+
+    // breadcrumb
+    const breadcrumbWrapper = wrapper.find('Breadcrumb');
+    expect(breadcrumbWrapper.length).toEqual(1);
+
+    // and the form?
+    const form = wrapper.find('OrganizationForm');
+    expect(form.length).toEqual(1);
+
+    wrapper.unmount();
   });
 });
