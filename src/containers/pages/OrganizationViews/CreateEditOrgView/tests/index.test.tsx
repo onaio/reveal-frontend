@@ -1,3 +1,4 @@
+import reducerRegistry from '@onaio/redux-reducer-registry';
 import { mount, shallow } from 'enzyme';
 import { createBrowserHistory } from 'history';
 import React from 'react';
@@ -11,9 +12,11 @@ import {
   OPENSRP_ORGANIZATION_ENDPOINT,
 } from '../../../../../constants';
 import store from '../../../../../store';
-import * as orgDucks from '../../../../../store/ducks/organization';
+import * as orgDucks from '../../../../../store/ducks/opensrp/organizations';
 import * as fixtures from '../../../../../store/ducks/tests/fixtures';
 import ConnectedCreateEditTeamView, { CreateEditTeamView } from '../../CreateEditOrgView';
+
+reducerRegistry.register(orgDucks.reducerName, orgDucks.default);
 
 // tslint:disable-next-line: no-var-requires
 const fetch = require('jest-fetch-mock');
@@ -23,7 +26,7 @@ const history = createBrowserHistory();
 describe('src/containers/pages/NewTeamView', () => {
   beforeEach(() => {
     jest.resetAllMocks();
-    store.dispatch(orgDucks.removeOrganizations);
+    store.dispatch(orgDucks.removeOrganizationsAction);
   });
 
   it('renders EditTeamView without crashing', () => {
