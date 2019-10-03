@@ -91,8 +91,8 @@ export const removePractitionersAction = {
 
 /** action creator for adding info on organization to practitioners
  * this will modify both the practitionersById as well as the practitionerRoles
- * Use this action creator when pulling data belonging to an organization only, otherwise
- * see fetchPractitioners
+ * Use this action creator when pulling data for practitioners belonging to
+ * an organization only, otherwise see fetchPractitioners
  *
  * @param {Practitioner []} practitioners - an array of practitioners
  * @param {string}  organizationId - id of organization that the practitioners belong to
