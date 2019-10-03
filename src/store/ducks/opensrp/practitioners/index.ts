@@ -158,6 +158,7 @@ export default function reducer(
       return SeamlessImmutable({
         ...state,
         practitionerRoles: {
+          ...state.practitionerRoles,
           [organizationId]: {
             ...state.practitionerRoles[organizationId],
             ...action.practitionerRoles[organizationId],
