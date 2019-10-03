@@ -1,12 +1,10 @@
 /** New Team View page:
  * displays form that's used to create a new team or update openSRP api
  */
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
-import { Link } from 'react-router-dom';
 import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
 import HeaderBreadcrumb, {
@@ -19,41 +17,51 @@ import {
   HOME,
   HOME_URL,
   NEW_TEAM,
+  OPENSRP_ORGANIZATION_ENDPOINT,
   TEAM_LIST_URL,
-  TEAMS,
 } from '../../../../constants';
 import { RouteParams } from '../../../../helpers/utils';
-import { Organization } from '../../../../store/ducks/organizations';
-import * as fixtures from '../../../../store/ducks/tests/fixtures';
+import { OpenSRPService } from '../../../../services/opensrp';
+import store from '../../../../store';
+import {
+  fetchOrganizationsAction,
+  getOrganizationById,
+  Organization,
+} from '../../../../store/ducks/organizations';
 import OrganizationForm, {
   defaultInitialValues,
   OrganizationFormProps,
 } from '../../../forms/OrganizationForm';
 
+/** props for create and editing an organization view */
 export interface Props {
-  team: Organization | null;
+  organization: Organization | null;
+  serviceClass: typeof OpenSRPService;
 }
 
 export const defaultProps: Props = {
-  team: null,
+  organization: null,
+  serviceClass: OpenSRPService,
 };
 
+/** type intersection for all types that pertain to the props */
 export type CreateEditTeamViewTypes = Props & RouteComponentProps<RouteParams>;
 
+/** CreateEditTeamView component */
 const CreateEditTeamView = (props: CreateEditTeamViewTypes) => {
-  const { team } = props;
+  const { organization, serviceClass } = props;
   // use route to know if we are editing team or creating team
   const editing = !!props.match.params.id;
 
   //  props for breadcrumbs
   const basePage = {
-    label: TEAMS,
+    label: ORGANIZATIONS_LABEL,
     url: TEAM_LIST_URL,
   };
   const breadcrumbProps: BreadCrumbProps = {
     currentPage: {
       label: editing ? EDIT_TEAM : NEW_TEAM,
-      url: editing ? `${EDIT_TEAM_URL}/${team!.identifier}` : CREATE_TEAM_URL,
+      url: editing ? `${EDIT_TEAM_URL}/${organization!.identifier}` : CREATE_TEAM_URL,
     },
     pages: [],
   };
@@ -63,11 +71,27 @@ const CreateEditTeamView = (props: CreateEditTeamViewTypes) => {
   };
   breadcrumbProps.pages = [homePage, basePage];
 
-  const teamFormProps: OrganizationFormProps = {
+  const organizationFormProps: OrganizationFormProps = {
     disabledFields: [],
-    initialValues: editing ? team! : defaultInitialValues,
+    initialValues: editing ? organization! : defaultInitialValues,
     redirectAfterAction: TEAM_LIST_URL,
   };
+
+  /** Load single organization */
+  const loadOrganization = async (service: typeof serviceClass, id: string) => {
+    const serve = new service(`${OPENSRP_ORGANIZATION_ENDPOINT}/${id}`);
+    serve
+      .list()
+      .then((response: Organization[]) => store.dispatch(fetchOrganizationsAction(response)))
+      .catch((err: Error) => {
+        /** TODO - find something to do with error */
+      });
+  };
+
+  useEffect(() => {
+    loadOrganization(OpenSRPService, Organization.identifier);
+  }, []);
+
   return (
     <div>
       <Helmet>
@@ -76,7 +100,7 @@ const CreateEditTeamView = (props: CreateEditTeamViewTypes) => {
       <HeaderBreadcrumb {...breadcrumbProps} />
       <Row>
         <Col md={8}>
-          <OrganizationForm {...teamFormProps} />
+          <OrganizationForm {...organizationFormProps} />
         </Col>
       </Row>
     </div>
@@ -87,19 +111,21 @@ CreateEditTeamView.defaultProps = defaultProps;
 
 export { CreateEditTeamView };
 
-type DispatchedProps = Props;
+interface DispatchedProps {
+  organization: Organization;
+}
 
 // connect to store
-const mapStateToprops = (
+const mapStateToProps = (
   state: Partial<Store>,
   ownProps: CreateEditTeamViewTypes
 ): DispatchedProps => {
   let teamId = ownProps.match.params.id;
   teamId = teamId ? teamId : '';
-  const team = fixtures.organizations.filter((tm: Organization) => tm.identifier === teamId)[0];
-  return { team };
+  const organization = getOrganizationById(state, teamId);
+  return { organization };
 };
 
-const ConnectedCreateEditTeamView = connect(mapStateToprops)(CreateEditTeamView);
+const ConnectedCreateEditTeamView = connect(mapStateToProps)(CreateEditTeamView);
 
 export default ConnectedCreateEditTeamView;
