@@ -10,7 +10,6 @@ import { Store } from 'redux';
 import HeaderBreadcrumb, {
   BreadCrumbProps,
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
-import Loading from '../../../../components/page/Loading';
 import {
   CREATE_ORGANIZATION_URL,
   EDIT_ORGANIZATION_URL,
@@ -104,7 +103,7 @@ const CreateEditTeamView = (props: CreateEditTeamViewTypes) => {
   return (
     <div>
       <Helmet>
-        <title>{NEW_TEAM}</title>
+        <title>{organization === null ? NEW_TEAM : EDIT_TEAM}</title>
       </Helmet>
       <HeaderBreadcrumb {...breadcrumbProps} />
       <Row>
@@ -120,6 +119,7 @@ CreateEditTeamView.defaultProps = defaultProps;
 
 export { CreateEditTeamView };
 
+/** Interface for connected state to props */
 interface DispatchedProps {
   organization: Organization | null;
 }
@@ -131,7 +131,9 @@ const mapStateToProps = (
 ): DispatchedProps => {
   let teamId = ownProps.match.params.id;
   teamId = teamId ? teamId : '';
+
   const organization = getOrganizationById(state, teamId);
+
   return { organization };
 };
 
