@@ -8,12 +8,14 @@ import { Helmet } from 'react-helmet';
 import { Route, Switch } from 'react-router';
 import { Col, Container, Row } from 'reactstrap';
 import Loading from '../components/page/Loading';
-import { DISABLE_LOGIN_PROTECTION } from '../configs/env';
 import { WEBSITE_NAME } from '../configs/env';
+import { DISABLE_LOGIN_PROTECTION } from '../configs/env';
 import { providers } from '../configs/settings';
 import {
   ACTIVE_IRS_PLAN_URL,
+  CREATE_ORGANIZATION_URL,
   DRAFT_IRS_PLAN_URL,
+  EDIT_ORGANIZATION_URL,
   FI_FILTER_URL,
   FI_SINGLE_MAP_URL,
   FI_SINGLE_URL,
@@ -25,11 +27,11 @@ import {
   MAP,
   NEW_IRS_PLAN_URL,
   NEW_PLAN_URL,
+  ORGANIZATIONS_LIST_URL,
   PLAN_COMPLETION_URL,
   PLAN_LIST_URL,
   PLAN_UPDATE_URL,
   REPORT_IRS_PLAN_URL,
-  TEAM_LIST_URL,
 } from '../constants';
 import ConnectedHeader from '../containers/ConnectedHeader';
 import ActiveFocusInvestigation from '../containers/pages/FocusInvestigation/active';
@@ -46,6 +48,7 @@ import ConnectedUpdatePlan from '../containers/pages/InterventionPlan/UpdatePlan
 import ConnectedJurisdictionReport from '../containers/pages/IRS/JurisdictionsReport';
 import ConnectedIRSReportingMap from '../containers/pages/IRS/Map';
 import ConnectedIRSPlansList from '../containers/pages/IRS/plans';
+import ConnectedCreateEditTeamView from '../containers/pages/OrganizationViews/CreateEditOrgView';
 import ConnectedOrgsListView from '../containers/pages/OrganizationViews/OrganizationListView';
 import { oAuthUserInfoGetter } from '../helpers/utils';
 
@@ -203,11 +206,26 @@ class App extends Component {
                   path={PLAN_LIST_URL}
                   component={ConnectedPlanDefinitionList}
                 />
+                {/** Organization list view */}
                 <ConnectedPrivateRoute
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
-                  path={TEAM_LIST_URL}
+                  path={ORGANIZATIONS_LIST_URL}
                   component={ConnectedOrgsListView}
+                />
+                {/** organization create view */}
+                <ConnectedPrivateRoute
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={CREATE_ORGANIZATION_URL}
+                  component={ConnectedCreateEditTeamView}
+                />
+                {/** Organization edit view */}
+                <ConnectedPrivateRoute
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${EDIT_ORGANIZATION_URL}/:id`}
+                  component={ConnectedCreateEditTeamView}
                 />
                 {/* tslint:disable jsx-no-lambda */}
                 <Route
