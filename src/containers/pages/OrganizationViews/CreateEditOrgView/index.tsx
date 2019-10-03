@@ -10,6 +10,7 @@ import { Store } from 'redux';
 import HeaderBreadcrumb, {
   BreadCrumbProps,
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
+import Loading from '../../../../components/page/Loading';
 import {
   CREATE_ORGANIZATION_URL,
   EDIT_ORGANIZATION_URL,
@@ -18,16 +19,17 @@ import {
   HOME_URL,
   NEW_TEAM,
   OPENSRP_ORGANIZATION_ENDPOINT,
+  ORGANIZATIONS_LABEL,
   ORGANIZATIONS_LIST_URL,
 } from '../../../../constants';
 import { RouteParams } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
 import store from '../../../../store';
 import {
-  fetchOrganizationsAction,
+  fetchOrganizations,
   getOrganizationById,
   Organization,
-} from '../../../../store/ducks/organizations';
+} from '../../../../store/ducks/opensrp/organizations';
 import OrganizationForm, {
   defaultInitialValues,
   OrganizationFormProps,
@@ -35,11 +37,13 @@ import OrganizationForm, {
 
 /** props for create and editing an organization view */
 export interface Props {
+  fetchOrganizationsCreator: typeof fetchOrganizations;
   organization: Organization | null;
   serviceClass: typeof OpenSRPService;
 }
 
 export const defaultProps: Props = {
+  fetchOrganizationsCreator: fetchOrganizations,
   organization: null,
   serviceClass: OpenSRPService,
 };
@@ -49,7 +53,7 @@ export type CreateEditTeamViewTypes = Props & RouteComponentProps<RouteParams>;
 
 /** CreateEditTeamView component */
 const CreateEditTeamView = (props: CreateEditTeamViewTypes) => {
-  const { organization, serviceClass } = props;
+  const { organization, serviceClass, fetchOrganizationsCreator } = props;
   // use route to know if we are editing team or creating team
   const editing = !!props.match.params.id;
 
@@ -84,15 +88,19 @@ const CreateEditTeamView = (props: CreateEditTeamViewTypes) => {
     const serve = new service(`${OPENSRP_ORGANIZATION_ENDPOINT}/${id}`);
     serve
       .list()
-      .then((response: Organization[]) => store.dispatch(fetchOrganizationsAction(response)))
+      .then((response: Organization[]) => store.dispatch(fetchOrganizationsCreator(response)))
       .catch((err: Error) => {
         /** TODO - find something to do with error */
       });
   };
 
   useEffect(() => {
-    loadOrganization(OpenSRPService, Organization.identifier);
+    loadOrganization(OpenSRPService, organization!.identifier);
   }, []);
+
+  if (!organization) {
+    return <Loading />;
+  }
 
   return (
     <div>
