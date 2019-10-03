@@ -183,8 +183,8 @@ const JurisdictionReport = (props: GenericJurisdictionProps & RouteComponentProp
   }
 
   const tableProps = {
-    ...(columnsToUse && { columns: columnsToUse }),
     CellComponent: IRSTableCell,
+    columns: [...(columnsToUse || [])],
     data,
     defaultPageSize: data.length,
     extraCellProps: { urlPath: baseURL },
