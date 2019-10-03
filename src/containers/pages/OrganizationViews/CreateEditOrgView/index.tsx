@@ -96,12 +96,10 @@ const CreateEditTeamView = (props: CreateEditTeamViewTypes) => {
   };
 
   useEffect(() => {
-    loadOrganization(OpenSRPService, organization!.identifier);
+    if (organization) {
+      loadOrganization(OpenSRPService, organization!.identifier);
+    }
   }, []);
-
-  if (!organization) {
-    return <Loading />;
-  }
 
   return (
     <div>
@@ -123,7 +121,7 @@ CreateEditTeamView.defaultProps = defaultProps;
 export { CreateEditTeamView };
 
 interface DispatchedProps {
-  organization: Organization;
+  organization: Organization | null;
 }
 
 // connect to store
