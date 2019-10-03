@@ -161,6 +161,18 @@ Object {
             activeClassName="active"
             aria-current="page"
             className="nav-link"
+            to="/teams"
+          >
+            Teams
+          </NavLink>
+        </NavItem>
+        <NavItem
+          tag="li"
+        >
+          <NavLink
+            activeClassName="active"
+            aria-current="page"
+            className="nav-link"
             to="/404"
           >
             Users
@@ -356,6 +368,18 @@ Object {
             </div>
           </DropdownMenu>
         </UncontrolledDropdown>
+        <NavItem
+          tag="li"
+        >
+          <NavLink
+            activeClassName="active"
+            aria-current="page"
+            className="nav-link"
+            to="/teams"
+          >
+            Teams
+          </NavLink>
+        </NavItem>
         <NavItem
           tag="li"
         >

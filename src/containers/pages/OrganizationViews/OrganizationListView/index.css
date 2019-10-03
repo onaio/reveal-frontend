@@ -1,0 +1,31 @@
+table {
+  margin-top: 20px;
+}
+
+#header-row .btn {
+  float: right;
+}
+
+.organization-name-link {
+  color: black;
+}
+
+a.organization-name-link:link {
+  text-decoration: none;
+  color: black;
+}
+
+a.organization-name-link:visited {
+  text-decoration: none;
+  color: black;
+}
+
+a.organization-name-link:hover {
+  text-decoration: none;
+  color: black;
+}
+
+a.organization-name-link:active {
+  text-decoration: none;
+  color: black;
+}

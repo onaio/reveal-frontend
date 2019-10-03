@@ -534,6 +534,40 @@ exports[`App renders App correctly 1`] = `
                                         activeClassName="active"
                                         aria-current="page"
                                         className="nav-link"
+                                        to="/teams"
+                                      >
+                                        <Route
+                                          path="\\\\/teams"
+                                        >
+                                          <Link
+                                            aria-current={null}
+                                            className="nav-link"
+                                            replace={false}
+                                            to="/teams"
+                                          >
+                                            <a
+                                              aria-current={null}
+                                              className="nav-link"
+                                              href="/teams"
+                                              onClick={[Function]}
+                                            >
+                                              Teams
+                                            </a>
+                                          </Link>
+                                        </Route>
+                                      </NavLink>
+                                    </li>
+                                  </NavItem>
+                                  <NavItem
+                                    tag="li"
+                                  >
+                                    <li
+                                      className="nav-item"
+                                    >
+                                      <NavLink
+                                        activeClassName="active"
+                                        aria-current="page"
+                                        className="nav-link"
                                         to="/404"
                                       >
                                         <Route
@@ -866,12 +900,12 @@ exports[`App renders App correctly 1`] = `
                                           className="col-md-6"
                                         >
                                           <Link
-                                            className="intervention-link"
+                                            className="home-link"
                                             replace={false}
                                             to="/intervention/irs"
                                           >
                                             <a
-                                              className="intervention-link"
+                                              className="home-link"
                                               href="/intervention/irs"
                                               onClick={[Function]}
                                             >
@@ -909,12 +943,12 @@ exports[`App renders App correctly 1`] = `
                                           className="col-md-6"
                                         >
                                           <Link
-                                            className="intervention-link"
+                                            className="home-link"
                                             replace={false}
                                             to="/focus-investigation"
                                           >
                                             <a
-                                              className="intervention-link"
+                                              className="home-link"
                                               href="/focus-investigation"
                                               onClick={[Function]}
                                             >
@@ -929,6 +963,49 @@ exports[`App renders App correctly 1`] = `
                                                   onClick={[Function]}
                                                 >
                                                   Focus Investigation
+                                                </button>
+                                              </Button>
+                                            </a>
+                                          </Link>
+                                        </div>
+                                      </Col>
+                                      <Col
+                                        md="6"
+                                        tag="div"
+                                        widths={
+                                          Array [
+                                            "xs",
+                                            "sm",
+                                            "md",
+                                            "lg",
+                                            "xl",
+                                          ]
+                                        }
+                                      >
+                                        <div
+                                          className="col-md-6"
+                                        >
+                                          <Link
+                                            className="home-link"
+                                            replace={false}
+                                            to="/teams"
+                                          >
+                                            <a
+                                              className="home-link"
+                                              href="/teams"
+                                              onClick={[Function]}
+                                            >
+                                              <Button
+                                                className="btn-intervention btn-lg btn-block btn-outline-green"
+                                                color="outline"
+                                                tag="button"
+                                              >
+                                                <button
+                                                  aria-label={null}
+                                                  className="btn-intervention btn-lg btn-block btn-outline-green btn btn-outline"
+                                                  onClick={[Function]}
+                                                >
+                                                  Teams
                                                 </button>
                                               </Button>
                                             </a>

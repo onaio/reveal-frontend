@@ -1,9 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`components/LinkToNewPlans Matches snapshot 1`] = `
-<LinkToNewPlans
-  className="focus-investigation btn btn-primary float-right mt-5"
+<LinkAsButton
+  classNameProp="focus-investigation btn btn-primary float-right mt-5"
   text="Add Focus Investigation"
+  to="/plans/new"
 >
   <Link
     className="focus-investigation btn btn-primary float-right mt-5"
@@ -18,5 +19,5 @@ exports[`components/LinkToNewPlans Matches snapshot 1`] = `
       Add Focus Investigation
     </a>
   </Link>
-</LinkToNewPlans>
+</LinkAsButton>
 `;
