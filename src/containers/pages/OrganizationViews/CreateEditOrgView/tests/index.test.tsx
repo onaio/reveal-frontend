@@ -4,7 +4,11 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
-import { EDIT_TEAM_URL, NEW_TEAM, OPENSRP_ORGANIZATION_ENDPOINT } from '../../../../../constants';
+import {
+  EDIT_ORGANIZATION_URL,
+  NEW_TEAM,
+  OPENSRP_ORGANIZATION_ENDPOINT,
+} from '../../../../../constants';
 import store from '../../../../../store';
 import * as orgDucks from '../../../../../store/ducks/organization';
 import * as fixtures from '../../../../../store/ducks/tests/fixtures';
@@ -29,8 +33,8 @@ describe('src/containers/pages/NewTeamView', () => {
       match: {
         isExact: true,
         params: { id: '' },
-        path: `${EDIT_TEAM_URL}/:id`,
-        url: `${EDIT_TEAM_URL}/teamId`,
+        path: `${EDIT_ORGANIZATION_URL}/:id`,
+        url: `${EDIT_ORGANIZATION_URL}/teamId`,
       },
       team: fixtures.organization1,
     };
@@ -50,8 +54,8 @@ describe('src/containers/pages/NewTeamView', () => {
       match: {
         isExact: true,
         params: { id: '' },
-        path: `${EDIT_TEAM_URL}/:id`,
-        url: `${EDIT_TEAM_URL}/teamId`,
+        path: `${EDIT_ORGANIZATION_URL}/:id`,
+        url: `${EDIT_ORGANIZATION_URL}/teamId`,
       },
       team: fixtures.organization1,
     };
@@ -91,8 +95,8 @@ describe('src/containers/pages/NewTeamView', () => {
       match: {
         isExact: true,
         params: { id: '' },
-        path: `${EDIT_TEAM_URL}/:id`,
-        url: `${EDIT_TEAM_URL}/teamId`,
+        path: `${EDIT_ORGANIZATION_URL}/:id`,
+        url: `${EDIT_ORGANIZATION_URL}/teamId`,
       },
       serviceClass: serviceMock,
       team: fixtures.organization1,
@@ -120,8 +124,8 @@ describe('src/containers/pages/NewTeamView', () => {
       match: {
         isExact: true,
         params: { id: '' },
-        path: `${EDIT_TEAM_URL}/:id`,
-        url: `${EDIT_TEAM_URL}/fixtures.organization1`,
+        path: `${EDIT_ORGANIZATION_URL}/:id`,
+        url: `${EDIT_ORGANIZATION_URL}/fixtures.organization1`,
       },
     };
     mount(
@@ -146,8 +150,8 @@ describe('src/containers/pages/NewTeamView', () => {
       match: {
         isExact: true,
         params: { id: '' },
-        path: `${EDIT_TEAM_URL}/:id`,
-        url: `${EDIT_TEAM_URL}/fixtures.organization1`,
+        path: `${EDIT_ORGANIZATION_URL}/:id`,
+        url: `${EDIT_ORGANIZATION_URL}/fixtures.organization1`,
       },
     };
     const wrapper = mount(

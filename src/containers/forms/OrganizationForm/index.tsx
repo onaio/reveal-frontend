@@ -11,10 +11,10 @@ import {
   NO,
   OPENSRP_ORGANIZATION_ENDPOINT,
   ORGANIZATION_LABEL,
+  ORGANIZATIONS_LIST_URL,
   REQUIRED,
   SAVE,
   SAVING,
-  TEAM_LIST_URL,
   YES,
 } from '../../../constants';
 import { generateNameSpacedUUID } from '../../../helpers/utils';
@@ -188,7 +188,7 @@ const OrganizationForm = (props: OrganizationFormProps) => {
 const defaultProps: OrganizationFormProps = {
   disabledFields: [],
   initialValues: defaultInitialValues,
-  redirectAfterAction: TEAM_LIST_URL,
+  redirectAfterAction: ORGANIZATIONS_LIST_URL,
 };
 
 OrganizationForm.defaultProps = defaultProps;

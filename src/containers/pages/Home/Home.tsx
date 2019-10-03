@@ -8,7 +8,7 @@ import {
   FI_URL,
   INTERVENTION_IRS_URL,
   ORGANIZATIONS_LABEL,
-  TEAM_LIST_URL,
+  ORGANIZATIONS_LIST_URL,
 } from '../../../constants';
 import { HOME_TITLE } from '../../../constants';
 import './Home.css';
@@ -57,7 +57,7 @@ class Home extends React.Component<{}, {}> {
           )}
           {ENABLE_TEAMS && (
             <Col md="6">
-              <Link to={TEAM_LIST_URL} className="home-link">
+              <Link to={ORGANIZATIONS_LIST_URL} className="home-link">
                 <Button
                   color="outline"
                   className="btn-intervention btn-lg btn-block btn-outline-green"

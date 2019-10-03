@@ -11,14 +11,14 @@ import HeaderBreadcrumb, {
   BreadCrumbProps,
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import {
-  CREATE_TEAM_URL,
+  CREATE_ORGANIZATION_URL,
+  EDIT_ORGANIZATION_URL,
   EDIT_TEAM,
-  EDIT_TEAM_URL,
   HOME,
   HOME_URL,
   NEW_TEAM,
   OPENSRP_ORGANIZATION_ENDPOINT,
-  TEAM_LIST_URL,
+  ORGANIZATIONS_LIST_URL,
 } from '../../../../constants';
 import { RouteParams } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
@@ -56,12 +56,14 @@ const CreateEditTeamView = (props: CreateEditTeamViewTypes) => {
   //  props for breadcrumbs
   const basePage = {
     label: ORGANIZATIONS_LABEL,
-    url: TEAM_LIST_URL,
+    url: ORGANIZATIONS_LIST_URL,
   };
   const breadcrumbProps: BreadCrumbProps = {
     currentPage: {
       label: editing ? EDIT_TEAM : NEW_TEAM,
-      url: editing ? `${EDIT_TEAM_URL}/${organization!.identifier}` : CREATE_TEAM_URL,
+      url: editing
+        ? `${EDIT_ORGANIZATION_URL}/${organization!.identifier}`
+        : CREATE_ORGANIZATION_URL,
     },
     pages: [],
   };
@@ -74,7 +76,7 @@ const CreateEditTeamView = (props: CreateEditTeamViewTypes) => {
   const organizationFormProps: OrganizationFormProps = {
     disabledFields: [],
     initialValues: editing ? organization! : defaultInitialValues,
-    redirectAfterAction: TEAM_LIST_URL,
+    redirectAfterAction: ORGANIZATIONS_LIST_URL,
   };
 
   /** Load single organization */
