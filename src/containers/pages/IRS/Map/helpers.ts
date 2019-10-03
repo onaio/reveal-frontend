@@ -73,7 +73,7 @@ export const IRSIndicatorRows: { [key: string]: IndicatorRows } = {
     },
     {
       denominator: 'totstruct',
-      description: 'Percent of structures sprayed over found',
+      description: 'Percent of structures found over total',
       numerator: 'foundstruct',
       title: 'Found Coverage',
       value: 'spraytarg',
