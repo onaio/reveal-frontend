@@ -372,7 +372,7 @@ describe('reducers/practitioners.reducer- integration test', () => {
     allPractitioners = getPractitionersArray(store.getState()).length;
     expect(allPractitioners).toEqual(2);
 
-    const org2Practs = getPractitionersByOrgId(store.getState(), fixtures.organization2.identifier)
+    let org2Practs = getPractitionersByOrgId(store.getState(), fixtures.organization2.identifier)
       .length;
     expect(org2Practs).toEqual(1);
 
@@ -390,6 +390,10 @@ describe('reducers/practitioners.reducer- integration test', () => {
     const org1Practs = getPractitionersByOrgId(store.getState(), fixtures.organization1.identifier)
       .length;
 
+    org2Practs = getPractitionersByOrgId(store.getState(), fixtures.organization2.identifier)
+      .length;
+    org3Practs = getPractitionersByOrgId(store.getState(), fixtures.organization3.identifier)
+      .length;
     expect(org1Practs).toEqual(1);
     expect(org2Practs).toEqual(1);
     expect(org3Practs).toEqual(2);
