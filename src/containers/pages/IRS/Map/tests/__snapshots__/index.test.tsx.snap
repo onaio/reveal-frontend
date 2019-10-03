@@ -318,7 +318,7 @@ Array [
   <p
     className="indicator-description"
   >
-    Percent of structures sprayed over found
+    Percent of structures found over total
   </p>,
   <p
     className="indicator-description"
