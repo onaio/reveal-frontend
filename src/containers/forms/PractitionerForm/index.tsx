@@ -8,13 +8,15 @@ import { FormGroup } from 'reactstrap';
 import * as Yup from 'yup';
 import {
   ACTIVE,
-  ID,
   NAME,
+  NO,
   OPENSRP_PRACTITIONER_ENDPOINT,
   PRACTITIONER,
   REQUIRED,
   SAVE,
   SAVING,
+  USERNAME,
+  YES,
 } from '../../../constants';
 import { generateNameSpacedUUID } from '../../../helpers/utils';
 import { OpenSRPService } from '../../../services/opensrp';
@@ -72,18 +74,18 @@ UserIdSelect.defaultProps = defaultUserIdSelectProps;
 export interface PractitionerFormFields {
   identifier: string;
   active: boolean;
-  name: string;
-  userId: string;
-  username: string;
+  name: string | undefined;
+  userId: string | undefined;
+  username: string | undefined;
 }
 
 /** Initial values for practitioner's form */
-export const defaultInitialValues = {
+export const defaultInitialValues: PractitionerFormFields = {
   active: false,
   identifier: '',
-  name: '',
-  userId: '',
-  username: '',
+  name: undefined,
+  userId: undefined,
+  username: undefined,
 };
 
 /** yup validations for practitioner data object from form */
@@ -157,13 +159,13 @@ const PractitionerForm = (props: PractitionerFormProps) => {
         }}
       >
         {({ errors, isSubmitting, values, setFieldValue }) => (
-          <Form className="mb-5">
+          <Form>
             <FormGroup className="non-field-errors">
               {globalError !== '' && <p className="form-text text-danger">{globalError}</p>}
             </FormGroup>
 
             <FormGroup>
-              <Label>{`${NAME}`}</Label>
+              <Label>{NAME}</Label>
               <Field
                 type="text"
                 name="name"
@@ -179,13 +181,13 @@ const PractitionerForm = (props: PractitionerFormProps) => {
             </FormGroup>
 
             <FormGroup>
-              <Label>Username</Label>
+              <Label>{USERNAME}</Label>
               <Field
                 type="text"
                 name="username"
                 id="username"
                 disabled={disabledFields.includes('username')}
-                className={errors.identifier ? `form-control is-invalid` : `form-control`}
+                className={errors.username ? `form-control is-invalid` : `form-control`}
               />
               <ErrorMessage
                 component="small"
@@ -216,7 +218,7 @@ const PractitionerForm = (props: PractitionerFormProps) => {
             </FormGroup>
 
             <FormGroup>
-              <Label>Active</Label>
+              <Label>{ACTIVE}</Label>
               <br />
               <div className="btn-group btn-group-toggle" data-toggle="buttons">
                 <label
@@ -229,7 +231,7 @@ const PractitionerForm = (props: PractitionerFormProps) => {
                     // tslint:disable-next-line: jsx-no-lambda
                     onChange={() => setFieldValue('active', false)}
                   />{' '}
-                  no
+                  {NO}
                 </label>
                 <label
                   className={`btn btn-outline-primary ${values.active === true ? 'active' : ''}`}
@@ -241,7 +243,7 @@ const PractitionerForm = (props: PractitionerFormProps) => {
                     // tslint:disable-next-line: jsx-no-lambda
                     onChange={() => setFieldValue('active', true)}
                   />{' '}
-                  yes
+                  {YES}
                 </label>
                 <ErrorMessage
                   name="active"
@@ -256,7 +258,7 @@ const PractitionerForm = (props: PractitionerFormProps) => {
               type="submit"
               id="practitioner-form-submit-button"
               className="btn btn-block btn btn-primary"
-              aria-Label="Save Practitioner"
+              aria-label="Save Practitioner"
               disabled={isSubmitting || Object.keys(errors).length > 0}
             >
               {isSubmitting ? SAVING : `${SAVE} ${PRACTITIONER}`}
