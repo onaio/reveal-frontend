@@ -41,7 +41,7 @@ interface OrganizationFormFields {
   active: boolean;
   identifier: string;
   name: string;
-  type?: any;
+  type: typeof defaultOrganizationType;
 }
 
 /** interface for Organization form props */
