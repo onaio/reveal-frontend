@@ -23,16 +23,14 @@ declare global {
 }
 /**
  * Geometry type is a union of seven types.
+ * For union type we can only access members that are common to all types in the union.
  * Unfortunately, not all of those types include the coordinates property
- * Let's exclude GeometryCollection which has no coordinates for our case when extending Feature
- * FeatureWithLayer Interface extends Feature, Adds layer prop which is missing on Feature
+ * Let's narrow down GeometryCollection which has no coordinates for our case when extending Feature
+ * Let's also add layer prop which is missing on Feature
  */
 export interface FeatureWithLayer
   extends Feature<Point | MultiPoint | LineString | MultiLineString | Polygon | MultiPolygon> {
   layer: FlexObject;
-}
-export interface CustomGeometry {
-  geometry: Point | MultiPoint | LineString | MultiLineString | Polygon | MultiPolygon;
 }
 export function popupHandler(event: EventData) {
   /** currentGoal is currently not being used but we  may  use it in the future  */
