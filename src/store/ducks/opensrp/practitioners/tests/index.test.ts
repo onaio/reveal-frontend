@@ -2,6 +2,7 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import { keyBy, values } from 'lodash';
 import { Reducer, Selector } from 'redux-testkit';
+import { FlushThunks } from 'redux-testkit';
 import reducer, {
   fetchPractitionerRoles,
   fetchPractitioners,
@@ -23,6 +24,14 @@ const generateKeyBy = (practitioners: Practitioner[]) =>
   keyBy(practitioners, practitioner => practitioner.identifier);
 
 describe('reducers/practitioners.reducer.fetchPractitionersAction', () => {
+  let flushThunks;
+
+  beforeEach(() => {
+    flushThunks = FlushThunks.createMiddleware();
+    jest.resetAllMocks();
+    store.dispatch(removePractitionersAction);
+    store.dispatch(removePractitionerRolesAction);
+  });
   // should handle dispatch on initialState
   it('handles dispatch correctly on initial state', () => {
     const action = fetchPractitioners([fixtures.practitioner1] as Practitioner[]);
@@ -280,5 +289,109 @@ describe('reducers/practitioners.reducer- integration test', () => {
     store.dispatch(fetchPractitioners([fixtures.practitioner2] as Practitioner[]));
     numberOfPractitioners = getPractitionersArray(store.getState()).length;
     expect(numberOfPractitioners).toEqual(2);
+  });
+
+  it('fetchedPractitionerRole actions actually adds data to store', () => {
+    expect(getPractitionersById(store.getState())).toEqual({});
+    expect(getPractitionersArray(store.getState())).toEqual([]);
+
+    store.dispatch(
+      fetchPractitionerRoles(
+        fixtures.org3Practitioners as Practitioner[],
+        fixtures.organization3.identifier
+      )
+    );
+    expect(getPractitionersById(store.getState())).toEqual({
+      '437cc699-cfd7-414c-ba27-1668b6b517e6': fixtures.practitioner6,
+      healer: fixtures.practitioner4,
+      master: fixtures.practitioner5,
+    });
+    expect(getPractitionersArray(store.getState()).length).toEqual(3);
+    expect(
+      getPractitionersByOrgId(store.getState(), fixtures.organization3.identifier).length
+    ).toEqual(3);
+  });
+
+  it('removePractitionerRole action removes practitioners', () => {
+    store.dispatch(
+      fetchPractitionerRoles(
+        fixtures.org3Practitioners as Practitioner[],
+        fixtures.organization3.identifier
+      )
+    );
+    let numberOfPractitioners = getPractitionersArray(store.getState()).length;
+    expect(numberOfPractitioners).toEqual(3);
+    let org3Practs = getPractitionersByOrgId(store.getState(), fixtures.organization3.identifier)
+      .length;
+    expect(org3Practs).toEqual(3);
+
+    store.dispatch(removePractitionerRolesAction);
+    numberOfPractitioners = getPractitionersArray(store.getState()).length;
+    org3Practs = getPractitionersByOrgId(store.getState(), fixtures.organization3.identifier)
+      .length;
+    expect(org3Practs).toEqual(0);
+  });
+
+  it('Adds new practitioners to store instead of overwriting existing ones', () => {
+    // impact on practitionersById
+    store.dispatch(
+      fetchPractitionerRoles(
+        [fixtures.practitioner4] as Practitioner[],
+        fixtures.organization3.identifier
+      )
+    );
+    let allPractitioners = getPractitionersArray(store.getState()).length;
+    expect(allPractitioners).toEqual(1);
+
+    let org3Practs = getPractitionersByOrgId(store.getState(), fixtures.organization3.identifier)
+      .length;
+    expect(org3Practs).toEqual(1);
+
+    // possibilities; adding practitioners to the same organization
+    store.dispatch(
+      fetchPractitionerRoles(
+        [fixtures.practitioner5] as Practitioner[],
+        fixtures.organization3.identifier
+      )
+    );
+    allPractitioners = getPractitionersArray(store.getState()).length;
+    expect(allPractitioners).toEqual(2);
+
+    org3Practs = getPractitionersByOrgId(store.getState(), fixtures.organization3.identifier)
+      .length;
+    expect(org3Practs).toEqual(2);
+
+    // possibilities; adding same practitioners to a different organization
+    store.dispatch(
+      fetchPractitionerRoles(
+        [fixtures.practitioner5] as Practitioner[],
+        fixtures.organization2.identifier
+      )
+    );
+
+    allPractitioners = getPractitionersArray(store.getState()).length;
+    expect(allPractitioners).toEqual(2);
+
+    const org2Practs = getPractitionersByOrgId(store.getState(), fixtures.organization2.identifier)
+      .length;
+    expect(org2Practs).toEqual(1);
+
+    // possibilities; adding practitioners to a different organization
+    store.dispatch(
+      fetchPractitionerRoles(
+        [fixtures.practitioner6] as Practitioner[],
+        fixtures.organization1.identifier
+      )
+    );
+
+    allPractitioners = getPractitionersArray(store.getState()).length;
+    expect(allPractitioners).toEqual(3);
+
+    const org1Practs = getPractitionersByOrgId(store.getState(), fixtures.organization1.identifier)
+      .length;
+
+    expect(org1Practs).toEqual(1);
+    expect(org2Practs).toEqual(1);
+    expect(org3Practs).toEqual(2);
   });
 });
