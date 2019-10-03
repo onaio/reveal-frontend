@@ -32,6 +32,7 @@ import {
 } from '../../../../store/ducks/opensrp/organizations';
 import OrganizationForm, {
   defaultInitialValues,
+  OrganizationFormFields,
   OrganizationFormProps,
 } from '../../../forms/OrganizationForm';
 
@@ -79,7 +80,7 @@ const CreateEditTeamView = (props: CreateEditTeamViewTypes) => {
 
   const organizationFormProps: OrganizationFormProps = {
     disabledFields: [],
-    initialValues: editing ? organization! : defaultInitialValues,
+    initialValues: editing ? (organization as OrganizationFormFields) : defaultInitialValues,
     redirectAfterAction: ORGANIZATIONS_LIST_URL,
   };
 

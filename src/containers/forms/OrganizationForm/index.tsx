@@ -41,7 +41,7 @@ export const OrgSchema = Yup.object().shape({
 });
 
 /** interface for data fields for team's form */
-interface OrganizationFormFields {
+export interface OrganizationFormFields {
   active: boolean;
   identifier: string;
   name: string;
