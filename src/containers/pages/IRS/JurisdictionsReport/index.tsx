@@ -92,9 +92,11 @@ const JurisdictionReport = (props: GenericJurisdictionProps & RouteComponentProp
             { jurisdiction_depth: true }
           );
         }
-        await service(slice, fetchJurisdictionsParams).then((result: GenericJurisdiction[]) =>
-          fetchJurisdictions(slice, result)
-        );
+        await service(slice, fetchJurisdictionsParams).then((result: GenericJurisdiction[]) => {
+          if (result) {
+            return fetchJurisdictions(slice, result);
+          }
+        });
       });
     } catch (e) {
       // todo - handle error https://github.com/onaio/reveal-frontend/issues/300
