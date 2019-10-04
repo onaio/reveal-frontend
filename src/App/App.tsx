@@ -48,7 +48,7 @@ import ConnectedUpdatePlan from '../containers/pages/InterventionPlan/UpdatePlan
 import ConnectedJurisdictionReport from '../containers/pages/IRS/JurisdictionsReport';
 import ConnectedIRSReportingMap from '../containers/pages/IRS/Map';
 import ConnectedIRSPlansList from '../containers/pages/IRS/plans';
-import ConnectedCreateEditTeamView from '../containers/pages/OrganizationViews/CreateEditOrgView';
+import ConnectedCreateEditOrgView from '../containers/pages/OrganizationViews/CreateEditOrgView';
 import ConnectedOrgsListView from '../containers/pages/OrganizationViews/OrganizationListView';
 import { oAuthUserInfoGetter } from '../helpers/utils';
 
@@ -218,14 +218,14 @@ class App extends Component {
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={CREATE_ORGANIZATION_URL}
-                  component={ConnectedCreateEditTeamView}
+                  component={ConnectedCreateEditOrgView}
                 />
                 {/** Organization edit view */}
                 <ConnectedPrivateRoute
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={`${EDIT_ORGANIZATION_URL}/:id`}
-                  component={ConnectedCreateEditTeamView}
+                  component={ConnectedCreateEditOrgView}
                 />
                 {/* tslint:disable jsx-no-lambda */}
                 <Route
