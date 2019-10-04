@@ -773,7 +773,7 @@ export const indicatorThresholdsIRS = {
     value: 1,
   },
   GREY_THRESHOLD: {
-    color: '#dddddd',
+    color: '#a9a9a9',
     value: 0.2,
   },
   RED_THRESHOLD: {
