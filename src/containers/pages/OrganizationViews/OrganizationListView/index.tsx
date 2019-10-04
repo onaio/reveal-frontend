@@ -19,7 +19,7 @@ import HeaderBreadcrumb, {
 import Loading from '../../../../components/page/Loading';
 import {
   ACTIONS,
-  CREATE_TEAM_URL,
+  CREATE_ORGANIZATION_URL,
   HOME,
   HOME_URL,
   IDENTIFIER,
@@ -28,9 +28,9 @@ import {
   OPENSRP_ORGANIZATION_ENDPOINT,
   ORGANIZATION_LABEL,
   ORGANIZATIONS_LABEL,
+  ORGANIZATIONS_LIST_URL,
   SEARCH,
-  SINGLE_TEAM_URL,
-  TEAM_LIST_URL,
+  SINGLE_ORGANIZATION_URL,
   VIEW,
 } from '../../../../constants';
 import { OpenSRPService } from '../../../../services/opensrp';
@@ -69,7 +69,7 @@ const OrganizationListView = (props: OrgsListViewPropsType) => {
   const breadcrumbProps: BreadCrumbProps = {
     currentPage: {
       label: ORGANIZATIONS_LABEL,
-      url: TEAM_LIST_URL,
+      url: ORGANIZATIONS_LIST_URL,
     },
     pages: [],
   };
@@ -91,7 +91,7 @@ const OrganizationListView = (props: OrgsListViewPropsType) => {
     data: organizations.map((organization: Organization) => {
       return [
         <Link
-          to={`${SINGLE_TEAM_URL}/${organization.identifier}`}
+          to={`${SINGLE_ORGANIZATION_URL}/${organization.identifier}`}
           key={`orgName-${organization.identifier}`}
           className="organization-name-link"
         >
@@ -99,7 +99,7 @@ const OrganizationListView = (props: OrgsListViewPropsType) => {
         </Link>,
         organization.identifier,
         <Link
-          to={`${SINGLE_TEAM_URL}/${organization.identifier}`}
+          to={`${SINGLE_ORGANIZATION_URL}/${organization.identifier}`}
           key={`action-${organization.identifier}`}
         >
           {VIEW}
@@ -113,7 +113,7 @@ const OrganizationListView = (props: OrgsListViewPropsType) => {
   // props for the link displayed as button: used to add new organization
   const linkAsButtonProps = {
     text: NEW_TEAM,
-    to: CREATE_TEAM_URL,
+    to: CREATE_ORGANIZATION_URL,
   };
 
   // functions/methods
