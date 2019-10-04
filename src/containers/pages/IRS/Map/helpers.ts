@@ -14,7 +14,7 @@ export const defaultIndicatorStop = [
   ['Not Sprayed', TASK_RED],
   ['Partially Sprayed', TASK_ORANGE],
   ['Not Visited', TASK_YELLOW],
-  ['Not Eligible', BLACK],
+  ['Not Eligible', GREY],
 ];
 
 /** IRS Indicator stops
@@ -27,7 +27,7 @@ export const IRSIndicatorStops: { [key: string]: string[][] } = {
     ['Not Sprayed', TASK_RED],
     ['Partially Sprayed', TASK_ORANGE],
     ['Not Visited', TASK_YELLOW],
-    ['Not Eligible', BLACK],
+    ['Not Eligible', GREY],
   ],
 };
 
