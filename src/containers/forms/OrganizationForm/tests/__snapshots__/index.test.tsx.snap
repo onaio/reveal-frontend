@@ -1,17 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`containers/forms/Teamform renders correctly: Team identifier 1`] = `
-<input
-  className="form-control"
-  disabled={true}
-  id="identifier"
-  name="identifier"
-  onBlur={[Function]}
-  onChange={[Function]}
-  type="text"
-  value=""
-/>
-`;
+exports[`containers/forms/Teamform renders correctly: Team identifier 1`] = `null`;
 
 exports[`containers/forms/Teamform renders correctly: Team name 1`] = `
 <input
@@ -28,18 +17,7 @@ exports[`containers/forms/Teamform renders correctly: Team name 1`] = `
 
 exports[`containers/forms/Teamform renders fields correctly in edit mode: Id field should have value in edit mode 1`] = `
 "Snapshot Diff:
-- First value
-+ Second value
-
-@@ -4,7 +4,7 @@
-    id=\\"identifier\\"
-    name=\\"identifier\\"
-    onBlur={[Function anonymous]}
-    onChange={[Function anonymous]}
-    type=\\"text\\"
--   value=\\"\\"
-+   value=\\"1\\"
-  />"
+Compared values have no visual difference."
 `;
 
 exports[`containers/forms/Teamform renders fields correctly in edit mode: Should not be different 1`] = `
@@ -54,6 +32,6 @@ exports[`containers/forms/Teamform renders fields correctly in edit mode: Should
     onChange={[Function anonymous]}
     type=\\"text\\"
 -   value=\\"\\"
-+   value=\\"User_45\\"
++   value=\\"The Luang\\"
   />"
 `;
