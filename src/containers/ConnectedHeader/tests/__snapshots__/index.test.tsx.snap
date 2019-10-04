@@ -166,18 +166,6 @@ Object {
             Teams
           </NavLink>
         </NavItem>
-        <NavItem
-          tag="li"
-        >
-          <NavLink
-            activeClassName="active"
-            aria-current="page"
-            className="nav-link"
-            to="/404"
-          >
-            About
-          </NavLink>
-        </NavItem>
       </Nav>
       <Nav
         className="ml-0"
@@ -366,18 +354,6 @@ Object {
             to="/teams"
           >
             Teams
-          </NavLink>
-        </NavItem>
-        <NavItem
-          tag="li"
-        >
-          <NavLink
-            activeClassName="active"
-            aria-current="page"
-            className="nav-link"
-            to="/404"
-          >
-            About
           </NavLink>
         </NavItem>
       </Nav>

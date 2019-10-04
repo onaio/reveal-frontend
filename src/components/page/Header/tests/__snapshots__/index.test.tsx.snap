@@ -514,40 +514,6 @@ exports[`components/page/Header renders header correctly 1`] = `
                             </NavLink>
                           </li>
                         </NavItem>
-                        <NavItem
-                          tag="li"
-                        >
-                          <li
-                            className="nav-item"
-                          >
-                            <NavLink
-                              activeClassName="active"
-                              aria-current="page"
-                              className="nav-link"
-                              to="/404"
-                            >
-                              <Route
-                                path="\\\\/404"
-                              >
-                                <Link
-                                  aria-current={null}
-                                  className="nav-link"
-                                  replace={false}
-                                  to="/404"
-                                >
-                                  <a
-                                    aria-current={null}
-                                    className="nav-link"
-                                    href="/404"
-                                    onClick={[Function]}
-                                  >
-                                    About
-                                  </a>
-                                </Link>
-                              </Route>
-                            </NavLink>
-                          </li>
-                        </NavItem>
                       </ul>
                     </Nav>
                     <Nav
@@ -1107,40 +1073,6 @@ exports[`components/page/Header renders header correctly when authenticated 1`] 
                                     onClick={[Function]}
                                   >
                                     Teams
-                                  </a>
-                                </Link>
-                              </Route>
-                            </NavLink>
-                          </li>
-                        </NavItem>
-                        <NavItem
-                          tag="li"
-                        >
-                          <li
-                            className="nav-item"
-                          >
-                            <NavLink
-                              activeClassName="active"
-                              aria-current="page"
-                              className="nav-link"
-                              to="/404"
-                            >
-                              <Route
-                                path="\\\\/404"
-                              >
-                                <Link
-                                  aria-current={null}
-                                  className="nav-link"
-                                  replace={false}
-                                  to="/404"
-                                >
-                                  <a
-                                    aria-current={null}
-                                    className="nav-link"
-                                    href="/404"
-                                    onClick={[Function]}
-                                  >
-                                    About
                                   </a>
                                 </Link>
                               </Route>
