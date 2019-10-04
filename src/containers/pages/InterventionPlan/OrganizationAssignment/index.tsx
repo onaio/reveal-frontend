@@ -89,11 +89,11 @@ const OrganizationAssignment: React.FC<PropsTypes> = props => {
 
   // props for async select component
   const asyncSelectProps = {
-    setState: setOrganization,
     cacheOptions: true,
     defaultOptions: true,
     loadOptions: loadOrganizations,
     onchange: handleChange,
+    setState: setOrganization,
   };
 
   // methods

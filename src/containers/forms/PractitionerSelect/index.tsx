@@ -1,11 +1,8 @@
 /** uses react select-async multi??? - for practitioner form usage we don't need this to be multi to select several practitioners */
 import React, { useState } from 'react';
 import AsyncSelect from 'react-select/async';
-import {
-  OPENSRP_PRACTITIONER_ENDPOINT,
-} from '../../../constants';
+import { OPENSRP_PRACTITIONER_ENDPOINT } from '../../../constants';
 import { OpenSRPService } from '../../../services/opensrp';
-
 
 interface PractitionerSelectProps {
   serviceClass: typeof OpenSRPService;
