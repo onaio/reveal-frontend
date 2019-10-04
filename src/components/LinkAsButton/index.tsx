@@ -4,23 +4,24 @@ import { NEW_PLAN_URL } from '../../constants';
 
 /** interface for LinkAsButton component props */
 export interface Props {
-  classProp: string;
+  classNameProp: string;
   text: string;
   to: string;
 }
 
 /** LinkAsButton component */
 const LinkAsButton = (props: Props) => {
-  const { to, classProp, text } = props;
+  const { to, classNameProp, text } = props;
   return (
-    <Link to={to} className={classProp}>
+    <Link to={to} className={classNameProp}>
       {text}
     </Link>
   );
 };
 
+/** default props for LinkAsButton component */
 const defaultProps: Props = {
-  classProp: 'btn btn-primary float-right mt-5',
+  classNameProp: 'focus-investigation btn btn-primary float-right mt-5',
   text: 'Add Focus Investigation',
   to: NEW_PLAN_URL,
 };

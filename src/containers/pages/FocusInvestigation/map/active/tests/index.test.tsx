@@ -10,12 +10,14 @@ import { Router } from 'react-router';
 import { FI_SINGLE_URL } from '../../../../../../constants';
 import { wrapFeatureCollection } from '../../../../../../helpers/utils';
 import store from '../../../../../../store';
-import { fetchGoals } from '../../../../../../store/ducks/goals';
-import { fetchJurisdictions } from '../../../../../../store/ducks/jurisdictions';
-import { fetchPlans, Plan } from '../../../../../../store/ducks/plans';
-import { fetchTasks } from '../../../../../../store/ducks/tasks';
+import * as goalDucks from '../../../../../../store/ducks/goals';
+import * as jurisdictionDucks from '../../../../../../store/ducks/jurisdictions';
+import * as planDucks from '../../../../../../store/ducks/plans';
+import * as structureDucks from '../../../../../../store/ducks/structures';
+import * as tasksDucks from '../../../../../../store/ducks/tasks';
 import * as fixtures from '../../../../../../store/ducks/tests/fixtures';
-import ConnectedMapSingleFI, { SingleActiveFIMap } from '../../active/';
+import ConnectedMapSingleFI, { MapSingleFIProps, SingleActiveFIMap } from '../../active/';
+import { existingState } from './fixtures';
 
 jest.mock('../../../../../../components/GisidaWrapper', () => {
   const GisidaWrapperMock = () => <div>I love oov</div>;
@@ -23,6 +25,11 @@ jest.mock('../../../../../../components/GisidaWrapper', () => {
 });
 jest.mock('../../../../../../configs/env');
 const history = createBrowserHistory();
+const { fetchGoals } = goalDucks;
+const { fetchJurisdictions } = jurisdictionDucks;
+const fetchPlans = planDucks.fetchPlans;
+type Plan = planDucks.Plan;
+const { fetchTasks } = tasksDucks;
 
 describe('containers/pages/FocusInvestigation/activeMap', () => {
   beforeEach(() => {
@@ -83,10 +90,26 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
         <SingleActiveFIMap {...props} />
       </Router>
     );
+
+    // what is passed as the document page title text
     const helmet = Helmet.peek();
     expect(helmet.title).toEqual('Focus Investigation: A1-Tha Luang Village 1 Focus 01');
-    expect(toJson(wrapper)).toMatchSnapshot();
-    expect(wrapper.find('GisidaWrapperMock').props()).toMatchSnapshot();
+
+    // Check a few crucial components to make sure the page has rendered
+
+    // check Header Breadcrumb
+    const headerWrapper = wrapper.find('Breadcrumb');
+    expect(toJson(headerWrapper)).toMatchSnapshot('Breadcrumb');
+
+    // Check gisida component using a mock
+    expect(toJson(wrapper.find('GisidaWrapperMock div'))).toMatchSnapshot('GisidaWrapperMock div');
+
+    // how about the selectPlan component
+    expect(wrapper.find('SelectPlan').length).toEqual(1);
+
+    // We should have progressBars somewhere in there
+    expect(toJson(wrapper.find('.targetItem').first())).toMatchSnapshot('ProgressBar instance');
+
     wrapper.unmount();
   });
 
@@ -118,8 +141,23 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
         </Router>
       </Provider>
     );
-    expect(toJson(wrapper)).toMatchSnapshot();
-    expect(wrapper.find('GisidaWrapperMock').props()).toMatchSnapshot();
+    // Check data passed to component props that should come from redux
+
+    const singleActiveWrapperProps = wrapper.find('SingleActiveFIMap').props();
+    // plan prop
+    expect((singleActiveWrapperProps as MapSingleFIProps).plan).toEqual(fixtures.plan1);
+
+    // goals prop
+    expect((singleActiveWrapperProps as MapSingleFIProps).goals).toEqual([]);
+
+    // jurisdiction prop
+    expect((singleActiveWrapperProps as MapSingleFIProps).jurisdiction).toEqual(
+      fixtures.jurisdictions[0]
+    );
+
+    // structures
+    expect((singleActiveWrapperProps as MapSingleFIProps).structures).toBeNull();
+
     wrapper.unmount();
   });
 
@@ -226,5 +264,82 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
     expect(supersetServiceMock).toHaveBeenCalledTimes(5);
     expect((superset.getFormData as any).mock.calls).toEqual(getformDataCallList);
     wrapper.unmount();
+  });
+
+  it('selectors get called with correct arguments', () => {
+    // spy on the selectors
+    const getPlansArrayMock = jest.spyOn(planDucks, 'getPlansArray');
+    const planByIdMock = jest.spyOn(planDucks, 'getPlanById');
+    const currentGoalMock = jest.spyOn(goalDucks, 'getCurrentGoal');
+    const goalPlanJurisdictionMock = jest.spyOn(goalDucks, 'getGoalsByPlanAndJurisdiction');
+    const jurisdictionIdMock = jest.spyOn(jurisdictionDucks, 'getJurisdictionById');
+    const plansIdArrayMock = jest.spyOn(planDucks, 'getPlansIdArray');
+    const structuresMock = jest.spyOn(structureDucks, 'getStructuresFCByJurisdictionId');
+    const FCMock = jest.spyOn(tasksDucks, 'getFCByPlanAndGoalAndJurisdiction');
+    // setup the component and mount
+    const mock: any = jest.fn();
+    const supersetServiceMock: any = jest.fn(async () => []);
+    store.dispatch(fetchGoals([fixtures.goal3]));
+    store.dispatch(fetchJurisdictions([fixtures.jurisdictions[0]]));
+    store.dispatch(fetchPlans([fixtures.plan1 as Plan]));
+    store.dispatch(fetchTasks(fixtures.tasks));
+    const props = {
+      currentGoal: fixtures.goal3,
+      history,
+      location: mock,
+      match: {
+        isExact: true,
+        params: { id: fixtures.plan1.id },
+        path: `${FI_SINGLE_URL}/:id`,
+        url: `${FI_SINGLE_URL}/13`,
+      },
+      pointFeatureCollection: wrapFeatureCollection([fixtures.coloredTasks.task3.geojson]),
+      polygonFeatureCollection: wrapFeatureCollection([fixtures.coloredTasks.task2.geojson]),
+      supersetService: supersetServiceMock,
+    };
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedMapSingleFI {...props} />
+        </Router>
+      </Provider>
+    );
+    expect(getPlansArrayMock).toBeCalledTimes(2);
+
+    // define expected results
+    const plansArrayExpected1 = [
+      existingState,
+      'FI',
+      ['active', 'complete'],
+      null,
+      [],
+      '450fc15b-5bd2-468a-927a-49cb10d3bcac',
+    ];
+    const plansArrayExpected2 = [existingState, 'FI', ['active', 'complete']];
+    const planByIdExpected = [existingState, 'ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f'];
+    const goalPlanJurisdictionexpected = [
+      existingState,
+      '10f9e9fa-ce34-4b27-a961-72fab5206ab6',
+      '450fc15b-5bd2-468a-927a-49cb10d3bcac',
+    ];
+    const getPlansIdArrayExpected = [
+      existingState,
+      'FI',
+      [planDucks.PlanStatus.ACTIVE, planDucks.PlanStatus.DRAFT],
+      null,
+    ];
+    const jurisdictionIdExpected = [existingState, '450fc15b-5bd2-468a-927a-49cb10d3bcac'];
+
+    // perform the actual assertions
+    expect(getPlansArrayMock.mock.calls[0]).toEqual(plansArrayExpected1);
+    expect(getPlansArrayMock.mock.calls[1]).toEqual(plansArrayExpected2);
+    expect(planByIdMock.mock.calls[0]).toEqual(planByIdExpected);
+    expect(goalPlanJurisdictionMock.mock.calls[0]).toEqual(goalPlanJurisdictionexpected);
+    expect(plansIdArrayMock.mock.calls[0]).toEqual(getPlansIdArrayExpected);
+    expect(jurisdictionIdMock.mock.calls[0]).toEqual(jurisdictionIdExpected);
+
+    expect(structuresMock).not.toBeCalled();
+    expect(currentGoalMock).not.toBeCalled();
+    expect(FCMock).not.toBeCalled();
   });
 });

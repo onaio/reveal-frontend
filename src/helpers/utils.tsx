@@ -2,10 +2,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { getOnadataUserInfo, getOpenSRPUserInfo } from '@onaio/gatekeeper';
 import { SessionState } from '@onaio/session-reducer';
 import { Color } from 'csstype';
+import { GisidaMap } from 'gisida';
 import { findKey, uniq } from 'lodash';
-import { FitBoundsOptions, Layer, Style } from 'mapbox-gl';
-import { MouseEvent } from 'react';
+import { FitBoundsOptions, Layer, LngLatBoundsLike, LngLatLike, Map, Style } from 'mapbox-gl';
 import React from 'react';
+import { MouseEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { CellInfo, Column } from 'react-table';
 import SeamlessImmutable from 'seamless-immutable';
@@ -21,6 +22,7 @@ import {
   CASE_CONFIRMATION_CODE,
   CASE_TRIGGERED_PLAN,
   FEATURE_COLLECTION,
+  FI_FILTER_URL,
   FI_SINGLE_MAP_URL,
   FI_SINGLE_URL,
   FOCUS_AREA_HEADER,
@@ -43,6 +45,8 @@ export interface FlexObject {
 export interface RouteParams {
   goalId?: string;
   id?: string;
+  jurisdictionId?: string;
+  planId?: string;
 }
 
 /** Geometry object interface */
@@ -232,6 +236,99 @@ export const ConfigStore = (
   };
   return config;
 };
+/** utility method ror getting a Gisida Mapbox Map from the reference saved in window.maps
+ * @param {string} mapId - The id string of the map to be returned
+ * @return {Map|null} - The Mapbox-gl object of the Map or null if not found
+ */
+export const getGisidaMapById = (mapId: string = MAP_ID): Map | null => {
+  if (!window.maps || !Array.isArray(window.maps)) {
+    return null;
+  }
+  return window.maps.find((e: Map) => (e as GisidaMap)._container.id === mapId) || null;
+};
+
+/** utility method for getting a rendered feature by matching property
+ * @param {string} prop - The feature property name of the value to compair against
+ * @param {string|number} val - The value to compair the feature property against
+ * @param {string} layerType - The Mapbox layer type to query
+ * @param {string} mapId - The id string of the map to query for features
+ * @return {mapboxFeature|null} - The queried feature matching the prop/val or null if none found
+ */
+export const getFeatureByProperty = (
+  prop: string,
+  val: string | number,
+  layerType: string = 'fill',
+  mapId: string = MAP_ID
+) => {
+  const map: Map | null = getGisidaMapById(mapId);
+  if (map) {
+    const features = map.queryRenderedFeatures().filter(f => f.layer.type === layerType);
+    for (const feature of features) {
+      if (feature && feature.properties && typeof feature.properties[prop] !== 'undefined') {
+        let propVal = feature.properties[prop];
+        // Make sure feature propVal and val are the same type before compairing
+        if (typeof val === 'string' && typeof propVal !== 'string') {
+          propVal = propVal.toString();
+        } else if (typeof val === 'number' && typeof propVal !== 'number') {
+          propVal = Number(propVal);
+        }
+        if (propVal === val) {
+          return feature;
+        }
+      }
+    }
+  }
+  return null;
+};
+
+/** interface for setGisidaMapPosition `position` parameter */
+export interface GisidaPositionType {
+  bounds?: LngLatBoundsLike;
+  boundsOptions?: FitBoundsOptions;
+  lat?: number;
+  lng?: number;
+  zoom?: number;
+}
+
+/** utility method to update the position of a Gisida Mapbox Map
+ * @param {GisidaPositionType} position - The config object describing the new map position
+ * @param {string} mapId - The id string of the map to query for features
+ * @returns {boolean} - Indicates the success or failure of updating the map position
+ */
+export const setGisidaMapPosition = (
+  position: GisidaPositionType,
+  mapId: string = MAP_ID
+): boolean => {
+  const map: Map | null = getGisidaMapById(mapId);
+
+  if (!map) {
+    return false;
+  }
+
+  if (position.bounds) {
+    // set position with fitBounds
+    try {
+      map.fitBounds(position.bounds, position.boundsOptions || { padding: 20 });
+    } catch {
+      return false;
+    }
+  } else {
+    // set position with l
+    const { lat, lng, zoom } = position;
+    const lngLat: LngLatLike | null = (lng && lat && [lng, lat]) || null;
+    if (lngLat && typeof zoom !== 'undefined') {
+      try {
+        map.setCenter(lngLat);
+        map.setZoom(zoom);
+      } catch {
+        return false;
+      }
+    }
+  }
+
+  return true;
+};
+
 /** utility method to extract plan from superset response object */
 export function extractPlan(plan: Plan) {
   const result: { [key: string]: any } = {
@@ -397,18 +494,53 @@ export function roundToPrecision(n: number, precision: number = 0): number {
   const factor = Math.pow(10, precision);
   return Math.round(n * factor) / factor;
 }
+/**
+ * I think the main/original use case for having the below 3 functions:
+ * PreventDefault, stopPropagation, and stopPropagationAndPreventDefault
+ * is feeding them directly into component handler attributes:
+ *
+ * <Button onClick={preventDefault} />
+ *
+ * which was intended to be a bit DRYer than:
+ *
+ * function handleSpecificButtonClick(e) { e.preventDefault() }
+ * <Button onClick={handleButtonClick} />
+ *
+ * and to avoid the linting error Lambdas are forbidden in JSX attributes due
+ * to their rendering performance impact when doing:
+ *
+ * <Button onClick={(e) => { e.preventDefault() } />
+ *
+ *
+ */
 
-export function stopPropagation(e: Event | MouseEvent | any) {
-  e.stopPropagation();
-}
-
-export function preventDefault(e: Event | MouseEvent | any) {
+/** click handler that cancels an event's default behavior
+ *
+ * @param {Event | MouseEvent} e - a synthetic event wrapper around native dom events
+ */
+export function preventDefault(e: MouseEvent) {
   e.preventDefault();
 }
 
-export function stopPropagationAndPreventDefault(e: Event | MouseEvent | any) {
-  preventDefault(e);
-  stopPropagation(e);
+/** click handler that cancels an event's default behavior
+ *
+ * @param {MouseEvent} e - a synthetic event wrapper around native dom events
+ */
+export function stopPropagation(e: MouseEvent) {
+  e.stopPropagation();
+}
+
+/** click handler that cancels both an event propagation and its default behavior
+ *
+ * @param {MouseEvent} e - a synthetic event wrapper around native dom events
+ */
+export function stopPropagationAndPreventDefault(e: MouseEvent) {
+  e.preventDefault();
+  e.stopPropagation();
+}
+
+export function getFilteredFIPlansURL(jurisdictionPath: string, planId: string): string {
+  return `${FI_FILTER_URL}/${jurisdictionPath}/${planId}`;
 }
 
 /** Returns Table columns Which require external dependencies (Cell, Link, CellInfo)

@@ -663,11 +663,11 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
                 },
                 Object {
                   "label": "Chadiza",
-                  "url": "",
+                  "url": "/focus-investigation/filter/2939/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
                 },
                 Object {
                   "label": "Naviluli",
-                  "url": "",
+                  "url": "/focus-investigation/filter/2944/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
                 },
               ]
             }
@@ -735,7 +735,18 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
                       <li
                         className="breadcrumb-item"
                       >
-                        Chadiza
+                        <Link
+                          key="2"
+                          replace={false}
+                          to="/focus-investigation/filter/2939/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
+                        >
+                          <a
+                            href="/focus-investigation/filter/2939/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
+                            onClick={[Function]}
+                          >
+                            Chadiza
+                          </a>
+                        </Link>
                       </li>
                     </BreadcrumbItem>
                     <BreadcrumbItem
@@ -745,7 +756,18 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
                       <li
                         className="breadcrumb-item"
                       >
-                        Naviluli
+                        <Link
+                          key="3"
+                          replace={false}
+                          to="/focus-investigation/filter/2944/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
+                        >
+                          <a
+                            href="/focus-investigation/filter/2944/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
+                            onClick={[Function]}
+                          >
+                            Naviluli
+                          </a>
+                        </Link>
                       </li>
                     </BreadcrumbItem>
                     <BreadcrumbItem
@@ -1127,8 +1149,10 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
                       <div
                         className="col-6"
                       >
-                        <LinkToNewPlans
-                          classProp="focus-investigation btn btn-primary float-right mt-5"
+                        <LinkAsButton
+                          classNameProp="focus-investigation btn btn-primary float-right mt-5"
+                          text="Add Focus Investigation"
+                          to="/plans/new"
                         >
                           <Link
                             className="focus-investigation btn btn-primary float-right mt-5"
@@ -1143,7 +1167,7 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
                               Add Focus Investigation
                             </a>
                           </Link>
-                        </LinkToNewPlans>
+                        </LinkAsButton>
                       </div>
                     </Col>
                   </div>
@@ -5817,11 +5841,11 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
             },
             Object {
               "label": "Chadiza",
-              "url": "",
+              "url": "/focus-investigation/filter/2939/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
             },
             Object {
               "label": "Naviluli",
-              "url": "",
+              "url": "/focus-investigation/filter/2944/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
             },
           ]
         }
@@ -5889,7 +5913,18 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
                   <li
                     className="breadcrumb-item"
                   >
-                    Chadiza
+                    <Link
+                      key="2"
+                      replace={false}
+                      to="/focus-investigation/filter/2939/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
+                    >
+                      <a
+                        href="/focus-investigation/filter/2939/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
+                        onClick={[Function]}
+                      >
+                        Chadiza
+                      </a>
+                    </Link>
                   </li>
                 </BreadcrumbItem>
                 <BreadcrumbItem
@@ -5899,7 +5934,18 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
                   <li
                     className="breadcrumb-item"
                   >
-                    Naviluli
+                    <Link
+                      key="3"
+                      replace={false}
+                      to="/focus-investigation/filter/2944/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
+                    >
+                      <a
+                        href="/focus-investigation/filter/2944/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
+                        onClick={[Function]}
+                      >
+                        Naviluli
+                      </a>
+                    </Link>
                   </li>
                 </BreadcrumbItem>
                 <BreadcrumbItem
@@ -7321,8 +7367,10 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
                   <div
                     className="col-6"
                   >
-                    <LinkToNewPlans
-                      classProp="focus-investigation btn btn-primary float-right mt-5"
+                    <LinkAsButton
+                      classNameProp="focus-investigation btn btn-primary float-right mt-5"
+                      text="Add Focus Investigation"
+                      to="/plans/new"
                     >
                       <Link
                         className="focus-investigation btn btn-primary float-right mt-5"
@@ -7337,7 +7385,7 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
                           Add Focus Investigation
                         </a>
                       </Link>
-                    </LinkToNewPlans>
+                    </LinkAsButton>
                   </div>
                 </Col>
               </div>
@@ -10777,8 +10825,10 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
                   <div
                     className="col-6"
                   >
-                    <LinkToNewPlans
-                      classProp="focus-investigation btn btn-primary float-right mt-5"
+                    <LinkAsButton
+                      classNameProp="focus-investigation btn btn-primary float-right mt-5"
+                      text="Add Focus Investigation"
+                      to="/plans/new"
                     >
                       <Link
                         className="focus-investigation btn btn-primary float-right mt-5"
@@ -10793,7 +10843,7 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
                           Add Focus Investigation
                         </a>
                       </Link>
-                    </LinkToNewPlans>
+                    </LinkAsButton>
                   </div>
                 </Col>
               </div>

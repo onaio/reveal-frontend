@@ -10,3 +10,8 @@
   right: 7px;
   color: #ff0000 !important;
 }
+
+#selected-jurisdiction-list {
+  overflow-y: scroll;
+  max-height: 200px;
+}

@@ -10,7 +10,18 @@ import LinkAsButton from '../../../../components/LinkAsButton';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
 import { PlanDefinition } from '../../../../configs/settings';
-import { ASSIGN, ASSIGN_ORGANIZATION_URL, HOME, HOME_URL, ORGANIZATION_LABEL, PLAN_LIST_URL, PLAN_UPDATE_URL, PLANS } from '../../../../constants';
+import {
+  ADD_PLAN,
+  ASSIGN,
+  ASSIGN_ORGANIZATION_URL,
+  HOME,
+  HOME_URL,
+  OPENSRP_PLANS,
+  ORGANIZATION_LABEL,
+  PLAN_LIST_URL,
+  PLAN_UPDATE_URL,
+  PLANS,
+} from '../../../../constants';
 import { OpenSRPService } from '../../../../services/opensrp';
 import planDefinitionReducer, {
   fetchPlanDefinitions,
@@ -33,7 +44,7 @@ const PlanDefinitionList = (props: PlanListProps) => {
   const { fetchPlans, plans, service } = props;
   const [loading, setLoading] = useState<boolean>(true);
 
-  const apiService = new service('/plans');
+  const apiService = new service(OPENSRP_PLANS);
 
   const pageTitle: string = PLANS;
 
@@ -103,7 +114,10 @@ const PlanDefinitionList = (props: PlanListProps) => {
           <h3 className="mt-3 mb-3 page-title">{pageTitle}</h3>
         </Col>
         <Col md={4}>
-          <LinkAsButton classProp="focus-investigation btn btn-primary float-right mt-3 mb-3" />
+          <LinkAsButton
+            classNameProp="focus-investigation btn btn-primary float-right mt-3 mb-3"
+            text={ADD_PLAN}
+          />
         </Col>
       </Row>
       <Row>

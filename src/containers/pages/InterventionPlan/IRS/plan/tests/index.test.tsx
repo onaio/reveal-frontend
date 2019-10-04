@@ -4,10 +4,9 @@ import { createBrowserHistory } from 'history';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
-import { FI_SINGLE_URL } from '../../../../../../constants';
+import { INTERVENTION_IRS_URL } from '../../../../../../constants';
 import store from '../../../../../../store';
 import * as fixtures from '../../../../../../store/ducks/tests/fixtures';
-
 import ConnectedIrsPlan, { IrsPlan } from './..';
 
 jest.mock('../../../../../../configs/env');
@@ -26,8 +25,8 @@ describe('containers/pages/IRS/plan', () => {
       match: {
         isExact: true,
         params: { id: '1234' },
-        path: `${FI_SINGLE_URL}/plan/:id`,
-        url: `${FI_SINGLE_URL}/plan/1234`,
+        path: `${INTERVENTION_IRS_URL}/plan/:id`,
+        url: `${INTERVENTION_IRS_URL}/plan/1234`,
       },
       planId: '1234',
     };
@@ -47,8 +46,8 @@ describe('containers/pages/IRS/plan', () => {
       match: {
         isExact: true,
         params: { id },
-        path: `${FI_SINGLE_URL}/plan/:id`,
-        url: `${FI_SINGLE_URL}/plan/${id}`,
+        path: `${INTERVENTION_IRS_URL}/plan/:id`,
+        url: `${INTERVENTION_IRS_URL}/plan/${id}`,
       },
     };
     const wrapper = mount(

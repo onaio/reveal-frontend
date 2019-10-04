@@ -57,6 +57,7 @@ import {
   defaultTableProps,
   extractPlan,
   FlexObject,
+  getFilteredFIPlansURL,
   getLocationColumns,
   jsxColumns,
   RouteParams,
@@ -215,13 +216,13 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
     };
     const namePaths =
       planById.jurisdiction_name_path instanceof Array ? planById.jurisdiction_name_path : [];
-    const pages = namePaths.map(namePath =>
+    const pages = namePaths.map((namePath, i) => {
       // return a page object for each name path
-      ({
+      return {
         label: namePath,
-        url: '',
-      })
-    );
+        url: getFilteredFIPlansURL(planById.jurisdiction_path[i], planById.id),
+      };
+    });
     breadCrumbProps.pages = [homePage, basePage, ...pages];
     /** currentRoutineReactivePlans array that holds current routine and reactive tables  */
     const currentRoutineReactivePlans: FlexObject[] = [];

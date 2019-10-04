@@ -2,7 +2,7 @@ import { Color } from 'csstype';
 import { get, keyBy, keys, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
 import SeamlessImmutable from 'seamless-immutable';
-import { MULTI_POLYGON, POLYGON } from '../../constants';
+import { JURISDICTION_ID, MULTI_POLYGON, POLYGON } from '../../constants';
 import {
   FeatureCollection,
   GeoJSON,
@@ -208,6 +208,21 @@ export function getTaskById(state: Partial<Store>, id: string): Task | null {
  */
 export function getTasksByPlanId(state: Partial<Store>, planId: string): Task[] {
   return values((state as any)[reducerName].tasksById).filter((e: Task) => e.plan_id === planId);
+}
+
+/** get tasks filtered by plan and jurisdiction ids
+ * @param {Partial<Store>} state - the redux store
+ * @param {string} planId - the plan id
+ * @param {string} jurisdictionId - the jurisdiction id
+ * @returns {Task[]} an array of tasks
+ */
+export function getTasksByPlanJurisdictionIds(
+  state: Partial<Store>,
+  planId: string,
+  jurisdictionId: string
+): Task[] {
+  const tasksByPlanId = getTasksByPlanId(state, planId);
+  return tasksByPlanId.filter((t: Task) => t.jurisdiction_id === jurisdictionId);
 }
 
 /** get tasks by goal id

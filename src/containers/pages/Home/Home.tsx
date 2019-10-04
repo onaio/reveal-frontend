@@ -4,7 +4,12 @@ import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { Button, Col, Row } from 'reactstrap';
 import { ENABLE_FI, ENABLE_IRS, ENABLE_TEAMS } from '../../../configs/env';
-import { FI_URL, INTERVENTION_IRS_URL, TEAM_LIST_URL } from '../../../constants';
+import {
+  FI_URL,
+  INTERVENTION_IRS_URL,
+  ORGANIZATIONS_LABEL,
+  TEAM_LIST_URL,
+} from '../../../constants';
 import { HOME_TITLE } from '../../../constants';
 import './Home.css';
 
@@ -31,7 +36,7 @@ class Home extends React.Component<{}, {}> {
               <Link to={INTERVENTION_IRS_URL} className="home-link">
                 <Button
                   color="outline"
-                  className="btn-home-call-to-action btn-lg btn-block btn-outline-dark"
+                  className="btn-intervention btn-lg btn-block btn-outline-green"
                 >
                   IRS
                 </Button>
@@ -43,7 +48,7 @@ class Home extends React.Component<{}, {}> {
               <Link to={FI_URL} className="home-link">
                 <Button
                   color="outline"
-                  className="btn-home-call-to-action btn-lg btn-block btn-outline-dark"
+                  className="btn-intervention btn-lg btn-block btn-outline-green"
                 >
                   Focus Investigation
                 </Button>
@@ -55,9 +60,9 @@ class Home extends React.Component<{}, {}> {
               <Link to={TEAM_LIST_URL} className="home-link">
                 <Button
                   color="outline"
-                  className="btn-home-call-to-action btn-lg btn-block btn-outline-dark"
+                  className="btn-intervention btn-lg btn-block btn-outline-green"
                 >
-                  Teams
+                  {ORGANIZATIONS_LABEL}
                 </Button>
               </Link>
             </Col>

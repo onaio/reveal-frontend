@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
 import InlineSearchForm, {
+  FieldProps,
   Props as InlineSearchFormProps,
 } from '../../../../components/InlineSearchForm';
 import LinkAsButton from '../../../../components/LinkAsButton';
@@ -39,7 +40,7 @@ import organizationsReducer, {
   getOrganizationsArray,
   Organization,
   reducerName as organizationsReducerName,
-} from '../../../../store/ducks/organizations';
+} from '../../../../store/ducks/opensrp/organizations';
 import './index.css';
 
 reducerRegistry.register(organizationsReducerName, organizationsReducer);
@@ -119,7 +120,7 @@ const OrganizationListView = (props: OrgsListViewPropsType) => {
 
   /** function to handle the submit on the inline search form */
   // tslint:disable-next-line: no-empty
-  function handleSubmit(event: React.FormEvent) {}
+  function handleSubmit(data: FieldProps) {}
 
   const loadOrganizations = async (service: typeof serviceClass) => {
     const serve = new service(OPENSRP_ORGANIZATION_ENDPOINT);
@@ -144,13 +145,12 @@ const OrganizationListView = (props: OrgsListViewPropsType) => {
   return (
     <div>
       <Helmet>
-        <title>{`${ORGANIZATION_LABEL}(${organizations.length})`}</title>
+        <title>{`${ORGANIZATIONS_LABEL}(${organizations.length})`}</title>
       </Helmet>
       <HeaderBreadcrumb {...breadcrumbProps} />
       <Row id="header-row">
         <Col className="xs">
-          {/** ? Should this be the number of organizations in store or in the api */}
-          <h2 className="mb-3 mt-5 page-title">{`${ORGANIZATION_LABEL}(${
+          <h2 className="mb-3 mt-5 page-title">{`${ORGANIZATIONS_LABEL} (${
             organizations.length
           })`}</h2>
         </Col>

@@ -5,7 +5,7 @@ import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { Link, NavLink } from 'react-router-dom';
-import { Badge, Button, Col, Row } from 'reactstrap';
+import { Badge, Col, Row } from 'reactstrap';
 import { Store } from 'redux';
 import GisidaWrapper from '../../../../../components/GisidaWrapper';
 import HeaderBreadcrumb, {
@@ -46,7 +46,12 @@ import {
 import { popupHandler } from '../../../../../helpers/handlers';
 import { getGoalReport } from '../../../../../helpers/indicators';
 import ProgressBar from '../../../../../helpers/ProgressBar';
-import { FeatureCollection, FlexObject, RouteParams } from '../../../../../helpers/utils';
+import {
+  FeatureCollection,
+  FlexObject,
+  getFilteredFIPlansURL,
+  RouteParams,
+} from '../../../../../helpers/utils';
 import supersetFetch from '../../../../../services/superset';
 import goalsReducer, {
   fetchGoals,
@@ -106,11 +111,11 @@ export interface MapSingleFIProps {
   goals: Goal[] | null;
   jurisdiction: Jurisdiction | null;
   plan: Plan | null;
-  plansArray: Plan[];
   pointFeatureCollection: FeatureCollection<TaskGeoJSON>;
   polygonFeatureCollection: FeatureCollection<TaskGeoJSON>;
   structures: FeatureCollection<StructureGeoJSON> | null /** we use this to get all structures */;
   supersetService: typeof supersetFetch;
+  plansByFocusArea: Plan[];
 }
 
 /** default value for feature Collection */
@@ -130,7 +135,7 @@ export const defaultMapSingleFIProps: MapSingleFIProps = {
   goals: null,
   jurisdiction: null,
   plan: null,
-  plansArray: [],
+  plansByFocusArea: [],
   pointFeatureCollection: defaultFeatureCollection,
   polygonFeatureCollection: defaultFeatureCollection,
   setCurrentGoalActionCreator: setCurrentGoal,
@@ -210,10 +215,10 @@ class SingleActiveFIMap extends React.Component<
       plan,
       goals,
       currentGoal,
-      plansArray,
       pointFeatureCollection,
       polygonFeatureCollection,
       structures,
+      plansByFocusArea,
     } = this.props;
     if (!jurisdiction || !plan) {
       return <Loading />;
@@ -239,11 +244,11 @@ class SingleActiveFIMap extends React.Component<
     };
     const namePaths =
       plan.jurisdiction_name_path instanceof Array ? plan.jurisdiction_name_path : [];
-    const pages = namePaths.map(namePath => {
+    const pages = namePaths.map((namePath, i) => {
       // return a page object for each name path
       return {
         label: namePath,
-        url: '',
+        url: getFilteredFIPlansURL(plan.jurisdiction_path[i], plan.id),
       };
     });
     breadCrumbProps.pages = [homePage, basePage, ...pages, secondLastPage];
@@ -312,7 +317,7 @@ class SingleActiveFIMap extends React.Component<
               </h2>
             </Col>
             <Col xs="4">
-              <SelectComponent plansArray={plansArray} />
+              <SelectComponent plansArray={plansByFocusArea} />
             </Col>
           </Row>
         </div>
@@ -395,7 +400,7 @@ export { SingleActiveFIMap };
  * @param {any} ownProps - the props
  */
 const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
-  // pass in the plan id to get plan the get the jurisdicytion_id from the plan
+  // pass in the plan id to get plan the get the jurisdiction_id from the plan
   const plan = getPlanById(state, ownProps.match.params.id);
   let goals = null;
   let jurisdiction = null;
@@ -403,9 +408,18 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
   let pointFeatureCollection = defaultFeatureCollection;
   let polygonFeatureCollection = defaultFeatureCollection;
   let structures = null;
+  let plansByFocusArea: Plan[] = [];
   if (plan) {
     jurisdiction = getJurisdictionById(state, plan.jurisdiction_id);
     goals = getGoalsByPlanAndJurisdiction(state, plan.plan_id, plan.jurisdiction_id);
+    plansByFocusArea = getPlansArray(
+      state,
+      InterventionType.FI,
+      [PlanStatus.ACTIVE, PlanStatus.COMPLETE],
+      null,
+      [],
+      plan.jurisdiction_id
+    );
   }
 
   if (plan && jurisdiction && (goals && goals.length > 1)) {
@@ -436,12 +450,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
     goals,
     jurisdiction,
     plan,
-    plansArray: getPlansArray(
-      state,
-      InterventionType.FI,
-      [PlanStatus.ACTIVE, PlanStatus.COMPLETE],
-      null
-    ),
+    plansArray: getPlansArray(state, InterventionType.FI, [PlanStatus.ACTIVE, PlanStatus.COMPLETE]),
     plansIdArray: getPlansIdArray(
       state,
       InterventionType.FI,

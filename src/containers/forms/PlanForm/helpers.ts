@@ -1,6 +1,6 @@
 import { parseISO } from 'date-fns';
 import { FormikErrors } from 'formik';
-import { omit, pick } from 'lodash';
+import { findKey, omit, pick } from 'lodash';
 import moment from 'moment';
 import { FormEvent } from 'react';
 import * as Yup from 'yup';
@@ -26,6 +26,7 @@ import {
   PlanActionCodesType,
   planActivities,
   PlanActivity,
+  PlanActivityTitlesType,
   PlanDefinition,
   PlanGoal,
   PlanGoalDetail,
@@ -142,6 +143,8 @@ export interface PlanFormFields {
  * @param activityObj - the plan activity object
  */
 export function extractActivityForForm(activityObj: PlanActivity): PlanActivityFormFields {
+  const planActivityKey: string =
+    findKey(planActivities, (a: PlanActivity) => a.action.code === activityObj.action.code) || '';
   return {
     actionCode: activityObj.action.code,
     actionDescription: activityObj.action.description || '',
@@ -150,13 +153,21 @@ export function extractActivityForForm(activityObj: PlanActivity): PlanActivityF
     actionTitle: activityObj.action.title || '',
     goalDescription: activityObj.goal.description || '',
     goalDue:
-      activityObj.goal.target[0].due && activityObj.goal.target[0].due !== ''
+      activityObj.goal.target &&
+      activityObj.goal.target[0].due &&
+      activityObj.goal.target[0].due !== ''
         ? parseISO(`${activityObj.goal.target[0].due}${DEFAULT_TIME}`)
         : moment()
             .add(DEFAULT_ACTIVITY_DURATION_DAYS, 'days')
             .toDate(),
     goalPriority: activityObj.goal.priority || goalPriorities[1],
-    goalValue: activityObj.goal.target[0].detail.detailQuantity.value || 0,
+    goalValue:
+      (activityObj.goal.target && activityObj.goal.target[0].detail.detailQuantity.value) ||
+      (planActivityKey &&
+        planActivities[planActivityKey as PlanActivityTitlesType] &&
+        planActivities[planActivityKey as PlanActivityTitlesType].goal.target[0].detail
+          .detailQuantity.value) ||
+      1,
     timingPeriodEnd:
       activityObj.action.timingPeriod.end && activityObj.action.timingPeriod.end !== ''
         ? parseISO(`${activityObj.action.timingPeriod.end}${DEFAULT_TIME}`)

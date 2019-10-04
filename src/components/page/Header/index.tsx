@@ -24,13 +24,20 @@ import {
   WEBSITE_NAME,
 } from '../../../configs/env';
 import {
-  FI_HISTORICAL_URL,
   FI_URL,
+  HOME,
+  INTERVENTION_IRS_DRAFTS_URL,
   INTERVENTION_IRS_URL,
+  IRS_REPORTING_TITLE,
+  IRS_TITLE,
   LOGIN_URL,
   LOGOUT_URL,
+  ORGANIZATIONS_LABEL,
   PLAN_LIST_URL,
+  PLANNING,
   PLANS,
+  REPORT_IRS_PLAN_URL,
+  REPORTING,
   TEAM_LIST_URL,
 } from '../../../constants';
 import './Header.css';
@@ -74,8 +81,8 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
     const path = this.props.location.pathname;
     return (
       <div>
-        <Navbar color="light" light={true} expand="md">
-          <nav className="navbar navbar-expand-md navbar-light bg-light">
+        <Navbar light={true} expand="md">
+          <nav className="navbar navbar-expand-md navbar-light">
             <Link to="/" className="navbar-brand">
               <img src={logo} alt={WEBSITE_NAME} />
             </Link>
@@ -89,7 +96,7 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
                   className={path === '/' ? 'nav-link active' : 'nav-link'}
                   activeClassName="active"
                 >
-                  Home
+                  {HOME}
                 </NavLink>
               </NavItem>
 
@@ -100,24 +107,22 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
                     caret={true}
                     className={path === INTERVENTION_IRS_URL ? 'nav-link active' : 'nav-link'}
                   >
-                    Planning
+                    {PLANNING}
                   </DropdownToggle>
                   <DropdownMenu right={true}>
-                    {ENABLE_FI && (
-                      <DropdownItem>
-                        <NavLink to={PLAN_LIST_URL} className="nav-link" activeClassName="active">
-                          {PLANS}
-                        </NavLink>
-                      </DropdownItem>
-                    )}
+                    <DropdownItem>
+                      <NavLink to={PLAN_LIST_URL} className="nav-link" activeClassName="active">
+                        {PLANS}
+                      </NavLink>
+                    </DropdownItem>
                     {ENABLE_IRS && (
                       <DropdownItem>
                         <NavLink
-                          to={INTERVENTION_IRS_URL}
+                          to={INTERVENTION_IRS_DRAFTS_URL}
                           className="nav-link"
                           activeClassName="active"
                         >
-                          IRS
+                          {IRS_TITLE}
                         </NavLink>
                       </DropdownItem>
                     )}
@@ -130,11 +135,9 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
                   <DropdownToggle
                     nav={true}
                     caret={true}
-                    className={
-                      path === FI_URL || path === FI_HISTORICAL_URL ? 'nav-link active' : 'nav-link'
-                    }
+                    className={path === FI_URL ? 'nav-link active' : 'nav-link'}
                   >
-                    Reporting
+                    {REPORTING}
                   </DropdownToggle>
                   <DropdownMenu right={true}>
                     {ENABLE_FI && (
@@ -144,13 +147,17 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
                             Focus Investigation
                           </NavLink>
                         </DropdownItem>
+                      </div>
+                    )}
+                    {ENABLE_IRS && (
+                      <div>
                         <DropdownItem>
                           <NavLink
-                            to={FI_HISTORICAL_URL}
+                            to={REPORT_IRS_PLAN_URL}
                             className="nav-link"
                             activeClassName="active"
                           >
-                            Historical FI
+                            {IRS_REPORTING_TITLE}
                           </NavLink>
                         </DropdownItem>
                       </div>
@@ -161,7 +168,7 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
               {ENABLE_TEAMS && (
                 <NavItem>
                   <NavLink to={`${TEAM_LIST_URL}`} className="nav-link" activeClassName="active">
-                    Teams
+                    {ORGANIZATIONS_LABEL}
                   </NavLink>
                 </NavItem>
               )}

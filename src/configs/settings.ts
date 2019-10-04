@@ -1,6 +1,18 @@
-/** This is the main configuration module */
+/** This is the main configuration module
+ *
+ * **** IMPORT RULES ****
+ * To avoid circular imports or anything of that nature, the only imports from the Reveal
+ * code base allowed in this module are from the following modules:
+ *  - constants
+ *  - envs
+ *  - colors
+ *
+ * **** CODE RULES ****
+ * To keep things simple, the code in this module should be simple statements.  Use of
+ * functions is discouraged and should only be done if there is no other way.
+ */
 import { Providers } from '@onaio/gatekeeper';
-import { Expression } from 'mapbox-gl';
+import { Expression, LngLatBoundsLike } from 'mapbox-gl';
 import {
   DOMAIN_NAME,
   ENABLE_ONADATA_OAUTH,
@@ -603,6 +615,9 @@ export const lineLayerConfig = {
   visible: false,
 };
 
+export const jurisdictionSelectionTooltipHint: string =
+  'Shift+Click a Jurisdiction to toggle its selection';
+
 /** Fill opacity configuration */
 export const structureFillOpacity: Expression = [
   'match',
@@ -617,6 +632,11 @@ export const structureFillOpacity: Expression = [
   1,
   0.75,
 ];
+
+/** Jurisdiction Selection Map Layer Style Settings */
+export const fullySelectedJurisdictionOpacity: number = 0.9;
+export const partiallySelectedJurisdictionOpacity: number = 0.6;
+export const deselectedJurisdictionOpacity: number = 0.3;
 
 /** Fill layer configuration */
 export const fillLayerConfig = {
@@ -694,8 +714,79 @@ export const symbolLayerConfig = {
 };
 
 /** Default colors layer fill colors per administrative level */
-export const adminLayerColors = ['purple', 'blue', 'green', 'yellow', 'orange', 'red'];
+export const adminLayerColors = ['black', 'red', 'orange', 'yellow', 'green'];
 export type adminLayerColorsType = typeof adminLayerColors[number];
+
+/** interface describing threshold configs for IRS report indicators */
+export interface IndicatorThresholds {
+  [key: string]: {
+    color: any;
+    orEquals?: boolean;
+    value: number;
+  };
+}
+
+/** Indicator Thresholds for NA (Namibia) */
+export const indicatorThresholdsNA: IndicatorThresholds = {
+  GREEN_THRESHOLD: {
+    color: '#2ECC40',
+    value: 1,
+  },
+  GREY_THRESHOLD: {
+    color: '#dddddd',
+    value: 0.2,
+  },
+  RED_THRESHOLD: {
+    color: '#FF4136',
+    orEquals: true,
+    value: 0.75,
+  },
+  YELLOW_THRESHOLD: {
+    color: '#FFDC00',
+    value: 0.9,
+  },
+};
+
+/** interface describing base configs for irs reporting configurations */
+export interface IrsReportingConfig {
+  indicatorThresholds: IndicatorThresholds;
+}
+
+/* tslint:disable:object-literal-sort-keys */
+/** The actual configuration object controlling how IRS Reporting is handled for different clients */
+export const irsReportingCongif: {
+  [key: string]: IrsReportingConfig;
+} = {
+  // Namibia Structures Configs
+  [process.env.REACT_APP_SUPERSET_IRS_REPORTING_STRUCTURES_DATA_SLICE_NA as string]: {
+    indicatorThresholds: indicatorThresholdsNA,
+  } as IrsReportingConfig,
+};
+/* tslint:enable:object-literal-sort-keys */
+
+/** END IRS Reporting interfaces */
+
+/** IRS Reporting configs */
+export const indicatorThresholdsIRS = {
+  GREEN_THRESHOLD: {
+    color: '#2ECC40',
+    value: 1,
+  },
+  GREY_THRESHOLD: {
+    color: '#dddddd',
+    value: 0.2,
+  },
+  RED_THRESHOLD: {
+    color: '#FF4136',
+    orEquals: true,
+    value: 0.75,
+  },
+  YELLOW_THRESHOLD: {
+    color: '#FFDC00',
+    value: 0.9,
+  },
+};
+/** END IRS Reporting configs */
 
 /** Interfaces describing administrative hierarchy via ISO 3166 admin codes */
 export interface ADMN0 {
@@ -715,12 +806,21 @@ export interface ADMN3 extends ADMN2 {
   ADMN3_EN: string;
 }
 
+export const baseTilesetGeographicLevel: number = 1; // this tells the Jurisdiction Selection map at which geographic level to start rendering administrative fill layers
 export const JurisdictionLevels = ['administrative', 'operational'] as const;
 export type JurisdictionTypes = typeof JurisdictionLevels[number];
-/** interface descbribing basic country level information */
+export interface Tileset {
+  idField: string; // the feature property corresponding with jurisdiction_id (for joining)
+  jurisdictionType: JurisdictionTypes; // Admin or OA/FA/SA
+  labelField?: string; // the feature property corresponding with the display name
+  layer: string; // the Mapbox tileset-layer name
+  parentIdField: string; // the feature property corresponding with parent_id (for joining)
+  url: string; // the Mapbox tileset url
+}
+/** interface describing basic country level information */
 export interface JurisdictionsByCountry extends ADMN0 {
   // the GPS extents of given geometry(s)
-  bounds?: any[];
+  bounds?: LngLatBoundsLike;
 
   // the top level jurisdiction_Ids from OpenSRP
   // this is most useful for instances where tilesets DO NOT match the OpenSRP hierarchy
@@ -733,14 +833,7 @@ export interface JurisdictionsByCountry extends ADMN0 {
   id?: string;
 
   // list of tilesets used for administrative boundaries
-  tilesets?: Array<{
-    idField: string; // the feature property cooresponding with jurisdiction_id (for joining)
-    jurisdictionType: JurisdictionTypes; // Admin or OA/FA/SA
-    labelField?: string; // the feature property cooresponding with the display name
-    layer: string; // the Mapbox tileset-layer name
-    parentIdField: string; // the feature property cooresponding with parent_id (for joining)
-    url: string; // the Mapbox tileset url
-  }>;
+  tilesets?: Tileset[];
 }
 /** Country Jurisdictions definition for Zambia */
 export const ZambiaAdmin0: JurisdictionsByCountry = {
@@ -1017,10 +1110,6 @@ export const emptyCurrentRoutinePlans = [
   },
   {
     Header: 'End Date',
-    columns: [{}],
-  },
-  {
-    Header: 'Actions',
     columns: [{}],
   },
 ];

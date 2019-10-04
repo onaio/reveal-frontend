@@ -4,7 +4,7 @@ exports[`components/ConnectedHeader renders the ConnectedHeader component 1`] = 
 Object {
   "children": Array [
     <nav
-      className="navbar navbar-expand-md navbar-light bg-light"
+      className="navbar navbar-expand-md navbar-light"
     >
       <Link
         className="navbar-brand"
@@ -97,7 +97,7 @@ Object {
                 activeClassName="active"
                 aria-current="page"
                 className="nav-link"
-                to="/intervention/irs"
+                to="/intervention/irs/drafts"
               >
                 IRS
               </NavLink>
@@ -136,6 +136,8 @@ Object {
                   Focus Investigation
                 </NavLink>
               </DropdownItem>
+            </div>
+            <div>
               <DropdownItem
                 tag="button"
                 toggle={true}
@@ -144,14 +146,26 @@ Object {
                   activeClassName="active"
                   aria-current="page"
                   className="nav-link"
-                  to="/focus-investigation/historical"
+                  to="/intervention/irs/report"
                 >
-                  Historical FI
+                  IRS Reporting
                 </NavLink>
               </DropdownItem>
             </div>
           </DropdownMenu>
         </UncontrolledDropdown>
+        <NavItem
+          tag="li"
+        >
+          <NavLink
+            activeClassName="active"
+            aria-current="page"
+            className="nav-link"
+            to="/teams"
+          >
+            Teams
+          </NavLink>
+        </NavItem>
         <NavItem
           tag="li"
         >
@@ -194,7 +208,6 @@ Object {
       </Nav>
     </Collapse>,
   ],
-  "color": "light",
   "expand": "md",
   "light": true,
   "tag": "nav",
@@ -205,7 +218,7 @@ exports[`components/ConnectedHeader renders the ConnectedHeader when logged in 1
 Object {
   "children": Array [
     <nav
-      className="navbar navbar-expand-md navbar-light bg-light"
+      className="navbar navbar-expand-md navbar-light"
     >
       <Link
         className="navbar-brand"
@@ -298,7 +311,7 @@ Object {
                 activeClassName="active"
                 aria-current="page"
                 className="nav-link"
-                to="/intervention/irs"
+                to="/intervention/irs/drafts"
               >
                 IRS
               </NavLink>
@@ -337,6 +350,8 @@ Object {
                   Focus Investigation
                 </NavLink>
               </DropdownItem>
+            </div>
+            <div>
               <DropdownItem
                 tag="button"
                 toggle={true}
@@ -345,14 +360,26 @@ Object {
                   activeClassName="active"
                   aria-current="page"
                   className="nav-link"
-                  to="/focus-investigation/historical"
+                  to="/intervention/irs/report"
                 >
-                  Historical FI
+                  IRS Reporting
                 </NavLink>
               </DropdownItem>
             </div>
           </DropdownMenu>
         </UncontrolledDropdown>
+        <NavItem
+          tag="li"
+        >
+          <NavLink
+            activeClassName="active"
+            aria-current="page"
+            className="nav-link"
+            to="/teams"
+          >
+            Teams
+          </NavLink>
+        </NavItem>
         <NavItem
           tag="li"
         >
@@ -443,7 +470,6 @@ Object {
       </Nav>
     </Collapse>,
   ],
-  "color": "light",
   "expand": "md",
   "light": true,
   "tag": "nav",

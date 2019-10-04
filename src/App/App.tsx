@@ -8,32 +8,36 @@ import { Helmet } from 'react-helmet';
 import { Route, Switch } from 'react-router';
 import { Col, Container, Row } from 'reactstrap';
 import Loading from '../components/page/Loading';
-import { DISABLE_LOGIN_PROTECTION } from '../configs/env';
 import { WEBSITE_NAME } from '../configs/env';
+import { DISABLE_LOGIN_PROTECTION } from '../configs/env';
 import { providers } from '../configs/settings';
 import {
+  ACTIVE_IRS_PLAN_URL,
   CREATE_PRACTITIONER_URL,
   CREATE_TEAM_URL,
+  DRAFT_IRS_PLAN_URL,
   EDIT_PRACTITIONER_URL,
   EDIT_TEAM_URL,
-  FI_HISTORICAL_URL,
+  FI_FILTER_URL,
   FI_SINGLE_MAP_URL,
   FI_SINGLE_URL,
   FI_URL,
+  INTERVENTION_IRS_DRAFTS_URL,
   INTERVENTION_IRS_URL,
   LOGIN_URL,
   LOGOUT_URL,
+  MAP,
   NEW_IRS_PLAN_URL,
   NEW_PLAN_URL,
   PLAN_COMPLETION_URL,
   PLAN_LIST_URL,
   PLAN_UPDATE_URL,
+  REPORT_IRS_PLAN_URL,
   SINGLE_TEAM_URL,
   TEAM_LIST_URL,
 } from '../constants';
 import ConnectedHeader from '../containers/ConnectedHeader';
 import ActiveFocusInvestigation from '../containers/pages/FocusInvestigation/active';
-import HistoricalFocusInvestigation from '../containers/pages/FocusInvestigation/historical';
 import SingleActiveFIMap from '../containers/pages/FocusInvestigation/map/active';
 import ConnectedPlanCompletion from '../containers/pages/FocusInvestigation/map/planCompletion';
 import SingleFI from '../containers/pages/FocusInvestigation/single';
@@ -44,6 +48,9 @@ import NewPlan from '../containers/pages/InterventionPlan/NewPlan/General';
 import NewIRSPlan from '../containers/pages/InterventionPlan/NewPlan/IRS';
 import ConnectedPlanDefinitionList from '../containers/pages/InterventionPlan/PlanDefinitionList';
 import ConnectedUpdatePlan from '../containers/pages/InterventionPlan/UpdatePlan';
+import ConnectedJurisdictionReport from '../containers/pages/IRS/JurisdictionsReport';
+import ConnectedIRSReportingMap from '../containers/pages/IRS/Map';
+import ConnectedIRSPlansList from '../containers/pages/IRS/plans';
 import ConnectedCreateEditTeamView from '../containers/pages/OrganizationViews/CreateEditOrgView';
 import ConnectedOrgsListView from '../containers/pages/OrganizationViews/OrganizationListView';
 import ConnectedOrgTeamView from '../containers/pages/OrganizationViews/SingleOrganizationView';
@@ -60,170 +67,185 @@ import './App.css';
 class App extends Component {
   public render() {
     return (
-      <Container>
+      <Container fluid={true}>
         <Helmet titleTemplate={`%s | ` + WEBSITE_NAME} defaultTitle="" />
         <ConnectedHeader />
-        <Row id="main-page-row">
-          <Col>
-            <Switch>
-              <ConnectedPrivateRoute
-                disableLoginProtection={DISABLE_LOGIN_PROTECTION}
-                exact={true}
-                path="/"
-                component={Home}
-              />
-              <ConnectedPrivateRoute
-                disableLoginProtection={DISABLE_LOGIN_PROTECTION}
-                exact={true}
-                path={INTERVENTION_IRS_URL}
-                component={IrsPlans}
-              />
+        <Container>
+          <Row id="main-page-row">
+            <Col>
+              <Switch>
+                {/* Home Page view */}
+                <ConnectedPrivateRoute
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path="/"
+                  component={Home}
+                />
 
-              <ConnectedPrivateRoute
-                disableLoginProtection={DISABLE_LOGIN_PROTECTION}
-                exact={true}
-                path={NEW_IRS_PLAN_URL}
-                component={NewIRSPlan}
-              />
+                {/* Active IRS Plans list view */}
+                <ConnectedPrivateRoute
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={INTERVENTION_IRS_URL}
+                  component={IrsPlans}
+                />
 
-              <ConnectedPrivateRoute
-                disableLoginProtection={DISABLE_LOGIN_PROTECTION}
-                exact={true}
-                path={`${INTERVENTION_IRS_URL}/draft/:id`}
-                component={IrsPlan}
-              />
+                {/* Draft IRS Plans list view */}
+                <ConnectedPrivateRoute
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={INTERVENTION_IRS_DRAFTS_URL}
+                  component={IrsPlans}
+                />
 
-              <ConnectedPrivateRoute
-                disableLoginProtection={DISABLE_LOGIN_PROTECTION}
-                exact={true}
-                path={`${INTERVENTION_IRS_URL}/plan/:id`}
-                component={IrsPlan}
-              />
+                {/* New IRS Plan form view */}
+                <ConnectedPrivateRoute
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={NEW_IRS_PLAN_URL}
+                  component={NewIRSPlan}
+                />
 
-              <ConnectedPrivateRoute
-                disableLoginProtection={DISABLE_LOGIN_PROTECTION}
-                exact={true}
-                path={FI_URL}
-                component={ActiveFocusInvestigation}
-              />
-              <ConnectedPrivateRoute
-                disableLoginProtection={DISABLE_LOGIN_PROTECTION}
-                exact={true}
-                path={`${FI_SINGLE_URL}/:id`}
-                component={SingleFI}
-              />
-              <ConnectedPrivateRoute
-                disableLoginProtection={DISABLE_LOGIN_PROTECTION}
-                exact={true}
-                path={`${PLAN_COMPLETION_URL}/:id`}
-                component={ConnectedPlanCompletion}
-              />
-              <ConnectedPrivateRoute
-                disableLoginProtection={DISABLE_LOGIN_PROTECTION}
-                exact={true}
-                path={`${FI_SINGLE_MAP_URL}/:id/`}
-                component={SingleActiveFIMap}
-              />
-              <ConnectedPrivateRoute
-                disableLoginProtection={DISABLE_LOGIN_PROTECTION}
-                exact={true}
-                path={`${FI_SINGLE_MAP_URL}/:id/:goalId`}
-                component={SingleActiveFIMap}
-              />
-              <ConnectedPrivateRoute
-                disableLoginProtection={DISABLE_LOGIN_PROTECTION}
-                exact={true}
-                path={FI_HISTORICAL_URL}
-                component={HistoricalFocusInvestigation}
-              />
-              <ConnectedPrivateRoute
-                disableLoginProtection={DISABLE_LOGIN_PROTECTION}
-                exact={true}
-                path={`${FI_HISTORICAL_URL}/:id`}
-                component={HistoricalFocusInvestigation}
-              />
-              <ConnectedPrivateRoute
-                disableLoginProtection={DISABLE_LOGIN_PROTECTION}
-                exact={true}
-                path={NEW_PLAN_URL}
-                component={NewPlan}
-              />
-              <ConnectedPrivateRoute
-                disableLoginProtection={DISABLE_LOGIN_PROTECTION}
-                exact={true}
-                path={`${PLAN_UPDATE_URL}/:id`}
-                component={ConnectedUpdatePlan}
-              />
-              <ConnectedPrivateRoute
-                disableLoginProtection={DISABLE_LOGIN_PROTECTION}
-                exact={true}
-                path={PLAN_LIST_URL}
-                component={ConnectedPlanDefinitionList}
-              />
-              <ConnectedPrivateRoute
-                disableLoginProtection={DISABLE_LOGIN_PROTECTION}
-                exact={true}
-                path={CREATE_TEAM_URL}
-                component={ConnectedCreateEditTeamView}
-              />
-              <ConnectedPrivateRoute
-                disableLoginProtection={DISABLE_LOGIN_PROTECTION}
-                exact={true}
-                path={`${EDIT_TEAM_URL}/:id`}
-                component={ConnectedCreateEditTeamView}
-              />
-              <ConnectedPrivateRoute
-                disableLoginProtection={DISABLE_LOGIN_PROTECTION}
-                exact={true}
-                path={`${SINGLE_TEAM_URL}/:id`}
-                component={ConnectedOrgTeamView}
-              />
-              <ConnectedPrivateRoute
-                disableLoginProtection={DISABLE_LOGIN_PROTECTION}
-                exact={true}
-                path={TEAM_LIST_URL}
-                component={ConnectedOrgsListView}
-              />
-              <ConnectedPrivateRoute
-                disableLoginProtection={DISABLE_LOGIN_PROTECTION}
-                exact={true}
-                path={CREATE_PRACTITIONER_URL}
-                component={ConnectedCreateEditPractitioner}
-              />
-              <ConnectedPrivateRoute
-                disableLoginProtection={DISABLE_LOGIN_PROTECTION}
-                exact={true}
-                path={`${EDIT_PRACTITIONER_URL}/:id`}
-                component={ConnectedCreateEditPractitioner}
-              />
-              {/* tslint:disable jsx-no-lambda */}
-              <Route
-                exact={true}
-                path={LOGIN_URL}
-                render={routeProps => <OauthLogin providers={providers} {...routeProps} />}
-              />
-              <Route
-                exact={true}
-                path="/oauth/callback/:id"
-                render={routeProps => (
-                  <ConnectedOauthCallback
-                    LoadingComponent={Loading}
-                    providers={providers}
-                    oAuthUserInfoGetter={oAuthUserInfoGetter}
-                    {...routeProps}
-                  />
-                )}
-              />
-              {/* tslint:enable jsx-no-lambda */}
-              <ConnectedPrivateRoute
-                disableLoginProtection={DISABLE_LOGIN_PROTECTION}
-                exact={true}
-                path={LOGOUT_URL}
-                component={ConnectedLogout}
-              />
-            </Switch>
-          </Col>
-        </Row>
+                {/* Draft IRS Plan Jurisdiction Selection view */}
+                <ConnectedPrivateRoute
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${DRAFT_IRS_PLAN_URL}/:id`}
+                  component={IrsPlan}
+                />
+
+                {/* Draft IRS Plan Team Assignment view */}
+                <ConnectedPrivateRoute
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${ACTIVE_IRS_PLAN_URL}/:id`}
+                  component={IrsPlan}
+                />
+
+                {/* IRS Reporting plan table view */}
+                <ConnectedPrivateRoute
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={REPORT_IRS_PLAN_URL}
+                  component={ConnectedIRSPlansList}
+                />
+                <ConnectedPrivateRoute
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${REPORT_IRS_PLAN_URL}/:planId`}
+                  component={ConnectedJurisdictionReport}
+                />
+                <ConnectedPrivateRoute
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${REPORT_IRS_PLAN_URL}/:planId/:jurisdictionId`}
+                  component={ConnectedJurisdictionReport}
+                />
+                {/* IRS Reporting Map view */}
+                <ConnectedPrivateRoute
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${REPORT_IRS_PLAN_URL}/:planId/:jurisdictionId/${MAP}`}
+                  component={ConnectedIRSReportingMap}
+                />
+
+                {/* Focus Investigation Reporting list view */}
+                <ConnectedPrivateRoute
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={FI_URL}
+                  component={ActiveFocusInvestigation}
+                />
+                {/* Focus Area detail view */}
+                <ConnectedPrivateRoute
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${FI_FILTER_URL}/:jurisdiction_parent_id/:plan_id?`}
+                  component={ActiveFocusInvestigation}
+                />
+                <ConnectedPrivateRoute
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${FI_SINGLE_URL}/:id`}
+                  component={SingleFI}
+                />
+                {/* Focus Investigation completion confirmation view */}
+                <ConnectedPrivateRoute
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${PLAN_COMPLETION_URL}/:id`}
+                  component={ConnectedPlanCompletion}
+                />
+                {/* Focus Investigation Reporting map view */}
+                <ConnectedPrivateRoute
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${FI_SINGLE_MAP_URL}/:id/`}
+                  component={SingleActiveFIMap}
+                />
+                {/* Focus Investigation Reporting map view (with goal layers) */}
+                <ConnectedPrivateRoute
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${FI_SINGLE_MAP_URL}/:id/:goalId`}
+                  component={SingleActiveFIMap}
+                />
+                {/* New Focus Investigation Plan form view */}
+                <ConnectedPrivateRoute
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={NEW_PLAN_URL}
+                  component={NewPlan}
+                />
+                {/* Edit Focus Investigation Plan form view */}
+                <ConnectedPrivateRoute
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${PLAN_UPDATE_URL}/:id`}
+                  component={ConnectedUpdatePlan}
+                />
+                {/* Manage Plans list view */}
+                <ConnectedPrivateRoute
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={PLAN_LIST_URL}
+                  component={ConnectedPlanDefinitionList}
+                />
+                <ConnectedPrivateRoute
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={TEAM_LIST_URL}
+                  component={ConnectedOrgsListView}
+                />
+                {/* tslint:disable jsx-no-lambda */}
+                <Route
+                  exact={true}
+                  path={LOGIN_URL}
+                  render={routeProps => <OauthLogin providers={providers} {...routeProps} />}
+                />
+                <Route
+                  exact={true}
+                  path="/oauth/callback/:id"
+                  render={routeProps => (
+                    <ConnectedOauthCallback
+                      LoadingComponent={Loading}
+                      providers={providers}
+                      oAuthUserInfoGetter={oAuthUserInfoGetter}
+                      {...routeProps}
+                    />
+                  )}
+                />
+                {/* tslint:enable jsx-no-lambda */}
+                <ConnectedPrivateRoute
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={LOGOUT_URL}
+                  component={ConnectedLogout}
+                />
+              </Switch>
+            </Col>
+          </Row>
+        </Container>
       </Container>
     );
   }
