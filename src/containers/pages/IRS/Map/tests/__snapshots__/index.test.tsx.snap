@@ -82,7 +82,7 @@ Array [
       className="sidebar-legend-color"
       style={
         Object {
-          "backgroundColor": "#000",
+          "backgroundColor": "#666a6d",
         }
       }
     />
@@ -107,7 +107,7 @@ Array [
           "value": 1,
         },
         "GREY_THRESHOLD": Object {
-          "color": "#dddddd",
+          "color": "#a9a9a9",
           "value": 0.2,
         },
         "RED_THRESHOLD": Object {
@@ -159,7 +159,7 @@ Array [
           "value": 1,
         },
         "GREY_THRESHOLD": Object {
-          "color": "#dddddd",
+          "color": "#a9a9a9",
           "value": 0.2,
         },
         "RED_THRESHOLD": Object {
@@ -211,7 +211,7 @@ Array [
           "value": 1,
         },
         "GREY_THRESHOLD": Object {
-          "color": "#dddddd",
+          "color": "#a9a9a9",
           "value": 0.2,
         },
         "RED_THRESHOLD": Object {
@@ -263,7 +263,7 @@ Array [
           "value": 1,
         },
         "GREY_THRESHOLD": Object {
-          "color": "#dddddd",
+          "color": "#a9a9a9",
           "value": 0.2,
         },
         "RED_THRESHOLD": Object {
