@@ -42,6 +42,7 @@ export interface Props {
   serviceClass: typeof OpenSRPService;
 }
 
+/** default props for createEditOrganization component */
 export const defaultProps: Props = {
   fetchOrganizationsCreator: fetchOrganizations,
   organization: null,
@@ -77,6 +78,7 @@ const CreateEditTeamView = (props: CreateEditTeamViewTypes) => {
   };
   breadcrumbProps.pages = [homePage, basePage];
 
+  /** props for the organization form */
   const organizationFormProps: OrganizationFormProps = {
     disabledFields: [],
     initialValues: editing ? (organization as OrganizationFormFields) : defaultInitialValues,
@@ -95,8 +97,8 @@ const CreateEditTeamView = (props: CreateEditTeamViewTypes) => {
   };
 
   useEffect(() => {
-    if (organization) {
-      loadOrganization(OpenSRPService, organization!.identifier);
+    if (organization !== null) {
+      loadOrganization(serviceClass, organization!.identifier);
     }
   }, []);
 
@@ -131,7 +133,6 @@ const mapStateToProps = (
 ): DispatchedProps => {
   let teamId = ownProps.match.params.id;
   teamId = teamId ? teamId : '';
-
   const organization = getOrganizationById(state, teamId);
 
   return { organization };
