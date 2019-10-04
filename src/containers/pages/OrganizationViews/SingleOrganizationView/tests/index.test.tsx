@@ -31,7 +31,7 @@ describe('src/containers/pages/TeamAssignment', () => {
         url: `${SINGLE_TEAM_URL}/teamId`,
       },
       team: fixtures.organization1,
-      teamMembers: fixtures.organizationMembers,
+      // teamMembers: fixtures.organizationMembers,
     };
 
     shallow(
@@ -54,7 +54,7 @@ describe('src/containers/pages/TeamAssignment', () => {
         url: `${SINGLE_TEAM_URL}/teamId`,
       },
       team: fixtures.organization1,
-      teamMembers: [fixtures.organizationMember1],
+      // teamMembers: [fixtures.organizationMember1],
     };
 
     const wrapper = mount(
@@ -105,6 +105,6 @@ describe('src/containers/pages/TeamAssignment', () => {
     );
     const passedProps = wrapper.find(SingleOrganizationView).props() as any;
     expect(passedProps.team).toEqual(fixtures.organization1);
-    expect(passedProps.teamMembers).toEqual([fixtures.organizationMember1]);
+    // expect(passedProps.teamMembers).toEqual([fixtures.organizationMember1]);
   });
 });
