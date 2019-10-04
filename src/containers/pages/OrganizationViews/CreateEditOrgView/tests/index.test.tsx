@@ -1,5 +1,6 @@
 import { mount, shallow } from 'enzyme';
 import { createBrowserHistory } from 'history';
+import * as React from 'react';
 import Helmet from 'react-helmet';
 import { Router } from 'react-router';
 import { EDIT_TEAM_URL, NEW_TEAM } from '../../../../../constants';
@@ -14,7 +15,19 @@ describe('src/containers/pages/NewTeamView', () => {
   });
 
   it('renders NewTeamView without crashing', () => {
-    shallow(<CreateEditTeamView />);
+    const mock: any = jest.fn();
+    const props = {
+      history,
+      location: mock,
+      match: {
+        isExact: true,
+        params: { id: '' },
+        path: `${EDIT_TEAM_URL}/`,
+        url: `${EDIT_TEAM_URL}/`,
+      },
+      team: null,
+    };
+    shallow(<CreateEditTeamView {...props} />);
   });
 
   it('renders NewTeamsView correctly', () => {
@@ -46,6 +59,4 @@ describe('src/containers/pages/NewTeamView', () => {
 
     wrapper.unmount();
   });
-
-  it('');
 });
