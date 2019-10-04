@@ -585,40 +585,6 @@ exports[`App renders App correctly 1`] = `
                                               href="/404"
                                               onClick={[Function]}
                                             >
-                                              Users
-                                            </a>
-                                          </Link>
-                                        </Route>
-                                      </NavLink>
-                                    </li>
-                                  </NavItem>
-                                  <NavItem
-                                    tag="li"
-                                  >
-                                    <li
-                                      className="nav-item"
-                                    >
-                                      <NavLink
-                                        activeClassName="active"
-                                        aria-current="page"
-                                        className="nav-link"
-                                        to="/404"
-                                      >
-                                        <Route
-                                          path="\\\\/404"
-                                        >
-                                          <Link
-                                            aria-current={null}
-                                            className="nav-link"
-                                            replace={false}
-                                            to="/404"
-                                          >
-                                            <a
-                                              aria-current={null}
-                                              className="nav-link"
-                                              href="/404"
-                                              onClick={[Function]}
-                                            >
                                               About
                                             </a>
                                           </Link>

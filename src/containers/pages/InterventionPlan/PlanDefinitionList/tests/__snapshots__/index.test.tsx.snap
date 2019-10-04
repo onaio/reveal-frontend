@@ -930,6 +930,12 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
                       "FI",
                       "active",
                       "2019-05-19",
+                      <Link
+                        replace={false}
+                        to="/plans/teamAssignment/356b6b84-fc36-4389-a44a-2b038ed2f38d"
+                      >
+                        Assign Team
+                      </Link>,
                     ],
                     Array [
                       <Link
@@ -941,6 +947,12 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
                       "IRS",
                       "active",
                       "2019-07-10",
+                      <Link
+                        replace={false}
+                        to="/plans/teamAssignment/8fa7eb32-99d7-4b49-8332-9ecedd6d51ae"
+                      >
+                        Assign Team
+                      </Link>,
                     ],
                     Array [
                       <Link
@@ -952,6 +964,12 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
                       "FI",
                       "active",
                       "2019-07-18",
+                      <Link
+                        replace={false}
+                        to="/plans/teamAssignment/f0558ad1-396d-4d97-9fff-c46cf92b6ce6"
+                      >
+                        Assign Team
+                      </Link>,
                     ],
                     Array [
                       <Link
@@ -963,6 +981,12 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
                       "FI",
                       "draft",
                       "2019-05-19",
+                      <Link
+                        replace={false}
+                        to="/plans/teamAssignment/0e85c238-39c1-4cea-a926-3d89f0c98429"
+                      >
+                        Assign Team
+                      </Link>,
                     ],
                   ]
                 }
@@ -972,6 +996,7 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
                     "Intervention Type",
                     "Status",
                     "Last Modified",
+                    "Assign Teams",
                   ]
                 }
                 renderHeaders={[Function]}
@@ -1001,6 +1026,7 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
                             "Intervention Type",
                             "Status",
                             "Last Modified",
+                            "Assign Teams",
                           ]
                         }
                       >
@@ -1028,6 +1054,12 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
                         >
                           Last Modified
                         </th>
+                        <th
+                          className="listview-td"
+                          key="4"
+                        >
+                          Assign Teams
+                        </th>
                       </ElementMap>
                     </tr>
                   </thead>
@@ -1052,6 +1084,12 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
                             "FI",
                             "active",
                             "2019-05-19",
+                            <Link
+                              replace={false}
+                              to="/plans/teamAssignment/356b6b84-fc36-4389-a44a-2b038ed2f38d"
+                            >
+                              Assign Team
+                            </Link>,
                           ]
                         }
                       >
@@ -1090,6 +1128,23 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
                         >
                           2019-05-19
                         </td>
+                        <td
+                          className="listview-th"
+                          key="4"
+                        >
+                          <Link
+                            key="356b6b84-fc36-4389-a44a-2b038ed2f38d"
+                            replace={false}
+                            to="/plans/teamAssignment/356b6b84-fc36-4389-a44a-2b038ed2f38d"
+                          >
+                            <a
+                              href="/plans/teamAssignment/356b6b84-fc36-4389-a44a-2b038ed2f38d"
+                              onClick={[Function]}
+                            >
+                              Assign Team
+                            </a>
+                          </Link>
+                        </td>
                       </ElementMap>
                     </tr>
                     <tr
@@ -1110,6 +1165,12 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
                             "IRS",
                             "active",
                             "2019-07-10",
+                            <Link
+                              replace={false}
+                              to="/plans/teamAssignment/8fa7eb32-99d7-4b49-8332-9ecedd6d51ae"
+                            >
+                              Assign Team
+                            </Link>,
                           ]
                         }
                       >
@@ -1148,6 +1209,23 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
                         >
                           2019-07-10
                         </td>
+                        <td
+                          className="listview-th"
+                          key="4"
+                        >
+                          <Link
+                            key="8fa7eb32-99d7-4b49-8332-9ecedd6d51ae"
+                            replace={false}
+                            to="/plans/teamAssignment/8fa7eb32-99d7-4b49-8332-9ecedd6d51ae"
+                          >
+                            <a
+                              href="/plans/teamAssignment/8fa7eb32-99d7-4b49-8332-9ecedd6d51ae"
+                              onClick={[Function]}
+                            >
+                              Assign Team
+                            </a>
+                          </Link>
+                        </td>
                       </ElementMap>
                     </tr>
                     <tr
@@ -1168,6 +1246,12 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
                             "FI",
                             "active",
                             "2019-07-18",
+                            <Link
+                              replace={false}
+                              to="/plans/teamAssignment/f0558ad1-396d-4d97-9fff-c46cf92b6ce6"
+                            >
+                              Assign Team
+                            </Link>,
                           ]
                         }
                       >
@@ -1206,6 +1290,23 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
                         >
                           2019-07-18
                         </td>
+                        <td
+                          className="listview-th"
+                          key="4"
+                        >
+                          <Link
+                            key="f0558ad1-396d-4d97-9fff-c46cf92b6ce6"
+                            replace={false}
+                            to="/plans/teamAssignment/f0558ad1-396d-4d97-9fff-c46cf92b6ce6"
+                          >
+                            <a
+                              href="/plans/teamAssignment/f0558ad1-396d-4d97-9fff-c46cf92b6ce6"
+                              onClick={[Function]}
+                            >
+                              Assign Team
+                            </a>
+                          </Link>
+                        </td>
                       </ElementMap>
                     </tr>
                     <tr
@@ -1226,6 +1327,12 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
                             "FI",
                             "draft",
                             "2019-05-19",
+                            <Link
+                              replace={false}
+                              to="/plans/teamAssignment/0e85c238-39c1-4cea-a926-3d89f0c98429"
+                            >
+                              Assign Team
+                            </Link>,
                           ]
                         }
                       >
@@ -1263,6 +1370,23 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
                           key="3"
                         >
                           2019-05-19
+                        </td>
+                        <td
+                          className="listview-th"
+                          key="4"
+                        >
+                          <Link
+                            key="0e85c238-39c1-4cea-a926-3d89f0c98429"
+                            replace={false}
+                            to="/plans/teamAssignment/0e85c238-39c1-4cea-a926-3d89f0c98429"
+                          >
+                            <a
+                              href="/plans/teamAssignment/0e85c238-39c1-4cea-a926-3d89f0c98429"
+                              onClick={[Function]}
+                            >
+                              Assign Team
+                            </a>
+                          </Link>
                         </td>
                       </ElementMap>
                     </tr>
