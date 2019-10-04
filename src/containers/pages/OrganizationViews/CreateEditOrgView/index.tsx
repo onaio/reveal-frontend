@@ -85,12 +85,20 @@ const CreateEditOrgView = (props: CreateEditTeamViewTypes) => {
     redirectAfterAction: ORGANIZATIONS_LIST_URL,
   };
 
-  /** Load single organization */
-  const loadOrganization = async (service: typeof serviceClass, id: string) => {
+  /** Load single organization
+   * @param {typeof serviceClass} service - opensrp service
+   * @param {string} id -  identifier of organization to get
+   * @param {typeof fetchOrganizationsCreator} - action creator
+   */
+  const loadOrganization = async (
+    service: typeof serviceClass,
+    id: string,
+    actionCreator: typeof fetchOrganizationsCreator = fetchOrganizationsCreator
+  ) => {
     const serve = new service(`${OPENSRP_ORGANIZATION_ENDPOINT}/${id}`);
     serve
       .list()
-      .then((response: Organization[]) => store.dispatch(fetchOrganizationsCreator(response)))
+      .then((response: Organization[]) => store.dispatch(actionCreator(response)))
       .catch((err: Error) => {
         /** TODO - find something to do with error */
       });
@@ -119,7 +127,7 @@ const CreateEditOrgView = (props: CreateEditTeamViewTypes) => {
 
 CreateEditOrgView.defaultProps = defaultProps;
 
-export { CreateEditOrgView as CreateEditTeamView };
+export { CreateEditOrgView };
 
 /** Interface for connected state to props */
 interface DispatchedProps {
@@ -133,11 +141,19 @@ const mapStateToProps = (
 ): DispatchedProps => {
   let teamId = ownProps.match.params.id;
   teamId = teamId ? teamId : '';
-  const organization = getOrganizationById(state, teamId);
 
+  const organization = getOrganizationById(state, teamId);
   return { organization };
 };
 
-const ConnectedCreateEditOrgView = connect(mapStateToProps)(CreateEditOrgView);
+/** map props to action creators */
+const mapDispatchToProps = {
+  fetchOrganizationsCreator: fetchOrganizations,
+};
+
+const ConnectedCreateEditOrgView = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CreateEditOrgView);
 
 export default ConnectedCreateEditOrgView;
