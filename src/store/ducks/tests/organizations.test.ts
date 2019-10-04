@@ -38,7 +38,10 @@ describe('reducers/plans', () => {
     store.dispatch(fetchOrganizations([fixtures.organization1]));
     const teamsNumber = getOrganizationsArray(store.getState()).length;
     expect(teamsNumber).toEqual(1);
-    const org1FromStore = getOrganizationById(store.getState(), '1');
+    const org1FromStore = getOrganizationById(
+      store.getState(),
+      'fcc19470-d599-11e9-bb65-2a2ae2dbcce4'
+    );
     expect(org1FromStore).toEqual(fixtures.organization1);
   });
 
@@ -46,7 +49,9 @@ describe('reducers/plans', () => {
     // goal => all selectors retrieve correct data form non-empty store
 
     store.dispatch(fetchOrganizations(fixtures.organizations));
-    expect(getOrganizationById(store.getState(), '2')).toEqual(fixtures.organization2);
+    expect(getOrganizationById(store.getState(), '4c506c98-d3a9-11e9-bb65-2a2ae2dbcce4')).toEqual(
+      fixtures.organization2
+    );
     const expected = keyBy(fixtures.organizations, (org: Organization) => org.identifier);
     expect(getOrganizationsById(store.getState())).toEqual(expected);
     expect(getOrganizationsArray(store.getState())).toEqual(fixtures.organizations);
