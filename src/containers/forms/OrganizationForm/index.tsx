@@ -82,15 +82,17 @@ const OrganizationForm = (props: OrganizationFormProps) => {
         // tslint:disable-next-line: jsx-no-lambda
         onSubmit={(values, { setSubmitting, setFieldValue }) => {
           const organizationService = new OpenSRPService(OPENSRP_ORGANIZATION_ENDPOINT);
-          setFieldValue(
-            'identifier',
-            generateNameSpacedUUID(`${moment().toString()}`, OrgFormNameSpace)
-          );
+          const identifier = generateNameSpacedUUID(`${moment().toString()}`, OrgFormNameSpace);
+          setFieldValue('identifier', identifier);
+          const valuesToSend = {
+            ...values,
+            identifier,
+          };
 
           if (editMode) {
             // 2 calls for each for updating team information and updating practitioner_role table
             organizationService
-              .update(values)
+              .update(valuesToSend)
               .then(() => {
                 setSubmitting(false);
                 setIfDoneHere(true);
@@ -101,7 +103,7 @@ const OrganizationForm = (props: OrganizationFormProps) => {
               });
           } else {
             organizationService
-              .create(values)
+              .create(valuesToSend)
               .then(() => {
                 setSubmitting(false);
                 setIfDoneHere(true);
