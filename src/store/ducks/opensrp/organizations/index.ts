@@ -7,12 +7,16 @@ import SeamlessImmutable from 'seamless-immutable';
 /** The reducer name */
 export const reducerName = 'organizations';
 
-/** interface for Organization coding property */
-interface OrganizationCoding {
-  code: string;
-  display: string;
-  system: string;
-}
+/** default type value for organizations */
+export const defaultOrganizationType = {
+  coding: [
+    {
+      code: 'team',
+      display: 'Team',
+      system: 'http://terminology.hl7.org/CodeSystem/organization-type',
+    },
+  ],
+};
 
 /** interface for a Organization object */
 export interface Organization {
@@ -21,7 +25,7 @@ export interface Organization {
   identifier: string;
   name: string;
   partOf?: number;
-  type?: { coding: OrganizationCoding[] };
+  type?: typeof defaultOrganizationType;
 }
 
 // action interfaces

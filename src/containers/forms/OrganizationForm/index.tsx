@@ -19,19 +19,9 @@ import {
 } from '../../../constants';
 import { generateNameSpacedUUID } from '../../../helpers/utils';
 import { OpenSRPService } from '../../../services/opensrp';
+import { defaultOrganizationType } from '../../../store/ducks/opensrp/organizations';
 
 const OrgFormNameSpace = '9a4c8cb0-df70-11e9-b38b-57f114a50538';
-
-/** default type value for organizations */
-const defaultOrganizationType = {
-  coding: [
-    {
-      code: 'team',
-      display: 'Team',
-      system: 'http://terminology.hl7.org/CodeSystem/organization-type',
-    },
-  ],
-};
 
 /** yup validation schema for teams Form input */
 export const OrgSchema = Yup.object().shape({
