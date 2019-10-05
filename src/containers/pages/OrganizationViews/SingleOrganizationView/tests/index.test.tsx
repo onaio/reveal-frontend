@@ -149,6 +149,7 @@ describe('src/containers/pages/TeamAssignment', () => {
         path: `${SINGLE_TEAM_URL}/:id`,
         url: `${SINGLE_TEAM_URL}/1`,
       },
+      serviceClass: serviceMock,
     };
     mount(
       <Provider store={store}>
@@ -160,8 +161,8 @@ describe('src/containers/pages/TeamAssignment', () => {
     await new Promise(resolve => setImmediate(resolve));
 
     expect(serviceMock).toHaveBeenCalledTimes(2);
-    expect(mockRead.mock.calls).toHaveBeenCalledWith(fixtures.organization3.identifier);
-    // expect(mockList.mock.calls).toHaveBeenCalledWith();
+    expect(mockRead.mock.calls[0][0]).toEqual(fixtures.organization3.identifier);
+    // expect(mockList.mock.calls[0]).toHaveBeenCalledWith();
     expect.assertions(3);
   });
 
