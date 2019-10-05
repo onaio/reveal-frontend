@@ -12,7 +12,7 @@ import * as organizationDucks from '../../../../../store/ducks/opensrp/organizat
 import * as practitionersDucks from '../../../../../store/ducks/opensrp/practitioners';
 import * as fixtures from '../../../../../store/ducks/tests/fixtures';
 import ConnectedSingleOrgView, { SingleOrganizationView } from '../../SingleOrganizationView';
-
+import { selectorState } from './fixtures';
 // tslint:disable-next-line: no-var-requires
 const fetch = require('jest-fetch-mock');
 
@@ -124,8 +124,8 @@ describe('src/containers/pages/TeamAssignment', () => {
     await new Promise(resolve => setImmediate(resolve));
 
     const passedProps = wrapper.find(SingleOrganizationView).props() as any;
-    expect(passedProps.team).toEqual(fixtures.organization1);
-    expect(passedProps.teamMembers).toEqual([fixtures.practitioner1]);
+    expect(passedProps.organization).toEqual(fixtures.organization3);
+    expect(passedProps.practitioners).toEqual(fixtures.org3Practitioners);
   });
 
   it('calls api correctly', async () => {
