@@ -12,7 +12,7 @@ import * as organizationDucks from '../../../../../store/ducks/opensrp/organizat
 import * as practitionersDucks from '../../../../../store/ducks/opensrp/practitioners';
 import * as fixtures from '../../../../../store/ducks/tests/fixtures';
 import ConnectedSingleOrgView, { SingleOrganizationView } from '../../SingleOrganizationView';
-import { selectorState } from './fixtures';
+import { organizationsByIdMockCalls, practitionersByOrgIdMockCalls } from './fixtures';
 // tslint:disable-next-line: no-var-requires
 const fetch = require('jest-fetch-mock');
 
@@ -166,6 +166,7 @@ describe('src/containers/pages/TeamAssignment', () => {
     expect.assertions(3);
   });
 
+  // TODO - repair this test
   xit('Deleting api calls for removing a practitioner from an organization', async () => {
     // removing a practitioner from an organization workflow
     fetch
@@ -235,13 +236,7 @@ describe('src/../singleOrganization.selectors', () => {
     );
 
     await new Promise(resolve => setImmediate(resolve));
-    expect(organizationByIdMock.mock.calls).toEqual([
-      selectorState,
-      fixtures.organization3.identifier,
-    ]);
-    expect(practitionerByOrgIdMock.mock.calls).toEqual([
-      selectorState,
-      fixtures.organization3.identifier,
-    ]);
+    expect(organizationByIdMock.mock.calls).toEqual(organizationsByIdMockCalls);
+    expect(practitionerByOrgIdMock.mock.calls).toEqual(practitionersByOrgIdMockCalls);
   });
 });
