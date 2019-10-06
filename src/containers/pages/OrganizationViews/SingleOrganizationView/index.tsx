@@ -93,7 +93,10 @@ const SingleOrganizationView = (props: SingleOrgViewPropsType) => {
 
     serve
       .read(organizationId)
-      .then((response: Organization[]) => store.dispatch(fetchOrganizationsAction(response)))
+      .then((response: Organization) => {
+        const action = fetchOrganizationsAction([response]);
+        store.dispatch(action);
+      })
       .catch((err: Error) => {
         /** still don't know what we should do with errors */
       });
