@@ -196,6 +196,8 @@ export const EDIT = 'Edit';
 export type EDIT = typeof EDIT;
 export const ADD = 'Add';
 export type ADD = typeof ADD;
+export const REMOVE = 'Remove';
+export type REMOVE = typeof REMOVE;
 
 // TODO ? - do the below 2 belong here or in a settings file
 export const ORGANIZATION_LABEL = TEAM;

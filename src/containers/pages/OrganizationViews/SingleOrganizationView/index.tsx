@@ -28,6 +28,7 @@ import {
   ORGANIZATION_LABEL,
   ORGANIZATIONS_LABEL,
   ORGANIZATIONS_LIST_URL,
+  REMOVE,
   SINGLE_ORGANIZATION_URL,
   USERNAME,
 } from '../../../../constants';
@@ -158,7 +159,7 @@ const SingleOrganizationView = (props: SingleOrgViewPropsType) => {
           // tslint:disable-next-line: jsx-no-lambda
           onClick={e => alert(practitioner.identifier)}
         >
-          View
+          {REMOVE}
         </a>,
       ]),
       /** link to remove this practitioner from this organization, effectively delete this practitioner role */
