@@ -17,8 +17,8 @@ import Loading from '../../../../components/page/Loading';
 import {
   ACTIONS,
   DETAILS,
-  EDIT_TEAM,
-  EDIT_TEAM_URL,
+  EDIT,
+  EDIT_ORGANIZATION_URL,
   HOME,
   HOME_URL,
   IDENTIFIER,
@@ -26,9 +26,9 @@ import {
   NAME,
   OPENSRP_ORGANIZATION_ENDPOINT,
   ORGANIZATION_LABEL,
-  SINGLE_TEAM_URL,
-  TEAM_LIST_URL,
-  TEAMS,
+  ORGANIZATIONS_LABEL,
+  ORGANIZATIONS_LIST_URL,
+  SINGLE_ORGANIZATION_URL,
   USERNAME,
 } from '../../../../constants';
 import { RouteParams } from '../../../../helpers/utils';
@@ -127,13 +127,13 @@ const SingleOrganizationView = (props: SingleOrgViewPropsType) => {
 
   // props for the header breadcrumb
   const basePage = {
-    label: TEAMS,
-    url: TEAM_LIST_URL,
+    label: ORGANIZATIONS_LABEL,
+    url: ORGANIZATIONS_LIST_URL,
   };
   const breadcrumbProps: BreadCrumbProps = {
     currentPage: {
       label: organization!.identifier,
-      url: `${SINGLE_TEAM_URL}/${organization!.identifier}`,
+      url: `${SINGLE_ORGANIZATION_URL}/${organization!.identifier}`,
     },
     pages: [],
   };
@@ -166,8 +166,8 @@ const SingleOrganizationView = (props: SingleOrgViewPropsType) => {
 
   // LinkAsButton Props
   const linkAsButtonProps = {
-    text: EDIT_TEAM,
-    to: `${EDIT_TEAM_URL}/${organization!.identifier}`,
+    text: `${EDIT} ${ORGANIZATION_LABEL}`,
+    to: `${EDIT_ORGANIZATION_URL}/${organization!.identifier}`,
   };
 
   return (
