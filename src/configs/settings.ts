@@ -35,6 +35,7 @@ import {
   OPENSRP_OAUTH_STATE,
   OPENSRP_USER_URL,
 } from './env';
+import { IndicatorRows, JurisdictionTypes } from './types';
 
 /** Interfaces */
 
@@ -579,11 +580,8 @@ export const FIClassifications: Classification[] = [
 
 // thresholds
 export const GREEN_THRESHOLD = 0.9;
-export type GREEN_THRESHOLD = typeof GREEN_THRESHOLD;
 export const YELLOW_THRESHOLD = 0.2;
-export type YELLOW_THRESHOLD = typeof YELLOW_THRESHOLD;
 export const ORANGE_THRESHOLD = 0.8;
-export type ORANGE_THRESHOLD = typeof ORANGE_THRESHOLD;
 
 // 1-3-7 thresholds
 export const ONE = 0;
@@ -711,7 +709,6 @@ export const symbolLayerConfig = {
 
 /** Default colors layer fill colors per administrative level */
 export const adminLayerColors = ['black', 'red', 'orange', 'yellow', 'green'];
-export type adminLayerColorsType = typeof adminLayerColors[number];
 
 /** interface describing threshold configs for IRS report indicators */
 export interface IndicatorThresholds {
@@ -804,7 +801,6 @@ export interface ADMN3 extends ADMN2 {
 
 export const baseTilesetGeographicLevel: number = 1; // this tells the Jurisdiction Selection map at which geographic level to start rendering administrative fill layers
 export const JurisdictionLevels = ['administrative', 'operational'] as const;
-export type JurisdictionTypes = typeof JurisdictionLevels[number];
 export interface Tileset {
   idField: string; // the feature property corresponding with jurisdiction_id (for joining)
   jurisdictionType: JurisdictionTypes; // Admin or OA/FA/SA
@@ -979,20 +975,6 @@ export const LusakaAdmin0: JurisdictionsByCountry = {
   jurisdictionIds: [],
   tilesets: [],
 };
-
-/** ISO 3166-alpha-2 admin codes */
-export type ADMN0_PCODE =
-  | 'TH'
-  | 'ZM'
-  | 'NA'
-  | 'BW'
-  | 'Chadiza'
-  | 'Sinda'
-  | 'Katete'
-  | 'Siavonga'
-  | 'Lop Buri'
-  | 'Oddar Meanchey Province'
-  | 'Lusaka';
 
 /** dictionary of JurisdictionsByCountry by country code */
 export const CountriesAdmin0 = {
