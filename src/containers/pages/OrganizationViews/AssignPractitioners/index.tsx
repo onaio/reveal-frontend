@@ -1,9 +1,10 @@
+/** view to assign practitioners to an organization */
 import { Field, Formik } from 'formik';
 
 {
   /* <FormGroup>
 <Field
-  component={PractitionerSelect}
+  component={AssignPractitioner}
   name="practitioners"
   id="practitioners"
   placeholder="Add Practitioners"
@@ -51,15 +52,15 @@ import {
 import { OpenSRPService } from '../../../../services/opensrp';
 import { Practitioner } from '../../../../store/ducks/opensrp/practitioners';
 
-/** Props for PractitionerSelect component */
-interface PractitionerSelectProps {
+/** Props for AssignPractitioner component */
+interface AssignPractitionerProps {
   allPractitionersApi: string;
   practitionersByOrgApi: string;
   serviceClass: typeof OpenSRPService;
 }
 
-/** default props for PractitionerSelect component */
-const defaultPractitionerSelectProps: PractitionerSelectProps = {
+/** default props for AssignPractitioner component */
+const defaultAssignPractitionerProps: AssignPractitionerProps = {
   allPractitionersApi: OPENSRP_PRACTITIONER_ENDPOINT,
   practitionersByOrgApi: OPENSRP_ORG_PRACTITIONER_ENDPOINT,
   serviceClass: OpenSRPService,
@@ -87,8 +88,8 @@ interface SelectedOption {
   readonly isFixed: boolean;
 }
 
-/** PractitionerSelect component */
-const PractitionerSelect: React.FC<PractitionerSelectProps> = props => {
+/** AssignPractitioner component */
+const AssignPractitioner: React.FC<AssignPractitionerProps> = props => {
   const { serviceClass, allPractitionersApi, practitionersByOrgApi } = props;
   const [selectedOptions, setSelectedOptions] = useState<OptionsType<SelectedOption>>([]);
 
@@ -241,6 +242,6 @@ const PractitionerSelect: React.FC<PractitionerSelectProps> = props => {
   );
 };
 
-PractitionerSelect.defaultProps = defaultPractitionerSelectProps;
+AssignPractitioner.defaultProps = defaultAssignPractitionerProps;
 
-export default PractitionerSelect;
+export default AssignPractitioner;
