@@ -9,7 +9,7 @@ import { Router } from 'react-router';
 import {
   OPENSRP_ORGANIZATION_ENDPOINT,
   ORGANIZATIONS_LABEL,
-  TEAM_LIST_URL,
+  ORGANIZATIONS_LIST_URL,
 } from '../../../../../constants';
 import store from '../../../../../store';
 import {
@@ -41,8 +41,8 @@ describe('src/containers/TeamAssignment/TeamListview/', () => {
       match: {
         isExact: true,
         params: { id: '' },
-        path: TEAM_LIST_URL,
-        url: TEAM_LIST_URL,
+        path: ORGANIZATIONS_LIST_URL,
+        url: ORGANIZATIONS_LIST_URL,
       },
       organizations: fixtures.organizations,
     };
@@ -87,8 +87,8 @@ describe('src/containers/TeamAssignment/TeamListview/', () => {
       match: {
         isExact: true,
         params: { id: '' },
-        path: TEAM_LIST_URL,
-        url: TEAM_LIST_URL,
+        path: ORGANIZATIONS_LIST_URL,
+        url: ORGANIZATIONS_LIST_URL,
       },
       organizations: fixtures.organizations,
       serviceClass: classMock,
@@ -114,8 +114,8 @@ describe('src/containers/TeamAssignment/TeamListview/', () => {
       match: {
         isExact: true,
         params: { id: '' },
-        path: TEAM_LIST_URL,
-        url: TEAM_LIST_URL,
+        path: ORGANIZATIONS_LIST_URL,
+        url: ORGANIZATIONS_LIST_URL,
       },
       organizations: fixtures.organizations,
     };
@@ -144,8 +144,8 @@ describe('src/containers/TeamAssignment/TeamListview/', () => {
       match: {
         isExact: true,
         params: {},
-        path: TEAM_LIST_URL,
-        url: TEAM_LIST_URL,
+        path: ORGANIZATIONS_LIST_URL,
+        url: ORGANIZATIONS_LIST_URL,
       },
     };
     const wrapper = mount(
@@ -175,8 +175,8 @@ describe('src/containers/TeamAssignment/TeamListview/', () => {
       match: {
         isExact: true,
         params: {},
-        path: TEAM_LIST_URL,
-        url: TEAM_LIST_URL,
+        path: ORGANIZATIONS_LIST_URL,
+        url: ORGANIZATIONS_LIST_URL,
       },
     };
     const wrapper = mount(

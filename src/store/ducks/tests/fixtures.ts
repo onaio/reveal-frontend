@@ -131,6 +131,14 @@ export const plan6 = {
   jurisdiction_path: 'null',
 };
 
+export const plan7 = {
+  ...plan2,
+  id: 'plan-id-7',
+  jurisdiction_name_path: 'null',
+  jurisdiction_parent_id: 'null',
+  jurisdiction_path: 'null',
+};
+
 export const plan3 = {
   id: '1502e539',
   jurisdiction_depth: 4,

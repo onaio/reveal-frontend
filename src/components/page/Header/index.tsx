@@ -33,12 +33,12 @@ import {
   LOGIN_URL,
   LOGOUT_URL,
   ORGANIZATIONS_LABEL,
+  ORGANIZATIONS_LIST_URL,
   PLAN_LIST_URL,
   PLANNING,
   PLANS,
   REPORT_IRS_PLAN_URL,
   REPORTING,
-  TEAM_LIST_URL,
 } from '../../../constants';
 import './Header.css';
 
@@ -167,7 +167,11 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
               )}
               {ENABLE_TEAMS && (
                 <NavItem>
-                  <NavLink to={`${TEAM_LIST_URL}`} className="nav-link" activeClassName="active">
+                  <NavLink
+                    to={`${ORGANIZATIONS_LIST_URL}`}
+                    className="nav-link"
+                    activeClassName="active"
+                  >
                     {ORGANIZATIONS_LABEL}
                   </NavLink>
                 </NavItem>
