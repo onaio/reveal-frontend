@@ -24,6 +24,7 @@ import {
   IDENTIFIER,
   MEMBERS,
   NAME,
+  OPENSRP_ORG_PRACTITIONERS_ENDPOINT,
   OPENSRP_ORGANIZATION_ENDPOINT,
   ORGANIZATION_LABEL,
   ORGANIZATIONS_LABEL,
@@ -108,10 +109,10 @@ const SingleOrganizationView = (props: SingleOrgViewPropsType) => {
    * @Param {string} organizationId - the organization id
    */
   const loadOrgPractitioners = async (service: typeof serviceClass, organizationId: string) => {
-    const serve = new service('');
+    const serve = new service(OPENSRP_ORG_PRACTITIONERS_ENDPOINT);
 
     serve
-      .list()
+      .read(organizationId)
       .then((response: Practitioner[]) =>
         store.dispatch(fetchPractitionerRolesAction(response, organizationId))
       )
@@ -119,6 +120,7 @@ const SingleOrganizationView = (props: SingleOrgViewPropsType) => {
         /** still don't know what we should do with errors */
       });
   };
+
   useEffect(() => {
     loadOrganization(serviceClass, orgId);
     loadOrgPractitioners(serviceClass, orgId);
