@@ -2192,6 +2192,27 @@
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
         "roomcov": 0.0
+      },
+      {
+        "id": "6175c594-44da-5d05-b39c-06bfc0ea921c",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "jurisdiction_parent_id": "06c1e660-b902-4b35-aecb-cd04f5cbb438",
+        "jurisdiction_name": "KMZ_421",
+        "jurisdiction_depth": 4,
+        "jurisdiction_path": "[\"22bc44dd-752d-4c20-8761-617361b4f1e7\", \"98ceb806-a45c-4ba1-be1c-1db8965b7b43\", \"ee21d269-1179-4d04-aea9-900155f890cd\", \"06c1e660-b902-4b35-aecb-cd04f5cbb438\"]",
+        "jurisdiction_name_path": "[\"Zambia\", \"Eastern\", \"Katete\", \"Kamiza\"]",
+        "totstruct": 90,
+        "rooms_eligible": 138,
+        "rooms_sprayed": 122,
+        "sprayed_rooms_eligible": 138,
+        "sprayed_rooms_sprayed": 122,
+        "foundstruct": 72,
+        "sprayedstruct": 56,
+        "spraycov": 0.6222222222222222,
+        "spraytarg": 0.8,
+        "spraysuccess": 0.7777777777777778,
+        "roomcov": 0.8840579710144928
       }
     ],
     "columns": [
