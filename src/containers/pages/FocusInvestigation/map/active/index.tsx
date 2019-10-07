@@ -451,6 +451,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
     jurisdiction,
     plan,
     plansArray: getPlansArray(state, InterventionType.FI, [PlanStatus.ACTIVE, PlanStatus.COMPLETE]),
+    plansByFocusArea,
     plansIdArray: getPlansIdArray(
       state,
       InterventionType.FI,
