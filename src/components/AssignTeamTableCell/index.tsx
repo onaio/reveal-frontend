@@ -99,6 +99,6 @@ const mapDispatchToProps = {};
 const ConnectedAssignTeamTableCell = connect(
   mapStateToProps,
   mapDispatchToProps
-);
+)(AssignTeamTableCell);
 
 export default ConnectedAssignTeamTableCell;

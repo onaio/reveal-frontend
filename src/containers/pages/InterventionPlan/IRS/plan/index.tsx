@@ -96,7 +96,6 @@ import Loading from '../../../../../components/page/Loading';
 
 import AssignTeamTableCell, {
   AssignTeamCellProps,
-  AssignTeamTableCell as AssignTeamCell,
 } from '../../../../../components/AssignTeamTableCell';
 import './../../../../../styles/css/drill-down-table.css';
 import './style.css';
@@ -1717,7 +1716,7 @@ class IrsPlan extends React.Component<
    */
   private getDrilldownPlanTableProps(state: IrsPlanState): DrillDownProps<any> | null {
     const { filteredJurisdictionIds, newPlan, focusJurisdictionId, tableCrumbs } = state;
-    const { jurisdictionsById, organizationsById, planId } = this.props;
+    const { jurisdictionsById, planId } = this.props;
     const filteredJurisdictions = filteredJurisdictionIds.map(j => jurisdictionsById[j]);
     const isFocusJurisdictionTopLevel = tableCrumbs[0] && focusJurisdictionId === tableCrumbs[0].id;
 
@@ -1826,10 +1825,9 @@ class IrsPlan extends React.Component<
             accessor: (j: JurisdictionRow) => {
               const cellProps = {
                 jurisdictionId: j.jurisdiction_id,
-                organizationsById,
                 planId: j.planId,
               } as AssignTeamCellProps;
-              return <AssignTeamCell {...cellProps} />;
+              return <AssignTeamTableCell {...cellProps} />;
             },
             id: 'teams_assigned',
           },
