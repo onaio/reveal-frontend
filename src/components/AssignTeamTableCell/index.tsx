@@ -5,16 +5,24 @@ import { connect } from 'react-redux';
 import { Button, Popover, PopoverBody, PopoverHeader } from 'reactstrap';
 import { Store } from 'redux';
 import { stopPropagationAndPreventDefault } from '../../helpers/utils';
+import assignmentReducer, {
+  Assignment,
+  getAssignmentsArrayByPlanIdByJurisdictionId,
+  reducerName as assignmentReducerName,
+} from '../../store/ducks/opensrp/assignments';
 import organizationsReducer, {
   getOrganizationsById,
   Organization,
   reducerName as organizationsReducerName,
 } from '../../store/ducks/opensrp/organizations';
 
+reducerRegistry.register(assignmentReducerName, assignmentReducer);
+
 reducerRegistry.register(organizationsReducerName, organizationsReducer);
 
 /** Interface for Assign Teams cell props */
 export interface AssignTeamCellProps {
+  assignments: Assignment[];
   jurisdictionId: string;
   organizationsById: { [key: string]: Organization } | null;
   planId: string;
@@ -86,8 +94,14 @@ export { AssignTeamTableCell };
  */
 const mapStateToProps = (state: Partial<Store>, ownProps: any): AssignTeamCellProps => {
   const organizationsById = getOrganizationsById(state);
+  const assignments = getAssignmentsArrayByPlanIdByJurisdictionId(
+    state,
+    ownProps.planId,
+    ownProps.jurisdictionId
+  );
   return {
     ...ownProps,
+    assignments,
     organizationsById,
   } as AssignTeamCellProps;
 };
