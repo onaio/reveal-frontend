@@ -4,6 +4,7 @@ import React, { MouseEvent, useState } from 'react';
 import { connect } from 'react-redux';
 import { Button, Form, Popover, PopoverBody, PopoverHeader } from 'reactstrap';
 import { Store } from 'redux';
+import { ASSIGN_TEAMS } from '../../constants';
 import OrganizationSelect from '../../containers/forms/OrganizationSelect';
 import { stopPropagationAndPreventDefault } from '../../helpers/utils';
 import assignmentReducer, {
@@ -48,7 +49,7 @@ const AssignTeamTableCell = (props: AssignTeamCellProps) => {
       onClick={onPlanAssignmentButtonClick}
       size="sm"
     >
-      Assign Teams
+      {ASSIGN_TEAMS}
     </Button>
   );
 
