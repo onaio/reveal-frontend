@@ -10,7 +10,7 @@ import organizationsReducer, {
   Organization,
   reducerName as organizationsReducerName,
 } from '../../store/ducks/opensrp/organizations';
-import Loading from '../page/Loading';
+
 reducerRegistry.register(organizationsReducerName, organizationsReducer);
 
 /** Interface for Assign Teams cell props */
@@ -61,7 +61,7 @@ const AssignTeamTableCell = (props: AssignTeamCellProps) => {
             ))}
           </ul>
         ) : (
-          <Loading />
+          <p>No teams loaded...</p>
         )}
       </PopoverBody>
     </Popover>
