@@ -250,7 +250,7 @@ class App extends Component {
                   exact={true}
                   path={`${EDIT_ORGANIZATION_URL}/:id`}
                   component={ConnectedCreateEditOrgView}
-                  />
+                />
                 {/* single organization view */}
                 <ConnectedPrivateRoute
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
