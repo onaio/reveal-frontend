@@ -302,7 +302,7 @@ describe('components/IRS Reports/IRSReportingMap', () => {
         '92a0c5f3-8b47-465e-961b-2998ad3f00a5'
       ),
       history,
-      jurisdiction: getJurisdictionById(store.getState(), '92a0c5f3-8b47-465e-961b-2998ad3f00a5'),
+      jurisdiction,
       location: mock,
       match: {
         isExact: true,
