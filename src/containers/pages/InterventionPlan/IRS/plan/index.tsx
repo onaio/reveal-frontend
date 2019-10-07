@@ -24,6 +24,7 @@ import {
   NEW_PLAN,
   OPENSRP_FIND_BY_PROPERTIES,
   OPENSRP_LOCATION,
+  OPENSRP_ORGANIZATION_ENDPOINT,
   OPENSRP_PARENT_ID,
   OPENSRP_PLANS,
   PARENTID,
@@ -69,6 +70,12 @@ import jurisdictionReducer, {
   JurisdictionGeoJSON,
   reducerName as jurisdictionReducerName,
 } from '../../../../../store/ducks/jurisdictions';
+import organizationsReducer, {
+  fetchOrganizations,
+  getOrganizationsById,
+  Organization,
+  reducerName as organizationsReducerName,
+} from '../../../../../store/ducks/opensrp/organizations';
 import plansReducer, {
   extractPlanPayloadFromPlanRecord,
   extractPlanRecordResponseFromPlanPayload,
@@ -94,21 +101,25 @@ import './style.css';
 /** register the plans reducer */
 reducerRegistry.register(plansReducerName, plansReducer);
 reducerRegistry.register(jurisdictionReducerName, jurisdictionReducer);
+reducerRegistry.register(organizationsReducerName, organizationsReducer);
 
 /** initialize OpenSRP API services */
 const OpenSrpLocationService = new OpenSRPService(OPENSRP_LOCATION);
 const OpenSrpPlanService = new OpenSRPService(OPENSRP_PLANS);
+const OpenSRPOrganizationService = new OpenSRPService(OPENSRP_ORGANIZATION_ENDPOINT);
 
 /** IrsPlanProps - interface for IRS Plan page */
 export interface IrsPlanProps {
   allJurisdictionIds: string[];
   fetchAllJurisdictionIdsActionCreator: typeof fetchAllJurisdictionIds;
   fetchJurisdictionsActionCreator: typeof fetchJurisdictions;
+  fetchOrganizationsActionCreator: typeof fetchOrganizations;
   fetchPlansActionCreator: typeof fetchPlanRecords;
   isDraftPlan?: boolean;
   isFinalizedPlan?: boolean;
   jurisdictionsById: { [key: string]: Jurisdiction };
   loadedJurisdictionIds: string[];
+  organizationsById: { [key: string]: Organization };
   planById?: PlanRecord | null;
   planId: string | null;
   supersetService: typeof supersetFetch;
@@ -119,11 +130,13 @@ export const defaultIrsPlanProps: IrsPlanProps = {
   allJurisdictionIds: [],
   fetchAllJurisdictionIdsActionCreator: fetchAllJurisdictionIds,
   fetchJurisdictionsActionCreator: fetchJurisdictions,
+  fetchOrganizationsActionCreator: fetchOrganizations,
   fetchPlansActionCreator: fetchPlanRecords,
   isDraftPlan: false,
   isFinalizedPlan: false,
   jurisdictionsById: {},
   loadedJurisdictionIds: [],
+  organizationsById: {},
   planById: null,
   planId: null,
   supersetService: supersetFetch,
@@ -189,6 +202,7 @@ class IrsPlan extends React.Component<
   public async componentDidMount() {
     const {
       fetchJurisdictionsActionCreator,
+      fetchOrganizationsActionCreator,
       fetchPlansActionCreator,
       isDraftPlan,
       planId,
@@ -351,6 +365,12 @@ class IrsPlan extends React.Component<
         return fetchJurisdictionsActionCreator(jurisdictionsArray);
       }
     );
+
+    await OpenSRPOrganizationService.list()
+      .then((response: Organization[]) => store.dispatch(fetchOrganizationsActionCreator(response)))
+      .catch((err: Error) => {
+        /** TODO - find something to do with error */
+      });
   }
 
   public componentWillReceiveProps(nextProps: IrsPlanProps) {
@@ -1694,7 +1714,7 @@ class IrsPlan extends React.Component<
    */
   private getDrilldownPlanTableProps(state: IrsPlanState): DrillDownProps<any> | null {
     const { filteredJurisdictionIds, newPlan, focusJurisdictionId, tableCrumbs } = state;
-    const { jurisdictionsById, planId } = this.props;
+    const { jurisdictionsById, organizationsById, planId } = this.props;
     const filteredJurisdictions = filteredJurisdictionIds.map(j => jurisdictionsById[j]);
     const isFocusJurisdictionTopLevel = tableCrumbs[0] && focusJurisdictionId === tableCrumbs[0].id;
 
@@ -2006,6 +2026,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
     isNewPlan,
     jurisdictionsById,
     loadedJurisdictionIds,
+    organizationsById,
     planById,
     planId,
     ...ownProps,
@@ -2017,6 +2038,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
 const mapDispatchToProps = {
   fetchAllJurisdictionIdsActionCreator: fetchAllJurisdictionIds,
   fetchJurisdictionsActionCreator: fetchJurisdictions,
+  fetchOrganizationsActionCreator: fetchOrganizations,
   fetchPlansActionCreator: fetchPlanRecords,
 };
 
