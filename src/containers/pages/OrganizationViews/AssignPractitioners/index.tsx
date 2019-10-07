@@ -70,14 +70,14 @@ import { Practitioner } from '../../../../store/ducks/opensrp/practitioners';
 
 /** Props for AssignPractitioner component */
 interface AssignPractitionerProps {
-  fetchOrganizationsAction: typeof fetchOrganizations;
+  fetchOrganizationsCreator: typeof fetchOrganizations;
   organization: Organization | null;
   serviceClass: typeof OpenSRPService;
 }
 
 /** default props for AssignPractitioner component */
 const defaultAssignPractitionerProps: AssignPractitionerProps = {
-  fetchOrganizationsAction: fetchOrganizations,
+  fetchOrganizationsCreator: fetchOrganizations,
   organization: null,
   serviceClass: OpenSRPService,
 };
@@ -109,7 +109,7 @@ interface SelectedOption {
 
 /** AssignPractitioner component */
 const AssignPractitioner: React.FC<PropsTypes> = props => {
-  const { serviceClass, fetchOrganizationsAction, organization } = props;
+  const { serviceClass, fetchOrganizationsCreator: fetchOrganizationsAction, organization } = props;
   const [selectedOptions, setSelectedOptions] = useState<OptionsType<SelectedOption>>([]);
 
   useEffect(() => {
