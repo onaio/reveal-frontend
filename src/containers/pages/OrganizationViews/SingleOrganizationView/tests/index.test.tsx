@@ -132,10 +132,8 @@ describe('src/containers/pages/TeamAssignment', () => {
     // api calls are correct.
     const mock: any = jest.fn();
     const mockRead: any = jest.fn(async () => []);
-    const mockList: any = jest.fn(async () => []);
     const serviceMock: any = jest.fn(() => {
       return {
-        list: mockList,
         read: mockRead,
       };
     });
@@ -162,7 +160,7 @@ describe('src/containers/pages/TeamAssignment', () => {
 
     expect(serviceMock).toHaveBeenCalledTimes(2);
     expect(mockRead.mock.calls[0][0]).toEqual(fixtures.organization3.identifier);
-    // expect(mockList.mock.calls[0]).toHaveBeenCalledWith();
+    expect(mockRead.mock.calls[1][0]).toEqual(fixtures.organization3.identifier);
     expect.assertions(3);
   });
 
