@@ -1,9 +1,12 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import { keys, values } from 'lodash';
 import React, { MouseEvent, useState } from 'react';
+import { connect } from 'react-redux';
 import { Button, Popover, PopoverBody, PopoverHeader } from 'reactstrap';
+import { Store } from 'redux';
 import { stopPropagationAndPreventDefault } from '../../helpers/utils';
 import organizationsReducer, {
+  getOrganizationsById,
   Organization,
   reducerName as organizationsReducerName,
 } from '../../store/ducks/opensrp/organizations';
@@ -72,5 +75,30 @@ const AssignTeamTableCell = (props: AssignTeamCellProps) => {
   );
 };
 
-export default AssignTeamTableCell;
 const getButtonId = (jurisdictionId: string): string => `plan-assignment-${jurisdictionId}`;
+export { AssignTeamTableCell };
+
+/** map state to props
+ * @param {partial<store>} - the redux store
+ * @param {AssignTeamCellProps} ownProps - the props
+ *
+ * @returns {AssignTeamCellProps} - ownProps and organizationsById
+ */
+const mapStateToProps = (state: Partial<Store>, ownProps: any): AssignTeamCellProps => {
+  const organizationsById = getOrganizationsById(state);
+  return {
+    ...ownProps,
+    organizationsById,
+  } as AssignTeamCellProps;
+};
+
+/** map props to actions that may be dispatched by component */
+const mapDispatchToProps = {};
+
+/** Create Connected AssignTeamTableCell */
+const ConnectedAssignTeamTableCell = connect(
+  mapStateToProps,
+  mapDispatchToProps
+);
+
+export default ConnectedAssignTeamTableCell;
