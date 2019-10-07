@@ -42,6 +42,7 @@ import Loading from '../../../../components/page/Loading';
 import {
   ADD,
   ASSIGN,
+  ASSIGN_PRACTITIONERS_URL,
   CREATE_ORGANIZATION_URL,
   EDIT_ORGANIZATION_URL,
   EDIT_TEAM,
@@ -234,7 +235,7 @@ const AssignPractitioner: React.FC<PropsTypes> = props => {
   const breadcrumbProps: BreadCrumbProps = {
     currentPage: {
       label: 'Assign Practitioners',
-      url: '/teams/assignPractitioners',
+      url: ASSIGN_PRACTITIONERS_URL,
     },
     pages: [],
   };
