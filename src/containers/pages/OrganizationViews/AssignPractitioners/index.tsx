@@ -51,11 +51,13 @@ import {
   OPENSRP_ORG_PRACTITIONER_ENDPOINT,
   OPENSRP_ORGANIZATION_ENDPOINT,
   OPENSRP_PRACTITIONER_ENDPOINT,
+  OPENSRP_PRACTITIONER_ROLE_ENDPOINT,
   ORGANIZATIONS_LABEL,
   ORGANIZATIONS_LIST_URL,
   PRACTITIONERS,
   TO,
 } from '../../../../constants';
+import { generateNameSpacedUUID } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
 import {
   fetchOrganizations,
@@ -204,8 +206,22 @@ const AssignPractitioner: React.FC<PropsTypes> = props => {
       .read(organizationId)
       .then((response: Organization) => fetchOrganizationsAction([response]));
   };
+
   const addHandler = () => {
+    const code = {
+      text: 'Community Health Worker',
+    };
+    // selected options
     const stringValues = selectedOptions.map(option => option.value);
+    const jsonArrayPayload = stringValues.map(practitionerId => ({
+      active: true,
+      code,
+      identifier: generateNameSpacedUUID('', ''),
+      organization: organization.identifier,
+      practitioner: practitionerId,
+    }));
+    const serve = new serviceClass(OPENSRP_PRACTITIONER_ROLE_ENDPOINT);
+    serve.create(jsonArrayPayload);
   };
 
   // Props
