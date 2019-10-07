@@ -70,19 +70,15 @@ import { Practitioner } from '../../../../store/ducks/opensrp/practitioners';
 
 /** Props for AssignPractitioner component */
 interface AssignPractitionerProps {
-  allPractitionersApi: string;
   fetchOrganizationsAction: typeof fetchOrganizations;
   organization: Organization | null;
-  practitionersByOrgApi: string;
   serviceClass: typeof OpenSRPService;
 }
 
 /** default props for AssignPractitioner component */
 const defaultAssignPractitionerProps: AssignPractitionerProps = {
-  allPractitionersApi: OPENSRP_PRACTITIONER_ENDPOINT,
   fetchOrganizationsAction: fetchOrganizations,
   organization: null,
-  practitionersByOrgApi: OPENSRP_ORG_PRACTITIONER_ENDPOINT,
   serviceClass: OpenSRPService,
 };
 
@@ -113,13 +109,7 @@ interface SelectedOption {
 
 /** AssignPractitioner component */
 const AssignPractitioner: React.FC<PropsTypes> = props => {
-  const {
-    serviceClass,
-    allPractitionersApi,
-    practitionersByOrgApi,
-    fetchOrganizationsAction,
-    organization,
-  } = props;
+  const { serviceClass, fetchOrganizationsAction, organization } = props;
   const [selectedOptions, setSelectedOptions] = useState<OptionsType<SelectedOption>>([]);
 
   useEffect(() => {
@@ -185,7 +175,7 @@ const AssignPractitioner: React.FC<PropsTypes> = props => {
 
   /** load practitioners that belong to this organization */
   const loadOrgPractitioners = async () => {
-    const serve = new serviceClass(allPractitionersApi);
+    const serve = new serviceClass(OPENSRP_ORG_PRACTITIONER_ENDPOINT);
     const orgPractitioners = await serve.list();
     return formatOptions(orgPractitioners, true);
   };
@@ -194,7 +184,7 @@ const AssignPractitioner: React.FC<PropsTypes> = props => {
    * in a single call to Practitioners endpoint
    */
   const loadAllPractitioners = async () => {
-    const serve = new serviceClass(practitionersByOrgApi);
+    const serve = new serviceClass(OPENSRP_PRACTITIONER_ENDPOINT);
     const allPractitioners = await serve.list();
     return formatOptions(allPractitioners);
   };
