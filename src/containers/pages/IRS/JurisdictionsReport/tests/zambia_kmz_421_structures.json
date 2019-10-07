@@ -1,0 +1,1024 @@
+{
+  "cache_key": null,
+  "cached_dttm": null,
+  "cache_timeout": 86400,
+  "error": null,
+  "form_data": {
+    "datasource": "22__table",
+    "viz_type": "table",
+    "granularity_sqla": null,
+    "time_grain_sqla": "P1D",
+    "time_range": "100 years ago : ",
+    "groupby": [],
+    "metrics": [],
+    "percent_metrics": [],
+    "timeseries_limit_metric": null,
+    "row_limit": 3000,
+    "include_time": false,
+    "order_desc": true,
+    "all_columns": ["structure_id", "jurisdiction_id", "task_id", "plan_id", "geojson"],
+    "order_by_cols": [],
+    "adhoc_filters": [
+      {
+        "clause": "WHERE",
+        "expressionType": "SIMPLE",
+        "comparator": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "operator": "==",
+        "subject": "jurisdiction_id"
+      }
+    ],
+    "table_timestamp_format": "%Y-%m-%d %H:%M:%S",
+    "page_length": 0,
+    "include_search": false,
+    "table_filter": false,
+    "align_pn": false,
+    "color_pn": true,
+    "slice_id": 158,
+    "where": "",
+    "having": "",
+    "having_filters": [],
+    "filters": [
+      {
+        "col": "jurisdiction_id",
+        "op": "==",
+        "val": "92a0c5f3-8b47-465e-961b-2998ad3f00a5"
+      }
+    ]
+  },
+  "is_cached": false,
+  "query": "SELECT structure_id AS structure_id,\n       jurisdiction_id AS jurisdiction_id,\n       task_id AS task_id,\n       plan_id AS plan_id,\n       geojson AS geojson\nFROM\n  (SELECT structure_id,\n          structure_jurisdiction_id as jurisdiction_id,\n          task_id,\n          plan_id,\n          jsonb_build_object('type', 'Feature', 'id', structure_id, 'geometry', ST_AsGeoJSON(structure_geometry)::jsonb, 'properties', to_jsonb(row) - 'structure_id' - 'structure_geometry') AS geojson\n   FROM\n     (SELECT structure_id,\n             structure_jurisdiction_id,\n             structure_code,\n             structure_name,\n             structure_type,\n             structure_geometry,\n             task_id,\n             plan_id,\n             event_date,\n             business_status,\n             rooms_eligible,\n             rooms_sprayed,\n             eligibility,\n             structure_sprayed,\n             business_status\n      FROM zambia_irs_structures) row) AS expr_qry\nWHERE jurisdiction_id = '92a0c5f3-8b47-465e-961b-2998ad3f00a5'\nLIMIT 3000;",
+  "status": "success",
+  "stacktrace": null,
+  "rowcount": 138,
+  "data": {
+    "records": [
+      {
+        "structure_id": "e5d1c6aa-d1f4-40e8-97a1-9e06b3f86e16",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "54249816-bc02-45d0-ad3a-fff23e54c381",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"e5d1c6aa-d1f4-40e8-97a1-9e06b3f86e16\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.0960743, -13.8867977]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"54249816-bc02-45d0-ad3a-fff23e54c381\", \"event_date\": \"2019-10-04T00:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 2, \"rooms_eligible\": 2, \"structure_code\": \"e5d1c6aa-d1f4-40e8-97a1-9e06b3f86e16\", \"structure_name\": \"e5d1c6aa-d1f4-40e8-97a1-9e06b3f86e16\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Complete\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "ec0acb90-056b-4189-b8cb-49975acbd47a",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "e73c57f9-2838-4114-9b8b-b113abefbd69",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"ec0acb90-056b-4189-b8cb-49975acbd47a\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.0960523, -13.8854906]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"e73c57f9-2838-4114-9b8b-b113abefbd69\", \"event_date\": \"2019-10-04T00:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 3, \"rooms_eligible\": 3, \"structure_code\": \"ec0acb90-056b-4189-b8cb-49975acbd47a\", \"structure_name\": \"ec0acb90-056b-4189-b8cb-49975acbd47a\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Complete\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "6d8c62f6-be0d-455a-bef8-3a1b2d70b860",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "2b35c9b0-11e9-415e-bcd0-a21cae3df331",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"6d8c62f6-be0d-455a-bef8-3a1b2d70b860\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.0956477, -13.8839393]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"2b35c9b0-11e9-415e-bcd0-a21cae3df331\", \"event_date\": \"2019-10-04T00:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 2, \"rooms_eligible\": 2, \"structure_code\": \"6d8c62f6-be0d-455a-bef8-3a1b2d70b860\", \"structure_name\": \"6d8c62f6-be0d-455a-bef8-3a1b2d70b860\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Complete\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "ffc1220c-56cb-408d-9d7e-934750de518a",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "858dd5b7-f497-4bcd-9969-50dd048767ad",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"ffc1220c-56cb-408d-9d7e-934750de518a\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.0959431, -13.8865901]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"858dd5b7-f497-4bcd-9969-50dd048767ad\", \"event_date\": \"2019-10-04T00:00:00\", \"eligibility\": \"notEligible\", \"rooms_sprayed\": 0, \"rooms_eligible\": 0, \"structure_code\": \"ffc1220c-56cb-408d-9d7e-934750de518a\", \"structure_name\": \"ffc1220c-56cb-408d-9d7e-934750de518a\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Not Eligible\", \"structure_sprayed\": \"No\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "311ea546-6d55-46d0-af51-48908ead4239",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "8c146338-2bfd-4605-80d3-40bf3dfb3394",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"311ea546-6d55-46d0-af51-48908ead4239\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.0960739, -13.885966]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"8c146338-2bfd-4605-80d3-40bf3dfb3394\", \"event_date\": \"2019-10-04T00:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 1, \"rooms_eligible\": 1, \"structure_code\": \"311ea546-6d55-46d0-af51-48908ead4239\", \"structure_name\": \"311ea546-6d55-46d0-af51-48908ead4239\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Complete\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "7822d073-b090-42c7-acbd-ff8fbe6ff3b0",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "742c5d58-3a2b-4597-b940-b1acab06dc1f",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"7822d073-b090-42c7-acbd-ff8fbe6ff3b0\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.0960324, -13.8865844]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"742c5d58-3a2b-4597-b940-b1acab06dc1f\", \"event_date\": \"2019-10-04T00:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 2, \"rooms_eligible\": 2, \"structure_code\": \"7822d073-b090-42c7-acbd-ff8fbe6ff3b0\", \"structure_name\": \"7822d073-b090-42c7-acbd-ff8fbe6ff3b0\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Complete\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "872b03cc-d32d-45d7-8bd9-c9f1e6591a60",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "cde8e013-9c81-4db4-a565-fb9c284d7509",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"872b03cc-d32d-45d7-8bd9-c9f1e6591a60\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.0958399, -13.8863803]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"cde8e013-9c81-4db4-a565-fb9c284d7509\", \"event_date\": \"2019-10-04T00:00:00\", \"eligibility\": \"notEligible\", \"rooms_sprayed\": 0, \"rooms_eligible\": 0, \"structure_code\": \"872b03cc-d32d-45d7-8bd9-c9f1e6591a60\", \"structure_name\": \"872b03cc-d32d-45d7-8bd9-c9f1e6591a60\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Not Eligible\", \"structure_sprayed\": \"No\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "77da0fad-73ae-4e87-9c96-36a42ee53524",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "a058fa93-5bb7-427c-a479-03348e7d4b56",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"77da0fad-73ae-4e87-9c96-36a42ee53524\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.0956236, -13.88418]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"a058fa93-5bb7-427c-a479-03348e7d4b56\", \"event_date\": \"2019-10-04T00:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 0, \"rooms_eligible\": 2, \"structure_code\": \"77da0fad-73ae-4e87-9c96-36a42ee53524\", \"structure_name\": \"77da0fad-73ae-4e87-9c96-36a42ee53524\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Partially Sprayed\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "0f0d5eff-bec1-4fc6-a46f-bf9e445b3648",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "0d984a78-7703-4cc3-9288-58ec061b404b",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"0f0d5eff-bec1-4fc6-a46f-bf9e445b3648\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.0957158, -13.8840047]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"0d984a78-7703-4cc3-9288-58ec061b404b\", \"event_date\": \"2019-10-04T00:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 3, \"rooms_eligible\": 3, \"structure_code\": \"0f0d5eff-bec1-4fc6-a46f-bf9e445b3648\", \"structure_name\": \"0f0d5eff-bec1-4fc6-a46f-bf9e445b3648\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Complete\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "4b2ef4cf-0afa-44d1-bffb-8bc68952a083",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "ae4a15a2-66bd-4eae-b612-a4d5fb164e6e",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"4b2ef4cf-0afa-44d1-bffb-8bc68952a083\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.0964584, -13.8870517]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"ae4a15a2-66bd-4eae-b612-a4d5fb164e6e\", \"event_date\": \"2019-10-04T00:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 1, \"rooms_eligible\": 1, \"structure_code\": \"4b2ef4cf-0afa-44d1-bffb-8bc68952a083\", \"structure_name\": \"4b2ef4cf-0afa-44d1-bffb-8bc68952a083\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Complete\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "f1ac44c4-846d-49fc-be9a-76bad0526367",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "ec264764-adf6-4f45-8f2a-0a8cba4fa6b7",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"f1ac44c4-846d-49fc-be9a-76bad0526367\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.0960187, -13.8863736]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"ec264764-adf6-4f45-8f2a-0a8cba4fa6b7\", \"event_date\": \"2019-10-04T00:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 1, \"rooms_eligible\": 1, \"structure_code\": \"f1ac44c4-846d-49fc-be9a-76bad0526367\", \"structure_name\": \"f1ac44c4-846d-49fc-be9a-76bad0526367\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Complete\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "0126ecb3-853b-4cc8-91a5-d91516d80ce7",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "61d8bcec-12b2-4a47-ab9e-001baea84a40",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"0126ecb3-853b-4cc8-91a5-d91516d80ce7\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.0963898, -13.8869167]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"61d8bcec-12b2-4a47-ab9e-001baea84a40\", \"event_date\": \"2019-10-04T00:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 2, \"rooms_eligible\": 2, \"structure_code\": \"0126ecb3-853b-4cc8-91a5-d91516d80ce7\", \"structure_name\": \"0126ecb3-853b-4cc8-91a5-d91516d80ce7\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Complete\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "f22cc380-d972-4eba-8df1-fbfab79829f5",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "a1cd90b4-9d9a-4eed-bda9-e6bf7547e645",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"f22cc380-d972-4eba-8df1-fbfab79829f5\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.0962589, -13.8869623]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"a1cd90b4-9d9a-4eed-bda9-e6bf7547e645\", \"event_date\": \"2019-10-04T00:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 2, \"rooms_eligible\": 2, \"structure_code\": \"f22cc380-d972-4eba-8df1-fbfab79829f5\", \"structure_name\": \"f22cc380-d972-4eba-8df1-fbfab79829f5\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Complete\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "853da0b2-01ab-46b9-ae2d-1e5b2aaa0c32",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "5358d3d6-986b-480d-a1c3-38374ee039fb",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"853da0b2-01ab-46b9-ae2d-1e5b2aaa0c32\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.095982, -13.8859556]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"5358d3d6-986b-480d-a1c3-38374ee039fb\", \"event_date\": \"2019-10-04T00:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 1, \"rooms_eligible\": 1, \"structure_code\": \"853da0b2-01ab-46b9-ae2d-1e5b2aaa0c32\", \"structure_name\": \"853da0b2-01ab-46b9-ae2d-1e5b2aaa0c32\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Complete\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "b44348b2-b908-4bb1-bdf4-b4db796de96e",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "21f751e7-ec64-4daf-b32a-64c0015dc98f",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"b44348b2-b908-4bb1-bdf4-b4db796de96e\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.0964483010078, -13.8871519386504]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"21f751e7-ec64-4daf-b32a-64c0015dc98f\", \"event_date\": \"2019-10-04T00:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 3, \"rooms_eligible\": 3, \"structure_code\": \"b44348b2-b908-4bb1-bdf4-b4db796de96e\", \"structure_name\": \"b44348b2-b908-4bb1-bdf4-b4db796de96e\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Complete\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "aa27c031-a71d-419f-a6b2-04ad5eccc337",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "fdc2e6a8-cad8-4693-9fa3-6b328e99a689",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"aa27c031-a71d-419f-a6b2-04ad5eccc337\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.0961781, -13.886773]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"fdc2e6a8-cad8-4693-9fa3-6b328e99a689\", \"event_date\": \"2019-10-04T00:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 0, \"rooms_eligible\": 0, \"structure_code\": \"aa27c031-a71d-419f-a6b2-04ad5eccc337\", \"structure_name\": \"aa27c031-a71d-419f-a6b2-04ad5eccc337\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Not Sprayed\", \"structure_sprayed\": \"no\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "1275aec2-2465-44c3-a206-7f5da3ac74af",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "73474f8f-b99c-4b2c-b058-98d95dc69c53",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"1275aec2-2465-44c3-a206-7f5da3ac74af\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.0963867, -13.88704]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"73474f8f-b99c-4b2c-b058-98d95dc69c53\", \"event_date\": \"2019-10-04T00:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 1, \"rooms_eligible\": 1, \"structure_code\": \"1275aec2-2465-44c3-a206-7f5da3ac74af\", \"structure_name\": \"1275aec2-2465-44c3-a206-7f5da3ac74af\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Complete\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "a6080ba9-420d-4fa3-a0ec-9b25ce69006b",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "272c1b27-dcc5-4f9d-86ad-5cf65722cf59",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"a6080ba9-420d-4fa3-a0ec-9b25ce69006b\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.0955861, -13.8864339]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"272c1b27-dcc5-4f9d-86ad-5cf65722cf59\", \"event_date\": \"2019-10-04T00:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 1, \"rooms_eligible\": 4, \"structure_code\": \"a6080ba9-420d-4fa3-a0ec-9b25ce69006b\", \"structure_name\": \"a6080ba9-420d-4fa3-a0ec-9b25ce69006b\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Partially Sprayed\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "8f0ba69b-21d6-435b-8fe5-815e4cd12960",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "afc332a2-72b4-4b90-924b-568458a331c7",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"8f0ba69b-21d6-435b-8fe5-815e4cd12960\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.0964349, -13.8869438]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"afc332a2-72b4-4b90-924b-568458a331c7\", \"event_date\": \"2019-10-04T00:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 1, \"rooms_eligible\": 1, \"structure_code\": \"8f0ba69b-21d6-435b-8fe5-815e4cd12960\", \"structure_name\": \"8f0ba69b-21d6-435b-8fe5-815e4cd12960\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Complete\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "9c45e68b-b6e8-47e4-9686-2953b92b7126",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "6fa06a94-9a99-47f9-a0ee-b8ce3793fae6",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"9c45e68b-b6e8-47e4-9686-2953b92b7126\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.0960944, -13.8856456]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"6fa06a94-9a99-47f9-a0ee-b8ce3793fae6\", \"event_date\": \"2019-10-04T00:00:00\", \"eligibility\": \"notEligible\", \"rooms_sprayed\": 0, \"rooms_eligible\": 0, \"structure_code\": \"9c45e68b-b6e8-47e4-9686-2953b92b7126\", \"structure_name\": \"9c45e68b-b6e8-47e4-9686-2953b92b7126\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Not Eligible\", \"structure_sprayed\": \"No\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "9cda3f6d-6df8-451b-9ac2-d730b4d5524a",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "8e480a52-e512-435f-9689-406a9b09ba36",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"9cda3f6d-6df8-451b-9ac2-d730b4d5524a\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.0958067, -13.8835]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"8e480a52-e512-435f-9689-406a9b09ba36\", \"event_date\": \"2019-10-04T00:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 2, \"rooms_eligible\": 2, \"structure_code\": \"9cda3f6d-6df8-451b-9ac2-d730b4d5524a\", \"structure_name\": \"9cda3f6d-6df8-451b-9ac2-d730b4d5524a\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Complete\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "8b268561-b5ab-4307-b0dc-7f10b366c928",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "57028e75-0483-4b31-b735-a3da27ad0bc0",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"8b268561-b5ab-4307-b0dc-7f10b366c928\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.0966191, -13.8801899]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"57028e75-0483-4b31-b735-a3da27ad0bc0\", \"event_date\": \"2019-10-04T00:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 5, \"rooms_eligible\": 5, \"structure_code\": \"8b268561-b5ab-4307-b0dc-7f10b366c928\", \"structure_name\": \"8b268561-b5ab-4307-b0dc-7f10b366c928\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Complete\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "0c580242-b525-4a5f-a356-4ac80baed292",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "8e1c020b-e7fb-4722-b60d-3c4bd995f2f9",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"0c580242-b525-4a5f-a356-4ac80baed292\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.0956403, -13.8863655]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"8e1c020b-e7fb-4722-b60d-3c4bd995f2f9\", \"event_date\": \"2019-10-04T00:00:00\", \"eligibility\": \"notEligible\", \"rooms_sprayed\": 0, \"rooms_eligible\": 0, \"structure_code\": \"0c580242-b525-4a5f-a356-4ac80baed292\", \"structure_name\": \"0c580242-b525-4a5f-a356-4ac80baed292\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Not Eligible\", \"structure_sprayed\": \"No\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "edd2b965-cda8-4483-b78d-63fc12cd50dd",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "5372fd9e-290e-4190-ad6a-d421ed6a5b56",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"edd2b965-cda8-4483-b78d-63fc12cd50dd\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.0964898995233, -13.8833437215941]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"5372fd9e-290e-4190-ad6a-d421ed6a5b56\", \"event_date\": \"2019-10-04T00:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 1, \"rooms_eligible\": 1, \"structure_code\": \"edd2b965-cda8-4483-b78d-63fc12cd50dd\", \"structure_name\": \"edd2b965-cda8-4483-b78d-63fc12cd50dd\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Complete\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "0731e092-ba55-4d31-81c6-2c785678237b",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "0a12f651-2690-4d3e-925b-af40041e76cd",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"0731e092-ba55-4d31-81c6-2c785678237b\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.0960288, -13.8860945]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"0a12f651-2690-4d3e-925b-af40041e76cd\", \"event_date\": \"2019-10-04T00:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 1, \"rooms_eligible\": 1, \"structure_code\": \"0731e092-ba55-4d31-81c6-2c785678237b\", \"structure_name\": \"0731e092-ba55-4d31-81c6-2c785678237b\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Complete\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "cc901aa6-0f30-45a5-a060-2a9e4b4af34b",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "a7799d1c-47bc-4c07-8fff-e8f094aefdff",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"cc901aa6-0f30-45a5-a060-2a9e4b4af34b\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.0956084, -13.8839586]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"a7799d1c-47bc-4c07-8fff-e8f094aefdff\", \"event_date\": \"2019-10-04T00:00:00\", \"eligibility\": \"notEligible\", \"rooms_sprayed\": 0, \"rooms_eligible\": 0, \"structure_code\": \"cc901aa6-0f30-45a5-a060-2a9e4b4af34b\", \"structure_name\": \"cc901aa6-0f30-45a5-a060-2a9e4b4af34b\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Not Eligible\", \"structure_sprayed\": \"No\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "04d60099-c6a6-4d65-bee9-8138f8e2a199",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "31106498-c071-44ba-b55d-d607b7e9531c",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"04d60099-c6a6-4d65-bee9-8138f8e2a199\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.0960817, -13.8868818]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"31106498-c071-44ba-b55d-d607b7e9531c\", \"event_date\": \"2019-10-04T00:00:00\", \"eligibility\": \"notEligible\", \"rooms_sprayed\": 0, \"rooms_eligible\": 0, \"structure_code\": \"04d60099-c6a6-4d65-bee9-8138f8e2a199\", \"structure_name\": \"04d60099-c6a6-4d65-bee9-8138f8e2a199\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Not Eligible\", \"structure_sprayed\": \"No\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "8936e6c7-5f64-485b-aedf-c705653150ea",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "edeb4df8-019e-4cba-8206-550eecb582cb",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"8936e6c7-5f64-485b-aedf-c705653150ea\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.0963735253948, -13.8870228269738]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"edeb4df8-019e-4cba-8206-550eecb582cb\", \"event_date\": \"2019-10-04T00:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 1, \"rooms_eligible\": 1, \"structure_code\": \"8936e6c7-5f64-485b-aedf-c705653150ea\", \"structure_name\": \"8936e6c7-5f64-485b-aedf-c705653150ea\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Complete\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "d9315b78-0a70-41a7-83f1-7aa749e08eeb",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "e07866d3-4552-4b95-8885-371f79f3a590",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"d9315b78-0a70-41a7-83f1-7aa749e08eeb\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.0962523, -13.8867097999999]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"e07866d3-4552-4b95-8885-371f79f3a590\", \"event_date\": \"2019-10-04T00:00:00\", \"eligibility\": \"notEligible\", \"rooms_sprayed\": 0, \"rooms_eligible\": 0, \"structure_code\": \"d9315b78-0a70-41a7-83f1-7aa749e08eeb\", \"structure_name\": \"d9315b78-0a70-41a7-83f1-7aa749e08eeb\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Not Eligible\", \"structure_sprayed\": \"No\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "9ec0d198-d279-4d00-b979-68b323464e5a",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "f731bc99-4f48-4f8f-a463-7a57b04fb847",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"9ec0d198-d279-4d00-b979-68b323464e5a\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.0963081, -13.8867383]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"f731bc99-4f48-4f8f-a463-7a57b04fb847\", \"event_date\": \"2019-10-04T00:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 2, \"rooms_eligible\": 2, \"structure_code\": \"9ec0d198-d279-4d00-b979-68b323464e5a\", \"structure_name\": \"9ec0d198-d279-4d00-b979-68b323464e5a\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Complete\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "1d42a449-f8ca-428d-b8fd-71d2bccc45d5",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "67389793-7a37-4960-b94c-262dd04295d2",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"1d42a449-f8ca-428d-b8fd-71d2bccc45d5\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.0961222331121, -13.885683557991]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"67389793-7a37-4960-b94c-262dd04295d2\", \"event_date\": \"2019-10-04T00:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 2, \"rooms_eligible\": 3, \"structure_code\": \"1d42a449-f8ca-428d-b8fd-71d2bccc45d5\", \"structure_name\": \"1d42a449-f8ca-428d-b8fd-71d2bccc45d5\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Partially Sprayed\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "c269fd42-d38b-4dd2-a9c2-e879d0a8af3b",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "2f4d6462-4f80-4e26-9f62-62ffb569d69e",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"c269fd42-d38b-4dd2-a9c2-e879d0a8af3b\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.0957889751446, -13.8863738424124]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"2f4d6462-4f80-4e26-9f62-62ffb569d69e\", \"event_date\": \"2019-10-04T00:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 2, \"rooms_eligible\": 2, \"structure_code\": \"c269fd42-d38b-4dd2-a9c2-e879d0a8af3b\", \"structure_name\": \"c269fd42-d38b-4dd2-a9c2-e879d0a8af3b\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Complete\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "8ab6b688-d940-46fb-a65c-4b8ab3990774",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "890c2354-9a09-4a43-8985-cf90a18d1c63",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"8ab6b688-d940-46fb-a65c-4b8ab3990774\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.096245, -13.8869017]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"890c2354-9a09-4a43-8985-cf90a18d1c63\", \"event_date\": \"2019-10-04T00:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 1, \"rooms_eligible\": 1, \"structure_code\": \"8ab6b688-d940-46fb-a65c-4b8ab3990774\", \"structure_name\": \"8ab6b688-d940-46fb-a65c-4b8ab3990774\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Complete\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "1676a04c-9415-4932-bc93-7772af15a46f",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "70a717eb-8fba-4af1-909a-6aef663b4478",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"1676a04c-9415-4932-bc93-7772af15a46f\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.0961933, -13.8868917]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"70a717eb-8fba-4af1-909a-6aef663b4478\", \"event_date\": \"2019-10-04T00:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 1, \"rooms_eligible\": 1, \"structure_code\": \"1676a04c-9415-4932-bc93-7772af15a46f\", \"structure_name\": \"1676a04c-9415-4932-bc93-7772af15a46f\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Complete\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "91c10b65-60e6-47ef-b837-78c41ead9077",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "d7a6165d-db61-43c6-9b95-d927d97d3d3f",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"91c10b65-60e6-47ef-b837-78c41ead9077\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.0956232, -13.8842885]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"d7a6165d-db61-43c6-9b95-d927d97d3d3f\", \"event_date\": \"2019-10-04T00:00:00\", \"eligibility\": \"notEligible\", \"rooms_sprayed\": 0, \"rooms_eligible\": 0, \"structure_code\": \"91c10b65-60e6-47ef-b837-78c41ead9077\", \"structure_name\": \"91c10b65-60e6-47ef-b837-78c41ead9077\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Not Eligible\", \"structure_sprayed\": \"No\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "c86c3d93-3923-4208-b1f9-0d63d9d564c3",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "196ff484-fb08-493d-b355-469c84860846",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"c86c3d93-3923-4208-b1f9-0d63d9d564c3\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.096139, -13.8858485]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"196ff484-fb08-493d-b355-469c84860846\", \"event_date\": \"2019-10-04T00:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 2, \"rooms_eligible\": 3, \"structure_code\": \"c86c3d93-3923-4208-b1f9-0d63d9d564c3\", \"structure_name\": \"c86c3d93-3923-4208-b1f9-0d63d9d564c3\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Partially Sprayed\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "262c8cba-0b16-48f7-ae10-fef67abc91fd",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "aaa6fa2f-5344-4010-bbd4-c382fe6e7d2a",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"262c8cba-0b16-48f7-ae10-fef67abc91fd\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.0960679636323, -13.8869159046714]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"aaa6fa2f-5344-4010-bbd4-c382fe6e7d2a\", \"event_date\": \"2019-10-04T00:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 2, \"rooms_eligible\": 2, \"structure_code\": \"262c8cba-0b16-48f7-ae10-fef67abc91fd\", \"structure_name\": \"262c8cba-0b16-48f7-ae10-fef67abc91fd\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Complete\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "7c9c3d8c-4d5f-40c3-8ce5-fc13d7f4300f",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "039a0255-9db2-4e91-a0e4-3db3d0ca0ae1",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"7c9c3d8c-4d5f-40c3-8ce5-fc13d7f4300f\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.0960117, -13.8856467]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"039a0255-9db2-4e91-a0e4-3db3d0ca0ae1\", \"event_date\": \"2019-10-04T00:00:00\", \"eligibility\": \"notEligible\", \"rooms_sprayed\": 0, \"rooms_eligible\": 0, \"structure_code\": \"7c9c3d8c-4d5f-40c3-8ce5-fc13d7f4300f\", \"structure_name\": \"7c9c3d8c-4d5f-40c3-8ce5-fc13d7f4300f\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Not Eligible\", \"structure_sprayed\": \"No\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "e7e489d4-502c-41cb-b393-3804b2b3f099",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "31948966-e1f0-4120-b606-dc915b5341e7",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"e7e489d4-502c-41cb-b393-3804b2b3f099\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.0960236, -13.8854833]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"31948966-e1f0-4120-b606-dc915b5341e7\", \"event_date\": \"2019-10-04T00:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 1, \"rooms_eligible\": 1, \"structure_code\": \"e7e489d4-502c-41cb-b393-3804b2b3f099\", \"structure_name\": \"e7e489d4-502c-41cb-b393-3804b2b3f099\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Complete\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "fedd383d-fd8c-4674-b80d-4e473079af7d",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "35c3ca85-8712-4807-bfca-7e8aaafe3863",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"fedd383d-fd8c-4674-b80d-4e473079af7d\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.0957641, -13.8836401]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"35c3ca85-8712-4807-bfca-7e8aaafe3863\", \"event_date\": \"2019-10-04T00:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 2, \"rooms_eligible\": 2, \"structure_code\": \"fedd383d-fd8c-4674-b80d-4e473079af7d\", \"structure_name\": \"fedd383d-fd8c-4674-b80d-4e473079af7d\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Complete\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "c5071ccc-e384-495b-b379-1bf4ec162b66",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "8b9ca4b5-d888-487b-8f81-dd9700f3193a",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"c5071ccc-e384-495b-b379-1bf4ec162b66\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.096455, -13.8869833]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"8b9ca4b5-d888-487b-8f81-dd9700f3193a\", \"event_date\": \"2019-10-04T00:00:00\", \"eligibility\": \"notEligible\", \"rooms_sprayed\": 0, \"rooms_eligible\": 0, \"structure_code\": \"c5071ccc-e384-495b-b379-1bf4ec162b66\", \"structure_name\": \"c5071ccc-e384-495b-b379-1bf4ec162b66\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Not Eligible\", \"structure_sprayed\": \"No\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "379df41f-c563-4bf3-a60d-a733fa0b9a35",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "ea6394c9-f41b-41a4-809e-7faf5e5e9976",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"379df41f-c563-4bf3-a60d-a733fa0b9a35\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.0960501, -13.8858126]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"ea6394c9-f41b-41a4-809e-7faf5e5e9976\", \"event_date\": \"2019-10-04T00:00:00\", \"eligibility\": \"notEligible\", \"rooms_sprayed\": 0, \"rooms_eligible\": 0, \"structure_code\": \"379df41f-c563-4bf3-a60d-a733fa0b9a35\", \"structure_name\": \"379df41f-c563-4bf3-a60d-a733fa0b9a35\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Not Eligible\", \"structure_sprayed\": \"No\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "3dae9ec7-a32d-4aca-8b61-f692840937c2",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "685d1594-019d-4788-ba8f-30ededc43943",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"3dae9ec7-a32d-4aca-8b61-f692840937c2\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.0964528666387, -13.8871057706026]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"685d1594-019d-4788-ba8f-30ededc43943\", \"event_date\": \"2019-10-04T00:00:00\", \"eligibility\": \"notEligible\", \"rooms_sprayed\": 0, \"rooms_eligible\": 0, \"structure_code\": \"3dae9ec7-a32d-4aca-8b61-f692840937c2\", \"structure_name\": \"3dae9ec7-a32d-4aca-8b61-f692840937c2\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Not Eligible\", \"structure_sprayed\": \"No\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "7295efbc-4fa0-48cb-bffe-9c7777b0aca2",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "e3415b89-938b-459c-927b-18eb2decb882",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"7295efbc-4fa0-48cb-bffe-9c7777b0aca2\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.0958433, -13.88649]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"e3415b89-938b-459c-927b-18eb2decb882\", \"event_date\": \"2019-10-04T00:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 2, \"rooms_eligible\": 2, \"structure_code\": \"7295efbc-4fa0-48cb-bffe-9c7777b0aca2\", \"structure_name\": \"7295efbc-4fa0-48cb-bffe-9c7777b0aca2\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Complete\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "1d346986-9f0c-48f6-85e1-d87f5c07aff6",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "46afc8d5-7ae7-44d3-9d20-f5534d3cc4c5",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"1d346986-9f0c-48f6-85e1-d87f5c07aff6\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.09641, -13.88695]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"46afc8d5-7ae7-44d3-9d20-f5534d3cc4c5\", \"event_date\": \"2019-10-04T00:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 1, \"rooms_eligible\": 1, \"structure_code\": \"1d346986-9f0c-48f6-85e1-d87f5c07aff6\", \"structure_name\": \"1d346986-9f0c-48f6-85e1-d87f5c07aff6\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Complete\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "b886401f-2081-4f11-ab8a-2a98ac4a2257",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": 0,
+        "plan_id": 0,
+        "geojson": "{\"id\": \"b886401f-2081-4f11-ab8a-2a98ac4a2257\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Polygon\", \"coordinates\": [[[32.1177326997044, -13.8412091001198, 0], [32.1177941998425, -13.8411834001937, 0], [32.1178170003543, -13.8412348000459, 0], [32.1177555002162, -13.8412604999721, 0], [32.1177326997044, -13.8412091001198, 0]]]}, \"properties\": {\"plan_id\": null, \"task_id\": null, \"event_date\": null, \"eligibility\": \"Eligible\", \"rooms_sprayed\": 0, \"rooms_eligible\": 0, \"structure_code\": \"b886401f-2081-4f11-ab8a-2a98ac4a2257\", \"structure_name\": \"627746111\", \"structure_type\": \"b886401f-2081-4f11-ab8a-2a98ac4a2257\", \"business_status\": \"Not Visited\", \"structure_sprayed\": \"No\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "835ef9a4-b9a2-44d5-acc5-4b16a72cc0c0",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": 0,
+        "plan_id": 0,
+        "geojson": "{\"id\": \"835ef9a4-b9a2-44d5-acc5-4b16a72cc0c0\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Polygon\", \"coordinates\": [[[32.1166451000914, -13.8386476996316, 0], [32.1166779999897, -13.8386743996038, 0], [32.1166205000361, -13.838741099622, 0], [32.1165876001377, -13.8387143996498, 0], [32.1166451000914, -13.8386476996316, 0]]]}, \"properties\": {\"plan_id\": null, \"task_id\": null, \"event_date\": null, \"eligibility\": \"Eligible\", \"rooms_sprayed\": 0, \"rooms_eligible\": 0, \"structure_code\": \"835ef9a4-b9a2-44d5-acc5-4b16a72cc0c0\", \"structure_name\": \"627746097\", \"structure_type\": \"835ef9a4-b9a2-44d5-acc5-4b16a72cc0c0\", \"business_status\": \"Not Visited\", \"structure_sprayed\": \"No\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "078ebe91-1e49-478d-99dc-9be153cd58ac",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": 0,
+        "plan_id": 0,
+        "geojson": "{\"id\": \"078ebe91-1e49-478d-99dc-9be153cd58ac\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Polygon\", \"coordinates\": [[[32.116875099906, -13.8385318004022, 0], [32.1169105997444, -13.8385525999225, 0], [32.1168800003118, -13.838601800033, 0], [32.116844499574, -13.8385809996134, 0], [32.116875099906, -13.8385318004022, 0]]]}, \"properties\": {\"plan_id\": null, \"task_id\": null, \"event_date\": null, \"eligibility\": \"Eligible\", \"rooms_sprayed\": 0, \"rooms_eligible\": 0, \"structure_code\": \"078ebe91-1e49-478d-99dc-9be153cd58ac\", \"structure_name\": \"627746099\", \"structure_type\": \"078ebe91-1e49-478d-99dc-9be153cd58ac\", \"business_status\": \"Not Visited\", \"structure_sprayed\": \"No\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "803a2149-fa07-4baa-a2a4-09aba54676df",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": 0,
+        "plan_id": 0,
+        "geojson": "{\"id\": \"803a2149-fa07-4baa-a2a4-09aba54676df\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Polygon\", \"coordinates\": [[[32.1176482003042, -13.8404141003304, 0], [32.1176908002902, -13.8404633004409, 0], [32.1176612998292, -13.840487299749, 0], [32.1176186998431, -13.8404382003626, 0], [32.1176482003042, -13.8404141003304, 0]]]}, \"properties\": {\"plan_id\": null, \"task_id\": null, \"event_date\": null, \"eligibility\": \"Eligible\", \"rooms_sprayed\": 0, \"rooms_eligible\": 0, \"structure_code\": \"803a2149-fa07-4baa-a2a4-09aba54676df\", \"structure_name\": \"627746110\", \"structure_type\": \"803a2149-fa07-4baa-a2a4-09aba54676df\", \"business_status\": \"Not Visited\", \"structure_sprayed\": \"No\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "8a0ae292-38b4-4e7e-9eae-50824f480548",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": 0,
+        "plan_id": 0,
+        "geojson": "{\"id\": \"8a0ae292-38b4-4e7e-9eae-50824f480548\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Polygon\", \"coordinates\": [[[32.1174876002726, -13.8373343998626, 0], [32.1175066002494, -13.8373721003421, 0], [32.1174683997469, -13.8373903997471, 0], [32.1174492999453, -13.8373527001669, 0], [32.1174876002726, -13.8373343998626, 0]]]}, \"properties\": {\"plan_id\": null, \"task_id\": null, \"event_date\": null, \"eligibility\": \"Eligible\", \"rooms_sprayed\": 0, \"rooms_eligible\": 0, \"structure_code\": \"8a0ae292-38b4-4e7e-9eae-50824f480548\", \"structure_name\": \"627749396\", \"structure_type\": \"8a0ae292-38b4-4e7e-9eae-50824f480548\", \"business_status\": \"Not Visited\", \"structure_sprayed\": \"No\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "6c76ae3c-91ca-4da6-8555-a38eb0dbceea",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": 0,
+        "plan_id": 0,
+        "geojson": "{\"id\": \"6c76ae3c-91ca-4da6-8555-a38eb0dbceea\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Polygon\", \"coordinates\": [[[32.1168632999014, -13.8379880999708, 0], [32.1168880996062, -13.8380076997955, 0], [32.1168505996755, -13.8380525004225, 0], [32.1168257999707, -13.8380330004226, 0], [32.1168632999014, -13.8379880999708, 0]]]}, \"properties\": {\"plan_id\": null, \"task_id\": null, \"event_date\": null, \"eligibility\": \"Eligible\", \"rooms_sprayed\": 0, \"rooms_eligible\": 0, \"structure_code\": \"6c76ae3c-91ca-4da6-8555-a38eb0dbceea\", \"structure_name\": \"627749394\", \"structure_type\": \"6c76ae3c-91ca-4da6-8555-a38eb0dbceea\", \"business_status\": \"Not Visited\", \"structure_sprayed\": \"No\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "f997a258-ec61-4d9d-a030-84b8071fff4d",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": 0,
+        "plan_id": 0,
+        "geojson": "{\"id\": \"f997a258-ec61-4d9d-a030-84b8071fff4d\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Polygon\", \"coordinates\": [[[32.1172722998768, -13.8377458999533, 0], [32.1173038004301, -13.8377616003175, 0], [32.1172743997938, -13.837817600202, 0], [32.117242800315, -13.8378019996625, 0], [32.1172722998768, -13.8377458999533, 0]]]}, \"properties\": {\"plan_id\": null, \"task_id\": null, \"event_date\": null, \"eligibility\": \"Eligible\", \"rooms_sprayed\": 0, \"rooms_eligible\": 0, \"structure_code\": \"f997a258-ec61-4d9d-a030-84b8071fff4d\", \"structure_name\": \"627749395\", \"structure_type\": \"f997a258-ec61-4d9d-a030-84b8071fff4d\", \"business_status\": \"Not Visited\", \"structure_sprayed\": \"No\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "3e4fd81b-3a13-446b-ae52-1ccab255bafd",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": 0,
+        "plan_id": 0,
+        "geojson": "{\"id\": \"3e4fd81b-3a13-446b-ae52-1ccab255bafd\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Polygon\", \"coordinates\": [[[32.1157076998505, -13.8385799995673, 0], [32.1157553998918, -13.8386007001621, 0], [32.1157387003807, -13.8386371002219, 0], [32.1156908996154, -13.8386163996271, 0], [32.1157076998505, -13.8385799995673, 0]]]}, \"properties\": {\"plan_id\": null, \"task_id\": null, \"event_date\": null, \"eligibility\": \"Eligible\", \"rooms_sprayed\": 0, \"rooms_eligible\": 0, \"structure_code\": \"3e4fd81b-3a13-446b-ae52-1ccab255bafd\", \"structure_name\": \"627746083\", \"structure_type\": \"3e4fd81b-3a13-446b-ae52-1ccab255bafd\", \"business_status\": \"Not Visited\", \"structure_sprayed\": \"No\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "9a2387c0-c3ac-477f-b713-2fe30667f81f",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": 0,
+        "plan_id": 0,
+        "geojson": "{\"id\": \"9a2387c0-c3ac-477f-b713-2fe30667f81f\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Polygon\", \"coordinates\": [[[32.1167209003493, -13.8390539998422, 0], [32.11675840028, -13.8390780998744, 0], [32.1167149998974, -13.8391417997542, 0], [32.1166774999667, -13.8391178004461, 0], [32.1167209003493, -13.8390539998422, 0]]]}, \"properties\": {\"plan_id\": null, \"task_id\": null, \"event_date\": null, \"eligibility\": \"Eligible\", \"rooms_sprayed\": 0, \"rooms_eligible\": 0, \"structure_code\": \"9a2387c0-c3ac-477f-b713-2fe30667f81f\", \"structure_name\": \"627746085\", \"structure_type\": \"9a2387c0-c3ac-477f-b713-2fe30667f81f\", \"business_status\": \"Not Visited\", \"structure_sprayed\": \"No\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "18552457-8f03-48ea-a164-07013ab86443",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": 0,
+        "plan_id": 0,
+        "geojson": "{\"id\": \"18552457-8f03-48ea-a164-07013ab86443\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Polygon\", \"coordinates\": [[[32.1169073001319, -13.838168500376, 0], [32.1169422001225, -13.8381899995688, 0], [32.1169017998782, -13.8382518000805, 0], [32.1168668998876, -13.8382302999883, 0], [32.1169073001319, -13.838168500376, 0]]]}, \"properties\": {\"plan_id\": null, \"task_id\": null, \"event_date\": null, \"eligibility\": \"Eligible\", \"rooms_sprayed\": 0, \"rooms_eligible\": 0, \"structure_code\": \"18552457-8f03-48ea-a164-07013ab86443\", \"structure_name\": \"627746105\", \"structure_type\": \"18552457-8f03-48ea-a164-07013ab86443\", \"business_status\": \"Not Visited\", \"structure_sprayed\": \"No\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "4e679170-5356-49ca-b926-18290b5f4909",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": 0,
+        "plan_id": 0,
+        "geojson": "{\"id\": \"4e679170-5356-49ca-b926-18290b5f4909\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Polygon\", \"coordinates\": [[[32.1170809996884, -13.8413144997643, 0], [32.1171338996098, -13.8413230001563, 0], [32.1171229998266, -13.8413876002575, 0], [32.1170700000805, -13.8413791996903, 0], [32.1170809996884, -13.8413144997643, 0]]]}, \"properties\": {\"plan_id\": null, \"task_id\": null, \"event_date\": null, \"eligibility\": \"Eligible\", \"rooms_sprayed\": 0, \"rooms_eligible\": 0, \"structure_code\": \"4e679170-5356-49ca-b926-18290b5f4909\", \"structure_name\": \"627746113\", \"structure_type\": \"4e679170-5356-49ca-b926-18290b5f4909\", \"business_status\": \"Not Visited\", \"structure_sprayed\": \"No\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "ac25554e-8687-47c8-9e17-977bdecc4a23",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": 0,
+        "plan_id": 0,
+        "geojson": "{\"id\": \"ac25554e-8687-47c8-9e17-977bdecc4a23\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Polygon\", \"coordinates\": [[[32.1173554997566, -13.8374873997237, 0], [32.1173822995535, -13.8375346995667, 0], [32.1173493996551, -13.8375522003737, 0], [32.1173225998581, -13.8375050003555, 0], [32.1173554997566, -13.8374873997237, 0]]]}, \"properties\": {\"plan_id\": null, \"task_id\": null, \"event_date\": null, \"eligibility\": \"Eligible\", \"rooms_sprayed\": 0, \"rooms_eligible\": 0, \"structure_code\": \"ac25554e-8687-47c8-9e17-977bdecc4a23\", \"structure_name\": \"627749397\", \"structure_type\": \"ac25554e-8687-47c8-9e17-977bdecc4a23\", \"business_status\": \"Not Visited\", \"structure_sprayed\": \"No\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "c0ec8813-b833-440a-88fb-87c6f4c2091b",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": 0,
+        "plan_id": 0,
+        "geojson": "{\"id\": \"c0ec8813-b833-440a-88fb-87c6f4c2091b\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Polygon\", \"coordinates\": [[[32.1172198001537, -13.838146400436, 0], [32.1172566004118, -13.8381677998041, 0], [32.1172183999093, -13.8382297999652, 0], [32.1171814998264, -13.8382082998731, 0], [32.1172198001537, -13.838146400436, 0]]]}, \"properties\": {\"plan_id\": null, \"task_id\": null, \"event_date\": null, \"eligibility\": \"Eligible\", \"rooms_sprayed\": 0, \"rooms_eligible\": 0, \"structure_code\": \"c0ec8813-b833-440a-88fb-87c6f4c2091b\", \"structure_name\": \"627746102\", \"structure_type\": \"c0ec8813-b833-440a-88fb-87c6f4c2091b\", \"business_status\": \"Not Visited\", \"structure_sprayed\": \"No\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "d902aea5-213d-42f3-8512-07285b869987",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": 0,
+        "plan_id": 0,
+        "geojson": "{\"id\": \"d902aea5-213d-42f3-8512-07285b869987\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Polygon\", \"coordinates\": [[[32.1164352001244, -13.8389081001287, 0], [32.1164753998199, -13.8389394001331, 0], [32.1164331002075, -13.8389907999854, 0], [32.1163927997879, -13.8389595998057, 0], [32.1164352001244, -13.8389081001287, 0]]]}, \"properties\": {\"plan_id\": null, \"task_id\": null, \"event_date\": null, \"eligibility\": \"Eligible\", \"rooms_sprayed\": 0, \"rooms_eligible\": 0, \"structure_code\": \"d902aea5-213d-42f3-8512-07285b869987\", \"structure_name\": \"627746088\", \"structure_type\": \"d902aea5-213d-42f3-8512-07285b869987\", \"business_status\": \"Not Visited\", \"structure_sprayed\": \"No\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "338c4817-f1ca-4fab-9ae9-492b9ba20a05",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": 0,
+        "plan_id": 0,
+        "geojson": "{\"id\": \"338c4817-f1ca-4fab-9ae9-492b9ba20a05\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Polygon\", \"coordinates\": [[[32.116240799973, -13.8387993999723, 0], [32.1162849998529, -13.838828000212, 0], [32.1162484999684, -13.8388811996076, 0], [32.1162042002637, -13.8388526002672, 0], [32.116240799973, -13.8387993999723, 0]]]}, \"properties\": {\"plan_id\": null, \"task_id\": null, \"event_date\": null, \"eligibility\": \"Eligible\", \"rooms_sprayed\": 0, \"rooms_eligible\": 0, \"structure_code\": \"338c4817-f1ca-4fab-9ae9-492b9ba20a05\", \"structure_name\": \"627746090\", \"structure_type\": \"338c4817-f1ca-4fab-9ae9-492b9ba20a05\", \"business_status\": \"Not Visited\", \"structure_sprayed\": \"No\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "7c9e0f62-ed13-49b4-b1b1-c8673ec50856",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": 0,
+        "plan_id": 0,
+        "geojson": "{\"id\": \"7c9e0f62-ed13-49b4-b1b1-c8673ec50856\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Polygon\", \"coordinates\": [[[32.1169736997765, -13.8401849000131, 0], [32.1170146000438, -13.8402148995979, 0], [32.1169706996381, -13.8402712996807, 0], [32.1169298002701, -13.8402413999206, 0], [32.1169736997765, -13.8401849000131, 0]]]}, \"properties\": {\"plan_id\": null, \"task_id\": null, \"event_date\": null, \"eligibility\": \"Eligible\", \"rooms_sprayed\": 0, \"rooms_eligible\": 0, \"structure_code\": \"7c9e0f62-ed13-49b4-b1b1-c8673ec50856\", \"structure_name\": \"627746106\", \"structure_type\": \"7c9e0f62-ed13-49b4-b1b1-c8673ec50856\", \"business_status\": \"Not Visited\", \"structure_sprayed\": \"No\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "355e8caf-9817-4f89-80ea-99ffa559593b",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": 0,
+        "plan_id": 0,
+        "geojson": "{\"id\": \"355e8caf-9817-4f89-80ea-99ffa559593b\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Polygon\", \"coordinates\": [[[32.1174229003466, -13.8403972002705, 0], [32.1174908000604, -13.8403754996295, 0], [32.1175068997237, -13.8404230000214, 0], [32.1174390000099, -13.8404446997631, 0], [32.1174229003466, -13.8403972002705, 0]]]}, \"properties\": {\"plan_id\": null, \"task_id\": null, \"event_date\": null, \"eligibility\": \"Eligible\", \"rooms_sprayed\": 0, \"rooms_eligible\": 0, \"structure_code\": \"355e8caf-9817-4f89-80ea-99ffa559593b\", \"structure_name\": \"627746109\", \"structure_type\": \"355e8caf-9817-4f89-80ea-99ffa559593b\", \"business_status\": \"Not Visited\", \"structure_sprayed\": \"No\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "6a470c37-c78a-450f-8c40-433e30af39e5",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": 0,
+        "plan_id": 0,
+        "geojson": "{\"id\": \"6a470c37-c78a-450f-8c40-433e30af39e5\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.0964415, -13.8869509]}, \"properties\": {\"plan_id\": null, \"task_id\": null, \"event_date\": null, \"eligibility\": \"Eligible\", \"rooms_sprayed\": 0, \"rooms_eligible\": 0, \"structure_code\": \"6a470c37-c78a-450f-8c40-433e30af39e5\", \"structure_name\": \"6a470c37-c78a-450f-8c40-433e30af39e5\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Not Visited\", \"structure_sprayed\": \"No\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "33c439b0-2370-4989-b5ab-02401b9b5bfa",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": 0,
+        "plan_id": 0,
+        "geojson": "{\"id\": \"33c439b0-2370-4989-b5ab-02401b9b5bfa\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.0962598054465, -13.8869452073514]}, \"properties\": {\"plan_id\": null, \"task_id\": null, \"event_date\": null, \"eligibility\": \"Eligible\", \"rooms_sprayed\": 0, \"rooms_eligible\": 0, \"structure_code\": \"33c439b0-2370-4989-b5ab-02401b9b5bfa\", \"structure_name\": \"33c439b0-2370-4989-b5ab-02401b9b5bfa\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Not Visited\", \"structure_sprayed\": \"No\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "a19e950e-08b1-4ada-a382-734de34558f7",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": 0,
+        "plan_id": 0,
+        "geojson": "{\"id\": \"a19e950e-08b1-4ada-a382-734de34558f7\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.0964132663581, -13.8870954785316]}, \"properties\": {\"plan_id\": null, \"task_id\": null, \"event_date\": null, \"eligibility\": \"Eligible\", \"rooms_sprayed\": 0, \"rooms_eligible\": 0, \"structure_code\": \"a19e950e-08b1-4ada-a382-734de34558f7\", \"structure_name\": \"a19e950e-08b1-4ada-a382-734de34558f7\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Not Visited\", \"structure_sprayed\": \"No\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "2d8031e8-a5e3-4a2d-a471-e02783d96069",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": 0,
+        "plan_id": 0,
+        "geojson": "{\"id\": \"2d8031e8-a5e3-4a2d-a471-e02783d96069\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.1182531311531, -13.8421229747921]}, \"properties\": {\"plan_id\": null, \"task_id\": null, \"event_date\": null, \"eligibility\": \"Eligible\", \"rooms_sprayed\": 0, \"rooms_eligible\": 0, \"structure_code\": \"2d8031e8-a5e3-4a2d-a471-e02783d96069\", \"structure_name\": \"2d8031e8-a5e3-4a2d-a471-e02783d96069\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Not Visited\", \"structure_sprayed\": \"No\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "27548fb3-3fe5-46e1-be72-6db0569dac6a",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "77d7a331-899a-407d-9a7e-1c9fdc4ea00e",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"27548fb3-3fe5-46e1-be72-6db0569dac6a\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Polygon\", \"coordinates\": [[[32.1188485002581, -13.8425541999163, 0], [32.1188893996261, -13.8425886997087, 0], [32.1188443004242, -13.8426391004141, 0], [32.1188034001568, -13.8426045997224, 0], [32.1188485002581, -13.8425541999163, 0]]]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"77d7a331-899a-407d-9a7e-1c9fdc4ea00e\", \"event_date\": \"2019-10-05T01:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 0, \"rooms_eligible\": 0, \"structure_code\": \"27548fb3-3fe5-46e1-be72-6db0569dac6a\", \"structure_name\": \"627746123\", \"structure_type\": \"27548fb3-3fe5-46e1-be72-6db0569dac6a\", \"business_status\": \"Not Sprayed\", \"structure_sprayed\": \"no\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "f85930a6-058c-4158-b3e9-a3b102b993c3",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "cdd67ec9-d571-4b11-9336-b273c18cdb3b",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"f85930a6-058c-4158-b3e9-a3b102b993c3\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Polygon\", \"coordinates\": [[[32.1180445000537, -13.8429455003345, 0], [32.1180887997584, -13.8429357004222, 0], [32.1181009001365, -13.8429872999239, 0], [32.1180566004318, -13.8429970000115, 0], [32.1180445000537, -13.8429455003345, 0]]]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"cdd67ec9-d571-4b11-9336-b273c18cdb3b\", \"event_date\": \"2019-10-05T01:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 0, \"rooms_eligible\": 0, \"structure_code\": \"f85930a6-058c-4158-b3e9-a3b102b993c3\", \"structure_name\": \"627746117\", \"structure_type\": \"f85930a6-058c-4158-b3e9-a3b102b993c3\", \"business_status\": \"Not Sprayed\", \"structure_sprayed\": \"no\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "47dea607-1eef-44f5-99e5-1583bcfb7ec0",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "8a340911-f50b-476a-86c3-f4fd884cec49",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"47dea607-1eef-44f5-99e5-1583bcfb7ec0\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Polygon\", \"coordinates\": [[[32.1173177003516, -13.8413288997089, 0], [32.1173707000978, -13.8413636998748, 0], [32.1173399001163, -13.8414079995795, 0], [32.1172867996461, -13.8413730995888, 0], [32.1173177003516, -13.8413288997089, 0]]]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"8a340911-f50b-476a-86c3-f4fd884cec49\", \"event_date\": \"2019-10-05T01:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 3, \"rooms_eligible\": 3, \"structure_code\": \"47dea607-1eef-44f5-99e5-1583bcfb7ec0\", \"structure_name\": \"627746112\", \"structure_type\": \"47dea607-1eef-44f5-99e5-1583bcfb7ec0\", \"business_status\": \"Complete\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "d7c26f2c-0c0d-4d37-8a96-c27dbfc5b444",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "3b574315-d892-42e0-b11a-c5f5c0ab9636",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"d7c26f2c-0c0d-4d37-8a96-c27dbfc5b444\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Polygon\", \"coordinates\": [[[32.1190704997039, -13.8436928999074, 0], [32.1191000999897, -13.8436322999906, 0], [32.1191524000633, -13.8436564000228, 0], [32.1191227997774, -13.8437169999395, 0], [32.1190704997039, -13.8436928999074, 0]]]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"3b574315-d892-42e0-b11a-c5f5c0ab9636\", \"event_date\": \"2019-10-05T01:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 0, \"rooms_eligible\": 0, \"structure_code\": \"d7c26f2c-0c0d-4d37-8a96-c27dbfc5b444\", \"structure_name\": \"627746133\", \"structure_type\": \"d7c26f2c-0c0d-4d37-8a96-c27dbfc5b444\", \"business_status\": \"Not Sprayed\", \"structure_sprayed\": \"no\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "cf6ec8fb-ecfd-478f-b476-354888f17112",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "6effb6fa-749f-48cd-8b6d-0be5f459c28f",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"cf6ec8fb-ecfd-478f-b476-354888f17112\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Polygon\", \"coordinates\": [[[32.1193587998688, -13.8435276000187, 0], [32.1194084001776, -13.8435548998387, 0], [32.1193771001731, -13.8436086001567, 0], [32.1193274998643, -13.8435811996126, 0], [32.1193587998688, -13.8435276000187, 0]]]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"6effb6fa-749f-48cd-8b6d-0be5f459c28f\", \"event_date\": \"2019-10-05T01:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 0, \"rooms_eligible\": 0, \"structure_code\": \"cf6ec8fb-ecfd-478f-b476-354888f17112\", \"structure_name\": \"627746130\", \"structure_type\": \"cf6ec8fb-ecfd-478f-b476-354888f17112\", \"business_status\": \"Not Sprayed\", \"structure_sprayed\": \"no\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "194872b6-09b6-48de-aeb4-4d48c3d0c1da",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "718bfc03-37d6-4c28-8010-58522786c2be",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"194872b6-09b6-48de-aeb4-4d48c3d0c1da\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Polygon\", \"coordinates\": [[[32.1191965001184, -13.8430861003432, 0], [32.1192360999661, -13.843104999596, 0], [32.1192077002752, -13.8431612000293, 0], [32.1191681004275, -13.8431422998772, 0], [32.1191965001184, -13.8430861003432, 0]]]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"718bfc03-37d6-4c28-8010-58522786c2be\", \"event_date\": \"2019-10-05T01:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 0, \"rooms_eligible\": 0, \"structure_code\": \"194872b6-09b6-48de-aeb4-4d48c3d0c1da\", \"structure_name\": \"627746126\", \"structure_type\": \"194872b6-09b6-48de-aeb4-4d48c3d0c1da\", \"business_status\": \"Not Sprayed\", \"structure_sprayed\": \"no\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "1d2e2e1a-a6df-45eb-96e4-3c824ad39e6c",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "72b0c7db-10f2-4cb1-a314-3e12e20b091d",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"1d2e2e1a-a6df-45eb-96e4-3c824ad39e6c\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Polygon\", \"coordinates\": [[[32.1181893997211, -13.8424844997598, 0], [32.1182164000668, -13.84245069964, 0], [32.1182612996193, -13.8424845995846, 0], [32.1182343001728, -13.8425183997043, 0], [32.1181893997211, -13.8424844997598, 0]]]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"72b0c7db-10f2-4cb1-a314-3e12e20b091d\", \"event_date\": \"2019-10-05T01:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 2, \"rooms_eligible\": 3, \"structure_code\": \"1d2e2e1a-a6df-45eb-96e4-3c824ad39e6c\", \"structure_name\": \"627746118\", \"structure_type\": \"1d2e2e1a-a6df-45eb-96e4-3c824ad39e6c\", \"business_status\": \"Partially Sprayed\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "a53e47dc-02f2-4828-9d0e-06e0144977f4",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "78a5578e-23be-4403-861e-34b1c62bb947",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"a53e47dc-02f2-4828-9d0e-06e0144977f4\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Polygon\", \"coordinates\": [[[32.1191697003214, -13.8434039000699, 0], [32.1192186998832, -13.8434200995579, 0], [32.1191975001645, -13.8434802003509, 0], [32.1191484997036, -13.8434639001388, 0], [32.1191697003214, -13.8434039000699, 0]]]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"78a5578e-23be-4403-861e-34b1c62bb947\", \"event_date\": \"2019-10-05T01:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 0, \"rooms_eligible\": 0, \"structure_code\": \"a53e47dc-02f2-4828-9d0e-06e0144977f4\", \"structure_name\": \"627746131\", \"structure_type\": \"a53e47dc-02f2-4828-9d0e-06e0144977f4\", \"business_status\": \"Not Sprayed\", \"structure_sprayed\": \"no\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "93c18a9b-7bae-41eb-b381-af73430f5f60",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "0ae8f7e2-8996-4c8c-981d-3b29372ec13e",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"93c18a9b-7bae-41eb-b381-af73430f5f60\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Polygon\", \"coordinates\": [[[32.11899740011, -13.8424994995522, 0], [32.1190438995563, -13.8424559004194, 0], [32.1190814003864, -13.8424936998243, 0], [32.1190349000407, -13.8425372998565, 0], [32.11899740011, -13.8424994995522, 0]]]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"0ae8f7e2-8996-4c8c-981d-3b29372ec13e\", \"event_date\": \"2019-10-05T01:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 0, \"rooms_eligible\": 0, \"structure_code\": \"93c18a9b-7bae-41eb-b381-af73430f5f60\", \"structure_name\": \"627746120\", \"structure_type\": \"93c18a9b-7bae-41eb-b381-af73430f5f60\", \"business_status\": \"Not Sprayed\", \"structure_sprayed\": \"no\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "3ee82ecb-5e63-47c5-bbef-be33d1c29f58",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "f54ccf3e-3570-4523-9335-35ff4ec8765e",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"3ee82ecb-5e63-47c5-bbef-be33d1c29f58\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Polygon\", \"coordinates\": [[[32.1172954996876, -13.8415182996298, 0], [32.1173596995905, -13.8415503002062, 0], [32.1173354997336, -13.8415959003305, 0], [32.1172713996554, -13.8415638997541, 0], [32.1172954996876, -13.8415182996298, 0]]]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"f54ccf3e-3570-4523-9335-35ff4ec8765e\", \"event_date\": \"2019-10-05T01:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 0, \"rooms_eligible\": 0, \"structure_code\": \"3ee82ecb-5e63-47c5-bbef-be33d1c29f58\", \"structure_name\": \"627746114\", \"structure_type\": \"3ee82ecb-5e63-47c5-bbef-be33d1c29f58\", \"business_status\": \"Not Sprayed\", \"structure_sprayed\": \"no\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "5b80f3a7-aa82-4f33-ad93-949802b9d4c5",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "1d3b790b-4500-40e0-8e82-3277f01b990b",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"5b80f3a7-aa82-4f33-ad93-949802b9d4c5\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Polygon\", \"coordinates\": [[[32.118128399606, -13.8425685000362, 0], [32.1181606996566, -13.8425227002624, 0], [32.1181989001591, -13.8425479999902, 0], [32.1181666001086, -13.8425938995887, 0], [32.118128399606, -13.8425685000362, 0]]]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"1d3b790b-4500-40e0-8e82-3277f01b990b\", \"event_date\": \"2019-10-05T01:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 0, \"rooms_eligible\": 0, \"structure_code\": \"5b80f3a7-aa82-4f33-ad93-949802b9d4c5\", \"structure_name\": \"627746119\", \"structure_type\": \"5b80f3a7-aa82-4f33-ad93-949802b9d4c5\", \"business_status\": \"Not Sprayed\", \"structure_sprayed\": \"no\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "22e58e3c-39f8-44d7-9b36-bd2111638d9b",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "49fe7574-d3ef-42f8-9a29-e4353926c21e",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"22e58e3c-39f8-44d7-9b36-bd2111638d9b\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Polygon\", \"coordinates\": [[[32.1186058002176, -13.8434156002497, 0], [32.1186274001345, -13.843357999572, 0], [32.1186789996362, -13.8433762000515, 0], [32.1186573997193, -13.8434337998299, 0], [32.1186058002176, -13.8434156002497, 0]]]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"49fe7574-d3ef-42f8-9a29-e4353926c21e\", \"event_date\": \"2019-10-05T01:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 0, \"rooms_eligible\": 0, \"structure_code\": \"22e58e3c-39f8-44d7-9b36-bd2111638d9b\", \"structure_name\": \"627746134\", \"structure_type\": \"22e58e3c-39f8-44d7-9b36-bd2111638d9b\", \"business_status\": \"Not Sprayed\", \"structure_sprayed\": \"no\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "f89258c3-10eb-445c-8840-d1f208285b5c",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "06f588f3-ace6-4591-b3c6-7a28816e6d0c",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"f89258c3-10eb-445c-8840-d1f208285b5c\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Polygon\", \"coordinates\": [[[32.1190422996625, -13.8433505001254, 0], [32.1190913001234, -13.8433692995535, 0], [32.1190652998238, -13.8434327997838, 0], [32.1190164000868, -13.8434138996317, 0], [32.1190422996625, -13.8433505001254, 0]]]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"06f588f3-ace6-4591-b3c6-7a28816e6d0c\", \"event_date\": \"2019-10-05T01:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 2, \"rooms_eligible\": 2, \"structure_code\": \"f89258c3-10eb-445c-8840-d1f208285b5c\", \"structure_name\": \"627746132\", \"structure_type\": \"f89258c3-10eb-445c-8840-d1f208285b5c\", \"business_status\": \"Complete\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "fc435ed6-47f4-4382-b9d0-6cce3a5950c2",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "adc1bacd-f504-4765-a491-649a7d5dd20f",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"fc435ed6-47f4-4382-b9d0-6cce3a5950c2\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Polygon\", \"coordinates\": [[[32.1189477998012, -13.8426537998329, 0], [32.118997900133, -13.8426969996668, 0], [32.1189610998749, -13.842737399911, 0], [32.1189108997183, -13.8426942000772, 0], [32.1189477998012, -13.8426537998329, 0]]]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"adc1bacd-f504-4765-a491-649a7d5dd20f\", \"event_date\": \"2019-10-05T01:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 1, \"rooms_eligible\": 4, \"structure_code\": \"fc435ed6-47f4-4382-b9d0-6cce3a5950c2\", \"structure_name\": \"627746122\", \"structure_type\": \"fc435ed6-47f4-4382-b9d0-6cce3a5950c2\", \"business_status\": \"Partially Sprayed\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "4741fe63-8a10-4271-8f28-632cb6fae33f",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "50e1c076-cc4c-4081-a24b-d6d6dd686030",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"4741fe63-8a10-4271-8f28-632cb6fae33f\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Polygon\", \"coordinates\": [[[32.1190363002851, -13.8431421002277, 0], [32.1190831999298, -13.8431610003798, 0], [32.1190581996762, -13.8432197000291, 0], [32.1190112002068, -13.843200799877, 0], [32.1190363002851, -13.8431421002277, 0]]]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"50e1c076-cc4c-4081-a24b-d6d6dd686030\", \"event_date\": \"2019-10-05T01:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 4, \"rooms_eligible\": 4, \"structure_code\": \"4741fe63-8a10-4271-8f28-632cb6fae33f\", \"structure_name\": \"627746128\", \"structure_type\": \"4741fe63-8a10-4271-8f28-632cb6fae33f\", \"business_status\": \"Complete\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "1b2ff30f-663e-48b5-8961-d16c48aff1c1",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "14b56b98-7352-4b43-bff0-c4419eb096fb",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"1b2ff30f-663e-48b5-8961-d16c48aff1c1\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Polygon\", \"coordinates\": [[[32.1193186001733, -13.8430549001635, 0], [32.119351400247, -13.8430692002833, 0], [32.1193279998873, -13.8431198995636, 0], [32.1192950999889, -13.8431056003431, 0], [32.1193186001733, -13.8430549001635, 0]]]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"14b56b98-7352-4b43-bff0-c4419eb096fb\", \"event_date\": \"2019-10-05T01:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 3, \"rooms_eligible\": 4, \"structure_code\": \"1b2ff30f-663e-48b5-8961-d16c48aff1c1\", \"structure_name\": \"627746127\", \"structure_type\": \"1b2ff30f-663e-48b5-8961-d16c48aff1c1\", \"business_status\": \"Partially Sprayed\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "d2f51112-fd2b-44b7-8998-7abda91c06c7",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "abdfc0b5-1888-4fa3-9e1a-3968285e84d3",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"d2f51112-fd2b-44b7-8998-7abda91c06c7\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Polygon\", \"coordinates\": [[[32.118921599852, -13.8429071001825, 0], [32.1189651998841, -13.8429240002424, 0], [32.1189395997828, -13.8429861002283, 0], [32.1188959997506, -13.8429692001684, 0], [32.118921599852, -13.8429071001825, 0]]]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"abdfc0b5-1888-4fa3-9e1a-3968285e84d3\", \"event_date\": \"2019-10-05T01:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 0, \"rooms_eligible\": 0, \"structure_code\": \"d2f51112-fd2b-44b7-8998-7abda91c06c7\", \"structure_name\": \"627746125\", \"structure_type\": \"d2f51112-fd2b-44b7-8998-7abda91c06c7\", \"business_status\": \"Not Sprayed\", \"structure_sprayed\": \"no\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "1601dd40-477d-41e3-8a64-e8ec7812977a",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "ea423dfc-dcff-4a97-8c82-9d3346b702a0",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"1601dd40-477d-41e3-8a64-e8ec7812977a\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Polygon\", \"coordinates\": [[[32.1172995996968, -13.8401667004329, 0], [32.117361099835, -13.8402024997455, 0], [32.1173308997013, -13.8402514003818, 0], [32.1172693995632, -13.840215500345, 0], [32.1172995996968, -13.8401667004329, 0]]]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"ea423dfc-dcff-4a97-8c82-9d3346b702a0\", \"event_date\": \"2019-10-05T01:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 3, \"rooms_eligible\": 3, \"structure_code\": \"1601dd40-477d-41e3-8a64-e8ec7812977a\", \"structure_name\": \"627746108\", \"structure_type\": \"1601dd40-477d-41e3-8a64-e8ec7812977a\", \"business_status\": \"Complete\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "a8df2e4e-64c6-43f7-9629-e4be4d6ebac8",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "d87daa49-67df-4f22-bb52-6e311d632723",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"a8df2e4e-64c6-43f7-9629-e4be4d6ebac8\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Polygon\", \"coordinates\": [[[32.1183683998818, -13.8427398002016, 0], [32.1184350000752, -13.8427654003029, 0], [32.1184169003197, -13.8428097000076, 0], [32.1183503001263, -13.8427840000815, 0], [32.1183683998818, -13.8427398002016, 0]]]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"d87daa49-67df-4f22-bb52-6e311d632723\", \"event_date\": \"2019-10-05T01:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 5, \"rooms_eligible\": 5, \"structure_code\": \"a8df2e4e-64c6-43f7-9629-e4be4d6ebac8\", \"structure_name\": \"627746124\", \"structure_type\": \"a8df2e4e-64c6-43f7-9629-e4be4d6ebac8\", \"business_status\": \"Complete\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "bb81cd67-fbe5-4869-9ba5-2358e0c55804",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "4d9073a5-8f78-4453-b06f-4214839b2906",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"bb81cd67-fbe5-4869-9ba5-2358e0c55804\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Polygon\", \"coordinates\": [[[32.1186620995763, -13.842073700241, 0], [32.1186956002218, -13.8421094995537, 0], [32.1186339004342, -13.8421640002683, 0], [32.1186002999639, -13.8421282000563, 0], [32.1186620995763, -13.842073700241, 0]]]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"4d9073a5-8f78-4453-b06f-4214839b2906\", \"event_date\": \"2019-10-05T01:00:00\", \"eligibility\": \"notEligible\", \"rooms_sprayed\": 0, \"rooms_eligible\": 0, \"structure_code\": \"bb81cd67-fbe5-4869-9ba5-2358e0c55804\", \"structure_name\": \"627746116\", \"structure_type\": \"bb81cd67-fbe5-4869-9ba5-2358e0c55804\", \"business_status\": \"Not Eligible\", \"structure_sprayed\": \"No\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "9b32869e-ef8f-49f7-9543-376be9aed384",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "1a8a6574-eaab-4f63-a45e-02a20fedac3c",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"9b32869e-ef8f-49f7-9543-376be9aed384\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Polygon\", \"coordinates\": [[[32.1171105001495, -13.8398835003233, 0], [32.1171520002646, -13.8399199003831, 0], [32.1171023999559, -13.8399733003275, 0], [32.117060800016, -13.839936800443, 0], [32.1171105001495, -13.8398835003233, 0]]]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"1a8a6574-eaab-4f63-a45e-02a20fedac3c\", \"event_date\": \"2019-10-05T01:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 4, \"rooms_eligible\": 4, \"structure_code\": \"9b32869e-ef8f-49f7-9543-376be9aed384\", \"structure_name\": \"627746107\", \"structure_type\": \"9b32869e-ef8f-49f7-9543-376be9aed384\", \"business_status\": \"Complete\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "bc6c5441-ad91-4bb7-b2df-2371d11646da",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "8f57e20d-a343-40e6-90aa-5e47e493d286",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"bc6c5441-ad91-4bb7-b2df-2371d11646da\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Polygon\", \"coordinates\": [[[32.118619200116, -13.8430951996837, 0], [32.1186654999129, -13.8431114998958, 0], [32.1186471996086, -13.8431603996327, 0], [32.1186009996365, -13.8431441003199, 0], [32.118619200116, -13.8430951996837, 0]]]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"8f57e20d-a343-40e6-90aa-5e47e493d286\", \"event_date\": \"2019-10-05T01:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 3, \"rooms_eligible\": 3, \"structure_code\": \"bc6c5441-ad91-4bb7-b2df-2371d11646da\", \"structure_name\": \"627746129\", \"structure_type\": \"bc6c5441-ad91-4bb7-b2df-2371d11646da\", \"business_status\": \"Complete\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "068912e1-8275-461e-9328-78b531395031",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "a9246a7f-fd91-429b-b4e4-85fbb5457268",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"068912e1-8275-461e-9328-78b531395031\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Polygon\", \"coordinates\": [[[32.1171995995819, -13.8418783998682, 0], [32.1172265999277, -13.8418157998592, 0], [32.1172763000612, -13.841836000431, 0], [32.1172492997155, -13.84189860044, 0], [32.1171995995819, -13.8418783998682, 0]]]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"a9246a7f-fd91-429b-b4e4-85fbb5457268\", \"event_date\": \"2019-10-05T01:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 1, \"rooms_eligible\": 4, \"structure_code\": \"068912e1-8275-461e-9328-78b531395031\", \"structure_name\": \"627746115\", \"structure_type\": \"068912e1-8275-461e-9328-78b531395031\", \"business_status\": \"Partially Sprayed\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "c5037338-19fb-4086-aff9-636d5b682d1e",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "68619c0b-ef7b-420e-ba11-9e2c9c9a7fd2",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"c5037338-19fb-4086-aff9-636d5b682d1e\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Polygon\", \"coordinates\": [[[32.1190590998976, -13.842730600137, 0], [32.1191073997867, -13.8427533997495, 0], [32.1190749999114, -13.8428179998508, 0], [32.1190267000222, -13.842795300063, 0], [32.1190590998976, -13.842730600137, 0]]]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"68619c0b-ef7b-420e-ba11-9e2c9c9a7fd2\", \"event_date\": \"2019-10-05T01:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 2, \"rooms_eligible\": 2, \"structure_code\": \"c5037338-19fb-4086-aff9-636d5b682d1e\", \"structure_name\": \"627746121\", \"structure_type\": \"c5037338-19fb-4086-aff9-636d5b682d1e\", \"business_status\": \"Complete\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "8ea8f89f-ad5b-4bac-8fe6-9df2ba664a92",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "628553db-761b-42fd-aafa-20c2fa81a024",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"8ea8f89f-ad5b-4bac-8fe6-9df2ba664a92\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Polygon\", \"coordinates\": [[[32.1176934002303, -13.8379165004461, 0], [32.1177228997921, -13.8379341001785, 0], [32.1176884998245, -13.8379885999938, 0], [32.1176590002627, -13.8379710002614, 0], [32.1176934002303, -13.8379165004461, 0]]]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"628553db-761b-42fd-aafa-20c2fa81a024\", \"event_date\": \"2019-10-05T01:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 2, \"rooms_eligible\": 2, \"structure_code\": \"8ea8f89f-ad5b-4bac-8fe6-9df2ba664a92\", \"structure_name\": \"627749390\", \"structure_type\": \"8ea8f89f-ad5b-4bac-8fe6-9df2ba664a92\", \"business_status\": \"Complete\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "2df9e24a-5b56-47a1-a7ce-f8e99ec1524b",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "43f8c15a-4cb3-48dc-b734-b146ed3d5f27",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"2df9e24a-5b56-47a1-a7ce-f8e99ec1524b\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Polygon\", \"coordinates\": [[[32.1178583997454, -13.8373702000746, 0], [32.1179006004324, -13.8373877998071, 0], [32.1178794996392, -13.8374355996731, 0], [32.1178372998515, -13.8374179999407, 0], [32.1178583997454, -13.8373702000746, 0]]]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"43f8c15a-4cb3-48dc-b734-b146ed3d5f27\", \"event_date\": \"2019-10-05T01:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 2, \"rooms_eligible\": 2, \"structure_code\": \"2df9e24a-5b56-47a1-a7ce-f8e99ec1524b\", \"structure_name\": \"627749402\", \"structure_type\": \"2df9e24a-5b56-47a1-a7ce-f8e99ec1524b\", \"business_status\": \"Complete\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "5ad1e8cb-be9a-42f1-a013-d23d3edc6de0",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "96125e08-9425-48e6-858c-eea004af24fc",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"5ad1e8cb-be9a-42f1-a013-d23d3edc6de0\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Polygon\", \"coordinates\": [[[32.1170932997161, -13.837770699658, 0], [32.1171307996468, -13.8378006003174, 0], [32.117092400394, -13.8378459998929, 0], [32.117054899564, -13.8378161001328, 0], [32.1170932997161, -13.837770699658, 0]]]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"96125e08-9425-48e6-858c-eea004af24fc\", \"event_date\": \"2019-10-05T01:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 2, \"rooms_eligible\": 2, \"structure_code\": \"5ad1e8cb-be9a-42f1-a013-d23d3edc6de0\", \"structure_name\": \"627749392\", \"structure_type\": \"5ad1e8cb-be9a-42f1-a013-d23d3edc6de0\", \"business_status\": \"Complete\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "39a8109b-ddcd-46e4-89cb-49bd0972f5d8",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "e9e375ac-2588-4857-9585-f0225f2c331d",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"39a8109b-ddcd-46e4-89cb-49bd0972f5d8\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Polygon\", \"coordinates\": [[[32.1178269000914, -13.8379706000631, 0], [32.1178777999206, -13.8379706000631, 0], [32.1178777999206, -13.838014799943, 0], [32.1178269000914, -13.838014799943, 0], [32.1178269000914, -13.8379706000631, 0]]]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"e9e375ac-2588-4857-9585-f0225f2c331d\", \"event_date\": \"2019-10-05T01:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 2, \"rooms_eligible\": 3, \"structure_code\": \"39a8109b-ddcd-46e4-89cb-49bd0972f5d8\", \"structure_name\": \"627749401\", \"structure_type\": \"39a8109b-ddcd-46e4-89cb-49bd0972f5d8\", \"business_status\": \"Partially Sprayed\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "e49ea390-b972-40b4-98a9-86b3d34440d9",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "fea6763d-d99c-4000-abd8-f7441b8e759a",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"e49ea390-b972-40b4-98a9-86b3d34440d9\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Polygon\", \"coordinates\": [[[32.1174265003328, -13.8376339001843, 0], [32.1174708000374, -13.8376385002165, 0], [32.1174642997377, -13.8376981999119, 0], [32.117420000033, -13.8376936997045, 0], [32.1174265003328, -13.8376339001843, 0]]]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"fea6763d-d99c-4000-abd8-f7441b8e759a\", \"event_date\": \"2019-10-05T01:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 2, \"rooms_eligible\": 3, \"structure_code\": \"e49ea390-b972-40b4-98a9-86b3d34440d9\", \"structure_name\": \"627749400\", \"structure_type\": \"e49ea390-b972-40b4-98a9-86b3d34440d9\", \"business_status\": \"Partially Sprayed\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "2457e9e0-d9e5-4597-9abf-6a29b5da5047",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "e54b3d59-5a2a-451c-b8eb-02e4109b4a53",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"2457e9e0-d9e5-4597-9abf-6a29b5da5047\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Polygon\", \"coordinates\": [[[32.1166538001328, -13.8385709002268, 0], [32.1166974001649, -13.8386028000791, 0], [32.1166642997177, -13.8386454000651, 0], [32.1166206996856, -13.8386135002128, 0], [32.1166538001328, -13.8385709002268, 0]]]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"e54b3d59-5a2a-451c-b8eb-02e4109b4a53\", \"event_date\": \"2019-10-05T01:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 0, \"rooms_eligible\": 0, \"structure_code\": \"2457e9e0-d9e5-4597-9abf-6a29b5da5047\", \"structure_name\": \"627746092\", \"structure_type\": \"2457e9e0-d9e5-4597-9abf-6a29b5da5047\", \"business_status\": \"Not Sprayed\", \"structure_sprayed\": \"no\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "f1344600-1b63-481c-8bf0-7858035df1c9",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "87db3d5d-5913-4d21-8e47-68ce745bc9cb",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"f1344600-1b63-481c-8bf0-7858035df1c9\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Polygon\", \"coordinates\": [[[32.1171315002186, -13.8375467001201, 0], [32.1171547998542, -13.8375910996495, 0], [32.1171193000158, -13.8376087002812, 0], [32.1170960003802, -13.8375642998525, 0], [32.1171315002186, -13.8375467001201, 0]]]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"87db3d5d-5913-4d21-8e47-68ce745bc9cb\", \"event_date\": \"2019-10-05T01:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 2, \"rooms_eligible\": 3, \"structure_code\": \"f1344600-1b63-481c-8bf0-7858035df1c9\", \"structure_name\": \"627749399\", \"structure_type\": \"f1344600-1b63-481c-8bf0-7858035df1c9\", \"business_status\": \"Partially Sprayed\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "da036e6c-3f78-48dc-945c-c44d4218aa01",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "5ce23cf2-02a4-4bff-97f1-f6d112e66221",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"da036e6c-3f78-48dc-945c-c44d4218aa01\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Polygon\", \"coordinates\": [[[32.1173379998489, -13.8379699003905, 0], [32.1173681999825, -13.8379906999108, 0], [32.1173351004346, -13.8380359996616, 0], [32.117304900301, -13.8380152001413, 0], [32.1173379998489, -13.8379699003905, 0]]]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"5ce23cf2-02a4-4bff-97f1-f6d112e66221\", \"event_date\": \"2019-10-05T01:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 2, \"rooms_eligible\": 2, \"structure_code\": \"da036e6c-3f78-48dc-945c-c44d4218aa01\", \"structure_name\": \"627749391\", \"structure_type\": \"da036e6c-3f78-48dc-945c-c44d4218aa01\", \"business_status\": \"Complete\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "6bd9d008-d01b-4e7d-8ba3-df0faa9b8c5b",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "d8bebac2-e6aa-48b8-84aa-9c07c08e2744",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"6bd9d008-d01b-4e7d-8ba3-df0faa9b8c5b\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Polygon\", \"coordinates\": [[[32.1172096998678, -13.8383072001171, 0], [32.1172465999507, -13.8383339000894, 0], [32.1171961003198, -13.8383996000615, 0], [32.1171592002369, -13.838372999914, 0], [32.1172096998678, -13.8383072001171, 0]]]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"d8bebac2-e6aa-48b8-84aa-9c07c08e2744\", \"event_date\": \"2019-10-05T01:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 2, \"rooms_eligible\": 2, \"structure_code\": \"6bd9d008-d01b-4e7d-8ba3-df0faa9b8c5b\", \"structure_name\": \"627746104\", \"structure_type\": \"6bd9d008-d01b-4e7d-8ba3-df0faa9b8c5b\", \"business_status\": \"Complete\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "2993d178-8fc5-422e-bcbe-3e2070d9f817",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "bdfcb554-4ea8-4ecc-a058-558be2ebb7a0",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"2993d178-8fc5-422e-bcbe-3e2070d9f817\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Polygon\", \"coordinates\": [[[32.1170729003941, -13.838195800196, 0], [32.1171050997206, -13.8382179999607, 0], [32.1170568996562, -13.8382841001311, 0], [32.1170247003297, -13.8382620001911, 0], [32.1170729003941, -13.838195800196, 0]]]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"bdfcb554-4ea8-4ecc-a058-558be2ebb7a0\", \"event_date\": \"2019-10-05T01:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 1, \"rooms_eligible\": 2, \"structure_code\": \"2993d178-8fc5-422e-bcbe-3e2070d9f817\", \"structure_name\": \"627746103\", \"structure_type\": \"2993d178-8fc5-422e-bcbe-3e2070d9f817\", \"business_status\": \"Partially Sprayed\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "a86f0965-8f9f-45d3-a887-66785eb378c2",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "30091663-33dc-440d-91fd-d0c3c43aa3a7",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"a86f0965-8f9f-45d3-a887-66785eb378c2\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Polygon\", \"coordinates\": [[[32.1165102998106, -13.838652900411, 0], [32.1165451998012, -13.8386880998759, 0], [32.1164926002534, -13.8387372001616, 0], [32.1164578000875, -13.8387020996221, 0], [32.1165102998106, -13.838652900411, 0]]]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"30091663-33dc-440d-91fd-d0c3c43aa3a7\", \"event_date\": \"2019-10-05T01:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 0, \"rooms_eligible\": 0, \"structure_code\": \"a86f0965-8f9f-45d3-a887-66785eb378c2\", \"structure_name\": \"627746095\", \"structure_type\": \"a86f0965-8f9f-45d3-a887-66785eb378c2\", \"business_status\": \"Not Sprayed\", \"structure_sprayed\": \"no\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "a3598b30-0c35-4bab-aad0-37f83c4f7b9d",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "f4ec0261-b9a6-4266-a26a-2e932cdb15c7",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"a3598b30-0c35-4bab-aad0-37f83c4f7b9d\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Polygon\", \"coordinates\": [[[32.1170690998591, -13.8376098001521, 0], [32.1170960003802, -13.8376359002766, 0], [32.1170597999699, -13.8376710997414, 0], [32.1170329003481, -13.837644999617, 0], [32.1170690998591, -13.8376098001521, 0]]]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"f4ec0261-b9a6-4266-a26a-2e932cdb15c7\", \"event_date\": \"2019-10-05T01:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 2, \"rooms_eligible\": 2, \"structure_code\": \"a3598b30-0c35-4bab-aad0-37f83c4f7b9d\", \"structure_name\": \"627749398\", \"structure_type\": \"a3598b30-0c35-4bab-aad0-37f83c4f7b9d\", \"business_status\": \"Complete\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "e7cc7b76-8721-4cd3-8271-d71e86e271cb",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "32ffc08f-ee4d-44b4-8501-8564ef399ac5",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"e7cc7b76-8721-4cd3-8271-d71e86e271cb\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Polygon\", \"coordinates\": [[[32.1167195001049, -13.838379400389, 0], [32.116753700423, -13.8384047999415, 0], [32.1167071002525, -13.8384639996139, 0], [32.1166728999344, -13.8384386000613, 0], [32.1167195001049, -13.838379400389, 0]]]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"32ffc08f-ee4d-44b4-8501-8564ef399ac5\", \"event_date\": \"2019-10-05T01:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 0, \"rooms_eligible\": 0, \"structure_code\": \"e7cc7b76-8721-4cd3-8271-d71e86e271cb\", \"structure_name\": \"627746101\", \"structure_type\": \"e7cc7b76-8721-4cd3-8271-d71e86e271cb\", \"business_status\": \"Not Sprayed\", \"structure_sprayed\": \"no\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "e5ff9f29-d504-49aa-8fd4-4e79deed7633",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "376dca73-ebbd-419a-867e-4c8edf7ebf44",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"e5ff9f29-d504-49aa-8fd4-4e79deed7633\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Polygon\", \"coordinates\": [[[32.1164563000183, -13.8381252996428, 0], [32.1165045999074, -13.8380846997491, 0], [32.1165447996029, -13.8381347002561, 0], [32.1165061998013, -13.8381675003298, 0], [32.1164563000183, -13.8381252996428, 0]]]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"376dca73-ebbd-419a-867e-4c8edf7ebf44\", \"event_date\": \"2019-10-05T01:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 3, \"rooms_eligible\": 3, \"structure_code\": \"e5ff9f29-d504-49aa-8fd4-4e79deed7633\", \"structure_name\": \"704786898\", \"structure_type\": \"e5ff9f29-d504-49aa-8fd4-4e79deed7633\", \"business_status\": \"Complete\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "fece74ed-3011-42ff-b143-4eed22d1a766",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "eeac239c-7350-498b-99ec-aaea435fa5f6",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"fece74ed-3011-42ff-b143-4eed22d1a766\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.1164047, -13.838809]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"eeac239c-7350-498b-99ec-aaea435fa5f6\", \"event_date\": \"2019-10-05T01:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 3, \"rooms_eligible\": 3, \"structure_code\": \"fece74ed-3011-42ff-b143-4eed22d1a766\", \"structure_name\": \"fece74ed-3011-42ff-b143-4eed22d1a766\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Complete\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "2445be27-02c0-4348-bb7d-a5a3d7d30227",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "dc6fe805-27e1-429b-8947-744533fb9c85",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"2445be27-02c0-4348-bb7d-a5a3d7d30227\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.1187784, -13.8426371]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"dc6fe805-27e1-429b-8947-744533fb9c85\", \"event_date\": \"2019-10-05T01:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 2, \"rooms_eligible\": 2, \"structure_code\": \"2445be27-02c0-4348-bb7d-a5a3d7d30227\", \"structure_name\": \"2445be27-02c0-4348-bb7d-a5a3d7d30227\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Complete\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "f03fc0c9-59ca-4539-bf34-0f7c2bf0bb3c",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "6ebfbb9d-13ad-427e-b380-416cdfe1665a",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"f03fc0c9-59ca-4539-bf34-0f7c2bf0bb3c\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.1194699, -13.8429417]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"6ebfbb9d-13ad-427e-b380-416cdfe1665a\", \"event_date\": \"2019-10-05T01:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 2, \"rooms_eligible\": 2, \"structure_code\": \"f03fc0c9-59ca-4539-bf34-0f7c2bf0bb3c\", \"structure_name\": \"f03fc0c9-59ca-4539-bf34-0f7c2bf0bb3c\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Complete\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "9ca6f994-6698-44ce-83b0-b697278514ac",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "dde78841-ee70-4c36-9b8d-4617f98f292c",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"9ca6f994-6698-44ce-83b0-b697278514ac\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.1171676175353, -13.840089933421]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"dde78841-ee70-4c36-9b8d-4617f98f292c\", \"event_date\": \"2019-10-05T01:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 2, \"rooms_eligible\": 2, \"structure_code\": \"9ca6f994-6698-44ce-83b0-b697278514ac\", \"structure_name\": \"9ca6f994-6698-44ce-83b0-b697278514ac\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Complete\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "44ef874e-7199-4f19-8ec3-af4b8a26a02a",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "857e37a0-41c2-4156-a6ed-587586b5cd2c",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"44ef874e-7199-4f19-8ec3-af4b8a26a02a\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.118666, -13.8424072]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"857e37a0-41c2-4156-a6ed-587586b5cd2c\", \"event_date\": \"2019-10-05T01:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 4, \"rooms_eligible\": 4, \"structure_code\": \"44ef874e-7199-4f19-8ec3-af4b8a26a02a\", \"structure_name\": \"44ef874e-7199-4f19-8ec3-af4b8a26a02a\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Complete\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "1a23ba5b-225a-425e-b066-ef82690f8fe7",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "1ef3d01c-7a4b-4f2c-b8bb-3718fbba88a2",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"1a23ba5b-225a-425e-b066-ef82690f8fe7\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.1166108553113, -13.8393339645846]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"1ef3d01c-7a4b-4f2c-b8bb-3718fbba88a2\", \"event_date\": \"2019-10-05T01:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 1, \"rooms_eligible\": 1, \"structure_code\": \"1a23ba5b-225a-425e-b066-ef82690f8fe7\", \"structure_name\": \"1a23ba5b-225a-425e-b066-ef82690f8fe7\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Complete\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "4cbf2f71-501f-4ff2-b9e1-bff959fb1e1e",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "0307f256-c76b-4f67-819c-0a65c87bfb2d",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"4cbf2f71-501f-4ff2-b9e1-bff959fb1e1e\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.1161333, -13.8389767]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"0307f256-c76b-4f67-819c-0a65c87bfb2d\", \"event_date\": \"2019-10-05T01:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 2, \"rooms_eligible\": 3, \"structure_code\": \"4cbf2f71-501f-4ff2-b9e1-bff959fb1e1e\", \"structure_name\": \"4cbf2f71-501f-4ff2-b9e1-bff959fb1e1e\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Partially Sprayed\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "0c69d292-bad8-4f95-967e-f1c163db7eef",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "9adb7db7-9ee1-4f18-8591-51bc954296f4",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"0c69d292-bad8-4f95-967e-f1c163db7eef\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.1187215, -13.8432491]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"9adb7db7-9ee1-4f18-8591-51bc954296f4\", \"event_date\": \"2019-10-05T01:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 2, \"rooms_eligible\": 2, \"structure_code\": \"0c69d292-bad8-4f95-967e-f1c163db7eef\", \"structure_name\": \"0c69d292-bad8-4f95-967e-f1c163db7eef\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Complete\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "4bf0b595-c47d-403c-b34b-000b06fb1c64",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "31aef6a2-96bf-4ed5-b39f-8e982595ed48",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"4bf0b595-c47d-403c-b34b-000b06fb1c64\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Polygon\", \"coordinates\": [[[32.1182470003988, -13.8418393000436, 0], [32.1183002996192, -13.8418648003203, 0], [32.1182754999144, -13.8419137000571, 0], [32.1182221997947, -13.8418880999558, 0], [32.1182470003988, -13.8418393000436, 0]]]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"31aef6a2-96bf-4ed5-b39f-8e982595ed48\", \"event_date\": \"2019-10-05T01:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 0, \"rooms_eligible\": 0, \"structure_code\": \"4bf0b595-c47d-403c-b34b-000b06fb1c64\", \"structure_name\": \"627746081\", \"structure_type\": \"4bf0b595-c47d-403c-b34b-000b06fb1c64\", \"business_status\": \"Not Sprayed\", \"structure_sprayed\": \"no\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "f38a8845-d599-411d-a9cf-eb529cbf19df",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "d5f6f0ba-6952-4c26-9652-003bc0171494",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"f38a8845-d599-411d-a9cf-eb529cbf19df\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.1182388, -13.8420224]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"d5f6f0ba-6952-4c26-9652-003bc0171494\", \"event_date\": \"2019-10-05T01:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 2, \"rooms_eligible\": 2, \"structure_code\": \"f38a8845-d599-411d-a9cf-eb529cbf19df\", \"structure_name\": \"f38a8845-d599-411d-a9cf-eb529cbf19df\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Complete\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "b579fb20-d2d3-4a19-930d-8394e195cfe3",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "25b17aa8-3a91-4ac3-9a76-30c55c9aeb2a",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"b579fb20-d2d3-4a19-930d-8394e195cfe3\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.1183864, -13.8419218000001]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"25b17aa8-3a91-4ac3-9a76-30c55c9aeb2a\", \"event_date\": \"2019-10-05T01:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 2, \"rooms_eligible\": 2, \"structure_code\": \"b579fb20-d2d3-4a19-930d-8394e195cfe3\", \"structure_name\": \"b579fb20-d2d3-4a19-930d-8394e195cfe3\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Complete\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "1786ff17-8230-476f-86ff-609708b4adf4",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "f588f8da-c07b-4f09-b880-506b43b91d47",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"1786ff17-8230-476f-86ff-609708b4adf4\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.116375, -13.838507]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"f588f8da-c07b-4f09-b880-506b43b91d47\", \"event_date\": \"2019-10-05T01:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 1, \"rooms_eligible\": 1, \"structure_code\": \"1786ff17-8230-476f-86ff-609708b4adf4\", \"structure_name\": \"1786ff17-8230-476f-86ff-609708b4adf4\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Complete\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "03950c25-bec3-4d22-a36e-14058074b62e",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "caa78578-a787-4b29-b665-5a1acde72ca7",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"03950c25-bec3-4d22-a36e-14058074b62e\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.1194447, -13.8429797]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"caa78578-a787-4b29-b665-5a1acde72ca7\", \"event_date\": \"2019-10-05T01:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 1, \"rooms_eligible\": 2, \"structure_code\": \"03950c25-bec3-4d22-a36e-14058074b62e\", \"structure_name\": \"03950c25-bec3-4d22-a36e-14058074b62e\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Partially Sprayed\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "7b389615-f8b9-4c68-99c0-5c7569f61ad9",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "b76efb4a-5d46-4667-bd90-59d41417aa54",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"7b389615-f8b9-4c68-99c0-5c7569f61ad9\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.1186385910639, -13.8425276325356]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"b76efb4a-5d46-4667-bd90-59d41417aa54\", \"event_date\": \"2019-10-05T01:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 1, \"rooms_eligible\": 3, \"structure_code\": \"7b389615-f8b9-4c68-99c0-5c7569f61ad9\", \"structure_name\": \"7b389615-f8b9-4c68-99c0-5c7569f61ad9\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Partially Sprayed\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "1e1b9438-37e9-4592-904d-db7e7f0c8f88",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "24b13d96-6f99-4a4e-b7ab-b3377d6c8a71",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"1e1b9438-37e9-4592-904d-db7e7f0c8f88\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.1193239, -13.8432048]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"24b13d96-6f99-4a4e-b7ab-b3377d6c8a71\", \"event_date\": \"2019-10-05T01:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 2, \"rooms_eligible\": 2, \"structure_code\": \"1e1b9438-37e9-4592-904d-db7e7f0c8f88\", \"structure_name\": \"1e1b9438-37e9-4592-904d-db7e7f0c8f88\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Complete\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "95c5893b-e95b-4a78-9752-8db1f1ec50b3",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "7ea47ac7-6f73-4501-8c9d-248a283e0a03",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"95c5893b-e95b-4a78-9752-8db1f1ec50b3\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.1182155172361, -13.8422102496648]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"7ea47ac7-6f73-4501-8c9d-248a283e0a03\", \"event_date\": \"2019-10-05T01:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 1, \"rooms_eligible\": 1, \"structure_code\": \"95c5893b-e95b-4a78-9752-8db1f1ec50b3\", \"structure_name\": \"95c5893b-e95b-4a78-9752-8db1f1ec50b3\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Complete\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "229a4ef6-0d9c-43c0-9664-1090ac2e214e",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "23c04e33-30a2-4769-b2c0-80b34d0e0879",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"229a4ef6-0d9c-43c0-9664-1090ac2e214e\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.1169308710522, -13.8401190398091]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"23c04e33-30a2-4769-b2c0-80b34d0e0879\", \"event_date\": \"2019-10-05T01:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 3, \"rooms_eligible\": 3, \"structure_code\": \"229a4ef6-0d9c-43c0-9664-1090ac2e214e\", \"structure_name\": \"229a4ef6-0d9c-43c0-9664-1090ac2e214e\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Complete\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "7dd34ad5-a501-424c-a013-da1418a6d5a5",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "d954a00c-a2d6-4da4-b694-e5fa2fd993a9",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"7dd34ad5-a501-424c-a013-da1418a6d5a5\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.1185731210172, -13.8422723306553]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"d954a00c-a2d6-4da4-b694-e5fa2fd993a9\", \"event_date\": \"2019-10-05T01:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 2, \"rooms_eligible\": 2, \"structure_code\": \"7dd34ad5-a501-424c-a013-da1418a6d5a5\", \"structure_name\": \"7dd34ad5-a501-424c-a013-da1418a6d5a5\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Complete\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "46bbac64-f8f6-4917-9b34-41f5cf28fb99",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "2fcf5cd3-8156-4dcc-a994-10b9ec96e327",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"46bbac64-f8f6-4917-9b34-41f5cf28fb99\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Polygon\", \"coordinates\": [[[32.1175050003555, -13.8378773997222, 0], [32.117535800337, -13.8378813999066, 0], [32.1175274995945, -13.8379435997173, 0], [32.1174965997883, -13.8379397002569, 0], [32.1175050003555, -13.8378773997222, 0]]]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"2fcf5cd3-8156-4dcc-a994-10b9ec96e327\", \"event_date\": \"2019-10-05T01:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 3, \"rooms_eligible\": 3, \"structure_code\": \"46bbac64-f8f6-4917-9b34-41f5cf28fb99\", \"structure_name\": \"627749393\", \"structure_type\": \"46bbac64-f8f6-4917-9b34-41f5cf28fb99\", \"business_status\": \"Complete\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "3db43bd5-93e8-44d9-916c-c6f1312f380e",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "36d38ce6-042b-444a-bb00-687c18a730fd",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"3db43bd5-93e8-44d9-916c-c6f1312f380e\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.117805, -13.8375817]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"36d38ce6-042b-444a-bb00-687c18a730fd\", \"event_date\": \"2019-10-05T01:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 2, \"rooms_eligible\": 2, \"structure_code\": \"3db43bd5-93e8-44d9-916c-c6f1312f380e\", \"structure_name\": \"3db43bd5-93e8-44d9-916c-c6f1312f380e\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Complete\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "95d2c55b-a3c0-4caf-9ea5-14e06d6e4599",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "6e516593-26f0-45c5-9140-9470accc4d5f",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"95d2c55b-a3c0-4caf-9ea5-14e06d6e4599\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.1157519, -13.8391976]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"6e516593-26f0-45c5-9140-9470accc4d5f\", \"event_date\": \"2019-10-05T01:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 2, \"rooms_eligible\": 2, \"structure_code\": \"95d2c55b-a3c0-4caf-9ea5-14e06d6e4599\", \"structure_name\": \"95d2c55b-a3c0-4caf-9ea5-14e06d6e4599\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Complete\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "c4061951-a402-4b57-82c1-e66ed9148a8a",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "b1baae87-5621-48e4-a420-041a3278c6b5",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"c4061951-a402-4b57-82c1-e66ed9148a8a\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.1174067, -13.8383917]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"b1baae87-5621-48e4-a420-041a3278c6b5\", \"event_date\": \"2019-10-05T01:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 2, \"rooms_eligible\": 2, \"structure_code\": \"c4061951-a402-4b57-82c1-e66ed9148a8a\", \"structure_name\": \"c4061951-a402-4b57-82c1-e66ed9148a8a\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Complete\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "538c2dd8-8fa6-48d7-8b82-aa290b573ce7",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "6c57f916-863b-48f2-b522-e3f7f30bea71",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"538c2dd8-8fa6-48d7-8b82-aa290b573ce7\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.1170283424158, -13.8398112759105]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"6c57f916-863b-48f2-b522-e3f7f30bea71\", \"event_date\": \"2019-10-05T01:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 1, \"rooms_eligible\": 1, \"structure_code\": \"538c2dd8-8fa6-48d7-8b82-aa290b573ce7\", \"structure_name\": \"538c2dd8-8fa6-48d7-8b82-aa290b573ce7\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Complete\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "587f9276-7dff-4d2c-a647-081879261478",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "c37dbc22-1191-4833-84df-70e69d8002b2",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"587f9276-7dff-4d2c-a647-081879261478\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.1176617, -13.8378633]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"c37dbc22-1191-4833-84df-70e69d8002b2\", \"event_date\": \"2019-10-05T01:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 2, \"rooms_eligible\": 2, \"structure_code\": \"587f9276-7dff-4d2c-a647-081879261478\", \"structure_name\": \"587f9276-7dff-4d2c-a647-081879261478\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Complete\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "05fdc194-a085-40a3-95c4-8ec3096cc3ad",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "d526a967-6991-426a-8379-44a8bc145d59",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"05fdc194-a085-40a3-95c4-8ec3096cc3ad\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.1182185605637, -13.8420570093518]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"d526a967-6991-426a-8379-44a8bc145d59\", \"event_date\": \"2019-10-05T01:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 2, \"rooms_eligible\": 2, \"structure_code\": \"05fdc194-a085-40a3-95c4-8ec3096cc3ad\", \"structure_name\": \"05fdc194-a085-40a3-95c4-8ec3096cc3ad\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Complete\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "7b2b0f82-1084-4885-ab86-a7360c94d2af",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "58472cd2-aad7-4c56-b2d3-eaf668e1b44f",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"7b2b0f82-1084-4885-ab86-a7360c94d2af\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.1184607, -13.842226]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"58472cd2-aad7-4c56-b2d3-eaf668e1b44f\", \"event_date\": \"2019-10-05T01:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 1, \"rooms_eligible\": 1, \"structure_code\": \"7b2b0f82-1084-4885-ab86-a7360c94d2af\", \"structure_name\": \"7b2b0f82-1084-4885-ab86-a7360c94d2af\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Complete\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "53c136ed-9e05-47da-a56f-bfd5ffc9a8a2",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "64b697ef-4c69-4252-a9f2-c69f9cfbcee0",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"53c136ed-9e05-47da-a56f-bfd5ffc9a8a2\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.1187166, -13.8421324]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"64b697ef-4c69-4252-a9f2-c69f9cfbcee0\", \"event_date\": \"2019-10-05T01:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 2, \"rooms_eligible\": 2, \"structure_code\": \"53c136ed-9e05-47da-a56f-bfd5ffc9a8a2\", \"structure_name\": \"53c136ed-9e05-47da-a56f-bfd5ffc9a8a2\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Complete\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "b8045c57-825a-4226-af8c-c9cb7cfef7bd",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "95616fb7-3319-4898-a934-d18144bae447",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"b8045c57-825a-4226-af8c-c9cb7cfef7bd\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.1182107, -13.8421697]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"95616fb7-3319-4898-a934-d18144bae447\", \"event_date\": \"2019-10-05T01:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 2, \"rooms_eligible\": 2, \"structure_code\": \"b8045c57-825a-4226-af8c-c9cb7cfef7bd\", \"structure_name\": \"b8045c57-825a-4226-af8c-c9cb7cfef7bd\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Complete\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "6478082f-e5ed-4e31-9b95-4f60ce332a3d",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "177ab8ae-8649-42a7-8e0a-2e7196de6aa8",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"6478082f-e5ed-4e31-9b95-4f60ce332a3d\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.11721, -13.8379399999999]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"177ab8ae-8649-42a7-8e0a-2e7196de6aa8\", \"event_date\": \"2019-10-05T01:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 1, \"rooms_eligible\": 1, \"structure_code\": \"6478082f-e5ed-4e31-9b95-4f60ce332a3d\", \"structure_name\": \"6478082f-e5ed-4e31-9b95-4f60ce332a3d\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Complete\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "b045d625-401f-4dc8-91e5-156aa66c6e50",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "10f600e7-e407-43d0-90ea-7e02fcaf1f75",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"b045d625-401f-4dc8-91e5-156aa66c6e50\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.1163133, -13.8382613]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"10f600e7-e407-43d0-90ea-7e02fcaf1f75\", \"event_date\": \"2019-10-05T01:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 2, \"rooms_eligible\": 2, \"structure_code\": \"b045d625-401f-4dc8-91e5-156aa66c6e50\", \"structure_name\": \"b045d625-401f-4dc8-91e5-156aa66c6e50\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Complete\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "17063b20-9dab-4a62-8301-55ab26996133",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "4723f9a5-fc31-426f-b49d-610eb5aacdc4",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"17063b20-9dab-4a62-8301-55ab26996133\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.1162119, -13.8384351]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"4723f9a5-fc31-426f-b49d-610eb5aacdc4\", \"event_date\": \"2019-10-05T01:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 2, \"rooms_eligible\": 2, \"structure_code\": \"17063b20-9dab-4a62-8301-55ab26996133\", \"structure_name\": \"17063b20-9dab-4a62-8301-55ab26996133\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Complete\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "4280c5c3-d5ff-43af-9186-43251676cda4",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "dc5b1903-6beb-45b4-9c92-61c884a65e09",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"4280c5c3-d5ff-43af-9186-43251676cda4\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.1185421, -13.8420165]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"dc5b1903-6beb-45b4-9c92-61c884a65e09\", \"event_date\": \"2019-10-05T01:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 5, \"rooms_eligible\": 5, \"structure_code\": \"4280c5c3-d5ff-43af-9186-43251676cda4\", \"structure_name\": \"4280c5c3-d5ff-43af-9186-43251676cda4\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Complete\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "783ef59d-8c47-4e15-b44a-511a92129e6d",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "cb0af067-55d3-4b9c-8078-81a5a700c08d",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"783ef59d-8c47-4e15-b44a-511a92129e6d\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.1193158, -13.8427462]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"cb0af067-55d3-4b9c-8078-81a5a700c08d\", \"event_date\": \"2019-10-05T01:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 3, \"rooms_eligible\": 3, \"structure_code\": \"783ef59d-8c47-4e15-b44a-511a92129e6d\", \"structure_name\": \"783ef59d-8c47-4e15-b44a-511a92129e6d\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Complete\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      },
+      {
+        "structure_id": "fc0fb563-dc9e-4adf-bacc-8a9c10cf39c7",
+        "jurisdiction_id": "92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+        "task_id": "f883474a-f8ac-43d6-97f5-861b5e558858",
+        "plan_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
+        "geojson": "{\"id\": \"fc0fb563-dc9e-4adf-bacc-8a9c10cf39c7\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [32.1192033662411, -13.8431726910351]}, \"properties\": {\"plan_id\": \"9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d\", \"task_id\": \"f883474a-f8ac-43d6-97f5-861b5e558858\", \"event_date\": \"2019-10-05T01:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 2, \"rooms_eligible\": 2, \"structure_code\": \"fc0fb563-dc9e-4adf-bacc-8a9c10cf39c7\", \"structure_name\": \"fc0fb563-dc9e-4adf-bacc-8a9c10cf39c7\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Complete\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"92a0c5f3-8b47-465e-961b-2998ad3f00a5\"}}"
+      }
+    ],
+    "columns": ["structure_id", "jurisdiction_id", "task_id", "plan_id", "geojson"]
+  }
+}
