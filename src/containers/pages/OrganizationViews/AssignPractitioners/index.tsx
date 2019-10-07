@@ -29,10 +29,12 @@ import { RouteParams } from '@onaio/gatekeeper/dist/types';
 import { keyBy, values } from 'lodash';
 import React, { Props, useState } from 'react';
 import Helmet from 'react-helmet';
+import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import AsyncSelect from 'react-select/async';
 import { ActionTypes, OptionsType, ValueType } from 'react-select/src/types';
 import { Button } from 'reactstrap';
+import { Store } from 'redux';
 import HeaderBreadcrumb, {
   BreadCrumbProps,
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
@@ -46,17 +48,26 @@ import {
   HOME_URL,
   NEW_TEAM,
   OPENSRP_ORG_PRACTITIONER_ENDPOINT,
+  OPENSRP_ORGANIZATION_ENDPOINT,
   OPENSRP_PRACTITIONER_ENDPOINT,
   ORGANIZATIONS_LABEL,
   ORGANIZATIONS_LIST_URL,
   PRACTITIONERS,
 } from '../../../../constants';
 import { OpenSRPService } from '../../../../services/opensrp';
+import {
+  fetchOrganizations,
+  getOrganizationById,
+  Organization,
+  removeOrganizationsAction,
+} from '../../../../store/ducks/opensrp/organizations';
 import { Practitioner } from '../../../../store/ducks/opensrp/practitioners';
 
 /** Props for AssignPractitioner component */
 interface AssignPractitionerProps {
   allPractitionersApi: string;
+  fetchOrganizationsAction: typeof fetchOrganizations;
+  organization: Organization | null;
   practitionersByOrgApi: string;
   serviceClass: typeof OpenSRPService;
 }
@@ -64,6 +75,8 @@ interface AssignPractitionerProps {
 /** default props for AssignPractitioner component */
 const defaultAssignPractitionerProps: AssignPractitionerProps = {
   allPractitionersApi: OPENSRP_PRACTITIONER_ENDPOINT,
+  fetchOrganizationsAction: fetchOrganizations,
+  organization: null,
   practitionersByOrgApi: OPENSRP_ORG_PRACTITIONER_ENDPOINT,
   serviceClass: OpenSRPService,
 };
@@ -95,7 +108,13 @@ interface SelectedOption {
 
 /** AssignPractitioner component */
 const AssignPractitioner: React.FC<PropsTypes> = props => {
-  const { serviceClass, allPractitionersApi, practitionersByOrgApi } = props;
+  const {
+    serviceClass,
+    allPractitionersApi,
+    practitionersByOrgApi,
+    fetchOrganizationsAction,
+    organization,
+  } = props;
   const [selectedOptions, setSelectedOptions] = useState<OptionsType<SelectedOption>>([]);
 
   /** formats Practitioner json object structure into a selectedOption object structure
@@ -166,6 +185,14 @@ const AssignPractitioner: React.FC<PropsTypes> = props => {
     return formatOptions(allPractitioners);
   };
 
+  // TODO - this is wet code
+  const loadOrganization = async (organizationId: string) => {
+    const serve = new serviceClass(OPENSRP_ORGANIZATION_ENDPOINT);
+
+    serve
+      .read(organizationId)
+      .then((response: Organization) => fetchOrganizationsAction([response]));
+  };
   const addHandler = () => {
     const stringValues = selectedOptions.map(option => option.value);
   };
@@ -227,4 +254,30 @@ const AssignPractitioner: React.FC<PropsTypes> = props => {
 
 AssignPractitioner.defaultProps = defaultAssignPractitionerProps;
 
-export default AssignPractitioner;
+export { AssignPractitioner };
+
+/** Interface for connected state to props */
+interface DispatchedProps {
+  organization: Organization | null;
+}
+
+// connect to store
+const mapStateToProps = (state: Partial<Store>, ownProps: PropsTypes): DispatchedProps => {
+  let organizationId = ownProps.match.params.id;
+  organizationId = organizationId ? organizationId : '';
+
+  const organization = getOrganizationById(state, organizationId);
+  return { organization };
+};
+
+/** map props to action creators */
+const mapDispatchToProps = {
+  fetchOrganizationsCreator: fetchOrganizations,
+};
+
+const ConnectedAssignPractitioner = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AssignPractitioner);
+
+export default ConnectedAssignPractitioner;
