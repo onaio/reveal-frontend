@@ -1,4 +1,5 @@
 import ListView from '@onaio/list-view';
+import reducerRegistry from '@onaio/redux-reducer-registry';
 import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import { createBrowserHistory } from 'history';
@@ -6,13 +7,15 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
-import { SINGLE_TEAM_URL, TEAM } from '../../../../../constants';
+import { SINGLE_ORGANIZATION_URL, TEAM } from '../../../../../constants';
 import store from '../../../../../store';
 import * as organizationDucks from '../../../../../store/ducks/opensrp/organizations';
 import * as practitionersDucks from '../../../../../store/ducks/opensrp/practitioners';
 import * as fixtures from '../../../../../store/ducks/tests/fixtures';
 import ConnectedSingleOrgView, { SingleOrganizationView } from '../../SingleOrganizationView';
-import { organizationsByIdMockCalls, practitionersByOrgIdMockCalls } from './fixtures';
+
+reducerRegistry.register(practitionersDucks.reducerName, practitionersDucks.default);
+
 // tslint:disable-next-line: no-var-requires
 const fetch = require('jest-fetch-mock');
 
@@ -21,6 +24,8 @@ const history = createBrowserHistory();
 describe('src/containers/pages/TeamAssignment', () => {
   beforeEach(() => {
     jest.resetAllMocks();
+    store.dispatch(practitionersDucks.removePractitionersAction);
+    store.dispatch(practitionersDucks.removePractitionerRolesAction);
   });
 
   it('renders SingleTeamView without crashing', () => {
@@ -32,8 +37,8 @@ describe('src/containers/pages/TeamAssignment', () => {
       match: {
         isExact: true,
         params: { id: '' },
-        path: `${SINGLE_TEAM_URL}/:id`,
-        url: `${SINGLE_TEAM_URL}/teamId`,
+        path: `${SINGLE_ORGANIZATION_URL}/:id`,
+        url: `${SINGLE_ORGANIZATION_URL}/teamId`,
       },
       organization: fixtures.organization1,
       practitioners: fixtures.practitioners,
@@ -48,7 +53,7 @@ describe('src/containers/pages/TeamAssignment', () => {
 
   it('renders SingleTeamView correctly', () => {
     // clean test: check for stuff that can only be present if page loaded
-    fetch.once(JSON.stringify([])).once(JSON.stringify([]));
+    fetch.once(JSON.stringify(fixtures.organization1)).once(JSON.stringify([]));
     const mock: any = jest.fn();
     const props = {
       history,
@@ -56,8 +61,8 @@ describe('src/containers/pages/TeamAssignment', () => {
       match: {
         isExact: true,
         params: { id: '' },
-        path: `${SINGLE_TEAM_URL}/:id`,
-        url: `${SINGLE_TEAM_URL}/teamId`,
+        path: `${SINGLE_ORGANIZATION_URL}/:id`,
+        url: `${SINGLE_ORGANIZATION_URL}/teamId`,
       },
       organization: fixtures.organization1,
       practitioners: [fixtures.practitioner1],
@@ -100,7 +105,7 @@ describe('src/containers/pages/TeamAssignment', () => {
     );
 
     fetch
-      .once(JSON.stringify([fixtures.organization3]))
+      .once(JSON.stringify(fixtures.organization3))
       .once(JSON.stringify(fixtures.org3Practitioners));
     const mock: any = jest.fn();
     const props = {
@@ -109,8 +114,8 @@ describe('src/containers/pages/TeamAssignment', () => {
       match: {
         isExact: true,
         params: { id: `${fixtures.organization3.identifier}` },
-        path: `${SINGLE_TEAM_URL}/:id`,
-        url: `${SINGLE_TEAM_URL}/1`,
+        path: `${SINGLE_ORGANIZATION_URL}/:id`,
+        url: `${SINGLE_ORGANIZATION_URL}/1`,
       },
     };
     const wrapper = mount(
@@ -144,8 +149,8 @@ describe('src/containers/pages/TeamAssignment', () => {
       match: {
         isExact: true,
         params: { id: `${fixtures.organization3.identifier}` },
-        path: `${SINGLE_TEAM_URL}/:id`,
-        url: `${SINGLE_TEAM_URL}/1`,
+        path: `${SINGLE_ORGANIZATION_URL}/:id`,
+        url: `${SINGLE_ORGANIZATION_URL}/1`,
       },
       serviceClass: serviceMock,
     };
@@ -184,8 +189,8 @@ describe('src/containers/pages/TeamAssignment', () => {
       match: {
         isExact: true,
         params: { id: '1' },
-        path: `${SINGLE_TEAM_URL}/:id`,
-        url: `${SINGLE_TEAM_URL}/1`,
+        path: `${SINGLE_ORGANIZATION_URL}/:id`,
+        url: `${SINGLE_ORGANIZATION_URL}/1`,
       },
     };
     mount(
@@ -201,40 +206,5 @@ describe('src/containers/pages/TeamAssignment', () => {
     expect(serviceMock).toHaveBeenCalledTimes(3);
     expect(mockDelete.mock.calls).toHaveBeenCalledWith();
     expect.assertions(3);
-  });
-});
-
-describe('src/../singleOrganization.selectors', () => {
-  it('selectors are called with the correct arguments', async () => {
-    // calls selectors correctly
-    const organizationByIdMock = jest.spyOn(organizationDucks, 'getOrganizationById');
-    const practitionerByOrgIdMock = jest.spyOn(practitionersDucks, 'getPractitionersByOrgId');
-
-    fetch
-      .once(JSON.stringify(fixtures.organization3))
-      .once(JSON.stringify(fixtures.org3Practitioners));
-
-    const mock: any = jest.fn();
-    const props = {
-      history,
-      location: mock,
-      match: {
-        isExact: true,
-        params: { id: `${fixtures.organization3.identifier}` },
-        path: `${SINGLE_TEAM_URL}/:id`,
-        url: `${SINGLE_TEAM_URL}/1`,
-      },
-    };
-    mount(
-      <Provider store={store}>
-        <Router history={history}>
-          <ConnectedSingleOrgView {...props} />
-        </Router>
-      </Provider>
-    );
-
-    await new Promise(resolve => setImmediate(resolve));
-    expect(organizationByIdMock.mock.calls).toEqual(organizationsByIdMockCalls);
-    expect(practitionerByOrgIdMock.mock.calls).toEqual(practitionersByOrgIdMockCalls);
   });
 });
