@@ -94,7 +94,10 @@ import HeaderBreadcrumbs, {
 } from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../../components/page/Loading';
 
-import AssignTeamTableCell from '../../../../../components/AssignTeamTableCell';
+import AssignTeamTableCell, {
+  AssignTeamCellProps,
+  AssignTeamTableCell as AssignTeamCell,
+} from '../../../../../components/AssignTeamTableCell';
 import './../../../../../styles/css/drill-down-table.css';
 import './style.css';
 
@@ -1820,9 +1823,14 @@ class IrsPlan extends React.Component<
         columns: [
           {
             Header: '',
-            accessor: (j: JurisdictionRow) => (
-              <AssignTeamTableCell planId={j.planId} jurisdictionId={j.jurisdiction_id} />
-            ),
+            accessor: (j: JurisdictionRow) => {
+              const cellProps = {
+                jurisdictionId: j.jurisdiction_id,
+                organizationsById,
+                planId: j.planId,
+              } as AssignTeamCellProps;
+              return <AssignTeamCell {...cellProps} />;
+            },
             id: 'teams_assigned',
           },
         ],
