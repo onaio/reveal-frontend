@@ -265,7 +265,7 @@ describe('reducers/plans', () => {
         [PlanStatus.ACTIVE],
         'Case-triggered',
         [],
-        'some-jurisdiction-id'
+        null
       )
     );
   });
