@@ -2018,6 +2018,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
   const jurisdictionsById = getJurisdictionsById(state);
   const allJurisdictionIds = getAllJurisdictionsIdArray(state);
   const loadedJurisdictionIds = getJurisdictionsIdArray(state);
+  const organizationsById = getOrganizationsById(state);
 
   const props = {
     allJurisdictionIds,
