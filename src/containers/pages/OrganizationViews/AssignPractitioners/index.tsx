@@ -25,9 +25,11 @@ import { Field, Formik } from 'formik';
 /** Wraps react select multi async to provide a form input that
  * pulls and selects at least one practitioner
  */
+import { RouteParams } from '@onaio/gatekeeper/dist/types';
 import { keyBy, values } from 'lodash';
-import React, { useState } from 'react';
+import React, { Props, useState } from 'react';
 import Helmet from 'react-helmet';
+import { RouteComponentProps } from 'react-router';
 import AsyncSelect from 'react-select/async';
 import { ActionTypes, OptionsType, ValueType } from 'react-select/src/types';
 import { Button } from 'reactstrap';
@@ -66,6 +68,9 @@ const defaultAssignPractitionerProps: AssignPractitionerProps = {
   serviceClass: OpenSRPService,
 };
 
+/** type intersection for all types that pertain to the props */
+export type PropsTypes = AssignPractitionerProps & RouteComponentProps<RouteParams>;
+
 /** custom styling for fixed options */
 const styles = {
   multiValue: (base: any, state: any) => {
@@ -89,7 +94,7 @@ interface SelectedOption {
 }
 
 /** AssignPractitioner component */
-const AssignPractitioner: React.FC<AssignPractitionerProps> = props => {
+const AssignPractitioner: React.FC<PropsTypes> = props => {
   const { serviceClass, allPractitionersApi, practitionersByOrgApi } = props;
   const [selectedOptions, setSelectedOptions] = useState<OptionsType<SelectedOption>>([]);
 
@@ -108,28 +113,6 @@ const AssignPractitioner: React.FC<AssignPractitionerProps> = props => {
       label: entry.username,
       value: entry.identifier,
     }));
-
-  // TODO - how does this work with lodash's sort.
-  /** sorts the options before passed to the async select such that
-   * fixed options are displayed first in the select ui
-   * @params {OptionType<SelectedOption>} - all formatted fetched practitioners
-   */
-  // const orderOptions = (options: OptionsType<SelectedOption>): OptionsType<SelectedOption> => {
-  //   /** orders those with isFixed first then those with isFixed false */
-  //   const clonedOptions = cloneDeep(options);
-  //   const predicate = (a: any, b: any) => {
-  //     if (a.isFixed && b.isFixed) {
-  //       return 0;
-  //     }
-  //     if (a.isFixed && !b.isFixed) {
-  //       return -1;
-  //     }
-  //     if (!a.isFixed && b.isFixed) {
-  //       return 1;
-  //     }
-  //   };
-  //   return clonedOptions.sort(predicate);
-  // };
 
   // TODO - Hack in this: typings for the changeHandler function.
   /** This sets the state selectedOptions
