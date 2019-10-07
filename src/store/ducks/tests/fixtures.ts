@@ -2,7 +2,6 @@ import { clone, cloneDeep } from 'lodash';
 import { Organization } from '../opensrp/organizations';
 import { Practitioner } from '../opensrp/practitioners';
 import { InterventionType, Plan, PlanStatus } from '../plans';
-import { Practitioner } from '../practitioners';
 
 export const plan1: Plan = {
   id: 'ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f',
@@ -1355,3 +1354,4 @@ export const assignments = [assignment1, assignment2, assignment3, assignment4];
 
 export const practitioners: Practitioner[] = [practitioner1, practitioner2, practitioner3];
 export const org3Practitioners: Practitioner[] = [practitioner4, practitioner5, practitioner6];
+export const allPractitioners = [...practitioners, ...org3Practitioners];
