@@ -27,7 +27,7 @@ import { Field, Formik } from 'formik';
  */
 import { RouteParams } from '@onaio/gatekeeper/dist/types';
 import { keyBy, values } from 'lodash';
-import React, { Props, useState } from 'react';
+import React, { Props, useEffect, useState } from 'react';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
@@ -38,6 +38,7 @@ import { Store } from 'redux';
 import HeaderBreadcrumb, {
   BreadCrumbProps,
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
+import Loading from '../../../../components/page/Loading';
 import {
   ADD,
   ASSIGN,
@@ -53,6 +54,7 @@ import {
   ORGANIZATIONS_LABEL,
   ORGANIZATIONS_LIST_URL,
   PRACTITIONERS,
+  TO,
 } from '../../../../constants';
 import { OpenSRPService } from '../../../../services/opensrp';
 import {
@@ -116,6 +118,15 @@ const AssignPractitioner: React.FC<PropsTypes> = props => {
     organization,
   } = props;
   const [selectedOptions, setSelectedOptions] = useState<OptionsType<SelectedOption>>([]);
+
+  useEffect(() => {
+    const organizationId = props.match.params.id;
+    loadOrganization(organizationId);
+  }, []);
+
+  if (!organization) {
+    return <Loading />;
+  }
 
   /** formats Practitioner json object structure into a selectedOption object structure
    * @param {Practitioner []} practitioners - list of practitioner json objects
@@ -225,6 +236,9 @@ const AssignPractitioner: React.FC<PropsTypes> = props => {
         </title>
       </Helmet>
       <HeaderBreadcrumb {...breadcrumbProps} />
+      <h2 className="mb-3 mt-5 page-title">{`${ASSIGN} ${PRACTITIONERS} ${TO} ${
+        organization!.name
+      }`}</h2>
       {/* section for displaying already Added practitioners to this organization */}
       {selectedOptions.map((option, index) => (
         <section key={index}>
@@ -238,6 +252,7 @@ const AssignPractitioner: React.FC<PropsTypes> = props => {
           />
         </section>
       ))}
+      <hr />
       <AsyncSelect
         styles={styles}
         isClearable={selectedOptions.some(option => !option.isFixed)}
