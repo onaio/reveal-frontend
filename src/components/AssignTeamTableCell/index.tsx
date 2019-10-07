@@ -1,9 +1,10 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
-import { keys, values } from 'lodash';
+import { keys } from 'lodash';
 import React, { MouseEvent, useState } from 'react';
 import { connect } from 'react-redux';
-import { Button, Popover, PopoverBody, PopoverHeader } from 'reactstrap';
+import { Button, Form, Popover, PopoverBody, PopoverHeader } from 'reactstrap';
 import { Store } from 'redux';
+import OrganizationSelect from '../../containers/forms/OrganizationSelect';
 import { stopPropagationAndPreventDefault } from '../../helpers/utils';
 import assignmentReducer, {
   Assignment,
@@ -32,7 +33,7 @@ export interface AssignTeamCellProps {
  * showing the button and card in the Assign Teams column
  */
 const AssignTeamTableCell = (props: AssignTeamCellProps) => {
-  const { jurisdictionId, organizationsById } = props;
+  const { assignments, jurisdictionId, organizationsById, planId } = props;
   const [isActive, setIsActive] = useState<boolean>(false);
 
   const onPlanAssignmentButtonClick = (e: MouseEvent) => {
@@ -57,17 +58,28 @@ const AssignTeamTableCell = (props: AssignTeamCellProps) => {
       .map((o: string) => organizationsById[o])
       .filter(o => !!o);
 
+  const organizationSelectProps = {
+    jurisdictionId,
+    name: getFormName(jurisdictionId),
+    planId,
+    values: assignments.map((a: Assignment) => a.organization),
+  };
+
+  const popoverProps = {
+    isOpen: isActive,
+    onClick: (e: React.MouseEvent) => stopPropagationAndPreventDefault(e),
+    target: getButtonId(jurisdictionId),
+    toggle: () => setIsActive(!isActive),
+  };
   const AssignPopover = (
-    <Popover target={getButtonId(jurisdictionId)} isOpen={isActive}>
+    <Popover {...popoverProps}>
       <PopoverHeader>Select Teams to Assign</PopoverHeader>
       <PopoverBody>
         <h1>Here be Teams!</h1>
         {organizationsArray ? (
-          <ul>
-            {organizationsArray.map((organization: Organization, i: number) => (
-              <li key={i}>{organization.name}</li>
-            ))}
-          </ul>
+          <Form name={getFormName(jurisdictionId)}>
+            <OrganizationSelect {...organizationSelectProps} />
+          </Form>
         ) : (
           <p>No teams loaded...</p>
         )}
@@ -84,6 +96,7 @@ const AssignTeamTableCell = (props: AssignTeamCellProps) => {
 };
 
 const getButtonId = (jurisdictionId: string): string => `plan-assignment-${jurisdictionId}`;
+const getFormName = (jurisdictionId: string): string => `plan-assignment-form-${jurisdictionId}`;
 export { AssignTeamTableCell };
 
 /** map state to props
