@@ -51,10 +51,12 @@ reducerRegistry.register(genericStructuresReducerName, genericStructuresReducer)
 const focusAreaData = superset.processData(fixtures.ZambiaFocusAreasJSON) || [];
 const structureData = superset.processData(fixtures.ZambiaStructuresJSON) || [];
 const jurisdictionData = superset.processData(fixtures.ZambiaAkros1JSON) || [];
+const jurisdiction2Data = superset.processData(fixtures.ZambiaKMZ421JSON) || [];
 
 store.dispatch(fetchGenericJurisdictions('zm-focusAreas', focusAreaData));
 store.dispatch(fetchGenericStructures('zm-structures', structureData));
 store.dispatch(fetchJurisdictions(jurisdictionData));
+store.dispatch(fetchJurisdictions(jurisdiction2Data));
 
 const history = createBrowserHistory();
 
@@ -271,5 +273,59 @@ describe('components/IRS Reports/IRSReportingMap', () => {
     ]);
     expect(supersetServiceMock).toHaveBeenCalledTimes(4);
     wrapper.unmount();
+  });
+
+  it('renders both Points and Polygons correctly', () => {
+    const mock: any = jest.fn();
+
+    const kmz421StructureData = superset.processData(fixtures.ZambiaKMZ421StructuresJSON) || [];
+
+    store.dispatch(fetchGenericStructures('zm-kmz421-structures', kmz421StructureData));
+
+    const jurisdiction = getJurisdictionById(
+      store.getState(),
+      '92a0c5f3-8b47-465e-961b-2998ad3f00a5'
+    );
+
+    const structures = getGenericStructures(
+      store.getState(),
+      'zm-kmz421-structures',
+      '92a0c5f3-8b47-465e-961b-2998ad3f00a5'
+    );
+
+    const indicatorStops = IRSIndicatorStops[SUPERSET_IRS_REPORTING_INDICATOR_STOPS];
+
+    const props = {
+      focusArea: getGenericJurisdictionByJurisdictionId(
+        store.getState(),
+        'zm-focusAreas',
+        '92a0c5f3-8b47-465e-961b-2998ad3f00a5'
+      ),
+      history,
+      jurisdiction: getJurisdictionById(store.getState(), '92a0c5f3-8b47-465e-961b-2998ad3f00a5'),
+      location: mock,
+      match: {
+        isExact: true,
+        params: {
+          jurisdictionId: '92a0c5f3-8b47-465e-961b-2998ad3f00a5',
+          planId: (plans[0] as IRSPlan).plan_id,
+        },
+        path: `${INTERVENTION_IRS_URL}/:planId/:jurisdictionId/${MAP}`,
+        url: `${INTERVENTION_IRS_URL}/${
+          (plans[0] as IRSPlan).plan_id
+        }/92a0c5f3-8b47-465e-961b-2998ad3f00a5/${MAP}`,
+      },
+      plan: plans[0] as IRSPlan,
+      structures,
+    };
+    const wrapper = mount(
+      <Router history={history}>
+        <IRSReportingMap {...props} />
+      </Router>
+    );
+
+    expect(wrapper.find('GisidaWrapper').props()).toEqual(
+      getGisidaWrapperProps(jurisdiction as Jurisdiction, structures, indicatorStops)
+    );
   });
 });
