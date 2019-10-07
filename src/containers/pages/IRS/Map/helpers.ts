@@ -104,11 +104,7 @@ export const structuresLayerBuilder = (
   indicatorStops: string[][] = defaultIndicatorStop
 ) => {
   const structuresLayers: FlexObject[] = [];
-  const layerType =
-    structures.features &&
-    structures.features[0] &&
-    structures.features[0].geometry &&
-    structures.features[0].geometry.type;
+
   const structuresPopup: FlexObject = {
     body: `<div>
           <p class="heading">{{structure_type}}</p>
@@ -124,70 +120,72 @@ export const structuresLayerBuilder = (
     type: 'categorical',
   };
 
-  if (layerType === 'Point') {
-    // build circle layers if structures are points
-    const structureCircleLayer = {
-      ...circleLayerConfig,
-      id: `${STRUCTURE_LAYER}-circle`,
-      paint: {
-        ...circleLayerConfig.paint,
-        'circle-color': structureStatusColors,
-        'circle-radius': ['interpolate', ['linear'], ['zoom'], 13, 2, 14, 4, 16, 8, 20, 12],
-        'circle-stroke-color': structureStatusColors,
-        'circle-stroke-opacity': 1,
+  // build circle layers if structures are points
+  const structureCircleLayer = {
+    ...circleLayerConfig,
+    filter: ['==', '$type', 'Point'],
+    id: `${STRUCTURE_LAYER}-circle`,
+    paint: {
+      ...circleLayerConfig.paint,
+      'circle-color': structureStatusColors,
+      'circle-radius': ['interpolate', ['linear'], ['zoom'], 13, 2, 14, 4, 16, 8, 20, 12],
+      'circle-stroke-color': structureStatusColors,
+      'circle-stroke-opacity': 1,
+    },
+    popup: structuresPopup,
+    source: {
+      ...circleLayerConfig.source,
+      data: {
+        data: JSON.stringify(structures),
+        type: 'stringified-geojson',
       },
-      popup: structuresPopup,
-      source: {
-        ...circleLayerConfig.source,
-        data: {
-          data: JSON.stringify(structures),
-          type: 'stringified-geojson',
-        },
-        type: 'geojson',
-      },
-      visible: true,
-    };
-    structuresLayers.push(structureCircleLayer);
-  } else if (layerType) {
-    // build fill / line layers if structures are polygons
-    const structuresFillLayer = {
-      ...fillLayerConfig,
-      id: `${STRUCTURE_LAYER}-fill`,
-      paint: {
-        ...fillLayerConfig.paint,
-        'fill-color': structureStatusColors,
-        'fill-outline-color': structureStatusColors,
-      },
-      popup: structuresPopup,
-      source: {
-        ...fillLayerConfig.source,
-        data: {
-          ...fillLayerConfig.source.data,
-          data: JSON.stringify(structures),
-        },
-      },
-      visible: true,
-    };
-    structuresLayers.push(structuresFillLayer);
+      type: 'geojson',
+    },
+    visible: true,
+  };
+  structuresLayers.push(structureCircleLayer);
 
-    const structuresLineLayer = {
-      ...lineLayerConfig,
-      id: `${STRUCTURE_LAYER}-line`,
-      paint: {
-        'line-color': structureStatusColors,
-        'line-opacity': 1,
-        'line-width': 2,
+  // build fill / line layers if structures are polygons
+  const structuresFillLayer = {
+    ...fillLayerConfig,
+    filter: ['==', '$type', 'Polygon'],
+    id: `${STRUCTURE_LAYER}-fill`,
+    paint: {
+      ...fillLayerConfig.paint,
+      'fill-color': structureStatusColors,
+      'fill-outline-color': structureStatusColors,
+    },
+    popup: structuresPopup,
+    source: {
+      ...fillLayerConfig.source,
+      data: {
+        ...fillLayerConfig.source.data,
+        data: JSON.stringify(structures),
       },
-      source: {
-        ...lineLayerConfig.source,
-        data: {
-          ...lineLayerConfig.source.data,
-          data: JSON.stringify(structures),
-        },
+    },
+    visible: true,
+  };
+  structuresLayers.push(structuresFillLayer);
+
+  const structuresLineLayer = {
+    ...lineLayerConfig,
+    filter: ['==', '$type', 'Polygon'],
+    id: `${STRUCTURE_LAYER}-line`,
+    paint: {
+      'line-color': structureStatusColors,
+      'line-opacity': 1,
+      'line-width': 2,
+    },
+    source: {
+      ...lineLayerConfig.source,
+      data: {
+        ...lineLayerConfig.source.data,
+        data: JSON.stringify(structures),
       },
-    };
-    structuresLayers.push(structuresLineLayer);
-  }
+    },
+  };
+  structuresLayers.push(structuresLineLayer);
+
   return structuresLayers;
 };
 
