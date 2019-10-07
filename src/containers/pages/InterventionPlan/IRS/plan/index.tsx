@@ -87,6 +87,7 @@ import HeaderBreadcrumbs, {
 } from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../../components/page/Loading';
 
+import AssignTeamTableCell from '../../../../../components/AssignTeamTableCell';
 import './../../../../../styles/css/drill-down-table.css';
 import './style.css';
 
@@ -1693,7 +1694,7 @@ class IrsPlan extends React.Component<
    */
   private getDrilldownPlanTableProps(state: IrsPlanState): DrillDownProps<any> | null {
     const { filteredJurisdictionIds, newPlan, focusJurisdictionId, tableCrumbs } = state;
-    const { isFinalizedPlan, jurisdictionsById, planId } = this.props;
+    const { jurisdictionsById, planId } = this.props;
     const filteredJurisdictions = filteredJurisdictionIds.map(j => jurisdictionsById[j]);
     const isFocusJurisdictionTopLevel = tableCrumbs[0] && focusJurisdictionId === tableCrumbs[0].id;
 
@@ -1729,6 +1730,7 @@ class IrsPlan extends React.Component<
     interface JurisdictionRow extends Jurisdiction {
       isChildless: boolean;
       isPartiallySelected: boolean;
+      planId: string;
     }
 
     const columns = [
@@ -1793,20 +1795,22 @@ class IrsPlan extends React.Component<
           },
         ],
       },
+      {
+        Header: 'Team Assignment',
+        columns: [
+          {
+            Header: '',
+            accessor: (j: JurisdictionRow) => (
+              <AssignTeamTableCell planId={j.planId} jurisdictionId={j.jurisdiction_id} />
+            ),
+            id: 'teams_assigned',
+          },
+        ],
+      },
     ];
 
     if (this.props.isFinalizedPlan) {
       columns.shift();
-      columns.push({
-        Header: 'Teams Assigned',
-        columns: [
-          {
-            Header: '',
-            accessor: () => <span className="text-info">X Teams Assigned to Y Jurisdictions</span>,
-            id: 'teams_assigned',
-          },
-        ],
-      });
     }
 
     let showPagination: boolean = false;
@@ -1817,20 +1821,23 @@ class IrsPlan extends React.Component<
       showPagination = directDescendants.length > 20;
     }
 
+    const data: JurisdictionRow[] = filteredJurisdictions.map(
+      (j: Jurisdiction) =>
+        ({
+          ...j,
+          id: j.jurisdiction_id,
+          isChildless: this.state.childlessChildrenIds.includes(j.jurisdiction_id),
+          isPartiallySelected:
+            !this.state.childlessChildrenIds.includes(j.jurisdiction_id) &&
+            this.getChildlessChildrenIds([jurisdictionsById[j.jurisdiction_id]]),
+          planId,
+        } as JurisdictionRow)
+    );
+
     const tableProps: DrillDownProps<any> = {
       CellComponent: DropDownCell,
       columns,
-      data: filteredJurisdictions.map(
-        (j: Jurisdiction) =>
-          ({
-            ...j,
-            id: j.jurisdiction_id,
-            isChildless: this.state.childlessChildrenIds.includes(j.jurisdiction_id),
-            isPartiallySelected:
-              !this.state.childlessChildrenIds.includes(j.jurisdiction_id) &&
-              this.getChildlessChildrenIds([jurisdictionsById[j.jurisdiction_id]]),
-          } as JurisdictionRow)
-      ),
+      data,
       identifierField: 'jurisdiction_id',
       linkerField: 'name',
       minRows: 0,
