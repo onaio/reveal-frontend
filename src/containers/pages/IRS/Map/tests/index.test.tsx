@@ -24,6 +24,7 @@ import genericStructuresReducer, {
   fetchGenericStructures,
   getGenericStructures,
   reducerName as genericStructuresReducerName,
+  StructureFeatureCollection,
 } from '../../../../../store/ducks/generic/structures';
 import { plans } from '../../../../../store/ducks/generic/tests/fixtures';
 import jurisdictionReducer, {
