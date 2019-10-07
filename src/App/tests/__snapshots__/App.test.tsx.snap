@@ -675,38 +675,78 @@ exports[`App renders App correctly 1`] = `
               </Route>
             </withRouter(HeaderComponent)>
           </Connect(withRouter(HeaderComponent))>
-          <Container
+          <Row
+            id="main-page-row"
             tag="div"
           >
             <div
-              className="container"
+              className="row"
+              id="main-page-row"
             >
-              <Row
-                id="main-page-row"
+              <Col
                 tag="div"
+                widths={
+                  Array [
+                    "xs",
+                    "sm",
+                    "md",
+                    "lg",
+                    "xl",
+                  ]
+                }
               >
                 <div
-                  className="row"
-                  id="main-page-row"
+                  className="col"
                 >
-                  <Col
-                    tag="div"
-                    widths={
-                      Array [
-                        "xs",
-                        "sm",
-                        "md",
-                        "lg",
-                        "xl",
-                      ]
-                    }
-                  >
-                    <div
-                      className="col"
+                  <Switch>
+                    <Connect(PrivateRoute)
+                      component={[Function]}
+                      computedMatch={
+                        Object {
+                          "isExact": true,
+                          "params": Object {},
+                          "path": "/",
+                          "url": "/",
+                        }
+                      }
+                      disableLoginProtection={true}
+                      exact={true}
+                      location={
+                        Object {
+                          "hash": "",
+                          "pathname": "/",
+                          "search": "",
+                          "state": undefined,
+                        }
+                      }
+                      path="/"
                     >
-                      <Switch>
-                        <Connect(PrivateRoute)
-                          component={[Function]}
+                      <PrivateRoute
+                        authenticated={false}
+                        component={[Function]}
+                        computedMatch={
+                          Object {
+                            "isExact": true,
+                            "params": Object {},
+                            "path": "/",
+                            "url": "/",
+                          }
+                        }
+                        disableLoginProtection={true}
+                        dispatch={[Function]}
+                        exact={true}
+                        location={
+                          Object {
+                            "hash": "",
+                            "pathname": "/",
+                            "search": "",
+                            "state": undefined,
+                          }
+                        }
+                        path="/"
+                        redirectPath="/login"
+                      >
+                        <Route
                           computedMatch={
                             Object {
                               "isExact": true,
@@ -715,7 +755,7 @@ exports[`App renders App correctly 1`] = `
                               "url": "/",
                             }
                           }
-                          disableLoginProtection={true}
+                          dispatch={[Function]}
                           exact={true}
                           location={
                             Object {
@@ -726,10 +766,9 @@ exports[`App renders App correctly 1`] = `
                             }
                           }
                           path="/"
+                          render={[Function]}
                         >
-                          <PrivateRoute
-                            authenticated={false}
-                            component={[Function]}
+                          <Home
                             computedMatch={
                               Object {
                                 "isExact": true,
@@ -738,9 +777,28 @@ exports[`App renders App correctly 1`] = `
                                 "url": "/",
                               }
                             }
-                            disableLoginProtection={true}
                             dispatch={[Function]}
                             exact={true}
+                            history={
+                              Object {
+                                "action": "POP",
+                                "block": [Function],
+                                "createHref": [Function],
+                                "go": [Function],
+                                "goBack": [Function],
+                                "goForward": [Function],
+                                "length": 1,
+                                "listen": [Function],
+                                "location": Object {
+                                  "hash": "",
+                                  "pathname": "/",
+                                  "search": "",
+                                  "state": undefined,
+                                },
+                                "push": [Function],
+                                "replace": [Function],
+                              }
+                            }
                             location={
                               Object {
                                 "hash": "",
@@ -749,283 +807,217 @@ exports[`App renders App correctly 1`] = `
                                 "state": undefined,
                               }
                             }
+                            match={
+                              Object {
+                                "isExact": true,
+                                "params": Object {},
+                                "path": "/",
+                                "url": "/",
+                              }
+                            }
                             path="/"
-                            redirectPath="/login"
                           >
-                            <Route
-                              computedMatch={
-                                Object {
-                                  "isExact": true,
-                                  "params": Object {},
-                                  "path": "/",
-                                  "url": "/",
-                                }
-                              }
-                              dispatch={[Function]}
-                              exact={true}
-                              location={
-                                Object {
-                                  "hash": "",
-                                  "pathname": "/",
-                                  "search": "",
-                                  "state": undefined,
-                                }
-                              }
-                              path="/"
-                              render={[Function]}
+                            <div
+                              className="text-center"
                             >
-                              <Home
-                                computedMatch={
-                                  Object {
-                                    "isExact": true,
-                                    "params": Object {},
-                                    "path": "/",
-                                    "url": "/",
-                                  }
-                                }
-                                dispatch={[Function]}
-                                exact={true}
-                                history={
-                                  Object {
-                                    "action": "POP",
-                                    "block": [Function],
-                                    "createHref": [Function],
-                                    "go": [Function],
-                                    "goBack": [Function],
-                                    "goForward": [Function],
-                                    "length": 1,
-                                    "listen": [Function],
-                                    "location": Object {
-                                      "hash": "",
-                                      "pathname": "/",
-                                      "search": "",
-                                      "state": undefined,
-                                    },
-                                    "push": [Function],
-                                    "replace": [Function],
-                                  }
-                                }
-                                location={
-                                  Object {
-                                    "hash": "",
-                                    "pathname": "/",
-                                    "search": "",
-                                    "state": undefined,
-                                  }
-                                }
-                                match={
-                                  Object {
-                                    "isExact": true,
-                                    "params": Object {},
-                                    "path": "/",
-                                    "url": "/",
-                                  }
-                                }
-                                path="/"
+                              <HelmetWrapper
+                                defer={true}
+                                encodeSpecialCharacters={true}
                               >
-                                <div
-                                  className="text-center"
+                                <SideEffect(NullComponent)
+                                  defer={true}
+                                  encodeSpecialCharacters={true}
+                                  title="Home page"
+                                  titleAttributes={Object {}}
                                 >
-                                  <HelmetWrapper
+                                  <NullComponent
                                     defer={true}
                                     encodeSpecialCharacters={true}
-                                  >
-                                    <SideEffect(NullComponent)
-                                      defer={true}
-                                      encodeSpecialCharacters={true}
-                                      title="Home page"
-                                      titleAttributes={Object {}}
-                                    >
-                                      <NullComponent
-                                        defer={true}
-                                        encodeSpecialCharacters={true}
-                                        title="Home page"
-                                        titleAttributes={Object {}}
-                                      />
-                                    </SideEffect(NullComponent)>
-                                  </HelmetWrapper>
-                                  <Row
-                                    className="welcome-box"
+                                    title="Home page"
+                                    titleAttributes={Object {}}
+                                  />
+                                </SideEffect(NullComponent)>
+                              </HelmetWrapper>
+                              <Row
+                                className="welcome-box"
+                                tag="div"
+                              >
+                                <div
+                                  className="welcome-box row"
+                                >
+                                  <Col
                                     tag="div"
+                                    widths={
+                                      Array [
+                                        "xs",
+                                        "sm",
+                                        "md",
+                                        "lg",
+                                        "xl",
+                                      ]
+                                    }
                                   >
                                     <div
-                                      className="welcome-box row"
+                                      className="col"
                                     >
-                                      <Col
-                                        tag="div"
-                                        widths={
-                                          Array [
-                                            "xs",
-                                            "sm",
-                                            "md",
-                                            "lg",
-                                            "xl",
-                                          ]
-                                        }
-                                      >
-                                        <div
-                                          className="col"
-                                        >
-                                          <h3>
-                                            Welcome to Reveal
-                                          </h3>
-                                          <p>
-                                            Get started by selecting an intervention below
-                                          </p>
-                                        </div>
-                                      </Col>
+                                      <h3>
+                                        Welcome to Reveal
+                                      </h3>
+                                      <p>
+                                        Get started by selecting an intervention below
+                                      </p>
                                     </div>
-                                  </Row>
-                                  <Row
-                                    className="intervention-box"
-                                    tag="div"
-                                  >
-                                    <div
-                                      className="intervention-box row"
-                                    >
-                                      <Col
-                                        md="6"
-                                        tag="div"
-                                        widths={
-                                          Array [
-                                            "xs",
-                                            "sm",
-                                            "md",
-                                            "lg",
-                                            "xl",
-                                          ]
-                                        }
-                                      >
-                                        <div
-                                          className="col-md-6"
-                                        >
-                                          <Link
-                                            className="home-link"
-                                            replace={false}
-                                            to="/intervention/irs"
-                                          >
-                                            <a
-                                              className="home-link"
-                                              href="/intervention/irs"
-                                              onClick={[Function]}
-                                            >
-                                              <Button
-                                                className="btn-intervention btn-lg btn-block btn-outline-green"
-                                                color="outline"
-                                                tag="button"
-                                              >
-                                                <button
-                                                  aria-label={null}
-                                                  className="btn-intervention btn-lg btn-block btn-outline-green btn btn-outline"
-                                                  onClick={[Function]}
-                                                >
-                                                  IRS
-                                                </button>
-                                              </Button>
-                                            </a>
-                                          </Link>
-                                        </div>
-                                      </Col>
-                                      <Col
-                                        md="6"
-                                        tag="div"
-                                        widths={
-                                          Array [
-                                            "xs",
-                                            "sm",
-                                            "md",
-                                            "lg",
-                                            "xl",
-                                          ]
-                                        }
-                                      >
-                                        <div
-                                          className="col-md-6"
-                                        >
-                                          <Link
-                                            className="home-link"
-                                            replace={false}
-                                            to="/focus-investigation"
-                                          >
-                                            <a
-                                              className="home-link"
-                                              href="/focus-investigation"
-                                              onClick={[Function]}
-                                            >
-                                              <Button
-                                                className="btn-intervention btn-lg btn-block btn-outline-green"
-                                                color="outline"
-                                                tag="button"
-                                              >
-                                                <button
-                                                  aria-label={null}
-                                                  className="btn-intervention btn-lg btn-block btn-outline-green btn btn-outline"
-                                                  onClick={[Function]}
-                                                >
-                                                  Focus Investigation
-                                                </button>
-                                              </Button>
-                                            </a>
-                                          </Link>
-                                        </div>
-                                      </Col>
-                                      <Col
-                                        md="6"
-                                        tag="div"
-                                        widths={
-                                          Array [
-                                            "xs",
-                                            "sm",
-                                            "md",
-                                            "lg",
-                                            "xl",
-                                          ]
-                                        }
-                                      >
-                                        <div
-                                          className="col-md-6"
-                                        >
-                                          <Link
-                                            className="home-link"
-                                            replace={false}
-                                            to="/teams"
-                                          >
-                                            <a
-                                              className="home-link"
-                                              href="/teams"
-                                              onClick={[Function]}
-                                            >
-                                              <Button
-                                                className="btn-intervention btn-lg btn-block btn-outline-green"
-                                                color="outline"
-                                                tag="button"
-                                              >
-                                                <button
-                                                  aria-label={null}
-                                                  className="btn-intervention btn-lg btn-block btn-outline-green btn btn-outline"
-                                                  onClick={[Function]}
-                                                >
-                                                  Teams
-                                                </button>
-                                              </Button>
-                                            </a>
-                                          </Link>
-                                        </div>
-                                      </Col>
-                                    </div>
-                                  </Row>
+                                  </Col>
                                 </div>
-                              </Home>
-                            </Route>
-                          </PrivateRoute>
-                        </Connect(PrivateRoute)>
-                      </Switch>
-                    </div>
-                  </Col>
+                              </Row>
+                              <Row
+                                className="intervention-box"
+                                tag="div"
+                              >
+                                <div
+                                  className="intervention-box row"
+                                >
+                                  <Col
+                                    md="6"
+                                    tag="div"
+                                    widths={
+                                      Array [
+                                        "xs",
+                                        "sm",
+                                        "md",
+                                        "lg",
+                                        "xl",
+                                      ]
+                                    }
+                                  >
+                                    <div
+                                      className="col-md-6"
+                                    >
+                                      <Link
+                                        className="home-link"
+                                        replace={false}
+                                        to="/intervention/irs"
+                                      >
+                                        <a
+                                          className="home-link"
+                                          href="/intervention/irs"
+                                          onClick={[Function]}
+                                        >
+                                          <Button
+                                            className="btn-intervention btn-lg btn-block btn-outline-green"
+                                            color="outline"
+                                            tag="button"
+                                          >
+                                            <button
+                                              aria-label={null}
+                                              className="btn-intervention btn-lg btn-block btn-outline-green btn btn-outline"
+                                              onClick={[Function]}
+                                            >
+                                              IRS
+                                            </button>
+                                          </Button>
+                                        </a>
+                                      </Link>
+                                    </div>
+                                  </Col>
+                                  <Col
+                                    md="6"
+                                    tag="div"
+                                    widths={
+                                      Array [
+                                        "xs",
+                                        "sm",
+                                        "md",
+                                        "lg",
+                                        "xl",
+                                      ]
+                                    }
+                                  >
+                                    <div
+                                      className="col-md-6"
+                                    >
+                                      <Link
+                                        className="home-link"
+                                        replace={false}
+                                        to="/focus-investigation"
+                                      >
+                                        <a
+                                          className="home-link"
+                                          href="/focus-investigation"
+                                          onClick={[Function]}
+                                        >
+                                          <Button
+                                            className="btn-intervention btn-lg btn-block btn-outline-green"
+                                            color="outline"
+                                            tag="button"
+                                          >
+                                            <button
+                                              aria-label={null}
+                                              className="btn-intervention btn-lg btn-block btn-outline-green btn btn-outline"
+                                              onClick={[Function]}
+                                            >
+                                              Focus Investigation
+                                            </button>
+                                          </Button>
+                                        </a>
+                                      </Link>
+                                    </div>
+                                  </Col>
+                                  <Col
+                                    md="6"
+                                    tag="div"
+                                    widths={
+                                      Array [
+                                        "xs",
+                                        "sm",
+                                        "md",
+                                        "lg",
+                                        "xl",
+                                      ]
+                                    }
+                                  >
+                                    <div
+                                      className="col-md-6"
+                                    >
+                                      <Link
+                                        className="home-link"
+                                        replace={false}
+                                        to="/teams"
+                                      >
+                                        <a
+                                          className="home-link"
+                                          href="/teams"
+                                          onClick={[Function]}
+                                        >
+                                          <Button
+                                            className="btn-intervention btn-lg btn-block btn-outline-green"
+                                            color="outline"
+                                            tag="button"
+                                          >
+                                            <button
+                                              aria-label={null}
+                                              className="btn-intervention btn-lg btn-block btn-outline-green btn btn-outline"
+                                              onClick={[Function]}
+                                            >
+                                              Teams
+                                            </button>
+                                          </Button>
+                                        </a>
+                                      </Link>
+                                    </div>
+                                  </Col>
+                                </div>
+                              </Row>
+                            </div>
+                          </Home>
+                        </Route>
+                      </PrivateRoute>
+                    </Connect(PrivateRoute)>
+                  </Switch>
                 </div>
-              </Row>
+              </Col>
             </div>
-          </Container>
+          </Row>
         </div>
       </Container>
     </App>
