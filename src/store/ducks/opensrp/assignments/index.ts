@@ -121,5 +121,22 @@ export function getAssignmentsByPlanId(state: Partial<Store>): { [key: string]: 
  * @return {Assignment []} - all assignments by planId in store as an array
  */
 export function getAssignmentsArrayByPlanId(state: Partial<Store>, planId: string): Assignment[] {
-  return get(getAssignmentsByPlanId(state), planId);
+  return get(getAssignmentsByPlanId(state), planId) || [];
+}
+
+/** Get all assignments by plan id and by jurisdiction id
+ * @param {Partial<Store>} state - Part of the redux store
+ * @param {string} planId - The id of the plan of which to return associated Assignments
+ * @param {string} jurisdictionId = The id of the jurisdiction of which to return associated Assignments
+ *
+ * @return {Assignment []} - all assignments by planId in store as an array
+ */
+export function getAssignmentsArrayByPlanIdByJurisdictionId(
+  state: Partial<Store>,
+  planId: string,
+  jurisdictionId: string
+): Assignment[] {
+  return getAssignmentsArrayByPlanId(state, planId).filter(
+    (a: Assignment) => a.jurisdiction === jurisdictionId
+  );
 }
