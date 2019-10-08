@@ -60,45 +60,40 @@ import {
 } from '../../../../constants';
 import { generateNameSpacedUUID } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
+import store from '../../../../store';
 import {
   fetchOrganizations,
   getOrganizationById,
   Organization,
   removeOrganizationsAction,
 } from '../../../../store/ducks/opensrp/organizations';
-import { Practitioner } from '../../../../store/ducks/opensrp/practitioners';
+import {
+  fetchPractitionerRoles,
+  getPractitionersByOrgId,
+  Practitioner,
+} from '../../../../store/ducks/opensrp/practitioners';
+import { styles } from './utils';
 
 /** Props for AssignPractitioner component */
 interface AssignPractitionerProps {
   fetchOrganizationsCreator: typeof fetchOrganizations;
+  fetchPractitionerRolesCreator: typeof fetchPractitionerRoles;
   organization: Organization | null;
   serviceClass: typeof OpenSRPService;
+  assignedPractitioners: Practitioner[];
 }
 
 /** default props for AssignPractitioner component */
 const defaultAssignPractitionerProps: AssignPractitionerProps = {
+  assignedPractitioners: [],
   fetchOrganizationsCreator: fetchOrganizations,
+  fetchPractitionerRolesCreator: fetchPractitionerRoles,
   organization: null,
   serviceClass: OpenSRPService,
 };
 
 /** type intersection for all types that pertain to the props */
 export type PropsTypes = AssignPractitionerProps & RouteComponentProps<RouteParams>;
-
-/** custom styling for fixed options */
-const styles = {
-  multiValue: (base: any, state: any) => {
-    return state.data.isFixed ? { ...base, backgroundColor: 'gray' } : base;
-  },
-  multiValueLabel: (base: any, state: any) => {
-    return state.data.isFixed
-      ? { ...base, fontWeight: 'bold', color: 'white', paddingRight: 6 }
-      : base;
-  },
-  multiValueRemove: (base: any, state: any) => {
-    return state.data.isFixed ? { ...base, display: 'none' } : base;
-  },
-};
 
 /** interface of an option in the component's state */
 interface SelectedOption {
@@ -109,8 +104,15 @@ interface SelectedOption {
 
 /** AssignPractitioner component */
 const AssignPractitioner: React.FC<PropsTypes> = props => {
-  const { serviceClass, fetchOrganizationsCreator: fetchOrganizationsAction, organization } = props;
+  const {
+    serviceClass,
+    fetchOrganizationsCreator,
+    organization,
+    fetchPractitionerRolesCreator,
+    assignedPractitioners,
+  } = props;
   const [selectedOptions, setSelectedOptions] = useState<OptionsType<SelectedOption>>([]);
+  const [assignedOptions, setAssignedOptions] = useState<Practitioner[]>([]);
 
   useEffect(() => {
     const organizationId = props.match.params.id;
@@ -163,20 +165,21 @@ const AssignPractitioner: React.FC<PropsTypes> = props => {
   const promiseOptions = async () => {
     // we need this to merge the practitioner records : those that belong to an
     // organization and those that are just fetched
+    const orgPractitioners = await loadOrgPractitioners(organization.identifier);
     const allPractitioners = await loadAllPractitioners();
-    const orgPractitioners = await loadOrgPractitioners();
-    // for now just brute force this s***f
     const mergedOptions = {
-      ...keyBy(allPractitioners, option => option.value),
       ...keyBy(orgPractitioners, option => option.value),
+      ...keyBy(allPractitioners, option => option.value),
     };
     return values(mergedOptions);
   };
 
   /** load practitioners that belong to this organization */
-  const loadOrgPractitioners = async () => {
+  const loadOrgPractitioners = async (organizationId: string) => {
+    // console.log("called loadOrgPractitioners")
     const serve = new serviceClass(OPENSRP_ORG_PRACTITIONER_ENDPOINT);
-    const orgPractitioners = await serve.list();
+    const orgPractitioners = await serve.read(organizationId);
+    store.dispatch(fetchPractitionerRolesCreator(orgPractitioners, organizationId));
     return formatOptions(orgPractitioners, true);
   };
 
@@ -194,8 +197,8 @@ const AssignPractitioner: React.FC<PropsTypes> = props => {
     const serve = new serviceClass(OPENSRP_ORGANIZATION_ENDPOINT);
 
     serve
-      .read(organizationId)
-      .then((response: Organization) => fetchOrganizationsAction([response]));
+      .read(props.match.params.id)
+      .then((response: Organization) => store.dispatch(fetchOrganizationsCreator([response])));
   };
 
   const addHandler = () => {
@@ -247,15 +250,15 @@ const AssignPractitioner: React.FC<PropsTypes> = props => {
         organization!.name
       }`}</h2>
       {/* section for displaying already Added practitioners to this organization */}
-      {selectedOptions.map((option, index) => (
+      {assignedPractitioners.map((option, index) => (
         <section key={index}>
-          <span>{option.value}</span>
+          <span>{option.name}</span>
           <input
             type="hidden"
             readOnly={true}
-            name={option.label}
-            id={option.value}
-            value={option.label}
+            name={option.name}
+            id={option.identifier}
+            value={option.identifier}
           />
         </section>
       ))}
@@ -269,7 +272,7 @@ const AssignPractitioner: React.FC<PropsTypes> = props => {
         loadOptions={promiseOptions}
         onChange={changeHandler}
       />
-      <Button onclick={addHandler}>{`${ADD} ${PRACTITIONERS}`}</Button>
+      <Button onClick={addHandler}>{`${ADD} ${PRACTITIONERS}`}</Button>
     </div>
   );
 };
@@ -281,6 +284,7 @@ export { AssignPractitioner };
 /** Interface for connected state to props */
 interface DispatchedProps {
   organization: Organization | null;
+  assignedPractitioners: Practitioner[];
 }
 
 // connect to store
@@ -289,12 +293,14 @@ const mapStateToProps = (state: Partial<Store>, ownProps: PropsTypes): Dispatche
   organizationId = organizationId ? organizationId : '';
 
   const organization = getOrganizationById(state, organizationId);
-  return { organization };
+  const assignedPractitioners = getPractitionersByOrgId(state, organizationId);
+  return { organization, assignedPractitioners };
 };
 
 /** map props to action creators */
 const mapDispatchToProps = {
   fetchOrganizationsCreator: fetchOrganizations,
+  fetchPractitionerRolesCreator: fetchPractitionerRoles,
 };
 
 const ConnectedAssignPractitioner = connect(
