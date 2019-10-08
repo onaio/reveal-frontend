@@ -11,7 +11,7 @@ import store from '../../../store';
 import assignmentReducer, {
   Assignment,
   fetchAssignments,
-  getAssignmentsArrayByPlanIdByJurisdictionId,
+  getAssignmentsArrayByPlanId,
   reducerName as assignmentReducerName,
 } from '../../../store/ducks/opensrp/assignments';
 import organizationsReducer, {
@@ -63,6 +63,7 @@ const defaultProps: OrganizationSelectProps = {
  */
 const OrganizationSelect = (props: OrganizationSelectProps) => {
   const {
+    assignments,
     fetchAssignmentsAction,
     fetchOrganizationsAction,
     jurisdictionId,
@@ -96,7 +97,10 @@ const OrganizationSelect = (props: OrganizationSelectProps) => {
   const handleChange = (nextValues: any, meta: any) => {
     // handle input change => updatedStore
     // console.log(nextValues, meta);
-    const nextAssignments: Assignment[] = nextValues.map(
+    const filteredAssignments: Assignment[] = assignments.filter(
+      (a: Assignment) => a.jurisdiction !== jurisdictionId
+    );
+    const newAssignments: Assignment[] = nextValues.map(
       (v: SelectOption) =>
         ({
           jurisdiction: jurisdictionId,
@@ -104,6 +108,7 @@ const OrganizationSelect = (props: OrganizationSelectProps) => {
           plan: planId,
         } as Assignment)
     );
+    const nextAssignments: Assignment[] = [...filteredAssignments, ...newAssignments];
     fetchAssignmentsAction(nextAssignments);
   };
 
@@ -136,19 +141,17 @@ export { OrganizationSelect };
 // connect to store
 const mapStateToProps = (state: Partial<Store>, ownProps: OrganizationSelectProps) => {
   const organizations = keyBy(getOrganizationsArray(state), (o: Organization) => o.identifier);
-  const assignments = getAssignmentsArrayByPlanIdByJurisdictionId(
-    state,
-    ownProps.planId,
-    ownProps.jurisdictionId
-  );
-  const selectOptions = assignments.map(
-    (a: Assignment) =>
-      ({
-        label:
-          (organizations[a.organization] && organizations[a.organization].name) || a.organization,
-        value: a.organization,
-      } as SelectOption)
-  );
+  const assignments = getAssignmentsArrayByPlanId(state, ownProps.planId);
+  const selectOptions = assignments
+    .filter((a: Assignment) => a.jurisdiction === ownProps.jurisdictionId)
+    .map(
+      (a: Assignment) =>
+        ({
+          label:
+            (organizations[a.organization] && organizations[a.organization].name) || a.organization,
+          value: a.organization,
+        } as SelectOption)
+    );
 
   return {
     ...ownProps,
