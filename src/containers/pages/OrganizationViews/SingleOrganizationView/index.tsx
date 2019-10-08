@@ -26,6 +26,7 @@ import {
   NAME,
   OPENSRP_ORG_PRACTITIONERS_ENDPOINT,
   OPENSRP_ORGANIZATION_ENDPOINT,
+  OPENSRP_PRACTITIONER_ROLE_ENDPOINT,
   ORGANIZATION_LABEL,
   ORGANIZATIONS_LABEL,
   ORGANIZATIONS_LIST_URL,
@@ -121,6 +122,24 @@ const SingleOrganizationView = (props: SingleOrgViewPropsType) => {
       });
   };
 
+  /** Unassign Practitioner form organization
+   * @param {serviceClass} service - the openSRP service
+   * @param {practitionerId} practitionerId - id of practitioner
+   * @param {organizationId} organizationId - id of organization
+   */
+  const unassignPractitioner = async (
+    service: typeof serviceClass,
+    practitionerId: string,
+    organizationId: string
+  ) => {
+    const serve = new service(OPENSRP_PRACTITIONER_ROLE_ENDPOINT);
+    const payload = { organization: organizationId, practitioner: practitionerId };
+    serve.delete(payload).then(() => {
+      // remove the practitioner Role
+      loadOrgPractitioners(serviceClass, organizationId);
+    });
+  };
+
   useEffect(() => {
     loadOrganization(serviceClass, orgId);
     loadOrgPractitioners(serviceClass, orgId);
@@ -156,10 +175,13 @@ const SingleOrganizationView = (props: SingleOrgViewPropsType) => {
         practitioner.username,
         practitioner.name,
         <a
-          className={`remove-link`}
+          className="text-danger"
           key={practitioner.identifier}
           // tslint:disable-next-line: jsx-no-lambda
-          onClick={e => alert(practitioner.identifier)}
+          onClick={e => {
+            e.preventDefault();
+            unassignPractitioner(serviceClass, practitioner.identifier, organization.identifier);
+          }}
         >
           {REMOVE}
         </a>,
