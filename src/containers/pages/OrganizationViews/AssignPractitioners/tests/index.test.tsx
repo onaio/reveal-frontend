@@ -1,24 +1,25 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
-import flushPromises from 'flush-promises';
 import { createBrowserHistory } from 'history';
 import React from 'react';
+import Helmet from 'react-helmet';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import ConnectedAssignPractitioner, { AssignPractitioner } from '..';
-import { ASSIGN_PRACTITIONERS_URL } from '../../../../../constants';
+import { ASSIGN, ASSIGN_PRACTITIONERS_URL, PRACTITIONERS } from '../../../../../constants';
 import { OpenSRPService } from '../../../../../services/opensrp';
 import store from '../../../../../store';
 import organizationsReducer, {
   fetchOrganizations,
   reducerName as organizationReducerName,
+  removeOrganizationsAction,
 } from '../../../../../store/ducks/opensrp/organizations';
 import practitionersReducer, {
-  fetchPractitionerRoles,
-  getPractitionersByOrgId,
   reducerName as practitionerReducerName,
+  removePractitionerRolesAction,
 } from '../../../../../store/ducks/opensrp/practitioners';
+import { removePractitionersAction } from '../../../../../store/ducks/practitioners';
 import * as fixtures from '../../../../../store/ducks/tests/fixtures';
 
 reducerRegistry.register(organizationReducerName, organizationsReducer);
@@ -32,42 +33,16 @@ const history = createBrowserHistory();
 describe('src/pages/*/AssignPractitioners', () => {
   beforeEach(() => {
     jest.resetAllMocks();
+    store.dispatch(removePractitionerRolesAction);
+    store.dispatch(removePractitionersAction);
+    store.dispatch(removeOrganizationsAction);
   });
 
-  //   it('render without crashing', () => {
-  //     fetch
-  //       .once(JSON.stringify(fixtures.allPractitioners))
-  //       .once(JSON.stringify(fixtures.org3Practitioners))
-  //       .once(JSON.stringify(fixtures.organization3))
-
-  //     const mock: any = jest.fn();
-  //     const props = {
-  //       fetchOrganizationsCreator: fetchOrganizations,
-  //       history,
-  //       location: mock,
-  //       match: {
-  //         isExact: true,
-  //         params: { id: fixtures.organization1.identifier },
-  //         path: `${ASSIGN_PRACTITIONERS_URL}/:id`,
-  //         url: `${ASSIGN_PRACTITIONERS_URL}/${fixtures.organization1.identifier}`,
-  //       },
-  //       organization: fixtures.organization1,
-  //       serviceClass: OpenSRPService,
-  //     };
-
-  //     shallow(
-  //       <Router history={history}>
-  //         <AssignPractitioner {...props} />
-  //       </Router>
-  //     );
-  //   });
-
-  it('Works well with store', async () => {
-    // interest here is if we component receives correct props
+  it('render without crashing', () => {
     fetch
-      // .once(JSON.stringify(fixtures.allPractitioners))
       .once(JSON.stringify(fixtures.organization3))
-      .once(JSON.stringify(fixtures.org3Practitioners));
+      .once(JSON.stringify(fixtures.org3Practitioners))
+      .once(JSON.stringify(fixtures.allPractitioners));
 
     const mock: any = jest.fn();
     const props = {
@@ -80,7 +55,35 @@ describe('src/pages/*/AssignPractitioners', () => {
         path: `${ASSIGN_PRACTITIONERS_URL}/:id`,
         url: `${ASSIGN_PRACTITIONERS_URL}/${fixtures.organization3.identifier}`,
       },
-      organization: fixtures.organization1,
+      organization: fixtures.organization3,
+      serviceClass: OpenSRPService,
+    };
+
+    shallow(
+      <Router history={history}>
+        <AssignPractitioner {...props} />
+      </Router>
+    );
+  });
+
+  it('Works well with store', async () => {
+    // interest here is if we component receives correct props
+    fetch
+      .once(JSON.stringify(fixtures.organization3))
+      .once(JSON.stringify(fixtures.org3Practitioners))
+      .once(JSON.stringify(fixtures.allPractitioners));
+
+    const mock: any = jest.fn();
+    const props = {
+      fetchOrganizationsCreator: fetchOrganizations,
+      history,
+      location: mock,
+      match: {
+        isExact: true,
+        params: { id: fixtures.organization3.identifier },
+        path: `${ASSIGN_PRACTITIONERS_URL}/:id`,
+        url: `${ASSIGN_PRACTITIONERS_URL}/${fixtures.organization3.identifier}`,
+      },
       serviceClass: OpenSRPService,
     };
 
@@ -95,58 +98,59 @@ describe('src/pages/*/AssignPractitioners', () => {
     await new Promise(resolve => setImmediate(resolve));
     wrapper.update();
 
-    const theProps = wrapper.find('AssignedPractitioner').props() as any;
+    const theProps = wrapper.find('AssignPractitioner').props() as any;
     expect(theProps.organization).toEqual(fixtures.organization3);
     expect(theProps.assignedPractitioners).toEqual(fixtures.org3Practitioners);
   });
 
-  // it('Works well with store', async () => {
-  //   // interest here is if we have crucial page components
-  //   fetch
-  //     // .once(JSON.stringify(fixtures.allPractitioners))
-  //     .once(JSON.stringify(fixtures.organization3))
-  //     .once(JSON.stringify(fixtures.org3Practitioners));
+  it('Renders correctly', async () => {
+    // interest here is if we have crucial page components
+    fetch
+      .once(JSON.stringify({}))
+      .once(JSON.stringify([]))
+      .once(JSON.stringify([]));
 
-  //   const mock: any = jest.fn();
-  //   const props = {
-  //     fetchOrganizationsCreator: fetchOrganizations,
-  //     history,
-  //     location: mock,
-  //     match: {
-  //       isExact: true,
-  //       params: { id: fixtures.organization3.identifier },
-  //       path: `${ASSIGN_PRACTITIONERS_URL}/:id`,
-  //       url: `${ASSIGN_PRACTITIONERS_URL}/${fixtures.organization3.identifier}`,
-  //     },
-  //     organization: fixtures.organization1,
-  //     serviceClass: OpenSRPService,
-  //   };
+    const mock: any = jest.fn();
+    const props = {
+      assignedPractitioners: fixtures.org3Practitioners,
+      fetchOrganizationsCreator: fetchOrganizations,
+      history,
+      location: mock,
+      match: {
+        isExact: true,
+        params: { id: fixtures.organization3.identifier },
+        path: `${ASSIGN_PRACTITIONERS_URL}/:id`,
+        url: `${ASSIGN_PRACTITIONERS_URL}/${fixtures.organization3.identifier}`,
+      },
+      organization: fixtures.organization3,
+      serviceClass: OpenSRPService,
+    };
 
-  //   const wrapper = mount(
-  //     <Provider store={store}>
+    const wrapper = mount(
+      <Router history={history}>
+        <AssignPractitioner {...props} />
+      </Router>
+    );
 
-  //     <Router history={history}>
-  //       <ConnectedAssignPractitioner {...props} />
-  //     </Router>
-  //     </Provider>
-  //   );
+    // expect(store.getState()[practitionerReducerName]).toEqual({});
+    await new Promise(resolve => setImmediate(resolve));
+    wrapper.update();
 
-  //   // expect(store.getState()[practitionerReducerName]).toEqual({});
-  //   await new Promise(resolve => setImmediate(resolve));
-  //   await flushPromises();
-  //   wrapper.update();
-  //   // expect(wrapper.find('span.assigned-options').length).toEqual(3)
+    // page Title
+    const helmet = Helmet.peek();
+    expect(helmet.title).toEqual(`${ASSIGN} ${PRACTITIONERS}`);
 
-  //   // expect(fetch.mock.calls).toEqual([]);
-  //   // expect(store.getState()[practitionerReducerName]).toEqual({});
-  //   // expect(getPractitionersByOrgId(store.getState(), fixtures.organization3.identifier)).toEqual([])
+    // assigned-options spans
+    expect(wrapper.find('span.assigned-options').length).toEqual(3);
 
-  //   expect(toJson(wrapper)).toMatchSnapshot('Everything');
-  //   // expect(store.getState()[practitionerReducerName]).toEqual({});
-  // });
+    // BreadCrumb
+    expect(wrapper.find('Breadcrumb').length).toEqual(1);
+    expect(toJson(wrapper.find('Breadcrumb'))).toMatchSnapshot('BreadCrumb');
 
-  // it('Works welll with store', () => {
-  //   // interest here is if we have crucial page components
-  // });
+    // the async select component
+    expect(wrapper.find('Select input').length).toEqual(1);
+    expect(toJson(wrapper.find('Select input'))).toMatchSnapshot('async select');
+
+    // add button
+  });
 });
-
