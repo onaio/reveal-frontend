@@ -26,6 +26,7 @@ import { Field, Formik } from 'formik';
  * pulls and selects at least one practitioner
  */
 import { RouteParams } from '@onaio/gatekeeper/dist/types';
+import reducerRegistry from '@onaio/redux-reducer-registry';
 import { keyBy, values } from 'lodash';
 import React, { Props, useEffect, useState } from 'react';
 import Helmet from 'react-helmet';
@@ -61,18 +62,22 @@ import {
 import { generateNameSpacedUUID } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
 import store from '../../../../store';
-import {
+import organizationsReducer, {
   fetchOrganizations,
   getOrganizationById,
   Organization,
-  removeOrganizationsAction,
+  reducerName as organizationReducerName,
 } from '../../../../store/ducks/opensrp/organizations';
-import {
+import practitionersReducer, {
   fetchPractitionerRoles,
   getPractitionersByOrgId,
   Practitioner,
+  reducerName as practitionerReducerName,
 } from '../../../../store/ducks/opensrp/practitioners';
 import { styles } from './utils';
+
+reducerRegistry.register(organizationReducerName, organizationsReducer);
+reducerRegistry.register(practitionerReducerName, practitionersReducer);
 
 /** Props for AssignPractitioner component */
 interface AssignPractitionerProps {
@@ -114,109 +119,109 @@ const AssignPractitioner: React.FC<PropsTypes> = props => {
   const [selectedOptions, setSelectedOptions] = useState<OptionsType<SelectedOption>>([]);
   const [assignedOptions, setAssignedOptions] = useState<Practitioner[]>([]);
 
-  useEffect(() => {
-    const organizationId = props.match.params.id;
-    loadOrganization(organizationId);
-  }, []);
-
-  if (!organization) {
-    return <Loading />;
-  }
-
-  /** formats Practitioner json object structure into a selectedOption object structure
-   * @param {Practitioner []} practitioners - list of practitioner json objects
-   * @param {boolean} isFixed - value of isFixed; option will be fixed if its already assigned
-   * to organization
-   * @return {OptionsType<SelectedOption>}
-   */
-  const formatOptions = (
-    practitioners: Practitioner[],
-    isFixed: boolean = false
-  ): OptionsType<SelectedOption> =>
-    practitioners.map(entry => ({
-      isFixed,
-      label: entry.username,
-      value: entry.identifier,
-    }));
-
-  // TODO - Hack in this: typings for the changeHandler function.
-  /** This sets the state selectedOptions
-   * @param {ValueType<SelectedOption>} -  the so far selected options
-   * @param {ActionMeta} - information on the change event; custom react-select event
-   */
-  const changeHandler = (chosenOptions: any[], { action, removedValue }: any) => {
-    if (!chosenOptions) {
-      return;
-    }
-    switch (action) {
-      case 'remove-value':
-      case 'pop-value':
-        if (removedValue.isFixed) {
-          return;
-        }
-        break;
-      case 'clear':
-        chosenOptions = chosenOptions.filter(v => !v.isFixed);
-    }
-    setSelectedOptions(chosenOptions);
-  };
-
-  /** merges the practitioner records and returns them as  a promise */
-  const promiseOptions = async () => {
-    // we need this to merge the practitioner records : those that belong to an
-    // organization and those that are just fetched
-    const orgPractitioners = await loadOrgPractitioners(organization.identifier);
-    const allPractitioners = await loadAllPractitioners();
-    const mergedOptions = {
-      ...keyBy(orgPractitioners, option => option.value),
-      ...keyBy(allPractitioners, option => option.value),
-    };
-    return values(mergedOptions);
-  };
-
   /** load practitioners that belong to this organization */
   const loadOrgPractitioners = async (organizationId: string) => {
     // console.log("called loadOrgPractitioners")
     const serve = new serviceClass(OPENSRP_ORG_PRACTITIONER_ENDPOINT);
     const orgPractitioners = await serve.read(organizationId);
     store.dispatch(fetchPractitionerRolesCreator(orgPractitioners, organizationId));
-    return formatOptions(orgPractitioners, true);
   };
 
   /** load all practitioners at least all of those returned
    * in a single call to Practitioners endpoint
    */
-  const loadAllPractitioners = async () => {
-    const serve = new serviceClass(OPENSRP_PRACTITIONER_ENDPOINT);
-    const allPractitioners = await serve.list();
-    return formatOptions(allPractitioners);
-  };
+  // const loadAllPractitioners = async () => {
+  //   const serve = new serviceClass(OPENSRP_PRACTITIONER_ENDPOINT);
+  //   const allPractitioners = await serve.list();
+  //   return formatOptions(allPractitioners);
+  // };
 
   // TODO - this is wet code
   const loadOrganization = async (organizationId: string) => {
     const serve = new serviceClass(OPENSRP_ORGANIZATION_ENDPOINT);
 
     serve
-      .read(props.match.params.id)
+      .read(organizationId)
       .then((response: Organization) => store.dispatch(fetchOrganizationsCreator([response])));
   };
 
-  const addHandler = () => {
-    const code = {
-      text: 'Community Health Worker',
-    };
-    // selected options
-    const stringValues = selectedOptions.map(option => option.value);
-    const jsonArrayPayload = stringValues.map(practitionerId => ({
-      active: true,
-      code,
-      identifier: generateNameSpacedUUID('', ''),
-      organization: organization.identifier,
-      practitioner: practitionerId,
-    }));
-    const serve = new serviceClass(OPENSRP_PRACTITIONER_ROLE_ENDPOINT);
-    serve.create(jsonArrayPayload);
-  };
+  useEffect(() => {
+    const organizationId = props.match.params.id;
+    loadOrganization(organizationId);
+    loadOrgPractitioners(organizationId);
+  }, []);
+
+  if (!organization) {
+    return <Loading />;
+  }
+
+  // /** formats Practitioner json object structure into a selectedOption object structure
+  //  * @param {Practitioner []} practitioners - list of practitioner json objects
+  //  * @param {boolean} isFixed - value of isFixed; option will be fixed if its already assigned
+  //  * to organization
+  //  * @return {OptionsType<SelectedOption>}
+  //  */
+  // const formatOptions = (
+  //   practitioners: Practitioner[],
+  //   isFixed: boolean = false
+  // ): OptionsType<SelectedOption> =>
+  //   practitioners.map(entry => ({
+  //     isFixed,
+  //     label: entry.username,
+  //     value: entry.identifier,
+  //   }));
+
+  // // TODO - Hack in this: typings for the changeHandler function.
+  // /** This sets the state selectedOptions
+  //  * @param {ValueType<SelectedOption>} -  the so far selected options
+  //  * @param {ActionMeta} - information on the change event; custom react-select event
+  //  */
+  // const changeHandler = (chosenOptions: any[], { action, removedValue }: any) => {
+  //   if (!chosenOptions) {
+  //     return;
+  //   }
+  //   switch (action) {
+  //     case 'remove-value':
+  //     case 'pop-value':
+  //       if (removedValue.isFixed) {
+  //         return;
+  //       }
+  //       break;
+  //     case 'clear':
+  //       chosenOptions = chosenOptions.filter(v => !v.isFixed);
+  //   }
+  //   setSelectedOptions(chosenOptions);
+  // };
+
+  // /** merges the practitioner records and returns them as  a promise */
+  // const promiseOptions = async () => {
+  //   // we need this to merge the practitioner records : those that belong to an
+  //   // organization and those that are just fetched
+  //   const orgPractitioners = formatOptions(assignedPractitioners, true);
+  //   const allPractitioners = await loadAllPractitioners();
+  //   const mergedOptions = {
+  //     ...keyBy(orgPractitioners, option => option.value),
+  //     ...keyBy(allPractitioners, option => option.value),
+  //   };
+  //   return values(mergedOptions);
+  // };
+
+  // const addHandler = () => {
+  //   const code = {
+  //     text: 'Community Health Worker',
+  //   };
+  //   // selected options
+  //   const stringValues = selectedOptions.map(option => option.value);
+  //   const jsonArrayPayload = stringValues.map(practitionerId => ({
+  //     active: true,
+  //     code,
+  //     identifier: generateNameSpacedUUID('', ''),
+  //     organization: organization.identifier,
+  //     practitioner: practitionerId,
+  //   }));
+  //   const serve = new serviceClass(OPENSRP_PRACTITIONER_ROLE_ENDPOINT);
+  //   serve.create(jsonArrayPayload);
+  // };
 
   // Props
 
@@ -250,9 +255,10 @@ const AssignPractitioner: React.FC<PropsTypes> = props => {
         organization!.name
       }`}</h2>
       {/* section for displaying already Added practitioners to this organization */}
+      {console.log(assignedPractitioners)};
       {assignedPractitioners.map((option, index) => (
         <section key={index}>
-          <span>{option.name}</span>
+          <span className="assigned-options">{option.name}</span>
           <input
             type="hidden"
             readOnly={true}
@@ -263,7 +269,7 @@ const AssignPractitioner: React.FC<PropsTypes> = props => {
         </section>
       ))}
       <hr />
-      <AsyncSelect
+      {/* <AsyncSelect
         styles={styles}
         isClearable={selectedOptions.some(option => !option.isFixed)}
         isMulti={true}
@@ -272,7 +278,7 @@ const AssignPractitioner: React.FC<PropsTypes> = props => {
         loadOptions={promiseOptions}
         onChange={changeHandler}
       />
-      <Button onClick={addHandler}>{`${ADD} ${PRACTITIONERS}`}</Button>
+      <Button onClick={addHandler}>{`${ADD} ${PRACTITIONERS}`}</Button> */}
     </div>
   );
 };
@@ -294,6 +300,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: PropsTypes): Dispatche
 
   const organization = getOrganizationById(state, organizationId);
   const assignedPractitioners = getPractitionersByOrgId(state, organizationId);
+  console.log(assignedPractitioners);
   return { organization, assignedPractitioners };
 };
 
