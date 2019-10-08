@@ -46,6 +46,8 @@ describe('services/OpenSRP', () => {
     );
   });
 
+  // list method
+
   it('OpenSRPService list method works', async () => {
     fetch.mockResponseOnce(JSON.stringify(plansListResponse));
     const planService = new OpenSRPService('plans');
@@ -86,6 +88,48 @@ describe('services/OpenSRP', () => {
     }
     expect(error).toEqual(new Error('OpenSRPService list on plans failed, HTTP status 500'));
   });
+
+  // delete method
+
+  it('OpenSRPService delete method works', async () => {
+    fetch.mockResponseOnce(JSON.stringify({}));
+    const service = new OpenSRPService('practitioners');
+    const result = await service.delete({});
+    expect(result).toEqual({});
+    expect(fetch.mock.calls).toEqual([
+      [
+        'https://test.smartregister.org/opensrp/rest/practitioners',
+        {
+          'Cache-Control': 'no-cache',
+          Pragma: 'no-cache',
+          body: JSON.stringify({}),
+
+          headers: {
+            accept: 'application/json',
+            authorization: 'Bearer hunter2',
+            'content-type': 'application/json;charset=UTF-8',
+          },
+          method: 'DELETE',
+        },
+      ],
+    ]);
+  });
+
+  it('OpenSRPService delete method should handle http errors', async () => {
+    fetch.mockResponseOnce(JSON.stringify({}), { status: 500 });
+    const service = new OpenSRPService('practitioners');
+    let error;
+    try {
+      await service.delete({});
+    } catch (e) {
+      error = e;
+    }
+    expect(error).toEqual(
+      new Error('OpenSRPService delete on practitioners failed, HTTP status 500')
+    );
+  });
+
+  // read method
 
   it('OpenSRPService read method works', async () => {
     fetch.mockResponseOnce(JSON.stringify(plansListResponse[0]));
