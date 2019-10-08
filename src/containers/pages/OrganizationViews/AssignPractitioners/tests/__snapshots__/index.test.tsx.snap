@@ -1,6 +1,110 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`src/pages/*/AssignPractitioners Assign Practitioner renders correctly: Everything 1`] = `
+exports[`src/pages/*/AssignPractitioners Renders correctly 1`] = `
+<input
+  aria-autocomplete="list"
+  autoCapitalize="none"
+  autoComplete="off"
+  autoCorrect="off"
+  disabled={false}
+  id="react-select-3-input"
+  onBlur={[Function]}
+  onChange={[Function]}
+  onFocus={[Function]}
+  spellCheck="false"
+  style={
+    Object {
+      "background": 0,
+      "border": 0,
+      "boxSizing": "content-box",
+      "color": "inherit",
+      "fontSize": "inherit",
+      "label": "input",
+      "opacity": 1,
+      "outline": 0,
+      "padding": 0,
+      "width": "2px",
+    }
+  }
+  tabIndex="0"
+  type="text"
+  value=""
+/>
+`;
+
+exports[`src/pages/*/AssignPractitioners Renders correctly: BreadCrumb 1`] = `
+<Breadcrumb
+  aria-label="breadcrumb"
+  className="reveal-breadcrumb"
+  listTag="ol"
+  tag="nav"
+>
+  <nav
+    aria-label="breadcrumb"
+    className="reveal-breadcrumb"
+  >
+    <ol
+      className="breadcrumb"
+    >
+      <BreadcrumbItem
+        key="0"
+        tag="li"
+      >
+        <li
+          className="breadcrumb-item"
+        >
+          <Link
+            key="0"
+            replace={false}
+            to="/"
+          >
+            <a
+              href="/"
+              onClick={[Function]}
+            >
+              Home
+            </a>
+          </Link>
+        </li>
+      </BreadcrumbItem>
+      <BreadcrumbItem
+        key="1"
+        tag="li"
+      >
+        <li
+          className="breadcrumb-item"
+        >
+          <Link
+            key="1"
+            replace={false}
+            to="/teams"
+          >
+            <a
+              href="/teams"
+              onClick={[Function]}
+            >
+              Teams
+            </a>
+          </Link>
+        </li>
+      </BreadcrumbItem>
+      <BreadcrumbItem
+        active={true}
+        tag="li"
+      >
+        <li
+          aria-current="page"
+          className="active breadcrumb-item"
+        >
+          Assign Practitioners
+        </li>
+      </BreadcrumbItem>
+    </ol>
+  </nav>
+</Breadcrumb>
+`;
+
+exports[`src/pages/*/AssignPractitioners Renders correctly: Everything 1`] = `
 <Router
   history={
     Object {
@@ -24,7 +128,31 @@ exports[`src/pages/*/AssignPractitioners Assign Practitioner renders correctly: 
   }
 >
   <AssignPractitioner
-    assignedPractitioners={Array []}
+    assignedPractitioners={
+      Array [
+        Object {
+          "active": true,
+          "identifier": "healer",
+          "name": "tlv2_name",
+          "userId": "84f3b7ce-e3fa-420f-8de6-e7c36e08f0bc",
+          "username": "tlv2",
+        },
+        Object {
+          "active": true,
+          "identifier": "master",
+          "name": "Biophics Tester",
+          "userId": "8df26310-c7ef-4bb2-b77f-3b9f4bd23713",
+          "username": "tak",
+        },
+        Object {
+          "active": true,
+          "identifier": "437cc699-cfd7-414c-ba27-1668b6b517e6",
+          "name": "Test User Lusaka",
+          "userId": "cad04f1e-9c05-4ebc-92ce-4b38aa478644",
+          "username": "lusaka",
+        },
+      ]
+    }
     fetchOrganizationsCreator={[Function]}
     fetchPractitionerRolesCreator={[Function]}
     history={
@@ -52,18 +180,19 @@ exports[`src/pages/*/AssignPractitioners Assign Practitioner renders correctly: 
       Object {
         "isExact": true,
         "params": Object {
-          "id": "fcc19470-d599-11e9-bb65-2a2ae2dbcce4",
+          "id": "d23f7350-d406-11e9-bb65-2a2ae2dbcce4",
         },
         "path": "/teams/assignPractitioners/:id",
-        "url": "/teams/assignPractitioners/fcc19470-d599-11e9-bb65-2a2ae2dbcce4",
+        "url": "/teams/assignPractitioners/d23f7350-d406-11e9-bb65-2a2ae2dbcce4",
       }
     }
     organization={
       Object {
         "active": true,
-        "id": 1,
-        "identifier": "fcc19470-d599-11e9-bb65-2a2ae2dbcce4",
-        "name": "The Luang",
+        "id": 2,
+        "identifier": "d23f7350-d406-11e9-bb65-2a2ae2dbcce4",
+        "name": "Takang 1",
+        "partOf": 1,
         "type": Object {
           "coding": Array [
             Object {
@@ -85,25 +214,13 @@ exports[`src/pages/*/AssignPractitioners Assign Practitioner renders correctly: 
         <SideEffect(NullComponent)
           defer={true}
           encodeSpecialCharacters={true}
-          title={
-            Array [
-              "Assign",
-              " ",
-              "Practitioners",
-            ]
-          }
+          title="Assign Practitioners"
           titleAttributes={Object {}}
         >
           <NullComponent
             defer={true}
             encodeSpecialCharacters={true}
-            title={
-              Array [
-                "Assign",
-                " ",
-                "Practitioners",
-              ]
-            }
+            title="Assign Practitioners"
             titleAttributes={Object {}}
           />
         </SideEffect(NullComponent)>
@@ -203,8 +320,56 @@ exports[`src/pages/*/AssignPractitioners Assign Practitioner renders correctly: 
       <h2
         className="mb-3 mt-5 page-title"
       >
-        Assign Practitioners To The Luang
+        Assign Practitioners To Takang 1
       </h2>
+      <section
+        key="0"
+      >
+        <span
+          className="assigned-options"
+        >
+          tlv2_name
+        </span>
+        <input
+          id="healer"
+          name="tlv2_name"
+          readOnly={true}
+          type="hidden"
+          value="healer"
+        />
+      </section>
+      <section
+        key="1"
+      >
+        <span
+          className="assigned-options"
+        >
+          Biophics Tester
+        </span>
+        <input
+          id="master"
+          name="Biophics Tester"
+          readOnly={true}
+          type="hidden"
+          value="master"
+        />
+      </section>
+      <section
+        key="2"
+      >
+        <span
+          className="assigned-options"
+        >
+          Test User Lusaka
+        </span>
+        <input
+          id="437cc699-cfd7-414c-ba27-1668b6b517e6"
+          name="Test User Lusaka"
+          readOnly={true}
+          type="hidden"
+          value="437cc699-cfd7-414c-ba27-1668b6b517e6"
+        />
+      </section>
       <hr />
       <Async
         cacheOptions={true}
@@ -797,7 +962,7 @@ exports[`src/pages/*/AssignPractitioners Assign Practitioner renders correctly: 
                                 autoCorrect="off"
                                 cx={[Function]}
                                 getStyles={[Function]}
-                                id="react-select-2-input"
+                                id="react-select-3-input"
                                 innerRef={[Function]}
                                 isDisabled={false}
                                 isHidden={false}
@@ -914,7 +1079,7 @@ exports[`src/pages/*/AssignPractitioners Assign Practitioner renders correctly: 
                                       autoCorrect="off"
                                       className=""
                                       disabled={false}
-                                      id="react-select-2-input"
+                                      id="react-select-3-input"
                                       injectStyles={true}
                                       inputRef={[Function]}
                                       inputStyle={
@@ -952,7 +1117,7 @@ exports[`src/pages/*/AssignPractitioners Assign Practitioner renders correctly: 
                                           autoComplete="off"
                                           autoCorrect="off"
                                           disabled={false}
-                                          id="react-select-2-input"
+                                          id="react-select-3-input"
                                           onBlur={[Function]}
                                           onChange={[Function]}
                                           onFocus={[Function]}
@@ -1401,21 +1566,39 @@ exports[`src/pages/*/AssignPractitioners Assign Practitioner renders correctly: 
           </Select>
         </StateManager>
       </Async>
-      <Button
-        color="secondary"
-        onClick={[Function]}
-        tag="button"
-      >
-        <button
-          aria-label={null}
-          className="btn btn-secondary"
-          onClick={[Function]}
-          type="button"
-        >
-          Add Practitioners
-        </button>
-      </Button>
     </div>
   </AssignPractitioner>
 </Router>
+`;
+
+exports[`src/pages/*/AssignPractitioners Renders correctly: async select 1`] = `
+<input
+  aria-autocomplete="list"
+  autoCapitalize="none"
+  autoComplete="off"
+  autoCorrect="off"
+  disabled={false}
+  id="react-select-3-input"
+  onBlur={[Function]}
+  onChange={[Function]}
+  onFocus={[Function]}
+  spellCheck="false"
+  style={
+    Object {
+      "background": 0,
+      "border": 0,
+      "boxSizing": "content-box",
+      "color": "inherit",
+      "fontSize": "inherit",
+      "label": "input",
+      "opacity": 1,
+      "outline": 0,
+      "padding": 0,
+      "width": "2px",
+    }
+  }
+  tabIndex="0"
+  type="text"
+  value=""
+/>
 `;
