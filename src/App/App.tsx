@@ -65,7 +65,7 @@ class App extends Component {
       <Container fluid={true}>
         <Helmet titleTemplate={`%s | ` + WEBSITE_NAME} defaultTitle="" />
         <ConnectedHeader />
-        <Container>
+        <Container fluid={true}>
           <Row id="main-page-row">
             <Col>
               <Switch>

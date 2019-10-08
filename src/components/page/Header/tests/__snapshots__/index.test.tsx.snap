@@ -90,7 +90,7 @@ exports[`components/page/Header renders header correctly 1`] = `
               className="navbar navbar-expand-md navbar-light"
             >
               <nav
-                className="navbar navbar-expand-md navbar-light"
+                className="navbar navbar-expand-md navbar-light header-logo-navbar"
               >
                 <Link
                   className="navbar-brand"
@@ -723,7 +723,7 @@ exports[`components/page/Header renders header correctly when authenticated 1`] 
               className="navbar navbar-expand-md navbar-light"
             >
               <nav
-                className="navbar navbar-expand-md navbar-light"
+                className="navbar navbar-expand-md navbar-light header-logo-navbar"
               >
                 <Link
                   className="navbar-brand"
