@@ -5,7 +5,7 @@ Object {
   "CellComponent": [Function],
   "columns": Any<Object>,
   "data": Any<Object>,
-  "defaultPageSize": 154,
+  "defaultPageSize": 155,
   "extraCellProps": Object {
     "urlPath": "/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce",
   },
@@ -28,7 +28,7 @@ Object {
   "CellComponent": [Function],
   "columns": Any<Object>,
   "data": Any<Object>,
-  "defaultPageSize": 154,
+  "defaultPageSize": 155,
   "extraCellProps": Object {
     "urlPath": "/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce",
   },
@@ -51,7 +51,7 @@ Object {
   "CellComponent": [Function],
   "columns": Any<Object>,
   "data": Any<Object>,
-  "defaultPageSize": 154,
+  "defaultPageSize": 155,
   "extraCellProps": Object {
     "urlPath": "/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce",
   },
@@ -74,7 +74,7 @@ Object {
   "CellComponent": [Function],
   "columns": Any<Object>,
   "data": Any<Object>,
-  "defaultPageSize": 154,
+  "defaultPageSize": 155,
   "extraCellProps": Object {
     "urlPath": "/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce",
   },
@@ -97,7 +97,7 @@ Object {
   "CellComponent": [Function],
   "columns": Any<Object>,
   "data": Any<Object>,
-  "defaultPageSize": 154,
+  "defaultPageSize": 155,
   "extraCellProps": Object {
     "urlPath": "/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce",
   },
@@ -120,7 +120,7 @@ Object {
   "CellComponent": [Function],
   "columns": Any<Object>,
   "data": Any<Object>,
-  "defaultPageSize": 154,
+  "defaultPageSize": 155,
   "extraCellProps": Object {
     "urlPath": "/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce",
   },

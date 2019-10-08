@@ -8,8 +8,14 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Router } from 'react-router';
 import { IRSReportingMap } from '../';
+import { GREY } from '../../../../../colors';
 import { SUPERSET_IRS_REPORTING_INDICATOR_STOPS } from '../../../../../configs/env';
-import { INTERVENTION_IRS_URL, MAP } from '../../../../../constants';
+import {
+  circleLayerConfig,
+  fillLayerConfig,
+  lineLayerConfig,
+} from '../../../../../configs/settings';
+import { INTERVENTION_IRS_URL, MAIN_PLAN, MAP, STRUCTURE_LAYER } from '../../../../../constants';
 import store from '../../../../../store';
 import GenericJurisdictionsReducer, {
   fetchGenericJurisdictions,
@@ -24,6 +30,7 @@ import genericStructuresReducer, {
   fetchGenericStructures,
   getGenericStructures,
   reducerName as genericStructuresReducerName,
+  StructureFeatureCollection,
 } from '../../../../../store/ducks/generic/structures';
 import { plans } from '../../../../../store/ducks/generic/tests/fixtures';
 import jurisdictionReducer, {
@@ -50,10 +57,12 @@ reducerRegistry.register(genericStructuresReducerName, genericStructuresReducer)
 const focusAreaData = superset.processData(fixtures.ZambiaFocusAreasJSON) || [];
 const structureData = superset.processData(fixtures.ZambiaStructuresJSON) || [];
 const jurisdictionData = superset.processData(fixtures.ZambiaAkros1JSON) || [];
+const jurisdiction2Data = superset.processData(fixtures.ZambiaKMZ421JSON) || [];
 
 store.dispatch(fetchGenericJurisdictions('zm-focusAreas', focusAreaData));
 store.dispatch(fetchGenericStructures('zm-structures', structureData));
 store.dispatch(fetchJurisdictions(jurisdictionData));
+store.dispatch(fetchJurisdictions(jurisdiction2Data));
 
 const history = createBrowserHistory();
 
@@ -270,5 +279,147 @@ describe('components/IRS Reports/IRSReportingMap', () => {
     ]);
     expect(supersetServiceMock).toHaveBeenCalledTimes(4);
     wrapper.unmount();
+  });
+
+  it('renders both Points and Polygons correctly', () => {
+    const mock: any = jest.fn();
+
+    const kmz421StructureData = superset.processData(fixtures.ZambiaKMZ421StructuresJSON) || [];
+
+    store.dispatch(fetchGenericStructures('zm-kmz421-structures', kmz421StructureData));
+
+    const jurisdiction = getJurisdictionById(
+      store.getState(),
+      '92a0c5f3-8b47-465e-961b-2998ad3f00a5'
+    );
+
+    const structures = getGenericStructures(
+      store.getState(),
+      'zm-kmz421-structures',
+      '92a0c5f3-8b47-465e-961b-2998ad3f00a5'
+    );
+
+    const indicatorStops = IRSIndicatorStops[SUPERSET_IRS_REPORTING_INDICATOR_STOPS];
+
+    const props = {
+      focusArea: getGenericJurisdictionByJurisdictionId(
+        store.getState(),
+        'zm-focusAreas',
+        '92a0c5f3-8b47-465e-961b-2998ad3f00a5'
+      ),
+      history,
+      jurisdiction,
+      location: mock,
+      match: {
+        isExact: true,
+        params: {
+          jurisdictionId: '92a0c5f3-8b47-465e-961b-2998ad3f00a5',
+          planId: (plans[0] as IRSPlan).plan_id,
+        },
+        path: `${INTERVENTION_IRS_URL}/:planId/:jurisdictionId/${MAP}`,
+        url: `${INTERVENTION_IRS_URL}/${
+          (plans[0] as IRSPlan).plan_id
+        }/92a0c5f3-8b47-465e-961b-2998ad3f00a5/${MAP}`,
+      },
+      plan: plans[0] as IRSPlan,
+      structures,
+    };
+    const wrapper = mount(
+      <Router history={history}>
+        <IRSReportingMap {...props} />
+      </Router>
+    );
+
+    expect(wrapper.find('GisidaWrapper').props()).toEqual(
+      getGisidaWrapperProps(jurisdiction as Jurisdiction, structures, indicatorStops)
+    );
+
+    const structuresPopup = {
+      body: `<div>
+          <p class="heading">{{structure_type}}</p>
+          <p>Status: {{business_status}}</p>
+        </div>`,
+      join: ['structure_jurisdiction_id', 'structure_jurisdiction_id'],
+    };
+
+    const structureStatusColors = {
+      default: GREY,
+      property: 'business_status',
+      stops: indicatorStops,
+      type: 'categorical',
+    };
+
+    expect((wrapper.find('GisidaWrapper').props() as any).layers).toEqual([
+      {
+        ...lineLayerConfig,
+        id: `${MAIN_PLAN}-${(jurisdiction as Jurisdiction).jurisdiction_id}`,
+        source: {
+          ...lineLayerConfig.source,
+          data: {
+            ...lineLayerConfig.source.data,
+            data: JSON.stringify((jurisdiction as Jurisdiction).geojson),
+          },
+        },
+        visible: true,
+      },
+      {
+        ...circleLayerConfig,
+        filter: ['==', '$type', 'Point'],
+        id: `${STRUCTURE_LAYER}-circle`,
+        paint: {
+          ...circleLayerConfig.paint,
+          'circle-color': structureStatusColors,
+          'circle-radius': ['interpolate', ['exponential', 2], ['zoom'], 15.75, 2.5, 20.8, 50],
+          'circle-stroke-color': structureStatusColors,
+          'circle-stroke-opacity': 1,
+        },
+        popup: structuresPopup,
+        source: {
+          ...circleLayerConfig.source,
+          data: {
+            data: JSON.stringify(structures),
+            type: 'stringified-geojson',
+          },
+          type: 'geojson',
+        },
+        visible: true,
+      },
+      {
+        ...fillLayerConfig,
+        filter: ['==', '$type', 'Polygon'],
+        id: `${STRUCTURE_LAYER}-fill`,
+        paint: {
+          ...fillLayerConfig.paint,
+          'fill-color': structureStatusColors,
+          'fill-outline-color': structureStatusColors,
+        },
+        popup: structuresPopup,
+        source: {
+          ...fillLayerConfig.source,
+          data: {
+            ...fillLayerConfig.source.data,
+            data: JSON.stringify(structures),
+          },
+        },
+        visible: true,
+      },
+      {
+        ...lineLayerConfig,
+        filter: ['==', '$type', 'Polygon'],
+        id: `${STRUCTURE_LAYER}-line`,
+        paint: {
+          'line-color': structureStatusColors,
+          'line-opacity': 1,
+          'line-width': 2,
+        },
+        source: {
+          ...lineLayerConfig.source,
+          data: {
+            ...lineLayerConfig.source.data,
+            data: JSON.stringify(structures),
+          },
+        },
+      },
+    ]);
   });
 });
