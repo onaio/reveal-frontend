@@ -70,6 +70,11 @@ import jurisdictionReducer, {
   JurisdictionGeoJSON,
   reducerName as jurisdictionReducerName,
 } from '../../../../../store/ducks/jurisdictions';
+import assignmentReducer, {
+  Assignment,
+  getAssignmentsArrayByPlanId,
+  reducerName as assignmentReducerName,
+} from '../../../../../store/ducks/opensrp/assignments';
 import organizationsReducer, {
   fetchOrganizations,
   getOrganizationsById,
@@ -104,6 +109,7 @@ import './style.css';
 reducerRegistry.register(plansReducerName, plansReducer);
 reducerRegistry.register(jurisdictionReducerName, jurisdictionReducer);
 reducerRegistry.register(organizationsReducerName, organizationsReducer);
+reducerRegistry.register(assignmentReducerName, assignmentReducer);
 
 /** initialize OpenSRP API services */
 const OpenSrpLocationService = new OpenSRPService(OPENSRP_LOCATION);
@@ -113,6 +119,7 @@ const OpenSRPOrganizationService = new OpenSRPService(OPENSRP_ORGANIZATION_ENDPO
 /** IrsPlanProps - interface for IRS Plan page */
 export interface IrsPlanProps {
   allJurisdictionIds: string[];
+  assignmentsArray: Assignment[];
   fetchAllJurisdictionIdsActionCreator: typeof fetchAllJurisdictionIds;
   fetchJurisdictionsActionCreator: typeof fetchJurisdictions;
   fetchOrganizationsActionCreator: typeof fetchOrganizations;
@@ -130,6 +137,7 @@ export interface IrsPlanProps {
 /** defaultIrsPlanProps - default props for IRS Plan page */
 export const defaultIrsPlanProps: IrsPlanProps = {
   allJurisdictionIds: [],
+  assignmentsArray: [],
   fetchAllJurisdictionIdsActionCreator: fetchAllJurisdictionIds,
   fetchJurisdictionsActionCreator: fetchJurisdictions,
   fetchOrganizationsActionCreator: fetchOrganizations,
@@ -1716,7 +1724,7 @@ class IrsPlan extends React.Component<
    */
   private getDrilldownPlanTableProps(state: IrsPlanState): DrillDownProps<any> | null {
     const { filteredJurisdictionIds, newPlan, focusJurisdictionId, tableCrumbs } = state;
-    const { jurisdictionsById, planId } = this.props;
+    const { assignmentsArray, jurisdictionsById, planId } = this.props;
     const filteredJurisdictions = filteredJurisdictionIds.map(j => jurisdictionsById[j]);
     const isFocusJurisdictionTopLevel = tableCrumbs[0] && focusJurisdictionId === tableCrumbs[0].id;
 
@@ -1750,6 +1758,7 @@ class IrsPlan extends React.Component<
 
     // a simple interface for the the drilldown table data extending Jurisdiciton
     interface JurisdictionRow extends Jurisdiction {
+      assignedTeams: string[];
       isChildless: boolean;
       isPartiallySelected: boolean;
       planId: string;
@@ -1851,6 +1860,9 @@ class IrsPlan extends React.Component<
       (j: Jurisdiction) =>
         ({
           ...j,
+          assignedTeams: assignmentsArray
+            .filter((a: Assignment) => a.jurisdiction === j.jurisdiction_id)
+            .map((a: Assignment) => a.organization),
           id: j.jurisdiction_id,
           isChildless: this.state.childlessChildrenIds.includes(j.jurisdiction_id),
           isPartiallySelected:
@@ -2025,9 +2037,11 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
   const allJurisdictionIds = getAllJurisdictionsIdArray(state);
   const loadedJurisdictionIds = getJurisdictionsIdArray(state);
   const organizationsById = getOrganizationsById(state);
+  const assignmentsArray = getAssignmentsArrayByPlanId(state, planId);
 
   const props = {
     allJurisdictionIds,
+    assignmentsArray,
     isDraftPlan,
     isFinalizedPlan,
     isNewPlan,
