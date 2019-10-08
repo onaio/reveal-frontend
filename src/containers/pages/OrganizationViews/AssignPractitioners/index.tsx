@@ -34,7 +34,7 @@ import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import AsyncSelect from 'react-select/async';
-import { ActionTypes, OptionsType, ValueType } from 'react-select/src/types';
+import { OptionsType } from 'react-select/src/types';
 import { Button } from 'reactstrap';
 import { Store } from 'redux';
 import HeaderBreadcrumb, {
@@ -46,12 +46,8 @@ import {
   ADD,
   ASSIGN,
   ASSIGN_PRACTITIONERS_URL,
-  CREATE_ORGANIZATION_URL,
-  EDIT_ORGANIZATION_URL,
-  EDIT_TEAM,
   HOME,
   HOME_URL,
-  NEW_TEAM,
   OPENSRP_ORG_PRACTITIONER_ENDPOINT,
   OPENSRP_ORGANIZATION_ENDPOINT,
   OPENSRP_PRACTITIONER_ENDPOINT,
