@@ -362,3 +362,8 @@ export const BLOOD_SCREENING_CODE = 'Blood Screening';
 export type BLOOD_SCREENING_CODE = typeof BLOOD_SCREENING_CODE;
 export const IRS_CODE = 'IRS';
 export type IRS_CODE = typeof IRS_CODE;
+
+export const PRACTITIONER_CODE = {
+  text: 'Community Health Worker',
+};
+export type PRACTITIONER_CODE = typeof PRACTITIONER_CODE;

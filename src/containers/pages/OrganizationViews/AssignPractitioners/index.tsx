@@ -28,6 +28,7 @@ import { Field, Formik } from 'formik';
 import { RouteParams } from '@onaio/gatekeeper/dist/types';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import { keyBy, values } from 'lodash';
+import moment from 'moment';
 import React, { Props, useEffect, useState } from 'react';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
@@ -40,6 +41,7 @@ import HeaderBreadcrumb, {
   BreadCrumbProps,
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
+import { PRACTITIONER_ROLE_NAMESPACE } from '../../../../configs/env';
 import {
   ADD,
   ASSIGN,
@@ -56,6 +58,7 @@ import {
   OPENSRP_PRACTITIONER_ROLE_ENDPOINT,
   ORGANIZATIONS_LABEL,
   ORGANIZATIONS_LIST_URL,
+  PRACTITIONER_CODE,
   PRACTITIONERS,
   TO,
 } from '../../../../constants';
@@ -117,7 +120,6 @@ const AssignPractitioner: React.FC<PropsTypes> = props => {
     assignedPractitioners,
   } = props;
   const [selectedOptions, setSelectedOptions] = useState<OptionsType<SelectedOption>>([]);
-  const [assignedOptions, setAssignedOptions] = useState<Practitioner[]>([]);
 
   /** load practitioners that belong to this organization */
   const loadOrgPractitioners = async (organizationId: string) => {
@@ -162,7 +164,7 @@ const AssignPractitioner: React.FC<PropsTypes> = props => {
       value: entry.identifier,
     }));
 
-  // TODO - scenario where this request doesn't return all practitioners
+  // TODO - scenario where this request doesn't return all practitioners in a single query
   /** load all practitioners at least all of those returned
    * in a single call to Practitioners endpoint
    */
@@ -207,22 +209,19 @@ const AssignPractitioner: React.FC<PropsTypes> = props => {
     return values(mergedOptions);
   };
 
-  // const addHandler = () => {
-  //   const code = {
-  //     text: 'Community Health Worker',
-  //   };
-  //   // selected options
-  //   const stringValues = selectedOptions.map(option => option.value);
-  //   const jsonArrayPayload = stringValues.map(practitionerId => ({
-  //     active: true,
-  //     code,
-  //     identifier: generateNameSpacedUUID('', ''),
-  //     organization: organization.identifier,
-  //     practitioner: practitionerId,
-  //   }));
-  //   const serve = new serviceClass(OPENSRP_PRACTITIONER_ROLE_ENDPOINT);
-  //   serve.create(jsonArrayPayload);
-  // };
+  const addHandler = () => {
+    // selected options
+    const practitionerIds = selectedOptions.map(option => option.value);
+    const jsonArrayPayload = practitionerIds.map(practitionerId => ({
+      active: true,
+      code: PRACTITIONER_CODE,
+      identifier: generateNameSpacedUUID(`${moment().toString()}`, PRACTITIONER_ROLE_NAMESPACE),
+      organization: organization.identifier,
+      practitioner: practitionerId,
+    }));
+    const serve = new serviceClass(OPENSRP_PRACTITIONER_ROLE_ENDPOINT);
+    serve.create(jsonArrayPayload).then(() => loadOrgPractitioners(props.match.params.id));
+  };
 
   // Props
 
@@ -253,8 +252,9 @@ const AssignPractitioner: React.FC<PropsTypes> = props => {
       <h2 className="mb-3 mt-5 page-title">{`${ASSIGN} ${PRACTITIONERS} ${TO} ${
         organization!.name
       }`}</h2>
-      {/* section for displaying already Added practitioners to this organization */}
+      <hr />
 
+      {/* section for displaying already Added practitioners to this organization */}
       {assignedPractitioners.map((option, index) => (
         <section key={index}>
           <span className="assigned-options">{option.name}</span>
@@ -277,7 +277,7 @@ const AssignPractitioner: React.FC<PropsTypes> = props => {
         loadOptions={promiseOptions}
         onChange={changeHandler}
       />
-      {/* <Button onClick={addHandler}>{`${ADD} ${PRACTITIONERS}`}</Button> */}
+      <Button onClick={addHandler}>{`${ADD} ${PRACTITIONERS}`}</Button>
     </div>
   );
 };
