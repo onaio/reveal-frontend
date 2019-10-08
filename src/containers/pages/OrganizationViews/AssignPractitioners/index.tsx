@@ -1,28 +1,4 @@
-/** view to assign practitioners to an organization */
-import { Field, Formik } from 'formik';
-
-{
-  /* <FormGroup>
-<Field
-  component={AssignPractitioner}
-  name="practitioners"
-  id="practitioners"
-  placeholder="Add Practitioners"
-  aria-label="Add Practitioners"
-  disabled={disabledFields.includes('practitioners')}
-  className={errors.practitioners ? 'is-invalid async-select' : 'async-select'}
-  allPractitionersApi={OPENSRP_PRACTITIONER_ENDPOINT}
-  practitionersByOrgApi={''}
-  serviceClass={OpenSRPService}
-  // tslint:disable-next-line: jsx-no-lambda
-  onAdd={(practitionersIds: string[]) =>
-    setFieldValue('practitioners', practitionersIds)
-  }
-/>
-</FormGroup> */
-}
-
-/** Wraps react select multi async to provide a form input that
+/** Wraps react select multi async to provide a view input that
  * pulls and selects at least one practitioner
  */
 import { RouteParams } from '@onaio/gatekeeper/dist/types';
