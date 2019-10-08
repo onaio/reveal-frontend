@@ -151,7 +151,7 @@ const AssignPractitioner: React.FC<PropsTypes> = props => {
    * @param {ValueType<SelectedOption>} -  the so far selected options
    * @param {ActionMeta} - information on the change event; custom react-select event
    */
-  const changeHandler = (chosenOptions: any[], { action, removedValue }: any) => {
+  const changeHandler = (chosenOptions: any, { action, removedValue }: any) => {
     if (!chosenOptions) {
       return;
     }
@@ -248,6 +248,7 @@ const AssignPractitioner: React.FC<PropsTypes> = props => {
         defaultOptions={true}
         loadOptions={promiseOptions}
         onChange={changeHandler}
+        value={selectedOptions}
       />
       <Button onClick={addHandler}>{`${ADD} ${PRACTITIONERS}`}</Button>
     </div>
