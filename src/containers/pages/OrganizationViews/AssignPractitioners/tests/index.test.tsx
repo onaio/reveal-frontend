@@ -152,5 +152,6 @@ describe('src/pages/*/AssignPractitioners', () => {
     expect(toJson(wrapper.find('Select input'))).toMatchSnapshot('async select');
 
     // add button
+    expect(wrapper.find('Button')).toMatchSnapshot('add Practitioners button');
   });
 });
