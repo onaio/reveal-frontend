@@ -15,3 +15,7 @@
 .reveal-breadcrumb .breadcrumb {
   background-color: #eceeef;
 }
+
+.header-logo-navbar {
+  padding-left: 0;
+}

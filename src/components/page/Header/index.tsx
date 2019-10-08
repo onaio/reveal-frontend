@@ -82,7 +82,7 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
     return (
       <div>
         <Navbar light={true} expand="md">
-          <nav className="navbar navbar-expand-md navbar-light">
+          <nav className="navbar navbar-expand-md navbar-light header-logo-navbar">
             <Link to="/" className="navbar-brand">
               <img src={logo} alt={WEBSITE_NAME} />
             </Link>
