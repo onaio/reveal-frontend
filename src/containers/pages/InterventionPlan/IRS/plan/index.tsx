@@ -1832,6 +1832,9 @@ class IrsPlan extends React.Component<
           {
             Header: '',
             accessor: (j: JurisdictionRow) => {
+              if (!j.isChildless) {
+                return '';
+              }
               const cellProps = {
                 jurisdictionId: j.jurisdiction_id,
                 planId: j.planId,
