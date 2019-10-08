@@ -128,7 +128,7 @@ export const structuresLayerBuilder = (
     paint: {
       ...circleLayerConfig.paint,
       'circle-color': structureStatusColors,
-      'circle-radius': ['interpolate', ['linear'], ['zoom'], 13, 2, 14, 4, 16, 8, 20, 12],
+      'circle-radius': ['interpolate', ['exponential', 2], ['zoom'], 15.75, 2.5, 20.8, 50],
       'circle-stroke-color': structureStatusColors,
       'circle-stroke-opacity': 1,
     },
