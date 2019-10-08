@@ -1975,9 +1975,18 @@ class IrsPlan extends React.Component<
           : `${Number(newPlan.plan_version) + 1}`,
       };
 
+      const { assignmentsArray } = this.props;
+
       if (newPlanDraft.plan_jurisdictions_ids && newPlanDraft.plan_jurisdictions_ids.length) {
         const planPayload = extractPlanPayloadFromPlanRecord(newPlanDraft);
         if (planPayload) {
+          // todo - check opensrp for Assignments to retire
+          const nextAssignments: Assignment[] = assignmentsArray.map((a: Assignment) => ({
+            ...a,
+            fromDate: moment(start).format(),
+            toDate: moment(end).format(),
+          }));
+
           this.setState({ isSaveDraftDisabled: true }, () => {
             // todo - handle Finalized plans!!
             if (this.props.isDraftPlan) {
