@@ -86,7 +86,7 @@ export const removeAssignmentsAction: RemoveAssignmentsAction = {
  *
  * @returns {FetchAssignmentsAction} - action with assignments payload that is added to store
  */
-export const FetchAssignments = (assignmentsList: Assignment[]): FetchAssignmentsAction => {
+export const fetchAssignments = (assignmentsList: Assignment[]): FetchAssignmentsAction => {
   const assignmentsByPlanId: { [key: string]: Assignment[] } = {};
 
   for (const assignment of assignmentsList) {

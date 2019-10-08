@@ -3,11 +3,15 @@ import React, { useEffect, useState } from 'react';
 import Select from 'react-select';
 import { OpenSRPService } from '../../../services/opensrp';
 
+import { keyBy, values } from 'lodash';
 import { connect } from 'react-redux';
 import { Store } from 'redux';
 import { OPENSRP_ORGANIZATION_ENDPOINT } from '../../../constants';
 import store from '../../../store';
 import assignmentReducer, {
+  Assignment,
+  fetchAssignments,
+  getAssignmentsArrayByPlanIdByJurisdictionId,
   reducerName as assignmentReducerName,
 } from '../../../store/ducks/opensrp/assignments';
 import organizationsReducer, {
@@ -28,17 +32,21 @@ interface SelectOption {
 
 /** OrganizationSelect props */
 export interface OrganizationSelectProps {
+  assignments: Assignment[];
+  fetchAssignmentsAction: typeof fetchAssignments;
   fetchOrganizationsAction: typeof fetchOrganizations;
   jurisdictionId: string;
   name: string; // name of the input
   organizations: Organization[];
   planId: string;
   serviceClass: typeof OpenSRPService /** the OpenSRP service */;
-  values: string[];
+  values: SelectOption[];
 }
 
 /** default props for OrganizationSelect */
 const defaultProps: OrganizationSelectProps = {
+  assignments: [],
+  fetchAssignmentsAction: fetchAssignments,
   fetchOrganizationsAction: fetchOrganizations,
   jurisdictionId: '',
   name: '',
@@ -54,7 +62,16 @@ const defaultProps: OrganizationSelectProps = {
  * This is simply a Higher Order Component that wraps around AsyncSelect
  */
 const OrganizationSelect = (props: OrganizationSelectProps) => {
-  const { fetchOrganizationsAction, name, organizations, serviceClass, values } = props;
+  const {
+    fetchAssignmentsAction,
+    fetchOrganizationsAction,
+    jurisdictionId,
+    name,
+    organizations,
+    planId,
+    serviceClass,
+    values: selectOptions,
+  } = props;
 
   const loadOrganizations = async (service: typeof serviceClass) => {
     const serve = new service(OPENSRP_ORGANIZATION_ENDPOINT);
@@ -76,8 +93,18 @@ const OrganizationSelect = (props: OrganizationSelectProps) => {
    * onChange callback
    * unfortunately we have to set the type of option as any (for now)
    */
-  const handleChange = (e: any) => {
+  const handleChange = (nextValues: any, meta: any) => {
     // handle input change => updatedStore
+    // console.log(nextValues, meta);
+    const nextAssignments: Assignment[] = nextValues.map(
+      (v: SelectOption) =>
+        ({
+          jurisdiction: jurisdictionId,
+          organization: v.value,
+          plan: planId,
+        } as Assignment)
+    );
+    fetchAssignmentsAction(nextAssignments);
   };
 
   return (
@@ -97,7 +124,7 @@ const OrganizationSelect = (props: OrganizationSelectProps) => {
       )}
       isClearable={true}
       isMulti={true}
-      values={values}
+      values={selectOptions}
     />
   );
 };
@@ -108,13 +135,37 @@ export { OrganizationSelect };
 
 // connect to store
 const mapStateToProps = (state: Partial<Store>, ownProps: OrganizationSelectProps) => {
-  const organizations = getOrganizationsArray(state);
+  const organizations = keyBy(getOrganizationsArray(state), (o: Organization) => o.identifier);
+  const assignments = getAssignmentsArrayByPlanIdByJurisdictionId(
+    state,
+    ownProps.planId,
+    ownProps.jurisdictionId
+  );
+  const selectOptions = assignments.map(
+    (a: Assignment) =>
+      ({
+        label:
+          (organizations[a.organization] && organizations[a.organization].name) || a.organization,
+        value: a.organization,
+      } as SelectOption)
+  );
+
   return {
     ...ownProps,
-    organizations,
+    assignments,
+    organizations: values(organizations),
+    values: selectOptions,
   };
 };
 
-const ConnectedOrganizationSelect = connect(mapStateToProps)(OrganizationSelect);
+/** map props to actions that may be dispatched by component */
+const mapDispatchToProps = {
+  fetchAssignmentsAction: fetchAssignments,
+};
+
+const ConnectedOrganizationSelect = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(OrganizationSelect);
 
 export default ConnectedOrganizationSelect;
