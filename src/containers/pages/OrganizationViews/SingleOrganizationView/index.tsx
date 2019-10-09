@@ -185,7 +185,6 @@ const SingleOrganizationView = (props: SingleOrgViewPropsType) => {
         </Col>
         <Col className="link-as-button xs">
           <LinkAsButton {...linkAsButtonProps} />
-          &nbsp;
           <LinkAsButton {...assignPractitionersButton} />
         </Col>
       </Row>
