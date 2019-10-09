@@ -96,7 +96,7 @@ const OrganizationSelect = (props: OrganizationSelectProps) => {
   /**
    * onChange callback
    */
-  const handleChange = (nextValues: any) => {
+  const handleChange = (nextValues: SelectOption[] | null) => {
     const filteredAssignments: Assignment[] = assignments.filter(
       (a: Assignment) => a.jurisdiction !== jurisdictionId
     );
