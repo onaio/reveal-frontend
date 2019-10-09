@@ -64,11 +64,7 @@ const defaultListViewProps: Props = {
 export type PropsTypes = Props & RouteComponentProps;
 
 const PractitionersListView = (props: PropsTypes) => {
-  const {
-    practitioners,
-    serviceClass,
-    fetchPractitionersCreator: fetchPractitionersAction,
-  } = props;
+  const { practitioners, serviceClass, fetchPractitionersCreator } = props;
 
   /** props to pass to the headerBreadCrumb */
   const breadcrumbProps: BreadCrumbProps = {
@@ -126,7 +122,7 @@ const PractitionersListView = (props: PropsTypes) => {
     const serve = new service(OPENSRP_PRACTITIONER_ENDPOINT);
     serve
       .list()
-      .then((response: Practitioner[]) => store.dispatch(fetchPractitionersAction(response)))
+      .then((response: Practitioner[]) => store.dispatch(fetchPractitionersCreator(response)))
       .catch((err: Error) => {
         /** TODO - find something to do with error */
       });
