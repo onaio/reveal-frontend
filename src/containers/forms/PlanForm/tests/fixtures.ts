@@ -2,9 +2,9 @@ import { parseISO } from 'date-fns';
 import moment from 'moment';
 import { FormEvent } from 'react';
 import { DEFAULT_ACTIVITY_DURATION_DAYS, DEFAULT_TIME } from '../../../../configs/env';
-import { PlanActivities } from '../../../../configs/settings';
 import { InterventionType, PlanStatus } from '../../../../store/ducks/plans';
 import { PlanActivityFormFields, PlanFormFields } from '../helpers';
+import { PlanActivities } from '../types';
 
 const goalDue = moment()
   .add(DEFAULT_ACTIVITY_DURATION_DAYS, 'days')
