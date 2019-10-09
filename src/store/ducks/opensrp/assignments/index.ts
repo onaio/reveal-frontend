@@ -106,6 +106,19 @@ export const fetchAssignments = (assignmentsList: Assignment[]): FetchAssignment
   };
 };
 
+/** creates action to reset plan
+ * @param {AssignmentsByPlanId} assignmentsByPlanId object with updated assignment arrays, keyed by planId
+ * @returns {FetchAssignmentsAction}
+ */
+export const resetPlanAssignments = (
+  assignmentsByPlanId: AssignmentsByPlanId = {}
+): FetchAssignmentsAction => {
+  return {
+    assignmentsByPlanId,
+    type: ASSIGNMENTS_FETCHED,
+  };
+};
+
 // selectors
 
 /** get assignments as an object where their ids are the keys and the objects
