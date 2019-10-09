@@ -148,27 +148,29 @@ const PractitionerForm = (props: PractitionerFormProps) => {
                 className="form-text text-danger username-error"
               />
             </FormGroup>
-            <FormGroup>
-              <Label for="userId"> openMRS username </Label>
-              <Field
-                required={true}
-                component={UserIdSelect}
-                // tslint:disable-next-line: jsx-no-lambda
-                onChangeHandler={(value: string) => setFieldValue('userId', value)}
-                name="userId"
-                id="userId"
-                placeholder="Select username form openMRS"
-                aria-label="Select username form openMRS"
-                disabled={disabledFields.includes('userId') || editMode}
-                className={errors.userId ? 'is-invalid async-select' : 'async-select'}
-              />
+            {!editMode && (
+              <FormGroup>
+                <Label for="userId"> openMRS username </Label>
+                <Field
+                  required={true}
+                  component={UserIdSelect}
+                  // tslint:disable-next-line: jsx-no-lambda
+                  onChangeHandler={(value: string) => setFieldValue('userId', value)}
+                  name="userId"
+                  id="userId"
+                  placeholder="Select username form openMRS"
+                  aria-label="Select username form openMRS"
+                  disabled={disabledFields.includes('userId') || editMode}
+                  className={errors.userId ? 'is-invalid async-select' : 'async-select'}
+                />
 
-              <ErrorMessage
-                name="userId"
-                component="small"
-                className="form-text text-danger userId-error"
-              />
-            </FormGroup>
+                <ErrorMessage
+                  name="userId"
+                  component="small"
+                  className="form-text text-danger userId-error"
+                />
+              </FormGroup>
+            )}
 
             <FormGroup>
               <Label>{ACTIVE}</Label>

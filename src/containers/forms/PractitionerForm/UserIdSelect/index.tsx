@@ -7,6 +7,7 @@ import { ValueType } from 'react-select/src/types';
 import { OpenSRPService } from '../../../../services/opensrp';
 
 const OPENMRS_USERS_REQUEST_PAGE_SIZE = 100;
+
 // props interface to UserIdSelect component
 export interface Props {
   onChange?: (value: string) => void;
