@@ -11,6 +11,7 @@ import assignmentReducer, {
   fetchAssignments,
   getAssignmentsArrayByPlanId,
   reducerName as assignmentReducerName,
+  resetPlanAssignments,
 } from '../../../store/ducks/opensrp/assignments';
 import organizationsReducer, {
   getOrganizationsById,
@@ -23,10 +24,11 @@ reducerRegistry.register(organizationsReducerName, organizationsReducer);
 
 /** Interface for Assign Teams cell props */
 export interface AssignTeamCellProps {
-  assignments: Assignment[];
+  assignments: Assignment[]; // all the assignments for the plan-jurisdiction
+  assignmentsArray: Assignment[]; // all the assignments for the plan
   assignButton?: React.ElementType;
   assignPopover?: React.ElementType;
-  fetchAssignmentsActionCreator: typeof fetchAssignments;
+  resetPlanAssignmentsAction: typeof resetPlanAssignments;
   jurisdictionId: string;
   organizationsById: { [key: string]: Organization } | null;
   planId: string;
@@ -38,9 +40,10 @@ export interface AssignTeamCellProps {
 const AssignTeamTableCell = (props: AssignTeamCellProps) => {
   const {
     assignments,
+    assignmentsArray,
     assignButton,
     assignPopover,
-    fetchAssignmentsActionCreator,
+    resetPlanAssignmentsAction,
     jurisdictionId,
     organizationsById,
     planId,
@@ -54,10 +57,11 @@ const AssignTeamTableCell = (props: AssignTeamCellProps) => {
 
   const onClearAssignmentsButtonClick = (e: MouseEvent) => {
     stopPropagationAndPreventDefault(e);
-    const nextAssignments = assignments.filter(
+    const nextAssignments = assignmentsArray.filter(
       (a: Assignment) => a.jurisdiction !== jurisdictionId
     );
-    fetchAssignmentsActionCreator(nextAssignments);
+    resetPlanAssignmentsAction({ [planId]: [...nextAssignments] });
+    setIsActive(!isActive);
   };
 
   const onSaveAssignmentsButtonClick = (e: MouseEvent) => {
@@ -72,6 +76,7 @@ const AssignTeamTableCell = (props: AssignTeamCellProps) => {
       id={getButtonId(jurisdictionId)}
       onClick={onPlanAssignmentButtonClick}
       size="sm"
+      style={{ float: 'right' }}
     >
       {ASSIGN_TEAMS}
     </Button>
@@ -120,6 +125,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): AssignTeamCellPr
   return {
     ...ownProps,
     assignments,
+    assignmentsArray,
     organizationsById,
   } as AssignTeamCellProps;
 };
@@ -127,6 +133,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): AssignTeamCellPr
 /** map props to actions that may be dispatched by component */
 const mapDispatchToProps = {
   fetchAssignmentsActionCreator: fetchAssignments,
+  resetPlanAssignmentsAction: resetPlanAssignments,
 };
 
 /** Create Connected AssignTeamTableCell */
