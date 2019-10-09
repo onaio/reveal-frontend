@@ -18,6 +18,7 @@ import {
   SUPERSET_IRS_REPORTING_JURISDICTIONS_DATA_SLICES,
   SUPERSET_IRS_REPORTING_JURISDICTIONS_FOCUS_AREA_LEVEL,
   SUPERSET_IRS_REPORTING_PLANS_SLICE,
+  SUPERSET_MAX_RECORDS,
 } from '../../../../configs/env';
 import { HOME, HOME_URL, IRS_REPORTING_TITLE, REPORT_IRS_PLAN_URL } from '../../../../constants';
 import '../../../../helpers/tables.css';
@@ -87,7 +88,7 @@ const JurisdictionReport = (props: GenericJurisdictionProps & RouteComponentProp
         let fetchJurisdictionsParams: SupersetFormData | null = null;
         if (planId) {
           fetchJurisdictionsParams = superset.getFormData(
-            3000,
+            SUPERSET_MAX_RECORDS,
             [{ comparator: planId, operator: '==', subject: 'plan_id' }],
             { jurisdiction_depth: true }
           );
