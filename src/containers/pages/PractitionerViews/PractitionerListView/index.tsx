@@ -63,7 +63,7 @@ const defaultListViewProps: Props = {
 /** the interface for all SinglePractitionerView props  */
 export type PropsTypes = Props & RouteComponentProps;
 
-const PractitionerListView = (props: PropsTypes) => {
+const PractitionersListView = (props: PropsTypes) => {
   const {
     practitioners,
     serviceClass,
@@ -164,9 +164,9 @@ const PractitionerListView = (props: PropsTypes) => {
   );
 };
 
-PractitionerListView.defaultProps = defaultListViewProps;
+PractitionersListView.defaultProps = defaultListViewProps;
 
-export { PractitionerListView };
+export { PractitionersListView };
 
 // connect to store
 
@@ -177,6 +177,6 @@ const mapStateToProps = (state: Partial<Store>) => {
 };
 
 /** connects the practitioner list view to store */
-const ConnectedPractitionersListView = connect(mapStateToProps)(PractitionerListView);
+const ConnectedPractitionersListView = connect(mapStateToProps)(PractitionersListView);
 
 export default ConnectedPractitionersListView;
