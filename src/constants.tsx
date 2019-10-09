@@ -260,6 +260,8 @@ export const EDIT_PRACTITIONER_URL = '/practitioners/edit';
 export type EDIT_PRACTITIONER_URL = typeof EDIT_PRACTITIONER_URL;
 export const ASSIGN_ORGANIZATION_URL = '/plans/teamAssignment';
 export type ASSIGN_ORGANIZATION_URL = typeof ASSIGN_ORGANIZATION_URL;
+export const PRACTITIONERS_LIST_URL = '/practitioners';
+export type PRACTITIONERS_LIST_URL = typeof PRACTITIONERS_LIST_URL;
 
 // OpenSRP API strings
 export const OPENSRP_PRACTITIONER_ENDPOINT = 'practitioner';
