@@ -6,6 +6,7 @@
  *  - constants
  *  - envs
  *  - colors
+ *  - types
  *
  * **** CODE RULES ****
  * To keep things simple, the code in this module should be simple statements.  Use of
@@ -13,6 +14,13 @@
  */
 import { Providers } from '@onaio/gatekeeper';
 import { Expression, LngLatBoundsLike } from 'mapbox-gl';
+import {
+  ActionReasonType,
+  GoalPriorityType,
+  PlanActionCodesType,
+  PlanActivities,
+  UseContextCodesType,
+} from '../containers/forms/PlanForm/types';
 import {
   DOMAIN_NAME,
   ENABLE_ONADATA_OAUTH,
@@ -28,8 +36,9 @@ import {
   OPENSRP_OAUTH_STATE,
   OPENSRP_USER_URL,
 } from './env';
+import { IndicatorRows, JurisdictionTypes } from './types';
 
-/** Interfaces and Types */
+/** Interfaces */
 
 /** Interface for a Focus Investigation Classification */
 export interface Classification {
@@ -106,19 +115,15 @@ export const locationHierarchy: LocationItem[] = [
 /** Focus investigation configs */
 /** Allowed FI Status values */
 export const FIStatuses = ['A1', 'A2', 'B1', 'B2'] as const;
-export type FIStatusType = typeof FIStatuses[number];
 
 /** Allowed FI Status values */
 export const FIReasons = ['Routine', 'Case Triggered'] as const;
-export type FIReasonType = typeof FIReasons[number];
 
 /** Allowed goal priority values */
 export const goalPriorities = ['low-priority', 'medium-priority', 'high-priority'] as const;
-export type GoalPriorityType = typeof goalPriorities[number];
 
 /** Allowed action Reason values */
 export const actionReasons = ['Investigation', 'Routine'] as const;
-export type ActionReasonType = typeof actionReasons[number];
 
 /** Allowed useContext Code values */
 export const useContextCodes = [
@@ -129,7 +134,6 @@ export const useContextCodes = [
   'caseNum',
   'taskGenerationStatus',
 ] as const;
-export type UseContextCodesType = typeof useContextCodes[number];
 
 /** Plan activity code values */
 export const PlanActionCodes = [
@@ -142,11 +146,9 @@ export const PlanActionCodes = [
   'Larval Dipping',
   'Mosquito Collection',
 ] as const;
-export type PlanActionCodesType = typeof PlanActionCodes[number];
 
 /** Allowed taskGenerationStatus values */
 export const taskGenerationStatuses = ['True', 'False'] as const;
-export type taskGenerationStatusType = typeof taskGenerationStatuses[number];
 
 /** Plan Action Timing Period */
 export interface PlanActionTimingPeriod {
@@ -217,10 +219,6 @@ export const PlanActivityTitles = [
   'BCC',
   'IRS',
 ] as const;
-export type PlanActivityTitlesType = typeof PlanActivityTitles[number];
-
-/** type to describe plan activities */
-export type PlanActivities = { [K in PlanActivityTitlesType]: PlanActivity };
 
 /** default plan activities */
 export const planActivities: PlanActivities = {
@@ -583,11 +581,8 @@ export const FIClassifications: Classification[] = [
 
 // thresholds
 export const GREEN_THRESHOLD = 0.9;
-export type GREEN_THRESHOLD = typeof GREEN_THRESHOLD;
 export const YELLOW_THRESHOLD = 0.2;
-export type YELLOW_THRESHOLD = typeof YELLOW_THRESHOLD;
 export const ORANGE_THRESHOLD = 0.8;
-export type ORANGE_THRESHOLD = typeof ORANGE_THRESHOLD;
 
 // 1-3-7 thresholds
 export const ONE = 0;
@@ -715,7 +710,6 @@ export const symbolLayerConfig = {
 
 /** Default colors layer fill colors per administrative level */
 export const adminLayerColors = ['black', 'red', 'orange', 'yellow', 'green'];
-export type adminLayerColorsType = typeof adminLayerColors[number];
 
 /** interface describing threshold configs for IRS report indicators */
 export interface IndicatorThresholds {
@@ -808,7 +802,6 @@ export interface ADMN3 extends ADMN2 {
 
 export const baseTilesetGeographicLevel: number = 1; // this tells the Jurisdiction Selection map at which geographic level to start rendering administrative fill layers
 export const JurisdictionLevels = ['administrative', 'operational'] as const;
-export type JurisdictionTypes = typeof JurisdictionLevels[number];
 export interface Tileset {
   idField: string; // the feature property corresponding with jurisdiction_id (for joining)
   jurisdictionType: JurisdictionTypes; // Admin or OA/FA/SA
@@ -983,20 +976,6 @@ export const LusakaAdmin0: JurisdictionsByCountry = {
   jurisdictionIds: [],
   tilesets: [],
 };
-
-/** ISO 3166-alpha-2 admin codes */
-export type ADMN0_PCODE =
-  | 'TH'
-  | 'ZM'
-  | 'NA'
-  | 'BW'
-  | 'Chadiza'
-  | 'Sinda'
-  | 'Katete'
-  | 'Siavonga'
-  | 'Lop Buri'
-  | 'Oddar Meanchey Province'
-  | 'Lusaka';
 
 /** dictionary of JurisdictionsByCountry by country code */
 export const CountriesAdmin0 = {

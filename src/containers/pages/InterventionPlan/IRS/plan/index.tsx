@@ -41,7 +41,6 @@ import {
 } from '../../../../../helpers/utils';
 import {
   adminLayerColors,
-  ADMN0_PCODE,
   baseTilesetGeographicLevel,
   CountriesAdmin0,
   deselectedJurisdictionOpacity,
@@ -50,7 +49,6 @@ import {
   JurisdictionLevels,
   JurisdictionsByCountry,
   jurisdictionSelectionTooltipHint,
-  JurisdictionTypes,
   lineLayerConfig,
   partiallySelectedJurisdictionOpacity,
   Tileset,
@@ -99,6 +97,7 @@ import HeaderBreadcrumbs, {
 } from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../../components/page/Loading';
 
+import { ADMN0_PCODE, JurisdictionTypes } from '../../../../../configs/types';
 import AssignTeamTableCell, { AssignTeamCellProps } from '../../../../forms/AssignTeamTableCell';
 import './../../../../../styles/css/drill-down-table.css';
 import './style.css';
