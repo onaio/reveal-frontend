@@ -9,7 +9,7 @@ import { stopPropagationAndPreventDefault } from '../../../helpers/utils';
 import assignmentReducer, {
   Assignment,
   fetchAssignments,
-  getAssignmentsArrayByPlanIdByJurisdictionId,
+  getAssignmentsArrayByPlanId,
   reducerName as assignmentReducerName,
 } from '../../../store/ducks/opensrp/assignments';
 import organizationsReducer, {
@@ -113,10 +113,9 @@ export { AssignTeamTableCell };
  */
 const mapStateToProps = (state: Partial<Store>, ownProps: any): AssignTeamCellProps => {
   const organizationsById = getOrganizationsById(state);
-  const assignments = getAssignmentsArrayByPlanIdByJurisdictionId(
-    state,
-    ownProps.planId,
-    ownProps.jurisdictionId
+  const assignmentsArray = getAssignmentsArrayByPlanId(state, ownProps.planId);
+  const assignments = assignmentsArray.filter(
+    (a: Assignment) => a.jurisdiction === ownProps.jurisdictionId
   );
   return {
     ...ownProps,
