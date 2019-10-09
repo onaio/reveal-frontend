@@ -229,7 +229,7 @@ const AssignPractitioner: React.FC<PropsTypes> = props => {
   breadcrumbProps.pages = [homePage, basePage];
 
   const value = [...formatOptions(assignedPractitioners, true), ...selectedOptions];
-
+  const activateAddButton = !!selectedOptions.length;
   return (
     <div>
       <Helmet>
@@ -275,7 +275,10 @@ const AssignPractitioner: React.FC<PropsTypes> = props => {
         value={value}
       />
       <br />
-      <Button className="btn btn-primary" onClick={addHandler}>{`${ADD} ${PRACTITIONERS}`}</Button>
+      <Button
+        className={`btn btn-primary ${activateAddButton ? '' : 'disabled'}`}
+        onClick={addHandler}
+      >{`${ADD} ${PRACTITIONERS}`}</Button>
     </div>
   );
 };
