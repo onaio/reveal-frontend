@@ -8,9 +8,7 @@ import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import ConnectedPractitionersListView, { PractitionersListView } from '..';
 import {
-  OPENSRP_ORGANIZATION_ENDPOINT,
   OPENSRP_PRACTITIONER_ENDPOINT,
-  ORGANIZATIONS_LABEL,
   PRACTITIONERS,
   PRACTITIONERS_LIST_URL,
 } from '../../../../../constants';
