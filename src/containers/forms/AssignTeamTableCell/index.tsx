@@ -25,6 +25,8 @@ reducerRegistry.register(organizationsReducerName, organizationsReducer);
 /** Interface for Assign Teams cell props */
 export interface AssignTeamCellProps {
   assignments: Assignment[];
+  assignButton?: React.ElementType;
+  assignPopover?: React.ElementType;
   fetchAssignmentsActionCreator: typeof fetchAssignments;
   jurisdictionId: string;
   organizationsById: { [key: string]: Organization } | null;
@@ -37,6 +39,8 @@ export interface AssignTeamCellProps {
 const AssignTeamTableCell = (props: AssignTeamCellProps) => {
   const {
     assignments,
+    assignButton,
+    assignPopover,
     fetchAssignmentsActionCreator,
     jurisdictionId,
     organizationsById,
@@ -120,6 +124,8 @@ const AssignTeamTableCell = (props: AssignTeamCellProps) => {
       </span>
       {AssignTeamButton}
       {AssignPopover}
+      {assignButton || AssignTeamButton}
+      {assignPopover || AssignPopover}
     </div>
   );
 };
