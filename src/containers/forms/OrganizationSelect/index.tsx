@@ -56,9 +56,9 @@ const defaultProps: OrganizationSelectProps = {
 };
 
 /**
- * OrganizationSelect - a cascading select for Jurisdictions
- * Allows you to drill-down Jurisdictions until you select a Focus Area
- * This is simply a Higher Order Component that wraps around AsyncSelect
+ * OrganizationSelect - a flat select for Organizations
+ * Allows you to Select Organizations to be assigned to the plan-jurisdiction
+ * On selection update the `handleChange` method updates the Assignments store
  */
 const OrganizationSelect = (props: OrganizationSelectProps) => {
   const {
@@ -91,11 +91,8 @@ const OrganizationSelect = (props: OrganizationSelectProps) => {
 
   /**
    * onChange callback
-   * unfortunately we have to set the type of option as any (for now)
    */
-  const handleChange = (nextValues: any, meta: any) => {
-    // handle input change => updatedStore
-    // console.log(nextValues, meta);
+  const handleChange = (nextValues: any) => {
     const filteredAssignments: Assignment[] = assignments.filter(
       (a: Assignment) => a.jurisdiction !== jurisdictionId
     );
@@ -110,6 +107,13 @@ const OrganizationSelect = (props: OrganizationSelectProps) => {
     const nextAssignments: Assignment[] = [...filteredAssignments, ...newAssignments];
     fetchAssignmentsAction(nextAssignments);
   };
+  const options = organizations.map(
+    o =>
+      ({
+        label: o.name,
+        value: o.identifier,
+      } as SelectOption)
+  );
 
   return (
     <Select
@@ -119,13 +123,7 @@ const OrganizationSelect = (props: OrganizationSelectProps) => {
       aria-label={'Select'}
       onChange={handleChange}
       defaultOptions={true}
-      options={organizations.map(
-        o =>
-          ({
-            label: o.name,
-            value: o.identifier,
-          } as SelectOption)
-      )}
+      options={options}
       isClearable={true}
       isMulti={true}
       values={selectOptions}
@@ -151,7 +149,6 @@ const mapStateToProps = (state: Partial<Store>, ownProps: OrganizationSelectProp
           value: a.organization,
         } as SelectOption)
     );
-
   return {
     ...ownProps,
     assignments,
