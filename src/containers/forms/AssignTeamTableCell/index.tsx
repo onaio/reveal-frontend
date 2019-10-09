@@ -4,23 +4,22 @@ import React, { MouseEvent, useState } from 'react';
 import { connect } from 'react-redux';
 import { Button, Form, Popover, PopoverBody, PopoverHeader } from 'reactstrap';
 import { Store } from 'redux';
-import { ASSIGN_TEAMS, TEAMS_ASSIGNED } from '../../constants';
-import OrganizationSelect from '../../containers/forms/OrganizationSelect';
-import { stopPropagationAndPreventDefault } from '../../helpers/utils';
+import { ASSIGN_TEAMS, TEAMS_ASSIGNED } from '../../../constants';
+import { stopPropagationAndPreventDefault } from '../../../helpers/utils';
 import assignmentReducer, {
   Assignment,
   fetchAssignments,
   getAssignmentsArrayByPlanIdByJurisdictionId,
   reducerName as assignmentReducerName,
-} from '../../store/ducks/opensrp/assignments';
+} from '../../../store/ducks/opensrp/assignments';
 import organizationsReducer, {
   getOrganizationsById,
   Organization,
   reducerName as organizationsReducerName,
-} from '../../store/ducks/opensrp/organizations';
+} from '../../../store/ducks/opensrp/organizations';
+import OrganizationSelect from '../OrganizationSelect';
 
 reducerRegistry.register(assignmentReducerName, assignmentReducer);
-
 reducerRegistry.register(organizationsReducerName, organizationsReducer);
 
 /** Interface for Assign Teams cell props */

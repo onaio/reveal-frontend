@@ -99,9 +99,7 @@ import HeaderBreadcrumbs, {
 } from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../../components/page/Loading';
 
-import AssignTeamTableCell, {
-  AssignTeamCellProps,
-} from '../../../../../components/AssignTeamTableCell';
+import AssignTeamTableCell, { AssignTeamCellProps } from '../../../../forms/AssignTeamTableCell';
 import './../../../../../styles/css/drill-down-table.css';
 import './style.css';
 
