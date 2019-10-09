@@ -38,9 +38,13 @@ interface RemoveAssignmentsAction extends AnyAction {
 /** single type for all action types */
 type AssignmentActionTypes = FetchAssignmentsAction | RemoveAssignmentsAction | AnyAction;
 
+/** interface describing the assignmentsByPlanId Store */
+interface AssignmentsByPlanId {
+  [key: string]: Assignment[];
+}
 /** interface for Assignments state in store */
 interface AssignmentsStoreState {
-  assignmentsByPlanId: { [key: string]: Assignment[] };
+  assignmentsByPlanId: AssignmentsByPlanId;
 }
 
 // immutable assignments state in dux
@@ -87,7 +91,7 @@ export const removeAssignmentsAction: RemoveAssignmentsAction = {
  * @returns {FetchAssignmentsAction} - action with assignments payload that is added to store
  */
 export const fetchAssignments = (assignmentsList: Assignment[]): FetchAssignmentsAction => {
-  const assignmentsByPlanId: { [key: string]: Assignment[] } = {};
+  const assignmentsByPlanId: AssignmentsByPlanId = {};
 
   for (const assignment of assignmentsList) {
     if (!assignmentsByPlanId[assignment.plan]) {
