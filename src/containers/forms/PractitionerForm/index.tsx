@@ -1,7 +1,7 @@
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import React, { useState } from 'react';
 import { Redirect } from 'react-router';
-import AsyncSelect from 'react-select/async';
+import UserIdSelect from './UserIdSelect';
 
 import { Button, Label } from 'reactstrap';
 import { FormGroup } from 'reactstrap';
@@ -23,53 +23,6 @@ import { OpenSRPService } from '../../../services/opensrp';
 
 /** Namespace for generating uuids */
 const PractitionerFormNameSpace = '78295ac0-df73-11e9-a54b-dbf5e5b2d668';
-
-/** props for userIdSelect */
-interface UserIdSelectProps {
-  serviceClass: typeof OpenSRPService;
-  onChangeHandler?: (value: string) => void;
-}
-
-/** default props for userIdSelectProps */
-const defaultUserIdSelectProps = {
-  serviceClass: OpenSRPService,
-};
-
-/** userIdSelect component - wraps around asyncSelect to provide a select
- * input component from which users can select an openMRS id when adding a practitioner
- * for the moment : this will be disabled for editing a practitioner.
- */
-const UserIdSelect: React.FC<UserIdSelectProps> = props => {
-  const { serviceClass, onChangeHandler } = props;
-  const formatOptions = (entries: any[]): Array<{ label: string; value: string }> => {
-    return entries.map(entry => ({ label: entry.username, value: entry.identifier }));
-  };
-
-  /** handles value changes in the async select */
-  const changeHandler = (value: any) => {
-    if (typeof onChangeHandler !== 'undefined') {
-      onChangeHandler(value.label);
-    }
-  };
-
-  /** returns promise that resolve with fetched openMRs user-data */
-  const promiseOptions = async () => {
-    const serve = new serviceClass('');
-    const options = await serve.list();
-    return formatOptions(options);
-  };
-
-  return (
-    <AsyncSelect
-      cacheOptions={true}
-      defaultOptions={true}
-      loadOptions={promiseOptions}
-      onChange={changeHandler}
-    />
-  );
-};
-
-UserIdSelect.defaultProps = defaultUserIdSelectProps;
 
 export interface PractitionerFormFields {
   identifier: string;

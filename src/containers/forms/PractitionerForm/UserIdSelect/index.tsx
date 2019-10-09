@@ -67,3 +67,5 @@ export const UserIdSelect: React.FC<Props> = props => {
     />
   );
 };
+UserIdSelect.defaultProps = defaultProps;
+export default UserIdSelect;
