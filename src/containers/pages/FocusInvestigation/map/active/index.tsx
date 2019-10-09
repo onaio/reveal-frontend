@@ -16,6 +16,7 @@ import SelectComponent from '../../../../../components/SelectPlan/';
 import {
   SUPERSET_GOALS_SLICE,
   SUPERSET_JURISDICTIONS_SLICE,
+  SUPERSET_MAX_RECORDS,
   SUPERSET_PLANS_SLICE,
   SUPERSET_STRUCTURES_SLICE,
   SUPERSET_TASKS_SLICE,
@@ -166,19 +167,19 @@ class SingleActiveFIMap extends React.Component<
 
     if (plan && plan.plan_id) {
       /** define superset filter params for jurisdictions */
-      const jurisdictionsParams = superset.getFormData(3000, [
+      const jurisdictionsParams = superset.getFormData(SUPERSET_MAX_RECORDS, [
         { comparator: plan.jurisdiction_id, operator: '==', subject: 'jurisdiction_id' },
       ]);
       await supersetService(SUPERSET_JURISDICTIONS_SLICE, jurisdictionsParams).then(
         (result: Jurisdiction[]) => fetchJurisdictionsActionCreator(result)
       );
       /** define superset params for filtering by plan_id */
-      const supersetParams = superset.getFormData(3000, [
+      const supersetParams = superset.getFormData(SUPERSET_MAX_RECORDS, [
         { comparator: plan.plan_id, operator: '==', subject: 'plan_id' },
       ]);
       /** define superset params for goals */
       const goalsParams = superset.getFormData(
-        3000,
+        SUPERSET_MAX_RECORDS,
         [{ comparator: plan.plan_id, operator: '==', subject: 'plan_id' }],
         { action_prefix: true }
       );

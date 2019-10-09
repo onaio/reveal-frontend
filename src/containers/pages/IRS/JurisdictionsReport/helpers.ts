@@ -1,6 +1,5 @@
 import { CellInfo, Column } from 'react-table';
 import { getIRSThresholdAdherenceIndicator } from '../../../../helpers/indicators';
-import { FlexObject } from '../../../../helpers/utils';
 
 /** columns for Namibia IRS jurisdictions */
 export const NamibiaColumns = [

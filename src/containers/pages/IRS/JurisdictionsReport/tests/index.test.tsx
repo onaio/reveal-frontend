@@ -12,31 +12,14 @@ import { REPORT_IRS_PLAN_URL } from '../../../../../constants';
 import store from '../../../../../store';
 import GenericJurisdictionsReducer, {
   fetchGenericJurisdictions,
-  GenericJurisdiction,
-  getGenericJurisdictionByJurisdictionId,
   getGenericJurisdictionsArray,
   reducerName as GenericJurisdictionsReducerName,
 } from '../../../../../store/ducks/generic/jurisdictions';
 import IRSPlansReducer, {
-  fetchIRSPlans,
-  getIRSPlanById,
   IRSPlan,
   reducerName as IRSPlansReducerName,
 } from '../../../../../store/ducks/generic/plans';
-import genericStructuresReducer, {
-  fetchGenericStructures,
-  GenericStructure,
-  getGenericStructures,
-  reducerName as genericStructuresReducerName,
-  StructureFeatureCollection,
-} from '../../../../../store/ducks/generic/structures';
 import { plans } from '../../../../../store/ducks/generic/tests/fixtures';
-import jurisdictionReducer, {
-  fetchJurisdictions,
-  getJurisdictionById,
-  Jurisdiction,
-  reducerName as jurisdictionReducerName,
-} from '../../../../../store/ducks/jurisdictions';
 import * as fixtures from '../../JurisdictionsReport/tests/fixtures';
 import { IRSTableColumns } from '../helpers';
 

@@ -33,7 +33,6 @@ import plansReducer, {
   fetchPlans,
   getPlanRecordsArray,
   getPlansArray,
-  getPlansById,
   InterventionType,
   Plan,
   PlanPayload,
@@ -49,7 +48,7 @@ import HeaderBreadcrumbs, {
   BreadCrumbProps,
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
-import { SUPERSET_IRS_REPORTING_PLANS_SLICE } from '../../../../configs/env';
+import { SUPERSET_IRS_REPORTING_PLANS_SLICE, SUPERSET_MAX_RECORDS } from '../../../../configs/env';
 import { useContextCodes } from '../../../../configs/settings';
 import { IRS_PLANS, IRS_TITLE } from '../../../../constants';
 import supersetFetch from '../../../../services/superset';
@@ -90,7 +89,7 @@ class IrsPlans extends React.Component<IrsPlansProps & RouteComponentProps<Route
     const { isReporting, fetchPlanRecordsActionCreator, fetchPlansActionCreator } = this.props;
 
     /** define superset filter params for jurisdictions */
-    const plansParams = superset.getFormData(3000, [
+    const plansParams = superset.getFormData(SUPERSET_MAX_RECORDS, [
       { comparator: 'IRS', operator: '==', subject: 'plan_intervention_type' },
     ]);
     if (isReporting) {
