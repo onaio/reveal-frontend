@@ -19,6 +19,7 @@ import {
   ENABLE_ABOUT,
   ENABLE_FI,
   ENABLE_IRS,
+  ENABLE_PRACTITIONERS,
   ENABLE_TEAMS,
   ENABLE_USERS,
   WEBSITE_NAME,
@@ -37,6 +38,8 @@ import {
   PLAN_LIST_URL,
   PLANNING,
   PLANS,
+  PRACTITIONERS,
+  PRACTITIONERS_LIST_URL,
   REPORT_IRS_PLAN_URL,
   REPORTING,
 } from '../../../constants';
@@ -173,6 +176,17 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
                     activeClassName="active"
                   >
                     {ORGANIZATIONS_LABEL}
+                  </NavLink>
+                </NavItem>
+              )}
+              {ENABLE_PRACTITIONERS && (
+                <NavItem>
+                  <NavLink
+                    to={`${PRACTITIONERS_LIST_URL}`}
+                    className="nav-link"
+                    activeClassName="active"
+                  >
+                    {PRACTITIONERS}
                   </NavLink>
                 </NavItem>
               )}
