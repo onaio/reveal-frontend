@@ -237,20 +237,26 @@ const AssignPractitioner: React.FC<PropsTypes> = props => {
       <hr />
 
       {/* section for displaying already Added practitioners to this organization */}
-      {assignedPractitioners.map((option, index) => (
-        <section key={index}>
-          <span className="assigned-options text-muted">
-            {option.name}(username: {option.username ? option.username : (option as any).userName})
-          </span>
-          <input
-            type="hidden"
-            readOnly={true}
-            name={option.name}
-            id={option.identifier}
-            value={option.identifier}
-          />
+      {assignedPractitioners.length > 0 ? (
+        assignedPractitioners.map((option, index) => (
+          <section key={index}>
+            <span className="assigned-options text-muted">
+              {option.name}({option.username ? option.username : (option as any).userName})
+            </span>
+            <input
+              type="hidden"
+              readOnly={true}
+              name={option.name}
+              id={option.identifier}
+              value={option.identifier}
+            />
+          </section>
+        ))
+      ) : (
+        <section>
+          <p className="text-info"> No Practitioners Added yet</p>
         </section>
-      ))}
+      )}
       <hr />
       <AsyncSelect
         className="w-75"
