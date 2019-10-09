@@ -4,7 +4,6 @@
 import { RouteParams } from '@onaio/gatekeeper/dist/types';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import { keyBy, values } from 'lodash';
-import moment from 'moment';
 import React, { Props, useEffect, useState } from 'react';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
@@ -95,7 +94,6 @@ const AssignPractitioner: React.FC<PropsTypes> = props => {
 
   /** load practitioners that belong to this organization */
   const loadOrgPractitioners = async (organizationId: string) => {
-    // console.log("called loadOrgPractitioners")
     const serve = new serviceClass(OPENSRP_ORG_PRACTITIONER_ENDPOINT);
     const orgPractitioners = await serve.read(organizationId);
     store.dispatch(fetchPractitionerRolesCreator(orgPractitioners, organizationId));
@@ -132,7 +130,7 @@ const AssignPractitioner: React.FC<PropsTypes> = props => {
   ): OptionsType<SelectedOption> =>
     practitioners.map(entry => ({
       isFixed,
-      label: entry.username,
+      label: entry.username ? entry.username : (entry as any).userName,
       value: entry.identifier,
     }));
 
@@ -151,7 +149,7 @@ const AssignPractitioner: React.FC<PropsTypes> = props => {
    * @param {ValueType<SelectedOption>} -  the so far selected options
    * @param {ActionMeta} - information on the change event; custom react-select event
    */
-  const changeHandler = (chosenOptions: any, { action, removedValue }: any) => {
+  const changeHandler = (chosenOptions: any, { action, removedValue, option }: any) => {
     if (!chosenOptions) {
       return;
     }
@@ -160,12 +158,18 @@ const AssignPractitioner: React.FC<PropsTypes> = props => {
       case 'pop-value':
         if (removedValue.isFixed) {
           return;
+        } else {
+          const remainingOptions = selectedOptions.filter(o => o.value !== removedValue.value);
+          setSelectedOptions(remainingOptions);
         }
         break;
+      case 'select-option':
+        setSelectedOptions([...selectedOptions, option]);
+        break;
       case 'clear':
-        chosenOptions = chosenOptions.filter(v => !v.isFixed);
+        chosenOptions = chosenOptions.filter((v: any) => !v.isFixed);
     }
-    setSelectedOptions(chosenOptions);
+    // setSelectedOptions(chosenOptions);
   };
 
   /** merges the practitioner records and returns them as  a promise */
@@ -184,15 +188,19 @@ const AssignPractitioner: React.FC<PropsTypes> = props => {
   const addHandler = () => {
     // selected options
     const practitionerIds = selectedOptions.map(option => option.value);
-    const jsonArrayPayload = practitionerIds.map(practitionerId => ({
+    const jsonArrayPayload = practitionerIds.map((practitionerId, index) => ({
       active: true,
       code: PRACTITIONER_CODE,
-      identifier: generateNameSpacedUUID(`${moment().toString()}`, PRACTITIONER_ROLE_NAMESPACE),
+      identifier: generateNameSpacedUUID(`${Date.now()} ${index}`, PRACTITIONER_ROLE_NAMESPACE),
       organization: organization.identifier,
       practitioner: practitionerId,
     }));
-    const serve = new serviceClass(OPENSRP_PRACTITIONER_ROLE_ENDPOINT);
-    serve.create(jsonArrayPayload).then(() => loadOrgPractitioners(props.match.params.id));
+    const serve = new serviceClass(`${OPENSRP_PRACTITIONER_ROLE_ENDPOINT}/add`);
+    serve.create(jsonArrayPayload).then(() => {
+      loadOrgPractitioners(props.match.params.id);
+      // TODO - possible candidate for setting state on unmounted component
+      setSelectedOptions([]);
+    });
   };
 
   // Props
@@ -215,6 +223,8 @@ const AssignPractitioner: React.FC<PropsTypes> = props => {
   };
   breadcrumbProps.pages = [homePage, basePage];
 
+  const value = [...formatOptions(assignedPractitioners, true), ...selectedOptions];
+
   return (
     <div>
       <Helmet>
@@ -229,7 +239,9 @@ const AssignPractitioner: React.FC<PropsTypes> = props => {
       {/* section for displaying already Added practitioners to this organization */}
       {assignedPractitioners.map((option, index) => (
         <section key={index}>
-          <span className="assigned-options">{option.name}</span>
+          <span className="assigned-options text-muted">
+            {option.name}(username: {option.username ? option.username : (option as any).userName})
+          </span>
           <input
             type="hidden"
             readOnly={true}
@@ -241,6 +253,7 @@ const AssignPractitioner: React.FC<PropsTypes> = props => {
       ))}
       <hr />
       <AsyncSelect
+        className="w-75"
         styles={styles}
         isClearable={selectedOptions.some(option => !option.isFixed)}
         isMulti={true}
@@ -248,9 +261,10 @@ const AssignPractitioner: React.FC<PropsTypes> = props => {
         defaultOptions={true}
         loadOptions={promiseOptions}
         onChange={changeHandler}
-        value={selectedOptions}
+        value={value}
       />
-      <Button onClick={addHandler}>{`${ADD} ${PRACTITIONERS}`}</Button>
+      <br />
+      <Button className="btn btn-primary" onClick={addHandler}>{`${ADD} ${PRACTITIONERS}`}</Button>
     </div>
   );
 };
