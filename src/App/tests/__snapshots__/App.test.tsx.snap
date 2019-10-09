@@ -568,6 +568,40 @@ exports[`App renders App correctly 1`] = `
                                         activeClassName="active"
                                         aria-current="page"
                                         className="nav-link"
+                                        to="/practitioners"
+                                      >
+                                        <Route
+                                          path="\\\\/practitioners"
+                                        >
+                                          <Link
+                                            aria-current={null}
+                                            className="nav-link"
+                                            replace={false}
+                                            to="/practitioners"
+                                          >
+                                            <a
+                                              aria-current={null}
+                                              className="nav-link"
+                                              href="/practitioners"
+                                              onClick={[Function]}
+                                            >
+                                              Practitioners
+                                            </a>
+                                          </Link>
+                                        </Route>
+                                      </NavLink>
+                                    </li>
+                                  </NavItem>
+                                  <NavItem
+                                    tag="li"
+                                  >
+                                    <li
+                                      className="nav-item"
+                                    >
+                                      <NavLink
+                                        activeClassName="active"
+                                        aria-current="page"
+                                        className="nav-link"
                                         to="/404"
                                       >
                                         <Route
