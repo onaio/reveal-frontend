@@ -126,7 +126,7 @@ const OrganizationSelect = (props: OrganizationSelectProps) => {
       options={options}
       isClearable={true}
       isMulti={true}
-      values={selectOptions}
+      value={selectOptions}
     />
   );
 };
