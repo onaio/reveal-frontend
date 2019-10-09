@@ -74,6 +74,7 @@ const defaultProps: SingleOrganizationViewProps = {
 /** the interface for all SingleOrganizationView props  */
 type SingleOrgViewPropsType = SingleOrganizationViewProps & RouteComponentProps<RouteParams>;
 
+/** The single Organization View component */
 const SingleOrganizationView = (props: SingleOrgViewPropsType) => {
   const {
     organization,
@@ -83,22 +84,25 @@ const SingleOrganizationView = (props: SingleOrgViewPropsType) => {
     fetchPractitionerRolesAction,
   } = props;
 
+  /** organization Id  */
   const orgId = props.match.params.id ? props.match.params.id : '';
 
   // functions / methods //
 
-  /** loads the organization data
+  /** loads a single organization data
+   * @param {string} organizationId - the organization id
    * @param {typeof OpenSRPService} service - the opensrp service
-   * @Param {string} organizationId - the organization id
    */
-  const loadOrganization = async (service: typeof serviceClass, organizationId: string) => {
+  const loadOrganization = async (
+    organizationId: string,
+    service: typeof OpenSRPService = OpenSRPService
+  ) => {
     const serve = new service(OPENSRP_ORGANIZATION_ENDPOINT);
 
     serve
       .read(organizationId)
       .then((response: Organization) => {
-        const action = fetchOrganizationsAction([response]);
-        store.dispatch(action);
+        store.dispatch(fetchOrganizationsAction([response]));
       })
       .catch((err: Error) => {
         /** still don't know what we should do with errors */
@@ -106,10 +110,13 @@ const SingleOrganizationView = (props: SingleOrgViewPropsType) => {
   };
 
   /** loads the practitioners that belong to this organization
+   * @param {string} organizationId - the organization id
    * @param {typeof OpenSRPService} service - the opensrp service
-   * @Param {string} organizationId - the organization id
    */
-  const loadOrgPractitioners = async (service: typeof serviceClass, organizationId: string) => {
+  const loadOrgPractitioners = async (
+    organizationId: string,
+    service: typeof OpenSRPService = OpenSRPService
+  ) => {
     const serve = new service(OPENSRP_ORG_PRACTITIONERS_ENDPOINT);
 
     serve
@@ -123,26 +130,26 @@ const SingleOrganizationView = (props: SingleOrgViewPropsType) => {
   };
 
   /** Unassign Practitioner form organization
-   * @param {serviceClass} service - the openSRP service
    * @param {practitionerId} practitionerId - id of practitioner
    * @param {organizationId} organizationId - id of organization
+   * @param {serviceClass} service - the openSRP service
    */
   const unassignPractitioner = async (
-    service: typeof serviceClass,
     practitionerId: string,
-    organizationId: string
+    organizationId: string,
+    service: typeof serviceClass = OpenSRPService
   ) => {
     const serve = new service(OPENSRP_PRACTITIONER_ROLE_ENDPOINT);
     const payload = { organization: organizationId, practitioner: practitionerId };
     serve.delete(payload).then(() => {
       // remove the practitioner Role
-      loadOrgPractitioners(serviceClass, organizationId);
+      loadOrgPractitioners(organizationId);
     });
   };
 
   useEffect(() => {
-    loadOrganization(serviceClass, orgId);
-    loadOrgPractitioners(serviceClass, orgId);
+    loadOrganization(orgId);
+    loadOrgPractitioners(orgId);
   }, []);
 
   if (!organization) {
@@ -180,7 +187,7 @@ const SingleOrganizationView = (props: SingleOrgViewPropsType) => {
           // tslint:disable-next-line: jsx-no-lambda
           onClick={e => {
             e.preventDefault();
-            unassignPractitioner(serviceClass, practitioner.identifier, organization.identifier);
+            unassignPractitioner(practitioner.identifier, organization.identifier);
           }}
         >
           {REMOVE}
