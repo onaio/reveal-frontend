@@ -39,7 +39,7 @@ export interface OrganizationSelectProps {
   organizations: Organization[];
   planId: string;
   serviceClass: typeof OpenSRPService /** the OpenSRP service */;
-  values: SelectOption[];
+  value: SelectOption[];
 }
 
 /** default props for OrganizationSelect */
@@ -52,7 +52,7 @@ const defaultProps: OrganizationSelectProps = {
   organizations: [],
   planId: '',
   serviceClass: OpenSRPService,
-  values: [],
+  value: [],
 };
 
 /**
@@ -70,7 +70,7 @@ const OrganizationSelect = (props: OrganizationSelectProps) => {
     organizations,
     planId,
     serviceClass,
-    values: selectOptions,
+    value: selectOptions,
   } = props;
 
   const loadOrganizations = async (service: typeof serviceClass) => {
@@ -156,7 +156,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: OrganizationSelectProp
     ...ownProps,
     assignments,
     organizations: values(organizations),
-    values: selectOptions,
+    value: selectOptions,
   };
 };
 
