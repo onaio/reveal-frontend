@@ -36,7 +36,7 @@ import {
   OPENSRP_OAUTH_STATE,
   OPENSRP_USER_URL,
 } from './env';
-import { IndicatorRows, JurisdictionTypes } from './types';
+import { JurisdictionTypes } from './types';
 
 /** Interfaces */
 
