@@ -27,17 +27,12 @@ import {
   IDENTIFIER,
   NAME,
   NEW_TEAM,
-  OPENSRP_ORGANIZATION_ENDPOINT,
   OPENSRP_PRACTITIONER_ENDPOINT,
-  OPENSRP_PRACTITIONER_ROLE_ENDPOINT,
-  ORGANIZATION_LABEL,
-  ORGANIZATIONS_LABEL,
   PRACTITIONER,
   PRACTITIONERS,
   PRACTITIONERS_LIST_URL,
   SEARCH,
   USERNAME,
-  VIEW,
 } from '../../../../constants';
 import { OpenSRPService } from '../../../../services/opensrp';
 import store from '../../../../store';
@@ -47,7 +42,6 @@ import practitionersReducer, {
   Practitioner,
   reducerName as practitionersReducerName,
 } from '../../../../store/ducks/opensrp/practitioners';
-import './index.css';
 
 reducerRegistry.register(practitionersReducerName, practitionersReducer);
 
