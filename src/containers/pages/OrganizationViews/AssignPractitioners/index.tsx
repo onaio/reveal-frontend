@@ -172,8 +172,13 @@ const AssignPractitioner: React.FC<PropsTypes> = props => {
     // setSelectedOptions(chosenOptions);
   };
 
+  /** filters options shown in dropdown based on the so far typed characters */
+  const filterOptions = (inputVal: string, allOptions: OptionsType<SelectedOption>) => {
+    return allOptions.filter(option => option.label.includes(inputVal));
+  };
+
   /** merges the practitioner records and returns them as  a promise */
-  const promiseOptions = async () => {
+  const promiseOptions = async (typedChars: string) => {
     // we need this to merge the practitioner records : those that belong to an
     // organization and those that are just fetched
     const orgPractitioners = formatOptions(assignedPractitioners, true);
@@ -182,7 +187,7 @@ const AssignPractitioner: React.FC<PropsTypes> = props => {
       ...keyBy(orgPractitioners, option => option.value),
       ...keyBy(allPractitioners, option => option.value),
     };
-    return values(mergedOptions);
+    return filterOptions(typedChars, values(mergedOptions));
   };
 
   const addHandler = () => {
