@@ -33,7 +33,6 @@ import plansReducer, {
   fetchPlans,
   getPlanRecordsArray,
   getPlansArray,
-  getPlansById,
   InterventionType,
   Plan,
   PlanPayload,
