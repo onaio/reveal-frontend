@@ -1,9 +1,9 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
-import { keys } from 'lodash';
 import React, { MouseEvent, useState } from 'react';
 import { connect } from 'react-redux';
-import { Button, Form, Popover, PopoverBody, PopoverHeader } from 'reactstrap';
+import { Button } from 'reactstrap';
 import { Store } from 'redux';
+import AssignTeamPopover, { AssignTeamPopoverProps } from '../../../components/AssignTeamPopover';
 import { ASSIGN_TEAMS, TEAMS_ASSIGNED } from '../../../constants';
 import { stopPropagationAndPreventDefault } from '../../../helpers/utils';
 import assignmentReducer, {
@@ -17,7 +17,6 @@ import organizationsReducer, {
   Organization,
   reducerName as organizationsReducerName,
 } from '../../../store/ducks/opensrp/organizations';
-import OrganizationSelect from '../OrganizationSelect';
 
 reducerRegistry.register(assignmentReducerName, assignmentReducer);
 reducerRegistry.register(organizationsReducerName, organizationsReducer);
@@ -77,55 +76,26 @@ const AssignTeamTableCell = (props: AssignTeamCellProps) => {
     </Button>
   );
 
-  const organizationsArray: Organization[] | null =
-    organizationsById &&
-    keys(organizationsById)
-      .map((o: string) => organizationsById[o])
-      .filter(o => !!o);
-
-  const organizationSelectProps = {
+  const defaultAssignTeamPopoverProps: AssignTeamPopoverProps = {
+    formName: getFormName(jurisdictionId),
+    isActive,
     jurisdictionId,
-    name: getFormName(jurisdictionId),
+    onClearAssignmentsButtonClick,
+    onSaveAssignmentsButtonClick,
+    onToggle: () => setIsActive(!isActive),
+    organizationsById,
     planId,
-  };
-
-  const popoverProps = {
-    isOpen: isActive,
-    onClick: (e: React.MouseEvent) => stopPropagationAndPreventDefault(e),
     target: getButtonId(jurisdictionId),
-    toggle: () => setIsActive(!isActive),
   };
-
-  const AssignPopover = (
-    <Popover {...popoverProps}>
-      <PopoverHeader>Select Teams to Assign</PopoverHeader>
-      <PopoverBody>
-        {organizationsArray ? (
-          <Form name={getFormName(jurisdictionId)}>
-            <OrganizationSelect {...organizationSelectProps} />
-            <Button color="default" onClick={onClearAssignmentsButtonClick} size="xs">
-              Clear
-            </Button>
-            <Button color="primary" onClick={onSaveAssignmentsButtonClick} size="xs">
-              Save
-            </Button>
-          </Form>
-        ) : (
-          <p>No teams loaded...</p>
-        )}
-      </PopoverBody>
-    </Popover>
-  );
+  const defaultAssignTeamPopover = <AssignTeamPopover {...defaultAssignTeamPopoverProps} />;
 
   return (
     <div onClick={stopPropagationAndPreventDefault}>
       <span style={{ paddingRight: '2rem' }}>
         {`${assignments.length} ${TEAMS_ASSIGNED}`}&nbsp;
       </span>
-      {AssignTeamButton}
-      {AssignPopover}
       {assignButton || AssignTeamButton}
-      {assignPopover || AssignPopover}
+      {assignPopover || defaultAssignTeamPopover}
     </div>
   );
 };
