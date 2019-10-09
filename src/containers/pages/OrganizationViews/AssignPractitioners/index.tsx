@@ -75,7 +75,7 @@ const defaultAssignPractitionerProps: AssignPractitionerProps = {
 export type PropsTypes = AssignPractitionerProps & RouteComponentProps<RouteParams>;
 
 /** interface of an option in the component's state */
-interface SelectedOption {
+interface SelectOption {
   readonly label: string;
   readonly value: string;
   readonly isFixed: boolean;
@@ -90,18 +90,31 @@ const AssignPractitioner: React.FC<PropsTypes> = props => {
     fetchPractitionerRolesCreator,
     assignedPractitioners,
   } = props;
-  const [selectedOptions, setSelectedOptions] = useState<OptionsType<SelectedOption>>([]);
+  const [selectedOptions, setSelectedOptions] = useState<OptionsType<SelectOption>>([]);
 
-  /** load practitioners that belong to this organization */
-  const loadOrgPractitioners = async (organizationId: string) => {
-    const serve = new serviceClass(OPENSRP_ORG_PRACTITIONER_ENDPOINT);
+  /** load practitioners that belong to this organization
+   * @param {string} organization - id for the organization
+   * @param {typeof OpenSRPService} service - the opensrp service
+   */
+  const loadOrgPractitioners = async (
+    organizationId: string,
+    service: typeof OpenSRPService = OpenSRPService
+  ) => {
+    const serve = new service(OPENSRP_ORG_PRACTITIONER_ENDPOINT);
     const orgPractitioners = await serve.read(organizationId);
     store.dispatch(fetchPractitionerRolesCreator(orgPractitioners, organizationId));
   };
 
   // TODO - this is wet code
-  const loadOrganization = async (organizationId: string) => {
-    const serve = new serviceClass(OPENSRP_ORGANIZATION_ENDPOINT);
+  /** loads the organization from the api and updates store
+   * @param {string} organizationId - id of the organization
+   * @param {typeof OpenSRPService} service - the openSRPService
+   */
+  const loadOrganization = async (
+    organizationId: string,
+    service: typeof OpenSRPService = OpenSRPService
+  ) => {
+    const serve = new service(OPENSRP_ORGANIZATION_ENDPOINT);
 
     serve
       .read(organizationId)
@@ -122,14 +135,15 @@ const AssignPractitioner: React.FC<PropsTypes> = props => {
    * @param {Practitioner []} practitioners - list of practitioner json objects
    * @param {boolean} isFixed - value of isFixed; option will be fixed if its already assigned
    * to organization
-   * @return {OptionsType<SelectedOption>}
+   * @return {OptionsType<SelectOption>}
    */
   const formatOptions = (
     practitioners: Practitioner[],
     isFixed: boolean = false
-  ): OptionsType<SelectedOption> =>
+  ): OptionsType<SelectOption> =>
     practitioners.map(entry => ({
       isFixed,
+      // TODO - pending api changes so we can only deal with one
       label: entry.username ? entry.username : (entry as any).userName,
       value: entry.identifier,
     }));
@@ -137,16 +151,17 @@ const AssignPractitioner: React.FC<PropsTypes> = props => {
   // TODO - scenario where this request doesn't return all practitioners in a single query
   /** load all practitioners at least all of those returned
    * in a single call to Practitioners endpoint
+   * @param {typeof OpenSRPService} service - the OpenSRPService
    */
-  const loadAllPractitioners = async () => {
-    const serve = new serviceClass(OPENSRP_PRACTITIONER_ENDPOINT);
+  const loadAllPractitioners = async (service: typeof OpenSRPService = OpenSRPService) => {
+    const serve = new service(OPENSRP_PRACTITIONER_ENDPOINT);
     const allPractitioners = await serve.list();
     return formatOptions(allPractitioners);
   };
 
   // TODO - Hack in this: typings for the changeHandler function.
   /** This sets the state selectedOptions
-   * @param {ValueType<SelectedOption>} -  the so far selected options
+   * @param {ValueType<SelectOption>} -  the so far selected options
    * @param {ActionMeta} - information on the change event; custom react-select event
    */
   const changeHandler = (chosenOptions: any, { action, removedValue, option }: any) => {
@@ -172,15 +187,23 @@ const AssignPractitioner: React.FC<PropsTypes> = props => {
     // setSelectedOptions(chosenOptions);
   };
 
-  /** filters options shown in dropdown based on the so far typed characters */
-  const filterOptions = (inputVal: string, allOptions: OptionsType<SelectedOption>) => {
+  /** filters options shown in dropdown based on the so far typed characters
+   * @param {string} inputVal - string literal that is being typed in select
+   * @param {OptionsType<SelectOption>} allOptions - options from which user can pick from
+   */
+  const filterOptions = (
+    inputVal: string,
+    allOptions: OptionsType<SelectOption>
+  ): OptionsType<SelectOption> => {
     return allOptions.filter(option => option.label.includes(inputVal));
   };
 
-  /** merges the practitioner records and returns them as  a promise */
+  // TODO - This will initiate an api request for the same exact data each time someone types
+  /** merges the practitioner records to be shown in the dropdown and returns them as  a promise
+   * @param {string} typedChars - value of select if user types in on it
+   */
   const promiseOptions = async (typedChars: string) => {
-    // we need this to merge the practitioner records : those that belong to an
-    // organization and those that are just fetched
+    // merging practitioners that are assigned to the organization and all practitioners
     const orgPractitioners = formatOptions(assignedPractitioners, true);
     const allPractitioners = await loadAllPractitioners();
     const mergedOptions = {
@@ -190,6 +213,7 @@ const AssignPractitioner: React.FC<PropsTypes> = props => {
     return filterOptions(typedChars, values(mergedOptions));
   };
 
+  /** handles clicking on the add button */
   const addHandler = () => {
     // selected options
     const practitionerIds = selectedOptions.map(option => option.value);
@@ -228,8 +252,13 @@ const AssignPractitioner: React.FC<PropsTypes> = props => {
   };
   breadcrumbProps.pages = [homePage, basePage];
 
+  // derived values
+
+  /** the options to be passed to react-select as having already been selected */
   const value = [...formatOptions(assignedPractitioners, true), ...selectedOptions];
+  /** activate add button if there are selected options that can be posted to api */
   const activateAddButton = !!selectedOptions.length;
+
   return (
     <div>
       <Helmet>
