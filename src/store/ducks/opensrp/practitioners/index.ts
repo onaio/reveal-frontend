@@ -8,7 +8,7 @@ export const reducerName = 'practitioner';
 
 /** Interface for practitioner json object */
 export interface Practitioner {
-  active: true;
+  active: boolean;
   identifier: string;
   name: string;
   userId: string;
