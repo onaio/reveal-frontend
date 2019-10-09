@@ -3,7 +3,7 @@ import toJson from 'enzyme-to-json';
 import React from 'react';
 import AssignTeamPopover, { AssignTeamPopoverProps } from '..';
 
-describe('/containers/forms/AssignTeamTableCell', () => {
+describe('/components/AssignTeamPopover', () => {
   beforeEach(() => {
     jest.resetAllMocks();
   });
