@@ -168,6 +168,8 @@ export const VIEW = 'view';
 export type VIEW = typeof VIEW;
 export const PRACTITIONER = 'Practitioner';
 export type PRACTITIONER = typeof PRACTITIONER;
+export const PRACTITIONERS = 'Practitioners';
+export type PRACTITIONERS = typeof PRACTITIONERS;
 export const ID = 'Id';
 export type ID = typeof ID;
 export const SAVE = 'Save';
@@ -180,6 +182,8 @@ export const ASSIGNMENT = 'Assignment';
 export type ASSIGNMENT = typeof ASSIGNMENT;
 export const YES = 'Yes';
 export type YES = typeof YES;
+export const EDIT = 'Edit';
+export type EDIT = typeof EDIT;
 // TODO ? - do the below 2 belong here or in a settings file
 export const ORGANIZATION_LABEL = TEAM;
 export type ORGANIZATION_LABEL = typeof ORGANIZATION_LABEL;
