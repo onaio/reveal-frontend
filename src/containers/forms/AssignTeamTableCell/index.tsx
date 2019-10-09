@@ -68,6 +68,7 @@ const AssignTeamTableCell = (props: AssignTeamCellProps) => {
   const AssignTeamButton = (
     <Button
       color="primary"
+      className="assign-team-button"
       id={getButtonId(jurisdictionId)}
       onClick={onPlanAssignmentButtonClick}
       size="sm"
@@ -91,8 +92,8 @@ const AssignTeamTableCell = (props: AssignTeamCellProps) => {
 
   return (
     <div onClick={stopPropagationAndPreventDefault}>
-      <span style={{ paddingRight: '2rem' }}>
-        {`${assignments.length} ${TEAMS_ASSIGNED}`}&nbsp;
+      <span style={{ paddingRight: '2rem' }} className="assignment-count-text">
+        {`${assignments.length} ${TEAMS_ASSIGNED}`}
       </span>
       {assignButton || AssignTeamButton}
       {assignPopover || defaultAssignTeamPopover}
