@@ -8,8 +8,8 @@ import { Helmet } from 'react-helmet';
 import { Route, Switch } from 'react-router';
 import { Col, Container, Row } from 'reactstrap';
 import Loading from '../components/page/Loading';
-import { WEBSITE_NAME } from '../configs/env';
 import { DISABLE_LOGIN_PROTECTION } from '../configs/env';
+import { WEBSITE_NAME } from '../configs/env';
 import { providers } from '../configs/settings';
 import {
   ACTIVE_IRS_PLAN_URL,
@@ -31,6 +31,7 @@ import {
   PLAN_COMPLETION_URL,
   PLAN_LIST_URL,
   PLAN_UPDATE_URL,
+  PRACTITIONERS_LIST_URL,
   REPORT_IRS_PLAN_URL,
 } from '../constants';
 import ConnectedHeader from '../containers/ConnectedHeader';
@@ -50,6 +51,7 @@ import ConnectedIRSReportingMap from '../containers/pages/IRS/Map';
 import ConnectedIRSPlansList from '../containers/pages/IRS/plans';
 import ConnectedCreateEditOrgView from '../containers/pages/OrganizationViews/CreateEditOrgView';
 import ConnectedOrgsListView from '../containers/pages/OrganizationViews/OrganizationListView';
+import ConnectedPractitionersListView from '../containers/pages/PractitionerViews/PractitionerListView';
 import { oAuthUserInfoGetter } from '../helpers/utils';
 
 library.add(faMap);
@@ -227,6 +229,14 @@ class App extends Component {
                   path={`${EDIT_ORGANIZATION_URL}/:id`}
                   component={ConnectedCreateEditOrgView}
                 />
+                {/* Practitioner listing page */}
+                <ConnectedPrivateRoute
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={PRACTITIONERS_LIST_URL}
+                  component={ConnectedPractitionersListView}
+                />
+
                 {/* tslint:disable jsx-no-lambda */}
                 <Route
                   exact={true}
