@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`/containers/forms/AssignTeamTableCell renders correctly: AssignTeamButton 1`] = `
+<button
+  aria-label={null}
+  className="assign-team-button btn btn-primary btn-sm"
+  id="plan-assignment-outpost-number-one"
+  onClick={[Function]}
+  type="button"
+>
+  Assign Teams
+</button>
+`;
+
+exports[`/containers/forms/AssignTeamTableCell renders correctly: Team Count Text 1`] = `
+<span
+  className="assignment-count-text"
+  style={
+    Object {
+      "paddingRight": "2rem",
+    }
+  }
+>
+  0 Teams Assigned
+</span>
+`;
