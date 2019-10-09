@@ -6,6 +6,11 @@ exports[`/containers/forms/AssignTeamTableCell renders correctly: AssignTeamButt
   className="assign-team-button btn btn-primary btn-sm"
   id="plan-assignment-outpost-number-one"
   onClick={[Function]}
+  style={
+    Object {
+      "float": "right",
+    }
+  }
   type="button"
 >
   Assign Teams
