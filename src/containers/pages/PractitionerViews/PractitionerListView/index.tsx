@@ -19,6 +19,7 @@ import HeaderBreadcrumb, {
 import Loading from '../../../../components/page/Loading';
 import {
   ACTIONS,
+  ADD,
   CREATE_PRACTITIONER_URL,
   EDIT,
   EDIT_PRACTITIONER_URL,
@@ -111,7 +112,7 @@ const PractitionerListView = (props: PropsTypes) => {
 
   // props for the link displayed as button: used to add new practitioner
   const linkAsButtonProps = {
-    text: NEW_TEAM,
+    text: `${ADD} ${PRACTITIONER}`,
     to: CREATE_PRACTITIONER_URL,
   };
 

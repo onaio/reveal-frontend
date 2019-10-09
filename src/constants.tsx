@@ -184,6 +184,8 @@ export const YES = 'Yes';
 export type YES = typeof YES;
 export const EDIT = 'Edit';
 export type EDIT = typeof EDIT;
+export const ADD = 'Add';
+export type ADD = typeof ADD;
 // TODO ? - do the below 2 belong here or in a settings file
 export const ORGANIZATION_LABEL = TEAM;
 export type ORGANIZATION_LABEL = typeof ORGANIZATION_LABEL;
