@@ -12,6 +12,7 @@ import assignmentReducer, {
   fetchAssignments,
   getAssignmentsArrayByPlanId,
   reducerName as assignmentReducerName,
+  resetPlanAssignments,
 } from '../../../store/ducks/opensrp/assignments';
 import organizationsReducer, {
   fetchOrganizations,
@@ -38,6 +39,7 @@ export interface OrganizationSelectProps {
   name: string; // name of the input
   organizations: Organization[];
   planId: string;
+  resetPlanAssignmentsAction: typeof resetPlanAssignments;
   serviceClass: typeof OpenSRPService /** the OpenSRP service */;
   value: SelectOption[];
 }
@@ -51,6 +53,7 @@ const defaultProps: OrganizationSelectProps = {
   name: '',
   organizations: [],
   planId: '',
+  resetPlanAssignmentsAction: resetPlanAssignments,
   serviceClass: OpenSRPService,
   value: [],
 };
@@ -69,6 +72,7 @@ const OrganizationSelect = (props: OrganizationSelectProps) => {
     name,
     organizations,
     planId,
+    resetPlanAssignmentsAction,
     serviceClass,
     value: selectOptions,
   } = props;
@@ -96,16 +100,20 @@ const OrganizationSelect = (props: OrganizationSelectProps) => {
     const filteredAssignments: Assignment[] = assignments.filter(
       (a: Assignment) => a.jurisdiction !== jurisdictionId
     );
-    const newAssignments: Assignment[] = nextValues.map(
-      (v: SelectOption) =>
-        ({
-          jurisdiction: jurisdictionId,
-          organization: v.value,
-          plan: planId,
-        } as Assignment)
-    );
-    const nextAssignments: Assignment[] = [...filteredAssignments, ...newAssignments];
-    fetchAssignmentsAction(nextAssignments);
+    if (!nextValues) {
+      resetPlanAssignmentsAction({ [planId]: filteredAssignments });
+    } else {
+      const newAssignments: Assignment[] = (nextValues || []).map(
+        (v: SelectOption) =>
+          ({
+            jurisdiction: jurisdictionId,
+            organization: v.value,
+            plan: planId,
+          } as Assignment)
+      );
+      const nextAssignments: Assignment[] = [...filteredAssignments, ...newAssignments];
+      fetchAssignmentsAction(nextAssignments);
+    }
   };
   const options = organizations.map(
     o =>
@@ -160,6 +168,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: OrganizationSelectProp
 /** map props to actions that may be dispatched by component */
 const mapDispatchToProps = {
   fetchAssignmentsAction: fetchAssignments,
+  resetPlanAssignmentsAction: resetPlanAssignments,
 };
 
 const ConnectedOrganizationSelect = connect(

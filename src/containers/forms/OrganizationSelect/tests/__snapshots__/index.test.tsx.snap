@@ -49,6 +49,7 @@ exports[`/containers/forms/OrganizationSelect renders select options correctly 1
         ]
       }
       planId="alpha"
+      resetPlanAssignmentsAction={[Function]}
       serviceClass={[Function]}
       value={Array []}
     >
