@@ -1,7 +1,6 @@
 import {
   adminLayerColors,
   GREEN_THRESHOLD,
-  IndicatorRowItem,
   JurisdictionLevels,
   ORANGE_THRESHOLD,
   YELLOW_THRESHOLD,
@@ -14,9 +13,6 @@ export type ORANGE_THRESHOLD = typeof ORANGE_THRESHOLD;
 
 // admin layer color type
 export type adminLayerColorsType = typeof adminLayerColors[number];
-
-// indicator row type
-export type IndicatorRows = IndicatorRowItem[];
 
 // jurisdiction types
 export type JurisdictionTypes = typeof JurisdictionLevels[number];
