@@ -184,7 +184,6 @@ const AssignPractitioner: React.FC<PropsTypes> = props => {
       case 'clear':
         chosenOptions = chosenOptions.filter((v: any) => !v.isFixed);
     }
-    // setSelectedOptions(chosenOptions);
   };
 
   /** filters options shown in dropdown based on the so far typed characters
