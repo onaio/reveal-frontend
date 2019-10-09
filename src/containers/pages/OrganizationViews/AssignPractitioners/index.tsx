@@ -195,7 +195,7 @@ const AssignPractitioner: React.FC<PropsTypes> = props => {
     inputVal: string,
     allOptions: OptionsType<SelectOption>
   ): OptionsType<SelectOption> => {
-    return allOptions.filter(option => option.label.includes(inputVal));
+    return allOptions.filter(option => option.label.toLocaleLowerCase().includes(inputVal));
   };
 
   // TODO - This will initiate an api request for the same exact data each time someone types
