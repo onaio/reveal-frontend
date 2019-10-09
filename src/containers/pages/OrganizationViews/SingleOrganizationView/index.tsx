@@ -16,6 +16,8 @@ import HeaderBreadcrumb, {
 import Loading from '../../../../components/page/Loading';
 import {
   ACTIONS,
+  ASSIGN,
+  ASSIGN_PRACTITIONERS_URL,
   DETAILS,
   EDIT,
   EDIT_ORGANIZATION_URL,
@@ -28,6 +30,7 @@ import {
   ORGANIZATION_LABEL,
   ORGANIZATIONS_LABEL,
   ORGANIZATIONS_LIST_URL,
+  PRACTITIONER,
   REMOVE,
   SINGLE_ORGANIZATION_URL,
   USERNAME,
@@ -164,6 +167,11 @@ const SingleOrganizationView = (props: SingleOrgViewPropsType) => {
     to: `${EDIT_ORGANIZATION_URL}/${organization!.identifier}`,
   };
 
+  const assignPractitionersButton = {
+    text: `${ASSIGN} ${PRACTITIONER}`,
+    to: `${ASSIGN_PRACTITIONERS_URL}/${organization!.identifier}`,
+  };
+
   return (
     <div>
       <Helmet>
@@ -177,6 +185,8 @@ const SingleOrganizationView = (props: SingleOrgViewPropsType) => {
         </Col>
         <Col className="link-as-button xs">
           <LinkAsButton {...linkAsButtonProps} />
+          &nbsp;
+          <LinkAsButton {...assignPractitionersButton} />
         </Col>
       </Row>
       <hr />
