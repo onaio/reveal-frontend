@@ -1,6 +1,6 @@
 // this is the IRS Plan page component
 import { Actions } from 'gisida';
-import { keyBy } from 'lodash';
+import { keyBy, values } from 'lodash';
 import { EventData, LngLatBoundsLike, MapboxGeoJSONFeature } from 'mapbox-gl';
 import moment from 'moment';
 import { MouseEvent } from 'react';
@@ -2046,12 +2046,12 @@ class IrsPlan extends React.Component<
           : `${Number(newPlan.plan_version) + 1}`,
       };
 
-      const { assignmentsArray } = this.props;
+      const { assignmentsArray, organizationsById } = this.props;
 
       if (newPlanDraft.plan_jurisdictions_ids && newPlanDraft.plan_jurisdictions_ids.length) {
         const planPayload = extractPlanPayloadFromPlanRecord(newPlanDraft);
         if (planPayload) {
-          // todo - check opensrp for Assignments to retire
+          // create payload of assignments based on current store state
           const nextAssignments: Assignment[] = assignmentsArray.map((a: Assignment) => ({
             ...a,
             fromDate: moment(start).format(),
@@ -2070,29 +2070,30 @@ class IrsPlan extends React.Component<
           }
 
           // fetch list of assignments from server which need to be retired
-          const retiredAssignments: Assignment[] = await OpenSRPOrganizationService.read(
-            OPENSRP_ASSIGNMENTS_BY_PLAN,
-            { plan: planPayload.identifier }
-          ).then((assignmentResults: Assignment[]) => {
-            const assignmentsToRetire: Assignment[] = [];
-            for (const result of assignmentResults) {
-              if (
-                !assignmentTeamIdsByJurisdictionId[result.jurisdiction] ||
-                !assignmentTeamIdsByJurisdictionId[result.jurisdiction].includes(
-                  result.organization
-                )
-              ) {
-                retiredAssignments.push({
-                  ...result,
-                  toDate: moment(0).format(),
-                } as Assignment);
+          const retiredAssignments: Assignment[] = await this.getAllAssignments(
+            planPayload.identifier,
+            values(organizationsById),
+            (existingAssignments: Assignment[]) => {
+              const assignmentsToRetire: Assignment[] = [];
+              for (const result of existingAssignments) {
+                if (
+                  !assignmentTeamIdsByJurisdictionId[result.jurisdiction] ||
+                  !assignmentTeamIdsByJurisdictionId[result.jurisdiction].includes(
+                    result.organization
+                  )
+                ) {
+                  assignmentsToRetire.push({
+                    ...result,
+                    fromDate: moment(0).format(),
+                    toDate: moment(1000).format(),
+                  } as Assignment);
+                }
               }
+              return assignmentsToRetire;
             }
-            return assignmentsToRetire;
-          });
+          );
 
-          this.setState({ isSaveDraftDisabled: true }, () => {
-            // todo - handle Finalized plans!!
+          this.setState({ isSaveDraftDisabled: true }, async () => {
             if (this.props.isDraftPlan) {
               OpenSrpPlanService.update(planPayload)
                 .then(() => {
@@ -2116,13 +2117,26 @@ class IrsPlan extends React.Component<
                   this.setState({ isSaveDraftDisabled: false });
                 });
 
-              // OpenSrpAssignmentService.create([...nextAssignments, ...retiredAssignments])
-              //   .then(res => {
-              //     // console.log('ASSIGNMENTS CREATED', res)
-              //   })
-              //   .catch(err => {
-              //     // console.log('Assignments NOT created', err);
-              //   });
+              // POST to retire unassigned assignments
+              if (retiredAssignments.length) {
+                await OpenSrpAssignmentService.create([...retiredAssignments])
+                  .then(res => {
+                    // todo - hook in success notification
+                  })
+                  .catch(err => {
+                    // todo - handle errors
+                  });
+              }
+              // POST to create new/updated assignments
+              if (nextAssignments.length) {
+                await OpenSrpAssignmentService.create([...nextAssignments])
+                  .then(res => {
+                    // todo - hook in success notification
+                  })
+                  .catch(err => {
+                    // todo - handle errors
+                  });
+              }
             }
           });
         } else {
