@@ -26,12 +26,13 @@ import {
   JURISDICTION_ID,
   MAP_ID,
   NEW_PLAN,
-  OPENSRP_ASSIGNMENTS_BY_PLAN,
   OPENSRP_FIND_BY_PROPERTIES,
+  OPENSRP_GET_ASSIGNMENTS_ENDPOINT,
   OPENSRP_LOCATION,
   OPENSRP_ORGANIZATION_ENDPOINT,
   OPENSRP_PARENT_ID,
   OPENSRP_PLANS,
+  OPENSRP_POST_ASSIGNMENTS_ENDPOINT,
   PARENTID,
 } from '../../../../../constants';
 import {
@@ -118,6 +119,8 @@ reducerRegistry.register(assignmentReducerName, assignmentReducer);
 const OpenSrpLocationService = new OpenSRPService(OPENSRP_LOCATION);
 const OpenSrpPlanService = new OpenSRPService(OPENSRP_PLANS);
 const OpenSRPOrganizationService = new OpenSRPService(OPENSRP_ORGANIZATION_ENDPOINT);
+const OpenSrpAssignedService = new OpenSRPService(OPENSRP_GET_ASSIGNMENTS_ENDPOINT);
+const OpenSrpAssignmentService = new OpenSRPService(OPENSRP_POST_ASSIGNMENTS_ENDPOINT);
 
 /** IrsPlanProps - interface for IRS Plan page */
 export interface IrsPlanProps {
@@ -242,13 +245,19 @@ class IrsPlan extends React.Component<
 
     // Get assignments
     if (planId) {
-      OpenSRPOrganizationService.read(OPENSRP_ASSIGNMENTS_BY_PLAN, { plan: planId }).then(
-        (assignmentResults: Assignment[]) => {
-          if (assignmentResults && assignmentResults.length) {
-            return store.dispatch(fetchAssignmentsActionCreator(assignmentResults));
-          }
-        }
-      );
+      // fetch all organizations
+      OpenSRPOrganizationService.list()
+        .then((response: Organization[]) => {
+          // save all organizations to store
+          store.dispatch(fetchOrganizationsActionCreator(response));
+          // get all assignments
+          return this.getAllAssignments(planId, response, (nextAssignments: Assignment[]) =>
+            store.dispatch(fetchAssignmentsActionCreator(nextAssignments))
+          );
+        })
+        .catch((err: Error) => {
+          /** TODO - find something to do with error */
+        });
     }
 
     const otherJurisdictionSupersetParams = { row_limit: SUPERSET_MAX_RECORDS };
@@ -392,12 +401,6 @@ class IrsPlan extends React.Component<
         return fetchJurisdictionsActionCreator(jurisdictionsArray);
       }
     );
-
-    await OpenSRPOrganizationService.list()
-      .then((response: Organization[]) => store.dispatch(fetchOrganizationsActionCreator(response)))
-      .catch((err: Error) => {
-        /** TODO - find something to do with error */
-      });
   }
 
   public componentWillReceiveProps(nextProps: IrsPlanProps) {
@@ -586,6 +589,55 @@ class IrsPlan extends React.Component<
         )}
       </div>
     );
+  }
+
+  /** getAllAssignments - funciton to get all assignments for the plan from OpenSRP
+   * @param {string} planId the id of the plan for which to return assignments
+   * @param {Organization[]} organizations an array of Organizations by which to query assignments
+   * @param {(assignments:Assignment[])=>any} callback a function handling the resulting Assignments
+   * @returns {(assignments:Assignment[])=>any} the callback passing the Assignments as the first parameter
+   */
+  public getAllAssignments(
+    planId: string,
+    organizations: Organization[],
+    callback: (assignments: Assignment[]) => any
+  ) {
+    // define a reference of all organization ids
+    const organizationIds: string[] = organizations.map((o: Organization) => o.identifier);
+
+    // generate api calls for each organization id
+    const assignmentPromises = organizationIds.map(
+      (o: string) =>
+        new Promise((resolve, reject) => {
+          OpenSrpAssignedService.read(o, { plan: planId })
+            .then(j => resolve(j))
+            .catch(error => reject(error));
+        })
+    );
+
+    // make all the calls to get assignments per org for the plan
+    return Promise.all(assignmentPromises).then((results: any[]) => {
+      const nextAssignments: Assignment[] = [];
+      // step through all api results per organization
+      for (let o = 0; o < results.length; o += 1) {
+        const result = results[o];
+        if (Array.isArray(result)) {
+          // loop through all Assignments for this org in this plan
+          for (const r of result) {
+            // ingest assigned Assignments as assignable Assignments
+            nextAssignments.push({
+              fromDate: moment(r.fromDate).format(),
+              jurisdiction: r.jurisdictionId,
+              organization: organizationIds[o],
+              plan: planId,
+              toDate: moment(r.toDate).format(),
+            });
+          }
+        }
+      }
+      // save the Assignments to the store
+      return callback(nextAssignments);
+    });
   }
 
   // Jurisdiction Hierarchy Control
@@ -2061,6 +2113,14 @@ class IrsPlan extends React.Component<
                 .catch(() => {
                   this.setState({ isSaveDraftDisabled: false });
                 });
+
+              // OpenSrpAssignmentService.create([...nextAssignments, ...retiredAssignments])
+              //   .then(res => {
+              //     // console.log('ASSIGNMENTS CREATED', res)
+              //   })
+              //   .catch(err => {
+              //     // console.log('Assignments NOT created', err);
+              //   });
             }
           });
         } else {
