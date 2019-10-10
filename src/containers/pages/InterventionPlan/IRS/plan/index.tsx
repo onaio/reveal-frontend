@@ -1971,7 +1971,7 @@ class IrsPlan extends React.Component<
   /** onSavePlanButtonClick - extracts PlanPayload from newPlan and PUSHs or PUTs to OpenSRP
    * @param {boolean} isFinal - determines if the Plan should be saved as a draft or as a finalized plan
    */
-  private onSavePlanButtonClick(isFinal: boolean = false) {
+  private async onSavePlanButtonClick(isFinal: boolean = false) {
     const { newPlan, childlessChildrenIds } = this.state;
     if (newPlan && newPlan.plan_jurisdictions_ids) {
       const now = moment(new Date());
@@ -2003,6 +2003,39 @@ class IrsPlan extends React.Component<
             fromDate: moment(start).format(),
             toDate: moment(end).format(),
           }));
+
+          // create temp reference to determine which assignments should be retired on server
+          const assignmentTeamIdsByJurisdictionId: { [key: string]: string[] } = {};
+          for (const assignment of nextAssignments) {
+            if (!assignmentTeamIdsByJurisdictionId[assignment.jurisdiction]) {
+              assignmentTeamIdsByJurisdictionId[assignment.jurisdiction] = [];
+            }
+            assignmentTeamIdsByJurisdictionId[assignment.jurisdiction].push(
+              assignment.organization
+            );
+          }
+
+          // fetch list of assignments from server which need to be retired
+          const retiredAssignments: Assignment[] = await OpenSRPOrganizationService.read(
+            OPENSRP_ASSIGNMENTS_BY_PLAN,
+            { plan: planPayload.identifier }
+          ).then((assignmentResults: Assignment[]) => {
+            const assignmentsToRetire: Assignment[] = [];
+            for (const result of assignmentResults) {
+              if (
+                !assignmentTeamIdsByJurisdictionId[result.jurisdiction] ||
+                !assignmentTeamIdsByJurisdictionId[result.jurisdiction].includes(
+                  result.organization
+                )
+              ) {
+                retiredAssignments.push({
+                  ...result,
+                  toDate: moment(0).format(),
+                } as Assignment);
+              }
+            }
+            return assignmentsToRetire;
+          });
 
           this.setState({ isSaveDraftDisabled: true }, () => {
             // todo - handle Finalized plans!!
