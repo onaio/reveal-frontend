@@ -71,6 +71,7 @@ exports[`containers/pages/IRS/plan renders IRS Plan page correctly 1`] = `
         allJurisdictionIds={Array []}
         assignmentsArray={Array []}
         fetchAllJurisdictionIdsActionCreator={[Function]}
+        fetchAssignmentsActionCreator={[Function]}
         fetchJurisdictionsActionCreator={[Function]}
         fetchOrganizationsActionCreator={[Function]}
         fetchPlansActionCreator={[Function]}
