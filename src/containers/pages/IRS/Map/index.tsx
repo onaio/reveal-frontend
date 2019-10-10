@@ -18,6 +18,7 @@ import {
   SUPERSET_IRS_REPORTING_PLANS_SLICE,
   SUPERSET_IRS_REPORTING_STRUCTURES_DATA_SLICE,
   SUPERSET_JURISDICTIONS_SLICE,
+  SUPERSET_MAX_RECORDS,
 } from '../../../../configs/env';
 import { indicatorThresholdsIRS } from '../../../../configs/settings';
 import { HOME, HOME_URL, IRS_REPORTING_TITLE, REPORT_IRS_PLAN_URL } from '../../../../constants';
@@ -138,7 +139,7 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
 
       let fetchStructureParams: SupersetFormData | null = null;
       if (jurisdictionId) {
-        fetchStructureParams = superset.getFormData(3000, [
+        fetchStructureParams = superset.getFormData(SUPERSET_MAX_RECORDS, [
           { comparator: jurisdictionId, operator: '==', subject: 'jurisdiction_id' },
         ]);
       }

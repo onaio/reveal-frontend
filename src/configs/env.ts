@@ -40,6 +40,10 @@ export type SUPERSET_API_BASE = typeof SUPERSET_API_BASE;
 export const SUPERSET_API_ENDPOINT = process.env.REACT_APP_SUPERSET_API_ENDPOINT || 'slice';
 export type SUPERSET_API_ENDPOINT = typeof SUPERSET_API_ENDPOINT;
 
+/** The max number of records to get from Superset API endpoint */
+export const SUPERSET_MAX_RECORDS = Number(process.env.REACT_APP_SUPERSET_MAX_RECORDS) || 10000;
+export type SUPERSET_MAX_RECORDS = typeof SUPERSET_MAX_RECORDS;
+
 export const SUPERSET_PLANS_SLICE = process.env.REACT_APP_SUPERSET_PLANS_SLICE || '0';
 export type SUPERSET_PLANS_SLICE = typeof SUPERSET_PLANS_SLICE;
 
