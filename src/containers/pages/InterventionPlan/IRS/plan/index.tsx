@@ -14,7 +14,11 @@ import GeojsonExtent from '@mapbox/geojson-extent';
 import DrillDownTable, { DrillDownProps, DropDownCell } from '@onaio/drill-down-table';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 
-import { DATE_FORMAT, SUPERSET_JURISDICTIONS_DATA_SLICE } from '../../../../../configs/env';
+import {
+  DATE_FORMAT,
+  SUPERSET_JURISDICTIONS_DATA_SLICE,
+  SUPERSET_MAX_RECORDS,
+} from '../../../../../configs/env';
 import {
   HOME,
   HOME_URL,
@@ -231,7 +235,7 @@ class IrsPlan extends React.Component<
       this.setState({ newPlan: planById });
     }
 
-    const otherJurisdictionSupersetParams = { row_limit: 10000 };
+    const otherJurisdictionSupersetParams = { row_limit: SUPERSET_MAX_RECORDS };
 
     // GET FULL JURISDICTION HIERARCHY
     await supersetService(SUPERSET_JURISDICTIONS_DATA_SLICE, otherJurisdictionSupersetParams).then(
