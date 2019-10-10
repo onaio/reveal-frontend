@@ -26,6 +26,7 @@ import {
   JURISDICTION_ID,
   MAP_ID,
   NEW_PLAN,
+  OPENSRP_ASSIGNMENTS_BY_PLAN,
   OPENSRP_FIND_BY_PROPERTIES,
   OPENSRP_LOCATION,
   OPENSRP_ORGANIZATION_ENDPOINT,
@@ -74,6 +75,7 @@ import jurisdictionReducer, {
 } from '../../../../../store/ducks/jurisdictions';
 import assignmentReducer, {
   Assignment,
+  fetchAssignments,
   getAssignmentsArrayByPlanId,
   reducerName as assignmentReducerName,
 } from '../../../../../store/ducks/opensrp/assignments';
@@ -122,6 +124,7 @@ export interface IrsPlanProps {
   allJurisdictionIds: string[];
   assignmentsArray: Assignment[];
   fetchAllJurisdictionIdsActionCreator: typeof fetchAllJurisdictionIds;
+  fetchAssignmentsActionCreator: typeof fetchAssignments;
   fetchJurisdictionsActionCreator: typeof fetchJurisdictions;
   fetchOrganizationsActionCreator: typeof fetchOrganizations;
   fetchPlansActionCreator: typeof fetchPlanRecords;
@@ -140,6 +143,7 @@ export const defaultIrsPlanProps: IrsPlanProps = {
   allJurisdictionIds: [],
   assignmentsArray: [],
   fetchAllJurisdictionIdsActionCreator: fetchAllJurisdictionIds,
+  fetchAssignmentsActionCreator: fetchAssignments,
   fetchJurisdictionsActionCreator: fetchJurisdictions,
   fetchOrganizationsActionCreator: fetchOrganizations,
   fetchPlansActionCreator: fetchPlanRecords,
@@ -212,6 +216,7 @@ class IrsPlan extends React.Component<
 
   public async componentDidMount() {
     const {
+      fetchAssignmentsActionCreator,
       fetchJurisdictionsActionCreator,
       fetchOrganizationsActionCreator,
       fetchPlansActionCreator,
@@ -233,6 +238,17 @@ class IrsPlan extends React.Component<
         .catch(err => err);
     } else if (isDraftPlan && planById) {
       this.setState({ newPlan: planById });
+    }
+
+    // Get assignments
+    if (planId) {
+      OpenSRPOrganizationService.read(OPENSRP_ASSIGNMENTS_BY_PLAN, { plan: planId }).then(
+        (assignmentResults: Assignment[]) => {
+          if (assignmentResults && assignmentResults.length) {
+            return store.dispatch(fetchAssignmentsActionCreator(assignmentResults));
+          }
+        }
+      );
     }
 
     const otherJurisdictionSupersetParams = { row_limit: SUPERSET_MAX_RECORDS };
@@ -2071,6 +2087,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
 /** map props to actions that may be dispatched by component */
 const mapDispatchToProps = {
   fetchAllJurisdictionIdsActionCreator: fetchAllJurisdictionIds,
+  fetchAssignmentsActionCreator: fetchAssignments,
   fetchJurisdictionsActionCreator: fetchJurisdictions,
   fetchOrganizationsActionCreator: fetchOrganizations,
   fetchPlansActionCreator: fetchPlanRecords,

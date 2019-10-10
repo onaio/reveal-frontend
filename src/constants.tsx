@@ -284,6 +284,8 @@ export const OPENSRP_PARENT_ID = 'parent_id';
 export type OPENSRP_PARENT_ID = typeof OPENSRP_PARENT_ID;
 export const OPENSRP_ORGANIZATION_ENDPOINT = 'organization';
 export type OPENSRP_ORGANIZATION_ENDPOINT = typeof OPENSRP_ORGANIZATION_ENDPOINT;
+export const OPENSRP_ASSIGNMENTS_BY_PLAN = 'assignedLocationsAndPlans';
+export type OPENSRP_ASSIGNMENTS_BY_PLAN = typeof OPENSRP_ASSIGNMENTS_BY_PLAN;
 
 // container pages title names
 export const HOME_TITLE = `Home page`;
