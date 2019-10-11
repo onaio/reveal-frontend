@@ -7,17 +7,18 @@ import { Organization } from '../../store/ducks/opensrp/organizations';
 
 /** Interface for AssignTeamPopover */
 export interface AssignTeamPopoverProps {
-  formName: string;
-  isActive: boolean;
-  jurisdictionId: string;
-  onClearAssignmentsButtonClick: (e: MouseEvent) => void;
-  onSaveAssignmentsButtonClick: (e: MouseEvent) => void;
-  onToggle: () => void;
-  organizationsById: { [key: string]: Organization } | null;
-  planId: string;
-  target: string;
+  formName: string; // id of the continer form element for the nested ReactSelect el
+  isActive: boolean; // whether or not the popover should be visible
+  jurisdictionId: string; // the id of the relevant Jurisdiction
+  onClearAssignmentsButtonClick: (e: MouseEvent) => void; // what to do when clicking 'Clear'
+  onSaveAssignmentsButtonClick: (e: MouseEvent) => void; // what to do when clicking 'Save'
+  onToggle: () => void; // what to do when the popover toggles
+  organizationsById: { [key: string]: Organization } | null; // all the organizations
+  planId: string; // the id of the current Plan
+  target: string; // the id of the adjacent button which toggles the popup
 }
 
+/** default Component for AssignTeamPopover */
 const AssignTeamPopover = (props: AssignTeamPopoverProps) => {
   const {
     formName,
@@ -31,12 +32,14 @@ const AssignTeamPopover = (props: AssignTeamPopoverProps) => {
     target,
   } = props;
 
+  // define props for the child Organization Select component
   const organizationSelectProps = {
     jurisdictionId,
     name: formName,
     planId,
   };
 
+  // define props for the actual popover component
   const popoverProps = {
     isOpen: isActive,
     onClick: (e: React.MouseEvent) => stopPropagationAndPreventDefault(e),
