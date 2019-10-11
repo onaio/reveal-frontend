@@ -1,7 +1,7 @@
 /** Practitioner Assignment component for listing all practitioners */
 import ListView from '@onaio/list-view';
 import reducerRegistry from '@onaio/redux-reducer-registry';
-import React, { useEffect } from 'react';
+import React from 'react';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
@@ -27,7 +27,6 @@ import {
   HOME_URL,
   IDENTIFIER,
   NAME,
-  OPENSRP_PRACTITIONER_ENDPOINT,
   PRACTITIONER,
   PRACTITIONERS,
   PRACTITIONERS_LIST_URL,
@@ -35,13 +34,13 @@ import {
   USERNAME,
 } from '../../../../constants';
 import { OpenSRPService } from '../../../../services/opensrp';
-import store from '../../../../store';
 import practitionersReducer, {
   fetchPractitioners,
   getPractitionersArray,
   Practitioner,
   reducerName as practitionersReducerName,
 } from '../../../../store/ducks/opensrp/practitioners';
+import { usePractitioners } from '../dataLoadingHooks';
 
 reducerRegistry.register(practitionersReducerName, practitionersReducer);
 
@@ -117,19 +116,8 @@ const PractitionersListView = (props: PropsTypes) => {
   // tslint:disable-next-line: no-empty
   function handleSubmit(data: FieldProps) {}
 
-  const loadPractitioners = async (service: typeof serviceClass) => {
-    const serve = new service(OPENSRP_PRACTITIONER_ENDPOINT);
-    serve
-      .list()
-      .then((response: Practitioner[]) => store.dispatch(fetchPractitionersCreator(response)))
-      .catch((err: Error) => {
-        /** TODO - find something to do with error */
-      });
-  };
-
-  useEffect(() => {
-    loadPractitioners(serviceClass);
-  }, []);
+  /** hook to load all practitioners and dispatch to them to store */
+  usePractitioners(fetchPractitionersCreator, serviceClass);
 
   // break early if practitioners are absent
   const isLoading = practitioners.length < 1;
@@ -165,6 +153,7 @@ export { PractitionersListView };
 
 // connect to store
 
+/** maps props to state via selectors */
 const mapStateToProps = (state: Partial<Store>) => {
   return {
     practitioners: getPractitionersArray(state),
