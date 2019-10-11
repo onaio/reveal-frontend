@@ -227,14 +227,14 @@ const SingleOrganizationView = (props: SingleOrgViewPropsType) => {
           <Row>
             <Col className="col-6">
               <Row>
-                <Col className="text-muted mb-4 col-6">{IDENTIFIER}</Col>
-                <Col className=" mb-4 col-6">{organization.identifier}</Col>
+                <Col className="organization-cells text-muted mb-4 col-6">{IDENTIFIER}</Col>
+                <Col className="organization-cells mb-4 col-6">{organization.identifier}</Col>
               </Row>
             </Col>
             <Col className="col-6">
               <Row>
-                <Col className="text-muted mb-4 col-6">{NAME}</Col>
-                <Col className=" mb-4 col-6">{organization.name}</Col>
+                <Col className="organization-cells text-muted mb-4 col-6">{NAME}</Col>
+                <Col className="organization-cells mb-4 col-6">{organization.name}</Col>
               </Row>
             </Col>
           </Row>
