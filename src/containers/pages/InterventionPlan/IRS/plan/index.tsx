@@ -623,15 +623,15 @@ class IrsPlan extends React.Component<
         const result = results[o];
         if (Array.isArray(result)) {
           // loop through all Assignments for this org in this plan
-          for (const r of result) {
-            if (r.planId === planId) {
+          for (const assignment of result) {
+            if (assignment.planId === planId) {
               // ingest assigned Assignments as assignable Assignments
               nextAssignments.push({
-                fromDate: moment(r.fromDate).format(),
-                jurisdiction: r.jurisdictionId,
+                fromDate: moment(assignment.fromDate).format(),
+                jurisdiction: assignment.jurisdictionId,
                 organization: organizationIds[o],
                 plan: planId,
-                toDate: moment(r.toDate).format(),
+                toDate: moment(assignment.toDate).format(),
               });
             }
           }
