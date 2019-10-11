@@ -128,6 +128,8 @@ const OrganizationSelect = (props: OrganizationSelectProps) => {
       name={name}
       bsSize="lg"
       placeholder={'Select'}
+      className="organization-select"
+      classNamePrefix="reveal"
       aria-label={'Select'}
       onChange={handleChange}
       defaultOptions={true}

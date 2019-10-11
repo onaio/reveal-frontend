@@ -3,6 +3,7 @@ import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import React from 'react';
 import { Provider } from 'react-redux';
+import Select, { components } from 'react-select';
 import OrganizationSelect from '..';
 import store from '../../../../store';
 import assignmentReducer, {
@@ -49,6 +50,8 @@ describe('/containers/forms/OrganizationSelect', () => {
       </Provider>
     );
     // todo - remove large snapshot
-    expect(toJson(wrapper)).toMatchSnapshot();
+    expect(toJson(wrapper.find('.organization-select'))).toMatchSnapshot('Organization Select');
+    // expect(wrapper.prop('classNamePrefix')).toBe('reveal');
+    expect(wrapper.find('.reveal__indicator').length).toBe(2);
   });
 });
