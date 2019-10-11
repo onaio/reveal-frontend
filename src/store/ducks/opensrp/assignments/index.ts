@@ -94,7 +94,7 @@ export const fetchAssignments = (assignmentsList: Assignment[]): FetchAssignment
   const assignmentsByPlanId: AssignmentsByPlanId = {};
 
   for (const assignment of assignmentsList) {
-    if (!assignmentsByPlanId[assignment.plan]) {
+    if (!(assignment.plan in assignmentsByPlanId)) {
       assignmentsByPlanId[assignment.plan] = [];
     }
     assignmentsByPlanId[assignment.plan].push(assignment);

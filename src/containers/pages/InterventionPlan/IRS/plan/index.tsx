@@ -2077,7 +2077,7 @@ class IrsPlan extends React.Component<
               const assignmentsToRetire: Assignment[] = [];
               for (const result of existingAssignments) {
                 if (
-                  !assignmentTeamIdsByJurisdictionId[result.jurisdiction] ||
+                  !(result.jurisdiction in assignmentTeamIdsByJurisdictionId) ||
                   !assignmentTeamIdsByJurisdictionId[result.jurisdiction].includes(
                     result.organization
                   )
