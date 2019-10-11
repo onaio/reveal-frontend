@@ -1,4 +1,3 @@
-import { keys } from 'lodash';
 import React, { MouseEvent } from 'react';
 import { Button, Form, FormGroup, Popover, PopoverBody, PopoverHeader } from 'reactstrap';
 import { CLEAR, NO_TEAMS_LOADED_MESSAGE, SAVE, SELECT_TEAMS_TO_ASSIGN } from '../../constants';
@@ -32,12 +31,6 @@ const AssignTeamPopover = (props: AssignTeamPopoverProps) => {
     target,
   } = props;
 
-  const organizationsArray: Organization[] | null =
-    organizationsById &&
-    keys(organizationsById)
-      .map((o: string) => organizationsById[o])
-      .filter(o => !!o);
-
   const organizationSelectProps = {
     jurisdictionId,
     name: formName,
@@ -55,7 +48,7 @@ const AssignTeamPopover = (props: AssignTeamPopoverProps) => {
     <Popover {...popoverProps} style={{ minWidth: '16rem' }}>
       <PopoverHeader>{SELECT_TEAMS_TO_ASSIGN}</PopoverHeader>
       <PopoverBody>
-        {organizationsArray ? (
+        {organizationsById ? (
           <Form name={formName}>
             <FormGroup>
               <OrganizationSelect {...organizationSelectProps} />
