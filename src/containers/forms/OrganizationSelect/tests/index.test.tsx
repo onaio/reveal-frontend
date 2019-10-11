@@ -49,9 +49,14 @@ describe('/containers/forms/OrganizationSelect', () => {
         <OrganizationSelect {...props} />
       </Provider>
     );
-    // todo - remove large snapshot
-    expect(toJson(wrapper.find('.organization-select'))).toMatchSnapshot('Organization Select');
-    // expect(wrapper.prop('classNamePrefix')).toBe('reveal');
+
+    expect(wrapper.children().props()).toMatchSnapshot('Organization Select ownProps');
+    expect(
+      wrapper
+        .children()
+        .children()
+        .props()
+    ).toMatchSnapshot('Organization Select Props');
     expect(wrapper.find('.reveal__indicator').length).toBe(2);
   });
 });
