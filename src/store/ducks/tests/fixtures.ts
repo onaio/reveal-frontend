@@ -1273,5 +1273,35 @@ export const practitioner6 = {
   username: 'lusaka',
 };
 
+export const assignment1 = {
+  fromDate: '2019-08-31T16:00:00-08:00',
+  jurisdiction: 'outpost-number-one',
+  organization: 'griff',
+  plan: 'alpha',
+  toDate: '2019-12-31T16:00:01-08:00',
+};
+export const assignment2 = {
+  fromDate: '2019-08-31T16:00:00-08:00',
+  jurisdiction: 'outpost-number-one',
+  organization: 'simons',
+  plan: 'alpha',
+  toDate: '2019-12-31T16:00:01-08:00',
+};
+export const assignment3 = {
+  fromDate: '2019-08-31T16:00:00-08:00',
+  jurisdiction: 'blue-base',
+  organization: 'tucker',
+  plan: 'alpha',
+  toDate: '2019-12-31T16:00:01-08:00',
+};
+export const assignment4 = {
+  fromDate: '2019-08-31T16:00:00-08:00',
+  jurisdiction: 'blue-base',
+  organization: 'caboose',
+  plan: 'alpha',
+  toDate: '2019-12-31T16:00:01-08:00',
+};
+export const assignments = [assignment1, assignment2, assignment3, assignment4];
+
 export const practitioners = [practitioner1, practitioner2, practitioner3];
 export const org3Practitioners = [practitioner4, practitioner5, practitioner6];
