@@ -79,7 +79,7 @@ const PractitionersListView = (props: PropsTypes) => {
   };
   breadcrumbProps.pages = [homePage];
 
-  /** props for the inline search form, used to search an practitioner via an api call */
+  /** props for the inline search form, used to search a practitioner via an api call */
   const inlineSearchFormProps: InlineSearchFormProps = {
     handleSubmit,
     inputId: 'search',
