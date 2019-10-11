@@ -169,31 +169,27 @@ describe('src/containers/pages/TeamAssignment', () => {
     expect.assertions(3);
   });
 
-  // TODO - repair this test
-  xit('Deleting api calls for removing a practitioner from an organization', async () => {
+  it('Deleting api calls for removing a practitioner from an organization', async () => {
     // removing a practitioner from an organization workflow
     fetch
       .once(JSON.stringify(fixtures.organization3))
-      .once(JSON.stringify(fixtures.org3Practitioners));
+      .once(JSON.stringify(fixtures.org3Practitioners))
+      .once(JSON.stringify([]), { status: 204 })
+      .once(JSON.stringify([fixtures.practitioner1, fixtures.practitioner2]));
+
     const mock: any = jest.fn();
-    const mockDelete: any = jest.fn(async () => []);
-    const serviceMock: any = jest.fn(() => {
-      return {
-        delete: mockDelete,
-      };
-    });
 
     const props = {
       history,
       location: mock,
       match: {
         isExact: true,
-        params: { id: '1' },
+        params: { id: fixtures.organization3.identifier },
         path: `${SINGLE_ORGANIZATION_URL}/:id`,
-        url: `${SINGLE_ORGANIZATION_URL}/1`,
+        url: `${SINGLE_ORGANIZATION_URL}/${fixtures.organization3.identifier}`,
       },
     };
-    mount(
+    const wrapper = mount(
       <Provider store={store}>
         <Router history={history}>
           <ConnectedSingleOrgView {...props} />
@@ -202,9 +198,28 @@ describe('src/containers/pages/TeamAssignment', () => {
     );
     await new Promise(resolve => setImmediate(resolve));
     // simulate removal action
+    wrapper.update();
+    const practitioner4RemoveLink = wrapper.findWhere(node => node.key() === 'healer');
+    expect(toJson(practitioner4RemoveLink)).toMatchSnapshot('Practitioner 4 removal link');
+    practitioner4RemoveLink.simulate('click');
+    wrapper.update();
 
-    expect(serviceMock).toHaveBeenCalledTimes(3);
-    expect(mockDelete.mock.calls).toHaveBeenCalledWith();
-    expect.assertions(3);
+    // now search & expect a delete request from fetch
+    const expectedRequest = [
+      'https://reveal-stage.smartregister.org/opensrp/rest/practitionerRole',
+      {
+        'Cache-Control': 'no-cache',
+        Pragma: 'no-cache',
+        body: '{"organization":"d23f7350-d406-11e9-bb65-2a2ae2dbcce4","practitioner":"healer"}',
+        headers: {
+          accept: 'application/json',
+          authorization: 'Bearer null',
+          'content-type': 'application/json;charset=UTF-8',
+        },
+        method: 'DELETE',
+      },
+    ];
+
+    expect(fetch.mock.calls[3]).toEqual(expectedRequest);
   });
 });
