@@ -1,7 +1,7 @@
 /** wrapper around react-select component that enables one
  * to select a single user from openmrs
  */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Select from 'react-select';
 import { ValueType } from 'react-select/src/types';
 import { OpenSRPService } from '../../../../services/opensrp';
@@ -44,16 +44,31 @@ export const UserIdSelect: React.FC<Props> = props => {
 
   /** Pulls all openMRS users info and puts in store */
   const loadOpenMRSUsers = async (service: typeof OpenSRPService = OpenSRPService) => {
-    const serve = new service('');
-    let pageSize: number = 100;
+    const currentUserIndex = 0;
+    let filterParams = {
+      page_size: OPENMRS_USERS_REQUEST_PAGE_SIZE,
+      start_index: currentUserIndex,
+    };
+    const serve = new service('user');
+    let responseSize: number = 0;
+
     do {
-      serve.list().then((response: OpenMRSUser[]) => {
-        pageSize = response.length;
+      serve.list(filterParams).then((response: { results: OpenMRSUser[] }) => {
+        const userData = response.results;
+        responseSize = userData.length;
+        filterParams = {
+          ...filterParams,
+          start_index: filterParams.start_index + responseSize,
+        };
         // TODO - candidate for setState on unmounted component error})
-        setOpenMRSUsers(response);
+        setOpenMRSUsers(userData);
       });
-    } while (pageSize === OPENMRS_USERS_REQUEST_PAGE_SIZE);
+    } while (responseSize === OPENMRS_USERS_REQUEST_PAGE_SIZE);
   };
+
+  useEffect(() => {
+    loadOpenMRSUsers();
+  });
 
   const options = openMRSUsers.map(user => ({ label: user.id, value: user.id }));
 
