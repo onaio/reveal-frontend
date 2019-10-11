@@ -18,6 +18,7 @@ import organizationsReducer, {
   Organization,
   reducerName as organizationsReducerName,
 } from '../../../store/ducks/opensrp/organizations';
+import { getButtonId, getFormName } from './helpers';
 
 reducerRegistry.register(assignmentReducerName, assignmentReducer);
 reducerRegistry.register(organizationsReducerName, organizationsReducer);
@@ -105,8 +106,6 @@ const AssignTeamTableCell = (props: AssignTeamCellProps) => {
   );
 };
 
-const getButtonId = (jurisdictionId: string): string => `plan-assignment-${jurisdictionId}`;
-const getFormName = (jurisdictionId: string): string => `plan-assignment-form-${jurisdictionId}`;
 export { AssignTeamTableCell };
 
 /** map state to props
