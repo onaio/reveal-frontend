@@ -15,6 +15,7 @@ import * as fixtures from '../../../../../store/ducks/tests/fixtures';
 import ConnectedSingleOrgView, { SingleOrganizationView } from '../../SingleOrganizationView';
 
 reducerRegistry.register(practitionersDucks.reducerName, practitionersDucks.default);
+reducerRegistry.register(organizationDucks.reducerName, organizationDucks.default);
 
 // tslint:disable-next-line: no-var-requires
 const fetch = require('jest-fetch-mock');
@@ -26,6 +27,7 @@ describe('src/containers/pages/TeamAssignment', () => {
     jest.resetAllMocks();
     store.dispatch(practitionersDucks.removePractitionersAction);
     store.dispatch(practitionersDucks.removePractitionerRolesAction);
+    store.dispatch(organizationDucks.removeOrganizationsAction);
   });
 
   it('renders SingleTeamView without crashing', () => {
