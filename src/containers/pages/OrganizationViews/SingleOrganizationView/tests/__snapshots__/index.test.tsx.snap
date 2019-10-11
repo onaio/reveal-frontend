@@ -1,98 +1,83 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`src/containers/pages/TeamAssignment renders SingleTeamView correctly: HeaderBreadcrumb 1`] = `
-<HeaderBreadcrumb
-  currentPage={
-    Object {
-      "label": "fcc19470-d599-11e9-bb65-2a2ae2dbcce4",
-      "url": "/teams/view/fcc19470-d599-11e9-bb65-2a2ae2dbcce4",
-    }
-  }
-  pages={
-    Array [
-      Object {
-        "label": "Home",
-        "url": "/",
-      },
-      Object {
-        "label": "Teams",
-        "url": "/teams",
-      },
-    ]
-  }
+exports[`src/containers/pages/TeamAssignment Deleting api calls for removing a practitioner from an organization: Practitioner 4 removal link 1`] = `
+<a
+  className="unassign-link text-danger"
+  key="healer"
+  onClick={[Function]}
 >
-  <div>
-    <Breadcrumb
-      aria-label="breadcrumb"
-      className="reveal-breadcrumb"
-      listTag="ol"
-      tag="nav"
-    >
-      <nav
-        aria-label="breadcrumb"
-        className="reveal-breadcrumb"
-      >
-        <ol
-          className="breadcrumb"
-        >
-          <BreadcrumbItem
-            key="0"
-            tag="li"
-          >
-            <li
-              className="breadcrumb-item"
-            >
-              <Link
-                key="0"
-                replace={false}
-                to="/"
-              >
-                <a
-                  href="/"
-                  onClick={[Function]}
-                >
-                  Home
-                </a>
-              </Link>
-            </li>
-          </BreadcrumbItem>
-          <BreadcrumbItem
-            key="1"
-            tag="li"
-          >
-            <li
-              className="breadcrumb-item"
-            >
-              <Link
-                key="1"
-                replace={false}
-                to="/teams"
-              >
-                <a
-                  href="/teams"
-                  onClick={[Function]}
-                >
-                  Teams
-                </a>
-              </Link>
-            </li>
-          </BreadcrumbItem>
-          <BreadcrumbItem
-            active={true}
-            tag="li"
-          >
-            <li
-              aria-current="page"
-              className="active breadcrumb-item"
-            >
-              fcc19470-d599-11e9-bb65-2a2ae2dbcce4
-            </li>
-          </BreadcrumbItem>
-        </ol>
-      </nav>
-    </Breadcrumb>
-  </div>
-</HeaderBreadcrumb>
+  Remove
+</a>
 `;
 
-exports[`src/containers/pages/TeamAssignment renders SingleTeamView correctly: TeamDetails 1`] = `null`;
+exports[`src/containers/pages/TeamAssignment renders SingleTeamView correctly: Breadcrumb 1`] = `
+<Breadcrumb
+  aria-label="breadcrumb"
+  className="reveal-breadcrumb"
+  listTag="ol"
+  tag="nav"
+>
+  <nav
+    aria-label="breadcrumb"
+    className="reveal-breadcrumb"
+  >
+    <ol
+      className="breadcrumb"
+    >
+      <BreadcrumbItem
+        key="0"
+        tag="li"
+      >
+        <li
+          className="breadcrumb-item"
+        >
+          <Link
+            key="0"
+            replace={false}
+            to="/"
+          >
+            <a
+              href="/"
+              onClick={[Function]}
+            >
+              Home
+            </a>
+          </Link>
+        </li>
+      </BreadcrumbItem>
+      <BreadcrumbItem
+        key="1"
+        tag="li"
+      >
+        <li
+          className="breadcrumb-item"
+        >
+          <Link
+            key="1"
+            replace={false}
+            to="/teams"
+          >
+            <a
+              href="/teams"
+              onClick={[Function]}
+            >
+              Teams
+            </a>
+          </Link>
+        </li>
+      </BreadcrumbItem>
+      <BreadcrumbItem
+        active={true}
+        tag="li"
+      >
+        <li
+          aria-current="page"
+          className="active breadcrumb-item"
+        >
+          The Luang
+        </li>
+      </BreadcrumbItem>
+    </ol>
+  </nav>
+</Breadcrumb>
+`;

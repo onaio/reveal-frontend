@@ -28,6 +28,7 @@ describe('src/containers/pages/TeamAssignment', () => {
     store.dispatch(practitionersDucks.removePractitionersAction);
     store.dispatch(practitionersDucks.removePractitionerRolesAction);
     store.dispatch(organizationDucks.removeOrganizationsAction);
+    fetch.resetMocks();
   });
 
   it('renders SingleTeamView without crashing', () => {
@@ -81,7 +82,7 @@ describe('src/containers/pages/TeamAssignment', () => {
     expect(helmet.title).toEqual(`${TEAM} - ${fixtures.organization1.name}`);
 
     // check for breadcrumbs is set
-    expect(toJson(wrapper.find('HeaderBreadcrumb'))).toMatchSnapshot('HeaderBreadcrumb');
+    expect(toJson(wrapper.find('Breadcrumb'))).toMatchSnapshot('Breadcrumb');
 
     // text wise : check for the team Name text - should be in the top-most tier header
     const pageTitle = wrapper.find('.page-title');
@@ -89,7 +90,7 @@ describe('src/containers/pages/TeamAssignment', () => {
     expect(pageTitle.text()).toEqual(`${fixtures.organization1.name}`);
 
     // check: team details div(snapshot)
-    expect(toJson(wrapper.find('#team-details'))).toMatchSnapshot('TeamDetails');
+    expect(wrapper.find('#organization-details').length).toEqual(1);
 
     // check: team members div(snapshot)
     expect(wrapper.find(ListView).length).toEqual(1);
@@ -133,42 +134,6 @@ describe('src/containers/pages/TeamAssignment', () => {
     const passedProps = wrapper.find(SingleOrganizationView).props() as any;
     expect(passedProps.organization).toEqual(fixtures.organization3);
     expect(passedProps.practitioners).toEqual(fixtures.org3Practitioners);
-  });
-
-  it('calls api correctly', async () => {
-    // api calls are correct.
-    const mock: any = jest.fn();
-    const mockRead: any = jest.fn(async () => []);
-    const serviceMock: any = jest.fn(() => {
-      return {
-        read: mockRead,
-      };
-    });
-
-    const props = {
-      history,
-      location: mock,
-      match: {
-        isExact: true,
-        params: { id: `${fixtures.organization3.identifier}` },
-        path: `${SINGLE_ORGANIZATION_URL}/:id`,
-        url: `${SINGLE_ORGANIZATION_URL}/1`,
-      },
-      serviceClass: serviceMock,
-    };
-    mount(
-      <Provider store={store}>
-        <Router history={history}>
-          <ConnectedSingleOrgView {...props} />
-        </Router>
-      </Provider>
-    );
-    await new Promise(resolve => setImmediate(resolve));
-
-    expect(serviceMock).toHaveBeenCalledTimes(2);
-    expect(mockRead.mock.calls[0][0]).toEqual(fixtures.organization3.identifier);
-    expect(mockRead.mock.calls[1][0]).toEqual(fixtures.organization3.identifier);
-    expect.assertions(3);
   });
 
   it('Deleting api calls for removing a practitioner from an organization', async () => {
@@ -222,6 +187,6 @@ describe('src/containers/pages/TeamAssignment', () => {
       },
     ];
 
-    expect(fetch.mock.calls[3]).toEqual(expectedRequest);
+    expect(fetch.mock.calls[2]).toEqual(expectedRequest);
   });
 });
