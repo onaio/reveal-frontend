@@ -12,6 +12,7 @@ import {
   NO,
   OPENSRP_PRACTITIONER_ENDPOINT,
   PRACTITIONER,
+  PRACTITIONERS_LIST_URL,
   REQUIRED,
   SAVE,
   SAVING,
@@ -61,7 +62,7 @@ export interface PractitionerFormProps {
 const defaultPractitionerFormProps: PractitionerFormProps = {
   disabledFields: [],
   initialValues: defaultInitialValues,
-  redirectAfterAction: '/teams',
+  redirectAfterAction: PRACTITIONERS_LIST_URL,
   serviceClass: OpenSRPService,
 };
 
