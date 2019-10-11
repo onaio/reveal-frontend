@@ -188,7 +188,6 @@ class IrsPlan extends React.Component<
     const {
       fetchJurisdictionsActionCreator,
       fetchPlansActionCreator,
-      isDraftPlan,
       planId,
       planById,
       supersetService,
@@ -204,7 +203,7 @@ class IrsPlan extends React.Component<
           }
         })
         .catch(err => err);
-    } else if (isDraftPlan && planById) {
+    } else if (planById) {
       this.setState({ newPlan: planById });
     }
 
@@ -283,14 +282,12 @@ class IrsPlan extends React.Component<
                     ? [country.jurisdictionId]
                     : [...country.jurisdictionIds];
                   // define all Jurisdictions pertaining to this Plan only (by country)
-                  const filteredJurisdictions = isDraftPlan
-                    ? this.getDescendantJurisdictionIds(
-                        countryIds,
-                        jurisdictionsById,
-                        true,
-                        childrenByParentId
-                      ).map(j => jurisdictionsById[j])
-                    : ancestorIds.map(j => jurisdictionsById[j]);
+                  const filteredJurisdictions = this.getDescendantJurisdictionIds(
+                    countryIds,
+                    jurisdictionsById,
+                    true,
+                    childrenByParentId
+                  ).map(j => jurisdictionsById[j]);
                   const childlessChildrenIds = this.getChildlessChildrenIds(filteredJurisdictions);
 
                   const newPlan: PlanRecord = {
@@ -313,13 +310,11 @@ class IrsPlan extends React.Component<
                       childlessChildrenIds,
                       childrenByParentId,
                       country,
-                      filteredJurisdictionIds: isDraftPlan
-                        ? filteredJurisdictions.map(j => j.jurisdiction_id)
-                        : ancestorIds,
+                      filteredJurisdictionIds: filteredJurisdictions.map(j => j.jurisdiction_id),
                       focusJurisdictionId: country.jurisdictionId.length
                         ? country.jurisdictionId
                         : this.state.focusJurisdictionId,
-                      isLoadingGeoms: !!isDraftPlan,
+                      isLoadingGeoms: true,
                       isLoadingJurisdictions: false,
                       newPlan,
                       planCountry: result.properties.ADM0_PCODE,
@@ -329,9 +324,7 @@ class IrsPlan extends React.Component<
                       // build drilldown table props
                       const planTableProps = this.getDrilldownPlanTableProps(this.state);
                       this.setState({ planTableProps }, () => {
-                        if (isDraftPlan) {
-                          this.loadJurisdictionGeometries();
-                        }
+                        this.loadJurisdictionGeometries();
                       });
                     }
                   );
@@ -1794,20 +1787,6 @@ class IrsPlan extends React.Component<
       },
     ];
 
-    if (this.props.isFinalizedPlan) {
-      columns.shift();
-      columns.push({
-        Header: 'Teams Assigned',
-        columns: [
-          {
-            Header: '',
-            accessor: () => <span className="text-info">X Teams Assigned to Y Jurisdictions</span>,
-            id: 'teams_assigned',
-          },
-        ],
-      });
-    }
-
     let showPagination: boolean = false;
     if (this.state.focusJurisdictionId) {
       const directDescendants = filteredJurisdictions.filter(
@@ -1891,7 +1870,7 @@ class IrsPlan extends React.Component<
       url: INTERVENTION_IRS_URL,
     };
     const urlPathAppend =
-      (isFinalizedPlan && `plan/${planId}`) || (isDraftPlan && `draft/${planId}`) || 'new';
+      (isFinalizedPlan && `draft/${planId}`) || (isDraftPlan && `draft/${planId}`) || 'new';
     const breadCrumbProps: BreadCrumbProps = {
       currentPage: {
         label: pageLabel,
@@ -1934,21 +1913,13 @@ class IrsPlan extends React.Component<
             if (this.props.isDraftPlan) {
               OpenSrpPlanService.update(planPayload)
                 .then(() => {
-                  if (isFinal) {
-                    // todo - force remounting of component by breaking this page into several
-                    // this.props.history.push(
-                    //   `${INTERVENTION_IRS_URL}/plan/${planPayload.identifier}`
-                    // );
-                    this.props.history.push(INTERVENTION_IRS_URL);
-                  } else {
-                    this.setState({
-                      isSaveDraftDisabled: false,
-                      newPlan: {
-                        ...newPlanDraft,
-                        plan_jurisdictions_ids: [...(newPlan.plan_jurisdictions_ids as string[])],
-                      },
-                    });
-                  }
+                  this.setState({
+                    isSaveDraftDisabled: false,
+                    newPlan: {
+                      ...newPlanDraft,
+                      plan_jurisdictions_ids: [...(newPlan.plan_jurisdictions_ids as string[])],
+                    },
+                  });
                 })
                 .catch(() => {
                   this.setState({ isSaveDraftDisabled: false });
