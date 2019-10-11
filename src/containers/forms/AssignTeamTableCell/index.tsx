@@ -1,10 +1,10 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import React, { MouseEvent, useState } from 'react';
 import { connect } from 'react-redux';
-import { Button } from 'reactstrap';
 import { Store } from 'redux';
+import AssignTeamButton, { AssignTeamButtonProps } from '../../../components/AssignTeamButton';
 import AssignTeamPopover, { AssignTeamPopoverProps } from '../../../components/AssignTeamPopover';
-import { ASSIGN_TEAMS, TEAMS_ASSIGNED } from '../../../constants';
+import { TEAMS_ASSIGNED } from '../../../constants';
 import { stopPropagationAndPreventDefault } from '../../../helpers/utils';
 import assignmentReducer, {
   Assignment,
@@ -27,6 +27,7 @@ export interface AssignTeamCellProps {
   assignments: Assignment[]; // all the assignments for the plan-jurisdiction
   assignmentsArray: Assignment[]; // all the assignments for the plan
   assignButton?: React.ElementType;
+  assignButtonProps?: AssignTeamButtonProps;
   assignPopover?: React.ElementType;
   resetPlanAssignmentsAction: typeof resetPlanAssignments;
   jurisdictionId: string;
@@ -69,20 +70,13 @@ const AssignTeamTableCell = (props: AssignTeamCellProps) => {
     setIsActive(!isActive);
   };
 
-  const AssignTeamButton = (
-    <Button
-      color="primary"
-      className="assign-team-button"
-      id={getButtonId(jurisdictionId)}
-      onClick={onPlanAssignmentButtonClick}
-      size="sm"
-      style={{ float: 'right' }}
-    >
-      {ASSIGN_TEAMS}
-    </Button>
-  );
+  // define the props being passed to the default AssignTeamButton
+  const assignTeamButtonProps: AssignTeamButtonProps = props.assignButtonProps || {
+    id: getButtonId(jurisdictionId),
+    onClick: onPlanAssignmentButtonClick,
+  };
 
-  const defaultAssignTeamPopoverProps: AssignTeamPopoverProps = {
+  const assignTeamPopoverProps: AssignTeamPopoverProps = {
     formName: getFormName(jurisdictionId),
     isActive,
     jurisdictionId,
@@ -100,8 +94,8 @@ const AssignTeamTableCell = (props: AssignTeamCellProps) => {
       <span style={{ paddingRight: '2rem' }} className="assignment-count-text">
         {`${assignments.length} ${TEAMS_ASSIGNED}`}
       </span>
-      {assignButton || AssignTeamButton}
       {assignPopover || defaultAssignTeamPopover}
+      {assignButton || <AssignTeamButton {...assignTeamButtonProps} />}
     </div>
   );
 };
