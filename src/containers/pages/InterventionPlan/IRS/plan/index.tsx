@@ -2085,7 +2085,7 @@ class IrsPlan extends React.Component<
                   assignmentsToRetire.push({
                     ...result,
                     fromDate: moment(0).format(),
-                    toDate: moment(1000).format(),
+                    toDate: moment(100000000).format(),
                   } as Assignment);
                 }
               }
