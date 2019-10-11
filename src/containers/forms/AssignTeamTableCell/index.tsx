@@ -52,11 +52,14 @@ const AssignTeamTableCell = (props: AssignTeamCellProps) => {
   } = props;
   const [isActive, setIsActive] = useState<boolean>(false);
 
+  // toggle isActive state on button click
   const onPlanAssignmentButtonClick = (e: MouseEvent) => {
     stopPropagationAndPreventDefault(e);
     setIsActive(!isActive);
   };
 
+  // remove assignments for this jurisdicition and save to state,
+  // and toggle isActive state on clear button click
   const onClearAssignmentsButtonClick = (e: MouseEvent) => {
     stopPropagationAndPreventDefault(e);
     const nextAssignments = assignmentsArray.filter(
@@ -66,6 +69,7 @@ const AssignTeamTableCell = (props: AssignTeamCellProps) => {
     setIsActive(!isActive);
   };
 
+  // toggle isActive state when clicking save button
   const onSaveAssignmentsButtonClick = (e: MouseEvent) => {
     stopPropagationAndPreventDefault(e);
     setIsActive(!isActive);
@@ -77,6 +81,7 @@ const AssignTeamTableCell = (props: AssignTeamCellProps) => {
     onClick: onPlanAssignmentButtonClick,
   };
 
+  // define the props for the default AssignTeamPopover
   const assignTeamPopoverProps: AssignTeamPopoverProps = props.assignPopoverProps || {
     formName: getFormName(jurisdictionId),
     isActive,
