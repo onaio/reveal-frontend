@@ -1,7 +1,7 @@
 import { keys } from 'lodash';
 import React, { MouseEvent } from 'react';
 import { Button, Form, FormGroup, Popover, PopoverBody, PopoverHeader } from 'reactstrap';
-import { CLEAR, SAVE, SELECT_TEAMS_TO_ASSIGN } from '../../constants';
+import { CLEAR, NO_TEAMS_LOADED_MESSAGE, SAVE, SELECT_TEAMS_TO_ASSIGN } from '../../constants';
 import OrganizationSelect from '../../containers/forms/OrganizationSelect';
 import { stopPropagationAndPreventDefault } from '../../helpers/utils';
 import { Organization } from '../../store/ducks/opensrp/organizations';
@@ -75,7 +75,7 @@ const AssignTeamPopover = (props: AssignTeamPopoverProps) => {
             </FormGroup>
           </Form>
         ) : (
-          <p>No teams loaded...</p>
+          <p>{NO_TEAMS_LOADED_MESSAGE}</p>
         )}
       </PopoverBody>
     </Popover>
