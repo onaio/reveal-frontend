@@ -49,6 +49,7 @@ import PractitionerReducer, {
   Practitioner,
   reducerName as practitionerReducerName,
 } from '../../../../store/ducks/opensrp/practitioners';
+import './index.css';
 
 reducerRegistry.register(organizationsReducerName, organizationsReducer);
 reducerRegistry.register(practitionerReducerName, PractitionerReducer);
@@ -182,7 +183,7 @@ const SingleOrganizationView = (props: SingleOrgViewPropsType) => {
         practitioner.username,
         practitioner.name,
         <a
-          className="text-danger"
+          className="unassign-link text-danger"
           key={practitioner.identifier}
           // tslint:disable-next-line: jsx-no-lambda
           onClick={e => {
@@ -227,14 +228,14 @@ const SingleOrganizationView = (props: SingleOrgViewPropsType) => {
           <Row>
             <Col className="col-6">
               <Row>
-                <Col className="organization-cells text-muted mb-4 col-6">{IDENTIFIER}</Col>
-                <Col className="organization-cells mb-4 col-6">{organization.identifier}</Col>
+                <Col className="text-muted mb-4 col-6">{IDENTIFIER}</Col>
+                <Col className="mb-4 col-6">{organization.identifier}</Col>
               </Row>
             </Col>
             <Col className="col-6">
               <Row>
-                <Col className="organization-cells text-muted mb-4 col-6">{NAME}</Col>
-                <Col className="organization-cells mb-4 col-6">{organization.name}</Col>
+                <Col className="text-muted mb-4 col-6">{NAME}</Col>
+                <Col className="mb-4 col-6">{organization.name}</Col>
               </Row>
             </Col>
           </Row>
