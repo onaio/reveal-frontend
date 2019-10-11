@@ -29,6 +29,7 @@ export interface AssignTeamCellProps {
   assignButton?: React.ElementType;
   assignButtonProps?: AssignTeamButtonProps;
   assignPopover?: React.ElementType;
+  assignPopoverProps?: AssignTeamPopoverProps;
   resetPlanAssignmentsAction: typeof resetPlanAssignments;
   jurisdictionId: string;
   organizationsById: { [key: string]: Organization } | null;
@@ -76,7 +77,7 @@ const AssignTeamTableCell = (props: AssignTeamCellProps) => {
     onClick: onPlanAssignmentButtonClick,
   };
 
-  const assignTeamPopoverProps: AssignTeamPopoverProps = {
+  const assignTeamPopoverProps: AssignTeamPopoverProps = props.assignPopoverProps || {
     formName: getFormName(jurisdictionId),
     isActive,
     jurisdictionId,
@@ -87,15 +88,14 @@ const AssignTeamTableCell = (props: AssignTeamCellProps) => {
     planId,
     target: getButtonId(jurisdictionId),
   };
-  const defaultAssignTeamPopover = <AssignTeamPopover {...defaultAssignTeamPopoverProps} />;
 
   return (
     <div onClick={stopPropagationAndPreventDefault}>
       <span style={{ paddingRight: '2rem' }} className="assignment-count-text">
         {`${assignments.length} ${TEAMS_ASSIGNED}`}
       </span>
-      {assignPopover || defaultAssignTeamPopover}
       {assignButton || <AssignTeamButton {...assignTeamButtonProps} />}
+      {assignPopover || <AssignTeamPopover {...assignTeamPopoverProps} />}
     </div>
   );
 };
