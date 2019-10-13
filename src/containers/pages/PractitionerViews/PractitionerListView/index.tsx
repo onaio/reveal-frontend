@@ -40,7 +40,7 @@ import practitionersReducer, {
   Practitioner,
   reducerName as practitionersReducerName,
 } from '../../../../store/ducks/opensrp/practitioners';
-import { loadPractitioners } from '../hooks';
+import { loadPractitioners } from '../serviceHooks';
 
 reducerRegistry.register(practitionersReducerName, practitionersReducer);
 
