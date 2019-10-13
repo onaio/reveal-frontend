@@ -64,6 +64,12 @@ export type PropsTypes = Props & RouteComponentProps;
 const PractitionersListView = (props: PropsTypes) => {
   const { practitioners, serviceClass, fetchPractitionersCreator } = props;
 
+  // functions/methods
+
+  /** function to handle the submit on the inline search form */
+  // tslint:disable-next-line: no-empty
+  function handleSubmit(data: FieldProps) {}
+
   /** props to pass to the headerBreadCrumb */
   const breadcrumbProps: BreadCrumbProps = {
     currentPage: {
@@ -109,12 +115,6 @@ const PractitionersListView = (props: PropsTypes) => {
     text: `${ADD} ${PRACTITIONER}`,
     to: CREATE_PRACTITIONER_URL,
   };
-
-  // functions/methods
-
-  /** function to handle the submit on the inline search form */
-  // tslint:disable-next-line: no-empty
-  function handleSubmit(data: FieldProps) {}
 
   /** hook to load all practitioners and dispatch to them to store */
   useEffect(() => {
