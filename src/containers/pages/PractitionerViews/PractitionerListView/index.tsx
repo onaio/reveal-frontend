@@ -1,7 +1,7 @@
 /** Practitioner Assignment component for listing all practitioners */
 import ListView from '@onaio/list-view';
 import reducerRegistry from '@onaio/redux-reducer-registry';
-import React from 'react';
+import React, { useEffect } from 'react';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
@@ -40,7 +40,7 @@ import practitionersReducer, {
   Practitioner,
   reducerName as practitionersReducerName,
 } from '../../../../store/ducks/opensrp/practitioners';
-import { usePractitioners } from '../dataLoadingHooks';
+import { loadPractitioners } from '../hooks';
 
 reducerRegistry.register(practitionersReducerName, practitionersReducer);
 
@@ -117,7 +117,9 @@ const PractitionersListView = (props: PropsTypes) => {
   function handleSubmit(data: FieldProps) {}
 
   /** hook to load all practitioners and dispatch to them to store */
-  usePractitioners(fetchPractitionersCreator, serviceClass);
+  useEffect(() => {
+    loadPractitioners(fetchPractitionersCreator, serviceClass);
+  }, []);
 
   // break early if practitioners are absent
   const isLoading = practitioners.length < 1;
