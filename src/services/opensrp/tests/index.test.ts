@@ -94,16 +94,12 @@ describe('services/OpenSRP', () => {
   it('OpenSRPService delete method works', async () => {
     fetch.mockResponseOnce(JSON.stringify({}));
     const service = new OpenSRPService('practitioners');
-    const result = await service.delete({});
+    const result = await service.delete({ practitioner: 'someone' });
     expect(result).toEqual({});
     expect(fetch.mock.calls).toEqual([
       [
-        'https://test.smartregister.org/opensrp/rest/practitioners',
+        'https://test.smartregister.org/opensrp/rest/practitioners?practitioner=someone',
         {
-          'Cache-Control': 'no-cache',
-          Pragma: 'no-cache',
-          body: JSON.stringify({}),
-
           headers: {
             accept: 'application/json',
             authorization: 'Bearer hunter2',

@@ -190,22 +190,15 @@ export class OpenSRPService {
   }
 
   /** delete method
-   * Send a DELETE request to the general endpoint containing the object data
-   * Successful requests will result in a HTTP status 202,
-   * This does not necessarily mean the object was deleted,
-   * @param {T} data - the data to be DELETE-ed
+   * Send a DELETE request to the general endpoint
+   * Successful requests will result in a HTTP status 204
+   * @param {params} params - the url params object
    * @param {HTTPMethod} method - the HTTP method
    * @returns the object returned by API
    */
-  public async delete<T>(data: T, method: HTTPMethod = 'DELETE') {
-    const url = getURL(this.generalURL);
-    const payload = {
-      ...getPayload(method),
-      'Cache-Control': 'no-cache',
-      Pragma: 'no-cache',
-      body: JSON.stringify(data),
-    };
-    const response = await fetch(url, payload);
+  public async delete<T>(params: paramsType = null, method: HTTPMethod = 'DELETE') {
+    const url = getURL(this.generalURL, params);
+    const response = await fetch(url, getPayload(method));
 
     if (response.ok || response.status === 204 || response.status === 200) {
       return {};
