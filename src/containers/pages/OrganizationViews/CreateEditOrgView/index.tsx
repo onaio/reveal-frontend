@@ -34,6 +34,7 @@ import OrganizationForm, {
   OrganizationFormFields,
   OrganizationFormProps,
 } from '../../../forms/OrganizationForm';
+import { loadOrganization } from '../serviceHooks';
 
 /** props for create and editing an organization view */
 export interface Props {
@@ -85,29 +86,10 @@ const CreateEditOrgView = (props: CreateEditTeamViewTypes) => {
     redirectAfterAction: ORGANIZATIONS_LIST_URL,
   };
 
-  /** Load single organization
-   * @param {typeof serviceClass} service - opensrp service
-   * @param {string} id -  identifier of organization to get
-   * @param {typeof fetchOrganizationsCreator} - action creator
-   */
-  const loadOrganization = async (
-    service: typeof serviceClass,
-    id: string,
-    actionCreator: typeof fetchOrganizationsCreator = fetchOrganizationsCreator
-  ) => {
-    const serve = new service(`${OPENSRP_ORGANIZATION_ENDPOINT}/${id}`);
-    serve
-      .list()
-      .then((response: Organization[]) => store.dispatch(actionCreator(response)))
-      .catch((err: Error) => {
-        /** TODO - find something to do with error */
-      });
-  };
-
   useEffect(() => {
-    if (organization !== null) {
-      loadOrganization(serviceClass, organization!.identifier);
-    }
+    let organizationId = props.match.params.id;
+    organizationId = organizationId ? organizationId : '';
+    loadOrganization(organizationId, serviceClass, fetchOrganizations);
   }, []);
 
   return (
@@ -139,10 +121,10 @@ const mapStateToProps = (
   state: Partial<Store>,
   ownProps: CreateEditTeamViewTypes
 ): DispatchedProps => {
-  let teamId = ownProps.match.params.id;
-  teamId = teamId ? teamId : '';
+  let organizationId = ownProps.match.params.id;
+  organizationId = organizationId ? organizationId : '';
 
-  const organization = getOrganizationById(state, teamId);
+  const organization = getOrganizationById(state, organizationId);
   return { organization };
 };
 

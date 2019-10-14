@@ -41,6 +41,7 @@ import organizationsReducer, {
   Organization,
   reducerName as organizationsReducerName,
 } from '../../../../store/ducks/opensrp/organizations';
+import { loadOrganizations } from '../serviceHooks';
 import './index.css';
 
 reducerRegistry.register(organizationsReducerName, organizationsReducer);
@@ -64,6 +65,12 @@ export type OrgsListViewPropsType = OrganizationsListViewProps & RouteComponentP
 
 const OrganizationListView = (props: OrgsListViewPropsType) => {
   const { organizations, serviceClass, fetchOrganizationsAction } = props;
+
+  // functions/methods
+
+  /** function to handle the submit on the inline search form */
+  // tslint:disable-next-line: no-empty
+  function handleSubmit(data: FieldProps) {}
 
   /** props to pass to the headerBreadCrumb */
   const breadcrumbProps: BreadCrumbProps = {
@@ -116,24 +123,8 @@ const OrganizationListView = (props: OrgsListViewPropsType) => {
     to: CREATE_ORGANIZATION_URL,
   };
 
-  // functions/methods
-
-  /** function to handle the submit on the inline search form */
-  // tslint:disable-next-line: no-empty
-  function handleSubmit(data: FieldProps) {}
-
-  const loadOrganizations = async (service: typeof serviceClass) => {
-    const serve = new service(OPENSRP_ORGANIZATION_ENDPOINT);
-    serve
-      .list()
-      .then((response: Organization[]) => store.dispatch(fetchOrganizationsAction(response)))
-      .catch((err: Error) => {
-        /** TODO - find something to do with error */
-      });
-  };
-
   useEffect(() => {
-    loadOrganizations(serviceClass);
+    loadOrganizations(serviceClass, fetchOrganizationsAction);
   }, []);
 
   // break early if organizations are absent
