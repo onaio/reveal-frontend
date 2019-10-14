@@ -134,7 +134,7 @@ const OrganizationListView = (props: OrgsListViewPropsType) => {
   return (
     <div>
       <Helmet>
-        <title>{`${ORGANIZATIONS_LABEL}(${organizations.length})`}</title>
+        <title>{`${ORGANIZATIONS_LABEL} (${organizations.length})`}</title>
       </Helmet>
       <HeaderBreadcrumb {...breadcrumbProps} />
       <Row id="header-row">

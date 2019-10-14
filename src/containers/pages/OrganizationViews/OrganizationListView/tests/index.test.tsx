@@ -53,7 +53,7 @@ describe('src/containers/TeamAssignment/TeamListview/', () => {
     );
     // page title
     const helmet = Helmet.peek();
-    expect(helmet.title).toEqual(`${ORGANIZATIONS_LABEL}(${fixtures.organizations.length})`);
+    expect(helmet.title).toEqual(`${ORGANIZATIONS_LABEL} (${fixtures.organizations.length})`);
 
     // should display a breadcrumb
     expect(toJson(wrapper.find('Breadcrumb'))).toMatchSnapshot('Breadcrumb');
