@@ -89,7 +89,7 @@ const CreateEditOrgView = (props: CreateEditTeamViewTypes) => {
   useEffect(() => {
     let organizationId = props.match.params.id;
     organizationId = organizationId ? organizationId : '';
-    loadOrganization(organizationId, serviceClass, fetchOrganizations);
+    loadOrganization(organizationId, serviceClass, fetchOrganizationsCreator);
   }, []);
 
   return (
