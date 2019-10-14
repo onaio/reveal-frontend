@@ -48,6 +48,7 @@ import practitionersReducer, {
   Practitioner,
   reducerName as practitionerReducerName,
 } from '../../../../store/ducks/opensrp/practitioners';
+import { loadOrganization, loadOrgPractitioners } from '../serviceHooks';
 import { styles } from './utils';
 
 reducerRegistry.register(organizationReducerName, organizationsReducer);
@@ -92,39 +93,10 @@ const AssignPractitioner: React.FC<PropsTypes> = props => {
   } = props;
   const [selectedOptions, setSelectedOptions] = useState<OptionsType<SelectOption>>([]);
 
-  /** load practitioners that belong to this organization
-   * @param {string} organization - id for the organization
-   * @param {typeof OpenSRPService} service - the opensrp service
-   */
-  const loadOrgPractitioners = async (
-    organizationId: string,
-    service: typeof OpenSRPService = OpenSRPService
-  ) => {
-    const serve = new service(OPENSRP_ORG_PRACTITIONER_ENDPOINT);
-    const orgPractitioners = await serve.read(organizationId);
-    store.dispatch(fetchPractitionerRolesCreator(orgPractitioners, organizationId));
-  };
-
-  // TODO - this is wet code
-  /** loads the organization from the api and updates store
-   * @param {string} organizationId - id of the organization
-   * @param {typeof OpenSRPService} service - the openSRPService
-   */
-  const loadOrganization = async (
-    organizationId: string,
-    service: typeof OpenSRPService = OpenSRPService
-  ) => {
-    const serve = new service(OPENSRP_ORGANIZATION_ENDPOINT);
-
-    serve
-      .read(organizationId)
-      .then((response: Organization) => store.dispatch(fetchOrganizationsCreator([response])));
-  };
-
   useEffect(() => {
     const organizationId = props.match.params.id;
-    loadOrganization(organizationId);
-    loadOrgPractitioners(organizationId);
+    loadOrganization(organizationId, serviceClass, fetchOrganizationsCreator);
+    loadOrgPractitioners(organizationId, serviceClass, fetchPractitionerRolesCreator);
   }, []);
 
   if (!organization) {
@@ -225,7 +197,7 @@ const AssignPractitioner: React.FC<PropsTypes> = props => {
     }));
     const serve = new serviceClass(`${OPENSRP_PRACTITIONER_ROLE_ENDPOINT}/add`);
     serve.create(jsonArrayPayload).then(() => {
-      loadOrgPractitioners(props.match.params.id);
+      loadOrgPractitioners(organization.identifier, serviceClass, fetchPractitionerRolesCreator);
       // TODO - possible candidate for setting state on unmounted component
       setSelectedOptions([]);
     });
