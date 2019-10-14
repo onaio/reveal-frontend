@@ -211,14 +211,15 @@ export function getThresholdAdherenceIndicator(cell: CellInfo, configId: string)
 
 /** Renders an indicator Cell based on cell.value and threshold configs
  * @param {CellInfo} cell - the ReactTable.Cell being rendered in an indicator drilldown table
- * @param {string} configId - the key vause used to get the custom reporting configs
+ * @param {IndicatorThresholds | null} thresholds - the indicator thresholds
  * @returns {React.ReactElement} - the ReactTable.Cell element to be rendered for the indicator
  */
-export function getIRSThresholdAdherenceIndicator(cell: CellInfo) {
+export function getIRSThresholdAdherenceIndicator(
+  cell: CellInfo,
+  thresholds: IndicatorThresholds | null = indicatorThresholdsNA
+) {
   // determine if cell.value is a number
   const isNumber = !Number.isNaN(Number(cell.value));
-  // get thresholds config from settings
-  const thresholds: IndicatorThresholds | null = indicatorThresholdsNA;
   // determine cell background color
   const cellColor = thresholds ? getThresholdColor(cell, thresholds) : WHITE;
 
