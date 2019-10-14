@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Redirect } from 'react-router';
 import UserIdSelect from './UserIdSelect';
 
+import moment from 'moment';
 import { Button, Label } from 'reactstrap';
 import { FormGroup } from 'reactstrap';
 import * as Yup from 'yup';
@@ -83,11 +84,11 @@ const PractitionerForm = (props: PractitionerFormProps) => {
         initialValues={initialValues}
         validationSchema={PractitionerSchema}
         // tslint:disable-next-line: jsx-no-lambda
-        onSubmit={(values, { setSubmitting, setFieldValue }) => {
-          setFieldValue('identifier', generateNameSpacedUUID(``, PractitionerFormNameSpace));
-          const apiService = new props.serviceClass(OPENSRP_PRACTITIONER_ENDPOINT);
-
+        onSubmit={(values, { setSubmitting }) => {
           if (editMode) {
+            const apiService = new props.serviceClass(
+              `${OPENSRP_PRACTITIONER_ENDPOINT}/${values.identifier}`
+            );
             apiService
               .update(values)
               .then(() => {
@@ -99,8 +100,17 @@ const PractitionerForm = (props: PractitionerFormProps) => {
                 setSubmitting(false);
               });
           } else {
+            const apiService = new props.serviceClass(OPENSRP_PRACTITIONER_ENDPOINT);
+            const identifier = generateNameSpacedUUID(
+              `${moment().toString()}`,
+              PractitionerFormNameSpace
+            );
+            const valuesToSend = {
+              ...values,
+              identifier,
+            };
             apiService
-              .create(values)
+              .create(valuesToSend)
               .then(() => {
                 setSubmitting(false);
                 setIfDoneHere(true);
