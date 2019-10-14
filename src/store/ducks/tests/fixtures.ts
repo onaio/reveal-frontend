@@ -1,7 +1,7 @@
 import { clone, cloneDeep } from 'lodash';
 import { Organization } from '../opensrp/organizations';
+import { Practitioner } from '../opensrp/practitioners';
 import { InterventionType, Plan, PlanStatus } from '../plans';
-import { Practitioner } from '../practitioners';
 
 export const plan1: Plan = {
   id: 'ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f',
