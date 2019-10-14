@@ -168,6 +168,8 @@ export const VIEW = 'view';
 export type VIEW = typeof VIEW;
 export const PRACTITIONER = 'Practitioner';
 export type PRACTITIONER = typeof PRACTITIONER;
+export const PRACTITIONERS = 'Practitioners';
+export type PRACTITIONERS = typeof PRACTITIONERS;
 export const ID = 'Id';
 export type ID = typeof ID;
 export const SAVE = 'Save';
@@ -180,6 +182,10 @@ export const ASSIGNMENT = 'Assignment';
 export type ASSIGNMENT = typeof ASSIGNMENT;
 export const YES = 'Yes';
 export type YES = typeof YES;
+export const EDIT = 'Edit';
+export type EDIT = typeof EDIT;
+export const ADD = 'Add';
+export type ADD = typeof ADD;
 // TODO ? - do the below 2 belong here or in a settings file
 export const ORGANIZATION_LABEL = TEAM;
 export type ORGANIZATION_LABEL = typeof ORGANIZATION_LABEL;
@@ -260,6 +266,8 @@ export const EDIT_PRACTITIONER_URL = '/practitioners/edit';
 export type EDIT_PRACTITIONER_URL = typeof EDIT_PRACTITIONER_URL;
 export const ASSIGN_ORGANIZATION_URL = '/plans/teamAssignment';
 export type ASSIGN_ORGANIZATION_URL = typeof ASSIGN_ORGANIZATION_URL;
+export const PRACTITIONERS_LIST_URL = '/practitioners';
+export type PRACTITIONERS_LIST_URL = typeof PRACTITIONERS_LIST_URL;
 
 // OpenSRP API strings
 export const OPENSRP_PRACTITIONER_ENDPOINT = 'practitioner';
