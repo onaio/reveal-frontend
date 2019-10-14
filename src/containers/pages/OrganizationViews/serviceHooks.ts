@@ -1,5 +1,5 @@
 import {
-  OPENSRP_ORG_PRACTITIONERS_ENDPOINT,
+  OPENSRP_ORG_PRACTITIONER_ENDPOINT,
   OPENSRP_ORGANIZATION_ENDPOINT,
 } from '../../../constants';
 import { OpenSRPService } from '../../../services/opensrp';
@@ -39,7 +39,7 @@ export const loadOrgPractitioners = async (
   service: typeof OpenSRPService,
   fetchPractitionerRolesCreator: typeof fetchPractitionerRoles
 ) => {
-  const serve = new service(OPENSRP_ORG_PRACTITIONERS_ENDPOINT);
+  const serve = new service(OPENSRP_ORG_PRACTITIONER_ENDPOINT);
 
   serve
     .read(organizationId)
