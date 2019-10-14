@@ -135,7 +135,7 @@ describe('src/containers/TeamAssignment/TeamListview/', () => {
   });
 
   it('TeamListView works correctly when connected to store', () => {
-    fetch.once(JSON.stringify([]));
+    fetch.once(JSON.stringify(fixtures.organizations));
     const mock: any = jest.fn();
     store.dispatch(fetchOrganizations(fixtures.organizations));
     const props = {
@@ -166,7 +166,7 @@ describe('src/containers/TeamAssignment/TeamListview/', () => {
     // spy on selectors
     const organizationsArrayMock = jest.spyOn(orgDucks, 'getOrganizationsArray');
 
-    fetch.once(JSON.stringify([]));
+    fetch.once(JSON.stringify(fixtures.organizations));
     const mock: any = jest.fn();
     store.dispatch(fetchOrganizations(fixtures.organizations));
     const props = {
@@ -179,7 +179,7 @@ describe('src/containers/TeamAssignment/TeamListview/', () => {
         url: ORGANIZATIONS_LIST_URL,
       },
     };
-    const wrapper = mount(
+    mount(
       <Provider store={store}>
         <Router history={history}>
           <ConnectedOrgsListView {...props} />
