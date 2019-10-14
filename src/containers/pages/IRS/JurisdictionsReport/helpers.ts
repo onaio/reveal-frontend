@@ -66,15 +66,17 @@ export const NamibiaColumns = [
     Header: 'Refusals',
     columns: [
       {
+        Cell: (cell: CellInfo) => getIRSThresholdAdherenceIndicator(cell, null),
         Header: 'Following first visit',
         accessor: 'refusalsfirst',
-        className: 'centered',
+        className: 'indicator centered',
         id: 'refusalsfirst',
       },
       {
+        Cell: (cell: CellInfo) => getIRSThresholdAdherenceIndicator(cell, null),
         Header: 'Following mop-up',
         accessor: 'refusalsmopup',
-        className: 'centered',
+        className: 'indicator centered',
         id: 'refusalsmopup',
       },
     ],
@@ -84,15 +86,17 @@ export const NamibiaColumns = [
     Header: 'Locked',
     columns: [
       {
+        Cell: (cell: CellInfo) => getIRSThresholdAdherenceIndicator(cell, null),
         Header: 'Following first visit',
         accessor: 'lockedfirst',
-        className: 'centered',
+        className: 'indicator centered',
         id: 'lockedfirst',
       },
       {
+        Cell: (cell: CellInfo) => getIRSThresholdAdherenceIndicator(cell, null),
         Header: 'Following mop-up',
         accessor: 'lockedmopup',
-        className: 'centered',
+        className: 'indicator centered',
         id: 'lockedmopup',
       },
     ],
