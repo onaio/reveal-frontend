@@ -24,7 +24,8 @@ import {
   IDENTIFIER,
   MEMBERS,
   NAME,
-  OPENSRP_ORG_PRACTITIONERS_ENDPOINT,
+  OPENSRP_DEL_PRACTITIONER_ROLE_ENDPOINT,
+  OPENSRP_ORG_PRACTITIONER_ENDPOINT,
   OPENSRP_ORGANIZATION_ENDPOINT,
   ORGANIZATION_LABEL,
   ORGANIZATIONS_LABEL,
@@ -35,6 +36,7 @@ import {
 } from '../../../../constants';
 import { RouteParams } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
+import { OpenSRPAPIResponse } from '../../../../services/opensrp/tests/fixtures/session';
 import store from '../../../../store';
 import organizationsReducer, {
   fetchOrganizations,
@@ -88,8 +90,23 @@ const SingleOrganizationView = (props: SingleOrgViewPropsType) => {
 
   // functions / methods //
 
-  // tslint:disable-next-line: no-empty
-  const unassignPractitioner = async (practitionerId: string, organizationId: string) => {};
+  /** Unassign Practitioner from organization
+   * @param {practitionerId} practitionerId - id of practitioner
+   * @param {organizationId} organizationId - id of organization
+   * @param {serviceClass} service - the openSRP service
+   */
+  const unassignPractitioner = async (
+    practitionerId: string,
+    organizationId: string,
+    service: typeof serviceClass = OpenSRPService
+  ) => {
+    const serve = new service(OPENSRP_DEL_PRACTITIONER_ROLE_ENDPOINT);
+    const params = { organization: organizationId, practitioner: practitionerId };
+    serve.delete(params).then(() => {
+      // remove the practitioner Role
+      loadOrgPractitioners(orgId, serviceClass, fetchPractitionerRolesAction);
+    });
+  };
 
   useEffect(() => {
     loadOrganization(orgId, serviceClass, fetchOrganizationsAction);
@@ -132,7 +149,7 @@ const SingleOrganizationView = (props: SingleOrgViewPropsType) => {
           // tslint:disable-next-line: jsx-no-lambda
           onClick={e => {
             e.preventDefault();
-            unassignPractitioner(practitioner.identifier, organization.identifier);
+            unassignPractitioner(practitioner.identifier, organization.identifier, serviceClass);
           }}
         >
           {REMOVE}

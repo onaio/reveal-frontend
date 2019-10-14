@@ -22,7 +22,7 @@ const fetch = require('jest-fetch-mock');
 
 const history = createBrowserHistory();
 
-describe('src/containers/pages/TeamAssignment', () => {
+describe('src/containers/pages/OrganizationViews', () => {
   beforeEach(() => {
     jest.resetAllMocks();
     store.dispatch(practitionersDucks.removePractitionersAction);
@@ -173,7 +173,7 @@ describe('src/containers/pages/TeamAssignment', () => {
 
     // now search & expect a delete request from fetch
     const expectedRequest = [
-      'https://reveal-stage.smartregister.org/opensrp/rest/practitionerRole',
+      'https://reveal-stage.smartregister.org/opensrp/rest/practitionerRole/deleteByPractitioner',
       {
         'Cache-Control': 'no-cache',
         Pragma: 'no-cache',
