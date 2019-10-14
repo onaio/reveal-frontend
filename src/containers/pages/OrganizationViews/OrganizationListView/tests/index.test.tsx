@@ -105,35 +105,6 @@ describe('src/containers/TeamAssignment/TeamListview/', () => {
     expect(fetchedOrgsMock).toHaveBeenCalledWith(fixtures.organizations);
   });
 
-  xit('E2E flow for searching a team', () => {
-    // questions: how should search be done(probably initiate an api call)
-    const mock: any = jest.fn();
-    const props = {
-      history,
-      location: mock,
-      match: {
-        isExact: true,
-        params: { id: '' },
-        path: ORGANIZATIONS_LIST_URL,
-        url: ORGANIZATIONS_LIST_URL,
-      },
-      organizations: fixtures.organizations,
-    };
-    const wrapper = mount(
-      <Router history={history}>
-        <OrganizationListView {...props} />
-      </Router>
-    );
-
-    // simulating submitting from inlineSearchForm
-    const inlineSearchForm = wrapper.find('Form');
-    inlineSearchForm.simulate('submit');
-
-    // now what?
-    expect.assertions(999);
-    wrapper.unmount();
-  });
-
   it('TeamListView works correctly when connected to store', () => {
     fetch.once(JSON.stringify(fixtures.organizations));
     const mock: any = jest.fn();
