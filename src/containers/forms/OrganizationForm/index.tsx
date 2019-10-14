@@ -83,7 +83,6 @@ const OrganizationForm = (props: OrganizationFormProps) => {
         onSubmit={(values, { setSubmitting, setFieldValue }) => {
           const organizationService = new OpenSRPService(OPENSRP_ORGANIZATION_ENDPOINT);
           const identifier = generateNameSpacedUUID(`${moment().toString()}`, OrgFormNameSpace);
-          setFieldValue('identifier', identifier);
           const valuesToSend = {
             ...values,
             identifier,
@@ -92,7 +91,7 @@ const OrganizationForm = (props: OrganizationFormProps) => {
           if (editMode) {
             // 2 calls for each for updating team information and updating practitioner_role table
             organizationService
-              .update(valuesToSend)
+              .update(values)
               .then(() => {
                 setSubmitting(false);
                 setIfDoneHere(true);
