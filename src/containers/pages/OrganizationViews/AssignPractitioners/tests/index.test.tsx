@@ -19,7 +19,7 @@ import practitionersReducer, {
   reducerName as practitionerReducerName,
   removePractitionerRolesAction,
 } from '../../../../../store/ducks/opensrp/practitioners';
-import { removePractitionersAction } from '../../../../../store/ducks/practitioners';
+import { removePractitionersAction } from '../../../../../store/ducks/opensrp/practitioners';
 import * as fixtures from '../../../../../store/ducks/tests/fixtures';
 
 reducerRegistry.register(organizationReducerName, organizationsReducer);
@@ -152,6 +152,6 @@ describe('src/pages/*/AssignPractitioners', () => {
     expect(toJson(wrapper.find('Select input'))).toMatchSnapshot('async select');
 
     // add button
-    expect(wrapper.find('Button')).toMatchSnapshot('add Practitioners button');
+    expect(toJson(wrapper.find('Button'))).toMatchSnapshot('add Practitioners button');
   });
 });
