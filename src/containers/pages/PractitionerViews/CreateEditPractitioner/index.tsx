@@ -17,14 +17,12 @@ import {
   HOME,
   HOME_URL,
   NEW,
-  OPENSRP_PRACTITIONER_ENDPOINT,
   PRACTITIONER,
   PRACTITIONERS,
   PRACTITIONERS_LIST_URL,
 } from '../../../../constants';
 import { RouteParams } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
-import store from '../../../../store';
 import {
   fetchPractitioners,
   getPractitionerById,
@@ -35,6 +33,7 @@ import PractitionerForm, {
   PractitionerFormFields,
   PractitionerFormProps,
 } from '../../../forms/PractitionerForm';
+import { loadPractitioner } from '../serviceHooks';
 
 /** props for create and editing an practitioner view */
 export interface Props {
@@ -84,31 +83,13 @@ const CreateEditPractitionerView = (props: PropsTypes) => {
     disabledFields: [],
     initialValues: editing ? (practitioner as PractitionerFormFields) : defaultInitialValues,
     redirectAfterAction: PRACTITIONERS_LIST_URL,
-  };
-
-  /** Load single practitioner
-   * @param {string} id -  identifier of practitioner to get
-   * @param {typeof serviceClass} service - opensrp service
-   * @param {typeof fetchPractitionersCreator} - action creator
-   */
-  const loadPractitioner = async (
-    id: string,
-    service: typeof serviceClass = OpenSRPService,
-    actionCreator: typeof fetchPractitionersCreator = fetchPractitionersCreator
-  ) => {
-    const serve = new service(OPENSRP_PRACTITIONER_ENDPOINT);
-    serve
-      .read(id)
-      .then((response: Practitioner[]) => store.dispatch(actionCreator(response)))
-      .catch((err: Error) => {
-        /** TODO - find something to do with error */
-      });
+    serviceClass: OpenSRPService,
   };
 
   useEffect(() => {
     let practitionerId = props.match.params.id;
     practitionerId = practitionerId ? practitionerId : '';
-    loadPractitioner(practitionerId, serviceClass);
+    loadPractitioner(practitionerId, serviceClass, fetchPractitionersCreator);
   }, []);
 
   return (
