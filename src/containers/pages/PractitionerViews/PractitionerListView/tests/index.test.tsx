@@ -101,36 +101,6 @@ describe('src/containers/TeamAssignment/PractitionersListView/', () => {
     expect(fetchedMock).toHaveBeenCalledWith(fixtures.practitioners);
   });
 
-  // TODO - this is skipped, currently intentionally
-  xit('E2E flow for searching a practitioner', () => {
-    // questions: how should search be done(probably initiate an api call)
-    const mock: any = jest.fn();
-    const props = {
-      history,
-      location: mock,
-      match: {
-        isExact: true,
-        params: { id: '' },
-        path: PRACTITIONERS_LIST_URL,
-        url: PRACTITIONERS_LIST_URL,
-      },
-      practitioners: fixtures.practitioners,
-    };
-    const wrapper = mount(
-      <Router history={history}>
-        <PractitionersListView {...props} />
-      </Router>
-    );
-
-    // simulating submitting from inlineSearchForm
-    const inlineSearchForm = wrapper.find('Form');
-    inlineSearchForm.simulate('submit');
-
-    // now what?
-    expect.assertions(999);
-    wrapper.unmount();
-  });
-
   it('PractitionerListView works correctly when connected to store', () => {
     fetch.once(JSON.stringify([]));
     const mock: any = jest.fn();
