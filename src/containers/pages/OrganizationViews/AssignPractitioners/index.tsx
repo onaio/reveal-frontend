@@ -4,7 +4,7 @@
 import { RouteParams } from '@onaio/gatekeeper/dist/types';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import { keyBy, values } from 'lodash';
-import React, { Props, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
@@ -23,8 +23,6 @@ import {
   ASSIGN_PRACTITIONERS_URL,
   HOME,
   HOME_URL,
-  OPENSRP_ORG_PRACTITIONER_ENDPOINT,
-  OPENSRP_ORGANIZATION_ENDPOINT,
   OPENSRP_PRACTITIONER_ENDPOINT,
   OPENSRP_PRACTITIONER_ROLE_ENDPOINT,
   ORGANIZATIONS_LABEL,
@@ -35,7 +33,6 @@ import {
 } from '../../../../constants';
 import { generateNameSpacedUUID } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
-import store from '../../../../store';
 import organizationsReducer, {
   fetchOrganizations,
   getOrganizationById,
