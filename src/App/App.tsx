@@ -57,7 +57,7 @@ import ConnectedIRSPlansList from '../containers/pages/IRS/plans';
 import ConnectedCreateEditOrgView from '../containers/pages/OrganizationViews/CreateEditOrgView';
 import ConnectedOrgsListView from '../containers/pages/OrganizationViews/OrganizationListView';
 import ConnectedSingleOrgView from '../containers/pages/OrganizationViews/SingleOrganizationView';
-import ConnectedCreateEditPractitionerView from '../containers/pages/PractitionersView/CreateEditPractitioner';
+import ConnectedCreateEditPractitionerView from '../containers/pages/PractitionerViews/CreateEditPractitioner';
 import ConnectedPractitionersListView from '../containers/pages/PractitionerViews/PractitionerListView';
 
 import { oAuthUserInfoGetter } from '../helpers/utils';
