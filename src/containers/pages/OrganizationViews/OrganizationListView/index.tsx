@@ -25,7 +25,6 @@ import {
   IDENTIFIER,
   NAME,
   NEW_TEAM,
-  OPENSRP_ORGANIZATION_ENDPOINT,
   ORGANIZATION_LABEL,
   ORGANIZATIONS_LABEL,
   ORGANIZATIONS_LIST_URL,
@@ -34,7 +33,6 @@ import {
   VIEW,
 } from '../../../../constants';
 import { OpenSRPService } from '../../../../services/opensrp';
-import store from '../../../../store';
 import organizationsReducer, {
   fetchOrganizations,
   getOrganizationsArray,

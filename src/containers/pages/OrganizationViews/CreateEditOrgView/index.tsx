@@ -17,13 +17,11 @@ import {
   HOME,
   HOME_URL,
   NEW_TEAM,
-  OPENSRP_ORGANIZATION_ENDPOINT,
   ORGANIZATIONS_LABEL,
   ORGANIZATIONS_LIST_URL,
 } from '../../../../constants';
 import { RouteParams } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
-import store from '../../../../store';
 import {
   fetchOrganizations,
   getOrganizationById,

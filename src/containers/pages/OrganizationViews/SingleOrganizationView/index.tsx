@@ -25,8 +25,6 @@ import {
   MEMBERS,
   NAME,
   OPENSRP_DEL_PRACTITIONER_ROLE_ENDPOINT,
-  OPENSRP_ORG_PRACTITIONER_ENDPOINT,
-  OPENSRP_ORGANIZATION_ENDPOINT,
   ORGANIZATION_LABEL,
   ORGANIZATIONS_LABEL,
   ORGANIZATIONS_LIST_URL,
@@ -36,8 +34,6 @@ import {
 } from '../../../../constants';
 import { RouteParams } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
-import { OpenSRPAPIResponse } from '../../../../services/opensrp/tests/fixtures/session';
-import store from '../../../../store';
 import organizationsReducer, {
   fetchOrganizations,
   getOrganizationById,
