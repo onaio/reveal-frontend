@@ -46,7 +46,7 @@ import practitionersReducer, {
   reducerName as practitionerReducerName,
 } from '../../../../store/ducks/opensrp/practitioners';
 import { loadOrganization, loadOrgPractitioners } from '../serviceHooks';
-import { styles } from './utils';
+import { filterOptions, formatOptions, SelectOption, styles } from './utils';
 
 reducerRegistry.register(organizationReducerName, organizationsReducer);
 reducerRegistry.register(practitionerReducerName, practitionersReducer);
@@ -72,13 +72,6 @@ const defaultAssignPractitionerProps: AssignPractitionerProps = {
 /** type intersection for all types that pertain to the props */
 export type PropsTypes = AssignPractitionerProps & RouteComponentProps<RouteParams>;
 
-/** interface of an option in the component's state */
-interface SelectOption {
-  readonly label: string;
-  readonly value: string;
-  readonly isFixed: boolean;
-}
-
 /** AssignPractitioner component */
 const AssignPractitioner: React.FC<PropsTypes> = props => {
   const {
@@ -99,23 +92,6 @@ const AssignPractitioner: React.FC<PropsTypes> = props => {
   if (!organization) {
     return <Loading />;
   }
-
-  /** formats Practitioner json object structure into a selectedOption object structure
-   * @param {Practitioner []} practitioners - list of practitioner json objects
-   * @param {boolean} isFixed - value of isFixed; option will be fixed if its already assigned
-   * to organization
-   * @return {OptionsType<SelectOption>}
-   */
-  const formatOptions = (
-    practitioners: Practitioner[],
-    isFixed: boolean = false
-  ): OptionsType<SelectOption> =>
-    practitioners.map(entry => ({
-      isFixed,
-      // TODO - pending api changes so we can only deal with one
-      label: entry.username ? entry.username : (entry as any).userName,
-      value: entry.identifier,
-    }));
 
   // TODO - scenario where this request doesn't return all practitioners in a single query
   /** load all practitioners at least all of those returned
@@ -153,17 +129,6 @@ const AssignPractitioner: React.FC<PropsTypes> = props => {
       case 'clear':
         chosenOptions = chosenOptions.filter((v: any) => !v.isFixed);
     }
-  };
-
-  /** filters options shown in dropdown based on the so far typed characters
-   * @param {string} inputVal - string literal that is being typed in select
-   * @param {OptionsType<SelectOption>} allOptions - options from which user can pick from
-   */
-  const filterOptions = (
-    inputVal: string,
-    allOptions: OptionsType<SelectOption>
-  ): OptionsType<SelectOption> => {
-    return allOptions.filter(option => option.label.toLocaleLowerCase().includes(inputVal));
   };
 
   // TODO - This will initiate an api request for the same exact data each time someone types
@@ -243,7 +208,7 @@ const AssignPractitioner: React.FC<PropsTypes> = props => {
         assignedPractitioners.map((option, index) => (
           <section key={index}>
             <span className="assigned-options text-muted">
-              {option.name}({option.username ? option.username : (option as any).userName})
+              {option.name}({option.username})
             </span>
             <input
               type="hidden"
