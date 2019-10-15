@@ -14,6 +14,11 @@ interface OrganizationCoding {
   system: string;
 }
 
+/** interface for the type key in an organization Object */
+interface OrganizationType {
+  coding: OrganizationCoding[];
+}
+
 /** interface for a Organization object */
 export interface Organization {
   active: boolean;
@@ -21,7 +26,7 @@ export interface Organization {
   identifier: string;
   name: string;
   partOf?: number;
-  type?: { coding: OrganizationCoding[] };
+  type?: OrganizationType;
 }
 
 // action interfaces

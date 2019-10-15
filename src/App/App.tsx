@@ -8,8 +8,8 @@ import { Helmet } from 'react-helmet';
 import { Route, Switch } from 'react-router';
 import { Col, Container, Row } from 'reactstrap';
 import Loading from '../components/page/Loading';
-import { DISABLE_LOGIN_PROTECTION } from '../configs/env';
 import { WEBSITE_NAME } from '../configs/env';
+import { DISABLE_LOGIN_PROTECTION } from '../configs/env';
 import { providers } from '../configs/settings';
 import {
   ACTIVE_IRS_PLAN_URL,
@@ -33,6 +33,7 @@ import {
   PLAN_UPDATE_URL,
   PRACTITIONERS_LIST_URL,
   REPORT_IRS_PLAN_URL,
+  SINGLE_ORGANIZATION_URL,
 } from '../constants';
 import ConnectedHeader from '../containers/ConnectedHeader';
 import ActiveFocusInvestigation from '../containers/pages/FocusInvestigation/active';
@@ -51,6 +52,7 @@ import ConnectedIRSReportingMap from '../containers/pages/IRS/Map';
 import ConnectedIRSPlansList from '../containers/pages/IRS/plans';
 import ConnectedCreateEditOrgView from '../containers/pages/OrganizationViews/CreateEditOrgView';
 import ConnectedOrgsListView from '../containers/pages/OrganizationViews/OrganizationListView';
+import ConnectedSingleOrgView from '../containers/pages/OrganizationViews/SingleOrganizationView';
 import ConnectedPractitionersListView from '../containers/pages/PractitionerViews/PractitionerListView';
 import { oAuthUserInfoGetter } from '../helpers/utils';
 
@@ -84,6 +86,7 @@ class App extends Component {
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={INTERVENTION_IRS_URL}
+                  ConnectedOrgTeamView={true}
                   component={IrsPlans}
                 />
 
@@ -228,6 +231,13 @@ class App extends Component {
                   exact={true}
                   path={`${EDIT_ORGANIZATION_URL}/:id`}
                   component={ConnectedCreateEditOrgView}
+                />
+                {/* single organization view */}
+                <ConnectedPrivateRoute
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${SINGLE_ORGANIZATION_URL}/:id`}
+                  component={ConnectedSingleOrgView}
                 />
                 {/* Practitioner listing page */}
                 <ConnectedPrivateRoute

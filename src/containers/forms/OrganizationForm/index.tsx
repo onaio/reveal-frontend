@@ -8,6 +8,7 @@ import * as Yup from 'yup';
 import {
   ACTIVE,
   NAME,
+  NAME_REGEX_ERROR,
   NO,
   OPENSRP_ORGANIZATION_ENDPOINT,
   ORGANIZATION_LABEL,
@@ -37,7 +38,9 @@ const defaultOrganizationType = {
 export const OrgSchema = Yup.object().shape({
   active: Yup.boolean(),
   identifier: Yup.string(),
-  name: Yup.string().required(REQUIRED),
+  name: Yup.string()
+    .matches(/^[a-zA-Z0-9]+([_ -]?[a-zA-Z0-9])*$/, NAME_REGEX_ERROR)
+    .required(REQUIRED),
 });
 
 /** interface for data fields for team's form */
@@ -81,18 +84,13 @@ const OrganizationForm = (props: OrganizationFormProps) => {
         validationSchema={OrgSchema}
         // tslint:disable-next-line: jsx-no-lambda
         onSubmit={(values, { setSubmitting, setFieldValue }) => {
-          const organizationService = new OpenSRPService(OPENSRP_ORGANIZATION_ENDPOINT);
-          const identifier = generateNameSpacedUUID(`${moment().toString()}`, OrgFormNameSpace);
-          setFieldValue('identifier', identifier);
-          const valuesToSend = {
-            ...values,
-            identifier,
-          };
-
           if (editMode) {
+            const organizationService = new OpenSRPService(
+              `${OPENSRP_ORGANIZATION_ENDPOINT}/${values.identifier}`
+            );
             // 2 calls for each for updating team information and updating practitioner_role table
             organizationService
-              .update(valuesToSend)
+              .update(values)
               .then(() => {
                 setSubmitting(false);
                 setIfDoneHere(true);
@@ -102,6 +100,12 @@ const OrganizationForm = (props: OrganizationFormProps) => {
                 setSubmitting(false);
               });
           } else {
+            const organizationService = new OpenSRPService(OPENSRP_ORGANIZATION_ENDPOINT);
+            const identifier = generateNameSpacedUUID(`${moment().toString()}`, OrgFormNameSpace);
+            const valuesToSend = {
+              ...values,
+              identifier,
+            };
             organizationService
               .create(valuesToSend)
               .then(() => {

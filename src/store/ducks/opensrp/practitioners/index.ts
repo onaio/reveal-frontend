@@ -160,7 +160,6 @@ export default function reducer(
         practitionerRoles: {
           ...state.practitionerRoles,
           [organizationId]: {
-            ...state.practitionerRoles[organizationId],
             ...action.practitionerRoles[organizationId],
           },
         } as PractitionerRole & SeamlessImmutable.ImmutableObject<PractitionerRole>,

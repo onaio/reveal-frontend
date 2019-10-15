@@ -196,6 +196,9 @@ export const EDIT = 'Edit';
 export type EDIT = typeof EDIT;
 export const ADD = 'Add';
 export type ADD = typeof ADD;
+export const REMOVE = 'Remove';
+export type REMOVE = typeof REMOVE;
+
 // TODO ? - do the below 2 belong here or in a settings file
 export const ORGANIZATION_LABEL = TEAM;
 export type ORGANIZATION_LABEL = typeof ORGANIZATION_LABEL;
@@ -298,6 +301,10 @@ export const OPENSRP_GET_ASSIGNMENTS_ENDPOINT = `${OPENSRP_ORGANIZATION_ENDPOINT
 export type OPENSRP_GET_ASSIGNMENTS_ENDPOINT = typeof OPENSRP_GET_ASSIGNMENTS_ENDPOINT;
 export const OPENSRP_POST_ASSIGNMENTS_ENDPOINT = `${OPENSRP_ORGANIZATION_ENDPOINT}/assignLocationsAndPlans`;
 export type OPENSRP_POST_ASSIGNMENTS_ENDPOINT = typeof OPENSRP_POST_ASSIGNMENTS_ENDPOINT;
+export const OPENSRP_ORG_PRACTITIONER_ENDPOINT = 'organization/practitioner';
+export type OPENSRP_ORG_PRACTITIONER_ENDPOINT = typeof OPENSRP_ORG_PRACTITIONER_ENDPOINT;
+export const OPENSRP_DEL_PRACTITIONER_ROLE_ENDPOINT = 'practitionerRole/deleteByPractitioner';
+export type OPENSRP_DEL_PRACTITIONER_ROLE_ENDPOINT = typeof OPENSRP_DEL_PRACTITIONER_ROLE_ENDPOINT;
 
 // container pages title names
 export const HOME_TITLE = `Home page`;
@@ -342,3 +349,7 @@ export const FI_PLAN_TYPE = 'FI';
 export type FI_PLAN_TYPE = typeof FI_PLAN_TYPE;
 export const IRS_PLAN_TYPE = 'IRS';
 export type IRS_PLAN_TYPE = typeof IRS_PLAN_TYPE;
+
+// error messages
+export const NAME_REGEX_ERROR = 'should include alphanumeric optionally separated by _ or -';
+export type NAME_REGEX_ERROR = typeof NAME_REGEX_ERROR;
