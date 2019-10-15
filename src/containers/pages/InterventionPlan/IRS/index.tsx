@@ -9,16 +9,32 @@ import { Store } from 'redux';
 
 import DrillDownTable from '@onaio/drill-down-table';
 import reducerRegistry from '@onaio/redux-reducer-registry';
+import superset from '@onaio/superset-connector';
 
-import { HOME, HOME_URL, INTERVENTION_IRS_URL, IRS_PLAN_TYPE } from '../../../../constants';
+import {
+  CREATE_NEW_PLAN,
+  DRAFT,
+  DRAFTS_PARENTHESIS,
+  HOME,
+  HOME_URL,
+  INTERVENTION_IRS_DRAFTS_URL,
+  INTERVENTION_IRS_URL,
+  IRS_PLAN_TYPE,
+  NEW,
+  PLAN,
+  REPORT,
+} from '../../../../constants';
 
 import { RouteParams } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
 import plansReducer, {
   extractPlanRecordResponseFromPlanPayload,
   fetchPlanRecords,
+  fetchPlans,
   getPlanRecordsArray,
+  getPlansArray,
   InterventionType,
+  Plan,
   PlanPayload,
   PlanRecord,
   PlanRecordResponse,
@@ -32,8 +48,10 @@ import HeaderBreadcrumbs, {
   BreadCrumbProps,
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
+import { SUPERSET_IRS_REPORTING_PLANS_SLICE, SUPERSET_MAX_RECORDS } from '../../../../configs/env';
 import { useContextCodes } from '../../../../configs/settings';
 import { IRS_PLANS, IRS_TITLE } from '../../../../constants';
+import supersetFetch from '../../../../services/superset';
 import './../../../../styles/css/drill-down-table.css';
 
 /** register the plans reducer */
@@ -44,13 +62,19 @@ const OpenSrpPlanService = new OpenSRPService('plans');
 
 /** IrsPlansProps - interface for IRS Plans page */
 export interface IrsPlansProps {
-  fetchPlansActionCreator: typeof fetchPlanRecords;
+  fetchPlanRecordsActionCreator: typeof fetchPlanRecords;
+  fetchPlansActionCreator: typeof fetchPlans;
+  isReporting: boolean;
+  pageTitle: string;
   plansArray: PlanRecord[];
 }
 
 /** defaultIrsPlansProps - default props for IRS Plans page */
 export const defaultIrsPlansProps: IrsPlansProps = {
-  fetchPlansActionCreator: fetchPlanRecords,
+  fetchPlanRecordsActionCreator: fetchPlanRecords,
+  fetchPlansActionCreator: fetchPlans,
+  isReporting: false,
+  pageTitle: '',
   plansArray: [],
 };
 
@@ -61,43 +85,56 @@ class IrsPlans extends React.Component<IrsPlansProps & RouteComponentProps<Route
     super(props);
   }
 
-  public componentDidMount() {
-    const { fetchPlansActionCreator } = this.props;
+  public async componentDidMount() {
+    const { isReporting, fetchPlanRecordsActionCreator, fetchPlansActionCreator } = this.props;
 
-    OpenSrpPlanService.list()
-      .then(plans => {
-        // filter for IRS plans
-        const irsPlans = plans.filter((p: PlanPayload) => {
-          for (const u of p.useContext) {
-            if (u.code === useContextCodes[0]) {
-              if (u.valueCodableConcept === IRS_PLAN_TYPE) {
-                return true;
-              } else {
-                return false;
+    /** define superset filter params for jurisdictions */
+    const plansParams = superset.getFormData(SUPERSET_MAX_RECORDS, [
+      { comparator: 'IRS', operator: '==', subject: 'plan_intervention_type' },
+    ]);
+    if (isReporting) {
+      // use superset enpoint in reporting
+      const plansArray = await supersetFetch(SUPERSET_IRS_REPORTING_PLANS_SLICE, plansParams).then(
+        (plans: Plan[]) => plans
+      );
+      fetchPlansActionCreator(plansArray);
+    } else {
+      // Use openSRP endpoint in planning
+      OpenSrpPlanService.list()
+        .then(plans => {
+          // filter for IRS plans
+          const irsPlans = plans.filter((p: PlanPayload) => {
+            for (const u of p.useContext) {
+              if (u.code === useContextCodes[0]) {
+                if (u.valueCodableConcept === IRS_PLAN_TYPE) {
+                  return true;
+                } else {
+                  return false;
+                }
               }
             }
-          }
-          return false;
+            return false;
+          });
+          const irsPlanRecords: PlanRecordResponse[] = irsPlans.map(
+            extractPlanRecordResponseFromPlanPayload
+          );
+          return fetchPlanRecordsActionCreator(irsPlanRecords);
+        })
+        .catch(err => {
+          // console.log('ERR', err)
         });
-        const irsPlanRecords: PlanRecordResponse[] = irsPlans.map(
-          extractPlanRecordResponseFromPlanPayload
-        );
-
-        return fetchPlansActionCreator(irsPlanRecords);
-      })
-      .catch(err => {
-        // console.log('ERR', err)
-      });
+    }
   }
 
   public render() {
+    const { isReporting, pageTitle } = this.props;
     const homePage = {
       label: HOME,
       url: HOME_URL,
     };
     const breadCrumbProps: BreadCrumbProps = {
       currentPage: {
-        label: 'IRS',
+        label: pageTitle,
         url: INTERVENTION_IRS_URL,
       },
       pages: [homePage],
@@ -114,10 +151,17 @@ class IrsPlans extends React.Component<IrsPlansProps & RouteComponentProps<Route
         columns: [
           {
             Cell: (cell: CellInfo) => {
-              const path = cell.original.plan_status === 'draft' ? 'draft' : 'plan';
+              const path = isReporting
+                ? REPORT
+                : cell.original.plan_status === DRAFT
+                ? DRAFT
+                : PLAN;
               return (
                 <div>
-                  <Link to={`${INTERVENTION_IRS_URL}/${path}/${cell.original.id}`}>
+                  <Link
+                    to={`${INTERVENTION_IRS_URL}/${path}/${cell.original.id ||
+                      cell.original.plan_id}`}
+                  >
                     {cell.value}
                   </Link>
                 </div>
@@ -173,26 +217,24 @@ class IrsPlans extends React.Component<IrsPlansProps & RouteComponentProps<Route
     return (
       <div className="mb-5">
         <Helmet>
-          <title>{IRS_TITLE}</title>
+          <title>{pageTitle.length ? pageTitle : IRS_TITLE}</title>
         </Helmet>
         <HeaderBreadcrumbs {...breadCrumbProps} />
-        <Container>
-          <Row>
-            <Col md="8">
-              <h2 className="page-title">{IRS_PLANS}</h2>
-            </Col>
-            <Col md="4" className="text-right">
-              <Button color="primary" tag={Link} to={`${INTERVENTION_IRS_URL}/new`}>
-                Create new plan
-              </Button>
-            </Col>
-          </Row>
-          <Row>
-            <Col md="12">
-              <DrillDownTable {...tableProps} />
-            </Col>
-          </Row>
-        </Container>
+        <Row noGutters={true}>
+          <Col md="8">
+            <h2 className="page-title">{IRS_PLANS}</h2>
+          </Col>
+          <Col md="4" className="text-right">
+            <Button color="primary" tag={Link} to={`${INTERVENTION_IRS_URL}/${NEW}`}>
+              {CREATE_NEW_PLAN}
+            </Button>
+          </Col>
+        </Row>
+        <Row noGutters={true}>
+          <Col md="12">
+            <DrillDownTable {...tableProps} />
+          </Col>
+        </Row>
       </div>
     );
   }
@@ -205,17 +247,25 @@ interface DispatchedStateProps {
 }
 
 const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateProps => {
+  const isDraftsList = ownProps.path === INTERVENTION_IRS_DRAFTS_URL;
+  const planStatus = isDraftsList ? [PlanStatus.DRAFT] : [PlanStatus.ACTIVE];
+  const pageTitle = `${IRS_PLANS}${isDraftsList ? ` ${DRAFTS_PARENTHESIS}` : ''}`;
+  const plansRecordsArray = getPlanRecordsArray(state, InterventionType.IRS, planStatus);
+  const plansArray = getPlansArray(state, InterventionType.IRS, planStatus);
+
   const props = {
-    plansArray: getPlanRecordsArray(state, InterventionType.IRS, [
-      PlanStatus.ACTIVE,
-      PlanStatus.DRAFT,
-    ]),
+    isReporting: !isDraftsList,
+    pageTitle,
+    plansArray: plansRecordsArray.length ? plansRecordsArray : plansArray,
     ...ownProps,
   };
   return props;
 };
 
-const mapDispatchToProps = { fetchPlansActionCreator: fetchPlanRecords };
+const mapDispatchToProps = {
+  fetchPlanRecordsActionCreator: fetchPlanRecords,
+  fetchPlansActionCreator: fetchPlans,
+};
 
 const ConnectedIrsPlans = connect(
   mapStateToProps,

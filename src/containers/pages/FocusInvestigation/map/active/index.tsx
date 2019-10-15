@@ -16,6 +16,7 @@ import SelectComponent from '../../../../../components/SelectPlan/';
 import {
   SUPERSET_GOALS_SLICE,
   SUPERSET_JURISDICTIONS_SLICE,
+  SUPERSET_MAX_RECORDS,
   SUPERSET_PLANS_SLICE,
   SUPERSET_STRUCTURES_SLICE,
   SUPERSET_TASKS_SLICE,
@@ -111,11 +112,11 @@ export interface MapSingleFIProps {
   goals: Goal[] | null;
   jurisdiction: Jurisdiction | null;
   plan: Plan | null;
-  plansArray: Plan[];
   pointFeatureCollection: FeatureCollection<TaskGeoJSON>;
   polygonFeatureCollection: FeatureCollection<TaskGeoJSON>;
   structures: FeatureCollection<StructureGeoJSON> | null /** we use this to get all structures */;
   supersetService: typeof supersetFetch;
+  plansByFocusArea: Plan[];
 }
 
 /** default value for feature Collection */
@@ -135,7 +136,7 @@ export const defaultMapSingleFIProps: MapSingleFIProps = {
   goals: null,
   jurisdiction: null,
   plan: null,
-  plansArray: [],
+  plansByFocusArea: [],
   pointFeatureCollection: defaultFeatureCollection,
   polygonFeatureCollection: defaultFeatureCollection,
   setCurrentGoalActionCreator: setCurrentGoal,
@@ -166,19 +167,19 @@ class SingleActiveFIMap extends React.Component<
 
     if (plan && plan.plan_id) {
       /** define superset filter params for jurisdictions */
-      const jurisdictionsParams = superset.getFormData(3000, [
+      const jurisdictionsParams = superset.getFormData(SUPERSET_MAX_RECORDS, [
         { comparator: plan.jurisdiction_id, operator: '==', subject: 'jurisdiction_id' },
       ]);
       await supersetService(SUPERSET_JURISDICTIONS_SLICE, jurisdictionsParams).then(
         (result: Jurisdiction[]) => fetchJurisdictionsActionCreator(result)
       );
       /** define superset params for filtering by plan_id */
-      const supersetParams = superset.getFormData(3000, [
+      const supersetParams = superset.getFormData(SUPERSET_MAX_RECORDS, [
         { comparator: plan.plan_id, operator: '==', subject: 'plan_id' },
       ]);
       /** define superset params for goals */
       const goalsParams = superset.getFormData(
-        3000,
+        SUPERSET_MAX_RECORDS,
         [{ comparator: plan.plan_id, operator: '==', subject: 'plan_id' }],
         { action_prefix: true }
       );
@@ -215,10 +216,10 @@ class SingleActiveFIMap extends React.Component<
       plan,
       goals,
       currentGoal,
-      plansArray,
       pointFeatureCollection,
       polygonFeatureCollection,
       structures,
+      plansByFocusArea,
     } = this.props;
     if (!jurisdiction || !plan) {
       return <Loading />;
@@ -317,7 +318,7 @@ class SingleActiveFIMap extends React.Component<
               </h2>
             </Col>
             <Col xs="4">
-              <SelectComponent plansArray={plansArray} />
+              <SelectComponent plansArray={plansByFocusArea} />
             </Col>
           </Row>
         </div>
@@ -400,7 +401,7 @@ export { SingleActiveFIMap };
  * @param {any} ownProps - the props
  */
 const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
-  // pass in the plan id to get plan the get the jurisdicytion_id from the plan
+  // pass in the plan id to get plan the get the jurisdiction_id from the plan
   const plan = getPlanById(state, ownProps.match.params.id);
   let goals = null;
   let jurisdiction = null;
@@ -408,9 +409,18 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
   let pointFeatureCollection = defaultFeatureCollection;
   let polygonFeatureCollection = defaultFeatureCollection;
   let structures = null;
+  let plansByFocusArea: Plan[] = [];
   if (plan) {
     jurisdiction = getJurisdictionById(state, plan.jurisdiction_id);
     goals = getGoalsByPlanAndJurisdiction(state, plan.plan_id, plan.jurisdiction_id);
+    plansByFocusArea = getPlansArray(
+      state,
+      InterventionType.FI,
+      [PlanStatus.ACTIVE, PlanStatus.COMPLETE],
+      null,
+      [],
+      plan.jurisdiction_id
+    );
   }
 
   if (plan && jurisdiction && (goals && goals.length > 1)) {
@@ -442,6 +452,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
     jurisdiction,
     plan,
     plansArray: getPlansArray(state, InterventionType.FI, [PlanStatus.ACTIVE, PlanStatus.COMPLETE]),
+    plansByFocusArea,
     plansIdArray: getPlansIdArray(
       state,
       InterventionType.FI,

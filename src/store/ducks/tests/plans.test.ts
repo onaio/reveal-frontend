@@ -213,6 +213,7 @@ describe('reducers/plans', () => {
       expect(plan3FromStore).toEqual(fixtures.plan3);
     }
   });
+
   it('resets plansById records', () => {
     store.dispatch(removePlansAction);
     let numberOfPlansInStore = getPlansArray(store.getState(), undefined, []).length;
@@ -241,5 +242,31 @@ describe('reducers/plans', () => {
     expect(plan99FromStore).not.toBeNull();
     numberOfPlansInStore = getPlansArray(store.getState(), undefined, []).length;
     expect(numberOfPlansInStore).toEqual(2);
+  });
+
+  it('getPlansArray works when plan.jurisdiction_path is null', () => {
+    store.dispatch(removePlansAction);
+    store.dispatch(fetchPlans([fixtures.plan7] as any));
+    expect([]).toEqual(
+      getPlansArray(
+        store.getState(),
+        InterventionType.IRS,
+        [PlanStatus.ACTIVE],
+        'Case-triggered',
+        [],
+        'some-jurisdiction-id'
+      )
+    );
+
+    expect([getPlanById(store.getState(), 'plan-id-7')]).toEqual(
+      getPlansArray(
+        store.getState(),
+        InterventionType.IRS,
+        [PlanStatus.ACTIVE],
+        'Case-triggered',
+        [],
+        null
+      )
+    );
   });
 });

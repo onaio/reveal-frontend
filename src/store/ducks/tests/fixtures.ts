@@ -1,4 +1,5 @@
 import { clone, cloneDeep } from 'lodash';
+import { Organization } from '../opensrp/organizations';
 import { InterventionType, Plan, PlanStatus } from '../plans';
 
 export const plan1: Plan = {
@@ -125,6 +126,14 @@ export const plan6 = {
   ...plan2,
   jurisdiction_id: 'null',
   jurisdiction_name: 'null',
+  jurisdiction_name_path: 'null',
+  jurisdiction_parent_id: 'null',
+  jurisdiction_path: 'null',
+};
+
+export const plan7 = {
+  ...plan2,
+  id: 'plan-id-7',
   jurisdiction_name_path: 'null',
   jurisdiction_parent_id: 'null',
   jurisdiction_path: 'null',
@@ -894,48 +903,51 @@ export const structure3 = {
   id: '155324',
   jurisdiction_id: '4050a8ab-b310-4881-8c76-1b6a817ea63a',
 };
+
+export const jurisdiction1 = {
+  geojson: {
+    geometry: {
+      coordinates: [
+        [
+          [101.166915893555, 15.0715019595332],
+          [101.165628433228, 15.069429992157],
+          [101.164855957031, 15.0649130333519],
+          [101.164898872375, 15.061473449978],
+          [101.165843009949, 15.0585311116698],
+          [101.168718338013, 15.0577022766384],
+          [101.173524856567, 15.0577437184666],
+          [101.179447174072, 15.0583653449216],
+          [101.183996200562, 15.0589455279759],
+          [101.189103126526, 15.0597743581685],
+          [101.191892623901, 15.0629238834779],
+          [101.191549301147, 15.0671093647448],
+          [101.19086265564, 15.0727036913665],
+          [101.190605163574, 15.0748170653661],
+          [101.188631057739, 15.0768061040682],
+          [101.185412406921, 15.0769304183694],
+          [101.182150840759, 15.0772619228176],
+          [101.177172660828, 15.0780906816776],
+          [101.174211502075, 15.0777591785211],
+          [101.172151565552, 15.0765989134045],
+          [101.168503761292, 15.0753557651845],
+          [101.166915893555, 15.0715019595332],
+        ],
+      ],
+      type: 'Polygon',
+    },
+    id: '450fc15b-5bd2-468a-927a-49cb10d3bcac',
+    properties: {
+      jurisdiction_name: 'TLv1_01',
+      jurisdiction_parent_id: 'dad42fa6-b9b8-4658-bf25-bfa7ab5b16ae',
+    },
+    type: 'Feature',
+  },
+  jurisdiction_id: '450fc15b-5bd2-468a-927a-49cb10d3bcac',
+};
+
 export const structures = [structure1, structure2];
 export const jurisdictions = [
-  {
-    geojson: {
-      geometry: {
-        coordinates: [
-          [
-            [101.166915893555, 15.0715019595332],
-            [101.165628433228, 15.069429992157],
-            [101.164855957031, 15.0649130333519],
-            [101.164898872375, 15.061473449978],
-            [101.165843009949, 15.0585311116698],
-            [101.168718338013, 15.0577022766384],
-            [101.173524856567, 15.0577437184666],
-            [101.179447174072, 15.0583653449216],
-            [101.183996200562, 15.0589455279759],
-            [101.189103126526, 15.0597743581685],
-            [101.191892623901, 15.0629238834779],
-            [101.191549301147, 15.0671093647448],
-            [101.19086265564, 15.0727036913665],
-            [101.190605163574, 15.0748170653661],
-            [101.188631057739, 15.0768061040682],
-            [101.185412406921, 15.0769304183694],
-            [101.182150840759, 15.0772619228176],
-            [101.177172660828, 15.0780906816776],
-            [101.174211502075, 15.0777591785211],
-            [101.172151565552, 15.0765989134045],
-            [101.168503761292, 15.0753557651845],
-            [101.166915893555, 15.0715019595332],
-          ],
-        ],
-        type: 'Polygon',
-      },
-      id: '450fc15b-5bd2-468a-927a-49cb10d3bcac',
-      properties: {
-        jurisdiction_name: 'TLv1_01',
-        jurisdiction_parent_id: 'dad42fa6-b9b8-4658-bf25-bfa7ab5b16ae',
-      },
-      type: 'Feature',
-    },
-    jurisdiction_id: '450fc15b-5bd2-468a-927a-49cb10d3bcac',
-  },
+  jurisdiction1,
   {
     geojson: {
       geometry: {
@@ -1174,3 +1186,92 @@ export const CompleteRoutineTableProps = {
   showPagination: false,
   useDrillDownTrProps: false,
 };
+
+export const organization1: Organization = {
+  active: true,
+  id: 1,
+  identifier: 'fcc19470-d599-11e9-bb65-2a2ae2dbcce4',
+  name: 'The Luang',
+  type: {
+    coding: [
+      {
+        code: 'team',
+        display: 'Team',
+        system: 'http://terminology.hl7.org/CodeSystem/organization-type',
+      },
+    ],
+  },
+};
+
+export const organization2: Organization = {
+  active: true,
+  id: 3,
+  identifier: '4c506c98-d3a9-11e9-bb65-2a2ae2dbcce4',
+  name: 'Demo Team',
+};
+
+export const organization3: Organization = {
+  active: true,
+  id: 2,
+  identifier: 'd23f7350-d406-11e9-bb65-2a2ae2dbcce4',
+  name: 'Takang 1',
+  partOf: 1,
+  type: {
+    coding: [
+      {
+        code: 'team',
+        display: 'Team',
+        system: 'http://terminology.hl7.org/CodeSystem/organization-type',
+      },
+    ],
+  },
+};
+
+export const organizations: Organization[] = [organization1, organization2];
+
+export const practitioner1 = {
+  active: true,
+  identifier: 'p5id',
+  name: 'tlv2_name',
+  userId: '8af3b7ce-e3fa-420f-8de6-e7c36e08f0bc',
+  username: 'tlv2',
+};
+export const practitioner2 = {
+  active: true,
+  identifier: 'd7c9c000-e9b3-427a-890e-49c301aa48e6',
+  name: 'Biophics Tester',
+  userId: '8df27310-c7ef-4bb2-b77f-3b9f4bd23713',
+  username: 'tak',
+};
+export const practitioner3 = {
+  active: true,
+  identifier: '437cc699-cfa7-414c-ba27-1668b6b517e6',
+  name: 'Test User Lusaka',
+  userId: 'cad04f1e-9b05-4eac-92ce-4b38aa478644',
+  username: 'lusaka',
+};
+
+export const practitioner4 = {
+  active: true,
+  identifier: 'healer',
+  name: 'tlv2_name',
+  userId: '84f3b7ce-e3fa-420f-8de6-e7c36e08f0bc',
+  username: 'tlv2',
+};
+export const practitioner5 = {
+  active: true,
+  identifier: 'master',
+  name: 'Biophics Tester',
+  userId: '8df26310-c7ef-4bb2-b77f-3b9f4bd23713',
+  username: 'tak',
+};
+export const practitioner6 = {
+  active: true,
+  identifier: '437cc699-cfd7-414c-ba27-1668b6b517e6',
+  name: 'Test User Lusaka',
+  userId: 'cad04f1e-9c05-4ebc-92ce-4b38aa478644',
+  username: 'lusaka',
+};
+
+export const practitioners = [practitioner1, practitioner2, practitioner3];
+export const org3Practitioners = [practitioner4, practitioner5, practitioner6];

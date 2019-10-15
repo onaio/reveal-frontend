@@ -873,9 +873,10 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
             <div
               className="col-md-4"
             >
-              <LinkToNewPlans
-                className="focus-investigation btn btn-primary float-right mt-3 mb-3"
+              <LinkAsButton
+                classNameProp="focus-investigation btn btn-primary float-right mt-3 mb-3"
                 text="Add Plan"
+                to="/plans/new"
               >
                 <Link
                   className="focus-investigation btn btn-primary float-right mt-3 mb-3"
@@ -890,7 +891,7 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
                     Add Plan
                   </a>
                 </Link>
-              </LinkToNewPlans>
+              </LinkAsButton>
             </div>
           </Col>
         </div>

@@ -19,6 +19,7 @@ import TableHeader from '../../../../components/Table/TableHeaders';
 import {
   SUPERSET_GOALS_SLICE,
   SUPERSET_JURISDICTIONS_SLICE,
+  SUPERSET_MAX_RECORDS,
   SUPERSET_PLANS_SLICE,
 } from '../../../../configs/env';
 import {
@@ -145,17 +146,17 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
 
     if (planById && planById.plan_id) {
       /** define superset filter params for plans */
-      const plansParams = superset.getFormData(3000, [
+      const plansParams = superset.getFormData(SUPERSET_MAX_RECORDS, [
         { comparator: planById.plan_id, operator: '==', subject: 'plan_id' },
       ]);
       /** define superset params for goals */
       const goalsParams = superset.getFormData(
-        3000,
+        SUPERSET_MAX_RECORDS,
         [{ comparator: planById.plan_id, operator: '==', subject: 'plan_id' }],
         { action_prefix: true }
       );
       /** define superset filter params for jurisdictions */
-      const jurisdictionsParams = superset.getFormData(3000, [
+      const jurisdictionsParams = superset.getFormData(SUPERSET_MAX_RECORDS, [
         { comparator: planById.jurisdiction_id, operator: '==', subject: 'jurisdiction_id' },
       ]);
       await supersetService(SUPERSET_PLANS_SLICE, jurisdictionsParams).then((result: Plan[]) =>

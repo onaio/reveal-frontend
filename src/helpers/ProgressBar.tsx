@@ -1,11 +1,20 @@
 import React from 'react';
+import { CellInfo } from 'react-table';
 import * as colors from '../colors';
-import { GREEN_THRESHOLD, ORANGE_THRESHOLD, YELLOW_THRESHOLD, ZERO } from '../configs/settings';
+import {
+  GREEN_THRESHOLD,
+  IndicatorThresholds,
+  ORANGE_THRESHOLD,
+  YELLOW_THRESHOLD,
+  ZERO,
+} from '../configs/settings';
+import { getThresholdColor } from './indicators';
 
 /** Props for ProgressBar */
 interface ProgressBarProps {
   decimalPoints: number;
   height: string;
+  indicatorThresholds: IndicatorThresholds | null;
   min: number;
   max: number;
   value: number;
@@ -15,13 +24,14 @@ interface ProgressBarProps {
 const defaultProgressBarProps: Partial<ProgressBarProps> = {
   decimalPoints: 0,
   height: '10px',
+  indicatorThresholds: null,
   max: 100,
   min: 0,
 };
 
 /** Displays configurable progress bar */
 const ProgressBar = (props: ProgressBarProps) => {
-  const { decimalPoints, height, value } = props;
+  const { decimalPoints, height, indicatorThresholds, value } = props;
   const max = props.max || 100;
   const min = props.min || 0;
   let range = max - min;
@@ -31,19 +41,23 @@ const ProgressBar = (props: ProgressBarProps) => {
   const decimalValue = value / range;
   const percentValue = decimalValue * 100;
   const percentValueString = percentValue.toFixed(decimalPoints);
+
+  const backgroundColor = indicatorThresholds
+    ? getThresholdColor({ value } as CellInfo, indicatorThresholds, true)
+    : decimalValue >= GREEN_THRESHOLD
+    ? colors.GREEN
+    : decimalValue >= ORANGE_THRESHOLD
+    ? colors.ORANGE
+    : decimalValue >= YELLOW_THRESHOLD
+    ? colors.RED
+    : colors.YELLOW;
+
   return (
     <div className="progress" style={{ height, marginBottom: '15px' }}>
       <div
         className={`progress-bar`}
         style={{
-          backgroundColor:
-            decimalValue >= GREEN_THRESHOLD
-              ? colors.GREEN
-              : decimalValue >= ORANGE_THRESHOLD
-              ? colors.ORANGE
-              : decimalValue >= YELLOW_THRESHOLD
-              ? colors.RED
-              : colors.YELLOW,
+          backgroundColor,
           width: `${percentValueString}%`,
         }}
         role="progressbar"

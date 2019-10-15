@@ -40,7 +40,6 @@ import {
 } from '../../../../../helpers/utils';
 import {
   adminLayerColors,
-  ADMN0_PCODE,
   baseTilesetGeographicLevel,
   CountriesAdmin0,
   deselectedJurisdictionOpacity,
@@ -49,7 +48,6 @@ import {
   JurisdictionLevels,
   JurisdictionsByCountry,
   jurisdictionSelectionTooltipHint,
-  JurisdictionTypes,
   lineLayerConfig,
   partiallySelectedJurisdictionOpacity,
   Tileset,
@@ -87,6 +85,7 @@ import HeaderBreadcrumbs, {
 } from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../../components/page/Loading';
 
+import { ADMN0_PCODE, JurisdictionTypes } from '../../../../../configs/types';
 import './../../../../../styles/css/drill-down-table.css';
 import './style.css';
 
@@ -129,7 +128,8 @@ export const defaultIrsPlanProps: IrsPlanProps = {
 };
 
 /** Interface for breadcrumb item */
-interface TableCrumb {
+export interface TableCrumb {
+  // todo: shift this out of here
   label: string;
   id: string | null;
   active: boolean;
@@ -1692,7 +1692,7 @@ class IrsPlan extends React.Component<
    */
   private getDrilldownPlanTableProps(state: IrsPlanState): DrillDownProps<any> | null {
     const { filteredJurisdictionIds, newPlan, focusJurisdictionId, tableCrumbs } = state;
-    const { jurisdictionsById } = this.props;
+    const { isFinalizedPlan, jurisdictionsById, planId } = this.props;
     const filteredJurisdictions = filteredJurisdictionIds.map(j => jurisdictionsById[j]);
     const isFocusJurisdictionTopLevel = tableCrumbs[0] && focusJurisdictionId === tableCrumbs[0].id;
 

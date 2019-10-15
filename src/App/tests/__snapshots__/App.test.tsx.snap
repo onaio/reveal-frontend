@@ -136,7 +136,7 @@ exports[`App renders App correctly 1`] = `
                         className="navbar navbar-expand-md navbar-light"
                       >
                         <nav
-                          className="navbar navbar-expand-md navbar-light"
+                          className="navbar navbar-expand-md navbar-light header-logo-navbar"
                         >
                           <Link
                             className="navbar-brand"
@@ -357,21 +357,21 @@ exports[`App renders App correctly 1`] = `
                                                     activeClassName="active"
                                                     aria-current="page"
                                                     className="nav-link"
-                                                    to="/intervention/irs"
+                                                    to="/intervention/irs/drafts"
                                                   >
                                                     <Route
-                                                      path="\\\\/intervention\\\\/irs"
+                                                      path="\\\\/intervention\\\\/irs\\\\/drafts"
                                                     >
                                                       <Link
                                                         aria-current={null}
                                                         className="nav-link"
                                                         replace={false}
-                                                        to="/intervention/irs"
+                                                        to="/intervention/irs/drafts"
                                                       >
                                                         <a
                                                           aria-current={null}
                                                           className="nav-link"
-                                                          href="/intervention/irs"
+                                                          href="/intervention/irs/drafts"
                                                           onClick={[Function]}
                                                         >
                                                           IRS
@@ -478,6 +478,8 @@ exports[`App renders App correctly 1`] = `
                                                     </NavLink>
                                                   </button>
                                                 </DropdownItem>
+                                              </div>
+                                              <div>
                                                 <DropdownItem
                                                   tag="button"
                                                   toggle={true}
@@ -493,24 +495,24 @@ exports[`App renders App correctly 1`] = `
                                                       activeClassName="active"
                                                       aria-current="page"
                                                       className="nav-link"
-                                                      to="/focus-investigation/historical"
+                                                      to="/intervention/irs/report"
                                                     >
                                                       <Route
-                                                        path="\\\\/focus-investigation\\\\/historical"
+                                                        path="\\\\/intervention\\\\/irs\\\\/report"
                                                       >
                                                         <Link
                                                           aria-current={null}
                                                           className="nav-link"
                                                           replace={false}
-                                                          to="/focus-investigation/historical"
+                                                          to="/intervention/irs/report"
                                                         >
                                                           <a
                                                             aria-current={null}
                                                             className="nav-link"
-                                                            href="/focus-investigation/historical"
+                                                            href="/intervention/irs/report"
                                                             onClick={[Function]}
                                                           >
-                                                            Historical FI
+                                                            IRS Reporting
                                                           </a>
                                                         </Link>
                                                       </Route>
@@ -524,6 +526,74 @@ exports[`App renders App correctly 1`] = `
                                       </Manager>
                                     </Dropdown>
                                   </UncontrolledDropdown>
+                                  <NavItem
+                                    tag="li"
+                                  >
+                                    <li
+                                      className="nav-item"
+                                    >
+                                      <NavLink
+                                        activeClassName="active"
+                                        aria-current="page"
+                                        className="nav-link"
+                                        to="/teams"
+                                      >
+                                        <Route
+                                          path="\\\\/teams"
+                                        >
+                                          <Link
+                                            aria-current={null}
+                                            className="nav-link"
+                                            replace={false}
+                                            to="/teams"
+                                          >
+                                            <a
+                                              aria-current={null}
+                                              className="nav-link"
+                                              href="/teams"
+                                              onClick={[Function]}
+                                            >
+                                              Teams
+                                            </a>
+                                          </Link>
+                                        </Route>
+                                      </NavLink>
+                                    </li>
+                                  </NavItem>
+                                  <NavItem
+                                    tag="li"
+                                  >
+                                    <li
+                                      className="nav-item"
+                                    >
+                                      <NavLink
+                                        activeClassName="active"
+                                        aria-current="page"
+                                        className="nav-link"
+                                        to="/practitioners"
+                                      >
+                                        <Route
+                                          path="\\\\/practitioners"
+                                        >
+                                          <Link
+                                            aria-current={null}
+                                            className="nav-link"
+                                            replace={false}
+                                            to="/practitioners"
+                                          >
+                                            <a
+                                              aria-current={null}
+                                              className="nav-link"
+                                              href="/practitioners"
+                                              onClick={[Function]}
+                                            >
+                                              Practitioners
+                                            </a>
+                                          </Link>
+                                        </Route>
+                                      </NavLink>
+                                    </li>
+                                  </NavItem>
                                   <NavItem
                                     tag="li"
                                   >
@@ -642,10 +712,11 @@ exports[`App renders App correctly 1`] = `
             </withRouter(HeaderComponent)>
           </Connect(withRouter(HeaderComponent))>
           <Container
+            fluid={true}
             tag="div"
           >
             <div
-              className="container"
+              className="container-fluid"
             >
               <Row
                 id="main-page-row"
@@ -866,12 +937,12 @@ exports[`App renders App correctly 1`] = `
                                           className="col-md-6"
                                         >
                                           <Link
-                                            className="intervention-link"
+                                            className="home-link"
                                             replace={false}
                                             to="/intervention/irs"
                                           >
                                             <a
-                                              className="intervention-link"
+                                              className="home-link"
                                               href="/intervention/irs"
                                               onClick={[Function]}
                                             >
@@ -909,12 +980,12 @@ exports[`App renders App correctly 1`] = `
                                           className="col-md-6"
                                         >
                                           <Link
-                                            className="intervention-link"
+                                            className="home-link"
                                             replace={false}
                                             to="/focus-investigation"
                                           >
                                             <a
-                                              className="intervention-link"
+                                              className="home-link"
                                               href="/focus-investigation"
                                               onClick={[Function]}
                                             >
@@ -929,6 +1000,49 @@ exports[`App renders App correctly 1`] = `
                                                   onClick={[Function]}
                                                 >
                                                   Focus Investigation
+                                                </button>
+                                              </Button>
+                                            </a>
+                                          </Link>
+                                        </div>
+                                      </Col>
+                                      <Col
+                                        md="6"
+                                        tag="div"
+                                        widths={
+                                          Array [
+                                            "xs",
+                                            "sm",
+                                            "md",
+                                            "lg",
+                                            "xl",
+                                          ]
+                                        }
+                                      >
+                                        <div
+                                          className="col-md-6"
+                                        >
+                                          <Link
+                                            className="home-link"
+                                            replace={false}
+                                            to="/teams"
+                                          >
+                                            <a
+                                              className="home-link"
+                                              href="/teams"
+                                              onClick={[Function]}
+                                            >
+                                              <Button
+                                                className="btn-intervention btn-lg btn-block btn-outline-green"
+                                                color="outline"
+                                                tag="button"
+                                              >
+                                                <button
+                                                  aria-label={null}
+                                                  className="btn-intervention btn-lg btn-block btn-outline-green btn btn-outline"
+                                                  onClick={[Function]}
+                                                >
+                                                  Teams
                                                 </button>
                                               </Button>
                                             </a>

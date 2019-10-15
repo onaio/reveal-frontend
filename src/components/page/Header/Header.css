@@ -19,3 +19,7 @@
 .breadcrumb a {
   color: #007742;
 }
+
+.header-logo-navbar {
+  padding-left: 0;
+}
