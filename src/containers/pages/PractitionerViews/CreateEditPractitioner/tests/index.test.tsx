@@ -1,6 +1,5 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import { mount, shallow } from 'enzyme';
-import toJson from 'enzyme-to-json';
 import { createBrowserHistory } from 'history';
 import React from 'react';
 import Helmet from 'react-helmet';
