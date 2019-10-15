@@ -8,6 +8,7 @@ import * as Yup from 'yup';
 import {
   ACTIVE,
   NAME,
+  NAME_REGEX_ERROR,
   NO,
   OPENSRP_ORGANIZATION_ENDPOINT,
   ORGANIZATION_LABEL,
@@ -37,7 +38,9 @@ const defaultOrganizationType = {
 export const OrgSchema = Yup.object().shape({
   active: Yup.boolean(),
   identifier: Yup.string(),
-  name: Yup.string().required(REQUIRED),
+  name: Yup.string()
+    .matches(/^[a-zA-Z0-9]+([_ -]?[a-zA-Z0-9])*$/, NAME_REGEX_ERROR)
+    .required(REQUIRED),
 });
 
 /** interface for data fields for team's form */
