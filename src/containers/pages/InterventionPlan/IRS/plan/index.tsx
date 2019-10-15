@@ -1,6 +1,6 @@
 // this is the IRS Plan page component
 import { Actions } from 'gisida';
-import { keyBy } from 'lodash';
+import { keyBy, values } from 'lodash';
 import { EventData, LngLatBoundsLike, MapboxGeoJSONFeature } from 'mapbox-gl';
 import moment from 'moment';
 import { MouseEvent } from 'react';
@@ -14,7 +14,11 @@ import GeojsonExtent from '@mapbox/geojson-extent';
 import DrillDownTable, { DrillDownProps, DropDownCell } from '@onaio/drill-down-table';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 
-import { DATE_FORMAT, SUPERSET_JURISDICTIONS_DATA_SLICE } from '../../../../../configs/env';
+import {
+  DATE_FORMAT,
+  SUPERSET_JURISDICTIONS_DATA_SLICE,
+  SUPERSET_MAX_RECORDS,
+} from '../../../../../configs/env';
 import {
   HOME,
   HOME_URL,
@@ -23,9 +27,12 @@ import {
   MAP_ID,
   NEW_PLAN,
   OPENSRP_FIND_BY_PROPERTIES,
+  OPENSRP_GET_ASSIGNMENTS_ENDPOINT,
   OPENSRP_LOCATION,
+  OPENSRP_ORGANIZATION_ENDPOINT,
   OPENSRP_PARENT_ID,
   OPENSRP_PLANS,
+  OPENSRP_POST_ASSIGNMENTS_ENDPOINT,
   PARENTID,
 } from '../../../../../constants';
 import {
@@ -67,6 +74,18 @@ import jurisdictionReducer, {
   JurisdictionGeoJSON,
   reducerName as jurisdictionReducerName,
 } from '../../../../../store/ducks/jurisdictions';
+import assignmentReducer, {
+  Assignment,
+  fetchAssignments,
+  getAssignmentsArrayByPlanId,
+  reducerName as assignmentReducerName,
+} from '../../../../../store/ducks/opensrp/assignments';
+import organizationsReducer, {
+  fetchOrganizations,
+  getOrganizationsById,
+  Organization,
+  reducerName as organizationsReducerName,
+} from '../../../../../store/ducks/opensrp/organizations';
 import plansReducer, {
   extractPlanPayloadFromPlanRecord,
   extractPlanRecordResponseFromPlanPayload,
@@ -86,27 +105,37 @@ import HeaderBreadcrumbs, {
 import Loading from '../../../../../components/page/Loading';
 
 import { ADMN0_PCODE, JurisdictionTypes } from '../../../../../configs/types';
+import AssignTeamTableCell, { AssignTeamCellProps } from '../../../../forms/AssignTeamTableCell';
 import './../../../../../styles/css/drill-down-table.css';
 import './style.css';
 
 /** register the plans reducer */
 reducerRegistry.register(plansReducerName, plansReducer);
 reducerRegistry.register(jurisdictionReducerName, jurisdictionReducer);
+reducerRegistry.register(organizationsReducerName, organizationsReducer);
+reducerRegistry.register(assignmentReducerName, assignmentReducer);
 
 /** initialize OpenSRP API services */
 const OpenSrpLocationService = new OpenSRPService(OPENSRP_LOCATION);
 const OpenSrpPlanService = new OpenSRPService(OPENSRP_PLANS);
+const OpenSRPOrganizationService = new OpenSRPService(OPENSRP_ORGANIZATION_ENDPOINT);
+const OpenSrpAssignedService = new OpenSRPService(OPENSRP_GET_ASSIGNMENTS_ENDPOINT);
+const OpenSrpAssignmentService = new OpenSRPService(OPENSRP_POST_ASSIGNMENTS_ENDPOINT);
 
 /** IrsPlanProps - interface for IRS Plan page */
 export interface IrsPlanProps {
   allJurisdictionIds: string[];
+  assignmentsArray: Assignment[];
   fetchAllJurisdictionIdsActionCreator: typeof fetchAllJurisdictionIds;
+  fetchAssignmentsActionCreator: typeof fetchAssignments;
   fetchJurisdictionsActionCreator: typeof fetchJurisdictions;
+  fetchOrganizationsActionCreator: typeof fetchOrganizations;
   fetchPlansActionCreator: typeof fetchPlanRecords;
   isDraftPlan?: boolean;
   isFinalizedPlan?: boolean;
   jurisdictionsById: { [key: string]: Jurisdiction };
   loadedJurisdictionIds: string[];
+  organizationsById: { [key: string]: Organization };
   planById?: PlanRecord | null;
   planId: string | null;
   supersetService: typeof supersetFetch;
@@ -115,13 +144,17 @@ export interface IrsPlanProps {
 /** defaultIrsPlanProps - default props for IRS Plan page */
 export const defaultIrsPlanProps: IrsPlanProps = {
   allJurisdictionIds: [],
+  assignmentsArray: [],
   fetchAllJurisdictionIdsActionCreator: fetchAllJurisdictionIds,
+  fetchAssignmentsActionCreator: fetchAssignments,
   fetchJurisdictionsActionCreator: fetchJurisdictions,
+  fetchOrganizationsActionCreator: fetchOrganizations,
   fetchPlansActionCreator: fetchPlanRecords,
   isDraftPlan: false,
   isFinalizedPlan: false,
   jurisdictionsById: {},
   loadedJurisdictionIds: [],
+  organizationsById: {},
   planById: null,
   planId: null,
   supersetService: supersetFetch,
@@ -186,7 +219,9 @@ class IrsPlan extends React.Component<
 
   public async componentDidMount() {
     const {
+      fetchAssignmentsActionCreator,
       fetchJurisdictionsActionCreator,
+      fetchOrganizationsActionCreator,
       fetchPlansActionCreator,
       isDraftPlan,
       planId,
@@ -208,7 +243,24 @@ class IrsPlan extends React.Component<
       this.setState({ newPlan: planById });
     }
 
-    const otherJurisdictionSupersetParams = { row_limit: 10000 };
+    // Get assignments
+    if (planId) {
+      // fetch all organizations
+      OpenSRPOrganizationService.list()
+        .then((response: Organization[]) => {
+          // save all organizations to store
+          store.dispatch(fetchOrganizationsActionCreator(response));
+          // get all assignments
+          return this.getAllAssignments(planId, response, (nextAssignments: Assignment[]) =>
+            store.dispatch(fetchAssignmentsActionCreator(nextAssignments))
+          );
+        })
+        .catch((err: Error) => {
+          /** TODO - find something to do with error */
+        });
+    }
+
+    const otherJurisdictionSupersetParams = { row_limit: SUPERSET_MAX_RECORDS };
 
     // GET FULL JURISDICTION HIERARCHY
     await supersetService(SUPERSET_JURISDICTIONS_DATA_SLICE, otherJurisdictionSupersetParams).then(
@@ -537,6 +589,57 @@ class IrsPlan extends React.Component<
         )}
       </div>
     );
+  }
+
+  /** getAllAssignments - funciton to get all assignments for the plan from OpenSRP
+   * @param {string} planId the id of the plan for which to return assignments
+   * @param {Organization[]} organizations an array of Organizations by which to query assignments
+   * @param {(assignments:Assignment[])=>any} callback a function handling the resulting Assignments
+   * @returns {(assignments:Assignment[])=>any} the callback passing the Assignments as the first parameter
+   */
+  public getAllAssignments(
+    planId: string,
+    organizations: Organization[],
+    callback: (assignments: Assignment[]) => any
+  ) {
+    // define a reference of all organization ids
+    const organizationIds: string[] = organizations.map((o: Organization) => o.identifier);
+
+    // generate api calls for each organization id
+    const assignmentPromises = organizationIds.map(
+      (o: string) =>
+        new Promise((resolve, reject) => {
+          OpenSrpAssignedService.read(o, { plan: planId })
+            .then(j => resolve(j))
+            .catch(error => reject(error));
+        })
+    );
+
+    // make all the calls to get assignments per org for the plan
+    return Promise.all(assignmentPromises).then((results: any[]) => {
+      const nextAssignments: Assignment[] = [];
+      // step through all api results per organization
+      for (let o = 0; o < results.length; o += 1) {
+        const result = results[o];
+        if (Array.isArray(result)) {
+          // loop through all Assignments for this org in this plan
+          for (const assignment of result) {
+            if (assignment.planId === planId) {
+              // ingest assigned Assignments as assignable Assignments
+              nextAssignments.push({
+                fromDate: moment(assignment.fromDate).format(),
+                jurisdiction: assignment.jurisdictionId,
+                organization: organizationIds[o],
+                plan: planId,
+                toDate: moment(assignment.toDate).format(),
+              });
+            }
+          }
+        }
+      }
+      // save the Assignments to the store
+      return callback(nextAssignments);
+    });
   }
 
   // Jurisdiction Hierarchy Control
@@ -1692,7 +1795,7 @@ class IrsPlan extends React.Component<
    */
   private getDrilldownPlanTableProps(state: IrsPlanState): DrillDownProps<any> | null {
     const { filteredJurisdictionIds, newPlan, focusJurisdictionId, tableCrumbs } = state;
-    const { isFinalizedPlan, jurisdictionsById, planId } = this.props;
+    const { assignmentsArray, jurisdictionsById, planId } = this.props;
     const filteredJurisdictions = filteredJurisdictionIds.map(j => jurisdictionsById[j]);
     const isFocusJurisdictionTopLevel = tableCrumbs[0] && focusJurisdictionId === tableCrumbs[0].id;
 
@@ -1726,8 +1829,10 @@ class IrsPlan extends React.Component<
 
     // a simple interface for the the drilldown table data extending Jurisdiciton
     interface JurisdictionRow extends Jurisdiction {
+      assignedTeams: string[];
       isChildless: boolean;
       isPartiallySelected: boolean;
+      planId: string;
     }
 
     const columns = [
@@ -1792,20 +1897,29 @@ class IrsPlan extends React.Component<
           },
         ],
       },
+      {
+        Header: 'Team Assignment',
+        columns: [
+          {
+            Header: '',
+            accessor: (j: JurisdictionRow) => {
+              if (!j.isChildless) {
+                return '';
+              }
+              const cellProps = {
+                jurisdictionId: j.jurisdiction_id,
+                planId: j.planId,
+              } as AssignTeamCellProps;
+              return <AssignTeamTableCell {...cellProps} />;
+            },
+            id: 'teams_assigned',
+          },
+        ],
+      },
     ];
 
     if (this.props.isFinalizedPlan) {
       columns.shift();
-      columns.push({
-        Header: 'Teams Assigned',
-        columns: [
-          {
-            Header: '',
-            accessor: () => <span className="text-info">X Teams Assigned to Y Jurisdictions</span>,
-            id: 'teams_assigned',
-          },
-        ],
-      });
     }
 
     let showPagination: boolean = false;
@@ -1816,20 +1930,26 @@ class IrsPlan extends React.Component<
       showPagination = directDescendants.length > 20;
     }
 
+    const data: JurisdictionRow[] = filteredJurisdictions.map(
+      (j: Jurisdiction) =>
+        ({
+          ...j,
+          assignedTeams: assignmentsArray
+            .filter((a: Assignment) => a.jurisdiction === j.jurisdiction_id)
+            .map((a: Assignment) => a.organization),
+          id: j.jurisdiction_id,
+          isChildless: this.state.childlessChildrenIds.includes(j.jurisdiction_id),
+          isPartiallySelected:
+            !this.state.childlessChildrenIds.includes(j.jurisdiction_id) &&
+            this.getChildlessChildrenIds([jurisdictionsById[j.jurisdiction_id]]),
+          planId,
+        } as JurisdictionRow)
+    );
+
     const tableProps: DrillDownProps<any> = {
       CellComponent: DropDownCell,
       columns,
-      data: filteredJurisdictions.map(
-        (j: Jurisdiction) =>
-          ({
-            ...j,
-            id: j.jurisdiction_id,
-            isChildless: this.state.childlessChildrenIds.includes(j.jurisdiction_id),
-            isPartiallySelected:
-              !this.state.childlessChildrenIds.includes(j.jurisdiction_id) &&
-              this.getChildlessChildrenIds([jurisdictionsById[j.jurisdiction_id]]),
-          } as JurisdictionRow)
-      ),
+      data,
       identifierField: 'jurisdiction_id',
       linkerField: 'name',
       minRows: 0,
@@ -1905,7 +2025,7 @@ class IrsPlan extends React.Component<
   /** onSavePlanButtonClick - extracts PlanPayload from newPlan and PUSHs or PUTs to OpenSRP
    * @param {boolean} isFinal - determines if the Plan should be saved as a draft or as a finalized plan
    */
-  private onSavePlanButtonClick(isFinal: boolean = false) {
+  private async onSavePlanButtonClick(isFinal: boolean = false) {
     const { newPlan, childlessChildrenIds } = this.state;
     if (newPlan && newPlan.plan_jurisdictions_ids) {
       const now = moment(new Date());
@@ -1926,11 +2046,54 @@ class IrsPlan extends React.Component<
           : `${Number(newPlan.plan_version) + 1}`,
       };
 
+      const { assignmentsArray, organizationsById } = this.props;
+
       if (newPlanDraft.plan_jurisdictions_ids && newPlanDraft.plan_jurisdictions_ids.length) {
         const planPayload = extractPlanPayloadFromPlanRecord(newPlanDraft);
         if (planPayload) {
-          this.setState({ isSaveDraftDisabled: true }, () => {
-            // todo - handle Finalized plans!!
+          // create payload of assignments based on current store state
+          const nextAssignments: Assignment[] = assignmentsArray.map((a: Assignment) => ({
+            ...a,
+            fromDate: moment(start).format(),
+            toDate: moment(end).format(),
+          }));
+
+          // create temp reference to determine which assignments should be retired on server
+          const assignmentTeamIdsByJurisdictionId: { [key: string]: string[] } = {};
+          for (const assignment of nextAssignments) {
+            if (!assignmentTeamIdsByJurisdictionId[assignment.jurisdiction]) {
+              assignmentTeamIdsByJurisdictionId[assignment.jurisdiction] = [];
+            }
+            assignmentTeamIdsByJurisdictionId[assignment.jurisdiction].push(
+              assignment.organization
+            );
+          }
+
+          // fetch list of assignments from server which need to be retired
+          const retiredAssignments: Assignment[] = await this.getAllAssignments(
+            planPayload.identifier,
+            values(organizationsById),
+            (existingAssignments: Assignment[]) => {
+              const assignmentsToRetire: Assignment[] = [];
+              for (const result of existingAssignments) {
+                if (
+                  !(result.jurisdiction in assignmentTeamIdsByJurisdictionId) ||
+                  !assignmentTeamIdsByJurisdictionId[result.jurisdiction].includes(
+                    result.organization
+                  )
+                ) {
+                  assignmentsToRetire.push({
+                    ...result,
+                    fromDate: moment(0).format(),
+                    toDate: moment(100000000).format(),
+                  } as Assignment);
+                }
+              }
+              return assignmentsToRetire;
+            }
+          );
+
+          this.setState({ isSaveDraftDisabled: true }, async () => {
             if (this.props.isDraftPlan) {
               OpenSrpPlanService.update(planPayload)
                 .then(() => {
@@ -1953,6 +2116,27 @@ class IrsPlan extends React.Component<
                 .catch(() => {
                   this.setState({ isSaveDraftDisabled: false });
                 });
+
+              // POST to retire unassigned assignments
+              if (retiredAssignments.length) {
+                await OpenSrpAssignmentService.create([...retiredAssignments])
+                  .then(res => {
+                    // todo - hook in success notification
+                  })
+                  .catch(err => {
+                    // todo - handle errors
+                  });
+              }
+              // POST to create new/updated assignments
+              if (nextAssignments.length) {
+                await OpenSrpAssignmentService.create([...nextAssignments])
+                  .then(res => {
+                    // todo - hook in success notification
+                  })
+                  .catch(err => {
+                    // todo - handle errors
+                  });
+              }
             }
           });
         } else {
@@ -1990,14 +2174,18 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
   const jurisdictionsById = getJurisdictionsById(state);
   const allJurisdictionIds = getAllJurisdictionsIdArray(state);
   const loadedJurisdictionIds = getJurisdictionsIdArray(state);
+  const organizationsById = getOrganizationsById(state);
+  const assignmentsArray = getAssignmentsArrayByPlanId(state, planId);
 
   const props = {
     allJurisdictionIds,
+    assignmentsArray,
     isDraftPlan,
     isFinalizedPlan,
     isNewPlan,
     jurisdictionsById,
     loadedJurisdictionIds,
+    organizationsById,
     planById,
     planId,
     ...ownProps,
@@ -2008,7 +2196,9 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
 /** map props to actions that may be dispatched by component */
 const mapDispatchToProps = {
   fetchAllJurisdictionIdsActionCreator: fetchAllJurisdictionIds,
+  fetchAssignmentsActionCreator: fetchAssignments,
   fetchJurisdictionsActionCreator: fetchJurisdictions,
+  fetchOrganizationsActionCreator: fetchOrganizations,
   fetchPlansActionCreator: fetchPlanRecords,
 };
 

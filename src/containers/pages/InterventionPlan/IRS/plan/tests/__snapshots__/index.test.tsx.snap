@@ -69,8 +69,11 @@ exports[`containers/pages/IRS/plan renders IRS Plan page correctly 1`] = `
     >
       <IrsPlan
         allJurisdictionIds={Array []}
+        assignmentsArray={Array []}
         fetchAllJurisdictionIdsActionCreator={[Function]}
+        fetchAssignmentsActionCreator={[Function]}
         fetchJurisdictionsActionCreator={[Function]}
+        fetchOrganizationsActionCreator={[Function]}
         fetchPlansActionCreator={[Function]}
         history={
           Object {
@@ -108,6 +111,7 @@ exports[`containers/pages/IRS/plan renders IRS Plan page correctly 1`] = `
             "url": "/intervention/irs/plan/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
           }
         }
+        organizationsById={Object {}}
         planById={null}
         planId="ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
         supersetService={[Function]}
