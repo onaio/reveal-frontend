@@ -10,7 +10,7 @@ const OPENMRS_USERS_REQUEST_PAGE_SIZE = 100;
 
 // props interface to UserIdSelect component
 export interface Props {
-  onChange?: (value: string) => void;
+  onChangeHandler?: (value: Option) => void;
   serviceClass: typeof OpenSRPService;
 }
 
@@ -18,7 +18,7 @@ export const defaultProps = {
   serviceClass: OpenSRPService,
 };
 
-interface Option {
+export interface Option {
   label: string;
   value: string;
 }
@@ -30,7 +30,7 @@ interface OpenMRSUser {
 
 /** The UserIdSelect component */
 export const UserIdSelect: React.FC<Props> = props => {
-  const { onChange } = props;
+  const { onChangeHandler: onChange } = props;
   const [openMRSUsers, setOpenMRSUsers] = useState<OpenMRSUser[]>([]);
 
   /** calls the prop.onChange with only the userId
@@ -38,7 +38,7 @@ export const UserIdSelect: React.FC<Props> = props => {
    */
   const changeHandler = (option: ValueType<Option>) => {
     if (option !== null && option !== undefined && onChange) {
-      onChange((option! as Option).value);
+      onChange(option as Option);
     }
   };
 
@@ -50,31 +50,27 @@ export const UserIdSelect: React.FC<Props> = props => {
       start_index: currentUserIndex,
     };
     const serve = new service('user');
-    let responseSize: number = 0;
+    let responseSize: number = 100;
 
-    do {
-      serve.list(filterParams).then((response: { results: OpenMRSUser[] }) => {
-        const userData = response.results;
-        responseSize = userData.length;
-        filterParams = {
-          ...filterParams,
-          start_index: filterParams.start_index + responseSize,
-        };
-        // TODO - candidate for setState on unmounted component error})
-        setOpenMRSUsers(userData);
-      });
-    } while (responseSize === OPENMRS_USERS_REQUEST_PAGE_SIZE);
+    while (responseSize === OPENMRS_USERS_REQUEST_PAGE_SIZE) {
+      const userData = await serve.list(filterParams);
+      responseSize = userData.results.length;
+      filterParams = {
+        ...filterParams,
+        start_index: filterParams.start_index + responseSize,
+      };
+      setOpenMRSUsers(userData.results);
+    }
   };
 
   useEffect(() => {
     loadOpenMRSUsers();
-  });
+  }, []);
 
-  const options = openMRSUsers.map(user => ({ label: user.id, value: user.id }));
+  const options = openMRSUsers.map((user: any) => ({ label: user.display, value: user.uuid }));
 
   return (
     <Select
-      isMulti={true}
       cacheOptions={true}
       defaultOptions={true}
       options={options}
