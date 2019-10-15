@@ -28,6 +28,8 @@ const history = createBrowserHistory();
 describe('src/containers/pages/CreateEditOrganization', () => {
   beforeEach(() => {
     jest.resetAllMocks();
+    store.dispatch(practitionerDucks.removePractitionerRolesAction);
+    store.dispatch(practitionerDucks.removePractitionersAction);
   });
 
   it('renders EditTeamView without crashing', () => {
@@ -85,17 +87,17 @@ describe('src/containers/pages/CreateEditOrganization', () => {
     expect(breadcrumbWrapper.length).toEqual(1);
 
     // and the form?
-    const form = wrapper.find('OrganizationForm');
+    const form = wrapper.find('PractitionerForm');
     expect(form.length).toEqual(1);
 
     wrapper.unmount();
   });
 
   it('Calls the correct endpoints', async () => {
-    const mockList: any = jest.fn(async () => []);
+    const mockRead: any = jest.fn().mockImplementation(async () => fixtures.practitioner1);
     const serviceMock = jest.fn().mockImplementation(() => {
       return {
-        list: mockList,
+        read: mockRead,
       };
     });
     // loads a single practitioner,
@@ -122,9 +124,7 @@ describe('src/containers/pages/CreateEditOrganization', () => {
     await new Promise(resolve => setImmediate(resolve));
 
     expect(serviceMock).toHaveBeenCalled();
-    expect(serviceMock).toHaveBeenCalledWith(
-      `${OPENSRP_PRACTITIONER_ENDPOINT}/${fixtures.practitioner1.identifier}`
-    );
+    expect(serviceMock).toHaveBeenCalledWith(OPENSRP_PRACTITIONER_ENDPOINT);
   });
 
   it('works correctly with the store', async () => {
@@ -151,7 +151,7 @@ describe('src/containers/pages/CreateEditOrganization', () => {
       </Provider>
     );
 
-    const connectedProps = wrapper.find('CreateEditOrgView').props();
+    const connectedProps = wrapper.find('CreateEditPractitionerView').props();
     expect((connectedProps as any).practitioner).toEqual(fixtures.practitioner1);
   });
 });
@@ -182,35 +182,34 @@ it('calls selectors with the correct arguments', async () => {
 
   const state = {
     gatekeeper: { result: {}, success: null },
-    practitioners: {
+    practitioner: {
+      practitionerRoles: {},
       practitionersById: {
-        '4c506c98-d3a9-11e9-bb65-2a2ae2dbcce4': {
+        '437cc699-cfa7-414c-ba27-1668b6b517e6': {
           active: true,
-          id: 3,
-          identifier: '4c506c98-d3a9-11e9-bb65-2a2ae2dbcce4',
-          name: 'Demo Team',
+          identifier: '437cc699-cfa7-414c-ba27-1668b6b517e6',
+          name: 'Test User Lusaka',
+          userId: 'cad04f1e-9b05-4eac-92ce-4b38aa478644',
+          username: 'lusaka',
         },
-        'fcc19470-d599-11e9-bb65-2a2ae2dbcce4': {
+        'd7c9c000-e9b3-427a-890e-49c301aa48e6': {
           active: true,
-          id: 1,
-          identifier: 'fcc19470-d599-11e9-bb65-2a2ae2dbcce4',
-          name: 'The Luang',
-          type: {
-            coding: [
-              {
-                code: 'team',
-                display: 'Team',
-                system: 'http://terminology.hl7.org/CodeSystem/practitioner-type',
-              },
-            ],
-          },
+          identifier: 'd7c9c000-e9b3-427a-890e-49c301aa48e6',
+          name: 'Biophics Tester',
+          userId: '8df27310-c7ef-4bb2-b77f-3b9f4bd23713',
+          username: 'tak',
         },
+        p5id: {
+          active: true,
+          identifier: 'p5id',
+          name: 'tlv2_name',
+          userId: '8af3b7ce-e3fa-420f-8de6-e7c36e08f0bc',
+          username: 'tlv2',
+        },
+        undefined: [],
       },
     },
-    router: {
-      action: 'POP',
-      location: { hash: '', pathname: '/', search: '', state: undefined },
-    },
+    router: { action: 'POP', location: { hash: '', pathname: '/', search: '', state: undefined } },
     session: {
       authenticated: false,
       extraData: {},
@@ -220,10 +219,7 @@ it('calls selectors with the correct arguments', async () => {
 
   await new Promise(resolve => setImmediate(resolve));
 
-  expect(practitionerByIdMock.mock.calls[0]).toEqual([
-    state,
-    'fcc19470-d599-11e9-bb65-2a2ae2dbcce4',
-  ]);
+  expect(practitionerByIdMock.mock.calls[0]).toEqual([state, fixtures.practitioner1.identifier]);
 });
 
 describe('src/containers/practitionerViews/createEditview.createView', () => {
@@ -261,8 +257,8 @@ describe('src/containers/practitionerViews/createEditview.createView', () => {
     expect(breadcrumbWrapper.length).toEqual(1);
 
     // and the form?
-    // const form = wrapper.find('');
-    // expect(form.length).toEqual(1);
+    const form = wrapper.find('PractitionerForm');
+    expect(form.length).toEqual(1);
 
     wrapper.unmount();
   });
