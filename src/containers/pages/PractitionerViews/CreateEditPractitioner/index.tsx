@@ -101,7 +101,7 @@ const CreateEditPractitionerView = (props: PropsTypes) => {
       </Helmet>
       <HeaderBreadcrumb {...breadcrumbProps} />
       <Row>
-        <Col md={8}>
+        <Col md={6}>
           <PractitionerForm {...practitionerFormProps} />
         </Col>
       </Row>
