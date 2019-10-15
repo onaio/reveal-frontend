@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`/containers/forms/OrganizationSelect renders select options correctly: Organization Select Props 1`] = `
+Object {
+  "assignments": Array [],
+  "fetchAssignmentsAction": [Function],
+  "fetchOrganizationsAction": [Function],
+  "jurisdictionId": "outpost-number-one",
+  "name": "plan-assignment-form-outpost-number-one",
+  "organizations": Array [
+    Object {
+      "active": true,
+      "id": 1,
+      "identifier": "fcc19470-d599-11e9-bb65-2a2ae2dbcce4",
+      "name": "The Luang",
+      "type": Object {
+        "coding": Array [
+          Object {
+            "code": "team",
+            "display": "Team",
+            "system": "http://terminology.hl7.org/CodeSystem/organization-type",
+          },
+        ],
+      },
+    },
+    Object {
+      "active": true,
+      "id": 3,
+      "identifier": "4c506c98-d3a9-11e9-bb65-2a2ae2dbcce4",
+      "name": "Demo Team",
+    },
+  ],
+  "planId": "alpha",
+  "resetPlanAssignmentsAction": [Function],
+  "serviceClass": [Function],
+  "value": Array [],
+}
+`;
+
+exports[`/containers/forms/OrganizationSelect renders select options correctly: Organization Select ownProps 1`] = `
+Object {
+  "jurisdictionId": "outpost-number-one",
+  "name": "plan-assignment-form-outpost-number-one",
+  "planId": "alpha",
+}
+`;
