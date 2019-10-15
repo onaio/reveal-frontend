@@ -356,3 +356,17 @@ export const BLOOD_SCREENING_CODE = 'Blood Screening';
 export type BLOOD_SCREENING_CODE = typeof BLOOD_SCREENING_CODE;
 export const IRS_CODE = 'IRS';
 export type IRS_CODE = typeof IRS_CODE;
+
+// plans
+export const ROUTINE_PLAN = 'Routine';
+export type ROUTINE_PLAN = typeof ROUTINE_PLAN;
+export const CASE_TRIGGERED_PLAN = 'Case-triggered';
+export type CASE_TRIGGERED_PLAN = typeof CASE_TRIGGERED_PLAN;
+export const FI_PLAN_TYPE = 'FI';
+export type FI_PLAN_TYPE = typeof FI_PLAN_TYPE;
+export const IRS_PLAN_TYPE = 'IRS';
+export type IRS_PLAN_TYPE = typeof IRS_PLAN_TYPE;
+
+// error messages
+export const NAME_REGEX_ERROR = 'should include alphanumeric optionally separated by _ or -';
+export type NAME_REGEX_ERROR = typeof NAME_REGEX_ERROR;
