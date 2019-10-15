@@ -86,9 +86,7 @@ const PractitionerForm = (props: PractitionerFormProps) => {
         // tslint:disable-next-line: jsx-no-lambda
         onSubmit={(values, { setSubmitting }) => {
           if (editMode) {
-            const apiService = new props.serviceClass(
-              `${OPENSRP_PRACTITIONER_ENDPOINT}/${values.identifier}`
-            );
+            const apiService = new props.serviceClass(OPENSRP_PRACTITIONER_ENDPOINT);
             apiService
               .update(values)
               .then(() => {

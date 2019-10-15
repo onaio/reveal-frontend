@@ -33,7 +33,7 @@ export const loadPractitioner = async (
   const serve = new service(OPENSRP_PRACTITIONER_ENDPOINT);
   serve
     .read(practitionerId)
-    .then((response: Practitioner[]) => store.dispatch(fetchPractitionersCreator(response)))
+    .then((response: Practitioner) => store.dispatch(fetchPractitionersCreator([response])))
     .catch((err: Error) => {
       /** TODO - find something to do with error */
     });
