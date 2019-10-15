@@ -87,9 +87,11 @@ const CreateEditPractitionerView = (props: PropsTypes) => {
   };
 
   useEffect(() => {
-    let practitionerId = props.match.params.id;
-    practitionerId = practitionerId ? practitionerId : '';
-    loadPractitioner(practitionerId, serviceClass, fetchPractitionersCreator);
+    if (editing) {
+      let practitionerId = props.match.params.id;
+      practitionerId = practitionerId ? practitionerId : '';
+      loadPractitioner(practitionerId, serviceClass, fetchPractitionersCreator);
+    }
   }, []);
 
   return (
