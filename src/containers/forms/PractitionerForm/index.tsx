@@ -1,7 +1,7 @@
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import React, { useState } from 'react';
 import { Redirect } from 'react-router';
-import UserIdSelect from './UserIdSelect';
+import UserIdSelect, { Option } from './UserIdSelect';
 
 import moment from 'moment';
 import { Button, Label } from 'reactstrap';
@@ -144,29 +144,16 @@ const PractitionerForm = (props: PractitionerFormProps) => {
               />
             </FormGroup>
 
-            <FormGroup>
-              <Label>{USERNAME}</Label>
-              <Field
-                type="text"
-                name="username"
-                id="username"
-                disabled={disabledFields.includes('username')}
-                className={errors.username ? `form-control is-invalid` : `form-control`}
-              />
-              <ErrorMessage
-                component="small"
-                name="username"
-                className="form-text text-danger username-error"
-              />
-            </FormGroup>
-            {!editMode && (
+            {!editMode ? (
               <FormGroup>
                 <Label for="userId"> openMRS username </Label>
                 <Field
                   required={true}
                   component={UserIdSelect}
                   // tslint:disable-next-line: jsx-no-lambda
-                  onChangeHandler={(value: string) => setFieldValue('userId', value)}
+                  onChangeHandler={(option: Option) => {
+                    setFieldValue('username', option.label), setFieldValue('userId', option.value);
+                  }}
                   name="userId"
                   id="userId"
                   placeholder="Select username form openMRS"
@@ -179,6 +166,23 @@ const PractitionerForm = (props: PractitionerFormProps) => {
                   name="userId"
                   component="small"
                   className="form-text text-danger userId-error"
+                />
+              </FormGroup>
+            ) : (
+              <FormGroup>
+                <Label>{USERNAME}</Label>
+                <Field
+                  readOnly={true}
+                  type="text"
+                  name="username"
+                  id="username"
+                  disabled={disabledFields.includes('username')}
+                  className={errors.username ? `form-control is-invalid` : `form-control`}
+                />
+                <ErrorMessage
+                  component="small"
+                  name="username"
+                  className="form-text text-danger username-error"
                 />
               </FormGroup>
             )}
