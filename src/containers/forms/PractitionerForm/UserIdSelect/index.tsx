@@ -51,7 +51,12 @@ export const UserIdSelect: React.FC<Props> = props => {
     };
     const serve = new service('user');
     let responseSize: number = 100;
+    const allOpenMRSUsers = [];
 
+    /**while any request returns the maximum request size:.
+     * assume there is more data and make another request,
+     * else know we just got the last page and stop making further requests
+     */
     while (responseSize === OPENMRS_USERS_REQUEST_PAGE_SIZE) {
       const userData = await serve.list(filterParams);
       responseSize = userData.results.length;
@@ -59,8 +64,9 @@ export const UserIdSelect: React.FC<Props> = props => {
         ...filterParams,
         start_index: filterParams.start_index + responseSize,
       };
-      setOpenMRSUsers(userData.results);
+      allOpenMRSUsers.push(...userData.results);
     }
+    setOpenMRSUsers([...allOpenMRSUsers]);
   };
 
   useEffect(() => {
