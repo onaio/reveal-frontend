@@ -23,8 +23,9 @@ import {
   ASSIGN_PRACTITIONERS_URL,
   HOME,
   HOME_URL,
+  NO_PRACTITIONERS_ADDED_YET,
+  OPENSRP_ADD_PRACTITIONER_ROLE_ENDPOINT,
   OPENSRP_PRACTITIONER_ENDPOINT,
-  OPENSRP_PRACTITIONER_ROLE_ENDPOINT,
   ORGANIZATIONS_LABEL,
   ORGANIZATIONS_LIST_URL,
   PRACTITIONER_CODE,
@@ -159,7 +160,7 @@ const AssignPractitioner: React.FC<PropsTypes> = props => {
       organization: organization.identifier,
       practitioner: practitionerId,
     }));
-    const serve = new serviceClass(`${OPENSRP_PRACTITIONER_ROLE_ENDPOINT}/add`);
+    const serve = new serviceClass(OPENSRP_ADD_PRACTITIONER_ROLE_ENDPOINT);
     serve.create(jsonArrayPayload).then(() => {
       loadOrgPractitioners(organization.identifier, serviceClass, fetchPractitionerRolesCreator);
       // TODO - possible candidate for setting state on unmounted component
@@ -223,7 +224,7 @@ const AssignPractitioner: React.FC<PropsTypes> = props => {
         ))
       ) : (
         <section>
-          <p className="text-info"> No Practitioners Added yet</p>
+          <p className="text-info"> {NO_PRACTITIONERS_ADDED_YET} </p>
         </section>
       )}
       <hr />
