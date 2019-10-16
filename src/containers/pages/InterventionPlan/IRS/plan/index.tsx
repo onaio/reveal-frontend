@@ -1790,6 +1790,10 @@ class IrsPlan extends React.Component<
     const { newPlan, focusJurisdictionId, tableCrumbs } = state;
     const { assignmentsArray, isDraftPlan, jurisdictionsById, planId } = this.props;
 
+    if (!newPlan || !newPlan.plan_jurisdictions_ids) {
+      return null;
+    }
+
     // finalized plans should only show rows for jurisdictions selected in the plan
     const filteredJurisdictionIds = isDraftPlan
       ? state.filteredJurisdictionIds
@@ -1797,10 +1801,6 @@ class IrsPlan extends React.Component<
 
     const filteredJurisdictions = filteredJurisdictionIds.map(j => jurisdictionsById[j]);
     const isFocusJurisdictionTopLevel = tableCrumbs[0] && focusJurisdictionId === tableCrumbs[0].id;
-
-    if (!newPlan || !newPlan.plan_jurisdictions_ids) {
-      return null;
-    }
 
     const planJurisdictionIds = [...newPlan.plan_jurisdictions_ids];
     const onToggleAllCheckboxChange = (e: any) => {
