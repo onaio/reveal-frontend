@@ -1,12 +1,11 @@
 import { ErrorMessage, Field, Form, Formik } from 'formik';
+import moment from 'moment';
 import React, { useState } from 'react';
 import { Redirect } from 'react-router';
-import UserIdSelect, { Option } from './UserIdSelect';
-
-import moment from 'moment';
-import { Button, Label } from 'reactstrap';
 import { FormGroup } from 'reactstrap';
+import { Button, Label } from 'reactstrap';
 import * as Yup from 'yup';
+import { PRACTITIONER_FORM_NAMESPACE } from '../../../configs/env';
 import {
   ACTIVE,
   NAME,
@@ -23,9 +22,7 @@ import {
 } from '../../../constants';
 import { generateNameSpacedUUID } from '../../../helpers/utils';
 import { OpenSRPService } from '../../../services/opensrp';
-
-/** Namespace for generating uuids */
-const PractitionerFormNameSpace = '78295ac0-df73-11e9-a54b-dbf5e5b2d668';
+import UserIdSelect, { Option } from './UserIdSelect';
 
 export interface PractitionerFormFields {
   identifier: string;
@@ -104,7 +101,7 @@ const PractitionerForm = (props: PractitionerFormProps) => {
             const apiService = new props.serviceClass(OPENSRP_PRACTITIONER_ENDPOINT);
             const identifier = generateNameSpacedUUID(
               `${moment().toString()}`,
-              PractitionerFormNameSpace
+              PRACTITIONER_FORM_NAMESPACE
             );
             const valuesToSend = {
               ...values,

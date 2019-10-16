@@ -4,9 +4,8 @@
 import React, { useEffect, useState } from 'react';
 import Select from 'react-select';
 import { ValueType } from 'react-select/src/types';
+import { OPENMRS_USERS_REQUEST_PAGE_SIZE } from '../../../../configs/env';
 import { OpenSRPService } from '../../../../services/opensrp';
-
-const OPENMRS_USERS_REQUEST_PAGE_SIZE = 100;
 
 // props interface to UserIdSelect component
 export interface Props {
