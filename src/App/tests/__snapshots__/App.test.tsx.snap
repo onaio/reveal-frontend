@@ -422,6 +422,102 @@ exports[`App renders App correctly 1`] = `
                                               href="#"
                                               onClick={[Function]}
                                             >
+                                              Assigning
+                                            </a>
+                                          </DropdownToggle>
+                                          <DropdownMenu
+                                            flip={true}
+                                            right={true}
+                                            tag="div"
+                                          >
+                                            <div
+                                              aria-hidden={true}
+                                              className="dropdown-menu dropdown-menu-right"
+                                              role="menu"
+                                              tabIndex="-1"
+                                            >
+                                              <DropdownItem
+                                                tag="button"
+                                                toggle={true}
+                                              >
+                                                <button
+                                                  className="dropdown-item"
+                                                  onClick={[Function]}
+                                                  role="menuitem"
+                                                  tabIndex="0"
+                                                  type="button"
+                                                >
+                                                  <NavLink
+                                                    activeClassName="active"
+                                                    aria-current="page"
+                                                    className="nav-link"
+                                                    to="/intervention/irs/assign"
+                                                  >
+                                                    <Route
+                                                      path="\\\\/intervention\\\\/irs\\\\/assign"
+                                                    >
+                                                      <Link
+                                                        aria-current={null}
+                                                        className="nav-link"
+                                                        replace={false}
+                                                        to="/intervention/irs/assign"
+                                                      >
+                                                        <a
+                                                          aria-current={null}
+                                                          className="nav-link"
+                                                          href="/intervention/irs/assign"
+                                                          onClick={[Function]}
+                                                        >
+                                                          IRS
+                                                        </a>
+                                                      </Link>
+                                                    </Route>
+                                                  </NavLink>
+                                                </button>
+                                              </DropdownItem>
+                                            </div>
+                                          </DropdownMenu>
+                                        </li>
+                                      </Manager>
+                                    </Dropdown>
+                                  </UncontrolledDropdown>
+                                  <UncontrolledDropdown
+                                    inNavbar={true}
+                                    nav={true}
+                                  >
+                                    <Dropdown
+                                      active={false}
+                                      addonType={false}
+                                      direction="down"
+                                      inNavbar={true}
+                                      isOpen={false}
+                                      nav={true}
+                                      setActiveFromChild={false}
+                                      toggle={[Function]}
+                                    >
+                                      <Manager
+                                        className="dropdown nav-item"
+                                        onKeyDown={[Function]}
+                                        tag="li"
+                                      >
+                                        <li
+                                          className="dropdown nav-item"
+                                          onKeyDown={[Function]}
+                                        >
+                                          <DropdownToggle
+                                            aria-haspopup={true}
+                                            caret={true}
+                                            className="nav-link"
+                                            color="secondary"
+                                            nav={true}
+                                          >
+                                            <a
+                                              aria-expanded={false}
+                                              aria-haspopup={true}
+                                              className="nav-link dropdown-toggle nav-link"
+                                              href="#"
+                                              onClick={[Function]}
+                                            >
                                               Reporting
                                             </a>
                                           </DropdownToggle>
@@ -552,40 +648,6 @@ exports[`App renders App correctly 1`] = `
                                               onClick={[Function]}
                                             >
                                               Teams
-                                            </a>
-                                          </Link>
-                                        </Route>
-                                      </NavLink>
-                                    </li>
-                                  </NavItem>
-                                  <NavItem
-                                    tag="li"
-                                  >
-                                    <li
-                                      className="nav-item"
-                                    >
-                                      <NavLink
-                                        activeClassName="active"
-                                        aria-current="page"
-                                        className="nav-link"
-                                        to="/practitioners"
-                                      >
-                                        <Route
-                                          path="\\\\/practitioners"
-                                        >
-                                          <Link
-                                            aria-current={null}
-                                            className="nav-link"
-                                            replace={false}
-                                            to="/practitioners"
-                                          >
-                                            <a
-                                              aria-current={null}
-                                              className="nav-link"
-                                              href="/practitioners"
-                                              onClick={[Function]}
-                                            >
-                                              Practitioners
                                             </a>
                                           </Link>
                                         </Route>
