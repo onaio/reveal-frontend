@@ -106,8 +106,8 @@ const AssignPractitioner: React.FC<PropsTypes> = props => {
   };
 
   /** This sets the state selectedOptions
-   * @param {ValueType<SelectOption>} -  the so far selected options
-   * @param {ActionMeta} - information on the change event; custom react-select event
+   * @param {ValueType<SelectOption>} chosenOptions -  the so far selected options
+   * @param {ActionMeta} { action, removedValue, option } - on the change event; custom react-select event
    */
   const changeHandler = (
     chosenOptions: ValueType<SelectOption>,
