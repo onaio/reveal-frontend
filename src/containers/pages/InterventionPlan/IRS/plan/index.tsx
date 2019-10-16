@@ -1,6 +1,6 @@
 // this is the IRS Plan page component
 import { Actions } from 'gisida';
-import { keyBy, values } from 'lodash';
+import { keyBy, keys, values } from 'lodash';
 import { EventData, LngLatBoundsLike, MapboxGeoJSONFeature } from 'mapbox-gl';
 import moment from 'moment';
 import { MouseEvent } from 'react';
@@ -1796,6 +1796,7 @@ class IrsPlan extends React.Component<
   private getDrilldownPlanTableProps(state: IrsPlanState): DrillDownProps<any> | null {
     const {
       childlessChildrenIds,
+      childrenByParentId,
       filteredJurisdictionIds,
       newPlan,
       focusJurisdictionId,
@@ -1836,7 +1837,7 @@ class IrsPlan extends React.Component<
     // a simple interface for the the drilldown table data extending Jurisdiciton
     interface JurisdictionRow extends Jurisdiction {
       assignedTeams: string[];
-      childlessChildrenIds?: string[];
+      childrenByParentId: { [key: string]: string[] };
       descendantJurisdictionIds?: string[];
       isChildless: boolean;
       isPartiallySelected: boolean;
@@ -1912,7 +1913,7 @@ class IrsPlan extends React.Component<
             Header: '',
             accessor: (j: JurisdictionRow) => {
               const cellProps = {
-                childlessChildrenIds: j.childlessChildrenIds || [],
+                childrenByParentId: j.childrenByParentId || {},
                 descendantJurisdictionIds: j.descendantJurisdictionIds || [],
                 jurisdictionId: j.jurisdiction_id,
                 planId: j.planId,
@@ -1938,20 +1939,25 @@ class IrsPlan extends React.Component<
     }
 
     const data: JurisdictionRow[] = filteredJurisdictions.map((j: Jurisdiction) => {
+      // define list of all jurisdiction ids representing a location tree "branch"
       const descendantJurisdictionIds: string[] = this.getDescendantJurisdictionIds(
         [j.jurisdiction_id],
         jurisdictionsById
       );
-      const childlessChildren: string[] = descendantJurisdictionIds.filter((d: string) =>
-        childlessChildrenIds.includes(d)
-      );
+      // define a filtered version of this.state.childrenByParentId
+      const filteredChildrenByParentId: { [key: string]: string[] } = {};
+      for (const childId of descendantJurisdictionIds) {
+        if (childrenByParentId[childId]) {
+          filteredChildrenByParentId[childId] = childrenByParentId[childId];
+        }
+      }
 
       return {
         ...j,
         assignedTeams: assignmentsArray
           .filter((a: Assignment) => a.jurisdiction === j.jurisdiction_id)
           .map((a: Assignment) => a.organization),
-        childlessChildrenIds: childlessChildren,
+        childrenByParentId: filteredChildrenByParentId,
         descendantJurisdictionIds,
         id: j.jurisdiction_id,
         isChildless: this.state.childlessChildrenIds.includes(j.jurisdiction_id),

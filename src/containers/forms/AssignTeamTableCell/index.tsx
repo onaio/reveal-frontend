@@ -31,8 +31,8 @@ export interface AssignTeamCellProps {
   assignButtonProps?: AssignTeamButtonProps;
   assignPopover?: React.ElementType;
   assignPopoverProps?: AssignTeamPopoverProps;
-  childlessChildrenIds?: string[];
   descendantJurisdictionIds?: string[];
+  childrenByParentId?: { [key: string]: string[] };
   resetPlanAssignmentsAction: typeof resetPlanAssignments;
   jurisdictionId: string;
   organizationsById: { [key: string]: Organization } | null;
@@ -48,16 +48,28 @@ const AssignTeamTableCell = (props: AssignTeamCellProps) => {
     assignmentsArray,
     assignButton,
     assignPopover,
+    childrenByParentId,
+    descendantJurisdictionIds,
     resetPlanAssignmentsAction,
     jurisdictionId,
     organizationsById,
     planId,
   } = props;
   const [isActive, setIsActive] = useState<boolean>(false);
+  const isParentAssignment = !!childrenByParentId![jurisdictionId];
 
   // toggle isActive state on button click
   const onPlanAssignmentButtonClick = (e: MouseEvent) => {
     stopPropagationAndPreventDefault(e);
+    // const nextAssignments:Assignment[] = [];
+    if (isParentAssignment && descendantJurisdictionIds) {
+      // 1. loop through all decscendant jurisdictions to find "parent assignments"
+      // 2. generate "decscendant assignments" and push them to nextAssignments
+      // 3. skip subsequent existing "decscendant assignments" to overwrite them
+      // 4. dispatch nextAssignments to state
+      // for (let descendantId of descendantJurisdictionIds) {
+      // }
+    }
     setIsActive(!isActive);
   };
 
@@ -116,7 +128,10 @@ export { AssignTeamTableCell };
  *
  * @returns {AssignTeamCellProps} - ownProps and organizationsById
  */
-const mapStateToProps = (state: Partial<Store>, ownProps: any): AssignTeamCellProps => {
+const mapStateToProps = (
+  state: Partial<Store>,
+  ownProps: AssignTeamCellProps
+): AssignTeamCellProps => {
   const organizationsById = getOrganizationsById(state);
   const assignmentsArray = getAssignmentsArrayByPlanId(state, ownProps.planId);
   const assignments = assignmentsArray.filter(
