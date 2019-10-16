@@ -3,7 +3,7 @@
  */
 import { RouteParams } from '@onaio/gatekeeper/dist/types';
 import reducerRegistry from '@onaio/redux-reducer-registry';
-import { keyBy, values } from 'lodash';
+import { keyBy, throttle, values } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
@@ -133,7 +133,6 @@ const AssignPractitioner: React.FC<PropsTypes> = props => {
     }
   };
 
-  // TODO - This will initiate an api request for the same exact data each time someone types
   /** merges the practitioner records to be shown in the dropdown and returns them as  a promise
    * @param {string} typedChars - value of select if user types in on it
    */
@@ -147,6 +146,9 @@ const AssignPractitioner: React.FC<PropsTypes> = props => {
     };
     return filterOptions(typedChars, values(mergedOptions));
   };
+
+  /** throttles the getting promiseOptions by 1 second */
+  const throttledPromiseOptions = throttle(promiseOptions, 1000);
 
   /** handles clicking on the add button */
   const addHandler = () => {
@@ -237,7 +239,7 @@ const AssignPractitioner: React.FC<PropsTypes> = props => {
         isMulti={true}
         cacheOptions={true}
         defaultOptions={true}
-        loadOptions={promiseOptions}
+        loadOptions={throttledPromiseOptions}
         onChange={changeHandler}
         value={value}
       />
