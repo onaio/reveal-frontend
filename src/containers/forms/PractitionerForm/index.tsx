@@ -9,7 +9,6 @@ import { PRACTITIONER_FORM_NAMESPACE } from '../../../configs/env';
 import {
   ACTIVE,
   NAME,
-  NAME_REGEX_ERROR,
   NO,
   OPENSRP_PRACTITIONER_ENDPOINT,
   PRACTITIONER,
@@ -45,9 +44,7 @@ export const defaultInitialValues: PractitionerFormFields = {
 export const PractitionerSchema = Yup.object().shape({
   active: Yup.boolean(),
   identifier: Yup.string(),
-  name: Yup.string()
-    .matches(/^[a-zA-Z0-9]+([_ -]?[a-zA-Z0-9])*$/, NAME_REGEX_ERROR)
-    .required(REQUIRED),
+  name: Yup.string().required(REQUIRED),
   userId: Yup.string().required(REQUIRED),
   username: Yup.string().required(REQUIRED),
 });
