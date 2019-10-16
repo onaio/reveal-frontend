@@ -94,7 +94,6 @@ const AssignPractitioner: React.FC<PropsTypes> = props => {
     return <Loading />;
   }
 
-  // TODO - scenario where this request doesn't return all practitioners in a single query
   /** load all practitioners at least all of those returned
    * in a single call to Practitioners endpoint
    * @param {typeof OpenSRPService} service - the OpenSRPService
