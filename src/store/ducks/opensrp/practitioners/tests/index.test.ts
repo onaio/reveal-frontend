@@ -110,7 +110,6 @@ describe('reducers/practitioners.reducer.fetchPractitionerRolesAction', () => {
       practitionerRoles: {
         'd23f7350-d406-11e9-bb65-2a2ae2dbcce4': {
           '437cc699-cfd7-414c-ba27-1668b6b517e6': fixtures.practitioner6,
-          master: fixtures.practitioner5,
         },
       },
       practitionersById: generateKeyBy([
@@ -347,7 +346,7 @@ describe('reducers/practitioners.reducer- integration test', () => {
       .length;
     expect(org3Practs).toEqual(1);
 
-    // possibilities; adding practitioners to the same organization
+    // possibilities; adding practitioners to the same organization should override
     store.dispatch(
       fetchPractitionerRoles(
         [fixtures.practitioner5] as Practitioner[],
@@ -359,7 +358,7 @@ describe('reducers/practitioners.reducer- integration test', () => {
 
     org3Practs = getPractitionersByOrgId(store.getState(), fixtures.organization3.identifier)
       .length;
-    expect(org3Practs).toEqual(2);
+    expect(org3Practs).toEqual(1);
 
     // possibilities; adding same practitioners to a different organization
     store.dispatch(
@@ -396,6 +395,6 @@ describe('reducers/practitioners.reducer- integration test', () => {
       .length;
     expect(org1Practs).toEqual(1);
     expect(org2Practs).toEqual(1);
-    expect(org3Practs).toEqual(2);
+    expect(org3Practs).toEqual(1);
   });
 });

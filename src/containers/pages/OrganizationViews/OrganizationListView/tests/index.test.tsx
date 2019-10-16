@@ -53,7 +53,7 @@ describe('src/containers/TeamAssignment/TeamListview/', () => {
     );
     // page title
     const helmet = Helmet.peek();
-    expect(helmet.title).toEqual(`${ORGANIZATIONS_LABEL}(${fixtures.organizations.length})`);
+    expect(helmet.title).toEqual(`${ORGANIZATIONS_LABEL} (${fixtures.organizations.length})`);
 
     // should display a breadcrumb
     expect(toJson(wrapper.find('Breadcrumb'))).toMatchSnapshot('Breadcrumb');
@@ -105,37 +105,8 @@ describe('src/containers/TeamAssignment/TeamListview/', () => {
     expect(fetchedOrgsMock).toHaveBeenCalledWith(fixtures.organizations);
   });
 
-  xit('E2E flow for searching a team', () => {
-    // questions: how should search be done(probably initiate an api call)
-    const mock: any = jest.fn();
-    const props = {
-      history,
-      location: mock,
-      match: {
-        isExact: true,
-        params: { id: '' },
-        path: ORGANIZATIONS_LIST_URL,
-        url: ORGANIZATIONS_LIST_URL,
-      },
-      organizations: fixtures.organizations,
-    };
-    const wrapper = mount(
-      <Router history={history}>
-        <OrganizationListView {...props} />
-      </Router>
-    );
-
-    // simulating submitting from inlineSearchForm
-    const inlineSearchForm = wrapper.find('Form');
-    inlineSearchForm.simulate('submit');
-
-    // now what?
-    expect.assertions(999);
-    wrapper.unmount();
-  });
-
   it('TeamListView works correctly when connected to store', () => {
-    fetch.once(JSON.stringify([]));
+    fetch.once(JSON.stringify(fixtures.organizations));
     const mock: any = jest.fn();
     store.dispatch(fetchOrganizations(fixtures.organizations));
     const props = {
@@ -166,7 +137,7 @@ describe('src/containers/TeamAssignment/TeamListview/', () => {
     // spy on selectors
     const organizationsArrayMock = jest.spyOn(orgDucks, 'getOrganizationsArray');
 
-    fetch.once(JSON.stringify([]));
+    fetch.once(JSON.stringify(fixtures.organizations));
     const mock: any = jest.fn();
     store.dispatch(fetchOrganizations(fixtures.organizations));
     const props = {
@@ -179,7 +150,7 @@ describe('src/containers/TeamAssignment/TeamListview/', () => {
         url: ORGANIZATIONS_LIST_URL,
       },
     };
-    const wrapper = mount(
+    mount(
       <Provider store={store}>
         <Router history={history}>
           <ConnectedOrgsListView {...props} />

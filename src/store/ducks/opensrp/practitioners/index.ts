@@ -8,7 +8,7 @@ export const reducerName = 'practitioner';
 
 /** Interface for practitioner json object */
 export interface Practitioner {
-  active: true;
+  active: boolean;
   identifier: string;
   name: string;
   userId: string;
@@ -160,7 +160,6 @@ export default function reducer(
         practitionerRoles: {
           ...state.practitionerRoles,
           [organizationId]: {
-            ...state.practitionerRoles[organizationId],
             ...action.practitionerRoles[organizationId],
           },
         } as PractitionerRole & SeamlessImmutable.ImmutableObject<PractitionerRole>,

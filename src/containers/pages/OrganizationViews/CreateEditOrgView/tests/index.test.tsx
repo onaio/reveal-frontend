@@ -27,10 +27,11 @@ const history = createBrowserHistory();
 describe('src/containers/pages/CreateEditOrganization', () => {
   beforeEach(() => {
     jest.resetAllMocks();
+    store.dispatch(orgDucks.removeOrganizationsAction);
   });
 
   it('renders EditTeamView without crashing', () => {
-    fetch.once(JSON.stringify([]));
+    fetch.once(JSON.stringify(fixtures.organization1));
     const mock: any = jest.fn();
     const props = {
       history,
@@ -51,7 +52,7 @@ describe('src/containers/pages/CreateEditOrganization', () => {
   });
 
   it('renders EditTeamsView correctly', () => {
-    fetch.once(JSON.stringify([]));
+    fetch.once(JSON.stringify(fixtures.organization1));
     store.dispatch(orgDucks.fetchOrganizations([fixtures.organization1]));
     const mock: any = jest.fn();
     const props = {
@@ -91,10 +92,10 @@ describe('src/containers/pages/CreateEditOrganization', () => {
   });
 
   it('Calls the correct endpoints', async () => {
-    const mockList: any = jest.fn(async () => []);
+    const mockRead: any = jest.fn(async () => []);
     const serviceMock = jest.fn().mockImplementation(() => {
       return {
-        list: mockList,
+        read: mockRead,
       };
     });
     // loads a single organization,
@@ -121,14 +122,12 @@ describe('src/containers/pages/CreateEditOrganization', () => {
     await new Promise(resolve => setImmediate(resolve));
 
     expect(serviceMock).toHaveBeenCalled();
-    expect(serviceMock).toHaveBeenCalledWith(
-      `${OPENSRP_ORGANIZATION_ENDPOINT}/${fixtures.organization1.identifier}`
-    );
+    expect(serviceMock).toHaveBeenCalledWith(OPENSRP_ORGANIZATION_ENDPOINT);
   });
 
   it('works correctly with the store', async () => {
     // check after connection if props are as they should be
-    fetch.once(JSON.stringify([]));
+    fetch.once(JSON.stringify(fixtures.organization1));
     store.dispatch(orgDucks.fetchOrganizations(fixtures.organizations));
     const mock: any = jest.fn();
     const props = {
@@ -157,7 +156,7 @@ describe('src/containers/pages/CreateEditOrganization', () => {
 
 it('calls selectors with the correct arguments', async () => {
   const organizationByIdMock = jest.spyOn(orgDucks, 'getOrganizationById');
-  fetch.once(JSON.stringify([]));
+  fetch.once(JSON.stringify(fixtures.organization1));
   store.dispatch(orgDucks.fetchOrganizations(fixtures.organizations));
   const mock: any = jest.fn();
   const props = {

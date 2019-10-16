@@ -168,18 +168,37 @@ export const VIEW = 'view';
 export type VIEW = typeof VIEW;
 export const PRACTITIONER = 'Practitioner';
 export type PRACTITIONER = typeof PRACTITIONER;
+export const PRACTITIONERS = 'Practitioners';
+export type PRACTITIONERS = typeof PRACTITIONERS;
 export const ID = 'Id';
 export type ID = typeof ID;
 export const SAVE = 'Save';
 export type SAVE = typeof SAVE;
+export const CLEAR = 'Clear';
+export type CLEAR = typeof CLEAR;
 export const ACTIVE = 'Active';
 export type ACTIVE = typeof ACTIVE;
 export const ASSIGN = 'Assign';
 export type ASSIGN = typeof ASSIGN;
+export const NO_TEAMS_LOADED_MESSAGE = 'No teams loaded...';
+export type NO_TEAMS_LOADED_MESSAGE = typeof NO_TEAMS_LOADED_MESSAGE;
+export const SELECT_TEAMS_TO_ASSIGN = 'Select Teams to Assign';
+export type SELECT_TEAMS_TO_ASSIGN = typeof SELECT_TEAMS_TO_ASSIGN;
+export const ASSIGN_TEAMS = 'Assign Teams';
+export type ASSIGN_TEAMS = typeof ASSIGN_TEAMS;
+export const TEAMS_ASSIGNED = 'Teams Assigned';
+export type TEAMS_ASSIGNED = typeof TEAMS_ASSIGNED;
 export const ASSIGNMENT = 'Assignment';
 export type ASSIGNMENT = typeof ASSIGNMENT;
 export const YES = 'Yes';
 export type YES = typeof YES;
+export const EDIT = 'Edit';
+export type EDIT = typeof EDIT;
+export const ADD = 'Add';
+export type ADD = typeof ADD;
+export const REMOVE = 'Remove';
+export type REMOVE = typeof REMOVE;
+
 // TODO ? - do the below 2 belong here or in a settings file
 export const ORGANIZATION_LABEL = TEAM;
 export type ORGANIZATION_LABEL = typeof ORGANIZATION_LABEL;
@@ -260,6 +279,8 @@ export const EDIT_PRACTITIONER_URL = '/practitioners/edit';
 export type EDIT_PRACTITIONER_URL = typeof EDIT_PRACTITIONER_URL;
 export const ASSIGN_ORGANIZATION_URL = '/plans/teamAssignment';
 export type ASSIGN_ORGANIZATION_URL = typeof ASSIGN_ORGANIZATION_URL;
+export const PRACTITIONERS_LIST_URL = '/practitioners';
+export type PRACTITIONERS_LIST_URL = typeof PRACTITIONERS_LIST_URL;
 
 // OpenSRP API strings
 export const OPENSRP_PRACTITIONER_ENDPOINT = 'practitioner';
@@ -276,6 +297,14 @@ export const OPENSRP_PARENT_ID = 'parent_id';
 export type OPENSRP_PARENT_ID = typeof OPENSRP_PARENT_ID;
 export const OPENSRP_ORGANIZATION_ENDPOINT = 'organization';
 export type OPENSRP_ORGANIZATION_ENDPOINT = typeof OPENSRP_ORGANIZATION_ENDPOINT;
+export const OPENSRP_GET_ASSIGNMENTS_ENDPOINT = `${OPENSRP_ORGANIZATION_ENDPOINT}/assignedLocationsAndPlans`;
+export type OPENSRP_GET_ASSIGNMENTS_ENDPOINT = typeof OPENSRP_GET_ASSIGNMENTS_ENDPOINT;
+export const OPENSRP_POST_ASSIGNMENTS_ENDPOINT = `${OPENSRP_ORGANIZATION_ENDPOINT}/assignLocationsAndPlans`;
+export type OPENSRP_POST_ASSIGNMENTS_ENDPOINT = typeof OPENSRP_POST_ASSIGNMENTS_ENDPOINT;
+export const OPENSRP_ORG_PRACTITIONER_ENDPOINT = 'organization/practitioner';
+export type OPENSRP_ORG_PRACTITIONER_ENDPOINT = typeof OPENSRP_ORG_PRACTITIONER_ENDPOINT;
+export const OPENSRP_DEL_PRACTITIONER_ROLE_ENDPOINT = 'practitionerRole/deleteByPractitioner';
+export type OPENSRP_DEL_PRACTITIONER_ROLE_ENDPOINT = typeof OPENSRP_DEL_PRACTITIONER_ROLE_ENDPOINT;
 
 // container pages title names
 export const HOME_TITLE = `Home page`;

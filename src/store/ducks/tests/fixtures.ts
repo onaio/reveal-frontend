@@ -1,5 +1,6 @@
 import { clone, cloneDeep } from 'lodash';
 import { Organization } from '../opensrp/organizations';
+import { Practitioner } from '../opensrp/practitioners';
 import { InterventionType, Plan, PlanStatus } from '../plans';
 
 export const plan1: Plan = {
@@ -1229,21 +1230,21 @@ export const organization3: Organization = {
 
 export const organizations: Organization[] = [organization1, organization2];
 
-export const practitioner1 = {
+export const practitioner1: Practitioner = {
   active: true,
   identifier: 'p5id',
   name: 'tlv2_name',
   userId: '8af3b7ce-e3fa-420f-8de6-e7c36e08f0bc',
   username: 'tlv2',
 };
-export const practitioner2 = {
+export const practitioner2: Practitioner = {
   active: true,
   identifier: 'd7c9c000-e9b3-427a-890e-49c301aa48e6',
   name: 'Biophics Tester',
   userId: '8df27310-c7ef-4bb2-b77f-3b9f4bd23713',
   username: 'tak',
 };
-export const practitioner3 = {
+export const practitioner3: Practitioner = {
   active: true,
   identifier: '437cc699-cfa7-414c-ba27-1668b6b517e6',
   name: 'Test User Lusaka',
@@ -1251,21 +1252,21 @@ export const practitioner3 = {
   username: 'lusaka',
 };
 
-export const practitioner4 = {
+export const practitioner4: Practitioner = {
   active: true,
   identifier: 'healer',
   name: 'tlv2_name',
   userId: '84f3b7ce-e3fa-420f-8de6-e7c36e08f0bc',
   username: 'tlv2',
 };
-export const practitioner5 = {
+export const practitioner5: Practitioner = {
   active: true,
   identifier: 'master',
   name: 'Biophics Tester',
   userId: '8df26310-c7ef-4bb2-b77f-3b9f4bd23713',
   username: 'tak',
 };
-export const practitioner6 = {
+export const practitioner6: Practitioner = {
   active: true,
   identifier: '437cc699-cfd7-414c-ba27-1668b6b517e6',
   name: 'Test User Lusaka',
@@ -1273,5 +1274,35 @@ export const practitioner6 = {
   username: 'lusaka',
 };
 
-export const practitioners = [practitioner1, practitioner2, practitioner3];
-export const org3Practitioners = [practitioner4, practitioner5, practitioner6];
+export const assignment1 = {
+  fromDate: '2019-08-31T16:00:00-08:00',
+  jurisdiction: 'outpost-number-one',
+  organization: 'griff',
+  plan: 'alpha',
+  toDate: '2019-12-31T16:00:01-08:00',
+};
+export const assignment2 = {
+  fromDate: '2019-08-31T16:00:00-08:00',
+  jurisdiction: 'outpost-number-one',
+  organization: 'simons',
+  plan: 'alpha',
+  toDate: '2019-12-31T16:00:01-08:00',
+};
+export const assignment3 = {
+  fromDate: '2019-08-31T16:00:00-08:00',
+  jurisdiction: 'blue-base',
+  organization: 'tucker',
+  plan: 'alpha',
+  toDate: '2019-12-31T16:00:01-08:00',
+};
+export const assignment4 = {
+  fromDate: '2019-08-31T16:00:00-08:00',
+  jurisdiction: 'blue-base',
+  organization: 'caboose',
+  plan: 'alpha',
+  toDate: '2019-12-31T16:00:01-08:00',
+};
+export const assignments = [assignment1, assignment2, assignment3, assignment4];
+
+export const practitioners: Practitioner[] = [practitioner1, practitioner2, practitioner3];
+export const org3Practitioners: Practitioner[] = [practitioner4, practitioner5, practitioner6];
