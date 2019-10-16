@@ -24,14 +24,14 @@ const fetch = require('jest-fetch-mock');
 
 const history = createBrowserHistory();
 
-describe('src/containers/pages/CreateEditOrganization', () => {
+describe('src/containers/pages/CreateEditPractitioner', () => {
   beforeEach(() => {
     jest.resetAllMocks();
     store.dispatch(practitionerDucks.removePractitionerRolesAction);
     store.dispatch(practitionerDucks.removePractitionersAction);
   });
 
-  it('renders EditTeamView without crashing', () => {
+  it('renders CreateEditPractitionerView without crashing', () => {
     fetch.once(JSON.stringify([]));
     const mock: any = jest.fn();
     const props = {
@@ -52,7 +52,7 @@ describe('src/containers/pages/CreateEditOrganization', () => {
     );
   });
 
-  it('renders EditTeamsView correctly', () => {
+  it('renders CreateEditPractitionerView correctly', () => {
     fetch.once(JSON.stringify([]));
     store.dispatch(practitionerDucks.fetchPractitioners([fixtures.practitioner1]));
     const mock: any = jest.fn();
@@ -222,7 +222,7 @@ it('calls selectors with the correct arguments', async () => {
 });
 
 describe('src/containers/practitionerViews/createEditview.createView', () => {
-  it('renders page correctly on create Organization view', () => {
+  it('renders page correctly on create Practitioner view', () => {
     // see it renders form when practitioner is null
     const mock: any = jest.fn();
     const props = {
