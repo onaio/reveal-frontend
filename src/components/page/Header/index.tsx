@@ -25,6 +25,8 @@ import {
   WEBSITE_NAME,
 } from '../../../configs/env';
 import {
+  ASSIGN_IRS_PLAN_URL,
+  ASSIGNING,
   FI_URL,
   HOME,
   INTERVENTION_IRS_DRAFTS_URL,
@@ -122,6 +124,32 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
                       <DropdownItem>
                         <NavLink
                           to={INTERVENTION_IRS_DRAFTS_URL}
+                          className="nav-link"
+                          activeClassName="active"
+                        >
+                          {IRS_TITLE}
+                        </NavLink>
+                      </DropdownItem>
+                    )}
+                  </DropdownMenu>
+                </UncontrolledDropdown>
+              )}
+
+              {ENABLE_IRS && (
+                // ASSIGN_IRS_PLAN_URL
+                <UncontrolledDropdown nav={true} inNavbar={true}>
+                  <DropdownToggle
+                    nav={true}
+                    caret={true}
+                    className={path === ASSIGN_IRS_PLAN_URL ? 'nav-link active' : 'nav-link'}
+                  >
+                    {ASSIGNING}
+                  </DropdownToggle>
+                  <DropdownMenu right={true}>
+                    {ENABLE_IRS && (
+                      <DropdownItem>
+                        <NavLink
+                          to={ASSIGN_IRS_PLAN_URL}
                           className="nav-link"
                           activeClassName="active"
                         >
