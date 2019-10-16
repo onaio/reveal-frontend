@@ -9,7 +9,7 @@ import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import AsyncSelect from 'react-select/async';
-import { OptionsType } from 'react-select/src/types';
+import { OptionsType, ValueType } from 'react-select/src/types';
 import { Button } from 'reactstrap';
 import { Store } from 'redux';
 import HeaderBreadcrumb, {
@@ -104,12 +104,14 @@ const AssignPractitioner: React.FC<PropsTypes> = props => {
     return formatOptions(allPractitioners);
   };
 
-  // TODO - Hack in this: typings for the changeHandler function.
   /** This sets the state selectedOptions
    * @param {ValueType<SelectOption>} -  the so far selected options
    * @param {ActionMeta} - information on the change event; custom react-select event
    */
-  const changeHandler = (chosenOptions: any, { action, removedValue, option }: any) => {
+  const changeHandler = (
+    chosenOptions: ValueType<SelectOption>,
+    { action, removedValue, option }: any
+  ) => {
     if (!chosenOptions) {
       return;
     }
@@ -127,7 +129,7 @@ const AssignPractitioner: React.FC<PropsTypes> = props => {
         setSelectedOptions([...selectedOptions, option]);
         break;
       case 'clear':
-        chosenOptions = chosenOptions.filter((v: any) => !v.isFixed);
+        chosenOptions = (chosenOptions as SelectOption[]).filter((v: any) => !v.isFixed);
     }
   };
 
