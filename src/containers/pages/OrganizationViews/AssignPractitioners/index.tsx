@@ -163,8 +163,11 @@ const AssignPractitioner: React.FC<PropsTypes> = props => {
     const serve = new serviceClass(OPENSRP_ADD_PRACTITIONER_ROLE_ENDPOINT);
     serve.create(jsonArrayPayload).then(() => {
       loadOrgPractitioners(organization.identifier, serviceClass, fetchPractitionerRolesCreator);
-      // TODO - possible candidate for setting state on unmounted component
-      setSelectedOptions([]);
+      try {
+        setSelectedOptions([]);
+      } catch (err) {
+        /** expected error: setState on unmounted component */
+      }
     });
   };
 
