@@ -1787,8 +1787,14 @@ class IrsPlan extends React.Component<
    * @returns {DrillDownProps<any>|null} - compatible object for DrillDownTable props or null
    */
   private getDrilldownPlanTableProps(state: IrsPlanState): DrillDownProps<any> | null {
-    const { filteredJurisdictionIds, newPlan, focusJurisdictionId, tableCrumbs } = state;
-    const { assignmentsArray, jurisdictionsById, planId } = this.props;
+    const { newPlan, focusJurisdictionId, tableCrumbs } = state;
+    const { assignmentsArray, isDraftPlan, jurisdictionsById, planId } = this.props;
+
+    // finalized plans should only show rows for jurisdictions selected in the plan
+    const filteredJurisdictionIds = isDraftPlan
+      ? state.filteredJurisdictionIds
+      : state.newPlan!.plan_jurisdictions_ids || state.filteredJurisdictionIds;
+
     const filteredJurisdictions = filteredJurisdictionIds.map(j => jurisdictionsById[j]);
     const isFocusJurisdictionTopLevel = tableCrumbs[0] && focusJurisdictionId === tableCrumbs[0].id;
 
