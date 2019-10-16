@@ -115,6 +115,39 @@ Object {
             color="secondary"
             nav={true}
           >
+            Assigning
+          </DropdownToggle>
+          <DropdownMenu
+            flip={true}
+            right={true}
+            tag="div"
+          >
+            <DropdownItem
+              tag="button"
+              toggle={true}
+            >
+              <NavLink
+                activeClassName="active"
+                aria-current="page"
+                className="nav-link"
+                to="/intervention/irs/assign"
+              >
+                IRS
+              </NavLink>
+            </DropdownItem>
+          </DropdownMenu>
+        </UncontrolledDropdown>
+        <UncontrolledDropdown
+          inNavbar={true}
+          nav={true}
+        >
+          <DropdownToggle
+            aria-haspopup={true}
+            caret={true}
+            className="nav-link"
+            color="secondary"
+            nav={true}
+          >
             Reporting
           </DropdownToggle>
           <DropdownMenu
@@ -164,18 +197,6 @@ Object {
             to="/teams"
           >
             Teams
-          </NavLink>
-        </NavItem>
-        <NavItem
-          tag="li"
-        >
-          <NavLink
-            activeClassName="active"
-            aria-current="page"
-            className="nav-link"
-            to="/practitioners"
-          >
-            Practitioners
           </NavLink>
         </NavItem>
         <NavItem
@@ -341,6 +362,39 @@ Object {
             color="secondary"
             nav={true}
           >
+            Assigning
+          </DropdownToggle>
+          <DropdownMenu
+            flip={true}
+            right={true}
+            tag="div"
+          >
+            <DropdownItem
+              tag="button"
+              toggle={true}
+            >
+              <NavLink
+                activeClassName="active"
+                aria-current="page"
+                className="nav-link"
+                to="/intervention/irs/assign"
+              >
+                IRS
+              </NavLink>
+            </DropdownItem>
+          </DropdownMenu>
+        </UncontrolledDropdown>
+        <UncontrolledDropdown
+          inNavbar={true}
+          nav={true}
+        >
+          <DropdownToggle
+            aria-haspopup={true}
+            caret={true}
+            className="nav-link"
+            color="secondary"
+            nav={true}
+          >
             Reporting
           </DropdownToggle>
           <DropdownMenu
@@ -390,18 +444,6 @@ Object {
             to="/teams"
           >
             Teams
-          </NavLink>
-        </NavItem>
-        <NavItem
-          tag="li"
-        >
-          <NavLink
-            activeClassName="active"
-            aria-current="page"
-            className="nav-link"
-            to="/practitioners"
-          >
-            Practitioners
           </NavLink>
         </NavItem>
         <NavItem
