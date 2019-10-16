@@ -31,6 +31,8 @@ export interface AssignTeamCellProps {
   assignButtonProps?: AssignTeamButtonProps;
   assignPopover?: React.ElementType;
   assignPopoverProps?: AssignTeamPopoverProps;
+  childlessChildrenIds?: string[];
+  descendantJurisdictionIds?: string[];
   resetPlanAssignmentsAction: typeof resetPlanAssignments;
   jurisdictionId: string;
   organizationsById: { [key: string]: Organization } | null;
