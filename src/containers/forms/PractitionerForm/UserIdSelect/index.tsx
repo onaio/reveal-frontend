@@ -13,10 +13,12 @@ export interface Props {
   serviceClass: typeof OpenSRPService;
 }
 
+/** default props for UserIdSelect component */
 export const defaultProps = {
   serviceClass: OpenSRPService,
 };
 
+/** interface for each select dropdown option */
 export interface Option {
   label: string;
   value: string;
