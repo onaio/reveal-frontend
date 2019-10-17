@@ -213,6 +213,8 @@ export const SAVE_ASSIGNMENTS = 'Save Assignments';
 export type SAVE_ASSIGNMENTS = typeof SAVE_ASSIGNMENTS;
 export const NO_PLANS_LOADED_MESSAGE = 'No plans found...';
 export type NO_PLANS_LOADED_MESSAGE = typeof NO_PLANS_LOADED_MESSAGE;
+export const SELECT_USERNAME = 'Select username';
+export type SELECT_USERNAME = typeof SELECT_USERNAME;
 
 // TODO ? - do the below 2 belong here or in a settings file
 export const ORGANIZATION_LABEL = TEAM;

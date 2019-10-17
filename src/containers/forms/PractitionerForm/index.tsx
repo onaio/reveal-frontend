@@ -16,6 +16,7 @@ import {
   REQUIRED,
   SAVE,
   SAVING,
+  SELECT_USERNAME,
   USERNAME,
   YES,
 } from '../../../constants';
@@ -141,7 +142,7 @@ const PractitionerForm = (props: PractitionerFormProps) => {
 
             {!editMode ? (
               <FormGroup>
-                <Label for="userId"> openMRS username </Label>
+                <Label for="userId"> {USERNAME} </Label>
                 <Field
                   required={true}
                   component={UserIdSelect}
@@ -151,8 +152,8 @@ const PractitionerForm = (props: PractitionerFormProps) => {
                   }}
                   name="userId"
                   id="userId"
-                  placeholder="Select username form openMRS"
-                  aria-label="Select username form openMRS"
+                  placeholder={SELECT_USERNAME}
+                  aria-label={SELECT_USERNAME}
                   disabled={disabledFields.includes('userId') || editMode}
                   className={errors.userId ? 'is-invalid async-select' : 'async-select'}
                 />
