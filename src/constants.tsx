@@ -200,6 +200,12 @@ export const ADD = 'Add';
 export type ADD = typeof ADD;
 export const REMOVE = 'Remove';
 export type REMOVE = typeof REMOVE;
+export const SAVE_AS_DRAFT = 'Save as a Draft';
+export type SAVE_AS_DRAFT = typeof SAVE_AS_DRAFT;
+export const SAVE_FINALIZED_PLAN = 'Save Finalized Plan';
+export type SAVE_FINALIZED_PLAN = typeof SAVE_FINALIZED_PLAN;
+export const SAVE_ASSIGNMENTS = 'Save Assignments';
+export type SAVE_ASSIGNMENTS = typeof SAVE_ASSIGNMENTS;
 
 // TODO ? - do the below 2 belong here or in a settings file
 export const ORGANIZATION_LABEL = TEAM;

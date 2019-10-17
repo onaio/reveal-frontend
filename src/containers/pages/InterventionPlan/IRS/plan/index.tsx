@@ -34,6 +34,9 @@ import {
   OPENSRP_PLANS,
   OPENSRP_POST_ASSIGNMENTS_ENDPOINT,
   PARENTID,
+  SAVE_AS_DRAFT,
+  SAVE_ASSIGNMENTS,
+  SAVE_FINALIZED_PLAN,
 } from '../../../../../constants';
 import {
   FlexObject,
@@ -501,7 +504,7 @@ class IrsPlan extends React.Component<
               outline={isDraftPlan}
               size="sm"
             >
-              Save as a Draft
+              {SAVE_AS_DRAFT}
             </Button>
           )}
           <Button
@@ -511,7 +514,7 @@ class IrsPlan extends React.Component<
             onClick={onSaveFinalizedPlanButtonClick}
             size="sm"
           >
-            Save Finalized Plan
+            {isDraftPlan ? SAVE_FINALIZED_PLAN : SAVE_ASSIGNMENTS}
           </Button>
         </Col>
       </Row>
