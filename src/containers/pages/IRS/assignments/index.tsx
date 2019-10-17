@@ -8,7 +8,6 @@ import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
-import { SUPERSET_IRS_REPORTING_PLANS_SLICE } from '../../../../configs/env';
 import { useContextCodes } from '../../../../configs/settings';
 import {
   ASSIGN_IRS_PLAN_URL,
@@ -20,11 +19,7 @@ import {
   REPORT_IRS_PLAN_URL,
 } from '../../../../constants';
 import { OpenSRPService } from '../../../../services/opensrp';
-import supersetFetch from '../../../../services/superset';
 import IRSPlansReducer, {
-  fetchIRSPlans,
-  getIRSPlansArray,
-  IRSPlan,
   reducerName as IRSPlansReducerName,
 } from '../../../../store/ducks/generic/plans';
 import {
@@ -167,7 +162,6 @@ interface DispatchedStateProps {
 
 /** map state to props */
 const mapStateToProps = (state: Partial<Store>): DispatchedStateProps => {
-  const planDefinitionsArray = getIRSPlansArray(state);
   const planStatus = [PlanStatus.ACTIVE];
   const plans = getPlanRecordsArray(state, InterventionType.IRS, planStatus);
   return {
