@@ -449,7 +449,11 @@ class IrsPlan extends React.Component<
     }
 
     // update state after fetching plan from OpenSRP
-    if (!newPlan && planById && planById.plan_jurisdictions_ids) {
+    // update state after saving plan to store
+    if (
+      (!newPlan && planById && planById.plan_jurisdictions_ids) ||
+      (newPlan && planById && newPlan.plan_version !== planById.plan_version)
+    ) {
       this.setState({
         newPlan: planById,
       });
@@ -2075,6 +2079,18 @@ class IrsPlan extends React.Component<
                 })
                 .catch(() => {
                   this.setState({ isSaveDraftDisabled: false });
+                })
+                .finally(() => {
+                  // update state with new plan definition
+                  const { plan_id, plan_status } = newPlanDraft;
+                  const planRecord = extractPlanRecordResponseFromPlanPayload(planPayload);
+                  if (planRecord) {
+                    this.props.fetchPlansActionCreator([planRecord]);
+                    if (plan_status === PlanStatus.ACTIVE) {
+                      // redirect to assingment page
+                      this.props.history.push(`${ASSIGN_IRS_PLAN_URL}/${plan_id}`);
+                    }
+                  }
                 });
             } else {
               // save plan-jurisdiction-organization assignments
