@@ -20,6 +20,7 @@ import {
   SUPERSET_MAX_RECORDS,
 } from '../../../../../configs/env';
 import {
+  ASSIGN_IRS_PLAN_URL,
   DRAFT,
   HOME,
   HOME_URL,
@@ -2013,7 +2014,7 @@ class IrsPlan extends React.Component<
     };
     const basePage = {
       label: IRS_TITLE,
-      url: INTERVENTION_IRS_URL,
+      url: isDraftPlan ? INTERVENTION_IRS_URL : ASSIGN_IRS_PLAN_URL,
     };
     const urlPathAppend =
       (isFinalizedPlan && `${DRAFT}/${planId}`) || (isDraftPlan && `${DRAFT}/${planId}`) || NEW;
