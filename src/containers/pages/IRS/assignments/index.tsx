@@ -168,7 +168,7 @@ interface DispatchedStateProps {
 /** map state to props */
 const mapStateToProps = (state: Partial<Store>): DispatchedStateProps => {
   const planDefinitionsArray = getIRSPlansArray(state);
-  const planStatus = [PlanStatus.DRAFT, PlanStatus.ACTIVE];
+  const planStatus = [PlanStatus.ACTIVE];
   const plans = getPlanRecordsArray(state, InterventionType.IRS, planStatus);
   return {
     plans,
