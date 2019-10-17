@@ -168,6 +168,7 @@ const SingleOrganizationView = (props: SingleOrgViewPropsType) => {
   };
 
   const assignPractitionersButton = {
+    classNameProp: 'focus-investigation btn btn-primary float-right mt-5 mr-3',
     text: `${ASSIGN} ${PRACTITIONER}`,
     to: `${ASSIGN_PRACTITIONERS_URL}/${organization!.identifier}`,
   };

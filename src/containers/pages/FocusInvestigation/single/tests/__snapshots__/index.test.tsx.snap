@@ -1152,17 +1152,17 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
                         className="col-6"
                       >
                         <LinkAsButton
-                          classNameProp="focus-investigation btn btn-primary float-right mt-5 mr-3"
+                          classNameProp="focus-investigation btn btn-primary float-right mt-5"
                           text="Add Focus Investigation"
                           to="/plans/new"
                         >
                           <Link
-                            className="focus-investigation btn btn-primary float-right mt-5 mr-3"
+                            className="focus-investigation btn btn-primary float-right mt-5"
                             replace={false}
                             to="/plans/new"
                           >
                             <a
-                              className="focus-investigation btn btn-primary float-right mt-5 mr-3"
+                              className="focus-investigation btn btn-primary float-right mt-5"
                               href="/plans/new"
                               onClick={[Function]}
                             >
@@ -7370,17 +7370,17 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
                     className="col-6"
                   >
                     <LinkAsButton
-                      classNameProp="focus-investigation btn btn-primary float-right mt-5 mr-3"
+                      classNameProp="focus-investigation btn btn-primary float-right mt-5"
                       text="Add Focus Investigation"
                       to="/plans/new"
                     >
                       <Link
-                        className="focus-investigation btn btn-primary float-right mt-5 mr-3"
+                        className="focus-investigation btn btn-primary float-right mt-5"
                         replace={false}
                         to="/plans/new"
                       >
                         <a
-                          className="focus-investigation btn btn-primary float-right mt-5 mr-3"
+                          className="focus-investigation btn btn-primary float-right mt-5"
                           href="/plans/new"
                           onClick={[Function]}
                         >
@@ -10828,17 +10828,17 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
                     className="col-6"
                   >
                     <LinkAsButton
-                      classNameProp="focus-investigation btn btn-primary float-right mt-5 mr-3"
+                      classNameProp="focus-investigation btn btn-primary float-right mt-5"
                       text="Add Focus Investigation"
                       to="/plans/new"
                     >
                       <Link
-                        className="focus-investigation btn btn-primary float-right mt-5 mr-3"
+                        className="focus-investigation btn btn-primary float-right mt-5"
                         replace={false}
                         to="/plans/new"
                       >
                         <a
-                          className="focus-investigation btn btn-primary float-right mt-5 mr-3"
+                          className="focus-investigation btn btn-primary float-right mt-5"
                           href="/plans/new"
                           onClick={[Function]}
                         >
