@@ -41,6 +41,6 @@ describe('/containers/forms/AssignTeamTableCell', () => {
     expect(toJson(wrapper.find('button#plan-assignment-outpost-number-one'))).toMatchSnapshot(
       'AssignTeamButton'
     );
-    expect(toJson(wrapper.find('span.assignment-count-text'))).toMatchSnapshot('Team Count Text');
+    expect(toJson(wrapper.find('span.assignment-label'))).toMatchSnapshot('Team Count Text');
   });
 });
