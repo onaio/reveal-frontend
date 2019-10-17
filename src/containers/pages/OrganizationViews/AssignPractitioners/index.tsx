@@ -74,7 +74,7 @@ const defaultAssignPractitionerProps: AssignPractitionerProps = {
 export type PropsTypes = AssignPractitionerProps & RouteComponentProps<RouteParams>;
 
 /** AssignPractitioner component */
-const AssignPractitioner: React.FC<PropsTypes> = props => {
+const AssignPractitioner = (props: PropsTypes) => {
   const {
     serviceClass,
     fetchOrganizationsCreator,
