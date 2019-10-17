@@ -2020,7 +2020,7 @@ class IrsPlan extends React.Component<
       url: isDraftPlan ? INTERVENTION_IRS_URL : ASSIGN_IRS_PLAN_URL,
     };
     const urlPathAppend =
-      (isFinalizedPlan && `${DRAFT}/${planId}`) || (isDraftPlan && `${DRAFT}/${planId}`) || NEW;
+      (isFinalizedPlan && `${planId}`) || (isDraftPlan && `${DRAFT}/${planId}`) || NEW;
     const breadCrumbProps: BreadCrumbProps = {
       currentPage: {
         label: pageLabel,
@@ -2060,50 +2060,9 @@ class IrsPlan extends React.Component<
       if (newPlanDraft.plan_jurisdictions_ids && newPlanDraft.plan_jurisdictions_ids.length) {
         const planPayload = extractPlanPayloadFromPlanRecord(newPlanDraft);
         if (planPayload) {
-          // create payload of assignments based on current store state
-          const nextAssignments: Assignment[] = assignmentsArray.map((a: Assignment) => ({
-            ...a,
-            fromDate: moment(start).format(),
-            toDate: moment(end).format(),
-          }));
-
-          // create temp reference to determine which assignments should be retired on server
-          const assignmentTeamIdsByJurisdictionId: { [key: string]: string[] } = {};
-          for (const assignment of nextAssignments) {
-            if (!assignmentTeamIdsByJurisdictionId[assignment.jurisdiction]) {
-              assignmentTeamIdsByJurisdictionId[assignment.jurisdiction] = [];
-            }
-            assignmentTeamIdsByJurisdictionId[assignment.jurisdiction].push(
-              assignment.organization
-            );
-          }
-
-          // fetch list of assignments from server which need to be retired
-          const retiredAssignments: Assignment[] = await this.getAllAssignments(
-            planPayload.identifier,
-            values(organizationsById),
-            (existingAssignments: Assignment[]) => {
-              const assignmentsToRetire: Assignment[] = [];
-              for (const result of existingAssignments) {
-                if (
-                  !(result.jurisdiction in assignmentTeamIdsByJurisdictionId) ||
-                  !assignmentTeamIdsByJurisdictionId[result.jurisdiction].includes(
-                    result.organization
-                  )
-                ) {
-                  assignmentsToRetire.push({
-                    ...result,
-                    fromDate: moment(0).format(),
-                    toDate: moment(100000000).format(),
-                  } as Assignment);
-                }
-              }
-              return assignmentsToRetire;
-            }
-          );
-
           this.setState({ isSaveDraftDisabled: true }, async () => {
             if (this.props.isDraftPlan) {
+              // Save planDefinition
               OpenSrpPlanService.update(planPayload)
                 .then(() => {
                   this.setState({
@@ -2117,6 +2076,50 @@ class IrsPlan extends React.Component<
                 .catch(() => {
                   this.setState({ isSaveDraftDisabled: false });
                 });
+            } else {
+              // save plan-jurisdiction-organization assignments
+              // todo - move this into './helpers.ts'
+              // create payload of assignments based on current store state
+              const nextAssignments: Assignment[] = assignmentsArray.map((a: Assignment) => ({
+                ...a,
+                fromDate: moment(start).format(),
+                toDate: moment(end).format(),
+              }));
+
+              // create temp reference to determine which assignments should be retired on server
+              const assignmentTeamIdsByJurisdictionId: { [key: string]: string[] } = {};
+              for (const assignment of nextAssignments) {
+                if (!assignmentTeamIdsByJurisdictionId[assignment.jurisdiction]) {
+                  assignmentTeamIdsByJurisdictionId[assignment.jurisdiction] = [];
+                }
+                assignmentTeamIdsByJurisdictionId[assignment.jurisdiction].push(
+                  assignment.organization
+                );
+              }
+
+              // fetch list of assignments from server which need to be retired
+              const retiredAssignments: Assignment[] = await this.getAllAssignments(
+                planPayload.identifier,
+                values(organizationsById),
+                (existingAssignments: Assignment[]) => {
+                  const assignmentsToRetire: Assignment[] = [];
+                  for (const result of existingAssignments) {
+                    if (
+                      !(result.jurisdiction in assignmentTeamIdsByJurisdictionId) ||
+                      !assignmentTeamIdsByJurisdictionId[result.jurisdiction].includes(
+                        result.organization
+                      )
+                    ) {
+                      assignmentsToRetire.push({
+                        ...result,
+                        fromDate: moment(0).format(),
+                        toDate: moment(100000000).format(),
+                      } as Assignment);
+                    }
+                  }
+                  return assignmentsToRetire;
+                }
+              );
 
               // POST to retire unassigned assignments
               if (retiredAssignments.length) {
@@ -2138,6 +2141,7 @@ class IrsPlan extends React.Component<
                     // todo - handle errors
                   });
               }
+              this.setState({ isSaveDraftDisabled: false });
             }
           });
         } else {
