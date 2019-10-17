@@ -286,6 +286,9 @@ class IrsPlan extends React.Component<
           this.props.planById.plan_jurisdictions_ids.length
         ) {
           const jurisdictionsById = keyBy(jurisdictionsArray, j => j.jurisdiction_id);
+          const planJurisdictionsIds = this.props.planById.plan_jurisdictions_ids.filter(
+            j => !!jurisdictionsById[j]
+          );
 
           // build and store decendant jurisdictions, jurisdictionsArray MUST be sorted by geographic_level from high to low
           const childrenByParentId: { [key: string]: string[] } = {};
@@ -305,7 +308,7 @@ class IrsPlan extends React.Component<
 
           // define level 0 Jurisdiction as parentlessParent
           const ancestorIds = this.getAncestorJurisdictionIds(
-            [...this.props.planById.plan_jurisdictions_ids],
+            [...planJurisdictionsIds],
             jurisdictionsArray
           );
           const parentlessParent = ancestorIds.find(
