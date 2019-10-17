@@ -1899,14 +1899,18 @@ class IrsPlan extends React.Component<
           },
         ],
       },
-      {
+    ];
+
+    if (this.props.isFinalizedPlan) {
+      columns.shift();
+      columns.push({
         Header: 'Team Assignment',
         columns: [
           {
             Header: '',
             accessor: (j: JurisdictionRow) => {
               if (!j.isChildless) {
-                return '';
+                return <span />;
               }
               const cellProps = {
                 jurisdictionId: j.jurisdiction_id,
@@ -1917,11 +1921,7 @@ class IrsPlan extends React.Component<
             id: 'teams_assigned',
           },
         ],
-      },
-    ];
-
-    if (this.props.isFinalizedPlan) {
-      columns.shift();
+      });
     }
 
     let showPagination: boolean = false;
