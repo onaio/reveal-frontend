@@ -20,11 +20,14 @@ import {
   SUPERSET_MAX_RECORDS,
 } from '../../../../../configs/env';
 import {
+  DRAFT,
   HOME,
   HOME_URL,
   INTERVENTION_IRS_URL,
+  IRS_TITLE,
   JURISDICTION_ID,
   MAP_ID,
+  NEW,
   NEW_PLAN,
   OPENSRP_FIND_BY_PROPERTIES,
   OPENSRP_GET_ASSIGNMENTS_ENDPOINT,
@@ -2009,11 +2012,11 @@ class IrsPlan extends React.Component<
       url: HOME_URL,
     };
     const basePage = {
-      label: 'IRS',
+      label: IRS_TITLE,
       url: INTERVENTION_IRS_URL,
     };
     const urlPathAppend =
-      (isFinalizedPlan && `draft/${planId}`) || (isDraftPlan && `draft/${planId}`) || 'new';
+      (isFinalizedPlan && `${DRAFT}/${planId}`) || (isDraftPlan && `${DRAFT}/${planId}`) || NEW;
     const breadCrumbProps: BreadCrumbProps = {
       currentPage: {
         label: pageLabel,
