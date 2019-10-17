@@ -8,8 +8,8 @@ import { Helmet } from 'react-helmet';
 import { Route, Switch } from 'react-router';
 import { Col, Container, Row } from 'reactstrap';
 import Loading from '../components/page/Loading';
-import { DISABLE_LOGIN_PROTECTION } from '../configs/env';
 import { WEBSITE_NAME } from '../configs/env';
+import { DISABLE_LOGIN_PROTECTION } from '../configs/env';
 import { providers } from '../configs/settings';
 import {
   ACTIVE_IRS_PLAN_URL,
@@ -55,6 +55,7 @@ import ConnectedIRSAssignmentPlansList from '../containers/pages/IRS/assignments
 import ConnectedJurisdictionReport from '../containers/pages/IRS/JurisdictionsReport';
 import ConnectedIRSReportingMap from '../containers/pages/IRS/Map';
 import ConnectedIRSPlansList from '../containers/pages/IRS/plans';
+import ConnectedAssignPractitioner from '../containers/pages/OrganizationViews/AssignPractitioners';
 import ConnectedCreateEditOrgView from '../containers/pages/OrganizationViews/CreateEditOrgView';
 import ConnectedOrgsListView from '../containers/pages/OrganizationViews/OrganizationListView';
 import ConnectedSingleOrgView from '../containers/pages/OrganizationViews/SingleOrganizationView';
@@ -67,7 +68,6 @@ library.add(faMap);
 library.add(faUser);
 library.add(faExternalLinkSquareAlt);
 
-import ConnectedAssignPractitioner from '../containers/pages/OrganizationViews/AssignPractitioners';
 import './App.css';
 
 /** Main App component */
