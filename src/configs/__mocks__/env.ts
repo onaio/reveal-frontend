@@ -10,6 +10,9 @@ export type SUPERSET_PLANS_SLICE = typeof SUPERSET_PLANS_SLICE;
 export const SUPERSET_MAX_RECORDS = 3000;
 export type SUPERSET_MAX_RECORDS = typeof SUPERSET_MAX_RECORDS;
 
+export const GISIDA_TIMEOUT = 3000;
+export type GISIDA_TIMEOUT = typeof GISIDA_TIMEOUT;
+
 export const GISIDA_MAPBOX_TOKEN = 'hunter2';
 export type GISIDA_MAPBOX_TOKEN = typeof GISIDA_MAPBOX_TOKEN;
 

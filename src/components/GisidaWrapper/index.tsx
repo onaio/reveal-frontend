@@ -7,11 +7,7 @@ import { FillPaint, LinePaint, Map as mbMap, Style, SymbolPaint } from 'mapbox-g
 import * as React from 'react';
 import { GREY } from '../../colors';
 import Loading from '../../components/page/Loading/index';
-import {
-  GISIDA_MAPBOX_TOKEN,
-  GISIDA_ONADATA_API_TOKEN,
-  SUPERSET_MAX_RECORDS,
-} from '../../configs/env';
+import { GISIDA_MAPBOX_TOKEN, GISIDA_ONADATA_API_TOKEN, GISIDA_TIMEOUT } from '../../configs/env';
 import {
   circleLayerConfig,
   fillLayerConfig,
@@ -184,7 +180,7 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
           // Dirty work around! Arbitrary delay to allow style load before adding layers
           setTimeout(() => {
             this.initMap(null, null);
-          }, SUPERSET_MAX_RECORDS);
+          }, GISIDA_TIMEOUT);
         }
       );
     } else if (!this.state.locations) {
@@ -212,7 +208,7 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
           // Dirty work around! Arbitrary delay to allow style load before adding layers
           setTimeout(() => {
             this.initMap(null, null);
-          }, SUPERSET_MAX_RECORDS);
+          }, GISIDA_TIMEOUT);
         }
       );
     }
@@ -261,7 +257,7 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
           // Dirty work around! Arbitrary delay to allow style load before adding layers
           setTimeout(() => {
             this.initMap(null, null);
-          }, SUPERSET_MAX_RECORDS);
+          }, GISIDA_TIMEOUT);
         }
       );
     }
