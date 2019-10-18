@@ -156,6 +156,10 @@ export type ONADATA_USER_URL = typeof ONADATA_USER_URL;
 export const ONADATA_OAUTH_STATE = process.env.REACT_APP_ONADATA_OAUTH_STATE || 'onadata';
 export type ONADATA_OAUTH_STATE = typeof ONADATA_OAUTH_STATE;
 
+/** The max number of records to get from Superset API endpoint */
+export const GISIDA_TIMEOUT = Number(process.env.REACT_APP_GISIDA_TIMEOUT) || 3000;
+export type GISIDA_TIMEOUT = typeof GISIDA_TIMEOUT;
+
 export const GISIDA_MAPBOX_TOKEN = process.env.REACT_APP_GISIDA_MAPBOX_TOKEN || '';
 export type GISIDA_MAPBOX_TOKEN = typeof GISIDA_MAPBOX_TOKEN;
 
