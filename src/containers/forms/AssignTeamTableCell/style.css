@@ -1,0 +1,7 @@
+.assignment-cell .assignment-label {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: calc(100% - 120px);
+  display: inline-block;
+  overflow: hidden;
+}

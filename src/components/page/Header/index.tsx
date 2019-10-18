@@ -25,7 +25,11 @@ import {
   WEBSITE_NAME,
 } from '../../../configs/env';
 import {
+  ADMIN,
+  ASSIGN,
+  ASSIGN_IRS_PLAN_URL,
   FI_URL,
+  FOCUS_INVESTIGATION,
   HOME,
   INTERVENTION_IRS_DRAFTS_URL,
   INTERVENTION_IRS_URL,
@@ -33,15 +37,15 @@ import {
   IRS_TITLE,
   LOGIN_URL,
   LOGOUT_URL,
+  MONITOR,
   ORGANIZATIONS_LABEL,
   ORGANIZATIONS_LIST_URL,
   PLAN_LIST_URL,
-  PLANNING,
+  PLAN_TITLE,
   PLANS,
   PRACTITIONERS,
   PRACTITIONERS_LIST_URL,
   REPORT_IRS_PLAN_URL,
-  REPORTING,
 } from '../../../constants';
 import './Header.css';
 
@@ -110,7 +114,7 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
                     caret={true}
                     className={path === INTERVENTION_IRS_URL ? 'nav-link active' : 'nav-link'}
                   >
-                    {PLANNING}
+                    {PLAN_TITLE}
                   </DropdownToggle>
                   <DropdownMenu right={true}>
                     <DropdownItem>
@@ -133,6 +137,32 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
                 </UncontrolledDropdown>
               )}
 
+              {ENABLE_IRS && (
+                // ASSIGN_IRS_PLAN_URL
+                <UncontrolledDropdown nav={true} inNavbar={true}>
+                  <DropdownToggle
+                    nav={true}
+                    caret={true}
+                    className={path === ASSIGN_IRS_PLAN_URL ? 'nav-link active' : 'nav-link'}
+                  >
+                    {ASSIGN}
+                  </DropdownToggle>
+                  <DropdownMenu right={true}>
+                    {ENABLE_IRS && (
+                      <DropdownItem>
+                        <NavLink
+                          to={ASSIGN_IRS_PLAN_URL}
+                          className="nav-link"
+                          activeClassName="active"
+                        >
+                          {IRS_TITLE}
+                        </NavLink>
+                      </DropdownItem>
+                    )}
+                  </DropdownMenu>
+                </UncontrolledDropdown>
+              )}
+
               {(ENABLE_IRS || ENABLE_FI) && (
                 <UncontrolledDropdown nav={true} inNavbar={true}>
                   <DropdownToggle
@@ -140,14 +170,14 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
                     caret={true}
                     className={path === FI_URL ? 'nav-link active' : 'nav-link'}
                   >
-                    {REPORTING}
+                    {MONITOR}
                   </DropdownToggle>
                   <DropdownMenu right={true}>
                     {ENABLE_FI && (
                       <div>
                         <DropdownItem>
                           <NavLink to={FI_URL} className="nav-link" activeClassName="active">
-                            Focus Investigation
+                            {FOCUS_INVESTIGATION}
                           </NavLink>
                         </DropdownItem>
                       </div>
@@ -168,36 +198,46 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
                   </DropdownMenu>
                 </UncontrolledDropdown>
               )}
-              {ENABLE_TEAMS && (
-                <NavItem>
-                  <NavLink
-                    to={`${ORGANIZATIONS_LIST_URL}`}
-                    className="nav-link"
-                    activeClassName="active"
-                  >
-                    {ORGANIZATIONS_LABEL}
-                  </NavLink>
-                </NavItem>
-              )}
-              {ENABLE_PRACTITIONERS && (
-                <NavItem>
-                  <NavLink
-                    to={`${PRACTITIONERS_LIST_URL}`}
-                    className="nav-link"
-                    activeClassName="active"
-                  >
-                    {PRACTITIONERS}
-                  </NavLink>
-                </NavItem>
+
+              {(ENABLE_TEAMS || ENABLE_PRACTITIONERS || ENABLE_USERS) && (
+                <UncontrolledDropdown nav={true} inNavbar={true}>
+                  <DropdownToggle nav={true} caret={true} className={'nav-link'}>
+                    {ADMIN}
+                  </DropdownToggle>
+                  <DropdownMenu right={true}>
+                    {ENABLE_TEAMS && (
+                      <DropdownItem>
+                        <NavLink
+                          to={`${ORGANIZATIONS_LIST_URL}`}
+                          className="nav-link"
+                          activeClassName="active"
+                        >
+                          {ORGANIZATIONS_LABEL}
+                        </NavLink>
+                      </DropdownItem>
+                    )}
+                    {ENABLE_PRACTITIONERS && (
+                      <DropdownItem>
+                        <NavLink
+                          to={`${PRACTITIONERS_LIST_URL}`}
+                          className="nav-link"
+                          activeClassName="active"
+                        >
+                          {PRACTITIONERS}
+                        </NavLink>
+                      </DropdownItem>
+                    )}
+                    {ENABLE_USERS && (
+                      <DropdownItem>
+                        <NavLink to="/404" className="nav-link" activeClassName="active">
+                          Users
+                        </NavLink>
+                      </DropdownItem>
+                    )}
+                  </DropdownMenu>
+                </UncontrolledDropdown>
               )}
 
-              {ENABLE_USERS && (
-                <NavItem>
-                  <NavLink to="/404" className="nav-link" activeClassName="active">
-                    Users
-                  </NavLink>
-                </NavItem>
-              )}
               {ENABLE_ABOUT && (
                 <NavItem>
                   <NavLink to="/404" className="nav-link" activeClassName="active">

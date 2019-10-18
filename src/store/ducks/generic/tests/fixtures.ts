@@ -1,3 +1,5 @@
+import { InterventionType, PlanRecord, PlanStatus } from '../../plans';
+
 export const plans = [
   {
     jurisdiction_root_parent_ids: ['f45b9380-c970-4dd1-8533-9e95ab12f128'],
@@ -32,6 +34,48 @@ export const plans = [
     plan_intervention_type: 'IRS',
     plan_name: 'Berg-Namibia-2019',
     plan_status: 'active',
+    plan_title: 'Berg Namibia 2019',
+    plan_version: '2',
+  },
+];
+
+export const planRecords: PlanRecord[] = [
+  {
+    id: '727c3d40-e118-564a-b231-aac633e6abce',
+    plan_date: '2019-09-05',
+    plan_effective_period_end: '2019-09-25',
+    plan_effective_period_start: '2019-09-05',
+    plan_fi_reason: '',
+    plan_fi_status: '',
+    plan_id: '727c3d40-e118-564a-b231-aac633e6abce',
+    plan_intervention_type: 'IRS' as InterventionType.IRS,
+    plan_status: 'retired' as PlanStatus.RETIRED,
+    plan_title: 'IRS 2019-09-05 TEST',
+    plan_version: '2',
+  },
+  {
+    id: '02e358ed-87fe-5720-8782-0afe28cb7e8c',
+    plan_date: '2019-08-30',
+    plan_effective_period_end: '2019-09-14',
+    plan_effective_period_start: '2019-08-30',
+    plan_fi_reason: '',
+    plan_fi_status: '',
+    plan_id: '02e358ed-87fe-5720-8782-0afe28cb7e8c',
+    plan_intervention_type: 'IRS' as InterventionType.IRS,
+    plan_status: 'active' as PlanStatus.RETIRED,
+    plan_title: 'IRS 2019-08-30m',
+    plan_version: '2',
+  },
+  {
+    id: 'c6e59ec1-8c54-5fdf-acf3-ee3692983f38',
+    plan_date: '2019-08-29',
+    plan_effective_period_end: '2019-09-18',
+    plan_effective_period_start: '2019-08-29',
+    plan_fi_reason: '',
+    plan_fi_status: '',
+    plan_id: 'c6e59ec1-8c54-5fdf-acf3-ee3692983f38',
+    plan_intervention_type: 'IRS' as InterventionType.IRS,
+    plan_status: 'active' as PlanStatus.RETIRED,
     plan_title: 'Berg Namibia 2019',
     plan_version: '2',
   },

@@ -20,11 +20,15 @@ import {
   SUPERSET_MAX_RECORDS,
 } from '../../../../../configs/env';
 import {
+  ASSIGN_IRS_PLAN_URL,
+  DRAFT,
   HOME,
   HOME_URL,
   INTERVENTION_IRS_URL,
+  IRS_TITLE,
   JURISDICTION_ID,
   MAP_ID,
+  NEW,
   NEW_PLAN,
   OPENSRP_FIND_BY_PROPERTIES,
   OPENSRP_GET_ASSIGNMENTS_ENDPOINT,
@@ -34,6 +38,9 @@ import {
   OPENSRP_PLANS,
   OPENSRP_POST_ASSIGNMENTS_ENDPOINT,
   PARENTID,
+  SAVE_AS_DRAFT,
+  SAVE_ASSIGNMENTS,
+  SAVE_FINALIZED_PLAN,
 } from '../../../../../constants';
 import {
   FlexObject,
@@ -223,7 +230,6 @@ class IrsPlan extends React.Component<
       fetchJurisdictionsActionCreator,
       fetchOrganizationsActionCreator,
       fetchPlansActionCreator,
-      isDraftPlan,
       planId,
       planById,
       supersetService,
@@ -239,7 +245,7 @@ class IrsPlan extends React.Component<
           }
         })
         .catch(err => err);
-    } else if (isDraftPlan && planById) {
+    } else if (planById) {
       this.setState({ newPlan: planById });
     }
 
@@ -286,6 +292,9 @@ class IrsPlan extends React.Component<
           this.props.planById.plan_jurisdictions_ids.length
         ) {
           const jurisdictionsById = keyBy(jurisdictionsArray, j => j.jurisdiction_id);
+          const planJurisdictionsIds = this.props.planById.plan_jurisdictions_ids.filter(
+            j => !!jurisdictionsById[j]
+          );
 
           // build and store decendant jurisdictions, jurisdictionsArray MUST be sorted by geographic_level from high to low
           const childrenByParentId: { [key: string]: string[] } = {};
@@ -305,7 +314,7 @@ class IrsPlan extends React.Component<
 
           // define level 0 Jurisdiction as parentlessParent
           const ancestorIds = this.getAncestorJurisdictionIds(
-            [...this.props.planById.plan_jurisdictions_ids],
+            [...planJurisdictionsIds],
             jurisdictionsArray
           );
           const parentlessParent = ancestorIds.find(
@@ -335,14 +344,12 @@ class IrsPlan extends React.Component<
                     ? [country.jurisdictionId]
                     : [...country.jurisdictionIds];
                   // define all Jurisdictions pertaining to this Plan only (by country)
-                  const filteredJurisdictions = isDraftPlan
-                    ? this.getDescendantJurisdictionIds(
-                        countryIds,
-                        jurisdictionsById,
-                        true,
-                        childrenByParentId
-                      ).map(j => jurisdictionsById[j])
-                    : ancestorIds.map(j => jurisdictionsById[j]);
+                  const filteredJurisdictions = this.getDescendantJurisdictionIds(
+                    countryIds,
+                    jurisdictionsById,
+                    true,
+                    childrenByParentId
+                  ).map(j => jurisdictionsById[j]);
                   const childlessChildrenIds = this.getChildlessChildrenIds(filteredJurisdictions);
 
                   const newPlan: PlanRecord = {
@@ -365,13 +372,11 @@ class IrsPlan extends React.Component<
                       childlessChildrenIds,
                       childrenByParentId,
                       country,
-                      filteredJurisdictionIds: isDraftPlan
-                        ? filteredJurisdictions.map(j => j.jurisdiction_id)
-                        : ancestorIds,
+                      filteredJurisdictionIds: filteredJurisdictions.map(j => j.jurisdiction_id),
                       focusJurisdictionId: country.jurisdictionId.length
                         ? country.jurisdictionId
                         : this.state.focusJurisdictionId,
-                      isLoadingGeoms: !!isDraftPlan,
+                      isLoadingGeoms: true,
                       isLoadingJurisdictions: false,
                       newPlan,
                       planCountry: result.properties.ADM0_PCODE,
@@ -381,9 +386,7 @@ class IrsPlan extends React.Component<
                       // build drilldown table props
                       const planTableProps = this.getDrilldownPlanTableProps(this.state);
                       this.setState({ planTableProps }, () => {
-                        if (isDraftPlan) {
-                          this.loadJurisdictionGeometries();
-                        }
+                        this.loadJurisdictionGeometries();
                       });
                     }
                   );
@@ -446,7 +449,12 @@ class IrsPlan extends React.Component<
     }
 
     // update state after fetching plan from OpenSRP
-    if (!newPlan && planById && planById.plan_jurisdictions_ids) {
+    // update state after saving plan to store
+    if (
+      planById &&
+      ((!newPlan && planById.plan_jurisdictions_ids) ||
+        (newPlan && newPlan.plan_version !== planById.plan_version))
+    ) {
       this.setState({
         newPlan: planById,
       });
@@ -508,7 +516,7 @@ class IrsPlan extends React.Component<
               outline={isDraftPlan}
               size="sm"
             >
-              Save as a Draft
+              {SAVE_AS_DRAFT}
             </Button>
           )}
           <Button
@@ -518,7 +526,7 @@ class IrsPlan extends React.Component<
             onClick={onSaveFinalizedPlanButtonClick}
             size="sm"
           >
-            Save Finalized Plan
+            {isDraftPlan ? SAVE_FINALIZED_PLAN : SAVE_ASSIGNMENTS}
           </Button>
         </Col>
       </Row>
@@ -1794,14 +1802,19 @@ class IrsPlan extends React.Component<
    * @returns {DrillDownProps<any>|null} - compatible object for DrillDownTable props or null
    */
   private getDrilldownPlanTableProps(state: IrsPlanState): DrillDownProps<any> | null {
-    const { filteredJurisdictionIds, newPlan, focusJurisdictionId, tableCrumbs } = state;
-    const { assignmentsArray, jurisdictionsById, planId } = this.props;
-    const filteredJurisdictions = filteredJurisdictionIds.map(j => jurisdictionsById[j]);
-    const isFocusJurisdictionTopLevel = tableCrumbs[0] && focusJurisdictionId === tableCrumbs[0].id;
+    const { newPlan, focusJurisdictionId, tableCrumbs } = state;
+    const { assignmentsArray, isDraftPlan, jurisdictionsById, planId } = this.props;
 
     if (!newPlan || !newPlan.plan_jurisdictions_ids) {
       return null;
     }
+
+    // finalized plans should only show rows for jurisdictions selected in the plan
+    const filteredJurisdictionIds =
+      (!isDraftPlan && state.newPlan!.plan_jurisdictions_ids) || state.filteredJurisdictionIds;
+
+    const filteredJurisdictions = filteredJurisdictionIds.map(j => jurisdictionsById[j]);
+    const isFocusJurisdictionTopLevel = tableCrumbs[0] && focusJurisdictionId === tableCrumbs[0].id;
 
     const planJurisdictionIds = [...newPlan.plan_jurisdictions_ids];
     const onToggleAllCheckboxChange = (e: any) => {
@@ -1897,14 +1910,18 @@ class IrsPlan extends React.Component<
           },
         ],
       },
-      {
+    ];
+
+    if (this.props.isFinalizedPlan) {
+      columns.shift();
+      columns.push({
         Header: 'Team Assignment',
         columns: [
           {
             Header: '',
             accessor: (j: JurisdictionRow) => {
               if (!j.isChildless) {
-                return '';
+                return <span />;
               }
               const cellProps = {
                 jurisdictionId: j.jurisdiction_id,
@@ -1915,11 +1932,7 @@ class IrsPlan extends React.Component<
             id: 'teams_assigned',
           },
         ],
-      },
-    ];
-
-    if (this.props.isFinalizedPlan) {
-      columns.shift();
+      });
     }
 
     let showPagination: boolean = false;
@@ -2007,11 +2020,11 @@ class IrsPlan extends React.Component<
       url: HOME_URL,
     };
     const basePage = {
-      label: 'IRS',
-      url: INTERVENTION_IRS_URL,
+      label: IRS_TITLE,
+      url: isDraftPlan ? INTERVENTION_IRS_URL : ASSIGN_IRS_PLAN_URL,
     };
     const urlPathAppend =
-      (isFinalizedPlan && `plan/${planId}`) || (isDraftPlan && `draft/${planId}`) || 'new';
+      (isFinalizedPlan && `${planId}`) || (isDraftPlan && `${DRAFT}/${planId}`) || NEW;
     const breadCrumbProps: BreadCrumbProps = {
       currentPage: {
         label: pageLabel,
@@ -2051,71 +2064,78 @@ class IrsPlan extends React.Component<
       if (newPlanDraft.plan_jurisdictions_ids && newPlanDraft.plan_jurisdictions_ids.length) {
         const planPayload = extractPlanPayloadFromPlanRecord(newPlanDraft);
         if (planPayload) {
-          // create payload of assignments based on current store state
-          const nextAssignments: Assignment[] = assignmentsArray.map((a: Assignment) => ({
-            ...a,
-            fromDate: moment(start).format(),
-            toDate: moment(end).format(),
-          }));
-
-          // create temp reference to determine which assignments should be retired on server
-          const assignmentTeamIdsByJurisdictionId: { [key: string]: string[] } = {};
-          for (const assignment of nextAssignments) {
-            if (!assignmentTeamIdsByJurisdictionId[assignment.jurisdiction]) {
-              assignmentTeamIdsByJurisdictionId[assignment.jurisdiction] = [];
-            }
-            assignmentTeamIdsByJurisdictionId[assignment.jurisdiction].push(
-              assignment.organization
-            );
-          }
-
-          // fetch list of assignments from server which need to be retired
-          const retiredAssignments: Assignment[] = await this.getAllAssignments(
-            planPayload.identifier,
-            values(organizationsById),
-            (existingAssignments: Assignment[]) => {
-              const assignmentsToRetire: Assignment[] = [];
-              for (const result of existingAssignments) {
-                if (
-                  !(result.jurisdiction in assignmentTeamIdsByJurisdictionId) ||
-                  !assignmentTeamIdsByJurisdictionId[result.jurisdiction].includes(
-                    result.organization
-                  )
-                ) {
-                  assignmentsToRetire.push({
-                    ...result,
-                    fromDate: moment(0).format(),
-                    toDate: moment(100000000).format(),
-                  } as Assignment);
-                }
-              }
-              return assignmentsToRetire;
-            }
-          );
-
           this.setState({ isSaveDraftDisabled: true }, async () => {
             if (this.props.isDraftPlan) {
+              // Save planDefinition
               OpenSrpPlanService.update(planPayload)
                 .then(() => {
-                  if (isFinal) {
-                    // todo - force remounting of component by breaking this page into several
-                    // this.props.history.push(
-                    //   `${INTERVENTION_IRS_URL}/plan/${planPayload.identifier}`
-                    // );
-                    this.props.history.push(INTERVENTION_IRS_URL);
-                  } else {
-                    this.setState({
-                      isSaveDraftDisabled: false,
-                      newPlan: {
-                        ...newPlanDraft,
-                        plan_jurisdictions_ids: [...(newPlan.plan_jurisdictions_ids as string[])],
-                      },
-                    });
-                  }
+                  this.setState({
+                    isSaveDraftDisabled: false,
+                    newPlan: {
+                      ...newPlanDraft,
+                      plan_jurisdictions_ids: [...(newPlan.plan_jurisdictions_ids as string[])],
+                    },
+                  });
                 })
                 .catch(() => {
                   this.setState({ isSaveDraftDisabled: false });
+                })
+                .finally(() => {
+                  // update state with new plan definition
+                  const { plan_id, plan_status } = newPlanDraft;
+                  const planRecord = extractPlanRecordResponseFromPlanPayload(planPayload);
+                  if (planRecord) {
+                    this.props.fetchPlansActionCreator([planRecord]);
+                    if (plan_status === PlanStatus.ACTIVE) {
+                      // redirect to assingment page
+                      this.props.history.push(`${ASSIGN_IRS_PLAN_URL}/${plan_id}`);
+                    }
+                  }
                 });
+            } else {
+              // save plan-jurisdiction-organization assignments
+              // todo - move this into './helpers.ts'
+              // create payload of assignments based on current store state
+              const nextAssignments: Assignment[] = assignmentsArray.map((a: Assignment) => ({
+                ...a,
+                fromDate: moment(start).format(),
+                toDate: moment(end).format(),
+              }));
+
+              // create temp reference to determine which assignments should be retired on server
+              const assignmentTeamIdsByJurisdictionId: { [key: string]: string[] } = {};
+              for (const assignment of nextAssignments) {
+                if (!assignmentTeamIdsByJurisdictionId[assignment.jurisdiction]) {
+                  assignmentTeamIdsByJurisdictionId[assignment.jurisdiction] = [];
+                }
+                assignmentTeamIdsByJurisdictionId[assignment.jurisdiction].push(
+                  assignment.organization
+                );
+              }
+
+              // fetch list of assignments from server which need to be retired
+              const retiredAssignments: Assignment[] = await this.getAllAssignments(
+                planPayload.identifier,
+                values(organizationsById),
+                (existingAssignments: Assignment[]) => {
+                  const assignmentsToRetire: Assignment[] = [];
+                  for (const result of existingAssignments) {
+                    if (
+                      !(result.jurisdiction in assignmentTeamIdsByJurisdictionId) ||
+                      !assignmentTeamIdsByJurisdictionId[result.jurisdiction].includes(
+                        result.organization
+                      )
+                    ) {
+                      assignmentsToRetire.push({
+                        ...result,
+                        fromDate: moment(0).format(),
+                        toDate: moment(100000000).format(),
+                      } as Assignment);
+                    }
+                  }
+                  return assignmentsToRetire;
+                }
+              );
 
               // POST to retire unassigned assignments
               if (retiredAssignments.length) {
@@ -2137,6 +2157,7 @@ class IrsPlan extends React.Component<
                     // todo - handle errors
                   });
               }
+              this.setState({ isSaveDraftDisabled: false });
             }
           });
         } else {
