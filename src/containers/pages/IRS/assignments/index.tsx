@@ -47,7 +47,7 @@ interface PlanAssignmentsListProps {
 /** Simple component that loads plans and allows you to manage plan-jurisdiciton-organization assignments */
 const IRSAssignmentPlansList = (props: PlanAssignmentsListProps) => {
   const { fetchPlans, plans } = props;
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(plans.length < 1);
 
   const pageTitle: string = IRS_PLANS;
 
@@ -68,7 +68,7 @@ const IRSAssignmentPlansList = (props: PlanAssignmentsListProps) => {
   async function loadData() {
     try {
       setLoading(plans.length < 1); // only set loading when there are no plans
-      OpenSrpPlanService.list()
+      await OpenSrpPlanService.list()
         .then(planResults => {
           // filter for IRS plans
           const irsPlans = planResults.filter((p: PlanPayload) => {
@@ -91,10 +91,9 @@ const IRSAssignmentPlansList = (props: PlanAssignmentsListProps) => {
         .catch(err => {
           // console.log('ERR', err)
         });
+      setLoading(false);
     } catch (e) {
       // do something with the error?
-    } finally {
-      setLoading(false);
     }
   }
 
@@ -102,7 +101,7 @@ const IRSAssignmentPlansList = (props: PlanAssignmentsListProps) => {
     loadData();
   }, []);
 
-  if (loading === true) {
+  if (loading) {
     return <Loading />;
   }
 
