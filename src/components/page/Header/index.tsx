@@ -25,9 +25,10 @@ import {
   WEBSITE_NAME,
 } from '../../../configs/env';
 import {
+  ASSIGN,
   ASSIGN_IRS_PLAN_URL,
-  ASSIGNING,
   FI_URL,
+  FOCUS_INVESTIGATION,
   HOME,
   INTERVENTION_IRS_DRAFTS_URL,
   INTERVENTION_IRS_URL,
@@ -35,15 +36,15 @@ import {
   IRS_TITLE,
   LOGIN_URL,
   LOGOUT_URL,
+  MONITOR,
   ORGANIZATIONS_LABEL,
   ORGANIZATIONS_LIST_URL,
   PLAN_LIST_URL,
-  PLANNING,
+  PLAN_TITLE,
   PLANS,
   PRACTITIONERS,
   PRACTITIONERS_LIST_URL,
   REPORT_IRS_PLAN_URL,
-  REPORTING,
 } from '../../../constants';
 import './Header.css';
 
@@ -112,7 +113,7 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
                     caret={true}
                     className={path === INTERVENTION_IRS_URL ? 'nav-link active' : 'nav-link'}
                   >
-                    {PLANNING}
+                    {PLAN_TITLE}
                   </DropdownToggle>
                   <DropdownMenu right={true}>
                     <DropdownItem>
@@ -143,7 +144,7 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
                     caret={true}
                     className={path === ASSIGN_IRS_PLAN_URL ? 'nav-link active' : 'nav-link'}
                   >
-                    {ASSIGNING}
+                    {ASSIGN}
                   </DropdownToggle>
                   <DropdownMenu right={true}>
                     {ENABLE_IRS && (
@@ -168,14 +169,14 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
                     caret={true}
                     className={path === FI_URL ? 'nav-link active' : 'nav-link'}
                   >
-                    {REPORTING}
+                    {MONITOR}
                   </DropdownToggle>
                   <DropdownMenu right={true}>
                     {ENABLE_FI && (
                       <div>
                         <DropdownItem>
                           <NavLink to={FI_URL} className="nav-link" activeClassName="active">
-                            Focus Investigation
+                            {FOCUS_INVESTIGATION}
                           </NavLink>
                         </DropdownItem>
                       </div>
