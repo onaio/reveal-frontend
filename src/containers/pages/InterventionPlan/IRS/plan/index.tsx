@@ -451,8 +451,9 @@ class IrsPlan extends React.Component<
     // update state after fetching plan from OpenSRP
     // update state after saving plan to store
     if (
-      (!newPlan && planById && planById.plan_jurisdictions_ids) ||
-      (newPlan && planById && newPlan.plan_version !== planById.plan_version)
+      planById &&
+      ((!newPlan && planById.plan_jurisdictions_ids) ||
+        (newPlan && newPlan.plan_version !== planById.plan_version))
     ) {
       this.setState({
         newPlan: planById,
@@ -1809,9 +1810,8 @@ class IrsPlan extends React.Component<
     }
 
     // finalized plans should only show rows for jurisdictions selected in the plan
-    const filteredJurisdictionIds = isDraftPlan
-      ? state.filteredJurisdictionIds
-      : state.newPlan!.plan_jurisdictions_ids || state.filteredJurisdictionIds;
+    const filteredJurisdictionIds =
+      (!isDraftPlan && state.newPlan!.plan_jurisdictions_ids) || state.filteredJurisdictionIds;
 
     const filteredJurisdictions = filteredJurisdictionIds.map(j => jurisdictionsById[j]);
     const isFocusJurisdictionTopLevel = tableCrumbs[0] && focusJurisdictionId === tableCrumbs[0].id;
