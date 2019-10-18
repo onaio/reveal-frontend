@@ -25,6 +25,7 @@ import {
   WEBSITE_NAME,
 } from '../../../configs/env';
 import {
+  ADMIN,
   ASSIGN,
   ASSIGN_IRS_PLAN_URL,
   FI_URL,
@@ -197,36 +198,46 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
                   </DropdownMenu>
                 </UncontrolledDropdown>
               )}
-              {ENABLE_TEAMS && (
-                <NavItem>
-                  <NavLink
-                    to={`${ORGANIZATIONS_LIST_URL}`}
-                    className="nav-link"
-                    activeClassName="active"
-                  >
-                    {ORGANIZATIONS_LABEL}
-                  </NavLink>
-                </NavItem>
-              )}
-              {ENABLE_PRACTITIONERS && (
-                <NavItem>
-                  <NavLink
-                    to={`${PRACTITIONERS_LIST_URL}`}
-                    className="nav-link"
-                    activeClassName="active"
-                  >
-                    {PRACTITIONERS}
-                  </NavLink>
-                </NavItem>
+
+              {(ENABLE_TEAMS || ENABLE_PRACTITIONERS || ENABLE_USERS) && (
+                <UncontrolledDropdown nav={true} inNavbar={true}>
+                  <DropdownToggle nav={true} caret={true} className={'nav-link'}>
+                    {ADMIN}
+                  </DropdownToggle>
+                  <DropdownMenu right={true}>
+                    {ENABLE_TEAMS && (
+                      <DropdownItem>
+                        <NavLink
+                          to={`${ORGANIZATIONS_LIST_URL}`}
+                          className="nav-link"
+                          activeClassName="active"
+                        >
+                          {ORGANIZATIONS_LABEL}
+                        </NavLink>
+                      </DropdownItem>
+                    )}
+                    {ENABLE_PRACTITIONERS && (
+                      <DropdownItem>
+                        <NavLink
+                          to={`${PRACTITIONERS_LIST_URL}`}
+                          className="nav-link"
+                          activeClassName="active"
+                        >
+                          {PRACTITIONERS}
+                        </NavLink>
+                      </DropdownItem>
+                    )}
+                    {ENABLE_USERS && (
+                      <DropdownItem>
+                        <NavLink to="/404" className="nav-link" activeClassName="active">
+                          Users
+                        </NavLink>
+                      </DropdownItem>
+                    )}
+                  </DropdownMenu>
+                </UncontrolledDropdown>
               )}
 
-              {ENABLE_USERS && (
-                <NavItem>
-                  <NavLink to="/404" className="nav-link" activeClassName="active">
-                    Users
-                  </NavLink>
-                </NavItem>
-              )}
               {ENABLE_ABOUT && (
                 <NavItem>
                   <NavLink to="/404" className="nav-link" activeClassName="active">
