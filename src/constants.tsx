@@ -206,6 +206,8 @@ export const SAVE_FINALIZED_PLAN = 'Save Finalized Plan';
 export type SAVE_FINALIZED_PLAN = typeof SAVE_FINALIZED_PLAN;
 export const SAVE_ASSIGNMENTS = 'Save Assignments';
 export type SAVE_ASSIGNMENTS = typeof SAVE_ASSIGNMENTS;
+export const NO_PLANS_LOADED_MESSAGE = 'No plans found...';
+export type NO_PLANS_LOADED_MESSAGE = typeof NO_PLANS_LOADED_MESSAGE;
 
 // TODO ? - do the below 2 belong here or in a settings file
 export const ORGANIZATION_LABEL = TEAM;

@@ -16,6 +16,7 @@ import {
   HOME_URL,
   IRS_PLAN_TYPE,
   IRS_PLANS,
+  NO_PLANS_LOADED_MESSAGE,
   REPORT_IRS_PLAN_URL,
 } from '../../../../constants';
 import { OpenSRPService } from '../../../../services/opensrp';
@@ -135,7 +136,11 @@ const IRSAssignmentPlansList = (props: PlanAssignmentsListProps) => {
       </Row>
       <Row>
         <Col>
-          <ListView {...listViewProps} />
+          {plans.length < 1 ? (
+            <span>{NO_PLANS_LOADED_MESSAGE}</span>
+          ) : (
+            <ListView {...listViewProps} />
+          )}
         </Col>
       </Row>
     </div>
