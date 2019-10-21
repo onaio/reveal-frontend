@@ -71,23 +71,11 @@ const IRSAssignmentPlansList = (props: PlanAssignmentsListProps) => {
       setLoading(plans.length < 1); // only set loading when there are no plans
       await OpenSrpPlanService.list()
         .then(planResults => {
-          // filter for IRS plans
-          const irsPlans = planResults.filter((p: PlanPayload) => {
-            for (const u of p.useContext) {
-              if (u.code === useContextCodes[0]) {
-                if (u.valueCodableConcept === IRS_PLAN_TYPE) {
-                  return true;
-                } else {
-                  return false;
-                }
-              }
-            }
-            return false;
-          });
-          const irsPlanRecords: PlanRecordResponse[] = irsPlans.map(
-            extractPlanRecordResponseFromPlanPayload
-          );
-          return fetchPlans(irsPlanRecords);
+          if (planResults) {
+            const planRecords: PlanRecordResponse[] =
+              planResults.map(extractPlanRecordResponseFromPlanPayload) || [];
+            return fetchPlans(planRecords);
+          }
         })
         .catch(err => {
           // console.log('ERR', err)
@@ -108,18 +96,17 @@ const IRSAssignmentPlansList = (props: PlanAssignmentsListProps) => {
 
   const listViewProps = {
     data: plans.map(planObj => {
-      const path =
-        planObj.plan_status === PlanStatus.DRAFT ? DRAFT_IRS_PLAN_URL : ASSIGN_IRS_PLAN_URL;
       return [
-        <Link to={`${path}/${planObj.plan_id}`} key={planObj.plan_id}>
+        <Link to={`${ASSIGN_IRS_PLAN_URL}/${planObj.plan_id}`} key={planObj.plan_id}>
           {planObj.plan_title}
         </Link>,
+        planObj.plan_intervention_type,
         planObj.plan_effective_period_start,
         planObj.plan_effective_period_end,
         planObj.plan_status,
       ];
     }),
-    headerItems: ['Title', 'Start Date', 'End Date', 'Plan Status'],
+    headerItems: ['Title', 'Intervention', 'Start Date', 'End Date', 'Plan Status'],
     tableClass: 'table table-bordered plans-list',
   };
 
@@ -167,7 +154,11 @@ interface DispatchedStateProps {
 /** map state to props */
 const mapStateToProps = (state: Partial<Store>): DispatchedStateProps => {
   const planStatus = [PlanStatus.ACTIVE];
-  const plans = getPlanRecordsArray(state, InterventionType.IRS, planStatus);
+  const fiPlans = getPlanRecordsArray(state, InterventionType.FI, planStatus);
+  const irsPlans = getPlanRecordsArray(state, InterventionType.IRS, planStatus);
+  const plans = [...fiPlans, ...irsPlans].sort(
+    (a: PlanRecord, b: PlanRecord) => Date.parse(a.plan_date) - Date.parse(b.plan_date)
+  );
   return {
     plans,
   };
