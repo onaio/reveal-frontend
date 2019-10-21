@@ -385,102 +385,40 @@ exports[`App renders App correctly 1`] = `
                                       </Manager>
                                     </Dropdown>
                                   </UncontrolledDropdown>
-                                  <UncontrolledDropdown
-                                    inNavbar={true}
-                                    nav={true}
+                                  <NavItem
+                                    tag="li"
                                   >
-                                    <Dropdown
-                                      active={false}
-                                      addonType={false}
-                                      direction="down"
-                                      inNavbar={true}
-                                      isOpen={false}
-                                      nav={true}
-                                      setActiveFromChild={false}
-                                      toggle={[Function]}
+                                    <li
+                                      className="nav-item"
                                     >
-                                      <Manager
-                                        className="dropdown nav-item"
-                                        onKeyDown={[Function]}
-                                        tag="li"
+                                      <NavLink
+                                        activeClassName="active"
+                                        aria-current="page"
+                                        className="nav-link"
+                                        to="/assign"
                                       >
-                                        <li
-                                          className="dropdown nav-item"
-                                          onKeyDown={[Function]}
+                                        <Route
+                                          path="\\\\/assign"
                                         >
-                                          <DropdownToggle
-                                            aria-haspopup={true}
-                                            caret={true}
+                                          <Link
+                                            aria-current={null}
                                             className="nav-link"
-                                            color="secondary"
-                                            nav={true}
+                                            replace={false}
+                                            to="/assign"
                                           >
                                             <a
-                                              aria-expanded={false}
-                                              aria-haspopup={true}
-                                              className="nav-link dropdown-toggle nav-link"
-                                              href="#"
+                                              aria-current={null}
+                                              className="nav-link"
+                                              href="/assign"
                                               onClick={[Function]}
                                             >
                                               Assign
                                             </a>
-                                          </DropdownToggle>
-                                          <DropdownMenu
-                                            flip={true}
-                                            right={true}
-                                            tag="div"
-                                          >
-                                            <div
-                                              aria-hidden={true}
-                                              className="dropdown-menu dropdown-menu-right"
-                                              role="menu"
-                                              tabIndex="-1"
-                                            >
-                                              <DropdownItem
-                                                tag="button"
-                                                toggle={true}
-                                              >
-                                                <button
-                                                  className="dropdown-item"
-                                                  onClick={[Function]}
-                                                  role="menuitem"
-                                                  tabIndex="0"
-                                                  type="button"
-                                                >
-                                                  <NavLink
-                                                    activeClassName="active"
-                                                    aria-current="page"
-                                                    className="nav-link"
-                                                    to="/intervention/irs/assign"
-                                                  >
-                                                    <Route
-                                                      path="\\\\/intervention\\\\/irs\\\\/assign"
-                                                    >
-                                                      <Link
-                                                        aria-current={null}
-                                                        className="nav-link"
-                                                        replace={false}
-                                                        to="/intervention/irs/assign"
-                                                      >
-                                                        <a
-                                                          aria-current={null}
-                                                          className="nav-link"
-                                                          href="/intervention/irs/assign"
-                                                          onClick={[Function]}
-                                                        >
-                                                          IRS
-                                                        </a>
-                                                      </Link>
-                                                    </Route>
-                                                  </NavLink>
-                                                </button>
-                                              </DropdownItem>
-                                            </div>
-                                          </DropdownMenu>
-                                        </li>
-                                      </Manager>
-                                    </Dropdown>
-                                  </UncontrolledDropdown>
+                                          </Link>
+                                        </Route>
+                                      </NavLink>
+                                    </li>
+                                  </NavItem>
                                   <UncontrolledDropdown
                                     inNavbar={true}
                                     nav={true}

@@ -13,7 +13,7 @@ import { WEBSITE_NAME } from '../configs/env';
 import { providers } from '../configs/settings';
 import {
   ACTIVE_IRS_PLAN_URL,
-  ASSIGN_IRS_PLAN_URL,
+  ASSIGN_PLAN_URL,
   CREATE_ORGANIZATION_URL,
   DRAFT_IRS_PLAN_URL,
   EDIT_ORGANIZATION_URL,
@@ -154,13 +154,13 @@ class App extends Component {
                 <ConnectedPrivateRoute
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
-                  path={`${ASSIGN_IRS_PLAN_URL}`}
+                  path={`${ASSIGN_PLAN_URL}`}
                   component={ConnectedIRSAssignmentPlansList}
                 />
                 <ConnectedPrivateRoute
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
-                  path={`${ASSIGN_IRS_PLAN_URL}/:id`}
+                  path={`${ASSIGN_PLAN_URL}/:id`}
                   component={IrsPlan}
                 />
 

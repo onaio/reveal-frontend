@@ -27,7 +27,7 @@ import {
 import {
   ADMIN,
   ASSIGN,
-  ASSIGN_IRS_PLAN_URL,
+  ASSIGN_PLAN_URL,
   FI_URL,
   FOCUS_INVESTIGATION,
   HOME,
@@ -137,30 +137,12 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
                 </UncontrolledDropdown>
               )}
 
-              {ENABLE_IRS && (
-                // ASSIGN_IRS_PLAN_URL
-                <UncontrolledDropdown nav={true} inNavbar={true}>
-                  <DropdownToggle
-                    nav={true}
-                    caret={true}
-                    className={path === ASSIGN_IRS_PLAN_URL ? 'nav-link active' : 'nav-link'}
-                  >
+              {(ENABLE_IRS || ENABLE_FI) && (
+                <NavItem>
+                  <NavLink to={ASSIGN_PLAN_URL} className="nav-link" activeClassName="active">
                     {ASSIGN}
-                  </DropdownToggle>
-                  <DropdownMenu right={true}>
-                    {ENABLE_IRS && (
-                      <DropdownItem>
-                        <NavLink
-                          to={ASSIGN_IRS_PLAN_URL}
-                          className="nav-link"
-                          activeClassName="active"
-                        >
-                          {IRS_TITLE}
-                        </NavLink>
-                      </DropdownItem>
-                    )}
-                  </DropdownMenu>
-                </UncontrolledDropdown>
+                  </NavLink>
+                </NavItem>
               )}
 
               {(ENABLE_IRS || ENABLE_FI) && (

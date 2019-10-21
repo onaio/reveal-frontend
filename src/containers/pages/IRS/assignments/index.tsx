@@ -10,7 +10,7 @@ import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/Heade
 import Loading from '../../../../components/page/Loading';
 import { useContextCodes } from '../../../../configs/settings';
 import {
-  ASSIGN_IRS_PLAN_URL,
+  ASSIGN_PLAN_URL,
   DRAFT_IRS_PLAN_URL,
   HOME,
   HOME_URL,
@@ -97,7 +97,7 @@ const IRSAssignmentPlansList = (props: PlanAssignmentsListProps) => {
   const listViewProps = {
     data: plans.map(planObj => {
       return [
-        <Link to={`${ASSIGN_IRS_PLAN_URL}/${planObj.plan_id}`} key={planObj.plan_id}>
+        <Link to={`${ASSIGN_PLAN_URL}/${planObj.plan_id}`} key={planObj.plan_id}>
           {planObj.plan_title}
         </Link>,
         planObj.plan_intervention_type,

@@ -79,10 +79,10 @@ Array [
     <Link
       key="727c3d40-e118-564a-b231-aac633e6abce"
       replace={false}
-      to="/intervention/irs/assign/727c3d40-e118-564a-b231-aac633e6abce"
+      to="/assign/727c3d40-e118-564a-b231-aac633e6abce"
     >
       <a
-        href="/intervention/irs/assign/727c3d40-e118-564a-b231-aac633e6abce"
+        href="/assign/727c3d40-e118-564a-b231-aac633e6abce"
         onClick={[Function]}
       >
         IRS 2019-09-05 TEST
@@ -120,10 +120,10 @@ Array [
     <Link
       key="02e358ed-87fe-5720-8782-0afe28cb7e8c"
       replace={false}
-      to="/intervention/irs/assign/02e358ed-87fe-5720-8782-0afe28cb7e8c"
+      to="/assign/02e358ed-87fe-5720-8782-0afe28cb7e8c"
     >
       <a
-        href="/intervention/irs/assign/02e358ed-87fe-5720-8782-0afe28cb7e8c"
+        href="/assign/02e358ed-87fe-5720-8782-0afe28cb7e8c"
         onClick={[Function]}
       >
         IRS 2019-08-30m
@@ -161,10 +161,10 @@ Array [
     <Link
       key="c6e59ec1-8c54-5fdf-acf3-ee3692983f38"
       replace={false}
-      to="/intervention/irs/assign/c6e59ec1-8c54-5fdf-acf3-ee3692983f38"
+      to="/assign/c6e59ec1-8c54-5fdf-acf3-ee3692983f38"
     >
       <a
-        href="/intervention/irs/assign/c6e59ec1-8c54-5fdf-acf3-ee3692983f38"
+        href="/assign/c6e59ec1-8c54-5fdf-acf3-ee3692983f38"
         onClick={[Function]}
       >
         Berg Namibia 2019

@@ -104,39 +104,18 @@ Object {
             </DropdownItem>
           </DropdownMenu>
         </UncontrolledDropdown>
-        <UncontrolledDropdown
-          inNavbar={true}
-          nav={true}
+        <NavItem
+          tag="li"
         >
-          <DropdownToggle
-            aria-haspopup={true}
-            caret={true}
+          <NavLink
+            activeClassName="active"
+            aria-current="page"
             className="nav-link"
-            color="secondary"
-            nav={true}
+            to="/assign"
           >
             Assign
-          </DropdownToggle>
-          <DropdownMenu
-            flip={true}
-            right={true}
-            tag="div"
-          >
-            <DropdownItem
-              tag="button"
-              toggle={true}
-            >
-              <NavLink
-                activeClassName="active"
-                aria-current="page"
-                className="nav-link"
-                to="/intervention/irs/assign"
-              >
-                IRS
-              </NavLink>
-            </DropdownItem>
-          </DropdownMenu>
-        </UncontrolledDropdown>
+          </NavLink>
+        </NavItem>
         <UncontrolledDropdown
           inNavbar={true}
           nav={true}
@@ -386,39 +365,18 @@ Object {
             </DropdownItem>
           </DropdownMenu>
         </UncontrolledDropdown>
-        <UncontrolledDropdown
-          inNavbar={true}
-          nav={true}
+        <NavItem
+          tag="li"
         >
-          <DropdownToggle
-            aria-haspopup={true}
-            caret={true}
+          <NavLink
+            activeClassName="active"
+            aria-current="page"
             className="nav-link"
-            color="secondary"
-            nav={true}
+            to="/assign"
           >
             Assign
-          </DropdownToggle>
-          <DropdownMenu
-            flip={true}
-            right={true}
-            tag="div"
-          >
-            <DropdownItem
-              tag="button"
-              toggle={true}
-            >
-              <NavLink
-                activeClassName="active"
-                aria-current="page"
-                className="nav-link"
-                to="/intervention/irs/assign"
-              >
-                IRS
-              </NavLink>
-            </DropdownItem>
-          </DropdownMenu>
-        </UncontrolledDropdown>
+          </NavLink>
+        </NavItem>
         <UncontrolledDropdown
           inNavbar={true}
           nav={true}
