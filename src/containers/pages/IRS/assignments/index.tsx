@@ -8,13 +8,10 @@ import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
-import { useContextCodes } from '../../../../configs/settings';
 import {
   ASSIGN_PLAN_URL,
-  DRAFT_IRS_PLAN_URL,
   HOME,
   HOME_URL,
-  IRS_PLAN_TYPE,
   IRS_PLANS,
   NO_PLANS_LOADED_MESSAGE,
   REPORT_IRS_PLAN_URL,
@@ -28,7 +25,6 @@ import {
   fetchPlanRecords,
   getPlanRecordsArray,
   InterventionType,
-  PlanPayload,
   PlanRecord,
   PlanRecordResponse,
   PlanStatus,
