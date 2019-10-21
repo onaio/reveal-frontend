@@ -47,17 +47,23 @@ Array [
     className="listview-td"
     key="1"
   >
-    Start Date
+    Intervention
   </th>,
   <th
     className="listview-td"
     key="2"
   >
-    End Date
+    Start Date
   </th>,
   <th
     className="listview-td"
     key="3"
+  >
+    End Date
+  </th>,
+  <th
+    className="listview-td"
+    key="4"
   >
     Plan Status
   </th>,
@@ -87,17 +93,23 @@ Array [
     className="listview-th"
     key="1"
   >
-    2019-09-05
+    IRS
   </td>,
   <td
     className="listview-th"
     key="2"
   >
-    2019-09-25
+    2019-09-05
   </td>,
   <td
     className="listview-th"
     key="3"
+  >
+    2019-09-25
+  </td>,
+  <td
+    className="listview-th"
+    key="4"
   >
     retired
   </td>,
@@ -122,17 +134,23 @@ Array [
     className="listview-th"
     key="1"
   >
-    2019-08-30
+    IRS
   </td>,
   <td
     className="listview-th"
     key="2"
   >
-    2019-09-14
+    2019-08-30
   </td>,
   <td
     className="listview-th"
     key="3"
+  >
+    2019-09-14
+  </td>,
+  <td
+    className="listview-th"
+    key="4"
   >
     active
   </td>,
@@ -157,17 +175,23 @@ Array [
     className="listview-th"
     key="1"
   >
-    2019-08-29
+    IRS
   </td>,
   <td
     className="listview-th"
     key="2"
   >
-    2019-09-18
+    2019-08-29
   </td>,
   <td
     className="listview-th"
     key="3"
+  >
+    2019-09-18
+  </td>,
+  <td
+    className="listview-th"
+    key="4"
   >
     active
   </td>,
