@@ -976,7 +976,13 @@ export const LusakaAdmin0: JurisdictionsByCountry = {
   jurisdictionIds: [],
   tilesets: [],
 };
-
+export const ราชอาณาจักรไทยAdmin0: JurisdictionsByCountry = {
+  ADMN0_EN: 'ราชอาณาจักรไทย',
+  ADMN0_PCODE: 'ราชอาณาจักรไทย',
+  bounds: [97.685, 15.117, 99.529, 17.917],
+  jurisdictionId: 'ef33a6d9-aaaa-44ad-91b7-583ab3fcdb22',
+  jurisdictionIds: [],
+};
 export const TakAdmin0: JurisdictionsByCountry = {
   ADMN0_EN: 'Tak',
   ADMN0_PCODE: 'Tak',
@@ -999,6 +1005,7 @@ export const CountriesAdmin0 = {
   TH: ThailandAdmin0,
   Tak: TakAdmin0,
   ZM: ZambiaAdmin0,
+  ราชอาณาจักรไทย: ราชอาณาจักรไทยAdmin0,
 };
 /** Columns for various Plans */
 /** complete reactive columns with no data */
