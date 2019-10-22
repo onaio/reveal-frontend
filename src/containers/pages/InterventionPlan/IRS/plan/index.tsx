@@ -20,7 +20,7 @@ import {
   SUPERSET_MAX_RECORDS,
 } from '../../../../../configs/env';
 import {
-  ASSIGN_IRS_PLAN_URL,
+  ASSIGN_PLAN_URL,
   DRAFT,
   HOME,
   HOME_URL,
@@ -2021,7 +2021,7 @@ class IrsPlan extends React.Component<
     };
     const basePage = {
       label: IRS_TITLE,
-      url: isDraftPlan ? INTERVENTION_IRS_URL : ASSIGN_IRS_PLAN_URL,
+      url: isDraftPlan ? INTERVENTION_IRS_URL : ASSIGN_PLAN_URL,
     };
     const urlPathAppend =
       (isFinalizedPlan && `${planId}`) || (isDraftPlan && `${DRAFT}/${planId}`) || NEW;
@@ -2088,7 +2088,7 @@ class IrsPlan extends React.Component<
                     this.props.fetchPlansActionCreator([planRecord]);
                     if (plan_status === PlanStatus.ACTIVE) {
                       // redirect to assingment page
-                      this.props.history.push(`${ASSIGN_IRS_PLAN_URL}/${plan_id}`);
+                      this.props.history.push(`${ASSIGN_PLAN_URL}/${plan_id}`);
                     }
                   }
                 });

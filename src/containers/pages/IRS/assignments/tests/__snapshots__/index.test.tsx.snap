@@ -47,17 +47,23 @@ Array [
     className="listview-td"
     key="1"
   >
-    Start Date
+    Intervention
   </th>,
   <th
     className="listview-td"
     key="2"
   >
-    End Date
+    Start Date
   </th>,
   <th
     className="listview-td"
     key="3"
+  >
+    End Date
+  </th>,
+  <th
+    className="listview-td"
+    key="4"
   >
     Plan Status
   </th>,
@@ -73,10 +79,10 @@ Array [
     <Link
       key="727c3d40-e118-564a-b231-aac633e6abce"
       replace={false}
-      to="/intervention/irs/assign/727c3d40-e118-564a-b231-aac633e6abce"
+      to="/assign/727c3d40-e118-564a-b231-aac633e6abce"
     >
       <a
-        href="/intervention/irs/assign/727c3d40-e118-564a-b231-aac633e6abce"
+        href="/assign/727c3d40-e118-564a-b231-aac633e6abce"
         onClick={[Function]}
       >
         IRS 2019-09-05 TEST
@@ -87,17 +93,23 @@ Array [
     className="listview-th"
     key="1"
   >
-    2019-09-05
+    IRS
   </td>,
   <td
     className="listview-th"
     key="2"
   >
-    2019-09-25
+    2019-09-05
   </td>,
   <td
     className="listview-th"
     key="3"
+  >
+    2019-09-25
+  </td>,
+  <td
+    className="listview-th"
+    key="4"
   >
     retired
   </td>,
@@ -108,10 +120,10 @@ Array [
     <Link
       key="02e358ed-87fe-5720-8782-0afe28cb7e8c"
       replace={false}
-      to="/intervention/irs/assign/02e358ed-87fe-5720-8782-0afe28cb7e8c"
+      to="/assign/02e358ed-87fe-5720-8782-0afe28cb7e8c"
     >
       <a
-        href="/intervention/irs/assign/02e358ed-87fe-5720-8782-0afe28cb7e8c"
+        href="/assign/02e358ed-87fe-5720-8782-0afe28cb7e8c"
         onClick={[Function]}
       >
         IRS 2019-08-30m
@@ -122,17 +134,23 @@ Array [
     className="listview-th"
     key="1"
   >
-    2019-08-30
+    IRS
   </td>,
   <td
     className="listview-th"
     key="2"
   >
-    2019-09-14
+    2019-08-30
   </td>,
   <td
     className="listview-th"
     key="3"
+  >
+    2019-09-14
+  </td>,
+  <td
+    className="listview-th"
+    key="4"
   >
     active
   </td>,
@@ -143,10 +161,10 @@ Array [
     <Link
       key="c6e59ec1-8c54-5fdf-acf3-ee3692983f38"
       replace={false}
-      to="/intervention/irs/assign/c6e59ec1-8c54-5fdf-acf3-ee3692983f38"
+      to="/assign/c6e59ec1-8c54-5fdf-acf3-ee3692983f38"
     >
       <a
-        href="/intervention/irs/assign/c6e59ec1-8c54-5fdf-acf3-ee3692983f38"
+        href="/assign/c6e59ec1-8c54-5fdf-acf3-ee3692983f38"
         onClick={[Function]}
       >
         Berg Namibia 2019
@@ -157,17 +175,23 @@ Array [
     className="listview-th"
     key="1"
   >
-    2019-08-29
+    IRS
   </td>,
   <td
     className="listview-th"
     key="2"
   >
-    2019-09-18
+    2019-08-29
   </td>,
   <td
     className="listview-th"
     key="3"
+  >
+    2019-09-18
+  </td>,
+  <td
+    className="listview-th"
+    key="4"
   >
     active
   </td>,
