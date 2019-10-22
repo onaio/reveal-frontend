@@ -1375,17 +1375,16 @@ Object {
         "circle-radius": Array [
           "interpolate",
           Array [
-            "linear",
+            "exponential",
+            2,
           ],
           Array [
             "zoom",
           ],
-          13.98,
-          10,
-          17.79,
-          10,
-          18.8,
-          15,
+          15.75,
+          2.5,
+          20.8,
+          50,
         ],
         "circle-stroke-color": Array [
           "get",
@@ -1444,17 +1443,16 @@ Object {
           "circle-radius": Array [
             "interpolate",
             Array [
-              "linear",
+              "exponential",
+              2,
             ],
             Array [
               "zoom",
             ],
-            13.98,
-            10,
-            17.79,
-            10,
-            18.8,
-            15,
+            15.75,
+            2.5,
+            20.8,
+            50,
           ],
           "circle-stroke-color": Array [
             "get",
@@ -3536,17 +3534,16 @@ Object {
         "circle-radius": Array [
           "interpolate",
           Array [
-            "linear",
+            "exponential",
+            2,
           ],
           Array [
             "zoom",
           ],
-          13.98,
-          10,
-          17.79,
-          10,
-          18.8,
-          15,
+          15.75,
+          2.5,
+          20.8,
+          50,
         ],
         "circle-stroke-color": Array [
           "get",
@@ -3605,17 +3602,16 @@ Object {
           "circle-radius": Array [
             "interpolate",
             Array [
-              "linear",
+              "exponential",
+              2,
             ],
             Array [
               "zoom",
             ],
-            13.98,
-            10,
-            17.79,
-            10,
-            18.8,
-            15,
+            15.75,
+            2.5,
+            20.8,
+            50,
           ],
           "circle-stroke-color": Array [
             "get",
@@ -4795,17 +4791,16 @@ Object {
         "circle-radius": Array [
           "interpolate",
           Array [
-            "linear",
+            "exponential",
+            2,
           ],
           Array [
             "zoom",
           ],
-          13.98,
-          10,
-          17.79,
-          10,
-          18.8,
-          15,
+          15.75,
+          2.5,
+          20.8,
+          50,
         ],
         "circle-stroke-color": Array [
           "get",
@@ -4864,17 +4859,16 @@ Object {
           "circle-radius": Array [
             "interpolate",
             Array [
-              "linear",
+              "exponential",
+              2,
             ],
             Array [
               "zoom",
             ],
-            13.98,
-            10,
-            17.79,
-            10,
-            18.8,
-            15,
+            15.75,
+            2.5,
+            20.8,
+            50,
           ],
           "circle-stroke-color": Array [
             "get",

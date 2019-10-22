@@ -191,7 +191,7 @@ describe('reducers/plans', () => {
     const planRecordsArray = [
       ...getPlanRecordsArray(store.getState()),
       ...getPlanRecordsArray(store.getState(), InterventionType.IRS),
-    ].sort((a: PlanRecord, b: PlanRecord) => Date.parse(a.plan_date) - Date.parse(b.plan_date));
+    ].sort((a: PlanRecord, b: PlanRecord) => Date.parse(b.plan_date) - Date.parse(a.plan_date));
     expect(planRecordsArray).toEqual(fixtures.sortedPlanRecordArray);
 
     const planId = '6c7904b2-c556-4004-a9b9-114617832954';

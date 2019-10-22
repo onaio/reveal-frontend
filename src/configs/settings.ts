@@ -664,7 +664,7 @@ export const circleLayerConfig = {
   paint: {
     'circle-color': '#FFDC00',
     'circle-opacity': 0.7,
-    'circle-radius': ['interpolate', ['linear'], ['zoom'], 13.98, 10, 17.79, 10, 18.8, 15],
+    'circle-radius': ['interpolate', ['exponential', 2], ['zoom'], 15.75, 2.5, 20.8, 50],
     'circle-stroke-width': 2,
   },
   source: {
@@ -976,6 +976,20 @@ export const LusakaAdmin0: JurisdictionsByCountry = {
   jurisdictionIds: [],
   tilesets: [],
 };
+export const ราชอาณาจักรไทยAdmin0: JurisdictionsByCountry = {
+  ADMN0_EN: 'ราชอาณาจักรไทย',
+  ADMN0_PCODE: 'ราชอาณาจักรไทย',
+  bounds: [97.685, 15.117, 99.529, 17.917],
+  jurisdictionId: 'ef33a6d9-aaaa-44ad-91b7-583ab3fcdb22',
+  jurisdictionIds: [],
+};
+export const TakAdmin0: JurisdictionsByCountry = {
+  ADMN0_EN: 'Tak',
+  ADMN0_PCODE: 'Tak',
+  bounds: [97.685, 15.117, 99.529, 17.917],
+  jurisdictionId: '5e37d232-d471-4ac1-b8a6-f5215a8aa117',
+  jurisdictionIds: [],
+};
 
 /** dictionary of JurisdictionsByCountry by country code */
 export const CountriesAdmin0 = {
@@ -989,7 +1003,9 @@ export const CountriesAdmin0 = {
   Siavonga: SiavongaAdmin0,
   Sinda: SindaAdmin0,
   TH: ThailandAdmin0,
+  Tak: TakAdmin0,
   ZM: ZambiaAdmin0,
+  ราชอาณาจักรไทย: ราชอาณาจักรไทยAdmin0,
 };
 /** Columns for various Plans */
 /** complete reactive columns with no data */
