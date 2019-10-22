@@ -977,6 +977,14 @@ export const LusakaAdmin0: JurisdictionsByCountry = {
   tilesets: [],
 };
 
+export const TakAdmin0: JurisdictionsByCountry = {
+  ADMN0_EN: 'Tak',
+  ADMN0_PCODE: 'Tak',
+  bounds: [97.685, 15.117, 99.529, 17.917],
+  jurisdictionId: '5e37d232-d471-4ac1-b8a6-f5215a8aa117',
+  jurisdictionIds: [],
+};
+
 /** dictionary of JurisdictionsByCountry by country code */
 export const CountriesAdmin0 = {
   BW: BotswanaAdmin0,
@@ -989,6 +997,7 @@ export const CountriesAdmin0 = {
   Siavonga: SiavongaAdmin0,
   Sinda: SindaAdmin0,
   TH: ThailandAdmin0,
+  Tak: TakAdmin0,
   ZM: ZambiaAdmin0,
 };
 /** Columns for various Plans */
