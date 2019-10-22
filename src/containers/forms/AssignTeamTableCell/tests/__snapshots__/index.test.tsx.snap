@@ -19,13 +19,7 @@ exports[`/containers/forms/AssignTeamTableCell renders correctly: AssignTeamButt
 
 exports[`/containers/forms/AssignTeamTableCell renders correctly: Team Count Text 1`] = `
 <span
-  className="assignment-count-text"
-  style={
-    Object {
-      "paddingRight": "2rem",
-    }
-  }
->
-  0 Teams Assigned
-</span>
+  className="assignment-label"
+  title="0 Teams Assigned"
+/>
 `;

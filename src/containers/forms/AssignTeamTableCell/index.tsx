@@ -19,6 +19,7 @@ import organizationsReducer, {
   reducerName as organizationsReducerName,
 } from '../../../store/ducks/opensrp/organizations';
 import { getButtonId, getFormName } from './helpers';
+import './style.css';
 
 reducerRegistry.register(assignmentReducerName, assignmentReducer);
 reducerRegistry.register(organizationsReducerName, organizationsReducer);
@@ -95,10 +96,20 @@ const AssignTeamTableCell = (props: AssignTeamCellProps) => {
     target: getButtonId(jurisdictionId),
   };
 
+  const assignedOrganizations = assignments
+    .map(
+      (a: Assignment) =>
+        organizationsById &&
+        organizationsById[a.organization] &&
+        organizationsById[a.organization].name
+    )
+    .filter(org => !!org)
+    .join(', ');
+
   return (
-    <div onClick={stopPropagationAndPreventDefault}>
-      <span style={{ paddingRight: '2rem' }} className="assignment-count-text">
-        {`${assignments.length} ${TEAMS_ASSIGNED}`}
+    <div onClick={stopPropagationAndPreventDefault} className="assignment-cell">
+      <span className="assignment-label" title={`${assignments.length} ${TEAMS_ASSIGNED}`}>
+        {assignedOrganizations}
       </span>
       {assignButton || <AssignTeamButton {...assignTeamButtonProps} />}
       {assignPopover || <AssignTeamPopover {...assignTeamPopoverProps} />}

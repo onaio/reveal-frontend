@@ -69,7 +69,7 @@ Object {
             color="secondary"
             nav={true}
           >
-            Planning
+            Plan
           </DropdownToggle>
           <DropdownMenu
             flip={true}
@@ -104,6 +104,18 @@ Object {
             </DropdownItem>
           </DropdownMenu>
         </UncontrolledDropdown>
+        <NavItem
+          tag="li"
+        >
+          <NavLink
+            activeClassName="active"
+            aria-current="page"
+            className="nav-link"
+            to="/assign"
+          >
+            Assign
+          </NavLink>
+        </NavItem>
         <UncontrolledDropdown
           inNavbar={true}
           nav={true}
@@ -115,7 +127,7 @@ Object {
             color="secondary"
             nav={true}
           >
-            Reporting
+            Monitor
           </DropdownToggle>
           <DropdownMenu
             flip={true}
@@ -154,42 +166,65 @@ Object {
             </div>
           </DropdownMenu>
         </UncontrolledDropdown>
-        <NavItem
-          tag="li"
+        <UncontrolledDropdown
+          inNavbar={true}
+          nav={true}
         >
-          <NavLink
-            activeClassName="active"
-            aria-current="page"
+          <DropdownToggle
+            aria-haspopup={true}
+            caret={true}
             className="nav-link"
-            to="/teams"
+            color="secondary"
+            nav={true}
           >
-            Teams
-          </NavLink>
-        </NavItem>
-        <NavItem
-          tag="li"
-        >
-          <NavLink
-            activeClassName="active"
-            aria-current="page"
-            className="nav-link"
-            to="/practitioners"
+            Admin
+          </DropdownToggle>
+          <DropdownMenu
+            flip={true}
+            right={true}
+            tag="div"
           >
-            Practitioners
-          </NavLink>
-        </NavItem>
-        <NavItem
-          tag="li"
-        >
-          <NavLink
-            activeClassName="active"
-            aria-current="page"
-            className="nav-link"
-            to="/404"
-          >
-            Users
-          </NavLink>
-        </NavItem>
+            <DropdownItem
+              tag="button"
+              toggle={true}
+            >
+              <NavLink
+                activeClassName="active"
+                aria-current="page"
+                className="nav-link"
+                to="/teams"
+              >
+                Teams
+              </NavLink>
+            </DropdownItem>
+            <DropdownItem
+              tag="button"
+              toggle={true}
+            >
+              <NavLink
+                activeClassName="active"
+                aria-current="page"
+                className="nav-link"
+                to="/practitioners"
+              >
+                Practitioners
+              </NavLink>
+            </DropdownItem>
+            <DropdownItem
+              tag="button"
+              toggle={true}
+            >
+              <NavLink
+                activeClassName="active"
+                aria-current="page"
+                className="nav-link"
+                to="/404"
+              >
+                Users
+              </NavLink>
+            </DropdownItem>
+          </DropdownMenu>
+        </UncontrolledDropdown>
         <NavItem
           tag="li"
         >
@@ -295,7 +330,7 @@ Object {
             color="secondary"
             nav={true}
           >
-            Planning
+            Plan
           </DropdownToggle>
           <DropdownMenu
             flip={true}
@@ -330,6 +365,18 @@ Object {
             </DropdownItem>
           </DropdownMenu>
         </UncontrolledDropdown>
+        <NavItem
+          tag="li"
+        >
+          <NavLink
+            activeClassName="active"
+            aria-current="page"
+            className="nav-link"
+            to="/assign"
+          >
+            Assign
+          </NavLink>
+        </NavItem>
         <UncontrolledDropdown
           inNavbar={true}
           nav={true}
@@ -341,7 +388,7 @@ Object {
             color="secondary"
             nav={true}
           >
-            Reporting
+            Monitor
           </DropdownToggle>
           <DropdownMenu
             flip={true}
@@ -380,42 +427,65 @@ Object {
             </div>
           </DropdownMenu>
         </UncontrolledDropdown>
-        <NavItem
-          tag="li"
+        <UncontrolledDropdown
+          inNavbar={true}
+          nav={true}
         >
-          <NavLink
-            activeClassName="active"
-            aria-current="page"
+          <DropdownToggle
+            aria-haspopup={true}
+            caret={true}
             className="nav-link"
-            to="/teams"
+            color="secondary"
+            nav={true}
           >
-            Teams
-          </NavLink>
-        </NavItem>
-        <NavItem
-          tag="li"
-        >
-          <NavLink
-            activeClassName="active"
-            aria-current="page"
-            className="nav-link"
-            to="/practitioners"
+            Admin
+          </DropdownToggle>
+          <DropdownMenu
+            flip={true}
+            right={true}
+            tag="div"
           >
-            Practitioners
-          </NavLink>
-        </NavItem>
-        <NavItem
-          tag="li"
-        >
-          <NavLink
-            activeClassName="active"
-            aria-current="page"
-            className="nav-link"
-            to="/404"
-          >
-            Users
-          </NavLink>
-        </NavItem>
+            <DropdownItem
+              tag="button"
+              toggle={true}
+            >
+              <NavLink
+                activeClassName="active"
+                aria-current="page"
+                className="nav-link"
+                to="/teams"
+              >
+                Teams
+              </NavLink>
+            </DropdownItem>
+            <DropdownItem
+              tag="button"
+              toggle={true}
+            >
+              <NavLink
+                activeClassName="active"
+                aria-current="page"
+                className="nav-link"
+                to="/practitioners"
+              >
+                Practitioners
+              </NavLink>
+            </DropdownItem>
+            <DropdownItem
+              tag="button"
+              toggle={true}
+            >
+              <NavLink
+                activeClassName="active"
+                aria-current="page"
+                className="nav-link"
+                to="/404"
+              >
+                Users
+              </NavLink>
+            </DropdownItem>
+          </DropdownMenu>
+        </UncontrolledDropdown>
         <NavItem
           tag="li"
         >

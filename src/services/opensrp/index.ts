@@ -4,7 +4,7 @@ import store from '../../store';
 import { getAccessToken } from '../../store/selectors';
 
 /** allowed http methods */
-type HTTPMethod = 'GET' | 'POST' | 'PUT';
+type HTTPMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
 
 /** get default HTTP headers for OpenSRP service */
 export function getDefaultHeaders(
@@ -187,5 +187,25 @@ export class OpenSRPService {
     }
 
     return await response.json();
+  }
+
+  /** delete method
+   * Send a DELETE request to the general endpoint
+   * Successful requests will result in a HTTP status 204
+   * @param {params} params - the url params object
+   * @param {HTTPMethod} method - the HTTP method
+   * @returns the object returned by API
+   */
+  public async delete<T>(params: paramsType = null, method: HTTPMethod = 'DELETE') {
+    const url = getURL(this.generalURL, params);
+    const response = await fetch(url, getPayload(method));
+
+    if (response.ok || response.status === 204 || response.status === 200) {
+      return {};
+    } else {
+      throw new Error(
+        `OpenSRPService delete on ${this.endpoint} failed, HTTP status ${response.status}`
+      );
+    }
   }
 }
