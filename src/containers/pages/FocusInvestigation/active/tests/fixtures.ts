@@ -98,7 +98,7 @@ export const activeFocusInvestigationProps = {
       plan_date: '2019-06-18',
       plan_effective_period_end: '2019-06-18',
       plan_effective_period_start: '2019-07-31',
-      plan_fi_reason: 'Case-triggered',
+      plan_fi_reason: 'Case Triggered',
       plan_fi_status: 'A1',
       plan_id: 'plan-id-2',
       plan_intervention_type: 'IRS',

@@ -263,7 +263,7 @@ describe('helpers/utils', () => {
       district: 'Mueng Trat District 2',
       focusArea: 'Tha Sen 8',
       province: 'Trat 2',
-      reason: 'Case-triggered',
+      reason: 'Case Triggered',
       status: 'A1',
       village: 'Laem Klat Moo 8',
     });
