@@ -427,7 +427,7 @@ export function getPlansArray(
   );
 }
 
-/** getPlansIdArray - get an array of Plan ids by intervention type
+/** getPlansIdArray - get an array of Plan ids
  * @param {Partial<Store>} state - the redux store
  * @param {InterventionType} intervention - the intervention type
  * @param {string[]} statusList - the plan statuses
@@ -435,7 +435,7 @@ export function getPlansArray(
  */
 export function getPlansIdArray(
   state: Partial<Store>,
-  intervention: InterventionType = InterventionType.FI,
+  intervention: InterventionType | null = null,
   statusList: string[] = [PlanStatus.ACTIVE],
   reason: string | null = null
 ): string[] {

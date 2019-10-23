@@ -74,7 +74,10 @@ describe('reducers/plans', () => {
     expect(getPlansById(store.getState(), InterventionType.FI, [], null)).toEqual(fiPlans);
     expect(getPlansById(store.getState(), InterventionType.IRS, [], null)).toEqual(irsPlans);
 
-    expect(getPlansIdArray(store.getState())).toEqual(['ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f']);
+    expect(getPlansIdArray(store.getState())).toEqual([
+      'ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f',
+      'plan-id-2',
+    ]);
     expect(getPlansIdArray(store.getState(), InterventionType.IRS)).toEqual(['plan-id-2']);
 
     expect(getPlansArray(store.getState(), InterventionType.FI, [], null)).toEqual(values(fiPlans));
