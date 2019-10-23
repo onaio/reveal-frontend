@@ -15,7 +15,6 @@ import { FlexObject, transformValues } from '../../helpers/utils';
 /** the reducer name */
 export const reducerName = 'plans';
 
-// todo: add '*' as any?
 /** Enum representing the possible intervention types */
 export enum InterventionType {
   FI = 'FI',
@@ -174,7 +173,7 @@ export enum PlanEventType {
   UPDATE = 'Update Plan',
 }
 
-/** PlanEvent - interface for pload used when logging create/update Plan events */
+/** PlanEvent - interface for upload used when logging create/update Plan events */
 export interface PlanEventPayload {
   baseEntityId: string;
   dateCreated: string;
