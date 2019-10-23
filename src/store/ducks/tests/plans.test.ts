@@ -61,17 +61,15 @@ describe('reducers/plans', () => {
         plan.plan_intervention_type === InterventionType.FI && plan.plan_fi_reason === FIReasons[0]
     );
 
-    const filteredByJurisdictionPlans = values(
-      cloneDeep(routinePlans).filter(
-        (plan: Plan) => plan.jurisdiction_id === '450fc15b-5bd2-468a-927a-49cb10d3bcac'
-      )
-    );
-
     const reactivePlans = values(cloneDeep(store.getState().plans.plansById)).filter(
-      (plan: Plan) => plan.plan_fi_reason === FIReasons[1]
+      (plan: Plan) =>
+        plan.plan_intervention_type === InterventionType.FI && plan.plan_fi_reason === FIReasons[1]
     );
     const reactiveDraftPlans = values(cloneDeep(store.getState().plans.plansById)).filter(
-      (plan: Plan) => plan.plan_fi_reason === FIReasons[1] && plan.plan_status === 'draft'
+      (plan: Plan) =>
+        plan.plan_intervention_type === InterventionType.FI &&
+        plan.plan_fi_reason === FIReasons[1] &&
+        plan.plan_status === 'draft'
     );
     expect(getPlansById(store.getState(), InterventionType.FI, [], null)).toEqual(fiPlans);
     expect(getPlansById(store.getState(), InterventionType.IRS, [], null)).toEqual(irsPlans);
@@ -83,6 +81,7 @@ describe('reducers/plans', () => {
     expect(getPlansArray(store.getState(), InterventionType.IRS, [], null)).toEqual(
       values(irsPlans)
     );
+
     expect(getPlansArray(store.getState(), InterventionType.FI, [], FIReasons[1])).toEqual(
       values(reactivePlans)
     );
@@ -137,7 +136,7 @@ describe('reducers/plans', () => {
         e.plan_fi_reason === FIReasons[0] &&
         e.jurisdiction_path.includes('2939')
     );
-    // filter case-triggered irs plans based on a location
+    // filter Case Triggered irs plans based on a location
     const filteredCaseTriggeredIRSPlans = pickBy(
       allPlans,
       (e: Plan) =>
@@ -259,7 +258,7 @@ describe('reducers/plans', () => {
         store.getState(),
         InterventionType.IRS,
         [PlanStatus.ACTIVE],
-        'Case-triggered',
+        'Case Triggered',
         [],
         'some-jurisdiction-id'
       )
@@ -270,7 +269,7 @@ describe('reducers/plans', () => {
         store.getState(),
         InterventionType.IRS,
         [PlanStatus.ACTIVE],
-        'Case-triggered',
+        'Case Triggered',
         [],
         null
       )
