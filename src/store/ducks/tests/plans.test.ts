@@ -179,7 +179,7 @@ describe('reducers/plans', () => {
 
     const fiRecordPlanIds = keys(fiPlanRecords);
     const irsRecordPlansIds = keys(irsPlanRecords);
-    expect(getPlanRecordsIdArray(store.getState())).toEqual(fiRecordPlanIds);
+    expect(getPlanRecordsIdArray(store.getState(), InterventionType.FI)).toEqual(fiRecordPlanIds);
     expect(getPlanRecordsIdArray(store.getState(), InterventionType.IRS)).toEqual(
       irsRecordPlansIds
     );

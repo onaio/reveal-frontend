@@ -500,7 +500,7 @@ export function getPlanRecordsArray(
  */
 export function getPlanRecordsIdArray(
   state: Partial<Store>,
-  intervention: InterventionType = InterventionType.FI,
+  intervention: InterventionType | null = null,
   statusList: string[] = [PlanStatus.ACTIVE],
   reason: string | null = null
 ): string[] {
