@@ -222,21 +222,21 @@ describe('reducers/plans', () => {
 
   it('resets plansById records', () => {
     store.dispatch(removePlansAction);
-    let numberOfPlansInStore = getPlansArray(store.getState(), undefined, []).length;
+    let numberOfPlansInStore = getPlansArray(store.getState(), null, []).length;
     expect(numberOfPlansInStore).toEqual(0);
 
     store.dispatch(fetchPlans([fixtures.plan3] as any));
-    numberOfPlansInStore = getPlansArray(store.getState(), undefined, []).length;
+    numberOfPlansInStore = getPlansArray(store.getState(), null, []).length;
     expect(numberOfPlansInStore).toEqual(1);
 
     store.dispatch(removePlansAction);
-    numberOfPlansInStore = getPlansArray(store.getState(), undefined, []).length;
+    numberOfPlansInStore = getPlansArray(store.getState(), null, []).length;
     expect(numberOfPlansInStore).toEqual(0);
   });
 
   it('Concatenates new plans to existing plans after fetching', () => {
     store.dispatch(removePlansAction);
-    let numberOfPlansInStore = getPlansArray(store.getState(), undefined, []).length;
+    let numberOfPlansInStore = getPlansArray(store.getState(), null, []).length;
     expect(numberOfPlansInStore).toEqual(0);
     store.dispatch(fetchPlans([fixtures.plan3] as any));
     let plan3FromStore = getPlanById(store.getState(), '1502e539');

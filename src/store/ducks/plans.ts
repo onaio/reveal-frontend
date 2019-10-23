@@ -376,7 +376,7 @@ export const fetchPlanRecords = (planList: PlanRecordResponse[] = []): FetchPlan
 
 // selectors
 
-/** getPlansById - get plansById by intervention type
+/** getPlansById - get plansById
  * @param {Partial<Store>} state - the redux store
  * @param {InterventionType} intervention - the intervention type
  * @param {string[]} statusList - the plan statuses
@@ -384,7 +384,7 @@ export const fetchPlanRecords = (planList: PlanRecordResponse[] = []): FetchPlan
  */
 export function getPlansById(
   state: Partial<Store>,
-  intervention: InterventionType = InterventionType.FI,
+  intervention: InterventionType | null = null,
   statusList: string[] = [PlanStatus.ACTIVE],
   reason: string | null = null
 ): { [key: string]: Plan } {
@@ -392,13 +392,13 @@ export function getPlansById(
   return pickBy(
     plansById,
     (plan: Plan) =>
-      plan.plan_intervention_type === intervention &&
+      (intervention ? plan.plan_intervention_type === intervention : true) &&
       (statusList.length ? statusList.includes(plan.plan_status) : true) &&
       (reason ? plan.plan_fi_reason === reason : true)
   );
 }
 
-/** getPlansArray - get an array of Plans by intervention type
+/** getPlansArray - get an array of Plans
  * @param {Partial<Store>} state - the redux store
  * @param {InterventionType} intervention - the intervention type
  * @param {string[]} statusList - a list of the desired the plan statuses
@@ -408,7 +408,7 @@ export function getPlansById(
  */
 export function getPlansArray(
   state: Partial<Store>,
-  intervention: InterventionType = InterventionType.FI,
+  intervention: InterventionType | null = null,
   statusList: string[] = [],
   reason: string | null = null,
   jurisdictions: string[] = [],
@@ -416,7 +416,7 @@ export function getPlansArray(
 ): Plan[] {
   return values((state as any)[reducerName].plansById).filter(
     (plan: Plan) =>
-      plan.plan_intervention_type === intervention &&
+      (intervention ? plan.plan_intervention_type === intervention : true) &&
       (statusList.length ? statusList.includes(plan.plan_status) : true) &&
       (reason ? plan.plan_fi_reason === reason : true) &&
       (jurisdictions.length ? jurisdictions.includes(plan.jurisdiction_id) : true) &&
