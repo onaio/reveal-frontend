@@ -186,15 +186,14 @@ describe('reducers/plans', () => {
 
     const fiPlanRecordsArray = values(fiPlanRecords);
     const irsPlanRecordsArray = values(irsPlanRecords);
-    expect(getPlanRecordsArray(store.getState())).toEqual(fiPlanRecordsArray);
+    expect(getPlanRecordsArray(store.getState(), InterventionType.FI)).toEqual(fiPlanRecordsArray);
     expect(getPlanRecordsArray(store.getState(), InterventionType.IRS)).toEqual(
       irsPlanRecordsArray
     );
 
-    const planRecordsArray = [
-      ...getPlanRecordsArray(store.getState()),
-      ...getPlanRecordsArray(store.getState(), InterventionType.IRS),
-    ].sort((a: PlanRecord, b: PlanRecord) => Date.parse(b.plan_date) - Date.parse(a.plan_date));
+    const planRecordsArray = [...getPlanRecordsArray(store.getState())].sort(
+      (a: PlanRecord, b: PlanRecord) => Date.parse(a.plan_date) - Date.parse(b.plan_date)
+    );
     expect(planRecordsArray).toEqual(fixtures.sortedPlanRecordArray);
 
     const planId = '6c7904b2-c556-4004-a9b9-114617832954';
