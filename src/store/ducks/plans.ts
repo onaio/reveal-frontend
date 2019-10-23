@@ -450,7 +450,7 @@ export function getPlanById(state: Partial<Store>, id: string): Plan | null {
   return get((state as any)[reducerName].plansById, id) || null;
 }
 
-/** getPlanRecordsById - get planRecordsById by intervention type
+/** getPlanRecordsById - get planRecordsById
  * @param {Partial<Store>} state - the redux store
  * @param {InterventionType} intervention - the intervention type
  * @param {string[]} statusList - the plan statuses
@@ -458,7 +458,7 @@ export function getPlanById(state: Partial<Store>, id: string): Plan | null {
  */
 export function getPlanRecordsById(
   state: Partial<Store>,
-  intervention: InterventionType = InterventionType.FI,
+  intervention: InterventionType | null = null,
   statusList: string[] = [PlanStatus.ACTIVE],
   reason: string | null = null
 ): { [key: string]: PlanRecord } {
@@ -466,7 +466,7 @@ export function getPlanRecordsById(
   return pickBy(
     planRecordsById,
     (plan: PlanRecord) =>
-      plan.plan_intervention_type === intervention &&
+      (intervention ? plan.plan_intervention_type === intervention : true) &&
       (statusList.length ? statusList.includes(plan.plan_status) : true) &&
       (reason ? plan.plan_fi_reason === reason : true)
   );

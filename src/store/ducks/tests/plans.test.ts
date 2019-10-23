@@ -174,7 +174,7 @@ describe('reducers/plans', () => {
       allPlanRecords,
       (e: PlanRecord) => e.plan_intervention_type === InterventionType.IRS
     );
-    expect(getPlanRecordsById(store.getState())).toEqual(fiPlanRecords);
+    expect(getPlanRecordsById(store.getState(), InterventionType.FI)).toEqual(fiPlanRecords);
     expect(getPlanRecordsById(store.getState(), InterventionType.IRS)).toEqual(irsPlanRecords);
 
     const fiRecordPlanIds = keys(fiPlanRecords);
