@@ -17,6 +17,7 @@ import reducer, {
   InterventionType,
   Plan,
   PlanRecord,
+  PlanRecordResponse,
   PlanStatus,
   reducerName,
   removePlansAction,
@@ -160,7 +161,7 @@ describe('reducers/plans', () => {
   });
 
   it('should fetch PlanRecords', () => {
-    store.dispatch(fetchPlanRecords(fixtures.planRecordResponses));
+    store.dispatch(fetchPlanRecords(fixtures.planRecordResponses as PlanRecordResponse[]));
     const { planRecordsById: allPlanRecords } = fixtures;
 
     const fiPlanRecords = pickBy(
