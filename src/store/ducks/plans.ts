@@ -51,8 +51,8 @@ export interface PlanRecord {
   plan_date: string;
   plan_effective_period_end: string;
   plan_effective_period_start: string;
-  plan_fi_reason: FIReasonType;
-  plan_fi_status: FIStatusType;
+  plan_fi_reason: FIReasonType | '';
+  plan_fi_status: FIStatusType | '';
   plan_id: string;
   plan_intervention_type: InterventionType;
   plan_status: PlanStatus;
