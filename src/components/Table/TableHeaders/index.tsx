@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { Button, Col, Row } from 'reactstrap';
-import { CASE_TRIGGERED, NEW_PLAN_URL, REACTIVE, ROUTINE } from '../../../constants';
+import { Col, Row } from 'reactstrap';
+import { CASE_TRIGGERED, REACTIVE, ROUTINE } from '../../../constants';
 import { Plan } from '../../../store/ducks/plans';
 import LinkAsButton from '../../LinkAsButton';
 /** Interface to describe props for TableHeader components  */
