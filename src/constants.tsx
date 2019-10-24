@@ -215,6 +215,10 @@ export const NO_PLANS_LOADED_MESSAGE = 'No plans found...';
 export type NO_PLANS_LOADED_MESSAGE = typeof NO_PLANS_LOADED_MESSAGE;
 export const SELECT_USERNAME = 'Select username';
 export type SELECT_USERNAME = typeof SELECT_USERNAME;
+export const TO = 'To';
+export type TO = typeof TO;
+export const NO_PRACTITIONERS_ADDED_YET = 'No Practitioners Added yet';
+export type NO_PRACTITIONERS_ADDED_YET = typeof NO_PRACTITIONERS_ADDED_YET;
 
 // TODO ? - do the below 2 belong here or in a settings file
 export const ORGANIZATION_LABEL = TEAM;
@@ -300,6 +304,8 @@ export const ASSIGN_ORGANIZATION_URL = '/plans/teamAssignment';
 export type ASSIGN_ORGANIZATION_URL = typeof ASSIGN_ORGANIZATION_URL;
 export const PRACTITIONERS_LIST_URL = '/practitioners';
 export type PRACTITIONERS_LIST_URL = typeof PRACTITIONERS_LIST_URL;
+export const ASSIGN_PRACTITIONERS_URL = '/teams/assignPractitioners';
+export type ASSIGN_PRACTITIONERS_URL = typeof ASSIGN_ORGANIZATION_URL;
 
 // OpenSRP API strings
 export const OPENSRP_PRACTITIONER_ENDPOINT = 'practitioner';
@@ -324,6 +330,8 @@ export const OPENSRP_ORG_PRACTITIONER_ENDPOINT = 'organization/practitioner';
 export type OPENSRP_ORG_PRACTITIONER_ENDPOINT = typeof OPENSRP_ORG_PRACTITIONER_ENDPOINT;
 export const OPENSRP_DEL_PRACTITIONER_ROLE_ENDPOINT = 'practitionerRole/deleteByPractitioner';
 export type OPENSRP_DEL_PRACTITIONER_ROLE_ENDPOINT = typeof OPENSRP_DEL_PRACTITIONER_ROLE_ENDPOINT;
+export const OPENSRP_ADD_PRACTITIONER_ROLE_ENDPOINT = 'practitionerRole/add';
+export type OPENSRP_ADD_PRACTITIONER_ROLE_ENDPOINT = typeof OPENSRP_ADD_PRACTITIONER_ROLE_ENDPOINT;
 
 // container pages title names
 export const HOME_TITLE = `Home page`;
@@ -358,3 +366,8 @@ export const BLOOD_SCREENING_CODE = 'Blood Screening';
 export type BLOOD_SCREENING_CODE = typeof BLOOD_SCREENING_CODE;
 export const IRS_CODE = 'IRS';
 export type IRS_CODE = typeof IRS_CODE;
+
+export const PRACTITIONER_CODE = {
+  text: 'Community Health Worker',
+};
+export type PRACTITIONER_CODE = typeof PRACTITIONER_CODE;

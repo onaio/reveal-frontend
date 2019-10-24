@@ -1354,3 +1354,4 @@ export const assignments = [assignment1, assignment2, assignment3, assignment4];
 
 export const practitioners: Practitioner[] = [practitioner1, practitioner2, practitioner3];
 export const org3Practitioners: Practitioner[] = [practitioner4, practitioner5, practitioner6];
+export const allPractitioners = [...practitioners, ...org3Practitioners];
