@@ -23,7 +23,6 @@ import IRSPlansReducer, {
 import {
   extractPlanRecordResponseFromPlanPayload,
   fetchPlanRecords,
-  getPlanRecordById,
   getPlanRecordsArray,
   InterventionType,
   PlanRecord,

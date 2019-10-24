@@ -303,7 +303,7 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
             },
             Object {
               "code": "fiReason",
-              "valueCodableConcept": "Case-triggered",
+              "valueCodableConcept": "Routine",
             },
           ],
           "version": "1",
@@ -734,7 +734,7 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
             },
             Object {
               "code": "fiReason",
-              "valueCodableConcept": "Case-triggered",
+              "valueCodableConcept": "Routine",
             },
           ],
         },

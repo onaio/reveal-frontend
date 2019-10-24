@@ -19,7 +19,6 @@ import {
   HOME_URL,
   INTERVENTION_IRS_DRAFTS_URL,
   INTERVENTION_IRS_URL,
-  IRS_PLAN_TYPE,
   NEW,
   PLAN,
   REPORT,
@@ -106,7 +105,7 @@ class IrsPlans extends React.Component<IrsPlansProps & RouteComponentProps<Route
           const irsPlans = plans.filter((p: PlanPayload) => {
             for (const u of p.useContext) {
               if (u.code === useContextCodes[0]) {
-                if (u.valueCodableConcept === IRS_PLAN_TYPE) {
+                if (u.valueCodableConcept === InterventionType.IRS) {
                   return true;
                 } else {
                   return false;

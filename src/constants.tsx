@@ -1,4 +1,5 @@
-import { Marker } from 'mapbox-gl';
+import { FIReasons } from './configs/settings';
+import { FIReasonType } from './containers/forms/PlanForm/types';
 
 // strings
 export const MAP = 'map';
@@ -99,10 +100,8 @@ export const STRUCTURES = 'structure(s)';
 export type STRUCTURES = typeof STRUCTURES;
 export const PERSONS = 'person(s)';
 export type PERSONS = typeof PERSONS;
-export const CASE_TRIGGERED = 'Case-triggered';
-export type CASE_TRIGGERED = typeof CASE_TRIGGERED;
-export const ROUTINE = 'Routine';
-export type ROUTINE = typeof ROUTINE;
+export const CASE_TRIGGERED: FIReasonType = FIReasons[1];
+export const ROUTINE: FIReasonType = FIReasons[0];
 export const REACTIVE = 'Reactive';
 export type REACTIVE = typeof REACTIVE;
 export const REQUIRED = 'Required';
@@ -357,13 +356,3 @@ export const BLOOD_SCREENING_CODE = 'Blood Screening';
 export type BLOOD_SCREENING_CODE = typeof BLOOD_SCREENING_CODE;
 export const IRS_CODE = 'IRS';
 export type IRS_CODE = typeof IRS_CODE;
-
-// plans
-export const ROUTINE_PLAN = 'Routine';
-export type ROUTINE_PLAN = typeof ROUTINE_PLAN;
-export const CASE_TRIGGERED_PLAN = 'Case-triggered';
-export type CASE_TRIGGERED_PLAN = typeof CASE_TRIGGERED_PLAN;
-export const FI_PLAN_TYPE = 'FI';
-export type FI_PLAN_TYPE = typeof FI_PLAN_TYPE;
-export const IRS_PLAN_TYPE = 'IRS';
-export type IRS_PLAN_TYPE = typeof IRS_PLAN_TYPE;

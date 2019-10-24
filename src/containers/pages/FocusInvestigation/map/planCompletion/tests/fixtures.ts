@@ -211,7 +211,7 @@ export const payload = {
       },
       {
         code: 'fiReason',
-        valueCodableConcept: 'Case-triggered',
+        valueCodableConcept: 'Case Triggered',
       },
     ],
     version: '1',

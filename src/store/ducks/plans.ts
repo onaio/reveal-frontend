@@ -2,13 +2,19 @@ import { get, keyBy, keys, pickBy, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
 import SeamlessImmutable from 'seamless-immutable';
 import uuidv4 from 'uuid/v4';
-import { PlanAction, planActivities, PlanGoal } from '../../configs/settings';
+import {
+  FIReasons,
+  FIStatuses,
+  PlanAction,
+  planActivities,
+  PlanGoal,
+} from '../../configs/settings';
+import { FIReasonType, FIStatusType } from '../../containers/forms/PlanForm/types';
 import { FlexObject, transformValues } from '../../helpers/utils';
 
 /** the reducer name */
 export const reducerName = 'plans';
 
-// todo: add '*' as any?
 /** Enum representing the possible intervention types */
 export enum InterventionType {
   FI = 'FI',
@@ -29,10 +35,10 @@ export interface PlanRecordResponse {
   effective_period_end: string;
   effective_period_start: string;
   identifier: string;
-  intervention_type: string;
+  intervention_type: InterventionType;
   jurisdictions?: string[];
-  fi_reason: string;
-  fi_status: string;
+  fi_reason: FIReasonType;
+  fi_status: FIStatusType;
   name: string;
   status: string;
   title: string;
@@ -45,8 +51,8 @@ export interface PlanRecord {
   plan_date: string;
   plan_effective_period_end: string;
   plan_effective_period_start: string;
-  plan_fi_reason: string;
-  plan_fi_status: string;
+  plan_fi_reason: FIReasonType | '';
+  plan_fi_status: FIStatusType | '';
   plan_id: string;
   plan_intervention_type: InterventionType;
   plan_status: PlanStatus;
@@ -167,7 +173,7 @@ export enum PlanEventType {
   UPDATE = 'Update Plan',
 }
 
-/** PlanEvent - interface for pload used when logging create/update Plan events */
+/** PlanEvent - interface for upload used when logging create/update Plan events */
 export interface PlanEventPayload {
   baseEntityId: string;
   dateCreated: string;
@@ -199,21 +205,21 @@ export const extractPlanRecordResponseFromPlanPayload = (
   const { date, effectivePeriod, identifier, status, title, useContext, version } = planPayload;
   if (useContext && effectivePeriod) {
     const { end, start } = effectivePeriod;
-    let planInterventionType = '';
-    let planFiReason = '';
-    let planFiStatus = '';
+    let planInterventionType = InterventionType.FI;
+    let planFiReason: FIReasonType = FIReasons[0];
+    let planFiStatus: FIStatusType = FIStatuses[0];
     for (const context of useContext) {
       switch (context.code) {
         case 'interventionType': {
-          planInterventionType = context.valueCodableConcept;
+          planInterventionType = context.valueCodableConcept as InterventionType;
           break;
         }
         case 'fiReason': {
-          planFiReason = context.valueCodableConcept;
+          planFiReason = context.valueCodableConcept as FIReasonType;
           break;
         }
         case 'fiStatus': {
-          planFiStatus = context.valueCodableConcept;
+          planFiStatus = context.valueCodableConcept as FIStatusType;
           break;
         }
       }
@@ -239,58 +245,6 @@ export const extractPlanRecordResponseFromPlanPayload = (
   return null;
 };
 
-/** extractPlanRecordFromPlanPayload - translates PlanPayload to PlanRecord */
-export const extractPlanRecordFromPlanPayload = (planPayload: PlanPayload): PlanRecord | null => {
-  const {
-    date,
-    effectivePeriod,
-    identifier,
-    status,
-    title,
-    useContext,
-    version,
-  } = planPayload as PlanPayload;
-
-  if (useContext && effectivePeriod) {
-    const { end, start } = effectivePeriod;
-    let planInterventionType = '';
-    let planFiReason = '';
-    let planFiStatus = '';
-    for (const context of useContext) {
-      switch (context.code) {
-        case 'interventionType': {
-          planInterventionType = context.valueCodableConcept;
-          break;
-        }
-        case 'fiReason': {
-          planFiReason = context.valueCodableConcept;
-          break;
-        }
-        case 'fiStatus': {
-          planFiStatus = context.valueCodableConcept;
-          break;
-        }
-      }
-    }
-    if (planInterventionType.length) {
-      const planRecord: PlanRecord = {
-        id: identifier,
-        plan_date: date,
-        plan_effective_period_end: end,
-        plan_effective_period_start: start,
-        plan_fi_reason: planFiReason,
-        plan_fi_status: planFiStatus,
-        plan_id: identifier,
-        plan_intervention_type: planInterventionType as InterventionType,
-        plan_status: status as PlanStatus,
-        plan_title: title,
-        plan_version: version,
-      };
-      return planRecord;
-    }
-  }
-  return null;
-};
 // actions
 /** PLANS_FETCHED action type */
 export const PLANS_FETCHED = 'reveal/reducer/plans/PLANS_FETCHED';
@@ -392,7 +346,7 @@ export const fetchPlans = (plansList: Plan[] = []): FetchPlansAction => ({
 });
 
 /** fetchPlanRecords - action creator setting planRecordsById
- * @param {PlanRecord[]} planList - an array of plan record obejcts
+ * @param {PlanRecord[]} planList - an array of plan record objects
  */
 export const fetchPlanRecords = (planList: PlanRecordResponse[] = []): FetchPlanRecordsAction => ({
   planRecordsById: keyBy(

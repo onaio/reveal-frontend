@@ -30,7 +30,7 @@ export const plansListResponse = [
       },
       {
         code: 'fiReason',
-        valueCodableConcept: 'Case-triggered',
+        valueCodableConcept: 'Case Triggered',
       },
     ],
     jurisdiction: [
@@ -247,7 +247,7 @@ export const plansListResponse = [
       },
       {
         code: 'fiReason',
-        valueCodableConcept: 'Case-triggered',
+        valueCodableConcept: 'Case Triggered',
       },
     ],
     jurisdiction: [
@@ -537,7 +537,7 @@ export const createPlan = {
     },
     {
       code: 'fiReason',
-      valueCodableConcept: 'Case-triggered',
+      valueCodableConcept: 'Case Triggered',
     },
   ],
   jurisdiction: [
