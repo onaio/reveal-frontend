@@ -74,7 +74,10 @@ describe('reducers/plans', () => {
     expect(getPlansById(store.getState(), InterventionType.FI, [], null)).toEqual(fiPlans);
     expect(getPlansById(store.getState(), InterventionType.IRS, [], null)).toEqual(irsPlans);
 
-    expect(getPlansIdArray(store.getState())).toEqual(['ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f']);
+    expect(getPlansIdArray(store.getState())).toEqual([
+      'ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f',
+      'plan-id-2',
+    ]);
     expect(getPlansIdArray(store.getState(), InterventionType.IRS)).toEqual(['plan-id-2']);
 
     expect(getPlansArray(store.getState(), InterventionType.FI, [], null)).toEqual(values(fiPlans));
@@ -171,27 +174,26 @@ describe('reducers/plans', () => {
       allPlanRecords,
       (e: PlanRecord) => e.plan_intervention_type === InterventionType.IRS
     );
-    expect(getPlanRecordsById(store.getState())).toEqual(fiPlanRecords);
+    expect(getPlanRecordsById(store.getState(), InterventionType.FI)).toEqual(fiPlanRecords);
     expect(getPlanRecordsById(store.getState(), InterventionType.IRS)).toEqual(irsPlanRecords);
 
     const fiRecordPlanIds = keys(fiPlanRecords);
     const irsRecordPlansIds = keys(irsPlanRecords);
-    expect(getPlanRecordsIdArray(store.getState())).toEqual(fiRecordPlanIds);
+    expect(getPlanRecordsIdArray(store.getState(), InterventionType.FI)).toEqual(fiRecordPlanIds);
     expect(getPlanRecordsIdArray(store.getState(), InterventionType.IRS)).toEqual(
       irsRecordPlansIds
     );
 
     const fiPlanRecordsArray = values(fiPlanRecords);
     const irsPlanRecordsArray = values(irsPlanRecords);
-    expect(getPlanRecordsArray(store.getState())).toEqual(fiPlanRecordsArray);
+    expect(getPlanRecordsArray(store.getState(), InterventionType.FI)).toEqual(fiPlanRecordsArray);
     expect(getPlanRecordsArray(store.getState(), InterventionType.IRS)).toEqual(
       irsPlanRecordsArray
     );
 
-    const planRecordsArray = [
-      ...getPlanRecordsArray(store.getState()),
-      ...getPlanRecordsArray(store.getState(), InterventionType.IRS),
-    ].sort((a: PlanRecord, b: PlanRecord) => Date.parse(b.plan_date) - Date.parse(a.plan_date));
+    const planRecordsArray = [...getPlanRecordsArray(store.getState())].sort(
+      (a: PlanRecord, b: PlanRecord) => Date.parse(b.plan_date) - Date.parse(a.plan_date)
+    );
     expect(planRecordsArray).toEqual(fixtures.sortedPlanRecordArray);
 
     const planId = '6c7904b2-c556-4004-a9b9-114617832954';
@@ -222,21 +224,21 @@ describe('reducers/plans', () => {
 
   it('resets plansById records', () => {
     store.dispatch(removePlansAction);
-    let numberOfPlansInStore = getPlansArray(store.getState(), undefined, []).length;
+    let numberOfPlansInStore = getPlansArray(store.getState(), null, []).length;
     expect(numberOfPlansInStore).toEqual(0);
 
     store.dispatch(fetchPlans([fixtures.plan3] as any));
-    numberOfPlansInStore = getPlansArray(store.getState(), undefined, []).length;
+    numberOfPlansInStore = getPlansArray(store.getState(), null, []).length;
     expect(numberOfPlansInStore).toEqual(1);
 
     store.dispatch(removePlansAction);
-    numberOfPlansInStore = getPlansArray(store.getState(), undefined, []).length;
+    numberOfPlansInStore = getPlansArray(store.getState(), null, []).length;
     expect(numberOfPlansInStore).toEqual(0);
   });
 
   it('Concatenates new plans to existing plans after fetching', () => {
     store.dispatch(removePlansAction);
-    let numberOfPlansInStore = getPlansArray(store.getState(), undefined, []).length;
+    let numberOfPlansInStore = getPlansArray(store.getState(), null, []).length;
     expect(numberOfPlansInStore).toEqual(0);
     store.dispatch(fetchPlans([fixtures.plan3] as any));
     let plan3FromStore = getPlanById(store.getState(), '1502e539');
