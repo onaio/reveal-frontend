@@ -15,8 +15,10 @@ import {
   ACTIVE_IRS_PLAN_URL,
   ASSIGN_PLAN_URL,
   CREATE_ORGANIZATION_URL,
+  CREATE_PRACTITIONER_URL,
   DRAFT_IRS_PLAN_URL,
   EDIT_ORGANIZATION_URL,
+  EDIT_PRACTITIONER_URL,
   FI_FILTER_URL,
   FI_SINGLE_MAP_URL,
   FI_SINGLE_URL,
@@ -55,7 +57,9 @@ import ConnectedIRSPlansList from '../containers/pages/IRS/plans';
 import ConnectedCreateEditOrgView from '../containers/pages/OrganizationViews/CreateEditOrgView';
 import ConnectedOrgsListView from '../containers/pages/OrganizationViews/OrganizationListView';
 import ConnectedSingleOrgView from '../containers/pages/OrganizationViews/SingleOrganizationView';
+import ConnectedCreateEditPractitionerView from '../containers/pages/PractitionerViews/CreateEditPractitioner';
 import ConnectedPractitionersListView from '../containers/pages/PractitionerViews/PractitionerListView';
+
 import { oAuthUserInfoGetter } from '../helpers/utils';
 
 library.add(faMap);
@@ -262,6 +266,20 @@ class App extends Component {
                   component={ConnectedPractitionersListView}
                 />
 
+                {/** practitioner create view */}
+                <ConnectedPrivateRoute
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={CREATE_PRACTITIONER_URL}
+                  component={ConnectedCreateEditPractitionerView}
+                />
+                {/** Practitioner edit view */}
+                <ConnectedPrivateRoute
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${EDIT_PRACTITIONER_URL}/:id`}
+                  component={ConnectedCreateEditPractitionerView}
+                />
                 {/* tslint:disable jsx-no-lambda */}
                 <Route
                   exact={true}

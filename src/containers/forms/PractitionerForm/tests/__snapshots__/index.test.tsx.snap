@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`src/components/PractitionerForm renders correctly: active field no radio 1`] = `
+<input
+  id="no"
+  name="active"
+  onBlur={[Function]}
+  onChange={[Function]}
+  type="radio"
+/>
+`;
+
+exports[`src/components/PractitionerForm renders correctly: active field yes radio 1`] = `
+<input
+  id="yes"
+  name="active"
+  onBlur={[Function]}
+  onChange={[Function]}
+  type="radio"
+/>
+`;
+
+exports[`src/components/PractitionerForm renders correctly: name input 1`] = `
+<input
+  className="form-control"
+  disabled={false}
+  id="name"
+  name="name"
+  onBlur={[Function]}
+  onChange={[Function]}
+  type="text"
+/>
+`;
