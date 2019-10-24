@@ -88,7 +88,6 @@ class App extends Component {
                   path="/"
                   component={Home}
                 />
-
                 {/* Active IRS Plans list view */}
                 <ConnectedPrivateRoute
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
@@ -97,7 +96,6 @@ class App extends Component {
                   ConnectedOrgTeamView={true}
                   component={IrsPlans}
                 />
-
                 {/* Draft IRS Plans list view */}
                 <ConnectedPrivateRoute
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
@@ -105,7 +103,6 @@ class App extends Component {
                   path={INTERVENTION_IRS_DRAFTS_URL}
                   component={IrsPlans}
                 />
-
                 {/* New IRS Plan form view */}
                 <ConnectedPrivateRoute
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
@@ -113,7 +110,6 @@ class App extends Component {
                   path={NEW_IRS_PLAN_URL}
                   component={NewIRSPlan}
                 />
-
                 {/* Draft IRS Plan Jurisdiction Selection view */}
                 <ConnectedPrivateRoute
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
@@ -121,7 +117,6 @@ class App extends Component {
                   path={`${DRAFT_IRS_PLAN_URL}/:id`}
                   component={IrsPlan}
                 />
-
                 {/* Draft IRS Plan Team Assignment view */}
                 <ConnectedPrivateRoute
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
@@ -129,7 +124,6 @@ class App extends Component {
                   path={`${ACTIVE_IRS_PLAN_URL}/:id`}
                   component={IrsPlan}
                 />
-
                 {/* IRS Reporting plan table view */}
                 <ConnectedPrivateRoute
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
@@ -169,7 +163,6 @@ class App extends Component {
                   path={`${ASSIGN_PLAN_URL}/:id`}
                   component={IrsPlan}
                 />
-
                 {/* Focus Investigation Reporting list view */}
                 <ConnectedPrivateRoute
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
@@ -274,7 +267,6 @@ class App extends Component {
                   path={PRACTITIONERS_LIST_URL}
                   component={ConnectedPractitionersListView}
                 />
-
                 {/** practitioner create view */}
                 <ConnectedPrivateRoute
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
@@ -288,7 +280,7 @@ class App extends Component {
                   exact={true}
                   path={`${EDIT_PRACTITIONER_URL}/:id`}
                   component={ConnectedCreateEditPractitionerView}
-                  />
+                />
                 {/** Assign practitioners to organization view */}
                 />
                 <ConnectedPrivateRoute
