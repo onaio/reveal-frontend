@@ -192,7 +192,7 @@ describe('reducers/plans', () => {
     );
 
     const planRecordsArray = [...getPlanRecordsArray(store.getState())].sort(
-      (a: PlanRecord, b: PlanRecord) => Date.parse(a.plan_date) - Date.parse(b.plan_date)
+      (a: PlanRecord, b: PlanRecord) => Date.parse(b.plan_date) - Date.parse(a.plan_date)
     );
     expect(planRecordsArray).toEqual(fixtures.sortedPlanRecordArray);
 
