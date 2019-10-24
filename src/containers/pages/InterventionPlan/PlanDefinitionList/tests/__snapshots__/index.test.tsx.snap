@@ -14,22 +14,6 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
     <ol
       className="breadcrumb"
     >
-      <ElementMap
-        HTMLTag="td"
-        className="listview-th"
-        items={
-          Array [
-            <Link
-              replace={false}
-              to="/plans/update/356b6b84-fc36-4389-a44a-2b038ed2f38d"
-            >
-              A2-Lusaka Akros Test Focus 2
-            </Link>,
-            "FI",
-            "active",
-            "2019-05-19",
-          ]
-        }
       <BreadcrumbItem
         key="0"
         tag="li"
