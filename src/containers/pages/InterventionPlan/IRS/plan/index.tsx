@@ -299,7 +299,7 @@ class IrsPlan extends React.Component<
           // build and store decendant jurisdictions, jurisdictionsArray MUST be sorted by geographic_level from high to low
           const childrenByParentId: { [key: string]: string[] } = {};
           for (const j of jurisdictionsArray) {
-            if (j.parent_id) {
+            if (j && j.parent_id) {
               if (!childrenByParentId[j.parent_id]) {
                 childrenByParentId[j.parent_id] = [];
               }
