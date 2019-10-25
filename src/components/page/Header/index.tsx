@@ -17,6 +17,7 @@ import {
 import logo from '../../../assets/images/logo.png';
 import {
   ENABLE_ABOUT,
+  ENABLE_ASSIGN,
   ENABLE_FI,
   ENABLE_IRS,
   ENABLE_PRACTITIONERS,
@@ -137,7 +138,7 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
                 </UncontrolledDropdown>
               )}
 
-              {(ENABLE_IRS || ENABLE_FI) && (
+              {ENABLE_ASSIGN && (
                 <NavItem>
                   <NavLink to={ASSIGN_PLAN_URL} className="nav-link" activeClassName="active">
                     {ASSIGN}

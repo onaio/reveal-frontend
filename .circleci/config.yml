@@ -17,6 +17,7 @@ jobs:
           REACT_APP_ENABLE_IRS: "true"
           REACT_APP_ENABLE_FI: "true"
           REACT_APP_ENABLE_USERS: "true"
+          REACT_APP_ENABLE_ASSIGN: "true"
           REACT_APP_ENABLE_ABOUT: "true"
           REACT_APP_ENABLE_TEAMS: "true"
           REACT_APP_ENABLE_PRACTITIONERS: "true"
