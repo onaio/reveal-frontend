@@ -1,4 +1,5 @@
 import { Jurisdiction } from '../../../../../store/ducks/jurisdictions';
+import { InterventionType, PlanRecord, PlanStatus } from '../../../../../store/ducks/plans';
 
 export const irsPlanDefinition1 = {
   action: [
@@ -67,7 +68,7 @@ export const irsPlanDefinition1 = {
   version: '1',
 };
 
-export const irsPlanRecord1 = {
+export const irsPlanRecord1: PlanRecord = {
   id: '0230f9e8-1f30-5e91-8693-4c993661785e',
   plan_date: '2019-08-09',
   plan_effective_period_end: '2019-08-29',
@@ -75,24 +76,40 @@ export const irsPlanRecord1 = {
   plan_fi_reason: '',
   plan_fi_status: '',
   plan_id: '0230f9e8-1f30-5e91-8693-4c993661785e',
-  plan_intervention_type: 'IRS',
-  plan_status: 'draft',
+  plan_intervention_type: InterventionType.IRS,
+  plan_jurisdictions_ids: ['3952'],
+  plan_status: PlanStatus.DRAFT,
   plan_title: 'IRS 2019-08-09',
   plan_version: '1',
+};
+
+export const irsPlanRecordResponse1 = {
+  date: '2019-08-09',
+  effective_period_end: '2019-08-29',
+  effective_period_start: '2019-08-09',
+  fi_reason: '',
+  fi_status: '',
+  identifier: '0230f9e8-1f30-5e91-8693-4c993661785e',
+  intervention_type: InterventionType.IRS,
+  jurisdictions: ['3952'],
+  name: 'IRS 2019-08-09',
+  status: PlanStatus.DRAFT,
+  title: 'IRS 2019-08-09',
+  version: '1',
 };
 
 export const jurisdiction1: Jurisdiction = {
   jurisdiction_id: '3952',
 };
 export const jurisdictionsById: { [key: string]: Jurisdiction } = {
-  '0': { jurisdiction_id: '0', name: '0' },
-  '1A': { jurisdiction_id: '1A', name: '1A', parent_id: '0' },
-  '1Aa': { jurisdiction_id: '1Aa', name: '1Aa', parent_id: '1A' },
-  '1Ab': { jurisdiction_id: '1Ab', name: '1Ab', parent_id: '1A' },
-  '1B': { jurisdiction_id: '1B', name: '1B', parent_id: '0' },
-  '1Ba': { jurisdiction_id: '1Ba', name: '1Ba', parent_id: '1B' },
-  '1Bb': { jurisdiction_id: '1Bb', name: '1Bb', parent_id: '1B' },
-  '3952': { jurisdiction_id: '3952', name: '1B - 3952', parent_id: '1B' },
+  '0': { geographic_level: 0, jurisdiction_id: '0', name: '0' },
+  '1A': { geographic_level: 1, jurisdiction_id: '1A', name: '1A', parent_id: '0' },
+  '1Aa': { geographic_level: 2, jurisdiction_id: '1Aa', name: '1Aa', parent_id: '1A' },
+  '1Ab': { geographic_level: 2, jurisdiction_id: '1Ab', name: '1Ab', parent_id: '1A' },
+  '1B': { geographic_level: 1, jurisdiction_id: '1B', name: '1B', parent_id: '0' },
+  '1Ba': { geographic_level: 2, jurisdiction_id: '1Ba', name: '1Ba', parent_id: '1B' },
+  '1Bb': { geographic_level: 2, jurisdiction_id: '1Bb', name: '1Bb', parent_id: '1B' },
+  '3952': { geographic_level: 2, jurisdiction_id: '3952', name: '1B - 3952', parent_id: '1B' },
 };
 
 export const jurisdictionsArray: Jurisdiction[] = [
