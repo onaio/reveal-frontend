@@ -1157,7 +1157,7 @@ class IrsPlan extends React.Component<
       if (doIncludeChildIds) {
         ancestorIds.push(childId);
       }
-      const { parent_id: parentId } = jurisdictionsById[childId];
+      const { parent_id: parentId } = jurisdictionsById[childId] || {};
       if (parentId && parentId !== 'null' && parentId.length) {
         const parentIds = this.getAncestorJurisdictionIds(
           [parentId],
