@@ -8,6 +8,10 @@ export type WEBSITE_NAME = typeof WEBSITE_NAME;
 export const DOMAIN_NAME = process.env.REACT_APP_DOMAIN_NAME || 'http://localhost:3000';
 export type DOMAIN_NAME = typeof DOMAIN_NAME;
 
+/** Do you want to enable team assignment? */
+export const ENABLE_ASSIGN = process.env.REACT_APP_ENABLE_ASSIGN === 'true';
+export type ENABLE_ASSIGN = typeof ENABLE_ASSIGN;
+
 /** Do you want to enable the IRS features? */
 export const ENABLE_IRS = process.env.REACT_APP_ENABLE_IRS === 'true';
 export type ENABLE_IRS = typeof ENABLE_IRS;
