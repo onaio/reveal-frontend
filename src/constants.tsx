@@ -1,4 +1,4 @@
-import { FIReasons } from './configs/settings';
+import { FIReasons, PlanActionCodes } from './configs/settings';
 import { FIReasonType } from './containers/forms/PlanForm/types';
 
 // strings
@@ -352,20 +352,22 @@ export const RED = 'Red';
 export type RED = typeof RED;
 
 // task action codes
-export const RACD_REGISTER_FAMILY_CODE = 'RACD Register Family';
-export type RACD_REGISTER_FAMILY_CODE = typeof RACD_REGISTER_FAMILY_CODE;
-export const CASE_CONFIRMATION_CODE = 'Case Confirmation';
-export type CASE_CONFIRMATION_CODE = typeof CASE_CONFIRMATION_CODE;
-export const MOSQUITO_COLLECTION_CODE = 'Mosquito Collection';
-export type MOSQUITO_COLLECTION_CODE = typeof MOSQUITO_COLLECTION_CODE;
-export const BEDNET_DISTRIBUTION_CODE = 'Bednet Distribution';
-export type BEDNET_DISTRIBUTION_CODE = typeof BEDNET_DISTRIBUTION_CODE;
-export const LARVAL_DIPPING_CODE = 'Larval Dipping';
-export type LARVAL_DIPPING_CODE = typeof LARVAL_DIPPING_CODE;
-export const BLOOD_SCREENING_CODE = 'Blood Screening';
-export type BLOOD_SCREENING_CODE = typeof BLOOD_SCREENING_CODE;
-export const IRS_CODE = 'IRS';
+export const BCC_CODE = PlanActionCodes[0];
+export type BCC_CODE = typeof BCC_CODE;
+export const IRS_CODE = PlanActionCodes[1];
 export type IRS_CODE = typeof IRS_CODE;
+export const BEDNET_DISTRIBUTION_CODE = PlanActionCodes[2];
+export type BEDNET_DISTRIBUTION_CODE = typeof BEDNET_DISTRIBUTION_CODE;
+export const BLOOD_SCREENING_CODE = PlanActionCodes[3];
+export type BLOOD_SCREENING_CODE = typeof BLOOD_SCREENING_CODE;
+export const CASE_CONFIRMATION_CODE = PlanActionCodes[4];
+export type CASE_CONFIRMATION_CODE = typeof CASE_CONFIRMATION_CODE;
+export const RACD_REGISTER_FAMILY_CODE = PlanActionCodes[5];
+export type RACD_REGISTER_FAMILY_CODE = typeof RACD_REGISTER_FAMILY_CODE;
+export const LARVAL_DIPPING_CODE = PlanActionCodes[6];
+export type LARVAL_DIPPING_CODE = typeof LARVAL_DIPPING_CODE;
+export const MOSQUITO_COLLECTION_CODE = PlanActionCodes[7];
+export type MOSQUITO_COLLECTION_CODE = typeof MOSQUITO_COLLECTION_CODE;
 
 export const PRACTITIONER_CODE = {
   text: 'Community Health Worker',
