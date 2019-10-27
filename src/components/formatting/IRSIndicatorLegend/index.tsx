@@ -3,7 +3,7 @@ import { Table } from 'reactstrap';
 import {
   IndicatorThresholdItem,
   IndicatorThresholds,
-  indicatorThresholdsNA,
+  indicatorThresholdsIRS,
 } from '../../../configs/settings';
 import { percentage } from '../../../helpers/utils';
 
@@ -12,7 +12,7 @@ interface Props {
 }
 
 const defaultProps: Props = {
-  indicatorThresholds: indicatorThresholdsNA,
+  indicatorThresholds: indicatorThresholdsIRS,
 };
 
 const IRSIndicatorLegend = (props: Props) => {
