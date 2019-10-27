@@ -1146,7 +1146,7 @@ export const expectedExtractActivityFromPlanformResult = {
       prefix: 1,
       reason: 'Investigation',
       subjectCodableConcept: {
-        text: 'Case_Confirmation',
+        text: 'Operational_Area',
       },
       taskTemplate: 'Case_Confirmation',
       timingPeriod: {
