@@ -1,0 +1,96 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`/components/formatting/IRSIndicatorLegend renders correctly: header 1`] = `
+<h5
+  className="mt-4 mb-3"
+>
+  IRS Conditional Formatting
+</h5>
+`;
+
+exports[`/components/formatting/IRSIndicatorLegend renders correctly: indicator table 1`] = `
+<Table
+  className="text-center"
+  responsiveTag="div"
+  tag="table"
+>
+  <table
+    className="text-center table"
+  >
+    <tbody>
+      <tr
+        key="0"
+        style={
+          Object {
+            "background": "#dddddd",
+          }
+        }
+      >
+        <td>
+          Grey
+        </td>
+        <td>
+          &gt;=
+        </td>
+        <td>
+          20%
+        </td>
+      </tr>
+      <tr
+        key="1"
+        style={
+          Object {
+            "background": "#FF4136",
+          }
+        }
+      >
+        <td>
+          Red
+        </td>
+        <td>
+          &gt;=
+        </td>
+        <td>
+          75%
+        </td>
+      </tr>
+      <tr
+        key="2"
+        style={
+          Object {
+            "background": "#FFDC00",
+          }
+        }
+      >
+        <td>
+          Yellow
+        </td>
+        <td>
+          &gt;=
+        </td>
+        <td>
+          90%
+        </td>
+      </tr>
+      <tr
+        key="3"
+        style={
+          Object {
+            "background": "#2ECC40",
+          }
+        }
+      >
+        <td>
+          Green
+        </td>
+        <td>
+          &gt;=
+        </td>
+        <td>
+          100%
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</Table>
+`;
