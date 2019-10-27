@@ -13,6 +13,7 @@
  * functions is discouraged and should only be done if there is no other way.
  */
 import { Providers } from '@onaio/gatekeeper';
+import { Color } from 'csstype';
 import { Expression, LngLatBoundsLike } from 'mapbox-gl';
 import {
   ActionReasonType,
@@ -711,32 +712,40 @@ export const symbolLayerConfig = {
 /** Default colors layer fill colors per administrative level */
 export const adminLayerColors = ['black', 'red', 'orange', 'yellow', 'green'];
 
+/** interface describing indicator threshold item */
+export interface IndicatorThresholdItem {
+  color: Color;
+  name: string;
+  orEquals?: boolean;
+  value: number;
+}
+
 /** interface describing threshold configs for IRS report indicators */
 export interface IndicatorThresholds {
-  [key: string]: {
-    color: any;
-    orEquals?: boolean;
-    value: number;
-  };
+  [key: string]: IndicatorThresholdItem;
 }
 
 /** Indicator Thresholds for NA (Namibia) */
 export const indicatorThresholdsNA: IndicatorThresholds = {
   GREEN_THRESHOLD: {
     color: '#2ECC40',
+    name: 'Green',
     value: 1,
   },
   GREY_THRESHOLD: {
     color: '#dddddd',
+    name: 'Grey',
     value: 0.2,
   },
   RED_THRESHOLD: {
     color: '#FF4136',
+    name: 'Red',
     orEquals: true,
     value: 0.75,
   },
   YELLOW_THRESHOLD: {
     color: '#FFDC00',
+    name: 'Yellow',
     value: 0.9,
   },
 };
