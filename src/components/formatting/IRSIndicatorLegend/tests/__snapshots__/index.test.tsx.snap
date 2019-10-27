@@ -1,11 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`/components/formatting/IRSIndicatorLegend renders correctly: header 1`] = `
-<h5
-  className="mt-4 mb-3"
+<div
+  className="card-header"
 >
-  IRS Conditional Formatting
-</h5>
+  Conditional formatting rules
+</div>
 `;
 
 exports[`/components/formatting/IRSIndicatorLegend renders correctly: indicator table 1`] = `
@@ -30,7 +30,7 @@ exports[`/components/formatting/IRSIndicatorLegend renders correctly: indicator 
           Grey
         </td>
         <td>
-          &gt;=
+          &lt;
         </td>
         <td>
           20%
@@ -48,7 +48,7 @@ exports[`/components/formatting/IRSIndicatorLegend renders correctly: indicator 
           Red
         </td>
         <td>
-          &gt;=
+          20% - 75%
         </td>
         <td>
           75%
@@ -66,7 +66,7 @@ exports[`/components/formatting/IRSIndicatorLegend renders correctly: indicator 
           Yellow
         </td>
         <td>
-          &gt;=
+          75% - 90%
         </td>
         <td>
           90%
@@ -84,7 +84,7 @@ exports[`/components/formatting/IRSIndicatorLegend renders correctly: indicator 
           Green
         </td>
         <td>
-          &gt;=
+          90% - 100%
         </td>
         <td>
           100%

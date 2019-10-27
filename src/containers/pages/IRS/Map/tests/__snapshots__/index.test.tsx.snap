@@ -104,19 +104,23 @@ Array [
       Object {
         "GREEN_THRESHOLD": Object {
           "color": "#2ECC40",
+          "name": "Green",
           "value": 1,
         },
         "GREY_THRESHOLD": Object {
           "color": "#dddddd",
+          "name": "Grey",
           "value": 0.2,
         },
         "RED_THRESHOLD": Object {
           "color": "#FF4136",
+          "name": "Red",
           "orEquals": true,
           "value": 0.75,
         },
         "YELLOW_THRESHOLD": Object {
           "color": "#FFDC00",
+          "name": "Yellow",
           "value": 0.9,
         },
       }
@@ -156,19 +160,23 @@ Array [
       Object {
         "GREEN_THRESHOLD": Object {
           "color": "#2ECC40",
+          "name": "Green",
           "value": 1,
         },
         "GREY_THRESHOLD": Object {
           "color": "#dddddd",
+          "name": "Grey",
           "value": 0.2,
         },
         "RED_THRESHOLD": Object {
           "color": "#FF4136",
+          "name": "Red",
           "orEquals": true,
           "value": 0.75,
         },
         "YELLOW_THRESHOLD": Object {
           "color": "#FFDC00",
+          "name": "Yellow",
           "value": 0.9,
         },
       }
@@ -208,19 +216,23 @@ Array [
       Object {
         "GREEN_THRESHOLD": Object {
           "color": "#2ECC40",
+          "name": "Green",
           "value": 1,
         },
         "GREY_THRESHOLD": Object {
           "color": "#dddddd",
+          "name": "Grey",
           "value": 0.2,
         },
         "RED_THRESHOLD": Object {
           "color": "#FF4136",
+          "name": "Red",
           "orEquals": true,
           "value": 0.75,
         },
         "YELLOW_THRESHOLD": Object {
           "color": "#FFDC00",
+          "name": "Yellow",
           "value": 0.9,
         },
       }
@@ -260,19 +272,23 @@ Array [
       Object {
         "GREEN_THRESHOLD": Object {
           "color": "#2ECC40",
+          "name": "Green",
           "value": 1,
         },
         "GREY_THRESHOLD": Object {
           "color": "#dddddd",
+          "name": "Grey",
           "value": 0.2,
         },
         "RED_THRESHOLD": Object {
           "color": "#FF4136",
+          "name": "Red",
           "orEquals": true,
           "value": 0.75,
         },
         "YELLOW_THRESHOLD": Object {
           "color": "#FFDC00",
+          "name": "Yellow",
           "value": 0.9,
         },
       }
