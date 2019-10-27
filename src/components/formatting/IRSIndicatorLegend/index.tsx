@@ -37,12 +37,11 @@ const IRSIndicatorLegend = (props: Props) => {
                         <td>{item.name}</td>
                         <td>
                           {index === 0
-                            ? '<'
+                            ? `< ${percentage(item.value)}`
                             : `${percentage(indicatorItems[index - 1].value)} - ${percentage(
                                 item.value
                               )}`}
                         </td>
-                        <td>{percentage(item.value)}</td>
                       </tr>
                     );
                   })}
