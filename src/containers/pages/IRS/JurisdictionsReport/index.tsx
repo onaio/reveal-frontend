@@ -9,6 +9,7 @@ import { RouteComponentProps } from 'react-router';
 import 'react-table/react-table.css';
 import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
+import IRSIndicatorLegend from '../../../../components/formatting/IRSIndicatorLegend';
 import IRSTableCell from '../../../../components/IRSTableCell';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
@@ -231,6 +232,7 @@ const JurisdictionReport = (props: GenericJurisdictionProps & RouteComponentProp
           <div className="irs-report-table">
             <DrillDownTable {...tableProps} />
           </div>
+          <IRSIndicatorLegend />
         </Col>
       </Row>
     </div>
