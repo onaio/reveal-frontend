@@ -30,10 +30,7 @@ exports[`/components/formatting/IRSIndicatorLegend renders correctly: indicator 
           Grey
         </td>
         <td>
-          &lt;
-        </td>
-        <td>
-          20%
+          &lt; 20%
         </td>
       </tr>
       <tr
@@ -50,9 +47,6 @@ exports[`/components/formatting/IRSIndicatorLegend renders correctly: indicator 
         <td>
           20% - 75%
         </td>
-        <td>
-          75%
-        </td>
       </tr>
       <tr
         key="2"
@@ -68,9 +62,6 @@ exports[`/components/formatting/IRSIndicatorLegend renders correctly: indicator 
         <td>
           75% - 90%
         </td>
-        <td>
-          90%
-        </td>
       </tr>
       <tr
         key="3"
@@ -85,9 +76,6 @@ exports[`/components/formatting/IRSIndicatorLegend renders correctly: indicator 
         </td>
         <td>
           90% - 100%
-        </td>
-        <td>
-          100%
         </td>
       </tr>
     </tbody>
