@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table } from 'reactstrap';
+import { Col, Row, Table } from 'reactstrap';
 import {
   IndicatorThresholdItem,
   IndicatorThresholds,
@@ -17,30 +17,39 @@ const defaultProps: Props = {
 
 const IRSIndicatorLegend = (props: Props) => {
   const { indicatorThresholds } = props;
+  const indicatorItems = Object.values(indicatorThresholds);
 
   return (
-    <div>
-      <h5 className="mt-4 mb-3">IRS Conditional Formatting</h5>
-      <div className="row">
-        <div className="col-3">
-          <Table className="text-center">
-            <tbody>
-              {Object.values(indicatorThresholds)
-                .sort((a: IndicatorThresholdItem, b: IndicatorThresholdItem) =>
-                  a.value > b.value ? 1 : -1
-                )
-                .map((item, index) => {
-                  return (
-                    <tr key={index} style={{ background: item.color }}>
-                      <td>{item.name}</td>
-                      <td>>=</td>
-                      <td>{percentage(item.value)}</td>
-                    </tr>
-                  );
-                })}
-            </tbody>
-          </Table>
-        </div>
+    <div className="card mt-5 mb-5">
+      <div className="card-header">Conditional formatting rules</div>
+      <div className="card-body">
+        <Row>
+          <Col sm="12" md={{ size: 4, offset: 4 }}>
+            <Table className="text-center">
+              <tbody>
+                {indicatorItems
+                  .sort((a: IndicatorThresholdItem, b: IndicatorThresholdItem) =>
+                    a.value > b.value ? 1 : -1
+                  )
+                  .map((item, index) => {
+                    return (
+                      <tr key={index} style={{ background: item.color }}>
+                        <td>{item.name}</td>
+                        <td>
+                          {index === 0
+                            ? '<'
+                            : `${percentage(indicatorItems[index - 1].value)} - ${percentage(
+                                item.value
+                              )}`}
+                        </td>
+                        <td>{percentage(item.value)}</td>
+                      </tr>
+                    );
+                  })}
+              </tbody>
+            </Table>
+          </Col>
+        </Row>
       </div>
     </div>
   );
