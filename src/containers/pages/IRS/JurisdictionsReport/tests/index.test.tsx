@@ -8,6 +8,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Router } from 'react-router';
 import { JurisdictionReport } from '../';
+import { indicatorThresholdsIRS } from '../../../../../configs/settings';
 import { REPORT_IRS_PLAN_URL } from '../../../../../constants';
 import store from '../../../../../store';
 import GenericJurisdictionsReducer, {
@@ -137,6 +138,10 @@ describe('components/IRS Reports/JurisdictionReport', () => {
     expect((wrapper.find('DrillDownTable').props() as any).columns).toEqual(
       IRSTableColumns.zambiaJurisdictions2019
     );
+    expect(wrapper.find('IRSIndicatorLegend').length).toEqual(1);
+    expect(wrapper.find('IRSIndicatorLegend').props()).toEqual({
+      indicatorThresholds: indicatorThresholdsIRS,
+    });
     expect(supersetServiceMock.mock.calls).toEqual([
       [
         '13',

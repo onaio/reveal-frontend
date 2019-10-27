@@ -1,5 +1,4 @@
-import { mount, shallow } from 'enzyme';
-import toJson from 'enzyme-to-json';
+import { shallow } from 'enzyme';
 import React from 'react';
 import AssignTeamPopover, { AssignTeamPopoverProps } from '..';
 

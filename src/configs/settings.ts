@@ -13,6 +13,7 @@
  * functions is discouraged and should only be done if there is no other way.
  */
 import { Providers } from '@onaio/gatekeeper';
+import { Color } from 'csstype';
 import { Expression, LngLatBoundsLike } from 'mapbox-gl';
 import {
   ActionReasonType,
@@ -711,35 +712,44 @@ export const symbolLayerConfig = {
 /** Default colors layer fill colors per administrative level */
 export const adminLayerColors = ['black', 'red', 'orange', 'yellow', 'green'];
 
-/** interface describing threshold configs for IRS report indicators */
-export interface IndicatorThresholds {
-  [key: string]: {
-    color: any;
-    orEquals?: boolean;
-    value: number;
-  };
+/** interface describing indicator threshold item */
+export interface IndicatorThresholdItem {
+  color: Color;
+  name: string;
+  orEquals?: boolean;
+  value: number;
 }
 
-/** Indicator Thresholds for NA (Namibia) */
-export const indicatorThresholdsNA: IndicatorThresholds = {
+/** interface describing threshold configs for IRS report indicators */
+export interface IndicatorThresholds {
+  [key: string]: IndicatorThresholdItem;
+}
+
+/** IRS Reporting configs */
+export const indicatorThresholdsIRS: IndicatorThresholds = {
   GREEN_THRESHOLD: {
     color: '#2ECC40',
+    name: 'Green',
     value: 1,
   },
   GREY_THRESHOLD: {
     color: '#dddddd',
+    name: 'Grey',
     value: 0.2,
   },
   RED_THRESHOLD: {
     color: '#FF4136',
+    name: 'Red',
     orEquals: true,
     value: 0.75,
   },
   YELLOW_THRESHOLD: {
     color: '#FFDC00',
+    name: 'Yellow',
     value: 0.9,
   },
 };
+/** END IRS Reporting configs */
 
 /** interface describing base configs for irs reporting configurations */
 export interface IrsReportingConfig {
@@ -753,34 +763,12 @@ export const irsReportingCongif: {
 } = {
   // Namibia Structures Configs
   [process.env.REACT_APP_SUPERSET_IRS_REPORTING_STRUCTURES_DATA_SLICE_NA as string]: {
-    indicatorThresholds: indicatorThresholdsNA,
+    indicatorThresholds: indicatorThresholdsIRS,
   } as IrsReportingConfig,
 };
 /* tslint:enable:object-literal-sort-keys */
 
 /** END IRS Reporting interfaces */
-
-/** IRS Reporting configs */
-export const indicatorThresholdsIRS = {
-  GREEN_THRESHOLD: {
-    color: '#2ECC40',
-    value: 1,
-  },
-  GREY_THRESHOLD: {
-    color: '#dddddd',
-    value: 0.2,
-  },
-  RED_THRESHOLD: {
-    color: '#FF4136',
-    orEquals: true,
-    value: 0.75,
-  },
-  YELLOW_THRESHOLD: {
-    color: '#FFDC00',
-    value: 0.9,
-  },
-};
-/** END IRS Reporting configs */
 
 /** Interfaces describing administrative hierarchy via ISO 3166 admin codes */
 export interface ADMN0 {

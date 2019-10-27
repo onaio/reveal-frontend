@@ -6,7 +6,7 @@ import { GREEN, ORANGE, RED, WHITE, YELLOW } from '../colors';
 import {
   GREEN_THRESHOLD,
   IndicatorThresholds,
-  indicatorThresholdsNA,
+  indicatorThresholdsIRS,
   irsReportingCongif,
   ORANGE_THRESHOLD,
   YELLOW_THRESHOLD,
@@ -155,10 +155,10 @@ export function renderClassificationRow(rowObject: FlexObject) {
 }
 
 /** Determines the color of a indicator based on cell.value and threshold configs
- * @param {CellInfo} cell - the ReactTable.Cell being rendered in an indicator drilldown table
+ * @param {CellInfo} cell - the ReactTable.Cell being rendered in an indicator drill-down table
  * @param {IndicatorThresholds} thresholds - the threshold configuration from settings
  * @param {boolean} doMakeDecimal -  determines if the cell value needs to be divided by 100
- * @returns {string} - the value coorisponding the cell.value according to the reporting config
+ * @returns {string} - the value corresponding the cell.value according to the reporting config
  */
 export function getThresholdColor(
   cell: CellInfo,
@@ -216,7 +216,7 @@ export function getThresholdAdherenceIndicator(cell: CellInfo, configId: string)
  */
 export function getIRSThresholdAdherenceIndicator(
   cell: CellInfo,
-  thresholds: IndicatorThresholds | null = indicatorThresholdsNA
+  thresholds: IndicatorThresholds | null = indicatorThresholdsIRS
 ) {
   // determine if cell.value is a number
   const isNumber = !Number.isNaN(Number(cell.value));
