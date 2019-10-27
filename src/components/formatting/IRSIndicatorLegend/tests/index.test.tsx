@@ -8,7 +8,7 @@ describe('/components/formatting/IRSIndicatorLegend', () => {
   it('renders correctly', () => {
     const wrapper = mount(<IRSIndicatorLegend />);
     expect(wrapper.props()).toEqual({ indicatorThresholds: indicatorThresholdsIRS });
-    expect(toJson(wrapper.find('h5'))).toMatchSnapshot('header');
+    expect(toJson(wrapper.find('.card-header'))).toMatchSnapshot('header');
     expect(toJson(wrapper.find('Table'))).toMatchSnapshot('indicator table');
     wrapper.unmount();
   });
