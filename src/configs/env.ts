@@ -36,10 +36,6 @@ export type ENABLE_TEAMS = typeof ENABLE_TEAMS;
 export const DISABLE_LOGIN_PROTECTION = process.env.REACT_APP_DISABLE_LOGIN_PROTECTION === 'true';
 export type DISABLE_LOGIN_PROTECTION = typeof DISABLE_LOGIN_PROTECTION;
 
-/** string to use to describe "structure" */
-export const STRUCTURES_UNIT_TYPE = process.env.REACT_APP_STRUTURES_TYPE || 'structure';
-export type STRUCTURES_UNIT_TYPE = typeof STRUCTURES_UNIT_TYPE;
-
 /** The Superset API base */
 export const SUPERSET_API_BASE = process.env.REACT_APP_SUPERSET_API_BASE || 'http://localhost';
 export type SUPERSET_API_BASE = typeof SUPERSET_API_BASE;
