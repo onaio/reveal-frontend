@@ -1,5 +1,66 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`components/IRS Reports/IRSReportingMap renders correctly: Indicator item breakdown 1`] = `
+Array [
+  <p
+    className="indicator-breakdown"
+  >
+    Progress
+    : 
+    7
+     of 
+    14
+     
+    structures
+     (
+    50
+    %)
+  </p>,
+  <p
+    className="indicator-breakdown"
+  >
+    Progress
+    : 
+    14
+     of 
+    14
+     
+    structures
+     (
+    100
+    %)
+  </p>,
+  <p
+    className="indicator-breakdown"
+  >
+    Progress
+    : 
+    7
+     of 
+    14
+     
+    structures
+     (
+    50
+    %)
+  </p>,
+  <p
+    className="indicator-breakdown"
+  >
+    Progress
+    : 
+    19
+     of 
+    22
+     
+    rooms
+     (
+    86
+    %)
+  </p>,
+]
+`;
+
 exports[`components/IRS Reports/IRSReportingMap renders correctly: Legend items 1`] = `
 Array [
   <div
