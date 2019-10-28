@@ -41,6 +41,7 @@ export const UserIdSelect: React.FC<Props> = props => {
   const { onChangeHandler: onChange } = props;
   const [openMRSUsers, setOpenMRSUsers] = useState<OpenMRSUser[]>([]);
   const [allPractitioners, setAllPractitioners] = useState<Practitioner[]>([]);
+  const [selectIsLoading, setSelectIsLoading] = useState<boolean>(true);
 
   /** calls the prop.onChange with only the userId
    * @param {ValueType<Option>} option - the value in the react-select
@@ -79,7 +80,12 @@ export const UserIdSelect: React.FC<Props> = props => {
   };
 
   useEffect(() => {
-    loadUnmatchedUsers();
+    try {
+      loadUnmatchedUsers();
+    } catch (err) {
+      /** expected error is setState on unmounted component
+       */
+    }
   }, []);
 
   /** filters out openMRs User objects that have already been mapped to an existing
@@ -94,6 +100,7 @@ export const UserIdSelect: React.FC<Props> = props => {
 
     const practitionerUserIds = practitioners.map(practitioner => practitioner.userId);
     const unMatchedUsers = allOpenMRSUsers.filter(user => !practitionerUserIds.includes(user.uuid));
+    setSelectIsLoading(false);
     setOpenMRSUsers(unMatchedUsers);
   };
 
@@ -105,6 +112,7 @@ export const UserIdSelect: React.FC<Props> = props => {
   return (
     <Select
       cacheOptions={true}
+      isLoading={selectIsLoading}
       defaultOptions={true}
       options={options}
       onChange={changeHandler}
