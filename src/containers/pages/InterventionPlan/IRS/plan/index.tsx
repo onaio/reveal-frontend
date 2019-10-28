@@ -503,16 +503,9 @@ class IrsPlan extends React.Component<
 
     const planHeaderRow = (
       <Row>
-        {isFinalizedPlan && (
-          <Col xs="8" className="page-title-col">
-            <h2 className="page-title">IRS: {pageLabel}</h2>
-          </Col>
-        )}
-        {!isFinalizedPlan && (
-          <Col xs="8" className="page-title-col">
-            <h2 className="page-title">IRS: {pageLabel}</h2>
-          </Col>
-        )}
+        <Col xs="8" className="page-title-col">
+          <h2 className="page-title">IRS: {pageLabel}</h2>
+        </Col>
 
         <Col xs="4" className="save-plan-buttons-column">
           {!isFinalizedPlan && (
