@@ -78,10 +78,13 @@ export function getGoalReport(goal: Goal): GoalReport {
   if (goal.goal_unit.toLowerCase() !== 'percent') {
     targetValue = goal.goal_value;
   } else {
-    goalUnit =
-      [CASE_CONFIRMATION_CODE, BLOOD_SCREENING_CODE].indexOf(goal.action_code) > -1
-        ? PERSONS
-        : STRUCTURES;
+    switch (goal.action_code) {
+      case CASE_CONFIRMATION_CODE:
+      case BLOOD_SCREENING_CODE:
+        goalUnit = PERSONS;
+      default:
+        goalUnit = STRUCTURES;
+    }
     targetValue = Math.round((goal.goal_value * goal.task_count) / 100);
 
     /** Use goal.goal_value as target if unit==='Percent' && goal.task_count === 0 */
