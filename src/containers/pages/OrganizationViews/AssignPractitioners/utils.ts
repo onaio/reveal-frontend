@@ -49,6 +49,6 @@ export const formatOptions = (
 ): OptionsType<SelectOption> =>
   practitioners.map(entry => ({
     isFixed,
-    label: entry.username,
+    label: `${entry.username} - ${entry.name}`,
     value: entry.identifier,
   }));
