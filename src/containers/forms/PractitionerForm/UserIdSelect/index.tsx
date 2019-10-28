@@ -5,7 +5,10 @@ import React, { useEffect, useState } from 'react';
 import Select from 'react-select';
 import { ValueType } from 'react-select/src/types';
 import { OPENMRS_USERS_REQUEST_PAGE_SIZE } from '../../../../configs/env';
+import { OPENSRP_PRACTITIONER_ENDPOINT } from '../../../../constants';
 import { OpenSRPService } from '../../../../services/opensrp';
+import { Practitioner } from '../../../../store/ducks/opensrp/practitioners';
+import { loadPractitioners } from '../../../pages/PractitionerViews/serviceHooks';
 
 // props interface to UserIdSelect component
 export interface Props {
@@ -72,12 +75,27 @@ export const UserIdSelect: React.FC<Props> = props => {
       };
       allOpenMRSUsers.push(...userData.results);
     }
-    setOpenMRSUsers([...allOpenMRSUsers]);
+    return allOpenMRSUsers;
   };
 
   useEffect(() => {
-    loadOpenMRSUsers();
+    loadUnmatchedUsers();
   }, []);
+
+  /** filters out openMRs User objects that have already been mapped to an existing
+   * practitioner, this is an effort towards ensuring a 1-1 mapping between an openMRS user
+   * and a practitioner entity
+   */
+  const loadUnmatchedUsers = async () => {
+    const practitioners: Practitioner[] = await new props.serviceClass(
+      OPENSRP_PRACTITIONER_ENDPOINT
+    ).list();
+    const allOpenMRSUsers = await loadOpenMRSUsers();
+
+    const practitionerUserIds = practitioners.map(practitioner => practitioner.userId);
+    const unMatchedUsers = allOpenMRSUsers.filter(user => !practitionerUserIds.includes(user.uuid));
+    setOpenMRSUsers(unMatchedUsers);
+  };
 
   const options = openMRSUsers.map((user: OpenMRSUser) => ({
     label: user.display,
