@@ -1,3 +1,4 @@
+import { STRUCTURES_UNIT_TYPE } from './configs/env';
 import { FIReasons, PlanActionCodes } from './configs/settings';
 import { FIReasonType } from './containers/forms/PlanForm/types';
 
@@ -96,7 +97,7 @@ export const STRUCTURE_LAYER = 'structure-layer';
 export type STRUCTURE_LAYER = typeof STRUCTURE_LAYER;
 export const PROGRESS = 'Progress';
 export type PROGRESS = typeof PROGRESS;
-export const STRUCTURES = 'structure(s)';
+export const STRUCTURES = `${STRUCTURES_UNIT_TYPE}(s)`;
 export type STRUCTURES = typeof STRUCTURES;
 export const PERSONS = 'person(s)';
 export type PERSONS = typeof PERSONS;
