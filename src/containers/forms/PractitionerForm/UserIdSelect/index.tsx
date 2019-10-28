@@ -8,7 +8,6 @@ import { OPENMRS_USERS_REQUEST_PAGE_SIZE } from '../../../../configs/env';
 import { OPENSRP_PRACTITIONER_ENDPOINT } from '../../../../constants';
 import { OpenSRPService } from '../../../../services/opensrp';
 import { Practitioner } from '../../../../store/ducks/opensrp/practitioners';
-import { loadPractitioners } from '../../../pages/PractitionerViews/serviceHooks';
 
 // props interface to UserIdSelect component
 export interface Props {
@@ -40,7 +39,6 @@ interface OpenMRSUser {
 export const UserIdSelect: React.FC<Props> = props => {
   const { onChangeHandler: onChange } = props;
   const [openMRSUsers, setOpenMRSUsers] = useState<OpenMRSUser[]>([]);
-  const [allPractitioners, setAllPractitioners] = useState<Practitioner[]>([]);
   const [selectIsLoading, setSelectIsLoading] = useState<boolean>(true);
 
   /** calls the prop.onChange with only the userId
