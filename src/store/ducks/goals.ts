@@ -1,7 +1,7 @@
 import { get, keyBy, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
 import SeamlessImmutable from 'seamless-immutable';
-import { PlanActionCodes } from '../../configs/settings';
+import { PlanActionCodesType } from '../../containers/forms/PlanForm/types';
 import { FlexObject } from '../../helpers/utils';
 
 /** the reducer name */
@@ -9,7 +9,7 @@ export const reducerName = 'goals';
 
 /** interface for goal Object */
 export interface Goal {
-  action_code: typeof PlanActionCodes[number];
+  action_code: PlanActionCodesType;
   action_description: string;
   action_prefix: string;
   action_reason: string;
