@@ -26,13 +26,18 @@ export interface Option {
 
 /** interface describing a user from openmrs */
 interface OpenMRSUser {
-  id: string;
+  person: {
+    display: string;
+  };
+  display: string;
+  uuid: string;
 }
 
 /** The UserIdSelect component */
 export const UserIdSelect: React.FC<Props> = props => {
   const { onChangeHandler: onChange } = props;
   const [openMRSUsers, setOpenMRSUsers] = useState<OpenMRSUser[]>([]);
+  const [allPractitioners, setAllPractitioners] = useState<Practitioner[]>([]);
 
   /** calls the prop.onChange with only the userId
    * @param {ValueType<Option>} option - the value in the react-select
@@ -45,10 +50,10 @@ export const UserIdSelect: React.FC<Props> = props => {
 
   /** Pulls all openMRS users info and puts in store */
   const loadOpenMRSUsers = async (service: typeof OpenSRPService = OpenSRPService) => {
-    const currentUserIndex = 0;
+    const currentCountIndex = 0;
     let filterParams = {
       page_size: OPENMRS_USERS_REQUEST_PAGE_SIZE,
-      start_index: currentUserIndex,
+      start_index: currentCountIndex,
     };
     const serve = new service('user');
     let responseSize: number = 100;
@@ -74,7 +79,10 @@ export const UserIdSelect: React.FC<Props> = props => {
     loadOpenMRSUsers();
   }, []);
 
-  const options = openMRSUsers.map((user: any) => ({ label: user.display, value: user.uuid }));
+  const options = openMRSUsers.map((user: OpenMRSUser) => ({
+    label: user.display,
+    value: user.uuid,
+  }));
 
   return (
     <Select
