@@ -683,14 +683,13 @@ class IrsPlan extends React.Component<
           target: getGisidaMapById(MAP_ID),
         };
         this.onDrillUpClick(fauxE, this.state.country, filteredJurisdictions);
-
-        // update drilldown table
-        this.onResetDrilldownTableHierarchy(clickedTableCrumb.id);
       }
+      // update drilldown table
+      this.onResetDrilldownTableHierarchy(e.currentTarget.id);
     }
   };
   /** onResetDrilldownTableHierarchy - function for resetting drilldown table hierachy baseline
-   * @param {string|null} Id - the id of the highest level parent_idto show in the table, or null to reset completely
+   * @param {string|null} Id - the id of the highest level parent_id to show in the table, or null to reset completely
    */
   private onResetDrilldownTableHierarchy(Id: string | null) {
     const id = Id !== 'null' ? Id : null;
