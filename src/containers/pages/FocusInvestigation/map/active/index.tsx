@@ -418,8 +418,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
       InterventionType.FI,
       [PlanStatus.ACTIVE, PlanStatus.COMPLETE],
       null,
-      [],
-      plan.jurisdiction_id
+      [plan.jurisdiction_id]
     );
   }
 
