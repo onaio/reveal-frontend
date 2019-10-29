@@ -34,7 +34,9 @@ describe('components/page/Header', () => {
         <SelectComponent {...props} />
       </Router>
     );
-    expect(toJson(wrapper)).toMatchSnapshot();
+    expect(wrapper.find('IndicatorsContainer').prop('options')).toMatchSnapshot(
+      'Select Indicator Options'
+    );
     wrapper.unmount();
   });
 
@@ -48,7 +50,7 @@ describe('components/page/Header', () => {
         <SelectComponent {...props} />
       </Router>
     );
-    expect(toJson(wrapper)).toMatchSnapshot();
+    expect(wrapper.find('Select').prop('placeholder')).toMatch(PLAN_SELECT_PLACEHOLDER);
     wrapper.unmount();
   });
 });
