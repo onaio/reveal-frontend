@@ -37,6 +37,7 @@ import {
   MULTI_POLYGON,
   OF,
   PLAN_COMPLETION_URL,
+  PLAN_SELECT_PLACEHOLDER,
   POINT,
   POLYGON,
   PROGRESS,
@@ -318,7 +319,10 @@ class SingleActiveFIMap extends React.Component<
               </h2>
             </Col>
             <Col xs="4">
-              <SelectComponent plansArray={plansByFocusArea} />
+              <SelectComponent
+                placeholder={PLAN_SELECT_PLACEHOLDER}
+                plansArray={plansByFocusArea}
+              />
             </Col>
           </Row>
         </div>
