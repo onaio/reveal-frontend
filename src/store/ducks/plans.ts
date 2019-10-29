@@ -2,13 +2,19 @@ import { get, keyBy, keys, pickBy, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
 import SeamlessImmutable from 'seamless-immutable';
 import uuidv4 from 'uuid/v4';
-import { PlanAction, planActivities, PlanGoal } from '../../configs/settings';
+import {
+  FIReasons,
+  FIStatuses,
+  PlanAction,
+  planActivities,
+  PlanGoal,
+} from '../../configs/settings';
+import { FIReasonType, FIStatusType } from '../../containers/forms/PlanForm/types';
 import { FlexObject, transformValues } from '../../helpers/utils';
 
 /** the reducer name */
 export const reducerName = 'plans';
 
-// todo: add '*' as any?
 /** Enum representing the possible intervention types */
 export enum InterventionType {
   FI = 'FI',
@@ -29,10 +35,10 @@ export interface PlanRecordResponse {
   effective_period_end: string;
   effective_period_start: string;
   identifier: string;
-  intervention_type: string;
+  intervention_type: InterventionType;
   jurisdictions?: string[];
-  fi_reason: string;
-  fi_status: string;
+  fi_reason: FIReasonType;
+  fi_status: FIStatusType;
   name: string;
   status: string;
   title: string;
@@ -45,8 +51,8 @@ export interface PlanRecord {
   plan_date: string;
   plan_effective_period_end: string;
   plan_effective_period_start: string;
-  plan_fi_reason: string;
-  plan_fi_status: string;
+  plan_fi_reason: FIReasonType | '';
+  plan_fi_status: FIStatusType | '';
   plan_id: string;
   plan_intervention_type: InterventionType;
   plan_status: PlanStatus;
@@ -167,7 +173,7 @@ export enum PlanEventType {
   UPDATE = 'Update Plan',
 }
 
-/** PlanEvent - interface for pload used when logging create/update Plan events */
+/** PlanEvent - interface for upload used when logging create/update Plan events */
 export interface PlanEventPayload {
   baseEntityId: string;
   dateCreated: string;
@@ -199,21 +205,21 @@ export const extractPlanRecordResponseFromPlanPayload = (
   const { date, effectivePeriod, identifier, status, title, useContext, version } = planPayload;
   if (useContext && effectivePeriod) {
     const { end, start } = effectivePeriod;
-    let planInterventionType = '';
-    let planFiReason = '';
-    let planFiStatus = '';
+    let planInterventionType = InterventionType.FI;
+    let planFiReason: FIReasonType = FIReasons[0];
+    let planFiStatus: FIStatusType = FIStatuses[0];
     for (const context of useContext) {
       switch (context.code) {
         case 'interventionType': {
-          planInterventionType = context.valueCodableConcept;
+          planInterventionType = context.valueCodableConcept as InterventionType;
           break;
         }
         case 'fiReason': {
-          planFiReason = context.valueCodableConcept;
+          planFiReason = context.valueCodableConcept as FIReasonType;
           break;
         }
         case 'fiStatus': {
-          planFiStatus = context.valueCodableConcept;
+          planFiStatus = context.valueCodableConcept as FIStatusType;
           break;
         }
       }
@@ -239,58 +245,6 @@ export const extractPlanRecordResponseFromPlanPayload = (
   return null;
 };
 
-/** extractPlanRecordFromPlanPayload - translates PlanPayload to PlanRecord */
-export const extractPlanRecordFromPlanPayload = (planPayload: PlanPayload): PlanRecord | null => {
-  const {
-    date,
-    effectivePeriod,
-    identifier,
-    status,
-    title,
-    useContext,
-    version,
-  } = planPayload as PlanPayload;
-
-  if (useContext && effectivePeriod) {
-    const { end, start } = effectivePeriod;
-    let planInterventionType = '';
-    let planFiReason = '';
-    let planFiStatus = '';
-    for (const context of useContext) {
-      switch (context.code) {
-        case 'interventionType': {
-          planInterventionType = context.valueCodableConcept;
-          break;
-        }
-        case 'fiReason': {
-          planFiReason = context.valueCodableConcept;
-          break;
-        }
-        case 'fiStatus': {
-          planFiStatus = context.valueCodableConcept;
-          break;
-        }
-      }
-    }
-    if (planInterventionType.length) {
-      const planRecord: PlanRecord = {
-        id: identifier,
-        plan_date: date,
-        plan_effective_period_end: end,
-        plan_effective_period_start: start,
-        plan_fi_reason: planFiReason,
-        plan_fi_status: planFiStatus,
-        plan_id: identifier,
-        plan_intervention_type: planInterventionType as InterventionType,
-        plan_status: status as PlanStatus,
-        plan_title: title,
-        plan_version: version,
-      };
-      return planRecord;
-    }
-  }
-  return null;
-};
 // actions
 /** PLANS_FETCHED action type */
 export const PLANS_FETCHED = 'reveal/reducer/plans/PLANS_FETCHED';
@@ -392,7 +346,7 @@ export const fetchPlans = (plansList: Plan[] = []): FetchPlansAction => ({
 });
 
 /** fetchPlanRecords - action creator setting planRecordsById
- * @param {PlanRecord[]} planList - an array of plan record obejcts
+ * @param {PlanRecord[]} planList - an array of plan record objects
  */
 export const fetchPlanRecords = (planList: PlanRecordResponse[] = []): FetchPlanRecordsAction => ({
   planRecordsById: keyBy(
@@ -422,7 +376,7 @@ export const fetchPlanRecords = (planList: PlanRecordResponse[] = []): FetchPlan
 
 // selectors
 
-/** getPlansById - get plansById by intervention type
+/** getPlansById - get plansById
  * @param {Partial<Store>} state - the redux store
  * @param {InterventionType} intervention - the intervention type
  * @param {string[]} statusList - the plan statuses
@@ -430,7 +384,7 @@ export const fetchPlanRecords = (planList: PlanRecordResponse[] = []): FetchPlan
  */
 export function getPlansById(
   state: Partial<Store>,
-  intervention: InterventionType = InterventionType.FI,
+  intervention: InterventionType | null = null,
   statusList: string[] = [PlanStatus.ACTIVE],
   reason: string | null = null
 ): { [key: string]: Plan } {
@@ -438,13 +392,13 @@ export function getPlansById(
   return pickBy(
     plansById,
     (plan: Plan) =>
-      plan.plan_intervention_type === intervention &&
+      (intervention ? plan.plan_intervention_type === intervention : true) &&
       (statusList.length ? statusList.includes(plan.plan_status) : true) &&
       (reason ? plan.plan_fi_reason === reason : true)
   );
 }
 
-/** getPlansArray - get an array of Plans by intervention type
+/** getPlansArray - get an array of Plans
  * @param {Partial<Store>} state - the redux store
  * @param {InterventionType} intervention - the intervention type
  * @param {string[]} statusList - a list of the desired the plan statuses
@@ -454,7 +408,7 @@ export function getPlansById(
  */
 export function getPlansArray(
   state: Partial<Store>,
-  intervention: InterventionType = InterventionType.FI,
+  intervention: InterventionType | null = null,
   statusList: string[] = [],
   reason: string | null = null,
   jurisdictions: string[] = [],
@@ -462,7 +416,7 @@ export function getPlansArray(
 ): Plan[] {
   return values((state as any)[reducerName].plansById).filter(
     (plan: Plan) =>
-      plan.plan_intervention_type === intervention &&
+      (intervention ? plan.plan_intervention_type === intervention : true) &&
       (statusList.length ? statusList.includes(plan.plan_status) : true) &&
       (reason ? plan.plan_fi_reason === reason : true) &&
       (jurisdictions.length ? jurisdictions.includes(plan.jurisdiction_id) : true) &&
@@ -473,7 +427,7 @@ export function getPlansArray(
   );
 }
 
-/** getPlansIdArray - get an array of Plan ids by intervention type
+/** getPlansIdArray - get an array of Plan ids
  * @param {Partial<Store>} state - the redux store
  * @param {InterventionType} intervention - the intervention type
  * @param {string[]} statusList - the plan statuses
@@ -481,7 +435,7 @@ export function getPlansArray(
  */
 export function getPlansIdArray(
   state: Partial<Store>,
-  intervention: InterventionType = InterventionType.FI,
+  intervention: InterventionType | null = null,
   statusList: string[] = [PlanStatus.ACTIVE],
   reason: string | null = null
 ): string[] {
@@ -496,7 +450,7 @@ export function getPlanById(state: Partial<Store>, id: string): Plan | null {
   return get((state as any)[reducerName].plansById, id) || null;
 }
 
-/** getPlanRecordsById - get planRecordsById by intervention type
+/** getPlanRecordsById - get planRecordsById
  * @param {Partial<Store>} state - the redux store
  * @param {InterventionType} intervention - the intervention type
  * @param {string[]} statusList - the plan statuses
@@ -504,7 +458,7 @@ export function getPlanById(state: Partial<Store>, id: string): Plan | null {
  */
 export function getPlanRecordsById(
   state: Partial<Store>,
-  intervention: InterventionType = InterventionType.FI,
+  intervention: InterventionType | null = null,
   statusList: string[] = [PlanStatus.ACTIVE],
   reason: string | null = null
 ): { [key: string]: PlanRecord } {
@@ -512,13 +466,13 @@ export function getPlanRecordsById(
   return pickBy(
     planRecordsById,
     (plan: PlanRecord) =>
-      plan.plan_intervention_type === intervention &&
+      (intervention ? plan.plan_intervention_type === intervention : true) &&
       (statusList.length ? statusList.includes(plan.plan_status) : true) &&
       (reason ? plan.plan_fi_reason === reason : true)
   );
 }
 
-/** getPlanRecordsArray - get an array of PlanRecords by intervention type
+/** getPlanRecordsArray - get an array of PlanRecords
  * @param {Partial<Store>} state - the redux store
  * @param {InterventionType} intervention - the intervention type
  * @param {string[]} status - the plan statuses
@@ -526,13 +480,13 @@ export function getPlanRecordsById(
  */
 export function getPlanRecordsArray(
   state: Partial<Store>,
-  intervention: InterventionType = InterventionType.FI,
+  intervention: InterventionType | null = null,
   statusList: string[] = [PlanStatus.ACTIVE],
   reason: string | null = null
 ): PlanRecord[] {
   return values((state as any)[reducerName].planRecordsById).filter(
     (plan: PlanRecord) =>
-      plan.plan_intervention_type === intervention &&
+      (intervention ? plan.plan_intervention_type === intervention : true) &&
       (statusList.length ? statusList.includes(plan.plan_status) : true) &&
       (reason ? plan.plan_fi_reason === reason : true)
   );
@@ -546,7 +500,7 @@ export function getPlanRecordsArray(
  */
 export function getPlanRecordsIdArray(
   state: Partial<Store>,
-  intervention: InterventionType = InterventionType.FI,
+  intervention: InterventionType | null = null,
   statusList: string[] = [PlanStatus.ACTIVE],
   reason: string | null = null
 ): string[] {

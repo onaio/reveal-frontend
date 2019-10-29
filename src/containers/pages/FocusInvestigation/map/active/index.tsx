@@ -22,7 +22,7 @@ import {
   SUPERSET_TASKS_SLICE,
 } from '../../../../../configs/env';
 import {
-  CASE_TRIGGERED_PLAN,
+  CASE_TRIGGERED,
   END_DATE,
   FI_SINGLE_MAP_URL,
   FI_SINGLE_URL,
@@ -37,11 +37,12 @@ import {
   MULTI_POLYGON,
   OF,
   PLAN_COMPLETION_URL,
+  PLAN_SELECT_PLACEHOLDER,
   POINT,
   POLYGON,
   PROGRESS,
   REACTIVE,
-  ROUTINE_PLAN,
+  ROUTINE,
   START_DATE,
 } from '../../../../../constants';
 import { popupHandler } from '../../../../../helpers/handlers';
@@ -274,7 +275,7 @@ class SingleActiveFIMap extends React.Component<
      */
     const planKeysArray: string[] = Object.keys(plan);
 
-    /** alias enables asigning keys dynamically used to populate the detailview  */
+    /** alias enables assigning keys dynamically used to populate the detailview  */
 
     const alias = {
       plan_effective_period_end: END_DATE,
@@ -282,7 +283,7 @@ class SingleActiveFIMap extends React.Component<
     };
 
     const detailViewPlanInvestigationContainer: React.ReactElement[] = [];
-    if (plan.plan_fi_reason === ROUTINE_PLAN) {
+    if (plan.plan_fi_reason === ROUTINE) {
       planKeysArray.forEach((column: string) => {
         if (column === 'plan_effective_period_end' || column === 'plan_effective_period_start') {
           detailViewPlanInvestigationContainer.push(
@@ -318,7 +319,10 @@ class SingleActiveFIMap extends React.Component<
               </h2>
             </Col>
             <Col xs="4">
-              <SelectComponent plansArray={plansByFocusArea} />
+              <SelectComponent
+                placeholder={PLAN_SELECT_PLACEHOLDER}
+                plansArray={plansByFocusArea}
+              />
             </Col>
           </Row>
         </div>
@@ -340,7 +344,7 @@ class SingleActiveFIMap extends React.Component<
             <div className="mapSidebar">
               <div>
                 <h5>
-                  {plan.plan_fi_reason === CASE_TRIGGERED_PLAN ? REACTIVE : ROUTINE_PLAN}&nbsp;
+                  {plan.plan_fi_reason === CASE_TRIGGERED ? REACTIVE : ROUTINE}&nbsp;
                   {INVESTIGATION}
                 </h5>
                 {detailViewPlanInvestigationContainer}
@@ -418,8 +422,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
       InterventionType.FI,
       [PlanStatus.ACTIVE, PlanStatus.COMPLETE],
       null,
-      [],
-      plan.jurisdiction_id
+      [plan.jurisdiction_id]
     );
   }
 

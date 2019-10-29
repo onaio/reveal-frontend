@@ -8,15 +8,18 @@ import { Helmet } from 'react-helmet';
 import { Route, Switch } from 'react-router';
 import { Col, Container, Row } from 'reactstrap';
 import Loading from '../components/page/Loading';
-import { DISABLE_LOGIN_PROTECTION } from '../configs/env';
 import { WEBSITE_NAME } from '../configs/env';
+import { DISABLE_LOGIN_PROTECTION } from '../configs/env';
 import { providers } from '../configs/settings';
 import {
   ACTIVE_IRS_PLAN_URL,
   ASSIGN_PLAN_URL,
+  ASSIGN_PRACTITIONERS_URL,
   CREATE_ORGANIZATION_URL,
+  CREATE_PRACTITIONER_URL,
   DRAFT_IRS_PLAN_URL,
   EDIT_ORGANIZATION_URL,
+  EDIT_PRACTITIONER_URL,
   FI_FILTER_URL,
   FI_SINGLE_MAP_URL,
   FI_SINGLE_URL,
@@ -52,10 +55,13 @@ import ConnectedIRSAssignmentPlansList from '../containers/pages/IRS/assignments
 import ConnectedJurisdictionReport from '../containers/pages/IRS/JurisdictionsReport';
 import ConnectedIRSReportingMap from '../containers/pages/IRS/Map';
 import ConnectedIRSPlansList from '../containers/pages/IRS/plans';
+import ConnectedAssignPractitioner from '../containers/pages/OrganizationViews/AssignPractitioners';
 import ConnectedCreateEditOrgView from '../containers/pages/OrganizationViews/CreateEditOrgView';
 import ConnectedOrgsListView from '../containers/pages/OrganizationViews/OrganizationListView';
 import ConnectedSingleOrgView from '../containers/pages/OrganizationViews/SingleOrganizationView';
+import ConnectedCreateEditPractitionerView from '../containers/pages/PractitionerViews/CreateEditPractitioner';
 import ConnectedPractitionersListView from '../containers/pages/PractitionerViews/PractitionerListView';
+
 import { oAuthUserInfoGetter } from '../helpers/utils';
 
 library.add(faMap);
@@ -82,7 +88,6 @@ class App extends Component {
                   path="/"
                   component={Home}
                 />
-
                 {/* Active IRS Plans list view */}
                 <ConnectedPrivateRoute
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
@@ -91,7 +96,6 @@ class App extends Component {
                   ConnectedOrgTeamView={true}
                   component={IrsPlans}
                 />
-
                 {/* Draft IRS Plans list view */}
                 <ConnectedPrivateRoute
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
@@ -99,7 +103,6 @@ class App extends Component {
                   path={INTERVENTION_IRS_DRAFTS_URL}
                   component={IrsPlans}
                 />
-
                 {/* New IRS Plan form view */}
                 <ConnectedPrivateRoute
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
@@ -107,7 +110,6 @@ class App extends Component {
                   path={NEW_IRS_PLAN_URL}
                   component={NewIRSPlan}
                 />
-
                 {/* Draft IRS Plan Jurisdiction Selection view */}
                 <ConnectedPrivateRoute
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
@@ -115,7 +117,6 @@ class App extends Component {
                   path={`${DRAFT_IRS_PLAN_URL}/:id`}
                   component={IrsPlan}
                 />
-
                 {/* Draft IRS Plan Team Assignment view */}
                 <ConnectedPrivateRoute
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
@@ -123,7 +124,6 @@ class App extends Component {
                   path={`${ACTIVE_IRS_PLAN_URL}/:id`}
                   component={IrsPlan}
                 />
-
                 {/* IRS Reporting plan table view */}
                 <ConnectedPrivateRoute
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
@@ -163,7 +163,6 @@ class App extends Component {
                   path={`${ASSIGN_PLAN_URL}/:id`}
                   component={IrsPlan}
                 />
-
                 {/* Focus Investigation Reporting list view */}
                 <ConnectedPrivateRoute
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
@@ -254,6 +253,13 @@ class App extends Component {
                   path={`${SINGLE_ORGANIZATION_URL}/:id`}
                   component={ConnectedSingleOrgView}
                 />
+                {/* single organization view */}
+                <ConnectedPrivateRoute
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${SINGLE_ORGANIZATION_URL}/:id`}
+                  component={ConnectedSingleOrgView}
+                />
                 {/* Practitioner listing page */}
                 <ConnectedPrivateRoute
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
@@ -261,7 +267,28 @@ class App extends Component {
                   path={PRACTITIONERS_LIST_URL}
                   component={ConnectedPractitionersListView}
                 />
-
+                {/** practitioner create view */}
+                <ConnectedPrivateRoute
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={CREATE_PRACTITIONER_URL}
+                  component={ConnectedCreateEditPractitionerView}
+                />
+                {/** Practitioner edit view */}
+                <ConnectedPrivateRoute
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${EDIT_PRACTITIONER_URL}/:id`}
+                  component={ConnectedCreateEditPractitionerView}
+                />
+                {/** Assign practitioners to organization view */}
+                />
+                <ConnectedPrivateRoute
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${ASSIGN_PRACTITIONERS_URL}/:id`}
+                  component={ConnectedAssignPractitioner}
+                />
                 {/* tslint:disable jsx-no-lambda */}
                 <Route
                   exact={true}

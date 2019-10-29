@@ -8,6 +8,10 @@ export type WEBSITE_NAME = typeof WEBSITE_NAME;
 export const DOMAIN_NAME = process.env.REACT_APP_DOMAIN_NAME || 'http://localhost:3000';
 export type DOMAIN_NAME = typeof DOMAIN_NAME;
 
+/** Do you want to enable team assignment? */
+export const ENABLE_ASSIGN = process.env.REACT_APP_ENABLE_ASSIGN === 'true';
+export type ENABLE_ASSIGN = typeof ENABLE_ASSIGN;
+
 /** Do you want to enable the IRS features? */
 export const ENABLE_IRS = process.env.REACT_APP_ENABLE_IRS === 'true';
 export type ENABLE_IRS = typeof ENABLE_IRS;
@@ -196,8 +200,20 @@ export const ACTION_UUID_NAMESPACE =
   process.env.REACT_APP_ACTION_UUID_NAMESPACE || '35968df5-f335-44ae-8ae5-25804caa2d86';
 export type ACTION_UUID_NAMESPACE = typeof ACTION_UUID_NAMESPACE;
 
+export const PRACTITIONER_ROLE_NAMESPACE =
+  process.env.REACT_APP_PRACTITIONER_ROLE_NAMESPACE || '228272e0-e9ce-11e9-a0d1-15f275801d76';
+export type PRACTITIONER_ROLE_NAMESPACE = typeof PRACTITIONER_ROLE_NAMESPACE;
+
 export const DEFAULT_PLAN_VERSION = process.env.REACT_APP_DEFAULT_PLAN_VERSION || '1';
 export type DEFAULT_PLAN_VERSION = typeof DEFAULT_PLAN_VERSION;
 
 export const ENABLE_PRACTITIONERS = process.env.REACT_APP_ENABLE_PRACTITIONERS === 'true';
 export type ENABLE_PRACTITIONERS = typeof ENABLE_PRACTITIONERS;
+
+export const PRACTITIONER_FORM_NAMESPACE =
+  process.env.REACT_APP_PRACTITIONER_FORM_NAMESPACE || '78295ac0-df73-11e9-a54b-dbf5e5b2d668';
+export type PRACTITIONER_FORM_NAMESPACE = typeof PRACTITIONER_FORM_NAMESPACE;
+
+const openMRSUsersRequestPageSize = process.env.REACT_APP_OPENMRS_USERS_REQUEST_PAGE_SIZE || '100';
+export const OPENMRS_USERS_REQUEST_PAGE_SIZE = parseInt(openMRSUsersRequestPageSize, 10);
+export type OPENMRS_USERS_REQUEST_PAGE_SIZE = typeof OPENMRS_USERS_REQUEST_PAGE_SIZE;

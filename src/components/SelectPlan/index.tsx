@@ -5,6 +5,7 @@ import { FI_SINGLE_MAP_URL } from '../../constants';
 import { Plan } from '../../store/ducks/plans';
 
 export interface SelectPlanProps extends RouteComponentProps {
+  placeholder?: string;
   plansArray: Plan[];
 }
 class SelectPlan extends React.Component<SelectPlanProps, {}> {
@@ -19,7 +20,7 @@ class SelectPlan extends React.Component<SelectPlanProps, {}> {
     }, 250);
   };
   public render() {
-    const { plansArray } = this.props;
+    const { placeholder, plansArray } = this.props;
     /** Sort plans by plan_date and build value label key value pairs to populate the select */
     let options;
     options = plansArray.sort((a, b) => {
@@ -28,7 +29,14 @@ class SelectPlan extends React.Component<SelectPlanProps, {}> {
     options = options.map(element => {
       return { value: element.id, label: element.plan_title };
     });
-    return <Select options={options} onChange={this.change} />;
+    const selectProps: any = {
+      onChange: this.change,
+      options,
+    };
+    if (placeholder) {
+      selectProps.placeholder = placeholder;
+    }
+    return <Select {...selectProps} />;
   }
 }
 

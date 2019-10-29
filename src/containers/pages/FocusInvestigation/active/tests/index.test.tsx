@@ -10,11 +10,10 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
-import { FI_PLAN_TYPE } from '../../../../../constants';
 import { CURRENT_FOCUS_INVESTIGATION } from '../../../../../constants';
 import store from '../../../../../store';
 import reducer, { fetchPlans, reducerName } from '../../../../../store/ducks/plans';
-import { Plan } from '../../../../../store/ducks/plans';
+import { InterventionType, Plan } from '../../../../../store/ducks/plans';
 import * as fixtures from '../../../../../store/ducks/tests/fixtures';
 import ConnectedActiveFocusInvestigation, { ActiveFocusInvestigation } from '../../active';
 import { activeFocusInvestigationProps } from './fixtures';
@@ -223,7 +222,10 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
     };
 
     const supersetCallList = [
-      [2000, [{ comparator: FI_PLAN_TYPE, operator: '==', subject: 'plan_intervention_type' }]],
+      [
+        2000,
+        [{ comparator: InterventionType.FI, operator: '==', subject: 'plan_intervention_type' }],
+      ],
     ];
     expect((superset.getFormData as any).mock.calls).toEqual(supersetCallList);
     expect(supersetMock).toHaveBeenCalledWith(0, supersetParams);

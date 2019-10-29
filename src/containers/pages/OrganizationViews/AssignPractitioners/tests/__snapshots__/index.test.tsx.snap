@@ -1,0 +1,123 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`src/pages/*/AssignPractitioners Renders correctly: BreadCrumb 1`] = `
+<Breadcrumb
+  aria-label="breadcrumb"
+  className="reveal-breadcrumb"
+  listTag="ol"
+  tag="nav"
+>
+  <nav
+    aria-label="breadcrumb"
+    className="reveal-breadcrumb"
+  >
+    <ol
+      className="breadcrumb"
+    >
+      <BreadcrumbItem
+        key="0"
+        tag="li"
+      >
+        <li
+          className="breadcrumb-item"
+        >
+          <Link
+            key="0"
+            replace={false}
+            to="/"
+          >
+            <a
+              href="/"
+              onClick={[Function]}
+            >
+              Home
+            </a>
+          </Link>
+        </li>
+      </BreadcrumbItem>
+      <BreadcrumbItem
+        key="1"
+        tag="li"
+      >
+        <li
+          className="breadcrumb-item"
+        >
+          <Link
+            key="1"
+            replace={false}
+            to="/teams"
+          >
+            <a
+              href="/teams"
+              onClick={[Function]}
+            >
+              Teams
+            </a>
+          </Link>
+        </li>
+      </BreadcrumbItem>
+      <BreadcrumbItem
+        active={true}
+        tag="li"
+      >
+        <li
+          aria-current="page"
+          className="active breadcrumb-item"
+        >
+          Assign Practitioners
+        </li>
+      </BreadcrumbItem>
+    </ol>
+  </nav>
+</Breadcrumb>
+`;
+
+exports[`src/pages/*/AssignPractitioners Renders correctly: add Practitioners button 1`] = `
+<Button
+  className="btn btn-primary disabled"
+  color="secondary"
+  onClick={[Function]}
+  tag="button"
+>
+  <button
+    aria-label={null}
+    className="btn btn-primary disabled btn btn-secondary"
+    onClick={[Function]}
+    type="button"
+  >
+    Add Practitioners
+  </button>
+</Button>
+`;
+
+exports[`src/pages/*/AssignPractitioners Renders correctly: async select 1`] = `
+<input
+  aria-autocomplete="list"
+  autoCapitalize="none"
+  autoComplete="off"
+  autoCorrect="off"
+  disabled={false}
+  id="react-select-3-input"
+  onBlur={[Function]}
+  onChange={[Function]}
+  onFocus={[Function]}
+  spellCheck="false"
+  style={
+    Object {
+      "background": 0,
+      "border": 0,
+      "boxSizing": "content-box",
+      "color": "inherit",
+      "fontSize": "inherit",
+      "label": "input",
+      "opacity": 1,
+      "outline": 0,
+      "padding": 0,
+      "width": "2px",
+    }
+  }
+  tabIndex="0"
+  type="text"
+  value=""
+/>
+`;

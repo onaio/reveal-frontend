@@ -1146,7 +1146,7 @@ export const expectedExtractActivityFromPlanformResult = {
       prefix: 1,
       reason: 'Investigation',
       subjectCodableConcept: {
-        text: 'Case_Confirmation',
+        text: 'Operational_Area',
       },
       taskTemplate: 'Case_Confirmation',
       timingPeriod: {
@@ -1783,7 +1783,7 @@ export const planFormValues2 = {
   caseNum: '',
   date: moment('2019-05-19T00:00:00.000Z').toDate(),
   end: moment('2019-08-30T00:00:00.000Z').toDate(),
-  fiReason: 'Case-triggered',
+  fiReason: 'Routine',
   fiStatus: 'A2',
   identifier: '356b6b84-fc36-4389-a44a-2b038ed2f38d',
   interventionType: 'FI',

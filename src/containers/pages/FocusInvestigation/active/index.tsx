@@ -30,7 +30,6 @@ import {
   CURRENT_FOCUS_INVESTIGATION,
   DEFINITIONS,
   END_DATE,
-  FI_PLAN_TYPE,
   FI_SINGLE_MAP_URL,
   FI_SINGLE_URL,
   FI_STATUS,
@@ -102,7 +101,7 @@ class ActiveFocusInvestigation extends React.Component<
   public componentDidMount() {
     const { fetchPlansActionCreator, supersetService } = this.props;
     const supersetParams = superset.getFormData(2000, [
-      { comparator: FI_PLAN_TYPE, operator: '==', subject: 'plan_intervention_type' },
+      { comparator: InterventionType.FI, operator: '==', subject: 'plan_intervention_type' },
     ]);
     supersetService(SUPERSET_PLANS_SLICE, supersetParams).then((result: Plan[]) =>
       fetchPlansActionCreator(result)

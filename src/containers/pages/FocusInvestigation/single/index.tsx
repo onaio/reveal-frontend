@@ -248,7 +248,7 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
           const locationColumns: Column[] = getLocationColumns(locationHierarchy, true);
           /**  Handle Columns Unique for Routine and Reactive Tables */
           const columnsBasedOnReason = [];
-          /** If plan_fi_reason is case-triggered then add currentReactivePlansColumns from settings */
+          /** If plan_fi_reason is Case Triggered then add currentReactivePlansColumns from settings */
           if (plansArray.every(d => d.plan_fi_reason === CASE_TRIGGERED)) {
             columnsBasedOnReason.push(...currentReactivePlansColumns);
           } else {

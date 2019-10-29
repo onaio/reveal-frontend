@@ -1,4 +1,5 @@
-import { Marker } from 'mapbox-gl';
+import { FIReasons, PlanActionCodes } from './configs/settings';
+import { FIReasonType } from './containers/forms/PlanForm/types';
 
 // strings
 export const MAP = 'map';
@@ -95,14 +96,14 @@ export const STRUCTURE_LAYER = 'structure-layer';
 export type STRUCTURE_LAYER = typeof STRUCTURE_LAYER;
 export const PROGRESS = 'Progress';
 export type PROGRESS = typeof PROGRESS;
+export const STRUCTURE = 'structure';
+export type STRUCTURE = typeof STRUCTURE;
 export const STRUCTURES = 'structure(s)';
 export type STRUCTURES = typeof STRUCTURES;
 export const PERSONS = 'person(s)';
 export type PERSONS = typeof PERSONS;
-export const CASE_TRIGGERED = 'Case-triggered';
-export type CASE_TRIGGERED = typeof CASE_TRIGGERED;
-export const ROUTINE = 'Routine';
-export type ROUTINE = typeof ROUTINE;
+export const CASE_TRIGGERED: FIReasonType = FIReasons[1];
+export const ROUTINE: FIReasonType = FIReasons[0];
 export const REACTIVE = 'Reactive';
 export type REACTIVE = typeof REACTIVE;
 export const REQUIRED = 'Required';
@@ -214,6 +215,14 @@ export const SAVE_ASSIGNMENTS = 'Save Assignments';
 export type SAVE_ASSIGNMENTS = typeof SAVE_ASSIGNMENTS;
 export const NO_PLANS_LOADED_MESSAGE = 'No plans found...';
 export type NO_PLANS_LOADED_MESSAGE = typeof NO_PLANS_LOADED_MESSAGE;
+export const SELECT_USERNAME = 'Select username';
+export type SELECT_USERNAME = typeof SELECT_USERNAME;
+export const TO = 'To';
+export type TO = typeof TO;
+export const NO_PRACTITIONERS_ADDED_YET = 'No Practitioners Added yet';
+export type NO_PRACTITIONERS_ADDED_YET = typeof NO_PRACTITIONERS_ADDED_YET;
+export const PLAN_SELECT_PLACEHOLDER = 'Other plans in this area';
+export type PLAN_SELECT_PLACEHOLDER = typeof PLAN_SELECT_PLACEHOLDER;
 
 // TODO ? - do the below 2 belong here or in a settings file
 export const ORGANIZATION_LABEL = TEAM;
@@ -299,6 +308,8 @@ export const ASSIGN_ORGANIZATION_URL = '/plans/teamAssignment';
 export type ASSIGN_ORGANIZATION_URL = typeof ASSIGN_ORGANIZATION_URL;
 export const PRACTITIONERS_LIST_URL = '/practitioners';
 export type PRACTITIONERS_LIST_URL = typeof PRACTITIONERS_LIST_URL;
+export const ASSIGN_PRACTITIONERS_URL = '/teams/assignPractitioners';
+export type ASSIGN_PRACTITIONERS_URL = typeof ASSIGN_ORGANIZATION_URL;
 
 // OpenSRP API strings
 export const OPENSRP_PRACTITIONER_ENDPOINT = 'practitioner';
@@ -323,6 +334,8 @@ export const OPENSRP_ORG_PRACTITIONER_ENDPOINT = 'organization/practitioner';
 export type OPENSRP_ORG_PRACTITIONER_ENDPOINT = typeof OPENSRP_ORG_PRACTITIONER_ENDPOINT;
 export const OPENSRP_DEL_PRACTITIONER_ROLE_ENDPOINT = 'practitionerRole/deleteByPractitioner';
 export type OPENSRP_DEL_PRACTITIONER_ROLE_ENDPOINT = typeof OPENSRP_DEL_PRACTITIONER_ROLE_ENDPOINT;
+export const OPENSRP_ADD_PRACTITIONER_ROLE_ENDPOINT = 'practitionerRole/add';
+export type OPENSRP_ADD_PRACTITIONER_ROLE_ENDPOINT = typeof OPENSRP_ADD_PRACTITIONER_ROLE_ENDPOINT;
 
 // container pages title names
 export const HOME_TITLE = `Home page`;
@@ -343,27 +356,24 @@ export const RED = 'Red';
 export type RED = typeof RED;
 
 // task action codes
-export const RACD_REGISTER_FAMILY_CODE = 'RACD Register Family';
-export type RACD_REGISTER_FAMILY_CODE = typeof RACD_REGISTER_FAMILY_CODE;
-export const CASE_CONFIRMATION_CODE = 'Case Confirmation';
-export type CASE_CONFIRMATION_CODE = typeof CASE_CONFIRMATION_CODE;
-export const MOSQUITO_COLLECTION_CODE = 'Mosquito Collection';
-export type MOSQUITO_COLLECTION_CODE = typeof MOSQUITO_COLLECTION_CODE;
-export const BEDNET_DISTRIBUTION_CODE = 'Bednet Distribution';
-export type BEDNET_DISTRIBUTION_CODE = typeof BEDNET_DISTRIBUTION_CODE;
-export const LARVAL_DIPPING_CODE = 'Larval Dipping';
-export type LARVAL_DIPPING_CODE = typeof LARVAL_DIPPING_CODE;
-export const BLOOD_SCREENING_CODE = 'Blood Screening';
-export type BLOOD_SCREENING_CODE = typeof BLOOD_SCREENING_CODE;
-export const IRS_CODE = 'IRS';
+export const BCC_CODE = PlanActionCodes[0];
+export type BCC_CODE = typeof BCC_CODE;
+export const IRS_CODE = PlanActionCodes[1];
 export type IRS_CODE = typeof IRS_CODE;
+export const BEDNET_DISTRIBUTION_CODE = PlanActionCodes[2];
+export type BEDNET_DISTRIBUTION_CODE = typeof BEDNET_DISTRIBUTION_CODE;
+export const BLOOD_SCREENING_CODE = PlanActionCodes[3];
+export type BLOOD_SCREENING_CODE = typeof BLOOD_SCREENING_CODE;
+export const CASE_CONFIRMATION_CODE = PlanActionCodes[4];
+export type CASE_CONFIRMATION_CODE = typeof CASE_CONFIRMATION_CODE;
+export const RACD_REGISTER_FAMILY_CODE = PlanActionCodes[5];
+export type RACD_REGISTER_FAMILY_CODE = typeof RACD_REGISTER_FAMILY_CODE;
+export const LARVAL_DIPPING_CODE = PlanActionCodes[6];
+export type LARVAL_DIPPING_CODE = typeof LARVAL_DIPPING_CODE;
+export const MOSQUITO_COLLECTION_CODE = PlanActionCodes[7];
+export type MOSQUITO_COLLECTION_CODE = typeof MOSQUITO_COLLECTION_CODE;
 
-// plans
-export const ROUTINE_PLAN = 'Routine';
-export type ROUTINE_PLAN = typeof ROUTINE_PLAN;
-export const CASE_TRIGGERED_PLAN = 'Case-triggered';
-export type CASE_TRIGGERED_PLAN = typeof CASE_TRIGGERED_PLAN;
-export const FI_PLAN_TYPE = 'FI';
-export type FI_PLAN_TYPE = typeof FI_PLAN_TYPE;
-export const IRS_PLAN_TYPE = 'IRS';
-export type IRS_PLAN_TYPE = typeof IRS_PLAN_TYPE;
+export const PRACTITIONER_CODE = {
+  text: 'Community Health Worker',
+};
+export type PRACTITIONER_CODE = typeof PRACTITIONER_CODE;

@@ -269,8 +269,8 @@ class IrsPlan extends React.Component<
     const otherJurisdictionSupersetParams = { row_limit: SUPERSET_MAX_RECORDS };
 
     // GET FULL JURISDICTION HIERARCHY
-    await supersetService(SUPERSET_JURISDICTIONS_DATA_SLICE, otherJurisdictionSupersetParams).then(
-      (jurisdictionResults: FlexObject[] = []) => {
+    await supersetService(SUPERSET_JURISDICTIONS_DATA_SLICE, otherJurisdictionSupersetParams)
+      .then((jurisdictionResults: FlexObject[] = []) => {
         const jurisdictionsArray: Jurisdiction[] = jurisdictionResults
           .map(j => {
             const { id, parent_id, name, geographic_level } = j;
@@ -299,7 +299,7 @@ class IrsPlan extends React.Component<
           // build and store decendant jurisdictions, jurisdictionsArray MUST be sorted by geographic_level from high to low
           const childrenByParentId: { [key: string]: string[] } = {};
           for (const j of jurisdictionsArray) {
-            if (j.parent_id) {
+            if (j && j.parent_id) {
               if (!childrenByParentId[j.parent_id]) {
                 childrenByParentId[j.parent_id] = [];
               }
@@ -329,72 +329,78 @@ class IrsPlan extends React.Component<
               is_jurisdiction: true,
               properties_filter: `name:${jurisdictionsById[parentlessParent].name}`,
               return_geometry: false,
-            }).then(results => {
-              const result = results[0];
-              if (result && result.properties) {
-                // Define which country settings to use
-                const country: JurisdictionsByCountry =
-                  CountriesAdmin0[
-                    (result.properties.ADM0_PCODE || result.properties.name) as ADMN0_PCODE
-                  ];
+            })
+              .then(results => {
+                const result = results[0];
+                if (result && result.properties) {
+                  // Define which country settings to use
+                  const country: JurisdictionsByCountry =
+                    CountriesAdmin0[
+                      (result.properties.ADM0_PCODE || result.properties.name) as ADMN0_PCODE
+                    ];
 
-                if (country) {
-                  // define id of parentless parent or ids of admin level 1s
-                  const countryIds = country.jurisdictionId.length
-                    ? [country.jurisdictionId]
-                    : [...country.jurisdictionIds];
-                  // define all Jurisdictions pertaining to this Plan only (by country)
-                  const filteredJurisdictions = this.getDescendantJurisdictionIds(
-                    countryIds,
-                    jurisdictionsById,
-                    true,
-                    childrenByParentId
-                  ).map(j => jurisdictionsById[j]);
-                  const childlessChildrenIds = this.getChildlessChildrenIds(filteredJurisdictions);
+                  if (country) {
+                    // define id of parentless parent or ids of admin level 1s
+                    const countryIds = country.jurisdictionId.length
+                      ? [country.jurisdictionId]
+                      : [...country.jurisdictionIds];
+                    // define all Jurisdictions pertaining to this Plan only (by country)
+                    const filteredJurisdictions = this.getDescendantJurisdictionIds(
+                      countryIds,
+                      jurisdictionsById,
+                      true,
+                      childrenByParentId
+                    ).map(j => jurisdictionsById[j]);
+                    const childlessChildrenIds = this.getChildlessChildrenIds(
+                      filteredJurisdictions
+                    );
 
-                  const newPlan: PlanRecord = {
-                    ...(this.props.planById as PlanRecord),
-                    plan_jurisdictions_ids: [...ancestorIds],
-                  };
+                    const newPlan: PlanRecord = {
+                      ...(this.props.planById as PlanRecord),
+                      plan_jurisdictions_ids: [...ancestorIds],
+                    };
 
-                  // build first TableCrumb based on the country settings
-                  const tableCrumbs: TableCrumb[] = [
-                    {
-                      active: true,
-                      bounds: country.bounds,
-                      id: country.jurisdictionId.length ? country.jurisdictionId : null,
-                      label: country.ADMN0_EN,
-                    },
-                  ];
+                    // build first TableCrumb based on the country settings
+                    const tableCrumbs: TableCrumb[] = [
+                      {
+                        active: true,
+                        bounds: country.bounds,
+                        id: country.jurisdictionId.length ? country.jurisdictionId : null,
+                        label: country.ADMN0_EN,
+                      },
+                    ];
 
-                  this.setState(
-                    {
-                      childlessChildrenIds,
-                      childrenByParentId,
-                      country,
-                      filteredJurisdictionIds: filteredJurisdictions.map(j => j.jurisdiction_id),
-                      focusJurisdictionId: country.jurisdictionId.length
-                        ? country.jurisdictionId
-                        : this.state.focusJurisdictionId,
-                      isLoadingGeoms: true,
-                      isLoadingJurisdictions: false,
-                      newPlan,
-                      planCountry: result.properties.ADM0_PCODE,
-                      tableCrumbs,
-                    },
-                    () => {
-                      // build drilldown table props
-                      const planTableProps = this.getDrilldownPlanTableProps(this.state);
-                      this.setState({ planTableProps }, () => {
-                        this.loadJurisdictionGeometries();
-                      });
-                    }
-                  );
-                } else {
-                  // handle country not found
+                    this.setState(
+                      {
+                        childlessChildrenIds,
+                        childrenByParentId,
+                        country,
+                        filteredJurisdictionIds: filteredJurisdictions.map(j => j.jurisdiction_id),
+                        focusJurisdictionId: country.jurisdictionId.length
+                          ? country.jurisdictionId
+                          : this.state.focusJurisdictionId,
+                        isLoadingGeoms: true,
+                        isLoadingJurisdictions: false,
+                        newPlan,
+                        planCountry: result.properties.ADM0_PCODE,
+                        tableCrumbs,
+                      },
+                      () => {
+                        // build drilldown table props
+                        const planTableProps = this.getDrilldownPlanTableProps(this.state);
+                        this.setState({ planTableProps }, () => {
+                          this.loadJurisdictionGeometries();
+                        });
+                      }
+                    );
+                  } else {
+                    // handle country not found
+                  }
                 }
-              }
-            });
+              })
+              .catch((err: Error) => {
+                /** TODO - find something to do with error */
+              });
           }
         } else {
           // build drilldown table props
@@ -402,8 +408,10 @@ class IrsPlan extends React.Component<
           this.setState({ isLoadingJurisdictions: false, planTableProps });
         }
         return fetchJurisdictionsActionCreator(jurisdictionsArray);
-      }
-    );
+      })
+      .catch((err: Error) => {
+        /** TODO - find something to do with error */
+      });
   }
 
   public componentWillReceiveProps(nextProps: IrsPlanProps) {
@@ -1149,14 +1157,16 @@ class IrsPlan extends React.Component<
       if (doIncludeChildIds) {
         ancestorIds.push(childId);
       }
-      const { parent_id: parentId } = jurisdictionsById[childId];
-      if (parentId && parentId !== 'null' && parentId.length) {
-        const parentIds = this.getAncestorJurisdictionIds(
-          [parentId],
-          jurisdictionsById,
-          doIncludeChildIds
-        );
-        ancestorIds = [...ancestorIds, ...parentIds];
+      if (jurisdictionsById[childId]) {
+        const { parent_id: parentId } = jurisdictionsById[childId];
+        if (parentId && parentId !== 'null' && parentId.length) {
+          const parentIds = this.getAncestorJurisdictionIds(
+            [parentId],
+            jurisdictionsById,
+            doIncludeChildIds
+          );
+          ancestorIds = [...ancestorIds, ...parentIds];
+        }
       }
     }
 

@@ -17,6 +17,7 @@ import reducer, {
   InterventionType,
   Plan,
   PlanRecord,
+  PlanRecordResponse,
   PlanStatus,
   reducerName,
   removePlansAction,
@@ -60,28 +61,30 @@ describe('reducers/plans', () => {
         plan.plan_intervention_type === InterventionType.FI && plan.plan_fi_reason === FIReasons[0]
     );
 
-    const filteredByJurisdictionPlans = values(
-      cloneDeep(routinePlans).filter(
-        (plan: Plan) => plan.jurisdiction_id === '450fc15b-5bd2-468a-927a-49cb10d3bcac'
-      )
-    );
-
     const reactivePlans = values(cloneDeep(store.getState().plans.plansById)).filter(
-      (plan: Plan) => plan.plan_fi_reason === FIReasons[1]
+      (plan: Plan) =>
+        plan.plan_intervention_type === InterventionType.FI && plan.plan_fi_reason === FIReasons[1]
     );
     const reactiveDraftPlans = values(cloneDeep(store.getState().plans.plansById)).filter(
-      (plan: Plan) => plan.plan_fi_reason === FIReasons[1] && plan.plan_status === 'draft'
+      (plan: Plan) =>
+        plan.plan_intervention_type === InterventionType.FI &&
+        plan.plan_fi_reason === FIReasons[1] &&
+        plan.plan_status === 'draft'
     );
     expect(getPlansById(store.getState(), InterventionType.FI, [], null)).toEqual(fiPlans);
     expect(getPlansById(store.getState(), InterventionType.IRS, [], null)).toEqual(irsPlans);
 
-    expect(getPlansIdArray(store.getState())).toEqual(['ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f']);
+    expect(getPlansIdArray(store.getState())).toEqual([
+      'ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f',
+      'plan-id-2',
+    ]);
     expect(getPlansIdArray(store.getState(), InterventionType.IRS)).toEqual(['plan-id-2']);
 
     expect(getPlansArray(store.getState(), InterventionType.FI, [], null)).toEqual(values(fiPlans));
     expect(getPlansArray(store.getState(), InterventionType.IRS, [], null)).toEqual(
       values(irsPlans)
     );
+
     expect(getPlansArray(store.getState(), InterventionType.FI, [], FIReasons[1])).toEqual(
       values(reactivePlans)
     );
@@ -136,7 +139,7 @@ describe('reducers/plans', () => {
         e.plan_fi_reason === FIReasons[0] &&
         e.jurisdiction_path.includes('2939')
     );
-    // filter case-triggered irs plans based on a location
+    // filter Case Triggered irs plans based on a location
     const filteredCaseTriggeredIRSPlans = pickBy(
       allPlans,
       (e: Plan) =>
@@ -160,7 +163,7 @@ describe('reducers/plans', () => {
   });
 
   it('should fetch PlanRecords', () => {
-    store.dispatch(fetchPlanRecords(fixtures.planRecordResponses));
+    store.dispatch(fetchPlanRecords(fixtures.planRecordResponses as PlanRecordResponse[]));
     const { planRecordsById: allPlanRecords } = fixtures;
 
     const fiPlanRecords = pickBy(
@@ -171,27 +174,26 @@ describe('reducers/plans', () => {
       allPlanRecords,
       (e: PlanRecord) => e.plan_intervention_type === InterventionType.IRS
     );
-    expect(getPlanRecordsById(store.getState())).toEqual(fiPlanRecords);
+    expect(getPlanRecordsById(store.getState(), InterventionType.FI)).toEqual(fiPlanRecords);
     expect(getPlanRecordsById(store.getState(), InterventionType.IRS)).toEqual(irsPlanRecords);
 
     const fiRecordPlanIds = keys(fiPlanRecords);
     const irsRecordPlansIds = keys(irsPlanRecords);
-    expect(getPlanRecordsIdArray(store.getState())).toEqual(fiRecordPlanIds);
+    expect(getPlanRecordsIdArray(store.getState(), InterventionType.FI)).toEqual(fiRecordPlanIds);
     expect(getPlanRecordsIdArray(store.getState(), InterventionType.IRS)).toEqual(
       irsRecordPlansIds
     );
 
     const fiPlanRecordsArray = values(fiPlanRecords);
     const irsPlanRecordsArray = values(irsPlanRecords);
-    expect(getPlanRecordsArray(store.getState())).toEqual(fiPlanRecordsArray);
+    expect(getPlanRecordsArray(store.getState(), InterventionType.FI)).toEqual(fiPlanRecordsArray);
     expect(getPlanRecordsArray(store.getState(), InterventionType.IRS)).toEqual(
       irsPlanRecordsArray
     );
 
-    const planRecordsArray = [
-      ...getPlanRecordsArray(store.getState()),
-      ...getPlanRecordsArray(store.getState(), InterventionType.IRS),
-    ].sort((a: PlanRecord, b: PlanRecord) => Date.parse(a.plan_date) - Date.parse(b.plan_date));
+    const planRecordsArray = [...getPlanRecordsArray(store.getState())].sort(
+      (a: PlanRecord, b: PlanRecord) => Date.parse(b.plan_date) - Date.parse(a.plan_date)
+    );
     expect(planRecordsArray).toEqual(fixtures.sortedPlanRecordArray);
 
     const planId = '6c7904b2-c556-4004-a9b9-114617832954';
@@ -222,21 +224,21 @@ describe('reducers/plans', () => {
 
   it('resets plansById records', () => {
     store.dispatch(removePlansAction);
-    let numberOfPlansInStore = getPlansArray(store.getState(), undefined, []).length;
+    let numberOfPlansInStore = getPlansArray(store.getState(), null, []).length;
     expect(numberOfPlansInStore).toEqual(0);
 
     store.dispatch(fetchPlans([fixtures.plan3] as any));
-    numberOfPlansInStore = getPlansArray(store.getState(), undefined, []).length;
+    numberOfPlansInStore = getPlansArray(store.getState(), null, []).length;
     expect(numberOfPlansInStore).toEqual(1);
 
     store.dispatch(removePlansAction);
-    numberOfPlansInStore = getPlansArray(store.getState(), undefined, []).length;
+    numberOfPlansInStore = getPlansArray(store.getState(), null, []).length;
     expect(numberOfPlansInStore).toEqual(0);
   });
 
   it('Concatenates new plans to existing plans after fetching', () => {
     store.dispatch(removePlansAction);
-    let numberOfPlansInStore = getPlansArray(store.getState(), undefined, []).length;
+    let numberOfPlansInStore = getPlansArray(store.getState(), null, []).length;
     expect(numberOfPlansInStore).toEqual(0);
     store.dispatch(fetchPlans([fixtures.plan3] as any));
     let plan3FromStore = getPlanById(store.getState(), '1502e539');
@@ -258,7 +260,7 @@ describe('reducers/plans', () => {
         store.getState(),
         InterventionType.IRS,
         [PlanStatus.ACTIVE],
-        'Case-triggered',
+        'Case Triggered',
         [],
         'some-jurisdiction-id'
       )
@@ -269,7 +271,7 @@ describe('reducers/plans', () => {
         store.getState(),
         InterventionType.IRS,
         [PlanStatus.ACTIVE],
-        'Case-triggered',
+        'Case Triggered',
         [],
         null
       )
