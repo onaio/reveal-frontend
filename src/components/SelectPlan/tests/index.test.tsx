@@ -38,19 +38,6 @@ describe('components/page/Header', () => {
     wrapper.unmount();
   });
 
-  it('renders header correctly when authenticated', () => {
-    const props = {
-      plansArray: [fixtures.plan1, fixtures.plan2],
-    };
-    const wrapper = mount(
-      <Router history={history}>
-        <SelectComponent {...props} />
-      </Router>
-    );
-    expect(toJson(wrapper)).toMatchSnapshot();
-    wrapper.unmount();
-  });
-
   it('renders a placeholder correctly if provided', () => {
     const props = {
       placeholder: PLAN_SELECT_PLACEHOLDER,
