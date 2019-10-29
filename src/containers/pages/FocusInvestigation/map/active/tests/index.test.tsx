@@ -312,8 +312,7 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
       'FI',
       ['active', 'complete'],
       null,
-      [],
-      '450fc15b-5bd2-468a-927a-49cb10d3bcac',
+      ['450fc15b-5bd2-468a-927a-49cb10d3bcac'],
     ];
     const plansArrayExpected2 = [existingState, 'FI', ['active', 'complete']];
     const planByIdExpected = [existingState, 'ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f'];

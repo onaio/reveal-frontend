@@ -1,9 +1,9 @@
 import { mount, shallow } from 'enzyme';
-import toJson from 'enzyme-to-json';
 import { createBrowserHistory } from 'history';
 import React from 'react';
 import { Router } from 'react-router';
 import SelectComponent from '../';
+import { PLAN_SELECT_PLACEHOLDER } from '../../../constants';
 import * as fixtures from '../../../store/ducks/tests/fixtures';
 
 const history = createBrowserHistory();
@@ -33,12 +33,15 @@ describe('components/page/Header', () => {
         <SelectComponent {...props} />
       </Router>
     );
-    expect(toJson(wrapper)).toMatchSnapshot();
+    expect(wrapper.find('IndicatorsContainer').prop('options')).toMatchSnapshot(
+      'Select Indicator Options'
+    );
     wrapper.unmount();
   });
 
-  it('renders header correctly when authenticated', () => {
+  it('renders a placeholder correctly if provided', () => {
     const props = {
+      placeholder: PLAN_SELECT_PLACEHOLDER,
       plansArray: [fixtures.plan1, fixtures.plan2],
     };
     const wrapper = mount(
@@ -46,7 +49,7 @@ describe('components/page/Header', () => {
         <SelectComponent {...props} />
       </Router>
     );
-    expect(toJson(wrapper)).toMatchSnapshot();
+    expect(wrapper.find('Select').prop('placeholder')).toMatch(PLAN_SELECT_PLACEHOLDER);
     wrapper.unmount();
   });
 });
