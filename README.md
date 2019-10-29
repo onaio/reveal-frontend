@@ -1,4 +1,4 @@
-# Reveal Frontend
+# Reveal Frontends
 
 This is the Reveal web application front end.
 
