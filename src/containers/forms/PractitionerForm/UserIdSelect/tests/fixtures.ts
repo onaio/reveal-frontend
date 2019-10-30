@@ -1,5 +1,5 @@
 // tslint:disable: object-literal-sort-keys
-export const response = {
+export const openMRSUsers = {
   links: [
     {
       rel: 'next',
@@ -353,6 +353,13 @@ export const response = {
     },
     {
       person: {
+        display: 'Joey Tribbiani',
+      },
+      display: 'Drake.Ramole',
+      uuid: '0259c0bc-78a2-4284-a7a9-d61d0005djae',
+    },
+    {
+      person: {
         display: 'Negonga zatias',
       },
       display: 'negonga.zatias',
@@ -360,3 +367,132 @@ export const response = {
     },
   ],
 };
+
+export const practitioners = [
+  {
+    identifier: 'p5id',
+    active: true,
+    name: 'tlv2_name',
+    userId: '87e5344j-e8f5-47ca-8864-5a4ae7e00482',
+    username: 'superset-user',
+  },
+  {
+    identifier: 'd7c9c000-e9b3-427a-890e-49c301aa48e6',
+    active: true,
+    name: 'Biophics Tester',
+    userId: '0249c0fc-78a2-4284-a7a9-d61d0005djae',
+    username: 'negonga.zatias',
+  },
+  {
+    identifier: '437cc699-cfa7-414c-ba27-1668b6b517e6',
+    active: true,
+    name: 'Test User Lusaka',
+    userId: 'cad04f1e-9b05-4eac-92ce-4b38aa478644',
+    username: 'lusaka',
+  },
+  {
+    identifier: 'd31b78bd-504a-4395-88f1-6e6c2475e65c',
+    active: true,
+    name: 'Jane Doe',
+    userId: '286efbc3-3370-46d7-b0a9-d64b4d11b695',
+    username: 'tester_jd',
+  },
+  {
+    identifier: 'e2a22588-2ebe-40c5-ab4c-72842036dc46',
+    active: true,
+    name: 'Fred Tester',
+    userId: '598031ff-9629-43b1-a6d3-7d6370e1792c',
+    username: 'FRTester',
+  },
+  {
+    identifier: 'f7927348-db4a-4db3-8b86-cb20a25158fd',
+    active: true,
+    name: 'Loko Doe',
+    userId: '5c8a9182-86dc-4ff1-ad3c-870780fe1cf9',
+    username: 'LOKO1',
+  },
+  {
+    identifier: '4366c12c-c35a-4408-a0fc-2e08783cda80',
+    active: true,
+    name: 'Moto Doe',
+    userId: '361e7832-85bb-4777-b3c4-7ded09969e7f',
+    username: 'MOTO1',
+  },
+  {
+    identifier: '04a482db-a2ac-41b1-91ac-058f3b83a6e2',
+    active: true,
+    name: 'Loko Doe',
+    userId: '5c8a9182-86dc-4ff1-ad3c-870780fe1cf9',
+    username: 'LOKO1',
+  },
+  {
+    identifier: '24a0743d-82cc-4e7e-a16d-6ca51b6f1354',
+    active: true,
+    name: 'Moto Doe',
+    userId: '361e7832-85bb-4777-b3c4-7ded09969e7f',
+    username: 'MOTO1',
+  },
+  {
+    identifier: 'a8440c32-eee8-4f87-99c4-ca15d68931c4',
+    active: true,
+    name: 'Moko Doe',
+    userId: '915a3797-9daa-46ff-b7b6-01d4b0d6cc64',
+    username: 'MOKO1',
+  },
+  {
+    identifier: '3cc8deb0-6ab7-4f92-b01a-72d8e9968e27',
+    active: true,
+    name: 'Loto Doe',
+    userId: '4bd75ffd-b811-4d78-9f2b-e13360c6e863',
+    username: 'LOTO1',
+  },
+  {
+    identifier: 'b42e04e6-889d-4deb-a862-3df8ac9a4781',
+    active: true,
+    name: 'Trat Tester',
+    userId: '290bdca0-196d-4635-9e6e-19a05ce3a472',
+    username: 'Trat',
+  },
+  {
+    identifier: '96d24478-5fd9-41cb-8e2c-da5d7ef80e6c',
+    active: true,
+    name: 'John Doe',
+    userId: 'aa9841e9-4565-46a5-851d-24b054f82520',
+    username: 'Trat1',
+  },
+  {
+    identifier: '232ac9ba-e7df-599b-91f1-8d23593a14b9',
+    active: true,
+    name: 'Test Orig',
+    userId: 'af5173b2-279e-4cc1-9506-ada94a95a8fe',
+    username: 'CD13',
+  },
+  {
+    identifier: '99551c4a-8c1a-5af2-b634-3d594f75f086',
+    active: true,
+    name: 'The Dr. Who',
+    userId: 'b8ac1b3e-1aa9-4c68-b2ad-986fbd09276f',
+    username: 'kkf2',
+  },
+  {
+    identifier: '5bf2804c-84c9-5f16-b20b-662f58c1ae18',
+    active: true,
+    name: 'sherlock holmes',
+    userId: 'edd3d6e1-242f-40bc-89a3-0e4c477356d8',
+    username: 'CD14',
+  },
+  {
+    identifier: '3c9d84e2-ce4c-5205-aa99-c4bc219ea419',
+    active: true,
+    name: 'Conor Kelly',
+    userId: '5e33cf03-1695-41df-9e6c-e3455d992ba9',
+    username: 'reveal',
+  },
+  {
+    identifier: '0ee45322-8653-552c-9819-76975573a6e9',
+    active: true,
+    name: 'pierre.dane',
+    userId: 'b17a6f6a-d112-4621-a102-59f12d44d473',
+    username: 'pierre.dane',
+  },
+];
