@@ -72,6 +72,26 @@ exports[`src/pages/*/AssignPractitioners Renders correctly: BreadCrumb 1`] = `
 </Breadcrumb>
 `;
 
+exports[`src/pages/*/AssignPractitioners Renders correctly: Select Values 1`] = `
+Array [
+  Object {
+    "isFixed": true,
+    "label": "tlv2 - tlv2_name",
+    "value": "healer",
+  },
+  Object {
+    "isFixed": true,
+    "label": "tak - Biophics Tester",
+    "value": "master",
+  },
+  Object {
+    "isFixed": true,
+    "label": "lusaka - Test User Lusaka",
+    "value": "437cc699-cfd7-414c-ba27-1668b6b517e6",
+  },
+]
+`;
+
 exports[`src/pages/*/AssignPractitioners Renders correctly: add Practitioners button 1`] = `
 <Button
   className="btn btn-primary disabled"

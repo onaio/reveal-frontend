@@ -199,6 +199,9 @@ describe('components/IRS Reports/IRSReportingMap', () => {
     expect(toJson(wrapper.find('.responseItem p.indicator-description'))).toMatchSnapshot(
       'Response item descriptions'
     );
+    expect(toJson(wrapper.find('p.indicator-breakdown'))).toMatchSnapshot(
+      'Indicator item breakdown'
+    );
     expect(toJson(wrapper.find('.responseItem ProgressBar'))).toMatchSnapshot(
       'Response item ProgressBar'
     );

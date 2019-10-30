@@ -9,10 +9,11 @@ import { Store } from 'redux';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
 import {
+  ASSIGN,
   ASSIGN_PLAN_URL,
+  ASSIGN_PLANS,
   HOME,
   HOME_URL,
-  IRS_PLANS,
   NO_PLANS_LOADED_MESSAGE,
   REPORT_IRS_PLAN_URL,
 } from '../../../../constants';
@@ -46,7 +47,7 @@ const IRSAssignmentPlansList = (props: PlanAssignmentsListProps) => {
   const { fetchPlans, plans } = props;
   const [loading, setLoading] = useState<boolean>(plans.length < 1);
 
-  const pageTitle: string = IRS_PLANS;
+  const pageTitle: string = `${ASSIGN_PLANS}`;
 
   const breadcrumbProps = {
     currentPage: {

@@ -96,6 +96,8 @@ export const STRUCTURE_LAYER = 'structure-layer';
 export type STRUCTURE_LAYER = typeof STRUCTURE_LAYER;
 export const PROGRESS = 'Progress';
 export type PROGRESS = typeof PROGRESS;
+export const STRUCTURE = 'structure';
+export type STRUCTURE = typeof STRUCTURE;
 export const STRUCTURES = 'structure(s)';
 export type STRUCTURES = typeof STRUCTURES;
 export const PERSONS = 'person(s)';
@@ -219,6 +221,10 @@ export const TO = 'To';
 export type TO = typeof TO;
 export const NO_PRACTITIONERS_ADDED_YET = 'No Practitioners Added yet';
 export type NO_PRACTITIONERS_ADDED_YET = typeof NO_PRACTITIONERS_ADDED_YET;
+export const PLAN_SELECT_PLACEHOLDER = 'Other plans in this area';
+export type PLAN_SELECT_PLACEHOLDER = typeof PLAN_SELECT_PLACEHOLDER;
+export const ASSIGN_PLANS = 'Assign Plans';
+export type ASSIGN_PLANS = typeof ASSIGN_PLANS;
 
 // TODO ? - do the below 2 belong here or in a settings file
 export const ORGANIZATION_LABEL = TEAM;

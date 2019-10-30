@@ -21,7 +21,14 @@ import {
   SUPERSET_MAX_RECORDS,
 } from '../../../../configs/env';
 import { indicatorThresholdsIRS } from '../../../../configs/settings';
-import { HOME, HOME_URL, IRS_REPORTING_TITLE, REPORT_IRS_PLAN_URL } from '../../../../constants';
+import {
+  HOME,
+  HOME_URL,
+  IRS_REPORTING_TITLE,
+  PROGRESS,
+  REPORT_IRS_PLAN_URL,
+  STRUCTURE,
+} from '../../../../constants';
 import ProgressBar from '../../../../helpers/ProgressBar';
 import { RouteParams } from '../../../../helpers/utils';
 import supersetFetch from '../../../../services/superset';
@@ -288,7 +295,8 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
                     value={row.value}
                   />
                   <p className="indicator-breakdown">
-                    Progress: {row.numerator} of {row.denominator} structures ({row.value}%)
+                    {PROGRESS}: {row.numerator} of {row.denominator} {`${row.unit || STRUCTURE}s`} (
+                    {row.value}%)
                   </p>
                 </div>
               ))}

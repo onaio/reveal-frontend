@@ -37,6 +37,7 @@ export interface IndicatorRowItem {
   description: string;
   numerator: string | number;
   title: string;
+  unit?: string;
   value: string | number;
 }
 
@@ -90,6 +91,7 @@ export const IRSIndicatorRows: { [key: string]: IndicatorRows } = {
       description: 'Percent of rooms sprayed over eligible',
       numerator: 'sprayed_rooms_sprayed',
       title: 'Spray Coverage (Rooms)',
+      unit: 'room',
       value: 'roomcov',
     },
   ],
