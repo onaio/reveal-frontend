@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import Select from 'react-select';
 import { ValueType } from 'react-select/src/types';
 import { OPENMRS_USERS_REQUEST_PAGE_SIZE } from '../../../../configs/env';
-import { OPENSRP_PRACTITIONER_ENDPOINT } from '../../../../constants';
+import { OPENSRP_PRACTITIONER_ENDPOINT, OPENSRP_USERS_ENDPOINT } from '../../../../constants';
 import { OpenSRPService } from '../../../../services/opensrp';
 import { Practitioner } from '../../../../store/ducks/opensrp/practitioners';
 
@@ -37,16 +37,16 @@ interface OpenMRSUser {
 
 /** The UserIdSelect component */
 export const UserIdSelect: React.FC<Props> = props => {
-  const { onChangeHandler: onChange } = props;
+  const { onChangeHandler } = props;
   const [openMRSUsers, setOpenMRSUsers] = useState<OpenMRSUser[]>([]);
   const [selectIsLoading, setSelectIsLoading] = useState<boolean>(true);
 
-  /** calls the prop.onChange with only the userId
+  /** calls the prop.onChange with the selected option as argument
    * @param {ValueType<Option>} option - the value in the react-select
    */
   const changeHandler = (option: ValueType<Option>) => {
-    if (option !== null && option !== undefined && onChange) {
-      onChange(option as Option);
+    if (option !== null && option !== undefined && onChangeHandler) {
+      onChangeHandler(option as Option);
     }
   };
 
@@ -57,7 +57,7 @@ export const UserIdSelect: React.FC<Props> = props => {
       page_size: OPENMRS_USERS_REQUEST_PAGE_SIZE,
       start_index: currentCountIndex,
     };
-    const serve = new service('user');
+    const serve = new service(OPENSRP_USERS_ENDPOINT);
     let responseSize: number = 100;
     const allOpenMRSUsers = [];
 
