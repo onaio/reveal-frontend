@@ -54,6 +54,7 @@ export const IRSIndicatorRows: { [key: string]: IndicatorRows } = {
       description: 'Percent of structures sprayed over targeted',
       numerator: 'structuressprayed',
       title: 'Target Coverage',
+      unit: 'room',
       value: 'targetcoverage',
     },
     {
@@ -61,6 +62,7 @@ export const IRSIndicatorRows: { [key: string]: IndicatorRows } = {
       description: 'Percent of structures sprayed over found',
       numerator: 'structuressprayed',
       title: 'Found Coverage',
+      unit: 'room',
       value: 'foundcoverage',
     },
   ],
