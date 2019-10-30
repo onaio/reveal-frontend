@@ -37,8 +37,8 @@ describe('src/*/forms/userIdSelect', () => {
   });
 
   it('should not reselect an already matched user', async () => {
-    // pass in curated practitioner list, see if Select options
-    // have records that are mapped to any of this in the practitioner list
+    // openMRs users (options) shown in select dropdown
+    // should not be already mapped to a practitioner entity in opensrp
     fetch.once(JSON.stringify(practitioners)).once(JSON.stringify(openMRSUsers));
     const props = {
       serviceClass: OpenSRPService,
@@ -62,7 +62,7 @@ describe('src/*/forms/userIdSelect', () => {
     expect(optionNames.includes('negonga.zatias')).toBeFalsy();
   });
 
-  it('calls callback correctly with correctly', async () => {
+  it('calls onchangeHandler callback correctly with correct arguments', async () => {
     fetch.once(JSON.stringify(practitioners)).once(JSON.stringify(openMRSUsers));
     const mock: any = jest.fn();
     const props = {
