@@ -332,6 +332,8 @@ export const OPENSRP_DEL_PRACTITIONER_ROLE_ENDPOINT = 'practitionerRole/deleteBy
 export type OPENSRP_DEL_PRACTITIONER_ROLE_ENDPOINT = typeof OPENSRP_DEL_PRACTITIONER_ROLE_ENDPOINT;
 export const OPENSRP_ADD_PRACTITIONER_ROLE_ENDPOINT = 'practitionerRole/add';
 export type OPENSRP_ADD_PRACTITIONER_ROLE_ENDPOINT = typeof OPENSRP_ADD_PRACTITIONER_ROLE_ENDPOINT;
+export const OPENSRP_USERS_ENDPOINT = 'user';
+export type OPENSRP_USERS_ENDPOINT = typeof OPENSRP_USERS_ENDPOINT;
 
 // container pages title names
 export const HOME_TITLE = `Home page`;
