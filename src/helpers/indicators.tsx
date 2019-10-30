@@ -79,7 +79,8 @@ export function getGoalReport(goal: Goal): GoalReport {
     targetValue = goal.goal_value;
   } else {
     goalUnit =
-      [CASE_CONFIRMATION_CODE, BLOOD_SCREENING_CODE].indexOf(goal.action_code) > -1
+      [CASE_CONFIRMATION_CODE as string, BLOOD_SCREENING_CODE as string].indexOf(goal.action_code) >
+      -1
         ? PERSONS
         : STRUCTURES;
     targetValue = Math.round((goal.goal_value * goal.task_count) / 100);
