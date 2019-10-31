@@ -11,7 +11,7 @@ import { RouteComponentProps } from 'react-router';
 import { Link } from 'react-router-dom';
 import { CellInfo, Column } from 'react-table';
 import 'react-table/react-table.css';
-import { Button, Col, Form, FormGroup, Input, Row, Table } from 'reactstrap';
+import { Badge, Button, Col, Form, FormGroup, Input, Row, Table } from 'reactstrap';
 import { Store } from 'redux';
 import DrillDownTableLinkedCell from '../../../../components/DrillDownTableLinkedCell';
 import LinkAsButton from '../../../../components/LinkAsButton';
@@ -275,6 +275,13 @@ class ActiveFocusInvestigation extends React.Component<
                 Header: FI_STATUS,
                 columns: [
                   {
+                    Cell: (cell: CellInfo) => {
+                      return (
+                        <Badge className={`status-badge ${cell.original.plan_status}`} pill={true}>
+                          {cell.original.plan_status}
+                        </Badge>
+                      );
+                    },
                     Header: '',
                     accessor: 'plan_status',
                     minWidth: 80,
