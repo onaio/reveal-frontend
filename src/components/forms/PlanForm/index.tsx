@@ -83,7 +83,9 @@ import {
 } from './helpers';
 import { PlanActionCodesType } from './types';
 
+import ConnectedPlansLocationNames from '../../pages/InterventionPlan/UpdatePlan/PlanLocationNames';
 import './style.css';
+import { valuesWithJurisdiction } from './tests/fixtures';
 
 /** initial values for plan jurisdiction forms */
 const initialJurisdictionValues: PlanJurisdictionFormFields = {
@@ -127,6 +129,9 @@ export interface PlanFormProps {
   initialValues: PlanFormFields /** initial values for fields on the form */;
   jurisdictionLabel: string /** the label used for the jurisdiction selection */;
   redirectAfterAction: string /** the url to redirect to after form submission */;
+  renderLocationNames?: (
+    child: (locationName: string, locationId: string, index: number) => JSX.Element
+  ) => JSX.Element;
 }
 
 /** Plan Form component */
@@ -310,29 +315,27 @@ const PlanForm = (props: PlanFormProps) => {
                 <div>
                   {editMode ? (
                     <div id="jurisdictions-display-container" className="mb-5">
-                      <ul id="selected-jurisdiction-list">
-                        {values.jurisdictions.map((jurisdiction, index) => (
-                          <li key={index}>
-                            <span>{jurisdiction.name}</span>
+                      {props.renderLocationNames &&
+                        props.renderLocationNames(
+                          (locationName: string, locationId: string, index: number) => (
                             <fieldset>
                               <Field
                                 type="hidden"
                                 readOnly={true}
                                 name={`jurisdictions[${index}].id`}
                                 id={`jurisdictions-${index}-id`}
-                                value={jurisdiction.id}
+                                value={locationId}
                               />
                               <Field
                                 type="hidden"
                                 readOnly={true}
                                 name={`jurisdictions[${index}].name`}
                                 id={`jurisdictions-${index}-name`}
-                                value={jurisdiction.name}
+                                value={locationName}
                               />
                             </fieldset>
-                          </li>
-                        ))}
-                      </ul>
+                          )
+                        )}
                     </div>
                   ) : (
                     <div id="jurisdictions-select-container" className="mb-5">
