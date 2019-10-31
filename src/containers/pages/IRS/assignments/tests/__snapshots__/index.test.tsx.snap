@@ -22,7 +22,7 @@ Array [
     aria-current="page"
     className="active breadcrumb-item"
   >
-    IRS Plans
+    Assign Plans
   </li>,
 ]
 `;
@@ -31,7 +31,7 @@ exports[`components/IRS Reports/IRSPlansList renders plan definition list correc
 <h3
   className="mt-3 mb-3 page-title"
 >
-  IRS Plans
+  Assign Plans
 </h3>
 `;
 

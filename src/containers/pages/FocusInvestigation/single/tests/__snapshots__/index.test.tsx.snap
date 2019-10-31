@@ -1016,59 +1016,11 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
             </div>
           </Row>
           <hr />
-          <Form
-            inline={true}
-            onSubmit={[Function]}
-            tag="form"
-          >
-            <form
-              className="form-inline"
-              onSubmit={[Function]}
-            >
-              <FormGroup
-                className="mb-2 mr-sm-2 mb-sm-0"
-                tag="div"
-              >
-                <div
-                  className="mb-2 mr-sm-2 mb-sm-0 form-group"
-                >
-                  <Input
-                    id="exampleEmail"
-                    name="search"
-                    placeholder="Search active focus investigations"
-                    type="text"
-                  >
-                    <input
-                      className="form-control"
-                      id="exampleEmail"
-                      name="search"
-                      placeholder="Search active focus investigations"
-                      type="text"
-                    />
-                  </Input>
-                </div>
-              </FormGroup>
-              <Button
-                color="success"
-                outline={true}
-                tag="button"
-              >
-                <button
-                  aria-label={null}
-                  className="btn btn-outline-success"
-                  onClick={[Function]}
-                >
-                  Search
-                </button>
-              </Button>
-            </form>
-          </Form>
           <h4
             className="mb-4"
           >
             Current Focus Investigations
           </h4>
-          <hr />
           <div
             key="ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
           >
@@ -6194,59 +6146,11 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
         </div>
       </Row>
       <hr />
-      <Form
-        inline={true}
-        onSubmit={[Function]}
-        tag="form"
-      >
-        <form
-          className="form-inline"
-          onSubmit={[Function]}
-        >
-          <FormGroup
-            className="mb-2 mr-sm-2 mb-sm-0"
-            tag="div"
-          >
-            <div
-              className="mb-2 mr-sm-2 mb-sm-0 form-group"
-            >
-              <Input
-                id="exampleEmail"
-                name="search"
-                placeholder="Search active focus investigations"
-                type="text"
-              >
-                <input
-                  className="form-control"
-                  id="exampleEmail"
-                  name="search"
-                  placeholder="Search active focus investigations"
-                  type="text"
-                />
-              </Input>
-            </div>
-          </FormGroup>
-          <Button
-            color="success"
-            outline={true}
-            tag="button"
-          >
-            <button
-              aria-label={null}
-              className="btn btn-outline-success"
-              onClick={[Function]}
-            >
-              Search
-            </button>
-          </Button>
-        </form>
-      </Form>
       <h4
         className="mb-4"
       >
         Current Focus Investigations
       </h4>
-      <hr />
       <div
         key="plan-id-2"
       >

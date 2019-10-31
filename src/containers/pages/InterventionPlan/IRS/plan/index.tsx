@@ -21,6 +21,7 @@ import {
 } from '../../../../../configs/env';
 import {
   ASSIGN_PLAN_URL,
+  ASSIGN_PLANS,
   DRAFT,
   HOME,
   HOME_URL,
@@ -185,6 +186,7 @@ interface IrsPlanState {
   filteredJurisdictionIds: string[];
   focusJurisdictionId: string | null;
   gisidaWrapperProps: GisidaProps | null;
+  isAssignView: boolean;
   isBuildingGisidaProps: boolean;
   isLoadingGeoms: boolean;
   isLoadingJurisdictions: boolean;
@@ -212,6 +214,7 @@ class IrsPlan extends React.Component<
       filteredJurisdictionIds: [],
       focusJurisdictionId: null,
       gisidaWrapperProps: null,
+      isAssignView: props.match.url.includes(ASSIGN_PLAN_URL),
       isBuildingGisidaProps: false,
       isLoadingGeoms: false,
       isLoadingJurisdictions: true,
@@ -490,6 +493,8 @@ class IrsPlan extends React.Component<
       (newPlan && newPlan.plan_title) ||
       NEW_PLAN;
 
+    const displayedPageLabel = this.state.isAssignView ? pageLabel : `IRS: ${pageLabel}`;
+
     const breadCrumbProps = this.getBreadCrumbProps(this.props, pageLabel);
 
     const { planTableProps } = this.state;
@@ -503,16 +508,9 @@ class IrsPlan extends React.Component<
 
     const planHeaderRow = (
       <Row>
-        {isFinalizedPlan && (
-          <Col xs="8" className="page-title-col">
-            <h2 className="page-title">IRS: {pageLabel}</h2>
-          </Col>
-        )}
-        {!isFinalizedPlan && (
-          <Col xs="8" className="page-title-col">
-            <h2 className="page-title">IRS: {pageLabel}</h2>
-          </Col>
-        )}
+        <Col xs="8" className="page-title-col">
+          <h2 className="page-title">{displayedPageLabel}</h2>
+        </Col>
 
         <Col xs="4" className="save-plan-buttons-column">
           {!isFinalizedPlan && (
@@ -570,7 +568,7 @@ class IrsPlan extends React.Component<
     return (
       <div className="mb-5">
         <Helmet>
-          <title>IRS: {pageLabel}</title>
+          <title>{displayedPageLabel}</title>
         </Helmet>
         <HeaderBreadcrumbs {...breadCrumbProps} />
         {planHeaderRow}
@@ -683,14 +681,13 @@ class IrsPlan extends React.Component<
           target: getGisidaMapById(MAP_ID),
         };
         this.onDrillUpClick(fauxE, this.state.country, filteredJurisdictions);
-
-        // update drilldown table
-        this.onResetDrilldownTableHierarchy(clickedTableCrumb.id);
       }
+      // update drilldown table
+      this.onResetDrilldownTableHierarchy(e.currentTarget.id);
     }
   };
   /** onResetDrilldownTableHierarchy - function for resetting drilldown table hierachy baseline
-   * @param {string|null} Id - the id of the highest level parent_idto show in the table, or null to reset completely
+   * @param {string|null} Id - the id of the highest level parent_id to show in the table, or null to reset completely
    */
   private onResetDrilldownTableHierarchy(Id: string | null) {
     const id = Id !== 'null' ? Id : null;
@@ -2030,7 +2027,7 @@ class IrsPlan extends React.Component<
       url: HOME_URL,
     };
     const basePage = {
-      label: IRS_TITLE,
+      label: this.state.isAssignView ? ASSIGN_PLANS : IRS_TITLE,
       url: isDraftPlan ? INTERVENTION_IRS_URL : ASSIGN_PLAN_URL,
     };
     const urlPathAppend =

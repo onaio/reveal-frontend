@@ -223,6 +223,8 @@ export const NO_PRACTITIONERS_ADDED_YET = 'No Practitioners Added yet';
 export type NO_PRACTITIONERS_ADDED_YET = typeof NO_PRACTITIONERS_ADDED_YET;
 export const PLAN_SELECT_PLACEHOLDER = 'Other plans in this area';
 export type PLAN_SELECT_PLACEHOLDER = typeof PLAN_SELECT_PLACEHOLDER;
+export const ASSIGN_PLANS = 'Assign Plans';
+export type ASSIGN_PLANS = typeof ASSIGN_PLANS;
 
 // TODO ? - do the below 2 belong here or in a settings file
 export const ORGANIZATION_LABEL = TEAM;
@@ -336,6 +338,8 @@ export const OPENSRP_DEL_PRACTITIONER_ROLE_ENDPOINT = 'practitionerRole/deleteBy
 export type OPENSRP_DEL_PRACTITIONER_ROLE_ENDPOINT = typeof OPENSRP_DEL_PRACTITIONER_ROLE_ENDPOINT;
 export const OPENSRP_ADD_PRACTITIONER_ROLE_ENDPOINT = 'practitionerRole/add';
 export type OPENSRP_ADD_PRACTITIONER_ROLE_ENDPOINT = typeof OPENSRP_ADD_PRACTITIONER_ROLE_ENDPOINT;
+export const OPENSRP_USERS_ENDPOINT = 'user';
+export type OPENSRP_USERS_ENDPOINT = typeof OPENSRP_USERS_ENDPOINT;
 
 // container pages title names
 export const HOME_TITLE = `Home page`;
