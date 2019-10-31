@@ -57,6 +57,27 @@ exports[`src/pages/*/AssignPractitioners Renders correctly: BreadCrumb 1`] = `
         </li>
       </BreadcrumbItem>
       <BreadcrumbItem
+        key="2"
+        tag="li"
+      >
+        <li
+          className="breadcrumb-item"
+        >
+          <Link
+            key="2"
+            replace={false}
+            to="/teams/view/d23f7350-d406-11e9-bb65-2a2ae2dbcce4"
+          >
+            <a
+              href="/teams/view/d23f7350-d406-11e9-bb65-2a2ae2dbcce4"
+              onClick={[Function]}
+            >
+              d23f7350-d406-11e9-bb65-2a2ae2dbcce4
+            </a>
+          </Link>
+        </li>
+      </BreadcrumbItem>
+      <BreadcrumbItem
         active={true}
         tag="li"
       >
