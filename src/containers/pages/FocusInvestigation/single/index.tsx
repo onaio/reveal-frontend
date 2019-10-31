@@ -481,14 +481,14 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
     currentReactivePlansArray: getPlansArray(
       state,
       InterventionType.FI,
-      [PlanStatus.ACTIVE, PlanStatus.DRAFT],
+      [PlanStatus.ACTIVE],
       CASE_TRIGGERED,
       jurisdictionId
     ),
     currentRoutinePlansArray: getPlansArray(
       state,
       InterventionType.FI,
-      [PlanStatus.ACTIVE, PlanStatus.DRAFT],
+      [PlanStatus.ACTIVE],
       ROUTINE,
       jurisdictionId
     ),
