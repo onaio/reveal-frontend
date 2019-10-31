@@ -83,18 +83,18 @@ a {
   padding: 8px 0px;
 }
 
-span.status-badge.active {
-  color: #007742;
+span.status-badge {
   font-size: 14px;
   font-weight: 500;
   line-height: 19px;
+}
+
+span.status-badge.active {
+  color: #007742;
   background-color: #b5ffa8;
 }
 
 span.status-badge.draft {
   color: #13171a;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 19px;
   background-color: #d5d9e0;
 }
