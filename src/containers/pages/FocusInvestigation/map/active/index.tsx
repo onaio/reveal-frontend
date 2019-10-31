@@ -21,6 +21,7 @@ import {
   SUPERSET_STRUCTURES_SLICE,
   SUPERSET_TASKS_SLICE,
 } from '../../../../../configs/env';
+import { FIReasons } from '../../../../../configs/settings';
 import {
   CASE_TRIGGERED,
   END_DATE,
@@ -417,13 +418,17 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
   if (plan) {
     jurisdiction = getJurisdictionById(state, plan.jurisdiction_id);
     goals = getGoalsByPlanAndJurisdiction(state, plan.plan_id, plan.jurisdiction_id);
-    plansByFocusArea = getPlansArray(
-      state,
-      InterventionType.FI,
-      [PlanStatus.ACTIVE, PlanStatus.COMPLETE],
-      null,
-      [plan.jurisdiction_id]
-    );
+    FIReasons.forEach(reason => {
+      const plans = getPlansArray(
+        state,
+        InterventionType.FI,
+        [PlanStatus.ACTIVE, PlanStatus.COMPLETE],
+        reason,
+        [plan.jurisdiction_id]
+      );
+      plansByFocusArea = plansByFocusArea.concat(plans);
+    });
+    plansByFocusArea.sort((a: Plan, b: Plan) => Date.parse(b.plan_date) - Date.parse(a.plan_date));
   }
 
   if (plan && jurisdiction && (goals && goals.length > 1)) {
