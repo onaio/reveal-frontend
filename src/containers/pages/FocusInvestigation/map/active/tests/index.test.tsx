@@ -7,6 +7,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
+import { FIReasons } from '../../../../../../configs/settings';
 import { FI_SINGLE_URL } from '../../../../../../constants';
 import { wrapFeatureCollection } from '../../../../../../helpers/utils';
 import store from '../../../../../../store';
@@ -304,17 +305,23 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
         </Router>
       </Provider>
     );
-    expect(getPlansArrayMock).toBeCalledTimes(2);
+    expect(getPlansArrayMock).toBeCalledTimes(FIReasons.length + 1);
 
     // define expected results
     const plansArrayExpected1 = [
       existingState,
       'FI',
       ['active', 'complete'],
-      null,
+      FIReasons[0],
       ['450fc15b-5bd2-468a-927a-49cb10d3bcac'],
     ];
-    const plansArrayExpected2 = [existingState, 'FI', ['active', 'complete']];
+    const plansArrayExpected2 = [
+      existingState,
+      'FI',
+      ['active', 'complete'],
+      'Case Triggered',
+      ['450fc15b-5bd2-468a-927a-49cb10d3bcac'],
+    ];
     const planByIdExpected = [existingState, 'ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f'];
     const goalPlanJurisdictionexpected = [
       existingState,
