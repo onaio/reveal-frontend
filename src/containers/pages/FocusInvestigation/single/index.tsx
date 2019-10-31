@@ -417,21 +417,7 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
           </Col>
         </Row>
         <hr />
-        <Form inline={true} onSubmit={this.handleSubmit}>
-          <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
-            <Input
-              type="text"
-              name="search"
-              id="exampleEmail"
-              placeholder="Search active focus investigations"
-            />
-          </FormGroup>
-          <Button outline={true} color="success">
-            Search
-          </Button>
-        </Form>
         <h4 className="mb-4">{CURRENT_FOCUS_INVESTIGATION}</h4>
-        <hr />
         {currentRoutineReactivePlans}
         <h4 className="mb-4 complete">{COMPLETE_FOCUS_INVESTIGATION}</h4>
         <hr />
