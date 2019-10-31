@@ -1,6 +1,7 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
+import flushPromises from 'flush-promises';
 import { createBrowserHistory } from 'history';
 import React from 'react';
 import Helmet from 'react-helmet';
@@ -132,7 +133,6 @@ describe('src/pages/*/AssignPractitioners', () => {
       </Router>
     );
 
-    // expect(store.getState()[practitionerReducerName]).toEqual({});
     await new Promise(resolve => setImmediate(resolve));
     wrapper.update();
 
@@ -156,5 +156,60 @@ describe('src/pages/*/AssignPractitioners', () => {
 
     // add button
     expect(toJson(wrapper.find('Button'))).toMatchSnapshot('add Practitioners button');
+  });
+
+  it('The async select works correctly', async () => {
+    // check that you can select one, for nominal case,
+    fetch
+      .once(JSON.stringify(fixtures.organization3))
+      .once(JSON.stringify([]))
+      .once(JSON.stringify(fixtures.allPractitioners));
+
+    const mock: any = jest.fn();
+    const props = {
+      assignedPractitioners: [],
+      fetchOrganizationsCreator: fetchOrganizations,
+      history,
+      location: mock,
+      match: {
+        isExact: true,
+        params: { id: fixtures.organization3.identifier },
+        path: `${ASSIGN_PRACTITIONERS_URL}/:id`,
+        url: `${ASSIGN_PRACTITIONERS_URL}/${fixtures.organization3.identifier}`,
+      },
+      organization: fixtures.organization3,
+      serviceClass: OpenSRPService,
+    };
+
+    const wrapper = mount(
+      <Router history={history}>
+        <AssignPractitioner {...props} />
+      </Router>
+    );
+
+    await flushPromises();
+    wrapper.update();
+
+    const select = wrapper.find('Select');
+    // simulate single value change
+    const entry = fixtures.practitioner2;
+    (select.instance() as any).selectOption({
+      label: `${entry.username} - ${entry.name}`,
+      value: entry.identifier,
+    });
+    wrapper.update();
+
+    expect(wrapper.find('Select').props().value).toEqual([
+      {
+        label: 'tak - Biophics Tester',
+        value: 'd7c9c000-e9b3-427a-890e-49c301aa48e6',
+      },
+    ]);
+
+    // simulate backspace
+    wrapper.find('Select').simulate('keyDown', { key: 'Backspace', keyCode: 8 });
+    wrapper.update();
+
+    expect(wrapper.find('Select').props().value).toEqual([]);
   });
 });
