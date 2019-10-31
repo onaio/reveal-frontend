@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Col, Row } from 'reactstrap';
+import { Badge, Col, Row } from 'reactstrap';
 import { Store } from 'redux';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
@@ -79,7 +79,9 @@ const IRSPlansList = (props: PlanListProps) => {
         planObj.plan_date,
         planObj.plan_effective_period_start,
         planObj.plan_effective_period_end,
-        planObj.plan_status,
+        <Badge className={`status-badge ${planObj.plan_status}`} key={planObj.plan_id} pill={true}>
+          {planObj.plan_status}
+        </Badge>,
       ];
     }),
     headerItems: ['Title', 'Date Created', 'Start Date', 'End Date', 'Status'],
