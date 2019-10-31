@@ -14,6 +14,7 @@
 
 .reveal-breadcrumb .breadcrumb {
   background: none;
+  padding-left: 0;
 }
 
 .breadcrumb a {
