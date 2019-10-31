@@ -111,7 +111,19 @@ Array [
     className="listview-th"
     key="4"
   >
-    retired
+    <Badge
+      className="status-badge retired"
+      color="secondary"
+      key="727c3d40-e118-564a-b231-aac633e6abce"
+      pill={true}
+      tag="span"
+    >
+      <span
+        className="status-badge retired badge badge-secondary badge-pill"
+      >
+        retired
+      </span>
+    </Badge>
   </td>,
   <td
     className="listview-th"
@@ -152,7 +164,19 @@ Array [
     className="listview-th"
     key="4"
   >
-    active
+    <Badge
+      className="status-badge active"
+      color="secondary"
+      key="02e358ed-87fe-5720-8782-0afe28cb7e8c"
+      pill={true}
+      tag="span"
+    >
+      <span
+        className="status-badge active badge badge-secondary badge-pill"
+      >
+        active
+      </span>
+    </Badge>
   </td>,
   <td
     className="listview-th"
@@ -193,7 +217,19 @@ Array [
     className="listview-th"
     key="4"
   >
-    active
+    <Badge
+      className="status-badge active"
+      color="secondary"
+      key="c6e59ec1-8c54-5fdf-acf3-ee3692983f38"
+      pill={true}
+      tag="span"
+    >
+      <span
+        className="status-badge active badge badge-secondary badge-pill"
+      >
+        active
+      </span>
+    </Badge>
   </td>,
 ]
 `;
