@@ -1,4 +1,5 @@
-import { get, keyBy, values } from 'lodash';
+import { LocationState } from 'history';
+import { get } from 'lodash';
 import { AnyAction, Store } from 'redux';
 import SeamlessImmutable from 'seamless-immutable';
 import { FlexObject } from '../../../../helpers/utils';
@@ -16,25 +17,39 @@ export interface Location {
 // action types
 export const FETCH_LOCATIONS = 'reveal/reducer/opensrp/location/FETCH_LOCATIONS';
 export const REMOVE_LOCATIONS = 'reveal/reducer/opensrp/location/REMOVE_LOCATIONS';
+export const REMOVE_ALL_PLANS_LOCATIONS =
+  'reveal/reducer/opensrp/location/REMOVE_ALL_PLANS_LOCATIONS';
 
 /** interface for fetchLocations action creator */
-interface FetchLocations extends AnyAction {
+interface FetchLocationsAction extends AnyAction {
   type: typeof FETCH_LOCATIONS;
-  locationsById: { [key: string]: Location };
+  locationsByPlanId: { [key: string]: Location[] };
+  planId: string;
 }
 
-/** interface for remove Locations action */
-interface RemoveLocations extends AnyAction {
+/** interface for remove Locations action ; removes locations
+ * assigned to specific plan
+ */
+interface RemoveLocationsAction extends AnyAction {
   type: typeof REMOVE_LOCATIONS;
-  locationsById: {};
+  locationsByPlanId: { [key: string]: [] };
+  planId: string;
+}
+
+/** describes an action that would remove all locations from the store
+ * irregardless of the plan
+ */
+interface RemoveAllPlansLocations extends AnyAction {
+  type: typeof REMOVE_ALL_PLANS_LOCATIONS;
+  locationsByPlanId: {};
 }
 
 /** location action types */
-export type LocationsActionTypes = FetchLocations | RemoveLocations | AnyAction;
+export type LocationsActionTypes = FetchLocationsAction | RemoveLocationsAction | AnyAction;
 
 /** interface to describe location state */
-interface LocationsState {
-  locationsById: { [key: string]: Location };
+export interface LocationsState {
+  locationsByPlanId: FlexObject<Location[]>;
 }
 
 /** immutable Location state */
@@ -43,7 +58,7 @@ export type ImmutableLocationsState = LocationsState &
 
 /** initial state */
 const initialState: ImmutableLocationsState = SeamlessImmutable({
-  locationsById: {},
+  locationsByPlanId: {},
 });
 
 // reducer
@@ -55,18 +70,29 @@ export default function reducer(
 ): ImmutableLocationsState {
   switch (action.type) {
     case FETCH_LOCATIONS:
-      return SeamlessImmutable({
+      const fetchLocationsState: LocationState = {
         ...state,
-        locationsById: {
-          ...state.locationsById,
-          ...action.locationsById,
+        locationsByPlanId: {
+          ...state.locationsByPlanId,
+          [action.planId]: [...action.locationsByPlanId[action.planId]],
         },
-      });
+      };
+      return SeamlessImmutable(fetchLocationsState);
     case REMOVE_LOCATIONS:
-      return SeamlessImmutable({
+      const removeLocationsState: LocationState = {
         ...state,
-        locationsById: action.locationsById,
-      });
+        locationsByPlanId: {
+          ...state.locationsByPlanId,
+          [action.planId]: [...action.locationsByPlanId[action.planId]],
+        },
+      };
+      return SeamlessImmutable(removeLocationsState);
+    case REMOVE_ALL_PLANS_LOCATIONS:
+      const removeAllPlansLocationsState: LocationState = {
+        ...state,
+        locationsByPlanId: action.locationsByPlanId,
+      };
+      return SeamlessImmutable(removeAllPlansLocationsState);
     default:
       return state;
   }
@@ -75,67 +101,47 @@ export default function reducer(
 // action creators
 
 /** creates actions that add fetched locations to store
+ * @param {Location []} - fetched locations
+ * @param {string} planId -  id of plans with the above assigned locations
  */
-export const fetchLocations = (locations: Location[]): FetchLocations => {
+export const fetchLocations = (locations: Location[], planId: string): FetchLocationsAction => {
   return {
-    locationsById: keyBy<Location>(locations, location => location.identifier),
+    locationsByPlanId: { [planId]: locations },
+    planId,
     type: FETCH_LOCATIONS,
+  };
+};
+
+/** creates actions that remove locations assigned to a plan from store
+ * @param {string} planId -  id of plans with the above assigned locations
+ */
+export const removeLocations = (planId: string): RemoveLocationsAction => {
+  return {
+    locationsByPlanId: { [planId]: [] },
+    planId,
+    type: REMOVE_LOCATIONS,
   };
 };
 
 // actions
 
-/** interface for remove Locations action */
-export const removeLocations = {
-  locationsById: {},
-  type: REMOVE_LOCATIONS,
+/** Action to remove all plans regardless of plan */
+export const removeAllPlansLocations: RemoveAllPlansLocations = {
+  locationsByPlanId: {},
+  type: REMOVE_ALL_PLANS_LOCATIONS,
 };
 
 // selectors
 
-/**
- * searches the store for a human friendly name for the location
- * whose id matches the argument locationId
+/** Returns an array of location names given the plan identifier
  *
  * @param {Partial<Store>} state - the redux store
- * @param {string} locationId - a location id
+ * @param {string} planId - the plan's identifier
  *
- * @return {string | null} -  Human friendly location name ;
- *  returns null if the associated name was not found
+ * @return {Location[]} - locations that are assigned to plan with identifier planId
  */
-export function getLocationNameFromId(state: Partial<Store>, locationId: string): string | null {
-  const location: Location | undefined = get(
-    (state as any)[reducerName].locationsById,
-    locationId,
-    undefined
-  );
-  const locationName = location ? location.name : null;
-  return locationName;
-}
-
-/** takes  a list of location ids and returns an object
- * where the location id is the key and the human friendly name
- * of the respective location is the value
- *
- * @param {Partial<Store>} state - the redux store
- * @param {string []} locationIds - an array of locations
- *
- */
-export function getLocationNamesByIds(
-  state: Partial<Store>,
-  locationIds: string[]
-): FlexObject<string | null> {
-  const lookup: FlexObject<string | null> = {};
-  locationIds.forEach(id => (lookup[id] = getLocationNameFromId(state, id)));
-  return lookup;
-}
-
-/** Returns an array of all locations objects
- *
- * @param {Partial<Store>} - the store
- *
- * @return {Location []}
- */
-export function getLocationsArray(state: Partial<Store>): Location[] {
-  return values((state as any)[reducerName].locationsById);
+export function getLocationsByPlanId(state: Partial<Store>, planId: string): Location[] {
+  let locations = get((state as any)[reducerName].locationsByPlanId, planId, undefined);
+  locations = locations ? locations : [];
+  return locations;
 }

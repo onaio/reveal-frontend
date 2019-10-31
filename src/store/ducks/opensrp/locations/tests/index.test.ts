@@ -1,22 +1,20 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
+import { LocationState } from 'history';
 import { cloneDeep, keyBy } from 'lodash';
 import { FlushThunks, Reducer, Selector } from 'redux-testkit';
 import store from '../../../../index';
 import reducer, {
   fetchLocations,
-  getLocationNameFromId,
-  getLocationNamesByIds,
-  getLocationsArray,
+  getLocationsByPlanId,
   Location,
+  LocationsState,
   reducerName,
+  removeAllPlansLocations,
   removeLocations,
 } from '../index';
 import * as fixtures from './fixtures';
 
 reducerRegistry.register(reducerName, reducer);
-
-const generateKeyBy = <T>(anArray: T[], key: string) =>
-  keyBy(anArray, anItem => (anItem as any)[key]);
 
 describe('src/store/opensrp/Location.integrationTests', () => {
   let flushThunks;
@@ -24,40 +22,29 @@ describe('src/store/opensrp/Location.integrationTests', () => {
   beforeEach(() => {
     flushThunks = FlushThunks.createMiddleware();
     jest.resetAllMocks();
-    store.dispatch(removeLocations);
+    store.dispatch(removeAllPlansLocations);
   });
 
   it('should have initial state', () => {
-    expect(getLocationNameFromId(store.getState(), 'someId')).toEqual(null);
-    expect(getLocationNamesByIds(store.getState(), ['someId', 'otherId'])).toEqual({
-      otherId: null,
-      someId: null,
-    });
-    expect(getLocationsArray(store.getState())).toEqual([]);
+    expect(getLocationsByPlanId(store.getState(), 'someId')).toEqual([]);
   });
 
   it('should fetch Locations correctly', () => {
-    store.dispatch(fetchLocations(fixtures.sampleLocations as Location[]));
-    expect(getLocationNameFromId(store.getState(), 'f45b9380-c970-4dd1-8533-9e95ab12f128')).toEqual(
-      'Namibia'
-    );
-    expect(
-      getLocationNamesByIds(store.getState(), ['f45b9380-c970-4dd1-8533-9e95ab12f128', '3951'])
-    ).toEqual({ 'f45b9380-c970-4dd1-8533-9e95ab12f128': 'Namibia', '3951': 'Akros_1' });
-    expect(getLocationsArray(store.getState()).length).toEqual(2);
+    store.dispatch(fetchLocations(fixtures.sampleLocations as Location[], 'planId'));
+    expect(getLocationsByPlanId(store.getState(), 'planId')).toEqual(fixtures.sampleLocations);
   });
 
   it('can remove Locations', () => {
-    store.dispatch(removeLocations);
-    let LocationCount = getLocationsArray(store.getState()).length;
+    store.dispatch(removeLocations('planId'));
+    let LocationCount = getLocationsByPlanId(store.getState(), 'planId').length;
     expect(LocationCount).toEqual(0);
 
-    store.dispatch(fetchLocations(fixtures.sampleLocations as Location[]));
-    LocationCount = getLocationsArray(store.getState()).length;
+    store.dispatch(fetchLocations(fixtures.sampleLocations as Location[], 'planId'));
+    LocationCount = getLocationsByPlanId(store.getState(), 'planId').length;
     expect(LocationCount).toEqual(2);
 
-    store.dispatch(removeLocations);
-    LocationCount = getLocationsArray(store.getState()).length;
+    store.dispatch(removeLocations('planId'));
+    LocationCount = getLocationsByPlanId(store.getState(), 'planId').length;
     expect(LocationCount).toEqual(0);
   });
 });
@@ -68,56 +55,39 @@ describe('src/store/opensrp/Locations.selectors', () => {
     const currentState = {
       [reducerName]: { locationsById: {} },
     };
-    Selector(getLocationsArray)
+    Selector(getLocationsByPlanId)
       .expect(currentState)
       .toReturn([]);
-    Selector(getLocationNameFromId)
-      .expect(currentState, 'someId')
-      .toReturn(null);
-    Selector(getLocationNamesByIds)
-      .expect(currentState, ['someId', 'anotherId'])
-      .toReturn({ someId: null, anotherId: null });
   });
 
   // selectors work fine on non-empty state
   it('selectors work correctly on non-empty state', () => {
     const currentState = {
       [reducerName]: {
-        locationsById: generateKeyBy<Location>(
-          fixtures.sampleLocations as Location[],
-          'identifier'
-        ),
+        locationsByPlanId: {
+          planId: fixtures.sampleLocations,
+        },
       },
     };
 
-    Selector(getLocationNameFromId)
-      .expect(currentState, 'someId')
-      .toReturn(null);
-    Selector(getLocationNamesByIds)
-      .expect(currentState, ['someId', 'anotherId'])
-      .toReturn({ someId: null, anotherId: null });
-
-    Selector(getLocationsArray)
-      .expect(currentState)
-      .toReturn([fixtures.location2, fixtures.location1]);
-    Selector(getLocationNameFromId)
-      .expect(currentState, '3951')
-      .toReturn('Akros_1');
-    Selector(getLocationNamesByIds)
-      .expect(currentState, ['3951', 'f45b9380-c970-4dd1-8533-9e95ab12f128'])
-      .toReturn({ 3951: 'Akros_1', 'f45b9380-c970-4dd1-8533-9e95ab12f128': 'Namibia' });
+    Selector(getLocationsByPlanId)
+      .expect(currentState, 'planId')
+      .toReturn(fixtures.sampleLocations);
   });
 });
 
 describe('src/store/opensrp/Locations.reducer.edgeCases', () => {
   // should return correct state for unknown action types
   it('reducer returns a valid state for unknown action types', () => {
-    const currentState = {
-      locationsById: {},
+    const currentState: LocationsState = {
+      locationsByPlanId: {},
     };
 
     const action = {
-      locationsById: generateKeyBy<Location>(fixtures.sampleLocations as Location[], 'identifier'),
+      locationsByPlanId: {
+        planId: fixtures.sampleLocations,
+      },
+      planId: `planId`,
       type: 'SOMETHING_OUT_OF_A_MOVIE',
     };
     const expectedState = cloneDeep(currentState);
@@ -128,16 +98,18 @@ describe('src/store/opensrp/Locations.reducer.edgeCases', () => {
   });
 });
 
-describe('src/store/opensrp/Locations.reducer.fetchGeometryLessLocations', () => {
+describe('src/store/opensrp/Locations.reducer.fetchLocationsAction', () => {
   // should handle dispatch on initialState
   // should handle dispatch on existing state
-  it('fetchGeometryLessLocations works correctly on initial state', () => {
-    const currentState = {
-      locationsById: {},
+  it('fetchLocations works correctly on initial state', () => {
+    const currentState: LocationsState = {
+      locationsByPlanId: {},
     };
-    const action = fetchLocations(fixtures.sampleLocations as Location[]);
+    const action = fetchLocations(fixtures.sampleLocations as Location[], 'planId');
     const expectedState = {
-      locationsById: generateKeyBy<Location>(fixtures.sampleLocations as Location[], 'identifier'),
+      locationsByPlanId: {
+        planId: fixtures.sampleLocations,
+      },
     };
     Reducer(reducer)
       .withState(currentState)
@@ -145,42 +117,93 @@ describe('src/store/opensrp/Locations.reducer.fetchGeometryLessLocations', () =>
       .toReturnState(expectedState);
   });
 
-  it('fetchGeometryLessLocations works correctly on current state', () => {
+  it('fetchLocations works correctly on current state', () => {
     const currentState = {
-      locationsById: generateKeyBy<Location>([fixtures.location1] as Location[], 'identifier'),
+      locationsByPlanId: {
+        planId: fixtures.sampleLocations,
+      },
     };
-    const action = fetchLocations([fixtures.location2] as Location[]);
+    const action = fetchLocations([fixtures.location2] as Location[], 'otherPlanId');
     const expectedState = {
-      locationsById: generateKeyBy<Location>(fixtures.sampleLocations as Location[], 'identifier'),
+      locationsByPlanId: {
+        otherPlanId: [fixtures.location2],
+        planId: fixtures.sampleLocations,
+      },
     };
     Reducer(reducer)
       .withState(currentState)
       .expect(action)
       .toReturnState(expectedState);
   });
+
+  it('fetchLocations works correctly for the same planId', () => {
+    // will overwrite existing location for any given plan.
+    const currentState = {
+      locationsByPlanId: {
+        planId: fixtures.sampleLocations,
+      },
+    };
+    const action = fetchLocations([fixtures.location2] as Location[], 'planId');
+    const expectedState = {
+      locationsByPlanId: {
+        planId: [fixtures.location2],
+      },
+    };
+    Reducer(reducer)
+      .withState(currentState)
+      .expect(action)
+      .toReturnState(expectedState);
+  });
+  // fetchLocations for the same planId
 });
 
-describe('src/store/opensrp/Locations.reducer.removeGeometryLessLocations', () => {
+describe('src/store/opensrp/Locations.reducer.removeLocations', () => {
   // should handle dispatch on initialState
   // should handle dispatch on existing state
-  it('fetchGeometryLessLocations works correctly on initial state', () => {
-    const currentState = {
-      locationsById: {},
+  it('removeLocations works correctly on initial state', () => {
+    const currentState: LocationState = {
+      locationsByPlanId: {},
     };
-    const action = removeLocations;
+    const action = removeLocations('planId');
+    const expectedState: LocationsState = {
+      locationsByPlanId: {
+        planId: [],
+      },
+    };
     Reducer(reducer)
       .withState(currentState)
       .expect(action)
-      .toReturnState(currentState);
+      .toReturnState(expectedState);
   });
 
   it('fetchGeometryLessLocations works correctly on current state', () => {
     const currentState = {
-      locationsById: generateKeyBy<Location>([fixtures.location1] as Location[], 'identifier'),
+      locationsByPlanId: {
+        planId: fixtures.sampleLocations,
+      },
     };
-    const action = removeLocations;
+    const action = removeLocations('planId');
     const expectedState = {
-      locationsById: {},
+      locationsByPlanId: {
+        planId: [],
+      },
+    };
+    Reducer(reducer)
+      .withState(currentState)
+      .expect(action)
+      .toReturnState(expectedState);
+  });
+
+  it('fetchGeometryLessLocations works correctly on current state', () => {
+    const currentState = {
+      locationsByPlanId: {
+        otherPlanId: fixtures.allLocations,
+        planId: fixtures.sampleLocations,
+      },
+    };
+    const action = removeAllPlansLocations;
+    const expectedState = {
+      locationsByPlanId: {},
     };
     Reducer(reducer)
       .withState(currentState)
