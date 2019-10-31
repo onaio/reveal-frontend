@@ -112,9 +112,6 @@ const AssignPractitioner = (props: PropsTypes) => {
     chosenOptions: ValueType<SelectOption>,
     { action, removedValue, option }: any
   ) => {
-    if (!chosenOptions) {
-      return;
-    }
     switch (action) {
       case 'remove-value':
       case 'pop-value':
