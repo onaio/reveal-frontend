@@ -78,6 +78,13 @@ a {
   border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
+table.table {
+  padding: 24px;
+  background-color: #ffffff;
+  border-radius: 5px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
 .ReactTable .rt-tbody .rt-td {
   border-right: 1px solid rgba(0, 0, 0, 0.02);
   padding: 8px 0px;
