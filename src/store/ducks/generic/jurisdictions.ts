@@ -8,6 +8,7 @@ export const reducerName = 'GenericJurisdictions';
 /** GenericJurisdiction interface */
 export interface GenericJurisdiction {
   id: string;
+  is_virtual_jurisdiction?: boolean;
   jurisdiction_depth: number;
   jurisdiction_id: string;
   jurisdiction_name: string;
