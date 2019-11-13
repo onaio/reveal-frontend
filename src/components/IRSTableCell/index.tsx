@@ -15,19 +15,20 @@ export interface LinkedCellProps extends DropDownCellProps {
 const IRSTableCell: React.ElementType<LinkedCellProps> = (props: LinkedCellProps) => {
   const { cell, cellValue, hasChildren, urlPath } = props;
   const url = urlPath ? `${urlPath}/${cell.original.jurisdiction_id}` : '';
-  const val = hasChildren ? (
-    cellValue
-  ) : (
-    <span className="plan-jurisdiction-name main-span">
-      <span className="plan-jurisdiction-name btn-link">
-        <Link to={`${urlPath}/${cell.original.jurisdiction_id}/${MAP}`}>
-          <FontAwesomeIcon icon={['fas', MAP]} />
-        </Link>
+  const val =
+    hasChildren || cell.original.is_virtual_jurisdiction ? (
+      cellValue
+    ) : (
+      <span className="plan-jurisdiction-name main-span">
+        <span className="plan-jurisdiction-name btn-link">
+          <Link to={`${urlPath}/${cell.original.jurisdiction_id}/${MAP}`}>
+            <FontAwesomeIcon icon={['fas', MAP]} />
+          </Link>
+        </span>
+        &nbsp;&nbsp;
+        <Link to={`${urlPath}/${cell.original.jurisdiction_id}/${MAP}`}>{cellValue}</Link>
       </span>
-      &nbsp;&nbsp;
-      <Link to={`${urlPath}/${cell.original.jurisdiction_id}/${MAP}`}>{cellValue}</Link>
-    </span>
-  );
+    );
   return <div>{hasChildren ? <Link to={url}>{cellValue}</Link> : val}</div>;
 };
 
