@@ -1,6 +1,7 @@
 /** Edit / New Practitioner View page:
  * displays form that's used to create a new practitioner or update openSRP api
  */
+import { capitalize } from 'lodash';
 import React, { useEffect } from 'react';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
@@ -65,7 +66,7 @@ const CreateEditPractitionerView = (props: PropsTypes) => {
   };
   const breadcrumbProps: BreadCrumbProps = {
     currentPage: {
-      label: editing ? `${EDIT} ${PRACTITIONER}` : `${NEW} ${PRACTITIONER}`,
+      label: editing ? `${EDIT} ${PRACTITIONER}` : `${capitalize(NEW as string)} ${PRACTITIONER}`,
       url: editing
         ? `${EDIT_PRACTITIONER_URL}/${practitioner!.identifier}`
         : CREATE_PRACTITIONER_URL,
