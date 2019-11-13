@@ -95,7 +95,7 @@ const UpdatePlan = (props: RouteComponentProps<RouteParams> & UpdatePlanProps) =
     ...propsForUpdatingPlans,
     ...(plan && { initialValues: getPlanFormValues(plan) }),
     renderLocationNames: (
-      child: (locationName: string, locationId: string, index: number) => JSX.Element
+      child?: (locationName: string, locationId: string, index: number) => JSX.Element
     ) => <ConnectedPlanLocationNames child={child} plan={plan} />,
   };
 

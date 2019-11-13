@@ -75,7 +75,7 @@ const PlanLocationNames = (props: Props) => {
   }, []);
 
   if (props.locations.length < 1) {
-    return <Loading />;
+    return <Loading minHeight={'5vh'} />;
   }
 
   return (

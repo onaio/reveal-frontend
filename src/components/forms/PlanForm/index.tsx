@@ -130,8 +130,13 @@ export interface PlanFormProps {
   jurisdictionLabel: string /** the label used for the jurisdiction selection */;
   redirectAfterAction: string /** the url to redirect to after form submission */;
   renderLocationNames?: (
-    child: (locationName: string, locationId: string, index: number) => JSX.Element
+    child?: (
+      locationName: string,
+      locationId: string,
+      index: number
+    ) => JSX.Element /** nested render content for each location name */
   ) => JSX.Element;
+  /** a render prop that renders the plan's location names */
 }
 
 /** Plan Form component */
