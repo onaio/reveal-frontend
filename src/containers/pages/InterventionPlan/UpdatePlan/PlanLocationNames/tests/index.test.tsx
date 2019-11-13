@@ -4,16 +4,18 @@ import toJson from 'enzyme-to-json';
 import flushPromises from 'flush-promises';
 import React from 'react';
 import { Provider } from 'react-redux';
-import ConnectedPlansLocationNames, { JurisdictionIdToName } from '..';
+import ConnectedPlansLocationNames, { PlanLocationNames } from '..';
 import { OPENSRP_LOCATIONS_BY_PLAN } from '../../../../../../constants';
+import { OpenSRPService } from '../../../../../../services/opensrp';
 import store from '../../../../../../store';
 import locationReducer, {
   fetchLocations,
-   Location,
+  Location,
   reducerName,
   removeAllPlansLocations,
 } from '../../../../../../store/ducks/opensrp/locations';
 import { sampleLocations } from '../../../../../../store/ducks/opensrp/locations/tests/fixtures';
+import { plans } from '../../../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
 
 reducerRegistry.register(reducerName, locationReducer);
 
@@ -29,47 +31,45 @@ describe('src/components/locationIdToNames', () => {
   it('renders without crashing', () => {
     fetch.once(JSON.stringify([]));
     const props = {
-        fetchLocationsAction: fetchLocations;
-        plan: ;
-        serviceClass: typeof OpenSRPService;
+      fetchLocationsAction: fetchLocations,
+      locations: [],
+      plan: plans[1],
+      serviceClass: OpenSRPService,
     };
 
-    shallow(<JurisdictionIdToName {...props} />);
+    shallow(<PlanLocationNames {...props} />);
   });
 
   it('Makes the correct api calls', async () => {
-    const mockList = jest.fn(async () => []);
+    const mockRead = jest.fn(async () => []);
     const classMock = jest.fn().mockImplementation(() => {
       return {
-        list: mockList,
+        read: mockRead,
       };
     });
     const props = {
-      ids: ['f45b9380-c970-4dd1-8533-9e95ab12f128', '3951'],
+      plan: plans[1],
       serviceClass: classMock,
     };
 
-    mount(<JurisdictionIdToName {...props} />);
+    mount(<PlanLocationNames {...props} />);
     await flushPromises();
 
     // to the correct endpoint
     expect(classMock).toHaveBeenCalledWith(OPENSRP_LOCATIONS_BY_PLAN);
 
-    // correct filter parameters
-    const filterParams = {
-      location_ids: ['f45b9380-c970-4dd1-8533-9e95ab12f128', '3951'],
-      return_geometry: false,
-    };
-    expect(mockList).toHaveBeenCalledWith(filterParams);
+    expect(mockRead).toHaveBeenCalledWith(plans[1].identifier);
   });
 
   it('renders correctly', async () => {
-    fetch.once(JSON.stringify(sampleLocations));
+    fetch.once(JSON.stringify([]));
     const props = {
-      ids: ['f45b9380-c970-4dd1-8533-9e95ab12f128', '3951'],
+      child: () => <h2 class="mock-child">Mock child render function</h2>,
+      locations: sampleLocations,
+      plan: plans[1],
     };
 
-    const wrapper = mount(<JurisdictionIdToName {...props} />);
+    const wrapper = mount(<PlanLocationNames {...props} />);
     await flushPromises();
     wrapper.update();
 
@@ -77,13 +77,16 @@ describe('src/components/locationIdToNames', () => {
     expect(wrapper.find('li').length).toEqual(2);
     expect(toJson(wrapper.find('li').at(0))).toMatchSnapshot();
     expect(toJson(wrapper.find('li').at(1))).toMatchSnapshot();
+
+    // invokes render prop child
+    expect(wrapper.find('h2.mock-child')).toMatchSnapshot();
   });
 
   it('works correctly with store', () => {
     fetch.once(JSON.stringify([]));
-    store.dispatch(fetchLocations(sampleLocations as Location[]));
+    store.dispatch(fetchLocations(sampleLocations as Location[], plans[1].identifier));
     const props = {
-      ids: ['f45b9380-c970-4dd1-8533-9e95ab12f128', '3951'],
+      plan: plans[1],
     };
 
     // should display the correct location Name
@@ -100,64 +103,7 @@ describe('src/components/locationIdToNames', () => {
         .at(0)
         .text()
     ).toEqual('Namibia');
-    expect(toJson(wrapper.find('li').at(0))).toMatchSnapshot();
-    expect(toJson(wrapper.find('li').at(1))).toMatchSnapshot();
-  });
-
-  it('renders correctly when connected to store', async () => {
-    // component should render the id initially and then re-render
-    // with the location name
-    fetch.once(JSON.stringify(sampleLocations));
-    const props = {
-      ids: ['f45b9380-c970-4dd1-8533-9e95ab12f128', '3951'],
-    };
-
-    // should display the correct location Name
-    const wrapper = mount(
-      <Provider store={store}>
-        <ConnectedPlansLocationNames {...props} />
-      </Provider>
-    );
-    await flushPromises();
-    wrapper.update();
-
-    expect(
-      wrapper
-        .find('li')
-        .at(0)
-        .text()
-    ).toEqual('Namibia');
-    expect(toJson(wrapper.find('li').at(0))).toMatchSnapshot();
-    expect(toJson(wrapper.find('li').at(1))).toMatchSnapshot();
-  });
-
-  it('Should not make api call if name is in store', async () => {
-    const mockList = jest.fn(async () => []);
-    const classMock = jest.fn().mockImplementation(() => {
-      return {
-        list: mockList,
-      };
-    });
-    store.dispatch(fetchLocations(sampleLocations as Location[]));
-    const props = {
-      ids: ['f45b9380-c970-4dd1-8533-9e95ab12f128', '3951'],
-      serviceClass: classMock,
-    };
-
-    // the service Class should not be called
-    expect(classMock).not.toHaveBeenCalled();
-
-    const wrapper = mount(
-      <Provider store={store}>
-        <ConnectedPlansLocationNames {...props} />
-      </Provider>
-    );
-    await flushPromises();
-
-    // should have at exactly 2 lis
-    expect(wrapper.find('li').length).toEqual(2);
     expect(toJson(wrapper.find('li').at(0))).toMatchSnapshot();
     expect(toJson(wrapper.find('li').at(1))).toMatchSnapshot();
   });
 });
-

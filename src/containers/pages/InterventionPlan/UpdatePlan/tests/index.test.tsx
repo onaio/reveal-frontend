@@ -51,9 +51,11 @@ describe('components/InterventionPlan/UpdatePlan', () => {
   it('renders plan definition list correctly', () => {
     fetch.mockResponseOnce(JSON.stringify(fixtures.plans[1]));
     const wrapper = mount(
-      <Router history={history}>
-        <UpdatePlan {...getProps()} />
-      </Router>
+      <Provider store={store}>
+        <Router history={history}>
+          <UpdatePlan {...getProps()} />
+        </Router>
+      </Provider>
     );
     expect(toJson(wrapper.find('Breadcrumb'))).toMatchSnapshot('Breadcrumb');
     expect(toJson(wrapper.find('h3.page-title'))).toMatchSnapshot('Page title');

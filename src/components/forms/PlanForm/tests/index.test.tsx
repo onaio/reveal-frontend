@@ -326,32 +326,20 @@ describe('containers/forms/PlanForm - Edit', () => {
     );
   });
 
-  it('renders jurisdictions fields correctly', () => {
+  it('Uses Custom component for rendering locationNames', () => {
+    const MockComponent = () => (
+      <div id="mock-component"> This Component renders jurisdictions</div>
+    );
+    fetch.mockResponseOnce(fixtures.jurisdictionLevel0JSON);
     const props = {
       ...propsForUpdatingPlans,
       initialValues: getPlanFormValues(plans[1]),
+      renderLocationNames: () => <MockComponent />,
     };
 
     const wrapper = mount(<PlanForm {...props} />);
 
-    function checkJurisdtictions(num: number) {
-      for (let i = 0; i <= num; i++) {
-        expect(toJson(wrapper.find(`#jurisdictions-${i}-id input`))).toMatchSnapshot(
-          `jurisdictions[${i}].id field`
-        );
-        expect(toJson(wrapper.find(`#jurisdictions-${i}-name input`))).toMatchSnapshot(
-          `jurisdictions[${i}].name field`
-        );
-      }
-    }
-
-    fetch.mockResponseOnce(fixtures.jurisdictionLevel0JSON);
-
-    checkJurisdtictions(plans[1].jurisdiction.length);
-
-    expect(toJson(wrapper.find('#selected-jurisdiction-list li span'))).toMatchSnapshot(
-      'selected jurisdictions'
-    );
+    expect(toJson(wrapper.find('#mock-component'))).toMatchSnapshot('Render Location Names');
 
     // there is no button to remove jurisdictions
     expect(wrapper.find(`.removeJurisdiction`).length).toEqual(0);

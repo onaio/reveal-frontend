@@ -1,0 +1,1182 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`src/components/locationIdToNames renders correctly 1`] = `
+<li
+  key="0"
+>
+  <span>
+    Namibia
+  </span>
+  <h2
+    class="mock-child"
+  >
+    Mock child render function
+  </h2>
+</li>
+`;
+
+exports[`src/components/locationIdToNames renders correctly 2`] = `
+<li
+  key="1"
+>
+  <span>
+    Akros_1
+  </span>
+  <h2
+    class="mock-child"
+  >
+    Mock child render function
+  </h2>
+</li>
+`;
+
+exports[`src/components/locationIdToNames renders correctly 3`] = `
+ReactWrapper {
+  Symbol(enzyme.__unrendered__): null,
+  Symbol(enzyme.__renderer__): Object {
+    "batchedUpdates": [Function],
+    "getNode": [Function],
+    "getWrappingComponentRenderer": [Function],
+    "render": [Function],
+    "simulateError": [Function],
+    "simulateEvent": [Function],
+    "unmount": [Function],
+  },
+  Symbol(enzyme.__root__): ReactWrapper {
+    Symbol(enzyme.__unrendered__): <PlanLocationNames
+      child={[Function]}
+      fetchLocationsAction={[Function]}
+      locations={
+        Array [
+          Object {
+            "identifier": "f45b9380-c970-4dd1-8533-9e95ab12f128",
+            "name": "Namibia",
+          },
+          Object {
+            "identifier": "3951",
+            "name": "Akros_1",
+          },
+        ]
+      }
+      plan={
+        Object {
+          "action": Array [
+            Object {
+              "code": "BCC",
+              "description": "Perform BCC for the operational area",
+              "goalId": "BCC_complete",
+              "identifier": "3f2eef38-38fe-4108-abb3-4e896b880302",
+              "prefix": 1,
+              "reason": "Routine",
+              "subjectCodableConcept": Object {
+                "text": "Operational_Area",
+              },
+              "taskTemplate": "Action1_Perform_BCC",
+              "timingPeriod": Object {
+                "end": "2019-07-30",
+                "start": "2019-07-10",
+              },
+              "title": "Perform BCC",
+            },
+            Object {
+              "code": "IRS",
+              "description": "Visit each structure in the operational area and attempt to spray",
+              "goalId": "90_percent_of_structures_sprayed",
+              "identifier": "95a5a00f-a411-4fe5-bd9c-460a856239c9",
+              "prefix": 2,
+              "reason": "Routine",
+              "subjectCodableConcept": Object {
+                "text": "Residential_Structure",
+              },
+              "taskTemplate": "Action2_Spray_Structures",
+              "timingPeriod": Object {
+                "end": "2019-07-30",
+                "start": "2019-07-10",
+              },
+              "title": "Spray Structures",
+            },
+          ],
+          "date": "2019-07-10",
+          "effectivePeriod": Object {
+            "end": "2019-07-30",
+            "start": "2019-07-10",
+          },
+          "goal": Array [
+            Object {
+              "description": "Complete BCC for the operational area",
+              "id": "BCC_complete",
+              "priority": "medium-priority",
+              "target": Array [
+                Object {
+                  "detail": Object {
+                    "detailQuantity": Object {
+                      "comparator": ">=",
+                      "unit": "each",
+                      "value": 1,
+                    },
+                  },
+                  "due": "2019-07-10",
+                  "measure": "Number of BCC communication activities that happened",
+                },
+              ],
+            },
+            Object {
+              "description": "Spray 90 % of structures in the operational area",
+              "id": "90_percent_of_structures_sprayed",
+              "priority": "medium-priority",
+              "target": Array [
+                Object {
+                  "detail": Object {
+                    "detailQuantity": Object {
+                      "comparator": ">=",
+                      "unit": "percent",
+                      "value": 90,
+                    },
+                  },
+                  "due": "2019-07-30",
+                  "measure": "Percent of structures sprayed",
+                },
+              ],
+            },
+          ],
+          "identifier": "8fa7eb32-99d7-4b49-8332-9ecedd6d51ae",
+          "jurisdiction": Array [
+            Object {
+              "code": "35968df5-f335-44ae-8ae5-25804caa2d86",
+            },
+            Object {
+              "code": "3952",
+            },
+            Object {
+              "code": "ac7ba751-35e8-4b46-9e53-3cbaad193697",
+            },
+          ],
+          "name": "TwoTwoOne_01_IRS_2019-07-10",
+          "serverVersion": 1563303151426,
+          "status": "active",
+          "title": "TwoTwoOne_01 IRS 2019-07-10",
+          "useContext": Array [
+            Object {
+              "code": "interventionType",
+              "valueCodableConcept": "IRS",
+            },
+          ],
+          "version": "1",
+        }
+      }
+      serviceClass={[Function]}
+    />,
+    Symbol(enzyme.__renderer__): Object {
+      "batchedUpdates": [Function],
+      "getNode": [Function],
+      "getWrappingComponentRenderer": [Function],
+      "render": [Function],
+      "simulateError": [Function],
+      "simulateEvent": [Function],
+      "unmount": [Function],
+    },
+    Symbol(enzyme.__root__): [Circular],
+    Symbol(enzyme.__node__): Object {
+      "instance": null,
+      "key": undefined,
+      "nodeType": "function",
+      "props": Object {
+        "child": [Function],
+        "fetchLocationsAction": [Function],
+        "locations": Array [
+          Object {
+            "identifier": "f45b9380-c970-4dd1-8533-9e95ab12f128",
+            "name": "Namibia",
+          },
+          Object {
+            "identifier": "3951",
+            "name": "Akros_1",
+          },
+        ],
+        "plan": Object {
+          "action": Array [
+            Object {
+              "code": "BCC",
+              "description": "Perform BCC for the operational area",
+              "goalId": "BCC_complete",
+              "identifier": "3f2eef38-38fe-4108-abb3-4e896b880302",
+              "prefix": 1,
+              "reason": "Routine",
+              "subjectCodableConcept": Object {
+                "text": "Operational_Area",
+              },
+              "taskTemplate": "Action1_Perform_BCC",
+              "timingPeriod": Object {
+                "end": "2019-07-30",
+                "start": "2019-07-10",
+              },
+              "title": "Perform BCC",
+            },
+            Object {
+              "code": "IRS",
+              "description": "Visit each structure in the operational area and attempt to spray",
+              "goalId": "90_percent_of_structures_sprayed",
+              "identifier": "95a5a00f-a411-4fe5-bd9c-460a856239c9",
+              "prefix": 2,
+              "reason": "Routine",
+              "subjectCodableConcept": Object {
+                "text": "Residential_Structure",
+              },
+              "taskTemplate": "Action2_Spray_Structures",
+              "timingPeriod": Object {
+                "end": "2019-07-30",
+                "start": "2019-07-10",
+              },
+              "title": "Spray Structures",
+            },
+          ],
+          "date": "2019-07-10",
+          "effectivePeriod": Object {
+            "end": "2019-07-30",
+            "start": "2019-07-10",
+          },
+          "goal": Array [
+            Object {
+              "description": "Complete BCC for the operational area",
+              "id": "BCC_complete",
+              "priority": "medium-priority",
+              "target": Array [
+                Object {
+                  "detail": Object {
+                    "detailQuantity": Object {
+                      "comparator": ">=",
+                      "unit": "each",
+                      "value": 1,
+                    },
+                  },
+                  "due": "2019-07-10",
+                  "measure": "Number of BCC communication activities that happened",
+                },
+              ],
+            },
+            Object {
+              "description": "Spray 90 % of structures in the operational area",
+              "id": "90_percent_of_structures_sprayed",
+              "priority": "medium-priority",
+              "target": Array [
+                Object {
+                  "detail": Object {
+                    "detailQuantity": Object {
+                      "comparator": ">=",
+                      "unit": "percent",
+                      "value": 90,
+                    },
+                  },
+                  "due": "2019-07-30",
+                  "measure": "Percent of structures sprayed",
+                },
+              ],
+            },
+          ],
+          "identifier": "8fa7eb32-99d7-4b49-8332-9ecedd6d51ae",
+          "jurisdiction": Array [
+            Object {
+              "code": "35968df5-f335-44ae-8ae5-25804caa2d86",
+            },
+            Object {
+              "code": "3952",
+            },
+            Object {
+              "code": "ac7ba751-35e8-4b46-9e53-3cbaad193697",
+            },
+          ],
+          "name": "TwoTwoOne_01_IRS_2019-07-10",
+          "serverVersion": 1563303151426,
+          "status": "active",
+          "title": "TwoTwoOne_01 IRS 2019-07-10",
+          "useContext": Array [
+            Object {
+              "code": "interventionType",
+              "valueCodableConcept": "IRS",
+            },
+          ],
+          "version": "1",
+        },
+        "serviceClass": [Function],
+      },
+      "ref": null,
+      "rendered": Object {
+        "instance": <ul
+          id="selected-jurisdiction-list"
+        >
+          <li>
+            <span>
+              Namibia
+            </span>
+            <h2
+              class="mock-child"
+            >
+              Mock child render function
+            </h2>
+          </li>
+          <li>
+            <span>
+              Akros_1
+            </span>
+            <h2
+              class="mock-child"
+            >
+              Mock child render function
+            </h2>
+          </li>
+        </ul>,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {
+          "children": Array [
+            <li>
+              <span>
+                Namibia
+              </span>
+              <h2
+                class="mock-child"
+              >
+                Mock child render function
+              </h2>
+            </li>,
+            <li>
+              <span>
+                Akros_1
+              </span>
+              <h2
+                class="mock-child"
+              >
+                Mock child render function
+              </h2>
+            </li>,
+          ],
+          "id": "selected-jurisdiction-list",
+        },
+        "ref": null,
+        "rendered": Array [
+          Object {
+            "instance": <li>
+              <span>
+                Namibia
+              </span>
+              <h2
+                class="mock-child"
+              >
+                Mock child render function
+              </h2>
+            </li>,
+            "key": "0",
+            "nodeType": "host",
+            "props": Object {
+              "children": Array [
+                <span>
+                  Namibia
+                </span>,
+                <h2
+                  class="mock-child"
+                >
+                  Mock child render function
+                </h2>,
+              ],
+            },
+            "ref": null,
+            "rendered": Array [
+              Object {
+                "instance": <span>
+                  Namibia
+                </span>,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "children": "Namibia",
+                },
+                "ref": null,
+                "rendered": Array [
+                  "Namibia",
+                ],
+                "type": "span",
+              },
+              Object {
+                "instance": <h2
+                  class="mock-child"
+                >
+                  Mock child render function
+                </h2>,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "children": "Mock child render function",
+                  "class": "mock-child",
+                },
+                "ref": null,
+                "rendered": Array [
+                  "Mock child render function",
+                ],
+                "type": "h2",
+              },
+            ],
+            "type": "li",
+          },
+          Object {
+            "instance": <li>
+              <span>
+                Akros_1
+              </span>
+              <h2
+                class="mock-child"
+              >
+                Mock child render function
+              </h2>
+            </li>,
+            "key": "1",
+            "nodeType": "host",
+            "props": Object {
+              "children": Array [
+                <span>
+                  Akros_1
+                </span>,
+                <h2
+                  class="mock-child"
+                >
+                  Mock child render function
+                </h2>,
+              ],
+            },
+            "ref": null,
+            "rendered": Array [
+              Object {
+                "instance": <span>
+                  Akros_1
+                </span>,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "children": "Akros_1",
+                },
+                "ref": null,
+                "rendered": Array [
+                  "Akros_1",
+                ],
+                "type": "span",
+              },
+              Object {
+                "instance": <h2
+                  class="mock-child"
+                >
+                  Mock child render function
+                </h2>,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "children": "Mock child render function",
+                  "class": "mock-child",
+                },
+                "ref": null,
+                "rendered": Array [
+                  "Mock child render function",
+                ],
+                "type": "h2",
+              },
+            ],
+            "type": "li",
+          },
+        ],
+        "type": "ul",
+      },
+      "type": [Function],
+    },
+    Symbol(enzyme.__nodes__): Array [
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "function",
+        "props": Object {
+          "child": [Function],
+          "fetchLocationsAction": [Function],
+          "locations": Array [
+            Object {
+              "identifier": "f45b9380-c970-4dd1-8533-9e95ab12f128",
+              "name": "Namibia",
+            },
+            Object {
+              "identifier": "3951",
+              "name": "Akros_1",
+            },
+          ],
+          "plan": Object {
+            "action": Array [
+              Object {
+                "code": "BCC",
+                "description": "Perform BCC for the operational area",
+                "goalId": "BCC_complete",
+                "identifier": "3f2eef38-38fe-4108-abb3-4e896b880302",
+                "prefix": 1,
+                "reason": "Routine",
+                "subjectCodableConcept": Object {
+                  "text": "Operational_Area",
+                },
+                "taskTemplate": "Action1_Perform_BCC",
+                "timingPeriod": Object {
+                  "end": "2019-07-30",
+                  "start": "2019-07-10",
+                },
+                "title": "Perform BCC",
+              },
+              Object {
+                "code": "IRS",
+                "description": "Visit each structure in the operational area and attempt to spray",
+                "goalId": "90_percent_of_structures_sprayed",
+                "identifier": "95a5a00f-a411-4fe5-bd9c-460a856239c9",
+                "prefix": 2,
+                "reason": "Routine",
+                "subjectCodableConcept": Object {
+                  "text": "Residential_Structure",
+                },
+                "taskTemplate": "Action2_Spray_Structures",
+                "timingPeriod": Object {
+                  "end": "2019-07-30",
+                  "start": "2019-07-10",
+                },
+                "title": "Spray Structures",
+              },
+            ],
+            "date": "2019-07-10",
+            "effectivePeriod": Object {
+              "end": "2019-07-30",
+              "start": "2019-07-10",
+            },
+            "goal": Array [
+              Object {
+                "description": "Complete BCC for the operational area",
+                "id": "BCC_complete",
+                "priority": "medium-priority",
+                "target": Array [
+                  Object {
+                    "detail": Object {
+                      "detailQuantity": Object {
+                        "comparator": ">=",
+                        "unit": "each",
+                        "value": 1,
+                      },
+                    },
+                    "due": "2019-07-10",
+                    "measure": "Number of BCC communication activities that happened",
+                  },
+                ],
+              },
+              Object {
+                "description": "Spray 90 % of structures in the operational area",
+                "id": "90_percent_of_structures_sprayed",
+                "priority": "medium-priority",
+                "target": Array [
+                  Object {
+                    "detail": Object {
+                      "detailQuantity": Object {
+                        "comparator": ">=",
+                        "unit": "percent",
+                        "value": 90,
+                      },
+                    },
+                    "due": "2019-07-30",
+                    "measure": "Percent of structures sprayed",
+                  },
+                ],
+              },
+            ],
+            "identifier": "8fa7eb32-99d7-4b49-8332-9ecedd6d51ae",
+            "jurisdiction": Array [
+              Object {
+                "code": "35968df5-f335-44ae-8ae5-25804caa2d86",
+              },
+              Object {
+                "code": "3952",
+              },
+              Object {
+                "code": "ac7ba751-35e8-4b46-9e53-3cbaad193697",
+              },
+            ],
+            "name": "TwoTwoOne_01_IRS_2019-07-10",
+            "serverVersion": 1563303151426,
+            "status": "active",
+            "title": "TwoTwoOne_01 IRS 2019-07-10",
+            "useContext": Array [
+              Object {
+                "code": "interventionType",
+                "valueCodableConcept": "IRS",
+              },
+            ],
+            "version": "1",
+          },
+          "serviceClass": [Function],
+        },
+        "ref": null,
+        "rendered": Object {
+          "instance": <ul
+            id="selected-jurisdiction-list"
+          >
+            <li>
+              <span>
+                Namibia
+              </span>
+              <h2
+                class="mock-child"
+              >
+                Mock child render function
+              </h2>
+            </li>
+            <li>
+              <span>
+                Akros_1
+              </span>
+              <h2
+                class="mock-child"
+              >
+                Mock child render function
+              </h2>
+            </li>
+          </ul>,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": Array [
+              <li>
+                <span>
+                  Namibia
+                </span>
+                <h2
+                  class="mock-child"
+                >
+                  Mock child render function
+                </h2>
+              </li>,
+              <li>
+                <span>
+                  Akros_1
+                </span>
+                <h2
+                  class="mock-child"
+                >
+                  Mock child render function
+                </h2>
+              </li>,
+            ],
+            "id": "selected-jurisdiction-list",
+          },
+          "ref": null,
+          "rendered": Array [
+            Object {
+              "instance": <li>
+                <span>
+                  Namibia
+                </span>
+                <h2
+                  class="mock-child"
+                >
+                  Mock child render function
+                </h2>
+              </li>,
+              "key": "0",
+              "nodeType": "host",
+              "props": Object {
+                "children": Array [
+                  <span>
+                    Namibia
+                  </span>,
+                  <h2
+                    class="mock-child"
+                  >
+                    Mock child render function
+                  </h2>,
+                ],
+              },
+              "ref": null,
+              "rendered": Array [
+                Object {
+                  "instance": <span>
+                    Namibia
+                  </span>,
+                  "key": undefined,
+                  "nodeType": "host",
+                  "props": Object {
+                    "children": "Namibia",
+                  },
+                  "ref": null,
+                  "rendered": Array [
+                    "Namibia",
+                  ],
+                  "type": "span",
+                },
+                Object {
+                  "instance": <h2
+                    class="mock-child"
+                  >
+                    Mock child render function
+                  </h2>,
+                  "key": undefined,
+                  "nodeType": "host",
+                  "props": Object {
+                    "children": "Mock child render function",
+                    "class": "mock-child",
+                  },
+                  "ref": null,
+                  "rendered": Array [
+                    "Mock child render function",
+                  ],
+                  "type": "h2",
+                },
+              ],
+              "type": "li",
+            },
+            Object {
+              "instance": <li>
+                <span>
+                  Akros_1
+                </span>
+                <h2
+                  class="mock-child"
+                >
+                  Mock child render function
+                </h2>
+              </li>,
+              "key": "1",
+              "nodeType": "host",
+              "props": Object {
+                "children": Array [
+                  <span>
+                    Akros_1
+                  </span>,
+                  <h2
+                    class="mock-child"
+                  >
+                    Mock child render function
+                  </h2>,
+                ],
+              },
+              "ref": null,
+              "rendered": Array [
+                Object {
+                  "instance": <span>
+                    Akros_1
+                  </span>,
+                  "key": undefined,
+                  "nodeType": "host",
+                  "props": Object {
+                    "children": "Akros_1",
+                  },
+                  "ref": null,
+                  "rendered": Array [
+                    "Akros_1",
+                  ],
+                  "type": "span",
+                },
+                Object {
+                  "instance": <h2
+                    class="mock-child"
+                  >
+                    Mock child render function
+                  </h2>,
+                  "key": undefined,
+                  "nodeType": "host",
+                  "props": Object {
+                    "children": "Mock child render function",
+                    "class": "mock-child",
+                  },
+                  "ref": null,
+                  "rendered": Array [
+                    "Mock child render function",
+                  ],
+                  "type": "h2",
+                },
+              ],
+              "type": "li",
+            },
+          ],
+          "type": "ul",
+        },
+        "type": [Function],
+      },
+    ],
+    Symbol(enzyme.__options__): Object {
+      "adapter": ReactSixteenAdapter {
+        "options": Object {
+          "enableComponentDidUpdateOnSetState": true,
+          "legacyContextMode": "parent",
+          "lifecycles": Object {
+            "componentDidUpdate": Object {
+              "onSetState": true,
+            },
+            "getChildContext": Object {
+              "calledByRenderer": false,
+            },
+            "getDerivedStateFromError": true,
+            "getDerivedStateFromProps": Object {
+              "hasShouldComponentUpdateBug": false,
+            },
+            "getSnapshotBeforeUpdate": true,
+            "setState": Object {
+              "skipsComponentDidUpdateOnNullish": true,
+            },
+          },
+        },
+      },
+    },
+  },
+  Symbol(enzyme.__node__): undefined,
+  Symbol(enzyme.__nodes__): Array [],
+  Symbol(enzyme.__rootNodes__): Array [
+    Object {
+      "instance": null,
+      "key": undefined,
+      "nodeType": "function",
+      "props": Object {
+        "child": [Function],
+        "fetchLocationsAction": [Function],
+        "locations": Array [
+          Object {
+            "identifier": "f45b9380-c970-4dd1-8533-9e95ab12f128",
+            "name": "Namibia",
+          },
+          Object {
+            "identifier": "3951",
+            "name": "Akros_1",
+          },
+        ],
+        "plan": Object {
+          "action": Array [
+            Object {
+              "code": "BCC",
+              "description": "Perform BCC for the operational area",
+              "goalId": "BCC_complete",
+              "identifier": "3f2eef38-38fe-4108-abb3-4e896b880302",
+              "prefix": 1,
+              "reason": "Routine",
+              "subjectCodableConcept": Object {
+                "text": "Operational_Area",
+              },
+              "taskTemplate": "Action1_Perform_BCC",
+              "timingPeriod": Object {
+                "end": "2019-07-30",
+                "start": "2019-07-10",
+              },
+              "title": "Perform BCC",
+            },
+            Object {
+              "code": "IRS",
+              "description": "Visit each structure in the operational area and attempt to spray",
+              "goalId": "90_percent_of_structures_sprayed",
+              "identifier": "95a5a00f-a411-4fe5-bd9c-460a856239c9",
+              "prefix": 2,
+              "reason": "Routine",
+              "subjectCodableConcept": Object {
+                "text": "Residential_Structure",
+              },
+              "taskTemplate": "Action2_Spray_Structures",
+              "timingPeriod": Object {
+                "end": "2019-07-30",
+                "start": "2019-07-10",
+              },
+              "title": "Spray Structures",
+            },
+          ],
+          "date": "2019-07-10",
+          "effectivePeriod": Object {
+            "end": "2019-07-30",
+            "start": "2019-07-10",
+          },
+          "goal": Array [
+            Object {
+              "description": "Complete BCC for the operational area",
+              "id": "BCC_complete",
+              "priority": "medium-priority",
+              "target": Array [
+                Object {
+                  "detail": Object {
+                    "detailQuantity": Object {
+                      "comparator": ">=",
+                      "unit": "each",
+                      "value": 1,
+                    },
+                  },
+                  "due": "2019-07-10",
+                  "measure": "Number of BCC communication activities that happened",
+                },
+              ],
+            },
+            Object {
+              "description": "Spray 90 % of structures in the operational area",
+              "id": "90_percent_of_structures_sprayed",
+              "priority": "medium-priority",
+              "target": Array [
+                Object {
+                  "detail": Object {
+                    "detailQuantity": Object {
+                      "comparator": ">=",
+                      "unit": "percent",
+                      "value": 90,
+                    },
+                  },
+                  "due": "2019-07-30",
+                  "measure": "Percent of structures sprayed",
+                },
+              ],
+            },
+          ],
+          "identifier": "8fa7eb32-99d7-4b49-8332-9ecedd6d51ae",
+          "jurisdiction": Array [
+            Object {
+              "code": "35968df5-f335-44ae-8ae5-25804caa2d86",
+            },
+            Object {
+              "code": "3952",
+            },
+            Object {
+              "code": "ac7ba751-35e8-4b46-9e53-3cbaad193697",
+            },
+          ],
+          "name": "TwoTwoOne_01_IRS_2019-07-10",
+          "serverVersion": 1563303151426,
+          "status": "active",
+          "title": "TwoTwoOne_01 IRS 2019-07-10",
+          "useContext": Array [
+            Object {
+              "code": "interventionType",
+              "valueCodableConcept": "IRS",
+            },
+          ],
+          "version": "1",
+        },
+        "serviceClass": [Function],
+      },
+      "ref": null,
+      "rendered": Object {
+        "instance": <ul
+          id="selected-jurisdiction-list"
+        >
+          <li>
+            <span>
+              Namibia
+            </span>
+            <h2
+              class="mock-child"
+            >
+              Mock child render function
+            </h2>
+          </li>
+          <li>
+            <span>
+              Akros_1
+            </span>
+            <h2
+              class="mock-child"
+            >
+              Mock child render function
+            </h2>
+          </li>
+        </ul>,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {
+          "children": Array [
+            <li>
+              <span>
+                Namibia
+              </span>
+              <h2
+                class="mock-child"
+              >
+                Mock child render function
+              </h2>
+            </li>,
+            <li>
+              <span>
+                Akros_1
+              </span>
+              <h2
+                class="mock-child"
+              >
+                Mock child render function
+              </h2>
+            </li>,
+          ],
+          "id": "selected-jurisdiction-list",
+        },
+        "ref": null,
+        "rendered": Array [
+          Object {
+            "instance": <li>
+              <span>
+                Namibia
+              </span>
+              <h2
+                class="mock-child"
+              >
+                Mock child render function
+              </h2>
+            </li>,
+            "key": "0",
+            "nodeType": "host",
+            "props": Object {
+              "children": Array [
+                <span>
+                  Namibia
+                </span>,
+                <h2
+                  class="mock-child"
+                >
+                  Mock child render function
+                </h2>,
+              ],
+            },
+            "ref": null,
+            "rendered": Array [
+              Object {
+                "instance": <span>
+                  Namibia
+                </span>,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "children": "Namibia",
+                },
+                "ref": null,
+                "rendered": Array [
+                  "Namibia",
+                ],
+                "type": "span",
+              },
+              Object {
+                "instance": <h2
+                  class="mock-child"
+                >
+                  Mock child render function
+                </h2>,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "children": "Mock child render function",
+                  "class": "mock-child",
+                },
+                "ref": null,
+                "rendered": Array [
+                  "Mock child render function",
+                ],
+                "type": "h2",
+              },
+            ],
+            "type": "li",
+          },
+          Object {
+            "instance": <li>
+              <span>
+                Akros_1
+              </span>
+              <h2
+                class="mock-child"
+              >
+                Mock child render function
+              </h2>
+            </li>,
+            "key": "1",
+            "nodeType": "host",
+            "props": Object {
+              "children": Array [
+                <span>
+                  Akros_1
+                </span>,
+                <h2
+                  class="mock-child"
+                >
+                  Mock child render function
+                </h2>,
+              ],
+            },
+            "ref": null,
+            "rendered": Array [
+              Object {
+                "instance": <span>
+                  Akros_1
+                </span>,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "children": "Akros_1",
+                },
+                "ref": null,
+                "rendered": Array [
+                  "Akros_1",
+                ],
+                "type": "span",
+              },
+              Object {
+                "instance": <h2
+                  class="mock-child"
+                >
+                  Mock child render function
+                </h2>,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "children": "Mock child render function",
+                  "class": "mock-child",
+                },
+                "ref": null,
+                "rendered": Array [
+                  "Mock child render function",
+                ],
+                "type": "h2",
+              },
+            ],
+            "type": "li",
+          },
+        ],
+        "type": "ul",
+      },
+      "type": [Function],
+    },
+  ],
+  Symbol(enzyme.__options__): Object {
+    "adapter": ReactSixteenAdapter {
+      "options": Object {
+        "enableComponentDidUpdateOnSetState": true,
+        "legacyContextMode": "parent",
+        "lifecycles": Object {
+          "componentDidUpdate": Object {
+            "onSetState": true,
+          },
+          "getChildContext": Object {
+            "calledByRenderer": false,
+          },
+          "getDerivedStateFromError": true,
+          "getDerivedStateFromProps": Object {
+            "hasShouldComponentUpdateBug": false,
+          },
+          "getSnapshotBeforeUpdate": true,
+          "setState": Object {
+            "skipsComponentDidUpdateOnNullish": true,
+          },
+        },
+      },
+    },
+  },
+}
+`;
+
+exports[`src/components/locationIdToNames works correctly with store 1`] = `
+<li
+  key="0"
+>
+  <span>
+    Namibia
+  </span>
+</li>
+`;
+
+exports[`src/components/locationIdToNames works correctly with store 2`] = `
+<li
+  key="1"
+>
+  <span>
+    Akros_1
+  </span>
+</li>
+`;
