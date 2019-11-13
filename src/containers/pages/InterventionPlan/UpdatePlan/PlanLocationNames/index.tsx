@@ -36,7 +36,7 @@ const defaultProps: Props = {
   serviceClass: OpenSRPService,
 };
 
-/** The JurisdictionIdToName component takes a plan and uses its id
+/** The PlanLocationNames component takes a plan and uses its id
  * to get location names which it renders in a list
  */
 const PlanLocationNames = (props: Props) => {
@@ -94,7 +94,7 @@ const PlanLocationNames = (props: Props) => {
 
 PlanLocationNames.defaultProps = defaultProps;
 
-export { PlanLocationNames as JurisdictionIdToName };
+export { PlanLocationNames };
 
 // connect component
 
