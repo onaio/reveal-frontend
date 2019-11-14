@@ -402,3 +402,9 @@ export const ORGANIZATION_EDITED_SUCCESSFULLY = `${ORGANIZATION_LABEL} edited su
 export type ORGANIZATION_EDITED_SUCCESSFULLY = typeof ORGANIZATION_EDITED_SUCCESSFULLY;
 export const ORGANIZATION_CREATED_SUCCESSFULLY = `${ORGANIZATION_LABEL} created successfully`;
 export type ORGANIZATION_CREATED_SUCCESSFULLY = typeof ORGANIZATION_CREATED_SUCCESSFULLY;
+export const REMOVED_FROM = 'successfully removed from';
+export type REMOVED_FROM = typeof REMOVED_FROM;
+
+// Error growl notification messages;
+export const REMOVING_PRACTITIONER_FAILED = 'Removing Practitioner Failed';
+export type REMOVING_PRACTITIONER_FAILED = typeof REMOVING_PRACTITIONER_FAILED;
