@@ -17,7 +17,7 @@ const IRSTableCell: React.ElementType<LinkedCellProps> = (props: LinkedCellProps
   const url = urlPath ? `${urlPath}/${cell.original.jurisdiction_id}` : '';
   const val =
     hasChildren || cell.original.is_virtual_jurisdiction ? (
-      cellValue
+      <span className="plan-jurisdiction-name name-label">{cellValue}</span>
     ) : (
       <span className="plan-jurisdiction-name main-span">
         <span className="plan-jurisdiction-name btn-link">
