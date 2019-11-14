@@ -6,10 +6,11 @@ import { ConnectedLogout, ConnectedOauthCallback, OauthLogin } from '@onaio/gate
 import React, { Component } from 'react';
 import { Helmet } from 'react-helmet';
 import { Route, Switch } from 'react-router';
+import { toast } from 'react-toastify';
 import { Col, Container, Row } from 'reactstrap';
 import Loading from '../components/page/Loading';
-import { WEBSITE_NAME } from '../configs/env';
 import { DISABLE_LOGIN_PROTECTION } from '../configs/env';
+import { TOAST_AUTO_CLOSE_DELAY, WEBSITE_NAME } from '../configs/env';
 import { providers } from '../configs/settings';
 import {
   ACTIVE_IRS_PLAN_URL,
@@ -61,12 +62,14 @@ import ConnectedOrgsListView from '../containers/pages/OrganizationViews/Organiz
 import ConnectedSingleOrgView from '../containers/pages/OrganizationViews/SingleOrganizationView';
 import ConnectedCreateEditPractitionerView from '../containers/pages/PractitionerViews/CreateEditPractitioner';
 import ConnectedPractitionersListView from '../containers/pages/PractitionerViews/PractitionerListView';
-
-import { oAuthUserInfoGetter } from '../helpers/utils';
+import { growl, oAuthUserInfoGetter } from '../helpers/utils';
 
 library.add(faMap);
 library.add(faUser);
 library.add(faExternalLinkSquareAlt);
+toast.configure({
+  autoClose: TOAST_AUTO_CLOSE_DELAY /** defines how long a toast remains visible on screen */,
+});
 
 import './App.css';
 

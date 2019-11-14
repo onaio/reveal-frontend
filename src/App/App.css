@@ -65,3 +65,45 @@ fieldset[disabled] .gatekeeper-btn.active {
   color: #28a745;
   background-color: #ffffff;
 }
+
+/** toast progress-bar styles */
+.success-toast-progress {
+  background-color: #32573a !important;
+}
+
+.info-toast-progress {
+  background-color: #0c5460 !important;
+}
+
+.warning-toast-progress {
+  background-color: #c98304 !important;
+}
+
+.danger-toast-progress {
+  background-color: #7e1c3a !important;
+}
+
+.light-toast-progress {
+  background-color: #8481a1 !important;
+}
+
+/** styles for toast's close button */
+.alert-success .Toastify__close-button {
+  color: #32573a !important;
+}
+
+.alert-info .Toastify__close-button {
+  color: #0c5460 !important;
+}
+
+.alert-warning .Toastify__close-button {
+  color: #c98304 !important;
+}
+
+.alert-danger .Toastify__close-button {
+  color: #7e1c3a !important;
+}
+
+.alert-light .Toastify__close-button {
+  color: #8481a1 !important;
+}
