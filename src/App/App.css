@@ -68,23 +68,23 @@ fieldset[disabled] .gatekeeper-btn.active {
 
 /** toast progress-bar styles */
 .success-toast-progress {
-  background-color: #32573a !important;
+  background: #32573a !important;
 }
 
 .info-toast-progress {
-  background-color: #0c5460 !important;
+  background: #0c5460 !important;
 }
 
 .warning-toast-progress {
-  background-color: #c98304 !important;
+  background: #c98304 !important;
 }
 
 .danger-toast-progress {
-  background-color: #7e1c3a !important;
+  background: #7e1c3a !important;
 }
 
 .light-toast-progress {
-  background-color: #8481a1 !important;
+  background: #8481a1 !important;
 }
 
 /** styles for toast's close button */
@@ -106,4 +106,16 @@ fieldset[disabled] .gatekeeper-btn.active {
 
 .alert-light .Toastify__close-button {
   color: #8481a1 !important;
+}
+
+.alert-info {
+  margin-left: 0;
+}
+
+.Toastify__toast-body {
+  margin: auto 15px !important;
+}
+
+.Toastify__toast-container {
+  width: fit-content !important;
 }
