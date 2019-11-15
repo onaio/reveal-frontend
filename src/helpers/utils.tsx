@@ -653,7 +653,7 @@ export function generateNameSpacedUUID(seedString: string, namespace: string) {
  * @param {string} message - text to displayed in growl
  * @param {ToastOptions} options - customizations options
  */
-export function growl(message: string, options: ToastOptions) {
+export function growl(message: string, options: ToastOptions = {}) {
   let className = 'alert alert-';
   let progressClassName = '';
   switch (options.type) {
@@ -678,6 +678,5 @@ export function growl(message: string, options: ToastOptions) {
       progressClassName = 'light-toast-progress';
       break;
   }
-
   toast(message, { ...options, className, progressClassName });
 }
