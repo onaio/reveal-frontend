@@ -98,25 +98,24 @@ const SingleOrganizationView = (props: SingleOrgViewPropsType) => {
   // functions / methods //
 
   /** Unassign Practitioner from organization
-   * @param {practitionerId} practitionerId - the practitioner
-   * @param {organizationId} organizationId - the organization
+   * @param {practitionerId} practitioner - the practitioner
+   * @param {organizationId} org - the organization
    * @param {serviceClass} service - the openSRP service
    */
   const unassignPractitioner = async (
     practitioner: Practitioner,
-    organization: Organization,
+    org: Organization,
     service: typeof serviceClass = OpenSRPService
   ) => {
     const serve = new service(OPENSRP_DEL_PRACTITIONER_ROLE_ENDPOINT);
-    const params = { organization: organization.identifier, practitioner: practitioner.identifier };
+    const params = { organization: org.identifier, practitioner: practitioner.identifier };
     serve
       .delete(params)
       .then(() => {
         // remove the practitioner Role
-        growl(
-          `${practitioner.name}-${practitioner.username} ${REMOVED_FROM} ${organization.name}`,
-          { type: toast.TYPE.INFO }
-        );
+        growl(`${practitioner.name}-${practitioner.username} ${REMOVED_FROM} ${org.name}`, {
+          type: toast.TYPE.INFO,
+        });
         loadOrgPractitioners(
           orgId,
           serviceClass,
@@ -235,19 +234,6 @@ const SingleOrganizationView = (props: SingleOrgViewPropsType) => {
       </div>
       <h3 className="mb-3 mt-5">{`${ORGANIZATION_LABEL} ${MEMBERS}`}</h3>
       <ListView {...listViewProps} />
-      <button
-        onClick={() =>
-          toast("Wow so easy A !", {
-            position: toast.POSITION.BOTTOM_LEFT,
-            className: "alert alert-primary",
-            progressClassName: "blue",
-            // autoClose: 2000,
-            
-          })
-        }
-      >
-        button A !
-      </button>
     </div>
   );
 };
