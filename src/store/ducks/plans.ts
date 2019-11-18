@@ -19,6 +19,7 @@ export const reducerName = 'plans';
 export enum InterventionType {
   FI = 'FI',
   IRS = 'IRS',
+  MDA = 'MDA',
 }
 
 /** interface for plan Objects */
