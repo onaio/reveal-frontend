@@ -1,11 +1,14 @@
 import {
   OPENSRP_ORG_PRACTITIONER_ENDPOINT,
   OPENSRP_ORGANIZATION_ENDPOINT,
-} from '../../../constants';
-import { OpenSRPService } from '../../../services/opensrp';
-import store from '../../../store';
-import { fetchOrganizations, Organization } from '../../../store/ducks/opensrp/organizations';
-import { fetchPractitionerRoles, Practitioner } from '../../../store/ducks/opensrp/practitioners';
+} from '../../../../constants';
+import { OpenSRPService } from '../../../../services/opensrp';
+import store from '../../../../store';
+import { fetchOrganizations, Organization } from '../../../../store/ducks/opensrp/organizations';
+import {
+  fetchPractitionerRoles,
+  Practitioner,
+} from '../../../../store/ducks/opensrp/practitioners';
 
 /** loads the organization data
  * @param {string} organizationId - the organization id
@@ -22,7 +25,10 @@ export const loadOrganization = async (
   serve
     .read(organizationId)
     .then((response: Organization) => {
+      // console.log(fetchOrganizationsCreator, response);
+
       store.dispatch(fetchOrganizationsCreator([response]));
+      // console.log("Got here", fetchOrganizationsCreator.mock.calls[0]);
     })
     .catch((err: Error) => {
       /** still don't know what we should do with errors */
