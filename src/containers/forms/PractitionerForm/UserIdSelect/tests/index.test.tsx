@@ -13,6 +13,7 @@ jest.mock('../../../../../configs/env');
 describe('src/*/forms/userIdSelect', () => {
   beforeEach(() => {
     jest.resetAllMocks();
+    fetch.resetMocks();
   });
 
   it('renders without crashing', async () => {

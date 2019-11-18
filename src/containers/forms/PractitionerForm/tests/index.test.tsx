@@ -18,7 +18,7 @@ describe('src/components/PractitionerForm', () => {
     expect(practitionerInput.length).toEqual(1);
     expect(toJson(practitionerInput)).toMatchSnapshot('name input');
 
-    // asyncs select to retrieve openmrs username
+    // async select to retrieve openMRS username
     const openmrsId = wrapper.find(UserIdSelect);
     expect(openmrsId.length).toBeGreaterThanOrEqual(1);
 
