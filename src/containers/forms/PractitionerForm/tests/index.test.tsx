@@ -167,25 +167,27 @@ describe('src/components/PractitionerForm', () => {
     const nameInput = wrapper.find('input#name');
     nameInput.simulate('change', { target: { name: 'name', value: 'that guy' } });
 
-    expect(wrapper.find('input#username')).toMatchSnapshot('readonly username edit');
+    expect(toJson(wrapper.find('input#username'))).toMatchSnapshot('readonly username edit');
 
     wrapper.find('form').simulate('submit');
     await new Promise(resolve => setImmediate(resolve));
 
-    expect(fetch.mock.calls[2]).toEqual([
-      'https://test.smartregister.org/opensrp/rest/practitioner',
-      {
-        'Cache-Control': 'no-cache',
-        Pragma: 'no-cache',
-        body:
-          '{"active":false,"identifier":"someUUId","name":"that guy","userId":"0259c0bc-78a2-4284-a7a9-d61d0005djae","username":"Drake.Ramole"}',
-        headers: {
-          accept: 'application/json',
-          authorization: 'Bearer null',
-          'content-type': 'application/json;charset=UTF-8',
+    expect(fetch.mock.calls).toEqual([
+      [
+        'https://test.smartregister.org/opensrp/rest/practitioner',
+        {
+          'Cache-Control': 'no-cache',
+          Pragma: 'no-cache',
+          body:
+            '{"active":false,"identifier":"someUUId","name":"that guy","userId":"0259c0bc-78a2-4284-a7a9-d61d0005djae","username":"Drake.Ramole"}',
+          headers: {
+            accept: 'application/json',
+            authorization: 'Bearer null',
+            'content-type': 'application/json;charset=UTF-8',
+          },
+          method: 'PUT',
         },
-        method: 'POST',
-      },
+      ],
     ]);
   });
 });

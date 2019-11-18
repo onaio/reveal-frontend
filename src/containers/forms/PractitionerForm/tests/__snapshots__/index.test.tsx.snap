@@ -1,5 +1,19 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`src/components/PractitionerForm creates object to send correctly for editing practitioner: readonly username edit 1`] = `
+<input
+  className="form-control"
+  disabled={false}
+  id="username"
+  name="username"
+  onBlur={[Function]}
+  onChange={[Function]}
+  readOnly={true}
+  type="text"
+  value="Drake.Ramole"
+/>
+`;
+
 exports[`src/components/PractitionerForm renders correctly: active field no radio 1`] = `
 <input
   id="no"
