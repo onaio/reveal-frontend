@@ -1,11 +1,14 @@
 import {
   OPENSRP_ORG_PRACTITIONER_ENDPOINT,
   OPENSRP_ORGANIZATION_ENDPOINT,
-} from '../../../constants';
-import { OpenSRPService } from '../../../services/opensrp';
-import store from '../../../store';
-import { fetchOrganizations, Organization } from '../../../store/ducks/opensrp/organizations';
-import { fetchPractitionerRoles, Practitioner } from '../../../store/ducks/opensrp/practitioners';
+} from '../../../../constants';
+import { OpenSRPService } from '../../../../services/opensrp';
+import store from '../../../../store';
+import { fetchOrganizations, Organization } from '../../../../store/ducks/opensrp/organizations';
+import {
+  fetchPractitionerRoles,
+  Practitioner,
+} from '../../../../store/ducks/opensrp/practitioners';
 
 /** loads the organization data
  * @param {string} organizationId - the organization id
