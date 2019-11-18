@@ -30,6 +30,7 @@ import {
   ORGANIZATIONS_LIST_URL,
   PRACTITIONER_CODE,
   PRACTITIONERS,
+  SINGLE_ORGANIZATION_URL,
   TO,
 } from '../../../../constants';
 import { generateNameSpacedUUID } from '../../../../helpers/utils';
@@ -112,9 +113,6 @@ const AssignPractitioner = (props: PropsTypes) => {
     chosenOptions: ValueType<SelectOption>,
     { action, removedValue, option }: any
   ) => {
-    if (!chosenOptions) {
-      return;
-    }
     switch (action) {
       case 'remove-value':
       case 'pop-value':
@@ -190,7 +188,13 @@ const AssignPractitioner = (props: PropsTypes) => {
     label: `${HOME}`,
     url: `${HOME_URL}`,
   };
-  breadcrumbProps.pages = [homePage, basePage];
+  const otherPagesInOrder = [
+    {
+      label: props.match.params.id,
+      url: `${SINGLE_ORGANIZATION_URL}/${props.match.params.id}`,
+    },
+  ];
+  breadcrumbProps.pages = [homePage, basePage, ...otherPagesInOrder];
 
   // derived values
 
