@@ -738,6 +738,146 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
             },
           ],
         },
+        Object {
+          "action": Array [
+            Object {
+              "code": "RACD Register Family",
+              "description": "Register all families & family members in all residential structures enumerated (100%) within the operational area",
+              "goalId": "RACD_register_all_families",
+              "identifier": "2df855c3-3179-41f1-b8d8-7f84de7fa684",
+              "prefix": 1,
+              "reason": "Investigation",
+              "subjectCodableConcept": Object {
+                "text": "Residential_Structure",
+              },
+              "taskTemplate": "RACD_register_families",
+              "timingPeriod": Object {
+                "end": "2019-12-31",
+                "start": "2019-10-18",
+              },
+              "title": "Family Registration",
+            },
+            Object {
+              "code": "MDA Dispense",
+              "description": "Visit all residential structures (100%) and dispense prophylaxis to each registered person",
+              "goalId": "MDA_Dispense",
+              "identifier": "da253449-8a89-46ea-8cdf-d4159240edae",
+              "prefix": 2,
+              "reason": "Routine",
+              "subjectCodableConcept": Object {
+                "text": "Person",
+              },
+              "taskTemplate": "MDA_Dispense",
+              "timingPeriod": Object {
+                "end": "2019-12-31",
+                "start": "2019-10-18",
+              },
+              "title": "MDA Round 1 Dispense",
+            },
+            Object {
+              "code": "MDA Adherence",
+              "description": "Visit all residential structures (100%) and confirm adherence of each registered person",
+              "goalId": "MDA_Dispense",
+              "identifier": "1c688154-e025-4a40-91fd-9baed25a0ba4",
+              "prefix": 3,
+              "reason": "Routine",
+              "subjectCodableConcept": Object {
+                "text": "Person",
+              },
+              "taskTemplate": "MDA_Adherence",
+              "timingPeriod": Object {
+                "end": "2019-12-31",
+                "start": "2019-10-18",
+              },
+              "title": "MDA Round 1 Adherence",
+            },
+          ],
+          "date": "2019-10-18",
+          "effectivePeriod": Object {
+            "end": "2019-12-31",
+            "start": "2019-10-18",
+          },
+          "goal": Array [
+            Object {
+              "description": "Register all families and family members in all residential structures enumerated or added (100%) within operational area",
+              "id": "RACD_register_all_families",
+              "priority": "medium-priority",
+              "target": Array [
+                Object {
+                  "detail": Object {
+                    "detailQuantity": Object {
+                      "comparator": ">=",
+                      "unit": "Percent",
+                      "value": 100,
+                    },
+                  },
+                  "due": "2019-12-31",
+                  "measure": "Percent of residential structures with full family registration",
+                },
+              ],
+            },
+            Object {
+              "description": "Visit all residential structures (100%) dispense prophylaxis to each registered person",
+              "id": "MDA_Dispense",
+              "priority": "medium-priority",
+              "target": Array [
+                Object {
+                  "detail": Object {
+                    "detailQuantity": Object {
+                      "comparator": ">=",
+                      "unit": "percent",
+                      "value": 100,
+                    },
+                  },
+                  "due": "2019-12-31",
+                  "measure": "Percent of Registered person(s)",
+                },
+              ],
+            },
+            Object {
+              "description": "Visit all residential structures (100%) and confirm adherence of each registered person",
+              "id": "MDA_Adherence",
+              "priority": "medium-priority",
+              "target": Array [
+                Object {
+                  "detail": Object {
+                    "detailQuantity": Object {
+                      "comparator": ">=",
+                      "unit": "percent",
+                      "value": 100,
+                    },
+                  },
+                  "due": "2019-12-31",
+                  "measure": "Percent of dispense recipients",
+                },
+              ],
+            },
+          ],
+          "identifier": "f3da140c-2d2c-4bf7-8189-c2349f143a72",
+          "jurisdiction": Array [
+            Object {
+              "code": "3951",
+            },
+            Object {
+              "code": "3952",
+            },
+          ],
+          "name": "Macepa-MDA-Campaign-2019-10-18",
+          "serverVersion": 1571406689603,
+          "status": "active",
+          "title": "Macepa MDA Campaign",
+          "useContext": Array [
+            Object {
+              "code": "interventionType",
+              "valueCodableConcept": "MDA",
+            },
+            Object {
+              "code": "taskGenerationStatus",
+              "valueCodableConcept": "True",
+            },
+          ],
+          "version": "1",
+        },
       ]
     }
     service={[Function]}
@@ -963,6 +1103,17 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
                       "FI",
                       "draft",
                       "2019-05-19",
+                    ],
+                    Array [
+                      <Link
+                        replace={false}
+                        to="/plans/update/f3da140c-2d2c-4bf7-8189-c2349f143a72"
+                      >
+                        Macepa MDA Campaign
+                      </Link>,
+                      "MDA",
+                      "active",
+                      "2019-10-18",
                     ],
                   ]
                 }
@@ -1263,6 +1414,64 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
                           key="3"
                         >
                           2019-05-19
+                        </td>
+                      </ElementMap>
+                    </tr>
+                    <tr
+                      className="listview-tr"
+                      key="4"
+                    >
+                      <ElementMap
+                        HTMLTag="td"
+                        className="listview-th"
+                        items={
+                          Array [
+                            <Link
+                              replace={false}
+                              to="/plans/update/f3da140c-2d2c-4bf7-8189-c2349f143a72"
+                            >
+                              Macepa MDA Campaign
+                            </Link>,
+                            "MDA",
+                            "active",
+                            "2019-10-18",
+                          ]
+                        }
+                      >
+                        <td
+                          className="listview-th"
+                          key="0"
+                        >
+                          <Link
+                            key="f3da140c-2d2c-4bf7-8189-c2349f143a72"
+                            replace={false}
+                            to="/plans/update/f3da140c-2d2c-4bf7-8189-c2349f143a72"
+                          >
+                            <a
+                              href="/plans/update/f3da140c-2d2c-4bf7-8189-c2349f143a72"
+                              onClick={[Function]}
+                            >
+                              Macepa MDA Campaign
+                            </a>
+                          </Link>
+                        </td>
+                        <td
+                          className="listview-th"
+                          key="1"
+                        >
+                          MDA
+                        </td>
+                        <td
+                          className="listview-th"
+                          key="2"
+                        >
+                          active
+                        </td>
+                        <td
+                          className="listview-th"
+                          key="3"
+                        >
+                          2019-10-18
                         </td>
                       </ElementMap>
                     </tr>
