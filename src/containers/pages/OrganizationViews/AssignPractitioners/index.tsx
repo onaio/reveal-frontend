@@ -47,7 +47,7 @@ import practitionersReducer, {
   Practitioner,
   reducerName as practitionerReducerName,
 } from '../../../../store/ducks/opensrp/practitioners';
-import { loadOrganization, loadOrgPractitioners } from '../serviceHooks';
+import { loadOrganization, loadOrgPractitioners } from '../helpers/serviceHooks';
 import { filterOptions, formatOptions, SelectOption, styles } from './utils';
 
 reducerRegistry.register(organizationReducerName, organizationsReducer);
