@@ -25,10 +25,7 @@ export const loadOrganization = async (
   serve
     .read(organizationId)
     .then((response: Organization) => {
-      // console.log(fetchOrganizationsCreator, response);
-
       store.dispatch(fetchOrganizationsCreator([response]));
-      // console.log("Got here", fetchOrganizationsCreator.mock.calls[0]);
     })
     .catch((err: Error) => {
       /** still don't know what we should do with errors */
