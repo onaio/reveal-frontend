@@ -14,7 +14,7 @@ export const loadPractitioners = async (
   const serve = new service(OPENSRP_PRACTITIONER_ENDPOINT);
   serve
     .list()
-    .then((response: Practitioner[]) => store.dispatch(fetchPractitionersCreator(response)))
+    .then((response: Practitioner[]) => store.dispatch(fetchPractitionersCreator(response, true)))
     .catch((err: Error) => {
       /** TODO - find something to do with error */
     });
