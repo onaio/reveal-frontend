@@ -65,7 +65,7 @@ export const loadOrganizations = async (
   const serve = new service(OPENSRP_ORGANIZATION_ENDPOINT);
   serve
     .list()
-    .then((response: Organization[]) => store.dispatch(fetchOrganizationsCreator(response)))
+    .then((response: Organization[]) => store.dispatch(fetchOrganizationsCreator(response, true)))
     .catch((err: Error) => {
       /** TODO - find something to do with error */
     });
