@@ -62,6 +62,20 @@ describe('reducers/practitioners.reducer.fetchPractitionersAction', () => {
       .toReturnState(expectedState);
   });
 
+  it('handles dispatch correctly on current state with overwrite', () => {
+    const currentState = {
+      practitionersById: generateKeyBy([fixtures.practitioner1] as Practitioner[]),
+    };
+    const action = fetchPractitioners([fixtures.practitioner2] as Practitioner[], true);
+    const expectedState = {
+      practitionersById: generateKeyBy([fixtures.practitioner2] as Practitioner[]),
+    };
+    Reducer(reducer)
+      .withState(currentState)
+      .expect(action)
+      .toReturnState(expectedState);
+  });
+
   // should return same state for non existing action
   it('returns current State for unknown action types', () => {
     const currentState = {
@@ -86,7 +100,7 @@ describe('reducers/practitioners.reducer.fetchPractitionerRolesAction', () => {
       practitionerRoles: {
         'd23f7350-d406-11e9-bb65-2a2ae2dbcce4': { master: fixtures.practitioner5 },
       },
-      practitionersById: generateKeyBy([fixtures.practitioner5] as Practitioner[]),
+      practitionersById: {},
     };
     // without a state, should use the default state
     Reducer(reducer)
@@ -100,7 +114,7 @@ describe('reducers/practitioners.reducer.fetchPractitionerRolesAction', () => {
       practitionerRoles: {
         'd23f7350-d406-11e9-bb65-2a2ae2dbcce4': { master: fixtures.practitioner5 },
       },
-      practitionersById: generateKeyBy([fixtures.practitioner5] as Practitioner[]),
+      practitionersById: {},
     };
     const action = fetchPractitionerRoles(
       [fixtures.practitioner6] as Practitioner[],
@@ -112,10 +126,7 @@ describe('reducers/practitioners.reducer.fetchPractitionerRolesAction', () => {
           '437cc699-cfd7-414c-ba27-1668b6b517e6': fixtures.practitioner6,
         },
       },
-      practitionersById: generateKeyBy([
-        fixtures.practitioner5,
-        fixtures.practitioner6,
-      ] as Practitioner[]),
+      practitionersById: {},
     };
     Reducer(reducer)
       .withState(currentState)
@@ -290,6 +301,17 @@ describe('reducers/practitioners.reducer- integration test', () => {
     expect(numberOfPractitioners).toEqual(2);
   });
 
+  it('overwrites stored practitioners when overwrite is true', () => {
+    store.dispatch(removePractitionersAction);
+    store.dispatch(fetchPractitioners([fixtures.practitioner1] as Practitioner[]));
+    let numberOfPractitioners = getPractitionersArray(store.getState()).length;
+    expect(numberOfPractitioners).toEqual(1);
+
+    store.dispatch(fetchPractitioners([fixtures.practitioner2] as Practitioner[], true));
+    numberOfPractitioners = getPractitionersArray(store.getState()).length;
+    expect(numberOfPractitioners).toEqual(1);
+  });
+
   it('fetchedPractitionerRole actions actually adds data to store', () => {
     expect(getPractitionersById(store.getState())).toEqual({});
     expect(getPractitionersArray(store.getState())).toEqual([]);
@@ -300,12 +322,7 @@ describe('reducers/practitioners.reducer- integration test', () => {
         fixtures.organization3.identifier
       )
     );
-    expect(getPractitionersById(store.getState())).toEqual({
-      '437cc699-cfd7-414c-ba27-1668b6b517e6': fixtures.practitioner6,
-      healer: fixtures.practitioner4,
-      master: fixtures.practitioner5,
-    });
-    expect(getPractitionersArray(store.getState()).length).toEqual(3);
+    expect(getPractitionersById(store.getState())).toEqual({});
     expect(
       getPractitionersByOrgId(store.getState(), fixtures.organization3.identifier).length
     ).toEqual(3);
@@ -318,14 +335,12 @@ describe('reducers/practitioners.reducer- integration test', () => {
         fixtures.organization3.identifier
       )
     );
-    let numberOfPractitioners = getPractitionersArray(store.getState()).length;
-    expect(numberOfPractitioners).toEqual(3);
+
     let org3Practs = getPractitionersByOrgId(store.getState(), fixtures.organization3.identifier)
       .length;
     expect(org3Practs).toEqual(3);
 
     store.dispatch(removePractitionerRolesAction);
-    numberOfPractitioners = getPractitionersArray(store.getState()).length;
     org3Practs = getPractitionersByOrgId(store.getState(), fixtures.organization3.identifier)
       .length;
     expect(org3Practs).toEqual(0);
@@ -339,8 +354,6 @@ describe('reducers/practitioners.reducer- integration test', () => {
         fixtures.organization3.identifier
       )
     );
-    let allPractitioners = getPractitionersArray(store.getState()).length;
-    expect(allPractitioners).toEqual(1);
 
     let org3Practs = getPractitionersByOrgId(store.getState(), fixtures.organization3.identifier)
       .length;
@@ -353,8 +366,6 @@ describe('reducers/practitioners.reducer- integration test', () => {
         fixtures.organization3.identifier
       )
     );
-    allPractitioners = getPractitionersArray(store.getState()).length;
-    expect(allPractitioners).toEqual(2);
 
     org3Practs = getPractitionersByOrgId(store.getState(), fixtures.organization3.identifier)
       .length;
@@ -368,9 +379,6 @@ describe('reducers/practitioners.reducer- integration test', () => {
       )
     );
 
-    allPractitioners = getPractitionersArray(store.getState()).length;
-    expect(allPractitioners).toEqual(2);
-
     let org2Practs = getPractitionersByOrgId(store.getState(), fixtures.organization2.identifier)
       .length;
     expect(org2Practs).toEqual(1);
@@ -382,9 +390,6 @@ describe('reducers/practitioners.reducer- integration test', () => {
         fixtures.organization1.identifier
       )
     );
-
-    allPractitioners = getPractitionersArray(store.getState()).length;
-    expect(allPractitioners).toEqual(3);
 
     const org1Practs = getPractitionersByOrgId(store.getState(), fixtures.organization1.identifier)
       .length;
