@@ -155,7 +155,8 @@ const mapStateToProps = (state: Partial<Store>): DispatchedStateProps => {
   const planStatus = [PlanStatus.ACTIVE];
   const fiPlans = getPlanRecordsArray(state, InterventionType.FI, planStatus);
   const irsPlans = getPlanRecordsArray(state, InterventionType.IRS, planStatus);
-  const plans = [...fiPlans, ...irsPlans].sort(
+  const mdaPlans = getPlanRecordsArray(state, InterventionType.MDA, planStatus);
+  const plans = [...fiPlans, ...irsPlans, ...mdaPlans].sort(
     (a: PlanRecord, b: PlanRecord) => Date.parse(b.plan_date) - Date.parse(a.plan_date)
   );
   return {

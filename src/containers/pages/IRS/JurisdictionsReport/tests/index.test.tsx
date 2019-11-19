@@ -170,7 +170,11 @@ describe('components/IRS Reports/JurisdictionReport', () => {
               subject: 'plan_id',
             },
           ],
-          order_by_cols: ['["jurisdiction_depth",+true]'],
+          order_by_cols: [
+            '["jurisdiction_depth",+true]',
+            '["is_virtual_jurisdiction",+true]',
+            '["jurisdiction_name",+true]',
+          ],
           row_limit: 3000,
         },
       ],
@@ -186,7 +190,11 @@ describe('components/IRS Reports/JurisdictionReport', () => {
               subject: 'plan_id',
             },
           ],
-          order_by_cols: ['["jurisdiction_depth",+true]'],
+          order_by_cols: [
+            '["jurisdiction_depth",+true]',
+            '["is_virtual_jurisdiction",+true]',
+            '["jurisdiction_name",+true]',
+          ],
           row_limit: 3000,
         },
       ],
@@ -371,6 +379,13 @@ describe('components/IRS Reports/JurisdictionReport', () => {
     expect((wrapper.find('DrillDownTable').props() as any).columns).toEqual(
       IRSTableColumns.zambiaJurisdictions2019
     );
+    expect(wrapper.find('DrillDownTable a').map(e => e.props().href)).toEqual([
+      '/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce/2bf9915d-8725-4061-983d-5938802ac0f0',
+      '/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce/ed2391d9-f91a-473e-af1c-65b18aa49e38',
+    ]);
+    expect(
+      wrapper.find('DrillDownTable .plan-jurisdiction-name.name-label').map(e => e.text())
+    ).toEqual(['Lusaka (other)']);
 
     // Lusaka HFC
     expect(

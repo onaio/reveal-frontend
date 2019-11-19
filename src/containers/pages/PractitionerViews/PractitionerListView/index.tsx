@@ -40,7 +40,7 @@ import practitionersReducer, {
   Practitioner,
   reducerName as practitionersReducerName,
 } from '../../../../store/ducks/opensrp/practitioners';
-import { loadPractitioners } from '../serviceHooks';
+import { loadPractitioners } from '../helpers/serviceHooks';
 
 reducerRegistry.register(practitionersReducerName, practitionersReducer);
 
@@ -118,7 +118,7 @@ const PractitionersListView = (props: PropsTypes) => {
 
   /** hook to load all practitioners and dispatch to them to store */
   useEffect(() => {
-    loadPractitioners(fetchPractitionersCreator, serviceClass);
+    loadPractitioners(serviceClass, fetchPractitionersCreator);
   }, []);
 
   // break early if practitioners are absent

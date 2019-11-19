@@ -49,7 +49,7 @@ import PractitionerReducer, {
   Practitioner,
   reducerName as practitionerReducerName,
 } from '../../../../store/ducks/opensrp/practitioners';
-import { loadOrganization, loadOrgPractitioners } from '../serviceHooks';
+import { loadOrganization, loadOrgPractitioners } from '../helpers/serviceHooks';
 import './index.css';
 
 reducerRegistry.register(organizationsReducerName, organizationsReducer);
