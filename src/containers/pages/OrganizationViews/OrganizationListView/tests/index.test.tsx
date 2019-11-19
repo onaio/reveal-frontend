@@ -26,7 +26,7 @@ const fetch = require('jest-fetch-mock');
 
 const history = createBrowserHistory();
 
-describe('src/containers/TeamAssignment/TeamListview/', () => {
+describe('src/containers/TeamAssignment/OrganizationListView/', () => {
   beforeEach(() => {
     store.dispatch(removeOrganizationsAction);
     jest.resetAllMocks();
@@ -102,7 +102,7 @@ describe('src/containers/TeamAssignment/TeamListview/', () => {
     await flushPromises();
     expect(classMock).toBeCalledWith(OPENSRP_ORGANIZATION_ENDPOINT);
     expect(mockList).toHaveBeenCalled();
-    expect(fetchedOrgsMock).toHaveBeenCalledWith(fixtures.organizations);
+    expect(fetchedOrgsMock).toHaveBeenCalledWith(fixtures.organizations, true);
   });
 
   it('TeamListView works correctly when connected to store', () => {
