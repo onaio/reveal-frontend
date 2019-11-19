@@ -125,7 +125,9 @@ const IRSAssignmentPlansList = (props: PlanAssignmentsListProps) => {
           {plans.length < 1 ? (
             <span>{NO_PLANS_LOADED_MESSAGE}</span>
           ) : (
-            <ListView {...listViewProps} />
+            <div className="table-container">
+              <ListView {...listViewProps} />
+            </div>
           )}
         </Col>
       </Row>

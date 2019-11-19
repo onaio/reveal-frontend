@@ -67,15 +67,18 @@ a {
 }
 
 /* TABLES */
-
+.table-container,
 .ReactTable {
   padding: 24px;
   background-color: #ffffff;
   border-radius: 5px;
   position: relative;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.ReactTable {
   display: flex;
   flex-direction: column;
-  border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 table.table {
@@ -83,6 +86,11 @@ table.table {
   background-color: #ffffff;
   border-radius: 5px;
   border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.table-container table.table {
+  border: none;
+  margin-top: 0;
 }
 
 .ReactTable .rt-tbody .rt-td {
