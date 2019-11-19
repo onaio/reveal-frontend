@@ -261,7 +261,8 @@ const mapStateToProps = (
 /** map props to action creators */
 const mapDispatchToProps = {
   fetchOrganizationsAction: fetchOrganizations,
-  fetchPractitionerRoles,
+  fetchPractitionerRolesAction: fetchPractitionerRoles,
+  fetchPractitionersAction: fetchPractitioners,
 };
 
 /** The connected component */
