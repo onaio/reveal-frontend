@@ -88,7 +88,7 @@ const AssignPractitioner = (props: PropsTypes) => {
   } = props;
   const [selectedOptions, setSelectedOptions] = useState<OptionsType<SelectOption>>([]);
 
-  useConfirmOnBrowserUnload();
+  useConfirmOnBrowserUnload(selectedOptions.length > 0);
   useEffect(() => {
     const organizationId = props.match.params.id;
     loadOrganization(organizationId, serviceClass, fetchOrganizationsCreator);
