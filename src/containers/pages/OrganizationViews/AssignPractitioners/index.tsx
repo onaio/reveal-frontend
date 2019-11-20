@@ -8,6 +8,7 @@ import React, { useEffect, useState } from 'react';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
+import { Prompt } from 'react-router-dom';
 import AsyncSelect from 'react-select/async';
 import { OptionsType, ValueType } from 'react-select/src/types';
 import { Button } from 'reactstrap';
@@ -24,6 +25,7 @@ import {
   HOME,
   HOME_URL,
   NO_PRACTITIONERS_ADDED_YET,
+  ON_REROUTE_WITH_UNSAVED_CHANGES,
   OPENSRP_ADD_PRACTITIONER_ROLE_ENDPOINT,
   OPENSRP_PRACTITIONER_ENDPOINT,
   ORGANIZATIONS_LABEL,
@@ -33,6 +35,7 @@ import {
   SINGLE_ORGANIZATION_URL,
   TO,
 } from '../../../../constants';
+import { useConfirmOnBrowserUnload } from '../../../../helpers/hooks';
 import { generateNameSpacedUUID } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
 import organizationsReducer, {
@@ -85,6 +88,7 @@ const AssignPractitioner = (props: PropsTypes) => {
   } = props;
   const [selectedOptions, setSelectedOptions] = useState<OptionsType<SelectOption>>([]);
 
+  useConfirmOnBrowserUnload();
   useEffect(() => {
     const organizationId = props.match.params.id;
     loadOrganization(organizationId, serviceClass, fetchOrganizationsCreator);
@@ -208,6 +212,13 @@ const AssignPractitioner = (props: PropsTypes) => {
       <Helmet>
         <title>{`${ASSIGN} ${PRACTITIONERS}`}</title>
       </Helmet>
+
+      <Prompt
+        when={selectedOptions.length > 0}
+        // tslint:disable-next-line: jsx-no-lambda
+        message={location => ON_REROUTE_WITH_UNSAVED_CHANGES}
+      />
+
       <HeaderBreadcrumb {...breadcrumbProps} />
       <h2 className="mb-3 mt-5 page-title">{`${ASSIGN} ${PRACTITIONERS} ${TO} ${
         organization!.name
