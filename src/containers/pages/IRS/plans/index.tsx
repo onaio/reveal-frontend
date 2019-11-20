@@ -96,7 +96,7 @@ const IRSPlansList = (props: PlanListProps) => {
       <HeaderBreadcrumb {...breadcrumbProps} />
       <Row>
         <Col md={8}>
-          <h3 className="mt-3 mb-3 page-title">{pageTitle}</h3>
+          <h2 className="page-title">{pageTitle}</h2>
         </Col>
       </Row>
       <Row>
