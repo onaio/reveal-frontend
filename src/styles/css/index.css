@@ -93,6 +93,22 @@ table.table {
   margin-top: 0;
 }
 
+table.plans-list {
+  margin-top: 0px;
+  border-collapse: separate;
+}
+table.plans-list {
+  margin-top: 0px;
+  border-collapse: separate;
+  border-spacing: 0px;
+}
+
+table.plans-list td,
+table.plans-list th {
+  border: none;
+  border-bottom: solid 1px rgba(0, 0, 0, 0.05);
+}
+
 .ReactTable .rt-tbody .rt-td {
   border-right: 1px solid rgba(0, 0, 0, 0.02);
   padding: 8px 0px;

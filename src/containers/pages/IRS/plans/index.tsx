@@ -99,8 +99,8 @@ const IRSPlansList = (props: PlanListProps) => {
           <h2 className="page-title">{pageTitle}</h2>
         </Col>
       </Row>
-      <Row>
-        <Col>
+      <Row className="no-gutters">
+        <Col md={12}>
           <ListView {...listViewProps} />
         </Col>
       </Row>
