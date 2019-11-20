@@ -237,19 +237,19 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
                   </DropdownToggle>
                   <DropdownMenu right={true}>
                     <DropdownItem>
-                      <NavLink to={LOGOUT_URL} className="nav-link" activeClassName="active">
+                      <NavLink
+                        onClick={this.handleLogout}
+                        to={LOGOUT_URL}
+                        className="nav-link"
+                        activeClassName="active"
+                      >
                         Sign Out
                       </NavLink>
                     </DropdownItem>
                   </DropdownMenu>
                 </UncontrolledDropdown>
               ) : (
-                <NavLink
-                  onClick={this.handleLogout}
-                  to={LOGIN_URL}
-                  className="nav-link"
-                  activeClassName="active"
-                >
+                <NavLink to={LOGIN_URL} className="nav-link" activeClassName="active">
                   Login
                 </NavLink>
               )}
@@ -261,7 +261,7 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
   }
 
   private handleLogout() {
-    const logoutURL: string = '';
+    const logoutURL: string = 'https://reveal-stage.smartregister.org/opensrp/logout.do';
     const logoutWindow: Window | null = window.open(logoutURL);
     const timer: NodeJS.Timeout = setInterval(() => {
       if (logoutWindow) {
