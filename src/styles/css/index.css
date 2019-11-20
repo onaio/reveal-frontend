@@ -121,8 +121,18 @@ span.status-badge {
 }
 
 span.status-badge.active {
+  background-color: #d0e2ff;
+  color: #0043ce;
+}
+
+span.status-badge.complete {
   color: #007742;
   background-color: #b5ffa8;
+}
+
+span.status-badge.retired {
+  background-color: #ffd7d9;
+  color: #a2191f;
 }
 
 span.status-badge.draft {
