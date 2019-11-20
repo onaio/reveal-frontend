@@ -244,7 +244,12 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
                   </DropdownMenu>
                 </UncontrolledDropdown>
               ) : (
-                <NavLink to={LOGIN_URL} className="nav-link" activeClassName="active">
+                <NavLink
+                  onClick={this.handleLogout}
+                  to={LOGIN_URL}
+                  className="nav-link"
+                  activeClassName="active"
+                >
                   Login
                 </NavLink>
               )}
@@ -253,6 +258,17 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
         </Navbar>
       </div>
     );
+  }
+
+  private handleLogout() {
+    const logoutURL: string = '';
+    const logoutWindow: Window | null = window.open(logoutURL);
+    const timer: NodeJS.Timeout = setInterval(() => {
+      if (logoutWindow) {
+        logoutWindow.close();
+      }
+      clearInterval(timer);
+    }, 20);
   }
 
   private toggle() {
