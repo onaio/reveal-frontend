@@ -45,6 +45,7 @@ import organizationsReducer, {
 } from '../../../../store/ducks/opensrp/organizations';
 import PractitionerReducer, {
   fetchPractitionerRoles,
+  fetchPractitioners,
   getPractitionersByOrgId,
   Practitioner,
   reducerName as practitionerReducerName,
@@ -62,12 +63,14 @@ interface SingleOrganizationViewProps {
   serviceClass: typeof OpenSRPService;
   fetchOrganizationsAction: typeof fetchOrganizations;
   fetchPractitionerRolesAction: typeof fetchPractitionerRoles;
+  fetchPractitionersAction: typeof fetchPractitioners;
 }
 
 /** the default props for SingleOrganizationView */
 const defaultProps: SingleOrganizationViewProps = {
   fetchOrganizationsAction: fetchOrganizations,
   fetchPractitionerRolesAction: fetchPractitionerRoles,
+  fetchPractitionersAction: fetchPractitioners,
   organization: null,
   practitioners: [],
   serviceClass: OpenSRPService,
@@ -84,6 +87,7 @@ const SingleOrganizationView = (props: SingleOrgViewPropsType) => {
     serviceClass,
     fetchOrganizationsAction,
     fetchPractitionerRolesAction,
+    fetchPractitionersAction,
   } = props;
 
   const orgId = props.match.params.id ? props.match.params.id : '';
@@ -104,13 +108,23 @@ const SingleOrganizationView = (props: SingleOrgViewPropsType) => {
     const params = { organization: organizationId, practitioner: practitionerId };
     serve.delete(params).then(() => {
       // remove the practitioner Role
-      loadOrgPractitioners(orgId, serviceClass, fetchPractitionerRolesAction);
+      loadOrgPractitioners(
+        orgId,
+        serviceClass,
+        fetchPractitionerRolesAction,
+        fetchPractitionersAction
+      );
     });
   };
 
   useEffect(() => {
     loadOrganization(orgId, serviceClass, fetchOrganizationsAction);
-    loadOrgPractitioners(orgId, serviceClass, fetchPractitionerRolesAction);
+    loadOrgPractitioners(
+      orgId,
+      serviceClass,
+      fetchPractitionerRolesAction,
+      fetchPractitionersAction
+    );
   }, []);
 
   if (!organization) {
@@ -247,7 +261,8 @@ const mapStateToProps = (
 /** map props to action creators */
 const mapDispatchToProps = {
   fetchOrganizationsAction: fetchOrganizations,
-  fetchPractitionerRoles,
+  fetchPractitionerRolesAction: fetchPractitionerRoles,
+  fetchPractitionersAction: fetchPractitioners,
 };
 
 /** The connected component */

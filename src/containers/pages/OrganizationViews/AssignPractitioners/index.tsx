@@ -43,6 +43,7 @@ import organizationsReducer, {
 } from '../../../../store/ducks/opensrp/organizations';
 import practitionersReducer, {
   fetchPractitionerRoles,
+  fetchPractitioners,
   getPractitionersByOrgId,
   Practitioner,
   reducerName as practitionerReducerName,
@@ -56,6 +57,7 @@ reducerRegistry.register(practitionerReducerName, practitionersReducer);
 /** Props for AssignPractitioner component */
 interface AssignPractitionerProps {
   fetchOrganizationsCreator: typeof fetchOrganizations;
+  fetchPractitionersCreator: typeof fetchPractitioners;
   fetchPractitionerRolesCreator: typeof fetchPractitionerRoles;
   organization: Organization | null;
   serviceClass: typeof OpenSRPService;
@@ -67,6 +69,7 @@ const defaultAssignPractitionerProps: AssignPractitionerProps = {
   assignedPractitioners: [],
   fetchOrganizationsCreator: fetchOrganizations,
   fetchPractitionerRolesCreator: fetchPractitionerRoles,
+  fetchPractitionersCreator: fetchPractitioners,
   organization: null,
   serviceClass: OpenSRPService,
 };
@@ -80,6 +83,7 @@ const AssignPractitioner = (props: PropsTypes) => {
     serviceClass,
     fetchOrganizationsCreator,
     organization,
+    fetchPractitionersCreator,
     fetchPractitionerRolesCreator,
     assignedPractitioners,
   } = props;
@@ -88,7 +92,12 @@ const AssignPractitioner = (props: PropsTypes) => {
   useEffect(() => {
     const organizationId = props.match.params.id;
     loadOrganization(organizationId, serviceClass, fetchOrganizationsCreator);
-    loadOrgPractitioners(organizationId, serviceClass, fetchPractitionerRolesCreator);
+    loadOrgPractitioners(
+      organizationId,
+      serviceClass,
+      fetchPractitionerRolesCreator,
+      fetchPractitionersCreator
+    );
   }, []);
 
   if (!organization) {
@@ -161,7 +170,12 @@ const AssignPractitioner = (props: PropsTypes) => {
     }));
     const serve = new serviceClass(OPENSRP_ADD_PRACTITIONER_ROLE_ENDPOINT);
     serve.create(jsonArrayPayload).then(() => {
-      loadOrgPractitioners(organization.identifier, serviceClass, fetchPractitionerRolesCreator);
+      loadOrgPractitioners(
+        organization.identifier,
+        serviceClass,
+        fetchPractitionerRolesCreator,
+        fetchPractitionersCreator
+      );
       try {
         setSelectedOptions([]);
       } catch (err) {
@@ -280,6 +294,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: PropsTypes): Dispatche
 const mapDispatchToProps = {
   fetchOrganizationsCreator: fetchOrganizations,
   fetchPractitionerRolesCreator: fetchPractitionerRoles,
+  fetchPractitionersCreator: fetchPractitioners,
 };
 
 const ConnectedAssignPractitioner = connect(
