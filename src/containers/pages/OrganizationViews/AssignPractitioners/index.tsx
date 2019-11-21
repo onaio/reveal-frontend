@@ -11,6 +11,7 @@ import { RouteComponentProps } from 'react-router';
 import { Prompt } from 'react-router-dom';
 import AsyncSelect from 'react-select/async';
 import { OptionsType, ValueType } from 'react-select/src/types';
+import { toast } from 'react-toastify';
 import { Button } from 'reactstrap';
 import { Store } from 'redux';
 import HeaderBreadcrumb, {
@@ -22,6 +23,7 @@ import {
   ADD,
   ASSIGN,
   ASSIGN_PRACTITIONERS_URL,
+  ASSIGNED_SUCCESSFULLY_TO,
   DISCARD_CHANGES,
   HOME,
   HOME_URL,
@@ -38,7 +40,7 @@ import {
   TO,
 } from '../../../../constants';
 import { useConfirmOnBrowserUnload } from '../../../../helpers/hooks';
-import { generateNameSpacedUUID } from '../../../../helpers/utils';
+import { generateNameSpacedUUID, growl } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
 import organizationsReducer, {
   fetchOrganizations,
@@ -182,10 +184,20 @@ const AssignPractitioner = (props: PropsTypes) => {
         fetchPractitionerRolesCreator,
         fetchPractitionersCreator
       );
+
+      growl(
+        `${jsonArrayPayload.length} ${PRACTITIONERS} ${ASSIGNED_SUCCESSFULLY_TO} ${
+          organization.name
+        }`,
+        {
+          type: toast.TYPE.SUCCESS,
+        }
+      );
+
       try {
         setSelectedOptions([]);
       } catch (err) {
-        /** expected error: setState on unmounted component */
+        growl(err.message, { type: toast.TYPE.ERROR });
       }
     });
   };

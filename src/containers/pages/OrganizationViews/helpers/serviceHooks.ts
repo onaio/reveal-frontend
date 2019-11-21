@@ -1,7 +1,9 @@
+import { toast } from 'react-toastify';
 import {
   OPENSRP_ORG_PRACTITIONER_ENDPOINT,
   OPENSRP_ORGANIZATION_ENDPOINT,
 } from '../../../../constants';
+import { growl } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
 import store from '../../../../store';
 import { fetchOrganizations, Organization } from '../../../../store/ducks/opensrp/organizations';
@@ -29,7 +31,7 @@ export const loadOrganization = async (
       store.dispatch(fetchOrganizationsCreator([response]));
     })
     .catch((err: Error) => {
-      /** still don't know what we should do with errors */
+      growl(err.message, { type: toast.TYPE.ERROR });
     });
 };
 
@@ -54,7 +56,7 @@ export const loadOrgPractitioners = async (
       store.dispatch(fetchPractitionersCreator(response));
     })
     .catch((err: Error) => {
-      /** still don't know what we should do with errors */
+      growl(err.message, { type: toast.TYPE.ERROR });
     });
 };
 
@@ -71,6 +73,6 @@ export const loadOrganizations = async (
     .list()
     .then((response: Organization[]) => store.dispatch(fetchOrganizationsCreator(response, true)))
     .catch((err: Error) => {
-      /** TODO - find something to do with error */
+      growl(err.message, { type: toast.TYPE.ERROR });
     });
 };
