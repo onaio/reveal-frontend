@@ -9,7 +9,17 @@ import { Store } from 'redux';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
 import { SUPERSET_IRS_REPORTING_PLANS_SLICE } from '../../../../configs/env';
-import { HOME, HOME_URL, IRS_PLANS, REPORT_IRS_PLAN_URL } from '../../../../constants';
+import {
+  DATE_CREATED,
+  END_DATE,
+  HOME,
+  HOME_URL,
+  IRS_PLANS,
+  REPORT_IRS_PLAN_URL,
+  START_DATE,
+  STATUS_HEADER,
+  TITLE,
+} from '../../../../constants';
 import supersetFetch from '../../../../services/superset';
 import IRSPlansReducer, {
   fetchIRSPlans,
@@ -82,7 +92,7 @@ const IRSPlansList = (props: PlanListProps) => {
         planObj.plan_status,
       ];
     }),
-    headerItems: ['Title', 'Date Created', 'Start Date', 'End Date', 'Status'],
+    headerItems: [TITLE, DATE_CREATED, START_DATE, END_DATE, STATUS_HEADER],
     tableClass: 'table table-bordered plans-list',
   };
 

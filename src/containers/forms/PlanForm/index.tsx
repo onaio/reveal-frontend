@@ -17,7 +17,36 @@ import {
   goalPriorities,
   planActivities,
 } from '../../../configs/settings';
-import { PLAN_LIST_URL, SAVING } from '../../../constants';
+import {
+  ACTION,
+  ACTIVITIES_LABEL,
+  ACTIVITY_LABEL,
+  ADD,
+  ADD_ACTIVITY,
+  AN_ERROR_OCCURED,
+  CASE_NUMBER,
+  DESCRIPTION_LABEL,
+  END_DATE,
+  FOCUS_AREA_HEADER,
+  FOCUS_INVESTIGATION,
+  FOCUS_INVESTIGATION_STATUS_LABEL,
+  FOCUS_INVESTIGATION_STATUS_REASON,
+  INTERVENTION_TYPE_LABEL,
+  IRS_TITLE,
+  LOCATIONS,
+  PLAN_END_DATE_LABEL,
+  PLAN_LIST_URL,
+  PLAN_START_DATE_LABEL,
+  PLAN_TITLE_LABEL,
+  PLEASE_FIX_THESE_ERRORS,
+  PRIORITY_LABEL,
+  QUANTITY_LABEL,
+  REASON_HEADER,
+  SAVE_PLAN,
+  SAVING,
+  START_DATE,
+  STATUS_HEADER,
+} from '../../../constants';
 import { OpenSRPService } from '../../../services/opensrp';
 import { InterventionType, PlanStatus } from '../../../store/ducks/plans';
 import JurisdictionSelect from '../JurisdictionSelect';
@@ -215,7 +244,7 @@ const PlanForm = (props: PlanFormProps) => {
               />
             </FormGroup>
             <FormGroup>
-              <Label for="interventionType">Intervention Type</Label>
+              <Label for="interventionType">{INTERVENTION_TYPE_LABEL}</Label>
               <Field
                 required={true}
                 component="select"
@@ -235,8 +264,8 @@ const PlanForm = (props: PlanFormProps) => {
                 }}
                 className={errors.interventionType ? 'form-control is-invalid' : 'form-control'}
               >
-                <option value={InterventionType.FI}>Focus Investigation</option>
-                <option value={InterventionType.IRS}>IRS</option>
+                <option value={InterventionType.FI}>{FOCUS_INVESTIGATION}</option>
+                <option value={InterventionType.IRS}>{IRS_TITLE}</option>
               </Field>
               <ErrorMessage
                 name="interventionType"
@@ -245,7 +274,7 @@ const PlanForm = (props: PlanFormProps) => {
               />
             </FormGroup>
 
-            <h5 className="mt-5">Locations</h5>
+            <h5 className="mt-5">{LOCATIONS}</h5>
 
             <FieldArray
               name="jurisdictions"
@@ -341,7 +370,7 @@ const PlanForm = (props: PlanFormProps) => {
 
                               {errors.jurisdictions && errors.jurisdictions[index] && (
                                 <small className="form-text text-danger jurisdictions-error">
-                                  An Error Ocurred
+                                  {AN_ERROR_OCCURED}
                                 </small>
                               )}
 
@@ -361,7 +390,7 @@ const PlanForm = (props: PlanFormProps) => {
                             className="btn btn-primary btn-sm mb-5 addJurisdiction"
                             onClick={() => arrayHelpers.push(initialJurisdictionValues)}
                           >
-                            Add {jurisdictionLabel}
+                            {ADD} {jurisdictionLabel}
                           </button>
                         )}
                     </div>
@@ -372,7 +401,7 @@ const PlanForm = (props: PlanFormProps) => {
 
             {values.interventionType === InterventionType.FI && (
               <FormGroup>
-                <Label for="fiStatus">Focus Investigation Status</Label>
+                <Label for="fiStatus">{FOCUS_INVESTIGATION_STATUS_LABEL}</Label>
                 <Field
                   required={values.interventionType === InterventionType.FI}
                   component="select"
@@ -397,7 +426,7 @@ const PlanForm = (props: PlanFormProps) => {
             )}
             {values.interventionType === InterventionType.FI && (
               <FormGroup>
-                <Label for="fiReason">Focus Investigation Reason</Label>
+                <Label for="fiReason">{FOCUS_INVESTIGATION_STATUS_REASON}</Label>
                 <Field
                   required={values.interventionType === InterventionType.FI}
                   component="select"
@@ -422,7 +451,7 @@ const PlanForm = (props: PlanFormProps) => {
             )}
             {values.interventionType === InterventionType.FI && values.fiReason === FIReasons[1] && (
               <FormGroup>
-                <Label for="caseNum">Case Number</Label>
+                <Label for="caseNum">{CASE_NUMBER}</Label>
                 <Field
                   required={
                     values.interventionType === InterventionType.FI &&
@@ -440,7 +469,7 @@ const PlanForm = (props: PlanFormProps) => {
               </FormGroup>
             )}
             <FormGroup>
-              <Label for="title">Plan Title</Label>
+              <Label for="title">{PLAN_TITLE_LABEL}</Label>
               <Field
                 required={true}
                 type="text"
@@ -466,7 +495,7 @@ const PlanForm = (props: PlanFormProps) => {
               />
             </FormGroup>
             <FormGroup>
-              <Label for="status">Status</Label>
+              <Label for="status">{STATUS_HEADER}</Label>
               <Field
                 required={true}
                 component="select"
@@ -490,7 +519,7 @@ const PlanForm = (props: PlanFormProps) => {
               />
             </FormGroup>
             <FormGroup>
-              <Label for="start">Plan Start Date</Label>
+              <Label for="start">{PLAN_START_DATE_LABEL}</Label>
               <Field
                 required={true}
                 type="date"
@@ -510,7 +539,7 @@ const PlanForm = (props: PlanFormProps) => {
               <Field type="hidden" name="date" id="date" />
             </FormGroup>
             <FormGroup>
-              <Label for="end">Plan End Date</Label>
+              <Label for="end">{PLAN_END_DATE_LABEL}</Label>
               <Field
                 required={true}
                 type="date"
@@ -528,7 +557,7 @@ const PlanForm = (props: PlanFormProps) => {
                 className="form-text text-danger end-error"
               />
             </FormGroup>
-            <h4 className="mt-5">Activities</h4>
+            <h4 className="mt-5">{ACTIVITIES_LABEL}</h4>
             <FieldArray
               name="activities"
               /* tslint:disable-next-line jsx-no-lambda */
@@ -556,7 +585,7 @@ const PlanForm = (props: PlanFormProps) => {
                               className={`alert alert-danger activities-${index}-errors`}
                               role="alert"
                             >
-                              <h6 className="alert-heading">Please fix these errors</h6>
+                              <h6 className="alert-heading">{PLEASE_FIX_THESE_ERRORS}</h6>
                               <ul className="list-unstyled">
                                 {Object.entries(errors.activities[index] || {}).map(
                                   ([key, val]) => (
@@ -569,7 +598,7 @@ const PlanForm = (props: PlanFormProps) => {
                             </div>
                           )}
                           <FormGroup>
-                            <Label for={`activities-${index}-actionTitle`}>Action</Label>
+                            <Label for={`activities-${index}-actionTitle`}>{ACTION}</Label>
                             <Field
                               type="text"
                               name={`activities[${index}].actionTitle`}
@@ -608,7 +637,9 @@ const PlanForm = (props: PlanFormProps) => {
                             />
                           </FormGroup>
                           <FormGroup>
-                            <Label for={`activities-${index}-actionDescription`}>Description</Label>
+                            <Label for={`activities-${index}-actionDescription`}>
+                              {DESCRIPTION_LABEL}
+                            </Label>
                             <Field
                               component="textarea"
                               name={`activities[${index}].actionDescription`}
@@ -638,7 +669,7 @@ const PlanForm = (props: PlanFormProps) => {
                             />
                           </FormGroup>
                           <FormGroup>
-                            <Label for={`activities-${index}-goalValue`}>Quantity</Label>
+                            <Label for={`activities-${index}-goalValue`}>{QUANTITY_LABEL}</Label>
                             <Field
                               type="number"
                               name={`activities[${index}].goalValue`}
@@ -662,7 +693,9 @@ const PlanForm = (props: PlanFormProps) => {
                             />
                           </FormGroup>
                           <FormGroup>
-                            <Label for={`activities-${index}-timingPeriodStart`}>Start Date</Label>
+                            <Label for={`activities-${index}-timingPeriodStart`}>
+                              {START_DATE}
+                            </Label>
                             <Field
                               type="date"
                               name={`activities[${index}].timingPeriodStart`}
@@ -690,7 +723,7 @@ const PlanForm = (props: PlanFormProps) => {
                             />
                           </FormGroup>
                           <FormGroup>
-                            <Label for={`activities-${index}-timingPeriodEnd`}>End Date</Label>
+                            <Label for={`activities-${index}-timingPeriodEnd`}>{END_DATE}</Label>
                             <Field
                               type="date"
                               name={`activities[${index}].timingPeriodEnd`}
@@ -724,7 +757,7 @@ const PlanForm = (props: PlanFormProps) => {
                             />
                           </FormGroup>
                           <FormGroup>
-                            <Label for={`activities-${index}-actionReason`}>Reason</Label>
+                            <Label for={`activities-${index}-actionReason`}>{REASON_HEADER}</Label>
                             <Field
                               component="select"
                               name={`activities[${index}].actionReason`}
@@ -754,7 +787,7 @@ const PlanForm = (props: PlanFormProps) => {
                             />
                           </FormGroup>
                           <FormGroup>
-                            <Label for={`activities-${index}-goalPriority`}>Priority</Label>
+                            <Label for={`activities-${index}-goalPriority`}>{PRIORITY_LABEL}</Label>
                             <Field
                               component="select"
                               name={`activities[${index}].goalPriority`}
@@ -797,7 +830,7 @@ const PlanForm = (props: PlanFormProps) => {
                           className="add-more-activities"
                           onClick={toggleActivityModal}
                         >
-                          Add Activity
+                          {ADD_ACTIVITY}
                         </Button>
                         <Modal
                           backdrop={false}
@@ -807,7 +840,7 @@ const PlanForm = (props: PlanFormProps) => {
                           className="activity-modal"
                         >
                           <ModalHeader toggle={toggleActivityModal}>
-                            Add Activity
+                            {ADD_ACTIVITY}
                             <button
                               type="button"
                               className="close"
@@ -833,7 +866,7 @@ const PlanForm = (props: PlanFormProps) => {
                                       className="btn btn-primary btn-sm mb-1 addActivity"
                                       onClick={() => arrayHelpers.push(g)}
                                     >
-                                      Add <b>{g.actionCode}</b> Activity
+                                      {ADD} <b>{g.actionCode}</b> {ACTIVITY_LABEL}
                                     </button>
                                   </li>
                                 ))}
@@ -853,10 +886,10 @@ const PlanForm = (props: PlanFormProps) => {
               id="planform-submit-button"
               className="btn btn-block"
               color="primary"
-              aria-label="Save Plan"
+              aria-label={SAVE_PLAN}
               disabled={isSubmitting || Object.keys(errors).length > 0}
             >
-              {isSubmitting ? SAVING : 'Save Plan'}
+              {isSubmitting ? SAVING : SAVE_PLAN}
             </Button>
           </Form>
         )}
@@ -872,7 +905,7 @@ const defaultProps: PlanFormProps = {
   disabledActivityFields: [],
   disabledFields: [],
   initialValues: defaultInitialValues,
-  jurisdictionLabel: 'Focus Area',
+  jurisdictionLabel: FOCUS_AREA_HEADER,
   redirectAfterAction: PLAN_LIST_URL,
 };
 

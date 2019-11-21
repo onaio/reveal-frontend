@@ -20,6 +20,8 @@ import {
   SUPERSET_MAX_RECORDS,
 } from '../../../../../configs/env';
 import {
+  ADMIN_LEVEL,
+  ASSIGN,
   ASSIGN_PLAN_URL,
   ASSIGN_PLANS,
   DRAFT,
@@ -27,8 +29,11 @@ import {
   HOME_URL,
   INTERVENTION_IRS_URL,
   IRS_TITLE,
+  JURISDICTION,
   JURISDICTION_ID,
+  JURISDICTIONS,
   MAP_ID,
+  NAME,
   NEW,
   NEW_PLAN,
   OPENSRP_FIND_BY_PROPERTIES,
@@ -42,6 +47,12 @@ import {
   SAVE_AS_DRAFT,
   SAVE_ASSIGNMENTS,
   SAVE_FINALIZED_PLAN,
+  SAVE_PLAN_DEFINITION_ERROR,
+  SAVE_PLAN_NO_JURISDICTIONS_ERROR,
+  SELECT,
+  SPRAY_AREA_HEADER,
+  TEAMS_ASSIGNMENT,
+  TYPE_LABEL,
 } from '../../../../../constants';
 import {
   FlexObject,
@@ -489,11 +500,11 @@ class IrsPlan extends React.Component<
 
     const pageLabel =
       (isFinalizedPlan && planById && planById.plan_title) ||
-      (isDraftPlan && planById && `${planById.plan_title} (draft)`) ||
+      (isDraftPlan && planById && `${planById.plan_title} (${DRAFT})`) ||
       (newPlan && newPlan.plan_title) ||
       NEW_PLAN;
 
-    const displayedPageLabel = this.state.isAssignView ? pageLabel : `IRS: ${pageLabel}`;
+    const displayedPageLabel = this.state.isAssignView ? pageLabel : `${IRS_TITLE}: ${pageLabel}`;
 
     const breadCrumbProps = this.getBreadCrumbProps(this.props, pageLabel);
 
@@ -592,8 +603,8 @@ class IrsPlan extends React.Component<
           <Row>
             <Col>
               <h3 className="table-title">{`${
-                isFinalizedPlan ? 'Assign' : 'Select'
-              } Jurisdictions`}</h3>
+                isFinalizedPlan ? ASSIGN : SELECT
+              } ${JURISDICTIONS}`}</h3>
               {tableCrumbs.length && tableBreadCrumbs}
               {doRenderTable && <DrillDownTable {...planTableProps} />}
             </Col>
@@ -723,7 +734,7 @@ class IrsPlan extends React.Component<
       (jurisdictionsById[id] && {
         active: true,
         id,
-        label: jurisdictionsById[id].name || 'Jurisdiction',
+        label: jurisdictionsById[id].name || JURISDICTION,
       }) ||
       null;
 
@@ -1884,7 +1895,7 @@ class IrsPlan extends React.Component<
         ],
       },
       {
-        Header: 'Name',
+        Header: NAME,
         columns: [
           {
             Header: '',
@@ -1902,14 +1913,14 @@ class IrsPlan extends React.Component<
         ],
       },
       {
-        Header: 'Type',
+        Header: TYPE_LABEL,
         columns: [
           {
             Header: '',
             accessor: (j: JurisdictionRow) => {
               return (
                 <span onClick={stopPropagationAndPreventDefault}>
-                  {j.isChildless ? 'Spray Area' : `Admin Level ${j.geographic_level}`}
+                  {j.isChildless ? SPRAY_AREA_HEADER : `${ADMIN_LEVEL} ${j.geographic_level}`}
                 </span>
               );
             },
@@ -1922,7 +1933,7 @@ class IrsPlan extends React.Component<
     if (this.props.isFinalizedPlan) {
       columns.shift();
       columns.push({
-        Header: 'Team Assignment',
+        Header: TEAMS_ASSIGNMENT,
         columns: [
           {
             Header: '',
@@ -2168,13 +2179,13 @@ class IrsPlan extends React.Component<
             }
           });
         } else {
-          alert('Uh oh, looks like something is (syntactically) wrong with the Plan schema');
+          alert(SAVE_PLAN_DEFINITION_ERROR);
         }
       } else {
-        alert('Oops, no jurisdictions selected!');
+        alert(SAVE_PLAN_NO_JURISDICTIONS_ERROR);
       }
     } else if (!childlessChildrenIds.length) {
-      alert('Oops, no jurisdictions selected!');
+      alert(SAVE_PLAN_NO_JURISDICTIONS_ERROR);
     }
   }
 }

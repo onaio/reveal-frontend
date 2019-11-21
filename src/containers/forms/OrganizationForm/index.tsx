@@ -17,7 +17,9 @@ import {
   ORGANIZATIONS_LIST_URL,
   REQUIRED,
   SAVE,
+  SAVE_TEAM,
   SAVING,
+  TEAM,
   YES,
 } from '../../../constants';
 import { generateNameSpacedUUID, growl } from '../../../helpers/utils';
@@ -30,7 +32,7 @@ const defaultOrganizationType = {
   coding: [
     {
       code: 'team',
-      display: 'Team',
+      display: TEAM,
       system: 'http://terminology.hl7.org/CodeSystem/organization-type',
     },
   ],
@@ -185,7 +187,7 @@ const OrganizationForm = (props: OrganizationFormProps) => {
               type="submit"
               id="team-form-submit-button"
               className="btn btn-block btn btn-primary"
-              aria-label="Save Team"
+              aria-label={SAVE_TEAM}
               disabled={isSubmitting || Object.keys(errors).length > 0}
             >
               {isSubmitting ? SAVING : `${SAVE} ${ORGANIZATION_LABEL}`}

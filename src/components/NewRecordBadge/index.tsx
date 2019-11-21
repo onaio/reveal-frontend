@@ -1,6 +1,7 @@
 import moment from 'moment';
 import React from 'react';
 import { Badge } from 'reactstrap';
+import { NEW_TITLE } from '../../constants';
 
 /** interface for NewRecordBadge props */
 interface NewRecordBadgeProps {
@@ -36,7 +37,7 @@ const defaultProps: NewRecordBadgeProps = {
   numDays: 1,
   pill: true,
   recordDate: null,
-  text: 'New',
+  text: NEW_TITLE,
 };
 
 /** declare default props for NewRecordBadge */

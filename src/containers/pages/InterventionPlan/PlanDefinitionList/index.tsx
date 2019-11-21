@@ -14,10 +14,14 @@ import {
   ADD_PLAN,
   HOME,
   HOME_URL,
+  INTERVENTION_TYPE_LABEL,
+  LAST_MODIFIED,
   OPENSRP_PLANS,
   PLAN_LIST_URL,
   PLAN_UPDATE_URL,
   PLANS,
+  STATUS_HEADER,
+  TITLE,
 } from '../../../../constants';
 import { OpenSRPService } from '../../../../services/opensrp';
 import planDefinitionReducer, {
@@ -92,7 +96,7 @@ const PlanDefinitionList = (props: PlanListProps) => {
         planObj.date,
       ];
     }),
-    headerItems: ['Title', 'Intervention Type', 'Status', 'Last Modified'],
+    headerItems: [TITLE, INTERVENTION_TYPE_LABEL, STATUS_HEADER, LAST_MODIFIED],
     tableClass: 'table table-bordered plans-list',
   };
 

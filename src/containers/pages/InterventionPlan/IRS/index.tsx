@@ -13,15 +13,18 @@ import superset from '@onaio/superset-connector';
 
 import {
   CREATE_NEW_PLAN,
+  DATE_CREATED,
   DRAFT,
   DRAFTS_PARENTHESIS,
   HOME,
   HOME_URL,
   INTERVENTION_IRS_DRAFTS_URL,
   INTERVENTION_IRS_URL,
+  NAME,
   NEW,
   PLAN,
   REPORT,
+  STATUS_HEADER,
 } from '../../../../constants';
 
 import { RouteParams } from '../../../../helpers/utils';
@@ -146,7 +149,7 @@ class IrsPlans extends React.Component<IrsPlansProps & RouteComponentProps<Route
 
     const columns: Column[] = [
       {
-        Header: 'Name',
+        Header: NAME,
         columns: [
           {
             Cell: (cell: CellInfo) => {
@@ -173,7 +176,7 @@ class IrsPlans extends React.Component<IrsPlansProps & RouteComponentProps<Route
         ],
       },
       {
-        Header: 'Date Created',
+        Header: DATE_CREATED,
         columns: [
           {
             Header: '',
@@ -182,7 +185,7 @@ class IrsPlans extends React.Component<IrsPlansProps & RouteComponentProps<Route
         ],
       },
       {
-        Header: 'Status',
+        Header: STATUS_HEADER,
         columns: [
           {
             Header: '',

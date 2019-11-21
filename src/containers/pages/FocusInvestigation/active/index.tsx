@@ -42,6 +42,7 @@ import {
   NAME,
   REACTIVE,
   ROUTINE,
+  SEARCH,
   START_DATE,
   STATUS_HEADER,
 } from '../../../../constants';
@@ -183,7 +184,7 @@ class ActiveFocusInvestigation extends React.Component<
             />
           </FormGroup>
           <Button outline={true} color="success">
-            Search
+            {SEARCH}
           </Button>
         </Form>
         {[caseTriggeredPlans, routinePlans].forEach((plansArray: Plan[] | null, i) => {

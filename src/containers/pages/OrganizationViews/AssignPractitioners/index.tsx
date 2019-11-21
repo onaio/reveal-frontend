@@ -22,6 +22,7 @@ import { PRACTITIONER_ROLE_NAMESPACE } from '../../../../configs/env';
 import {
   ADD,
   ASSIGN,
+  ASSIGN_PRACTITIONERS,
   ASSIGN_PRACTITIONERS_URL,
   ASSIGNED_SUCCESSFULLY_TO,
   DISCARD_CHANGES,
@@ -216,7 +217,7 @@ const AssignPractitioner = (props: PropsTypes) => {
   };
   const breadcrumbProps: BreadCrumbProps = {
     currentPage: {
-      label: 'Assign Practitioners',
+      label: ASSIGN_PRACTITIONERS,
       url: ASSIGN_PRACTITIONERS_URL,
     },
     pages: [],

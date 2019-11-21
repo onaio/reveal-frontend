@@ -18,6 +18,7 @@ import NewRecordBadge from '../components/NewRecordBadge';
 import { DIGITAL_GLOBE_CONNECT_ID, ONADATA_OAUTH_STATE, OPENSRP_OAUTH_STATE } from '../configs/env';
 import { imgArr, locationHierarchy, LocationItem } from '../configs/settings';
 import {
+  ACTION,
   BEDNET_DISTRIBUTION_CODE,
   BLOOD_SCREENING_CODE,
   CASE_CONFIRMATION_CODE,
@@ -604,7 +605,7 @@ export const jsxColumns = (colType: string): Column[] | [] => {
     return [
       {
         // Not clear on what it should show
-        Header: 'Action',
+        Header: ACTION,
         columns: [
           {
             Cell: (cell: CellInfo) => {

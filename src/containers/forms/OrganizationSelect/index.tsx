@@ -4,7 +4,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import Select from 'react-select';
 import { Store } from 'redux';
-import { OPENSRP_ORGANIZATION_ENDPOINT } from '../../../constants';
+import { OPENSRP_ORGANIZATION_ENDPOINT, SELECT } from '../../../constants';
 import { OpenSRPService } from '../../../services/opensrp';
 import store from '../../../store';
 import assignmentReducer, {
@@ -127,10 +127,10 @@ const OrganizationSelect = (props: OrganizationSelectProps) => {
     <Select
       name={name}
       bsSize="lg"
-      placeholder={'Select'}
+      placeholder={SELECT}
       className="organization-select"
       classNamePrefix="reveal"
-      aria-label={'Select'}
+      aria-label={SELECT}
       onChange={handleChange}
       defaultOptions={true}
       options={options}

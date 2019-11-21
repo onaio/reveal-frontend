@@ -25,6 +25,9 @@ import {
   HOME,
   HOME_URL,
   IRS_REPORTING_TITLE,
+  LEGEND_LABEL,
+  MAP_LOAD_ERROR,
+  OF,
   PROGRESS,
   REPORT_IRS_PLAN_URL,
   STRUCTURE,
@@ -264,7 +267,7 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
               <GisidaWrapper {...gisidaWrapperProps} />
             </div>
           ) : (
-            <div>Could not load the map</div>
+            <div>{MAP_LOAD_ERROR}</div>
           )}
         </Col>
         <Col xs={3}>
@@ -274,7 +277,7 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
 
             {indicatorStops && (
               <div className="mapLegend">
-                <h6>Legend</h6>
+                <h6>{LEGEND_LABEL}</h6>
                 {indicatorStops.map((stop, i) => (
                   <div className="sidebar-legend-item" key={i}>
                     <span className="sidebar-legend-color" style={{ backgroundColor: stop[1] }} />
@@ -295,8 +298,8 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
                     value={row.value}
                   />
                   <p className="indicator-breakdown">
-                    {PROGRESS}: {row.numerator} of {row.denominator} {`${row.unit || STRUCTURE}s`} (
-                    {row.value}%)
+                    {PROGRESS}: {row.numerator} {OF} {row.denominator} {`${row.unit || STRUCTURE}s`}{' '}
+                    ({row.value}%)
                   </p>
                 </div>
               ))}
