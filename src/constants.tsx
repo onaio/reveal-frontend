@@ -225,6 +225,10 @@ export const PLAN_SELECT_PLACEHOLDER = 'Other plans in this area';
 export type PLAN_SELECT_PLACEHOLDER = typeof PLAN_SELECT_PLACEHOLDER;
 export const ASSIGN_PLANS = 'Assign Plans';
 export type ASSIGN_PLANS = typeof ASSIGN_PLANS;
+export const DISCARD_CHANGES = 'Discard changes';
+export type DISCARD_CHANGES = typeof DISCARD_CHANGES;
+export const SAVE_CHANGES = 'Save changes';
+export type SAVE_CHANGES = typeof SAVE_CHANGES;
 
 // TODO ? - do the below 2 belong here or in a settings file
 export const ORGANIZATION_LABEL = TEAM;
@@ -384,5 +388,5 @@ export type PRACTITIONER_CODE = typeof PRACTITIONER_CODE;
 
 // prompt message
 export const ON_REROUTE_WITH_UNSAVED_CHANGES =
-  'Rerouting will discard any unsaved changes, Please confirm';
+  'Unsaved Changes: please Save or Discard changes made';
 export type ON_REROUTE_WITH_UNSAVED_CHANGES = typeof ON_REROUTE_WITH_UNSAVED_CHANGES;
