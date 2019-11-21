@@ -231,6 +231,14 @@ export const ONE_DAY_TO_GO = '1 day to go';
 export type ONE_DAY_TO_GO = typeof ONE_DAY_TO_GO;
 export const ZERO_DAYS_TO_GO = '0 days to go';
 export type ZERO_DAYS_TO_GO = typeof ZERO_DAYS_TO_GO;
+export const USERS = 'Users';
+export type USERS = typeof USERS;
+export const ABOUT = 'About';
+export type ABOUT = typeof ABOUT;
+export const SIGN_OUT = 'Sign Out';
+export type SIGN_OUT = typeof SIGN_OUT;
+export const LOGIN = 'Login';
+export type LOGIN = typeof LOGIN;
 
 // TODO ? - do the below 2 belong here or in a settings file
 export const ORGANIZATION_LABEL = TEAM;

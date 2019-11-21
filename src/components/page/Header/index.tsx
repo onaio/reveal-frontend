@@ -26,6 +26,7 @@ import {
   WEBSITE_NAME,
 } from '../../../configs/env';
 import {
+  ABOUT,
   ADMIN,
   ASSIGN,
   ASSIGN_PLAN_URL,
@@ -36,6 +37,7 @@ import {
   INTERVENTION_IRS_URL,
   IRS_REPORTING_TITLE,
   IRS_TITLE,
+  LOGIN,
   LOGIN_URL,
   LOGOUT_URL,
   MONITOR,
@@ -47,6 +49,8 @@ import {
   PRACTITIONERS,
   PRACTITIONERS_LIST_URL,
   REPORT_IRS_PLAN_URL,
+  SIGN_OUT,
+  USERS,
 } from '../../../constants';
 import './Header.css';
 
@@ -213,7 +217,7 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
                     {ENABLE_USERS && (
                       <DropdownItem>
                         <NavLink to="/404" className="nav-link" activeClassName="active">
-                          Users
+                          {USERS}
                         </NavLink>
                       </DropdownItem>
                     )}
@@ -224,7 +228,7 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
               {ENABLE_ABOUT && (
                 <NavItem>
                   <NavLink to="/404" className="nav-link" activeClassName="active">
-                    About
+                    {ABOUT}
                   </NavLink>
                 </NavItem>
               )}
@@ -238,14 +242,14 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
                   <DropdownMenu right={true}>
                     <DropdownItem>
                       <NavLink to={LOGOUT_URL} className="nav-link" activeClassName="active">
-                        Sign Out
+                        {SIGN_OUT}
                       </NavLink>
                     </DropdownItem>
                   </DropdownMenu>
                 </UncontrolledDropdown>
               ) : (
                 <NavLink to={LOGIN_URL} className="nav-link" activeClassName="active">
-                  Login
+                  {LOGIN}
                 </NavLink>
               )}
             </Nav>
