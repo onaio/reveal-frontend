@@ -131,10 +131,11 @@ export interface OpenMRSResponse {
 /** util function that given an OpenMRSResponse, returns
  * whether we can call the openSRP-openMRS proxy for the next page of data
  */
-export const thereIsNextPage = (response: OpenMRSResponse) => {
-  if (response) {
+export const thereIsNextPage = (response: OpenMRSResponse): boolean => {
+  if (response.links) {
     // check if we have a next link in the links
     const links = response.links;
     return links.filter(link => link.rel === 'next').length > 0;
   }
+  return false;
 };
