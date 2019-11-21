@@ -2,16 +2,18 @@ import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import flushPromises from 'flush-promises';
 import React from 'react';
-import UserIdSelect from '..';
+import UserIdSelect, { thereIsNextPage } from '..';
 import { OpenSRPService } from '../../../../../services/opensrp';
 import { openMRSUsers, practitioners } from './fixtures';
 
 // tslint:disable-next-line: no-var-requires
 const fetch = require('jest-fetch-mock');
+jest.mock('../../../../../configs/env');
 
 describe('src/*/forms/userIdSelect', () => {
   beforeEach(() => {
     jest.resetAllMocks();
+    fetch.resetMocks();
   });
 
   it('renders without crashing', async () => {
@@ -34,6 +36,42 @@ describe('src/*/forms/userIdSelect', () => {
     wrapper.update();
     const inputSelect = wrapper.find('input');
     expect(toJson(inputSelect)).toMatchSnapshot('Selector Input');
+  });
+
+  it('calls to fetch', async () => {
+    fetch.once(JSON.stringify(practitioners)).once(JSON.stringify(openMRSUsers));
+
+    const props = {
+      serviceClass: OpenSRPService,
+    };
+    mount(<UserIdSelect {...props} />);
+    await new Promise(resolve => new Promise(resolve));
+    await flushPromises();
+    const calls = [
+      [
+        'https://test.smartregister.org/opensrp/rest/practitioner',
+        {
+          headers: {
+            accept: 'application/json',
+            authorization: 'Bearer null',
+            'content-type': 'application/json;charset=UTF-8',
+          },
+          method: 'GET',
+        },
+      ],
+      [
+        'https://test.smartregister.org/opensrp/rest/user?page_size=51&start_index=0',
+        {
+          headers: {
+            accept: 'application/json',
+            authorization: 'Bearer null',
+            'content-type': 'application/json;charset=UTF-8',
+          },
+          method: 'GET',
+        },
+      ],
+    ];
+    expect(fetch.mock.calls).toEqual(calls);
   });
 
   it('should not reselect an already matched user', async () => {
@@ -89,5 +127,35 @@ describe('src/*/forms/userIdSelect', () => {
         },
       ],
     ]);
+  });
+});
+
+describe('src/containers/forms/PractitionerForm/UserIdSelect.utils', () => {
+  it('correctly checks if there is more data', () => {
+    expect(thereIsNextPage(openMRSUsers)).toBeFalsy();
+    let mockResponse = {
+      links: [
+        {
+          rel: 'next',
+          uri: '',
+        },
+        {
+          rel: 'prev',
+          uri: '',
+        },
+      ],
+      results: [],
+    };
+    expect(thereIsNextPage(mockResponse)).toBeTruthy();
+    mockResponse = {
+      links: [
+        {
+          rel: 'next',
+          uri: '',
+        },
+      ],
+      results: [],
+    };
+    expect(thereIsNextPage(mockResponse)).toBeTruthy();
   });
 });

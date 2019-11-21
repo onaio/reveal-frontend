@@ -222,3 +222,8 @@ export type PRACTITIONER_FORM_NAMESPACE = typeof PRACTITIONER_FORM_NAMESPACE;
 const openMRSUsersRequestPageSize = process.env.REACT_APP_OPENMRS_USERS_REQUEST_PAGE_SIZE || '100';
 export const OPENMRS_USERS_REQUEST_PAGE_SIZE = parseInt(openMRSUsersRequestPageSize, 10);
 export type OPENMRS_USERS_REQUEST_PAGE_SIZE = typeof OPENMRS_USERS_REQUEST_PAGE_SIZE;
+
+const toastAutoCloseDelay = process.env.REACT_APP_TOAST_AUTO_CLOSE_DELAY || '2000';
+
+export const TOAST_AUTO_CLOSE_DELAY = parseInt(toastAutoCloseDelay, 10);
+export type TOAST_AUTO_CLOSE_DELAY = typeof TOAST_AUTO_CLOSE_DELAY;
