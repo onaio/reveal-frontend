@@ -1,32 +1,39 @@
 import React from 'react';
 import { Table } from 'reactstrap';
 import * as colors from '../../colors';
-import { ONE, ZERO } from '../../configs/settings';
-import { GREEN, ORANGE, RED } from '../../constants';
+import {
+  CONDITIONAL_FORMATTING_TITLE,
+  FOCUS_INVESTIGATION_START_TITLE,
+  GREEN,
+  ONE_DAY_TO_GO,
+  ORANGE,
+  RED,
+  ZERO_DAYS_TO_GO,
+} from '../../constants';
 
 /** Displays conditional formatting guide for Focus Investigation 1-3-7 Adherence */
 const OneThreeSevenAdherence: React.ElementType = props => {
   return (
     <div>
-      <h5 className="mt-4 mb-3">Conditional Formatting</h5>
-      <h6 className="mb-3">Focus Investigation Start</h6>
+      <h5 className="mt-4 mb-3">{CONDITIONAL_FORMATTING_TITLE}</h5>
+      <h6 className="mb-3">{FOCUS_INVESTIGATION_START_TITLE}</h6>
       <div className="row">
         <div className="col-3">
           <Table className="text-center">
             <tbody>
               <tr style={{ background: colors.GREEN }}>
                 <td>
-                  {GREEN} >= {ONE} days to go
+                  {GREEN} {'>='} {ONE_DAY_TO_GO}
                 </td>
               </tr>
               <tr style={{ background: colors.ORANGE }}>
                 <td>
-                  {ORANGE} {ZERO} days to go
+                  {ORANGE} {ZERO_DAYS_TO_GO}
                 </td>
               </tr>
               <tr style={{ background: colors.RED }}>
                 <td>
-                  {RED} {'<'} {ZERO} days to go
+                  {RED} {'<'} {ZERO_DAYS_TO_GO}
                 </td>
               </tr>
             </tbody>

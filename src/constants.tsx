@@ -225,6 +225,10 @@ export const PLAN_SELECT_PLACEHOLDER = 'Other plans in this area';
 export type PLAN_SELECT_PLACEHOLDER = typeof PLAN_SELECT_PLACEHOLDER;
 export const ASSIGN_PLANS = 'Assign Plans';
 export type ASSIGN_PLANS = typeof ASSIGN_PLANS;
+export const ONE_DAY_TO_GO = '1 day to go';
+export type ONE_DAY_TO_GO = typeof ONE_DAY_TO_GO;
+export const ZERO_DAYS_TO_GO = '0 days to go';
+export type ZERO_DAYS_TO_GO = typeof ZERO_DAYS_TO_GO;
 
 // TODO ? - do the below 2 belong here or in a settings file
 export const ORGANIZATION_LABEL = TEAM;
@@ -350,6 +354,10 @@ export const IRS_REPORTING_TITLE = 'IRS Reporting';
 export type IRS_REPORTING_TITLE = typeof IRS_REPORTING_TITLE;
 export const CONDITIONAL_FORMATTING_RULES = 'Conditional formatting rules';
 export type CONDITIONAL_FORMATTING_RULES = typeof CONDITIONAL_FORMATTING_RULES;
+export const CONDITIONAL_FORMATTING_TITLE = 'Conditional Formatting';
+export type CONDITIONAL_FORMATTING_TITLE = typeof CONDITIONAL_FORMATTING_TITLE;
+export const FOCUS_INVESTIGATION_START_TITLE = 'Focus Investigation Start';
+export type FOCUS_INVESTIGATION_START_TITLE = typeof FOCUS_INVESTIGATION_START_TITLE;
 
 // colors
 export const GREEN = 'Green';
