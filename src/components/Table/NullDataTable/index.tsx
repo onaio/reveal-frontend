@@ -1,6 +1,7 @@
 import DrillDownTable from '@onaio/drill-down-table';
 import * as React from 'react';
 import { Column } from 'react-table';
+import { NO_INVESTIGATIONS_FOUND } from '../../../constants';
 import { FlexObject } from '../../../helpers/utils';
 
 /** Interface to describe props for TableProps */
@@ -26,7 +27,7 @@ class NullDataTable extends React.Component<NullDataTableProps, {}> {
       <div>
         <h3 className="mb-3 mt-5 page-title">{reasonType}</h3>
         <DrillDownTable {...tableProps} NoDataComponent={(() => null) as any} />
-        <h3 className="text-muted">No Investigations Found</h3>
+        <h3 className="text-muted">{NO_INVESTIGATIONS_FOUND}</h3>
         <hr />
       </div>
     );
