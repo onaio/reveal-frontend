@@ -24,7 +24,7 @@ export interface Props {
 /** default values for props for this component */
 const defaultProps: Props = {
   inputId: 'search',
-  inputPlaceholder: 'Search',
+  inputPlaceholder: SEARCH,
 };
 
 /** the InlineSearchForm component */
