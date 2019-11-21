@@ -358,6 +358,8 @@ export const CONDITIONAL_FORMATTING_TITLE = 'Conditional Formatting';
 export type CONDITIONAL_FORMATTING_TITLE = typeof CONDITIONAL_FORMATTING_TITLE;
 export const FOCUS_INVESTIGATION_START_TITLE = 'Focus Investigation Start';
 export type FOCUS_INVESTIGATION_START_TITLE = typeof FOCUS_INVESTIGATION_START_TITLE;
+export const FI_RESPONSE_ADHERENCE_TITLE = 'FI Response Adherence';
+export type FI_RESPONSE_ADHERENCE_TITLE = typeof FI_RESPONSE_ADHERENCE_TITLE;
 
 // colors
 export const GREEN = 'Green';
