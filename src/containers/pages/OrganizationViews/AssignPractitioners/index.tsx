@@ -267,10 +267,12 @@ const AssignPractitioner = (props: PropsTypes) => {
       />
       <br />
       <Button
-        className={`btn btn-primary ${activateButtons ? '' : 'disabled'}`}
+        id="add-button"
+        className={`btn btn-primary mr-4 ${activateButtons ? '' : 'disabled'}`}
         onClick={addHandler}
       >{`${SAVE_CHANGES}`}</Button>
       <Button
+        id="discard-button"
         className={`btn btn-primary ${activateButtons ? '' : 'disabled'}`}
         onClick={discardChangesHandler}
       >{`${DISCARD_CHANGES}`}</Button>
