@@ -9,13 +9,12 @@ import { Store } from 'redux';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
 import {
-  ASSIGN,
   ASSIGN_PLAN_URL,
   ASSIGN_PLANS,
   END_DATE,
   HOME,
   HOME_URL,
-  INVESTIGATION_HEADER,
+  INTERVENTION,
   NO_PLANS_LOADED_MESSAGE,
   PLAN_STATUS,
   REPORT_IRS_PLAN_URL,
@@ -108,7 +107,7 @@ const IRSAssignmentPlansList = (props: PlanAssignmentsListProps) => {
         planObj.plan_status,
       ];
     }),
-    headerItems: [TITLE, INVESTIGATION_HEADER, START_DATE, END_DATE, PLAN_STATUS],
+    headerItems: [TITLE, INTERVENTION, START_DATE, END_DATE, PLAN_STATUS],
     tableClass: 'table table-bordered plans-list',
   };
 
