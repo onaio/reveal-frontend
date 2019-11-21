@@ -384,5 +384,5 @@ export type PRACTITIONER_CODE = typeof PRACTITIONER_CODE;
 
 // prompt message
 export const ON_REROUTE_WITH_UNSAVED_CHANGES =
-  'Rerouting will discard any unsaved changes, confirm';
+  'Rerouting will discard any unsaved changes, Please confirm';
 export type ON_REROUTE_WITH_UNSAVED_CHANGES = typeof ON_REROUTE_WITH_UNSAVED_CHANGES;

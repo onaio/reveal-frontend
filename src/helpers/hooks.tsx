@@ -1,12 +1,12 @@
 import React from 'react';
 
-/** This hook allows for a component to prompt the user if they are sure that they
+/** This hook allows for a component to prompt the user if the user is sure that they
  *  wish to close the the tab/window that the component is currently rendered
- * @param {boolean} enforce - a condition that controls whether to prompt user
+ * @param {boolean} hasUnsavedChanges - a condition that controls whether to prompt user
  */
-export function useConfirmOnBrowserUnload(enforce: boolean = false) {
+export function useConfirmOnBrowserUnload(hasUnsavedChanges: boolean = false) {
   function callback(event: any) {
-    if (enforce) {
+    if (hasUnsavedChanges) {
       event.preventDefault();
       event.returnValue = '';
     }
