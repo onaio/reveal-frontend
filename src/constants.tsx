@@ -508,3 +508,21 @@ export type GET_STARTED_MESSAGE = typeof GET_STARTED_MESSAGE;
 export const ON_REROUTE_WITH_UNSAVED_CHANGES =
   'Unsaved Changes: please Save or Discard changes made';
 export type ON_REROUTE_WITH_UNSAVED_CHANGES = typeof ON_REROUTE_WITH_UNSAVED_CHANGES;
+
+// Success growl notification messages;
+export const PRACTITIONER_CREATED_SUCCESSFULLY = 'Practitioner created Successfully.';
+export type PRACTITIONER_CREATED_SUCCESSFULLY = typeof PRACTITIONER_CREATED_SUCCESSFULLY;
+export const PRACTITIONER_EDITED_SUCCESSFULLY = 'Practitioner edited successfully.';
+export type PRACTITIONER_EDITED_SUCCESSFULLY = typeof PRACTITIONER_EDITED_SUCCESSFULLY;
+export const ASSIGNED_SUCCESSFULLY_TO = 'successfully assigned to';
+export type ASSIGNED_SUCCESSFULLY_TO = typeof ASSIGNED_SUCCESSFULLY_TO;
+export const ORGANIZATION_EDITED_SUCCESSFULLY = `${ORGANIZATION_LABEL} edited successfully.`;
+export type ORGANIZATION_EDITED_SUCCESSFULLY = typeof ORGANIZATION_EDITED_SUCCESSFULLY;
+export const ORGANIZATION_CREATED_SUCCESSFULLY = `${ORGANIZATION_LABEL} created successfully`;
+export type ORGANIZATION_CREATED_SUCCESSFULLY = typeof ORGANIZATION_CREATED_SUCCESSFULLY;
+export const REMOVED_FROM = 'successfully removed from';
+export type REMOVED_FROM = typeof REMOVED_FROM;
+
+// Error growl notification messages;
+export const REMOVING_PRACTITIONER_FAILED = 'Removing Practitioner Failed';
+export type REMOVING_PRACTITIONER_FAILED = typeof REMOVING_PRACTITIONER_FAILED;

@@ -1,5 +1,4 @@
 import { history } from '@onaio/connected-reducer-registry';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import { ConnectedRouter } from 'connected-react-router';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -7,6 +6,10 @@ import { Provider } from 'react-redux';
 import App from './App/App';
 import * as serviceWorker from './serviceWorker';
 import store from './store';
+
+import 'react-toastify/dist/ReactToastify.css';
+// tslint:disable-next-line: ordered-imports
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/css/index.css';
 
 ReactDOM.render(

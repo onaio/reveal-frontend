@@ -2,8 +2,9 @@ import { ErrorMessage, Field, Form, Formik } from 'formik';
 import moment from 'moment';
 import React, { useState } from 'react';
 import { Redirect } from 'react-router';
-import { FormGroup } from 'reactstrap';
+import { toast } from 'react-toastify';
 import { Button, Label } from 'reactstrap';
+import { FormGroup } from 'reactstrap';
 import * as Yup from 'yup';
 import { PRACTITIONER_FORM_NAMESPACE } from '../../../configs/env';
 import {
@@ -12,6 +13,8 @@ import {
   NO,
   OPENSRP_PRACTITIONER_ENDPOINT,
   PRACTITIONER,
+  PRACTITIONER_CREATED_SUCCESSFULLY,
+  PRACTITIONER_EDITED_SUCCESSFULLY,
   PRACTITIONERS_LIST_URL,
   REQUIRED,
   SAVE,
@@ -20,7 +23,7 @@ import {
   USERNAME,
   YES,
 } from '../../../constants';
-import { generateNameSpacedUUID } from '../../../helpers/utils';
+import { generateNameSpacedUUID, growl } from '../../../helpers/utils';
 import { OpenSRPService } from '../../../services/opensrp';
 import UserIdSelect, { Option } from './UserIdSelect';
 
@@ -89,7 +92,10 @@ const PractitionerForm = (props: PractitionerFormProps) => {
               .update(values)
               .then(() => {
                 setSubmitting(false);
-                setIfDoneHere(true);
+                growl(PRACTITIONER_EDITED_SUCCESSFULLY, {
+                  onClose: () => setIfDoneHere(true),
+                  type: toast.TYPE.SUCCESS,
+                });
               })
               .catch((e: Error) => {
                 setGlobalError(e.message);
@@ -109,7 +115,11 @@ const PractitionerForm = (props: PractitionerFormProps) => {
               .create(valuesToSend)
               .then(() => {
                 setSubmitting(false);
-                setIfDoneHere(true);
+                growl(PRACTITIONER_CREATED_SUCCESSFULLY, {
+                  onClose: () => setIfDoneHere(true),
+                  type: toast.TYPE.SUCCESS,
+                });
+                // setIfDoneHere(true);
               })
               .catch((e: Error) => {
                 setGlobalError(e.message);
