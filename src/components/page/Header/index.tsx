@@ -23,6 +23,7 @@ import {
   ENABLE_PRACTITIONERS,
   ENABLE_TEAMS,
   ENABLE_USERS,
+  OPENSRP_LOGOUT_URL,
   WEBSITE_NAME,
 } from '../../../configs/env';
 import {
@@ -237,7 +238,12 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
                   </DropdownToggle>
                   <DropdownMenu right={true}>
                     <DropdownItem>
-                      <NavLink to={LOGOUT_URL} className="nav-link" activeClassName="active">
+                      <NavLink
+                        onClick={this.handleLogout}
+                        to={LOGOUT_URL}
+                        className="nav-link"
+                        activeClassName="active"
+                      >
                         Sign Out
                       </NavLink>
                     </DropdownItem>
@@ -253,6 +259,21 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
         </Navbar>
       </div>
     );
+  }
+
+  /**
+   * event handler for sign out. opens a new window and makes a call to
+   * the openSRP logout url.
+   */
+  public handleLogout() {
+    const logoutURL: string = OPENSRP_LOGOUT_URL;
+    const logoutWindow: Window | null = window.open(logoutURL);
+    const timer: NodeJS.Timeout = setInterval(() => {
+      if (logoutWindow) {
+        logoutWindow.close();
+      }
+      clearInterval(timer);
+    }, 20);
   }
 
   private toggle() {

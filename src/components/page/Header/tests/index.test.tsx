@@ -3,7 +3,8 @@ import toJson from 'enzyme-to-json';
 import { createBrowserHistory } from 'history';
 import React from 'react';
 import { Router } from 'react-router';
-import HeaderComponent from '..';
+import HeaderComponentWithRouter, { HeaderComponent } from '..';
+import { OPENSRP_LOGOUT_URL } from '../../../../configs/env';
 
 const history = createBrowserHistory();
 
@@ -23,7 +24,7 @@ describe('components/page/Header', () => {
     };
     shallow(
       <Router history={history}>
-        <HeaderComponent {...props} />
+        <HeaderComponentWithRouter {...props} />
       </Router>
     );
   });
@@ -39,7 +40,7 @@ describe('components/page/Header', () => {
     };
     const wrapper = mount(
       <Router history={history}>
-        <HeaderComponent {...props} />
+        <HeaderComponentWithRouter {...props} />
       </Router>
     );
     expect(toJson(wrapper)).toMatchSnapshot();
@@ -57,10 +58,35 @@ describe('components/page/Header', () => {
     };
     const wrapper = mount(
       <Router history={history}>
-        <HeaderComponent {...props} />
+        <HeaderComponentWithRouter {...props} />
       </Router>
     );
     expect(toJson(wrapper)).toMatchSnapshot();
     wrapper.unmount();
+  });
+});
+
+describe('components/page/Header/handleLogout()', () => {
+  beforeEach(() => {
+    jest.resetAllMocks();
+  });
+  it('must open a window with the correct url.', () => {
+    window.open = jest.fn();
+    const props = {
+      authenticated: true,
+      user: {
+        email: 'bob@example.com',
+        name: 'Bobbie',
+        username: 'RobertBaratheon',
+      },
+    };
+    const wrapper = mount(
+      <Router history={history}>
+        <HeaderComponentWithRouter {...props} />
+      </Router>
+    );
+    const headerComponent = wrapper.find('HeaderComponent').instance() as HeaderComponent;
+    headerComponent.handleLogout();
+    expect(window.open).toBeCalledWith(OPENSRP_LOGOUT_URL);
   });
 });
