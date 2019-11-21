@@ -348,6 +348,8 @@ export const IRS_TITLE = 'IRS';
 export type IRS_TITLE = typeof IRS_TITLE;
 export const IRS_REPORTING_TITLE = 'IRS Reporting';
 export type IRS_REPORTING_TITLE = typeof IRS_REPORTING_TITLE;
+export const CONDITIONAL_FORMATTING_RULES = 'Conditional formatting rules';
+export type CONDITIONAL_FORMATTING_RULES = typeof CONDITIONAL_FORMATTING_RULES;
 
 // colors
 export const GREEN = 'Green';

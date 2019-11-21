@@ -5,6 +5,7 @@ import {
   IndicatorThresholds,
   indicatorThresholdsIRS,
 } from '../../../configs/settings';
+import { CONDITIONAL_FORMATTING_RULES } from '../../../constants';
 import { percentage } from '../../../helpers/utils';
 
 interface Props {
@@ -21,7 +22,7 @@ const IRSIndicatorLegend = (props: Props) => {
 
   return (
     <div className="card mt-5 mb-5">
-      <div className="card-header">Conditional formatting rules</div>
+      <div className="card-header">{CONDITIONAL_FORMATTING_RULES}</div>
       <div className="card-body">
         <Row>
           <Col sm="12" md={{ size: 4, offset: 4 }}>
