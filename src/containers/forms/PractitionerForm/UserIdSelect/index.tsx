@@ -123,20 +123,16 @@ export default UserIdSelect;
 /** interface for paginated response got from openSRP
  * openMRS proxy for getting openMRS users.
  */
-interface OpenMRSResponse {
+export interface OpenMRSResponse {
   links: Array<{ rel: string; uri: string }>;
   results: OpenMRSUser[];
 }
 
-/** util function that given an OpenMRSResponse or lack thereof, returns
- * whether we can call the openSRP-openMRS proxy for the next page of data,
- * when response is null the next page of data is implicitly the first page
+/** util function that given an OpenMRSResponse, returns
+ * whether we can call the openSRP-openMRS proxy for the next page of data
  */
-export const thereIsNextPage = (response: OpenMRSResponse | null = null) => {
-  if (response === null) {
-    // we have not made any request yet
-    return true;
-  } else {
+export const thereIsNextPage = (response: OpenMRSResponse) => {
+  if (response) {
     // check if we have a next link in the links
     const links = response.links;
     return links.filter(link => link.rel === 'next').length > 0;
