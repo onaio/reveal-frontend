@@ -4,6 +4,7 @@ import { Col, Row } from 'reactstrap';
 import HeaderBreadcrumb from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import {
   COUNTRY,
+  CREATE_NEW_IRS_PLAN,
   HOME,
   HOME_URL,
   INTERVENTION_IRS_URL,
@@ -16,7 +17,7 @@ import { getFormActivities, IRSActivities } from '../../../../forms/PlanForm/hel
 
 /** Simple component that loads the new plan form and allows you to create a new IRS plan */
 const NewIRSPlan = () => {
-  const pageTitle: string = 'Create New IRS Plan';
+  const pageTitle: string = CREATE_NEW_IRS_PLAN;
 
   const breadcrumbProps = {
     currentPage: {
