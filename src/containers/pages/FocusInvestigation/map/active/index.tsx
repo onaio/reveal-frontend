@@ -23,6 +23,7 @@ import {
 } from '../../../../../configs/env';
 import { FIReasons } from '../../../../../configs/settings';
 import {
+  CASE_CLASSIFICATION_LABEL,
   CASE_TRIGGERED,
   END_DATE,
   FI_SINGLE_MAP_URL,
@@ -298,7 +299,7 @@ class SingleActiveFIMap extends React.Component<
     } else {
       detailViewPlanInvestigationContainer.push(
         <span key={plan && plan.plan_id}>
-          <b>Case Classification:</b>&nbsp;
+          <b>{CASE_CLASSIFICATION_LABEL}:</b>&nbsp;
           {plan && plan.plan_intervention_type ? plan.plan_intervention_type : null}
         </span>
       );
