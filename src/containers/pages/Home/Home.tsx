@@ -6,9 +6,13 @@ import { Button, Col, Row } from 'reactstrap';
 import { ENABLE_FI, ENABLE_IRS, ENABLE_TEAMS } from '../../../configs/env';
 import {
   FI_URL,
+  FOCUS_INVESTIGATION,
+  GET_STARTED_MESSAGE,
   INTERVENTION_IRS_URL,
+  IRS_TITLE,
   ORGANIZATIONS_LABEL,
   ORGANIZATIONS_LIST_URL,
+  WELCOME_TO_REVEAL,
 } from '../../../constants';
 import { HOME_TITLE } from '../../../constants';
 import './Home.css';
@@ -26,8 +30,8 @@ class Home extends React.Component<{}, {}> {
         </Helmet>
         <Row className="welcome-box">
           <Col>
-            <h3>Welcome to Reveal</h3>
-            <p>Get started by selecting an intervention below</p>
+            <h3>{WELCOME_TO_REVEAL}</h3>
+            <p>{GET_STARTED_MESSAGE}</p>
           </Col>
         </Row>
         <Row className="intervention-box">
@@ -38,7 +42,7 @@ class Home extends React.Component<{}, {}> {
                   color="outline"
                   className="btn-intervention btn-lg btn-block btn-outline-green"
                 >
-                  IRS
+                  {IRS_TITLE}
                 </Button>
               </Link>
             </Col>
@@ -50,7 +54,7 @@ class Home extends React.Component<{}, {}> {
                   color="outline"
                   className="btn-intervention btn-lg btn-block btn-outline-green"
                 >
-                  Focus Investigation
+                  {FOCUS_INVESTIGATION}
                 </Button>
               </Link>
             </Col>

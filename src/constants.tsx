@@ -456,3 +456,9 @@ export const PRACTITIONER_CODE = {
   text: 'Community Health Worker',
 };
 export type PRACTITIONER_CODE = typeof PRACTITIONER_CODE;
+
+// Homepage strings
+export const WELCOME_TO_REVEAL = 'Welcome to Reveal';
+export type WELCOME_TO_REVEAL = typeof WELCOME_TO_REVEAL;
+export const GET_STARTED_MESSAGE = 'Get started by selecting an intervention below';
+export type GET_STARTED_MESSAGE = typeof GET_STARTED_MESSAGE;
