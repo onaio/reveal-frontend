@@ -1,5 +1,19 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`src/components/PractitionerForm creates object to send correctly for editing practitioner: readonly username edit 1`] = `
+<input
+  className="form-control"
+  disabled={false}
+  id="username"
+  name="username"
+  onBlur={[Function]}
+  onChange={[Function]}
+  readOnly={true}
+  type="text"
+  value="Drake.Ramole"
+/>
+`;
+
 exports[`src/components/PractitionerForm renders correctly: active field no radio 1`] = `
 <input
   id="no"
@@ -30,4 +44,20 @@ exports[`src/components/PractitionerForm renders correctly: name input 1`] = `
   onChange={[Function]}
   type="text"
 />
+`;
+
+exports[`src/components/PractitionerForm yup validates correctly: Name error 1`] = `
+<small
+  className="form-text text-danger name-error"
+>
+  Required
+</small>
+`;
+
+exports[`src/components/PractitionerForm yup validates correctly: User select error 1`] = `
+<small
+  className="form-text text-danger userId-error"
+>
+  Required
+</small>
 `;
