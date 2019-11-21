@@ -5,10 +5,10 @@ import React from 'react';
  * @param {boolean} hasUnsavedChanges - a condition that controls whether to prompt user
  */
 export function useConfirmOnBrowserUnload(hasUnsavedChanges: boolean = false) {
-  function callback(event: any) {
+  function callback(event: Event) {
     if (hasUnsavedChanges) {
       event.preventDefault();
-      event.returnValue = '';
+      event.returnValue = true;
     }
   }
   React.useEffect(() => {
