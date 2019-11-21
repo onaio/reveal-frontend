@@ -98,7 +98,7 @@ describe('src/containers/TeamAssignment/PractitionersListView/', () => {
     await flushPromises();
     expect(classMock).toBeCalledWith(OPENSRP_PRACTITIONER_ENDPOINT);
     expect(mockList).toHaveBeenCalled();
-    expect(fetchedMock).toHaveBeenCalledWith(fixtures.practitioners);
+    expect(fetchedMock).toHaveBeenCalledWith(fixtures.practitioners, true);
   });
 
   it('PractitionerListView works correctly when connected to store', () => {

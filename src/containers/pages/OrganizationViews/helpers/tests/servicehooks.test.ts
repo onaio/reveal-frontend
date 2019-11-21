@@ -32,14 +32,20 @@ describe('src/containers/pages/OrganizationViews/helpers/servicehooks', () => {
 
   it('loadOrgPractitioners works correctly', async () => {
     const mockRead = jest.fn(async () => fixtures.org3Practitioners);
-    const mockActionCreator = jest.fn();
+    const fetchPractitionerRolesMock = jest.fn();
+    const fetchPractitionersMock = jest.fn();
     const mockClass = jest.fn().mockImplementation(() => {
       return {
         read: mockRead,
       };
     });
 
-    loadOrgPractitioners('organization3Id', mockClass, mockActionCreator);
+    loadOrgPractitioners(
+      'organization3Id',
+      mockClass,
+      fetchPractitionerRolesMock,
+      fetchPractitionersMock
+    );
     await flushPromises();
 
     // calls the correct endpoint
@@ -49,7 +55,10 @@ describe('src/containers/pages/OrganizationViews/helpers/servicehooks', () => {
     expect(mockRead).toHaveBeenCalledWith('organization3Id');
 
     // calls action creator correctly.
-    expect(mockActionCreator).toHaveBeenCalledWith(fixtures.org3Practitioners, 'organization3Id');
+    expect(fetchPractitionerRolesMock).toHaveBeenCalledWith(
+      fixtures.org3Practitioners,
+      'organization3Id'
+    );
   });
 
   it('loadOrganizations works correctly', async () => {
@@ -71,6 +80,6 @@ describe('src/containers/pages/OrganizationViews/helpers/servicehooks', () => {
     expect(mockList).toHaveBeenCalledTimes(1);
 
     // calls action creator correctly.
-    expect(mockActionCreator).toHaveBeenCalledWith(fixtures.organizations);
+    expect(mockActionCreator).toHaveBeenCalledWith(fixtures.organizations, true);
   });
 });

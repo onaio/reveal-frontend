@@ -46,6 +46,6 @@ describe('src/containers/pages/PractitionerViews/serviceHooks', () => {
     expect(mockList).toHaveBeenCalledTimes(1);
 
     // calls action creator correctly.
-    expect(mockActionCreator).toHaveBeenCalledWith(practitioners);
+    expect(mockActionCreator).toHaveBeenCalledWith(practitioners, true);
   });
 });

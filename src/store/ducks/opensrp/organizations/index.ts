@@ -38,6 +38,7 @@ export const REMOVE_ORGANIZATIONS = 'src/store/ducks/organizations/reducer/REMOV
 
 /** interface for organizations fetched action */
 interface FetchOrganizationsAction extends AnyAction {
+  overwrite: boolean;
   organizationsById: { [key: string]: Organization };
   type: typeof ORGANIZATIONS_FETCHED;
 }
@@ -69,9 +70,13 @@ export type ImmutableOrgsStoreState = OrgsStoreState &
 export default function reducer(state = initialOrgsStoreState, action: OrganizationActionTypes) {
   switch (action.type) {
     case ORGANIZATIONS_FETCHED:
+      const organizationsToPut = action.overwrite
+        ? { ...action.organizationsById } // this repopulates the store with newly fetched data
+        : { ...state.organizationsById, ...action.organizationsById }; // this adds fetched data to existing store data
+
       return SeamlessImmutable({
         ...state,
-        organizationsById: { ...state.organizationsById, ...action.organizationsById },
+        organizationsById: organizationsToPut,
       });
     case REMOVE_ORGANIZATIONS:
       return SeamlessImmutable({
@@ -95,12 +100,17 @@ export const removeOrganizationsAction: RemoveOrganizationsAction = {
 
 /** creates action to add fetched organizations to store
  * @param {Organization []} organizationsList - array of organizations to be added to store
+ * @param {boolean} overwrite - whether to replace organization records in state
  *
  * @returns {FetchOrganizationsAction} - action with organizations payload that is added to store
  */
-export const fetchOrganizations = (organizationsList: Organization[]): FetchOrganizationsAction => {
+export const fetchOrganizations = (
+  organizationsList: Organization[],
+  overwrite: boolean = false
+): FetchOrganizationsAction => {
   return {
     organizationsById: keyBy(organizationsList, organization => organization.identifier),
+    overwrite,
     type: ORGANIZATIONS_FETCHED,
   };
 };
