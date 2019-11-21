@@ -261,7 +261,11 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
     );
   }
 
-  private handleLogout() {
+  /**
+   * event handler for sign out. opens a new window and makes a call to
+   * the openSRP logout url.
+   */
+  public handleLogout() {
     const logoutURL: string = OPENSRP_LOGOUT_URL;
     const logoutWindow: Window | null = window.open(logoutURL);
     const timer: NodeJS.Timeout = setInterval(() => {
