@@ -59,9 +59,11 @@ export const UserIdSelect: React.FC<Props> = props => {
     };
     const serve = new service(OPENSRP_USERS_ENDPOINT);
     const allOpenMRSUsers = [];
-    let response = null;
+    let response: OpenMRSResponse;
     do {
-      response = await serve.list(filterParams);
+      response = await serve.list(filterParams).catch(err => {
+        /** growl */
+      });
       allOpenMRSUsers.push(...response.results);
 
       // modify filter params to point to next page
