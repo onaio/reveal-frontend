@@ -281,6 +281,8 @@ export const SELECT_USERNAME = 'Select username';
 export type SELECT_USERNAME = typeof SELECT_USERNAME;
 export const TO = 'To';
 export type TO = typeof TO;
+export const MAP_LOAD_ERROR = 'Could not load the map';
+export type MAP_LOAD_ERROR = typeof MAP_LOAD_ERROR;
 export const AN_ERROR_OCCURED = 'An Error Ocurred';
 export type AN_ERROR_OCCURED = typeof AN_ERROR_OCCURED;
 export const PLEASE_FIX_THESE_ERRORS = 'Please fix these errors';
@@ -315,6 +317,8 @@ export const SIGN_OUT = 'Sign Out';
 export type SIGN_OUT = typeof SIGN_OUT;
 export const LOGIN = 'Login';
 export type LOGIN = typeof LOGIN;
+export const LEGEND_LABEL = 'Legend';
+export type LEGEND_LABEL = typeof LEGEND_LABEL;
 
 // TODO ? - do the below 2 belong here or in a settings file
 export const ORGANIZATION_LABEL = TEAM;
