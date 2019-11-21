@@ -1,20 +1,20 @@
-import { OPENSRP_PRACTITIONER_ENDPOINT } from '../../../constants';
-import { OpenSRPService } from '../../../services/opensrp';
-import store from '../../../store';
-import { fetchPractitioners, Practitioner } from '../../../store/ducks/opensrp/practitioners';
+import { OPENSRP_PRACTITIONER_ENDPOINT } from '../../../../constants';
+import { OpenSRPService } from '../../../../services/opensrp';
+import store from '../../../../store';
+import { fetchPractitioners, Practitioner } from '../../../../store/ducks/opensrp/practitioners';
 
 /** loads all practitioners returned in within a single request from practitioners endpoint
- * @param {typeof fetchPractitioners} fetchPractitionersActionCreator - action creator for adding practitioners to store
  * @param {typeof OpenSRPService} service -  the OpenSRP service
+ * @param {typeof fetchPractitioners} fetchPractitionersActionCreator - action creator for adding practitioners to store
  */
 export const loadPractitioners = async (
-  fetchPractitionersCreator: any,
-  service: typeof OpenSRPService = OpenSRPService
+  service: typeof OpenSRPService = OpenSRPService,
+  fetchPractitionersCreator: any
 ) => {
   const serve = new service(OPENSRP_PRACTITIONER_ENDPOINT);
   serve
     .list()
-    .then((response: Practitioner[]) => store.dispatch(fetchPractitionersCreator(response)))
+    .then((response: Practitioner[]) => store.dispatch(fetchPractitionersCreator(response, true)))
     .catch((err: Error) => {
       /** TODO - find something to do with error */
     });

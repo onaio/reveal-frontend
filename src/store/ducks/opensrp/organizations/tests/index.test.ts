@@ -36,8 +36,8 @@ describe('reducers/plans', () => {
     // checking that dispatching actions has desired effect
 
     store.dispatch(fetchOrganizations([fixtures.organization1]));
-    const teamsNumber = getOrganizationsArray(store.getState()).length;
-    expect(teamsNumber).toEqual(1);
+    const organizationsNumber = getOrganizationsArray(store.getState()).length;
+    expect(organizationsNumber).toEqual(1);
     const org1FromStore = getOrganizationById(
       store.getState(),
       'fcc19470-d599-11e9-bb65-2a2ae2dbcce4'
@@ -57,27 +57,37 @@ describe('reducers/plans', () => {
     expect(getOrganizationsArray(store.getState())).toEqual(fixtures.organizations);
   });
 
-  it('has action to clear teams form store', () => {
+  it('has action to clear organizations form store', () => {
     store.dispatch(removeOrganizationsAction);
-    let teamNum = getOrganizationsArray(store.getState()).length;
-    expect(teamNum).toEqual(0);
+    let organizationsNum = getOrganizationsArray(store.getState()).length;
+    expect(organizationsNum).toEqual(0);
 
     store.dispatch(fetchOrganizations(fixtures.organizations));
-    teamNum = getOrganizationsArray(store.getState()).length;
-    expect(teamNum).toEqual(2);
+    organizationsNum = getOrganizationsArray(store.getState()).length;
+    expect(organizationsNum).toEqual(2);
 
     store.dispatch(removeOrganizationsAction);
-    teamNum = getOrganizationsArray(store.getState()).length;
-    expect(teamNum).toEqual(0);
+    organizationsNum = getOrganizationsArray(store.getState()).length;
+    expect(organizationsNum).toEqual(0);
   });
 
-  it('does not override existing teams with newly fetched', () => {
+  it('does not override existing organizations with newly fetched', () => {
     store.dispatch(fetchOrganizations([fixtures.organization1]));
-    let teamNum = getOrganizationsArray(store.getState()).length;
-    expect(teamNum).toEqual(1);
+    let organizationsNum = getOrganizationsArray(store.getState()).length;
+    expect(organizationsNum).toEqual(1);
 
     store.dispatch(fetchOrganizations([fixtures.organization2]));
-    teamNum = getOrganizationsArray(store.getState()).length;
-    expect(teamNum).toEqual(2);
+    organizationsNum = getOrganizationsArray(store.getState()).length;
+    expect(organizationsNum).toEqual(2);
+  });
+
+  it('overwrites existing organizations when told to', () => {
+    store.dispatch(fetchOrganizations([fixtures.organization1]));
+    let organizationsNum = getOrganizationsArray(store.getState()).length;
+    expect(organizationsNum).toEqual(1);
+
+    store.dispatch(fetchOrganizations([fixtures.organization2], true));
+    organizationsNum = getOrganizationsArray(store.getState()).length;
+    expect(organizationsNum).toEqual(1);
   });
 });

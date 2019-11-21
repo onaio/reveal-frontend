@@ -32,7 +32,7 @@ import OrganizationForm, {
   OrganizationFormFields,
   OrganizationFormProps,
 } from '../../../forms/OrganizationForm';
-import { loadOrganization } from '../serviceHooks';
+import { loadOrganization } from '../helpers/serviceHooks';
 
 /** props for create and editing an organization view */
 export interface Props {
