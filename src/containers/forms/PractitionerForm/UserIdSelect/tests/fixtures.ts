@@ -2,7 +2,7 @@
 export const openMRSUsers = {
   links: [
     {
-      rel: 'next',
+      rel: 'prev',
       uri:
         'http://openzrs.reveal-stage.szartregister.org/openzrs/os/rest/v1/user?lizit=50&v=custoz%3A%28uuid%2Cdisplay%2Cperson%2Cperson%3A%28display%29%29&startIndex=50',
     },

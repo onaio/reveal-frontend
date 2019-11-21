@@ -323,6 +323,10 @@ export const LOGIN = 'Login';
 export type LOGIN = typeof LOGIN;
 export const LEGEND_LABEL = 'Legend';
 export type LEGEND_LABEL = typeof LEGEND_LABEL;
+export const DISCARD_CHANGES = 'Discard changes';
+export type DISCARD_CHANGES = typeof DISCARD_CHANGES;
+export const SAVE_CHANGES = 'Save changes';
+export type SAVE_CHANGES = typeof SAVE_CHANGES;
 
 // TODO ? - do the below 2 belong here or in a settings file
 export const ORGANIZATION_LABEL = TEAM;
@@ -499,3 +503,8 @@ export const WELCOME_TO_REVEAL = 'Welcome to Reveal';
 export type WELCOME_TO_REVEAL = typeof WELCOME_TO_REVEAL;
 export const GET_STARTED_MESSAGE = 'Get started by selecting an intervention below';
 export type GET_STARTED_MESSAGE = typeof GET_STARTED_MESSAGE;
+
+// prompt message
+export const ON_REROUTE_WITH_UNSAVED_CHANGES =
+  'Unsaved Changes: please Save or Discard changes made';
+export type ON_REROUTE_WITH_UNSAVED_CHANGES = typeof ON_REROUTE_WITH_UNSAVED_CHANGES;
