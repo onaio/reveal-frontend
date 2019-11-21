@@ -13,8 +13,10 @@ import {
   FI_SINGLE_MAP_URL,
   MARK,
   MARK_AS_COMPLETE,
+  NO_PLAN_FOUND_ERROR,
   OPENSRP_PLANS,
   PLAN_LIST_URL,
+  PLAN_STATUS_UPDATE_ERROR,
 } from '../../../../../constants';
 import { FlexObject } from '../../../../../helpers/utils';
 import { OpenSRPService } from '../../../../../services/opensrp';
@@ -85,11 +87,11 @@ export class PlanCompletion extends React.Component<
           })
           .catch(e => {
             // catch the error if one is returned from OpenSRP
-            alert('Sorry, something went wrong when we tried to update the plan status');
+            alert(PLAN_STATUS_UPDATE_ERROR);
           });
       } else {
         // catch the error of the plan not existing in the server
-        alert('Sorry, no plan found in the cloud!');
+        alert(NO_PLAN_FOUND_ERROR);
       }
     });
   }

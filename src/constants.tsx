@@ -271,6 +271,11 @@ export const NO_PRACTITIONERS_ADDED_YET = 'No Practitioners Added yet';
 export type NO_PRACTITIONERS_ADDED_YET = typeof NO_PRACTITIONERS_ADDED_YET;
 export const PLAN_SELECT_PLACEHOLDER = 'Other plans in this area';
 export type PLAN_SELECT_PLACEHOLDER = typeof PLAN_SELECT_PLACEHOLDER;
+export const PLAN_STATUS_UPDATE_ERROR =
+  'Sorry, something went wrong when we tried to update the plan status';
+export type PLAN_STATUS_UPDATE_ERROR = typeof PLAN_STATUS_UPDATE_ERROR;
+export const NO_PLAN_FOUND_ERROR = 'Sorry, no plan found in the cloud!';
+export type NO_PLAN_FOUND_ERROR = typeof NO_PLAN_FOUND_ERROR;
 export const ASSIGN_PLANS = 'Assign Plans';
 export type ASSIGN_PLANS = typeof ASSIGN_PLANS;
 export const ONE_DAY_TO_GO = '1 day to go';
