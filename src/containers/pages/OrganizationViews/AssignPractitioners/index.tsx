@@ -22,6 +22,7 @@ import {
   ADD,
   ASSIGN,
   ASSIGN_PRACTITIONERS_URL,
+  DISCARD_CHANGES,
   HOME,
   HOME_URL,
   NO_PRACTITIONERS_ADDED_YET,
@@ -32,6 +33,7 @@ import {
   ORGANIZATIONS_LIST_URL,
   PRACTITIONER_CODE,
   PRACTITIONERS,
+  SAVE_CHANGES,
   SINGLE_ORGANIZATION_URL,
   TO,
 } from '../../../../constants';
@@ -174,6 +176,11 @@ const AssignPractitioner = (props: PropsTypes) => {
     });
   };
 
+  /** handles clicks on the discard changes button */
+  const discardChangesHandler = () => {
+    setSelectedOptions([]);
+  };
+
   // Props
 
   // breadcrumb props
@@ -204,8 +211,8 @@ const AssignPractitioner = (props: PropsTypes) => {
 
   /** the options to be passed to react-select as having already been selected */
   const value = [...formatOptions(assignedPractitioners, true), ...selectedOptions];
-  /** activate add button if there are selected options that can be posted to api */
-  const activateAddButton = !!selectedOptions.length;
+  /** activate add&Reset buttons if there are selected options that can be posted to api */
+  const activateButtons = !!selectedOptions.length;
 
   return (
     <div>
@@ -216,7 +223,7 @@ const AssignPractitioner = (props: PropsTypes) => {
       <Prompt
         when={selectedOptions.length > 0}
         // tslint:disable-next-line: jsx-no-lambda
-        message={location => ON_REROUTE_WITH_UNSAVED_CHANGES}
+        message={location => `${ON_REROUTE_WITH_UNSAVED_CHANGES} [${organization.name}]`}
       />
 
       <HeaderBreadcrumb {...breadcrumbProps} />
@@ -260,9 +267,13 @@ const AssignPractitioner = (props: PropsTypes) => {
       />
       <br />
       <Button
-        className={`btn btn-primary ${activateAddButton ? '' : 'disabled'}`}
+        className={`btn btn-primary ${activateButtons ? '' : 'disabled'}`}
         onClick={addHandler}
-      >{`${ADD} ${PRACTITIONERS}`}</Button>
+      >{`${SAVE_CHANGES}`}</Button>
+      <Button
+        className={`btn btn-primary ${activateButtons ? '' : 'disabled'}`}
+        onClick={discardChangesHandler}
+      >{`${DISCARD_CHANGES}`}</Button>
     </div>
   );
 };
