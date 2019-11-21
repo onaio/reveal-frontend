@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import AsyncSelect, { Props as AsyncSelectProps } from 'react-select/async';
 import { getFilterParams, OpenSRPService, URLParams } from '../../../services/opensrp';
 
+import { SELECT } from '../../../constants';
 import './style.css';
 
 /** interface for jurisdiction options
@@ -151,8 +152,8 @@ const JurisdictionSelect = (props: JurisdictionSelectProps & FieldProps) => {
       bsSize="lg"
       defaultMenuIsOpen={shouldMenuOpen}
       closeMenuOnSelect={closeMenuOnSelect}
-      placeholder={props.placeholder ? props.placeholder : 'Select'}
-      aria-label={props['aria-label'] ? props['aria-label'] : 'Select'}
+      placeholder={props.placeholder ? props.placeholder : SELECT}
+      aria-label={props['aria-label'] ? props['aria-label'] : SELECT}
       onChange={handleChange()}
       defaultOptions={true}
       loadOptions={promiseOptions}
