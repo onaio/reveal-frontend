@@ -1,11 +1,17 @@
+import { toast } from 'react-toastify';
 import {
   OPENSRP_ORG_PRACTITIONER_ENDPOINT,
   OPENSRP_ORGANIZATION_ENDPOINT,
-} from '../../../constants';
-import { OpenSRPService } from '../../../services/opensrp';
-import store from '../../../store';
-import { fetchOrganizations, Organization } from '../../../store/ducks/opensrp/organizations';
-import { fetchPractitionerRoles, Practitioner } from '../../../store/ducks/opensrp/practitioners';
+} from '../../../../constants';
+import { growl } from '../../../../helpers/utils';
+import { OpenSRPService } from '../../../../services/opensrp';
+import store from '../../../../store';
+import { fetchOrganizations, Organization } from '../../../../store/ducks/opensrp/organizations';
+import {
+  fetchPractitionerRoles,
+  fetchPractitioners,
+  Practitioner,
+} from '../../../../store/ducks/opensrp/practitioners';
 
 /** loads the organization data
  * @param {string} organizationId - the organization id
@@ -25,29 +31,32 @@ export const loadOrganization = async (
       store.dispatch(fetchOrganizationsCreator([response]));
     })
     .catch((err: Error) => {
-      /** still don't know what we should do with errors */
+      growl(err.message, { type: toast.TYPE.ERROR });
     });
 };
 
 /** loads the practitioners that belong to this organization
  * @param {string} organizationId - the organization id
  * @param {typeof OpenSRPService} service - the opensrp service
- * @param {typeof} fetchPractitionerRolesCreator -  action creator
+ * @param {typeof fetchPractitionerRoles} fetchPractitionerRolesCreator -  action creator
+ * @param {typeof fetchPractitioners} fetchPractitionersCreator - action creator
  */
 export const loadOrgPractitioners = async (
   organizationId: string,
   service: typeof OpenSRPService,
-  fetchPractitionerRolesCreator: typeof fetchPractitionerRoles
+  fetchPractitionerRolesCreator: typeof fetchPractitionerRoles,
+  fetchPractitionersCreator: typeof fetchPractitioners
 ) => {
   const serve = new service(OPENSRP_ORG_PRACTITIONER_ENDPOINT);
 
   serve
     .read(organizationId)
-    .then((response: Practitioner[]) =>
-      store.dispatch(fetchPractitionerRolesCreator(response, organizationId))
-    )
+    .then((response: Practitioner[]) => {
+      store.dispatch(fetchPractitionerRolesCreator(response, organizationId));
+      store.dispatch(fetchPractitionersCreator(response));
+    })
     .catch((err: Error) => {
-      /** still don't know what we should do with errors */
+      growl(err.message, { type: toast.TYPE.ERROR });
     });
 };
 
@@ -62,8 +71,8 @@ export const loadOrganizations = async (
   const serve = new service(OPENSRP_ORGANIZATION_ENDPOINT);
   serve
     .list()
-    .then((response: Organization[]) => store.dispatch(fetchOrganizationsCreator(response)))
+    .then((response: Organization[]) => store.dispatch(fetchOrganizationsCreator(response, true)))
     .catch((err: Error) => {
-      /** TODO - find something to do with error */
+      growl(err.message, { type: toast.TYPE.ERROR });
     });
 };

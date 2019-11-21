@@ -57,6 +57,27 @@ exports[`src/pages/*/AssignPractitioners Renders correctly: BreadCrumb 1`] = `
         </li>
       </BreadcrumbItem>
       <BreadcrumbItem
+        key="2"
+        tag="li"
+      >
+        <li
+          className="breadcrumb-item"
+        >
+          <Link
+            key="2"
+            replace={false}
+            to="/teams/view/d23f7350-d406-11e9-bb65-2a2ae2dbcce4"
+          >
+            <a
+              href="/teams/view/d23f7350-d406-11e9-bb65-2a2ae2dbcce4"
+              onClick={[Function]}
+            >
+              d23f7350-d406-11e9-bb65-2a2ae2dbcce4
+            </a>
+          </Link>
+        </li>
+      </BreadcrumbItem>
+      <BreadcrumbItem
         active={true}
         tag="li"
       >
@@ -93,21 +114,65 @@ Array [
 `;
 
 exports[`src/pages/*/AssignPractitioners Renders correctly: add Practitioners button 1`] = `
-<Button
-  className="btn btn-primary disabled"
-  color="secondary"
-  onClick={[Function]}
-  tag="button"
->
+Array [
+  <Button
+    className="btn btn-primary mr-4 disabled"
+    color="secondary"
+    id="add-button"
+    onClick={[Function]}
+    tag="button"
+  >
+    <button
+      aria-label={null}
+      className="btn btn-primary mr-4 disabled btn btn-secondary"
+      id="add-button"
+      onClick={[Function]}
+      type="button"
+    >
+      Save changes
+    </button>
+  </Button>,
   <button
     aria-label={null}
-    className="btn btn-primary disabled btn btn-secondary"
+    className="btn btn-primary mr-4 disabled btn btn-secondary"
+    id="add-button"
     onClick={[Function]}
     type="button"
   >
-    Add Practitioners
-  </button>
-</Button>
+    Save changes
+  </button>,
+]
+`;
+
+exports[`src/pages/*/AssignPractitioners Renders correctly: add Practitioners button 2`] = `
+Array [
+  <Button
+    className="btn btn-primary disabled"
+    color="secondary"
+    id="discard-button"
+    onClick={[Function]}
+    tag="button"
+  >
+    <button
+      aria-label={null}
+      className="btn btn-primary disabled btn btn-secondary"
+      id="discard-button"
+      onClick={[Function]}
+      type="button"
+    >
+      Discard changes
+    </button>
+  </Button>,
+  <button
+    aria-label={null}
+    className="btn btn-primary disabled btn btn-secondary"
+    id="discard-button"
+    onClick={[Function]}
+    type="button"
+  >
+    Discard changes
+  </button>,
+]
 `;
 
 exports[`src/pages/*/AssignPractitioners Renders correctly: async select 1`] = `

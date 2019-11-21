@@ -56,7 +56,7 @@ describe('src/../singleOrganization.selectors', () => {
 
     await new Promise(resolve => setImmediate(resolve));
 
-    expect(organizationByIdMock).toHaveBeenCalledTimes(4);
+    expect(organizationByIdMock).toHaveBeenCalledTimes(7);
     expect(organizationByIdMock.mock.calls[3][0]).toEqual(selectorState);
     expect(organizationByIdMock.mock.calls[3][1]).toEqual('d23f7350-d406-11e9-bb65-2a2ae2dbcce4');
     expect(practitionerByOrgIdMock.mock.calls[3][0]).toEqual(selectorState);

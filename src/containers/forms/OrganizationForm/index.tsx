@@ -2,6 +2,7 @@ import { ErrorMessage, Field, Form, Formik } from 'formik';
 import moment from 'moment';
 import React, { useState } from 'react';
 import { Redirect } from 'react-router';
+import { toast } from 'react-toastify';
 import { Button, Label } from 'reactstrap';
 import { FormGroup } from 'reactstrap';
 import * as Yup from 'yup';
@@ -10,6 +11,8 @@ import {
   NAME,
   NO,
   OPENSRP_ORGANIZATION_ENDPOINT,
+  ORGANIZATION_CREATED_SUCCESSFULLY,
+  ORGANIZATION_EDITED_SUCCESSFULLY,
   ORGANIZATION_LABEL,
   ORGANIZATIONS_LIST_URL,
   REQUIRED,
@@ -17,7 +20,7 @@ import {
   SAVING,
   YES,
 } from '../../../constants';
-import { generateNameSpacedUUID } from '../../../helpers/utils';
+import { generateNameSpacedUUID, growl } from '../../../helpers/utils';
 import { OpenSRPService } from '../../../services/opensrp';
 
 const OrgFormNameSpace = '9a4c8cb0-df70-11e9-b38b-57f114a50538';
@@ -85,12 +88,15 @@ const OrganizationForm = (props: OrganizationFormProps) => {
             const organizationService = new OpenSRPService(
               `${OPENSRP_ORGANIZATION_ENDPOINT}/${values.identifier}`
             );
-            // 2 calls for each for updating team information and updating practitioner_role table
+
             organizationService
               .update(values)
               .then(() => {
                 setSubmitting(false);
-                setIfDoneHere(true);
+                growl(ORGANIZATION_EDITED_SUCCESSFULLY, {
+                  onClose: () => setIfDoneHere(true),
+                  type: toast.TYPE.SUCCESS,
+                });
               })
               .catch((e: Error) => {
                 setGlobalError(e.message);
@@ -107,7 +113,10 @@ const OrganizationForm = (props: OrganizationFormProps) => {
               .create(valuesToSend)
               .then(() => {
                 setSubmitting(false);
-                setIfDoneHere(true);
+                growl(ORGANIZATION_CREATED_SUCCESSFULLY, {
+                  onClose: () => setIfDoneHere(true),
+                  type: toast.TYPE.SUCCESS,
+                });
               })
               .catch((e: Error) => {
                 setGlobalError(e.message);

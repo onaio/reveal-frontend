@@ -34,6 +34,7 @@ export const REMOVE_PRACTITIONER_ROLES = 'opensrp/reducer/practitioners/REMOVE_P
 
 /** interface action to add practitioners to store */
 export interface FetchPractitionersAction extends AnyAction {
+  overwrite: boolean;
   practitionersById: { [key: string]: Practitioner };
   type: typeof PRACTITIONERS_FETCHED;
 }
@@ -47,7 +48,7 @@ interface RemovePractitionersAction extends AnyAction {
 /** interface for actions that add practitionerRoles */
 interface FetchPractitionerRolesAction extends AnyAction {
   practitionerRoles: PractitionerRole;
-  practitionersById: { [key: string]: Practitioner };
+  overwrite: boolean;
   type: typeof PRACTITIONER_ROLES_FETCHED;
 }
 
@@ -69,11 +70,14 @@ export type PractitionersActionTypes =
 
 /** Fetch practitioners action creator
  * @param {Practitioner []} practitionersList - practitioners array to add to store
+ * @param {boolean} overwrite - whether to replace the records in store for practitioners
  * @return {FetchPractitionersAction} - an action to add practitioners to redux store
  */
 export const fetchPractitioners = (
-  practitionersList: Practitioner[] = []
+  practitionersList: Practitioner[] = [],
+  overwrite: boolean = false
 ): FetchPractitionersAction => ({
+  overwrite,
   practitionersById: keyBy(
     practitionersList,
     (practitioner: Practitioner) => practitioner.identifier
@@ -99,7 +103,8 @@ export const removePractitionersAction = {
  */
 export const fetchPractitionerRoles = (
   practitioners: Practitioner[],
-  organizationId: string
+  organizationId: string,
+  overwrite: boolean = false
 ): FetchPractitionerRolesAction => {
   const practitionersById = keyBy(
     practitioners,
@@ -107,8 +112,8 @@ export const fetchPractitionerRoles = (
   );
 
   return {
+    overwrite,
     practitionerRoles: { [organizationId]: practitionersById },
-    practitionersById,
     type: PRACTITIONER_ROLES_FETCHED,
   };
 };
@@ -144,9 +149,12 @@ export default function reducer(
 ): ImmutablePractitionersState {
   switch (action.type) {
     case PRACTITIONERS_FETCHED:
+      const practitionersToPut = action.overwrite
+        ? { ...action.practitionersById }
+        : { ...state.practitionersById, ...action.practitionersById };
       return SeamlessImmutable({
         ...state,
-        practitionersById: { ...state.practitionersById, ...action.practitionersById },
+        practitionersById: practitionersToPut,
       });
     case REMOVE_PRACTITIONERS:
       return SeamlessImmutable({
@@ -163,7 +171,6 @@ export default function reducer(
             ...action.practitionerRoles[organizationId],
           },
         } as PractitionerRole & SeamlessImmutable.ImmutableObject<PractitionerRole>,
-        practitionersById: { ...state.practitionersById, ...action.practitionersById },
       });
     case REMOVE_PRACTITIONER_ROLES:
       return SeamlessImmutable({

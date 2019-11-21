@@ -9,6 +9,7 @@ import React from 'react';
 import { MouseEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { CellInfo, Column } from 'react-table';
+import { toast, ToastOptions } from 'react-toastify';
 import SeamlessImmutable from 'seamless-immutable';
 import uuidv5 from 'uuid/v5';
 import { TASK_YELLOW } from '../colors';
@@ -36,6 +37,7 @@ import {
 import { Plan } from '../store/ducks/plans';
 import { InitialTask } from '../store/ducks/tasks';
 import { colorMaps, ColorMapsTypes } from './structureColorMaps';
+
 /** Interface for an object that is allowed to have any property */
 export interface FlexObject {
   [key: string]: any;
@@ -644,4 +646,37 @@ export const defaultTableProps = {
  */
 export function generateNameSpacedUUID(seedString: string, namespace: string) {
   return uuidv5(seedString, namespace);
+}
+
+/** creates a cleaner interface for invoking toast functions and
+ * adds the required bootstrap classes
+ * @param {string} message - text to displayed in growl
+ * @param {ToastOptions} options - customizations options
+ */
+export function growl(message: string, options: ToastOptions = {}) {
+  let className = 'alert alert-';
+  let progressClassName = '';
+  switch (options.type) {
+    case toast.TYPE.SUCCESS:
+      className = `${className}success`;
+      progressClassName = 'success-toast-progress';
+      break;
+    case toast.TYPE.INFO:
+      className = `${className}info`;
+      progressClassName = 'info-toast-progress';
+      break;
+    case toast.TYPE.WARNING:
+      className = `${className}warning`;
+      progressClassName = 'warning-toast-progress';
+      break;
+    case toast.TYPE.ERROR:
+      className = `${className}danger`;
+      progressClassName = 'danger-toast-progress';
+      break;
+    default:
+      className = `${className}light`;
+      progressClassName = 'light-toast-progress';
+      break;
+  }
+  toast(message, { ...options, className, progressClassName });
 }

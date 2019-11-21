@@ -7,6 +7,7 @@ import React, { useEffect } from 'react';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
+import { toast } from 'react-toastify';
 import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
 import LinkAsButton from '../../../../components/LinkAsButton';
@@ -32,10 +33,12 @@ import {
   ORGANIZATIONS_LIST_URL,
   PRACTITIONER,
   REMOVE,
+  REMOVED_FROM,
+  REMOVING_PRACTITIONER_FAILED,
   SINGLE_ORGANIZATION_URL,
   USERNAME,
 } from '../../../../constants';
-import { RouteParams } from '../../../../helpers/utils';
+import { growl, RouteParams } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
 import organizationsReducer, {
   fetchOrganizations,
@@ -45,11 +48,12 @@ import organizationsReducer, {
 } from '../../../../store/ducks/opensrp/organizations';
 import PractitionerReducer, {
   fetchPractitionerRoles,
+  fetchPractitioners,
   getPractitionersByOrgId,
   Practitioner,
   reducerName as practitionerReducerName,
 } from '../../../../store/ducks/opensrp/practitioners';
-import { loadOrganization, loadOrgPractitioners } from '../serviceHooks';
+import { loadOrganization, loadOrgPractitioners } from '../helpers/serviceHooks';
 import './index.css';
 
 reducerRegistry.register(organizationsReducerName, organizationsReducer);
@@ -62,12 +66,14 @@ interface SingleOrganizationViewProps {
   serviceClass: typeof OpenSRPService;
   fetchOrganizationsAction: typeof fetchOrganizations;
   fetchPractitionerRolesAction: typeof fetchPractitionerRoles;
+  fetchPractitionersAction: typeof fetchPractitioners;
 }
 
 /** the default props for SingleOrganizationView */
 const defaultProps: SingleOrganizationViewProps = {
   fetchOrganizationsAction: fetchOrganizations,
   fetchPractitionerRolesAction: fetchPractitionerRoles,
+  fetchPractitionersAction: fetchPractitioners,
   organization: null,
   practitioners: [],
   serviceClass: OpenSRPService,
@@ -84,6 +90,7 @@ const SingleOrganizationView = (props: SingleOrgViewPropsType) => {
     serviceClass,
     fetchOrganizationsAction,
     fetchPractitionerRolesAction,
+    fetchPractitionersAction,
   } = props;
 
   const orgId = props.match.params.id ? props.match.params.id : '';
@@ -91,26 +98,42 @@ const SingleOrganizationView = (props: SingleOrgViewPropsType) => {
   // functions / methods //
 
   /** Unassign Practitioner from organization
-   * @param {practitionerId} practitionerId - id of practitioner
-   * @param {organizationId} organizationId - id of organization
+   * @param {practitionerId} practitioner - the practitioner
+   * @param {organizationId} org - the organization
    * @param {serviceClass} service - the openSRP service
    */
   const unassignPractitioner = async (
-    practitionerId: string,
-    organizationId: string,
+    practitioner: Practitioner,
+    org: Organization,
     service: typeof serviceClass = OpenSRPService
   ) => {
     const serve = new service(OPENSRP_DEL_PRACTITIONER_ROLE_ENDPOINT);
-    const params = { organization: organizationId, practitioner: practitionerId };
-    serve.delete(params).then(() => {
-      // remove the practitioner Role
-      loadOrgPractitioners(orgId, serviceClass, fetchPractitionerRolesAction);
-    });
+    const params = { organization: org.identifier, practitioner: practitioner.identifier };
+    serve
+      .delete(params)
+      .then(() => {
+        // remove the practitioner Role
+        growl(`${practitioner.name}-${practitioner.username} ${REMOVED_FROM} ${org.name}`, {
+          type: toast.TYPE.INFO,
+        });
+        loadOrgPractitioners(
+          orgId,
+          serviceClass,
+          fetchPractitionerRolesAction,
+          fetchPractitionersAction
+        );
+      })
+      .catch((err: Error) => growl(REMOVING_PRACTITIONER_FAILED, { type: toast.TYPE.ERROR }));
   };
 
   useEffect(() => {
     loadOrganization(orgId, serviceClass, fetchOrganizationsAction);
-    loadOrgPractitioners(orgId, serviceClass, fetchPractitionerRolesAction);
+    loadOrgPractitioners(
+      orgId,
+      serviceClass,
+      fetchPractitionerRolesAction,
+      fetchPractitionersAction
+    );
   }, []);
 
   if (!organization) {
@@ -149,7 +172,7 @@ const SingleOrganizationView = (props: SingleOrgViewPropsType) => {
           // tslint:disable-next-line: jsx-no-lambda
           onClick={e => {
             e.preventDefault();
-            unassignPractitioner(practitioner.identifier, organization.identifier, serviceClass);
+            unassignPractitioner(practitioner, organization, serviceClass);
           }}
         >
           {REMOVE}
@@ -247,7 +270,8 @@ const mapStateToProps = (
 /** map props to action creators */
 const mapDispatchToProps = {
   fetchOrganizationsAction: fetchOrganizations,
-  fetchPractitionerRoles,
+  fetchPractitionerRolesAction: fetchPractitionerRoles,
+  fetchPractitionersAction: fetchPractitioners,
 };
 
 /** The connected component */

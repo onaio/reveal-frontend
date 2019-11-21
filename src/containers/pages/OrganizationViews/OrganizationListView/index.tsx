@@ -39,7 +39,7 @@ import organizationsReducer, {
   Organization,
   reducerName as organizationsReducerName,
 } from '../../../../store/ducks/opensrp/organizations';
-import { loadOrganizations } from '../serviceHooks';
+import { loadOrganizations } from '../helpers/serviceHooks';
 import './index.css';
 
 reducerRegistry.register(organizationsReducerName, organizationsReducer);

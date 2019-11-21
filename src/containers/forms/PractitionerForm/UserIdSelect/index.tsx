@@ -1,5 +1,6 @@
 /** wrapper around react-select component that enables one
- * to select a single user from openmrs
+ * to select a single user from openMRS. the selected openMRs user
+ * should not be mapped to any existing practitioner
  */
 import React, { useEffect, useState } from 'react';
 import Select from 'react-select';
@@ -26,7 +27,7 @@ export interface Option {
   value: string;
 }
 
-/** interface describing a user from openmrs */
+/** interface describing a user from openMRS */
 interface OpenMRSUser {
   person: {
     display: string;
@@ -50,30 +51,28 @@ export const UserIdSelect: React.FC<Props> = props => {
     }
   };
 
-  /** Pulls all openMRS users info and puts in store */
+  /** Pulls all openMRS users data */
   const loadOpenMRSUsers = async (service: typeof OpenSRPService = OpenSRPService) => {
-    const currentCountIndex = 0;
     let filterParams = {
       page_size: OPENMRS_USERS_REQUEST_PAGE_SIZE,
-      start_index: currentCountIndex,
+      start_index: 0,
     };
     const serve = new service(OPENSRP_USERS_ENDPOINT);
-    let responseSize: number = 100;
     const allOpenMRSUsers = [];
+    let response: OpenMRSResponse;
+    do {
+      response = await serve.list(filterParams).catch(err => {
+        /** growl */
+      });
+      allOpenMRSUsers.push(...response.results);
 
-    /**while any request returns the maximum request size:.
-     * assume there is more data and make another request,
-     * else know we just got the last page and stop making further requests
-     */
-    while (responseSize === OPENMRS_USERS_REQUEST_PAGE_SIZE) {
-      const userData = await serve.list(filterParams);
-      responseSize = userData.results.length;
+      // modify filter params to point to next page
+      const responseSize = response.results.length;
       filterParams = {
         ...filterParams,
         start_index: filterParams.start_index + responseSize,
       };
-      allOpenMRSUsers.push(...userData.results);
-    }
+    } while (thereIsNextPage(response));
     return allOpenMRSUsers;
   };
 
@@ -98,8 +97,8 @@ export const UserIdSelect: React.FC<Props> = props => {
 
     const practitionerUserIds = practitioners.map(practitioner => practitioner.userId);
     const unMatchedUsers = allOpenMRSUsers.filter(user => !practitionerUserIds.includes(user.uuid));
-    setSelectIsLoading(false);
     setOpenMRSUsers(unMatchedUsers);
+    setSelectIsLoading(false);
   };
 
   const options = React.useMemo(() => {
@@ -128,3 +127,23 @@ export const UserIdSelect: React.FC<Props> = props => {
 };
 UserIdSelect.defaultProps = defaultProps;
 export default UserIdSelect;
+
+/** interface for paginated response got from openSRP
+ * openMRS proxy for getting openMRS users.
+ */
+export interface OpenMRSResponse {
+  links: Array<{ rel: string; uri: string }>;
+  results: OpenMRSUser[];
+}
+
+/** util function that given an OpenMRSResponse, returns
+ * whether we can call the openSRP-openMRS proxy for the next page of data
+ */
+export const thereIsNextPage = (response: OpenMRSResponse): boolean => {
+  if (response.links) {
+    // check if we have a next link in the links
+    const links = response.links;
+    return links.filter(link => link.rel === 'next').length > 0;
+  }
+  return false;
+};

@@ -34,7 +34,7 @@ import PractitionerForm, {
   PractitionerFormFields,
   PractitionerFormProps,
 } from '../../../forms/PractitionerForm';
-import { loadPractitioner } from '../serviceHooks';
+import { loadPractitioner } from '../helpers/serviceHooks';
 
 /** props for create and editing an practitioner view */
 export interface Props {
