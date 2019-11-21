@@ -258,6 +258,8 @@ export const ADD_PLAN = 'Add Plan';
 export type ADD_PLAN = typeof ADD_PLAN;
 export const UPDATE_PLAN = 'Update Plan';
 export type UPDATE_PLAN = typeof UPDATE_PLAN;
+export const ADD_FOCUS_INVESTIGATION = 'Add Focus Investigation';
+export type ADD_FOCUS_INVESTIGATION = typeof ADD_FOCUS_INVESTIGATION;
 
 export const DATE_COMPLETED = 'Date Completed';
 export type DATE_COMPLETED = typeof DATE_COMPLETED;

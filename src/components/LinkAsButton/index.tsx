@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import { NEW_PLAN_URL } from '../../constants';
+import { ADD_FOCUS_INVESTIGATION, NEW_PLAN_URL } from '../../constants';
 
 /** interface for LinkAsButton component props */
 export interface Props {
@@ -22,7 +22,7 @@ const LinkAsButton = (props: Props) => {
 /** default props for LinkAsButton component */
 const defaultProps: Props = {
   classNameProp: 'focus-investigation btn btn-primary float-right mt-5',
-  text: 'Add Focus Investigation',
+  text: ADD_FOCUS_INVESTIGATION,
   to: NEW_PLAN_URL,
 };
 LinkAsButton.defaultProps = defaultProps;
