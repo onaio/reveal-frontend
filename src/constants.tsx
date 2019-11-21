@@ -339,6 +339,8 @@ export type UPDATE_PLAN = typeof UPDATE_PLAN;
 export const ADD_FOCUS_INVESTIGATION = 'Add Focus Investigation';
 export type ADD_FOCUS_INVESTIGATION = typeof ADD_FOCUS_INVESTIGATION;
 
+export const DATE_CREATED = 'Date Created';
+export type DATE_CREATED = typeof DATE_CREATED;
 export const DATE_COMPLETED = 'Date Completed';
 export type DATE_COMPLETED = typeof DATE_COMPLETED;
 // internal urls
