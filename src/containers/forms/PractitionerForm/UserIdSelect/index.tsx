@@ -101,10 +101,18 @@ export const UserIdSelect: React.FC<Props> = props => {
     setSelectIsLoading(false);
   };
 
-  const options = openMRSUsers.map((user: OpenMRSUser) => ({
-    label: user.display,
-    value: user.uuid,
-  }));
+  const options = React.useMemo(() => {
+    return openMRSUsers
+      .map((user: OpenMRSUser) => ({
+        label: user.display,
+        value: user.uuid,
+      }))
+      .sort((userA, userB) => {
+        const userALabel = userA.label;
+        const userBLabel = userB.label;
+        return userALabel === userBLabel ? 0 : userALabel > userBLabel ? 1 : -1;
+      });
+  }, [openMRSUsers]);
 
   return (
     <Select
