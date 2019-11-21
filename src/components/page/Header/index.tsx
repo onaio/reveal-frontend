@@ -23,6 +23,7 @@ import {
   ENABLE_PRACTITIONERS,
   ENABLE_TEAMS,
   ENABLE_USERS,
+  OPENSRP_LOGOUT_URL,
   WEBSITE_NAME,
 } from '../../../configs/env';
 import {
@@ -261,7 +262,7 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
   }
 
   private handleLogout() {
-    const logoutURL: string = 'https://reveal-stage.smartregister.org/opensrp/logout.do';
+    const logoutURL: string = OPENSRP_LOGOUT_URL;
     const logoutWindow: Window | null = window.open(logoutURL);
     const timer: NodeJS.Timeout = setInterval(() => {
       if (logoutWindow) {
