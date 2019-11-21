@@ -12,10 +12,15 @@ import {
   ASSIGN,
   ASSIGN_PLAN_URL,
   ASSIGN_PLANS,
+  END_DATE,
   HOME,
   HOME_URL,
+  INVESTIGATION_HEADER,
   NO_PLANS_LOADED_MESSAGE,
+  PLAN_STATUS,
   REPORT_IRS_PLAN_URL,
+  START_DATE,
+  TITLE,
 } from '../../../../constants';
 import { OpenSRPService } from '../../../../services/opensrp';
 import IRSPlansReducer, {
@@ -103,7 +108,7 @@ const IRSAssignmentPlansList = (props: PlanAssignmentsListProps) => {
         planObj.plan_status,
       ];
     }),
-    headerItems: ['Title', 'Intervention', 'Start Date', 'End Date', 'Plan Status'],
+    headerItems: [TITLE, INVESTIGATION_HEADER, START_DATE, END_DATE, PLAN_STATUS],
     tableClass: 'table table-bordered plans-list',
   };
 
