@@ -132,7 +132,6 @@ describe('src/*/forms/userIdSelect', () => {
 
 describe('src/containers/forms/PractitionerForm/UserIdSelect.utils', () => {
   it('correctly checks if there is more data', () => {
-    expect(thereIsNextPage(null)).toBeTruthy();
     expect(thereIsNextPage(openMRSUsers)).toBeFalsy();
     let mockResponse = {
       links: [
