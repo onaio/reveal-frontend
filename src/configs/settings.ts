@@ -18,6 +18,7 @@ import { Expression, LngLatBoundsLike } from 'mapbox-gl';
 import {
   ActionReasonType,
   GoalPriorityType,
+  GoalUnit,
   PlanActionCodesType,
   PlanActivities,
   UseContextCodesType,
@@ -179,7 +180,7 @@ export interface PlanAction {
 /** Plan Goal detailQuantity */
 export interface PlanGoaldetailQuantity {
   comparator: '>=';
-  unit: string;
+  unit: GoalUnit;
   value: number;
 }
 
@@ -250,7 +251,7 @@ export const planActivities: PlanActivities = {
           detail: {
             detailQuantity: {
               comparator: '>=',
-              unit: 'activit(y|ies)',
+              unit: GoalUnit.ACTIVITY,
               value: 1,
             },
           },
@@ -287,7 +288,7 @@ export const planActivities: PlanActivities = {
           detail: {
             detailQuantity: {
               comparator: '>=',
-              unit: 'Percent',
+              unit: GoalUnit.PERCENT,
               value: 90,
             },
           },
@@ -324,7 +325,7 @@ export const planActivities: PlanActivities = {
           detail: {
             detailQuantity: {
               comparator: '>=',
-              unit: 'Percent',
+              unit: GoalUnit.PERCENT,
               value: 100,
             },
           },
@@ -363,7 +364,7 @@ export const planActivities: PlanActivities = {
           detail: {
             detailQuantity: {
               comparator: '>=',
-              unit: 'Person(s)',
+              unit: GoalUnit.PERSON,
               value: 100,
             },
           },
@@ -400,7 +401,7 @@ export const planActivities: PlanActivities = {
           detail: {
             detailQuantity: {
               comparator: '>=',
-              unit: 'case(s)',
+              unit: GoalUnit.CASE,
               value: 1,
             },
           },
@@ -439,7 +440,7 @@ export const planActivities: PlanActivities = {
           detail: {
             detailQuantity: {
               comparator: '>=',
-              unit: 'Percent',
+              unit: GoalUnit.PERCENT,
               value: 100,
             },
           },
@@ -476,7 +477,7 @@ export const planActivities: PlanActivities = {
           detail: {
             detailQuantity: {
               comparator: '>=',
-              unit: 'activit(y|ies)',
+              unit: GoalUnit.ACTIVITY,
               value: 3,
             },
           },
@@ -515,7 +516,7 @@ export const planActivities: PlanActivities = {
           detail: {
             detailQuantity: {
               comparator: '>=',
-              unit: 'activit(y|ies)',
+              unit: GoalUnit.ACTIVITY,
               value: 3,
             },
           },
