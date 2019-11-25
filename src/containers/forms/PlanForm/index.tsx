@@ -682,7 +682,7 @@ const PlanForm = (props: PlanFormProps) => {
                           </FormGroup>
                           <FormGroup>
                             <Label for={`activities-${index}-goalValue`}>{QUANTITY_LABEL}</Label>
-                            <InputGroup>
+                            <InputGroup id={`activities-${index}-goalValue-input-group`}>
                               <Field
                                 type="number"
                                 name={`activities[${index}].goalValue`}
