@@ -1,4 +1,5 @@
 import MockDate from 'mockdate';
+import { PlanActionCodes } from '../../../../configs/settings';
 import { plans } from '../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
 import {
   doesFieldHaveErrors,
@@ -6,10 +7,12 @@ import {
   extractActivityForForm,
   generatePlanDefinition,
   getFormActivities,
+  getGoalUnitFromActionCode,
   getNameTitle,
   getPlanFormValues,
   PlanFormFields,
 } from '../helpers';
+import { GoalUnit, PlanActionCodesType } from '../types';
 import {
   activities,
   event,
@@ -219,5 +222,22 @@ describe('containers/forms/PlanForm/helpers', () => {
       { id: '3952', name: '3952' },
       { id: 'ac7ba751-35e8-4b46-9e53-3cbaad193697', name: 'ac7ba751-35e8-4b46-9e53-3cbaad193697' },
     ]);
+  });
+
+  it('getGoalUnitFromActionCode works', () => {
+    const expectedUnits: GoalUnit[] = [
+      GoalUnit.ACTIVITY,
+      GoalUnit.PERCENT,
+      GoalUnit.PERCENT,
+      GoalUnit.PERSON,
+      GoalUnit.CASE,
+      GoalUnit.PERCENT,
+      GoalUnit.ACTIVITY,
+      GoalUnit.ACTIVITY,
+    ];
+    for (let index = 0; index < PlanActionCodes.length; index++) {
+      expect(getGoalUnitFromActionCode(PlanActionCodes[index])).toEqual(expectedUnits[index]);
+    }
+    expect(getGoalUnitFromActionCode('mosh' as PlanActionCodesType)).toEqual(GoalUnit.UNKNOWN);
   });
 });
