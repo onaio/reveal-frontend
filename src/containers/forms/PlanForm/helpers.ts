@@ -218,6 +218,41 @@ export function getActivityFromPlan(
 }
 
 /**
+ * Get plan activity object using an action code
+ * @param {PlanActionCodesType} actionCode - the action code
+ */
+export function getPlanActivityFromActionCode(
+  actionCode: PlanActionCodesType
+): PlanActivity | null {
+  if (actionCode === 'BCC') {
+    return planActivities.BCC;
+  }
+  if (actionCode === 'IRS') {
+    return planActivities.IRS;
+  }
+  if (actionCode === 'Bednet Distribution') {
+    return planActivities.bednetDistribution;
+  }
+  if (actionCode === 'Blood Screening') {
+    return planActivities.bloodScreening;
+  }
+  if (actionCode === 'Case Confirmation') {
+    return planActivities.caseConfirmation;
+  }
+  if (actionCode === 'RACD Register Family') {
+    return planActivities.familyRegistration;
+  }
+  if (actionCode === 'Larval Dipping') {
+    return planActivities.larvalDipping;
+  }
+  if (actionCode === 'Mosquito Collection') {
+    return planActivities.mosquitoCollection;
+  }
+
+  return null;
+}
+
+/**
  * Get action and plans from PlanForm activities
  * @param {PlanActivityFormFields[]} activities - this of activities from PlanForm
  * @param {string} planIdentifier - this plan identifier
@@ -243,84 +278,15 @@ export function extractActivitiesFromPlanForm(
       let thisAction: PlanAction = planActivities.BCC.action;
       let thisGoal: PlanGoal = planActivities.BCC.goal;
 
-      // first populate with default values
-      if (element.actionCode === 'BCC') {
+      const planActivity = getPlanActivityFromActionCode(element.actionCode as PlanActionCodesType);
+
+      if (planActivity) {
         thisAction = {
-          ...planActivities.BCC.action,
+          ...planActivity.action,
           ...planActionGoal.action,
         };
         thisGoal = {
-          ...planActivities.BCC.goal,
-          ...planActionGoal.goal,
-        };
-      }
-      if (element.actionCode === 'IRS') {
-        thisAction = {
-          ...planActivities.IRS.action,
-          ...planActionGoal.action,
-        };
-        thisGoal = {
-          ...planActivities.IRS.goal,
-          ...planActionGoal.goal,
-        };
-      }
-      if (element.actionCode === 'Bednet Distribution') {
-        thisAction = {
-          ...planActivities.bednetDistribution.action,
-          ...planActionGoal.action,
-        };
-        thisGoal = {
-          ...planActivities.bednetDistribution.goal,
-          ...planActionGoal.goal,
-        };
-      }
-      if (element.actionCode === 'Blood Screening') {
-        thisAction = {
-          ...planActivities.bloodScreening.action,
-          ...planActionGoal.action,
-        };
-        thisGoal = {
-          ...planActivities.bloodScreening.goal,
-          ...planActionGoal.goal,
-        };
-      }
-      if (element.actionCode === 'Case Confirmation') {
-        thisAction = {
-          ...planActivities.caseConfirmation.action,
-          ...planActionGoal.action,
-        };
-        thisGoal = {
-          ...planActivities.caseConfirmation.goal,
-          ...planActionGoal.goal,
-        };
-      }
-      if (element.actionCode === 'RACD Register Family') {
-        thisAction = {
-          ...planActivities.familyRegistration.action,
-          ...planActionGoal.action,
-        };
-        thisGoal = {
-          ...planActivities.familyRegistration.goal,
-          ...planActionGoal.goal,
-        };
-      }
-      if (element.actionCode === 'Larval Dipping') {
-        thisAction = {
-          ...planActivities.larvalDipping.action,
-          ...planActionGoal.action,
-        };
-        thisGoal = {
-          ...planActivities.larvalDipping.goal,
-          ...planActionGoal.goal,
-        };
-      }
-      if (element.actionCode === 'Mosquito Collection') {
-        thisAction = {
-          ...planActivities.mosquitoCollection.action,
-          ...planActionGoal.action,
-        };
-        thisGoal = {
-          ...planActivities.mosquitoCollection.goal,
+          ...planActivity.goal,
           ...planActionGoal.goal,
         };
       }
