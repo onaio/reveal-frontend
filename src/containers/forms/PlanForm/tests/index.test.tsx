@@ -112,6 +112,9 @@ describe('containers/forms/PlanForm', () => {
         expect(toJson(wrapper.find(`#activities-${i}-goalValue input`))).toMatchSnapshot(
           `${name} activities[${i}].goalValue field`
         );
+        expect(
+          toJson(wrapper.find(`#activities-${i}-goalValue-input-group InputGroupText span`))
+        ).toMatchSnapshot(`${name} activities[${i}].goalValue unit`);
         expect(toJson(wrapper.find({ for: `activities-${i}-timingPeriodStart` }))).toMatchSnapshot(
           `${name} activities[${i}].timingPeriodStart label`
         );
