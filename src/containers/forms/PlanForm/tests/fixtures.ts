@@ -4,7 +4,7 @@ import { FormEvent } from 'react';
 import { DEFAULT_ACTIVITY_DURATION_DAYS, DEFAULT_TIME } from '../../../../configs/env';
 import { InterventionType, PlanStatus } from '../../../../store/ducks/plans';
 import { PlanActivityFormFields, PlanFormFields } from '../helpers';
-import { PlanActivities } from '../types';
+import { GoalUnit, PlanActivities } from '../types';
 
 const goalDue = moment()
   .add(DEFAULT_ACTIVITY_DURATION_DAYS, 'days')
@@ -163,7 +163,7 @@ export const planActivityWithEmptyfields: PlanActivities = {
           detail: {
             detailQuantity: {
               comparator: '>=',
-              unit: 'activit(y|ies)',
+              unit: GoalUnit.ACTIVITY,
               value: 1,
             },
           },
@@ -200,7 +200,7 @@ export const planActivityWithEmptyfields: PlanActivities = {
           detail: {
             detailQuantity: {
               comparator: '>=',
-              unit: 'Percent',
+              unit: GoalUnit.PERCENT,
               value: 90,
             },
           },
@@ -237,7 +237,7 @@ export const planActivityWithEmptyfields: PlanActivities = {
           detail: {
             detailQuantity: {
               comparator: '>=',
-              unit: 'Percent',
+              unit: GoalUnit.PERCENT,
               value: 100,
             },
           },
@@ -274,7 +274,7 @@ export const planActivityWithEmptyfields: PlanActivities = {
           detail: {
             detailQuantity: {
               comparator: '>=',
-              unit: 'Person(s)',
+              unit: GoalUnit.PERSON,
               value: 100,
             },
           },
@@ -311,7 +311,7 @@ export const planActivityWithEmptyfields: PlanActivities = {
           detail: {
             detailQuantity: {
               comparator: '>=',
-              unit: 'case(s)',
+              unit: GoalUnit.CASE,
               value: 1,
             },
           },
@@ -348,7 +348,7 @@ export const planActivityWithEmptyfields: PlanActivities = {
           detail: {
             detailQuantity: {
               comparator: '>=',
-              unit: 'Percent',
+              unit: GoalUnit.PERCENT,
               value: 100,
             },
           },
@@ -385,7 +385,7 @@ export const planActivityWithEmptyfields: PlanActivities = {
           detail: {
             detailQuantity: {
               comparator: '>=',
-              unit: 'activit(y|ies)',
+              unit: GoalUnit.ACTIVITY,
               value: 3,
             },
           },
@@ -422,7 +422,7 @@ export const planActivityWithEmptyfields: PlanActivities = {
           detail: {
             detailQuantity: {
               comparator: '>=',
-              unit: 'activit(y|ies)',
+              unit: GoalUnit.ACTIVITY,
               value: 3,
             },
           },
@@ -685,7 +685,7 @@ export const planActivities: PlanActivities = {
           detail: {
             detailQuantity: {
               comparator: '>=',
-              unit: 'activit(y|ies)',
+              unit: GoalUnit.ACTIVITY,
               value: 1,
             },
           },
@@ -722,7 +722,7 @@ export const planActivities: PlanActivities = {
           detail: {
             detailQuantity: {
               comparator: '>=',
-              unit: 'Percent',
+              unit: GoalUnit.PERCENT,
               value: 90,
             },
           },
@@ -759,7 +759,7 @@ export const planActivities: PlanActivities = {
           detail: {
             detailQuantity: {
               comparator: '>=',
-              unit: 'Percent',
+              unit: GoalUnit.PERCENT,
               value: 100,
             },
           },
@@ -798,7 +798,7 @@ export const planActivities: PlanActivities = {
           detail: {
             detailQuantity: {
               comparator: '>=',
-              unit: 'Person(s)',
+              unit: GoalUnit.PERSON,
               value: 100,
             },
           },
@@ -835,7 +835,7 @@ export const planActivities: PlanActivities = {
           detail: {
             detailQuantity: {
               comparator: '>=',
-              unit: 'case(s)',
+              unit: GoalUnit.CASE,
               value: 1,
             },
           },
@@ -874,7 +874,7 @@ export const planActivities: PlanActivities = {
           detail: {
             detailQuantity: {
               comparator: '>=',
-              unit: 'Percent',
+              unit: GoalUnit.PERCENT,
               value: 100,
             },
           },
@@ -911,7 +911,7 @@ export const planActivities: PlanActivities = {
           detail: {
             detailQuantity: {
               comparator: '>=',
-              unit: 'activit(y|ies)',
+              unit: GoalUnit.ACTIVITY,
               value: 3,
             },
           },
@@ -950,7 +950,7 @@ export const planActivities: PlanActivities = {
           detail: {
             detailQuantity: {
               comparator: '>=',
-              unit: 'activit(y|ies)',
+              unit: GoalUnit.ACTIVITY,
               value: 3,
             },
           },
@@ -1271,7 +1271,7 @@ export const expectedExtractActivityFromPlanformResult = {
           detail: {
             detailQuantity: {
               comparator: '>=',
-              unit: 'case(s)',
+              unit: GoalUnit.CASE,
               value: 1,
             },
           },
@@ -1290,7 +1290,7 @@ export const expectedExtractActivityFromPlanformResult = {
           detail: {
             detailQuantity: {
               comparator: '>=',
-              unit: 'Percent',
+              unit: GoalUnit.PERCENT,
               value: 100,
             },
           },
@@ -1309,7 +1309,7 @@ export const expectedExtractActivityFromPlanformResult = {
           detail: {
             detailQuantity: {
               comparator: '>=',
-              unit: 'Person(s)',
+              unit: GoalUnit.PERSON,
               value: 100,
             },
           },
@@ -1327,7 +1327,7 @@ export const expectedExtractActivityFromPlanformResult = {
           detail: {
             detailQuantity: {
               comparator: '>=',
-              unit: 'Percent',
+              unit: GoalUnit.PERCENT,
               value: 100,
             },
           },
@@ -1345,7 +1345,7 @@ export const expectedExtractActivityFromPlanformResult = {
           detail: {
             detailQuantity: {
               comparator: '>=',
-              unit: 'activit(y|ies)',
+              unit: GoalUnit.ACTIVITY,
               value: 3,
             },
           },
@@ -1364,7 +1364,7 @@ export const expectedExtractActivityFromPlanformResult = {
           detail: {
             detailQuantity: {
               comparator: '>=',
-              unit: 'activit(y|ies)',
+              unit: GoalUnit.ACTIVITY,
               value: 3,
             },
           },
@@ -1382,7 +1382,7 @@ export const expectedExtractActivityFromPlanformResult = {
           detail: {
             detailQuantity: {
               comparator: '>=',
-              unit: 'activit(y|ies)',
+              unit: GoalUnit.ACTIVITY,
               value: 1,
             },
           },
@@ -1571,7 +1571,7 @@ export const expectedPlanDefinition = {
           detail: {
             detailQuantity: {
               comparator: '>=',
-              unit: 'Percent',
+              unit: GoalUnit.PERCENT,
               value: 90,
             },
           },
