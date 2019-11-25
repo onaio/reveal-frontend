@@ -265,68 +265,17 @@ export const ADD = 'Add';
 export type ADD = typeof ADD;
 export const REMOVE = 'Remove';
 export type REMOVE = typeof REMOVE;
-export const SAVE_TEAM = 'Save Team';
-export type SAVE_TEAM = typeof SAVE_TEAM;
-export const SAVE_PLAN = 'Save Plan';
-export type SAVE_PLAN = typeof SAVE_PLAN;
-export const SAVE_AS_DRAFT = 'Save as a Draft';
-export type SAVE_AS_DRAFT = typeof SAVE_AS_DRAFT;
-export const SAVE_FINALIZED_PLAN = 'Save Finalized Plan';
-export type SAVE_FINALIZED_PLAN = typeof SAVE_FINALIZED_PLAN;
-export const SAVE_ASSIGNMENTS = 'Save Assignments';
-export type SAVE_ASSIGNMENTS = typeof SAVE_ASSIGNMENTS;
-export const NO_PLANS_LOADED_MESSAGE = 'No plans found...';
-export type NO_PLANS_LOADED_MESSAGE = typeof NO_PLANS_LOADED_MESSAGE;
-export const SELECT = 'Select';
-export type SELECT = typeof SELECT;
-export const SELECT_USERNAME = 'Select username';
-export type SELECT_USERNAME = typeof SELECT_USERNAME;
+// todo - ^^ continue organizing from here ^^
+
+// todo - replace this with full string with vairiable
 export const TO = 'To';
 export type TO = typeof TO;
-export const MAP_LOAD_ERROR = 'Could not load the map';
-export type MAP_LOAD_ERROR = typeof MAP_LOAD_ERROR;
-export const AN_ERROR_OCCURED = 'An Error Ocurred';
-export type AN_ERROR_OCCURED = typeof AN_ERROR_OCCURED;
-export const PLEASE_FIX_THESE_ERRORS = 'Please fix these errors';
-export type PLEASE_FIX_THESE_ERRORS = typeof PLEASE_FIX_THESE_ERRORS;
-export const NO_INVESTIGATIONS_FOUND = 'No Investigations Found';
-export type NO_INVESTIGATIONS_FOUND = typeof NO_INVESTIGATIONS_FOUND;
-export const NO_PRACTITIONERS_ADDED_YET = 'No Practitioners Added yet';
-export type NO_PRACTITIONERS_ADDED_YET = typeof NO_PRACTITIONERS_ADDED_YET;
-export const PLAN_SELECT_PLACEHOLDER = 'Other plans in this area';
-export type PLAN_SELECT_PLACEHOLDER = typeof PLAN_SELECT_PLACEHOLDER;
-export const PLAN_STATUS_UPDATE_ERROR =
-  'Sorry, something went wrong when we tried to update the plan status';
-export type PLAN_STATUS_UPDATE_ERROR = typeof PLAN_STATUS_UPDATE_ERROR;
-export const NO_PLAN_FOUND_ERROR = 'Sorry, no plan found in the cloud!';
-export type NO_PLAN_FOUND_ERROR = typeof NO_PLAN_FOUND_ERROR;
-export const SAVE_PLAN_DEFINITION_ERROR =
-  'Uh oh, looks like something is (syntactically) wrong with the Plan schema';
-export type SAVE_PLAN_DEFINITION_ERROR = typeof SAVE_PLAN_DEFINITION_ERROR;
-export const SAVE_PLAN_NO_JURISDICTIONS_ERROR = 'Oops, no jurisdictions selected!';
-export type SAVE_PLAN_NO_JURISDICTIONS_ERROR = typeof SAVE_PLAN_NO_JURISDICTIONS_ERROR;
-export const ASSIGN_PLANS = 'Assign Plans';
-export type ASSIGN_PLANS = typeof ASSIGN_PLANS;
-export const ASSIGN_PRACTITIONERS = 'Assign Practitioners';
-export type ASSIGN_PRACTITIONERS = typeof ASSIGN_PRACTITIONERS;
+
+// todo - save plurals with variables
 export const ONE_DAY_TO_GO = '1 day to go';
 export type ONE_DAY_TO_GO = typeof ONE_DAY_TO_GO;
 export const ZERO_DAYS_TO_GO = '0 days to go';
 export type ZERO_DAYS_TO_GO = typeof ZERO_DAYS_TO_GO;
-export const USERS = 'Users';
-export type USERS = typeof USERS;
-export const ABOUT = 'About';
-export type ABOUT = typeof ABOUT;
-export const SIGN_OUT = 'Sign Out';
-export type SIGN_OUT = typeof SIGN_OUT;
-export const LOGIN = 'Login';
-export type LOGIN = typeof LOGIN;
-export const LEGEND_LABEL = 'Legend';
-export type LEGEND_LABEL = typeof LEGEND_LABEL;
-export const DISCARD_CHANGES = 'Discard changes';
-export type DISCARD_CHANGES = typeof DISCARD_CHANGES;
-export const SAVE_CHANGES = 'Save changes';
-export type SAVE_CHANGES = typeof SAVE_CHANGES;
 
 // TODO ? - do the below 2 belong here or in a settings file
 export const ORGANIZATION_LABEL = TEAM;
@@ -342,29 +291,7 @@ export const PARENT_ID = 'parent_id';
 export type PARENT_ID = typeof JURISDICTION_ID;
 export const PARENTID = 'parentId';
 export type PARENTID = typeof JURISDICTIONID;
-export const START_DATE = 'Start Date';
-export type START_DATE = typeof START_DATE;
-export const END_DATE = 'End Date';
-export type END_DATE = typeof END_DATE;
-export const NAME = 'Name';
-export type NAME = typeof NAME;
-export const NEW_PLAN = 'New Plan';
-export type NEW_PLAN = typeof NEW_PLAN;
-export const CREATE_NEW_PLAN = 'Create New Plan';
-export type CREATE_NEW_PLAN = typeof CREATE_NEW_PLAN;
-export const CREATE_NEW_IRS_PLAN = 'Create New IRS Plan';
-export type CREATE_NEW_IRS_PLAN = typeof CREATE_NEW_IRS_PLAN;
-export const ADD_PLAN = 'Add Plan';
-export type ADD_PLAN = typeof ADD_PLAN;
-export const UPDATE_PLAN = 'Update Plan';
-export type UPDATE_PLAN = typeof UPDATE_PLAN;
-export const ADD_FOCUS_INVESTIGATION = 'Add Focus Investigation';
-export type ADD_FOCUS_INVESTIGATION = typeof ADD_FOCUS_INVESTIGATION;
 
-export const DATE_CREATED = 'Date Created';
-export type DATE_CREATED = typeof DATE_CREATED;
-export const DATE_COMPLETED = 'Date Completed';
-export type DATE_COMPLETED = typeof DATE_COMPLETED;
 // internal urls
 export const LOGIN_URL = '/login';
 export type LOGIN_URL = typeof LOGIN_URL;
@@ -449,22 +376,6 @@ export type OPENSRP_ADD_PRACTITIONER_ROLE_ENDPOINT = typeof OPENSRP_ADD_PRACTITI
 export const OPENSRP_USERS_ENDPOINT = 'user';
 export type OPENSRP_USERS_ENDPOINT = typeof OPENSRP_USERS_ENDPOINT;
 
-// container pages title names
-export const HOME_TITLE = `Home page`;
-export type HOME_TITLE = typeof HOME_TITLE;
-export const IRS_TITLE = 'IRS';
-export type IRS_TITLE = typeof IRS_TITLE;
-export const IRS_REPORTING_TITLE = 'IRS Reporting';
-export type IRS_REPORTING_TITLE = typeof IRS_REPORTING_TITLE;
-export const CONDITIONAL_FORMATTING_RULES = 'Conditional formatting rules';
-export type CONDITIONAL_FORMATTING_RULES = typeof CONDITIONAL_FORMATTING_RULES;
-export const CONDITIONAL_FORMATTING_TITLE = 'Conditional Formatting';
-export type CONDITIONAL_FORMATTING_TITLE = typeof CONDITIONAL_FORMATTING_TITLE;
-export const FOCUS_INVESTIGATION_START_TITLE = 'Focus Investigation Start';
-export type FOCUS_INVESTIGATION_START_TITLE = typeof FOCUS_INVESTIGATION_START_TITLE;
-export const FI_RESPONSE_ADHERENCE_TITLE = 'FI Response Adherence';
-export type FI_RESPONSE_ADHERENCE_TITLE = typeof FI_RESPONSE_ADHERENCE_TITLE;
-
 // colors
 export const GREEN = 'Green';
 export type GREEN = typeof GREEN;
@@ -498,22 +409,8 @@ export const PRACTITIONER_CODE = {
 };
 export type PRACTITIONER_CODE = typeof PRACTITIONER_CODE;
 
-// Homepage strings
-export const WELCOME_TO_REVEAL = 'Welcome to Reveal';
-export type WELCOME_TO_REVEAL = typeof WELCOME_TO_REVEAL;
-export const GET_STARTED_MESSAGE = 'Get started by selecting an intervention below';
-export type GET_STARTED_MESSAGE = typeof GET_STARTED_MESSAGE;
-
-// prompt message
-export const ON_REROUTE_WITH_UNSAVED_CHANGES =
-  'Unsaved Changes: please Save or Discard changes made';
-export type ON_REROUTE_WITH_UNSAVED_CHANGES = typeof ON_REROUTE_WITH_UNSAVED_CHANGES;
-
 // Success growl notification messages;
-export const PRACTITIONER_CREATED_SUCCESSFULLY = 'Practitioner created Successfully.';
-export type PRACTITIONER_CREATED_SUCCESSFULLY = typeof PRACTITIONER_CREATED_SUCCESSFULLY;
-export const PRACTITIONER_EDITED_SUCCESSFULLY = 'Practitioner edited successfully.';
-export type PRACTITIONER_EDITED_SUCCESSFULLY = typeof PRACTITIONER_EDITED_SUCCESSFULLY;
+// todo - set up full strings with conditionals
 export const ASSIGNED_SUCCESSFULLY_TO = 'successfully assigned to';
 export type ASSIGNED_SUCCESSFULLY_TO = typeof ASSIGNED_SUCCESSFULLY_TO;
 export const ORGANIZATION_EDITED_SUCCESSFULLY = `${ORGANIZATION_LABEL} edited successfully.`;
@@ -523,6 +420,116 @@ export type ORGANIZATION_CREATED_SUCCESSFULLY = typeof ORGANIZATION_CREATED_SUCC
 export const REMOVED_FROM = 'successfully removed from';
 export type REMOVED_FROM = typeof REMOVED_FROM;
 
-// Error growl notification messages;
+// todo - init i18n here (or migrate everything below) and asynchronously export translations
+// also - async export/imports article: https://medium.com/@WebReflection/javascript-dynamic-import-export-b0e8775a59d4
+
+// Display Strings
+export const WELCOME_TO_REVEAL = 'Welcome to Reveal';
+export type WELCOME_TO_REVEAL = typeof WELCOME_TO_REVEAL;
+export const GET_STARTED_MESSAGE = 'Get started by selecting an intervention below';
+export type GET_STARTED_MESSAGE = typeof GET_STARTED_MESSAGE;
+export const PRACTITIONER_CREATED_SUCCESSFULLY = 'Practitioner created Successfully.';
+export type PRACTITIONER_CREATED_SUCCESSFULLY = typeof PRACTITIONER_CREATED_SUCCESSFULLY;
+export const PRACTITIONER_EDITED_SUCCESSFULLY = 'Practitioner edited successfully.';
+export type PRACTITIONER_EDITED_SUCCESSFULLY = typeof PRACTITIONER_EDITED_SUCCESSFULLY;
 export const REMOVING_PRACTITIONER_FAILED = 'Removing Practitioner Failed';
 export type REMOVING_PRACTITIONER_FAILED = typeof REMOVING_PRACTITIONER_FAILED;
+export const ON_REROUTE_WITH_UNSAVED_CHANGES =
+  'Unsaved Changes: please Save or Discard changes made';
+export type ON_REROUTE_WITH_UNSAVED_CHANGES = typeof ON_REROUTE_WITH_UNSAVED_CHANGES;
+
+export const HOME_TITLE = `Home page`;
+export type HOME_TITLE = typeof HOME_TITLE;
+export const IRS_TITLE = 'IRS';
+export type IRS_TITLE = typeof IRS_TITLE;
+export const IRS_REPORTING_TITLE = 'IRS Reporting';
+export type IRS_REPORTING_TITLE = typeof IRS_REPORTING_TITLE;
+export const CONDITIONAL_FORMATTING_RULES = 'Conditional formatting rules';
+export type CONDITIONAL_FORMATTING_RULES = typeof CONDITIONAL_FORMATTING_RULES;
+export const CONDITIONAL_FORMATTING_TITLE = 'Conditional Formatting';
+export type CONDITIONAL_FORMATTING_TITLE = typeof CONDITIONAL_FORMATTING_TITLE;
+export const FI_RESPONSE_ADHERENCE_TITLE = 'FI Response Adherence';
+export type FI_RESPONSE_ADHERENCE_TITLE = typeof FI_RESPONSE_ADHERENCE_TITLE;
+export const FOCUS_INVESTIGATION_START_TITLE = 'Focus Investigation Start';
+export type FOCUS_INVESTIGATION_START_TITLE = typeof FOCUS_INVESTIGATION_START_TITLE;
+export const DATE_CREATED = 'Date Created';
+export type DATE_CREATED = typeof DATE_CREATED;
+
+export const NEW_PLAN = 'New Plan';
+export type NEW_PLAN = typeof NEW_PLAN;
+export const ADD_PLAN = 'Add Plan';
+export type ADD_PLAN = typeof ADD_PLAN;
+export const CREATE_NEW_PLAN = 'Create New Plan';
+export type CREATE_NEW_PLAN = typeof CREATE_NEW_PLAN;
+export const UPDATE_PLAN = 'Update Plan';
+export type UPDATE_PLAN = typeof UPDATE_PLAN;
+export const CREATE_NEW_IRS_PLAN = 'Create New IRS Plan';
+export type CREATE_NEW_IRS_PLAN = typeof CREATE_NEW_IRS_PLAN;
+export const ADD_FOCUS_INVESTIGATION = 'Add Focus Investigation';
+export type ADD_FOCUS_INVESTIGATION = typeof ADD_FOCUS_INVESTIGATION;
+
+export const START_DATE = 'Start Date';
+export type START_DATE = typeof START_DATE;
+export const END_DATE = 'End Date';
+export type END_DATE = typeof END_DATE;
+export const NAME = 'Name';
+export type NAME = typeof NAME;
+export const LEGEND_LABEL = 'Legend';
+export type LEGEND_LABEL = typeof LEGEND_LABEL;
+export const DISCARD_CHANGES = 'Discard changes';
+export type DISCARD_CHANGES = typeof DISCARD_CHANGES;
+export const SAVE_CHANGES = 'Save changes';
+export type SAVE_CHANGES = typeof SAVE_CHANGES;
+export const ASSIGN_PLANS = 'Assign Plans';
+export type ASSIGN_PLANS = typeof ASSIGN_PLANS;
+export const ASSIGN_PRACTITIONERS = 'Assign Practitioners';
+export type ASSIGN_PRACTITIONERS = typeof ASSIGN_PRACTITIONERS;
+
+export const USERS = 'Users';
+export type USERS = typeof USERS;
+export const ABOUT = 'About';
+export type ABOUT = typeof ABOUT;
+export const LOGIN = 'Login';
+export type LOGIN = typeof LOGIN;
+export const SIGN_OUT = 'Sign Out';
+export type SIGN_OUT = typeof SIGN_OUT;
+
+export const MAP_LOAD_ERROR = 'Could not load the map';
+export type MAP_LOAD_ERROR = typeof MAP_LOAD_ERROR;
+export const AN_ERROR_OCCURED = 'An Error Ocurred';
+export type AN_ERROR_OCCURED = typeof AN_ERROR_OCCURED;
+export const PLEASE_FIX_THESE_ERRORS = 'Please fix these errors';
+export type PLEASE_FIX_THESE_ERRORS = typeof PLEASE_FIX_THESE_ERRORS;
+export const NO_INVESTIGATIONS_FOUND = 'No Investigations Found';
+export type NO_INVESTIGATIONS_FOUND = typeof NO_INVESTIGATIONS_FOUND;
+export const NO_PRACTITIONERS_ADDED_YET = 'No Practitioners Added yet';
+export type NO_PRACTITIONERS_ADDED_YET = typeof NO_PRACTITIONERS_ADDED_YET;
+export const PLAN_SELECT_PLACEHOLDER = 'Other plans in this area';
+export type PLAN_SELECT_PLACEHOLDER = typeof PLAN_SELECT_PLACEHOLDER;
+export const PLAN_STATUS_UPDATE_ERROR =
+  'Sorry, something went wrong when we tried to update the plan status';
+export type PLAN_STATUS_UPDATE_ERROR = typeof PLAN_STATUS_UPDATE_ERROR;
+export const NO_PLAN_FOUND_ERROR = 'Sorry, no plan found in the cloud!';
+export type NO_PLAN_FOUND_ERROR = typeof NO_PLAN_FOUND_ERROR;
+export const SAVE_PLAN_DEFINITION_ERROR =
+  'Uh oh, looks like something is (syntactically) wrong with the Plan schema';
+export type SAVE_PLAN_DEFINITION_ERROR = typeof SAVE_PLAN_DEFINITION_ERROR;
+export const SAVE_PLAN_NO_JURISDICTIONS_ERROR = 'Oops, no jurisdictions selected!';
+export type SAVE_PLAN_NO_JURISDICTIONS_ERROR = typeof SAVE_PLAN_NO_JURISDICTIONS_ERROR;
+
+export const SAVE_TEAM = 'Save Team';
+export type SAVE_TEAM = typeof SAVE_TEAM;
+export const SAVE_PLAN = 'Save Plan';
+export type SAVE_PLAN = typeof SAVE_PLAN;
+export const SAVE_AS_DRAFT = 'Save as a Draft';
+export type SAVE_AS_DRAFT = typeof SAVE_AS_DRAFT;
+export const SAVE_FINALIZED_PLAN = 'Save Finalized Plan';
+export type SAVE_FINALIZED_PLAN = typeof SAVE_FINALIZED_PLAN;
+export const SAVE_ASSIGNMENTS = 'Save Assignments';
+export type SAVE_ASSIGNMENTS = typeof SAVE_ASSIGNMENTS;
+export const NO_PLANS_LOADED_MESSAGE = 'No plans found...';
+export type NO_PLANS_LOADED_MESSAGE = typeof NO_PLANS_LOADED_MESSAGE;
+export const SELECT = 'Select';
+export type SELECT = typeof SELECT;
+export const SELECT_USERNAME = 'Select username';
+export type SELECT_USERNAME = typeof SELECT_USERNAME;
