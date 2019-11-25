@@ -3,7 +3,17 @@ import { xor } from 'lodash';
 import moment from 'moment';
 import React, { FormEvent, useState } from 'react';
 import { Redirect } from 'react-router-dom';
-import { Button, FormGroup, Label, Modal, ModalBody, ModalHeader } from 'reactstrap';
+import {
+  Button,
+  FormGroup,
+  InputGroup,
+  InputGroupAddon,
+  InputGroupText,
+  Label,
+  Modal,
+  ModalBody,
+  ModalHeader,
+} from 'reactstrap';
 import DatePickerWrapper from '../../../components/DatePickerWrapper';
 import {
   DATE_FORMAT,
@@ -55,6 +65,7 @@ import {
   FIActivities,
   generatePlanDefinition,
   getFormActivities,
+  getGoalUnitFromActionCode,
   getNameTitle,
   IRSActivities,
   PlanActivityFormFields,
@@ -62,6 +73,7 @@ import {
   PlanJurisdictionFormFields,
   PlanSchema,
 } from './helpers';
+import { GoalUnit, PlanActionCodesType } from './types';
 
 import './style.css';
 
@@ -670,22 +682,30 @@ const PlanForm = (props: PlanFormProps) => {
                           </FormGroup>
                           <FormGroup>
                             <Label for={`activities-${index}-goalValue`}>{QUANTITY_LABEL}</Label>
-                            <Field
-                              type="number"
-                              name={`activities[${index}].goalValue`}
-                              id={`activities-${index}-goalValue`}
-                              required={true}
-                              disabled={
-                                disabledFields.includes('activities') ||
-                                disabledActivityFields.includes('goalValue')
-                              }
-                              className={
-                                errors.activities &&
-                                doesFieldHaveErrors('goalValue', index, errors.activities)
-                                  ? 'form-control is-invalid'
-                                  : 'form-control'
-                              }
-                            />
+                            <InputGroup id={`activities-${index}-goalValue-input-group`}>
+                              <Field
+                                type="number"
+                                name={`activities[${index}].goalValue`}
+                                id={`activities-${index}-goalValue`}
+                                required={true}
+                                disabled={
+                                  disabledFields.includes('activities') ||
+                                  disabledActivityFields.includes('goalValue')
+                                }
+                                className={
+                                  errors.activities &&
+                                  doesFieldHaveErrors('goalValue', index, errors.activities)
+                                    ? 'form-control is-invalid'
+                                    : 'form-control'
+                                }
+                              />
+                              <InputGroupAddon addonType="append">
+                                <InputGroupText>
+                                  {getGoalUnitFromActionCode(values.activities[index]
+                                    .actionCode as PlanActionCodesType)}
+                                </InputGroupText>
+                              </InputGroupAddon>
+                            </InputGroup>
                             <ErrorMessage
                               name={`activities[${index}].goalValue`}
                               component="small"

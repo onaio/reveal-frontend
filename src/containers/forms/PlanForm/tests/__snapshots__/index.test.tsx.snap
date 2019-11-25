@@ -1115,6 +1115,14 @@ exports[`containers/forms/PlanForm renders activity fields correctly: FI activit
 </Label>
 `;
 
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[0].goalValue unit 1`] = `
+<span
+  className="input-group-text"
+>
+  case(s)
+</span>
+`;
+
 exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[0].timingPeriodEnd field 1`] = `
 <input
   className="form-control"
@@ -1453,6 +1461,14 @@ exports[`containers/forms/PlanForm renders activity fields correctly: FI activit
     Quantity
   </label>
 </Label>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[1].goalValue unit 1`] = `
+<span
+  className="input-group-text"
+>
+  Percent
+</span>
 `;
 
 exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[1].timingPeriodEnd field 1`] = `
@@ -1795,6 +1811,14 @@ exports[`containers/forms/PlanForm renders activity fields correctly: FI activit
 </Label>
 `;
 
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[2].goalValue unit 1`] = `
+<span
+  className="input-group-text"
+>
+  Person(s)
+</span>
+`;
+
 exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[2].timingPeriodEnd field 1`] = `
 <input
   className="form-control"
@@ -2133,6 +2157,14 @@ exports[`containers/forms/PlanForm renders activity fields correctly: FI activit
     Quantity
   </label>
 </Label>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[3].goalValue unit 1`] = `
+<span
+  className="input-group-text"
+>
+  Percent
+</span>
 `;
 
 exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[3].timingPeriodEnd field 1`] = `
@@ -2475,6 +2507,14 @@ exports[`containers/forms/PlanForm renders activity fields correctly: FI activit
 </Label>
 `;
 
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[4].goalValue unit 1`] = `
+<span
+  className="input-group-text"
+>
+  activit(y|ies)
+</span>
+`;
+
 exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[4].timingPeriodEnd field 1`] = `
 <input
   className="form-control"
@@ -2813,6 +2853,14 @@ exports[`containers/forms/PlanForm renders activity fields correctly: FI activit
     Quantity
   </label>
 </Label>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[5].goalValue unit 1`] = `
+<span
+  className="input-group-text"
+>
+  activit(y|ies)
+</span>
 `;
 
 exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[5].timingPeriodEnd field 1`] = `
@@ -3155,6 +3203,14 @@ exports[`containers/forms/PlanForm renders activity fields correctly: FI activit
 </Label>
 `;
 
+exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[6].goalValue unit 1`] = `
+<span
+  className="input-group-text"
+>
+  activit(y|ies)
+</span>
+`;
+
 exports[`containers/forms/PlanForm renders activity fields correctly: FI activities[6].timingPeriodEnd field 1`] = `
 <input
   className="form-control"
@@ -3493,6 +3549,14 @@ exports[`containers/forms/PlanForm renders activity fields correctly: IRS activi
     Quantity
   </label>
 </Label>
+`;
+
+exports[`containers/forms/PlanForm renders activity fields correctly: IRS activities[0].goalValue unit 1`] = `
+<span
+  className="input-group-text"
+>
+  Percent
+</span>
 `;
 
 exports[`containers/forms/PlanForm renders activity fields correctly: IRS activities[0].timingPeriodEnd field 1`] = `
