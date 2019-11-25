@@ -37,6 +37,7 @@ import {
   FIReasonType,
   FIStatusType,
   GoalPriorityType,
+  GoalUnit,
   PlanActionCodesType,
   PlanActivityTitlesType,
   taskGenerationStatusType,
@@ -585,4 +586,16 @@ export function getPlanFormValues(planObject: PlanDefinition): PlanFormFields {
     title: planObject.title,
     version: planObject.version,
   };
+}
+
+/**
+ * Get goal unit from action code
+ * @param {PlanActionCodesType} actionCode - the plan action code
+ */
+export function getGoalUnitFromActionCode(actionCode: PlanActionCodesType): GoalUnit {
+  const planActivity = getPlanActivityFromActionCode(actionCode);
+  if (planActivity) {
+    return planActivity.goal.target[0].detail.detailQuantity.unit;
+  }
+  return GoalUnit.UNKNOWN;
 }
