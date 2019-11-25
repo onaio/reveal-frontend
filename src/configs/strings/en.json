@@ -1,0 +1,202 @@
+{
+  "WELCOME_TO_REVEAL": {
+    "message": "Welcome to Reveal",
+    "description": "Title on the landing page"
+  },
+  "GET_STARTED_MESSAGE": {
+    "message": "Get started by selecting an intervention below",
+    "description": "Subtitle on the landing page"
+  },
+  "ON_REROUTE_WITH_UNSAVED_CHANGES": {
+    "message": "Unsaved Changes: please Save or Discard changes made",
+    "description": "prompt message warning against navigating away from unsaved changes"
+  },
+  "PRACTITIONER_CREATED_SUCCESSFULLY": {
+    "message": "Practitioner created Successfully.",
+    "description": "confirmation prompt message"
+  },
+  "PRACTITIONER_EDITED_SUCCESSFULLY": {
+    "message": "Practitioner edited successfully.",
+    "description": "confirmation prompt message"
+  },
+  "REMOVING_PRACTITIONER_FAILED": {
+    "message": "Removing Practitioner Failed",
+    "description": "warning prompt message"
+  },
+  "HOME_TITLE": {
+    "message": "Home page",
+    "description": "page title base for SEO and tab text"
+  },
+  "IRS_TITLE": {
+    "message": "IRS",
+    "description": "abbreviation for  Indoor Residual Spray, used for breadcrumbs, nav, and page titles"
+  },
+  "IRS_REPORTING_TITLE": {
+    "message": "IRS Reporting",
+    "description": "page title for IRS reporting page"
+  },
+  "CONDITIONAL_FORMATTING_RULES": {
+    "message": "Conditional formatting rules",
+    "description": "legend title describing colors"
+  },
+  "CONDITIONAL_FORMATTING_TITLE": {
+    "message": "Conditional Formatting",
+    "description": "legend header of column containing colors"
+  },
+  "FI_RESPONSE_ADHERENCE_TITLE": {
+    "message": "FI Response Adherence",
+    "description": "legend heder of column describing category definitions"
+  },
+  "DATE_CREATED": {
+    "message": "Date Created",
+    "description": "column header: date a plan was create"
+  },
+  "FOCUS_INVESTIGATION_START_TITLE": {
+    "message": "Focus Investigation Start",
+    "description": "section label: the start date of a focus investigation plan"
+  },
+  "ADD_FOCUS_INVESTIGATION": {
+    "message": "Add Focus Investigation",
+    "description": "button text: create a new focus investigation plan"
+  },
+  "UPDATE_PLAN": {
+    "message": "Update Plan",
+    "description": "button text: edit an existing plan"
+  },
+  "ADD_PLAN": {
+    "message": "Add Plan",
+    "description": "button text: create a new plan"
+  },
+  "CREATE_NEW_IRS_PLAN": {
+    "message": "Create New IRS Plan",
+    "description": "button text: create a new IRS plan"
+  },
+  "CREATE_NEW_PLAN": {
+    "message": "Create New Plan",
+    "description": "button text: create a new plan; page title"
+  },
+  "NEW_PLAN": {
+    "message": "New Plan",
+    "description": "page title: page for creating new plans"
+  },
+  "NAME": {
+    "message": "Name",
+    "description": "label, column header: name, title, designation of an entity"
+  },
+  "START_DATE": {
+    "message": "Start Date",
+    "description": "label, column header: starting date of a plan or activity"
+  },
+  "END_DATE": {
+    "message": "End Date",
+    "description": "label, column header: ending date of a plan or activity"
+  },
+  "SAVE_CHANGES": {
+    "message": "Save changes",
+    "description": "button text: save unsaved changes made"
+  },
+  "DISCARD_CHANGES": {
+    "message": "Discard changes",
+    "description": "button text: discard unsaved changes"
+  },
+  "LEGEND_LABEL": {
+    "message": "Legend",
+    "description": "section header: sidbar section containing a map legend"
+  },
+  "USERS": {
+    "message": "Users",
+    "description": "nav item: links to Admin > Users page"
+  },
+  "ABOUT": {
+    "message": "About",
+    "description": "nav item: links to About page"
+  },
+  "LOGIN": {
+    "message": "Login",
+    "description": "header button: links to sign-in page"
+  },
+  "SIGN_OUT": {
+    "message": "Sign Out",
+    "description": "header button: logs out the user"
+  },
+  "ASSIGN_PRACTITIONERS": {
+    "message": "Assign Practitioners",
+    "description": "bread crumb: label for the page for assigning practitioners to teams"
+  },
+  "ASSIGN_PLANS": {
+    "message": "Assign Plans",
+    "description": "page title, breadcrumb: label for the page for assigning practitioners to plans"
+  },
+  "MAP_LOAD_ERROR": {
+    "message": "Could not load the map",
+    "description": "error promt: warns user map won't load"
+  },
+  "AN_ERROR_OCCURED": {
+    "message": "An Error Ocurred",
+    "description": "error prompt: a general warning that something went wrong"
+  },
+  "PLEASE_FIX_THESE_ERRORS": {
+    "message": "Please fix these errors",
+    "description": "error prompt: header on a page listing errors"
+  },
+  "NO_INVESTIGATIONS_FOUND": {
+    "message": "No Investigations Found",
+    "description": "error prompt: message alerting that no plans were found"
+  },
+  "NO_PRACTITIONERS_ADDED_YET": {
+    "message": "No Practitioners Added yet",
+    "description": "warning prompt: message alerting that there are no practioners saved in the server"
+  },
+  "PLAN_SELECT_PLACEHOLDER": {
+    "message": "Other plans in this area",
+    "description": "input placeholder: non-selected dropdown linking to other plans in the same focus area"
+  },
+  "PLAN_STATUS_UPDATE_ERROR": {
+    "message": "Sorry, something went wrong when we tried to update the plan status",
+    "description": "error prompt: general warning that something went wrong when saving a plan"
+  },
+  "NO_PLAN_FOUND_ERROR": {
+    "message": "Sorry, no plan found in the cloud!",
+    "description": "error prompt: warning that the loaded plan doesn't exist on the server"
+  },
+  "SAVE_PLAN_DEFINITION_ERROR": {
+    "message": "Uh oh, looks like something is (syntactically) wrong with the Plan schema",
+    "description": "error prompt: warning that the plan data schema being saved is incorrect"
+  },
+  "SAVE_PLAN_NO_JURISDICTIONS_ERROR": {
+    "message": "Oops, no jurisdictions selected!",
+    "description": "error prompt: warning that no jurisdictions were selected for the loaded plan"
+  },
+  "SELECT_USERNAME": {
+    "message": "Select username",
+    "description": "input placeholder: non-selected dropdown to select OpenMRS user for the OpenSRP practitioner"
+  },
+  "SELECT": {
+    "message": "Select",
+    "description": "input placeholder, label: indicates the user making a selection from a dropdown or list"
+  },
+  "NO_PLANS_LOADED_MESSAGE": {
+    "message": "No plans found...",
+    "description": "warning prompt: when there are no plans to render in the lists"
+  },
+  "SAVE_ASSIGNMENTS": {
+    "message": "Save Assignments",
+    "description": "button text: to save the configured team-plan-jurisdiction selection"
+  },
+  "SAVE_FINALIZED_PLAN": {
+    "message": "Save Finalized Plan",
+    "description": "button text: to save a finalized plan definition to the server"
+  },
+  "SAVE_AS_DRAFT": {
+    "message": "Save as a Draft",
+    "description": "button text: to save a draft plan definition to the server"
+  },
+  "SAVE_PLAN": {
+    "message": "Save Plan",
+    "description": "button text: to save a plan definition to the server"
+  },
+  "SAVE_TEAM": {
+    "message": "Save Team",
+    "description": "button title: when saving a plan definition to the server"
+  }
+}
