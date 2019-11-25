@@ -36,3 +36,12 @@ export type PlanActivityTitlesType = typeof PlanActivityTitles[number];
 
 /** Plan activities type */
 export type PlanActivities = { [K in PlanActivityTitlesType]: PlanActivity };
+
+/** Enum representing the possible goal unitss */
+export enum GoalUnit {
+  ACTIVITY = 'activit(y|ies)',
+  CASE = 'case(s)',
+  PERCENT = 'Percent',
+  PERSON = 'Person(s)',
+  UNKNOWN = 'unknown',
+}
