@@ -3,6 +3,7 @@ import * as React from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
+import { toast } from 'react-toastify';
 import { Store } from 'redux';
 import Loading from '../../../../../components/page/Loading';
 import {
@@ -19,6 +20,7 @@ import {
   PLAN_STATUS_UPDATE_ERROR,
 } from '../../../../../constants';
 import { FlexObject } from '../../../../../helpers/utils';
+import { growl } from '../../../../../helpers/utils';
 import { OpenSRPService } from '../../../../../services/opensrp';
 import {
   fetchPlans,
@@ -88,11 +90,11 @@ export class PlanCompletion extends React.Component<
           })
           .catch(e => {
             // catch the error if one is returned from OpenSRP
-            alert(PLAN_STATUS_UPDATE_ERROR);
+            growl(`{PLAN_STATUS_UPDATE_ERROR}: ${e.message}`, { type: toast.TYPE.ERROR });
           });
       } else {
         // catch the error of the plan not existing in the server
-        alert(NO_PLAN_FOUND_ERROR);
+        growl(NO_PLAN_FOUND_ERROR, { type: toast.TYPE.ERROR });
       }
     });
   }
