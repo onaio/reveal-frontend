@@ -327,6 +327,12 @@ export const DISCARD_CHANGES = 'Discard changes';
 export type DISCARD_CHANGES = typeof DISCARD_CHANGES;
 export const SAVE_CHANGES = 'Save changes';
 export type SAVE_CHANGES = typeof SAVE_CHANGES;
+export const SAVE_PRACTITIONER = 'Save Practitioner';
+export type SAVE_PRACTITIONER = typeof SAVE_PRACTITIONER;
+export const NEW_PRACTITIONER = 'New Practitioner';
+export type NEW_PRACTITIONER = typeof NEW_PRACTITIONER;
+export const EDIT_PRACTITIONER = 'Edit Practitioner';
+export type EDIT_PRACTITIONER = typeof EDIT_PRACTITIONER;
 
 // TODO ? - do the below 2 belong here or in a settings file
 export const ORGANIZATION_LABEL = TEAM;

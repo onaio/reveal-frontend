@@ -9,7 +9,7 @@ import ConnectedCreateEditPractitionerView, { CreateEditPractitionerView } from 
 import {
   EDIT,
   EDIT_PRACTITIONER_URL,
-  NEW,
+  NEW_PRACTITIONER,
   OPENSRP_PRACTITIONER_ENDPOINT,
   PRACTITIONER,
 } from '../../../../../constants';
@@ -249,7 +249,7 @@ describe('src/containers/practitionerViews/createEditview.createView', () => {
 
     // page title
     const helmet = Helmet.peek();
-    expect(helmet.title).toEqual(`${NEW} ${PRACTITIONER}`);
+    expect(helmet.title).toEqual(NEW_PRACTITIONER);
 
     // breadcrumb
     const breadcrumbWrapper = wrapper.find('Breadcrumb');
