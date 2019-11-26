@@ -3,6 +3,7 @@ import * as React from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
+import { toast } from 'react-toastify';
 import { Store } from 'redux';
 import Loading from '../../../../../components/page/Loading';
 import {
@@ -19,6 +20,7 @@ import {
   PLAN_STATUS_UPDATE_ERROR,
 } from '../../../../../constants';
 import { FlexObject } from '../../../../../helpers/utils';
+import { growl } from '../../../../../helpers/utils';
 import { OpenSRPService } from '../../../../../services/opensrp';
 import {
   fetchPlans,
@@ -69,31 +71,34 @@ export class PlanCompletion extends React.Component<
     const service = new serviceClass(`${OPENSRP_PLANS}`);
 
     // get the plan as it exists in the OpenSRP Server
-    await service.read(planToconfirm.plan_id).then((planPayload: PlanPayload) => {
-      if (planPayload && JSON.stringify(planPayload) !== '{}') {
-        // set the plan status to complete
-        const thePlan: PlanPayload = {
-          ...planPayload,
-          status: PlanStatus.COMPLETE,
-        };
-        // update the plan with updated status
-        return service
-          .update(thePlan)
-          .then(response => {
-            // todo - extract Plan from PlanPayload to save to state
-            fetchPlansActionCreator([planToconfirm]);
-            // redirect to Focus Investigations page
-            this.props.history.push(`${PLAN_LIST_URL}`);
-          })
-          .catch(e => {
-            // catch the error if one is returned from OpenSRP
-            alert(PLAN_STATUS_UPDATE_ERROR);
-          });
-      } else {
-        // catch the error of the plan not existing in the server
-        alert(NO_PLAN_FOUND_ERROR);
-      }
-    });
+    await service
+      .read(planToconfirm.plan_id)
+      .then((fullPayload: PlanPayload[]) => {
+        const planPayload = fullPayload[0];
+        if (planPayload && JSON.stringify(planPayload) !== '{}') {
+          // set the plan status to complete
+          const thePlan: PlanPayload = {
+            ...planPayload,
+            status: PlanStatus.COMPLETE,
+          };
+          // update the plan with updated status
+          return service
+            .update(thePlan)
+            .then(response => {
+              // todo - extract Plan from PlanPayload to save to state
+              fetchPlansActionCreator([planToconfirm]);
+              // redirect to Focus Investigations page
+              this.props.history.push(`${PLAN_LIST_URL}`);
+            })
+            .catch(e =>
+              growl(`${PLAN_STATUS_UPDATE_ERROR}: ${e.message}`, { type: toast.TYPE.ERROR })
+            );
+        } else {
+          // catch the error of the plan not existing in the server
+          growl(NO_PLAN_FOUND_ERROR, { type: toast.TYPE.ERROR });
+        }
+      })
+      .catch(e => growl(`${PLAN_STATUS_UPDATE_ERROR}: ${e.message}`, { type: toast.TYPE.ERROR }));
   }
 
   public render() {
