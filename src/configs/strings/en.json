@@ -198,5 +198,341 @@
   "SAVE_TEAM": {
     "message": "Save Team",
     "description": "button title: when saving a plan definition to the server"
+  },
+  "REMOVE": {
+    "message": "Remove",
+    "description": "button text: to remove a practioner from a team"
+  },
+  "ADD": {
+    "message": "Add",
+    "description": "button text: to add one entity to another"
+  },
+  "EDIT": {
+    "message": "Edit",
+    "description": "button text: to update an entity on the server"
+  },
+  "YES": {
+    "message": "Yes",
+    "description": "form label: to select yes in a form"
+  },
+  "NO": {
+    "message": "No",
+    "description": "form label: to select no in a form"
+  },
+  "TEAMS_ASSIGNED": {
+    "message": "Teams Assigned",
+    "description": "button text: to set team assignment for a plan-jurisdiction"
+  },
+  "ASSIGN_TEAMS": {
+    "message": "Assign Teams",
+    "description": "button text: to choose teams to assign to a plan-jurisdiction"
+  },
+  "SELECT_TEAMS_TO_ASSIGN": {
+    "message": "Select Teams to Assign",
+    "description": "popup header: informing users to select teams for plan-jurisdiction assignment"
+  },
+  "NO_TEAMS_LOADED_MESSAGE": {
+    "message": "No teams loaded...",
+    "description": "warning prompt: message alerting that there were no teams loaded from the server"
+  },
+  "ASSIGN": {
+    "message": "Assign",
+    "description": "button text: to assign a practioner to a team or a team to a plan-jurisdiction"
+  },
+  "ACTIVE": {
+    "message": "Active",
+    "description": "section title: for sections containing lists of active emtities"
+  },
+  "CLEAR": {
+    "message": "Clear",
+    "description": "button text: to remove all team assignments from a plan-jurisdiction"
+  },
+  "SAVE": {
+    "message": "Save",
+    "description": "button text: to save changes to the server"
+  },
+  "PRACTITIONERS": {
+    "message": "Practitioners",
+    "description": "page title: page for practioner managment"
+  },
+  "PRACTITIONER": {
+    "message": "Practitioner",
+    "description": "column header, section title: for information about a single practitioner"
+  },
+  "VIEW": {
+    "message": "view",
+    "description": "link text: to navigate to information about a team"
+  },
+  "USERNAME": {
+    "message": "Username",
+    "description": "column header, form label: for user aliases for practitioners"
+  },
+  "IDENTIFIER": {
+    "message": "Identifier",
+    "description": "column header: unique identifiers for teams and practitioners"
+  },
+  "ACTIONS": {
+    "message": "Actions",
+    "description": "column header: for actionable items in team and practitioner management"
+  },
+  "ACTION": {
+    "message": "Action",
+    "description": "column header, form label: for actionable item in plans"
+  },
+  "SEARCH": {
+    "message": "Search",
+    "description": "button text, input placeholder: indicates the user can search for a specific entity"
+  },
+  "TEAMS_ASSIGNMENT": {
+    "message": "Team Assignment",
+    "description": "column header: containing information about plan-jurisdiction assignments"
+  },
+  "NEW_TEAM": {
+    "message": "New Team",
+    "description": "button text: to create a new team"
+  },
+  "EDIT_TEAM": {
+    "message": "Edit Team",
+    "description": "button text: to update an existing team on the server"
+  },
+  "TEAM": {
+    "message": "Team",
+    "description": "input placeholder: when defining the type of an organization"
+  },
+  "TEAMS": {
+    "message": "Teams",
+    "description": "header, title, links: for pages about teams"
+  },
+  "PLAN_STATUS": {
+    "message": "Plan Status",
+    "description": "column header: describing the current status of a plan"
+  },
+  "PLAN_TITLE": {
+    "message": "Plan",
+    "description": "global nav (title case): name of an entity describing work which needs to be done"
+  },
+  "NEW_TITLE": {
+    "message": "New",
+    "description": "badge text: indicates an entity is new"
+  },
+  "COUNTRY": {
+    "message": "Country",
+    "description": "form lable: indicates the top-most location hierarchy level"
+  },
+  "IRS_PLANS": {
+    "message": "IRS Plans",
+    "description": "page title: pages for Indoor Residual Sray plans"
+  },
+  "CANCEL": {
+    "message": "Cancel",
+    "description": "button text: discard unsaved changes"
+  },
+  "CONFIRM": {
+    "message": "Confirm",
+    "description": "button text: save unsaved changes made"
+  },
+  "DRAFTS_PARENTHESIS": {
+    "message": "(drafts)",
+    "description": "page title: denoting the currently rendered plan is not finalized"
+  },
+  "ADMIN": {
+    "message": "Admin",
+    "description": "global nav: group of administrative pages for teams and practioners"
+  },
+  "MONITOR": {
+    "message": "Monitor",
+    "description": "global nav: group of pages relating to monitoring plans and plan reports"
+  },
+  "PLANNING": {
+    "message": "Planning",
+    "description": "global nav: group of pages relating to developing plans"
+  },
+  "PLANS": {
+    "message": "Manage Plans",
+    "description": "page title: page to list out all plans from the server"
+  },
+  "SAVING": {
+    "message": "Saving",
+    "description": "button text: displays while an entity is being saved to the server and denoting progress"
+  },
+  "REQUIRED": {
+    "message": "Required",
+    "description": "form label: denoting a form input is mandatory to submit"
+  },
+  "REACTIVE": {
+    "message": "Reactive",
+    "description": "page title, section title: for the reactive type of focus investigation plans"
+  },
+  "PERSONS": {
+    "message": "person(s)",
+    "description": "unit of meassurement: can be one person or multiple people"
+  },
+  "STRUCTURES": {
+    "message": "structure(s)",
+    "description": "unit of meassurement: can be single building or multiple buildings"
+  },
+  "MARK_AS_COMPLETE": {
+    "message": "Mark as complete",
+    "description": "button, page title: to update a plan status to as completed"
+  },
+  "MEASURE": {
+    "message": "Measure",
+    "description": "indicator label: indicating the type of plan action being monitored"
+  },
+  "FI_STATUS": {
+    "message": "FI Status",
+    "description": "column header: for the status of Focus Investigation plans"
+  },
+  "FI_REASON": {
+    "message": "FI Reason",
+    "description": "column header: the reason for the plan (can be reactive or routine)"
+  },
+  "CANTON": {
+    "message": "Canton",
+    "description": "column header: the Canton in which a focus investigation takes place"
+  },
+  "DISTRICT": {
+    "message": "District",
+    "description": "column header: the District in which a focus investigation takes place"
+  },
+  "ADMIN_LEVEL": {
+    "message": "Admin Level",
+    "description": "column header: the administrative label of a jurisdiction"
+  },
+  "JURISDICTION": {
+    "message": "Jurisdiction",
+    "description": "breadcrumb: generic term for an administrative territory"
+  },
+  "LOCATIONS": {
+    "message": "Locations",
+    "description": "form section header: for defining the locations included in a plan"
+  },
+  "TYPE_LABEL": {
+    "message": "Type",
+    "description": "column header: containing the categorical type of an entity"
+  },
+  "DEFINITIONS": {
+    "message": "Definitions",
+    "description": "legend header: descrbing the meaning of different focus investigation classifications"
+  },
+  "CASE_CLASSIFICATION_LABEL": {
+    "message": "Case Classification",
+    "description": "label: for the classification of a plan"
+  },
+  "CASE_CLASSIFICATION_HEADER": {
+    "message": "Case Class.",
+    "description": "table header: (abbreviated) for the classification of a plan"
+  },
+  "CASE_NOTIF_DATE_HEADER": {
+    "message": "Case Notif. Date",
+    "description": "table header: (abbreviated) for the notification date of a plan"
+  },
+  "STATUS_HEADER": {
+    "message": "Status",
+    "description": "column header: containing the status of plans"
+  },
+  "REASON_HEADER": {
+    "message": "Reason",
+    "description": "form label: for the reason leading to a plan being created"
+  },
+  "ADD_ACTIVITY": {
+    "message": "Add Activity",
+    "description": "button text: to add a new activity to a plan"
+  },
+  "PRIORITY_LABEL": {
+    "message": "Priority",
+    "description": "form label: for the priority level of an activity in a plan"
+  },
+  "QUANTITY_LABEL": {
+    "message": "Quantity",
+    "description": "form label: for the quantitative value for a goal of an activity in a plan"
+  },
+  "DESCRIPTION_LABEL": {
+    "message": "Description",
+    "description": "form label: for the description for a gaol of an activity in a plan"
+  },
+  "ACTIVITIES_LABEL": {
+    "message": "Activities",
+    "description": "form section header: for defining the activities in a plan"
+  },
+  "PLAN_END_DATE_LABEL": {
+    "message": "Plan End Date",
+    "description": "form label: for the ending date of a plan"
+  },
+  "PLAN_START_DATE_LABEL": {
+    "message": "Plan Start Date",
+    "description": "form label: for the starting date of a plan"
+  },
+  "PLAN_TITLE_LABEL": {
+    "message": "Plan Title",
+    "description": "form label: for the name of a plan"
+  },
+  "TITLE": {
+    "message": "Title",
+    "description": "column header: containing the names of plans"
+  },
+  "LAST_MODIFIED": {
+    "message": "Last Modified",
+    "description": "column header: containing the date of the last time a plan was updated on the server"
+  },
+  "CASE_NUMBER": {
+    "message": "Case Number",
+    "description": "form label: for the case identification number"
+  },
+  "FOCUS_INVESTIGATION_STATUS_REASON": {
+    "message": "Focus Investigation Reason",
+    "description": "form label: for the reason leading to a plan being created"
+  },
+  "FOCUS_INVESTIGATION_STATUS_LABEL": {
+    "message": "Focus Investigation Status",
+    "description": "form label: for the status of a focus investigation plan"
+  },
+  "INTERVENTION_TYPE_LABEL": {
+    "message": "INTERVENTION_TYPE_LABEL",
+    "description": "form label: for the type of intervention plan"
+  },
+  "SPRAY_AREA_HEADER": {
+    "message": "Spray Area",
+    "description": "table lable: inidcating a jurisdiction is a Spray Area"
+  },
+  "FOCUS_AREA_HEADER": {
+    "message": "Focus Area",
+    "description": "form label: for the Focus Area specified in a Focus Investigation plan"
+  },
+  "FOCUS_INVESTIGATIONS": {
+    "message": "Focus Investigations",
+    "description": "page title: for pages about Focus Investigation plans"
+  },
+  "FOCUS_AREA_INFO": {
+    "message": "Focus Area Information",
+    "description": "section title: containint information about a specific Focus Area"
+  },
+  "INTERVENTION": {
+    "message": "Intervention",
+    "description": "column header: containing the type of intervention of a plan"
+  },
+  "INVESTIGATION": {
+    "message": "Investigation",
+    "description": "section header: sidebar section containing information about the intervention plan"
+  },
+  "COMPLETE_FOCUS_INVESTIGATION": {
+    "message": "Complete Focus Investigations",
+    "description": "section header: containing list of completed focus investigation plans"
+  },
+  "CURRENT_FOCUS_INVESTIGATION": {
+    "message": "Current Focus Investigations",
+    "description": "section header: containing list of active focus investigation plans"
+  },
+  "FOCUS_INVESTIGATION": {
+    "message": "Focus Investigation",
+    "description": "page title: for focus investigation pages"
+  },
+  "HOME": {
+    "message": "Home",
+    "description": "global nav: linking to site homepage"
+  },
+  "PROVINCE": {
+    "message": "Province",
+    "description": "column header: the Province in which a focus investigation takes place"
   }
 }
