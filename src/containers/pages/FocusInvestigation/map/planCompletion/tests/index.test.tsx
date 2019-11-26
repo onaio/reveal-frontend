@@ -9,13 +9,7 @@ import { Helmet } from 'react-helmet';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import ConnectedPlanCompletion, { PlanCompletion } from '..';
-import {
-  FI_SINGLE_MAP_URL,
-  OPENSRP_PLANS,
-  PLAN_COMPLETION_URL,
-  PLAN_LIST_URL,
-} from '../../../../../../constants';
-import { OpenSRPService } from '../../../../../../services/opensrp';
+import { FI_SINGLE_MAP_URL, PLAN_COMPLETION_URL, PLAN_LIST_URL } from '../../../../../../constants';
 import {
   plansListResponse,
   updateResponse,
