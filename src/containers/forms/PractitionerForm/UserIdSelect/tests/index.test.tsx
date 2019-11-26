@@ -4,7 +4,7 @@ import flushPromises from 'flush-promises';
 import React from 'react';
 import UserIdSelect, { thereIsNextPage } from '..';
 import { OpenSRPService } from '../../../../../services/opensrp';
-import { openMRSUsers, practitioners } from './fixtures';
+import { openMRSUsers, practitioners, sortedUsers } from './fixtures';
 
 // tslint:disable-next-line: no-var-requires
 const fetch = require('jest-fetch-mock');
@@ -127,6 +127,22 @@ describe('src/*/forms/userIdSelect', () => {
         },
       ],
     ]);
+  });
+
+  it('options are sorted in descending', async () => {
+    fetch.once(JSON.stringify(practitioners)).once(JSON.stringify(openMRSUsers));
+    const props = {
+      serviceClass: OpenSRPService,
+    };
+    const wrapper = mount(<UserIdSelect {...props} />);
+
+    await flushPromises();
+    wrapper.update();
+
+    // now look at passed options to Select
+    const selectWrapperProps = wrapper.find('Select').props();
+    const selectWrapperOptions = (selectWrapperProps as any).options;
+    expect(selectWrapperOptions).toEqual(sortedUsers);
   });
 });
 
