@@ -69,7 +69,8 @@ export class PlanCompletion extends React.Component<
     const service = new serviceClass(`${OPENSRP_PLANS}`);
 
     // get the plan as it exists in the OpenSRP Server
-    await service.read(planToconfirm.plan_id).then((planPayload: PlanPayload) => {
+    await service.read(planToconfirm.plan_id).then((fullPayload: PlanPayload[]) => {
+      const planPayload = fullPayload[0];
       if (planPayload && JSON.stringify(planPayload) !== '{}') {
         // set the plan status to complete
         const thePlan: PlanPayload = {

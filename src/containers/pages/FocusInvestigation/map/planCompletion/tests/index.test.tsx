@@ -169,7 +169,7 @@ describe('@containers/pages/map/planCompletion/', () => {
 
     const expectedCalledUrl =
       'https://reveal-stage.smartregister.org/opensrp/rest/plans/10f9e9fa-ce34-4b27-a961-72fab5206ab6';
-    fetch.once(JSON.stringify(plansListResponse[0])).once(JSON.stringify(updateResponse));
+    fetch.once(JSON.stringify([plansListResponse[0]])).once(JSON.stringify(updateResponse));
 
     const discoWrapper = mount(
       <Provider store={store}>
