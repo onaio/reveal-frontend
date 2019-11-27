@@ -582,5 +582,29 @@
   "TEAM_MEMBERS": {
     "message": "Team Members",
     "description": "section header: containing list of practitioners assigned to a team"
+  },
+  "ONE_DAY_TO_GO": {
+    "message": "1 day to go",
+    "description": "legend item: describing that there is greater than or equal to one remaining day to complete the plan"
+  },
+  "ZERO_DAYS_TO_GO": {
+    "message": "0 days to go",
+    "description": "legend item: describing that there zero remaining days to complete the plan"
+  },
+  "PRACTITIONERS_ASSIGNED_TO_ORG": {
+    "message": "%s Practitioners successfully assigned to %s",
+    "description": "notification alert: alerting user that a number of practitioners has been assigned to a team; args: number of practitioners, name of the team"
+  },
+  "PRACTITIONER_REMOVED_FROM_ORG": {
+    "message": "%s-%s successfully removed from %s",
+    "description": "notification alert: telling useer that a practioner was removed from a team; args: name, username, team name (example: Conor-ckelly successfully removed from BlueTeam"
+  },
+  "ORGANIZATION_EDITED_SUCCESSFULLY": {
+    "message": "Team edited successfully.",
+    "description": "notification alert: an existing team was successfully edited and saved to the server"
+  },
+  "ORGANIZATION_CREATED_SUCCESSFULLY": {
+    "message": "Team created successfully",
+    "description": "notification alert: a new team was successfully created and added to the server"
   }
 }
