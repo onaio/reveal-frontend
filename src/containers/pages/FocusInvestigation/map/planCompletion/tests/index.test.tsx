@@ -36,20 +36,6 @@ import { payload } from './fixtures';
 
 // tslint:disable-next-line: no-var-requires
 const fetch = require('jest-fetch-mock');
-jest.mock('react-toastify', () => {
-  const mockToast: any = jest.fn();
-  mockToast.TYPE = {
-    DEFAULT: 'default',
-    ERROR: 'error',
-    INFO: 'info',
-    SUCCESS: 'success',
-    WARNING: 'warning',
-  };
-  mockToast.configure = jest.fn();
-  return {
-    toast: mockToast,
-  };
-});
 
 reducerRegistry.register(reducerName, reducer);
 const history = createBrowserHistory();
@@ -257,7 +243,7 @@ describe('@containers/pages/map/planCompletion/', () => {
     discoWrapper.unmount();
   });
 
-  it('growl on plan read error', async () => {
+  it('growl on error when reading plan', async () => {
     store.dispatch(fetchPlans(fixtures.plans as any));
     const mock: any = jest.fn();
     const props = {
@@ -293,7 +279,7 @@ describe('@containers/pages/map/planCompletion/', () => {
     });
   });
 
-  it('growl on no update error', async () => {
+  it('growl on error when updating plan', async () => {
     store.dispatch(fetchPlans(fixtures.plans as any));
     const mock: any = jest.fn();
     const props = {
@@ -330,7 +316,7 @@ describe('@containers/pages/map/planCompletion/', () => {
     });
   });
 
-  it('growl on no plan read error', async () => {
+  it('growl on read if no plan received', async () => {
     store.dispatch(fetchPlans(fixtures.plans as any));
     const mock: any = jest.fn();
     const props = {
