@@ -10,6 +10,7 @@ import { RouteComponentProps } from 'react-router';
 import { toast } from 'react-toastify';
 import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
+import { format } from 'util';
 import LinkAsButton from '../../../../components/LinkAsButton';
 import HeaderBreadcrumb, {
   BreadCrumbProps,
@@ -31,8 +32,8 @@ import {
   ORGANIZATIONS_LABEL,
   ORGANIZATIONS_LIST_URL,
   PRACTITIONER,
+  PRACTITIONER_REMOVED_FROM_ORG,
   REMOVE,
-  REMOVED_FROM,
   REMOVING_PRACTITIONER_FAILED,
   SINGLE_ORGANIZATION_URL,
   TEAM_MEMBERS,
@@ -113,9 +114,12 @@ const SingleOrganizationView = (props: SingleOrgViewPropsType) => {
       .delete(params)
       .then(() => {
         // remove the practitioner Role
-        growl(`${practitioner.name}-${practitioner.username} ${REMOVED_FROM} ${org.name}`, {
-          type: toast.TYPE.INFO,
-        });
+        growl(
+          format(PRACTITIONER_REMOVED_FROM_ORG, practitioner.name, practitioner.username, org.name),
+          {
+            type: toast.TYPE.INFO,
+          }
+        );
         loadOrgPractitioners(
           orgId,
           serviceClass,
