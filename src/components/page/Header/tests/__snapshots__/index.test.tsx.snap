@@ -1613,7 +1613,6 @@ exports[`components/page/Header renders header correctly when authenticated 1`] 
                                           activeClassName="active"
                                           aria-current="page"
                                           className="nav-link"
-                                          onClick={[Function]}
                                           to="/logout"
                                         >
                                           <Route
@@ -1622,7 +1621,6 @@ exports[`components/page/Header renders header correctly when authenticated 1`] 
                                             <Link
                                               aria-current={null}
                                               className="nav-link"
-                                              onClick={[Function]}
                                               replace={false}
                                               to="/logout"
                                             >
