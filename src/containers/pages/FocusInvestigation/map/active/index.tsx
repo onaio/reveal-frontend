@@ -7,6 +7,7 @@ import { RouteComponentProps } from 'react-router';
 import { Link, NavLink } from 'react-router-dom';
 import { Badge, Col, Row } from 'reactstrap';
 import { Store } from 'redux';
+import { format } from 'util';
 import GisidaWrapper from '../../../../../components/GisidaWrapper';
 import HeaderBreadcrumb, {
   BreadCrumbProps,
@@ -37,7 +38,7 @@ import {
   MARK_AS_COMPLETE,
   MEASURE,
   MULTI_POLYGON,
-  OF,
+  NUMERATOR_OF_DENOMINATOR_UNITS,
   PLAN_COMPLETION_URL,
   PLAN_SELECT_PLACEHOLDER,
   POINT,
@@ -371,7 +372,12 @@ class SingleActiveFIMap extends React.Component<
                           {MEASURE}: {item.measure}
                         </p>
                         <p>
-                          {PROGRESS}: {item.completed_task_count} {OF} {goalReport.targetValue}{' '}
+                          {PROGRESS}:{' '}
+                          {format(
+                            NUMERATOR_OF_DENOMINATOR_UNITS,
+                            item.completed_task_count,
+                            goalReport.targetValue
+                          )}{' '}
                           {goalReport.goalUnit} ({goalReport.prettyPercentAchieved})
                         </p>
                         <br />

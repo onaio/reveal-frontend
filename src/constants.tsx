@@ -448,6 +448,8 @@ export const DATE_IS_REQUIRED = 'Date is Required';
 export type DATE_IS_REQUIRED = typeof DATE_IS_REQUIRED;
 export const NAME_IS_REQUIRED = 'Name is Required';
 export type NAME_IS_REQUIRED = typeof NAME_IS_REQUIRED;
+export const NUMERATOR_OF_DENOMINATOR_UNITS = '%s of %s %s';
+export type NUMERATOR_OF_DENOMINATOR_UNITS = typeof NUMERATOR_OF_DENOMINATOR_UNITS;
 
 // todo - decouple references: url fragment/code vs display text
 export const DRAFT = 'draft';
