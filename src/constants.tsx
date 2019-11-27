@@ -36,6 +36,10 @@ export const STRINGIFIED_GEOJSON = 'stringified-geojson';
 export type STRINGIFIED_GEOJSON = typeof STRINGIFIED_GEOJSON;
 export const MAP = 'map';
 export type MAP = typeof MAP;
+export const DRAFT = 'draft';
+export type DRAFT = typeof DRAFT;
+export const NEW = 'new';
+export type NEW = typeof NEW;
 
 // internal urls
 export const LOGIN_URL = '/login';
@@ -484,12 +488,10 @@ export const ORGANIZATION_CREATED_SUCCESSFULLY = `Team created successfully`;
 export type ORGANIZATION_CREATED_SUCCESSFULLY = typeof ORGANIZATION_CREATED_SUCCESSFULLY;
 export const DRAFT_PLAN_TITLE = '%s (draft)';
 export type DRAFT_PLAN_TITLE = typeof DRAFT_PLAN_TITLE;
-
-// todo - decouple references: url fragment/code vs display text
-export const DRAFT = 'draft';
-export type DRAFT = typeof DRAFT;
-export const NEW = 'new';
-export type NEW = typeof NEW;
+export const EDIT_PRACTITIONER = 'Edit Practitioner';
+export type EDIT_PRACTITIONER = typeof EDIT_PRACTITIONER;
+export const NEW_PRACTITIONER = 'New Practitioner';
+export type NEW_PRACTITIONER = typeof NEW_PRACTITIONER;
 
 // TODO ? - do the below 2 belong here or in a settings file
 export const ORGANIZATION_LABEL = TEAM;

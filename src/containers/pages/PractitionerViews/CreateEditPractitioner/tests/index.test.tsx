@@ -7,11 +7,10 @@ import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import ConnectedCreateEditPractitionerView, { CreateEditPractitionerView } from '..';
 import {
-  EDIT,
+  EDIT_PRACTITIONER,
   EDIT_PRACTITIONER_URL,
-  NEW,
+  NEW_PRACTITIONER,
   OPENSRP_PRACTITIONER_ENDPOINT,
-  PRACTITIONER,
 } from '../../../../../constants';
 import store from '../../../../../store';
 import * as practitionerDucks from '../../../../../store/ducks/opensrp/practitioners';
@@ -79,7 +78,7 @@ describe('src/containers/pages/CreateEditPractitioner', () => {
 
     // page title
     const helmet = Helmet.peek();
-    expect(helmet.title).toEqual(`${EDIT} ${PRACTITIONER}`);
+    expect(helmet.title).toEqual(EDIT_PRACTITIONER);
 
     // breadcrumb
     const breadcrumbWrapper = wrapper.find('Breadcrumb');
@@ -249,7 +248,7 @@ describe('src/containers/practitionerViews/createEditview.createView', () => {
 
     // page title
     const helmet = Helmet.peek();
-    expect(helmet.title).toEqual(`${NEW} ${PRACTITIONER}`);
+    expect(helmet.title).toEqual(NEW_PRACTITIONER);
 
     // breadcrumb
     const breadcrumbWrapper = wrapper.find('Breadcrumb');

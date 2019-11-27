@@ -13,12 +13,11 @@ import HeaderBreadcrumb, {
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import {
   CREATE_PRACTITIONER_URL,
-  EDIT,
+  EDIT_PRACTITIONER,
   EDIT_PRACTITIONER_URL,
   HOME,
   HOME_URL,
-  NEW,
-  PRACTITIONER,
+  NEW_PRACTITIONER,
   PRACTITIONERS,
   PRACTITIONERS_LIST_URL,
 } from '../../../../constants';
@@ -66,7 +65,7 @@ const CreateEditPractitionerView = (props: PropsTypes) => {
   };
   const breadcrumbProps: BreadCrumbProps = {
     currentPage: {
-      label: editing ? `${EDIT} ${PRACTITIONER}` : `${capitalize(NEW as string)} ${PRACTITIONER}`,
+      label: editing ? EDIT_PRACTITIONER : NEW_PRACTITIONER,
       url: editing
         ? `${EDIT_PRACTITIONER_URL}/${practitioner!.identifier}`
         : CREATE_PRACTITIONER_URL,
@@ -98,9 +97,7 @@ const CreateEditPractitionerView = (props: PropsTypes) => {
   return (
     <div>
       <Helmet>
-        <title>
-          {practitioner === null ? `${NEW} ${PRACTITIONER}` : `${EDIT} ${PRACTITIONER}`}
-        </title>
+        <title>{practitioner === null ? NEW_PRACTITIONER : EDIT_PRACTITIONER}</title>
       </Helmet>
       <HeaderBreadcrumb {...breadcrumbProps} />
       <Row>
