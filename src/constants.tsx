@@ -470,22 +470,24 @@ export const ORGANIZATION_DETAILS = 'Team Details';
 export type ORGANIZATION_DETAILS = typeof ORGANIZATION_DETAILS;
 export const TEAM_MEMBERS = 'Team Members';
 export type TEAM_MEMBERS = typeof TEAM_MEMBERS;
+export const ONE_DAY_TO_GO = '1 day to go';
+export type ONE_DAY_TO_GO = typeof ONE_DAY_TO_GO;
+export const ZERO_DAYS_TO_GO = '0 days to go';
+export type ZERO_DAYS_TO_GO = typeof ZERO_DAYS_TO_GO;
 export const PRACTITIONERS_ASSIGNED_TO_ORG = '%s Practitioners successfully assigned to %s';
 export type PRACTITIONERS_ASSIGNED_TO_ORG = typeof PRACTITIONERS_ASSIGNED_TO_ORG;
 export const PRACTITIONER_REMOVED_FROM_ORG = '%s-%s successfully removed from %s';
 export type PRACTITIONER_REMOVED_FROM_ORG = typeof PRACTITIONER_REMOVED_FROM_ORG;
+export const ORGANIZATION_EDITED_SUCCESSFULLY = `Team edited successfully.`;
+export type ORGANIZATION_EDITED_SUCCESSFULLY = typeof ORGANIZATION_EDITED_SUCCESSFULLY;
+export const ORGANIZATION_CREATED_SUCCESSFULLY = `Team created successfully`;
+export type ORGANIZATION_CREATED_SUCCESSFULLY = typeof ORGANIZATION_CREATED_SUCCESSFULLY;
 
 // todo - decouple references: url fragment/code vs display text
 export const DRAFT = 'draft';
 export type DRAFT = typeof DRAFT;
 export const NEW = 'new';
 export type NEW = typeof NEW;
-
-// todo - save plurals with variables
-export const ONE_DAY_TO_GO = '1 day to go';
-export type ONE_DAY_TO_GO = typeof ONE_DAY_TO_GO;
-export const ZERO_DAYS_TO_GO = '0 days to go';
-export type ZERO_DAYS_TO_GO = typeof ZERO_DAYS_TO_GO;
 
 // TODO ? - do the below 2 belong here or in a settings file
 export const ORGANIZATION_LABEL = TEAM;
@@ -497,9 +499,5 @@ export type ORGANIZATIONS_LABEL = typeof ORGANIZATIONS_LABEL;
 // todo - set up full strings with conditionals
 export const ASSIGNED_SUCCESSFULLY_TO = 'successfully assigned to';
 export type ASSIGNED_SUCCESSFULLY_TO = typeof ASSIGNED_SUCCESSFULLY_TO;
-export const ORGANIZATION_EDITED_SUCCESSFULLY = `${ORGANIZATION_LABEL} edited successfully.`;
-export type ORGANIZATION_EDITED_SUCCESSFULLY = typeof ORGANIZATION_EDITED_SUCCESSFULLY;
-export const ORGANIZATION_CREATED_SUCCESSFULLY = `${ORGANIZATION_LABEL} created successfully`;
-export type ORGANIZATION_CREATED_SUCCESSFULLY = typeof ORGANIZATION_CREATED_SUCCESSFULLY;
 export const REMOVED_FROM = 'successfully removed from';
 export type REMOVED_FROM = typeof REMOVED_FROM;
