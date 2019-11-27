@@ -21,7 +21,7 @@ import {
 } from '../../../../../configs/env';
 import {
   ADMIN_LEVEL,
-  ASSIGN,
+  ASSIGN_JURISDICTIONS,
   ASSIGN_PLAN_URL,
   ASSIGN_PLANS,
   DRAFT,
@@ -31,7 +31,6 @@ import {
   IRS_TITLE,
   JURISDICTION,
   JURISDICTION_ID,
-  JURISDICTIONS,
   MAP_ID,
   NAME,
   NEW,
@@ -49,7 +48,7 @@ import {
   SAVE_FINALIZED_PLAN,
   SAVE_PLAN_DEFINITION_ERROR,
   SAVE_PLAN_NO_JURISDICTIONS_ERROR,
-  SELECT,
+  SELECT_JURISDICTIONS,
   SPRAY_AREA_HEADER,
   TEAMS_ASSIGNMENT,
   TYPE_LABEL,
@@ -602,9 +601,9 @@ class IrsPlan extends React.Component<
         {planTableProps && planTableProps.data && planTableProps.data.length ? (
           <Row>
             <Col>
-              <h3 className="table-title">{`${
-                isFinalizedPlan ? ASSIGN : SELECT
-              } ${JURISDICTIONS}`}</h3>
+              <h3 className="table-title">
+                {isFinalizedPlan ? ASSIGN_JURISDICTIONS : SELECT_JURISDICTIONS}
+              </h3>
               {tableCrumbs.length && tableBreadCrumbs}
               {doRenderTable && <DrillDownTable {...planTableProps} />}
             </Col>

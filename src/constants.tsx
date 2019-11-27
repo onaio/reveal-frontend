@@ -458,6 +458,12 @@ export const FIS_IN_JURISDICTION = 'Focus Investigations in %s';
 export type FIS_IN_JURISDICTION = typeof FIS_IN_JURISDICTION;
 export const FI_IN_JURISDICTION = 'Current Focus Investigations in %s';
 export type FI_IN_JURISDICTION = typeof FI_IN_JURISDICTION;
+export const PROGRESS = 'Progress';
+export type PROGRESS = typeof PROGRESS;
+export const ASSIGN_JURISDICTIONS = 'Assign Jurisdictions';
+export type ASSIGN_JURISDICTIONS = typeof ASSIGN_JURISDICTIONS;
+export const SELECT_JURISDICTIONS = 'Select Jurisdictions';
+export type SELECT_JURISDICTIONS = typeof SELECT_JURISDICTIONS;
 
 // todo - decouple references: url fragment/code vs display text
 export const DRAFT = 'draft';
