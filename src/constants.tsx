@@ -494,10 +494,3 @@ export const ORGANIZATION_LABEL = TEAM;
 export type ORGANIZATION_LABEL = typeof ORGANIZATION_LABEL;
 export const ORGANIZATIONS_LABEL = TEAMS;
 export type ORGANIZATIONS_LABEL = typeof ORGANIZATIONS_LABEL;
-
-// Success growl notification messages;
-// todo - set up full strings with conditionals
-export const ASSIGNED_SUCCESSFULLY_TO = 'successfully assigned to';
-export type ASSIGNED_SUCCESSFULLY_TO = typeof ASSIGNED_SUCCESSFULLY_TO;
-export const REMOVED_FROM = 'successfully removed from';
-export type REMOVED_FROM = typeof REMOVED_FROM;
