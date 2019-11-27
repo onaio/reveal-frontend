@@ -444,6 +444,10 @@ export const FOCUS_AREA_INFO = 'Focus Area Information';
 export type FOCUS_AREA_INFO = typeof FOCUS_AREA_INFO;
 export const FOCUS_INVESTIGATIONS = 'Focus Investigations';
 export type FOCUS_INVESTIGATIONS = typeof FOCUS_INVESTIGATIONS;
+export const DATE_IS_REQUIRED = 'Date is Required';
+export type DATE_IS_REQUIRED = typeof DATE_IS_REQUIRED;
+export const NAME_IS_REQUIRED = 'Name is Required';
+export type NAME_IS_REQUIRED = typeof NAME_IS_REQUIRED;
 
 // todo - decouple references: url fragment/code vs display text
 export const DRAFT = 'draft';

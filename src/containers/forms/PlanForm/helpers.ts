@@ -29,7 +29,7 @@ import {
   taskGenerationStatuses,
   UseContext,
 } from '../../../configs/settings';
-import { DATE, IS, NAME, REQUIRED } from '../../../constants';
+import { DATE_IS_REQUIRED, NAME_IS_REQUIRED, REQUIRED } from '../../../constants';
 import { generateNameSpacedUUID } from '../../../helpers/utils';
 import { InterventionType, PlanStatus } from '../../../store/ducks/plans';
 import {
@@ -74,7 +74,7 @@ export const PlanSchema = Yup.object().shape({
     })
   ),
   caseNum: Yup.string(),
-  date: Yup.string().required(`${DATE} ${IS} ${REQUIRED}`),
+  date: Yup.string().required(DATE_IS_REQUIRED),
   end: Yup.date().required(REQUIRED),
   fiReason: Yup.string().oneOf(FIReasons.map(e => e)),
   fiStatus: Yup.string().oneOf(fiStatusCodes),
@@ -88,7 +88,7 @@ export const PlanSchema = Yup.object().shape({
       name: Yup.string(),
     })
   ),
-  name: Yup.string().required(`${NAME} ${IS} ${REQUIRED}`),
+  name: Yup.string().required(NAME_IS_REQUIRED),
   opensrpEventId: Yup.string(),
   start: Yup.date().required(REQUIRED),
   status: Yup.string()
