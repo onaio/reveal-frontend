@@ -534,5 +534,25 @@
   "PROVINCE": {
     "message": "Province",
     "description": "column header: the Province in which a focus investigation takes place"
+  },
+  "ASSIGN_PRACTITIONERS_TO_ORG": {
+    "message": "Assign Practitioners to %s",
+    "description": "page header: for assigning practitioners to a team; args: the team name"
+  },
+  "DATE_IS_REQUIRED": {
+    "message": "Date is Required",
+    "description": "form validation messag: alerts users that the dates fields are required"
+  },
+  "NAME_IS_REQUIRED": {
+    "message": "Name is Required",
+    "description": "form validation messag: alerts users that the name field are required"
+  },
+  "NUMERATOR_OF_DENOMINATOR_UNITS": {
+    "message": "'%s of %s %s",
+    "description": "progress indicator: describing prgoress currently made towards a goal (example: 8 of 10 structures), unit comes from the data and defaults to structures (plural)"
+  },
+  "MARK_PLAN_AS_COMPLETE": {
+    "message": "Mark %s as complete",
+    "description": "page title: page for marking a plan as complete; arg: plan title"
   }
 }
