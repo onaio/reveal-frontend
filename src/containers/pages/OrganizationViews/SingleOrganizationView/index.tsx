@@ -19,7 +19,6 @@ import {
   ACTIONS,
   ASSIGN,
   ASSIGN_PRACTITIONERS_URL,
-  DETAILS,
   EDIT,
   EDIT_ORGANIZATION_URL,
   HOME,
@@ -28,6 +27,7 @@ import {
   MEMBERS,
   NAME,
   OPENSRP_DEL_PRACTITIONER_ROLE_ENDPOINT,
+  ORGANIZATION_DETAILS,
   ORGANIZATION_LABEL,
   ORGANIZATIONS_LABEL,
   ORGANIZATIONS_LIST_URL,
@@ -214,7 +214,7 @@ const SingleOrganizationView = (props: SingleOrgViewPropsType) => {
       </Row>
       <hr />
       <div id="organization-details" className="card mb-3">
-        <div className="card-header">{`${ORGANIZATION_LABEL} ${DETAILS}`}</div>
+        <div className="card-header">{ORGANIZATION_DETAILS}</div>
         <div className="card-body">
           <Row>
             <Col className="col-6">

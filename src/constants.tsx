@@ -466,6 +466,8 @@ export const SELECT_JURISDICTIONS = 'Select Jurisdictions';
 export type SELECT_JURISDICTIONS = typeof SELECT_JURISDICTIONS;
 export const ADD_CODED_ACTIVITY = 'Add %s Activity';
 export type ADD_CODED_ACTIVITY = typeof ADD_CODED_ACTIVITY;
+export const ORGANIZATION_DETAILS = 'Team Details';
+export type ORGANIZATION_DETAILS = typeof ORGANIZATION_DETAILS;
 
 // todo - decouple references: url fragment/code vs display text
 export const DRAFT = 'draft';
