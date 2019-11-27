@@ -562,5 +562,25 @@
   "FI_IN_JURISDICTION": {
     "message": "Current Focus Investigations in %s",
     "description": "page title: for all active focus investigations in a jurisdiction; args: jurisdiction name"
+  },
+  "ASSIGN_JURISDICTIONS": {
+    "message": "Assign Jurisdictions",
+    "description": "section header: for assigning teams to plan-jurisdictions"
+  },
+  "SELECT_JURISDICTIONS": {
+    "message": "Select Jurisdictions",
+    "description": "section header: for selecting jurisdictions for a plan"
+  },
+  "ADD_CODED_ACTIVITY": {
+    "message": "Add %s Activity",
+    "description": "button text: to add an activity to a plan; args: the action code for the given goal"
+  },
+  "ORGANIZATION_DETAILS": {
+    "message": "Team Details",
+    "description": "section header: containing details about a single team or organization"
+  },
+  "TEAM_MEMBERS": {
+    "message": "Team Members",
+    "description": "section header: containing list of practitioners assigned to a team"
   }
 }
