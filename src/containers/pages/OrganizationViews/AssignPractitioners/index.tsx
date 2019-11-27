@@ -25,7 +25,6 @@ import {
   ASSIGN_PRACTITIONERS,
   ASSIGN_PRACTITIONERS_TO_ORG,
   ASSIGN_PRACTITIONERS_URL,
-  ASSIGNED_SUCCESSFULLY_TO,
   DISCARD_CHANGES,
   HOME,
   HOME_URL,
@@ -37,6 +36,7 @@ import {
   ORGANIZATIONS_LIST_URL,
   PRACTITIONER_CODE,
   PRACTITIONERS,
+  PRACTITIONERS_ASSIGNED_TO_ORG,
   SAVE_CHANGES,
   SINGLE_ORGANIZATION_URL,
 } from '../../../../constants';
@@ -186,14 +186,9 @@ const AssignPractitioner = (props: PropsTypes) => {
         fetchPractitionersCreator
       );
 
-      growl(
-        `${jsonArrayPayload.length} ${PRACTITIONERS} ${ASSIGNED_SUCCESSFULLY_TO} ${
-          organization.name
-        }`,
-        {
-          type: toast.TYPE.SUCCESS,
-        }
-      );
+      growl(format(PRACTITIONERS_ASSIGNED_TO_ORG, jsonArrayPayload.length, organization.name), {
+        type: toast.TYPE.SUCCESS,
+      });
 
       try {
         setSelectedOptions([]);

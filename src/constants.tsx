@@ -470,6 +470,8 @@ export const ORGANIZATION_DETAILS = 'Team Details';
 export type ORGANIZATION_DETAILS = typeof ORGANIZATION_DETAILS;
 export const TEAM_MEMBERS = 'Team Members';
 export type TEAM_MEMBERS = typeof TEAM_MEMBERS;
+export const PRACTITIONERS_ASSIGNED_TO_ORG = '%s Practitioners successfully assigned to %s';
+export type PRACTITIONERS_ASSIGNED_TO_ORG = typeof PRACTITIONERS_ASSIGNED_TO_ORG;
 
 // todo - decouple references: url fragment/code vs display text
 export const DRAFT = 'draft';
