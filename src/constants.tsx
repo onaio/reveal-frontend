@@ -482,6 +482,8 @@ export const ORGANIZATION_EDITED_SUCCESSFULLY = `Team edited successfully.`;
 export type ORGANIZATION_EDITED_SUCCESSFULLY = typeof ORGANIZATION_EDITED_SUCCESSFULLY;
 export const ORGANIZATION_CREATED_SUCCESSFULLY = `Team created successfully`;
 export type ORGANIZATION_CREATED_SUCCESSFULLY = typeof ORGANIZATION_CREATED_SUCCESSFULLY;
+export const DRAFT_PLAN_TITLE = '%s (draft)';
+export type DRAFT_PLAN_TITLE = typeof DRAFT_PLAN_TITLE;
 
 // todo - decouple references: url fragment/code vs display text
 export const DRAFT = 'draft';

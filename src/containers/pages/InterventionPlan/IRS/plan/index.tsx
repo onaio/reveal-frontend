@@ -25,6 +25,7 @@ import {
   ASSIGN_PLAN_URL,
   ASSIGN_PLANS,
   DRAFT,
+  DRAFT_PLAN_TITLE,
   HOME,
   HOME_URL,
   INTERVENTION_IRS_URL,
@@ -122,6 +123,7 @@ import HeaderBreadcrumbs, {
 } from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../../components/page/Loading';
 
+import { format } from 'util';
 import { ADMN0_PCODE, JurisdictionTypes } from '../../../../../configs/types';
 import AssignTeamTableCell, { AssignTeamCellProps } from '../../../../forms/AssignTeamTableCell';
 import './../../../../../styles/css/drill-down-table.css';
@@ -499,7 +501,7 @@ class IrsPlan extends React.Component<
 
     const pageLabel =
       (isFinalizedPlan && planById && planById.plan_title) ||
-      (isDraftPlan && planById && `${planById.plan_title} (${DRAFT})`) ||
+      (isDraftPlan && planById && format(DRAFT_PLAN_TITLE, planById.plan_title)) ||
       (newPlan && newPlan.plan_title) ||
       NEW_PLAN;
 
@@ -2061,12 +2063,12 @@ class IrsPlan extends React.Component<
       const now = moment(new Date());
       const start = moment(newPlan.plan_effective_period_start);
       const end = moment(newPlan.plan_effective_period_end);
-      const format = DATE_FORMAT.toUpperCase();
+      const dateFormat = DATE_FORMAT.toUpperCase();
       const newPlanDraft: PlanRecord = {
         ...newPlan,
-        plan_date: now.format(format),
-        plan_effective_period_end: end.format(format),
-        plan_effective_period_start: start.format(format),
+        plan_date: now.format(dateFormat),
+        plan_effective_period_end: end.format(dateFormat),
+        plan_effective_period_start: start.format(dateFormat),
         plan_jurisdictions_ids: newPlan.plan_jurisdictions_ids.filter(j =>
           childlessChildrenIds.includes(j)
         ),
