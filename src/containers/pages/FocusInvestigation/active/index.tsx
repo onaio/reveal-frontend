@@ -13,6 +13,7 @@ import { CellInfo, Column } from 'react-table';
 import 'react-table/react-table.css';
 import { Button, Col, Form, FormGroup, Input, Row, Table } from 'reactstrap';
 import { Store } from 'redux';
+import { format } from 'util';
 import DrillDownTableLinkedCell from '../../../../components/DrillDownTableLinkedCell';
 import LinkAsButton from '../../../../components/LinkAsButton';
 import NewRecordBadge from '../../../../components/NewRecordBadge';
@@ -30,6 +31,7 @@ import {
   CURRENT_FOCUS_INVESTIGATION,
   DEFINITIONS,
   END_DATE,
+  FI_IN_JURISDICTION,
   FI_SINGLE_MAP_URL,
   FI_SINGLE_URL,
   FI_STATUS,
@@ -38,7 +40,6 @@ import {
   FOCUS_INVESTIGATIONS,
   HOME,
   HOME_URL,
-  IN,
   NAME,
   REACTIVE,
   ROUTINE,
@@ -164,7 +165,7 @@ class ActiveFocusInvestigation extends React.Component<
     }
     const routineReactivePlans: FlexObject[] = [];
     const pageTitle = jurisdictionName
-      ? `${CURRENT_FOCUS_INVESTIGATION} ${IN} ${jurisdictionName}`
+      ? format(FI_IN_JURISDICTION, jurisdictionName)
       : CURRENT_FOCUS_INVESTIGATION;
     return (
       <div>

@@ -454,6 +454,10 @@ export const NUMERATOR_OF_DENOMINATOR_UNITS = '%s of %s %s';
 export type NUMERATOR_OF_DENOMINATOR_UNITS = typeof NUMERATOR_OF_DENOMINATOR_UNITS;
 export const MARK_PLAN_AS_COMPLETE = 'Mark %s as complete';
 export type MARK_PLAN_AS_COMPLETE = typeof MARK_PLAN_AS_COMPLETE;
+export const FIS_IN_JURISDICTION = 'Focus Investigations in %s';
+export type FIS_IN_JURISDICTION = typeof FIS_IN_JURISDICTION;
+export const FI_IN_JURISDICTION = 'Current Focus Investigations in %s';
+export type FI_IN_JURISDICTION = typeof FI_IN_JURISDICTION;
 
 // todo - decouple references: url fragment/code vs display text
 export const DRAFT = 'draft';
