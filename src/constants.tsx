@@ -450,6 +450,8 @@ export const NAME_IS_REQUIRED = 'Name is Required';
 export type NAME_IS_REQUIRED = typeof NAME_IS_REQUIRED;
 export const NUMERATOR_OF_DENOMINATOR_UNITS = '%s of %s %s';
 export type NUMERATOR_OF_DENOMINATOR_UNITS = typeof NUMERATOR_OF_DENOMINATOR_UNITS;
+export const MARK_PLAN_AS_COMPLETE = 'Mark %s as complete';
+export type MARK_PLAN_AS_COMPLETE = typeof MARK_PLAN_AS_COMPLETE;
 
 // todo - decouple references: url fragment/code vs display text
 export const DRAFT = 'draft';

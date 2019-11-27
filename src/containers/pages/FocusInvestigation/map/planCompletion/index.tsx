@@ -4,15 +4,14 @@ import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { Store } from 'redux';
+import { format } from 'util';
 import Loading from '../../../../../components/page/Loading';
 import {
-  AS,
   CANCEL,
-  COMPLETE,
   CONFIRM,
   FI_SINGLE_MAP_URL,
-  MARK,
   MARK_AS_COMPLETE,
+  MARK_PLAN_AS_COMPLETE,
   NO_PLAN_FOUND_ERROR,
   OPENSRP_PLANS,
   PLAN_LIST_URL,
@@ -105,18 +104,16 @@ export class PlanCompletion extends React.Component<
     return (
       <div id="plan-completion-page-wrapper">
         <Helmet>
-          <title>{`${MARK} ${plan.plan_title} ${AS} ${COMPLETE.toLocaleLowerCase()}`}</title>
+          <title>{format(MARK_PLAN_AS_COMPLETE, plan.plan_title)}</title>
         </Helmet>
         {/** prompt to confirm mark as complete click action */}
-        <h2 className="mb-3 mt-5 page-title">{`${MARK} ${
-          plan.plan_title
-        } ${AS} ${COMPLETE.toLocaleLowerCase()}`}</h2>
+        <h2 className="mb-3 mt-5 page-title">{format(MARK_PLAN_AS_COMPLETE, plan.plan_title)}</h2>
         <hr />
         <div className="card mb-3">
           <div className="card-header">{MARK_AS_COMPLETE}</div>
           <div className="card-body">
             {/* this should be error handlers not links */}
-            <p>{`${MARK} ${plan.plan_title} ${AS} ${COMPLETE.toLocaleLowerCase()}`}</p>
+            <p>{format(MARK_PLAN_AS_COMPLETE, plan.plan_title)}</p>
             <button
               id="complete-plan-cancel-btn"
               onClick={this.cancelClickHandler}
