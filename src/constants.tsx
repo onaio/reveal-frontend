@@ -462,16 +462,6 @@ export const NEW = 'new';
 export type NEW = typeof NEW;
 
 // todo - replace this with full string with vairiable
-export const TO = 'To';
-export type TO = typeof TO;
-export const DATE = 'Date';
-export type DATE = typeof DATE;
-export const OF = 'of';
-export type OF = typeof OF;
-export const IS = 'is';
-export type IS = typeof IS;
-export const AS = 'as';
-export type AS = typeof AS;
 export const IN = 'in';
 export type IN = typeof IN;
 export const STRUCTURE = 'structure';
