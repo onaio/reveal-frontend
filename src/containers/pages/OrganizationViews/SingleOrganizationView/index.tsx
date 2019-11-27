@@ -24,7 +24,6 @@ import {
   HOME,
   HOME_URL,
   IDENTIFIER,
-  MEMBERS,
   NAME,
   OPENSRP_DEL_PRACTITIONER_ROLE_ENDPOINT,
   ORGANIZATION_DETAILS,
@@ -36,6 +35,7 @@ import {
   REMOVED_FROM,
   REMOVING_PRACTITIONER_FAILED,
   SINGLE_ORGANIZATION_URL,
+  TEAM_MEMBERS,
   USERNAME,
 } from '../../../../constants';
 import { growl, RouteParams } from '../../../../helpers/utils';
@@ -232,7 +232,7 @@ const SingleOrganizationView = (props: SingleOrgViewPropsType) => {
           </Row>
         </div>
       </div>
-      <h3 className="mb-3 mt-5">{`${ORGANIZATION_LABEL} ${MEMBERS}`}</h3>
+      <h3 className="mb-3 mt-5">{TEAM_MEMBERS}</h3>
       <ListView {...listViewProps} />
     </div>
   );

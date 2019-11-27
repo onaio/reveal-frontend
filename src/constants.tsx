@@ -468,18 +468,14 @@ export const ADD_CODED_ACTIVITY = 'Add %s Activity';
 export type ADD_CODED_ACTIVITY = typeof ADD_CODED_ACTIVITY;
 export const ORGANIZATION_DETAILS = 'Team Details';
 export type ORGANIZATION_DETAILS = typeof ORGANIZATION_DETAILS;
+export const TEAM_MEMBERS = 'Team Members';
+export type TEAM_MEMBERS = typeof TEAM_MEMBERS;
 
 // todo - decouple references: url fragment/code vs display text
 export const DRAFT = 'draft';
 export type DRAFT = typeof DRAFT;
 export const NEW = 'new';
 export type NEW = typeof NEW;
-
-// todo - replace this with full string with vairiable
-export const DETAILS = 'Details';
-export type DETAILS = typeof DETAILS;
-export const MEMBERS = 'Members';
-export type MEMBERS = typeof MEMBERS;
 
 // todo - save plurals with variables
 export const ONE_DAY_TO_GO = '1 day to go';
