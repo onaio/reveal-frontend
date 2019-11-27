@@ -14,15 +14,16 @@ import { OptionsType, ValueType } from 'react-select/src/types';
 import { toast } from 'react-toastify';
 import { Button } from 'reactstrap';
 import { Store } from 'redux';
+import { format } from 'util';
 import HeaderBreadcrumb, {
   BreadCrumbProps,
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
 import { PRACTITIONER_ROLE_NAMESPACE } from '../../../../configs/env';
 import {
-  ADD,
   ASSIGN,
   ASSIGN_PRACTITIONERS,
+  ASSIGN_PRACTITIONERS_TO_ORG,
   ASSIGN_PRACTITIONERS_URL,
   ASSIGNED_SUCCESSFULLY_TO,
   DISCARD_CHANGES,
@@ -38,7 +39,6 @@ import {
   PRACTITIONERS,
   SAVE_CHANGES,
   SINGLE_ORGANIZATION_URL,
-  TO,
 } from '../../../../constants';
 import { useConfirmOnBrowserUnload } from '../../../../helpers/hooks';
 import { generateNameSpacedUUID, growl } from '../../../../helpers/utils';
@@ -254,9 +254,9 @@ const AssignPractitioner = (props: PropsTypes) => {
       />
 
       <HeaderBreadcrumb {...breadcrumbProps} />
-      <h2 className="mb-3 mt-5 page-title">{`${ASSIGN} ${PRACTITIONERS} ${TO} ${
-        organization!.name
-      }`}</h2>
+      <h2 className="mb-3 mt-5 page-title">
+        {format(ASSIGN_PRACTITIONERS_TO_ORG, organization!.name)}
+      </h2>
       <hr />
 
       {/* section for displaying already Added practitioners to this organization */}
