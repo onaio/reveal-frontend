@@ -333,6 +333,8 @@ export const NEW_PRACTITIONER = 'New Practitioner';
 export type NEW_PRACTITIONER = typeof NEW_PRACTITIONER;
 export const EDIT_PRACTITIONER = 'Edit Practitioner';
 export type EDIT_PRACTITIONER = typeof EDIT_PRACTITIONER;
+export const AS_COMPLETE = 'as complete';
+export type AS_COMPLETE = typeof AS_COMPLETE;
 
 // TODO ? - do the below 2 belong here or in a settings file
 export const ORGANIZATION_LABEL = TEAM;
