@@ -464,6 +464,8 @@ export const ASSIGN_JURISDICTIONS = 'Assign Jurisdictions';
 export type ASSIGN_JURISDICTIONS = typeof ASSIGN_JURISDICTIONS;
 export const SELECT_JURISDICTIONS = 'Select Jurisdictions';
 export type SELECT_JURISDICTIONS = typeof SELECT_JURISDICTIONS;
+export const ADD_CODED_ACTIVITY = 'Add %s Activity';
+export type ADD_CODED_ACTIVITY = typeof ADD_CODED_ACTIVITY;
 
 // todo - decouple references: url fragment/code vs display text
 export const DRAFT = 'draft';
@@ -472,20 +474,6 @@ export const NEW = 'new';
 export type NEW = typeof NEW;
 
 // todo - replace this with full string with vairiable
-export const IN = 'in';
-export type IN = typeof IN;
-export const STRUCTURE = 'structure';
-export type STRUCTURE = typeof STRUCTURE;
-export const PROGRESS = 'Progress';
-export type PROGRESS = typeof PROGRESS;
-export const MARK = 'Mark';
-export type MARK = typeof MARK;
-export const COMPLETE = 'Complete';
-export type COMPLETE = typeof COMPLETE;
-export const JURISDICTIONS = 'Jurisdictions';
-export type JURISDICTIONS = typeof JURISDICTIONS;
-export const ACTIVITY_LABEL = 'Activity';
-export type ACTIVITY_LABEL = typeof ACTIVITY_LABEL;
 export const DETAILS = 'Details';
 export type DETAILS = typeof DETAILS;
 export const MEMBERS = 'Members';

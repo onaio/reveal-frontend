@@ -14,6 +14,7 @@ import {
   ModalBody,
   ModalHeader,
 } from 'reactstrap';
+import { format } from 'util';
 import DatePickerWrapper from '../../../components/DatePickerWrapper';
 import {
   DATE_FORMAT,
@@ -30,9 +31,9 @@ import {
 import {
   ACTION,
   ACTIVITIES_LABEL,
-  ACTIVITY_LABEL,
   ADD,
   ADD_ACTIVITY,
+  ADD_CODED_ACTIVITY,
   AN_ERROR_OCCURED,
   CASE_NUMBER,
   DESCRIPTION_LABEL,
@@ -73,7 +74,7 @@ import {
   PlanJurisdictionFormFields,
   PlanSchema,
 } from './helpers';
-import { GoalUnit, PlanActionCodesType } from './types';
+import { PlanActionCodesType } from './types';
 
 import './style.css';
 
@@ -886,7 +887,7 @@ const PlanForm = (props: PlanFormProps) => {
                                       className="btn btn-primary btn-sm mb-1 addActivity"
                                       onClick={() => arrayHelpers.push(g)}
                                     >
-                                      {ADD} <b>{g.actionCode}</b> {ACTIVITY_LABEL}
+                                      {format(ADD_CODED_ACTIVITY, g.actionCode)}
                                     </button>
                                   </li>
                                 ))}
