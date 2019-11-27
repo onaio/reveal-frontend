@@ -554,5 +554,13 @@
   "MARK_PLAN_AS_COMPLETE": {
     "message": "Mark %s as complete",
     "description": "page title: page for marking a plan as complete; arg: plan title"
+  },
+  "FIS_IN_JURISDICTION": {
+    "message": "Focus Investigations in %s",
+    "description": "page title: for all focus investigations in a jurisdiction; args: jurisdiction name"
+  },
+  "FI_IN_JURISDICTION": {
+    "message": "Current Focus Investigations in %s",
+    "description": "page title: for all active focus investigations in a jurisdiction; args: jurisdiction name"
   }
 }
