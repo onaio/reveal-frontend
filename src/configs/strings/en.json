@@ -606,5 +606,17 @@
   "ORGANIZATION_CREATED_SUCCESSFULLY": {
     "message": "Team created successfully",
     "description": "notification alert: a new team was successfully created and added to the server"
+  },
+  "DRAFT_PLAN_TITLE": {
+    "message": "%s (draft)",
+    "description": "page title: for page about a specific draft plan; args: name of the plan"
+  },
+  "EDIT_PRACTITIONER": {
+    "message": "Edit Practitioner",
+    "description": "page title: for pages when editng information of a practitioner"
+  },
+  "NEW_PRACTITIONER": {
+    "message": "New Practitioner",
+    "description": "page title: for pages when adding a new practitioner"
   }
 }
