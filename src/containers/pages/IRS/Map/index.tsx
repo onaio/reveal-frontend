@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
+import { format } from 'util';
 import GisidaWrapper from '../../../../components/GisidaWrapper';
 import NotFound from '../../../../components/NotFound';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
@@ -27,10 +28,10 @@ import {
   IRS_REPORTING_TITLE,
   LEGEND_LABEL,
   MAP_LOAD_ERROR,
-  OF,
+  NUMERATOR_OF_DENOMINATOR_UNITS,
   PROGRESS,
   REPORT_IRS_PLAN_URL,
-  STRUCTURE,
+  STRUCTURES,
 } from '../../../../constants';
 import ProgressBar from '../../../../helpers/ProgressBar';
 import { RouteParams } from '../../../../helpers/utils';
@@ -298,7 +299,13 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
                     value={row.value}
                   />
                   <p className="indicator-breakdown">
-                    {PROGRESS}: {row.numerator} {OF} {row.denominator} {`${row.unit || STRUCTURE}s`}{' '}
+                    {PROGRESS}:{' '}
+                    {format(
+                      NUMERATOR_OF_DENOMINATOR_UNITS,
+                      row.numerator,
+                      row.denominator,
+                      row.unit || STRUCTURES
+                    )}{' '}
                     ({row.value}%)
                   </p>
                 </div>
