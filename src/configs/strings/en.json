@@ -624,7 +624,7 @@
     "description": "intervention activity"
   },
   "IRS_ACTIVITY": {
-    "message": "Indoor Residual Spray",
+    "message": "Spray Structures",
     "description": "intervention activity"
   },
   "BEDNET_ACTIVITY": {
@@ -640,7 +640,7 @@
     "description": "intervention activity"
   },
   "RACD_ACTIVITY": {
-    "message": "RACD Register Family",
+    "message": "Family Registration",
     "description": "intervention activity"
   },
   "LARVAL_DIPPING_ACTIVITY": {
@@ -650,5 +650,77 @@
   "MOSQUITO_COLLECTION_ACTIVITY": {
     "message": "Mosquito Collection",
     "description": "intervention activity"
+  },
+  "BCC_ACTIVITY_DESCRIPTION": {
+    "message": "Conduct BCC activity",
+    "description": ""
+  },
+  "BCC_GOAL_DESCRIPTION": {
+    "message": "Complete at least 1 BCC activity for the operational area",
+    "description": ""
+  },
+  "BCC_GOAL_MEASURE": {
+    "message": "Number of BCC Activities Completed",
+    "description": ""
+  },
+  "IRS_ACTIVITY_DESCRIPTION": {
+    "message": "Visit each structure in the operational area and attempt to spray",
+    "description": ""
+  },
+  "IRS_GOAL_DESCRIPTION": {
+    "message": "Spray structures in the operational area",
+    "description": ""
+  },
+  "IRS_GOAL_MEASURE": {
+    "message": "Percent of structures sprayed",
+    "description": "aaa"
+  },
+  "BEDNET_ACTIVITY_DESCRIPTION": {
+    "message": "Visit 100% of residential structures in the operational area and provide nets",
+    "description": ""
+  },
+  "BEDNET_GOAL_MEASURE": {
+    "message": "Percent of residential structures received nets",
+    "description": ""
+  },
+  "BLOOD_SCREENING_ACTIVITY_DESCRIPTION": {
+    "message": "Visit all residential structures (100%) within a 1 km radius of a confirmed index case and test each registered person",
+    "description": ""
+  },
+  "BLOOD_SCREENING_GOAL_MEASURE": {
+    "message": "Number of registered people tested",
+    "description": ""
+  },
+  "CASE_CONFIRMATION_ACTIVITY_DESCRIPTION": {
+    "message": "Confirm the index case",
+    "description": ""
+  },
+  "CASE_CONFIRMATION_ACTIVITY_GOAL_MEASURE": {
+    "message": "Number of cases confirmed",
+    "description": ""
+  },
+  "RACD_ACTIVITY_DESCRIPTION": {
+    "message": "Register all families & family members in all residential structures enumerated (100%) within the operational area",
+    "description": ""
+  },
+  "RACD_ACTIVITY_GOAL_MEASURE": {
+    "message": "Percent of residential structures with full family registration",
+    "description": "aaa"
+  },
+  "LARVAL_DIPPING_ACTIVITY_DESCRIPTION": {
+    "message": "Perform a minimum of three larval dipping activities in the operational area",
+    "description": ""
+  },
+  "LARVAL_DIPPING_GOAL_MEASURE": {
+    "message": "Number of larval dipping activities completed",
+    "description": ""
+  },
+  "MOSQUITO_COLLECTION_ACTIVITY_DESCRIPTION": {
+    "message": "Set a minimum of three mosquito collection traps and complete the mosquito collection process",
+    "description": ""
+  },
+  "MOSQUITO_COLLECTION_GOAL_MEASURE": {
+    "message": "Number of mosquito collection activities completed",
+    "description": ""
   }
 }
