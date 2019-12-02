@@ -618,5 +618,37 @@
   "NEW_PRACTITIONER": {
     "message": "New Practitioner",
     "description": "page title: for pages when adding a new practitioner"
+  },
+  "BCC_ACTIVITY": {
+    "message": "Behaviour Change Communication",
+    "description": "intervention activity"
+  },
+  "IRS_ACTIVITY": {
+    "message": "Indoor Residual Spray",
+    "description": "intervention activity"
+  },
+  "BEDNET_ACTIVITY": {
+    "message": "Bednet Distribution",
+    "description": "intervention activity"
+  },
+  "BLOOD_SCREENING_ACTIVITY": {
+    "message": "Blood Screening",
+    "description": "intervention activity"
+  },
+  "CASE_CONFIRMATION_ACTIVITY": {
+    "message": "Case Confirmation",
+    "description": "intervention activity"
+  },
+  "RACD_ACTIVITY": {
+    "message": "RACD Register Family",
+    "description": "intervention activity"
+  },
+  "LARVAL_DIPPING_ACTIVITY": {
+    "message": "Larval Dipping",
+    "description": "intervention activity"
+  },
+  "MOSQUITO_COLLECTION_ACTIVITY": {
+    "message": "Mosquito Collection",
+    "description": "intervention activity"
   }
 }
