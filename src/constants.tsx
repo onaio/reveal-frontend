@@ -493,6 +493,41 @@ export type EDIT_PRACTITIONER = typeof EDIT_PRACTITIONER;
 export const NEW_PRACTITIONER = 'New Practitioner';
 export type NEW_PRACTITIONER = typeof NEW_PRACTITIONER;
 
+export const BCC_ACTIVITY = 'Behaviour Change Communication';
+export const BCC_ACTIVITY_DESCRIPTION = 'Conduct BCC activity';
+export const BCC_GOAL_DESCRIPTION = 'Complete at least 1 BCC activity for the operational area';
+export const BCC_GOAL_MEASURE = 'Number of BCC Activities Completed';
+export const IRS_ACTIVITY = 'Spray Structures';
+export const IRS_ACTIVITY_DESCRIPTION =
+  'Visit each structure in the operational area and attempt to spray';
+export const IRS_GOAL_DESCRIPTION = 'Spray structures in the operational area';
+export const IRS_GOAL_MEASURE = 'Percent of structures sprayed';
+export const BEDNET_ACTIVITY = 'Bednet Distribution';
+export const BEDNET_ACTIVITY_DESCRIPTION =
+  'Visit 100% of residential structures in the operational area and provide nets';
+export const BEDNET_GOAL_MEASURE = 'Percent of residential structures received nets';
+export const BLOOD_SCREENING_ACTIVITY = 'Blood Screening';
+export const BLOOD_SCREENING_ACTIVITY_DESCRIPTION =
+  'Visit all residential structures (100%) within a 1 km radius of a confirmed index case and test each registered person';
+export const BLOOD_SCREENING_GOAL_MEASURE = 'Number of registered people tested';
+export const CASE_CONFIRMATION_ACTIVITY = 'Case Confirmation';
+export const CASE_CONFIRMATION_ACTIVITY_DESCRIPTION = 'Confirm the index case';
+export const CASE_CONFIRMATION_ACTIVITY_GOAL_MEASURE = 'Number of cases confirmed';
+export const RACD_ACTIVITY = 'Family Registration';
+export const RACD_ACTIVITY_DESCRIPTION =
+  'Register all families & family members in all residential structures enumerated (100%) within the operational area';
+export const RACD_ACTIVITY_GOAL_MEASURE =
+  'Percent of residential structures with full family registration';
+export const LARVAL_DIPPING_ACTIVITY = 'Larval Dipping';
+export const LARVAL_DIPPING_ACTIVITY_DESCRIPTION =
+  'Perform a minimum of three larval dipping activities in the operational area';
+export const LARVAL_DIPPING_GOAL_MEASURE = 'Number of larval dipping activities completed';
+export const MOSQUITO_COLLECTION_ACTIVITY = 'Mosquito Collection';
+export const MOSQUITO_COLLECTION_ACTIVITY_DESCRIPTION =
+  'Set a minimum of three mosquito collection traps and complete the mosquito collection process';
+export const MOSQUITO_COLLECTION_GOAL_MEASURE =
+  'Number of mosquito collection activities completed';
+
 // TODO ? - do the below 2 belong here or in a settings file
 export const ORGANIZATION_LABEL = TEAM;
 export type ORGANIZATION_LABEL = typeof ORGANIZATION_LABEL;
