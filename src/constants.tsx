@@ -342,6 +342,7 @@ export type VIEW = typeof VIEW;
 
 export const REACTIVE = 'Reactive';
 export type REACTIVE = typeof REACTIVE;
+export const REACTIVE_INVESTIGATION = 'Reactive Investigation';
 export const REQUIRED = 'Required';
 export type REQUIRED = typeof REQUIRED;
 export const SAVING = 'Saving';
@@ -493,6 +494,8 @@ export type EDIT_PRACTITIONER = typeof EDIT_PRACTITIONER;
 export const NEW_PRACTITIONER = 'New Practitioner';
 export type NEW_PRACTITIONER = typeof NEW_PRACTITIONER;
 
+export const ROUTINE_TITLE = 'Routine';
+export const ROUTINE_INVESTIGATION_TITLE = 'Routine Investigation';
 export const BCC_ACTIVITY = 'Behaviour Change Communication';
 export const BCC_ACTIVITY_DESCRIPTION = 'Conduct BCC activity';
 export const BCC_GOAL_DESCRIPTION = 'Complete at least 1 BCC activity for the operational area';
