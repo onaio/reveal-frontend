@@ -1,5 +1,14 @@
-// todo - init i18n here (or migrate everything below) and asynchronously export translations
-// also - async export/imports article: https://medium.com/@WebReflection/javascript-dynamic-import-export-b0e8775a59d4
+// import the strings reference i18n file for the specified language
+import { LANGUAGE } from './env';
+// tslint:disable-next-line:no-var-requires
+const reference = require('./strings')[LANGUAGE] || {};
+/**
+ * @param {string} key The unique variable name of the display string
+ * @param {string} fallback The (original) English fallback string if reference doesn't include the display string
+ * @returns {string} The translated display string
+ */
+const translate = (key: string, fallback: string): string =>
+  (reference[key] && reference[key].message) || fallback;
 
 // Display Strings
 export const WELCOME_TO_REVEAL = 'Welcome to Reveal';
