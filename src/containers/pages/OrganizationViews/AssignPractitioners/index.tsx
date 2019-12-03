@@ -223,7 +223,7 @@ const AssignPractitioner = (props: PropsTypes) => {
   };
   const otherPagesInOrder = [
     {
-      label: props.match.params.id,
+      label: organization.name,
       url: `${SINGLE_ORGANIZATION_URL}/${props.match.params.id}`,
     },
   ];

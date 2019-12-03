@@ -72,7 +72,7 @@ exports[`src/pages/*/AssignPractitioners Renders correctly: BreadCrumb 1`] = `
               href="/teams/view/d23f7350-d406-11e9-bb65-2a2ae2dbcce4"
               onClick={[Function]}
             >
-              d23f7350-d406-11e9-bb65-2a2ae2dbcce4
+              Takang 1
             </a>
           </Link>
         </li>

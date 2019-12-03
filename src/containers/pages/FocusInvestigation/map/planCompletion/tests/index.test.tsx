@@ -8,14 +8,16 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
+import { toast } from 'react-toastify';
 import ConnectedPlanCompletion, { PlanCompletion } from '..';
 import {
   FI_SINGLE_MAP_URL,
-  OPENSRP_PLANS,
+  NO_PLAN_FOUND_ERROR,
   PLAN_COMPLETION_URL,
   PLAN_LIST_URL,
+  PLAN_STATUS_UPDATE_ERROR,
 } from '../../../../../../constants';
-import { OpenSRPService } from '../../../../../../services/opensrp';
+import * as helperUtils from '../../../../../../helpers/utils';
 import {
   plansListResponse,
   updateResponse,
@@ -169,7 +171,7 @@ describe('@containers/pages/map/planCompletion/', () => {
 
     const expectedCalledUrl =
       'https://reveal-stage.smartregister.org/opensrp/rest/plans/10f9e9fa-ce34-4b27-a961-72fab5206ab6';
-    fetch.once(JSON.stringify(plansListResponse[0])).once(JSON.stringify(updateResponse));
+    fetch.once(JSON.stringify([plansListResponse[0]])).once(JSON.stringify(updateResponse));
 
     const discoWrapper = mount(
       <Provider store={store}>
@@ -239,5 +241,112 @@ describe('@containers/pages/map/planCompletion/', () => {
     expect(plan1FromStore!.plan_status).toBe(PlanStatus.ACTIVE);
 
     discoWrapper.unmount();
+  });
+
+  it('growl on error when reading plan', async () => {
+    store.dispatch(fetchPlans(fixtures.plans as any));
+    const mock: any = jest.fn();
+    const props = {
+      history,
+      location: mock,
+      match: {
+        isExact: true,
+        params: { id: fixtures.plan1.id },
+        path: `${PLAN_COMPLETION_URL}/:id`,
+        url: `${PLAN_COMPLETION_URL}/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f`,
+      },
+    };
+    const mockGrowl: any = jest.fn();
+    (helperUtils as any).growl = mockGrowl;
+    fetch.mockReject(new Error('some error message'), { status: 500 });
+
+    const discoWrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedPlanCompletion {...props} />
+        </Router>
+      </Provider>
+    );
+
+    const confirmButton = discoWrapper.find('#complete-plan-confirm-btn');
+    expect(confirmButton.length).toEqual(1);
+    confirmButton.simulate('click');
+
+    await flushPromises();
+
+    expect(mockGrowl).toHaveBeenCalledWith(`${PLAN_STATUS_UPDATE_ERROR}: some error message`, {
+      type: toast.TYPE.ERROR,
+    });
+  });
+
+  it('growl on error when updating plan', async () => {
+    store.dispatch(fetchPlans(fixtures.plans as any));
+    const mock: any = jest.fn();
+    const props = {
+      history,
+      location: mock,
+      match: {
+        isExact: true,
+        params: { id: fixtures.plan1.id },
+        path: `${PLAN_COMPLETION_URL}/:id`,
+        url: `${PLAN_COMPLETION_URL}/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f`,
+      },
+    };
+    const mockGrowl: any = jest.fn();
+    (helperUtils as any).growl = mockGrowl;
+    fetch.once(JSON.stringify([plansListResponse[0]]));
+    fetch.mockReject(new Error('Some error'), { status: 500 });
+
+    const discoWrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedPlanCompletion {...props} />
+        </Router>
+      </Provider>
+    );
+
+    const confirmButton = discoWrapper.find('#complete-plan-confirm-btn');
+    expect(confirmButton.length).toEqual(1);
+    confirmButton.simulate('click');
+
+    await flushPromises();
+
+    expect(mockGrowl).toHaveBeenCalledWith(`${PLAN_STATUS_UPDATE_ERROR}: Some error`, {
+      type: toast.TYPE.ERROR,
+    });
+  });
+
+  it('growl on read if no plan received', async () => {
+    store.dispatch(fetchPlans(fixtures.plans as any));
+    const mock: any = jest.fn();
+    const props = {
+      history,
+      location: mock,
+      match: {
+        isExact: true,
+        params: { id: fixtures.plan1.id },
+        path: `${PLAN_COMPLETION_URL}/:id`,
+        url: `${PLAN_COMPLETION_URL}/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f`,
+      },
+    };
+    const mockGrowl: any = jest.fn();
+    (helperUtils as any).growl = mockGrowl;
+    fetch.once(JSON.stringify([])).once(JSON.stringify(updateResponse));
+
+    const discoWrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedPlanCompletion {...props} />
+        </Router>
+      </Provider>
+    );
+
+    const confirmButton = discoWrapper.find('#complete-plan-confirm-btn');
+    expect(confirmButton.length).toEqual(1);
+    confirmButton.simulate('click');
+
+    await flushPromises();
+
+    expect(mockGrowl).toHaveBeenCalledWith(NO_PLAN_FOUND_ERROR, { type: toast.TYPE.ERROR });
   });
 });

@@ -12,12 +12,11 @@ import {
   NAME,
   NO,
   OPENSRP_PRACTITIONER_ENDPOINT,
-  PRACTITIONER,
   PRACTITIONER_CREATED_SUCCESSFULLY,
   PRACTITIONER_EDITED_SUCCESSFULLY,
   PRACTITIONERS_LIST_URL,
   REQUIRED,
-  SAVE,
+  SAVE_PRACTITIONER,
   SAVING,
   SELECT_USERNAME,
   USERNAME,
@@ -237,7 +236,7 @@ const PractitionerForm = (props: PractitionerFormProps) => {
               aria-label="Save Practitioner"
               disabled={isSubmitting || Object.keys(errors).length > 0}
             >
-              {isSubmitting ? SAVING : `${SAVE} ${PRACTITIONER}`}
+              {isSubmitting ? SAVING : SAVE_PRACTITIONER}
             </Button>
           </Form>
         )}
