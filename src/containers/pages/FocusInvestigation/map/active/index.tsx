@@ -45,7 +45,9 @@ import {
   POLYGON,
   PROGRESS,
   REACTIVE,
+  REACTIVE_INVESTIGATION,
   ROUTINE,
+  ROUTINE_INVESTIGATION_TITLE,
   START_DATE,
 } from '../../../../../constants';
 import { popupHandler } from '../../../../../helpers/handlers';
@@ -347,8 +349,10 @@ class SingleActiveFIMap extends React.Component<
             <div className="mapSidebar">
               <div>
                 <h5>
-                  {plan.plan_fi_reason === CASE_TRIGGERED ? REACTIVE : ROUTINE}&nbsp;
-                  {INVESTIGATION}
+                  {plan.plan_fi_reason === CASE_TRIGGERED
+                    ? REACTIVE_INVESTIGATION
+                    : ROUTINE_INVESTIGATION_TITLE}
+                  &nbsp;
                 </h5>
                 {detailViewPlanInvestigationContainer}
               </div>

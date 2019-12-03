@@ -43,6 +43,7 @@ import {
   NAME,
   REACTIVE,
   ROUTINE,
+  ROUTINE_TITLE,
   SEARCH,
   START_DATE,
   STATUS_HEADER,
@@ -340,7 +341,7 @@ class ActiveFocusInvestigation extends React.Component<
               <div className="routine-heading">
                 <Row>
                   <Col xs="6">
-                    <h3 className="mb-3 mt-5 page-title">{ROUTINE}</h3>
+                    <h3 className="mb-3 mt-5 page-title">{ROUTINE_TITLE}</h3>
                   </Col>
                   <Col xs="6">
                     <LinkAsButton />
@@ -355,7 +356,7 @@ class ActiveFocusInvestigation extends React.Component<
               </div>
             );
           } else {
-            const header = i ? ROUTINE : REACTIVE;
+            const header = i ? ROUTINE_TITLE : REACTIVE;
             const emptyPlansColumns = [
               {
                 Header: NAME,

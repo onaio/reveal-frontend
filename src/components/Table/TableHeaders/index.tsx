@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Col, Row } from 'reactstrap';
-import { CASE_TRIGGERED, REACTIVE, ROUTINE } from '../../../constants';
+import { CASE_TRIGGERED, REACTIVE, ROUTINE_TITLE } from '../../../constants';
 import { Plan } from '../../../store/ducks/plans';
 import LinkAsButton from '../../LinkAsButton';
 /** Interface to describe props for TableHeader components  */
@@ -21,7 +21,7 @@ class TableHeader extends React.Component<TableHeaderProps, {}> {
         <div className="routine-heading">
           <Row>
             <Col xs="6">
-              <h3 className="mb-3 mt-5 page-title">{ROUTINE}</h3>
+              <h3 className="mb-3 mt-5 page-title">{ROUTINE_TITLE}</h3>
             </Col>
             <Col xs="6">
               <LinkAsButton />
