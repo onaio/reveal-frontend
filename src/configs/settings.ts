@@ -21,12 +21,24 @@ import {
   B1,
   B2,
   BCC_ACTIVITY,
+  BCC_ACTIVITY_DESCRIPTION,
   BCC_CODE,
+  BCC_GOAL_DESCRIPTION,
+  BCC_GOAL_MEASURE,
+  BEDNET_ACTIVITY,
+  BEDNET_ACTIVITY_DESCRIPTION,
   BEDNET_DISTRIBUTION_ACTIVITY_CODE,
   BEDNET_DISTRIBUTION_CODE,
+  BEDNET_GOAL_MEASURE,
+  BLOOD_SCREENING_ACTIVITY,
   BLOOD_SCREENING_ACTIVITY_CODE,
+  BLOOD_SCREENING_ACTIVITY_DESCRIPTION,
   BLOOD_SCREENING_CODE,
+  BLOOD_SCREENING_GOAL_MEASURE,
+  CASE_CONFIRMATION_ACTIVITY,
   CASE_CONFIRMATION_ACTIVITY_CODE,
+  CASE_CONFIRMATION_ACTIVITY_DESCRIPTION,
+  CASE_CONFIRMATION_ACTIVITY_GOAL_MEASURE,
   CASE_CONFIRMATION_CODE,
   CASE_NUMBER_CODE,
   CASE_TRIGGERED,
@@ -37,14 +49,27 @@ import {
   HIGH_PRIORITIY,
   INTERVENTION_TYPE_CODE,
   INVESTIGATION,
+  IRS_ACTIVITY,
+  IRS_ACTIVITY_DESCRIPTION,
   IRS_CODE,
+  IRS_GOAL_DESCRIPTION,
+  IRS_GOAL_MEASURE,
+  LARVAL_DIPPING_ACTIVITY,
   LARVAL_DIPPING_ACTIVITY_CODE,
+  LARVAL_DIPPING_ACTIVITY_DESCRIPTION,
   LARVAL_DIPPING_CODE,
+  LARVAL_DIPPING_GOAL_MEASURE,
   LOW_PRIORITY,
   MEDIUM_PRIORITY,
+  MOSQUITO_COLLECTION_ACTIVITY,
   MOSQUITO_COLLECTION_ACTIVITY_CODE,
+  MOSQUITO_COLLECTION_ACTIVITY_DESCRIPTION,
   MOSQUITO_COLLECTION_CODE,
+  MOSQUITO_COLLECTION_GOAL_MEASURE,
   OPENSRP_EVENT_ID_CODE,
+  RACD_ACTIVITY,
+  RACD_ACTIVITY_DESCRIPTION,
+  RACD_ACTIVITY_GOAL_MEASURE,
   RACD_REGISTER_FAMILY_CODE,
   ROUTINE,
   TASK_GENERATION_STATUS_CODE,
@@ -261,8 +286,8 @@ export const PlanActivityTitles = [
 export const planActivities: PlanActivities = {
   BCC: {
     action: {
-      code: 'BCC',
-      description: 'Conduct BCC activity',
+      code: BCC_CODE,
+      description: BCC_ACTIVITY_DESCRIPTION,
       goalId: 'BCC_Focus',
       identifier: '',
       prefix: 99,
@@ -275,10 +300,10 @@ export const planActivities: PlanActivities = {
         end: '',
         start: '',
       },
-      title: 'Behaviour Change Communication',
+      title: BCC_ACTIVITY,
     },
     goal: {
-      description: 'Complete at least 1 BCC activity for the operational area',
+      description: BCC_GOAL_DESCRIPTION,
       id: 'BCC_Focus',
       priority: 'medium-priority',
       target: [
@@ -291,7 +316,7 @@ export const planActivities: PlanActivities = {
             },
           },
           due: '',
-          measure: 'Number of BCC Activities Completed',
+          measure: BCC_GOAL_MEASURE,
         },
       ],
     },
@@ -299,11 +324,11 @@ export const planActivities: PlanActivities = {
   IRS: {
     action: {
       code: 'IRS',
-      description: 'Visit each structure in the operational area and attempt to spray',
+      description: IRS_ACTIVITY_DESCRIPTION,
       goalId: 'IRS',
       identifier: '',
       prefix: 7,
-      reason: 'Routine',
+      reason: ROUTINE,
       subjectCodableConcept: {
         text: 'Residential_Structure',
       },
@@ -312,12 +337,12 @@ export const planActivities: PlanActivities = {
         end: '',
         start: '',
       },
-      title: 'Spray Structures',
+      title: IRS_ACTIVITY,
     },
     goal: {
-      description: 'Spray structures in the operational area',
+      description: IRS_GOAL_DESCRIPTION,
       id: 'IRS',
-      priority: 'medium-priority',
+      priority: MEDIUM_PRIORITY,
       target: [
         {
           detail: {
@@ -328,7 +353,7 @@ export const planActivities: PlanActivities = {
             },
           },
           due: '',
-          measure: 'Percent of structures sprayed',
+          measure: IRS_GOAL_MEASURE,
         },
       ],
     },
@@ -336,11 +361,11 @@ export const planActivities: PlanActivities = {
   bednetDistribution: {
     action: {
       code: 'Bednet Distribution',
-      description: 'Visit 100% of residential structures in the operational area and provide nets',
+      description: BEDNET_ACTIVITY_DESCRIPTION,
       goalId: 'RACD_bednet_distribution',
       identifier: '',
       prefix: 4,
-      reason: 'Investigation',
+      reason: INVESTIGATION,
       subjectCodableConcept: {
         text: 'Residential_Structure',
       },
@@ -349,12 +374,12 @@ export const planActivities: PlanActivities = {
         end: '',
         start: '',
       },
-      title: 'Bednet Distribution',
+      title: BEDNET_ACTIVITY,
     },
     goal: {
-      description: 'Visit 100% of residential structures in the operational area and provide nets',
+      description: BEDNET_ACTIVITY_DESCRIPTION,
       id: 'RACD_bednet_distribution',
-      priority: 'medium-priority',
+      priority: MEDIUM_PRIORITY,
       target: [
         {
           detail: {
@@ -365,7 +390,7 @@ export const planActivities: PlanActivities = {
             },
           },
           due: '',
-          measure: 'Percent of residential structures received nets',
+          measure: BEDNET_GOAL_MEASURE,
         },
       ],
     },
@@ -373,12 +398,11 @@ export const planActivities: PlanActivities = {
   bloodScreening: {
     action: {
       code: 'Blood Screening',
-      description:
-        'Visit all residential structures (100%) within a 1 km radius of a confirmed index case and test each registered person',
+      description: BLOOD_SCREENING_ACTIVITY_DESCRIPTION,
       goalId: 'RACD_Blood_Screening',
       identifier: '',
       prefix: 3,
-      reason: 'Investigation',
+      reason: INVESTIGATION,
       subjectCodableConcept: {
         text: 'Person',
       },
@@ -387,13 +411,12 @@ export const planActivities: PlanActivities = {
         end: '',
         start: '',
       },
-      title: 'Blood screening',
+      title: BLOOD_SCREENING_ACTIVITY,
     },
     goal: {
-      description:
-        'Visit all residential structures (100%) within a 1 km radius of a confirmed index case and test each registered person',
+      description: BLOOD_SCREENING_ACTIVITY_DESCRIPTION,
       id: 'RACD_Blood_Screening',
-      priority: 'medium-priority',
+      priority: MEDIUM_PRIORITY,
       target: [
         {
           detail: {
@@ -404,7 +427,7 @@ export const planActivities: PlanActivities = {
             },
           },
           due: '',
-          measure: 'Number of registered people tested',
+          measure: BLOOD_SCREENING_GOAL_MEASURE,
         },
       ],
     },
@@ -412,11 +435,11 @@ export const planActivities: PlanActivities = {
   caseConfirmation: {
     action: {
       code: 'Case Confirmation',
-      description: 'Confirm the index case',
+      description: CASE_CONFIRMATION_ACTIVITY_DESCRIPTION,
       goalId: 'Case_Confirmation',
       identifier: '',
       prefix: 1,
-      reason: 'Investigation',
+      reason: INVESTIGATION,
       subjectCodableConcept: {
         text: 'Operational_Area',
       },
@@ -425,12 +448,12 @@ export const planActivities: PlanActivities = {
         end: '',
         start: '',
       },
-      title: 'Case Confirmation',
+      title: CASE_CONFIRMATION_ACTIVITY,
     },
     goal: {
-      description: 'Confirm the index case',
+      description: CASE_CONFIRMATION_ACTIVITY_DESCRIPTION,
       id: 'Case_Confirmation',
-      priority: 'medium-priority',
+      priority: MEDIUM_PRIORITY,
       target: [
         {
           detail: {
@@ -441,7 +464,7 @@ export const planActivities: PlanActivities = {
             },
           },
           due: '',
-          measure: 'Number of cases confirmed',
+          measure: CASE_CONFIRMATION_ACTIVITY_GOAL_MEASURE,
         },
       ],
     },
@@ -449,12 +472,11 @@ export const planActivities: PlanActivities = {
   familyRegistration: {
     action: {
       code: 'RACD Register Family',
-      description:
-        'Register all families & family members in all residential structures enumerated (100%) within the operational area',
+      description: RACD_ACTIVITY_DESCRIPTION,
       goalId: 'RACD_register_families',
       identifier: '',
       prefix: 2,
-      reason: 'Investigation',
+      reason: INVESTIGATION,
       subjectCodableConcept: {
         text: 'Residential_Structure',
       },
@@ -463,13 +485,12 @@ export const planActivities: PlanActivities = {
         end: '',
         start: '',
       },
-      title: 'Family Registration',
+      title: RACD_ACTIVITY,
     },
     goal: {
-      description:
-        'Register all families & family members in all residential structures enumerated (100%) within the operational area',
+      description: RACD_ACTIVITY_DESCRIPTION,
       id: 'RACD_register_families',
-      priority: 'medium-priority',
+      priority: MEDIUM_PRIORITY,
       target: [
         {
           detail: {
@@ -480,7 +501,7 @@ export const planActivities: PlanActivities = {
             },
           },
           due: '',
-          measure: 'Percent of residential structures with full family registration',
+          measure: RACD_ACTIVITY_GOAL_MEASURE,
         },
       ],
     },
@@ -488,11 +509,11 @@ export const planActivities: PlanActivities = {
   larvalDipping: {
     action: {
       code: 'Larval Dipping',
-      description: 'Perform a minimum of three larval dipping activities in the operational area',
+      description: LARVAL_DIPPING_ACTIVITY_DESCRIPTION,
       goalId: 'Larval_Dipping',
       identifier: '',
       prefix: 5,
-      reason: 'Investigation',
+      reason: INVESTIGATION,
       subjectCodableConcept: {
         text: 'Breeding_Site',
       },
@@ -501,12 +522,12 @@ export const planActivities: PlanActivities = {
         end: '',
         start: '',
       },
-      title: 'Larval Dipping',
+      title: LARVAL_DIPPING_ACTIVITY,
     },
     goal: {
-      description: 'Perform a minimum of three larval dipping activities in the operational area',
+      description: LARVAL_DIPPING_ACTIVITY_DESCRIPTION,
       id: 'Larval_Dipping',
-      priority: 'medium-priority',
+      priority: MEDIUM_PRIORITY,
       target: [
         {
           detail: {
@@ -517,7 +538,7 @@ export const planActivities: PlanActivities = {
             },
           },
           due: '',
-          measure: 'Number of larval dipping activities completed',
+          measure: LARVAL_DIPPING_GOAL_MEASURE,
         },
       ],
     },
@@ -525,12 +546,11 @@ export const planActivities: PlanActivities = {
   mosquitoCollection: {
     action: {
       code: 'Mosquito Collection',
-      description:
-        'Set a minimum of three mosquito collection traps and complete the mosquito collection process',
+      description: MOSQUITO_COLLECTION_ACTIVITY_DESCRIPTION,
       goalId: 'Mosquito_Collection',
       identifier: '',
       prefix: 6,
-      reason: 'Investigation',
+      reason: INVESTIGATION,
       subjectCodableConcept: {
         text: 'Mosquito_Collection_Point',
       },
@@ -539,13 +559,12 @@ export const planActivities: PlanActivities = {
         end: '',
         start: '',
       },
-      title: 'Mosquito Collection',
+      title: MOSQUITO_COLLECTION_ACTIVITY,
     },
     goal: {
-      description:
-        'Set a minimum of three mosquito collection traps and complete the mosquito collection process',
+      description: MOSQUITO_COLLECTION_ACTIVITY_DESCRIPTION,
       id: 'Mosquito_Collection',
-      priority: 'medium-priority',
+      priority: MEDIUM_PRIORITY,
       target: [
         {
           detail: {
@@ -556,7 +575,7 @@ export const planActivities: PlanActivities = {
             },
           },
           due: '',
-          measure: 'Number of mosquito collection activities completed',
+          measure: MOSQUITO_COLLECTION_GOAL_MEASURE,
         },
       ],
     },

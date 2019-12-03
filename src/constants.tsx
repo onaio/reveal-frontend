@@ -527,7 +527,7 @@ export const BEDNET_ACTIVITY = 'Bednet Distribution';
 export const BEDNET_ACTIVITY_DESCRIPTION =
   'Visit 100% of residential structures in the operational area and provide nets';
 export const BEDNET_GOAL_MEASURE = 'Percent of residential structures received nets';
-export const BLOOD_SCREENING_ACTIVITY = 'Blood Screening';
+export const BLOOD_SCREENING_ACTIVITY = 'Blood screening';
 export const BLOOD_SCREENING_ACTIVITY_DESCRIPTION =
   'Visit all residential structures (100%) within a 1 km radius of a confirmed index case and test each registered person';
 export const BLOOD_SCREENING_GOAL_MEASURE = 'Number of registered people tested';
