@@ -1,0 +1,10 @@
+{
+  "WELCOME_TO_REVEAL": {
+    "message": "Karibu Reveal!",
+    "description": "Title on the landing page"
+  },
+  "GET_STARTED_MESSAGE": {
+    "message": "Anza kwa kuchagua kuingilia chini",
+    "description": "Subtitle on the landing page"
+  }
+}
