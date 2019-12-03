@@ -722,5 +722,17 @@
   "MOSQUITO_COLLECTION_GOAL_MEASURE": {
     "message": "Number of mosquito collection activities completed",
     "description": ""
+  },
+  "REACTIVE_INVESTIGATION": {
+    "message": "Reactive Investigation",
+    "description": "page title: for pages about case-triggered reactive investigations"
+  },
+  "ROUTINE_TITLE": {
+    "message": "Routine",
+    "description": ""
+  },
+  "ROUTINE_INVESTIGATION_TITLE": {
+    "message": "Routine Investigation",
+    "description": "page title: for pages about planned investigations"
   }
 }
