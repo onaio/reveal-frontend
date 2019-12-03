@@ -1,6 +1,3 @@
-import { FIReasons, PlanActionCodes } from './configs/settings';
-import { FIReasonType } from './containers/forms/PlanForm/types';
-
 // magical strings
 export const JURISDICTION_ID = 'jurisdiction_id';
 export type JURISDICTION_ID = typeof JURISDICTION_ID;
@@ -10,8 +7,8 @@ export const PARENT_ID = 'parent_id';
 export type PARENT_ID = typeof JURISDICTION_ID;
 export const PARENTID = 'parentId';
 export type PARENTID = typeof JURISDICTIONID;
-export const CASE_TRIGGERED: FIReasonType = FIReasons[1];
-export const ROUTINE: FIReasonType = FIReasons[0];
+export const CASE_TRIGGERED = 'Case Triggered';
+export const ROUTINE = 'Routine';
 export const STRUCTURE_LAYER = 'structure-layer';
 export type STRUCTURE_LAYER = typeof STRUCTURE_LAYER;
 export const POLYGON = 'Polygon';
@@ -40,6 +37,27 @@ export const DRAFT = 'draft';
 export type DRAFT = typeof DRAFT;
 export const NEW = 'new';
 export type NEW = typeof NEW;
+export const A1 = 'A1';
+export const A2 = 'A2';
+export const B1 = 'B1';
+export const B2 = 'B2';
+export const LOW_PRIORITY = 'low-priority';
+export const MEDIUM_PRIORITY = 'medium-priority';
+export const HIGH_PRIORITIY = 'high-priority';
+export const TRUE = 'True';
+export const FALSE = 'False';
+export const INTERVENTION_TYPE_CODE = 'interventionType';
+export const FI_STATUS_CODE = 'fiStatus';
+export const FI_REASON_CODE = 'fiReason';
+export const OPENSRP_EVENT_ID_CODE = 'opensrpEventId';
+export const CASE_NUMBER_CODE = 'caseNum';
+export const TASK_GENERATION_STATUS_CODE = 'taskGenerationStatus';
+export const CASE_CONFIRMATION_ACTIVITY_CODE = 'caseConfirmation';
+export const FAMILY_REGISTRATION_ACTIVITY_CODE = 'familyRegistration';
+export const BLOOD_SCREENING_ACTIVITY_CODE = 'bloodScreening';
+export const BEDNET_DISTRIBUTION_ACTIVITY_CODE = 'bednetDistribution';
+export const LARVAL_DIPPING_ACTIVITY_CODE = 'larvalDipping';
+export const MOSQUITO_COLLECTION_ACTIVITY_CODE = 'mosquitoCollection';
 
 // internal urls
 export const LOGIN_URL = '/login';
@@ -140,21 +158,21 @@ export const RED = 'Red';
 export type RED = typeof RED;
 
 // task action codes
-export const BCC_CODE = PlanActionCodes[0];
+export const BCC_CODE = 'BCC';
 export type BCC_CODE = typeof BCC_CODE;
-export const IRS_CODE = PlanActionCodes[1];
+export const IRS_CODE = 'IRS';
 export type IRS_CODE = typeof IRS_CODE;
-export const BEDNET_DISTRIBUTION_CODE = PlanActionCodes[2];
+export const BEDNET_DISTRIBUTION_CODE = 'Bednet Distribution';
 export type BEDNET_DISTRIBUTION_CODE = typeof BEDNET_DISTRIBUTION_CODE;
-export const BLOOD_SCREENING_CODE = PlanActionCodes[3];
+export const BLOOD_SCREENING_CODE = 'Blood Screening';
 export type BLOOD_SCREENING_CODE = typeof BLOOD_SCREENING_CODE;
-export const CASE_CONFIRMATION_CODE = PlanActionCodes[4];
+export const CASE_CONFIRMATION_CODE = 'Case Confirmation';
 export type CASE_CONFIRMATION_CODE = typeof CASE_CONFIRMATION_CODE;
-export const RACD_REGISTER_FAMILY_CODE = PlanActionCodes[5];
+export const RACD_REGISTER_FAMILY_CODE = 'RACD Register Family';
 export type RACD_REGISTER_FAMILY_CODE = typeof RACD_REGISTER_FAMILY_CODE;
-export const LARVAL_DIPPING_CODE = PlanActionCodes[6];
+export const LARVAL_DIPPING_CODE = 'Larval Dipping';
 export type LARVAL_DIPPING_CODE = typeof LARVAL_DIPPING_CODE;
-export const MOSQUITO_COLLECTION_CODE = PlanActionCodes[7];
+export const MOSQUITO_COLLECTION_CODE = 'Mosquito Collection';
 export type MOSQUITO_COLLECTION_CODE = typeof MOSQUITO_COLLECTION_CODE;
 
 export const PRACTITIONER_CODE = {

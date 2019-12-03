@@ -16,6 +16,41 @@ import { Providers } from '@onaio/gatekeeper';
 import { Color } from 'csstype';
 import { Expression, LngLatBoundsLike } from 'mapbox-gl';
 import {
+  A1,
+  A2,
+  B1,
+  B2,
+  BCC_ACTIVITY,
+  BCC_CODE,
+  BEDNET_DISTRIBUTION_ACTIVITY_CODE,
+  BEDNET_DISTRIBUTION_CODE,
+  BLOOD_SCREENING_ACTIVITY_CODE,
+  BLOOD_SCREENING_CODE,
+  CASE_CONFIRMATION_ACTIVITY_CODE,
+  CASE_CONFIRMATION_CODE,
+  CASE_NUMBER_CODE,
+  CASE_TRIGGERED,
+  FALSE,
+  FAMILY_REGISTRATION_ACTIVITY_CODE,
+  FI_REASON_CODE,
+  FI_STATUS_CODE,
+  HIGH_PRIORITIY,
+  INTERVENTION_TYPE_CODE,
+  INVESTIGATION,
+  IRS_CODE,
+  LARVAL_DIPPING_ACTIVITY_CODE,
+  LARVAL_DIPPING_CODE,
+  LOW_PRIORITY,
+  MEDIUM_PRIORITY,
+  MOSQUITO_COLLECTION_ACTIVITY_CODE,
+  MOSQUITO_COLLECTION_CODE,
+  OPENSRP_EVENT_ID_CODE,
+  RACD_REGISTER_FAMILY_CODE,
+  ROUTINE,
+  TASK_GENERATION_STATUS_CODE,
+  TRUE,
+} from '../constants';
+import {
   ActionReasonType,
   GoalPriorityType,
   GoalUnit,
@@ -116,41 +151,41 @@ export const locationHierarchy: LocationItem[] = [
 
 /** Focus investigation configs */
 /** Allowed FI Status values */
-export const FIStatuses = ['A1', 'A2', 'B1', 'B2'] as const;
+export const FIStatuses = [A1, A2, B1, B2] as const;
 
 /** Allowed FI Status values */
-export const FIReasons = ['Routine', 'Case Triggered'] as const;
+export const FIReasons = [ROUTINE, CASE_TRIGGERED] as const;
 
 /** Allowed goal priority values */
-export const goalPriorities = ['low-priority', 'medium-priority', 'high-priority'] as const;
+export const goalPriorities = [LOW_PRIORITY, MEDIUM_PRIORITY, HIGH_PRIORITIY] as const;
 
 /** Allowed action Reason values */
-export const actionReasons = ['Investigation', 'Routine'] as const;
+export const actionReasons = [INVESTIGATION, ROUTINE] as const;
 
 /** Allowed useContext Code values */
 export const useContextCodes = [
-  'interventionType',
-  'fiStatus',
-  'fiReason',
-  'opensrpEventId',
-  'caseNum',
-  'taskGenerationStatus',
+  INTERVENTION_TYPE_CODE,
+  FI_STATUS_CODE,
+  FI_REASON_CODE,
+  OPENSRP_EVENT_ID_CODE,
+  CASE_NUMBER_CODE,
+  TASK_GENERATION_STATUS_CODE,
 ] as const;
 
 /** Plan activity code values */
 export const PlanActionCodes = [
-  'BCC',
-  'IRS',
-  'Bednet Distribution',
-  'Blood Screening',
-  'Case Confirmation',
-  'RACD Register Family',
-  'Larval Dipping',
-  'Mosquito Collection',
+  BCC_CODE,
+  IRS_CODE,
+  BEDNET_DISTRIBUTION_CODE,
+  BLOOD_SCREENING_CODE,
+  CASE_CONFIRMATION_CODE,
+  RACD_REGISTER_FAMILY_CODE,
+  LARVAL_DIPPING_CODE,
+  MOSQUITO_COLLECTION_CODE,
 ] as const;
 
 /** Allowed taskGenerationStatus values */
-export const taskGenerationStatuses = ['True', 'False'] as const;
+export const taskGenerationStatuses = [TRUE, FALSE] as const;
 
 /** Plan Action Timing Period */
 export interface PlanActionTimingPeriod {
@@ -212,14 +247,14 @@ export interface PlanActivity {
 
 /** Plan activity title values */
 export const PlanActivityTitles = [
-  'caseConfirmation',
-  'familyRegistration',
-  'bloodScreening',
-  'bednetDistribution',
-  'larvalDipping',
-  'mosquitoCollection',
-  'BCC',
-  'IRS',
+  CASE_CONFIRMATION_ACTIVITY_CODE,
+  FAMILY_REGISTRATION_ACTIVITY_CODE,
+  BLOOD_SCREENING_ACTIVITY_CODE,
+  BEDNET_DISTRIBUTION_ACTIVITY_CODE,
+  LARVAL_DIPPING_ACTIVITY_CODE,
+  MOSQUITO_COLLECTION_ACTIVITY_CODE,
+  BCC_CODE,
+  IRS_CODE,
 ] as const;
 
 /** default plan activities */
