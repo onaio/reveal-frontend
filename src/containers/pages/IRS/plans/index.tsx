@@ -13,13 +13,12 @@ import {
   DATE_CREATED,
   END_DATE,
   HOME,
-  HOME_URL,
   IRS_PLANS,
-  REPORT_IRS_PLAN_URL,
   START_DATE,
   STATUS_HEADER,
   TITLE,
-} from '../../../../constants';
+} from '../../../../configs/lang';
+import { HOME_URL, REPORT_IRS_PLAN_URL } from '../../../../constants';
 import supersetFetch from '../../../../services/superset';
 import IRSPlansReducer, {
   fetchIRSPlans,

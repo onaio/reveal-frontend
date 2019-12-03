@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Store } from 'redux';
 import AssignTeamButton, { AssignTeamButtonProps } from '../../../components/AssignTeamButton';
 import AssignTeamPopover, { AssignTeamPopoverProps } from '../../../components/AssignTeamPopover';
-import { TEAMS_ASSIGNED } from '../../../constants';
+import { TEAMS_ASSIGNED } from '../../../configs/lang';
 import { stopPropagationAndPreventDefault } from '../../../helpers/utils';
 import assignmentReducer, {
   Assignment,

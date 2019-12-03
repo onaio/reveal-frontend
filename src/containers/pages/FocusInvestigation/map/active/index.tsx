@@ -22,33 +22,34 @@ import {
   SUPERSET_STRUCTURES_SLICE,
   SUPERSET_TASKS_SLICE,
 } from '../../../../../configs/env';
-import { FIReasons } from '../../../../../configs/settings';
 import {
   CASE_CLASSIFICATION_LABEL,
-  CASE_TRIGGERED,
   END_DATE,
-  FI_SINGLE_MAP_URL,
-  FI_SINGLE_URL,
-  FI_URL,
   FOCUS_INVESTIGATION,
   FOCUS_INVESTIGATIONS,
   HOME,
-  HOME_URL,
   INVESTIGATION,
   MARK_AS_COMPLETE,
   MEASURE,
-  MULTI_POLYGON,
   NUMERATOR_OF_DENOMINATOR_UNITS,
-  PLAN_COMPLETION_URL,
   PLAN_SELECT_PLACEHOLDER,
-  POINT,
-  POLYGON,
   PROGRESS,
-  REACTIVE,
   REACTIVE_INVESTIGATION,
-  ROUTINE,
   ROUTINE_INVESTIGATION_TITLE,
   START_DATE,
+} from '../../../../../configs/lang';
+import { FIReasons } from '../../../../../configs/settings';
+import {
+  CASE_TRIGGERED,
+  FI_SINGLE_MAP_URL,
+  FI_SINGLE_URL,
+  FI_URL,
+  HOME_URL,
+  MULTI_POLYGON,
+  PLAN_COMPLETION_URL,
+  POINT,
+  POLYGON,
+  ROUTINE,
 } from '../../../../../constants';
 import { popupHandler } from '../../../../../helpers/handlers';
 import { getGoalReport } from '../../../../../helpers/indicators';

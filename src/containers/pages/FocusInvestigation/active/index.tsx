@@ -23,30 +23,32 @@ import HeaderBreadCrumb, {
 import Loading from '../../../../components/page/Loading';
 import NullDataTable from '../../../../components/Table/NullDataTable';
 import { SUPERSET_PLANS_SLICE } from '../../../../configs/env';
-import { FIClassifications, locationHierarchy } from '../../../../configs/settings';
 import {
   CASE_CLASSIFICATION_HEADER,
   CASE_NOTIF_DATE_HEADER,
-  CASE_TRIGGERED,
   CURRENT_FOCUS_INVESTIGATION,
   DEFINITIONS,
   END_DATE,
   FI_IN_JURISDICTION,
-  FI_SINGLE_MAP_URL,
-  FI_SINGLE_URL,
   FI_STATUS,
-  FI_URL,
   FOCUS_AREA_HEADER,
   FOCUS_INVESTIGATIONS,
   HOME,
-  HOME_URL,
   NAME,
   REACTIVE,
-  ROUTINE,
   ROUTINE_TITLE,
   SEARCH,
   START_DATE,
   STATUS_HEADER,
+} from '../../../../configs/lang';
+import { FIClassifications, locationHierarchy } from '../../../../configs/settings';
+import {
+  CASE_TRIGGERED,
+  FI_SINGLE_MAP_URL,
+  FI_SINGLE_URL,
+  FI_URL,
+  HOME_URL,
+  ROUTINE,
 } from '../../../../constants';
 import { renderClassificationRow } from '../../../../helpers/indicators';
 import '../../../../helpers/tables.css';

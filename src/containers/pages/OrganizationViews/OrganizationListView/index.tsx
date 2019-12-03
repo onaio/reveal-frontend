@@ -19,18 +19,20 @@ import HeaderBreadcrumb, {
 import Loading from '../../../../components/page/Loading';
 import {
   ACTIONS,
-  CREATE_ORGANIZATION_URL,
   HOME,
-  HOME_URL,
   IDENTIFIER,
   NAME,
   NEW_TEAM,
   ORGANIZATION_LABEL,
   ORGANIZATIONS_LABEL,
-  ORGANIZATIONS_LIST_URL,
   SEARCH,
-  SINGLE_ORGANIZATION_URL,
   VIEW,
+} from '../../../../configs/lang';
+import {
+  CREATE_ORGANIZATION_URL,
+  HOME_URL,
+  ORGANIZATIONS_LIST_URL,
+  SINGLE_ORGANIZATION_URL,
 } from '../../../../constants';
 import { OpenSRPService } from '../../../../services/opensrp';
 import organizationsReducer, {

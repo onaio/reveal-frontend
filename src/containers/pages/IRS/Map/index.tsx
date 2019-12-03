@@ -21,18 +21,17 @@ import {
   SUPERSET_JURISDICTIONS_SLICE,
   SUPERSET_MAX_RECORDS,
 } from '../../../../configs/env';
-import { indicatorThresholdsIRS } from '../../../../configs/settings';
 import {
   HOME,
-  HOME_URL,
   IRS_REPORTING_TITLE,
   LEGEND_LABEL,
   MAP_LOAD_ERROR,
   NUMERATOR_OF_DENOMINATOR_UNITS,
   PROGRESS,
-  REPORT_IRS_PLAN_URL,
   STRUCTURES,
-} from '../../../../constants';
+} from '../../../../configs/lang';
+import { indicatorThresholdsIRS } from '../../../../configs/settings';
+import { HOME_URL, REPORT_IRS_PLAN_URL } from '../../../../constants';
 import ProgressBar from '../../../../helpers/ProgressBar';
 import { RouteParams } from '../../../../helpers/utils';
 import supersetFetch from '../../../../services/superset';

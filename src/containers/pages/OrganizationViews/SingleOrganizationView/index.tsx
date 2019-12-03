@@ -19,25 +19,27 @@ import Loading from '../../../../components/page/Loading';
 import {
   ACTIONS,
   ASSIGN,
-  ASSIGN_PRACTITIONERS_URL,
   EDIT,
-  EDIT_ORGANIZATION_URL,
   HOME,
-  HOME_URL,
   IDENTIFIER,
   NAME,
-  OPENSRP_DEL_PRACTITIONER_ROLE_ENDPOINT,
   ORGANIZATION_DETAILS,
   ORGANIZATION_LABEL,
   ORGANIZATIONS_LABEL,
-  ORGANIZATIONS_LIST_URL,
   PRACTITIONER,
   PRACTITIONER_REMOVED_FROM_ORG,
   REMOVE,
   REMOVING_PRACTITIONER_FAILED,
-  SINGLE_ORGANIZATION_URL,
   TEAM_MEMBERS,
   USERNAME,
+} from '../../../../configs/lang';
+import {
+  ASSIGN_PRACTITIONERS_URL,
+  EDIT_ORGANIZATION_URL,
+  HOME_URL,
+  OPENSRP_DEL_PRACTITIONER_ROLE_ENDPOINT,
+  ORGANIZATIONS_LIST_URL,
+  SINGLE_ORGANIZATION_URL,
 } from '../../../../constants';
 import { growl, RouteParams } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';

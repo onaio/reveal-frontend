@@ -6,12 +6,8 @@ import Helmet from 'react-helmet';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import ConnectedCreateEditPractitionerView, { CreateEditPractitionerView } from '..';
-import {
-  EDIT_PRACTITIONER,
-  EDIT_PRACTITIONER_URL,
-  NEW_PRACTITIONER,
-  OPENSRP_PRACTITIONER_ENDPOINT,
-} from '../../../../../constants';
+import { EDIT_PRACTITIONER, NEW_PRACTITIONER } from '../../../../../configs/lang';
+import { EDIT_PRACTITIONER_URL, OPENSRP_PRACTITIONER_ENDPOINT } from '../../../../../constants';
 import store from '../../../../../store';
 import * as practitionerDucks from '../../../../../store/ducks/opensrp/practitioners';
 import * as fixtures from '../../../../../store/ducks/tests/fixtures';

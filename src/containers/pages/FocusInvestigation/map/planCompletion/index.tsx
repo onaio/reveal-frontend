@@ -10,14 +10,12 @@ import Loading from '../../../../../components/page/Loading';
 import {
   CANCEL,
   CONFIRM,
-  FI_SINGLE_MAP_URL,
   MARK_AS_COMPLETE,
   MARK_PLAN_AS_COMPLETE,
   NO_PLAN_FOUND_ERROR,
-  OPENSRP_PLANS,
-  PLAN_LIST_URL,
   PLAN_STATUS_UPDATE_ERROR,
-} from '../../../../../constants';
+} from '../../../../../configs/lang';
+import { FI_SINGLE_MAP_URL, OPENSRP_PLANS, PLAN_LIST_URL } from '../../../../../constants';
 import { FlexObject } from '../../../../../helpers/utils';
 import { growl } from '../../../../../helpers/utils';
 import { OpenSRPService } from '../../../../../services/opensrp';

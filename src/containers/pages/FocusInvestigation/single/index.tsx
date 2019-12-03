@@ -24,6 +24,20 @@ import {
   SUPERSET_PLANS_SLICE,
 } from '../../../../configs/env';
 import {
+  CANTON,
+  COMPLETE_FOCUS_INVESTIGATION,
+  CURRENT_FOCUS_INVESTIGATION,
+  DISTRICT,
+  FI_REASON,
+  FI_STATUS,
+  FIS_IN_JURISDICTION,
+  FOCUS_AREA_INFO,
+  FOCUS_INVESTIGATIONS,
+  HOME,
+  PROVINCE,
+  REACTIVE,
+} from '../../../../configs/lang';
+import {
   completeReactivePlansColumn,
   completeRoutinePlansColumn,
   currentReactivePlansColumns,
@@ -36,25 +50,7 @@ import {
   locationHierarchy,
   statusColumn,
 } from '../../../../configs/settings';
-import {
-  CANTON,
-  CASE_TRIGGERED,
-  COMPLETE_FOCUS_INVESTIGATION,
-  CURRENT_FOCUS_INVESTIGATION,
-  DISTRICT,
-  FI_REASON,
-  FI_SINGLE_URL,
-  FI_STATUS,
-  FI_URL,
-  FIS_IN_JURISDICTION,
-  FOCUS_AREA_INFO,
-  FOCUS_INVESTIGATIONS,
-  HOME,
-  HOME_URL,
-  PROVINCE,
-  REACTIVE,
-  ROUTINE,
-} from '../../../../constants';
+import { CASE_TRIGGERED, FI_SINGLE_URL, FI_URL, HOME_URL, ROUTINE } from '../../../../constants';
 import {
   defaultTableProps,
   extractPlan,

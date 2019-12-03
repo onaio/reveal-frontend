@@ -1,6 +1,6 @@
 import React, { MouseEvent } from 'react';
 import { Button } from 'reactstrap';
-import { ASSIGN_TEAMS } from '../../constants';
+import { ASSIGN_TEAMS } from '../../configs/lang';
 import { FlexObject } from '../../helpers/utils';
 
 /** interface describing the props of AssignTeamButton */

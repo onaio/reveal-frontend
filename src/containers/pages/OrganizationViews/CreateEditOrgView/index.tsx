@@ -10,14 +10,11 @@ import { Store } from 'redux';
 import HeaderBreadcrumb, {
   BreadCrumbProps,
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
+import { EDIT_TEAM, HOME, NEW_TEAM, ORGANIZATIONS_LABEL } from '../../../../configs/lang';
 import {
   CREATE_ORGANIZATION_URL,
   EDIT_ORGANIZATION_URL,
-  EDIT_TEAM,
-  HOME,
   HOME_URL,
-  NEW_TEAM,
-  ORGANIZATIONS_LABEL,
   ORGANIZATIONS_LIST_URL,
 } from '../../../../constants';
 import { RouteParams } from '../../../../helpers/utils';

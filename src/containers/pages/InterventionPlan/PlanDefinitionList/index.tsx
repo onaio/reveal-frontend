@@ -9,20 +9,17 @@ import { Store } from 'redux';
 import LinkAsButton from '../../../../components/LinkAsButton';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
-import { PlanDefinition } from '../../../../configs/settings';
 import {
   ADD_PLAN,
   HOME,
-  HOME_URL,
   INTERVENTION_TYPE_LABEL,
   LAST_MODIFIED,
-  OPENSRP_PLANS,
-  PLAN_LIST_URL,
-  PLAN_UPDATE_URL,
   PLANS,
   STATUS_HEADER,
   TITLE,
-} from '../../../../constants';
+} from '../../../../configs/lang';
+import { PlanDefinition } from '../../../../configs/settings';
+import { HOME_URL, OPENSRP_PLANS, PLAN_LIST_URL, PLAN_UPDATE_URL } from '../../../../constants';
 import { OpenSRPService } from '../../../../services/opensrp';
 import planDefinitionReducer, {
   fetchPlanDefinitions,

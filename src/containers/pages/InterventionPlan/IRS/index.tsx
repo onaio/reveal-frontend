@@ -14,17 +14,21 @@ import superset from '@onaio/superset-connector';
 import {
   CREATE_NEW_PLAN,
   DATE_CREATED,
-  DRAFT,
   DRAFTS_PARENTHESIS,
   HOME,
+  IRS_PLANS,
+  IRS_TITLE,
+  NAME,
+  STATUS_HEADER,
+} from '../../../../configs/lang';
+import {
+  DRAFT,
   HOME_URL,
   INTERVENTION_IRS_DRAFTS_URL,
   INTERVENTION_IRS_URL,
-  NAME,
   NEW,
   PLAN,
   REPORT,
-  STATUS_HEADER,
 } from '../../../../constants';
 
 import { RouteParams } from '../../../../helpers/utils';
@@ -52,7 +56,6 @@ import HeaderBreadcrumbs, {
 import Loading from '../../../../components/page/Loading';
 import { SUPERSET_IRS_REPORTING_PLANS_SLICE, SUPERSET_MAX_RECORDS } from '../../../../configs/env';
 import { useContextCodes } from '../../../../configs/settings';
-import { IRS_PLANS, IRS_TITLE } from '../../../../constants';
 import supersetFetch from '../../../../services/superset';
 import './../../../../styles/css/drill-down-table.css';
 

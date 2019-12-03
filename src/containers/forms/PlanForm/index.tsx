@@ -22,13 +22,6 @@ import {
   DEFAULT_PLAN_VERSION,
 } from '../../../configs/env';
 import {
-  actionReasons,
-  FIClassifications,
-  FIReasons,
-  goalPriorities,
-  planActivities,
-} from '../../../configs/settings';
-import {
   ACTION,
   ACTIVITIES_LABEL,
   ADD,
@@ -46,7 +39,6 @@ import {
   IRS_TITLE,
   LOCATIONS,
   PLAN_END_DATE_LABEL,
-  PLAN_LIST_URL,
   PLAN_START_DATE_LABEL,
   PLAN_TITLE_LABEL,
   PLEASE_FIX_THESE_ERRORS,
@@ -57,7 +49,15 @@ import {
   SAVING,
   START_DATE,
   STATUS_HEADER,
-} from '../../../constants';
+} from '../../../configs/lang';
+import {
+  actionReasons,
+  FIClassifications,
+  FIReasons,
+  goalPriorities,
+  planActivities,
+} from '../../../configs/settings';
+import { PLAN_LIST_URL } from '../../../constants';
 import { OpenSRPService } from '../../../services/opensrp';
 import { InterventionType, PlanStatus } from '../../../store/ducks/plans';
 import JurisdictionSelect from '../JurisdictionSelect';

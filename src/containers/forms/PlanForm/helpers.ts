@@ -12,6 +12,7 @@ import {
   DEFAULT_TIME,
   PLAN_UUID_NAMESPACE,
 } from '../../../configs/env';
+import { DATE_IS_REQUIRED, NAME_IS_REQUIRED, REQUIRED } from '../../../configs/lang';
 import {
   actionReasons,
   FIClassifications,
@@ -29,7 +30,6 @@ import {
   taskGenerationStatuses,
   UseContext,
 } from '../../../configs/settings';
-import { DATE_IS_REQUIRED, NAME_IS_REQUIRED, REQUIRED } from '../../../constants';
 import { generateNameSpacedUUID } from '../../../helpers/utils';
 import { InterventionType, PlanStatus } from '../../../store/ducks/plans';
 import {
