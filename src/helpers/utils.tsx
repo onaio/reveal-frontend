@@ -461,7 +461,7 @@ export type UpdateType<T extends any, Y> = T & Y;
 
 /** Interface for FeatureCollection */
 export interface FeatureCollection<T> {
-  type: FEATURE_COLLECTION;
+  type: typeof FEATURE_COLLECTION;
   features: T[];
 }
 /** creates an object that wraps geojson features around
