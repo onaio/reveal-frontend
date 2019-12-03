@@ -7,9 +7,8 @@ import { toast } from 'react-toastify';
 import { Store } from 'redux';
 import Loading from '../../../../../components/page/Loading';
 import {
-  AS,
+  AS_COMPLETE,
   CANCEL,
-  COMPLETE,
   CONFIRM,
   FI_SINGLE_MAP_URL,
   MARK,
@@ -29,6 +28,7 @@ import {
   PlanPayload,
   PlanStatus,
 } from '../../../../../store/ducks/plans';
+import './index.css';
 
 /** Props interface for the plan completion component page */
 export interface PlanCompletionProps {
@@ -110,18 +110,24 @@ export class PlanCompletion extends React.Component<
     return (
       <div id="plan-completion-page-wrapper">
         <Helmet>
-          <title>{`${MARK} ${plan.plan_title} ${AS} ${COMPLETE.toLocaleLowerCase()}`}</title>
+          <title>{`${MARK} ${plan.plan_title} ${AS_COMPLETE}`}</title>
         </Helmet>
         {/** prompt to confirm mark as complete click action */}
-        <h2 className="mb-3 mt-5 page-title">{`${MARK} ${
-          plan.plan_title
-        } ${AS} ${COMPLETE.toLocaleLowerCase()}`}</h2>
+        <h2 className="mb-3 mt-5 page-title">
+          {`${MARK} `}
+          <span className="plan-name">${plan.plan_title}</span>
+          {` ${AS_COMPLETE}`}
+        </h2>
         <hr />
         <div className="card mb-3">
           <div className="card-header">{MARK_AS_COMPLETE}</div>
           <div className="card-body">
             {/* this should be error handlers not links */}
-            <p>{`${MARK} ${plan.plan_title} ${AS} ${COMPLETE.toLocaleLowerCase()}`}</p>
+            <p>
+              {`${MARK} `}
+              <span className="plan-name">${plan.plan_title}</span>
+              {` ${AS_COMPLETE}`}
+            </p>
             <button
               id="complete-plan-cancel-btn"
               onClick={this.cancelClickHandler}
