@@ -3,8 +3,7 @@ import toJson from 'enzyme-to-json';
 import { createBrowserHistory } from 'history';
 import React from 'react';
 import { Router } from 'react-router';
-import HeaderComponentWithRouter, { HeaderComponent } from '..';
-import { OPENSRP_LOGOUT_URL } from '../../../../configs/env';
+import HeaderComponentWithRouter from '..';
 
 const history = createBrowserHistory();
 

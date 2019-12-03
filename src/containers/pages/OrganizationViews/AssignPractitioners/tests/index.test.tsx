@@ -7,9 +7,9 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
-import SnapshotDiff from 'snapshot-diff';
 import ConnectedAssignPractitioner, { AssignPractitioner } from '..';
-import { ASSIGN, ASSIGN_PRACTITIONERS_URL, PRACTITIONERS } from '../../../../../constants';
+import { ASSIGN, PRACTITIONERS } from '../../../../../configs/lang';
+import { ASSIGN_PRACTITIONERS_URL } from '../../../../../constants';
 import { OpenSRPService } from '../../../../../services/opensrp';
 import store from '../../../../../store';
 import organizationsReducer, {

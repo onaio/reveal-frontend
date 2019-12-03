@@ -1,4 +1,3 @@
-import { initialState } from '@onaio/gatekeeper/dist/types/ducks/gatekeeper';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import { cloneDeep, keyBy, values } from 'lodash';
 import { FlushThunks } from 'redux-testkit';

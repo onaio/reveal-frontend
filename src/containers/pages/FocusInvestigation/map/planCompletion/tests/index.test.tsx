@@ -10,13 +10,8 @@ import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import { toast } from 'react-toastify';
 import ConnectedPlanCompletion, { PlanCompletion } from '..';
-import {
-  FI_SINGLE_MAP_URL,
-  NO_PLAN_FOUND_ERROR,
-  PLAN_COMPLETION_URL,
-  PLAN_LIST_URL,
-  PLAN_STATUS_UPDATE_ERROR,
-} from '../../../../../../constants';
+import { NO_PLAN_FOUND_ERROR, PLAN_STATUS_UPDATE_ERROR } from '../../../../../../configs/lang';
+import { FI_SINGLE_MAP_URL, PLAN_COMPLETION_URL, PLAN_LIST_URL } from '../../../../../../constants';
 import * as helperUtils from '../../../../../../helpers/utils';
 import {
   plansListResponse,

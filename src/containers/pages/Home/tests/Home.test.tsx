@@ -4,7 +4,7 @@ import { createBrowserHistory } from 'history';
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Router } from 'react-router';
-import { HOME_TITLE } from '../../../../constants';
+import { HOME_TITLE } from '../../../../configs/lang';
 import Home from '../Home';
 
 const history = createBrowserHistory();
