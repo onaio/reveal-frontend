@@ -9,7 +9,7 @@ import { Route, Switch } from 'react-router';
 import { toast } from 'react-toastify';
 import { Col, Container, Row } from 'reactstrap';
 import Loading from '../components/page/Loading';
-import { DISABLE_LOGIN_PROTECTION } from '../configs/env';
+import { DISABLE_LOGIN_PROTECTION, OPENSRP_LOGOUT_URL, OPENSRP_OAUTH_STATE } from '../configs/env';
 import { TOAST_AUTO_CLOSE_DELAY, WEBSITE_NAME } from '../configs/env';
 import { providers } from '../configs/settings';
 import {
@@ -71,6 +71,8 @@ toast.configure({
   autoClose: TOAST_AUTO_CLOSE_DELAY /** defines how long a toast remains visible on screen */,
 });
 
+import store from '../store';
+import { getOauthProviderState } from '../store/selectors';
 import './App.css';
 
 /** Main App component */
@@ -315,7 +317,17 @@ class App extends Component {
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={LOGOUT_URL}
-                  component={ConnectedLogout}
+                  // tslint:disable-next-line: jsx-no-lambda
+                  component={() => {
+                    const state = getOauthProviderState(store.getState());
+                    return (
+                      <ConnectedLogout
+                        {...{
+                          logoutURL: state === OPENSRP_OAUTH_STATE ? OPENSRP_LOGOUT_URL : null,
+                        }}
+                      />
+                    );
+                  }}
                 />
               </Switch>
             </Col>

@@ -65,28 +65,3 @@ describe('components/page/Header', () => {
     wrapper.unmount();
   });
 });
-
-describe('components/page/Header/handleLogout()', () => {
-  beforeEach(() => {
-    jest.resetAllMocks();
-  });
-  it('must open a window with the correct url.', () => {
-    window.open = jest.fn();
-    const props = {
-      authenticated: true,
-      user: {
-        email: 'bob@example.com',
-        name: 'Bobbie',
-        username: 'RobertBaratheon',
-      },
-    };
-    const wrapper = mount(
-      <Router history={history}>
-        <HeaderComponentWithRouter {...props} />
-      </Router>
-    );
-    const headerComponent = wrapper.find('HeaderComponent').instance() as HeaderComponent;
-    headerComponent.handleLogout();
-    expect(window.open).toBeCalledWith(OPENSRP_LOGOUT_URL);
-  });
-});
