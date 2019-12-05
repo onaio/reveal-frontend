@@ -639,7 +639,7 @@
     "message": "Case Confirmation",
     "description": "intervention activity"
   },
-  "RACD_ACTIVITY": {
+  "REGISTER_FAMILY_ACTIVITY": {
     "message": "Family Registration",
     "description": "intervention activity"
   },
@@ -699,11 +699,11 @@
     "message": "Number of cases confirmed",
     "description": ""
   },
-  "RACD_ACTIVITY_DESCRIPTION": {
+  "REGISTER_FAMILY_ACTIVITY_DESCRIPTION": {
     "message": "Register all families & family members in all residential structures enumerated (100%) within the operational area",
     "description": ""
   },
-  "RACD_ACTIVITY_GOAL_MEASURE": {
+  "REGISTER_FAMILY_ACTIVITY_GOAL_MEASURE": {
     "message": "Percent of residential structures with full family registration",
     "description": "aaa"
   },

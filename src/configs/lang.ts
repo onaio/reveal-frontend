@@ -323,13 +323,16 @@ export const CASE_CONFIRMATION_ACTIVITY_GOAL_MEASURE = translate(
   'CASE_CONFIRMATION_ACTIVITY_GOAL_MEASURE',
   'Number of cases confirmed'
 );
-export const RACD_ACTIVITY = translate('RACD_ACTIVITY', 'Family Registration');
-export const RACD_ACTIVITY_DESCRIPTION = translate(
-  'RACD_ACTIVITY_DESCRIPTION',
+export const REGISTER_FAMILY_ACTIVITY = translate(
+  'REGISTER_FAMILY_ACTIVITY',
+  'Family Registration'
+);
+export const REGISTER_FAMILY_ACTIVITY_DESCRIPTION = translate(
+  'REGISTER_FAMILY_ACTIVITY_DESCRIPTION',
   'Register all families & family members in all residential structures enumerated (100%) within the operational area'
 );
-export const RACD_ACTIVITY_GOAL_MEASURE = translate(
-  'RACD_ACTIVITY_GOAL_MEASURE',
+export const REGISTER_FAMILY_ACTIVITY_GOAL_MEASURE = translate(
+  'REGISTER_FAMILY_ACTIVITY_GOAL_MEASURE',
   'Percent of residential structures with full family registration'
 );
 export const LARVAL_DIPPING_ACTIVITY = translate('LARVAL_DIPPING_ACTIVITY', 'Larval Dipping');

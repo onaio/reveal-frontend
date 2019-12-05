@@ -40,9 +40,9 @@ import {
   MOSQUITO_COLLECTION_ACTIVITY,
   MOSQUITO_COLLECTION_ACTIVITY_DESCRIPTION,
   MOSQUITO_COLLECTION_GOAL_MEASURE,
-  RACD_ACTIVITY,
-  RACD_ACTIVITY_DESCRIPTION,
-  RACD_ACTIVITY_GOAL_MEASURE,
+  REGISTER_FAMILY_ACTIVITY,
+  REGISTER_FAMILY_ACTIVITY_DESCRIPTION,
+  REGISTER_FAMILY_ACTIVITY_GOAL_MEASURE,
 } from '../configs/lang';
 import {
   A1,
@@ -474,7 +474,7 @@ export const planActivities: PlanActivities = {
   familyRegistration: {
     action: {
       code: 'RACD Register Family',
-      description: RACD_ACTIVITY_DESCRIPTION,
+      description: REGISTER_FAMILY_ACTIVITY_DESCRIPTION,
       goalId: 'RACD_register_families',
       identifier: '',
       prefix: 2,
@@ -487,10 +487,10 @@ export const planActivities: PlanActivities = {
         end: '',
         start: '',
       },
-      title: RACD_ACTIVITY,
+      title: REGISTER_FAMILY_ACTIVITY,
     },
     goal: {
-      description: RACD_ACTIVITY_DESCRIPTION,
+      description: REGISTER_FAMILY_ACTIVITY_DESCRIPTION,
       id: 'RACD_register_families',
       priority: MEDIUM_PRIORITY,
       target: [
@@ -503,7 +503,7 @@ export const planActivities: PlanActivities = {
             },
           },
           due: '',
-          measure: RACD_ACTIVITY_GOAL_MEASURE,
+          measure: REGISTER_FAMILY_ACTIVITY_GOAL_MEASURE,
         },
       ],
     },
