@@ -293,7 +293,7 @@ export const planActivities: PlanActivities = {
       goalId: 'BCC_Focus',
       identifier: '',
       prefix: 99,
-      reason: 'Investigation',
+      reason: INVESTIGATION,
       subjectCodableConcept: {
         text: 'Operational_Area',
       },
@@ -307,7 +307,7 @@ export const planActivities: PlanActivities = {
     goal: {
       description: BCC_GOAL_DESCRIPTION,
       id: 'BCC_Focus',
-      priority: 'medium-priority',
+      priority: MEDIUM_PRIORITY,
       target: [
         {
           detail: {
