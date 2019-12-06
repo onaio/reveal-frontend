@@ -56,6 +56,7 @@ import {
   FIReasons,
   FIReasonsDisplay,
   goalPriorities,
+  goalUnitDisplay,
   planActivities,
   planStatusDisplay,
 } from '../../../configs/settings';
@@ -704,8 +705,12 @@ const PlanForm = (props: PlanFormProps) => {
                               />
                               <InputGroupAddon addonType="append">
                                 <InputGroupText>
-                                  {getGoalUnitFromActionCode(values.activities[index]
-                                    .actionCode as PlanActionCodesType)}
+                                  {
+                                    goalUnitDisplay[
+                                      getGoalUnitFromActionCode(values.activities[index]
+                                        .actionCode as PlanActionCodesType)
+                                    ]
+                                  }
                                 </InputGroupText>
                               </InputGroupAddon>
                             </InputGroup>

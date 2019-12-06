@@ -38,6 +38,11 @@ import {
   CASE_CONFIRMATION_ACTIVITY_DESCRIPTION,
   CASE_CONFIRMATION_ACTIVITY_GOAL_MEASURE,
   CASE_TRIGGERED_TITLE,
+  GOAL_UNIT_ACTIVITY,
+  GOAL_UNIT_CASE,
+  GOAL_UNIT_PERCENT,
+  GOAL_UNIT_PERSON,
+  GOAL_UNIT_UNKNOWN,
   INVESTIGATION,
   IRS_ACTIVITY,
   IRS_ACTIVITY_DESCRIPTION,
@@ -206,6 +211,13 @@ export const planStatusDisplay: { [key: string]: string } = {
   complete: PLAN_STATUS_COMPLETE,
   draft: PLAN_STATUS_DRAFT,
   retired: PLAN_STATUS_RETIRED,
+};
+export const goalUnitDisplay: { [key: string]: string } = {
+  ['activit(y|ies)']: GOAL_UNIT_ACTIVITY,
+  ['case(s)']: GOAL_UNIT_CASE,
+  ['Percent']: GOAL_UNIT_PERCENT,
+  ['Person(s)']: GOAL_UNIT_PERSON,
+  ['unknown']: GOAL_UNIT_UNKNOWN,
 };
 
 /** Allowed goal priority values */
