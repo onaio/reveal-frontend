@@ -37,6 +37,7 @@ import {
   CASE_CONFIRMATION_ACTIVITY,
   CASE_CONFIRMATION_ACTIVITY_DESCRIPTION,
   CASE_CONFIRMATION_ACTIVITY_GOAL_MEASURE,
+  CASE_TRIGGERED_TITLE,
   INVESTIGATION,
   IRS_ACTIVITY,
   IRS_ACTIVITY_DESCRIPTION,
@@ -51,6 +52,7 @@ import {
   REGISTER_FAMILY_ACTIVITY,
   REGISTER_FAMILY_ACTIVITY_DESCRIPTION,
   REGISTER_FAMILY_ACTIVITY_GOAL_MEASURE,
+  ROUTINE_TITLE,
 } from '../configs/lang';
 import {
   A1,
@@ -190,6 +192,10 @@ export const FIStatuses = [A1, A2, B1, B2] as const;
 
 /** Allowed FI Status values */
 export const FIReasons = [ROUTINE, CASE_TRIGGERED] as const;
+export const FIReasonsDisplay: { [key: string]: string } = {
+  [ROUTINE]: ROUTINE_TITLE,
+  [CASE_TRIGGERED]: CASE_TRIGGERED_TITLE,
+};
 
 /** Allowed goal priority values */
 export const goalPriorities = [LOW_PRIORITY, MEDIUM_PRIORITY, HIGH_PRIORITIY] as const;

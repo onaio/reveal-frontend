@@ -54,6 +54,7 @@ import {
   actionReasons,
   FIClassifications,
   FIReasons,
+  FIReasonsDisplay,
   goalPriorities,
   planActivities,
 } from '../../../configs/settings';
@@ -451,7 +452,7 @@ const PlanForm = (props: PlanFormProps) => {
                   <option>----</option>
                   {FIReasons.map(e => (
                     <option key={e} value={e}>
-                      {e}
+                      {FIReasonsDisplay[e]}
                     </option>
                   ))}
                 </Field>
