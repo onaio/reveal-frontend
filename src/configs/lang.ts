@@ -7,7 +7,7 @@ const reference = require('./strings')[LANGUAGE] || {};
  * @param {string} fallback The (original) English fallback string if reference doesn't include the display string
  * @returns {string} The translated display string
  */
-const translate = (key: string, fallback: string): string =>
+export const translate = (key: string, fallback: string): string =>
   (reference[key] && reference[key].message) || fallback;
 
 export const WELCOME_TO_REVEAL = translate('WELCOME_TO_REVEAL', 'Welcome to Reveal');
