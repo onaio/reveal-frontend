@@ -727,6 +727,10 @@
     "message": "Reactive Investigation",
     "description": "page title: for pages about case-triggered reactive investigations"
   },
+  "CASE_TRIGGERED_TITLE": {
+    "message": "Case Triggered",
+    "description": ""
+  },
   "ROUTINE_TITLE": {
     "message": "Routine",
     "description": ""

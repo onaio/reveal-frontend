@@ -270,6 +270,7 @@ export const EDIT_PRACTITIONER = translate('EDIT_PRACTITIONER', 'Edit Practition
 export const NEW_PRACTITIONER = translate('NEW_PRACTITIONER', 'New Practitioner');
 export const SAVE_PRACTITIONER = translate('SAVE_PRACTITIONER', 'Save Practitioner');
 
+export const CASE_TRIGGERED_TITLE = translate('CASE_TRIGGERED_TITLE', 'Case Triggered');
 export const ROUTINE_TITLE = translate('ROUTINE_TITLE', 'Routine');
 export const ROUTINE_INVESTIGATION_TITLE = translate(
   'ROUTINE_INVESTIGATION_TITLE',
