@@ -114,19 +114,19 @@ exports[`containers/forms/PlanForm - Edit renders activity fields correctly: act
     key="low-priority"
     value="low-priority"
   >
-    low-priority
+    Low Priority
   </option>
   <option
     key="medium-priority"
     value="medium-priority"
   >
-    medium-priority
+    Medium Priority
   </option>
   <option
     key="high-priority"
     value="high-priority"
   >
-    high-priority
+    High Priority
   </option>
 </select>
 `;
@@ -293,19 +293,19 @@ exports[`containers/forms/PlanForm - Edit renders activity fields correctly: act
     key="low-priority"
     value="low-priority"
   >
-    low-priority
+    Low Priority
   </option>
   <option
     key="medium-priority"
     value="medium-priority"
   >
-    medium-priority
+    Medium Priority
   </option>
   <option
     key="high-priority"
     value="high-priority"
   >
-    high-priority
+    High Priority
   </option>
 </select>
 `;

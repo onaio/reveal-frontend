@@ -57,6 +57,7 @@ import {
   FIReasons,
   FIReasonsDisplay,
   goalPriorities,
+  goalPrioritiesDisplay,
   goalUnitDisplay,
   planActivities,
   planStatusDisplay,
@@ -835,7 +836,7 @@ const PlanForm = (props: PlanFormProps) => {
                             >
                               {goalPriorities.map(e => (
                                 <option key={e} value={e}>
-                                  {e}
+                                  {goalPrioritiesDisplay[e]}
                                 </option>
                               ))}
                             </Field>
