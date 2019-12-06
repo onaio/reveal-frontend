@@ -359,6 +359,24 @@ export const MOSQUITO_COLLECTION_GOAL_MEASURE = translate(
   'Number of mosquito collection activities completed'
 );
 
+export const A1_DESCRIPTION = translate(
+  'A1_DESCRIPTION',
+  'Indigenous case recorded within the last year.'
+);
+export const A1_NAME = translate('A1_NAME', 'Active');
+export const A2_DESCRIPTION = translate(
+  'A2_DESCRIPTION',
+  'No indigenous case during the last year, but withing the last 3 years.'
+);
+export const A2_NAME = translate('A2_NAME', 'Residual Non-Active');
+export const B1_DESCRIPTION = translate(
+  'B1_DESCRIPTION',
+  'Receptive area but no indigenous cases within the last 3 years.'
+);
+export const B1_NAME = translate('B1_NAME', 'Cleared Receptive');
+export const B2_DESCRIPTION = translate('B2_DESCRIPTION', 'Non-receptive area.');
+export const B2_NAME = translate('B2_NAME', 'Cleared Non-Receptive');
+
 // TODO ? - do the below 2 belong here or in a settings file
 export const ORGANIZATION_LABEL = TEAM;
 export const ORGANIZATIONS_LABEL = TEAMS;
