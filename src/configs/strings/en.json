@@ -806,5 +806,17 @@
   "GOAL_UNIT_UNKNOWN": {
     "message": "unknown",
     "description": "unit of meassurment for plan activity goals"
+  },
+  "LOW_PRIORITY_LABEL": {
+    "message": "Low Priority",
+    "description": "priority level of a plan activity"
+  },
+  "MEDIUM_PRIORITY_LABEL": {
+    "message": "Medium Priority",
+    "description": "priority level of a plan activity"
+  },
+  "HIGH_PRIORITIY_LABEL": {
+    "message": "High Priority",
+    "description": "priority level of a plan activity"
   }
 }

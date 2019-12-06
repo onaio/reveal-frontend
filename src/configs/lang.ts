@@ -389,6 +389,10 @@ export const GOAL_UNIT_PERCENT = translate('GOAL_UNIT_PERCENT', 'Percent');
 export const GOAL_UNIT_PERSON = translate('GOAL_UNIT_PERSON', 'Person(s)');
 export const GOAL_UNIT_UNKNOWN = translate('GOAL_UNIT_UNKNOWN', 'unknown');
 
+export const LOW_PRIORITY_LABEL = translate('LOW_PRIORITY_LABEL', 'Low Priority');
+export const MEDIUM_PRIORITY_LABEL = translate('MEDIUM_PRIORITY_LABEL', 'Medium Priority');
+export const HIGH_PRIORITIY_LABEL = translate('HIGH_PRIORITIY_LABEL', 'High Priority');
+
 // TODO ? - do the below 2 belong here or in a settings file
 export const ORGANIZATION_LABEL = TEAM;
 export const ORGANIZATIONS_LABEL = TEAMS;
