@@ -378,6 +378,11 @@ export const B1_NAME = translate('B1_NAME', 'Cleared Receptive');
 export const B2_DESCRIPTION = translate('B2_DESCRIPTION', 'Non-receptive area.');
 export const B2_NAME = translate('B2_NAME', 'Cleared Non-Receptive');
 
+export const PLAN_STATUS_ACTIVE = translate('PLAN_STATUS_ACTIVE', 'active');
+export const PLAN_STATUS_COMPLETE = translate('PLAN_STATUS_COMPLETE', 'complete');
+export const PLAN_STATUS_DRAFT = translate('PLAN_STATUS_DRAFT', 'draft');
+export const PLAN_STATUS_RETIRED = translate('PLAN_STATUS_RETIRED', 'retired');
+
 // TODO ? - do the below 2 belong here or in a settings file
 export const ORGANIZATION_LABEL = TEAM;
 export const ORGANIZATIONS_LABEL = TEAMS;

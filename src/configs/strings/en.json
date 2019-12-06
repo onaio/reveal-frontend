@@ -770,5 +770,21 @@
   "B2_NAME": {
     "message": "Cleared Non-Receptive",
     "description": "classification status name"
+  },
+  "PLAN_STATUS_ACTIVE": {
+    "message": "active",
+    "description": "status indicator for plans which are currently ongoing"
+  },
+  "PLAN_STATUS_COMPLETE": {
+    "message": "complete",
+    "description": "status indicator for plans which are finished and still relevant for monitoring and evaluation"
+  },
+  "PLAN_STATUS_DRAFT": {
+    "message": "draft",
+    "description": "status indicator for plans which are still being defined"
+  },
+  "PLAN_STATUS_RETIRED": {
+    "message": "retired",
+    "description": "status indicator for plans which are no longer relevant"
   }
 }
