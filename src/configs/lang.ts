@@ -1,14 +1,16 @@
 // import the strings reference i18n file for the specified language
 import { LANGUAGE } from './env';
+import { Reference } from './strings';
 // tslint:disable-next-line:no-var-requires
-const reference = require('./strings')[LANGUAGE] || {};
+const reference: Reference = require('./strings')[LANGUAGE] || {};
 /**
  * @param {string} key The unique variable name of the display string
  * @param {string} fallback The (original) English fallback string if reference doesn't include the display string
+ * @param {Reference} ref The i18n reference object to pull strings from
  * @returns {string} The translated display string
  */
-export const translate = (key: string, fallback: string): string =>
-  (reference[key] && reference[key].message) || fallback;
+export const translate = (key: string, fallback: string, ref: Reference = reference): string =>
+  (ref && ref[key] && ref[key].message) || fallback;
 
 export const WELCOME_TO_REVEAL = translate('WELCOME_TO_REVEAL', 'Welcome to Reveal');
 export const GET_STARTED_MESSAGE = translate(
