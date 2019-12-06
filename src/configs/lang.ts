@@ -383,6 +383,12 @@ export const PLAN_STATUS_COMPLETE = translate('PLAN_STATUS_COMPLETE', 'complete'
 export const PLAN_STATUS_DRAFT = translate('PLAN_STATUS_DRAFT', 'draft');
 export const PLAN_STATUS_RETIRED = translate('PLAN_STATUS_RETIRED', 'retired');
 
+export const GOAL_UNIT_ACTIVITY = translate('GOAL_UNIT_ACTIVITY', 'activit(y|ies)');
+export const GOAL_UNIT_CASE = translate('GOAL_UNIT_CASE', 'case(s)');
+export const GOAL_UNIT_PERCENT = translate('GOAL_UNIT_PERCENT', 'Percent');
+export const GOAL_UNIT_PERSON = translate('GOAL_UNIT_PERSON', 'Person(s)');
+export const GOAL_UNIT_UNKNOWN = translate('GOAL_UNIT_UNKNOWN', 'unknown');
+
 // TODO ? - do the below 2 belong here or in a settings file
 export const ORGANIZATION_LABEL = TEAM;
 export const ORGANIZATIONS_LABEL = TEAMS;

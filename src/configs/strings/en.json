@@ -786,5 +786,25 @@
   "PLAN_STATUS_RETIRED": {
     "message": "retired",
     "description": "status indicator for plans which are no longer relevant"
+  },
+  "GOAL_UNIT_ACTIVITY": {
+    "message": "activit(y|ies)",
+    "description": "unit of meassurment for goal activities"
+  },
+  "GOAL_UNIT_CASE": {
+    "message": "case(s)",
+    "description": "unit of meassurment for goal activities"
+  },
+  "GOAL_UNIT_PERCENT": {
+    "message": "Percent",
+    "description": "unit of meassurment for goal activities"
+  },
+  "GOAL_UNIT_PERSON": {
+    "message": "Person(s)",
+    "description": "unit of meassurment for goal activities"
+  },
+  "GOAL_UNIT_UNKNOWN": {
+    "message": "unknown",
+    "description": "unit of meassurment for goal activities"
   }
 }
