@@ -5,6 +5,7 @@ export const PARENT_ID = 'parent_id';
 export const PARENTID = 'parentId';
 export const CASE_TRIGGERED = 'Case Triggered';
 export const ROUTINE = 'Routine';
+export const INVESTIGATION = 'Investigation';
 export const STRUCTURE_LAYER = 'structure-layer';
 export const POLYGON = 'Polygon';
 export const MULTI_POLYGON = 'MultiPolygon';

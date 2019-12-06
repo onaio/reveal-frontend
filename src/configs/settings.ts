@@ -43,7 +43,7 @@ import {
   GOAL_UNIT_PERCENT,
   GOAL_UNIT_PERSON,
   GOAL_UNIT_UNKNOWN,
-  INVESTIGATION,
+  INVESTIGATION as INVESTIGATION_TITLE,
   IRS_ACTIVITY,
   IRS_ACTIVITY_DESCRIPTION,
   IRS_GOAL_DESCRIPTION,
@@ -83,6 +83,7 @@ import {
   FI_STATUS_CODE,
   HIGH_PRIORITIY,
   INTERVENTION_TYPE_CODE,
+  INVESTIGATION,
   IRS_CODE,
   LARVAL_DIPPING_ACTIVITY_CODE,
   LARVAL_DIPPING_CODE,
@@ -104,7 +105,6 @@ import {
   PlanActivities,
   UseContextCodesType,
 } from '../containers/forms/PlanForm/types';
-import { PlanStatus } from '../store/ducks/plans';
 import {
   DOMAIN_NAME,
   ENABLE_ONADATA_OAUTH,
@@ -225,6 +225,10 @@ export const goalPriorities = [LOW_PRIORITY, MEDIUM_PRIORITY, HIGH_PRIORITIY] as
 
 /** Allowed action Reason values */
 export const actionReasons = [INVESTIGATION, ROUTINE] as const;
+export const actionReasonsDisplay: { [key: string]: string } = {
+  [INVESTIGATION]: INVESTIGATION_TITLE,
+  [ROUTINE]: ROUTINE_TITLE,
+};
 
 /** Allowed useContext Code values */
 export const useContextCodes = [

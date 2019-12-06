@@ -52,6 +52,7 @@ import {
 } from '../../../configs/lang';
 import {
   actionReasons,
+  actionReasonsDisplay,
   FIClassifications,
   FIReasons,
   FIReasonsDisplay,
@@ -804,7 +805,7 @@ const PlanForm = (props: PlanFormProps) => {
                             >
                               {actionReasons.map(e => (
                                 <option key={e} value={e}>
-                                  {e}
+                                  {actionReasonsDisplay[e]}
                                 </option>
                               ))}
                             </Field>
