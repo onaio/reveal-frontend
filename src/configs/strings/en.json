@@ -789,22 +789,22 @@
   },
   "GOAL_UNIT_ACTIVITY": {
     "message": "activit(y|ies)",
-    "description": "unit of meassurment for goal activities"
+    "description": "unit of meassurment for plan activity goals"
   },
   "GOAL_UNIT_CASE": {
     "message": "case(s)",
-    "description": "unit of meassurment for goal activities"
+    "description": "unit of meassurment for plan activity goals"
   },
   "GOAL_UNIT_PERCENT": {
     "message": "Percent",
-    "description": "unit of meassurment for goal activities"
+    "description": "unit of meassurment for plan activity goals"
   },
   "GOAL_UNIT_PERSON": {
     "message": "Person(s)",
-    "description": "unit of meassurment for goal activities"
+    "description": "unit of meassurment for plan activity goals"
   },
   "GOAL_UNIT_UNKNOWN": {
     "message": "unknown",
-    "description": "unit of meassurment for goal activities"
+    "description": "unit of meassurment for plan activity goals"
   }
 }
