@@ -49,6 +49,10 @@ import {
   MOSQUITO_COLLECTION_ACTIVITY,
   MOSQUITO_COLLECTION_ACTIVITY_DESCRIPTION,
   MOSQUITO_COLLECTION_GOAL_MEASURE,
+  PLAN_STATUS_ACTIVE,
+  PLAN_STATUS_COMPLETE,
+  PLAN_STATUS_DRAFT,
+  PLAN_STATUS_RETIRED,
   REGISTER_FAMILY_ACTIVITY,
   REGISTER_FAMILY_ACTIVITY_DESCRIPTION,
   REGISTER_FAMILY_ACTIVITY_GOAL_MEASURE,
@@ -95,6 +99,7 @@ import {
   PlanActivities,
   UseContextCodesType,
 } from '../containers/forms/PlanForm/types';
+import { PlanStatus } from '../store/ducks/plans';
 import {
   DOMAIN_NAME,
   ENABLE_ONADATA_OAUTH,
@@ -195,6 +200,12 @@ export const FIReasons = [ROUTINE, CASE_TRIGGERED] as const;
 export const FIReasonsDisplay: { [key: string]: string } = {
   [ROUTINE]: ROUTINE_TITLE,
   [CASE_TRIGGERED]: CASE_TRIGGERED_TITLE,
+};
+export const planStatusDisplay: { [key: string]: string } = {
+  active: PLAN_STATUS_ACTIVE,
+  complete: PLAN_STATUS_COMPLETE,
+  draft: PLAN_STATUS_DRAFT,
+  retired: PLAN_STATUS_RETIRED,
 };
 
 /** Allowed goal priority values */

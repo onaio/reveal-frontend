@@ -57,6 +57,7 @@ import {
   FIReasonsDisplay,
   goalPriorities,
   planActivities,
+  planStatusDisplay,
 } from '../../../configs/settings';
 import { PLAN_LIST_URL } from '../../../constants';
 import { OpenSRPService } from '../../../services/opensrp';
@@ -522,7 +523,7 @@ const PlanForm = (props: PlanFormProps) => {
                   .filter(e => !disAllowedStatusChoices.includes(e[1]))
                   .map(e => (
                     <option key={e[0]} value={e[1]}>
-                      {e[1]}
+                      {planStatusDisplay[e[1]]}
                     </option>
                   ))}
               </Field>
