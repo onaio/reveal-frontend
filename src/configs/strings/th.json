@@ -550,5 +550,173 @@
   "MARK_PLAN_AS_COMPLETE": {
     "message": "เปลี่ยนสถานะแผนงาน %s เป็นดำเนินการเสร็จแล้ว",
     "description": "page title: page for marking a plan as complete; arg: plan title"
+  },
+  "FIS_IN_JURISDICTION": {
+    "message": "การดำเนินงานสอบสวนผู้ป่วย/แหล่งแพร่เชื้อในพื้นที่ %s",
+    "description": "page title: for all focus investigations in a jurisdiction; args: jurisdiction name"
+  },
+  "FI_IN_JURISDICTION": {
+    "message": "แผนงานที่กำลังดำเนินการใน %s",
+    "description": "page title: for all active focus investigations in a jurisdiction; args: jurisdiction name"
+  },
+  "ASSIGN_JURISDICTIONS": {
+    "message": "กำหนดทีมปฏิบัติงาน",
+    "description": "section header: for assigning teams to plan-jurisdictions"
+  },
+  "SELECT_JURISDICTIONS": {
+    "message": "เลือกทีมปฏิบัติงาน",
+    "description": "section header: for selecting jurisdictions for a plan"
+  },
+  "ADD_CODED_ACTIVITY": {
+    "message": "เพิ่มกิจกรรม",
+    "description": "button text: to add an activity to a plan; args: the action code for the given goal"
+  },
+  "ORGANIZATION_DETAILS": {
+    "message": "รายละเอียดทีมปฏิบัติงาน",
+    "description": "section header: containing details about a single team or organization"
+  },
+  "TEAM_MEMBERS": {
+    "message": "สมาชิกทีมปฏิบัติงาน",
+    "description": "section header: containing list of practitioners assigned to a team"
+  },
+  "ONE_DAY_TO_GO": {
+    "message": "เหลืออีก >= 1วันในการปฏิบัติงาน",
+    "description": "legend item: describing that there is greater than or equal to one remaining day to complete the plan"
+  },
+  "ZERO_DAYS_TO_GO": {
+    "message": "เหลืออีก 0 วันในการปฏิบัติงาน",
+    "description": "legend item: describing that there zero remaining days to complete the plan"
+  },
+  "PRACTITIONERS_ASSIGNED_TO_ORG": {
+    "message": "ผู้ปฏิบัติงาน %s คน ได้ถูกกำหนดในทีม %s แล้ว",
+    "description": "notification alert: alerting user that a number of practitioners has been assigned to a team; args: number of practitioners, name of the team"
+  },
+  "PRACTITIONER_REMOVED_FROM_ORG": {
+    "message": "%s-%s ถูกลบออกจากทีม %s แล้ว",
+    "description": "notification alert: telling useer that a practioner was removed from a team; args: name, username, team name (example: Conor-ckelly successfully removed from BlueTeam"
+  },
+  "ORGANIZATION_EDITED_SUCCESSFULLY": {
+    "message": "แก้ไขทีมปฏิบัติงานเรียบร้อยแล้ว",
+    "description": "notification alert: an existing team was successfully edited and saved to the server"
+  },
+  "ORGANIZATION_CREATED_SUCCESSFULLY": {
+    "message": "สร้างทีมปฏิบัติงานเรียบร้อยแล้ว",
+    "description": "notification alert: a new team was successfully created and added to the server"
+  },
+  "DRAFT_PLAN_TITLE": {
+    "message": "(ร่าง) %s",
+    "description": "page title: for page about a specific draft plan; args: name of the plan"
+  },
+  "EDIT_PRACTITIONER": {
+    "message": "แก้ไขผู้ปฏิบัติงาน",
+    "description": "page title: for pages when editng information of a practitioner"
+  },
+  "NEW_PRACTITIONER": {
+    "message": "เพิ่มผู้ปฏิบัติงาน",
+    "description": "page title: for pages when adding a new practitioner"
+  },
+  "BCC_ACTIVITY": {
+    "message": "กิจกรรมการให้สุขศึกษา",
+    "description": "intervention activity"
+  },
+  "IRS_ACTIVITY": {
+    "message": "กิจกรรมการพ่นสารเคมี",
+    "description": "intervention activity"
+  },
+  "BEDNET_ACTIVITY": {
+    "message": "กิจกรรมสำรวจ/ชุบ/แจกมุ้ง",
+    "description": "intervention activity"
+  },
+  "BLOOD_SCREENING_ACTIVITY": {
+    "message": "กิจกรรมการเจาะโลหิต",
+    "description": "intervention activity"
+  },
+  "CASE_CONFIRMATION_ACTIVITY": {
+    "message": "การยืนยันบ้านผู้ป่วย",
+    "description": "intervention activity"
+  },
+  "REGISTER_FAMILY_ACTIVITY": {
+    "message": "ลงทะเบียนครัวเรือน",
+    "description": "intervention activity"
+  },
+  "LARVAL_DIPPING_ACTIVITY": {
+    "message": "กิจกรรมการตักลูกน้ำ",
+    "description": "intervention activity"
+  },
+  "MOSQUITO_COLLECTION_ACTIVITY": {
+    "message": "กิจกรรมการจับยุง",
+    "description": "intervention activity"
+  },
+  "BCC_ACTIVITY_DESCRIPTION": {
+    "message": "ดำเนินกิจกรรมให้สุขศึกษา",
+    "description": ""
+  },
+  "BCC_GOAL_DESCRIPTION": {
+    "message": "ให้สุขศึกษาในพื้นที่ปฏิบัติงานอย่างน้อย 1 ครั้ง",
+    "description": ""
+  },
+  "BCC_GOAL_MEASURE": {
+    "message": "จำนวนกิจกรรมการให้สุขศึกษา",
+    "description": ""
+  },
+  "IRS_ACTIVITY_DESCRIPTION": {
+    "message": "บ้าน/สิ่งปลูกสร้าง ในพื้นที่ปฏิบัติงานที่ได้พ่นสารเคมี",
+    "description": ""
+  },
+  "IRS_GOAL_DESCRIPTION": {
+    "message": "พ่นสารเคมีในพื้นที่ปฏิบัติงาน",
+    "description": ""
+  },
+  "IRS_GOAL_MEASURE": {
+    "message": "ร้อยละของบ้าน/สิ่งปลูกสร้างที่ได้รับการพ่นสารเคมี",
+    "description": ""
+  },
+  "BEDNET_ACTIVITY_DESCRIPTION": {
+    "message": "แจกมุ้งทุกหลังคาเรือนในพื้นที่ปฏิบัติงาน (100%)",
+    "description": ""
+  },
+  "BEDNET_GOAL_MEASURE": {
+    "message": "จำนวนบ้าน/สิ่งปลูกสร้างที่ได้รับมุ้ง",
+    "description": ""
+  },
+  "BLOOD_SCREENING_ACTIVITY_DESCRIPTION": {
+    "message": "เจาะเลือดรอบบ้านผู้ป่วยในรัศมี 1 กิโลเมตร (100%)",
+    "description": ""
+  },
+  "BLOOD_SCREENING_GOAL_MEASURE": {
+    "message": "จำนวนผู้ที่ได้รับการเจาะโลหิต",
+    "description": ""
+  },
+  "CASE_CONFIRMATION_ACTIVITY_DESCRIPTION": {
+    "message": "ยืนยันบ้านผู้ป่วย",
+    "description": ""
+  },
+  "CASE_CONFIRMATION_ACTIVITY_GOAL_MEASURE": {
+    "message": "จำนวนผู้ป่วยที่ได้รับการยืนยัน",
+    "description": ""
+  },
+  "REGISTER_FAMILY_ACTIVITY_DESCRIPTION": {
+    "message": "ลงทะเบียนครัวเรือนและสมาชิกในครัวเรือน (100%) ภายในพื้นที่ปฏิบัติงาน",
+    "description": ""
+  },
+  "REGISTER_FAMILY_ACTIVITY_GOAL_MEASURE": {
+    "message": "ร้อยละของบ้าน/สิ่งปลูกสร้างที่ได้ลงทะเบียนข้อมูลครัวเรือน",
+    "description": ""
+  },
+  "LARVAL_DIPPING_ACTIVITY_DESCRIPTION": {
+    "message": "ดำเนินกิจกรรมจับลูกน้ำอย่างน้อย 3 แห่งในพื้นที่ปฏิบัติงาน",
+    "description": ""
+  },
+  "LARVAL_DIPPING_GOAL_MEASURE": {
+    "message": "จำนวนกิจกรรมการตักลูกน้ำ",
+    "description": ""
+  },
+  "MOSQUITO_COLLECTION_ACTIVITY_DESCRIPTION": {
+    "message": "กิจกรรมจับยุงกำหนดไว้อย่างน้อย 3 แห่ง",
+    "description": ""
+  },
+  "MOSQUITO_COLLECTION_GOAL_MEASURE": {
+    "message": "จำนวนกิจกรรมการจับยุง",
+    "description": ""
   }
 }
