@@ -1,8 +1,8 @@
 // import the strings reference i18n file for the specified language
 import { LANGUAGE } from './env';
-import { Reference } from './strings';
-// tslint:disable-next-line:no-var-requires
-const reference: Reference = require('./strings')[LANGUAGE] || {};
+import strings, { Reference } from './strings';
+const reference: Reference = strings[LANGUAGE] || {};
+
 /**
  * @param {string} key The unique variable name of the display string
  * @param {string} fallback The (original) English fallback string if reference doesn't include the display string

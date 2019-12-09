@@ -1,5 +1,5 @@
-import * as en from './en.json';
-import * as sw from './sw.json';
+import en from './en.json';
+import sw from './sw.json';
 
 export interface Translation {
   description: string;
