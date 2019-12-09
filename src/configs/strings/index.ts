@@ -1,5 +1,6 @@
 import en from './en.json';
 import sw from './sw.json';
+import th from './th.json';
 
 export interface Translation {
   description: string;
@@ -17,4 +18,5 @@ export interface Strings {
 export default {
   en,
   sw,
+  th,
 } as Strings;

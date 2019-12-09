@@ -1,0 +1,554 @@
+{
+  "WELCOME_TO_REVEAL": {
+    "message": "ยินดีต้อนรับสู่เว็บไซต์ Reveal",
+    "description": "Title on the landing page"
+  },
+  "GET_STARTED_MESSAGE": {
+    "message": "เริ่มต้นการใช้งานโดยคลิกเลือกหัวข้อด้านล่าง",
+    "description": "Subtitle on the landing page"
+  },
+  "ON_REROUTE_WITH_UNSAVED_CHANGES": {
+    "message": "คุณยังไม่ได้บันทึกสิ่งที่แก้ไข : โปรดกดปุ่ม 'บันทึก' เพื่อบันทึกการเปลี่ยนแปลง หรือ กดปุ่ม 'ยกเลิก' เพื่อยกเลิกการเปลี่ยนแปลง",
+    "description": "prompt message warning against navigating away from unsaved changes"
+  },
+  "PRACTITIONER_CREATED_SUCCESSFULLY": {
+    "message": "สร้างผู้ปฏิบัติงานเรียบร้อยแล้ว",
+    "description": "confirmation prompt message"
+  },
+  "PRACTITIONER_EDITED_SUCCESSFULLY": {
+    "message": "แก้ไขผู้ปฏิบัติงานเรียบร้อยแล้ว",
+    "description": "confirmation prompt message"
+  },
+  "REMOVING_PRACTITIONER_FAILED": {
+    "message": "ไม่สามารถลบผู้ปฏิบัติงานได้",
+    "description": "warning prompt message"
+  },
+  "HOME_TITLE": {
+    "message": "หน้าหลัก",
+    "description": "page title base for SEO and tab text"
+  },
+  "IRS_TITLE": {
+    "message": "IRS",
+    "description": "abbreviation for  Indoor Residual Spray, used for breadcrumbs, nav, and page titles"
+  },
+  "IRS_REPORTING_TITLE": {
+    "message": "รายงานผลการทำ IRS",
+    "description": "page title for IRS reporting page"
+  },
+  "CONDITIONAL_FORMATTING_RULES": {
+    "message": "กฎการกำหนดรูปแบบตามเงื่อนไข",
+    "description": "legend title describing colors"
+  },
+  "CONDITIONAL_FORMATTING_TITLE": {
+    "message": "การกำหนดรูปแบบตามเงื่อนไข",
+    "description": "legend header of column containing colors"
+  },
+  "FI_RESPONSE_ADHERENCE_TITLE": {
+    "message": "การติดตามงานตอบโต้ของงานสอบสวนผู้ป่วยและแหล่งแพร่เชื้อ",
+    "description": "legend heder of column describing category definitions"
+  },
+  "DATE_CREATED": {
+    "message": "วันที่สร้างแผน",
+    "description": "column header: date a plan was create"
+  },
+  "FOCUS_INVESTIGATION_START_TITLE": {
+    "message": "วันเริ่มต้นที่ออกไปทำกิจกรรม Focus Investigation",
+    "description": "section label: the start date of a focus investigation plan"
+  },
+  "UPDATE_PLAN": {
+    "message": "แก้ไขแผนปฏิบัติงาน",
+    "description": "button text: edit an existing plan"
+  },
+  "ADD_PLAN": {
+    "message": "เพิ่มแผนปฏิบัติงาน",
+    "description": "button text: create a new plan"
+  },
+  "CREATE_NEW_IRS_PLAN": {
+    "message": "สร้างแผนกิจกรรมงาน IRS",
+    "description": "button text: create a new IRS plan"
+  },
+  "CREATE_NEW_PLAN": {
+    "message": "สร้างแผนปฏิบัติงานใหม่",
+    "description": "button text: create a new plan; page title"
+  },
+  "NEW_PLAN": {
+    "message": "แผนปฏิบัติงานใหม่",
+    "description": "page title: page for creating new plans"
+  },
+  "NAME": {
+    "message": "ชื่อแผน",
+    "description": "label, column header: name, title, designation of an entity"
+  },
+  "START_DATE": {
+    "message": "วันที่เริ่มดำเนินแผนปฏิบัติงาน",
+    "description": "label, column header: starting date of a plan or activity"
+  },
+  "END_DATE": {
+    "message": "วันที่สิ้นสุดแผนปฏิบัติงาน",
+    "description": "label, column header: ending date of a plan or activity"
+  },
+  "SAVE_CHANGES": {
+    "message": "บันทึก",
+    "description": "button text: save unsaved changes made"
+  },
+  "DISCARD_CHANGES": {
+    "message": "ยกเลิก",
+    "description": "button text: discard unsaved changes"
+  },
+  "LEGEND_LABEL": {
+    "message": "คำอธิบายแผนที่",
+    "description": "section header: sidbar section containing a map legend"
+  },
+  "USERS": {
+    "message": "ผู้ใช้งาน",
+    "description": "nav item: links to Admin > Users page"
+  },
+  "ABOUT": {
+    "message": "เกี่ยวกับเว็บไซต์",
+    "description": "nav item: links to About page"
+  },
+  "LOGIN": {
+    "message": "เข้าสู่ระบบ",
+    "description": "header button: links to sign-in page"
+  },
+  "SIGN_OUT": {
+    "message": "ออกจากระบบ",
+    "description": "header button: logs out the user"
+  },
+  "ASSIGN_PRACTITIONERS": {
+    "message": "กำหนดผู้ปฏิบัติงาน",
+    "description": "bread crumb: label for the page for assigning practitioners to teams"
+  },
+  "ASSIGN_PLANS": {
+    "message": "กำหนดแผนปฏิบัติงาน",
+    "description": "page title, breadcrumb: label for the page for assigning practitioners to plans"
+  },
+  "MAP_LOAD_ERROR": {
+    "message": "ไม่สามารถแสดงแผนที่ได้",
+    "description": "error promt: warns user map won't load"
+  },
+  "AN_ERROR_OCCURED": {
+    "message": "ระบบขัดข้อง ขออภัยในความไม่สะดวก",
+    "description": "error prompt: a general warning that something went wrong"
+  },
+  "PLEASE_FIX_THESE_ERRORS": {
+    "message": "โปรแก้ไขข้อผิดพลาดเหล่านี้",
+    "description": "error prompt: header on a page listing errors"
+  },
+  "NO_INVESTIGATIONS_FOUND": {
+    "message": "ไม่พบแผนปฏิบัติงานนี้",
+    "description": "error prompt: message alerting that no plans were found"
+  },
+  "NO_PRACTITIONERS_ADDED_YET": {
+    "message": "ไม่พบผู้ปฏิบัติงานนี้",
+    "description": "warning prompt: message alerting that there are no practioners saved in the server"
+  },
+  "PLAN_SELECT_PLACEHOLDER": {
+    "message": "แผนปฏิบัติงานอื่นในกลุ่มบ้านนี้",
+    "description": "input placeholder: non-selected dropdown linking to other plans in the same focus area"
+  },
+  "PLAN_STATUS_UPDATE_ERROR": {
+    "message": "ขออภัย, พบข้อผิดพลาดบางอย่าง ไม่สามารถบันทึกแผนปฏิบัติงานนี้ได้",
+    "description": "error prompt: general warning that something went wrong when saving a plan"
+  },
+  "NO_PLAN_FOUND_ERROR": {
+    "message": "ขออภัย, ไม่พบแผนปฏิบัติงานนี้ในระบบ",
+    "description": "error prompt: warning that the loaded plan doesn't exist on the server"
+  },
+  "SAVE_PLAN_DEFINITION_ERROR": {
+    "message": "มีบางอย่างผิดพลาดในแผนปฏิบัติงาน",
+    "description": "error prompt: warning that the plan data schema being saved is incorrect"
+  },
+  "SAVE_PLAN_NO_JURISDICTIONS_ERROR": {
+    "message": "ยังไม่มีการเลือกผู้ดูแลแผนปฏิบัติงาน",
+    "description": "error prompt: warning that no jurisdictions were selected for the loaded plan"
+  },
+  "SELECT_USERNAME": {
+    "message": "เลือกผู้ใช้งาน",
+    "description": "input placeholder: non-selected dropdown to select OpenMRS user for the OpenSRP practitioner"
+  },
+  "SELECT": {
+    "message": "เลือก",
+    "description": "input placeholder, label: indicates the user making a selection from a dropdown or list"
+  },
+  "NO_PLANS_LOADED_MESSAGE": {
+    "message": "ไม่พบแผนปฏิบัติงาน",
+    "description": "warning prompt: when there are no plans to render in the lists"
+  },
+  "SAVE_ASSIGNMENTS": {
+    "message": "บันทึกการมอบหมาย",
+    "description": "button text: to save the configured team-plan-jurisdiction selection"
+  },
+  "SAVE_FINALIZED_PLAN": {
+    "message": "บันทึกแผนปฏิบัติงานขั้นสุดท้าย",
+    "description": "button text: to save a finalized plan definition to the server"
+  },
+  "SAVE_AS_DRAFT": {
+    "message": "บันทึกร่างแผนปฏิบัติงาน",
+    "description": "button text: to save a draft plan definition to the server"
+  },
+  "SAVE_PLAN": {
+    "message": "บันทึกแผนปฏิบัติงาน",
+    "description": "button text: to save a plan definition to the server"
+  },
+  "SAVE_TEAM": {
+    "message": "บันทึกทีมปฏิบัติงาน",
+    "description": "button title: when saving a plan definition to the server"
+  },
+  "REMOVE": {
+    "message": "ลบ",
+    "description": "button text: to remove a practioner from a team"
+  },
+  "ADD": {
+    "message": "เพิ่ม",
+    "description": "button text: to add one entity to another"
+  },
+  "EDIT": {
+    "message": "แก้ไข",
+    "description": "button text: to update an entity on the server"
+  },
+  "YES": {
+    "message": "ใช่",
+    "description": "form label: to select yes in a form"
+  },
+  "NO": {
+    "message": "ไม่ใช่",
+    "description": "form label: to select no in a form"
+  },
+  "TEAMS_ASSIGNED": {
+    "message": "กำหนดทีมปฏิบัติงาน",
+    "description": "button text: to set team assignment for a plan-jurisdiction"
+  },
+  "ASSIGN_TEAMS": {
+    "message": "เลือกทีมปฏิบัติงาน",
+    "description": "button text: to choose teams to assign to a plan-jurisdiction"
+  },
+  "SELECT_TEAMS_TO_ASSIGN": {
+    "message": "เลือกทีมที่จะมอบหมายงาน",
+    "description": "popup header: informing users to select teams for plan-jurisdiction assignment"
+  },
+  "NO_TEAMS_LOADED_MESSAGE": {
+    "message": "ไม่มีข้อมูลทีมปฏิบัติงาน",
+    "description": "warning prompt: message alerting that there were no teams loaded from the server"
+  },
+  "ASSIGN": {
+    "message": "มอบหมาย",
+    "description": "button text: to assign a practioner to a team or a team to a plan-jurisdiction"
+  },
+  "ACTIVE": {
+    "message": "ดำเนินการ",
+    "description": "section title: for sections containing lists of active emtities"
+  },
+  "CLEAR": {
+    "message": "ล้าง",
+    "description": "button text: to remove all team assignments from a plan-jurisdiction"
+  },
+  "SAVE": {
+    "message": "บันทึก",
+    "description": "button text: to save changes to the server"
+  },
+  "PRACTITIONERS": {
+    "message": "ผู้ปฏิบัติงาน",
+    "description": "page title: page for practioner managment"
+  },
+  "PRACTITIONER": {
+    "message": "ผู้ปฏิบัติงาน",
+    "description": "column header, section title: for information about a single practitioner"
+  },
+  "VIEW": {
+    "message": "ดูข้อมูล",
+    "description": "link text: to navigate to information about a team"
+  },
+  "USERNAME": {
+    "message": "ชื่อผู้ใช้",
+    "description": "column header, form label: for user aliases for practitioners"
+  },
+  "IDENTIFIER": {
+    "message": "ID",
+    "description": "column header: unique identifiers for teams and practitioners"
+  },
+  "ACTIONS": {
+    "message": "การดำเนินการ",
+    "description": "column header: for actionable items in team and practitioner management"
+  },
+  "ACTION": {
+    "message": "การดำเนินการ",
+    "description": "column header, form label: for actionable item in plans"
+  },
+  "SEARCH": {
+    "message": "ค้นหา",
+    "description": "button text, input placeholder: indicates the user can search for a specific entity"
+  },
+  "TEAMS_ASSIGNMENT": {
+    "message": "มอบหมายทีมปฏิบัติงาน",
+    "description": "column header: containing information about plan-jurisdiction assignments"
+  },
+  "NEW_TEAM": {
+    "message": "สร้างทีมปฏิบัติงานใหม่",
+    "description": "button text: to create a new team"
+  },
+  "EDIT_TEAM": {
+    "message": "แก้ไขทีมปฏิบัติงาน",
+    "description": "button text: to update an existing team on the server"
+  },
+  "TEAM": {
+    "message": "ทีมปฏิบัติงาน",
+    "description": "input placeholder: when defining the type of an organization"
+  },
+  "TEAMS": {
+    "message": "ทีมปฏิบัติงาน",
+    "description": "header, title, links: for pages about teams"
+  },
+  "PLAN_STATUS": {
+    "message": "สถานะแผนปฏิบัติงาน",
+    "description": "column header: describing the current status of a plan"
+  },
+  "PLAN_TITLE": {
+    "message": "แผนปฏิบัติงาน",
+    "description": "global nav (title case): name of an entity describing work which needs to be done"
+  },
+  "NEW_TITLE": {
+    "message": "ใหม่",
+    "description": "badge text: indicates an entity is new"
+  },
+  "COUNTRY": {
+    "message": "ประเทศ",
+    "description": "form lable: indicates the top-most location hierarchy level"
+  },
+  "IRS_PLANS": {
+    "message": "แผนกิจกรรม IRS",
+    "description": "page title: pages for Indoor Residual Sray plans"
+  },
+  "CANCEL": {
+    "message": "ยกเลิก",
+    "description": "button text: discard unsaved changes"
+  },
+  "CONFIRM": {
+    "message": "ยืนยัน",
+    "description": "button text: save unsaved changes made"
+  },
+  "DRAFTS_PARENTHESIS": {
+    "message": "(ร่าง)",
+    "description": "page title: denoting the currently rendered plan is not finalized"
+  },
+  "ADMIN": {
+    "message": "ผู้ดูแลระบบ",
+    "description": "global nav: group of administrative pages for teams and practioners"
+  },
+  "MONITOR": {
+    "message": "ผู้ติดตามแผนการทำงาน",
+    "description": "global nav: group of pages relating to monitoring plans and plan reports"
+  },
+  "PLANNING": {
+    "message": "ผู้สร้างแผนปฏิบัติงาน",
+    "description": "global nav: group of pages relating to developing plans"
+  },
+  "PLANS": {
+    "message": "จัดการแผนปฏิบัติงาน",
+    "description": "page title: page to list out all plans from the server"
+  },
+  "SAVING": {
+    "message": "กำลังบันทึก...",
+    "description": "button text: displays while an entity is being saved to the server and denoting progress"
+  },
+  "REQUIRED": {
+    "message": "ต้องใส่ข้อมูล",
+    "description": "form label: denoting a form input is mandatory to submit"
+  },
+  "REACTIVE": {
+    "message": "กิจกรรม RACD",
+    "description": "page title, section title: for the reactive type of focus investigation plans"
+  },
+  "PERSONS": {
+    "message": "คน",
+    "description": "unit of meassurement: can be one person or multiple people"
+  },
+  "STRUCTURES": {
+    "message": "หลัง",
+    "description": "unit of meassurement: can be single building or multiple buildings"
+  },
+  "MARK_AS_COMPLETE": {
+    "message": "เปลี่ยนสถานะเป็น ดำเนินการเสร็จแล้ว",
+    "description": "button, page title: to update a plan status to as completed"
+  },
+  "MEASURE": {
+    "message": "วัดผล",
+    "description": "indicator label: indicating the type of plan action being monitored"
+  },
+  "FI_STATUS": {
+    "message": "สถานะ",
+    "description": "column header: for the status of Focus Investigation plans"
+  },
+  "FI_REASON": {
+    "message": "ประเภทแผนงาน",
+    "description": "column header: the reason for the plan (can be reactive or routine)"
+  },
+  "CANTON": {
+    "message": "ตำบล",
+    "description": "column header: the Canton in which a focus investigation takes place"
+  },
+  "DISTRICT": {
+    "message": "อำเภอ",
+    "description": "column header: the District in which a focus investigation takes place"
+  },
+  "ADMIN_LEVEL": {
+    "message": "ระดับของผู้ดูแลระบบ",
+    "description": "column header: the administrative label of a jurisdiction"
+  },
+  "JURISDICTION": {
+    "message": "ผู้ดูแลระบบ",
+    "description": "breadcrumb: generic term for an administrative territory"
+  },
+  "LOCATIONS": {
+    "message": "สถานที่",
+    "description": "form section header: for defining the locations included in a plan"
+  },
+  "TYPE_LABEL": {
+    "message": "ประเภท",
+    "description": "column header: containing the categorical type of an entity"
+  },
+  "DEFINITIONS": {
+    "message": "คำอธิบาย",
+    "description": "legend header: descrbing the meaning of different focus investigation classifications"
+  },
+  "CASE_CLASSIFICATION_LABEL": {
+    "message": "การตัดสินชนิดการติดเชื้อ",
+    "description": "label: for the classification of a plan"
+  },
+  "CASE_CLASSIFICATION_HEADER": {
+    "message": "การตัดสินชนิดการติดเชื้อ",
+    "description": "table header: (abbreviated) for the classification of a plan"
+  },
+  "CASE_NOTIF_DATE_HEADER": {
+    "message": "วันที่สร้างแผนงาน",
+    "description": "table header: (abbreviated) for the notification date of a plan"
+  },
+  "STATUS_HEADER": {
+    "message": "สถานะ",
+    "description": "column header: containing the status of plans"
+  },
+  "REASON_HEADER": {
+    "message": "เหตุผล",
+    "description": "form label: for the reason leading to a plan being created"
+  },
+  "ADD_ACTIVITY": {
+    "message": "เพิ่มกิจกรรม",
+    "description": "button text: to add a new activity to a plan"
+  },
+  "PRIORITY_LABEL": {
+    "message": "ความสำคัญ",
+    "description": "form label: for the priority level of an activity in a plan"
+  },
+  "QUANTITY_LABEL": {
+    "message": "เป้าหมาย",
+    "description": "form label: for the quantitative value for a goal of an activity in a plan"
+  },
+  "DESCRIPTION_LABEL": {
+    "message": "คำอธิบายเพิ่มเติม",
+    "description": "form label: for the description for a gaol of an activity in a plan"
+  },
+  "ACTIVITIES_LABEL": {
+    "message": "กิจกรรม",
+    "description": "form section header: for defining the activities in a plan"
+  },
+  "PLAN_END_DATE_LABEL": {
+    "message": "วันที่เริ่มทำกิจกรรม",
+    "description": "form label: for the ending date of a plan"
+  },
+  "PLAN_START_DATE_LABEL": {
+    "message": "วันที่สิ้นสุดการทำกิจกรรม",
+    "description": "form label: for the starting date of a plan"
+  },
+  "PLAN_TITLE_LABEL": {
+    "message": "ชื่อแผนปฏิบัติงาน",
+    "description": "form label: for the name of a plan"
+  },
+  "TITLE": {
+    "message": "ชื่อแผนปฏิบัติงาน",
+    "description": "column header: containing the names of plans"
+  },
+  "LAST_MODIFIED": {
+    "message": "วันที่แก้ไขล่าสุด",
+    "description": "column header: containing the date of the last time a plan was updated on the server"
+  },
+  "CASE_NUMBER": {
+    "message": "รหัสผู้ป่วย",
+    "description": "form label: for the case identification number"
+  },
+  "FOCUS_INVESTIGATION_STATUS_REASON": {
+    "message": "ประเภทของแผนปฏิบัติงาน",
+    "description": "form label: for the reason leading to a plan being created"
+  },
+  "FOCUS_INVESTIGATION_STATUS_LABEL": {
+    "message": "ระยะท้องที่ของพื้นที่ดำเนินการ",
+    "description": "form label: for the status of a focus investigation plan"
+  },
+  "INTERVENTION_TYPE_LABEL": {
+    "message": "ประเภทกิจกรรม",
+    "description": "form label: for the type of intervention plan"
+  },
+  "SPRAY_AREA_HEADER": {
+    "message": "พื้นที่พ่นสารเคมี",
+    "description": "table lable: inidcating a jurisdiction is a Spray Area"
+  },
+  "FOCUS_AREA_HEADER": {
+    "message": "กลุ่มบ้าน",
+    "description": "form label: for the Focus Area specified in a Focus Investigation plan"
+  },
+  "FOCUS_INVESTIGATIONS": {
+    "message": "กิจกรรมสอบสวนผู้ป่วยและแหล่งแพร่เชื้อ",
+    "description": "page title: for pages about Focus Investigation plans"
+  },
+  "FOCUS_AREA_INFO": {
+    "message": "ข้อมูลเบื้องต้น",
+    "description": "section title: containint information about a specific Focus Area"
+  },
+  "INTERVENTION": {
+    "message": "กิจกรรม",
+    "description": "column header: containing the type of intervention of a plan"
+  },
+  "INVESTIGATION": {
+    "message": "การสอบสวน",
+    "description": "section header: sidebar section containing information about the intervention plan"
+  },
+  "COMPLETE_FOCUS_INVESTIGATION": {
+    "message": "แผนงานที่ดำเนินการเรียบร้อยแล้วs",
+    "description": "section header: containing list of completed focus investigation plans"
+  },
+  "CURRENT_FOCUS_INVESTIGATION": {
+    "message": "แผนงานที่กำลังดำเนินการ",
+    "description": "section header: containing list of active focus investigation plans"
+  },
+  "FOCUS_INVESTIGATION": {
+    "message": "กิจกรรมสอบสวนผู้ป่วยและแหล่งแพร่เชื้อ",
+    "description": "page title: for focus investigation pages"
+  },
+  "HOME": {
+    "message": "หน้าหลัก",
+    "description": "global nav: linking to site homepage"
+  },
+  "PROVINCE": {
+    "message": "จังหวัด",
+    "description": "column header: the Province in which a focus investigation takes place"
+  },
+  "ASSIGN_PRACTITIONERS_TO_ORG": {
+    "message": "กำหนดผู้ปฏิบัติงานในทีม%s",
+    "description": "page header: for assigning practitioners to a team; args: the team name"
+  },
+  "DATE_IS_REQUIRED": {
+    "message": "กรุณากรอกวันที่",
+    "description": "form validation messag: alerts users that the dates fields are required"
+  },
+  "NAME_IS_REQUIRED": {
+    "message": "กรุณากรอกชื่อ",
+    "description": "form validation messag: alerts users that the name field are required"
+  },
+  "NUMERATOR_OF_DENOMINATOR_UNITS": {
+    "message": "'%s of %s %s",
+    "description": "progress indicator: describing prgoress currently made towards a goal (example: 8 of 10 structures), unit comes from the data and defaults to structures (plural)"
+  },
+  "MARK_PLAN_AS_COMPLETE": {
+    "message": "เปลี่ยนสถานะแผนงาน %s เป็นดำเนินการเสร็จแล้ว",
+    "description": "page title: page for marking a plan as complete; arg: plan title"
+  }
+}
