@@ -488,7 +488,7 @@
     "description": "form label: for the status of a focus investigation plan"
   },
   "INTERVENTION_TYPE_LABEL": {
-    "message": "INTERVENTION_TYPE_LABEL",
+    "message": "Intervention Type",
     "description": "form label: for the type of intervention plan"
   },
   "SPRAY_AREA_HEADER": {
@@ -548,7 +548,7 @@
     "description": "form validation messag: alerts users that the name field are required"
   },
   "NUMERATOR_OF_DENOMINATOR_UNITS": {
-    "message": "'%s of %s %s",
+    "message": "%s of %s %s",
     "description": "progress indicator: describing prgoress currently made towards a goal (example: 8 of 10 structures), unit comes from the data and defaults to structures (plural)"
   },
   "MARK_PLAN_AS_COMPLETE": {

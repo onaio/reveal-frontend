@@ -1670,7 +1670,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: FI activit
   onChange={[Function]}
   required={true}
   type="text"
-  value="Blood screening"
+  value="Blood Screening"
 />
 `;
 
