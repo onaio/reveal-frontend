@@ -167,7 +167,7 @@ exports[`components/page/Header renders routine headers correctly 1`] = `
             >
               <LinkAsButton
                 classNameProp="focus-investigation btn btn-primary float-right mt-5"
-                text="Add Focus Investigation"
+                text="Add Plan"
                 to="/plans/new"
               >
                 <Link
@@ -180,7 +180,7 @@ exports[`components/page/Header renders routine headers correctly 1`] = `
                     href="/plans/new"
                     onClick={[Function]}
                   >
-                    Add Focus Investigation
+                    Add Plan
                   </a>
                 </Link>
               </LinkAsButton>
