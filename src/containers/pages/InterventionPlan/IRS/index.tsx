@@ -55,7 +55,7 @@ import HeaderBreadcrumbs, {
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
 import { SUPERSET_IRS_REPORTING_PLANS_SLICE, SUPERSET_MAX_RECORDS } from '../../../../configs/env';
-import { useContextCodes } from '../../../../configs/settings';
+import { planStatusDisplay, useContextCodes } from '../../../../configs/settings';
 import supersetFetch from '../../../../services/superset';
 import './../../../../styles/css/drill-down-table.css';
 
@@ -192,7 +192,8 @@ class IrsPlans extends React.Component<IrsPlansProps & RouteComponentProps<Route
         columns: [
           {
             Header: '',
-            accessor: 'plan_status',
+            accessor: (d: PlanRecord) => planStatusDisplay[d.plan_status] || d.plan_status,
+            id: 'plan_status',
           },
         ],
       },

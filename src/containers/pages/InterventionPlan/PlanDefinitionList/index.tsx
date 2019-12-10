@@ -18,7 +18,7 @@ import {
   STATUS_HEADER,
   TITLE,
 } from '../../../../configs/lang';
-import { PlanDefinition } from '../../../../configs/settings';
+import { PlanDefinition, planStatusDisplay } from '../../../../configs/settings';
 import { HOME_URL, OPENSRP_PLANS, PLAN_LIST_URL, PLAN_UPDATE_URL } from '../../../../constants';
 import { OpenSRPService } from '../../../../services/opensrp';
 import planDefinitionReducer, {
@@ -89,7 +89,7 @@ const PlanDefinitionList = (props: PlanListProps) => {
           {planObj.title}
         </Link>,
         typeUseContext.length > 0 ? typeUseContext[0].valueCodableConcept : '',
-        planObj.status,
+        planStatusDisplay[planObj.status] || planObj.status,
         planObj.date,
       ];
     }),

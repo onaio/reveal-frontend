@@ -18,6 +18,7 @@ import {
   STATUS_HEADER,
   TITLE,
 } from '../../../../configs/lang';
+import { planStatusDisplay } from '../../../../configs/settings';
 import { HOME_URL, REPORT_IRS_PLAN_URL } from '../../../../constants';
 import supersetFetch from '../../../../services/superset';
 import IRSPlansReducer, {
@@ -88,7 +89,7 @@ const IRSPlansList = (props: PlanListProps) => {
         planObj.plan_date,
         planObj.plan_effective_period_start,
         planObj.plan_effective_period_end,
-        planObj.plan_status,
+        planStatusDisplay[planObj.plan_status] || planObj.plan_status,
       ];
     }),
     headerItems: [TITLE, DATE_CREATED, START_DATE, END_DATE, STATUS_HEADER],

@@ -41,7 +41,11 @@ import {
   START_DATE,
   STATUS_HEADER,
 } from '../../../../configs/lang';
-import { FIClassifications, locationHierarchy } from '../../../../configs/settings';
+import {
+  FIClassifications,
+  locationHierarchy,
+  planStatusDisplay,
+} from '../../../../configs/settings';
 import {
   CASE_TRIGGERED,
   FI_SINGLE_MAP_URL,
@@ -281,7 +285,8 @@ class ActiveFocusInvestigation extends React.Component<
                 columns: [
                   {
                     Header: '',
-                    accessor: 'plan_status',
+                    accessor: (d: Plan) => planStatusDisplay[d.plan_status] || d.plan_status,
+                    id: 'plan_status',
                     minWidth: 80,
                   },
                 ],

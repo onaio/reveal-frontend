@@ -488,7 +488,8 @@ exports[`containers/pages/IRS renders plans list correctly 1`] = `
                   "columns": Array [
                     Object {
                       "Header": "",
-                      "accessor": "plan_status",
+                      "accessor": [Function],
+                      "id": "plan_status",
                     },
                   ],
                 },
@@ -717,7 +718,8 @@ exports[`containers/pages/IRS renders plans list correctly 1`] = `
                     "columns": Array [
                       Object {
                         "Header": "",
-                        "accessor": "plan_status",
+                        "accessor": [Function],
+                        "id": "plan_status",
                       },
                     ],
                   },
