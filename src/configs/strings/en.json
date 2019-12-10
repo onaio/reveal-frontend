@@ -830,5 +830,13 @@
   "VILLAGE": {
     "message": "Village",
     "description": "column header: the Village in which a focus investigation takes place"
+  },
+  "NEXT": {
+    "message": "Next",
+    "description": "pagination button text: to update the table to show the next page of table rows"
+  },
+  "PREVIOUS": {
+    "message": "Previous",
+    "description": "pagination button text: to update the table to show the previous page of table rows"
   }
 }

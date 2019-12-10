@@ -396,6 +396,9 @@ export const LOW_PRIORITY_LABEL = translate('LOW_PRIORITY_LABEL', 'Low Priority'
 export const MEDIUM_PRIORITY_LABEL = translate('MEDIUM_PRIORITY_LABEL', 'Medium Priority');
 export const HIGH_PRIORITIY_LABEL = translate('HIGH_PRIORITIY_LABEL', 'High Priority');
 
+export const NEXT = translate('NEXT', 'Next');
+export const PREVIOUS = translate('PREVIOUS', 'Previous');
+
 // TODO ? - do the below 2 belong here or in a settings file
 export const ORGANIZATION_LABEL = TEAM;
 export const ORGANIZATIONS_LABEL = TEAMS;
