@@ -47,6 +47,7 @@ import {
   REASON_HEADER,
   SAVE_PLAN,
   SAVING,
+  SELECT_PLACHOLDER,
   START_DATE,
   STATUS_HEADER,
 } from '../../../configs/lang';
@@ -331,7 +332,7 @@ const PlanForm = (props: PlanFormProps) => {
                         <fieldset key={index}>
                           {errors.jurisdictions && errors.jurisdictions[index] && (
                             <div className="alert alert-danger" role="alert">
-                              <h6 className="alert-heading">Please fix these errors</h6>
+                              <h6 className="alert-heading">{PLEASE_FIX_THESE_ERRORS}</h6>
                               <ul className="list-unstyled">
                                 {Object.entries(errors.jurisdictions[index] || {}).map(
                                   ([key, val]) => (
@@ -369,8 +370,8 @@ const PlanForm = (props: PlanFormProps) => {
                                 cascadingSelect={cascadingSelect}
                                 name={`jurisdictions[${index}].id`}
                                 id={`jurisdictions-${index}-id`}
-                                placeholder={`Select ${jurisdictionLabel}`}
-                                aria-label={`Select ${jurisdictionLabel}`}
+                                placeholder={format(SELECT_PLACHOLDER, jurisdictionLabel)}
+                                aria-label={format(SELECT_PLACHOLDER, jurisdictionLabel)}
                                 disabled={disabledFields.includes('jurisdictions')}
                                 className={
                                   errors.jurisdictions &&
