@@ -19,6 +19,8 @@ import {
   IRS_PLANS,
   IRS_TITLE,
   NAME,
+  NEXT,
+  PREVIOUS,
   STATUS_HEADER,
 } from '../../../../configs/lang';
 import {
@@ -207,6 +209,8 @@ class IrsPlans extends React.Component<IrsPlansProps & RouteComponentProps<Route
       identifierField: 'id',
       linkerField: 'id',
       minRows: 0,
+      nextText: NEXT,
+      previousText: PREVIOUS,
       rootParentId: null,
       showPageSizeOptions: false,
       showPagination: plansArray.length > 20,
