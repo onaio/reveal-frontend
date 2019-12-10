@@ -179,6 +179,10 @@
     "message": "Select",
     "description": "input placeholder, label: indicates the user making a selection from a dropdown or list"
   },
+  "SELECT_PLACHOLDER": {
+    "message": "Select %s",
+    "description": "input placeholder: non-selected dropdown to select something; args: admin level being selected"
+  },
   "NO_PLANS_LOADED_MESSAGE": {
     "message": "No plans found...",
     "description": "warning prompt: when there are no plans to render in the lists"

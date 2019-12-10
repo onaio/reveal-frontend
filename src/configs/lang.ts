@@ -121,6 +121,7 @@ export const SAVE_ASSIGNMENTS = translate('SAVE_ASSIGNMENTS', 'Save Assignments'
 export const NO_PLANS_LOADED_MESSAGE = translate('NO_PLANS_LOADED_MESSAGE', 'No plans found...');
 export const SELECT = translate('SELECT', 'Select');
 export const SELECT_USERNAME = translate('SELECT_USERNAME', 'Select username');
+export const SELECT_PLACHOLDER = translate('SELECT_PLACHOLDER', 'Select %s');
 
 export const PRACTITIONER = translate('PRACTITIONER', 'Practitioner');
 export const PRACTITIONERS = translate('PRACTITIONERS', 'Practitioners');
