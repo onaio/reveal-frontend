@@ -741,7 +741,7 @@
   },
   "ROUTINE_TITLE": {
     "message": "Routine",
-    "description": ""
+    "description": "section title: for sections containing list of Routine FI plans"
   },
   "ROUTINE_INVESTIGATION_TITLE": {
     "message": "Routine Investigation",
