@@ -53,6 +53,7 @@ export const FOCUS_INVESTIGATION_START_TITLE = translate(
   'Focus Investigation Start'
 );
 export const DATE_CREATED = translate('DATE_CREATED', 'Date Created');
+export const DATE_COMPLETED = translate('DATE_COMPLETED', 'Date Completed');
 export const NEW_PLAN = translate('NEW_PLAN', 'New Plan');
 export const ADD_PLAN = translate('ADD_PLAN', 'Add Plan');
 export const CREATE_NEW_PLAN = translate('CREATE_NEW_PLAN', 'Create New Plan');
@@ -169,6 +170,7 @@ export const JURISDICTION = translate('JURISDICTION', 'Jurisdiction');
 export const ADMIN_LEVEL = translate('ADMIN_LEVEL', 'Admin Level');
 export const DISTRICT = translate('DISTRICT', 'District');
 export const CANTON = translate('CANTON', 'Canton');
+export const VILLAGE = translate('VILLAGE', 'Village');
 export const FI_REASON = translate('FI_REASON', 'FI Reason');
 export const FI_STATUS = translate('FI_STATUS', 'FI Status');
 export const MEASURE = translate('MEASURE', 'Measure');

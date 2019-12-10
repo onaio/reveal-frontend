@@ -51,6 +51,10 @@
     "message": "Date Created",
     "description": "column header: date a plan was create"
   },
+  "DATE_COMPLETED": {
+    "message": "Date Completed",
+    "description": "column header: date a plan was completed"
+  },
   "FOCUS_INVESTIGATION_START_TITLE": {
     "message": "Focus Investigation Start",
     "description": "section label: the start date of a focus investigation plan"
@@ -818,5 +822,9 @@
   "HIGH_PRIORITIY_LABEL": {
     "message": "High Priority",
     "description": "priority level of a plan activity"
+  },
+  "VILLAGE": {
+    "message": "Village",
+    "description": "column header: the Village in which a focus investigation takes place"
   }
 }
