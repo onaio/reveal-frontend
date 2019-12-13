@@ -1916,12 +1916,12 @@
   dependencies:
     "@onaio/session-reducer" "^0.0.10"
 
-"@onaio/connected-reducer-registry@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@onaio/connected-reducer-registry/-/connected-reducer-registry-0.0.1.tgz#e4cef471ef6a2da8ed22520c787bcaa9aa053180"
-  integrity sha512-euTobnOCUd9XR4Hvm1i6rIy1RuDmUL+TeLZhoeMxPafkCSgoDuqVkRtLEmWz1fou8HcVfZBKqXugAXv3CuF9gw==
+"@onaio/connected-reducer-registry@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@onaio/connected-reducer-registry/-/connected-reducer-registry-0.0.2.tgz#d3fda9ffaf651f030b799944a5ba160f68d401c3"
+  integrity sha512-w260IncHgh6AOsUJrHfcd9/ZMYYI4LGzzOO12D2i8N0PKq/I48G6Ah15+JAdA9+1rWXmBqxnvx0xWlsJLoTGqA==
   dependencies:
-    "@onaio/redux-reducer-registry" "^0.0.8"
+    "@onaio/redux-reducer-registry" "^0.0.9"
 
 "@onaio/drill-down-table@^0.0.21":
   version "0.0.21"
@@ -1958,10 +1958,10 @@
   dependencies:
     "@onaio/element-map" "^0.0.5"
 
-"@onaio/redux-reducer-registry@^0.0.8":
-  version "0.0.8"
-  resolved "https://registry.yarnpkg.com/@onaio/redux-reducer-registry/-/redux-reducer-registry-0.0.8.tgz#53433bc95c271fe1f77e5632ec324af6825f56e7"
-  integrity sha512-GyM9D5mZHAtTv2HL8MB3zZyO1y2gJH+iIbctxP6Z+5NWKowxjr/VLbv6O7fEECwRZgQKzSeE/eqKNYaPGSrWEQ==
+"@onaio/redux-reducer-registry@^0.0.9":
+  version "0.0.9"
+  resolved "https://registry.yarnpkg.com/@onaio/redux-reducer-registry/-/redux-reducer-registry-0.0.9.tgz#513bac5c9838ca3bcf60f0963a6824a88b9694b7"
+  integrity sha512-XNBLsWFjDijEr/0ejzi5AzsKvUiJBt4xrmRpWHMWUPkY9Lfo+pfLCxLB8n4qDO30Dt/UYuHOSX1dgXAlsvcuPg==
   dependencies:
     redux "^4.0.1"
 
