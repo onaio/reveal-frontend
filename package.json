@@ -62,6 +62,7 @@
     "reactstrap": "^7.1.0",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
+    "request": "^2.88.0",
     "seamless-immutable": "^7.1.4",
     "serialize-javascript": "^2.1.2",
     "typescript": "^3.3.1",
