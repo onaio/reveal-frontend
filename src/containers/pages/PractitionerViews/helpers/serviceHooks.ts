@@ -8,12 +8,14 @@ import { fetchPractitioners, Practitioner } from '../../../../store/ducks/opensr
 /** loads all practitioners returned in within a single request from practitioners endpoint
  * @param {typeof OpenSRPService} service -  the OpenSRP service
  * @param {typeof fetchPractitioners} fetchPractitionersActionCreator - action creator for adding practitioners to store
+ * @param {AbortSignal} signal - used to communicate with/abort a DOM request.
  */
 export const loadPractitioners = async (
   service: typeof OpenSRPService = OpenSRPService,
-  fetchPractitionersCreator: any
+  fetchPractitionersCreator: typeof fetchPractitioners,
+  signal: AbortSignal
 ) => {
-  const serve = new service(OPENSRP_PRACTITIONER_ENDPOINT);
+  const serve = new service(OPENSRP_PRACTITIONER_ENDPOINT, signal);
   serve
     .list()
     .then((response: Practitioner[]) => store.dispatch(fetchPractitionersCreator(response, true)))
@@ -26,13 +28,15 @@ export const loadPractitioners = async (
  * @param {string} practitionerId - id of practitioner
  * @param {typeof OpenSRPService} service -  the OpenSRP service
  * @param {typeof fetchPractitioners} fetchPractitionersActionCreator - action creator for adding practitioners to store
+ * @param {AbortSignal} signal - used to communicate with/abort a DOM request.
  */
 export const loadPractitioner = async (
   practitionerId: string,
   service: typeof OpenSRPService = OpenSRPService,
-  fetchPractitionersCreator: typeof fetchPractitioners
+  fetchPractitionersCreator: typeof fetchPractitioners,
+  signal: AbortSignal
 ) => {
-  const serve = new service(OPENSRP_PRACTITIONER_ENDPOINT);
+  const serve = new service(OPENSRP_PRACTITIONER_ENDPOINT, signal);
   serve
     .read(practitionerId)
     .then((response: Practitioner) => store.dispatch(fetchPractitionersCreator([response])))
