@@ -23,7 +23,7 @@ export const getGAusername = (): string => username;
 
 if (GA_CODE.length) {
   GoogleAnalytics.initialize(GA_CODE, {
-    testMode: GA_ENV === 'test', // this doesn't seem to affect things
+    testMode: GA_ENV === 'test',
   });
   GoogleAnalytics.set({
     env: GA_ENV,
