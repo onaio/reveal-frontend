@@ -186,7 +186,6 @@ const AssignPractitioner = (props: PropsTypes) => {
       practitioner: practitionerId,
     }));
     const serve = new serviceClass(OPENSRP_ADD_PRACTITIONER_ROLE_ENDPOINT);
-<<<<<<< HEAD
     serve
       .create(jsonArrayPayload)
       .then(() => {
@@ -194,18 +193,9 @@ const AssignPractitioner = (props: PropsTypes) => {
           organization.identifier,
           serviceClass,
           fetchPractitionerRolesCreator,
-          fetchPractitionersCreator
+          fetchPractitionersCreator,
+          signal
         ).catch(err => displayError(err));
-=======
-    serve.create(jsonArrayPayload).then(() => {
-      loadOrgPractitioners(
-        organization.identifier,
-        serviceClass,
-        fetchPractitionerRolesCreator,
-        fetchPractitionersCreator,
-        signal
-      );
->>>>>>> Add cleanup to Assign Practitioners aborting fetche's
 
         growl(format(PRACTITIONERS_ASSIGNED_TO_ORG, jsonArrayPayload.length, organization.name), {
           type: toast.TYPE.SUCCESS,
