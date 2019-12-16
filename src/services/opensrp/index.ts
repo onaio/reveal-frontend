@@ -49,12 +49,14 @@ export function getFilterParams(obj: URLParams | {}): string {
 
 /** get payload for fetch
  * @param {HTTPMethod} method - the HTTP method
+ * @param {AbortSignal} signal - used to communicate with/abort a DOM request.
  * @returns the payload
  */
-export function getPayload(method: HTTPMethod) {
+export function getPayload(method: HTTPMethod, signal: AbortSignal) {
   return {
     headers: getDefaultHeaders() as HeadersInit,
     method,
+    signal,
   };
 }
 
@@ -89,11 +91,17 @@ export class OpenSRPService {
   public baseURL: string;
   public endpoint: string;
   public generalURL: string;
+  public signal: AbortSignal;
 
-  constructor(endpoint: string, baseURL: string = OPENSRP_API_BASE_URL) {
+  constructor(
+    endpoint: string,
+    signal: AbortSignal = new AbortController().signal,
+    baseURL: string = OPENSRP_API_BASE_URL
+  ) {
     this.endpoint = endpoint;
     this.baseURL = baseURL;
     this.generalURL = `${this.baseURL}${this.endpoint}`;
+    this.signal = signal;
   }
 
   /** create method
@@ -107,7 +115,7 @@ export class OpenSRPService {
   public async create<T>(data: T, params: paramsType = null, method: HTTPMethod = 'POST') {
     const url = getURL(this.generalURL, params);
     const payload = {
-      ...getPayload(method),
+      ...getPayload(method, this.signal),
       'Cache-Control': 'no-cache',
       Pragma: 'no-cache',
       body: JSON.stringify(data),
@@ -132,7 +140,7 @@ export class OpenSRPService {
    */
   public async read(id: string | number, params: paramsType = null, method: HTTPMethod = 'GET') {
     const url = getURL(`${this.generalURL}/${id}`, params);
-    const response = await fetch(url, getPayload(method));
+    const response = await fetch(url, getPayload(method, this.signal));
 
     if (!response.ok) {
       throw new Error(
@@ -154,7 +162,7 @@ export class OpenSRPService {
   public async update<T>(data: T, params: paramsType = null, method: HTTPMethod = 'PUT') {
     const url = getURL(this.generalURL, params);
     const payload = {
-      ...getPayload(method),
+      ...getPayload(method, this.signal),
       'Cache-Control': 'no-cache',
       Pragma: 'no-cache',
       body: JSON.stringify(data),
@@ -178,7 +186,7 @@ export class OpenSRPService {
    */
   public async list(params: paramsType = null, method: HTTPMethod = 'GET') {
     const url = getURL(this.generalURL, params);
-    const response = await fetch(url, getPayload(method));
+    const response = await fetch(url, getPayload(method, this.signal));
 
     if (!response.ok) {
       throw new Error(
@@ -198,7 +206,7 @@ export class OpenSRPService {
    */
   public async delete(params: paramsType = null, method: HTTPMethod = 'DELETE') {
     const url = getURL(this.generalURL, params);
-    const response = await fetch(url, getPayload(method));
+    const response = await fetch(url, getPayload(method, this.signal));
 
     if (response.ok || response.status === 204 || response.status === 200) {
       return {};
