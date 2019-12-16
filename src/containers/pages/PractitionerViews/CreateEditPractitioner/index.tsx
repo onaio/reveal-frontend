@@ -52,6 +52,8 @@ export type PropsTypes = Props & RouteComponentProps<RouteParams>;
 /** CreateEditTeamView component */
 const CreateEditPractitionerView = (props: PropsTypes) => {
   const { practitioner, serviceClass, fetchPractitionersCreator } = props;
+  const controller = new AbortController();
+  const signal = controller.signal;
   // use route to know if we are editing practitioner or creating practitioner
   const editing = !!props.match.params.id;
 
@@ -87,10 +89,16 @@ const CreateEditPractitionerView = (props: PropsTypes) => {
     if (editing) {
       let practitionerId = props.match.params.id;
       practitionerId = practitionerId ? practitionerId : '';
-      loadPractitioner(practitionerId, serviceClass, fetchPractitionersCreator).catch(error =>
-        displayError(error)
-      );
+      loadPractitioner(
+        practitionerId,
+        serviceClass,
+        fetchPractitionersCreator,
+        signal
+      ).catch(error => displayError(error));
     }
+    return () => {
+      controller.abort();
+    };
   }, []);
 
   return (
