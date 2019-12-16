@@ -17,13 +17,15 @@ import {
  * @param {string} organizationId - the organization id
  * @param {typeof OpenSRPService} service - the opensrp service
  * @param {typeof fetchOrganizations} fetchOrganizationsCreator - action creator
+ * @param {AbortSignal} signal - used to communicate with/abort a DOM request.
  */
 export const loadOrganization = async (
   organizationId: string,
   service: typeof OpenSRPService,
-  fetchOrganizationsCreator: typeof fetchOrganizations
+  fetchOrganizationsCreator: typeof fetchOrganizations,
+  signal: AbortSignal
 ) => {
-  const serve = new service(OPENSRP_ORGANIZATION_ENDPOINT);
+  const serve = new service(OPENSRP_ORGANIZATION_ENDPOINT, signal);
 
   serve
     .read(organizationId)
@@ -40,12 +42,14 @@ export const loadOrganization = async (
  * @param {typeof OpenSRPService} service - the opensrp service
  * @param {typeof fetchPractitionerRoles} fetchPractitionerRolesCreator -  action creator
  * @param {typeof fetchPractitioners} fetchPractitionersCreator - action creator
+ * @param {AbortSignal} signal - used to communicate with/abort a DOM request.
  */
 export const loadOrgPractitioners = async (
   organizationId: string,
   service: typeof OpenSRPService,
   fetchPractitionerRolesCreator: typeof fetchPractitionerRoles,
-  fetchPractitionersCreator: typeof fetchPractitioners
+  fetchPractitionersCreator: typeof fetchPractitioners,
+  signal: AbortSignal
 ) => {
   const serve = new service(OPENSRP_ORG_PRACTITIONER_ENDPOINT);
 
@@ -62,11 +66,13 @@ export const loadOrgPractitioners = async (
 
 /** loads the organization data
  * @param {typeof OpenSRPService} service - the opensrp service
- * @param {typeof fetchOrganizations} fetchOrganizationsCreator - action creator
+ * @param {typeof fetchOrganizations} fetchOrganizationsCreator - action creator,
+ * @param {AbortSignal} signal - used to communicate with/abort a DOM request.
  */
 export const loadOrganizations = async (
   service: typeof OpenSRPService,
-  fetchOrganizationsCreator: typeof fetchOrganizations
+  fetchOrganizationsCreator: typeof fetchOrganizations,
+  signal: AbortSignal
 ) => {
   const serve = new service(OPENSRP_ORGANIZATION_ENDPOINT);
   serve
