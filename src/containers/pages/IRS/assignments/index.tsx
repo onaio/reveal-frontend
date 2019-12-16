@@ -22,6 +22,7 @@ import { planStatusDisplay } from '../../../../configs/settings';
 import {
   ASSIGN_PLAN_URL,
   HOME_URL,
+  OPENSRP_PLANS,
   PLAN_RECORD_BY_ID,
   REPORT_IRS_PLAN_URL,
 } from '../../../../constants';
@@ -43,8 +44,6 @@ import {
 /** register the plan definitions reducer */
 reducerRegistry.register(IRSPlansReducerName, IRSPlansReducer);
 
-const OpenSrpPlanService = new OpenSRPService('plans');
-
 /** Plans filter selector */
 const plansArraySelector = makePlansArraySelector(PLAN_RECORD_BY_ID);
 
@@ -52,12 +51,16 @@ const plansArraySelector = makePlansArraySelector(PLAN_RECORD_BY_ID);
 interface PlanAssignmentsListProps {
   fetchPlans: typeof fetchPlanRecords;
   plans: PlanRecord[];
+  service: typeof OpenSRPService;
 }
 
-/** Simple component that loads plans and allows you to manage plan-jurisdiciton-organization assignments */
+/** Simple component that loads plans and allows you to manage plan-jurisdiction-organization assignments */
 const IRSAssignmentPlansList = (props: PlanAssignmentsListProps) => {
-  const { fetchPlans, plans } = props;
-  const [loading, setLoading] = useState<boolean>(plans.length < 1);
+  const { fetchPlans, plans, service } = props;
+  const controller = new AbortController();
+  const signal = controller.signal;
+
+  const OpenSrpPlanService = new service(OPENSRP_PLANS, signal);
 
   const pageTitle: string = `${ASSIGN_PLANS}`;
 
@@ -77,7 +80,6 @@ const IRSAssignmentPlansList = (props: PlanAssignmentsListProps) => {
   /** async function to load the data */
   async function loadData() {
     try {
-      setLoading(plans.length < 1); // only set loading when there are no plans
       await OpenSrpPlanService.list()
         .then(planResults => {
           if (planResults) {
@@ -89,7 +91,6 @@ const IRSAssignmentPlansList = (props: PlanAssignmentsListProps) => {
         .catch(err => {
           displayError(err);
         });
-      setLoading(false);
     } catch (e) {
       displayError(e);
     }
@@ -97,9 +98,10 @@ const IRSAssignmentPlansList = (props: PlanAssignmentsListProps) => {
 
   useEffect(() => {
     loadData().catch(error => displayError(error));
+    return () => controller.abort();
   }, []);
 
-  if (loading) {
+  if (plans.length < 1) {
     return <Loading />;
   }
 
@@ -147,6 +149,7 @@ const IRSAssignmentPlansList = (props: PlanAssignmentsListProps) => {
 const defaultProps: PlanAssignmentsListProps = {
   fetchPlans: fetchPlanRecords,
   plans: [],
+  service: OpenSRPService,
 };
 
 IRSAssignmentPlansList.defaultProps = defaultProps;
