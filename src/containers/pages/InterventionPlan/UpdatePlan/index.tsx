@@ -46,32 +46,31 @@ export interface RouteParams {
 const UpdatePlan = (props: RouteComponentProps<RouteParams> & UpdatePlanProps) => {
   const { fetchPlan, plan, service } = props;
   const planIdentifier = props.match.params.id;
-  const [loading, setLoading] = useState<boolean>(true);
+  const controller = new AbortController();
+  const signal = controller.signal;
 
   if (!planIdentifier) {
     return null; /** we should make this into a better error page */
   }
-  const apiService = new service(OPENSRP_PLANS);
+  const apiService = new service(OPENSRP_PLANS, signal);
 
   /** async function to load the data */
   async function loadData() {
     try {
-      setLoading(plan === null); // only set loading when there are no plans
       const planFromAPI = await apiService.read(planIdentifier);
       const currentPlan = Array.isArray(planFromAPI) ? planFromAPI[0] : planFromAPI;
       fetchPlan(currentPlan);
     } catch (e) {
       displayError(e);
-    } finally {
-      setLoading(false);
     }
   }
 
   useEffect(() => {
     loadData().catch(err => displayError(err));
+    return () => controller.abort();
   }, []);
 
-  if (loading === true) {
+  if (plan === null) {
     return <Loading />;
   }
 
