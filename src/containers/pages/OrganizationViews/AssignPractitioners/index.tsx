@@ -99,19 +99,25 @@ const AssignPractitioner = (props: PropsTypes) => {
     assignedPractitioners,
   } = props;
   const [selectedOptions, setSelectedOptions] = useState<OptionsType<SelectOption>>([]);
+  const controller = new AbortController();
+  const signal = controller.signal;
 
   useConfirmOnBrowserUnload(selectedOptions.length > 0);
   useEffect(() => {
     const organizationId = props.match.params.id;
-    loadOrganization(organizationId, serviceClass, fetchOrganizationsCreator).catch(err =>
+    loadOrganization(organizationId, serviceClass, fetchOrganizationsCreator, signal).catch(err =>
       displayError(err)
     );
     loadOrgPractitioners(
       organizationId,
       serviceClass,
       fetchPractitionerRolesCreator,
-      fetchPractitionersCreator
+      fetchPractitionersCreator,
+      signal
     ).catch(err => displayError(err));
+    return () => {
+      controller.abort();
+    };
   }, []);
 
   if (!organization) {
@@ -180,6 +186,7 @@ const AssignPractitioner = (props: PropsTypes) => {
       practitioner: practitionerId,
     }));
     const serve = new serviceClass(OPENSRP_ADD_PRACTITIONER_ROLE_ENDPOINT);
+<<<<<<< HEAD
     serve
       .create(jsonArrayPayload)
       .then(() => {
@@ -189,6 +196,16 @@ const AssignPractitioner = (props: PropsTypes) => {
           fetchPractitionerRolesCreator,
           fetchPractitionersCreator
         ).catch(err => displayError(err));
+=======
+    serve.create(jsonArrayPayload).then(() => {
+      loadOrgPractitioners(
+        organization.identifier,
+        serviceClass,
+        fetchPractitionerRolesCreator,
+        fetchPractitionersCreator,
+        signal
+      );
+>>>>>>> Add cleanup to Assign Practitioners aborting fetche's
 
         growl(format(PRACTITIONERS_ASSIGNED_TO_ORG, jsonArrayPayload.length, organization.name), {
           type: toast.TYPE.SUCCESS,
