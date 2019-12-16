@@ -54,6 +54,8 @@ export const UserIdSelect: React.FC<Props> = props => {
   const { onChangeHandler } = props;
   const [openMRSUsers, setOpenMRSUsers] = useState<OpenMRSUser[]>([]);
   const [selectIsLoading, setSelectIsLoading] = useState<boolean>(true);
+  const controller = new AbortController();
+  const signal = controller.signal;
 
   /** calls the prop.onChange with the selected option as argument
    * @param {ValueType<Option>} option - the value in the react-select
@@ -64,13 +66,19 @@ export const UserIdSelect: React.FC<Props> = props => {
     }
   };
 
-  /** Pulls all openMRS users data */
-  const loadOpenMRSUsers = async (service: typeof OpenSRPService = OpenSRPService) => {
+  /** Pulls all openMRS users data
+   * @param {typeof OpenSRPService} service - the opensrp service
+   * @param {AbortSignal} abortSignal - communicates with/abort a fetch request.
+   */
+  const loadOpenMRSUsers = async (
+    service: typeof OpenSRPService = OpenSRPService,
+    abortSignal: AbortSignal
+  ) => {
     let filterParams = {
       page_size: OPENMRS_USERS_REQUEST_PAGE_SIZE,
       start_index: 0,
     };
-    const serve = new service(OPENSRP_USERS_ENDPOINT);
+    const serve = new service(OPENSRP_USERS_ENDPOINT, abortSignal);
     const allOpenMRSUsers = [];
     let response: OpenMRSResponse;
     do {
@@ -93,11 +101,13 @@ export const UserIdSelect: React.FC<Props> = props => {
    * practitioner, this is an effort towards ensuring a 1-1 mapping between an openMRS user
    * and a practitioner entity
    */
-  const loadUnmatchedUsers = async () => {
+  const loadUnmatchedUsers = async (abortSignal: AbortSignal) => {
     const practitioners: Practitioner[] = await new props.serviceClass(
       OPENSRP_PRACTITIONER_ENDPOINT
-    ).list();
-    const allOpenMRSUsers = await loadOpenMRSUsers();
+    )
+      .list()
+      .catch((err: Error) => displayError(err));
+    const allOpenMRSUsers = await loadOpenMRSUsers(props.serviceClass, abortSignal);
 
     const practitionerUserIds = practitioners.map(practitioner => practitioner.userId);
     const unMatchedUsers = allOpenMRSUsers.filter(user => !practitionerUserIds.includes(user.uuid));
@@ -107,10 +117,11 @@ export const UserIdSelect: React.FC<Props> = props => {
 
   useEffect(() => {
     try {
-      loadUnmatchedUsers().catch(err => displayError(err));
+      loadUnmatchedUsers(signal).catch(err => err);
     } catch (err) {
       displayError(err);
     }
+    return () => controller.abort();
   }, []);
 
   const options = React.useMemo(() => {
