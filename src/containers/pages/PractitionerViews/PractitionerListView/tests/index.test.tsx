@@ -19,6 +19,8 @@ const fetch = require('jest-fetch-mock');
 
 const history = createBrowserHistory();
 
+const signal = new AbortController().signal;
+
 describe('src/containers/TeamAssignment/PractitionersListView/', () => {
   beforeEach(() => {
     store.dispatch(practitionerDucks.removePractitionersAction);
@@ -93,7 +95,7 @@ describe('src/containers/TeamAssignment/PractitionersListView/', () => {
     );
 
     await flushPromises();
-    expect(classMock).toBeCalledWith(OPENSRP_PRACTITIONER_ENDPOINT);
+    expect(classMock).toBeCalledWith(OPENSRP_PRACTITIONER_ENDPOINT, signal);
     expect(mockList).toHaveBeenCalled();
     expect(fetchedMock).toHaveBeenCalledWith(fixtures.practitioners, true);
   });

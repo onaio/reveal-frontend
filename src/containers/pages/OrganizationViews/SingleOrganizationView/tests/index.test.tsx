@@ -23,6 +23,9 @@ const fetch = require('jest-fetch-mock');
 
 const history = createBrowserHistory();
 
+const controller = new AbortController();
+const signal = controller.signal;
+
 describe('src/containers/pages/OrganizationViews', () => {
   beforeEach(() => {
     jest.resetAllMocks();
@@ -181,6 +184,7 @@ describe('src/containers/pages/OrganizationViews', () => {
           'content-type': 'application/json;charset=UTF-8',
         },
         method: 'DELETE',
+        signal,
       },
     ];
 

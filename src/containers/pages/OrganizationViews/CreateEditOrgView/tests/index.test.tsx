@@ -17,6 +17,8 @@ reducerRegistry.register(orgDucks.reducerName, orgDucks.default);
 // tslint:disable-next-line: no-var-requires
 const fetch = require('jest-fetch-mock');
 
+const signal = new AbortController().signal;
+
 const history = createBrowserHistory();
 
 describe('src/containers/pages/CreateEditOrganization', () => {
@@ -115,7 +117,7 @@ describe('src/containers/pages/CreateEditOrganization', () => {
     );
 
     expect(serviceMock).toHaveBeenCalled();
-    expect(serviceMock).toHaveBeenCalledWith(OPENSRP_ORGANIZATION_ENDPOINT);
+    expect(serviceMock).toHaveBeenCalledWith(OPENSRP_ORGANIZATION_ENDPOINT, signal);
   });
 
   it('works correctly with the store', async () => {

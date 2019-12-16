@@ -23,6 +23,8 @@ const fetch = require('jest-fetch-mock');
 
 const history = createBrowserHistory();
 
+const signal = new AbortController().signal;
+
 describe('src/containers/TeamAssignment/OrganizationListView/', () => {
   beforeEach(() => {
     store.dispatch(removeOrganizationsAction);
@@ -97,7 +99,7 @@ describe('src/containers/TeamAssignment/OrganizationListView/', () => {
     );
 
     await flushPromises();
-    expect(classMock).toBeCalledWith(OPENSRP_ORGANIZATION_ENDPOINT);
+    expect(classMock).toBeCalledWith(OPENSRP_ORGANIZATION_ENDPOINT, signal);
     expect(mockList).toHaveBeenCalled();
     expect(fetchedOrgsMock).toHaveBeenCalledWith(fixtures.organizations, true);
   });

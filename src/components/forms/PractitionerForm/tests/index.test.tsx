@@ -11,6 +11,9 @@ import { openMRSUsers, practitioners } from '../UserIdSelect/tests/fixtures';
 const fetch = require('jest-fetch-mock');
 jest.mock('../../../../configs/env');
 
+const controller = new AbortController();
+const signal = controller.signal;
+
 describe('src/components/PractitionerForm', () => {
   beforeEach(() => {
     jest.resetAllMocks();
@@ -62,6 +65,7 @@ describe('src/components/PractitionerForm', () => {
             'content-type': 'application/json;charset=UTF-8',
           },
           method: 'GET',
+          signal,
         },
       ],
       [
@@ -73,6 +77,7 @@ describe('src/components/PractitionerForm', () => {
             'content-type': 'application/json;charset=UTF-8',
           },
           method: 'GET',
+          signal,
         },
       ],
     ]);
@@ -147,6 +152,7 @@ describe('src/components/PractitionerForm', () => {
           'content-type': 'application/json;charset=UTF-8',
         },
         method: 'POST',
+        signal,
       },
     ]);
   });
@@ -188,6 +194,7 @@ describe('src/components/PractitionerForm', () => {
             'content-type': 'application/json;charset=UTF-8',
           },
           method: 'PUT',
+          signal,
         },
       ],
     ]);

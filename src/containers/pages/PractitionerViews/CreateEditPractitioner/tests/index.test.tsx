@@ -19,6 +19,8 @@ const fetch = require('jest-fetch-mock');
 
 const history = createBrowserHistory();
 
+const signal = new AbortController().signal;
+
 describe('src/containers/pages/CreateEditPractitioner', () => {
   beforeEach(() => {
     jest.resetAllMocks();
@@ -116,7 +118,7 @@ describe('src/containers/pages/CreateEditPractitioner', () => {
     );
 
     expect(serviceMock).toHaveBeenCalled();
-    expect(serviceMock).toHaveBeenCalledWith(OPENSRP_PRACTITIONER_ENDPOINT);
+    expect(serviceMock).toHaveBeenCalledWith(OPENSRP_PRACTITIONER_ENDPOINT, signal);
   });
 
   it('works correctly with the store', async () => {
