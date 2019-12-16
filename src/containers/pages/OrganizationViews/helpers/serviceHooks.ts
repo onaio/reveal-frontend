@@ -51,7 +51,7 @@ export const loadOrgPractitioners = async (
   fetchPractitionersCreator: typeof fetchPractitioners,
   signal: AbortSignal
 ) => {
-  const serve = new service(OPENSRP_ORG_PRACTITIONER_ENDPOINT);
+  const serve = new service(OPENSRP_ORG_PRACTITIONER_ENDPOINT, signal);
 
   serve
     .read(organizationId)
@@ -74,7 +74,7 @@ export const loadOrganizations = async (
   fetchOrganizationsCreator: typeof fetchOrganizations,
   signal: AbortSignal
 ) => {
-  const serve = new service(OPENSRP_ORGANIZATION_ENDPOINT);
+  const serve = new service(OPENSRP_ORGANIZATION_ENDPOINT, signal);
   serve
     .list()
     .then((response: Organization[]) => store.dispatch(fetchOrganizationsCreator(response, true)))

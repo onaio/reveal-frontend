@@ -7,6 +7,9 @@ import {
 import * as fixtures from '../../../../../store/ducks/tests/fixtures';
 import { loadOrganization, loadOrganizations, loadOrgPractitioners } from '../serviceHooks';
 
+const controller = new AbortController();
+const signal = controller.signal;
+
 describe('src/containers/pages/OrganizationViews/helpers/servicehooks', () => {
   it('loadOrganization works correctly', async () => {
     const mockRead = jest.fn(async () => fixtures.organization1);
@@ -17,13 +20,13 @@ describe('src/containers/pages/OrganizationViews/helpers/servicehooks', () => {
       };
     });
 
-    loadOrganization('organizationId', mockClass, mockActionCreator).catch(e => {
+    loadOrganization('organizationId', mockClass, mockActionCreator, signal).catch(e => {
       throw e;
     });
     await flushPromises();
 
     // calls the correct endpoint
-    expect(mockClass).toHaveBeenCalledWith(OPENSRP_ORGANIZATION_ENDPOINT);
+    expect(mockClass).toHaveBeenCalledWith(OPENSRP_ORGANIZATION_ENDPOINT, signal);
 
     // Uses the correct service method
     expect(mockRead).toHaveBeenCalledWith('organizationId');
@@ -46,14 +49,13 @@ describe('src/containers/pages/OrganizationViews/helpers/servicehooks', () => {
       'organization3Id',
       mockClass,
       fetchPractitionerRolesMock,
-      fetchPractitionersMock
-    ).catch(e => {
-      throw e;
-    });
+      fetchPractitionersMock,
+      signal
+    ).catch(err => err);
     await flushPromises();
 
     // calls the correct endpoint
-    expect(mockClass).toHaveBeenCalledWith(OPENSRP_ORG_PRACTITIONER_ENDPOINT);
+    expect(mockClass).toHaveBeenCalledWith(OPENSRP_ORG_PRACTITIONER_ENDPOINT, signal);
 
     // Uses the correct service method
     expect(mockRead).toHaveBeenCalledWith('organization3Id');
@@ -74,13 +76,13 @@ describe('src/containers/pages/OrganizationViews/helpers/servicehooks', () => {
       };
     });
 
-    loadOrganizations(mockClass, mockActionCreator).catch(e => {
+    loadOrganizations(mockClass, mockActionCreator, signal).catch(e => {
       throw e;
     });
     await flushPromises();
 
     // calls the correct endpoint
-    expect(mockClass).toHaveBeenCalledWith(OPENSRP_ORGANIZATION_ENDPOINT);
+    expect(mockClass).toHaveBeenCalledWith(OPENSRP_ORGANIZATION_ENDPOINT, signal);
 
     // Uses the correct service method
     expect(mockList).toHaveBeenCalledTimes(1);
