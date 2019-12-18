@@ -299,9 +299,7 @@ class App extends Component {
                 <Route
                   exact={true}
                   path={LOGIN_URL}
-                  render={routeProps =>
-                    WithGATracker(<OauthLogin providers={providers} {...routeProps} />)
-                  }
+                  render={routeProps => <OauthLogin providers={providers} {...routeProps} />}
                 />
                 <Route
                   exact={true}
@@ -323,7 +321,7 @@ class App extends Component {
                   // tslint:disable-next-line: jsx-no-lambda
                   component={() => {
                     const state = getOauthProviderState(store.getState());
-                    return WithGATracker(
+                    return (
                       <ConnectedLogout
                         {...{
                           logoutURL: state === OPENSRP_OAUTH_STATE ? OPENSRP_LOGOUT_URL : null,
