@@ -12,9 +12,20 @@ import App from '../App';
 
 const history = createBrowserHistory();
 
+// uncommenting this line fixes the GoogleAnalytics.initialize TypeError
+// but breaks the header part of the snapshot (looks like it's not auth'd)
+// jest.mock('../../configs/env');
+
+// manually overriding the vars doesn't seem to work (GA_CODE seems undefined, causing a TypeError)
+process.env = Object.assign(process.env, {
+  GA_CODE: 'UA-0000000-0',
+  GA_ENV: 'test',
+});
+
 describe('App', () => {
   beforeEach(() => {
     jest.resetAllMocks();
+    // manually setting process.env doesn't seem to work here either
   });
 
   it('renders without crashing', () => {
