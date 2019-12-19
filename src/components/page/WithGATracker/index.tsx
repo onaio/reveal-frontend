@@ -12,14 +12,24 @@ const username = (getUser(store.getState()) || {}).username || '';
 
 /**
  * helper function to set the Google Analytics dimension for username
+ * @param {FlexObject} user user object returned from session store
  */
 export const setGAusername = (user: FlexObject): void => {
   GoogleAnalytics.set({ username: user.username || '' });
 };
 
+/**
+ * helper function to get the current value for the username GA dimension
+ * @returns {string} the username or ''
+ */
 export const getGAusername = (): string => username;
 
-const trackPage = (page: string, options: FlexObject = {}) => {
+/**
+ * helper funcitno to execute the page view Google Analytics tracking
+ * @param {string} page the url string of the page view being tracked
+ * @param {FlexObject} options tracking options for the page view
+ */
+const trackPage = (page: string, options: FlexObject = {}): void => {
   GoogleAnalytics.set({
     page,
     ...options,
@@ -37,14 +47,22 @@ if (GA_CODE.length) {
   });
 }
 
+/**
+ * Higher Order Component (HOC) which handles Google Analytics page view tracking
+ * @param {any} WrappedComponent the component to be wrapped by the HOC component
+ * @param {FlexObject} options tracking options for the page view
+ * @returns HOC rendering the WrappedComponent
+ */
 const WithGATracker = (WrappedComponent: any, options: FlexObject = {}) => {
   const HOC = class extends Component<Props> {
     public componentDidMount() {
+      // update the username dimension
       const user = (getUser(store.getState()) || {}) as FlexObject;
       if (user.username && getGAusername() !== user.username) {
         setGAusername(user);
       }
 
+      // track the page view
       if (GA_CODE.length) {
         const page = `${this.props.location.pathname}${this.props.location.search}`;
         trackPage(page, options);
@@ -57,6 +75,7 @@ const WithGATracker = (WrappedComponent: any, options: FlexObject = {}) => {
         const currentPage = prevProps.location.pathname + location.search;
         const nextPage = location.pathname + location.search;
 
+        // track the page view here only if component didn't un/remount and the URL has updated
         if (currentPage !== nextPage) {
           trackPage(nextPage);
         }
