@@ -8,15 +8,13 @@ import { FlexObject, RouteParams } from '../../../helpers/utils';
 import store from '../../../store';
 
 type Props = RouteComponentProps<RouteParams>;
-let username = (getUser(store.getState()) || {}).username || '';
+const username = (getUser(store.getState()) || {}).username || '';
 
 /**
  * helper function to set the Google Analytics dimension for username
  */
-export const setGAusername = (): void => {
-  const user = getUser(store.getState()) || {};
-  username = user.username || '';
-  GoogleAnalytics.set({ username });
+export const setGAusername = (user: FlexObject): void => {
+  GoogleAnalytics.set({ username: user.username || '' });
 };
 
 export const getGAusername = (): string => username;
@@ -42,9 +40,9 @@ if (GA_CODE.length) {
 const WithGATracker = (WrappedComponent: any, options: FlexObject = {}) => {
   const HOC = class extends Component<Props> {
     public componentDidMount() {
-      const user = getUser(store.getState()) || {};
-      if (getGAusername() !== user.username) {
-        setGAusername();
+      const user = (getUser(store.getState()) || {}) as FlexObject;
+      if (user.username && getGAusername() !== user.username) {
+        setGAusername(user);
       }
 
       if (GA_CODE.length) {
