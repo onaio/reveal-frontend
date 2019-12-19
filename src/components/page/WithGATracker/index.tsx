@@ -40,7 +40,6 @@ if (GA_CODE.length) {
 }
 
 const WithGATracker = (WrappedComponent: any, options: FlexObject = {}) => {
-  // eslint-disable-next-line
   const HOC = class extends Component<Props> {
     public componentDidMount() {
       const user = getUser(store.getState()) || {};
@@ -49,8 +48,7 @@ const WithGATracker = (WrappedComponent: any, options: FlexObject = {}) => {
       }
 
       if (GA_CODE.length) {
-        // eslint-disable-next-line
-        const page = this.props.location.pathname + this.props.location.search;
+        const page = `${this.props.location.pathname}${this.props.location.search}`;
         trackPage(page, options);
       }
     }
