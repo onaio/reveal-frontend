@@ -21,6 +21,14 @@ export const setGAusername = (): void => {
 
 export const getGAusername = (): string => username;
 
+const trackPage = (page: string, options: FlexObject = {}) => {
+  GoogleAnalytics.set({
+    page,
+    ...options,
+  });
+  GoogleAnalytics.pageview(page);
+};
+
 if (GA_CODE.length) {
   GoogleAnalytics.initialize(GA_CODE, {
     testMode: GA_ENV === 'test',
@@ -32,14 +40,6 @@ if (GA_CODE.length) {
 }
 
 const WithGATracker = (WrappedComponent: any, options: FlexObject = {}) => {
-  const trackPage = (page: string) => {
-    GoogleAnalytics.set({
-      page,
-      ...options,
-    });
-    GoogleAnalytics.pageview(page);
-  };
-
   // eslint-disable-next-line
   const HOC = class extends Component<Props> {
     public componentDidMount() {
@@ -51,7 +51,7 @@ const WithGATracker = (WrappedComponent: any, options: FlexObject = {}) => {
       if (GA_CODE.length) {
         // eslint-disable-next-line
         const page = this.props.location.pathname + this.props.location.search;
-        trackPage(page);
+        trackPage(page, options);
       }
     }
 
