@@ -8,14 +8,15 @@ import { FlexObject, RouteParams } from '../../../helpers/utils';
 import store from '../../../store';
 
 type Props = RouteComponentProps<RouteParams>;
-const username = (getUser(store.getState()) || {}).username || '';
+let username = (getUser(store.getState()) || {}).username || '';
 
 /**
  * helper function to set the Google Analytics dimension for username
  * @param {FlexObject} user user object returned from session store
  */
 export const setGAusername = (user: FlexObject): void => {
-  GoogleAnalytics.set({ username: user.username || '' });
+  username = user.username || '';
+  GoogleAnalytics.set({ username });
 };
 
 /**
