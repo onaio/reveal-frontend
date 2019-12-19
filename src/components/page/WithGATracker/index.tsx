@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import GoogleAnalytics from 'react-ga';
 import { RouteComponentProps } from 'react-router';
 import { GA_CODE, GA_ENV } from '../../../configs/env';
-import { RouteParams } from '../../../helpers/utils';
+import { FlexObject, RouteParams } from '../../../helpers/utils';
 import store from '../../../store';
 
 type Props = RouteComponentProps<RouteParams>;
@@ -31,7 +31,7 @@ if (GA_CODE.length) {
   });
 }
 
-const WithGATracker = (WrappedComponent: any, options: any = {}) => {
+const WithGATracker = (WrappedComponent: any, options: FlexObject = {}) => {
   const trackPage = (page: string) => {
     GoogleAnalytics.set({
       page,
