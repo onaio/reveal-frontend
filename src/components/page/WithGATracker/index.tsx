@@ -26,7 +26,7 @@ export const setGAusername = (user: FlexObject): void => {
 export const getGAusername = (): string => username;
 
 /**
- * helper funcitno to execute the page view Google Analytics tracking
+ * helper function to execute the page view Google Analytics tracking
  * @param {string} page the url string of the page view being tracked
  * @param {FlexObject} options tracking options for the page view
  */
