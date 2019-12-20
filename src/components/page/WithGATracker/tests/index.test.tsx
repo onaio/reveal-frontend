@@ -64,6 +64,14 @@ describe('components/WithGATracker', () => {
 
   it('GoogleAnalytics.pageview is called with the correct arguments', () => {
     GoogleAnalytics.pageview = jest.fn();
+    trackPage('/');
+    expect(GoogleAnalytics.pageview).toBeCalledWith('/');
+    trackPage(PLAN_LIST_URL);
+    expect(GoogleAnalytics.pageview).toBeCalledWith(PLAN_LIST_URL);
+  });
+
+  it('tracks pageviews when navigating to different pages', () => {
+    GoogleAnalytics.pageview = jest.fn();
     mount(
       <Provider store={store}>
         <ConnectedRouter history={history}>
