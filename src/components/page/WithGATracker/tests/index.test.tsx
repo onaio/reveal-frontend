@@ -1,18 +1,14 @@
-import ConnectedPrivateRoute from '@onaio/connected-private-route';
 import { authenticateUser } from '@onaio/session-reducer';
 import { ConnectedRouter } from 'connected-react-router';
-import { mount, shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import { createBrowserHistory } from 'history';
 import React from 'react';
 import GoogleAnalytics from 'react-ga';
 import { Provider } from 'react-redux';
-import WithGATracker, { getGAusername, setGAusername } from '..';
-import * as lib from '..';
+import { getGAusername, setGAusername, trackPage } from '..';
 import App from '../../../../App/App';
-import { DISABLE_LOGIN_PROTECTION } from '../../../../configs/env';
 import { PLAN_LIST_URL } from '../../../../constants';
-import Home from '../../../../containers/pages/Home/Home';
 import store from '../../../../store';
 
 const history = createBrowserHistory();
@@ -79,15 +75,8 @@ describe('components/WithGATracker', () => {
         </ConnectedRouter>
       </Provider>
     );
-
     expect(GoogleAnalytics.pageview).toBeCalledWith('/');
-
     history.push(PLAN_LIST_URL);
-
     expect(GoogleAnalytics.pageview).toBeCalledWith(PLAN_LIST_URL);
-
-    // this could pass if we wrap the logout route's component with our withGATracker HOC
-    // history.push('/logout')
-    // expect(GoogleAnalytics.pageview).toBeCalledWith('/logout');
   });
 });
