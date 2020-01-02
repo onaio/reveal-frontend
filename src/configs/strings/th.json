@@ -336,7 +336,7 @@
     "description": "global nav: group of administrative pages for teams and practioners"
   },
   "MONITOR": {
-    "message": "ผู้ติดตามแผนการทำงาน",
+    "message": "รายงานแผนปฏิบัติงาน",
     "description": "global nav: group of pages relating to monitoring plans and plan reports"
   },
   "PLANNING": {
@@ -452,11 +452,11 @@
     "description": "form section header: for defining the activities in a plan"
   },
   "PLAN_END_DATE_LABEL": {
-    "message": "วันที่เริ่มทำกิจกรรม",
+    "message": "วันที่สิ้นสุดทำกิจกรรม",
     "description": "form label: for the ending date of a plan"
   },
   "PLAN_START_DATE_LABEL": {
-    "message": "วันที่สิ้นสุดการทำกิจกรรม",
+    "message": "วันที่เริ่มทำกิจกรรม",
     "description": "form label: for the starting date of a plan"
   },
   "PLAN_TITLE_LABEL": {
