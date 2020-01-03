@@ -1213,12 +1213,12 @@
   resolved "https://registry.yarnpkg.com/@onaio/element-map/-/element-map-0.0.5.tgz#6c8b55314d41fb76c1ea7538d4ee217a121936cb"
   integrity sha512-PxhKq2uR9j8fZkvIqiUMp8CvZTX358d3sWuLj5a7LRpTK/Y+ZS1L9XZp2Xb9pplHCSferZxzwjm/YfKqVr56lA==
 
-"@onaio/gatekeeper@^0.0.14":
-  version "0.0.14"
-  resolved "https://registry.yarnpkg.com/@onaio/gatekeeper/-/gatekeeper-0.0.14.tgz#bdffeb5056cbb6ecc322178792fb40d3c87bbd6e"
-  integrity sha512-znVkg3ss+pIEsbHtdg1inwN6rQcANtpwgfayswL2635jHg0nrmKYwMaOar47rqu5BZH8L8C93W4U2zszreu74w==
+"@onaio/gatekeeper@^0.0.16":
+  version "0.0.16"
+  resolved "https://registry.yarnpkg.com/@onaio/gatekeeper/-/gatekeeper-0.0.16.tgz#e4873a32d70f0491c00afee772d70ffd1da06885"
+  integrity sha512-coEZ9cFetovWr62p85v1aXLW3DjEihbZohMelGiA4+BdzQw6pB0oN3fCT9uH0vBMt3Qnc9vqTd7FsTSthb8Rvw==
   dependencies:
-    "@onaio/session-reducer" "^0.0.10"
+    "@onaio/session-reducer" "^0.0.11"
     client-oauth2 "^4.2.3"
     query-string "^6.4.2"
 
@@ -1240,6 +1240,11 @@
   version "0.0.10"
   resolved "https://registry.yarnpkg.com/@onaio/session-reducer/-/session-reducer-0.0.10.tgz#ba245827b0d52355bf0b921ff139fc56f9e80e7f"
   integrity sha512-xEwtJW9ouFBcQbaT49ihg+fApC8wFZ9KIycATMsTIXUWaMe4Dbp38Dc0w0hPwlSr+cTgCXBQMCP658GXyskDcg==
+
+"@onaio/session-reducer@^0.0.11":
+  version "0.0.11"
+  resolved "https://registry.yarnpkg.com/@onaio/session-reducer/-/session-reducer-0.0.11.tgz#4e8384ef3fc48d0bb697d698b115e8fc541100ed"
+  integrity sha512-vjesMXOggnFgJAwlUSFgGfU95TepDL/JwRo9mUPxqvlkQRT296xMbm62RZdvUMwzi4StdXXH/3Vyv3emMuWeqA==
 
 "@onaio/superset-connector@^0.0.13":
   version "0.0.13"
@@ -11492,6 +11497,11 @@ react-fast-compare@^2.0.1, react-fast-compare@^2.0.2:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/react-fast-compare/-/react-fast-compare-2.0.4.tgz#e84b4d455b0fec113e0402c329352715196f81f9"
   integrity sha512-suNP+J1VU1MWFKcyt7RtjiSWUjvidmQSlqu+eHslq+342xCbGTYmC0mEhPCOHxlW0CywylOC1u2DFAT+bv4dBw==
+
+react-ga@^2.7.0:
+  version "2.7.0"
+  resolved "https://registry.yarnpkg.com/react-ga/-/react-ga-2.7.0.tgz#24328f157f31e8cffbf4de74a3396536679d8d7c"
+  integrity sha512-AjC7UOZMvygrWTc2hKxTDvlMXEtbmA0IgJjmkhgmQQ3RkXrWR11xEagLGFGaNyaPnmg24oaIiaNPnEoftUhfXA==
 
 react-helmet@^5.2.1:
   version "5.2.1"

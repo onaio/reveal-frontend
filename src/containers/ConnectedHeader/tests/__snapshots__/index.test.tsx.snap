@@ -554,7 +554,6 @@ Object {
                 activeClassName="active"
                 aria-current="page"
                 className="nav-link"
-                onClick={[Function]}
                 to="/logout"
               >
                 Sign Out

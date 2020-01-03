@@ -8,6 +8,14 @@ export type WEBSITE_NAME = typeof WEBSITE_NAME;
 export const DOMAIN_NAME = process.env.REACT_APP_DOMAIN_NAME || 'http://localhost:3000';
 export type DOMAIN_NAME = typeof DOMAIN_NAME;
 
+/** The Tracking Code for google analytics */
+export const GA_CODE = process.env.REACT_APP_GA_CODE || '';
+export type GA_CODE = typeof GA_CODE;
+
+/** Google Analytic Dimensions */
+export const GA_ENV = process.env.REACT_APP_GA_ENV || 'dev';
+export type GA_ENV = typeof GA_ENV;
+
 /** Do you want to enable team assignment? */
 export const ENABLE_ASSIGN = process.env.REACT_APP_ENABLE_ASSIGN === 'true';
 export type ENABLE_ASSIGN = typeof ENABLE_ASSIGN;

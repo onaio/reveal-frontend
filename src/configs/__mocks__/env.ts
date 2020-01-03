@@ -31,6 +31,12 @@ export type PLAN_UUID_NAMESPACE = typeof PLAN_UUID_NAMESPACE;
 export const ACTION_UUID_NAMESPACE = '1bb3c217-af1c-4749-b3df-4f6108582e3c';
 export type ACTION_UUID_NAMESPACE = typeof ACTION_UUID_NAMESPACE;
 
+export const GA_CODE = process.env.REACT_APP_GA_CODE || '';
+export type GA_CODE = typeof GA_CODE;
+
+export const GA_ENV = process.env.REACT_APP_GA_ENV || 'dev';
+export type GA_ENV = typeof GA_ENV;
+
 export const DEFAULT_PLAN_VERSION = '2';
 export type DEFAULT_PLAN_VERSION = typeof DEFAULT_PLAN_VERSION;
 
