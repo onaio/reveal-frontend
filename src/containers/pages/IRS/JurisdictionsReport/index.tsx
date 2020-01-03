@@ -92,7 +92,7 @@ const JurisdictionReport = (props: GenericJurisdictionProps & RouteComponentProp
           fetchJurisdictionsParams = superset.getFormData(
             SUPERSET_MAX_RECORDS,
             [{ comparator: planId, operator: '==', subject: 'plan_id' }],
-            { jurisdiction_depth: true, is_virtual_jurisdiction: true, jurisdiction_name: true }
+            { jurisdiction_depth: true, jurisdiction_name: true }
           );
         }
         await service(slice, fetchJurisdictionsParams).then((result: GenericJurisdiction[]) =>
