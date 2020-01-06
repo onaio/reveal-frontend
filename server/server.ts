@@ -44,21 +44,7 @@ const filePath = path.resolve(BUILD_PATH, 'index.html');
 
 // need to add docstrings and type defs
 const renderer = (req, res) => {
-  const preloadedState = fs.readFileSync(preloadedStateFile);
-
-  req.session = preloadedState;
-
-  fs.readFile(filePath, 'utf8', (err, htmlData) => {
-    if (err) {
-      return res.status(404).end();
-    }
-    return res.send(
-      htmlData.replace(
-        '<div id="reveal-root"></div>',
-        `<div id="reveal-root"></div><script>window.__PRELOADED_STATE__=${preloadedState}</script>`
-      )
-    );
-  });
+  res.sendFile(filePath);
 };
 
 const oauthLogin = (req, res) => {
