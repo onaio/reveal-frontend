@@ -516,7 +516,7 @@
     "description": "section header: containing list of completed focus investigation plans"
   },
   "CURRENT_FOCUS_INVESTIGATION": {
-    "message": "แผนงานที่กำลังดำเนินการ",
+    "message": "แผนงานที่ดำเนินการ",
     "description": "section header: containing list of active focus investigation plans"
   },
   "FOCUS_INVESTIGATION": {
