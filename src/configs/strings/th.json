@@ -452,7 +452,7 @@
     "description": "form section header: for defining the activities in a plan"
   },
   "PLAN_END_DATE_LABEL": {
-    "message": "วันที่สิ้นสุดทำกิจกรรม",
+    "message": "วันที่สิ้นสุดการทำกิจกรรม",
     "description": "form label: for the ending date of a plan"
   },
   "PLAN_START_DATE_LABEL": {
