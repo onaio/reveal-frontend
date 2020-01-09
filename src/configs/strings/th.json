@@ -718,5 +718,113 @@
   "MOSQUITO_COLLECTION_GOAL_MEASURE": {
     "message": "จำนวนกิจกรรมการจับยุง",
     "description": ""
+  },
+  "A1_DESCRIPTION": {
+    "message": "กลุ่มบ้านแพร่เชื้อ",
+    "description": "classification status description"
+  },
+  "A1_NAME": {
+    "message": "Active",
+    "description": "classification status name"
+  },
+  "A2_DESCRIPTION": {
+    "message": "กลุ่มบ้านหยุดการแพร่เชื้อ",
+    "description": "classification status description"
+  },
+  "A2_NAME": {
+    "message": "Residual Non-Active",
+    "description": "classification status name"
+  },
+  "B1_DESCRIPTION": {
+    "message": "กลุ่มบ้านไม่มีการแพร่เชื้อ-เสี่ยงสูง",
+    "description": "classification status description"
+  },
+  "B1_NAME": {
+    "message": "Cleared Receptive",
+    "description": "classification status name"
+  },
+  "B2_DESCRIPTION": {
+    "message": "กลุ่มบ้านไม่มีการแพร่เชื้อ-เสี่ยงต่ำ",
+    "description": "classification status description"
+  },
+  "B2_NAME": {
+    "message": "Cleared Non-Receptive",
+    "description": "classification status name"
+  },
+  "CASE_TRIGGERED_TITLE": {
+    "message": "งานตอบโต้ กรณีเกิดผู้ป่วย",
+    "description": ""
+  },
+  "PLAN_STATUS_ACTIVE": {
+    "message": "กำลังดำเนินการ",
+    "description": "status indicator for plans which are currently ongoing"
+  },
+  "PLAN_STATUS_COMPLETE": {
+    "message": "ดำเนินการเสร็จแล้ว",
+    "description": "status indicator for plans which are finished and still relevant for monitoring and evaluation"
+  },
+  "PLAN_STATUS_DRAFT": {
+    "message": "ร่าง",
+    "description": "status indicator for plans which are still being defined"
+  },
+  "PLAN_STATUS_RETIRED": {
+    "message": "ยกเลิก",
+    "description": "status indicator for plans which are no longer relevant"
+  },
+  "GOAL_UNIT_ACTIVITY": {
+    "message": "แห่ง",
+    "description": "unit of meassurment for plan activity goals"
+  },
+  "GOAL_UNIT_CASE": {
+    "message": "ราย",
+    "description": "unit of meassurment for plan activity goals"
+  },
+  "GOAL_UNIT_PERCENT": {
+    "message": "%",
+    "description": "unit of meassurment for plan activity goals"
+  },
+  "GOAL_UNIT_PERSON": {
+    "message": "คน",
+    "description": "unit of meassurment for plan activity goals"
+  },
+  "GOAL_UNIT_UNKNOWN": {
+    "message": "ไม่ทราบ",
+    "description": "unit of meassurment for plan activity goals"
+  },
+  "LOW_PRIORITY_LABEL": {
+    "message": "ลำดับความสำคัญต่ำ",
+    "description": "priority level of a plan activity"
+  },
+  "MEDIUM_PRIORITY_LABEL": {
+    "message": "ลำดับความสำคัญปานกลาง",
+    "description": "priority level of a plan activity"
+  },
+  "HIGH_PRIORITIY_LABEL": {
+    "message": "ลำดับความสำคัญสูง",
+    "description": "priority level of a plan activity"
+  },
+  "VILLAGE": {
+    "message": "กลุ่มบ้าน",
+    "description": "column header: the Village in which a focus investigation takes place"
+  },
+  "ROUTINE_TITLE": {
+    "message": "งานปกติ",
+    "description": "section title: for sections containing list of Routine FI plans"
+  },
+  "ROUTINE_INVESTIGATION_TITLE": {
+    "message": "งานปกติ",
+    "description": "page title: for pages about planned investigations"
+  },
+  "NEXT": {
+    "message": "ถัดไป",
+    "description": "pagination button text: to update the table to show the next page of table rows"
+  },
+  "PREVIOUS": {
+    "message": "ก่อนหน้า",
+    "description": "pagination button text: to update the table to show the previous page of table rows"
+  },
+  "SELECT_PLACHOLDER": {
+    "message": "เลือก %s",
+    "description": "input placeholder: non-selected dropdown to select something; args: admin level being selected"
   }
 }
