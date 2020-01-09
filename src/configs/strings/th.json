@@ -826,5 +826,9 @@
   "SELECT_PLACHOLDER": {
     "message": "เลือก %s",
     "description": "input placeholder: non-selected dropdown to select something; args: admin level being selected"
+  },
+  "ORGANIZATION_NAME_TITLE": {
+    "message": "ทีมปฏิบัติงาน",
+    "description": "Organization list column header"
   }
 }

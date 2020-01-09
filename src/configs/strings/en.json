@@ -838,5 +838,9 @@
   "PREVIOUS": {
     "message": "Previous",
     "description": "pagination button text: to update the table to show the previous page of table rows"
+  },
+  "ORGANIZATION_NAME_TITLE": {
+    "message": "Team Name",
+    "description": "Organization list column header"
   }
 }

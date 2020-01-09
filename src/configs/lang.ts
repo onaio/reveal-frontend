@@ -402,3 +402,5 @@ export const PREVIOUS = translate('PREVIOUS', 'Previous');
 // TODO ? - do the below 2 belong here or in a settings file
 export const ORGANIZATION_LABEL = TEAM;
 export const ORGANIZATIONS_LABEL = TEAMS;
+
+export const ORGANIZATION_NAME_TITLE = translate('ORGANIZATION_NAME_TITLE', 'Team Name');

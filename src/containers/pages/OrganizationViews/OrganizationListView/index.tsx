@@ -21,9 +21,9 @@ import {
   ACTIONS,
   HOME,
   IDENTIFIER,
-  NAME,
   NEW_TEAM,
   ORGANIZATION_LABEL,
+  ORGANIZATION_NAME_TITLE,
   ORGANIZATIONS_LABEL,
   SEARCH,
   VIEW,
@@ -113,7 +113,7 @@ const OrganizationListView = (props: OrgsListViewPropsType) => {
         </Link>,
       ];
     }),
-    headerItems: [`${ORGANIZATION_LABEL} ${NAME}`, `${IDENTIFIER}`, `${ACTIONS}`],
+    headerItems: [`${ORGANIZATION_NAME_TITLE}`, `${IDENTIFIER}`, `${ACTIONS}`],
     tableClass: 'table table-bordered',
   };
 
@@ -141,9 +141,7 @@ const OrganizationListView = (props: OrgsListViewPropsType) => {
       <HeaderBreadcrumb {...breadcrumbProps} />
       <Row id="header-row">
         <Col className="xs">
-          <h2 className="mb-3 mt-5 page-title">{`${ORGANIZATIONS_LABEL} (${
-            organizations.length
-          })`}</h2>
+          <h2 className="mb-3 mt-5 page-title">{`${ORGANIZATIONS_LABEL} (${organizations.length})`}</h2>
         </Col>
         <Col className="xs">
           <LinkAsButton {...linkAsButtonProps} />
