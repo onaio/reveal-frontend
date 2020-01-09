@@ -158,9 +158,6 @@ const mapDispatchToProps = {
 
 // connect presentational planCompletion to store
 /** the connected Plan completion */
-const ConnectedPlanCompletion = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(PlanCompletion);
+const ConnectedPlanCompletion = connect(mapStateToProps, mapDispatchToProps)(PlanCompletion);
 
 export default ConnectedPlanCompletion;

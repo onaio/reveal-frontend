@@ -2249,9 +2249,6 @@ const mapDispatchToProps = {
 };
 
 /** Create connected IrsPlan */
-const ConnectedIrsPlan = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(IrsPlan);
+const ConnectedIrsPlan = connect(mapStateToProps, mapDispatchToProps)(IrsPlan);
 
 export default ConnectedIrsPlan;

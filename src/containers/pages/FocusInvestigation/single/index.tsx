@@ -162,9 +162,10 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
       await supersetService(SUPERSET_GOALS_SLICE, goalsParams).then((result2: Goal[]) =>
         fetchGoalsActionCreator(result2)
       );
-      await supersetService(SUPERSET_JURISDICTIONS_SLICE, jurisdictionsParams).then(
-        (result: Jurisdiction[]) => fetchJurisdictionsActionCreator(result)
-      );
+      await supersetService(
+        SUPERSET_JURISDICTIONS_SLICE,
+        jurisdictionsParams
+      ).then((result: Jurisdiction[]) => fetchJurisdictionsActionCreator(result));
     }
   }
   /** Handles form submission event */
@@ -491,9 +492,6 @@ const mapDispatchToProps = {
 /** create connected component */
 
 /** Connected SingleFI component */
-const ConnectedSingleFI = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(SingleFI);
+const ConnectedSingleFI = connect(mapStateToProps, mapDispatchToProps)(SingleFI);
 
 export default ConnectedSingleFI;

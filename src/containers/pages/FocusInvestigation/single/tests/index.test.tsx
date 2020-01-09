@@ -254,7 +254,11 @@ describe('containers/pages/SingleFI', () => {
       ],
     ];
 
-    const callList = [[0, jurisdictionParams], [3, goalsParams], [1, jurisdictionParams]];
+    const callList = [
+      [0, jurisdictionParams],
+      [3, goalsParams],
+      [1, jurisdictionParams],
+    ];
     expect(supersetMock).toHaveBeenCalledTimes(3);
     expect((superset.getFormData as any).mock.calls).toEqual(getFormDataCallList);
     expect(supersetMock.mock.calls).toEqual(callList);

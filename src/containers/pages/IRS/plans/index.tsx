@@ -147,9 +147,6 @@ const mapStateToProps = (state: Partial<Store>): DispatchedStateProps => {
 const mapDispatchToProps = { fetchPlans: fetchIRSPlans };
 
 /** Connected ActiveFI component */
-const ConnectedIRSPlansList = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(IRSPlansList);
+const ConnectedIRSPlansList = connect(mapStateToProps, mapDispatchToProps)(IRSPlansList);
 
 export default ConnectedIRSPlansList;

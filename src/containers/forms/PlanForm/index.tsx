@@ -241,7 +241,8 @@ const PlanForm = (props: PlanFormProps) => {
               const nameTitle = getNameTitle(e, values);
               if (
                 fieldsThatChangePlanTitle.includes(target.name) ||
-                (!values.title || values.title === '')
+                !values.title ||
+                values.title === ''
               ) {
                 setFieldValue('title', nameTitle[1]);
               }
@@ -710,8 +711,9 @@ const PlanForm = (props: PlanFormProps) => {
                                 <InputGroupText>
                                   {
                                     goalUnitDisplay[
-                                      getGoalUnitFromActionCode(values.activities[index]
-                                        .actionCode as PlanActionCodesType)
+                                      getGoalUnitFromActionCode(
+                                        values.activities[index].actionCode as PlanActionCodesType
+                                      )
                                     ]
                                   }
                                 </InputGroupText>
