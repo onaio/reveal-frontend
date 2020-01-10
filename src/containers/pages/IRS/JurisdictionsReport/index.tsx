@@ -21,7 +21,8 @@ import {
   SUPERSET_IRS_REPORTING_PLANS_SLICE,
   SUPERSET_MAX_RECORDS,
 } from '../../../../configs/env';
-import { HOME, HOME_URL, IRS_REPORTING_TITLE, REPORT_IRS_PLAN_URL } from '../../../../constants';
+import { HOME, IRS_REPORTING_TITLE } from '../../../../configs/lang';
+import { HOME_URL, REPORT_IRS_PLAN_URL } from '../../../../constants';
 import '../../../../helpers/tables.css';
 import { FlexObject, RouteParams } from '../../../../helpers/utils';
 import supersetFetch from '../../../../services/superset';

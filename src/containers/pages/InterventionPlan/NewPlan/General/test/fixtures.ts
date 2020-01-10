@@ -36,7 +36,7 @@ export const planFormProps = {
         'Visit all residential structures (100%) within a 1 km radius of a confirmed index case and test each registered person',
       actionIdentifier: '',
       actionReason: 'Investigation',
-      actionTitle: 'Blood screening',
+      actionTitle: 'Blood Screening',
       goalDescription:
         'Visit all residential structures (100%) within a 1 km radius of a confirmed index case and test each registered person',
       goalDue: parseISO('2017-07-20T19:31:00.000Z'),
@@ -157,7 +157,7 @@ export const planFormProps = {
           'Visit all residential structures (100%) within a 1 km radius of a confirmed index case and test each registered person',
         actionIdentifier: '',
         actionReason: 'Investigation',
-        actionTitle: 'Blood screening',
+        actionTitle: 'Blood Screening',
         goalDescription:
           'Visit all residential structures (100%) within a 1 km radius of a confirmed index case and test each registered person',
         goalDue: parseISO('2017-07-20T19:31:00.000Z'),

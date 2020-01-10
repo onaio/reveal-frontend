@@ -3,7 +3,7 @@ import { createBrowserHistory } from 'history';
 import React from 'react';
 import { Router } from 'react-router';
 import SelectComponent from '../';
-import { PLAN_SELECT_PLACEHOLDER } from '../../../constants';
+import { PLAN_SELECT_PLACEHOLDER } from '../../../configs/lang';
 import * as fixtures from '../../../store/ducks/tests/fixtures';
 
 const history = createBrowserHistory();

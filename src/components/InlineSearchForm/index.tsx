@@ -2,7 +2,7 @@
 import { Field, Form, Formik } from 'formik';
 import React from 'react';
 import { Button, FormGroup } from 'reactstrap';
-import { SEARCH } from '../../constants';
+import { SEARCH } from '../../configs/lang';
 
 /** Interface describing the form fields data */
 export interface FieldProps {

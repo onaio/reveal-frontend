@@ -1,7 +1,7 @@
 import moment from 'moment';
 import React from 'react';
 import { Badge } from 'reactstrap';
-import { NEW_TITLE } from '../../constants';
+import { NEW_TITLE } from '../../configs/lang';
 
 /** interface for NewRecordBadge props */
 interface NewRecordBadgeProps {

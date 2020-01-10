@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
+import { format } from 'util';
 import GisidaWrapper from '../../../../components/GisidaWrapper';
 import NotFound from '../../../../components/NotFound';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
@@ -20,18 +21,17 @@ import {
   SUPERSET_JURISDICTIONS_SLICE,
   SUPERSET_MAX_RECORDS,
 } from '../../../../configs/env';
-import { indicatorThresholdsIRS } from '../../../../configs/settings';
 import {
   HOME,
-  HOME_URL,
   IRS_REPORTING_TITLE,
   LEGEND_LABEL,
   MAP_LOAD_ERROR,
-  OF,
+  NUMERATOR_OF_DENOMINATOR_UNITS,
   PROGRESS,
-  REPORT_IRS_PLAN_URL,
-  STRUCTURE,
-} from '../../../../constants';
+  STRUCTURES,
+} from '../../../../configs/lang';
+import { indicatorThresholdsIRS } from '../../../../configs/settings';
+import { HOME_URL, REPORT_IRS_PLAN_URL } from '../../../../constants';
 import ProgressBar from '../../../../helpers/ProgressBar';
 import { RouteParams } from '../../../../helpers/utils';
 import supersetFetch from '../../../../services/superset';
@@ -200,7 +200,7 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
     return <NotFound />;
   }
 
-  if (loading === true || (!focusArea || !jurisdiction || !plan || !structures)) {
+  if (loading === true || !focusArea || !jurisdiction || !plan || !structures) {
     return <Loading />;
   }
 
@@ -298,7 +298,13 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
                     value={row.value}
                   />
                   <p className="indicator-breakdown">
-                    {PROGRESS}: {row.numerator} {OF} {row.denominator} {`${row.unit || STRUCTURE}s`}{' '}
+                    {PROGRESS}:{' '}
+                    {format(
+                      NUMERATOR_OF_DENOMINATOR_UNITS,
+                      row.numerator,
+                      row.denominator,
+                      row.unit || STRUCTURES
+                    )}{' '}
                     ({row.value}%)
                   </p>
                 </div>

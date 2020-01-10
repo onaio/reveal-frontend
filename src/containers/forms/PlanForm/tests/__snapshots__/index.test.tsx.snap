@@ -114,19 +114,19 @@ exports[`containers/forms/PlanForm - Edit renders activity fields correctly: act
     key="low-priority"
     value="low-priority"
   >
-    low-priority
+    Low Priority
   </option>
   <option
     key="medium-priority"
     value="medium-priority"
   >
-    medium-priority
+    Medium Priority
   </option>
   <option
     key="high-priority"
     value="high-priority"
   >
-    high-priority
+    High Priority
   </option>
 </select>
 `;
@@ -293,19 +293,19 @@ exports[`containers/forms/PlanForm - Edit renders activity fields correctly: act
     key="low-priority"
     value="low-priority"
   >
-    low-priority
+    Low Priority
   </option>
   <option
     key="medium-priority"
     value="medium-priority"
   >
-    medium-priority
+    Medium Priority
   </option>
   <option
     key="high-priority"
     value="high-priority"
   >
-    high-priority
+    High Priority
   </option>
 </select>
 `;
@@ -1038,19 +1038,19 @@ exports[`containers/forms/PlanForm renders activity fields correctly: FI activit
     key="low-priority"
     value="low-priority"
   >
-    low-priority
+    Low Priority
   </option>
   <option
     key="medium-priority"
     value="medium-priority"
   >
-    medium-priority
+    Medium Priority
   </option>
   <option
     key="high-priority"
     value="high-priority"
   >
-    high-priority
+    High Priority
   </option>
 </select>
 `;
@@ -1386,19 +1386,19 @@ exports[`containers/forms/PlanForm renders activity fields correctly: FI activit
     key="low-priority"
     value="low-priority"
   >
-    low-priority
+    Low Priority
   </option>
   <option
     key="medium-priority"
     value="medium-priority"
   >
-    medium-priority
+    Medium Priority
   </option>
   <option
     key="high-priority"
     value="high-priority"
   >
-    high-priority
+    High Priority
   </option>
 </select>
 `;
@@ -1670,7 +1670,7 @@ exports[`containers/forms/PlanForm renders activity fields correctly: FI activit
   onChange={[Function]}
   required={true}
   type="text"
-  value="Blood screening"
+  value="Blood Screening"
 />
 `;
 
@@ -1734,19 +1734,19 @@ exports[`containers/forms/PlanForm renders activity fields correctly: FI activit
     key="low-priority"
     value="low-priority"
   >
-    low-priority
+    Low Priority
   </option>
   <option
     key="medium-priority"
     value="medium-priority"
   >
-    medium-priority
+    Medium Priority
   </option>
   <option
     key="high-priority"
     value="high-priority"
   >
-    high-priority
+    High Priority
   </option>
 </select>
 `;
@@ -2082,19 +2082,19 @@ exports[`containers/forms/PlanForm renders activity fields correctly: FI activit
     key="low-priority"
     value="low-priority"
   >
-    low-priority
+    Low Priority
   </option>
   <option
     key="medium-priority"
     value="medium-priority"
   >
-    medium-priority
+    Medium Priority
   </option>
   <option
     key="high-priority"
     value="high-priority"
   >
-    high-priority
+    High Priority
   </option>
 </select>
 `;
@@ -2430,19 +2430,19 @@ exports[`containers/forms/PlanForm renders activity fields correctly: FI activit
     key="low-priority"
     value="low-priority"
   >
-    low-priority
+    Low Priority
   </option>
   <option
     key="medium-priority"
     value="medium-priority"
   >
-    medium-priority
+    Medium Priority
   </option>
   <option
     key="high-priority"
     value="high-priority"
   >
-    high-priority
+    High Priority
   </option>
 </select>
 `;
@@ -2778,19 +2778,19 @@ exports[`containers/forms/PlanForm renders activity fields correctly: FI activit
     key="low-priority"
     value="low-priority"
   >
-    low-priority
+    Low Priority
   </option>
   <option
     key="medium-priority"
     value="medium-priority"
   >
-    medium-priority
+    Medium Priority
   </option>
   <option
     key="high-priority"
     value="high-priority"
   >
-    high-priority
+    High Priority
   </option>
 </select>
 `;
@@ -3126,19 +3126,19 @@ exports[`containers/forms/PlanForm renders activity fields correctly: FI activit
     key="low-priority"
     value="low-priority"
   >
-    low-priority
+    Low Priority
   </option>
   <option
     key="medium-priority"
     value="medium-priority"
   >
-    medium-priority
+    Medium Priority
   </option>
   <option
     key="high-priority"
     value="high-priority"
   >
-    high-priority
+    High Priority
   </option>
 </select>
 `;
@@ -3474,19 +3474,19 @@ exports[`containers/forms/PlanForm renders activity fields correctly: IRS activi
     key="low-priority"
     value="low-priority"
   >
-    low-priority
+    Low Priority
   </option>
   <option
     key="medium-priority"
     value="medium-priority"
   >
-    medium-priority
+    Medium Priority
   </option>
   <option
     key="high-priority"
     value="high-priority"
   >
-    high-priority
+    High Priority
   </option>
 </select>
 `;

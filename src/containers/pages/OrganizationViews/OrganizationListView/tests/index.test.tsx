@@ -6,11 +6,8 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
-import {
-  OPENSRP_ORGANIZATION_ENDPOINT,
-  ORGANIZATIONS_LABEL,
-  ORGANIZATIONS_LIST_URL,
-} from '../../../../../constants';
+import { ORGANIZATIONS_LABEL } from '../../../../../configs/lang';
+import { OPENSRP_ORGANIZATION_ENDPOINT, ORGANIZATIONS_LIST_URL } from '../../../../../constants';
 import store from '../../../../../store';
 import {
   fetchOrganizations,

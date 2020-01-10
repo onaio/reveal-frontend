@@ -1,5 +1,5 @@
 import { Feature, Geometry } from 'geojson';
-import { get, keyBy, values } from 'lodash';
+import { keyBy, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
 import SeamlessImmutable from 'seamless-immutable';
 import { FeatureCollection, wrapFeatureCollection } from '../../../helpers/utils';

@@ -7,11 +7,8 @@ import Helmet from 'react-helmet';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import ConnectedPractitionersListView, { PractitionersListView } from '..';
-import {
-  OPENSRP_PRACTITIONER_ENDPOINT,
-  PRACTITIONERS,
-  PRACTITIONERS_LIST_URL,
-} from '../../../../../constants';
+import { PRACTITIONERS } from '../../../../../configs/lang';
+import { OPENSRP_PRACTITIONER_ENDPOINT, PRACTITIONERS_LIST_URL } from '../../../../../constants';
 import store from '../../../../../store';
 import * as practitionerDucks from '../../../../../store/ducks/opensrp/practitioners';
 import * as fixtures from '../../../../../store/ducks/tests/fixtures';

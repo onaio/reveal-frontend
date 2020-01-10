@@ -1,17 +1,12 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import { mount, shallow } from 'enzyme';
-import toJson from 'enzyme-to-json';
 import { createBrowserHistory } from 'history';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
-import {
-  EDIT_ORGANIZATION_URL,
-  EDIT_TEAM,
-  NEW_TEAM,
-  OPENSRP_ORGANIZATION_ENDPOINT,
-} from '../../../../../constants';
+import { EDIT_TEAM, NEW_TEAM } from '../../../../../configs/lang';
+import { EDIT_ORGANIZATION_URL, OPENSRP_ORGANIZATION_ENDPOINT } from '../../../../../constants';
 import store from '../../../../../store';
 import * as orgDucks from '../../../../../store/ducks/opensrp/organizations';
 import * as fixtures from '../../../../../store/ducks/tests/fixtures';

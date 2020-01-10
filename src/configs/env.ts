@@ -4,6 +4,10 @@
 export const WEBSITE_NAME = process.env.REACT_APP_WEBSITE_NAME || 'Reveal';
 export type WEBSITE_NAME = typeof WEBSITE_NAME;
 
+/** The website language */
+export const LANGUAGE = process.env.REACT_APP_LANGUAGE || 'en';
+export type LANGUAGE = typeof LANGUAGE;
+
 /** The domain name */
 export const DOMAIN_NAME = process.env.REACT_APP_DOMAIN_NAME || 'http://localhost:3000';
 export type DOMAIN_NAME = typeof DOMAIN_NAME;

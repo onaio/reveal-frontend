@@ -10,18 +10,17 @@ import {
   ACTIVE,
   NAME,
   NO,
-  OPENSRP_ORGANIZATION_ENDPOINT,
   ORGANIZATION_CREATED_SUCCESSFULLY,
   ORGANIZATION_EDITED_SUCCESSFULLY,
   ORGANIZATION_LABEL,
-  ORGANIZATIONS_LIST_URL,
   REQUIRED,
   SAVE,
   SAVE_TEAM,
   SAVING,
   TEAM,
   YES,
-} from '../../../constants';
+} from '../../../configs/lang';
+import { OPENSRP_ORGANIZATION_ENDPOINT, ORGANIZATIONS_LIST_URL } from '../../../constants';
 import { generateNameSpacedUUID, growl } from '../../../helpers/utils';
 import { OpenSRPService } from '../../../services/opensrp';
 

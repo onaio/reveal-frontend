@@ -3,6 +3,7 @@ import { keys } from 'lodash';
 import * as React from 'react';
 import { CellInfo } from 'react-table';
 import { GREEN, ORANGE, RED, WHITE, YELLOW } from '../colors';
+import { PERSONS, STRUCTURES } from '../configs/lang';
 import {
   GREEN_THRESHOLD,
   IndicatorThresholds,
@@ -12,7 +13,7 @@ import {
   YELLOW_THRESHOLD,
   ZERO,
 } from '../configs/settings';
-import { BLOOD_SCREENING_CODE, CASE_CONFIRMATION_CODE, PERSONS, STRUCTURES } from '../constants';
+import { BLOOD_SCREENING_CODE, CASE_CONFIRMATION_CODE } from '../constants';
 import { FlexObject, percentage, roundToPrecision } from '../helpers/utils';
 import { Goal } from '../store/ducks/goals';
 

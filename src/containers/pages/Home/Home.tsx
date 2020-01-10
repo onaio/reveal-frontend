@@ -5,16 +5,14 @@ import { Link } from 'react-router-dom';
 import { Button, Col, Row } from 'reactstrap';
 import { ENABLE_FI, ENABLE_IRS, ENABLE_TEAMS } from '../../../configs/env';
 import {
-  FI_URL,
   FOCUS_INVESTIGATION,
   GET_STARTED_MESSAGE,
-  INTERVENTION_IRS_URL,
+  HOME_TITLE,
   IRS_TITLE,
   ORGANIZATIONS_LABEL,
-  ORGANIZATIONS_LIST_URL,
   WELCOME_TO_REVEAL,
-} from '../../../constants';
-import { HOME_TITLE } from '../../../constants';
+} from '../../../configs/lang';
+import { FI_URL, INTERVENTION_IRS_URL, ORGANIZATIONS_LIST_URL } from '../../../constants';
 import './Home.css';
 
 class Home extends React.Component<{}, {}> {

@@ -2,15 +2,8 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Col, Row } from 'reactstrap';
 import HeaderBreadcrumb from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
-import {
-  COUNTRY,
-  CREATE_NEW_IRS_PLAN,
-  HOME,
-  HOME_URL,
-  INTERVENTION_IRS_URL,
-  IRS_PLANS,
-  NEW_IRS_PLAN_URL,
-} from '../../../../../constants';
+import { COUNTRY, CREATE_NEW_IRS_PLAN, HOME, IRS_PLANS } from '../../../../../configs/lang';
+import { HOME_URL, INTERVENTION_IRS_URL, NEW_IRS_PLAN_URL } from '../../../../../constants';
 import { InterventionType } from '../../../../../store/ducks/plans';
 import PlanForm, { defaultInitialValues, PlanFormProps } from '../../../../forms/PlanForm';
 import { getFormActivities, IRSActivities } from '../../../../forms/PlanForm/helpers';

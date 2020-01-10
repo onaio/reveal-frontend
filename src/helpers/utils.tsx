@@ -5,8 +5,8 @@ import { Color } from 'csstype';
 import { GisidaMap } from 'gisida';
 import { findKey, uniq } from 'lodash';
 import { FitBoundsOptions, Layer, LngLatBoundsLike, LngLatLike, Map, Style } from 'mapbox-gl';
-import React from 'react';
 import { MouseEvent } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { CellInfo, Column } from 'react-table';
 import { toast, ToastOptions } from 'react-toastify';
@@ -16,9 +16,9 @@ import { TASK_YELLOW } from '../colors';
 import DrillDownTableLinkedCell from '../components/DrillDownTableLinkedCell';
 import NewRecordBadge from '../components/NewRecordBadge';
 import { DIGITAL_GLOBE_CONNECT_ID, ONADATA_OAUTH_STATE, OPENSRP_OAUTH_STATE } from '../configs/env';
+import { ACTION, FOCUS_AREA_HEADER, NAME } from '../configs/lang';
 import { imgArr, locationHierarchy, LocationItem } from '../configs/settings';
 import {
-  ACTION,
   BEDNET_DISTRIBUTION_CODE,
   BLOOD_SCREENING_CODE,
   CASE_CONFIRMATION_CODE,
@@ -27,12 +27,10 @@ import {
   FI_FILTER_URL,
   FI_SINGLE_MAP_URL,
   FI_SINGLE_URL,
-  FOCUS_AREA_HEADER,
   IRS_CODE,
   LARVAL_DIPPING_CODE,
   MAP_ID,
   MOSQUITO_COLLECTION_CODE,
-  NAME,
   RACD_REGISTER_FAMILY_CODE,
 } from '../constants';
 import { Plan } from '../store/ducks/plans';
@@ -461,7 +459,7 @@ export type UpdateType<T extends any, Y> = T & Y;
 
 /** Interface for FeatureCollection */
 export interface FeatureCollection<T> {
-  type: FEATURE_COLLECTION;
+  type: typeof FEATURE_COLLECTION;
   features: T[];
 }
 /** creates an object that wraps geojson features around

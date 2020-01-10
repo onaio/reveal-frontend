@@ -11,17 +11,16 @@ import {
   ACTIVE,
   NAME,
   NO,
-  OPENSRP_PRACTITIONER_ENDPOINT,
   PRACTITIONER_CREATED_SUCCESSFULLY,
   PRACTITIONER_EDITED_SUCCESSFULLY,
-  PRACTITIONERS_LIST_URL,
   REQUIRED,
   SAVE_PRACTITIONER,
   SAVING,
   SELECT_USERNAME,
   USERNAME,
   YES,
-} from '../../../constants';
+} from '../../../configs/lang';
+import { OPENSRP_PRACTITIONER_ENDPOINT, PRACTITIONERS_LIST_URL } from '../../../constants';
 import { generateNameSpacedUUID, growl } from '../../../helpers/utils';
 import { OpenSRPService } from '../../../services/opensrp';
 import UserIdSelect, { Option } from './UserIdSelect';

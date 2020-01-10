@@ -9,18 +9,17 @@ import { Store } from 'redux';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
 import {
-  ASSIGN_PLAN_URL,
   ASSIGN_PLANS,
   END_DATE,
   HOME,
-  HOME_URL,
   INTERVENTION,
   NO_PLANS_LOADED_MESSAGE,
   PLAN_STATUS,
-  REPORT_IRS_PLAN_URL,
   START_DATE,
   TITLE,
-} from '../../../../constants';
+} from '../../../../configs/lang';
+import { planStatusDisplay } from '../../../../configs/settings';
+import { ASSIGN_PLAN_URL, HOME_URL, REPORT_IRS_PLAN_URL } from '../../../../constants';
 import { OpenSRPService } from '../../../../services/opensrp';
 import IRSPlansReducer, {
   reducerName as IRSPlansReducerName,
@@ -104,7 +103,7 @@ const IRSAssignmentPlansList = (props: PlanAssignmentsListProps) => {
         planObj.plan_intervention_type,
         planObj.plan_effective_period_start,
         planObj.plan_effective_period_end,
-        planObj.plan_status,
+        planStatusDisplay[planObj.plan_status] || planObj.plan_status,
       ];
     }),
     headerItems: [TITLE, INTERVENTION, START_DATE, END_DATE, PLAN_STATUS],

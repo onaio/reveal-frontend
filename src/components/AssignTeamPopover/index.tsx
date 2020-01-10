@@ -1,6 +1,6 @@
 import React, { MouseEvent } from 'react';
 import { Button, Form, FormGroup, Popover, PopoverBody, PopoverHeader } from 'reactstrap';
-import { CLEAR, NO_TEAMS_LOADED_MESSAGE, SAVE, SELECT_TEAMS_TO_ASSIGN } from '../../constants';
+import { CLEAR, NO_TEAMS_LOADED_MESSAGE, SAVE, SELECT_TEAMS_TO_ASSIGN } from '../../configs/lang';
 import OrganizationSelect from '../../containers/forms/OrganizationSelect';
 import { stopPropagationAndPreventDefault } from '../../helpers/utils';
 import { Organization } from '../../store/ducks/opensrp/organizations';
