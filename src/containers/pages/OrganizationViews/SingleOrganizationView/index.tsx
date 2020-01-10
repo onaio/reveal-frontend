@@ -281,6 +281,9 @@ const mapDispatchToProps = {
 };
 
 /** The connected component */
-const ConnectedSingleOrgView = connect(mapStateToProps, mapDispatchToProps)(SingleOrganizationView);
+const ConnectedSingleOrgView = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SingleOrganizationView);
 
 export default ConnectedSingleOrgView;
