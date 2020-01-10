@@ -177,10 +177,9 @@ class SingleActiveFIMap extends React.Component<
       const jurisdictionsParams = superset.getFormData(SUPERSET_MAX_RECORDS, [
         { comparator: plan.jurisdiction_id, operator: '==', subject: 'jurisdiction_id' },
       ]);
-      await supersetService(
-        SUPERSET_JURISDICTIONS_SLICE,
-        jurisdictionsParams
-      ).then((result: Jurisdiction[]) => fetchJurisdictionsActionCreator(result));
+      await supersetService(SUPERSET_JURISDICTIONS_SLICE, jurisdictionsParams).then(
+        (result: Jurisdiction[]) => fetchJurisdictionsActionCreator(result)
+      );
       /** define superset params for filtering by plan_id */
       const supersetParams = superset.getFormData(SUPERSET_MAX_RECORDS, [
         { comparator: plan.plan_id, operator: '==', subject: 'plan_id' },
@@ -498,6 +497,9 @@ const mapDispatchToProps = {
 };
 
 /** Create connected SingleActiveFIMAP */
-const ConnectedMapSingleFI = connect(mapStateToProps, mapDispatchToProps)(SingleActiveFIMap);
+const ConnectedMapSingleFI = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SingleActiveFIMap);
 
 export default ConnectedMapSingleFI;

@@ -82,10 +82,9 @@ const JurisdictionReport = (props: GenericJurisdictionProps & RouteComponentProp
         ]);
       }
 
-      await service(
-        SUPERSET_IRS_REPORTING_PLANS_SLICE,
-        fetchPlansParams
-      ).then((result: IRSPlan[]) => fetchPlans(result));
+      await service(SUPERSET_IRS_REPORTING_PLANS_SLICE, fetchPlansParams).then(
+        (result: IRSPlan[]) => fetchPlans(result)
+      );
 
       slices.forEach(async slice => {
         let fetchJurisdictionsParams: SupersetFormData | null = null;

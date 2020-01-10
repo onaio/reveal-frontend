@@ -711,9 +711,8 @@ const PlanForm = (props: PlanFormProps) => {
                                 <InputGroupText>
                                   {
                                     goalUnitDisplay[
-                                      getGoalUnitFromActionCode(
-                                        values.activities[index].actionCode as PlanActionCodesType
-                                      )
+                                      getGoalUnitFromActionCode(values.activities[index]
+                                        .actionCode as PlanActionCodesType)
                                     ]
                                   }
                                 </InputGroupText>

@@ -261,6 +261,9 @@ const mapDispatchToProps = {
   fetchPlansActionCreator: fetchPlans,
 };
 
-const ConnectedIrsPlans = connect(mapStateToProps, mapDispatchToProps)(IrsPlans);
+const ConnectedIrsPlans = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(IrsPlans);
 
 export default ConnectedIrsPlans;

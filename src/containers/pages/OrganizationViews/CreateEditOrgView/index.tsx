@@ -130,6 +130,9 @@ const mapDispatchToProps = {
   fetchOrganizationsCreator: fetchOrganizations,
 };
 
-const ConnectedCreateEditOrgView = connect(mapStateToProps, mapDispatchToProps)(CreateEditOrgView);
+const ConnectedCreateEditOrgView = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CreateEditOrgView);
 
 export default ConnectedCreateEditOrgView;

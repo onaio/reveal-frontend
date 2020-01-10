@@ -135,6 +135,9 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
 const mapDispatchToProps = { fetchPlan: addPlanDefinition };
 
 /** Connected ActiveFI component */
-const ConnectedUpdatePlan = connect(mapStateToProps, mapDispatchToProps)(UpdatePlan);
+const ConnectedUpdatePlan = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(UpdatePlan);
 
 export default ConnectedUpdatePlan;
