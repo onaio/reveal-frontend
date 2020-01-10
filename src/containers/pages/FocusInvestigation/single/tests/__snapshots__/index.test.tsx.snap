@@ -1101,7 +1101,7 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
                       >
                         <LinkAsButton
                           classNameProp="focus-investigation btn btn-primary float-right mt-5"
-                          text="Add Plan"
+                          text="Add Focus Investigation"
                           to="/plans/new"
                         >
                           <Link
@@ -1114,7 +1114,7 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
                               href="/plans/new"
                               onClick={[Function]}
                             >
-                              Add Plan
+                              Add Focus Investigation
                             </a>
                           </Link>
                         </LinkAsButton>
@@ -2986,6 +2986,7 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
                                                 rotation={null}
                                                 size={null}
                                                 spin={false}
+                                                swapOpacity={false}
                                                 symbol={false}
                                                 title=""
                                                 transform={null}
@@ -7267,7 +7268,7 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
                   >
                     <LinkAsButton
                       classNameProp="focus-investigation btn btn-primary float-right mt-5"
-                      text="Add Plan"
+                      text="Add Focus Investigation"
                       to="/plans/new"
                     >
                       <Link
@@ -7280,7 +7281,7 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
                           href="/plans/new"
                           onClick={[Function]}
                         >
-                          Add Plan
+                          Add Focus Investigation
                         </a>
                       </Link>
                     </LinkAsButton>
@@ -9152,6 +9153,7 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
                                             rotation={null}
                                             size={null}
                                             spin={false}
+                                            swapOpacity={false}
                                             symbol={false}
                                             title=""
                                             transform={null}
@@ -10725,7 +10727,7 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
                   >
                     <LinkAsButton
                       classNameProp="focus-investigation btn btn-primary float-right mt-5"
-                      text="Add Plan"
+                      text="Add Focus Investigation"
                       to="/plans/new"
                     >
                       <Link
@@ -10738,7 +10740,7 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
                           href="/plans/new"
                           onClick={[Function]}
                         >
-                          Add Plan
+                          Add Focus Investigation
                         </a>
                       </Link>
                     </LinkAsButton>
