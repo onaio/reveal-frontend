@@ -7,16 +7,9 @@ import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
+import { HOME, PLANS, UPDATE_PLAN } from '../../../../configs/lang';
 import { PlanDefinition } from '../../../../configs/settings';
-import {
-  HOME,
-  HOME_URL,
-  NEW_PLAN_URL,
-  OPENSRP_PLANS,
-  PLAN_LIST_URL,
-  PLANS,
-  UPDATE_PLAN,
-} from '../../../../constants';
+import { HOME_URL, NEW_PLAN_URL, OPENSRP_PLANS, PLAN_LIST_URL } from '../../../../constants';
 import { OpenSRPService } from '../../../../services/opensrp';
 import planDefinitionReducer, {
   addPlanDefinition,

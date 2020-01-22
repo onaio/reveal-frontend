@@ -13,6 +13,7 @@ import { CellInfo, Column } from 'react-table';
 import 'react-table/react-table.css';
 import { Button, Col, Form, FormGroup, Input, Row, Table } from 'reactstrap';
 import { Store } from 'redux';
+import { format } from 'util';
 import DrillDownTableLinkedCell from '../../../../components/DrillDownTableLinkedCell';
 import LinkAsButton from '../../../../components/LinkAsButton';
 import NewRecordBadge from '../../../../components/NewRecordBadge';
@@ -22,29 +23,38 @@ import HeaderBreadCrumb, {
 import Loading from '../../../../components/page/Loading';
 import NullDataTable from '../../../../components/Table/NullDataTable';
 import { SUPERSET_PLANS_SLICE } from '../../../../configs/env';
-import { FIClassifications, locationHierarchy } from '../../../../configs/settings';
 import {
   CASE_CLASSIFICATION_HEADER,
   CASE_NOTIF_DATE_HEADER,
-  CASE_TRIGGERED,
   CURRENT_FOCUS_INVESTIGATION,
   DEFINITIONS,
   END_DATE,
-  FI_SINGLE_MAP_URL,
-  FI_SINGLE_URL,
+  FI_IN_JURISDICTION,
   FI_STATUS,
-  FI_URL,
   FOCUS_AREA_HEADER,
   FOCUS_INVESTIGATIONS,
   HOME,
-  HOME_URL,
-  IN,
   NAME,
+  NEXT,
+  PREVIOUS,
   REACTIVE,
-  ROUTINE,
+  ROUTINE_TITLE,
   SEARCH,
   START_DATE,
   STATUS_HEADER,
+} from '../../../../configs/lang';
+import {
+  FIClassifications,
+  locationHierarchy,
+  planStatusDisplay,
+} from '../../../../configs/settings';
+import {
+  CASE_TRIGGERED,
+  FI_SINGLE_MAP_URL,
+  FI_SINGLE_URL,
+  FI_URL,
+  HOME_URL,
+  ROUTINE,
 } from '../../../../constants';
 import { renderClassificationRow } from '../../../../helpers/indicators';
 import '../../../../helpers/tables.css';
@@ -158,13 +168,14 @@ class ActiveFocusInvestigation extends React.Component<
     if (
       caseTriggeredPlans &&
       caseTriggeredPlans.length === 0 &&
-      (routinePlans && routinePlans.length === 0)
+      routinePlans &&
+      routinePlans.length === 0
     ) {
       return <Loading />;
     }
     const routineReactivePlans: FlexObject[] = [];
     const pageTitle = jurisdictionName
-      ? `${CURRENT_FOCUS_INVESTIGATION} ${IN} ${jurisdictionName}`
+      ? format(FI_IN_JURISDICTION, jurisdictionName)
       : CURRENT_FOCUS_INVESTIGATION;
     return (
       <div>
@@ -277,7 +288,8 @@ class ActiveFocusInvestigation extends React.Component<
                 columns: [
                   {
                     Header: '',
-                    accessor: 'plan_status',
+                    accessor: (d: Plan) => planStatusDisplay[d.plan_status] || d.plan_status,
+                    id: 'plan_status',
                     minWidth: 80,
                   },
                 ],
@@ -325,7 +337,9 @@ class ActiveFocusInvestigation extends React.Component<
               identifierField: 'id',
               linkerField: 'id',
               minRows: 0,
+              nextText: NEXT,
               parentIdentifierField: 'parent',
+              previousText: PREVIOUS,
               rootParentId: null,
               showPageSizeOptions: false,
               showPagination: thePlans.length > 20,
@@ -339,7 +353,7 @@ class ActiveFocusInvestigation extends React.Component<
               <div className="routine-heading">
                 <Row>
                   <Col xs="6">
-                    <h3 className="mb-3 mt-5 page-title">{ROUTINE}</h3>
+                    <h3 className="mb-3 mt-5 page-title">{ROUTINE_TITLE}</h3>
                   </Col>
                   <Col xs="6">
                     <LinkAsButton />
@@ -354,7 +368,7 @@ class ActiveFocusInvestigation extends React.Component<
               </div>
             );
           } else {
-            const header = i ? ROUTINE : REACTIVE;
+            const header = i ? ROUTINE_TITLE : REACTIVE;
             const emptyPlansColumns = [
               {
                 Header: NAME,

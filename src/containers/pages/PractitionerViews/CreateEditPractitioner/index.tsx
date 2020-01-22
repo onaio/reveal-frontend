@@ -11,14 +11,11 @@ import { Store } from 'redux';
 import HeaderBreadcrumb, {
   BreadCrumbProps,
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
+import { EDIT_PRACTITIONER, HOME, NEW_PRACTITIONER, PRACTITIONERS } from '../../../../configs/lang';
 import {
   CREATE_PRACTITIONER_URL,
-  EDIT_PRACTITIONER,
   EDIT_PRACTITIONER_URL,
-  HOME,
   HOME_URL,
-  NEW_PRACTITIONER,
-  PRACTITIONERS,
   PRACTITIONERS_LIST_URL,
 } from '../../../../constants';
 import { RouteParams } from '../../../../helpers/utils';

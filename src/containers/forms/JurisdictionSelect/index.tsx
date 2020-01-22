@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import AsyncSelect, { Props as AsyncSelectProps } from 'react-select/async';
 import { getFilterParams, OpenSRPService, URLParams } from '../../../services/opensrp';
 
-import { SELECT } from '../../../constants';
+import { SELECT } from '../../../configs/lang';
 import './style.css';
 
 /** interface for jurisdiction options

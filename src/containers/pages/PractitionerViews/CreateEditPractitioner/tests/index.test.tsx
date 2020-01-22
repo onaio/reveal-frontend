@@ -6,13 +6,8 @@ import Helmet from 'react-helmet';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import ConnectedCreateEditPractitionerView, { CreateEditPractitionerView } from '..';
-import {
-  EDIT,
-  EDIT_PRACTITIONER_URL,
-  NEW_PRACTITIONER,
-  OPENSRP_PRACTITIONER_ENDPOINT,
-  PRACTITIONER,
-} from '../../../../../constants';
+import { EDIT_PRACTITIONER, NEW_PRACTITIONER } from '../../../../../configs/lang';
+import { EDIT_PRACTITIONER_URL, OPENSRP_PRACTITIONER_ENDPOINT } from '../../../../../constants';
 import store from '../../../../../store';
 import * as practitionerDucks from '../../../../../store/ducks/opensrp/practitioners';
 import * as fixtures from '../../../../../store/ducks/tests/fixtures';
@@ -79,7 +74,7 @@ describe('src/containers/pages/CreateEditPractitioner', () => {
 
     // page title
     const helmet = Helmet.peek();
-    expect(helmet.title).toEqual(`${EDIT} ${PRACTITIONER}`);
+    expect(helmet.title).toEqual(EDIT_PRACTITIONER);
 
     // breadcrumb
     const breadcrumbWrapper = wrapper.find('Breadcrumb');

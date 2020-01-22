@@ -1,5 +1,5 @@
 import { map } from 'lodash';
-import { PERSONS, STRUCTURES } from '../../constants';
+import { PERSONS, STRUCTURES } from '../../configs/lang';
 import * as fixtures from '../../store/ducks/tests/fixtures';
 import { getGoalReport, goalRatioAchieved } from '../indicators';
 

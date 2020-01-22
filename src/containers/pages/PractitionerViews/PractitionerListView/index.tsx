@@ -20,18 +20,20 @@ import Loading from '../../../../components/page/Loading';
 import {
   ACTIONS,
   ADD,
-  CREATE_PRACTITIONER_URL,
   EDIT,
-  EDIT_PRACTITIONER_URL,
   HOME,
-  HOME_URL,
   IDENTIFIER,
   NAME,
   PRACTITIONER,
   PRACTITIONERS,
-  PRACTITIONERS_LIST_URL,
   SEARCH,
   USERNAME,
+} from '../../../../configs/lang';
+import {
+  CREATE_PRACTITIONER_URL,
+  EDIT_PRACTITIONER_URL,
+  HOME_URL,
+  PRACTITIONERS_LIST_URL,
 } from '../../../../constants';
 import { OpenSRPService } from '../../../../services/opensrp';
 import practitionersReducer, {

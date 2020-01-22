@@ -1,11 +1,11 @@
 import React from 'react';
 import { Col, Row, Table } from 'reactstrap';
+import { CONDITIONAL_FORMATTING_RULES } from '../../../configs/lang';
 import {
   IndicatorThresholdItem,
   IndicatorThresholds,
   indicatorThresholdsIRS,
 } from '../../../configs/settings';
-import { CONDITIONAL_FORMATTING_RULES } from '../../../constants';
 import { percentage } from '../../../helpers/utils';
 
 interface Props {

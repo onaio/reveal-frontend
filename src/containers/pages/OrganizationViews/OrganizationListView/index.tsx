@@ -19,18 +19,20 @@ import HeaderBreadcrumb, {
 import Loading from '../../../../components/page/Loading';
 import {
   ACTIONS,
-  CREATE_ORGANIZATION_URL,
   HOME,
-  HOME_URL,
   IDENTIFIER,
-  NAME,
   NEW_TEAM,
   ORGANIZATION_LABEL,
+  ORGANIZATION_NAME_TITLE,
   ORGANIZATIONS_LABEL,
-  ORGANIZATIONS_LIST_URL,
   SEARCH,
-  SINGLE_ORGANIZATION_URL,
   VIEW,
+} from '../../../../configs/lang';
+import {
+  CREATE_ORGANIZATION_URL,
+  HOME_URL,
+  ORGANIZATIONS_LIST_URL,
+  SINGLE_ORGANIZATION_URL,
 } from '../../../../constants';
 import { OpenSRPService } from '../../../../services/opensrp';
 import organizationsReducer, {
@@ -111,7 +113,7 @@ const OrganizationListView = (props: OrgsListViewPropsType) => {
         </Link>,
       ];
     }),
-    headerItems: [`${ORGANIZATION_LABEL} ${NAME}`, `${IDENTIFIER}`, `${ACTIONS}`],
+    headerItems: [`${ORGANIZATION_NAME_TITLE}`, `${IDENTIFIER}`, `${ACTIONS}`],
     tableClass: 'table table-bordered',
   };
 

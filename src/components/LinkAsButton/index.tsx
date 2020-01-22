@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import { ADD_FOCUS_INVESTIGATION, NEW_PLAN_URL } from '../../constants';
+import { ADD_FOCUS_INVESTIGATION } from '../../configs/lang';
+import { NEW_PLAN_URL } from '../../constants';
 
 /** interface for LinkAsButton component props */
 export interface Props {

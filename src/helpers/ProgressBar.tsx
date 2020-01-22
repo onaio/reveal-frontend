@@ -6,7 +6,6 @@ import {
   IndicatorThresholds,
   ORANGE_THRESHOLD,
   YELLOW_THRESHOLD,
-  ZERO,
 } from '../configs/settings';
 import { getThresholdColor } from './indicators';
 

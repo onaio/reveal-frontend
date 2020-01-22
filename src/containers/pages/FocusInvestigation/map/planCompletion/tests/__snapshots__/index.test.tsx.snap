@@ -25,14 +25,7 @@ exports[`@containers/pages/map/planCompletion/ renders correctly 1`] = `
   <h2
     className="mb-3 mt-5 page-title"
   >
-    Mark 
-    <span
-      className="plan-name"
-    >
-      $
-      A1-Tha Luang Village 1 Focus 01
-    </span>
-     as complete
+    Mark A1-Tha Luang Village 1 Focus 01 as complete
   </h2>
   <hr />
   <div
@@ -47,14 +40,7 @@ exports[`@containers/pages/map/planCompletion/ renders correctly 1`] = `
       className="card-body"
     >
       <p>
-        Mark 
-        <span
-          className="plan-name"
-        >
-          $
-          A1-Tha Luang Village 1 Focus 01
-        </span>
-         as complete
+        Mark A1-Tha Luang Village 1 Focus 01 as complete
       </p>
       <button
         className="btn btn-danger"
@@ -80,13 +66,6 @@ exports[`@containers/pages/map/planCompletion/ works with the redux store 1`] = 
 <h2
   className="mb-3 mt-5 page-title"
 >
-  Mark 
-  <span
-    className="plan-name"
-  >
-    $
-    A1-Tha Luang Village 1 Focus 01
-  </span>
-   as complete
+  Mark A1-Tha Luang Village 1 Focus 01 as complete
 </h2>
 `;

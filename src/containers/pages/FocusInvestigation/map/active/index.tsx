@@ -7,6 +7,7 @@ import { RouteComponentProps } from 'react-router';
 import { Link, NavLink } from 'react-router-dom';
 import { Badge, Col, Row } from 'reactstrap';
 import { Store } from 'redux';
+import { format } from 'util';
 import GisidaWrapper from '../../../../../components/GisidaWrapper';
 import HeaderBreadcrumb, {
   BreadCrumbProps,
@@ -21,31 +22,34 @@ import {
   SUPERSET_STRUCTURES_SLICE,
   SUPERSET_TASKS_SLICE,
 } from '../../../../../configs/env';
-import { FIReasons } from '../../../../../configs/settings';
 import {
   CASE_CLASSIFICATION_LABEL,
-  CASE_TRIGGERED,
   END_DATE,
-  FI_SINGLE_MAP_URL,
-  FI_SINGLE_URL,
-  FI_URL,
   FOCUS_INVESTIGATION,
   FOCUS_INVESTIGATIONS,
   HOME,
-  HOME_URL,
   INVESTIGATION,
   MARK_AS_COMPLETE,
   MEASURE,
-  MULTI_POLYGON,
-  OF,
-  PLAN_COMPLETION_URL,
+  NUMERATOR_OF_DENOMINATOR_UNITS,
   PLAN_SELECT_PLACEHOLDER,
+  PROGRESS,
+  REACTIVE_INVESTIGATION,
+  ROUTINE_INVESTIGATION_TITLE,
+  START_DATE,
+} from '../../../../../configs/lang';
+import { FIReasons } from '../../../../../configs/settings';
+import {
+  CASE_TRIGGERED,
+  FI_SINGLE_MAP_URL,
+  FI_SINGLE_URL,
+  FI_URL,
+  HOME_URL,
+  MULTI_POLYGON,
+  PLAN_COMPLETION_URL,
   POINT,
   POLYGON,
-  PROGRESS,
-  REACTIVE,
   ROUTINE,
-  START_DATE,
 } from '../../../../../constants';
 import { popupHandler } from '../../../../../helpers/handlers';
 import { getGoalReport } from '../../../../../helpers/indicators';
@@ -346,8 +350,10 @@ class SingleActiveFIMap extends React.Component<
             <div className="mapSidebar">
               <div>
                 <h5>
-                  {plan.plan_fi_reason === CASE_TRIGGERED ? REACTIVE : ROUTINE}&nbsp;
-                  {INVESTIGATION}
+                  {plan.plan_fi_reason === CASE_TRIGGERED
+                    ? REACTIVE_INVESTIGATION
+                    : ROUTINE_INVESTIGATION_TITLE}
+                  &nbsp;
                 </h5>
                 {detailViewPlanInvestigationContainer}
               </div>
@@ -371,8 +377,14 @@ class SingleActiveFIMap extends React.Component<
                           {MEASURE}: {item.measure}
                         </p>
                         <p>
-                          {PROGRESS}: {item.completed_task_count} {OF} {goalReport.targetValue}{' '}
-                          {goalReport.goalUnit} ({goalReport.prettyPercentAchieved})
+                          {PROGRESS}:{' '}
+                          {format(
+                            NUMERATOR_OF_DENOMINATOR_UNITS,
+                            item.completed_task_count,
+                            goalReport.targetValue,
+                            goalReport.goalUnit
+                          )}{' '}
+                          ({goalReport.prettyPercentAchieved})
                         </p>
                         <br />
                         <ProgressBar value={goalReport.percentAchieved} max={1} />
@@ -432,7 +444,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
     plansByFocusArea.sort((a: Plan, b: Plan) => Date.parse(b.plan_date) - Date.parse(a.plan_date));
   }
 
-  if (plan && jurisdiction && (goals && goals.length > 1)) {
+  if (plan && jurisdiction && goals && goals.length > 1) {
     currentGoal = getCurrentGoal(state);
     pointFeatureCollection = getFCByPlanAndGoalAndJurisdiction(
       state,

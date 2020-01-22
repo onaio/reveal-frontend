@@ -10,6 +10,7 @@ import { RouteComponentProps } from 'react-router';
 import { toast } from 'react-toastify';
 import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
+import { format } from 'util';
 import LinkAsButton from '../../../../components/LinkAsButton';
 import HeaderBreadcrumb, {
   BreadCrumbProps,
@@ -18,25 +19,27 @@ import Loading from '../../../../components/page/Loading';
 import {
   ACTIONS,
   ASSIGN,
-  ASSIGN_PRACTITIONERS_URL,
-  DETAILS,
   EDIT,
-  EDIT_ORGANIZATION_URL,
   HOME,
-  HOME_URL,
   IDENTIFIER,
-  MEMBERS,
   NAME,
-  OPENSRP_DEL_PRACTITIONER_ROLE_ENDPOINT,
+  ORGANIZATION_DETAILS,
   ORGANIZATION_LABEL,
   ORGANIZATIONS_LABEL,
-  ORGANIZATIONS_LIST_URL,
   PRACTITIONER,
+  PRACTITIONER_REMOVED_FROM_ORG,
   REMOVE,
-  REMOVED_FROM,
   REMOVING_PRACTITIONER_FAILED,
-  SINGLE_ORGANIZATION_URL,
+  TEAM_MEMBERS,
   USERNAME,
+} from '../../../../configs/lang';
+import {
+  ASSIGN_PRACTITIONERS_URL,
+  EDIT_ORGANIZATION_URL,
+  HOME_URL,
+  OPENSRP_DEL_PRACTITIONER_ROLE_ENDPOINT,
+  ORGANIZATIONS_LIST_URL,
+  SINGLE_ORGANIZATION_URL,
 } from '../../../../constants';
 import { growl, RouteParams } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
@@ -113,9 +116,12 @@ const SingleOrganizationView = (props: SingleOrgViewPropsType) => {
       .delete(params)
       .then(() => {
         // remove the practitioner Role
-        growl(`${practitioner.name}-${practitioner.username} ${REMOVED_FROM} ${org.name}`, {
-          type: toast.TYPE.INFO,
-        });
+        growl(
+          format(PRACTITIONER_REMOVED_FROM_ORG, practitioner.name, practitioner.username, org.name),
+          {
+            type: toast.TYPE.INFO,
+          }
+        );
         loadOrgPractitioners(
           orgId,
           serviceClass,
@@ -214,7 +220,7 @@ const SingleOrganizationView = (props: SingleOrgViewPropsType) => {
       </Row>
       <hr />
       <div id="organization-details" className="card mb-3">
-        <div className="card-header">{`${ORGANIZATION_LABEL} ${DETAILS}`}</div>
+        <div className="card-header">{ORGANIZATION_DETAILS}</div>
         <div className="card-body">
           <Row>
             <Col className="col-6">
@@ -232,7 +238,7 @@ const SingleOrganizationView = (props: SingleOrgViewPropsType) => {
           </Row>
         </div>
       </div>
-      <h3 className="mb-3 mt-5">{`${ORGANIZATION_LABEL} ${MEMBERS}`}</h3>
+      <h3 className="mb-3 mt-5">{TEAM_MEMBERS}</h3>
       <ListView {...listViewProps} />
     </div>
   );

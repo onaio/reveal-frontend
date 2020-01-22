@@ -7,8 +7,9 @@ import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { Column } from 'react-table';
-import { Button, Col, Form, FormGroup, Input, Row } from 'reactstrap';
+import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
+import { format } from 'util';
 import GisidaWrapper from '../../../../components/GisidaWrapper';
 import HeaderBreadcrumbs, {
   BreadCrumbProps,
@@ -23,6 +24,20 @@ import {
   SUPERSET_PLANS_SLICE,
 } from '../../../../configs/env';
 import {
+  CANTON,
+  COMPLETE_FOCUS_INVESTIGATION,
+  CURRENT_FOCUS_INVESTIGATION,
+  DISTRICT,
+  FI_REASON,
+  FI_STATUS,
+  FIS_IN_JURISDICTION,
+  FOCUS_AREA_INFO,
+  FOCUS_INVESTIGATIONS,
+  HOME,
+  PROVINCE,
+  REACTIVE,
+} from '../../../../configs/lang';
+import {
   completeReactivePlansColumn,
   completeRoutinePlansColumn,
   currentReactivePlansColumns,
@@ -35,25 +50,7 @@ import {
   locationHierarchy,
   statusColumn,
 } from '../../../../configs/settings';
-import {
-  CANTON,
-  CASE_TRIGGERED,
-  COMPLETE_FOCUS_INVESTIGATION,
-  CURRENT_FOCUS_INVESTIGATION,
-  DISTRICT,
-  FI_REASON,
-  FI_SINGLE_URL,
-  FI_STATUS,
-  FI_URL,
-  FOCUS_AREA_INFO,
-  FOCUS_INVESTIGATIONS,
-  HOME,
-  HOME_URL,
-  IN,
-  PROVINCE,
-  REACTIVE,
-  ROUTINE,
-} from '../../../../constants';
+import { CASE_TRIGGERED, FI_SINGLE_URL, FI_URL, HOME_URL, ROUTINE } from '../../../../constants';
 import {
   defaultTableProps,
   extractPlan,
@@ -383,15 +380,14 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
         />
       );
     }
+    const pageTitle = format(FIS_IN_JURISDICTION, theObject.focusArea);
     return (
       <div className="mb-5">
         <Helmet>
-          <title>{`${FOCUS_INVESTIGATIONS} ${IN} ${theObject.focusArea}`}</title>
+          <title>{pageTitle}</title>
         </Helmet>
         <HeaderBreadcrumbs {...breadCrumbProps} />
-        <h2 className="page-title mt-4 mb-5">
-          {FOCUS_INVESTIGATIONS} {IN} {theObject.focusArea}
-        </h2>
+        <h2 className="page-title mt-4 mb-5">{pageTitle}</h2>
         <Row>
           <Col className="col-6">
             <h4 className="mb-4">{FOCUS_AREA_INFO}</h4>

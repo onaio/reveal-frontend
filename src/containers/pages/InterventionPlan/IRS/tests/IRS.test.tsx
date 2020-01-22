@@ -6,7 +6,7 @@ import { Helmet } from 'react-helmet';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import ConnectedIrsPlans, { IrsPlans } from '..';
-import { IRS_PLANS } from '../../../../../constants';
+import { IRS_PLANS } from '../../../../../configs/lang';
 import { FI_SINGLE_URL } from '../../../../../constants';
 import store from '../../../../../store';
 import { Plan } from '../../../../../store/ducks/plans';

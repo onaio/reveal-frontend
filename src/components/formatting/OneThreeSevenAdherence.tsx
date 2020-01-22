@@ -4,12 +4,10 @@ import * as colors from '../../colors';
 import {
   CONDITIONAL_FORMATTING_TITLE,
   FOCUS_INVESTIGATION_START_TITLE,
-  GREEN,
   ONE_DAY_TO_GO,
-  ORANGE,
-  RED,
   ZERO_DAYS_TO_GO,
-} from '../../constants';
+} from '../../configs/lang';
+import { GREEN, ORANGE, RED } from '../../constants';
 
 /** Displays conditional formatting guide for Focus Investigation 1-3-7 Adherence */
 const OneThreeSevenAdherence: React.ElementType = props => {

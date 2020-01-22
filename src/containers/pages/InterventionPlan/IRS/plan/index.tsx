@@ -21,21 +21,34 @@ import {
 } from '../../../../../configs/env';
 import {
   ADMIN_LEVEL,
-  ASSIGN,
-  ASSIGN_PLAN_URL,
+  ASSIGN_JURISDICTIONS,
   ASSIGN_PLANS,
-  DRAFT,
+  DRAFT_PLAN_TITLE,
   HOME,
-  HOME_URL,
-  INTERVENTION_IRS_URL,
   IRS_TITLE,
   JURISDICTION,
-  JURISDICTION_ID,
-  JURISDICTIONS,
-  MAP_ID,
   NAME,
-  NEW,
   NEW_PLAN,
+  NEXT,
+  PREVIOUS,
+  SAVE_AS_DRAFT,
+  SAVE_ASSIGNMENTS,
+  SAVE_FINALIZED_PLAN,
+  SAVE_PLAN_DEFINITION_ERROR,
+  SAVE_PLAN_NO_JURISDICTIONS_ERROR,
+  SELECT_JURISDICTIONS,
+  SPRAY_AREA_HEADER,
+  TEAMS_ASSIGNMENT,
+  TYPE_LABEL,
+} from '../../../../../configs/lang';
+import {
+  ASSIGN_PLAN_URL,
+  DRAFT,
+  HOME_URL,
+  INTERVENTION_IRS_URL,
+  JURISDICTION_ID,
+  MAP_ID,
+  NEW,
   OPENSRP_FIND_BY_PROPERTIES,
   OPENSRP_GET_ASSIGNMENTS_ENDPOINT,
   OPENSRP_LOCATION,
@@ -44,15 +57,6 @@ import {
   OPENSRP_PLANS,
   OPENSRP_POST_ASSIGNMENTS_ENDPOINT,
   PARENTID,
-  SAVE_AS_DRAFT,
-  SAVE_ASSIGNMENTS,
-  SAVE_FINALIZED_PLAN,
-  SAVE_PLAN_DEFINITION_ERROR,
-  SAVE_PLAN_NO_JURISDICTIONS_ERROR,
-  SELECT,
-  SPRAY_AREA_HEADER,
-  TEAMS_ASSIGNMENT,
-  TYPE_LABEL,
 } from '../../../../../constants';
 import {
   FlexObject,
@@ -123,6 +127,7 @@ import HeaderBreadcrumbs, {
 } from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../../components/page/Loading';
 
+import { format } from 'util';
 import { ADMN0_PCODE, JurisdictionTypes } from '../../../../../configs/types';
 import AssignTeamTableCell, { AssignTeamCellProps } from '../../../../forms/AssignTeamTableCell';
 import './../../../../../styles/css/drill-down-table.css';
@@ -500,7 +505,7 @@ class IrsPlan extends React.Component<
 
     const pageLabel =
       (isFinalizedPlan && planById && planById.plan_title) ||
-      (isDraftPlan && planById && `${planById.plan_title} (${DRAFT})`) ||
+      (isDraftPlan && planById && format(DRAFT_PLAN_TITLE, planById.plan_title)) ||
       (newPlan && newPlan.plan_title) ||
       NEW_PLAN;
 
@@ -602,9 +607,9 @@ class IrsPlan extends React.Component<
         {planTableProps && planTableProps.data && planTableProps.data.length ? (
           <Row>
             <Col>
-              <h3 className="table-title">{`${
-                isFinalizedPlan ? ASSIGN : SELECT
-              } ${JURISDICTIONS}`}</h3>
+              <h3 className="table-title">
+                {isFinalizedPlan ? ASSIGN_JURISDICTIONS : SELECT_JURISDICTIONS}
+              </h3>
               {tableCrumbs.length && tableBreadCrumbs}
               {doRenderTable && <DrillDownTable {...planTableProps} />}
             </Col>
@@ -1984,7 +1989,9 @@ class IrsPlan extends React.Component<
       identifierField: 'jurisdiction_id',
       linkerField: 'name',
       minRows: 0,
+      nextText: NEXT,
       parentIdentifierField: 'parent_id',
+      previousText: PREVIOUS,
       rootParentId: this.state.focusJurisdictionId,
       showPageSizeOptions: false,
       showPagination,
@@ -2062,12 +2069,12 @@ class IrsPlan extends React.Component<
       const now = moment(new Date());
       const start = moment(newPlan.plan_effective_period_start);
       const end = moment(newPlan.plan_effective_period_end);
-      const format = DATE_FORMAT.toUpperCase();
+      const dateFormat = DATE_FORMAT.toUpperCase();
       const newPlanDraft: PlanRecord = {
         ...newPlan,
-        plan_date: now.format(format),
-        plan_effective_period_end: end.format(format),
-        plan_effective_period_start: start.format(format),
+        plan_date: now.format(dateFormat),
+        plan_effective_period_end: end.format(dateFormat),
+        plan_effective_period_start: start.format(dateFormat),
         plan_jurisdictions_ids: newPlan.plan_jurisdictions_ids.filter(j =>
           childlessChildrenIds.includes(j)
         ),

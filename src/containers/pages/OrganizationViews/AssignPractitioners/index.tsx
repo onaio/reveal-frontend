@@ -14,31 +14,33 @@ import { OptionsType, ValueType } from 'react-select/src/types';
 import { toast } from 'react-toastify';
 import { Button } from 'reactstrap';
 import { Store } from 'redux';
+import { format } from 'util';
 import HeaderBreadcrumb, {
   BreadCrumbProps,
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
 import { PRACTITIONER_ROLE_NAMESPACE } from '../../../../configs/env';
 import {
-  ADD,
   ASSIGN,
   ASSIGN_PRACTITIONERS,
-  ASSIGN_PRACTITIONERS_URL,
-  ASSIGNED_SUCCESSFULLY_TO,
+  ASSIGN_PRACTITIONERS_TO_ORG,
   DISCARD_CHANGES,
   HOME,
-  HOME_URL,
   NO_PRACTITIONERS_ADDED_YET,
   ON_REROUTE_WITH_UNSAVED_CHANGES,
+  ORGANIZATIONS_LABEL,
+  PRACTITIONERS,
+  PRACTITIONERS_ASSIGNED_TO_ORG,
+  SAVE_CHANGES,
+} from '../../../../configs/lang';
+import {
+  ASSIGN_PRACTITIONERS_URL,
+  HOME_URL,
   OPENSRP_ADD_PRACTITIONER_ROLE_ENDPOINT,
   OPENSRP_PRACTITIONER_ENDPOINT,
-  ORGANIZATIONS_LABEL,
   ORGANIZATIONS_LIST_URL,
   PRACTITIONER_CODE,
-  PRACTITIONERS,
-  SAVE_CHANGES,
   SINGLE_ORGANIZATION_URL,
-  TO,
 } from '../../../../constants';
 import { useConfirmOnBrowserUnload } from '../../../../helpers/hooks';
 import { generateNameSpacedUUID, growl } from '../../../../helpers/utils';
@@ -186,14 +188,9 @@ const AssignPractitioner = (props: PropsTypes) => {
         fetchPractitionersCreator
       );
 
-      growl(
-        `${jsonArrayPayload.length} ${PRACTITIONERS} ${ASSIGNED_SUCCESSFULLY_TO} ${
-          organization.name
-        }`,
-        {
-          type: toast.TYPE.SUCCESS,
-        }
-      );
+      growl(format(PRACTITIONERS_ASSIGNED_TO_ORG, jsonArrayPayload.length, organization.name), {
+        type: toast.TYPE.SUCCESS,
+      });
 
       try {
         setSelectedOptions([]);
@@ -254,9 +251,9 @@ const AssignPractitioner = (props: PropsTypes) => {
       />
 
       <HeaderBreadcrumb {...breadcrumbProps} />
-      <h2 className="mb-3 mt-5 page-title">{`${ASSIGN} ${PRACTITIONERS} ${TO} ${
-        organization!.name
-      }`}</h2>
+      <h2 className="mb-3 mt-5 page-title">
+        {format(ASSIGN_PRACTITIONERS_TO_ORG, organization!.name)}
+      </h2>
       <hr />
 
       {/* section for displaying already Added practitioners to this organization */}

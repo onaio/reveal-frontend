@@ -14,6 +14,7 @@ import {
   ModalBody,
   ModalHeader,
 } from 'reactstrap';
+import { format } from 'util';
 import DatePickerWrapper from '../../../components/DatePickerWrapper';
 import {
   DATE_FORMAT,
@@ -21,18 +22,11 @@ import {
   DEFAULT_PLAN_VERSION,
 } from '../../../configs/env';
 import {
-  actionReasons,
-  FIClassifications,
-  FIReasons,
-  goalPriorities,
-  planActivities,
-} from '../../../configs/settings';
-import {
   ACTION,
   ACTIVITIES_LABEL,
-  ACTIVITY_LABEL,
   ADD,
   ADD_ACTIVITY,
+  ADD_CODED_ACTIVITY,
   AN_ERROR_OCCURED,
   CASE_NUMBER,
   DESCRIPTION_LABEL,
@@ -45,7 +39,6 @@ import {
   IRS_TITLE,
   LOCATIONS,
   PLAN_END_DATE_LABEL,
-  PLAN_LIST_URL,
   PLAN_START_DATE_LABEL,
   PLAN_TITLE_LABEL,
   PLEASE_FIX_THESE_ERRORS,
@@ -54,9 +47,23 @@ import {
   REASON_HEADER,
   SAVE_PLAN,
   SAVING,
+  SELECT_PLACHOLDER,
   START_DATE,
   STATUS_HEADER,
-} from '../../../constants';
+} from '../../../configs/lang';
+import {
+  actionReasons,
+  actionReasonsDisplay,
+  FIClassifications,
+  FIReasons,
+  FIReasonsDisplay,
+  goalPriorities,
+  goalPrioritiesDisplay,
+  goalUnitDisplay,
+  planActivities,
+  planStatusDisplay,
+} from '../../../configs/settings';
+import { PLAN_LIST_URL } from '../../../constants';
 import { OpenSRPService } from '../../../services/opensrp';
 import { InterventionType, PlanStatus } from '../../../store/ducks/plans';
 import JurisdictionSelect from '../JurisdictionSelect';
@@ -73,7 +80,7 @@ import {
   PlanJurisdictionFormFields,
   PlanSchema,
 } from './helpers';
-import { GoalUnit, PlanActionCodesType } from './types';
+import { PlanActionCodesType } from './types';
 
 import './style.css';
 
@@ -234,7 +241,8 @@ const PlanForm = (props: PlanFormProps) => {
               const nameTitle = getNameTitle(e, values);
               if (
                 fieldsThatChangePlanTitle.includes(target.name) ||
-                (!values.title || values.title === '')
+                !values.title ||
+                values.title === ''
               ) {
                 setFieldValue('title', nameTitle[1]);
               }
@@ -325,7 +333,7 @@ const PlanForm = (props: PlanFormProps) => {
                         <fieldset key={index}>
                           {errors.jurisdictions && errors.jurisdictions[index] && (
                             <div className="alert alert-danger" role="alert">
-                              <h6 className="alert-heading">Please fix these errors</h6>
+                              <h6 className="alert-heading">{PLEASE_FIX_THESE_ERRORS}</h6>
                               <ul className="list-unstyled">
                                 {Object.entries(errors.jurisdictions[index] || {}).map(
                                   ([key, val]) => (
@@ -363,8 +371,8 @@ const PlanForm = (props: PlanFormProps) => {
                                 cascadingSelect={cascadingSelect}
                                 name={`jurisdictions[${index}].id`}
                                 id={`jurisdictions-${index}-id`}
-                                placeholder={`Select ${jurisdictionLabel}`}
-                                aria-label={`Select ${jurisdictionLabel}`}
+                                placeholder={format(SELECT_PLACHOLDER, jurisdictionLabel)}
+                                aria-label={format(SELECT_PLACHOLDER, jurisdictionLabel)}
                                 disabled={disabledFields.includes('jurisdictions')}
                                 className={
                                   errors.jurisdictions &&
@@ -450,7 +458,7 @@ const PlanForm = (props: PlanFormProps) => {
                   <option>----</option>
                   {FIReasons.map(e => (
                     <option key={e} value={e}>
-                      {e}
+                      {FIReasonsDisplay[e]}
                     </option>
                   ))}
                 </Field>
@@ -520,7 +528,7 @@ const PlanForm = (props: PlanFormProps) => {
                   .filter(e => !disAllowedStatusChoices.includes(e[1]))
                   .map(e => (
                     <option key={e[0]} value={e[1]}>
-                      {e[1]}
+                      {planStatusDisplay[e[1]]}
                     </option>
                   ))}
               </Field>
@@ -701,8 +709,12 @@ const PlanForm = (props: PlanFormProps) => {
                               />
                               <InputGroupAddon addonType="append">
                                 <InputGroupText>
-                                  {getGoalUnitFromActionCode(values.activities[index]
-                                    .actionCode as PlanActionCodesType)}
+                                  {
+                                    goalUnitDisplay[
+                                      getGoalUnitFromActionCode(values.activities[index]
+                                        .actionCode as PlanActionCodesType)
+                                    ]
+                                  }
                                 </InputGroupText>
                               </InputGroupAddon>
                             </InputGroup>
@@ -796,7 +808,7 @@ const PlanForm = (props: PlanFormProps) => {
                             >
                               {actionReasons.map(e => (
                                 <option key={e} value={e}>
-                                  {e}
+                                  {actionReasonsDisplay[e]}
                                 </option>
                               ))}
                             </Field>
@@ -826,7 +838,7 @@ const PlanForm = (props: PlanFormProps) => {
                             >
                               {goalPriorities.map(e => (
                                 <option key={e} value={e}>
-                                  {e}
+                                  {goalPrioritiesDisplay[e]}
                                 </option>
                               ))}
                             </Field>
@@ -886,7 +898,7 @@ const PlanForm = (props: PlanFormProps) => {
                                       className="btn btn-primary btn-sm mb-1 addActivity"
                                       onClick={() => arrayHelpers.push(g)}
                                     >
-                                      {ADD} <b>{g.actionCode}</b> {ACTIVITY_LABEL}
+                                      {format(ADD_CODED_ACTIVITY, g.actionCode)}
                                     </button>
                                   </li>
                                 ))}

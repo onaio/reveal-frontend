@@ -16,6 +16,104 @@ import { Providers } from '@onaio/gatekeeper';
 import { Color } from 'csstype';
 import { Expression, LngLatBoundsLike } from 'mapbox-gl';
 import {
+  A1_DESCRIPTION,
+  A1_NAME,
+  A2_DESCRIPTION,
+  A2_NAME,
+  B1_DESCRIPTION,
+  B1_NAME,
+  B2_DESCRIPTION,
+  B2_NAME,
+  BCC_ACTIVITY,
+  BCC_ACTIVITY_DESCRIPTION,
+  BCC_GOAL_DESCRIPTION,
+  BCC_GOAL_MEASURE,
+  BEDNET_ACTIVITY,
+  BEDNET_ACTIVITY_DESCRIPTION,
+  BEDNET_GOAL_MEASURE,
+  BLOOD_SCREENING_ACTIVITY,
+  BLOOD_SCREENING_ACTIVITY_DESCRIPTION,
+  BLOOD_SCREENING_GOAL_MEASURE,
+  CANTON,
+  CASE_CLASSIFICATION_HEADER,
+  CASE_CONFIRMATION_ACTIVITY,
+  CASE_CONFIRMATION_ACTIVITY_DESCRIPTION,
+  CASE_CONFIRMATION_ACTIVITY_GOAL_MEASURE,
+  CASE_NOTIF_DATE_HEADER,
+  CASE_TRIGGERED_TITLE,
+  DATE_COMPLETED,
+  DISTRICT,
+  END_DATE,
+  FI_STATUS,
+  FOCUS_AREA_HEADER,
+  GOAL_UNIT_ACTIVITY,
+  GOAL_UNIT_CASE,
+  GOAL_UNIT_PERCENT,
+  GOAL_UNIT_PERSON,
+  GOAL_UNIT_UNKNOWN,
+  HIGH_PRIORITIY_LABEL,
+  INVESTIGATION as INVESTIGATION_TITLE,
+  IRS_ACTIVITY,
+  IRS_ACTIVITY_DESCRIPTION,
+  IRS_GOAL_DESCRIPTION,
+  IRS_GOAL_MEASURE,
+  LARVAL_DIPPING_ACTIVITY,
+  LARVAL_DIPPING_ACTIVITY_DESCRIPTION,
+  LARVAL_DIPPING_GOAL_MEASURE,
+  LOW_PRIORITY_LABEL,
+  MEDIUM_PRIORITY_LABEL,
+  MOSQUITO_COLLECTION_ACTIVITY,
+  MOSQUITO_COLLECTION_ACTIVITY_DESCRIPTION,
+  MOSQUITO_COLLECTION_GOAL_MEASURE,
+  NAME,
+  PLAN_STATUS_ACTIVE,
+  PLAN_STATUS_COMPLETE,
+  PLAN_STATUS_DRAFT,
+  PLAN_STATUS_RETIRED,
+  PROVINCE,
+  REGISTER_FAMILY_ACTIVITY,
+  REGISTER_FAMILY_ACTIVITY_DESCRIPTION,
+  REGISTER_FAMILY_ACTIVITY_GOAL_MEASURE,
+  ROUTINE_TITLE,
+  START_DATE,
+  STATUS_HEADER,
+  VILLAGE,
+} from '../configs/lang';
+import {
+  A1,
+  A2,
+  B1,
+  B2,
+  BCC_CODE,
+  BEDNET_DISTRIBUTION_ACTIVITY_CODE,
+  BEDNET_DISTRIBUTION_CODE,
+  BLOOD_SCREENING_ACTIVITY_CODE,
+  BLOOD_SCREENING_CODE,
+  CASE_CONFIRMATION_ACTIVITY_CODE,
+  CASE_CONFIRMATION_CODE,
+  CASE_NUMBER_CODE,
+  CASE_TRIGGERED,
+  FALSE,
+  FAMILY_REGISTRATION_ACTIVITY_CODE,
+  FI_REASON_CODE,
+  FI_STATUS_CODE,
+  HIGH_PRIORITIY,
+  INTERVENTION_TYPE_CODE,
+  INVESTIGATION,
+  IRS_CODE,
+  LARVAL_DIPPING_ACTIVITY_CODE,
+  LARVAL_DIPPING_CODE,
+  LOW_PRIORITY,
+  MEDIUM_PRIORITY,
+  MOSQUITO_COLLECTION_ACTIVITY_CODE,
+  MOSQUITO_COLLECTION_CODE,
+  OPENSRP_EVENT_ID_CODE,
+  RACD_REGISTER_FAMILY_CODE,
+  ROUTINE,
+  TASK_GENERATION_STATUS_CODE,
+  TRUE,
+} from '../constants';
+import {
   ActionReasonType,
   GoalPriorityType,
   GoalUnit,
@@ -95,62 +193,88 @@ export const locationHierarchy: LocationItem[] = [
   {
     identifier: 'province',
     level: 1,
-    name: 'Province',
+    name: PROVINCE,
   },
   {
     identifier: 'district',
     level: 2,
-    name: 'District',
+    name: DISTRICT,
   },
   {
     identifier: 'canton',
     level: 3,
-    name: 'Canton',
+    name: CANTON,
   },
   {
     identifier: 'village',
     level: 4,
-    name: 'Village',
+    name: VILLAGE,
   },
 ];
 
 /** Focus investigation configs */
 /** Allowed FI Status values */
-export const FIStatuses = ['A1', 'A2', 'B1', 'B2'] as const;
+export const FIStatuses = [A1, A2, B1, B2] as const;
 
 /** Allowed FI Status values */
-export const FIReasons = ['Routine', 'Case Triggered'] as const;
+export const FIReasons = [ROUTINE, CASE_TRIGGERED] as const;
+export const FIReasonsDisplay: { [key: string]: string } = {
+  [ROUTINE]: ROUTINE_TITLE,
+  [CASE_TRIGGERED]: CASE_TRIGGERED_TITLE,
+};
+export const planStatusDisplay: { [key: string]: string } = {
+  active: PLAN_STATUS_ACTIVE,
+  complete: PLAN_STATUS_COMPLETE,
+  draft: PLAN_STATUS_DRAFT,
+  retired: PLAN_STATUS_RETIRED,
+};
+export const goalUnitDisplay: { [key: string]: string } = {
+  ['activit(y|ies)']: GOAL_UNIT_ACTIVITY,
+  ['case(s)']: GOAL_UNIT_CASE,
+  ['Percent']: GOAL_UNIT_PERCENT,
+  ['Person(s)']: GOAL_UNIT_PERSON,
+  ['unknown']: GOAL_UNIT_UNKNOWN,
+};
 
 /** Allowed goal priority values */
-export const goalPriorities = ['low-priority', 'medium-priority', 'high-priority'] as const;
+export const goalPriorities = [LOW_PRIORITY, MEDIUM_PRIORITY, HIGH_PRIORITIY] as const;
+export const goalPrioritiesDisplay: { [key: string]: string } = {
+  [LOW_PRIORITY]: LOW_PRIORITY_LABEL,
+  [MEDIUM_PRIORITY]: MEDIUM_PRIORITY_LABEL,
+  [HIGH_PRIORITIY]: HIGH_PRIORITIY_LABEL,
+};
 
 /** Allowed action Reason values */
-export const actionReasons = ['Investigation', 'Routine'] as const;
+export const actionReasons = [INVESTIGATION, ROUTINE] as const;
+export const actionReasonsDisplay: { [key: string]: string } = {
+  [INVESTIGATION]: INVESTIGATION_TITLE,
+  [ROUTINE]: ROUTINE_TITLE,
+};
 
 /** Allowed useContext Code values */
 export const useContextCodes = [
-  'interventionType',
-  'fiStatus',
-  'fiReason',
-  'opensrpEventId',
-  'caseNum',
-  'taskGenerationStatus',
+  INTERVENTION_TYPE_CODE,
+  FI_STATUS_CODE,
+  FI_REASON_CODE,
+  OPENSRP_EVENT_ID_CODE,
+  CASE_NUMBER_CODE,
+  TASK_GENERATION_STATUS_CODE,
 ] as const;
 
 /** Plan activity code values */
 export const PlanActionCodes = [
-  'BCC',
-  'IRS',
-  'Bednet Distribution',
-  'Blood Screening',
-  'Case Confirmation',
-  'RACD Register Family',
-  'Larval Dipping',
-  'Mosquito Collection',
+  BCC_CODE,
+  IRS_CODE,
+  BEDNET_DISTRIBUTION_CODE,
+  BLOOD_SCREENING_CODE,
+  CASE_CONFIRMATION_CODE,
+  RACD_REGISTER_FAMILY_CODE,
+  LARVAL_DIPPING_CODE,
+  MOSQUITO_COLLECTION_CODE,
 ] as const;
 
 /** Allowed taskGenerationStatus values */
-export const taskGenerationStatuses = ['True', 'False'] as const;
+export const taskGenerationStatuses = [TRUE, FALSE] as const;
 
 /** Plan Action Timing Period */
 export interface PlanActionTimingPeriod {
@@ -212,26 +336,26 @@ export interface PlanActivity {
 
 /** Plan activity title values */
 export const PlanActivityTitles = [
-  'caseConfirmation',
-  'familyRegistration',
-  'bloodScreening',
-  'bednetDistribution',
-  'larvalDipping',
-  'mosquitoCollection',
-  'BCC',
-  'IRS',
+  CASE_CONFIRMATION_ACTIVITY_CODE,
+  FAMILY_REGISTRATION_ACTIVITY_CODE,
+  BLOOD_SCREENING_ACTIVITY_CODE,
+  BEDNET_DISTRIBUTION_ACTIVITY_CODE,
+  LARVAL_DIPPING_ACTIVITY_CODE,
+  MOSQUITO_COLLECTION_ACTIVITY_CODE,
+  BCC_CODE,
+  IRS_CODE,
 ] as const;
 
 /** default plan activities */
 export const planActivities: PlanActivities = {
   BCC: {
     action: {
-      code: 'BCC',
-      description: 'Conduct BCC activity',
+      code: BCC_CODE,
+      description: BCC_ACTIVITY_DESCRIPTION,
       goalId: 'BCC_Focus',
       identifier: '',
       prefix: 99,
-      reason: 'Investigation',
+      reason: INVESTIGATION,
       subjectCodableConcept: {
         text: 'Operational_Area',
       },
@@ -240,12 +364,12 @@ export const planActivities: PlanActivities = {
         end: '',
         start: '',
       },
-      title: 'Behaviour Change Communication',
+      title: BCC_ACTIVITY,
     },
     goal: {
-      description: 'Complete at least 1 BCC activity for the operational area',
+      description: BCC_GOAL_DESCRIPTION,
       id: 'BCC_Focus',
-      priority: 'medium-priority',
+      priority: MEDIUM_PRIORITY,
       target: [
         {
           detail: {
@@ -256,7 +380,7 @@ export const planActivities: PlanActivities = {
             },
           },
           due: '',
-          measure: 'Number of BCC Activities Completed',
+          measure: BCC_GOAL_MEASURE,
         },
       ],
     },
@@ -264,11 +388,11 @@ export const planActivities: PlanActivities = {
   IRS: {
     action: {
       code: 'IRS',
-      description: 'Visit each structure in the operational area and attempt to spray',
+      description: IRS_ACTIVITY_DESCRIPTION,
       goalId: 'IRS',
       identifier: '',
       prefix: 7,
-      reason: 'Routine',
+      reason: ROUTINE,
       subjectCodableConcept: {
         text: 'Residential_Structure',
       },
@@ -277,12 +401,12 @@ export const planActivities: PlanActivities = {
         end: '',
         start: '',
       },
-      title: 'Spray Structures',
+      title: IRS_ACTIVITY,
     },
     goal: {
-      description: 'Spray structures in the operational area',
+      description: IRS_GOAL_DESCRIPTION,
       id: 'IRS',
-      priority: 'medium-priority',
+      priority: MEDIUM_PRIORITY,
       target: [
         {
           detail: {
@@ -293,7 +417,7 @@ export const planActivities: PlanActivities = {
             },
           },
           due: '',
-          measure: 'Percent of structures sprayed',
+          measure: IRS_GOAL_MEASURE,
         },
       ],
     },
@@ -301,11 +425,11 @@ export const planActivities: PlanActivities = {
   bednetDistribution: {
     action: {
       code: 'Bednet Distribution',
-      description: 'Visit 100% of residential structures in the operational area and provide nets',
+      description: BEDNET_ACTIVITY_DESCRIPTION,
       goalId: 'RACD_bednet_distribution',
       identifier: '',
       prefix: 4,
-      reason: 'Investigation',
+      reason: INVESTIGATION,
       subjectCodableConcept: {
         text: 'Residential_Structure',
       },
@@ -314,12 +438,12 @@ export const planActivities: PlanActivities = {
         end: '',
         start: '',
       },
-      title: 'Bednet Distribution',
+      title: BEDNET_ACTIVITY,
     },
     goal: {
-      description: 'Visit 100% of residential structures in the operational area and provide nets',
+      description: BEDNET_ACTIVITY_DESCRIPTION,
       id: 'RACD_bednet_distribution',
-      priority: 'medium-priority',
+      priority: MEDIUM_PRIORITY,
       target: [
         {
           detail: {
@@ -330,7 +454,7 @@ export const planActivities: PlanActivities = {
             },
           },
           due: '',
-          measure: 'Percent of residential structures received nets',
+          measure: BEDNET_GOAL_MEASURE,
         },
       ],
     },
@@ -338,12 +462,11 @@ export const planActivities: PlanActivities = {
   bloodScreening: {
     action: {
       code: 'Blood Screening',
-      description:
-        'Visit all residential structures (100%) within a 1 km radius of a confirmed index case and test each registered person',
+      description: BLOOD_SCREENING_ACTIVITY_DESCRIPTION,
       goalId: 'RACD_Blood_Screening',
       identifier: '',
       prefix: 3,
-      reason: 'Investigation',
+      reason: INVESTIGATION,
       subjectCodableConcept: {
         text: 'Person',
       },
@@ -352,13 +475,12 @@ export const planActivities: PlanActivities = {
         end: '',
         start: '',
       },
-      title: 'Blood screening',
+      title: BLOOD_SCREENING_ACTIVITY,
     },
     goal: {
-      description:
-        'Visit all residential structures (100%) within a 1 km radius of a confirmed index case and test each registered person',
+      description: BLOOD_SCREENING_ACTIVITY_DESCRIPTION,
       id: 'RACD_Blood_Screening',
-      priority: 'medium-priority',
+      priority: MEDIUM_PRIORITY,
       target: [
         {
           detail: {
@@ -369,7 +491,7 @@ export const planActivities: PlanActivities = {
             },
           },
           due: '',
-          measure: 'Number of registered people tested',
+          measure: BLOOD_SCREENING_GOAL_MEASURE,
         },
       ],
     },
@@ -377,11 +499,11 @@ export const planActivities: PlanActivities = {
   caseConfirmation: {
     action: {
       code: 'Case Confirmation',
-      description: 'Confirm the index case',
+      description: CASE_CONFIRMATION_ACTIVITY_DESCRIPTION,
       goalId: 'Case_Confirmation',
       identifier: '',
       prefix: 1,
-      reason: 'Investigation',
+      reason: INVESTIGATION,
       subjectCodableConcept: {
         text: 'Operational_Area',
       },
@@ -390,12 +512,12 @@ export const planActivities: PlanActivities = {
         end: '',
         start: '',
       },
-      title: 'Case Confirmation',
+      title: CASE_CONFIRMATION_ACTIVITY,
     },
     goal: {
-      description: 'Confirm the index case',
+      description: CASE_CONFIRMATION_ACTIVITY_DESCRIPTION,
       id: 'Case_Confirmation',
-      priority: 'medium-priority',
+      priority: MEDIUM_PRIORITY,
       target: [
         {
           detail: {
@@ -406,7 +528,7 @@ export const planActivities: PlanActivities = {
             },
           },
           due: '',
-          measure: 'Number of cases confirmed',
+          measure: CASE_CONFIRMATION_ACTIVITY_GOAL_MEASURE,
         },
       ],
     },
@@ -414,12 +536,11 @@ export const planActivities: PlanActivities = {
   familyRegistration: {
     action: {
       code: 'RACD Register Family',
-      description:
-        'Register all families & family members in all residential structures enumerated (100%) within the operational area',
+      description: REGISTER_FAMILY_ACTIVITY_DESCRIPTION,
       goalId: 'RACD_register_families',
       identifier: '',
       prefix: 2,
-      reason: 'Investigation',
+      reason: INVESTIGATION,
       subjectCodableConcept: {
         text: 'Residential_Structure',
       },
@@ -428,13 +549,12 @@ export const planActivities: PlanActivities = {
         end: '',
         start: '',
       },
-      title: 'Family Registration',
+      title: REGISTER_FAMILY_ACTIVITY,
     },
     goal: {
-      description:
-        'Register all families & family members in all residential structures enumerated (100%) within the operational area',
+      description: REGISTER_FAMILY_ACTIVITY_DESCRIPTION,
       id: 'RACD_register_families',
-      priority: 'medium-priority',
+      priority: MEDIUM_PRIORITY,
       target: [
         {
           detail: {
@@ -445,7 +565,7 @@ export const planActivities: PlanActivities = {
             },
           },
           due: '',
-          measure: 'Percent of residential structures with full family registration',
+          measure: REGISTER_FAMILY_ACTIVITY_GOAL_MEASURE,
         },
       ],
     },
@@ -453,11 +573,11 @@ export const planActivities: PlanActivities = {
   larvalDipping: {
     action: {
       code: 'Larval Dipping',
-      description: 'Perform a minimum of three larval dipping activities in the operational area',
+      description: LARVAL_DIPPING_ACTIVITY_DESCRIPTION,
       goalId: 'Larval_Dipping',
       identifier: '',
       prefix: 5,
-      reason: 'Investigation',
+      reason: INVESTIGATION,
       subjectCodableConcept: {
         text: 'Breeding_Site',
       },
@@ -466,12 +586,12 @@ export const planActivities: PlanActivities = {
         end: '',
         start: '',
       },
-      title: 'Larval Dipping',
+      title: LARVAL_DIPPING_ACTIVITY,
     },
     goal: {
-      description: 'Perform a minimum of three larval dipping activities in the operational area',
+      description: LARVAL_DIPPING_ACTIVITY_DESCRIPTION,
       id: 'Larval_Dipping',
-      priority: 'medium-priority',
+      priority: MEDIUM_PRIORITY,
       target: [
         {
           detail: {
@@ -482,7 +602,7 @@ export const planActivities: PlanActivities = {
             },
           },
           due: '',
-          measure: 'Number of larval dipping activities completed',
+          measure: LARVAL_DIPPING_GOAL_MEASURE,
         },
       ],
     },
@@ -490,12 +610,11 @@ export const planActivities: PlanActivities = {
   mosquitoCollection: {
     action: {
       code: 'Mosquito Collection',
-      description:
-        'Set a minimum of three mosquito collection traps and complete the mosquito collection process',
+      description: MOSQUITO_COLLECTION_ACTIVITY_DESCRIPTION,
       goalId: 'Mosquito_Collection',
       identifier: '',
       prefix: 6,
-      reason: 'Investigation',
+      reason: INVESTIGATION,
       subjectCodableConcept: {
         text: 'Mosquito_Collection_Point',
       },
@@ -504,13 +623,12 @@ export const planActivities: PlanActivities = {
         end: '',
         start: '',
       },
-      title: 'Mosquito Collection',
+      title: MOSQUITO_COLLECTION_ACTIVITY,
     },
     goal: {
-      description:
-        'Set a minimum of three mosquito collection traps and complete the mosquito collection process',
+      description: MOSQUITO_COLLECTION_ACTIVITY_DESCRIPTION,
       id: 'Mosquito_Collection',
-      priority: 'medium-priority',
+      priority: MEDIUM_PRIORITY,
       target: [
         {
           detail: {
@@ -521,7 +639,7 @@ export const planActivities: PlanActivities = {
             },
           },
           due: '',
-          measure: 'Number of mosquito collection activities completed',
+          measure: MOSQUITO_COLLECTION_GOAL_MEASURE,
         },
       ],
     },
@@ -558,24 +676,24 @@ export interface PlanDefinition {
 /** Focus Investigation case classifications */
 export const FIClassifications: Classification[] = [
   {
-    code: 'A1',
-    description: 'Indigenous case recorded within the last year.',
-    name: 'Active',
+    code: A1,
+    description: A1_DESCRIPTION,
+    name: A1_NAME,
   },
   {
-    code: 'A2',
-    description: 'No indigenous case during the last year, but withing the last 3 years.',
-    name: 'Residual Non-Active',
+    code: A2,
+    description: A2_DESCRIPTION,
+    name: A2_NAME,
   },
   {
-    code: 'B1',
-    description: 'Receptive area but no indigenous cases within the last 3 years.',
-    name: 'Cleared Receptive',
+    code: B1,
+    description: B1_DESCRIPTION,
+    name: B1_NAME,
   },
   {
-    code: 'B2',
-    description: 'Non-receptive area.',
-    name: 'Cleared Non-Receptive',
+    code: B2,
+    description: B2_DESCRIPTION,
+    name: B2_NAME,
   },
 ];
 
@@ -1000,107 +1118,107 @@ export const CountriesAdmin0 = {
 /** complete reactive columns with no data */
 export const emptyCompleteReactivePlans = [
   {
-    Header: 'Name',
+    Header: NAME,
     columns: [{}],
   },
   {
-    Header: 'Date Completed',
+    Header: DATE_COMPLETED,
     columns: [{}],
   },
   {
-    Header: 'Case Notif. Date',
+    Header: CASE_NOTIF_DATE_HEADER,
     columns: [{}],
   },
   {
-    Header: 'Case Class.',
+    Header: CASE_CLASSIFICATION_HEADER,
     columns: [{}],
   },
 ];
 /** complete routine columns with no data */
 export const emptyCompleteRoutinePlans = [
   {
-    Header: 'Name',
+    Header: NAME,
     columns: [{}],
   },
   {
-    Header: 'Start Date',
+    Header: START_DATE,
     columns: [{}],
   },
   {
-    Header: 'End Date',
+    Header: END_DATE,
     columns: [{}],
   },
   {
-    Header: 'Date Completed',
+    Header: DATE_COMPLETED,
     columns: [{}],
   },
 ];
 /** current reactive columns with no data */
 export const emptyCurrentReactivePlans = [
   {
-    Header: 'Name',
+    Header: NAME,
     columns: [{}],
   },
   {
-    Header: 'FI Status',
+    Header: FI_STATUS,
     columns: [{}],
   },
   {
-    Header: 'Case Notif. Date',
+    Header: CASE_NOTIF_DATE_HEADER,
     columns: [{}],
   },
   {
-    Header: 'Case Class.',
+    Header: CASE_CLASSIFICATION_HEADER,
     columns: [{}],
   },
 ];
 /** current routine columns with no data */
 export const emptyCurrentRoutinePlans = [
   {
-    Header: 'Name',
+    Header: NAME,
     columns: [{}],
   },
   {
-    Header: 'FI Status',
+    Header: FI_STATUS,
     columns: [{}],
   },
   {
-    Header: 'Province',
+    Header: PROVINCE,
     columns: [{}],
   },
   {
-    Header: 'District',
+    Header: DISTRICT,
     columns: [{}],
   },
   {
-    Header: 'Canton',
+    Header: CANTON,
     columns: [{}],
   },
   {
-    Header: 'Village',
+    Header: VILLAGE,
     columns: [{}],
   },
   {
-    Header: 'Focus Area',
+    Header: FOCUS_AREA_HEADER,
     columns: [{}],
   },
   {
-    Header: 'Status',
+    Header: STATUS_HEADER,
     columns: [{}],
   },
   {
-    Header: 'Start Date',
+    Header: START_DATE,
     columns: [{}],
   },
   {
-    Header: 'End Date',
+    Header: END_DATE,
     columns: [{}],
   },
 ];
 /** current reactive columns with data */
 export const currentReactivePlansColumns = [
   {
-    Header: 'Case Notif. Date',
+    Header: CASE_NOTIF_DATE_HEADER,
     columns: [
       {
         Header: '',
@@ -1110,7 +1228,7 @@ export const currentReactivePlansColumns = [
     ],
   },
   {
-    Header: 'Case Class.',
+    Header: CASE_CLASSIFICATION_HEADER,
     columns: [
       {
         Header: '',
@@ -1122,7 +1240,7 @@ export const currentReactivePlansColumns = [
 /** current routine columns with data */
 export const currentRoutinePlansColumn = [
   {
-    Header: 'Status',
+    Header: STATUS_HEADER,
     columns: [
       {
         Header: '',
@@ -1132,7 +1250,7 @@ export const currentRoutinePlansColumn = [
     ],
   },
   {
-    Header: 'Start Date',
+    Header: START_DATE,
     columns: [
       {
         Header: '',
@@ -1142,7 +1260,7 @@ export const currentRoutinePlansColumn = [
     ],
   },
   {
-    Header: 'End Date',
+    Header: END_DATE,
     columns: [
       {
         Header: '',
@@ -1154,7 +1272,7 @@ export const currentRoutinePlansColumn = [
 /** complete reactive columns with data */
 export const completeReactivePlansColumn = [
   {
-    Header: 'End Date',
+    Header: END_DATE,
     columns: [
       {
         Header: '',
@@ -1163,7 +1281,7 @@ export const completeReactivePlansColumn = [
     ],
   },
   {
-    Header: 'Case Notif. Date',
+    Header: CASE_NOTIF_DATE_HEADER,
     columns: [
       {
         Header: '',
@@ -1173,7 +1291,7 @@ export const completeReactivePlansColumn = [
     ],
   },
   {
-    Header: 'Case Class.',
+    Header: CASE_CLASSIFICATION_HEADER,
     columns: [
       {
         Header: '',
@@ -1185,7 +1303,7 @@ export const completeReactivePlansColumn = [
 /** complete routine columns with data */
 export const completeRoutinePlansColumn = [
   {
-    Header: 'Start Date',
+    Header: START_DATE,
     columns: [
       {
         Header: '',
@@ -1195,7 +1313,7 @@ export const completeRoutinePlansColumn = [
     ],
   },
   {
-    Header: 'End Date',
+    Header: END_DATE,
     columns: [
       {
         Header: '',
@@ -1204,7 +1322,7 @@ export const completeRoutinePlansColumn = [
     ],
   },
   {
-    Header: 'Date Completed',
+    Header: DATE_COMPLETED,
     columns: [
       {
         Header: '',
@@ -1216,7 +1334,7 @@ export const completeRoutinePlansColumn = [
 /** Date completed field not there in the current plan  */
 export const dateCompletedColumn = [
   {
-    Header: 'Date Completed',
+    Header: DATE_COMPLETED,
     columns: [
       {
         Header: '',
@@ -1229,7 +1347,7 @@ export const dateCompletedColumn = [
 // status column
 export const statusColumn = [
   {
-    Header: 'FI Status',
+    Header: FI_STATUS,
     columns: [
       {
         Header: '',

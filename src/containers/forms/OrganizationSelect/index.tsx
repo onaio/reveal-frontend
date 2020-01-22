@@ -4,7 +4,8 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import Select from 'react-select';
 import { Store } from 'redux';
-import { OPENSRP_ORGANIZATION_ENDPOINT, SELECT } from '../../../constants';
+import { SELECT } from '../../../configs/lang';
+import { OPENSRP_ORGANIZATION_ENDPOINT } from '../../../constants';
 import { OpenSRPService } from '../../../services/opensrp';
 import store from '../../../store';
 import assignmentReducer, {

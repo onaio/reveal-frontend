@@ -1,6 +1,5 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset from '@onaio/superset-connector';
-import { keyBy } from 'lodash';
 import { FlushThunks } from 'redux-testkit';
 import store from '../../..';
 import reducer, {

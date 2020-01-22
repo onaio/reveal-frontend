@@ -8,7 +8,7 @@ import { Router } from 'react-router';
 import { APP, MAP_ID } from '../../../constants';
 import { FeatureCollection, toggleLayer, wrapFeatureCollection } from '../../../helpers/utils';
 import store from '../../../store';
-import { Task, TaskGeoJSON } from '../../../store/ducks/tasks';
+import { TaskGeoJSON } from '../../../store/ducks/tasks';
 import * as fixtures from '../../../store/ducks/tests/fixtures';
 import GisidaWrapper from '../index';
 

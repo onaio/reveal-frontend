@@ -5,19 +5,17 @@ import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { toast } from 'react-toastify';
 import { Store } from 'redux';
+import { format } from 'util';
 import Loading from '../../../../../components/page/Loading';
 import {
-  AS_COMPLETE,
   CANCEL,
   CONFIRM,
-  FI_SINGLE_MAP_URL,
-  MARK,
   MARK_AS_COMPLETE,
+  MARK_PLAN_AS_COMPLETE,
   NO_PLAN_FOUND_ERROR,
-  OPENSRP_PLANS,
-  PLAN_LIST_URL,
   PLAN_STATUS_UPDATE_ERROR,
-} from '../../../../../constants';
+} from '../../../../../configs/lang';
+import { FI_SINGLE_MAP_URL, OPENSRP_PLANS, PLAN_LIST_URL } from '../../../../../constants';
 import { FlexObject } from '../../../../../helpers/utils';
 import { growl } from '../../../../../helpers/utils';
 import { OpenSRPService } from '../../../../../services/opensrp';
@@ -110,24 +108,16 @@ export class PlanCompletion extends React.Component<
     return (
       <div id="plan-completion-page-wrapper">
         <Helmet>
-          <title>{`${MARK} ${plan.plan_title} ${AS_COMPLETE}`}</title>
+          <title>{format(MARK_PLAN_AS_COMPLETE, plan.plan_title)}</title>
         </Helmet>
         {/** prompt to confirm mark as complete click action */}
-        <h2 className="mb-3 mt-5 page-title">
-          {`${MARK} `}
-          <span className="plan-name">${plan.plan_title}</span>
-          {` ${AS_COMPLETE}`}
-        </h2>
+        <h2 className="mb-3 mt-5 page-title">{format(MARK_PLAN_AS_COMPLETE, plan.plan_title)}</h2>
         <hr />
         <div className="card mb-3">
           <div className="card-header">{MARK_AS_COMPLETE}</div>
           <div className="card-body">
             {/* this should be error handlers not links */}
-            <p>
-              {`${MARK} `}
-              <span className="plan-name">${plan.plan_title}</span>
-              {` ${AS_COMPLETE}`}
-            </p>
+            <p>{format(MARK_PLAN_AS_COMPLETE, plan.plan_title)}</p>
             <button
               id="complete-plan-cancel-btn"
               onClick={this.cancelClickHandler}
