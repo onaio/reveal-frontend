@@ -1,6 +1,5 @@
 import gatekeeper from '@onaio/gatekeeper';
 import ClientOAuth2 from 'client-oauth2';
-import cookieSession from 'cookie-session';
 import express from 'express';
 import fs from 'fs';
 import path from 'path';
@@ -88,12 +87,12 @@ const oauthCallback = (req, res) => {
       //   console.log(" updated user >>> ", updatedUser !== user); // => true
       //   console.log(" access token >>> ", updatedUser.accessToken);
       // });
+      return res.send('success');
     })
     .catch(e => {
-      // console.log('error >>> ', e);
+      console.log('error >>> ', e);
+      return res.send('oops');
     });
-
-  return res.send('oops');
 };
 
 const oauthState = (req, res) => {
