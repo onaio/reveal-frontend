@@ -72,6 +72,7 @@ toast.configure({
   autoClose: TOAST_AUTO_CLOSE_DELAY /** defines how long a toast remains visible on screen */,
 });
 
+import { AuthorizationGrantType } from '@onaio/gatekeeper/dist/types/components/login';
 import store from '../store';
 import { getOauthProviderState } from '../store/selectors';
 import './App.css';
@@ -299,7 +300,13 @@ class App extends Component {
                 <Route
                   exact={true}
                   path={LOGIN_URL}
-                  render={routeProps => <OauthLogin providers={providers} {...routeProps} />}
+                  render={routeProps => (
+                    <OauthLogin
+                      providers={providers}
+                      authorizationGrant={AuthorizationGrantType.AUTHORIZATION_CODE}
+                      {...routeProps}
+                    />
+                  )}
                 />
                 <Route
                   exact={true}
