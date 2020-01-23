@@ -2,7 +2,12 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { faUser } from '@fortawesome/free-regular-svg-icons';
 import { faExternalLinkSquareAlt, faMap } from '@fortawesome/free-solid-svg-icons';
 import ConnectedPrivateRoute from '@onaio/connected-private-route';
-import { ConnectedLogout, ConnectedOauthCallback, OauthLogin } from '@onaio/gatekeeper';
+import {
+  AuthorizationGrantType,
+  ConnectedLogout,
+  ConnectedOauthCallback,
+  OauthLogin,
+} from '@onaio/gatekeeper';
 import React, { Component } from 'react';
 import { Helmet } from 'react-helmet';
 import { Route, Switch } from 'react-router';
@@ -72,7 +77,6 @@ toast.configure({
   autoClose: TOAST_AUTO_CLOSE_DELAY /** defines how long a toast remains visible on screen */,
 });
 
-import { AuthorizationGrantType } from '@onaio/gatekeeper/dist/types/components/login';
 import store from '../store';
 import { getOauthProviderState } from '../store/selectors';
 import './App.css';
@@ -303,7 +307,7 @@ class App extends Component {
                   render={routeProps => (
                     <OauthLogin
                       providers={providers}
-                      authorizationGrant={AuthorizationGrantType.AUTHORIZATION_CODE}
+                      authorizationGrant={'AUTHORIZATION_CODE' as any}
                       {...routeProps}
                     />
                   )}
