@@ -14,8 +14,7 @@ import {
   lineLayerConfig,
   symbolLayerConfig,
 } from '../../configs/settings';
-import { APP, MAIN_PLAN, MAP_ID, STRUCTURE_LAYER } from '../../constants';
-import { displayError } from '../../helpers/errors';
+import { APP, MAIN_PLAN, MAP_ID, POINT, STRUCTURE_LAYER } from '../../constants';
 import { EventData } from '../../helpers/mapbox';
 import { ConfigStore, FeatureCollection, FlexObject } from '../../helpers/utils';
 import store from '../../store';
@@ -24,6 +23,7 @@ import { Jurisdiction, JurisdictionGeoJSON } from '../../store/ducks/jurisdictio
 import { StructureGeoJSON } from '../../store/ducks/structures';
 import { TaskGeoJSON } from '../../store/ducks/tasks';
 import './gisida.css';
+import { displayError } from '../../helpers/errors';
 
 /** handlers Interface */
 export interface Handlers {
@@ -340,39 +340,80 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
     /**  Deal with structures */
     const { structures } = this.props;
     if (structures) {
-      const structureLayer: FillLayerObj = {
-        ...fillLayerConfig,
-        id: STRUCTURE_LAYER,
-        paint: {
-          ...fillLayerConfig.paint,
-          'fill-color': GREY,
-          'fill-outline-color': GREY,
-        },
-        source: {
-          ...fillLayerConfig.source,
-          data: {
-            ...fillLayerConfig.source.data,
-            data: JSON.stringify(structures),
-          },
-        },
-        visible: true,
-      };
-      builtGeometriesContainer.push(structureLayer, {
-        ...lineLayerConfig,
-        id: `${STRUCTURE_LAYER}-line`,
-        paint: {
-          'line-color': GREY,
-          'line-opacity': 1,
-          'line-width': 2,
-        },
-        source: {
-          ...lineLayerConfig.source,
-          data: {
-            ...lineLayerConfig.source.data,
-            data: JSON.stringify(structures),
-          },
-        },
+      // console.log(structures.features.map(f => f.geometry && f.geometry.type));
+      const structurePolygons = { ...structures, features: [] as StructureGeoJSON[] };
+      const structurePoints = { ...structures, features: [] as StructureGeoJSON[] };
+      structures.features.forEach((structure: StructureGeoJSON) => {
+        const featureType = structure.geometry && structure.geometry.type;
+        switch (featureType) {
+          case POINT: {
+            structurePoints.features.push(structure);
+          }
+          default: {
+            structurePolygons.features.push(structure);
+          }
+        }
       });
+
+      if (structurePoints.features.length) {
+        const structurePointLayer = {
+          ...circleLayerConfig,
+          id: `${STRUCTURE_LAYER}-point`,
+          paint: {
+            ...circleLayerConfig.paint,
+            'circle-color': GREY,
+            'circle-stroke-color': GREY,
+          },
+          source: {
+            ...circleLayerConfig.source,
+            data: {
+              ...circleLayerConfig.source.data,
+              data: JSON.stringify(structurePoints),
+            },
+          },
+          visible: true,
+        };
+        builtGeometriesContainer.push(structurePointLayer);
+      }
+
+      if (structurePolygons.features.length) {
+        const structureFillLayer: FillLayerObj = {
+          ...fillLayerConfig,
+          id: STRUCTURE_LAYER,
+          paint: {
+            ...fillLayerConfig.paint,
+            'fill-color': GREY,
+            'fill-outline-color': GREY,
+          },
+          source: {
+            ...fillLayerConfig.source,
+            data: {
+              ...fillLayerConfig.source.data,
+              data: JSON.stringify(structurePolygons),
+            },
+          },
+          visible: true,
+        };
+
+        const structureLineLayer = {
+          ...lineLayerConfig,
+          id: `${STRUCTURE_LAYER}-line`,
+          paint: {
+            'line-color': GREY,
+            'line-opacity': 1,
+            'line-width': 2,
+          },
+          source: {
+            ...lineLayerConfig.source,
+            data: {
+              ...lineLayerConfig.source.data,
+              data: JSON.stringify(structurePolygons),
+            },
+          },
+        };
+
+        builtGeometriesContainer.push(structureFillLayer, structureLineLayer);
+      }
     }
     // handle Point layer types
     if (pointFeatureCollection) {
