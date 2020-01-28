@@ -72,7 +72,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint-js": "eslint 'src/**/*.{js,jsx}'",
-    "lint-ts": "tslint -c tslint.json 'src/**/*.{ts,tsx}'"
+    "lint-ts": "tslint -c tslint.json 'src/**/*.{ts,tsx}'",
+    "serve": "yarn babel-node -r node_modules/dotenv/config server/server.ts --extensions '.ts' dotenv_config_path=server/.env"
   },
   "husky": {
     "hooks": {
