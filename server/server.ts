@@ -1,10 +1,12 @@
 import gatekeeper from '@onaio/gatekeeper';
 import ClientOAuth2 from 'client-oauth2';
 import express from 'express';
+import session from 'express-session';
 import fs from 'fs';
 import path from 'path';
 import request from 'request';
 import serialize from 'serialize-javascript';
+import sessionFileStore from 'session-file-store';
 
 const opensrpAuth = new ClientOAuth2({
   accessTokenUri: process.env.EXPRESS_OPENSRP_ACCESS_TOKEN_URL,
@@ -20,24 +22,57 @@ const preloadedStateFile = process.env.EXPRESS_PRELOADED_STATE_FILE || '/tmp/exp
 
 console.log('opensrpAuth >>>>> ', opensrpAuth);
 
-// const session = () => cookieSession({
-//   httpOnly: false,
-//   name: 'session',
-//   secret: 'reveal',
-// });
-
 const app = express();
 
-// app.use(session);
-// app.use(cookieSession({
-//   httpOnly: true,
-//   name: 'session',
-//   keys: ['key1', 'key2']
-// }))
+const FileStore = sessionFileStore(session);
+const fileStoreOptions = {
+  path: process.env.EXPRESS_SESSION_FILESTORE_PATH || './sessions',
+};
+
+const sess = {
+  cookie: {
+    httpOnly: true,
+    maxAge: null,
+    path: process.env.EXPRESS_SESSION_PATH || '/',
+    secure: false,
+  },
+  name: process.env.EXPRESS_SESSION_NAME || 'session',
+  resave: false,
+  saveUninitialized: false,
+  secret: process.env.EXPRESS_SESSION_SECRET || 'hunter2',
+  store: new FileStore(fileStoreOptions),
+};
+
+if (app.get('env') === 'production') {
+  app.set('trust proxy', 1); // trust first proxy
+  sess.cookie.secure = true; // serve secure cookies
+}
+
+app.use(session(sess));
+
+// This middleware will check if user's cookie is still saved in browser and
+// user is not set, then automatically log the user out.
+// This usually happens when you stop your express server after login, your
+// cookie still remains saved in the browser.
+// app.use((req, res, next) => {
+//     if (req.cookies.user_sid && !req.session.user) {
+//         res.clearCookie('user_sid');
+//     }
+//     next();
+// });
+
+// middleware function to check for logged-in users
+// const sessionChecker = (req, res, next) => {
+//     if (req.session.user && req.cookies.user_sid) {
+//         res.redirect('/dashboard');
+//     } else {
+//         next();
+//     }
+// };
 
 const router = express.Router();
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.EXPRESS_PORT || 3000;
 const BUILD_PATH = path.resolve(path.resolve(), 'build');
 const filePath = path.resolve(BUILD_PATH, 'index.html');
 
@@ -56,7 +91,7 @@ const oauthCallback = (req, res) => {
   const provider = opensrpAuth;
   provider.code
     .getToken(req.originalUrl)
-    .then(function(user) {
+    .then(user => {
       const url = process.env.EXPRESS_OPENSRP_USER_URL;
       request.get(
         url,
@@ -77,6 +112,8 @@ const oauthCallback = (req, res) => {
               gatekeeper: gatekeeperState,
               session: sessionState,
             };
+            req.session.preloadedState = preloadedState;
+            req.session.save();
             fs.writeFileSync(preloadedStateFile, serialize(preloadedState));
           }
         }
