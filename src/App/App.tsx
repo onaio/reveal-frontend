@@ -70,7 +70,6 @@ import ConnectedOrgsListView from '../containers/pages/OrganizationViews/Organiz
 import ConnectedSingleOrgView from '../containers/pages/OrganizationViews/SingleOrganizationView';
 import ConnectedCreateEditPractitionerView from '../containers/pages/PractitionerViews/CreateEditPractitioner';
 import ConnectedPractitionersListView from '../containers/pages/PractitionerViews/PractitionerListView';
-import { growl, oAuthUserInfoGetter } from '../helpers/utils';
 
 library.add(faMap);
 library.add(faUser);
