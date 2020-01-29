@@ -52,7 +52,7 @@ export interface RouteParams {
 
 /** Geometry object interface */
 export interface Geometry {
-  coordinates: number[][][] | number[];
+  coordinates: number[][][][] | number[][][] | number[];
   type: string;
 }
 
