@@ -19,7 +19,7 @@ import * as structureDucks from '../../../../../../store/ducks/structures';
 import * as tasksDucks from '../../../../../../store/ducks/tasks';
 import * as fixtures from '../../../../../../store/ducks/tests/fixtures';
 import ConnectedMapSingleFI, { MapSingleFIProps, SingleActiveFIMap } from '../../active/';
-import { existingState } from './fixtures';
+import { existingState, structures } from './fixtures';
 
 jest.mock('../../../../../../components/GisidaWrapper', () => {
   const GisidaWrapperMock = () => <div>I love oov</div>;
@@ -351,5 +351,44 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
     expect(structuresMock).not.toBeCalled();
     expect(currentGoalMock).not.toBeCalled();
     expect(FCMock).not.toBeCalled();
+  });
+
+  it('renders the GisidaWrapper with structures', () => {
+    const mock: any = jest.fn();
+    const supersetServiceMock: any = jest.fn(async () => []);
+    store.dispatch(fetchGoals([fixtures.goal3 as goalDucks.Goal]));
+    store.dispatch(fetchJurisdictions([fixtures.jurisdictions[0]]));
+    store.dispatch(fetchPlans([fixtures.plan1 as Plan]));
+    store.dispatch(fetchTasks(fixtures.tasks));
+    store.dispatch(structureDucks.setStructures(structures as structureDucks.Structure[]));
+
+    const props = {
+      currentGoal: fixtures.goal3,
+      history,
+      location: mock,
+      match: {
+        isExact: true,
+        params: { id: fixtures.plan1.id },
+        path: `${FI_SINGLE_URL}/:id`,
+        url: `${FI_SINGLE_URL}/13`,
+      },
+      pointFeatureCollection: wrapFeatureCollection([fixtures.coloredTasks.task3.geojson]),
+      polygonFeatureCollection: wrapFeatureCollection([fixtures.coloredTasks.task2.geojson]),
+      supersetService: supersetServiceMock,
+    };
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedMapSingleFI {...props} />
+        </Router>
+      </Provider>
+    );
+
+    // structures prop
+    const singleActiveWrapperProps = wrapper.find('SingleActiveFIMap').props();
+    expect((singleActiveWrapperProps as MapSingleFIProps).plan).toEqual(fixtures.plan1);
+    expect((singleActiveWrapperProps as MapSingleFIProps).structures).not.toBeNull();
+
+    wrapper.unmount();
   });
 });
