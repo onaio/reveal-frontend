@@ -6,9 +6,9 @@ import {
   AuthorizationGrantType,
   ConnectedAPICallback,
   ConnectedLogout,
-  ConnectedOauthCallback,
   OauthLogin,
 } from '@onaio/gatekeeper';
+import querystring from 'querystring';
 import React, { Component } from 'react';
 import { Helmet } from 'react-helmet';
 import { Route, Switch, withRouter } from 'react-router';
@@ -32,6 +32,7 @@ import {
   FI_SINGLE_MAP_URL,
   FI_SINGLE_URL,
   FI_URL,
+  HOME_URL,
   INTERVENTION_IRS_DRAFTS_URL,
   INTERVENTION_IRS_URL,
   LOGIN_URL,
@@ -78,6 +79,7 @@ toast.configure({
   autoClose: TOAST_AUTO_CLOSE_DELAY /** defines how long a toast remains visible on screen */,
 });
 
+import { trimStart } from 'lodash';
 import { Redirect, RouteProps } from 'react-router-dom';
 import store from '../store';
 import { getOauthProviderState } from '../store/selectors';
@@ -350,15 +352,18 @@ class App extends Component {
                   render={routeProps => (
                     <ConnectedAPICallback
                       LoadingComponent={Loading}
-                      UnSuccessfulLoginComponent={withRouter(props => {
+                      UnSuccessfulLoginComponent={props => {
                         return <Redirect to={LOGIN_URL} />;
-                      })}
+                      }}
                       SuccessfulLoginComponent={withRouter(props => {
-                        return (
-                          <>
-                            <Redirect to={'/home'} />
-                          </>
-                        );
+                        let pathToRedirectTo = HOME_URL;
+                        const searchString = trimStart(props.location.search, '?');
+                        const searchParams = querystring.parse(searchString);
+                        const nextPath = searchParams.next as string | undefined;
+                        if (nextPath) {
+                          pathToRedirectTo = nextPath;
+                        }
+                        return <Redirect to={pathToRedirectTo} />;
                       })}
                       apiURL={EXPRESS_OAUTH_GET_STATE_URL}
                       {...routeProps}
