@@ -40,6 +40,7 @@ import {
   MAP,
   NEW_IRS_PLAN_URL,
   NEW_PLAN_URL,
+  OAUTH_CALLBACK_PATH,
   OAUTH_CALLBACK_URL,
   ORGANIZATIONS_LIST_URL,
   PLAN_COMPLETION_URL,
@@ -348,7 +349,7 @@ class App extends Component {
                 />
                 <Route
                   exact={true}
-                  path="/fe/oauth/callback/:id"
+                  path={OAUTH_CALLBACK_PATH}
                   render={routeProps => (
                     <ConnectedAPICallback
                       LoadingComponent={Loading}
