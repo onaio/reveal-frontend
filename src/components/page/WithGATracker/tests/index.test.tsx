@@ -68,7 +68,7 @@ describe('components/WithGATracker', () => {
 
   it('tracks pageviews when navigating to different pages', () => {
     GoogleAnalytics.pageview = jest.fn();
-    mount(
+    const wrapper = mount(
       <Provider store={store}>
         <ConnectedRouter history={history}>
           <App />
@@ -78,5 +78,6 @@ describe('components/WithGATracker', () => {
     expect(GoogleAnalytics.pageview).toBeCalledWith('/');
     history.push(PLAN_LIST_URL);
     expect(GoogleAnalytics.pageview).toBeCalledWith(PLAN_LIST_URL);
+    wrapper.unmount();
   });
 });
