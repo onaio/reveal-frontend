@@ -352,7 +352,7 @@ class App extends Component {
                   render={routeProps => (
                     <ConnectedAPICallback
                       LoadingComponent={Loading}
-                      UnSuccessfulLoginComponent={props => {
+                      UnSuccessfulLoginComponent={() => {
                         return <Redirect to={LOGIN_URL} />;
                       }}
                       SuccessfulLoginComponent={withRouter(props => {
