@@ -145,11 +145,10 @@ const oauthCallback = (req: express.Request, res: express.Response, next: expres
             req.session.preloadedState = preloadedState;
             // you have to save the session manually for POST requests like this one
             req.session.save(() => void 0);
+            return res.redirect(process.env.FRONTEND_OPENSRP_CALLBACK_URL);
           }
         }
       );
-
-      return res.status(200).json('Success');
     })
     .catch((e: Error) => {
       next(e);
