@@ -80,4 +80,20 @@ describe('components/WithGATracker', () => {
     expect(GoogleAnalytics.pageview).toBeCalledWith(PLAN_LIST_URL);
     wrapper.unmount();
   });
+
+  it('does not initialize GA or track page views without a GA code', () => {
+    process.env.REACT_APP_GA_CODE = '';
+    jest.mock('../../../../configs/env');
+    GoogleAnalytics.pageview = jest.fn();
+    const wrapper = mount(
+      <Provider store={store}>
+        <ConnectedRouter history={history}>
+          <App />
+        </ConnectedRouter>
+      </Provider>
+    );
+    history.push(PLAN_LIST_URL);
+    expect(GoogleAnalytics.pageview).toBeCalledTimes(0);
+    wrapper.unmount();
+  });
 });
