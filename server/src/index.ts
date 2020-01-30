@@ -1,9 +1,11 @@
 import { getOpenSRPUserInfo } from '@onaio/gatekeeper';
 import ClientOAuth2 from 'client-oauth2';
+import compression from 'compression';
 import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
 import express from 'express';
 import session from 'express-session';
+import helmet from 'helmet';
 import path from 'path';
 import request from 'request';
 import sessionFileStore from 'session-file-store';
@@ -26,6 +28,9 @@ const loginURL = process.env.EXPRESS_SESSION_LOGIN_URL || '/';
 const sessionName = process.env.EXPRESS_SESSION_NAME || 'session';
 
 const app = express();
+
+app.use(compression()); // Compress all routes
+app.use(helmet()); // protect against well known vulnerabilities
 
 const FileStore = sessionFileStore(session);
 const fileStoreOptions = {
