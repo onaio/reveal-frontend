@@ -72,7 +72,7 @@ export const PRACTITIONERS_LIST_URL = '/practitioners';
 export const ASSIGN_PRACTITIONERS_URL = '/teams/assignPractitioners';
 export const PLAN = 'plan';
 export const REPORT = 'report';
-export const OAUTH_CALLBACK_URL = '/fe/oauth/callback';
+export const OAUTH_CALLBACK_URL = '/fe/oauth/callback/opensrp';
 
 // OpenSRP API strings
 export const OPENSRP_PRACTITIONER_ENDPOINT = 'practitioner';

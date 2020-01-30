@@ -348,7 +348,7 @@ class App extends Component {
                 />
                 <Route
                   exact={true}
-                  path={`${OAUTH_CALLBACK_URL}/:id`}
+                  path="/fe/oauth/callback/:id"
                   render={routeProps => (
                     <ConnectedAPICallback
                       LoadingComponent={Loading}
