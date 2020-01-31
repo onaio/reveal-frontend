@@ -1180,12 +1180,12 @@
   resolved "https://registry.yarnpkg.com/@nodelib/fs.stat/-/fs.stat-1.1.3.tgz#2b5a3ab3f918cca48a8c754c08168e3f03eba61b"
   integrity sha512-shAmDyaQC4H92APFoIaVDHCx5bStIocgvbwQyxPRrbUY20V1EYTbSDchWbuwlMG3V17cprZhA6+78JfB+3DTPw==
 
-"@onaio/connected-private-route@^0.0.8":
-  version "0.0.8"
-  resolved "https://registry.yarnpkg.com/@onaio/connected-private-route/-/connected-private-route-0.0.8.tgz#a30f6cdc8ed4cc376ac8a300223cf4b21b278a47"
-  integrity sha512-RkSCeaJS8Z1M5JyJvQhz3tXmoVodbhXbiMK4FWDvvB9cyid13tnXhXXyfQceK3GCg/i7oDCGAIfRg50sw9LLag==
+"@onaio/connected-private-route@^0.0.10":
+  version "0.0.10"
+  resolved "https://registry.yarnpkg.com/@onaio/connected-private-route/-/connected-private-route-0.0.10.tgz#c7e4d408f45e8b2fee7b9456cf6714b5ac950564"
+  integrity sha512-dMqT2A7yJvCLHA9rjnSVf/YjCzcKTX+pffnY4rPo7WPXquIepwB6/ymDDycSKqY8ST/C6AnhZ79gGdEOPrXL5Q==
   dependencies:
-    "@onaio/session-reducer" "^0.0.10"
+    "@onaio/session-reducer" "^0.0.11"
 
 "@onaio/connected-reducer-registry@^0.0.2":
   version "0.0.2"
@@ -1213,10 +1213,10 @@
   resolved "https://registry.yarnpkg.com/@onaio/element-map/-/element-map-0.0.5.tgz#6c8b55314d41fb76c1ea7538d4ee217a121936cb"
   integrity sha512-PxhKq2uR9j8fZkvIqiUMp8CvZTX358d3sWuLj5a7LRpTK/Y+ZS1L9XZp2Xb9pplHCSferZxzwjm/YfKqVr56lA==
 
-"@onaio/gatekeeper@^0.0.16":
-  version "0.0.16"
-  resolved "https://registry.yarnpkg.com/@onaio/gatekeeper/-/gatekeeper-0.0.16.tgz#e4873a32d70f0491c00afee772d70ffd1da06885"
-  integrity sha512-coEZ9cFetovWr62p85v1aXLW3DjEihbZohMelGiA4+BdzQw6pB0oN3fCT9uH0vBMt3Qnc9vqTd7FsTSthb8Rvw==
+"@onaio/gatekeeper@^0.0.17":
+  version "0.0.17"
+  resolved "https://registry.yarnpkg.com/@onaio/gatekeeper/-/gatekeeper-0.0.17.tgz#5b7b0d8ae3d2714cc20b170c1ec3f81f387131d1"
+  integrity sha512-4g1rmLiLyCcReGH/8Gg2lY6vviCaPGrQLi6+qGbqCddY0PW0FOCrff3arLgyikI18WAHLowA2mqXzE0K7qrZvA==
   dependencies:
     "@onaio/session-reducer" "^0.0.11"
     client-oauth2 "^4.2.3"
@@ -11253,9 +11253,9 @@ qs@~6.5.2:
   integrity sha512-N5ZAX4/LxJmF+7wN74pUD6qAh9/wnvdQcjq9TZjevvXzSUo7bfmw91saqMjzGS2xq91/odN2dW/WOl7qQHNDGA==
 
 query-string@^6.4.2:
-  version "6.5.0"
-  resolved "https://registry.yarnpkg.com/query-string/-/query-string-6.5.0.tgz#2e1a70125af01f6f04573692d02c09302a1d8bfc"
-  integrity sha512-TYC4hDjZSvVxLMEucDMySkuAS9UIzSbAiYGyA9GWCjLKB8fQpviFbjd20fD7uejCDxZS+ftSdBKE6DS+xucJFg==
+  version "6.10.1"
+  resolved "https://registry.yarnpkg.com/query-string/-/query-string-6.10.1.tgz#30b3505f6fca741d5ae541964d1b3ae9dc2a0de8"
+  integrity sha512-SHTUV6gDlgMXg/AQUuLpTiBtW/etZ9JT6k6RCtCyqADquApLX0Aq5oK/s5UeTUAWBG50IExjIr587GqfXRfM4A==
   dependencies:
     decode-uri-component "^0.2.0"
     split-on-first "^1.0.0"

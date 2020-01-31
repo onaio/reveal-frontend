@@ -239,3 +239,7 @@ const toastAutoCloseDelay = process.env.REACT_APP_TOAST_AUTO_CLOSE_DELAY || '200
 
 export const TOAST_AUTO_CLOSE_DELAY = parseInt(toastAutoCloseDelay, 10);
 export type TOAST_AUTO_CLOSE_DELAY = typeof TOAST_AUTO_CLOSE_DELAY;
+
+export const EXPRESS_OAUTH_GET_STATE_URL =
+  process.env.EXPRESS_OAUTH_GET_STATE_URL || 'http://localhost:3000/oauth/state';
+export type EXPRESS_OAUTH_GET_STATE_URL = typeof EXPRESS_OAUTH_GET_STATE_URL;

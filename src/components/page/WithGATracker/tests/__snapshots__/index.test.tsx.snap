@@ -1044,7 +1044,7 @@ exports[`components/WithGATracker renders components correctly when wrapped with
                                     "url": "/",
                                   }
                                 }
-                                disableLoginProtection={true}
+                                disableLoginProtection={false}
                                 exact={true}
                                 location={
                                   Object {
@@ -1055,6 +1055,7 @@ exports[`components/WithGATracker renders components correctly when wrapped with
                                   }
                                 }
                                 path="/"
+                                redirectPath="/fe/oauth/callback/opensrp"
                               >
                                 <PrivateRoute
                                   authenticated={true}
@@ -1067,7 +1068,7 @@ exports[`components/WithGATracker renders components correctly when wrapped with
                                       "url": "/",
                                     }
                                   }
-                                  disableLoginProtection={true}
+                                  disableLoginProtection={false}
                                   dispatch={[Function]}
                                   exact={true}
                                   location={
@@ -1079,7 +1080,7 @@ exports[`components/WithGATracker renders components correctly when wrapped with
                                     }
                                   }
                                   path="/"
-                                  redirectPath="/login"
+                                  redirectPath="/fe/oauth/callback/opensrp"
                                 >
                                   <Route
                                     computedMatch={

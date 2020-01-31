@@ -21,7 +21,7 @@ jobs:
           REACT_APP_ENABLE_ABOUT: "true"
           REACT_APP_ENABLE_TEAMS: "true"
           REACT_APP_ENABLE_PRACTITIONERS: "true"
-          REACT_APP_DISABLE_LOGIN_PROTECTION: "true"
+          REACT_APP_DISABLE_LOGIN_PROTECTION: "false"
           REACT_APP_GA_CODE: "UA-0000000-0"
           REACT_APP_GA_ENV: "test"
           REACT_APP_GISIDA_ONADATA_API_TOKEN: hunter2
@@ -40,6 +40,7 @@ jobs:
           REACT_APP_ONADATA_OAUTH_STATE: "onadata"
           REACT_APP_ONADATA_CLIENT_ID: "hunter2"
           REACT_APP_IRS_PLAN_COUNTRIES: "NA,TH"
+          EXPRESS_OAUTH_GET_STATE_URL: "http://localhost:3000/oauth/state"
 
     working_directory: ~/repo
 
