@@ -1044,7 +1044,7 @@ exports[`components/WithGATracker renders components correctly when wrapped with
                                     "url": "/",
                                   }
                                 }
-                                disableLoginProtection={true}
+                                disableLoginProtection={false}
                                 exact={true}
                                 location={
                                   Object {
@@ -1068,7 +1068,7 @@ exports[`components/WithGATracker renders components correctly when wrapped with
                                       "url": "/",
                                     }
                                   }
-                                  disableLoginProtection={true}
+                                  disableLoginProtection={false}
                                   dispatch={[Function]}
                                   exact={true}
                                   location={
