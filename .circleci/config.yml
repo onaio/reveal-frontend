@@ -40,6 +40,7 @@ jobs:
           REACT_APP_ONADATA_OAUTH_STATE: "onadata"
           REACT_APP_ONADATA_CLIENT_ID: "hunter2"
           REACT_APP_IRS_PLAN_COUNTRIES: "NA,TH"
+          EXPRESS_OAUTH_GET_STATE_URL: "http://localhost:3000/oauth/state"
 
     working_directory: ~/repo
 
