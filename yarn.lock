@@ -1213,8 +1213,10 @@
   resolved "https://registry.yarnpkg.com/@onaio/element-map/-/element-map-0.0.5.tgz#6c8b55314d41fb76c1ea7538d4ee217a121936cb"
   integrity sha512-PxhKq2uR9j8fZkvIqiUMp8CvZTX358d3sWuLj5a7LRpTK/Y+ZS1L9XZp2Xb9pplHCSferZxzwjm/YfKqVr56lA==
 
-"@onaio/gatekeeper@file:../js-tools/packages/gatekeeper":
-  version "0.0.16"
+"@onaio/gatekeeper@^0.0.17":
+  version "0.0.17"
+  resolved "https://registry.yarnpkg.com/@onaio/gatekeeper/-/gatekeeper-0.0.17.tgz#5b7b0d8ae3d2714cc20b170c1ec3f81f387131d1"
+  integrity sha512-4g1rmLiLyCcReGH/8Gg2lY6vviCaPGrQLi6+qGbqCddY0PW0FOCrff3arLgyikI18WAHLowA2mqXzE0K7qrZvA==
   dependencies:
     "@onaio/session-reducer" "^0.0.11"
     client-oauth2 "^4.2.3"

@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@onaio/gatekeeper@^0.0.16":
-  version "0.0.16"
-  resolved "https://registry.yarnpkg.com/@onaio/gatekeeper/-/gatekeeper-0.0.16.tgz#e4873a32d70f0491c00afee772d70ffd1da06885"
-  integrity sha512-coEZ9cFetovWr62p85v1aXLW3DjEihbZohMelGiA4+BdzQw6pB0oN3fCT9uH0vBMt3Qnc9vqTd7FsTSthb8Rvw==
+"@onaio/gatekeeper@^0.0.17":
+  version "0.0.17"
+  resolved "https://registry.yarnpkg.com/@onaio/gatekeeper/-/gatekeeper-0.0.17.tgz#5b7b0d8ae3d2714cc20b170c1ec3f81f387131d1"
+  integrity sha512-4g1rmLiLyCcReGH/8Gg2lY6vviCaPGrQLi6+qGbqCddY0PW0FOCrff3arLgyikI18WAHLowA2mqXzE0K7qrZvA==
   dependencies:
     "@onaio/session-reducer" "^0.0.11"
     client-oauth2 "^4.2.3"

@@ -13,7 +13,7 @@
     "@onaio/connected-reducer-registry": "^0.0.2",
     "@onaio/drill-down-table": "^0.0.21",
     "@onaio/element-map": "^0.0.2",
-    "@onaio/gatekeeper": "/home/peter/Desktop/onaio/js-tools/packages/gatekeeper/",
+    "@onaio/gatekeeper": "^0.0.17",
     "@onaio/list-view": "^0.0.1",
     "@onaio/redux-reducer-registry": "^0.0.9",
     "@onaio/session-reducer": "^0.0.10",
