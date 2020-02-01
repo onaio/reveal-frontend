@@ -16,7 +16,7 @@ import { toast } from 'react-toastify';
 import { Col, Container, Row } from 'reactstrap';
 import Loading from '../components/page/Loading';
 import WithGATracker from '../components/page/WithGATracker';
-import { EXPRESS_OAUTH_GET_STATE_URL, TOAST_AUTO_CLOSE_DELAY, WEBSITE_NAME } from '../configs/env';
+import { OAUTH_GET_STATE_URL, TOAST_AUTO_CLOSE_DELAY, WEBSITE_NAME } from '../configs/env';
 import { DISABLE_LOGIN_PROTECTION, OPENSRP_LOGOUT_URL, OPENSRP_OAUTH_STATE } from '../configs/env';
 import { providers } from '../configs/settings';
 import {
@@ -366,7 +366,7 @@ class App extends Component {
                         }
                         return <Redirect to={pathToRedirectTo} />;
                       })}
-                      apiURL={EXPRESS_OAUTH_GET_STATE_URL}
+                      apiURL={OAUTH_GET_STATE_URL}
                       {...routeProps}
                     />
                   )}

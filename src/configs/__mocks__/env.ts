@@ -87,5 +87,5 @@ export type OPENMRS_USERS_REQUEST_PAGE_SIZE = typeof OPENMRS_USERS_REQUEST_PAGE_
 export const LANGUAGE = 'en';
 export type LANGUAGE = typeof LANGUAGE;
 
-export const EXPRESS_OAUTH_GET_STATE_URL = 'http://localhost:3000/oauth/state';
-export type EXPRESS_OAUTH_GET_STATE_URL = typeof EXPRESS_OAUTH_GET_STATE_URL;
+export const OAUTH_GET_STATE_URL = 'http://localhost:3000/oauth/state';
+export type OAUTH_GET_STATE_URL = typeof OAUTH_GET_STATE_URL;
