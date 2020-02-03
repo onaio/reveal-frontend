@@ -6,12 +6,23 @@ import React from 'react';
 import GoogleAnalytics from 'react-ga';
 import { Provider } from 'react-redux';
 import App from '../../../../App/App';
+import { GA_CODE } from '../../../../configs/env';
 import { PLAN_LIST_URL } from '../../../../constants';
 import store from '../../../../store';
 
 const history = createBrowserHistory();
+let localGaCode = '';
 
 describe('components/WithGATracker without GA_CODE', () => {
+  beforeAll(() => {
+    localGaCode = process.env.REACT_APP_GA_CODE || '';
+    process.env.REACT_APP_GA_CODE = '';
+  });
+  afterAll(() => {
+    process.env.REACT_APP_GA_CODE = localGaCode;
+    localGaCode = '';
+  });
+
   beforeEach(() => {
     jest.resetAllMocks();
     store.dispatch(
@@ -46,7 +57,7 @@ describe('components/WithGATracker without GA_CODE', () => {
         </ConnectedRouter>
       </Provider>
     );
-    expect(wrapper.find('App').length).toEqual(1); // this doesn't specifically test that the HOC isn't there
+    expect(wrapper.find('App').length).toEqual(1);
     expect(wrapper.find('HOC').length).toEqual(0);
     wrapper.unmount();
   });
@@ -62,8 +73,12 @@ describe('components/WithGATracker without GA_CODE', () => {
     );
     history.push(PLAN_LIST_URL);
 
-    expect(process.env.REACT_APP_GA_CODE).toBe(''); // this is still picking up local process.env values
-    expect(GoogleAnalytics.pageview).toBeCalledTimes(0); // by the time this runs, GA_CODE is already set from local process
+    // even though this env variable is set up correctly for the test,
+    // env.ts is picking up the local process.env.REACT_APP_GA_CODE,
+    // so by the time WithGACode imports GA_CODE it's already set from local process.env
+    expect(process.env.REACT_APP_GA_CODE).toBe('');
+    expect(GA_CODE).toBe('');
+    expect(GoogleAnalytics.pageview).toBeCalledTimes(0);
 
     wrapper.unmount();
   });
