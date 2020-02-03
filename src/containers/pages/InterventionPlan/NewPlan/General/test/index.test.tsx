@@ -34,11 +34,11 @@ describe('containers/pages/NewPlan', () => {
     });
     // check that there's a Row that nests a Col that nests a PlanForm
     expect(wrapper.find('Row')).toHaveLength(1);
-    expect(wrapper.find('Row').find('Col')).toHaveLength(1);
+    expect(wrapper.find('Row').find('Col')).toHaveLength(2);
     expect(
       wrapper
         .find('Row')
-        .find('Col')
+        .find('Col#planform-col-container')
         .find('PlanForm')
     ).toHaveLength(1);
 
