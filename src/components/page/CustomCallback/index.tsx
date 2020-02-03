@@ -1,4 +1,4 @@
-import { APICallbackProps, ConnectedAPICallback, RouteParams } from '@onaio/gatekeeper';
+import { ConnectedAPICallback, RouteParams } from '@onaio/gatekeeper';
 import { trimStart } from 'lodash';
 import querystring from 'querystring';
 import React from 'react';
