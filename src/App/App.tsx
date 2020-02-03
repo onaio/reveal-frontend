@@ -14,6 +14,7 @@ import { Helmet } from 'react-helmet';
 import { Route, Switch, withRouter } from 'react-router';
 import { toast } from 'react-toastify';
 import { Col, Container, Row } from 'reactstrap';
+import CustomConnectedAPICallBack from '../components/page/CustomCallback';
 import Loading from '../components/page/Loading';
 import WithGATracker from '../components/page/WithGATracker';
 import { OAUTH_GET_STATE_URL, TOAST_AUTO_CLOSE_DELAY, WEBSITE_NAME } from '../configs/env';
@@ -72,6 +73,9 @@ import ConnectedOrgsListView from '../containers/pages/OrganizationViews/Organiz
 import ConnectedSingleOrgView from '../containers/pages/OrganizationViews/SingleOrganizationView';
 import ConnectedCreateEditPractitionerView from '../containers/pages/PractitionerViews/CreateEditPractitioner';
 import ConnectedPractitionersListView from '../containers/pages/PractitionerViews/PractitionerListView';
+import store from '../store';
+import { getOauthProviderState } from '../store/selectors';
+import './App.css';
 
 library.add(faMap);
 library.add(faUser);
@@ -79,12 +83,6 @@ library.add(faExternalLinkSquareAlt);
 toast.configure({
   autoClose: TOAST_AUTO_CLOSE_DELAY /** defines how long a toast remains visible on screen */,
 });
-
-import { trimStart } from 'lodash';
-import { Redirect, RouteProps } from 'react-router-dom';
-import store from '../store';
-import { getOauthProviderState } from '../store/selectors';
-import './App.css';
 
 /** Main App component */
 class App extends Component {
@@ -350,26 +348,7 @@ class App extends Component {
                 <Route
                   exact={true}
                   path={OAUTH_CALLBACK_PATH}
-                  render={routeProps => (
-                    <ConnectedAPICallback
-                      LoadingComponent={Loading}
-                      UnSuccessfulLoginComponent={() => {
-                        return <Redirect to={LOGIN_URL} />;
-                      }}
-                      SuccessfulLoginComponent={withRouter(props => {
-                        let pathToRedirectTo = HOME_URL;
-                        const searchString = trimStart(props.location.search, '?');
-                        const searchParams = querystring.parse(searchString);
-                        const nextPath = searchParams.next as string | undefined;
-                        if (nextPath) {
-                          pathToRedirectTo = nextPath;
-                        }
-                        return <Redirect to={pathToRedirectTo} />;
-                      })}
-                      apiURL={OAUTH_GET_STATE_URL}
-                      {...routeProps}
-                    />
-                  )}
+                  render={routeProps => <CustomConnectedAPICallBack {...routeProps} />}
                 />
                 {/* tslint:enable jsx-no-lambda */}
                 <ConnectedPrivateRoute
