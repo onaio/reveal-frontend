@@ -56,7 +56,7 @@ describe('components/WithGATracker', () => {
         </ConnectedRouter>
       </Provider>
     );
-    expect(toJson(wrapper)).toMatchSnapshot();
+    expect(wrapper.find('App').length).toEqual(1);
     wrapper.unmount();
   });
 
