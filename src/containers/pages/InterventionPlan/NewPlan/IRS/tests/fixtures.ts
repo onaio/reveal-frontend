@@ -1,5 +1,5 @@
 import { parseISO } from 'date-fns';
-import { planFormProps as newPlanFormProps } from '../../General/test/fixtures';
+import { planFormProps as newPlanFormProps } from '../../General/tests/fixtures';
 
 export const planFormProps = {
   ...newPlanFormProps,
