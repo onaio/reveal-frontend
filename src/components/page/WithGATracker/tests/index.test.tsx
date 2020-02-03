@@ -11,6 +11,8 @@ import App from '../../../../App/App';
 import { PLAN_LIST_URL } from '../../../../constants';
 import store from '../../../../store';
 
+jest.mock('../../../../configs/env');
+
 const history = createBrowserHistory();
 
 describe('components/WithGATracker', () => {
