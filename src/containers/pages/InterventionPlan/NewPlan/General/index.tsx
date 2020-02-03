@@ -43,7 +43,7 @@ const NewPlan = () => {
       <HeaderBreadcrumb {...breadcrumbProps} />
       <h3 className="mb-3 page-title">{pageTitle}</h3>
       <Row>
-        <Col md={8}>
+        <Col md={8} id="planform-col-container">
           <PlanForm {...{ formHandler: formValuesHandler }} />
         </Col>
         <Col md={4}>
