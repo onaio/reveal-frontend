@@ -38,7 +38,7 @@ export const trackPage = (page: string, options: FlexObject = {}): void => {
   GoogleAnalytics.pageview(page);
 };
 
-if (GA_CODE.length) {
+if (GA_CODE && GA_CODE.length) {
   GoogleAnalytics.initialize(GA_CODE, {
     testMode: GA_ENV === 'test',
   });
@@ -55,7 +55,7 @@ if (GA_CODE.length) {
  * @returns HOC rendering the WrappedComponent
  */
 const WithGATracker = (WrappedComponent: any, options: FlexObject = {}) => {
-  if (!GA_CODE.length) {
+  if (!GA_CODE || !GA_CODE.length) {
     return WrappedComponent;
   }
 
