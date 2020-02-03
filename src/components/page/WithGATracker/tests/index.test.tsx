@@ -55,6 +55,7 @@ describe('components/WithGATracker', () => {
       </Provider>
     );
     expect(toJson(wrapper)).toMatchSnapshot();
+    expect(wrapper.find('HOC').length).toEqual(1);
     wrapper.unmount();
   });
 
