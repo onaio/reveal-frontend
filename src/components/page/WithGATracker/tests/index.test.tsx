@@ -1,14 +1,14 @@
 import { authenticateUser } from '@onaio/session-reducer';
 import { ConnectedRouter } from 'connected-react-router';
 import { mount } from 'enzyme';
-import toJson from 'enzyme-to-json';
 import { createBrowserHistory } from 'history';
 import React from 'react';
 import GoogleAnalytics from 'react-ga';
 import { Provider } from 'react-redux';
-import { getGAusername, setGAusername, trackPage } from '..';
+import { getGAusername, initGoogleAnalytics, setGAusername, trackPage } from '..';
 import App from '../../../../App/App';
-import { PLAN_LIST_URL } from '../../../../constants';
+import { NEW_IRS_PLAN_URL, PLAN_LIST_URL } from '../../../../constants';
+import { FlexObject } from '../../../../helpers/utils';
 import store from '../../../../store';
 
 jest.mock('../../../../configs/env');
@@ -82,5 +82,14 @@ describe('components/WithGATracker', () => {
     history.push(PLAN_LIST_URL);
     expect(GoogleAnalytics.pageview).toBeCalledWith(PLAN_LIST_URL);
     wrapper.unmount();
+  });
+
+  it('tracks nothing when no GA Code is provided', () => {
+    GoogleAnalytics.pageview = jest.fn();
+    const gaOptions: FlexObject = { GA_CODE: '' };
+    initGoogleAnalytics(gaOptions);
+    trackPage('/', gaOptions);
+    trackPage(NEW_IRS_PLAN_URL, gaOptions);
+    expect(GoogleAnalytics.pageview).not.toBeCalled();
   });
 });
