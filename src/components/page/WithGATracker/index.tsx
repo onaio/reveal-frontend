@@ -44,15 +44,22 @@ export const trackPage = (page: string, options: FlexObject = {}): void => {
   GoogleAnalytics.pageview(page);
 };
 
-if (GA_CODE.length) {
-  GoogleAnalytics.initialize(GA_CODE, {
-    testMode: GA_ENV === 'test',
-  });
-  GoogleAnalytics.set({
-    env: GA_ENV,
-    username,
-  });
-}
+/**
+ * helper function to initialize GoogleAnalytics
+ * @param {FlexObject} options tracking options for the page view
+ */
+export const initGoogleAnalytics = (options: FlexObject = {}) => {
+  const gaCode = getGaCode(options);
+  if (gaCode && gaCode.length) {
+    GoogleAnalytics.initialize(GA_CODE, {
+      testMode: GA_ENV === 'test',
+    });
+    GoogleAnalytics.set({
+      env: GA_ENV,
+      username,
+    });
+  }
+};
 
 /**
  * Higher Order Component (HOC) which handles Google Analytics page view tracking
