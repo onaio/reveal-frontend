@@ -57,6 +57,7 @@ describe('components/WithGATracker', () => {
       </Provider>
     );
     expect(wrapper.find('App').length).toEqual(1);
+    expect(wrapper.find('WithGATrackerHOC').length).toEqual(1);
     wrapper.unmount();
   });
 

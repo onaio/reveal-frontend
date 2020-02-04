@@ -73,7 +73,7 @@ const WithGATracker = (WrappedComponent: any, options: FlexObject = {}) => {
     return WrappedComponent;
   }
 
-  const HOC = class extends Component<Props> {
+  const WithGATrackerHOC = class extends Component<Props> {
     public componentDidMount() {
       // update the username dimension
       const user = (getUser(store.getState()) || {}) as FlexObject;
@@ -106,7 +106,7 @@ const WithGATracker = (WrappedComponent: any, options: FlexObject = {}) => {
     }
   };
 
-  return HOC;
+  return WithGATrackerHOC;
 };
 
 export default WithGATracker;
