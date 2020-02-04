@@ -12,9 +12,16 @@ let username = (getUser(store.getState()) || {}).username || '';
 
 /**
  * helper function to get the Google Analytics tracking code
- * @param options tracking options for the page view
+ * @param {FlexObject|undefined} options tracking options for the page view
+ * @returns {string}
  */
-export const getGaCode = (options: FlexObject = {}) => (options && options.GA_CODE) || GA_CODE;
+export const getGaCode = (options: FlexObject | undefined) => {
+  const gaCode =
+    (options && !!!options.GA_CODE && options.GA_CODE) ||
+    ((!options || !!options.GA_CODE) && GA_CODE) ||
+    '';
+  return gaCode;
+};
 
 /**
  * helper function to set the Google Analytics dimension for username
