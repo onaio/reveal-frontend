@@ -11,6 +11,12 @@ type Props = RouteComponentProps<RouteParams>;
 let username = (getUser(store.getState()) || {}).username || '';
 
 /**
+ * helper function to get the Google Analytics tracking code
+ * @param options tracking options for the page view
+ */
+export const getGaCode = (options: FlexObject = {}) => (options && options.GA_CODE) || GA_CODE;
+
+/**
  * helper function to set the Google Analytics dimension for username
  * @param {FlexObject} user user object returned from session store
  */
