@@ -77,7 +77,7 @@ export const initGoogleAnalytics = (options?: FlexObject) => {
  * @param {FlexObject} options tracking options for the page view
  * @returns HOC rendering the WrappedComponent
  */
-const WithGATracker = (WrappedComponent: any, options: FlexObject = {}) => {
+const WithGATracker = (WrappedComponent: any, options?: FlexObject) => {
   const gaCode = getGaCode(options);
   if (!gaCode || !gaCode.length) {
     return WrappedComponent;
@@ -106,7 +106,7 @@ const WithGATracker = (WrappedComponent: any, options: FlexObject = {}) => {
 
         // track the page view here only if component didn't un/remount and the URL has updated
         if (currentPage !== nextPage) {
-          trackPage(nextPage);
+          trackPage(nextPage, options);
         }
       }
     }
