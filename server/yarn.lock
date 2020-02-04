@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@onaio/gatekeeper@^0.0.17":
-  version "0.0.17"
-  resolved "https://registry.yarnpkg.com/@onaio/gatekeeper/-/gatekeeper-0.0.17.tgz#5b7b0d8ae3d2714cc20b170c1ec3f81f387131d1"
-  integrity sha512-4g1rmLiLyCcReGH/8Gg2lY6vviCaPGrQLi6+qGbqCddY0PW0FOCrff3arLgyikI18WAHLowA2mqXzE0K7qrZvA==
+"@onaio/gatekeeper@^0.0.18":
+  version "0.0.18"
+  resolved "https://registry.yarnpkg.com/@onaio/gatekeeper/-/gatekeeper-0.0.18.tgz#684ab8c10c0058063bbe6d36230bde0a1d80f08b"
+  integrity sha512-FZ74RgibzLcXqrtH8SqOcb/she+9pbDOotZmfGaoX+/hzbOCCAnof1NrLcYs8xtOLkwzAYdRzDWOy4HB1ndzoQ==
   dependencies:
     "@onaio/session-reducer" "^0.0.11"
     client-oauth2 "^4.2.3"
@@ -1581,9 +1581,9 @@ popsicle-redirects@^1.0.0:
   integrity sha512-XCpzVjVk7tty+IJnSdqWevmOr1n8HNDhL86v7mZ6T1JIIf2KGybxUk9mm7ZFOhWMkGB0e8XkacHip7BV8AQWQA==
 
 popsicle-transport-http@^1.0.0:
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/popsicle-transport-http/-/popsicle-transport-http-1.0.6.tgz#b73a65426f7ef9d0bfedd98673b84cd92e061bdd"
-  integrity sha512-J/d1MhlqgaDro9xWe31RCNFBlUs3kG52rl7YNKYZdF8nllgGtXwhfcLlzwNJOW/M+nPOyxFvqOZIi6Qq599Hlw==
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/popsicle-transport-http/-/popsicle-transport-http-1.0.7.tgz#a20bf0dd3a42d4acd55fb9cf34e8cff47789ba49"
+  integrity sha512-UVpbAfJn9Z19A84WdIklHzbK8EHt7o1w0u6JEkAx6BTlkSxI6T2Lo5Vr989YO8pPmbFZhNClz3Eir8fldAYWpQ==
   dependencies:
     make-error-cause "^2.2.0"
     pump "^3.0.0"

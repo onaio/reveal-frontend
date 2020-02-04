@@ -10,7 +10,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "@onaio/gatekeeper": "^0.0.17",
+    "@onaio/gatekeeper": "^0.0.18",
     "@types/compression": "^1.0.1",
     "@types/helmet": "^0.0.45",
     "compression": "^1.7.4",
