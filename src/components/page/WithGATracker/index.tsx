@@ -61,7 +61,8 @@ if (GA_CODE.length) {
  * @returns HOC rendering the WrappedComponent
  */
 const WithGATracker = (WrappedComponent: any, options: FlexObject = {}) => {
-  if (!GA_CODE.length) {
+  const gaCode = getGaCode(options);
+  if (!gaCode || !gaCode.length) {
     return WrappedComponent;
   }
 
