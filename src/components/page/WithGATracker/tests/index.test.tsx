@@ -11,6 +11,8 @@ import App from '../../../../App/App';
 import { PLAN_LIST_URL } from '../../../../constants';
 import store from '../../../../store';
 
+jest.mock('../../../../configs/env');
+
 const history = createBrowserHistory();
 
 describe('components/WithGATracker', () => {
@@ -54,8 +56,8 @@ describe('components/WithGATracker', () => {
         </ConnectedRouter>
       </Provider>
     );
-    expect(toJson(wrapper)).toMatchSnapshot();
     expect(wrapper.find('HOC').length).toEqual(1);
+    expect(wrapper.find('App').length).toEqual(1);
     wrapper.unmount();
   });
 
