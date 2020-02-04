@@ -43,12 +43,15 @@ export const getGAusername = (): string => username;
  * @param {string} page the url string of the page view being tracked
  * @param {FlexObject} options tracking options for the page view
  */
-export const trackPage = (page: string, options: FlexObject = {}): void => {
-  GoogleAnalytics.set({
-    page,
-    ...options,
-  });
-  GoogleAnalytics.pageview(page);
+export const trackPage = (page: string, options?: FlexObject): void => {
+  const gaCode = getGaCode(options);
+  if (gaCode && gaCode.length) {
+    GoogleAnalytics.set({
+      page,
+      ...options,
+    });
+    GoogleAnalytics.pageview(page);
+  }
 };
 
 /**
