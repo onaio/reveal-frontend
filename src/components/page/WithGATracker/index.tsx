@@ -55,7 +55,7 @@ export const trackPage = (page: string, options: FlexObject = {}): void => {
  * helper function to initialize GoogleAnalytics
  * @param {FlexObject} options tracking options for the page view
  */
-export const initGoogleAnalytics = (options: FlexObject = {}) => {
+export const initGoogleAnalytics = (options?: FlexObject) => {
   const gaCode = getGaCode(options);
   if (gaCode && gaCode.length) {
     GoogleAnalytics.initialize(GA_CODE, {
