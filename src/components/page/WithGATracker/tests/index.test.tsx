@@ -5,7 +5,7 @@ import { createBrowserHistory } from 'history';
 import React from 'react';
 import GoogleAnalytics from 'react-ga';
 import { Provider } from 'react-redux';
-import { getGAusername, initGoogleAnalytics, setGAusername, trackPage } from '..';
+import { getGAusername, initGoogleAnalytics, setGAusername, TrackingOptions, trackPage } from '..';
 import App from '../../../../App/App';
 import { NEW_IRS_PLAN_URL, PLAN_LIST_URL } from '../../../../constants';
 import { FlexObject } from '../../../../helpers/utils';
@@ -63,9 +63,10 @@ describe('components/WithGATracker', () => {
 
   it('GoogleAnalytics.pageview is called with the correct arguments', () => {
     GoogleAnalytics.pageview = jest.fn();
-    trackPage('/');
+    const trackingOptions: TrackingOptions = { GA_CODE: '12345', GA_ENV: 'test' };
+    trackPage('/', trackingOptions);
     expect(GoogleAnalytics.pageview).toBeCalledWith('/');
-    trackPage(PLAN_LIST_URL);
+    trackPage(PLAN_LIST_URL, trackingOptions);
     expect(GoogleAnalytics.pageview).toBeCalledWith(PLAN_LIST_URL);
   });
 
@@ -86,8 +87,7 @@ describe('components/WithGATracker', () => {
 
   it('tracks nothing when no GA Code is provided', () => {
     GoogleAnalytics.pageview = jest.fn();
-    const gaOptions: FlexObject = { GA_CODE: '' };
-    initGoogleAnalytics(gaOptions);
+    const gaOptions: TrackingOptions = initGoogleAnalytics({ GA_CODE: '' }) as TrackingOptions;
     trackPage('/', gaOptions);
     trackPage(NEW_IRS_PLAN_URL, gaOptions);
     expect(GoogleAnalytics.pageview).not.toBeCalled();

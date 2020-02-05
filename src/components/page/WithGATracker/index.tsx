@@ -3,7 +3,7 @@ import { getUser } from '@onaio/session-reducer';
 import React, { Component } from 'react';
 import GoogleAnalytics from 'react-ga';
 import { RouteComponentProps } from 'react-router';
-import { GA_CODE, GA_ENV } from '../../../configs/env';
+import { TEST } from '../../../constants';
 import { FlexObject, RouteParams } from '../../../helpers/utils';
 import store from '../../../store';
 
@@ -11,17 +11,12 @@ type Props = RouteComponentProps<RouteParams>;
 let username = (getUser(store.getState()) || {}).username || '';
 
 /**
- * helper function to get the Google Analytics tracking code
- * @param {FlexObject|undefined} options tracking options for the page view
- * @returns {string}
+ * Interface defining the options param passed into tracking methods
  */
-export const getGaCode = (options: FlexObject | undefined) => {
-  const gaCode =
-    (options && !!!options.GA_CODE && options.GA_CODE) ||
-    ((!options || !!options.GA_CODE) && GA_CODE) ||
-    '';
-  return gaCode;
-};
+export interface TrackingOptions {
+  GA_CODE: string;
+  GA_ENV?: string;
+}
 
 /**
  * helper function to set the Google Analytics dimension for username
@@ -43,9 +38,9 @@ export const getGAusername = (): string => username;
  * @param {string} page the url string of the page view being tracked
  * @param {FlexObject} options tracking options for the page view
  */
-export const trackPage = (page: string, options?: FlexObject): void => {
-  const gaCode = getGaCode(options);
-  if (gaCode && gaCode.length) {
+export const trackPage = (page: string, options: TrackingOptions): void => {
+  const { GA_CODE } = options;
+  if (GA_CODE && GA_CODE.length) {
     GoogleAnalytics.set({
       page,
       ...options,
@@ -56,30 +51,32 @@ export const trackPage = (page: string, options?: FlexObject): void => {
 
 /**
  * helper function to initialize GoogleAnalytics
- * @param {FlexObject} options tracking options for the page view
+ * @param {TrackingOptions} options tracking options for the page view
+ * @returns {TrackingOptions}
  */
-export const initGoogleAnalytics = (options?: FlexObject) => {
-  const gaCode = getGaCode(options);
-  if (gaCode && gaCode.length) {
+export const initGoogleAnalytics = (options: TrackingOptions): TrackingOptions => {
+  const { GA_CODE, GA_ENV } = options;
+  if (GA_CODE && GA_CODE.length) {
     GoogleAnalytics.initialize(GA_CODE, {
-      testMode: GA_ENV === 'test',
+      testMode: GA_ENV === TEST,
     });
     GoogleAnalytics.set({
-      env: GA_ENV,
+      env: GA_ENV || TEST,
       username,
     });
   }
+  return options;
 };
 
 /**
  * Higher Order Component (HOC) which handles Google Analytics page view tracking
  * @param {any} WrappedComponent the component to be wrapped by the HOC component
- * @param {FlexObject} options tracking options for the page view
+ * @param {TrackingOptions} options tracking options for the page view
  * @returns HOC rendering the WrappedComponent
  */
-const WithGATracker = (WrappedComponent: any, options?: FlexObject) => {
-  const gaCode = getGaCode(options);
-  if (!gaCode || !gaCode.length) {
+const WithGATracker = (WrappedComponent: any, options: TrackingOptions) => {
+  const { GA_CODE } = options;
+  if (!GA_CODE || !GA_CODE.length) {
     return WrappedComponent;
   }
 
