@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import GoogleAnalytics from 'react-ga';
 import { RouteComponentProps } from 'react-router';
 import * as env from '../../../configs/env';
+import { ConnectedFlexComponent, FlexComponent } from '../../../configs/types';
 import { GA_ENV_TEST } from '../../../constants';
 import { RouteParams } from '../../../helpers/utils';
 import store from '../../../store';
@@ -81,12 +82,12 @@ export const initGoogleAnalytics = (
 
 /**
  * Higher Order Component (HOC) which handles Google Analytics page view tracking
- * @param {any} WrappedComponent the component to be wrapped by the HOC component
+ * @param {FlexComponent | ConnectedFlexComponent} WrappedComponent the component to be wrapped by the HOC component
  * @param {TrackingOptions} options tracking options for the page view
  * @returns HOC rendering the WrappedComponent
  */
 const WithGATracker = (
-  WrappedComponent: any,
+  WrappedComponent: FlexComponent | ConnectedFlexComponent,
   options: TrackingOptions = defaultTrackingOptions
 ) => {
   const { GA_CODE } = options;
