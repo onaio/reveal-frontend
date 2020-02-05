@@ -33,5 +33,5 @@ export type ADMN0_PCODE =
   | 'Oddar Meanchey Province'
   | 'Lusaka';
 
-export type FlexComponent<T> = ComponentType | ComponentType<T>;
+export type FlexComponent<T = {}> = ComponentType<T>;
 export type ConnectedFlexComponent = ConnectedComponentClass<FlexComponent<any>, any>;
