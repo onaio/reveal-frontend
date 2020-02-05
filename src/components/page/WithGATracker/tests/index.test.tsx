@@ -87,7 +87,7 @@ describe('components/WithGATracker', () => {
 
   it('tracks nothing when no GA Code is provided', () => {
     GoogleAnalytics.pageview = jest.fn();
-    const gaOptions: TrackingOptions = initGoogleAnalytics({ GA_CODE: '' }) as TrackingOptions;
+    const gaOptions: TrackingOptions = initGoogleAnalytics({ GA_CODE: '' } as TrackingOptions);
     trackPage('/', gaOptions);
     trackPage(NEW_IRS_PLAN_URL, gaOptions);
     expect(GoogleAnalytics.pageview).not.toBeCalled();
