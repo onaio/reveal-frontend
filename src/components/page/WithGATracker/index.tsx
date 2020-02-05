@@ -20,7 +20,10 @@ export interface TrackingOptions {
   GA_ENV?: string;
 }
 
-const defaultTrackingOptions: TrackingOptions = {
+/**
+ * Default tracking options using global envs
+ */
+export const defaultTrackingOptions: TrackingOptions = {
   GA_CODE: env.GA_CODE || '',
   GA_ENV: env.GA_ENV || GA_ENV_TEST,
 };
