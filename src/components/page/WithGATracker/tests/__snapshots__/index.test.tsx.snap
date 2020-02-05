@@ -1093,14 +1093,6 @@ exports[`components/WithGATracker renders components correctly when wrapped with
                                     }
                                     dispatch={[Function]}
                                     exact={true}
-                                    location={
-                                      Object {
-                                        "hash": "",
-                                        "pathname": "/",
-                                        "search": "",
-                                        "state": undefined,
-                                      }
-                                    }
                                     path="/"
                                     render={[Function]}
                                   >
