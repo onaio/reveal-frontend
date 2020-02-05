@@ -41,7 +41,7 @@ export const BLOOD_SCREENING_ACTIVITY_CODE = 'bloodScreening';
 export const BEDNET_DISTRIBUTION_ACTIVITY_CODE = 'bednetDistribution';
 export const LARVAL_DIPPING_ACTIVITY_CODE = 'larvalDipping';
 export const MOSQUITO_COLLECTION_ACTIVITY_CODE = 'mosquitoCollection';
-export const TEST = 'test';
+export const GA_ENV_TEST = 'test';
 
 // internal urls
 export const LOGIN_URL = '/login';

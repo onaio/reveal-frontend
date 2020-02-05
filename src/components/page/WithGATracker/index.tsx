@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import GoogleAnalytics from 'react-ga';
 import { RouteComponentProps } from 'react-router';
 import * as env from '../../../configs/env';
-import { TEST } from '../../../constants';
+import { GA_ENV_TEST } from '../../../constants';
 import { FlexObject, RouteParams } from '../../../helpers/utils';
 import store from '../../../store';
 
@@ -21,7 +21,7 @@ export interface TrackingOptions {
 
 const defaultTrackingOptions: TrackingOptions = {
   GA_CODE: env.GA_CODE || '',
-  GA_ENV: env.GA_ENV || TEST,
+  GA_ENV: env.GA_ENV || GA_ENV_TEST,
 };
 
 /**
@@ -69,10 +69,10 @@ export const initGoogleAnalytics = (
   const { GA_CODE, GA_ENV } = options;
   if (GA_CODE && GA_CODE.length) {
     GoogleAnalytics.initialize(GA_CODE, {
-      testMode: GA_ENV === TEST,
+      testMode: GA_ENV === GA_ENV_TEST,
     });
     GoogleAnalytics.set({
-      env: GA_ENV || TEST,
+      env: GA_ENV || GA_ENV_TEST,
       username,
     });
   }
