@@ -1,11 +1,11 @@
 /* eslint-disable react/prop-types */
-import { getUser } from '@onaio/session-reducer';
+import { getUser, User } from '@onaio/session-reducer';
 import React, { Component } from 'react';
 import GoogleAnalytics from 'react-ga';
 import { RouteComponentProps } from 'react-router';
 import * as env from '../../../configs/env';
 import { GA_ENV_TEST } from '../../../constants';
-import { FlexObject, RouteParams } from '../../../helpers/utils';
+import { RouteParams } from '../../../helpers/utils';
 import store from '../../../store';
 
 type Props = RouteComponentProps<RouteParams>;
@@ -26,9 +26,9 @@ const defaultTrackingOptions: TrackingOptions = {
 
 /**
  * helper function to set the Google Analytics dimension for username
- * @param {FlexObject} user user object returned from session store
+ * @param {User} user user object returned from session store
  */
-export const setGAusername = (user: FlexObject): void => {
+export const setGAusername = (user: User): void => {
   username = user.username || '';
   GoogleAnalytics.set({ username });
 };
@@ -97,7 +97,7 @@ const WithGATracker = (
   const WithGATrackerHOC = class extends Component<Props> {
     public componentDidMount() {
       // update the username dimension
-      const user = (getUser(store.getState()) || {}) as FlexObject;
+      const user: User = (getUser(store.getState()) || {}) as User;
       if (user.username && getGAusername() !== user.username) {
         setGAusername(user);
       }
