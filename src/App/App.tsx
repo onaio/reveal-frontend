@@ -23,6 +23,7 @@ import {
   EDIT_ORGANIZATION_URL,
   EDIT_PRACTITIONER_URL,
   FI_FILTER_URL,
+  FI_JURISDICTION_URL,
   FI_SINGLE_MAP_URL,
   FI_SINGLE_URL,
   FI_URL,
@@ -43,6 +44,7 @@ import {
 } from '../constants';
 import ConnectedHeader from '../containers/ConnectedHeader';
 import ActiveFocusInvestigation from '../containers/pages/FocusInvestigation/active';
+import FIJurisdiction from '../containers/pages/FocusInvestigation/jurisdiction';
 import SingleActiveFIMap from '../containers/pages/FocusInvestigation/map/active';
 import ConnectedPlanCompletion from '../containers/pages/FocusInvestigation/map/planCompletion';
 import SingleFI from '../containers/pages/FocusInvestigation/single';
@@ -178,6 +180,12 @@ class App extends Component {
                   component={WithGATracker(ActiveFocusInvestigation)}
                 />
                 {/* Focus Area detail view */}
+                <ConnectedPrivateRoute
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${FI_JURISDICTION_URL}`}
+                  component={WithGATracker(FIJurisdiction)}
+                />
                 <ConnectedPrivateRoute
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}

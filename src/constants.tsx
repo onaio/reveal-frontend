@@ -56,6 +56,7 @@ export const REPORT_IRS_PLAN_URL = `/intervention/irs/report`;
 export const ASSIGN_PLAN_URL = `/assign`;
 export const FI_URL = '/focus-investigation';
 export const FI_FILTER_URL = '/focus-investigation/filter';
+export const FI_JURISDICTION_URL = '/focus-investigation/jurisdiction';
 export const FI_SINGLE_URL = '/focus-investigation/view';
 export const FI_SINGLE_MAP_URL = '/focus-investigation/map';
 export const NEW_PLAN_URL = '/plans/new';
