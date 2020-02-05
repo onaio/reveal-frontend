@@ -15,7 +15,6 @@ import {
 } from '..';
 import App from '../../../../App/App';
 import { NEW_IRS_PLAN_URL, PLAN_LIST_URL } from '../../../../constants';
-import { FlexObject } from '../../../../helpers/utils';
 import store from '../../../../store';
 
 jest.mock('../../../../configs/env');
