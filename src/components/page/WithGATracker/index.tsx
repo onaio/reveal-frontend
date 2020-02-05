@@ -3,6 +3,7 @@ import { getUser } from '@onaio/session-reducer';
 import React, { Component } from 'react';
 import GoogleAnalytics from 'react-ga';
 import { RouteComponentProps } from 'react-router';
+import * as env from '../../../configs/env';
 import { TEST } from '../../../constants';
 import { FlexObject, RouteParams } from '../../../helpers/utils';
 import store from '../../../store';
@@ -17,6 +18,11 @@ export interface TrackingOptions {
   GA_CODE: string;
   GA_ENV?: string;
 }
+
+const defaultTrackingOptions: TrackingOptions = {
+  GA_CODE: env.GA_CODE || '',
+  GA_ENV: env.GA_ENV || TEST,
+};
 
 /**
  * helper function to set the Google Analytics dimension for username
@@ -38,7 +44,10 @@ export const getGAusername = (): string => username;
  * @param {string} page the url string of the page view being tracked
  * @param {FlexObject} options tracking options for the page view
  */
-export const trackPage = (page: string, options: TrackingOptions): void => {
+export const trackPage = (
+  page: string,
+  options: TrackingOptions = defaultTrackingOptions
+): void => {
   const { GA_CODE } = options;
   if (GA_CODE && GA_CODE.length) {
     GoogleAnalytics.set({
@@ -54,7 +63,9 @@ export const trackPage = (page: string, options: TrackingOptions): void => {
  * @param {TrackingOptions} options tracking options for the page view
  * @returns {TrackingOptions}
  */
-export const initGoogleAnalytics = (options: TrackingOptions): TrackingOptions => {
+export const initGoogleAnalytics = (
+  options: TrackingOptions = defaultTrackingOptions
+): TrackingOptions => {
   const { GA_CODE, GA_ENV } = options;
   if (GA_CODE && GA_CODE.length) {
     GoogleAnalytics.initialize(GA_CODE, {
@@ -65,7 +76,7 @@ export const initGoogleAnalytics = (options: TrackingOptions): TrackingOptions =
       username,
     });
   }
-  return options;
+  return { ...options };
 };
 
 /**
@@ -74,7 +85,10 @@ export const initGoogleAnalytics = (options: TrackingOptions): TrackingOptions =
  * @param {TrackingOptions} options tracking options for the page view
  * @returns HOC rendering the WrappedComponent
  */
-const WithGATracker = (WrappedComponent: any, options: TrackingOptions) => {
+const WithGATracker = (
+  WrappedComponent: any,
+  options: TrackingOptions = defaultTrackingOptions
+) => {
   const { GA_CODE } = options;
   if (!GA_CODE || !GA_CODE.length) {
     return WrappedComponent;

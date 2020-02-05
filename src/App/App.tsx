@@ -9,11 +9,8 @@ import { Route, Switch } from 'react-router';
 import { toast } from 'react-toastify';
 import { Col, Container, Row } from 'reactstrap';
 import Loading from '../components/page/Loading';
-import WithGATracker, {
-  initGoogleAnalytics,
-  TrackingOptions,
-} from '../components/page/WithGATracker';
-import { GA_CODE, GA_ENV, TOAST_AUTO_CLOSE_DELAY, WEBSITE_NAME } from '../configs/env';
+import WithGATracker, { initGoogleAnalytics } from '../components/page/WithGATracker';
+import { TOAST_AUTO_CLOSE_DELAY, WEBSITE_NAME } from '../configs/env';
 import { DISABLE_LOGIN_PROTECTION, OPENSRP_LOGOUT_URL, OPENSRP_OAUTH_STATE } from '../configs/env';
 import { providers } from '../configs/settings';
 import {
@@ -74,11 +71,7 @@ library.add(faExternalLinkSquareAlt);
 toast.configure({
   autoClose: TOAST_AUTO_CLOSE_DELAY /** defines how long a toast remains visible on screen */,
 });
-
-const trackingOptions: TrackingOptions = initGoogleAnalytics({
-  GA_CODE,
-  GA_ENV,
-} as TrackingOptions);
+initGoogleAnalytics();
 
 import store from '../store';
 import { getOauthProviderState } from '../store/selectors';
@@ -100,7 +93,7 @@ class App extends Component {
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path="/"
-                  component={WithGATracker(Home, trackingOptions)}
+                  component={WithGATracker(Home)}
                 />
                 {/* Active IRS Plans list view */}
                 <ConnectedPrivateRoute
@@ -108,192 +101,192 @@ class App extends Component {
                   exact={true}
                   path={INTERVENTION_IRS_URL}
                   ConnectedOrgTeamView={true}
-                  component={WithGATracker(IrsPlans, trackingOptions)}
+                  component={WithGATracker(IrsPlans)}
                 />
                 {/* Draft IRS Plans list view */}
                 <ConnectedPrivateRoute
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={INTERVENTION_IRS_DRAFTS_URL}
-                  component={WithGATracker(IrsPlans, trackingOptions)}
+                  component={WithGATracker(IrsPlans)}
                 />
                 {/* New IRS Plan form view */}
                 <ConnectedPrivateRoute
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={NEW_IRS_PLAN_URL}
-                  component={WithGATracker(NewIRSPlan, trackingOptions)}
+                  component={WithGATracker(NewIRSPlan)}
                 />
                 {/* Draft IRS Plan Jurisdiction Selection view */}
                 <ConnectedPrivateRoute
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={`${DRAFT_IRS_PLAN_URL}/:id`}
-                  component={WithGATracker(IrsPlan, trackingOptions)}
+                  component={WithGATracker(IrsPlan)}
                 />
                 {/* Draft IRS Plan Team Assignment view */}
                 <ConnectedPrivateRoute
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={`${ACTIVE_IRS_PLAN_URL}/:id`}
-                  component={WithGATracker(IrsPlan, trackingOptions)}
+                  component={WithGATracker(IrsPlan)}
                 />
                 {/* IRS Reporting plan table view */}
                 <ConnectedPrivateRoute
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={REPORT_IRS_PLAN_URL}
-                  component={WithGATracker(ConnectedIRSPlansList, trackingOptions)}
+                  component={WithGATracker(ConnectedIRSPlansList)}
                 />
                 <ConnectedPrivateRoute
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={`${REPORT_IRS_PLAN_URL}/:planId`}
-                  component={WithGATracker(ConnectedJurisdictionReport, trackingOptions)}
+                  component={WithGATracker(ConnectedJurisdictionReport)}
                 />
                 <ConnectedPrivateRoute
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={`${REPORT_IRS_PLAN_URL}/:planId/:jurisdictionId`}
-                  component={WithGATracker(ConnectedJurisdictionReport, trackingOptions)}
+                  component={WithGATracker(ConnectedJurisdictionReport)}
                 />
                 {/* IRS Reporting Map view */}
                 <ConnectedPrivateRoute
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={`${REPORT_IRS_PLAN_URL}/:planId/:jurisdictionId/${MAP}`}
-                  component={WithGATracker(ConnectedIRSReportingMap, trackingOptions)}
+                  component={WithGATracker(ConnectedIRSReportingMap)}
                 />
                 {/* IRS Assignment views */}
                 <ConnectedPrivateRoute
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={`${ASSIGN_PLAN_URL}`}
-                  component={WithGATracker(ConnectedIRSAssignmentPlansList, trackingOptions)}
+                  component={WithGATracker(ConnectedIRSAssignmentPlansList)}
                 />
                 <ConnectedPrivateRoute
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={`${ASSIGN_PLAN_URL}/:id`}
-                  component={WithGATracker(IrsPlan, trackingOptions)}
+                  component={WithGATracker(IrsPlan)}
                 />
                 {/* Focus Investigation Reporting list view */}
                 <ConnectedPrivateRoute
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={FI_URL}
-                  component={WithGATracker(ActiveFocusInvestigation, trackingOptions)}
+                  component={WithGATracker(ActiveFocusInvestigation)}
                 />
                 {/* Focus Area detail view */}
                 <ConnectedPrivateRoute
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={`${FI_FILTER_URL}/:jurisdiction_parent_id/:plan_id?`}
-                  component={WithGATracker(ActiveFocusInvestigation, trackingOptions)}
+                  component={WithGATracker(ActiveFocusInvestigation)}
                 />
                 <ConnectedPrivateRoute
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={`${FI_SINGLE_URL}/:id`}
-                  component={WithGATracker(SingleFI, trackingOptions)}
+                  component={WithGATracker(SingleFI)}
                 />
                 {/* Focus Investigation completion confirmation view */}
                 <ConnectedPrivateRoute
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={`${PLAN_COMPLETION_URL}/:id`}
-                  component={WithGATracker(ConnectedPlanCompletion, trackingOptions)}
+                  component={WithGATracker(ConnectedPlanCompletion)}
                 />
                 {/* Focus Investigation Reporting map view */}
                 <ConnectedPrivateRoute
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={`${FI_SINGLE_MAP_URL}/:id/`}
-                  component={WithGATracker(SingleActiveFIMap, trackingOptions)}
+                  component={WithGATracker(SingleActiveFIMap)}
                 />
                 {/* Focus Investigation Reporting map view (with goal layers) */}
                 <ConnectedPrivateRoute
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={`${FI_SINGLE_MAP_URL}/:id/:goalId`}
-                  component={WithGATracker(SingleActiveFIMap, trackingOptions)}
+                  component={WithGATracker(SingleActiveFIMap)}
                 />
                 {/* New Focus Investigation Plan form view */}
                 <ConnectedPrivateRoute
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={NEW_PLAN_URL}
-                  component={WithGATracker(NewPlan, trackingOptions)}
+                  component={WithGATracker(NewPlan)}
                 />
                 {/* Edit Focus Investigation Plan form view */}
                 <ConnectedPrivateRoute
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={`${PLAN_UPDATE_URL}/:id`}
-                  component={WithGATracker(ConnectedUpdatePlan, trackingOptions)}
+                  component={WithGATracker(ConnectedUpdatePlan)}
                 />
                 {/* Manage Plans list view */}
                 <ConnectedPrivateRoute
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={PLAN_LIST_URL}
-                  component={WithGATracker(ConnectedPlanDefinitionList, trackingOptions)}
+                  component={WithGATracker(ConnectedPlanDefinitionList)}
                 />
                 {/** Organization list view */}
                 <ConnectedPrivateRoute
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={ORGANIZATIONS_LIST_URL}
-                  component={WithGATracker(ConnectedOrgsListView, trackingOptions)}
+                  component={WithGATracker(ConnectedOrgsListView)}
                 />
                 {/** organization create view */}
                 <ConnectedPrivateRoute
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={CREATE_ORGANIZATION_URL}
-                  component={WithGATracker(ConnectedCreateEditOrgView, trackingOptions)}
+                  component={WithGATracker(ConnectedCreateEditOrgView)}
                 />
                 {/** Organization edit view */}
                 <ConnectedPrivateRoute
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={`${EDIT_ORGANIZATION_URL}/:id`}
-                  component={WithGATracker(ConnectedCreateEditOrgView, trackingOptions)}
+                  component={WithGATracker(ConnectedCreateEditOrgView)}
                 />
                 {/* single organization view */}
                 <ConnectedPrivateRoute
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={`${SINGLE_ORGANIZATION_URL}/:id`}
-                  component={WithGATracker(ConnectedSingleOrgView, trackingOptions)}
+                  component={WithGATracker(ConnectedSingleOrgView)}
                 />
                 {/* single organization view */}
                 <ConnectedPrivateRoute
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={`${SINGLE_ORGANIZATION_URL}/:id`}
-                  component={WithGATracker(ConnectedSingleOrgView, trackingOptions)}
+                  component={WithGATracker(ConnectedSingleOrgView)}
                 />
                 {/* Practitioner listing page */}
                 <ConnectedPrivateRoute
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={PRACTITIONERS_LIST_URL}
-                  component={WithGATracker(ConnectedPractitionersListView, trackingOptions)}
+                  component={WithGATracker(ConnectedPractitionersListView)}
                 />
                 {/** practitioner create view */}
                 <ConnectedPrivateRoute
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={CREATE_PRACTITIONER_URL}
-                  component={WithGATracker(ConnectedCreateEditPractitionerView, trackingOptions)}
+                  component={WithGATracker(ConnectedCreateEditPractitionerView)}
                 />
                 {/** Practitioner edit view */}
                 <ConnectedPrivateRoute
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={`${EDIT_PRACTITIONER_URL}/:id`}
-                  component={WithGATracker(ConnectedCreateEditPractitionerView, trackingOptions)}
+                  component={WithGATracker(ConnectedCreateEditPractitionerView)}
                 />
                 {/** Assign practitioners to organization view */}
                 />
@@ -301,7 +294,7 @@ class App extends Component {
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={`${ASSIGN_PRACTITIONERS_URL}/:id`}
-                  component={WithGATracker(ConnectedAssignPractitioner, trackingOptions)}
+                  component={WithGATracker(ConnectedAssignPractitioner)}
                 />
                 {/* tslint:disable jsx-no-lambda */}
                 <Route
