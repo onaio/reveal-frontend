@@ -50,8 +50,8 @@ describe('components/WithGATracker', () => {
 
   it('gets and sets the username dimension', () => {
     expect(getGAusername()).toBe('');
-    setGAusername({ username: 'Conor' });
-    expect(getGAusername()).toBe('Conor');
+    setGAusername({ username: 'suppaD3v4life', name: 'Conor' });
+    expect(getGAusername()).toBe('suppaD3v4life');
   });
 
   it('renders components correctly when wrapped with HOC', () => {
