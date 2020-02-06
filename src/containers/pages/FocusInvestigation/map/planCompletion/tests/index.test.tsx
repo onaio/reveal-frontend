@@ -21,7 +21,6 @@ import store from '../../../../../../store';
 import reducer, {
   fetchPlans,
   getPlanById,
-  Plan,
   PlanStatus,
   reducerName,
   removePlansAction,
@@ -53,7 +52,7 @@ describe('@containers/pages/map/planCompletion/', () => {
         path: `${PLAN_COMPLETION_URL}/:id`,
         url: `${PLAN_COMPLETION_URL}/13`,
       },
-      plan: fixtures.plan1 as Plan,
+      plan: fixtures.plan1,
     };
     shallow(
       <Router history={history}>
@@ -73,7 +72,7 @@ describe('@containers/pages/map/planCompletion/', () => {
         path: `${PLAN_COMPLETION_URL}/:id`,
         url: `${PLAN_COMPLETION_URL}/13`,
       },
-      plan: fixtures.plan1 as Plan,
+      plan: fixtures.plan1,
     };
     const wrapper = mount(
       <Router history={history}>
@@ -132,7 +131,7 @@ describe('@containers/pages/map/planCompletion/', () => {
       },
     };
 
-    const discoWrapper = mount(<PlanCompletion plan={fixtures.plan1 as Plan} {...props} />);
+    const discoWrapper = mount(<PlanCompletion plan={fixtures.plan1} {...props} />);
     const cancelButton = discoWrapper.find('#complete-plan-cancel-btn');
     cancelButton.simulate('click');
     // check that history url after clicking cancel points to singleFi url
@@ -171,7 +170,7 @@ describe('@containers/pages/map/planCompletion/', () => {
     const discoWrapper = mount(
       <Provider store={store}>
         <Router history={history}>
-          <ConnectedPlanCompletion plan={fixtures.plan1 as Plan} {...props} />
+          <ConnectedPlanCompletion plan={fixtures.plan1} {...props} />
         </Router>
       </Provider>
     );
