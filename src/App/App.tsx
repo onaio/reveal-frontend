@@ -6,17 +6,12 @@ import { AuthorizationGrantType, OauthLogin } from '@onaio/gatekeeper';
 import { logOutUser } from '@onaio/session-reducer';
 import React, { Component, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
-import { Route, Switch, withRouter } from 'react-router';
+import { Route, Switch } from 'react-router';
 import { toast } from 'react-toastify';
 import { Col, Container, Row } from 'reactstrap';
 import CustomConnectedAPICallBack from '../components/page/CustomCallback';
 import WithGATracker from '../components/page/WithGATracker';
-import {
-  DOMAIN_NAME,
-  EXPRESS_OAUTH_LOGOUT_URL,
-  TOAST_AUTO_CLOSE_DELAY,
-  WEBSITE_NAME,
-} from '../configs/env';
+import { EXPRESS_OAUTH_LOGOUT_URL, TOAST_AUTO_CLOSE_DELAY, WEBSITE_NAME } from '../configs/env';
 import { DISABLE_LOGIN_PROTECTION, OPENSRP_LOGOUT_URL, OPENSRP_OAUTH_STATE } from '../configs/env';
 import { providers } from '../configs/settings';
 import {
@@ -32,7 +27,6 @@ import {
   FI_SINGLE_MAP_URL,
   FI_SINGLE_URL,
   FI_URL,
-  HOME_URL,
   INTERVENTION_IRS_DRAFTS_URL,
   INTERVENTION_IRS_URL,
   LOGIN_URL,
@@ -73,7 +67,6 @@ import ConnectedSingleOrgView from '../containers/pages/OrganizationViews/Single
 import ConnectedCreateEditPractitionerView from '../containers/pages/PractitionerViews/CreateEditPractitioner';
 import ConnectedPractitionersListView from '../containers/pages/PractitionerViews/PractitionerListView';
 import store from '../store';
-import { getOauthProviderState } from '../store/selectors';
 import './App.css';
 
 library.add(faMap);
