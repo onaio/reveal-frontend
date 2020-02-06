@@ -1,0 +1,106 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`src/components/formatting/ResponseAdherence renders ResponseAdherence correctly 1`] = `
+<ResponseAdherence>
+  <div>
+    <h5
+      className="mt-4 mb-3"
+    >
+      Conditional Formatting
+    </h5>
+    <h6
+      className="mb-3"
+    >
+      FI Response Adherence
+    </h6>
+    <div
+      className="row"
+    >
+      <div
+        className="col-3"
+      >
+        <Table
+          className="text-center"
+          responsiveTag="div"
+          tag="table"
+        >
+          <table
+            className="text-center table"
+          >
+            <tbody>
+              <tr
+                style={
+                  Object {
+                    "background": "#33ad33",
+                  }
+                }
+              >
+                <td>
+                  Green
+                </td>
+                <td>
+                  &gt;=
+                </td>
+                <td>
+                  90%
+                </td>
+              </tr>
+              <tr
+                style={
+                  Object {
+                    "background": "#ff8533",
+                  }
+                }
+              >
+                <td>
+                  Orange
+                </td>
+                <td>
+                  90%
+                </td>
+                <td>
+                  80%
+                </td>
+              </tr>
+              <tr
+                style={
+                  Object {
+                    "background": "#ff5c33",
+                  }
+                }
+              >
+                <td>
+                  Red
+                </td>
+                <td>
+                  80%
+                </td>
+                <td>
+                  20%
+                </td>
+              </tr>
+              <tr
+                style={
+                  Object {
+                    "background": "#ff3",
+                  }
+                }
+              >
+                <td>
+                  Yellow
+                </td>
+                <td>
+                  &gt;=
+                </td>
+                <td>
+                  20%
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </Table>
+      </div>
+    </div>
+  </div>
+</ResponseAdherence>
+`;
