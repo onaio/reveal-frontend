@@ -143,7 +143,7 @@ describe('src/containers/TeamAssignment/PractitionersListView/', () => {
         url: PRACTITIONERS_LIST_URL,
       },
     };
-    const wrapper = mount(
+    mount(
       <Provider store={store}>
         <Router history={history}>
           <ConnectedPractitionersListView {...props} />
