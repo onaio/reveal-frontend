@@ -5,7 +5,6 @@ import React from 'react';
 import { Router } from 'react-router';
 import { IRSAssignmentPlansList } from '../';
 import * as fixtures from '../../../../../store/ducks/generic/tests/fixtures';
-import { PlanRecord } from '../../../../../store/ducks/plans';
 
 /* tslint:disable-next-line no-var-requires */
 const fetch = require('jest-fetch-mock');
@@ -30,7 +29,7 @@ describe('components/IRS Reports/IRSPlansList', () => {
 
   it('renders plan definition list correctly', () => {
     fetch.mockResponseOnce(JSON.stringify({}));
-    const plans = fixtures.planRecords as PlanRecord[];
+    const plans = fixtures.planRecords;
     const props = {
       plans,
     };

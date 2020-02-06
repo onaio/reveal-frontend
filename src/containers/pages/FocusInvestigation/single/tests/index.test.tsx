@@ -12,7 +12,7 @@ import { FI_SINGLE_URL } from '../../../../../constants';
 import store from '../../../../../store';
 import { fetchGoals } from '../../../../../store/ducks/goals';
 import { fetchJurisdictions } from '../../../../../store/ducks/jurisdictions';
-import { fetchPlans, Plan } from '../../../../../store/ducks/plans';
+import { fetchPlans } from '../../../../../store/ducks/plans';
 import * as fixtures from '../../../../../store/ducks/tests/fixtures';
 import ConnectedSingleFI, { SingleFI } from '../../single';
 
@@ -48,7 +48,7 @@ describe('containers/pages/SingleFI', () => {
         path: `${FI_SINGLE_URL}/:id`,
         url: `${FI_SINGLE_URL}/13`,
       },
-      planById: fixtures.plan1 as Plan,
+      planById: fixtures.plan1,
       plansIdArray: fixtures.plansIdArray,
       supersetService: supersetServiceMock,
     };
@@ -77,7 +77,7 @@ describe('containers/pages/SingleFI', () => {
         path: `${FI_SINGLE_URL}/:id`,
         url: `${FI_SINGLE_URL}/16`,
       },
-      planById: fixtures.plan1 as Plan,
+      planById: fixtures.plan1,
       plansIdArray: fixtures.plansIdArray,
       supersetService: supersetServiceMock,
       // tslint:disable-next-line: object-literal-sort-keys
@@ -139,7 +139,7 @@ describe('containers/pages/SingleFI', () => {
 
   it('It works with the Redux store', () => {
     const mock: any = jest.fn();
-    store.dispatch(fetchPlans(fixtures.plans as Plan[]));
+    store.dispatch(fetchPlans(fixtures.plans));
     store.dispatch(fetchGoals(fixtures.goals));
     store.dispatch(fetchJurisdictions(fixtures.jurisdictions));
     const supersetServiceMock: any = jest.fn(async () => []);
@@ -185,7 +185,7 @@ describe('containers/pages/SingleFI', () => {
     const mock: any = jest.fn();
     const supersetMock: any = jest.fn();
     supersetMock.mockImplementation(() => Promise.resolve([]));
-    store.dispatch(fetchPlans(fixtures.plans as Plan[]));
+    store.dispatch(fetchPlans(fixtures.plans));
     store.dispatch(fetchGoals(fixtures.goals));
     store.dispatch(fetchJurisdictions(fixtures.jurisdictions));
     const props = {
