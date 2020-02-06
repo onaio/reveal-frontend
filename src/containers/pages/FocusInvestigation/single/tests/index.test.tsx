@@ -237,10 +237,10 @@ describe('containers/pages/SingleFI', () => {
 
     await flushPromises();
     const getFormDataCallList = [
-      [3000, [{ comparator: fixtures.plan1.plan_id, operator: '==', subject: 'plan_id' }]],
       [
         3000,
         [{ comparator: fixtures.plan1.plan_id, operator: '==', subject: 'plan_id' }],
+
         { action_prefix: true },
       ],
       [
