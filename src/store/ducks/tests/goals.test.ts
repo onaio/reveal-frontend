@@ -110,7 +110,6 @@ describe('reducers/goals', () => {
 
     store.dispatch(fetchGoals(fixtures.goals));
     goalsInStore = getGoalsById(store.getState());
-    goalsInStore = getGoalsById(store.getState());
 
     store.dispatch(removeGoalsAction);
     expect(goalsInStore).not.toEqual({});
