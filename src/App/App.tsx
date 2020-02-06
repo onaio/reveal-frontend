@@ -358,7 +358,7 @@ class App extends Component {
                   // tslint:disable-next-line: jsx-no-lambda
                   component={() => {
                     store.dispatch(logOutUser());
-                    window.location.href = `${DOMAIN_NAME}/${EXPRESS_OAUTH_LOGOUT_URL}`;
+                    window.location.href = EXPRESS_OAUTH_LOGOUT_URL;
                     return <></>;
                   }}
                 />
