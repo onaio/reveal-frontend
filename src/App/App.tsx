@@ -2,22 +2,21 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { faUser } from '@fortawesome/free-regular-svg-icons';
 import { faExternalLinkSquareAlt, faMap } from '@fortawesome/free-solid-svg-icons';
 import ConnectedPrivateRoute from '@onaio/connected-private-route';
-import {
-  AuthorizationGrantType,
-  ConnectedAPICallback,
-  ConnectedLogout,
-  OauthLogin,
-} from '@onaio/gatekeeper';
-import querystring from 'querystring';
-import React, { Component } from 'react';
+import { AuthorizationGrantType, OauthLogin } from '@onaio/gatekeeper';
+import { logOutUser } from '@onaio/session-reducer';
+import React, { Component, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { Route, Switch, withRouter } from 'react-router';
 import { toast } from 'react-toastify';
 import { Col, Container, Row } from 'reactstrap';
 import CustomConnectedAPICallBack from '../components/page/CustomCallback';
-import Loading from '../components/page/Loading';
 import WithGATracker from '../components/page/WithGATracker';
-import { OAUTH_GET_STATE_URL, TOAST_AUTO_CLOSE_DELAY, WEBSITE_NAME } from '../configs/env';
+import {
+  DOMAIN_NAME,
+  EXPRESS_OAUTH_LOGOUT_URL,
+  TOAST_AUTO_CLOSE_DELAY,
+  WEBSITE_NAME,
+} from '../configs/env';
 import { DISABLE_LOGIN_PROTECTION, OPENSRP_LOGOUT_URL, OPENSRP_OAUTH_STATE } from '../configs/env';
 import { providers } from '../configs/settings';
 import {
@@ -358,14 +357,9 @@ class App extends Component {
                   path={LOGOUT_URL}
                   // tslint:disable-next-line: jsx-no-lambda
                   component={() => {
-                    const state = getOauthProviderState(store.getState());
-                    return (
-                      <ConnectedLogout
-                        {...{
-                          logoutURL: state === OPENSRP_OAUTH_STATE ? OPENSRP_LOGOUT_URL : null,
-                        }}
-                      />
-                    );
+                    store.dispatch(logOutUser());
+                    window.location.href = `${DOMAIN_NAME}/${EXPRESS_OAUTH_LOGOUT_URL}`;
+                    return <></>;
                   }}
                 />
               </Switch>
