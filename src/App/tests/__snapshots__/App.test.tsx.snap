@@ -915,7 +915,7 @@ exports[`App renders App correctly 1`] = `
                               path="/"
                               render={[Function]}
                             >
-                              <HOC
+                              <WithGATrackerHOC
                                 computedMatch={
                                   Object {
                                     "isExact": true,
@@ -1206,7 +1206,7 @@ exports[`App renders App correctly 1`] = `
                                     </Row>
                                   </div>
                                 </Home>
-                              </HOC>
+                              </WithGATrackerHOC>
                             </Route>
                           </PrivateRoute>
                         </Connect(PrivateRoute)>
