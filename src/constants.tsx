@@ -44,7 +44,7 @@ export const MOSQUITO_COLLECTION_ACTIVITY_CODE = 'mosquitoCollection';
 
 // internal urls
 export const LOGIN_URL = '/login';
-export const LOGOUT_URL = '/logout';
+export const LOGOUT_URL = '/fe/logout';
 export const HOME_URL = '/';
 export const INTERVENTION_IRS_URL = '/intervention/irs';
 export const INTERVENTION_IRS_DRAFTS_URL = '/intervention/irs/drafts';
