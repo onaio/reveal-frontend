@@ -372,7 +372,7 @@ export const getNameTitle = (event: FormEvent, formValues: PlanFormFields): [str
   }
 
   let name = currentInterventionType;
-  let title = currentInterventionType;
+  let title;
 
   const currentDate = target.name === 'date' ? target.value : formValues.date;
   if (currentInterventionType === InterventionType.FI) {
@@ -412,7 +412,7 @@ export function doesFieldHaveErrors(
   errors: Array<FormikErrors<PlanActivityFormFields | PlanJurisdictionFormFields> | undefined>
 ) {
   return (
-    errors && Object.entries(errors[index] || {}).filter(([key, val]) => key === field).length > 0
+    errors && Object.entries(errors[index] || {}).filter(([key, _]) => key === field).length > 0
   );
 }
 
@@ -536,13 +536,15 @@ export function getPlanFormValues(planObject: PlanDefinition): PlanFormFields {
   let activities = planObject.action.reduce(
     (accumulator: PlanActivityFormFields[], currentAction) => {
       const goalArray = planObject.goal.filter(goal => goal.id === currentAction.goalId);
-      goalArray.map(currentGoal => {
+
+      goalArray.forEach(currentGoal => {
         const currentActivity = extractActivityForForm({
           action: currentAction,
           goal: currentGoal,
         });
         accumulator.push(currentActivity);
       });
+
       return accumulator;
     },
     []
