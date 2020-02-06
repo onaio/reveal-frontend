@@ -961,21 +961,21 @@ exports[`components/WithGATracker renders components correctly when wrapped with
                                                           activeClassName="active"
                                                           aria-current="page"
                                                           className="nav-link"
-                                                          to="/logout"
+                                                          to="/fe/logout"
                                                         >
                                                           <Route
-                                                            path="\\\\/logout"
+                                                            path="\\\\/fe\\\\/logout"
                                                           >
                                                             <Link
                                                               aria-current={null}
                                                               className="nav-link"
                                                               replace={false}
-                                                              to="/logout"
+                                                              to="/fe/logout"
                                                             >
                                                               <a
                                                                 aria-current={null}
                                                                 className="nav-link"
-                                                                href="/logout"
+                                                                href="/fe/logout"
                                                                 onClick={[Function]}
                                                               >
                                                                 Sign Out
