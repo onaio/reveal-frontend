@@ -37,7 +37,7 @@ describe('reducers/goals', () => {
   });
 
   it('should fetch goals', () => {
-    store.dispatch(fetchGoals(fixtures.goals));
+    store.dispatch(fetchGoals(fixtures.goals as Goal[]));
     const expected = keyBy(fixtures.goals, (goal: Goal) => goal.id);
     expect(getGoalsById(store.getState())).toEqual(expected);
     expect(getGoalById(store.getState(), '5a27ec10-7a5f-563c-ba11-4de150b336af')).toEqual(
@@ -108,7 +108,7 @@ describe('reducers/goals', () => {
     let goalsInStore = getGoalsById(store.getState());
     expect(goalsInStore).toEqual({});
 
-    store.dispatch(fetchGoals(fixtures.goals));
+    store.dispatch(fetchGoals(fixtures.goals as Goal[]));
     goalsInStore = getGoalsById(store.getState());
 
     store.dispatch(removeGoalsAction);
@@ -123,14 +123,14 @@ describe('reducers/goals', () => {
     let goalNumberInStore = getGoalsByPlanId(store.getState(), plan1Id).length;
     expect(goalNumberInStore).toEqual(0);
 
-    store.dispatch(fetchGoals([fixtures.goal1]));
+    store.dispatch(fetchGoals([fixtures.goal1 as Goal]));
     const goal1Id = '5a27ec10-7a5f-563c-ba11-4de150b336af';
     let goal1FromStore = getGoalById(store.getState(), goal1Id);
     expect(goal1FromStore).not.toBe(null);
     goalNumberInStore = getGoalsByPlanId(store.getState(), plan1Id).length;
     expect(goalNumberInStore).toEqual(1);
 
-    store.dispatch(fetchGoals([fixtures.goal2]));
+    store.dispatch(fetchGoals([fixtures.goal2 as Goal]));
     const goal2Id = 'f8d4e0a9-5867-5c78-9e26-de45d72556c4';
     const goal2FromStore = getGoalById(store.getState(), goal2Id);
     goal1FromStore = getGoalById(store.getState(), goal1Id);
@@ -139,7 +139,7 @@ describe('reducers/goals', () => {
     goalNumberInStore = getGoalsByPlanId(store.getState(), plan1Id).length;
     expect(goalNumberInStore).toEqual(2);
 
-    store.dispatch(fetchGoals([fixtures.goal1]));
+    store.dispatch(fetchGoals([fixtures.goal1 as Goal]));
     goalNumberInStore = getGoalsByPlanId(store.getState(), plan1Id).length;
     expect(goalNumberInStore).toEqual(2);
   });
