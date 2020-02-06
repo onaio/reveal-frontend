@@ -127,9 +127,7 @@ class IrsPlans extends React.Component<IrsPlansProps & RouteComponentProps<Route
           );
           return fetchPlanRecordsActionCreator(irsPlanRecords);
         })
-        .catch(err => {
-          // console.log('ERR', err)
-        });
+        .catch(); // is this wise?
     }
   }
 
