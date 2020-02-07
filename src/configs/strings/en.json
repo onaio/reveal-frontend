@@ -842,5 +842,9 @@
   "ORGANIZATION_NAME_TITLE": {
     "message": "Team Name",
     "description": "Organization list column header"
+  },
+  "LINK": {
+    "message": "Link",
+    "description": "URL"
   }
 }
