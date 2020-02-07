@@ -75,6 +75,12 @@
     "lint-ts": "tslint -c tslint.json 'src/**/*.{ts,tsx}'",
     "serve": "yarn babel-node -r node_modules/dotenv/config server/server.ts --extensions '.ts' dotenv_config_path=server/.env"
   },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.{ts,tsx}",
+      "!src/index.tsx"
+    ]
+  },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
