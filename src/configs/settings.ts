@@ -870,6 +870,45 @@ export const indicatorThresholdsIRS: IndicatorThresholds = {
 };
 /** END IRS Reporting configs */
 
+/** Namibia IRS Reporting configs */
+export const indicatorThresholdsIRSNamibia: IndicatorThresholds = {
+  GREEN_THRESHOLD: {
+    color: '#4C9A2A',
+    name: 'Green',
+    value: 1,
+  },
+  LIGHT_GREEN_THRESHOLD: {
+    color: '#76BA1B',
+    name: 'Light Green',
+    value: 0.85,
+  },
+  RED_THRESHOLD: {
+    color: '#FF4136',
+    name: 'Red',
+    orEquals: true,
+    value: 0.7,
+  },
+  YELLOW_THRESHOLD: {
+    color: '#FFDC00',
+    name: 'Yellow',
+    value: 0.8,
+  },
+};
+/** END Namibia IRS Reporting configs */
+
+/** Interface describing thresholds look up */
+export interface IndicatorThresholdsLookUp {
+  [key: string]: IndicatorThresholds;
+}
+
+/** Thresholds lookup
+ * For custom indicator thresholds, define it and add it here,
+ * otherwise the default indicator thresholds will be used.
+ */
+export const indicatorThresholdsLookUpIRS: IndicatorThresholdsLookUp = {
+  namibia2019: indicatorThresholdsIRSNamibia,
+};
+
 /** interface describing base configs for irs reporting configurations */
 export interface IrsReportingConfig {
   indicatorThresholds: IndicatorThresholds;
