@@ -231,6 +231,10 @@ class SingleActiveFIMap extends React.Component<
     if (!jurisdiction || !plan) {
       return <Loading />;
     }
+
+    /** filter out this plan form plans by focusArea */
+    const otherPlansByFocusArea = plansByFocusArea.filter(localPlan => localPlan.id !== plan.id);
+
     const homePage = {
       label: HOME,
       url: HOME_URL,
@@ -327,7 +331,7 @@ class SingleActiveFIMap extends React.Component<
             <Col xs="4">
               <SelectComponent
                 placeholder={PLAN_SELECT_PLACEHOLDER}
-                plansArray={plansByFocusArea}
+                plansArray={otherPlansByFocusArea}
               />
             </Col>
           </Row>
