@@ -830,9 +830,5 @@
   "ORGANIZATION_NAME_TITLE": {
     "message": "ทีมปฏิบัติงาน",
     "description": "Organization list column header"
-  },
-  "WELCOME_BACK": {
-    "message": "",
-    "description": "prompt after a user has logged in"
   }
 }
