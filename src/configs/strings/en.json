@@ -862,5 +862,9 @@
   "IRS_LIGHT_GREEN_THRESHOLD": {
     "message": "Light Green",
     "description": "IRS legend color light green"
+  },
+  "LINK": {
+    "message": "Link",
+    "description": "URL leading to another page"
   }
 }
