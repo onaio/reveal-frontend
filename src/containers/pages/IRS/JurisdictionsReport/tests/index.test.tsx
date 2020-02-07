@@ -8,7 +8,10 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Router } from 'react-router';
 import { JurisdictionReport } from '../';
-import { indicatorThresholdsIRS } from '../../../../../configs/settings';
+import {
+  indicatorThresholdsIRS,
+  indicatorThresholdsLookUpIRS,
+} from '../../../../../configs/settings';
 import { REPORT_IRS_PLAN_URL } from '../../../../../constants';
 import store from '../../../../../store';
 import GenericJurisdictionsReducer, {
@@ -140,7 +143,9 @@ describe('components/IRS Reports/JurisdictionReport', () => {
     );
     expect(wrapper.find('IRSIndicatorLegend').length).toEqual(1);
     expect(wrapper.find('IRSIndicatorLegend').props()).toEqual({
+      indicatorRows: 'zambia2019',
       indicatorThresholds: indicatorThresholdsIRS,
+      indicatorThresholdsLookUp: indicatorThresholdsLookUpIRS,
     });
     expect(supersetServiceMock.mock.calls).toEqual([
       [
