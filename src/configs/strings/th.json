@@ -830,9 +830,5 @@
   "ORGANIZATION_NAME_TITLE": {
     "message": "ทีมปฏิบัติงาน",
     "description": "Organization list column header"
-  },
-  "LINK": {
-    "message": "",
-    "description": "URL"
   }
 }
