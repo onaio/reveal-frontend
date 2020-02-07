@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`/components/formatting/IRSIndicatorLegend renders correctly: header 1`] = `
+exports[`/components/formatting/IRSIndicatorLegend renders correctly for default indicator colors: header 1`] = `
 <div
   className="card-header"
 >
@@ -8,7 +8,7 @@ exports[`/components/formatting/IRSIndicatorLegend renders correctly: header 1`]
 </div>
 `;
 
-exports[`/components/formatting/IRSIndicatorLegend renders correctly: indicator table 1`] = `
+exports[`/components/formatting/IRSIndicatorLegend renders correctly for default indicator colors: indicator table 1`] = `
 <Table
   className="text-center"
   responsiveTag="div"
@@ -76,6 +76,89 @@ exports[`/components/formatting/IRSIndicatorLegend renders correctly: indicator 
         </td>
         <td>
           90% - 100%
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</Table>
+`;
+
+exports[`/components/formatting/IRSIndicatorLegend renders correctly for namibia indicator colors: header 1`] = `
+<div
+  className="card-header"
+>
+  Conditional formatting rules
+</div>
+`;
+
+exports[`/components/formatting/IRSIndicatorLegend renders correctly for namibia indicator colors: indicator table namibia 1`] = `
+<Table
+  className="text-center"
+  responsiveTag="div"
+  tag="table"
+>
+  <table
+    className="text-center table"
+  >
+    <tbody>
+      <tr
+        key="0"
+        style={
+          Object {
+            "background": "#FF4136",
+          }
+        }
+      >
+        <td>
+          Red
+        </td>
+        <td>
+          &lt; 70%
+        </td>
+      </tr>
+      <tr
+        key="1"
+        style={
+          Object {
+            "background": "#FFDC00",
+          }
+        }
+      >
+        <td>
+          Yellow
+        </td>
+        <td>
+          70% - 80%
+        </td>
+      </tr>
+      <tr
+        key="2"
+        style={
+          Object {
+            "background": "#76BA1B",
+          }
+        }
+      >
+        <td>
+          Light Green
+        </td>
+        <td>
+          80% - 85%
+        </td>
+      </tr>
+      <tr
+        key="3"
+        style={
+          Object {
+            "background": "#4C9A2A",
+          }
+        }
+      >
+        <td>
+          Green
+        </td>
+        <td>
+          85% - 100%
         </td>
       </tr>
     </tbody>

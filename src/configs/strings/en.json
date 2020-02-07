@@ -843,8 +843,24 @@
     "message": "Team Name",
     "description": "Organization list column header"
   },
-  "LINK": {
-    "message": "Link",
-    "description": "URL"
+  "IRS_GREEN_THRESHOLD": {
+    "message": "Green",
+    "description": "IRS legend color green"
+  },
+  "IRS_GREY_THRESHOLD": {
+    "message": "Grey",
+    "description": "IRS legend color grey"
+  },
+  "IRS_RED_THRESHOLD": {
+    "message": "Red",
+    "description": "IRS legend color red"
+  },
+  "IRS_YELLOW_THRESHOLD": {
+    "message": "Yellow",
+    "description": "IRS legend color yellow"
+  },
+  "IRS_LIGHT_GREEN_THRESHOLD": {
+    "message": "Light Green",
+    "description": "IRS legend color light green"
   }
 }

@@ -7,6 +7,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
+import SelectComponent from '../../../../../../components/SelectPlan';
 import { FIReasons } from '../../../../../../configs/settings';
 import { FI_SINGLE_URL } from '../../../../../../constants';
 import { wrapFeatureCollection } from '../../../../../../helpers/utils';
@@ -158,6 +159,10 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
 
     // structures
     expect((singleActiveWrapperProps as MapSingleFIProps).structures).toBeNull();
+
+    // does not render the current plan under other plans select dropdown
+    const otherPlansSelectProps = wrapper.find(SelectComponent).props();
+    expect(otherPlansSelectProps.plansArray).toEqual([]);
 
     wrapper.unmount();
   });
