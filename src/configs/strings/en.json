@@ -842,5 +842,9 @@
   "ORGANIZATION_NAME_TITLE": {
     "message": "Team Name",
     "description": "Organization list column header"
+  },
+  "WELCOME_BACK": {
+    "message": "Welcome back",
+    "description": "prompt after a user has logged in"
   }
 }

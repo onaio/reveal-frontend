@@ -6,6 +6,7 @@ import React from 'react';
 import { Redirect, RouteComponentProps, withRouter } from 'react-router';
 import { toast } from 'react-toastify';
 import { REACT_APP_EXPRESS_OAUTH_GET_STATE_URL } from '../../../configs/env';
+import { WELCOME_BACK } from '../../../configs/lang';
 import { HOME_URL, LOGIN_URL } from '../../../constants';
 import { growl } from '../../../helpers/utils';
 import store from '../../../store';
@@ -21,7 +22,7 @@ export const BaseSuccessfulLoginComponent: React.FC<RouteComponentProps> = props
   }
   if (nextPath === '/') {
     const user = getUser(store.getState());
-    growl(`Welcome back ${user.username}`, { type: toast.TYPE.INFO });
+    growl(`${WELCOME_BACK}, ${user.username}`, { type: toast.TYPE.INFO });
   }
   return <Redirect to={pathToRedirectTo} />;
 };

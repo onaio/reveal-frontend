@@ -404,3 +404,4 @@ export const ORGANIZATION_LABEL = TEAM;
 export const ORGANIZATIONS_LABEL = TEAMS;
 
 export const ORGANIZATION_NAME_TITLE = translate('ORGANIZATION_NAME_TITLE', 'Team Name');
+export const WELCOME_BACK = translate('WELCOME_BACK', 'Welcome back');
