@@ -1,10 +1,15 @@
 import { ConnectedAPICallback, RouteParams } from '@onaio/gatekeeper';
+import { getUser } from '@onaio/session-reducer';
 import { trimStart } from 'lodash';
 import querystring from 'querystring';
 import React from 'react';
 import { Redirect, RouteComponentProps, withRouter } from 'react-router';
-import { OAUTH_GET_STATE_URL } from '../../../configs/env';
+import { toast } from 'react-toastify';
+import { REACT_APP_EXPRESS_OAUTH_GET_STATE_URL } from '../../../configs/env';
+import { WELCOME_BACK } from '../../../configs/lang';
 import { HOME_URL, LOGIN_URL } from '../../../constants';
+import { growl } from '../../../helpers/utils';
+import store from '../../../store';
 import Loading from '../Loading';
 
 export const BaseSuccessfulLoginComponent: React.FC<RouteComponentProps> = props => {
@@ -14,6 +19,10 @@ export const BaseSuccessfulLoginComponent: React.FC<RouteComponentProps> = props
   const nextPath = searchParams.next as string | undefined;
   if (nextPath) {
     pathToRedirectTo = nextPath;
+  }
+  if (nextPath === '/') {
+    const user = getUser(store.getState());
+    growl(`${WELCOME_BACK}, ${user.username}`, { type: toast.TYPE.INFO });
   }
   return <Redirect to={pathToRedirectTo} />;
 };
@@ -29,7 +38,7 @@ const CustomConnectedAPICallBack: React.FC<RouteComponentProps<RouteParams>> = p
         return <Redirect to={LOGIN_URL} />;
       }}
       SuccessfulLoginComponent={SuccessfulLoginComponent}
-      apiURL={OAUTH_GET_STATE_URL}
+      apiURL={REACT_APP_EXPRESS_OAUTH_GET_STATE_URL}
       {...props}
     />
   );
