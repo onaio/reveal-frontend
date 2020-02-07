@@ -143,6 +143,7 @@ describe('components/IRS Reports/JurisdictionReport', () => {
     );
     expect(wrapper.find('IRSIndicatorLegend').length).toEqual(1);
     expect(wrapper.find('IRSIndicatorLegend').props()).toEqual({
+      indicatorRows: 'zambia2019',
       indicatorThresholds: indicatorThresholdsIRS,
       indicatorThresholdsLookUp: indicatorThresholdsLookUpIRS,
     });

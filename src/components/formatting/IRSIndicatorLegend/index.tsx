@@ -13,26 +13,31 @@ import {
 import { percentage } from '../../../helpers/utils';
 
 interface Props {
+  indicatorRows: string;
   indicatorThresholds: IndicatorThresholds;
   indicatorThresholdsLookUp: IndicatorThresholdsLookUp;
 }
 
 const defaultProps: Props = {
+  indicatorRows: SUPERSET_IRS_REPORTING_INDICATOR_ROWS,
   indicatorThresholds: indicatorThresholdsIRS,
   indicatorThresholdsLookUp: indicatorThresholdsLookUpIRS,
 };
 
-const IRSIndicatorLegend = (props: Props) => {
-  const { indicatorThresholds, indicatorThresholdsLookUp } = props;
+const getIndicatorItems = (props: Props) => {
+  const { indicatorThresholds, indicatorThresholdsLookUp, indicatorRows } = props;
   let indicatorItems = Object.values(indicatorThresholds);
-  const customIndicatorThreshHolds = get(
-    indicatorThresholdsLookUp,
-    SUPERSET_IRS_REPORTING_INDICATOR_ROWS
-  );
+  const customIndicatorThreshHolds = get(indicatorThresholdsLookUp, indicatorRows);
 
   if (customIndicatorThreshHolds) {
     indicatorItems = Object.values(customIndicatorThreshHolds);
   }
+
+  return indicatorItems;
+};
+
+const IRSIndicatorLegend = (props: Props) => {
+  const indicatorItems = getIndicatorItems(props);
 
   return (
     <div className="card mt-5 mb-5">
