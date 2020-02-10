@@ -1,5 +1,121 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`containers/pages/IRS/plan calls the correct API endpoints to load map and table: IRS PLAN 1`] = `
+<IrsPlan
+  allJurisdictionIds={Array []}
+  assignmentsArray={Array []}
+  fetchAllJurisdictionIdsActionCreator={[Function]}
+  fetchAssignmentsActionCreator={[Function]}
+  fetchJurisdictionsActionCreator={[Function]}
+  fetchOrganizationsActionCreator={[Function]}
+  fetchPlansActionCreator={[Function]}
+  history={
+    Object {
+      "action": "POP",
+      "block": [Function],
+      "createHref": [Function],
+      "go": [Function],
+      "goBack": [Function],
+      "goForward": [Function],
+      "length": 1,
+      "listen": [Function],
+      "location": Object {
+        "hash": "",
+        "pathname": "/",
+        "search": "",
+        "state": undefined,
+      },
+      "push": [Function],
+      "replace": [Function],
+    }
+  }
+  isDraftPlan={true}
+  isFinalizedPlan={false}
+  isNewPlan={false}
+  jurisdictionsById={Object {}}
+  loadedJurisdictionIds={Array []}
+  location={[MockFunction]}
+  match={
+    Object {
+      "isExact": true,
+      "params": Object {
+        "id": "0230f9e8-1f30-5e91-8693-4c993661785e",
+      },
+      "path": "/intervention/irs/plan/:id",
+      "url": "/intervention/irs/plan/0230f9e8-1f30-5e91-8693-4c993661785e",
+    }
+  }
+  organizationsById={Object {}}
+  planById={
+    Object {
+      "id": "0230f9e8-1f30-5e91-8693-4c993661785e",
+      "plan_date": "2019-08-09",
+      "plan_effective_period_end": "2019-08-29",
+      "plan_effective_period_start": "2019-08-09",
+      "plan_fi_reason": "",
+      "plan_fi_status": "",
+      "plan_id": "0230f9e8-1f30-5e91-8693-4c993661785e",
+      "plan_intervention_type": "IRS",
+      "plan_jurisdictions_ids": Array [
+        "3952",
+      ],
+      "plan_status": "draft",
+      "plan_title": "IRS 2019-08-09",
+      "plan_version": "1",
+    }
+  }
+  planId="0230f9e8-1f30-5e91-8693-4c993661785e"
+  supersetService={[Function]}
+>
+  <Ripple
+    borderColor="#ff5d00"
+    borderStyle="solid"
+    borderWidth="4px"
+    height="64px"
+    minHeight="80vh"
+    width="64px"
+  >
+    <div
+      className="lds-ripple-parent"
+      style={
+        Object {
+          "minHeight": "80vh",
+        }
+      }
+    >
+      <div
+        className="lds-ripple"
+        style={
+          Object {
+            "height": "64px",
+            "width": "64px",
+          }
+        }
+      >
+        <div
+          style={
+            Object {
+              "borderColor": "#ff5d00",
+              "borderStyle": "solid",
+              "borderWidth": "4px",
+            }
+          }
+        />
+        <div
+          style={
+            Object {
+              "borderColor": "#ff5d00",
+              "borderStyle": "solid",
+              "borderWidth": "4px",
+            }
+          }
+        />
+      </div>
+    </div>
+  </Ripple>
+</IrsPlan>
+`;
+
 exports[`containers/pages/IRS/plan renders IRS Plan page correctly 1`] = `
 <Provider
   store={
