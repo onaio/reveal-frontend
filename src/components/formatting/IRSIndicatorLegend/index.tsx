@@ -1,24 +1,43 @@
+import { get } from 'lodash';
 import React from 'react';
 import { Col, Row, Table } from 'reactstrap';
+import { SUPERSET_IRS_REPORTING_INDICATOR_ROWS } from '../../../configs/env';
 import { CONDITIONAL_FORMATTING_RULES } from '../../../configs/lang';
 import {
   IndicatorThresholdItem,
   IndicatorThresholds,
   indicatorThresholdsIRS,
+  IndicatorThresholdsLookUp,
+  indicatorThresholdsLookUpIRS,
 } from '../../../configs/settings';
 import { percentage } from '../../../helpers/utils';
 
 interface Props {
+  indicatorRows: string;
   indicatorThresholds: IndicatorThresholds;
+  indicatorThresholdsLookUp: IndicatorThresholdsLookUp;
 }
 
 const defaultProps: Props = {
+  indicatorRows: SUPERSET_IRS_REPORTING_INDICATOR_ROWS,
   indicatorThresholds: indicatorThresholdsIRS,
+  indicatorThresholdsLookUp: indicatorThresholdsLookUpIRS,
+};
+
+const getIndicatorItems = (props: Props) => {
+  const { indicatorThresholds, indicatorThresholdsLookUp, indicatorRows } = props;
+  let indicatorItems = Object.values(indicatorThresholds);
+  const customIndicatorThreshHolds = get(indicatorThresholdsLookUp, indicatorRows);
+
+  if (customIndicatorThreshHolds) {
+    indicatorItems = Object.values(customIndicatorThreshHolds);
+  }
+
+  return indicatorItems;
 };
 
 const IRSIndicatorLegend = (props: Props) => {
-  const { indicatorThresholds } = props;
-  const indicatorItems = Object.values(indicatorThresholds);
+  const indicatorItems = getIndicatorItems(props);
 
   return (
     <div className="card mt-5 mb-5">
