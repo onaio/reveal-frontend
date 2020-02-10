@@ -33,6 +33,7 @@ import {
   REPORT,
 } from '../../../../constants';
 
+import { displayError } from '../../../../helpers/errors';
 import { RouteParams } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
 import plansReducer, {
@@ -127,9 +128,7 @@ class IrsPlans extends React.Component<IrsPlansProps & RouteComponentProps<Route
           );
           return fetchPlanRecordsActionCreator(irsPlanRecords);
         })
-        .catch(err => {
-          // console.log('ERR', err)
-        });
+        .catch(error => displayError(error));
     }
   }
 

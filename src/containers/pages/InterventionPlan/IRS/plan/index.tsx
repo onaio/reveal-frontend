@@ -58,6 +58,7 @@ import {
   OPENSRP_POST_ASSIGNMENTS_ENDPOINT,
   PARENTID,
 } from '../../../../../constants';
+import { displayError } from '../../../../../helpers/errors';
 import {
   FlexObject,
   getFeatureByProperty,
@@ -281,7 +282,7 @@ class IrsPlan extends React.Component<
           );
         })
         .catch((err: Error) => {
-          /** TODO - find something to do with error */
+          displayError(err);
         });
     }
 
@@ -418,7 +419,7 @@ class IrsPlan extends React.Component<
                 }
               })
               .catch((err: Error) => {
-                /** TODO - find something to do with error */
+                displayError(err);
               });
           }
         } else {
@@ -429,7 +430,7 @@ class IrsPlan extends React.Component<
         return fetchJurisdictionsActionCreator(jurisdictionsArray);
       })
       .catch((err: Error) => {
-        /** TODO - find something to do with error */
+        displayError(err);
       });
   }
 
@@ -516,10 +517,10 @@ class IrsPlan extends React.Component<
     const { planTableProps } = this.state;
 
     const onSaveAsDraftButtonClick = () => {
-      this.onSavePlanButtonClick();
+      this.onSavePlanButtonClick().catch(err => displayError(err));
     };
     const onSaveFinalizedPlanButtonClick = () => {
-      this.onSavePlanButtonClick(true);
+      this.onSavePlanButtonClick(true).catch(err => displayError(err));
     };
 
     const planHeaderRow = (
@@ -638,6 +639,7 @@ class IrsPlan extends React.Component<
     // generate api calls for each organization id
     const assignmentPromises = organizationIds.map(
       (o: string) =>
+        // tslint:disable-next-line:no-inferred-empty-object-type
         new Promise((resolve, reject) => {
           OpenSrpAssignedService.read(o, { plan: planId })
             .then(j => resolve(j))
@@ -763,7 +765,7 @@ class IrsPlan extends React.Component<
 
       this.setState(
         {
-          focusJurisdictionId: (id as string) || null,
+          focusJurisdictionId: id || null,
           tableCrumbs: [...newCrumbs],
         },
         () => {
@@ -833,6 +835,7 @@ class IrsPlan extends React.Component<
           (params as any).properties_filter = `${OPENSRP_PARENT_ID}:${jurisdiction}`;
         }
         promises.push(
+          // tslint:disable-next-line:no-inferred-empty-object-type
           new Promise((resolve, reject) => {
             OpenSrpLocationService.read(endpoint, params)
               .then(j => resolve(j))
@@ -842,29 +845,31 @@ class IrsPlan extends React.Component<
       }
 
       // Make all calls to OpenSRP API
-      Promise.all(promises).then((results: any[]) => {
-        const jurisdictions: Jurisdiction[] = [];
-        // Loop through all parent_id results
-        for (const Result of results) {
-          const result = Array.isArray(Result) ? [...Result] : [{ ...Result }];
-          // Loop through all children of parent
-          for (const geojson of result) {
-            // If the child geojson needs to be loaded into state, do so
-            if (doLoadAllGeojson || jurisdictionIdsToLoad.includes(geojson.id)) {
-              const J = jurisdictionsById[geojson.id];
-              if (J) {
-                const j: Jurisdiction = {
-                  ...J,
-                  geojson,
-                };
-                jurisdictions.push(j);
+      Promise.all(promises)
+        .then((results: any[]) => {
+          const jurisdictions: Jurisdiction[] = [];
+          // Loop through all parent_id results
+          for (const Result of results) {
+            const result = Array.isArray(Result) ? [...Result] : [{ ...Result }];
+            // Loop through all children of parent
+            for (const geojson of result) {
+              // If the child geojson needs to be loaded into state, do so
+              if (doLoadAllGeojson || jurisdictionIdsToLoad.includes(geojson.id)) {
+                const J = jurisdictionsById[geojson.id];
+                if (J) {
+                  const j: Jurisdiction = {
+                    ...J,
+                    geojson,
+                  };
+                  jurisdictions.push(j);
+                }
               }
             }
           }
-        }
-        // Update the store with newly loaded jurisdictions with geojson
-        this.props.fetchJurisdictionsActionCreator(jurisdictions);
-      });
+          // Update the store with newly loaded jurisdictions with geojson
+          this.props.fetchJurisdictionsActionCreator(jurisdictions);
+        })
+        .catch(err => displayError(err));
     } else {
       this.setState(
         {
@@ -987,7 +992,7 @@ class IrsPlan extends React.Component<
       const { checked: isSelected } = e.target;
       const { plan_jurisdictions_ids } = NewPlan;
 
-      const selectedIds = (plan_jurisdictions_ids && [...plan_jurisdictions_ids]) || [
+      let selectedIds = (plan_jurisdictions_ids && [...plan_jurisdictions_ids]) || [
         ...filteredJurisdictionIds,
       ];
       const decendantIds = focusJurisdictionId
@@ -1012,7 +1017,7 @@ class IrsPlan extends React.Component<
       } else if (!focusJurisdictionId) {
         selectedIds.length = 0;
         if (isSelected) {
-          selectedIds.concat(...filteredJurisdictionIds);
+          selectedIds = selectedIds.concat(...filteredJurisdictionIds);
         }
       }
 
@@ -1055,16 +1060,13 @@ class IrsPlan extends React.Component<
               (nextCountry && nextCountry.tilesets && nextCountry.tilesets[d]) || undefined
             );
 
-            if (Map && Map.getLayer(`${nextCountry.ADMN0_EN}-admin-${d}-fill`)) {
+            if (Map.getLayer(`${nextCountry.ADMN0_EN}-admin-${d}-fill`)) {
               Map.setPaintProperty(
                 `${nextCountry.ADMN0_EN}-admin-${d}-fill`,
                 'fill-opacity',
                 adminFillOpacity
               );
-            } else if (
-              Map &&
-              Map.getLayer(`${nextCountry.ADMN0_EN}-admin-${d}-jurisdiction-fill`)
-            ) {
+            } else if (Map.getLayer(`${nextCountry.ADMN0_EN}-admin-${d}-jurisdiction-fill`)) {
               Map.setPaintProperty(
                 `${nextCountry.ADMN0_EN}-admin-${d}-jurisdiction-fill`,
                 'fill-opacity',
@@ -1750,7 +1752,7 @@ class IrsPlan extends React.Component<
             } else {
               const layerFilter = Map.getFilter(layerId);
               if (layerFilter) {
-                layerFilter[2] = t === geographicLevel + 1 ? clickedId : '';
+                layerFilter[2] = t === (geographicLevel as number) + 1 ? clickedId : '';
                 Map.setFilter(layerId, layerFilter);
               }
             }
@@ -2102,9 +2104,6 @@ class IrsPlan extends React.Component<
                     },
                   });
                 })
-                .catch(() => {
-                  this.setState({ isSaveDraftDisabled: false });
-                })
                 .finally(() => {
                   // update state with new plan definition
                   const { plan_id, plan_status } = newPlanDraft;
@@ -2116,6 +2115,9 @@ class IrsPlan extends React.Component<
                       this.props.history.push(`${ASSIGN_PLAN_URL}/${plan_id}`);
                     }
                   }
+                })
+                .catch(() => {
+                  this.setState({ isSaveDraftDisabled: false });
                 });
             } else {
               // save plan-jurisdiction-organization assignments
@@ -2165,21 +2167,21 @@ class IrsPlan extends React.Component<
               // POST to retire unassigned assignments
               if (retiredAssignments.length) {
                 await OpenSrpAssignmentService.create([...retiredAssignments])
-                  .then(res => {
+                  .then(_ => {
                     // todo - hook in success notification
                   })
                   .catch(err => {
-                    // todo - handle errors
+                    displayError(err);
                   });
               }
               // POST to create new/updated assignments
               if (nextAssignments.length) {
                 await OpenSrpAssignmentService.create([...nextAssignments])
-                  .then(res => {
+                  .then(_ => {
                     // todo - hook in success notification
                   })
                   .catch(err => {
-                    // todo - handle errors
+                    displayError(err);
                   });
               }
               this.setState({ isSaveDraftDisabled: false });

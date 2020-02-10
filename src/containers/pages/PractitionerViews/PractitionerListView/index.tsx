@@ -35,6 +35,7 @@ import {
   HOME_URL,
   PRACTITIONERS_LIST_URL,
 } from '../../../../constants';
+import { displayError } from '../../../../helpers/errors';
 import { OpenSRPService } from '../../../../services/opensrp';
 import practitionersReducer, {
   fetchPractitioners,
@@ -70,7 +71,7 @@ const PractitionersListView = (props: PropsTypes) => {
 
   /** function to handle the submit on the inline search form */
   // tslint:disable-next-line: no-empty
-  function handleSubmit(data: FieldProps) {}
+  function handleSubmit(_: FieldProps) {}
 
   /** props to pass to the headerBreadCrumb */
   const breadcrumbProps: BreadCrumbProps = {
@@ -120,7 +121,7 @@ const PractitionersListView = (props: PropsTypes) => {
 
   /** hook to load all practitioners and dispatch to them to store */
   useEffect(() => {
-    loadPractitioners(serviceClass, fetchPractitionersCreator);
+    loadPractitioners(serviceClass, fetchPractitionersCreator).catch(error => displayError(error));
   }, []);
 
   // break early if practitioners are absent

@@ -4,6 +4,10 @@ import { FlexObject } from '../../helpers/utils';
 
 export const reducerName = 'map';
 
+// actions
+/** update admin level index action type */
+export const UPDATE_ADMIN_LEVEL_INDEX = 'reveal/reducer/map/UPDATE_ADMIN_LEVEL_INDEX';
+
 /** Interface for update admin level action */
 interface UpdateAdminLevelAction extends AnyAction {
   index: number;
@@ -40,10 +44,6 @@ export function reducer(state = initialState, action: MapActionTypes): Immutable
       return state;
   }
 }
-
-// actions
-/** update admin level index action type */
-export const UPDATE_ADMIN_LEVEL_INDEX = 'reveal/reducer/map/UPDATE_ADMIN_LEVEL_INDEX';
 
 // action creators
 /** update admin level index action creator

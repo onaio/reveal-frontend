@@ -10,9 +10,10 @@ import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import { FI_SINGLE_URL } from '../../../../../constants';
 import store from '../../../../../store';
-import { fetchGoals } from '../../../../../store/ducks/goals';
+import { fetchGoals, Goal } from '../../../../../store/ducks/goals';
 import { fetchJurisdictions } from '../../../../../store/ducks/jurisdictions';
-import { fetchPlans, Plan } from '../../../../../store/ducks/plans';
+import { Plan } from '../../../../../store/ducks/plans';
+import { fetchPlans } from '../../../../../store/ducks/plans';
 import * as fixtures from '../../../../../store/ducks/tests/fixtures';
 import ConnectedSingleFI, { SingleFI } from '../../single';
 
@@ -34,11 +35,11 @@ describe('containers/pages/SingleFI', () => {
     const mock: any = jest.fn();
     const supersetServiceMock: any = jest.fn(async () => []);
     const props = {
-      completeReactivePlansArray: [fixtures.completeReactivePlan],
-      completeRoutinePlansArray: [fixtures.completeRoutinePlan],
+      completeReactivePlansArray: [fixtures.completeReactivePlan as Plan],
+      completeRoutinePlansArray: [fixtures.completeRoutinePlan as Plan],
       currentReactivePlansArray: [fixtures.plan2],
       currentRoutinePlansArray: [fixtures.plan1],
-      goalsArray: fixtures.plan1Goals,
+      goalsArray: fixtures.plan1Goals as Goal[],
       history,
       jurisdiction: fixtures.jurisdictions[0],
       location: mock,
@@ -48,7 +49,7 @@ describe('containers/pages/SingleFI', () => {
         path: `${FI_SINGLE_URL}/:id`,
         url: `${FI_SINGLE_URL}/13`,
       },
-      planById: fixtures.plan1 as Plan,
+      planById: fixtures.plan1,
       plansIdArray: fixtures.plansIdArray,
       supersetService: supersetServiceMock,
     };
@@ -63,11 +64,11 @@ describe('containers/pages/SingleFI', () => {
     const mock: any = jest.fn();
     const supersetServiceMock: any = jest.fn(async () => []);
     const props = {
-      completeReactivePlansArray: [fixtures.completeReactivePlan],
-      completeRoutinePlansArray: [fixtures.completeRoutinePlan],
+      completeReactivePlansArray: [fixtures.completeReactivePlan as Plan],
+      completeRoutinePlansArray: [fixtures.completeRoutinePlan as Plan],
       currentReactivePlansArray: [fixtures.plan2],
       currentRoutinePlansArray: [fixtures.plan1],
-      goalsArray: fixtures.plan1Goals,
+      goalsArray: fixtures.plan1Goals as Goal[],
       history,
       jurisdiction: fixtures.jurisdictions[0],
       location: mock,
@@ -77,7 +78,7 @@ describe('containers/pages/SingleFI', () => {
         path: `${FI_SINGLE_URL}/:id`,
         url: `${FI_SINGLE_URL}/16`,
       },
-      planById: fixtures.plan1 as Plan,
+      planById: fixtures.plan1,
       plansIdArray: fixtures.plansIdArray,
       supersetService: supersetServiceMock,
       // tslint:disable-next-line: object-literal-sort-keys
@@ -118,7 +119,7 @@ describe('containers/pages/SingleFI', () => {
         path: `${FI_SINGLE_URL}/:id`,
         url: `${FI_SINGLE_URL}/16`,
       },
-      planById: fixtures.plan5,
+      planById: fixtures.plan5 as Plan,
       plansArray: [fixtures.plan5],
       plansIdArray: [fixtures.plan5.id],
       supersetService: supersetServiceMock,
@@ -139,8 +140,8 @@ describe('containers/pages/SingleFI', () => {
 
   it('It works with the Redux store', () => {
     const mock: any = jest.fn();
-    store.dispatch(fetchPlans(fixtures.plans as Plan[]));
-    store.dispatch(fetchGoals(fixtures.goals));
+    store.dispatch(fetchPlans(fixtures.plans));
+    store.dispatch(fetchGoals(fixtures.goals as Goal[]));
     store.dispatch(fetchJurisdictions(fixtures.jurisdictions));
     const supersetServiceMock: any = jest.fn(async () => []);
     const props = {
@@ -185,8 +186,8 @@ describe('containers/pages/SingleFI', () => {
     const mock: any = jest.fn();
     const supersetMock: any = jest.fn();
     supersetMock.mockImplementation(() => Promise.resolve([]));
-    store.dispatch(fetchPlans(fixtures.plans as Plan[]));
-    store.dispatch(fetchGoals(fixtures.goals));
+    store.dispatch(fetchPlans(fixtures.plans));
+    store.dispatch(fetchGoals(fixtures.goals as Goal[]));
     store.dispatch(fetchJurisdictions(fixtures.jurisdictions));
     const props = {
       history,
@@ -236,10 +237,10 @@ describe('containers/pages/SingleFI', () => {
 
     await flushPromises();
     const getFormDataCallList = [
-      [3000, [{ comparator: fixtures.plan1.plan_id, operator: '==', subject: 'plan_id' }]],
       [
         3000,
         [{ comparator: fixtures.plan1.plan_id, operator: '==', subject: 'plan_id' }],
+
         { action_prefix: true },
       ],
       [

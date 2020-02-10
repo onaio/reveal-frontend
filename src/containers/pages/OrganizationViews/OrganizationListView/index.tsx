@@ -34,6 +34,7 @@ import {
   ORGANIZATIONS_LIST_URL,
   SINGLE_ORGANIZATION_URL,
 } from '../../../../constants';
+import { displayError } from '../../../../helpers/errors';
 import { OpenSRPService } from '../../../../services/opensrp';
 import organizationsReducer, {
   fetchOrganizations,
@@ -70,7 +71,7 @@ const OrganizationListView = (props: OrgsListViewPropsType) => {
 
   /** function to handle the submit on the inline search form */
   // tslint:disable-next-line: no-empty
-  function handleSubmit(data: FieldProps) {}
+  function handleSubmit(_: FieldProps) {}
 
   /** props to pass to the headerBreadCrumb */
   const breadcrumbProps: BreadCrumbProps = {
@@ -124,7 +125,7 @@ const OrganizationListView = (props: OrgsListViewPropsType) => {
   };
 
   useEffect(() => {
-    loadOrganizations(serviceClass, fetchOrganizationsAction);
+    loadOrganizations(serviceClass, fetchOrganizationsAction).catch(err => displayError(err));
   }, []);
 
   // break early if organizations are absent

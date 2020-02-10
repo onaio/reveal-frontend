@@ -196,7 +196,7 @@ export class OpenSRPService {
    * @param {HTTPMethod} method - the HTTP method
    * @returns the object returned by API
    */
-  public async delete<T>(params: paramsType = null, method: HTTPMethod = 'DELETE') {
+  public async delete(params: paramsType = null, method: HTTPMethod = 'DELETE') {
     const url = getURL(this.generalURL, params);
     const response = await fetch(url, getPayload(method));
 
