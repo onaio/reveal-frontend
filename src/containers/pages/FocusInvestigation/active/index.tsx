@@ -56,6 +56,7 @@ import {
   HOME_URL,
   ROUTINE,
 } from '../../../../constants';
+import { displayError } from '../../../../helpers/errors';
 import { renderClassificationRow } from '../../../../helpers/indicators';
 import '../../../../helpers/tables.css';
 import { defaultTableProps, getFilteredFIPlansURL } from '../../../../helpers/utils';
@@ -114,9 +115,9 @@ class ActiveFocusInvestigation extends React.Component<
     const supersetParams = superset.getFormData(2000, [
       { comparator: InterventionType.FI, operator: '==', subject: 'plan_intervention_type' },
     ]);
-    supersetService(SUPERSET_PLANS_SLICE, supersetParams).then((result: Plan[]) =>
-      fetchPlansActionCreator(result)
-    );
+    supersetService(SUPERSET_PLANS_SLICE, supersetParams)
+      .then((result: Plan[]) => fetchPlansActionCreator(result))
+      .catch(err => displayError(err));
   }
   public handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
