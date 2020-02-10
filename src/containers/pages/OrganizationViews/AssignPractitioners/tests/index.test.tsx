@@ -97,6 +97,7 @@ describe('src/pages/*/AssignPractitioners', () => {
       </Provider>
     );
 
+    // tslint:disable-next-line
     await new Promise(resolve => setImmediate(resolve));
     wrapper.update();
 
@@ -134,7 +135,6 @@ describe('src/pages/*/AssignPractitioners', () => {
       </Router>
     );
 
-    await new Promise(resolve => setImmediate(resolve));
     wrapper.update();
 
     // page Title
