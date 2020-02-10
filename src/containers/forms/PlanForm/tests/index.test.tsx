@@ -79,6 +79,8 @@ describe('containers/forms/PlanForm', () => {
   });
 
   it('renders activity fields correctly', () => {
+    const wrapper = mount(<PlanForm />);
+
     function checkActivities(num: number, name: string = 'FI') {
       // FI activities by default
       for (let i = 0; i <= num; i++) {
@@ -147,7 +149,6 @@ describe('containers/forms/PlanForm', () => {
     }
 
     fetch.mockResponseOnce(fixtures.jurisdictionLevel0JSON);
-    const wrapper = mount(<PlanForm />);
 
     // activities are 6 and of type FI by default
     checkActivities(6, 'FI');
@@ -177,6 +178,8 @@ describe('containers/forms/PlanForm', () => {
   });
 
   it('renders jurisdictions fields correctly', () => {
+    const wrapper = mount(<PlanForm />);
+
     function checkJurisdtictions(num: number) {
       // FI activities by default
       for (let i = 0; i <= num; i++) {
@@ -194,7 +197,6 @@ describe('containers/forms/PlanForm', () => {
     }
 
     fetch.mockResponseOnce(fixtures.jurisdictionLevel0JSON);
-    const wrapper = mount(<PlanForm />);
 
     checkJurisdtictions(0);
     // ensure there is only one options so far
@@ -325,6 +327,13 @@ describe('containers/forms/PlanForm - Edit', () => {
   });
 
   it('renders jurisdictions fields correctly', () => {
+    const props = {
+      ...propsForUpdatingPlans,
+      initialValues: getPlanFormValues(plans[1]),
+    };
+
+    const wrapper = mount(<PlanForm {...props} />);
+
     function checkJurisdtictions(num: number) {
       for (let i = 0; i <= num; i++) {
         expect(toJson(wrapper.find(`#jurisdictions-${i}-id input`))).toMatchSnapshot(
@@ -337,11 +346,6 @@ describe('containers/forms/PlanForm - Edit', () => {
     }
 
     fetch.mockResponseOnce(fixtures.jurisdictionLevel0JSON);
-    const props = {
-      ...propsForUpdatingPlans,
-      initialValues: getPlanFormValues(plans[1]),
-    };
-    const wrapper = mount(<PlanForm {...props} />);
 
     checkJurisdtictions(plans[1].jurisdiction.length);
 
@@ -358,6 +362,13 @@ describe('containers/forms/PlanForm - Edit', () => {
   });
 
   it('renders activity fields correctly', () => {
+    const props = {
+      ...propsForUpdatingPlans,
+      initialValues: getPlanFormValues(plans[1]),
+    };
+
+    const wrapper = mount(<PlanForm {...props} />);
+
     function checkActivities(num: number) {
       // FI activities by default
       for (let i = 0; i <= num; i++) {
@@ -399,11 +410,6 @@ describe('containers/forms/PlanForm - Edit', () => {
     }
 
     fetch.mockResponseOnce(fixtures.jurisdictionLevel0JSON);
-    const props = {
-      ...propsForUpdatingPlans,
-      initialValues: getPlanFormValues(plans[1]),
-    };
-    const wrapper = mount(<PlanForm {...props} />);
 
     checkActivities(plans[1].action.length);
 
@@ -424,6 +430,7 @@ describe('containers/forms/PlanForm - Submission', () => {
     ).toEqual({});
 
     wrapper.find('form').simulate('submit');
+    // tslint:disable-next-line
     await new Promise(resolve => setImmediate(resolve));
     wrapper.update();
 
@@ -468,6 +475,7 @@ describe('containers/forms/PlanForm - Submission', () => {
       .simulate('change', { target: { name: 'status', value: '' } });
 
     wrapper.find('form').simulate('submit');
+    // tslint:disable-next-line
     await new Promise(resolve => setImmediate(resolve));
     wrapper.update();
 
@@ -494,6 +502,7 @@ describe('containers/forms/PlanForm - Submission', () => {
       .simulate('change', { target: { name: 'interventionType', value: 'oOv' } });
 
     wrapper.find('form').simulate('submit');
+    // tslint:disable-next-line
     await new Promise(resolve => setImmediate(resolve));
     wrapper.update();
 
@@ -521,6 +530,7 @@ describe('containers/forms/PlanForm - Submission', () => {
       .simulate('change', { target: { name: 'status', value: 'Ona' } });
 
     wrapper.find('form').simulate('submit');
+    // tslint:disable-next-line
     await new Promise(resolve => setImmediate(resolve));
     wrapper.update();
 
@@ -571,6 +581,7 @@ describe('containers/forms/PlanForm - Submission', () => {
     ).toEqual({});
 
     wrapper.find('form').simulate('submit');
+    // tslint:disable-next-line
     await new Promise(resolve => setImmediate(resolve));
     wrapper.update();
 
@@ -609,6 +620,7 @@ describe('containers/forms/PlanForm - Submission', () => {
       .simulate('change', { target: { name: 'activities[0].timingPeriodStart', value: '' } });
 
     wrapper.find('form').simulate('submit');
+    // tslint:disable-next-line
     await new Promise(resolve => setImmediate(resolve));
     wrapper.update();
 
@@ -627,6 +639,7 @@ describe('containers/forms/PlanForm - Submission', () => {
       .simulate('change', { target: { name: 'activities[0].goalValue', value: '0' } });
 
     wrapper.find('form').simulate('submit');
+    // tslint:disable-next-line
     await new Promise(resolve => setImmediate(resolve));
     wrapper.update();
 
@@ -699,7 +712,7 @@ describe('containers/forms/PlanForm - Submission', () => {
   it('Form submission for new plans works', async () => {
     // ensure that we are logged in so that we can get the OpenSRP token from Redux
     const { authenticated, user, extraData } = getOpenSRPUserInfo(OpenSRPAPIResponse);
-    await store.dispatch(authenticateUser(authenticated, user, extraData));
+    store.dispatch(authenticateUser(authenticated, user, extraData));
 
     fetch.mockResponseOnce(JSON.stringify({}), { status: 201 });
 
@@ -728,6 +741,7 @@ describe('containers/forms/PlanForm - Submission', () => {
       .simulate('change', { target: { name: 'fiStatus', value: 'A2' } });
 
     wrapper.find('form').simulate('submit');
+    // tslint:disable-next-line
     await new Promise(resolve => setImmediate(resolve));
     wrapper.update();
 
@@ -767,7 +781,7 @@ describe('containers/forms/PlanForm - Submission', () => {
   it('Form submission for updating plans works', async () => {
     // ensure that we are logged in so that we can get the OpenSRP token from Redux
     const { authenticated, user, extraData } = getOpenSRPUserInfo(OpenSRPAPIResponse);
-    await store.dispatch(authenticateUser(authenticated, user, extraData));
+    store.dispatch(authenticateUser(authenticated, user, extraData));
 
     fetch.mockResponseOnce(JSON.stringify({}));
 
@@ -778,6 +792,7 @@ describe('containers/forms/PlanForm - Submission', () => {
     const wrapper = mount(<PlanForm {...props} />);
 
     wrapper.find('form').simulate('submit');
+    // tslint:disable-next-line
     await new Promise(resolve => setImmediate(resolve));
     wrapper.update();
 
