@@ -54,6 +54,7 @@ describe('src/../singleOrganization.selectors', () => {
       </Provider>
     );
 
+    // tslint:disable-next-line
     await new Promise(resolve => setImmediate(resolve));
 
     expect(organizationByIdMock).toHaveBeenCalledTimes(7);
