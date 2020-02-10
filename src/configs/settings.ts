@@ -989,6 +989,15 @@ export const ZambiaAdmin0: JurisdictionsByCountry = {
   tilesets: [],
 };
 
+export const TestAdmin0: JurisdictionsByCountry = {
+  ADMN0_EN: 'Test',
+  ADMN0_PCODE: '0',
+  bounds: [0, 0, 0, 0],
+  jurisdictionId: '0',
+  jurisdictionIds: [],
+  tilesets: [],
+};
+
 /** Country Jurisdictions definition for Thailand */
 export const ThailandAdmin0: JurisdictionsByCountry = {
   ADMN0_EN: 'Thailand',
@@ -1157,6 +1166,7 @@ export const CountriesAdmin0 = {
   Tak: TakAdmin0,
   ZM: ZambiaAdmin0,
   ราชอาณาจักรไทย: ราชอาณาจักรไทยAdmin0,
+  ['0']: TestAdmin0,
 };
 /** Columns for various Plans */
 /** complete reactive columns with no data */
