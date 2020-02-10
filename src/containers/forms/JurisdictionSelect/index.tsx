@@ -73,7 +73,7 @@ const JurisdictionSelect = (props: JurisdictionSelectProps & FieldProps) => {
 
   /** Get select options from OpenSRP as a promise */
   const promiseOptions = () =>
-    // tslint:disable-next-line
+    // tslint:disable-next-line:no-inferred-empty-object-type
     new Promise(resolve =>
       resolve(
         service.list(paramsToUse).then((e: JurisdictionOption[]) => {

@@ -54,7 +54,7 @@ describe('src/../singleOrganization.selectors', () => {
       </Provider>
     );
 
-    // tslint:disable-next-line
+    // tslint:disable-next-line:no-inferred-empty-object-type
     await new Promise(resolve => setImmediate(resolve));
 
     expect(organizationByIdMock).toHaveBeenCalledTimes(7);

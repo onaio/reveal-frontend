@@ -103,7 +103,7 @@ describe('src/components/PractitionerForm', () => {
       value: '0259c0bc-78a2-4284-a7a9-d61d0005djae',
     });
 
-    // tslint:disable-next-line
+    // tslint:disable-next-line:no-inferred-empty-object-type
     await new Promise(resolve => setImmediate(resolve));
 
     wrapper.update();
@@ -133,7 +133,7 @@ describe('src/components/PractitionerForm', () => {
 
     wrapper.find('form').simulate('submit');
 
-    // tslint:disable-next-line
+    // tslint:disable-next-line:no-inferred-empty-object-type
     await new Promise(resolve => setImmediate(resolve));
 
     expect(fetch.mock.calls[2]).toEqual([
@@ -174,7 +174,7 @@ describe('src/components/PractitionerForm', () => {
 
     wrapper.find('form').simulate('submit');
 
-    // tslint:disable-next-line
+    // tslint:disable-next-line:no-inferred-empty-object-type
     await new Promise(resolve => setImmediate(resolve));
 
     expect(fetch.mock.calls).toEqual([

@@ -164,7 +164,7 @@ describe('src/containers/pages/OrganizationViews', () => {
         </Router>
       </Provider>
     );
-    // tslint:disable-next-line
+    // tslint:disable-next-line:no-inferred-empty-object-type
     await new Promise(resolve => setImmediate(resolve));
     // simulate removal action
     wrapper.update();

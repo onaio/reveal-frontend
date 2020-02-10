@@ -639,7 +639,7 @@ class IrsPlan extends React.Component<
     // generate api calls for each organization id
     const assignmentPromises = organizationIds.map(
       (o: string) =>
-        // tslint:disable-next-line
+        // tslint:disable-next-line:no-inferred-empty-object-type
         new Promise((resolve, reject) => {
           OpenSrpAssignedService.read(o, { plan: planId })
             .then(j => resolve(j))
@@ -835,7 +835,7 @@ class IrsPlan extends React.Component<
           (params as any).properties_filter = `${OPENSRP_PARENT_ID}:${jurisdiction}`;
         }
         promises.push(
-          // tslint:disable-next-line
+          // tslint:disable-next-line:no-inferred-empty-object-type
           new Promise((resolve, reject) => {
             OpenSrpLocationService.read(endpoint, params)
               .then(j => resolve(j))

@@ -22,8 +22,8 @@ describe('src/*/forms/userIdSelect', () => {
       serviceClass: OpenSRPService,
     };
     const wrapper = shallow(<UserIdSelect {...props} />);
-    // tslint:disable-next-line
-    await new Promise(resolve => new Promise(resolve));
+    // tslint:disable-next-line:promise-must-complete
+    await new Promise<any>(resolve => new Promise<any>(resolve));
     wrapper.update();
   });
 
@@ -33,8 +33,8 @@ describe('src/*/forms/userIdSelect', () => {
       serviceClass: OpenSRPService,
     };
     const wrapper = mount(<UserIdSelect {...props} />);
-    // tslint:disable-next-line
-    await new Promise(resolve => new Promise(resolve));
+    // tslint:disable-next-line:promise-must-complete
+    await new Promise<any>(resolve => new Promise<any>(resolve));
     wrapper.update();
     const inputSelect = wrapper.find('input');
     expect(toJson(inputSelect)).toMatchSnapshot('Selector Input');
@@ -47,8 +47,8 @@ describe('src/*/forms/userIdSelect', () => {
       serviceClass: OpenSRPService,
     };
     mount(<UserIdSelect {...props} />);
-    // tslint:disable-next-line
-    await new Promise(resolve => new Promise(resolve));
+    // tslint:disable-next-line:promise-must-complete
+    await new Promise<any>(resolve => new Promise<any>(resolve));
     await flushPromises();
     const calls = [
       [

@@ -97,7 +97,7 @@ describe('src/pages/*/AssignPractitioners', () => {
       </Provider>
     );
 
-    // tslint:disable-next-line
+    // tslint:disable-next-line:no-inferred-empty-object-type
     await new Promise(resolve => setImmediate(resolve));
     wrapper.update();
 

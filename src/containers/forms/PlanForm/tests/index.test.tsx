@@ -430,7 +430,7 @@ describe('containers/forms/PlanForm - Submission', () => {
     ).toEqual({});
 
     wrapper.find('form').simulate('submit');
-    // tslint:disable-next-line
+    // tslint:disable-next-line:no-inferred-empty-object-type
     await new Promise(resolve => setImmediate(resolve));
     wrapper.update();
 
@@ -475,7 +475,7 @@ describe('containers/forms/PlanForm - Submission', () => {
       .simulate('change', { target: { name: 'status', value: '' } });
 
     wrapper.find('form').simulate('submit');
-    // tslint:disable-next-line
+    // tslint:disable-next-line:no-inferred-empty-object-type
     await new Promise(resolve => setImmediate(resolve));
     wrapper.update();
 
@@ -502,7 +502,7 @@ describe('containers/forms/PlanForm - Submission', () => {
       .simulate('change', { target: { name: 'interventionType', value: 'oOv' } });
 
     wrapper.find('form').simulate('submit');
-    // tslint:disable-next-line
+    // tslint:disable-next-line:no-inferred-empty-object-type
     await new Promise(resolve => setImmediate(resolve));
     wrapper.update();
 
@@ -530,7 +530,7 @@ describe('containers/forms/PlanForm - Submission', () => {
       .simulate('change', { target: { name: 'status', value: 'Ona' } });
 
     wrapper.find('form').simulate('submit');
-    // tslint:disable-next-line
+    // tslint:disable-next-line:no-inferred-empty-object-type
     await new Promise(resolve => setImmediate(resolve));
     wrapper.update();
 
@@ -581,7 +581,7 @@ describe('containers/forms/PlanForm - Submission', () => {
     ).toEqual({});
 
     wrapper.find('form').simulate('submit');
-    // tslint:disable-next-line
+    // tslint:disable-next-line:no-inferred-empty-object-type
     await new Promise(resolve => setImmediate(resolve));
     wrapper.update();
 
@@ -620,7 +620,7 @@ describe('containers/forms/PlanForm - Submission', () => {
       .simulate('change', { target: { name: 'activities[0].timingPeriodStart', value: '' } });
 
     wrapper.find('form').simulate('submit');
-    // tslint:disable-next-line
+    // tslint:disable-next-line:no-inferred-empty-object-type
     await new Promise(resolve => setImmediate(resolve));
     wrapper.update();
 
@@ -639,7 +639,7 @@ describe('containers/forms/PlanForm - Submission', () => {
       .simulate('change', { target: { name: 'activities[0].goalValue', value: '0' } });
 
     wrapper.find('form').simulate('submit');
-    // tslint:disable-next-line
+    // tslint:disable-next-line:no-inferred-empty-object-type
     await new Promise(resolve => setImmediate(resolve));
     wrapper.update();
 
@@ -741,7 +741,7 @@ describe('containers/forms/PlanForm - Submission', () => {
       .simulate('change', { target: { name: 'fiStatus', value: 'A2' } });
 
     wrapper.find('form').simulate('submit');
-    // tslint:disable-next-line
+    // tslint:disable-next-line:no-inferred-empty-object-type
     await new Promise(resolve => setImmediate(resolve));
     wrapper.update();
 
@@ -792,7 +792,7 @@ describe('containers/forms/PlanForm - Submission', () => {
     const wrapper = mount(<PlanForm {...props} />);
 
     wrapper.find('form').simulate('submit');
-    // tslint:disable-next-line
+    // tslint:disable-next-line:no-inferred-empty-object-type
     await new Promise(resolve => setImmediate(resolve));
     wrapper.update();
 
