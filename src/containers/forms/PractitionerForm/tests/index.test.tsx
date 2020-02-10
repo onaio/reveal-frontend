@@ -103,8 +103,7 @@ describe('src/components/PractitionerForm', () => {
       value: '0259c0bc-78a2-4284-a7a9-d61d0005djae',
     });
 
-    // tslint:disable-next-line:no-inferred-empty-object-type
-    await new Promise(resolve => setImmediate(resolve));
+    await new Promise<any>(resolve => setImmediate(resolve));
 
     wrapper.update();
 
@@ -133,8 +132,7 @@ describe('src/components/PractitionerForm', () => {
 
     wrapper.find('form').simulate('submit');
 
-    // tslint:disable-next-line:no-inferred-empty-object-type
-    await new Promise(resolve => setImmediate(resolve));
+    await new Promise<any>(resolve => setImmediate(resolve));
 
     expect(fetch.mock.calls[2]).toEqual([
       'https://test.smartregister.org/opensrp/rest/practitioner',
@@ -174,8 +172,7 @@ describe('src/components/PractitionerForm', () => {
 
     wrapper.find('form').simulate('submit');
 
-    // tslint:disable-next-line:no-inferred-empty-object-type
-    await new Promise(resolve => setImmediate(resolve));
+    await new Promise<any>(resolve => setImmediate(resolve));
 
     expect(fetch.mock.calls).toEqual([
       [

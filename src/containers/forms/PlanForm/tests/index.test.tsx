@@ -430,8 +430,8 @@ describe('containers/forms/PlanForm - Submission', () => {
     ).toEqual({});
 
     wrapper.find('form').simulate('submit');
-    // tslint:disable-next-line:no-inferred-empty-object-type
-    await new Promise(resolve => setImmediate(resolve));
+
+    await new Promise<any>(resolve => setImmediate(resolve));
     wrapper.update();
 
     // we now have some errors
@@ -475,8 +475,8 @@ describe('containers/forms/PlanForm - Submission', () => {
       .simulate('change', { target: { name: 'status', value: '' } });
 
     wrapper.find('form').simulate('submit');
-    // tslint:disable-next-line:no-inferred-empty-object-type
-    await new Promise(resolve => setImmediate(resolve));
+
+    await new Promise<any>(resolve => setImmediate(resolve));
     wrapper.update();
 
     // date is required
@@ -502,8 +502,8 @@ describe('containers/forms/PlanForm - Submission', () => {
       .simulate('change', { target: { name: 'interventionType', value: 'oOv' } });
 
     wrapper.find('form').simulate('submit');
-    // tslint:disable-next-line:no-inferred-empty-object-type
-    await new Promise(resolve => setImmediate(resolve));
+
+    await new Promise<any>(resolve => setImmediate(resolve));
     wrapper.update();
 
     // interventionType should be as expected
@@ -530,8 +530,8 @@ describe('containers/forms/PlanForm - Submission', () => {
       .simulate('change', { target: { name: 'status', value: 'Ona' } });
 
     wrapper.find('form').simulate('submit');
-    // tslint:disable-next-line:no-inferred-empty-object-type
-    await new Promise(resolve => setImmediate(resolve));
+
+    await new Promise<any>(resolve => setImmediate(resolve));
     wrapper.update();
 
     // fiReason should be as expected
@@ -581,8 +581,8 @@ describe('containers/forms/PlanForm - Submission', () => {
     ).toEqual({});
 
     wrapper.find('form').simulate('submit');
-    // tslint:disable-next-line:no-inferred-empty-object-type
-    await new Promise(resolve => setImmediate(resolve));
+
+    await new Promise<any>(resolve => setImmediate(resolve));
     wrapper.update();
 
     // lets mess with the activity fields :)
@@ -620,8 +620,8 @@ describe('containers/forms/PlanForm - Submission', () => {
       .simulate('change', { target: { name: 'activities[0].timingPeriodStart', value: '' } });
 
     wrapper.find('form').simulate('submit');
-    // tslint:disable-next-line:no-inferred-empty-object-type
-    await new Promise(resolve => setImmediate(resolve));
+
+    await new Promise<any>(resolve => setImmediate(resolve));
     wrapper.update();
 
     // activity errors display nicely, as expected
@@ -639,8 +639,8 @@ describe('containers/forms/PlanForm - Submission', () => {
       .simulate('change', { target: { name: 'activities[0].goalValue', value: '0' } });
 
     wrapper.find('form').simulate('submit');
-    // tslint:disable-next-line:no-inferred-empty-object-type
-    await new Promise(resolve => setImmediate(resolve));
+
+    await new Promise<any>(resolve => setImmediate(resolve));
     wrapper.update();
 
     // actionReason should be as expected
@@ -741,8 +741,8 @@ describe('containers/forms/PlanForm - Submission', () => {
       .simulate('change', { target: { name: 'fiStatus', value: 'A2' } });
 
     wrapper.find('form').simulate('submit');
-    // tslint:disable-next-line:no-inferred-empty-object-type
-    await new Promise(resolve => setImmediate(resolve));
+
+    await new Promise<any>(resolve => setImmediate(resolve));
     wrapper.update();
 
     // no errors are initially shown
@@ -792,8 +792,8 @@ describe('containers/forms/PlanForm - Submission', () => {
     const wrapper = mount(<PlanForm {...props} />);
 
     wrapper.find('form').simulate('submit');
-    // tslint:disable-next-line:no-inferred-empty-object-type
-    await new Promise(resolve => setImmediate(resolve));
+
+    await new Promise<any>(resolve => setImmediate(resolve));
     wrapper.update();
 
     const payload = {

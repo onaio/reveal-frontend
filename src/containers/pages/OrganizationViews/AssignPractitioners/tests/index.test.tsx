@@ -97,8 +97,7 @@ describe('src/pages/*/AssignPractitioners', () => {
       </Provider>
     );
 
-    // tslint:disable-next-line:no-inferred-empty-object-type
-    await new Promise(resolve => setImmediate(resolve));
+    await new Promise<any>(resolve => setImmediate(resolve));
     wrapper.update();
 
     const theProps = wrapper.find('AssignPractitioner').props() as any;

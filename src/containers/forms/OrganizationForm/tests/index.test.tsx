@@ -51,8 +51,7 @@ describe('containers/forms/Teamform', () => {
   it('form validation works', async () => {
     const wrapper = mount(<TeamForm />);
     wrapper.find('form').simulate('submit');
-    // tslint:disable-next-line:no-inferred-empty-object-type
-    await new Promise(resolve => setImmediate(resolve));
+    await new Promise<any>(resolve => setImmediate(resolve));
     wrapper.update();
 
     expect(wrapper.find('small.name-error').text()).toEqual('Required');
