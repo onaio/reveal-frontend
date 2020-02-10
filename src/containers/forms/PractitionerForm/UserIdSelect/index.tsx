@@ -7,6 +7,7 @@ import Select from 'react-select';
 import { ValueType } from 'react-select/src/types';
 import { OPENMRS_USERS_REQUEST_PAGE_SIZE } from '../../../../configs/env';
 import { OPENSRP_PRACTITIONER_ENDPOINT, OPENSRP_USERS_ENDPOINT } from '../../../../constants';
+import { displayError } from '../../../../helpers/errors';
 import { OpenSRPService } from '../../../../services/opensrp';
 import { Practitioner } from '../../../../store/ducks/opensrp/practitioners';
 
@@ -36,6 +37,18 @@ interface OpenMRSUser {
   uuid: string;
 }
 
+/** util function that given an OpenMRSResponse, returns
+ * whether we can call the openSRP-openMRS proxy for the next page of data
+ */
+export const thereIsNextPage = (response: OpenMRSResponse): boolean => {
+  if (response.links) {
+    // check if we have a next link in the links
+    const links = response.links;
+    return links.filter(link => link.rel === 'next').length > 0;
+  }
+  return false;
+};
+
 /** The UserIdSelect component */
 export const UserIdSelect: React.FC<Props> = props => {
   const { onChangeHandler } = props;
@@ -62,7 +75,7 @@ export const UserIdSelect: React.FC<Props> = props => {
     let response: OpenMRSResponse;
     do {
       response = await serve.list(filterParams).catch(err => {
-        /** growl */
+        displayError(err);
       });
       allOpenMRSUsers.push(...response.results);
 
@@ -75,15 +88,6 @@ export const UserIdSelect: React.FC<Props> = props => {
     } while (thereIsNextPage(response));
     return allOpenMRSUsers;
   };
-
-  useEffect(() => {
-    try {
-      loadUnmatchedUsers();
-    } catch (err) {
-      /** expected error is setState on unmounted component
-       */
-    }
-  }, []);
 
   /** filters out openMRs User objects that have already been mapped to an existing
    * practitioner, this is an effort towards ensuring a 1-1 mapping between an openMRS user
@@ -100,6 +104,14 @@ export const UserIdSelect: React.FC<Props> = props => {
     setOpenMRSUsers(unMatchedUsers);
     setSelectIsLoading(false);
   };
+
+  useEffect(() => {
+    try {
+      loadUnmatchedUsers().catch(err => displayError(err));
+    } catch (err) {
+      displayError(err);
+    }
+  }, []);
 
   const options = React.useMemo(() => {
     return openMRSUsers
@@ -135,15 +147,3 @@ export interface OpenMRSResponse {
   links: Array<{ rel: string; uri: string }>;
   results: OpenMRSUser[];
 }
-
-/** util function that given an OpenMRSResponse, returns
- * whether we can call the openSRP-openMRS proxy for the next page of data
- */
-export const thereIsNextPage = (response: OpenMRSResponse): boolean => {
-  if (response.links) {
-    // check if we have a next link in the links
-    const links = response.links;
-    return links.filter(link => link.rel === 'next').length > 0;
-  }
-  return false;
-};
