@@ -23,6 +23,7 @@ import {
 } from '../../../../configs/env';
 import { HOME, IRS_REPORTING_TITLE } from '../../../../configs/lang';
 import { HOME_URL, REPORT_IRS_PLAN_URL } from '../../../../constants';
+import { displayError } from '../../../../helpers/errors';
 import '../../../../helpers/tables.css';
 import { FlexObject, RouteParams } from '../../../../helpers/utils';
 import supersetFetch from '../../../../services/superset';
@@ -107,7 +108,7 @@ const JurisdictionReport = (props: GenericJurisdictionProps & RouteComponentProp
   }
 
   useEffect(() => {
-    loadData();
+    loadData().catch(err => displayError(err));
   }, []);
 
   useEffect(() => {
@@ -191,9 +192,9 @@ const JurisdictionReport = (props: GenericJurisdictionProps & RouteComponentProp
     data,
     defaultPageSize: data.length,
     extraCellProps: { urlPath: baseURL },
-    getTdProps: (state: any, rowInfo: any, column: any, instance: any) => {
+    getTdProps: (_: any, rowInfo: any, column: any) => {
       return {
-        onClick: (e: any, handleOriginal: any) => {
+        onClick: (__: any, handleOriginal: any) => {
           if (
             column.id === 'jurisdiction_name' &&
             hasChildren(rowInfo, parentNodes, 'jurisdiction_id')
