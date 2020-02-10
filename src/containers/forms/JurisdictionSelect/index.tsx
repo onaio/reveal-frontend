@@ -1,9 +1,9 @@
 import { FieldProps } from 'formik';
 import React, { useState } from 'react';
 import AsyncSelect, { Props as AsyncSelectProps } from 'react-select/async';
-import { getFilterParams, OpenSRPService, URLParams } from '../../../services/opensrp';
-
 import { SELECT } from '../../../configs/lang';
+import { displayError } from '../../../helpers/errors';
+import { getFilterParams, OpenSRPService, URLParams } from '../../../services/opensrp';
 import './style.css';
 
 /** interface for jurisdiction options
@@ -73,6 +73,7 @@ const JurisdictionSelect = (props: JurisdictionSelectProps & FieldProps) => {
 
   /** Get select options from OpenSRP as a promise */
   const promiseOptions = () =>
+    // tslint:disable-next-line
     new Promise(resolve =>
       resolve(
         service.list(paramsToUse).then((e: JurisdictionOption[]) => {
@@ -107,30 +108,33 @@ const JurisdictionSelect = (props: JurisdictionSelectProps & FieldProps) => {
         ...params,
         properties_filter: getFilterParams({ parentId: optionVal.value }),
       };
-      service.list(newParamsToUse).then(e => {
-        setShouldMenuOpen(true);
-        if (e.length > 0 && cascadingSelect === true) {
-          setParentId(optionVal.value);
+      service
+        .list(newParamsToUse)
+        .then(e => {
+          setShouldMenuOpen(true);
+          if (e.length > 0 && cascadingSelect === true) {
+            setParentId(optionVal.value);
 
-          hierarchy.push(optionVal);
-          setHierarchy(hierarchy);
+            hierarchy.push(optionVal);
+            setHierarchy(hierarchy);
 
-          setCloseMenuOnSelect(false);
-        } else {
-          // set the Formik field value
-          if (form && field) {
-            form.setFieldValue(field.name, optionVal.value);
-            form.setFieldTouched(field.name, true);
-            if (labelFieldName) {
-              form.setFieldValue(labelFieldName, optionVal.label); /** dirty hack */
-              form.setFieldTouched(labelFieldName, true); /** dirty hack */
+            setCloseMenuOnSelect(false);
+          } else {
+            // set the Formik field value
+            if (form && field) {
+              form.setFieldValue(field.name, optionVal.value);
+              form.setFieldTouched(field.name, true);
+              if (labelFieldName) {
+                form.setFieldValue(labelFieldName, optionVal.label); /** dirty hack */
+                form.setFieldTouched(labelFieldName, true); /** dirty hack */
+              }
             }
-          }
 
-          setCloseMenuOnSelect(true);
-          setShouldMenuOpen(false);
-        }
-      });
+            setCloseMenuOnSelect(true);
+            setShouldMenuOpen(false);
+          }
+        })
+        .catch(error => displayError(error));
     } else {
       // most probably the select element was reset, so we reset the state vars
       setParentId('');
