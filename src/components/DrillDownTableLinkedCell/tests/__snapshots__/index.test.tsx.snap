@@ -1,0 +1,175 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`/components/DrillDownTableLinkedCell renders correctly if prop hasChildren is false 1`] = `
+<Router
+  history={
+    Object {
+      "action": "POP",
+      "block": [Function],
+      "createHref": [Function],
+      "go": [Function],
+      "goBack": [Function],
+      "goForward": [Function],
+      "length": 1,
+      "listen": [Function],
+      "location": Object {
+        "hash": "",
+        "pathname": "/",
+        "search": "",
+        "state": undefined,
+      },
+      "push": [Function],
+      "replace": [Function],
+    }
+  }
+>
+  <DrillDownTableLinkedCell
+    cell={
+      Object {
+        "aggregated": false,
+        "classes": Array [],
+        "column": Object {
+          "Header": "",
+          "className": "",
+          "filterAll": false,
+          "footerClassName": "",
+          "footerStyle": Object {},
+          "headerClassName": "",
+          "headerStyle": Object {},
+          "id": "id",
+          "minWidth": 90,
+          "show": true,
+          "style": Object {},
+        },
+        "columnProps": Object {
+          "rest": Object {},
+        },
+        "expander": false,
+        "groupedByPivot": false,
+        "index": 0,
+        "isExpanded": false,
+        "level": 0,
+        "maxWidth": 4,
+        "nestingPath": Array [
+          0,
+        ],
+        "original": Object {},
+        "page": 0,
+        "pageSize": 20,
+        "pivoted": false,
+        "resized": Array [],
+        "row": Object {},
+        "rowValues": Object {},
+        "show": true,
+        "styles": Object {},
+        "subRows": Array [],
+        "tdProps": Object {
+          "rest": Object {},
+        },
+        "value": "2019-11-20",
+        "viewIndex": 0,
+        "width": 90,
+      }
+    }
+    cellValue="2019-11-20"
+    hasChildren={false}
+    urlPath="http://example.com/path"
+  >
+    <div>
+      2019-11-20
+    </div>
+  </DrillDownTableLinkedCell>
+</Router>
+`;
+
+exports[`/components/DrillDownTableLinkedCell renders correctly if prop hasChildren is true 1`] = `
+<Router
+  history={
+    Object {
+      "action": "POP",
+      "block": [Function],
+      "createHref": [Function],
+      "go": [Function],
+      "goBack": [Function],
+      "goForward": [Function],
+      "length": 1,
+      "listen": [Function],
+      "location": Object {
+        "hash": "",
+        "pathname": "/",
+        "search": "",
+        "state": undefined,
+      },
+      "push": [Function],
+      "replace": [Function],
+    }
+  }
+>
+  <DrillDownTableLinkedCell
+    cell={
+      Object {
+        "aggregated": false,
+        "classes": Array [],
+        "column": Object {
+          "Header": "",
+          "className": "",
+          "filterAll": false,
+          "footerClassName": "",
+          "footerStyle": Object {},
+          "headerClassName": "",
+          "headerStyle": Object {},
+          "id": "id",
+          "minWidth": 90,
+          "show": true,
+          "style": Object {},
+        },
+        "columnProps": Object {
+          "rest": Object {},
+        },
+        "expander": false,
+        "groupedByPivot": false,
+        "index": 0,
+        "isExpanded": false,
+        "level": 0,
+        "maxWidth": 4,
+        "nestingPath": Array [
+          0,
+        ],
+        "original": Object {},
+        "page": 0,
+        "pageSize": 20,
+        "pivoted": false,
+        "resized": Array [],
+        "row": Object {},
+        "rowValues": Object {},
+        "show": true,
+        "styles": Object {},
+        "subRows": Array [],
+        "tdProps": Object {
+          "rest": Object {},
+        },
+        "value": "2019-11-20",
+        "viewIndex": 0,
+        "width": 90,
+      }
+    }
+    cellValue="2019-11-20"
+    hasChildren={true}
+    urlPath="http://example.com/path"
+  >
+    <div>
+      <Link
+        replace={false}
+        to="http://example.com/path/2019-11-20"
+      >
+        <a
+          href="/http://example.com/path/2019-11-20"
+          onClick={[Function]}
+        >
+          2019-11-20
+        </a>
+      </Link>
+    </div>
+  </DrillDownTableLinkedCell>
+</Router>
+`;
