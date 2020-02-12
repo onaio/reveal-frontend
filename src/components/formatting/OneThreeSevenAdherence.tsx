@@ -10,7 +10,7 @@ import {
 import { GREEN, ORANGE, RED } from '../../constants';
 
 /** Displays conditional formatting guide for Focus Investigation 1-3-7 Adherence */
-const OneThreeSevenAdherence: React.ElementType = props => {
+const OneThreeSevenAdherence: React.ElementType = () => {
   return (
     <div>
       <h5 className="mt-4 mb-3">{CONDITIONAL_FORMATTING_TITLE}</h5>

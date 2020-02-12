@@ -10,6 +10,7 @@ import Loading from '../../../../components/page/Loading';
 import { HOME, PLANS, UPDATE_PLAN } from '../../../../configs/lang';
 import { PlanDefinition } from '../../../../configs/settings';
 import { HOME_URL, NEW_PLAN_URL, OPENSRP_PLANS, PLAN_LIST_URL } from '../../../../constants';
+import { displayError } from '../../../../helpers/errors';
 import { OpenSRPService } from '../../../../services/opensrp';
 import planDefinitionReducer, {
   addPlanDefinition,
@@ -44,6 +45,8 @@ const UpdatePlan = (props: RouteComponentProps<RouteParams> & UpdatePlanProps) =
     return null; /** we should make this into a better error page */
   }
 
+  const apiService = new service(OPENSRP_PLANS);
+
   /** async function to load the data */
   async function loadData() {
     try {
@@ -51,21 +54,20 @@ const UpdatePlan = (props: RouteComponentProps<RouteParams> & UpdatePlanProps) =
       const planFromAPI = await apiService.read(planIdentifier);
       fetchPlan(planFromAPI);
     } catch (e) {
-      // do something with the error?
+      displayError(e);
     } finally {
       setLoading(false);
     }
   }
 
   useEffect(() => {
-    loadData();
+    loadData().catch(err => displayError(err));
   }, []);
 
   if (loading === true) {
     return <Loading />;
   }
 
-  const apiService = new service(OPENSRP_PLANS);
   const pageTitle: string = plan ? `${UPDATE_PLAN}: ${plan.title}` : UPDATE_PLAN;
 
   const breadcrumbProps = {

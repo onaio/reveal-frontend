@@ -4,6 +4,13 @@ import SeamlessImmutable from 'seamless-immutable';
 /** the reducer name */
 export const reducerName = 'superset';
 
+// actions
+/** authorize action type */
+export const AUTHORIZE = 'reveal/reducer/superset/AUTHORIZE';
+
+/** reset action type */
+export const RESET = 'reveal/reducer/superset/RESET';
+
 /** interface for authorize action */
 interface AuthorizeSupersetAction extends AnyAction {
   authorized: boolean;
@@ -47,13 +54,6 @@ export default function reducer(state = initialState, action: SupersetActionType
       return state;
   }
 }
-
-// actions
-/** authorize action type */
-export const AUTHORIZE = 'reveal/reducer/superset/AUTHORIZE';
-
-/** reset action type */
-export const RESET = 'reveal/reducer/superset/RESET';
 
 // action creators
 

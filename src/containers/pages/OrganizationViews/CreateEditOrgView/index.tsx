@@ -17,6 +17,7 @@ import {
   HOME_URL,
   ORGANIZATIONS_LIST_URL,
 } from '../../../../constants';
+import { displayError } from '../../../../helpers/errors';
 import { RouteParams } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
 import {
@@ -85,7 +86,9 @@ const CreateEditOrgView = (props: CreateEditTeamViewTypes) => {
     if (editing) {
       let organizationId = props.match.params.id;
       organizationId = organizationId ? organizationId : '';
-      loadOrganization(organizationId, serviceClass, fetchOrganizationsCreator);
+      loadOrganization(organizationId, serviceClass, fetchOrganizationsCreator).catch(err =>
+        displayError(err)
+      );
     }
   }, []);
 

@@ -360,7 +360,7 @@ export const fetchPlanRecords = (planList: PlanRecordResponse[] = []): FetchPlan
         plan_fi_reason: plan.fi_reason,
         plan_fi_status: plan.fi_status,
         plan_id: plan.identifier,
-        plan_intervention_type: plan.intervention_type as InterventionType,
+        plan_intervention_type: plan.intervention_type,
         plan_status: plan.status as PlanStatus,
         plan_title: plan.title,
         plan_version: plan.version,

@@ -100,7 +100,7 @@ export const fetchGenericStructures = (
         if (typeof structure.geojson.geometry === 'string') {
           structure.geojson.geometry = JSON.parse(structure.geojson.geometry);
         }
-        return structure as GenericStructure;
+        return structure;
       }
     ),
     'structure_id'

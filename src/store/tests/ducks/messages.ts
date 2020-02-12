@@ -2,6 +2,9 @@ import { ActionCreator, AnyAction, Store } from 'redux';
 
 const reducerName = 'messages';
 
+// actions
+export const SEND_MESSAGE = 'reveal-test/reducer/SEND_MESSAGE';
+
 interface Message {
   user: string;
   message: string;
@@ -33,9 +36,6 @@ export default function reducer(state = initialState, action: MessageActionTypes
       return state;
   }
 }
-
-// actions
-export const SEND_MESSAGE = 'reveal-test/reducer/SEND_MESSAGE';
 
 // action creators
 export const sendMessage: ActionCreator<SendMessageAction> = (newMessage: Message) => ({
