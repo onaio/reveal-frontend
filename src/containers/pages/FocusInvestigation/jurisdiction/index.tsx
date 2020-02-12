@@ -1,8 +1,10 @@
-import DrillDownTable from '@onaio/drill-down-table';
 import * as React from 'react';
+import { ObjectList } from '../../../../helpers/cbv';
 
 const FIJurisdiction = () => {
   return <div>xxxxxxxxxxxxxxxxxxxxxxxxxxxxx</div>;
 };
 
-export default FIJurisdiction;
+const objectList = new ObjectList(FIJurisdiction);
+
+export default objectList.render();
