@@ -1,3 +1,4 @@
+import { ProgressBar } from '@onaio/progress-indicators';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset from '@onaio/superset-connector';
 import * as React from 'react';
@@ -48,7 +49,6 @@ import {
 import { PLAN_INTERVENTION_TYPE } from '../../../../../constants';
 import { displayError } from '../../../../../helpers/errors';
 import { getGoalReport } from '../../../../../helpers/indicators';
-import ProgressBar from '../../../../../helpers/ProgressBar';
 import {
   FeatureCollection,
   getFilteredFIPlansURL,
