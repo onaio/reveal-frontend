@@ -42,6 +42,7 @@ import {
   PRACTITIONER_CODE,
   SINGLE_ORGANIZATION_URL,
 } from '../../../../constants';
+import { displayError } from '../../../../helpers/errors';
 import { useConfirmOnBrowserUnload } from '../../../../helpers/hooks';
 import { generateNameSpacedUUID, growl } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
@@ -102,13 +103,15 @@ const AssignPractitioner = (props: PropsTypes) => {
   useConfirmOnBrowserUnload(selectedOptions.length > 0);
   useEffect(() => {
     const organizationId = props.match.params.id;
-    loadOrganization(organizationId, serviceClass, fetchOrganizationsCreator);
+    loadOrganization(organizationId, serviceClass, fetchOrganizationsCreator).catch(err =>
+      displayError(err)
+    );
     loadOrgPractitioners(
       organizationId,
       serviceClass,
       fetchPractitionerRolesCreator,
       fetchPractitionersCreator
-    );
+    ).catch(err => displayError(err));
   }, []);
 
   if (!organization) {
@@ -126,13 +129,10 @@ const AssignPractitioner = (props: PropsTypes) => {
   };
 
   /** This sets the state selectedOptions
-   * @param {ValueType<SelectOption>} chosenOptions -  the so far selected options
+   * @param {ValueType<SelectOption>} _ -  the so far selected options
    * @param {ActionMeta} { action, removedValue, option } - on the change event; custom react-select event
    */
-  const changeHandler = (
-    chosenOptions: ValueType<SelectOption>,
-    { action, removedValue, option }: any
-  ) => {
+  const changeHandler = (_: ValueType<SelectOption>, { action, removedValue, option }: any) => {
     switch (action) {
       case 'remove-value':
       case 'pop-value':
@@ -147,7 +147,7 @@ const AssignPractitioner = (props: PropsTypes) => {
         setSelectedOptions([...selectedOptions, option]);
         break;
       case 'clear':
-        chosenOptions = (chosenOptions as SelectOption[]).filter((v: any) => !v.isFixed);
+      // nothing
     }
   };
 
@@ -180,24 +180,27 @@ const AssignPractitioner = (props: PropsTypes) => {
       practitioner: practitionerId,
     }));
     const serve = new serviceClass(OPENSRP_ADD_PRACTITIONER_ROLE_ENDPOINT);
-    serve.create(jsonArrayPayload).then(() => {
-      loadOrgPractitioners(
-        organization.identifier,
-        serviceClass,
-        fetchPractitionerRolesCreator,
-        fetchPractitionersCreator
-      );
+    serve
+      .create(jsonArrayPayload)
+      .then(() => {
+        loadOrgPractitioners(
+          organization.identifier,
+          serviceClass,
+          fetchPractitionerRolesCreator,
+          fetchPractitionersCreator
+        ).catch(err => displayError(err));
 
-      growl(format(PRACTITIONERS_ASSIGNED_TO_ORG, jsonArrayPayload.length, organization.name), {
-        type: toast.TYPE.SUCCESS,
-      });
+        growl(format(PRACTITIONERS_ASSIGNED_TO_ORG, jsonArrayPayload.length, organization.name), {
+          type: toast.TYPE.SUCCESS,
+        });
 
-      try {
-        setSelectedOptions([]);
-      } catch (err) {
-        growl(err.message, { type: toast.TYPE.ERROR });
-      }
-    });
+        try {
+          setSelectedOptions([]);
+        } catch (err) {
+          growl(err.message, { type: toast.TYPE.ERROR });
+        }
+      })
+      .catch(err => displayError(err));
   };
 
   /** handles clicks on the discard changes button */
@@ -247,12 +250,12 @@ const AssignPractitioner = (props: PropsTypes) => {
       <Prompt
         when={selectedOptions.length > 0}
         // tslint:disable-next-line: jsx-no-lambda
-        message={location => `${ON_REROUTE_WITH_UNSAVED_CHANGES} [${organization.name}]`}
+        message={_ => `${ON_REROUTE_WITH_UNSAVED_CHANGES} [${organization.name}]`}
       />
 
       <HeaderBreadcrumb {...breadcrumbProps} />
       <h2 className="mb-3 mt-5 page-title">
-        {format(ASSIGN_PRACTITIONERS_TO_ORG, organization!.name)}
+        {format(ASSIGN_PRACTITIONERS_TO_ORG, organization.name)}
       </h2>
       <hr />
 

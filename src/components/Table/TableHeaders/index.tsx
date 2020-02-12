@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Col, Row } from 'reactstrap';
-import { REACTIVE, ROUTINE_TITLE } from '../../../configs/lang';
+import { ADD_FOCUS_INVESTIGATION, REACTIVE, ROUTINE_TITLE } from '../../../configs/lang';
 import { CASE_TRIGGERED } from '../../../constants';
 import { Plan } from '../../../store/ducks/plans';
 import LinkAsButton from '../../LinkAsButton';
@@ -25,7 +25,7 @@ class TableHeader extends React.Component<TableHeaderProps, {}> {
               <h3 className="mb-3 mt-5 page-title">{ROUTINE_TITLE}</h3>
             </Col>
             <Col xs="6">
-              <LinkAsButton />
+              <LinkAsButton text={ADD_FOCUS_INVESTIGATION} />
             </Col>
           </Row>
         </div>

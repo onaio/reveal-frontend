@@ -6,9 +6,6 @@ import Teamform from '..';
 import TeamForm from '..';
 import * as fixtures from '../../../../store/ducks/tests/fixtures';
 
-// tslint:disable-next-line: no-var-requires
-const fetch = require('jest-fetch-mock');
-
 describe('containers/forms/Teamform', () => {
   beforeEach(() => {
     jest.resetAllMocks();
@@ -54,7 +51,7 @@ describe('containers/forms/Teamform', () => {
   it('form validation works', async () => {
     const wrapper = mount(<TeamForm />);
     wrapper.find('form').simulate('submit');
-    await new Promise(resolve => setImmediate(resolve));
+    await new Promise<any>(resolve => setImmediate(resolve));
     wrapper.update();
 
     expect(wrapper.find('small.name-error').text()).toEqual('Required');

@@ -33,6 +33,7 @@ describe('components/page/Header', () => {
         <SelectComponent {...props} />
       </Router>
     );
+    // tslint:disable-next-line:no-inferred-empty-object-type
     expect(wrapper.find('IndicatorsContainer').prop('options')).toMatchSnapshot(
       'Select Indicator Options'
     );

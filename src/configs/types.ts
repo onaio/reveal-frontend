@@ -1,3 +1,5 @@
+import { ComponentType } from 'react';
+import { ConnectedComponentClass } from 'react-redux';
 import {
   adminLayerColors,
   GREEN_THRESHOLD,
@@ -30,3 +32,9 @@ export type ADMN0_PCODE =
   | 'Lop Buri'
   | 'Oddar Meanchey Province'
   | 'Lusaka';
+
+export type FlexComponent<T = {}> = ComponentType<T>;
+export type ConnectedFlexComponent = ConnectedComponentClass<FlexComponent<any>, any>;
+
+// tslint:disable-next-line:no-empty-interface
+export interface EmptyObject {}

@@ -480,7 +480,7 @@ export function toggleLayer(allLayers: FlexObject, currentGoal: string, store: a
     layer = allLayers[eachLayer];
     /** Toggle layers to show on the map */
     if (layer.visible && (layer.id.includes(currentGoal) || layer.id.includes('main-plan-layer'))) {
-      store.dispatch((Actions as any).toggleLayer(MAP_ID, layer.id, true));
+      store.dispatch(Actions.toggleLayer(MAP_ID, layer.id, true));
     }
   }
 }
@@ -606,7 +606,7 @@ export const jsxColumns = (colType: string): Column[] | [] => {
         Header: ACTION,
         columns: [
           {
-            Cell: (cell: CellInfo) => {
+            Cell: () => {
               return null;
             },
             Header: '',

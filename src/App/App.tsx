@@ -9,7 +9,7 @@ import { Route, Switch } from 'react-router';
 import { toast } from 'react-toastify';
 import { Col, Container, Row } from 'reactstrap';
 import Loading from '../components/page/Loading';
-import WithGATracker from '../components/page/WithGATracker';
+import WithGATracker, { initGoogleAnalytics } from '../components/page/WithGATracker';
 import { TOAST_AUTO_CLOSE_DELAY, WEBSITE_NAME } from '../configs/env';
 import { DISABLE_LOGIN_PROTECTION, OPENSRP_LOGOUT_URL, OPENSRP_OAUTH_STATE } from '../configs/env';
 import { providers } from '../configs/settings';
@@ -63,7 +63,7 @@ import ConnectedOrgsListView from '../containers/pages/OrganizationViews/Organiz
 import ConnectedSingleOrgView from '../containers/pages/OrganizationViews/SingleOrganizationView';
 import ConnectedCreateEditPractitionerView from '../containers/pages/PractitionerViews/CreateEditPractitioner';
 import ConnectedPractitionersListView from '../containers/pages/PractitionerViews/PractitionerListView';
-import { growl, oAuthUserInfoGetter } from '../helpers/utils';
+import { oAuthUserInfoGetter } from '../helpers/utils';
 
 library.add(faMap);
 library.add(faUser);
@@ -71,6 +71,7 @@ library.add(faExternalLinkSquareAlt);
 toast.configure({
   autoClose: TOAST_AUTO_CLOSE_DELAY /** defines how long a toast remains visible on screen */,
 });
+initGoogleAnalytics();
 
 import store from '../store';
 import { getOauthProviderState } from '../store/selectors';

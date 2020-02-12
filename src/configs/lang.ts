@@ -404,3 +404,10 @@ export const ORGANIZATION_LABEL = TEAM;
 export const ORGANIZATIONS_LABEL = TEAMS;
 
 export const ORGANIZATION_NAME_TITLE = translate('ORGANIZATION_NAME_TITLE', 'Team Name');
+
+export const LINK = translate('LINK', 'Link');
+export const IRS_GREEN_THRESHOLD = translate('IRS_GREEN_THRESHOLD', 'Green');
+export const IRS_GREY_THRESHOLD = translate('IRS_GREY_THRESHOLD', 'Grey');
+export const IRS_RED_THRESHOLD = translate('RED_THRESHOLD', 'Red');
+export const IRS_YELLOW_THRESHOLD = translate('YELLOW_THRESHOLD', 'Yellow');
+export const IRS_LIGHT_GREEN_THRESHOLD = translate('LIGHT_GREEN_THRESHOLD', 'Light Green');

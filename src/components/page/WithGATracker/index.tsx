@@ -1,20 +1,38 @@
 /* eslint-disable react/prop-types */
-import { getUser } from '@onaio/session-reducer';
+import { getUser, User } from '@onaio/session-reducer';
 import React, { Component } from 'react';
 import GoogleAnalytics from 'react-ga';
 import { RouteComponentProps } from 'react-router';
-import { GA_CODE, GA_ENV } from '../../../configs/env';
-import { FlexObject, RouteParams } from '../../../helpers/utils';
+import * as env from '../../../configs/env';
+import { ConnectedFlexComponent, FlexComponent } from '../../../configs/types';
+import { GA_ENV_TEST } from '../../../constants';
+import { RouteParams } from '../../../helpers/utils';
 import store from '../../../store';
 
 type Props = RouteComponentProps<RouteParams>;
 let username = (getUser(store.getState()) || {}).username || '';
 
 /**
- * helper function to set the Google Analytics dimension for username
- * @param {FlexObject} user user object returned from session store
+ * Interface defining the options param passed into tracking methods
  */
-export const setGAusername = (user: FlexObject): void => {
+export interface TrackingOptions {
+  GA_CODE: string;
+  GA_ENV?: string;
+}
+
+/**
+ * Default tracking options using global envs
+ */
+export const defaultTrackingOptions: TrackingOptions = {
+  GA_CODE: env.GA_CODE || '',
+  GA_ENV: env.GA_ENV || GA_ENV_TEST,
+};
+
+/**
+ * helper function to set the Google Analytics dimension for username
+ * @param {User} user user object returned from session store
+ */
+export const setGAusername = (user: User): void => {
   username = user.username || '';
   GoogleAnalytics.set({ username });
 };
@@ -30,35 +48,60 @@ export const getGAusername = (): string => username;
  * @param {string} page the url string of the page view being tracked
  * @param {FlexObject} options tracking options for the page view
  */
-export const trackPage = (page: string, options: FlexObject = {}): void => {
-  GoogleAnalytics.set({
-    page,
-    ...options,
-  });
-  GoogleAnalytics.pageview(page);
+export const trackPage = (
+  page: string,
+  options: TrackingOptions = defaultTrackingOptions
+): void => {
+  const { GA_CODE } = options;
+  if (GA_CODE && GA_CODE.length) {
+    GoogleAnalytics.set({
+      page,
+      ...options,
+    });
+    GoogleAnalytics.pageview(page);
+  }
 };
 
-if (GA_CODE.length) {
-  GoogleAnalytics.initialize(GA_CODE, {
-    testMode: GA_ENV === 'test',
-  });
-  GoogleAnalytics.set({
-    env: GA_ENV,
-    username,
-  });
-}
+/**
+ * helper function to initialize GoogleAnalytics
+ * @param {TrackingOptions} options tracking options for the page view
+ * @returns {TrackingOptions}
+ */
+export const initGoogleAnalytics = (
+  options: TrackingOptions = defaultTrackingOptions
+): TrackingOptions => {
+  const { GA_CODE, GA_ENV } = options;
+  if (GA_CODE && GA_CODE.length) {
+    GoogleAnalytics.initialize(GA_CODE, {
+      testMode: GA_ENV === GA_ENV_TEST,
+    });
+    GoogleAnalytics.set({
+      env: GA_ENV || GA_ENV_TEST,
+      username,
+    });
+  }
+  return { ...options };
+};
 
 /**
  * Higher Order Component (HOC) which handles Google Analytics page view tracking
- * @param {any} WrappedComponent the component to be wrapped by the HOC component
- * @param {FlexObject} options tracking options for the page view
+ * @param {FlexComponent | ConnectedFlexComponent} WrappedComponent the component to be wrapped by the HOC component
+ * @param {TrackingOptions} options tracking options for the page view
  * @returns HOC rendering the WrappedComponent
  */
-const WithGATracker = (WrappedComponent: any, options: FlexObject = {}) => {
-  const HOC = class extends Component<Props> {
+const WithGATracker = (
+  WrappedComponent: FlexComponent | ConnectedFlexComponent,
+  options: TrackingOptions = defaultTrackingOptions
+) => {
+  const { GA_CODE } = options;
+  if (!GA_CODE || !GA_CODE.length) {
+    return WrappedComponent;
+  }
+
+  const WithGATrackerHOC = class extends Component<Props> {
     public componentDidMount() {
       // update the username dimension
-      const user = (getUser(store.getState()) || {}) as FlexObject;
+      const user: User = (getUser(store.getState()) || {}) as User;
       if (user.username && getGAusername() !== user.username) {
         setGAusername(user);
       }
@@ -78,7 +121,7 @@ const WithGATracker = (WrappedComponent: any, options: FlexObject = {}) => {
 
         // track the page view here only if component didn't un/remount and the URL has updated
         if (currentPage !== nextPage) {
-          trackPage(nextPage);
+          trackPage(nextPage, options);
         }
       }
     }
@@ -88,7 +131,7 @@ const WithGATracker = (WrappedComponent: any, options: FlexObject = {}) => {
     }
   };
 
-  return HOC;
+  return WithGATrackerHOC;
 };
 
 export default WithGATracker;

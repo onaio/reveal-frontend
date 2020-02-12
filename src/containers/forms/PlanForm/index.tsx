@@ -205,7 +205,7 @@ const PlanForm = (props: PlanFormProps) => {
       <Formik
         initialValues={initialValues}
         /* tslint:disable-next-line jsx-no-lambda */
-        onSubmit={(values, { setErrors, setSubmitting }) => {
+        onSubmit={(values, { setSubmitting }) => {
           const payload = generatePlanDefinition(values);
           const apiService = new OpenSRPService('plans');
 
@@ -336,7 +336,7 @@ const PlanForm = (props: PlanFormProps) => {
                     </div>
                   ) : (
                     <div id="jurisdictions-select-container" className="mb-5">
-                      {values.jurisdictions.map((jurisdiction, index) => (
+                      {values.jurisdictions.map((_, index) => (
                         <fieldset key={index}>
                           {errors.jurisdictions && errors.jurisdictions[index] && (
                             <div className="alert alert-danger" role="alert">
@@ -590,7 +590,7 @@ const PlanForm = (props: PlanFormProps) => {
               /* tslint:disable-next-line jsx-no-lambda */
               render={arrayHelpers => (
                 <div>
-                  {values.activities.map((activity, index) => (
+                  {values.activities.map((_, index) => (
                     <div className="card mb-3" key={index}>
                       <h5 className="card-header position-relative">
                         {values.activities[index].actionTitle}

@@ -1,15 +1,23 @@
 import { authenticateUser } from '@onaio/session-reducer';
 import { ConnectedRouter } from 'connected-react-router';
 import { mount } from 'enzyme';
-import toJson from 'enzyme-to-json';
 import { createBrowserHistory } from 'history';
 import React from 'react';
 import GoogleAnalytics from 'react-ga';
 import { Provider } from 'react-redux';
-import { getGAusername, setGAusername, trackPage } from '..';
+import {
+  defaultTrackingOptions,
+  getGAusername,
+  initGoogleAnalytics,
+  setGAusername,
+  TrackingOptions,
+  trackPage,
+} from '..';
 import App from '../../../../App/App';
-import { PLAN_LIST_URL } from '../../../../constants';
+import { NEW_IRS_PLAN_URL, PLAN_LIST_URL } from '../../../../constants';
 import store from '../../../../store';
+
+jest.mock('../../../../configs/env');
 
 const history = createBrowserHistory();
 
@@ -42,8 +50,8 @@ describe('components/WithGATracker', () => {
 
   it('gets and sets the username dimension', () => {
     expect(getGAusername()).toBe('');
-    setGAusername({ username: 'Conor' });
-    expect(getGAusername()).toBe('Conor');
+    setGAusername({ username: 'suppaD3v4life', name: 'Conor' });
+    expect(getGAusername()).toBe('suppaD3v4life');
   });
 
   it('renders components correctly when wrapped with HOC', () => {
@@ -54,21 +62,23 @@ describe('components/WithGATracker', () => {
         </ConnectedRouter>
       </Provider>
     );
-    expect(toJson(wrapper)).toMatchSnapshot();
+    expect(wrapper.find('App').length).toEqual(1);
+    expect(wrapper.find('WithGATrackerHOC').length).toEqual(1);
     wrapper.unmount();
   });
 
   it('GoogleAnalytics.pageview is called with the correct arguments', () => {
     GoogleAnalytics.pageview = jest.fn();
-    trackPage('/');
+    const trackingOptions: TrackingOptions = { ...defaultTrackingOptions };
+    trackPage('/', trackingOptions);
     expect(GoogleAnalytics.pageview).toBeCalledWith('/');
-    trackPage(PLAN_LIST_URL);
+    trackPage(PLAN_LIST_URL, trackingOptions);
     expect(GoogleAnalytics.pageview).toBeCalledWith(PLAN_LIST_URL);
   });
 
   it('tracks pageviews when navigating to different pages', () => {
     GoogleAnalytics.pageview = jest.fn();
-    mount(
+    const wrapper = mount(
       <Provider store={store}>
         <ConnectedRouter history={history}>
           <App />
@@ -78,5 +88,14 @@ describe('components/WithGATracker', () => {
     expect(GoogleAnalytics.pageview).toBeCalledWith('/');
     history.push(PLAN_LIST_URL);
     expect(GoogleAnalytics.pageview).toBeCalledWith(PLAN_LIST_URL);
+    wrapper.unmount();
+  });
+
+  it('tracks nothing when no GA Code is provided', () => {
+    GoogleAnalytics.pageview = jest.fn();
+    const gaOptions: TrackingOptions = initGoogleAnalytics({ GA_CODE: '' } as TrackingOptions);
+    trackPage('/', gaOptions);
+    trackPage(NEW_IRS_PLAN_URL, gaOptions);
+    expect(GoogleAnalytics.pageview).not.toBeCalled();
   });
 });

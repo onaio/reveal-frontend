@@ -24,6 +24,7 @@ import Loading from '../../../../components/page/Loading';
 import NullDataTable from '../../../../components/Table/NullDataTable';
 import { SUPERSET_PLANS_SLICE } from '../../../../configs/env';
 import {
+  ADD_FOCUS_INVESTIGATION,
   CASE_CLASSIFICATION_HEADER,
   CASE_NOTIF_DATE_HEADER,
   CURRENT_FOCUS_INVESTIGATION,
@@ -56,6 +57,7 @@ import {
   HOME_URL,
   ROUTINE,
 } from '../../../../constants';
+import { displayError } from '../../../../helpers/errors';
 import { renderClassificationRow } from '../../../../helpers/indicators';
 import '../../../../helpers/tables.css';
 import { defaultTableProps, getFilteredFIPlansURL } from '../../../../helpers/utils';
@@ -114,9 +116,9 @@ class ActiveFocusInvestigation extends React.Component<
     const supersetParams = superset.getFormData(2000, [
       { comparator: InterventionType.FI, operator: '==', subject: 'plan_intervention_type' },
     ]);
-    supersetService(SUPERSET_PLANS_SLICE, supersetParams).then((result: Plan[]) =>
-      fetchPlansActionCreator(result)
-    );
+    supersetService(SUPERSET_PLANS_SLICE, supersetParams)
+      .then((result: Plan[]) => fetchPlansActionCreator(result))
+      .catch(err => displayError(err));
   }
   public handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -356,7 +358,7 @@ class ActiveFocusInvestigation extends React.Component<
                     <h3 className="mb-3 mt-5 page-title">{ROUTINE_TITLE}</h3>
                   </Col>
                   <Col xs="6">
-                    <LinkAsButton />
+                    <LinkAsButton text={ADD_FOCUS_INVESTIGATION} />
                   </Col>
                 </Row>
               </div>

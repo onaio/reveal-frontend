@@ -57,7 +57,7 @@ describe('App', () => {
       })
     );
 
-    const wrapper = mount(
+    mount(
       <Provider store={store}>
         <Router history={history}>
           <App />

@@ -7,7 +7,7 @@ import { GREEN, ORANGE, RED, YELLOW } from '../../constants';
 import { percentage } from '../../helpers/utils';
 
 /** Displays conditional formatting guide for Focus Investigation Response Adherence */
-const ResponseAdherence: React.ElementType = props => {
+const ResponseAdherence: React.ElementType = () => {
   return (
     <div>
       <h5 className="mt-4 mb-3">{CONDITIONAL_FORMATTING_TITLE}</h5>

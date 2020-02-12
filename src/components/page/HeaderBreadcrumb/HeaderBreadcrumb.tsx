@@ -28,7 +28,7 @@ class HeaderBreadcrumb extends React.Component<BreadCrumbProps, {}> {
       let breadCrumbItem: string | JSX.Element;
       if (page.url && page.url.trim()) {
         breadCrumbItem = (
-          <Link to={page.url!} key={key}>
+          <Link to={page.url} key={key}>
             {page.label}
           </Link>
         );

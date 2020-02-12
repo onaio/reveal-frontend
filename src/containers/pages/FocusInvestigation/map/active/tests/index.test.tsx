@@ -7,6 +7,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
+import SelectComponent from '../../../../../../components/SelectPlan';
 import { FIReasons } from '../../../../../../configs/settings';
 import { FI_SINGLE_URL } from '../../../../../../constants';
 import { wrapFeatureCollection } from '../../../../../../helpers/utils';
@@ -29,7 +30,6 @@ const history = createBrowserHistory();
 const { fetchGoals } = goalDucks;
 const { fetchJurisdictions } = jurisdictionDucks;
 const fetchPlans = planDucks.fetchPlans;
-type Plan = planDucks.Plan;
 const { fetchTasks } = tasksDucks;
 
 describe('containers/pages/FocusInvestigation/activeMap', () => {
@@ -42,7 +42,7 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
     const supersetServiceMock: any = jest.fn(async () => []);
     const props = {
       currentGoal: fixtures.goal3.goal_id,
-      goals: [fixtures.goal3],
+      goals: [fixtures.goal3 as goalDucks.Goal],
       history,
       jurisdiction: fixtures.jurisdictions[0],
       location: mock,
@@ -52,7 +52,7 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
         path: `${FI_SINGLE_URL}/:id`,
         url: `${FI_SINGLE_URL}/13`,
       },
-      plan: fixtures.plan1 as Plan,
+      plan: fixtures.plan1,
       pointFeatureCollection: wrapFeatureCollection([fixtures.coloredTasks.task3.geojson]),
       polygonFeatureCollection: wrapFeatureCollection([fixtures.coloredTasks.task2.geojson]),
       structures: wrapFeatureCollection([fixtures.structure1.geojson]),
@@ -70,7 +70,7 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
     const supersetServiceMock: any = jest.fn(async () => []);
     const props = {
       currentGoal: fixtures.goal3.goal_id,
-      goals: [fixtures.goal3],
+      goals: [fixtures.goal3 as goalDucks.Goal],
       history,
       jurisdiction: fixtures.jurisdictions[0],
       location: mock,
@@ -80,7 +80,7 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
         path: `${FI_SINGLE_URL}/:id`,
         url: `${FI_SINGLE_URL}/13`,
       },
-      plan: fixtures.plan1 as Plan,
+      plan: fixtures.plan1,
       pointFeatureCollection: wrapFeatureCollection([fixtures.coloredTasks.task3.geojson]),
       polygonFeatureCollection: wrapFeatureCollection([fixtures.coloredTasks.task2.geojson]),
       structures: wrapFeatureCollection([fixtures.structure1.geojson]),
@@ -117,9 +117,9 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
   it('works with redux store (gisidawrapper component that loads jurisdiction without structures and tasks)', () => {
     const mock: any = jest.fn();
     const supersetServiceMock: any = jest.fn(async () => []);
-    store.dispatch(fetchGoals([fixtures.goal3]));
+    store.dispatch(fetchGoals([fixtures.goal3 as goalDucks.Goal]));
     store.dispatch(fetchJurisdictions([fixtures.jurisdictions[0]]));
-    store.dispatch(fetchPlans([fixtures.plan1 as Plan]));
+    store.dispatch(fetchPlans([fixtures.plan1]));
     store.dispatch(fetchTasks(fixtures.tasks));
     const props = {
       currentGoal: fixtures.goal3,
@@ -159,6 +159,10 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
     // structures
     expect((singleActiveWrapperProps as MapSingleFIProps).structures).toBeNull();
 
+    // does not render the current plan under other plans select dropdown
+    const otherPlansSelectProps = wrapper.find(SelectComponent).props();
+    expect(otherPlansSelectProps.plansArray).toEqual([]);
+
     wrapper.unmount();
   });
 
@@ -172,9 +176,9 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
     const mock: any = jest.fn();
     const supersetServiceMock: any = jest.fn();
     supersetServiceMock.mockImplementation(async () => []);
-    store.dispatch(fetchGoals([fixtures.goal3]));
+    store.dispatch(fetchGoals([fixtures.goal3 as goalDucks.Goal]));
     store.dispatch(fetchJurisdictions([fixtures.jurisdictions[0]]));
-    store.dispatch(fetchPlans([fixtures.plan1 as Plan]));
+    store.dispatch(fetchPlans([fixtures.plan1]));
     store.dispatch(fetchTasks(fixtures.tasks));
     const props = {
       currentGoal: fixtures.goal3,
@@ -280,9 +284,9 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
     // setup the component and mount
     const mock: any = jest.fn();
     const supersetServiceMock: any = jest.fn(async () => []);
-    store.dispatch(fetchGoals([fixtures.goal3]));
+    store.dispatch(fetchGoals([fixtures.goal3 as goalDucks.Goal]));
     store.dispatch(fetchJurisdictions([fixtures.jurisdictions[0]]));
-    store.dispatch(fetchPlans([fixtures.plan1 as Plan]));
+    store.dispatch(fetchPlans([fixtures.plan1]));
     store.dispatch(fetchTasks(fixtures.tasks));
     const props = {
       currentGoal: fixtures.goal3,
@@ -298,7 +302,7 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
       polygonFeatureCollection: wrapFeatureCollection([fixtures.coloredTasks.task2.geojson]),
       supersetService: supersetServiceMock,
     };
-    const wrapper = mount(
+    mount(
       <Provider store={store}>
         <Router history={history}>
           <ConnectedMapSingleFI {...props} />

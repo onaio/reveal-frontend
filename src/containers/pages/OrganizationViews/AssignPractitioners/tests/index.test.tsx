@@ -97,7 +97,7 @@ describe('src/pages/*/AssignPractitioners', () => {
       </Provider>
     );
 
-    await new Promise(resolve => setImmediate(resolve));
+    await new Promise<any>(resolve => setImmediate(resolve));
     wrapper.update();
 
     const theProps = wrapper.find('AssignPractitioner').props() as any;
@@ -134,7 +134,6 @@ describe('src/pages/*/AssignPractitioners', () => {
       </Router>
     );
 
-    await new Promise(resolve => setImmediate(resolve));
     wrapper.update();
 
     // page Title
