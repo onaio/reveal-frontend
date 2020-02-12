@@ -1,11 +1,11 @@
 import { ActionCreator, AnyAction, Store } from 'redux';
 
-const reducerName = 'messages';
+export const reducerName = 'messages';
 
 // actions
 export const SEND_MESSAGE = 'reveal-test/reducer/SEND_MESSAGE';
 
-interface Message {
+export interface Message {
   user: string;
   message: string;
 }
