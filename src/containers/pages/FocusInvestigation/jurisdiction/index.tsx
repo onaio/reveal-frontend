@@ -1,14 +1,18 @@
 import * as React from 'react';
 import { ObjectList } from '../../../../helpers/cbv';
-import { Message, sendMessage } from '../../../../store/tests/ducks/messages';
+import { Message } from '../../../../store/tests/ducks/messages';
 
 interface Props {
-  dispatchObjects: typeof sendMessage;
   messages: Message[];
 }
 
+const options = {
+  dispatchPropName: 'loadMessages',
+  listPropName: 'messages',
+};
+
 const FIJurisdiction = (props: Props) => {
-  const { dispatchObjects, messages } = props;
+  const { messages } = props;
   const messageList =
     messages.length > 0 ? (
       <ul>
@@ -22,15 +26,10 @@ const FIJurisdiction = (props: Props) => {
       <div>nothing</div>
     );
 
-  const xxx = () => {
-    dispatchObjects({ user: 'bob', message: 'hello' });
-  };
-
   return (
     <div>
       {messageList}
       <hr />
-      <span onClick={xxx}>Add Message</span>
     </div>
   );
 };
@@ -39,6 +38,6 @@ FIJurisdiction.defaultProps = {
   messages: [] as Message[],
 };
 
-const objectList = new ObjectList(FIJurisdiction);
+const cbv = new ObjectList(FIJurisdiction, options);
 
-export default objectList.render();
+export default cbv.render();
