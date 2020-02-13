@@ -1,5 +1,4 @@
 import { mount } from 'enzyme';
-import toJson from 'enzyme-to-json';
 import { createBrowserHistory } from 'history';
 import React from 'react';
 import { Router } from 'react-router-dom';
@@ -63,35 +62,43 @@ const cellValue = cell.value;
 const history = createBrowserHistory();
 
 describe('/components/DrillDownTableLinkedCell', () => {
-  const propsHasChildren = {
+  const props = {
     cell,
     cellValue,
     hasChildren: true,
     urlPath,
   };
+  const wrapper = mount(
+    <Router history={history}>
+      <DrillDownTableLinkedCell {...props} />
+    </Router>
+  );
+
+  it('receives props correctly', () => {
+    expect(wrapper.find(DrillDownTableLinkedCell).props()).toEqual(props);
+  });
+
   it('renders correctly if prop hasChildren is true', () => {
-    const wrapper = mount(
-      <Router history={history}>
-        <DrillDownTableLinkedCell {...propsHasChildren} />
-      </Router>
+    expect(wrapper.find(DrillDownTableLinkedCell).html()).toEqual(
+      '<div><a href="/http://example.com/path/2019-11-20">2019-11-20</a></div>'
     );
-    expect(wrapper.find(DrillDownTableLinkedCell).props()).toEqual(propsHasChildren);
-    expect(toJson(wrapper)).toMatchSnapshot();
     wrapper.unmount();
   });
 
   it('renders correctly if prop hasChildren is false', () => {
     const propsHasChildrenFalse = {
-      ...propsHasChildren,
+      ...props,
       hasChildren: false,
     };
-    const wrapper = mount(
+    const wrapperHasChildreFalse = mount(
       <Router history={history}>
         <DrillDownTableLinkedCell {...propsHasChildrenFalse} />
       </Router>
     );
-    expect(wrapper.find(DrillDownTableLinkedCell).props()).toEqual(propsHasChildrenFalse);
-    expect(toJson(wrapper)).toMatchSnapshot();
-    wrapper.unmount();
+
+    expect(wrapperHasChildreFalse.find(DrillDownTableLinkedCell).html()).toEqual(
+      '<div>2019-11-20</div>'
+    );
+    wrapperHasChildreFalse.unmount();
   });
 });
