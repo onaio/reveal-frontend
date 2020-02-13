@@ -5,7 +5,7 @@ import { Router } from 'react-router-dom';
 import { CellInfo } from 'react-table';
 import DrillDownTableLinkedCell from '..';
 
-const urlPath: string = 'http://example.com/path';
+const urlPath: string = '/path';
 /* tslint:disable:object-literal-sort-keys */
 
 const cell: CellInfo = {
@@ -80,7 +80,7 @@ describe('/components/DrillDownTableLinkedCell', () => {
 
   it('renders correctly if prop hasChildren is true', () => {
     expect(wrapper.find(DrillDownTableLinkedCell).html()).toEqual(
-      '<div><a href="/http://example.com/path/2019-11-20">2019-11-20</a></div>'
+      '<div><a href="/path/2019-11-20">2019-11-20</a></div>'
     );
     wrapper.unmount();
   });
