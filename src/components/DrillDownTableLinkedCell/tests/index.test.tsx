@@ -90,15 +90,15 @@ describe('/components/DrillDownTableLinkedCell', () => {
       ...props,
       hasChildren: false,
     };
-    const wrapperHasChildreFalse = mount(
+    const wrapperHasChildrenFalse = mount(
       <Router history={history}>
         <DrillDownTableLinkedCell {...propsHasChildrenFalse} />
       </Router>
     );
 
-    expect(wrapperHasChildreFalse.find(DrillDownTableLinkedCell).html()).toEqual(
+    expect(wrapperHasChildrenFalse.find(DrillDownTableLinkedCell).html()).toEqual(
       '<div>2019-11-20</div>'
     );
-    wrapperHasChildreFalse.unmount();
+    wrapperHasChildrenFalse.unmount();
   });
 });
