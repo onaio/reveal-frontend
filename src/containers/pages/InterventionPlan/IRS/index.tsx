@@ -240,7 +240,8 @@ interface DispatchedStateProps {
 }
 
 const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateProps => {
-  const isDraftsList = ownProps.path === INTERVENTION_IRS_DRAFTS_URL;
+  const isDraftsList =
+    ownProps.path === INTERVENTION_IRS_DRAFTS_URL || ownProps.path === INTERVENTION_IRS_URL;
   const planStatus = [PlanStatus.DRAFT];
   const pageTitle = `${IRS_PLANS}${isDraftsList ? ` ${DRAFTS_PARENTHESIS}` : ''}`;
   const plansRecordsArray = getPlanRecordsArray(state, InterventionType.IRS, planStatus);
