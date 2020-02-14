@@ -1,8 +1,9 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Store } from 'redux';
-import store from '../store';
+import { displayError } from '../helpers/errors';
+import { getURL } from '../services/opensrp';
 import reducer, {
   reducerName,
   selectAllMessages,
@@ -30,16 +31,26 @@ export class ObjectList {
     this.options = options;
   }
 
-  public loadData() {
-    store.dispatch(sendMessage({ user: 'bob', message: 'hello' }));
-    store.dispatch(sendMessage({ user: 'brayo', message: 'sasa' }));
-    store.dispatch(sendMessage({ user: 'Swale', message: 'habari' }));
-    store.dispatch(sendMessage({ user: 'ras', message: 'yeiya' }));
+  public async fetchData() {
+    const requestOptions: RequestInit = {
+      method: 'GET',
+      mode: 'no-cors',
+    };
+    const params = { user: 'jaya', message: 'hello' };
+    const url = getURL('https://postman-echo.com/get', params);
+    return await fetch(url, requestOptions);
   }
 
   public getHOC() {
     const NewComponent = (props: ObjectListProps) => {
       const { actionCreator, objectList } = props;
+
+      useEffect(() => {
+        this.fetchData()
+          .then(result => actionCreator({ message: result.ok, user: result.type }))
+          .catch(err => displayError(err));
+      }, []);
+
       const propsToPass = {
         [this.options.dispatchPropName]: actionCreator,
         [this.options.listPropName]: objectList,
@@ -75,7 +86,6 @@ export class ObjectList {
   }
 
   public render() {
-    this.loadData();
     return this.getConnectedHOC();
   }
 }
