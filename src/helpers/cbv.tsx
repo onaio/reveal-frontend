@@ -42,7 +42,7 @@ export class ObjectList {
   }
 
   public getHOC() {
-    const NewComponent = (props: ObjectListProps) => {
+    return (props: ObjectListProps) => {
       const { actionCreator, objectList } = props;
 
       useEffect(() => {
@@ -57,8 +57,6 @@ export class ObjectList {
       };
       return <this.Component {...propsToPass} />;
     };
-
-    return NewComponent;
   }
 
   public getMapDispatchToProps() {
