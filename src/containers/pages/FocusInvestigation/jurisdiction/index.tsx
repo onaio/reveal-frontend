@@ -11,6 +11,7 @@ const options = {
   listPropName: 'messages',
 };
 
+/** this is our dumb component */
 const FIJurisdiction = (props: Props) => {
   const { messages } = props;
   const messageList =
@@ -40,4 +41,7 @@ FIJurisdiction.defaultProps = {
 
 const cbv = new ObjectList(FIJurisdiction, options);
 
+/** This represents a fully redux-connected component that fetches data from
+ * an API.
+ */
 export default cbv.render();
