@@ -71,7 +71,7 @@ export class ObjectList<ObjectType, ActionType, SelectorType> {
   public getMapStateToProps() {
     return (state: Partial<Store>): any => {
       // we have to use a Type Guard to check if this.options.selector is a
-      // callable/function otherwise Tyescript will infer its type as "uknown"
+      // callable/function otherwise Typescript will infer its type as "unknown"
       // TODO: look into whether there is a better fix for this
       if (typeof this.options.selector === 'function') {
         return {
