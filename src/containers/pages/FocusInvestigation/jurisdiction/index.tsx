@@ -1,6 +1,8 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ObjectList } from '../../../../helpers/cbv';
+import { displayError } from '../../../../helpers/errors';
+import { getURL } from '../../../../services/opensrp';
 import reducer, {
   Message,
   reducerName,
@@ -12,6 +14,7 @@ import reducer, {
 reducerRegistry.register(reducerName, reducer);
 
 export interface FIJurisdictionProps {
+  loadMessages: typeof sendMessage;
   messages: Message[];
 }
 
@@ -24,7 +27,22 @@ const options = {
 
 /** this is our dumb component */
 const FIJurisdiction = (props: FIJurisdictionProps) => {
-  const { messages } = props;
+  const { loadMessages, messages } = props;
+
+  useEffect(() => {
+    const requestOptions: RequestInit = {
+      method: 'GET',
+      mode: 'no-cors',
+    };
+    const params = { user: 'jaya', message: 'hello' };
+    const url = getURL('https://postman-echo.com/get', params);
+    fetch(url, requestOptions)
+      .then(result => {
+        loadMessages({ message: result.ok, user: result.type });
+      })
+      .catch(err => displayError(err));
+  }, []);
+
   const messageList =
     messages.length > 0 ? (
       <ul>
@@ -47,6 +65,7 @@ const FIJurisdiction = (props: FIJurisdictionProps) => {
 };
 
 FIJurisdiction.defaultProps = {
+  loadMessages: sendMessage,
   messages: [] as Message[],
 };
 
