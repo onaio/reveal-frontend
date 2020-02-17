@@ -216,6 +216,58 @@ describe('src/pages/*/AssignPractitioners', () => {
     expect(wrapper.find('Select').props().value).toEqual([]);
   });
 
+  it('Should not navigate when there are unsaved changes', async () => {
+    fetch
+      .once(JSON.stringify(fixtures.organization3))
+      .once(JSON.stringify([]))
+      .once(JSON.stringify(fixtures.allPractitioners));
+
+    const mock: any = jest.fn();
+    const props = {
+      assignedPractitioners: [],
+      fetchOrganizationsCreator: fetchOrganizations,
+      history,
+      location: mock,
+      match: {
+        isExact: true,
+        params: { id: fixtures.organization3.identifier },
+        path: `${ASSIGN_PRACTITIONERS_URL}/:id`,
+        url: `${ASSIGN_PRACTITIONERS_URL}/${fixtures.organization3.identifier}`,
+      },
+      organization: fixtures.organization3,
+      serviceClass: OpenSRPService,
+    };
+
+    const wrapper = mount(
+      <Router history={history}>
+        <AssignPractitioner {...props} />
+      </Router>
+    );
+
+    await flushPromises();
+    wrapper.update();
+
+    const select = wrapper.find('Select');
+    // simulate single value change function
+    const entry = fixtures.practitioner2;
+    (select.instance() as any).selectOption({
+      label: `${entry.username} - ${entry.name}`,
+      value: entry.identifier,
+    });
+    wrapper.update();
+
+    // try navigating to login
+    history.push('/login');
+    let locIsLogin = location.pathname === '/login';
+    expect(locIsLogin).toBeFalsy();
+
+    // discard changes and try to navigate
+    wrapper.find('button#discard-button').simulate('click');
+    history.push('/login');
+    locIsLogin = location.pathname === '/login';
+    expect(locIsLogin).toBeTruthy();
+  });
+
   it('discard changes works correctly', async () => {
     fetch
       .once(JSON.stringify(fixtures.organization3))
