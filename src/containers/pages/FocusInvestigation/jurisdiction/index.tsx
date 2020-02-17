@@ -25,7 +25,10 @@ const options = {
   selector: selectAllMessages,
 };
 
-/** this is our dumb component */
+/** This component is meant to display a list of focus investigations for a
+ * given jurisdiction.  It is meant to display for the focus area i.e. the
+ * lowest level jurisdiction
+ */
 const FIJurisdiction = (props: FIJurisdictionProps) => {
   const { loadMessages, messages } = props;
 
