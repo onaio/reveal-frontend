@@ -35,11 +35,11 @@ interface ObjectListProps {
  * Every method in this class can and should be overridden to cater to custom needs.
  */
 export class ObjectList<ActionType> {
-  public Component: any;
+  public Component: React.ElementType;
   public options: ObjectListOptions<ActionType>;
 
   /** constructor */
-  constructor(component: any, options: ObjectListOptions<ActionType>) {
+  constructor(component: React.ElementType, options: ObjectListOptions<ActionType>) {
     this.Component = component;
     this.options = options;
   }
