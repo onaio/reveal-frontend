@@ -13,6 +13,11 @@ import reducer, {
 
 reducerRegistry.register(reducerName, reducer);
 
+/** Interface for props that come from the URL */
+export interface RouteParams {
+  jurisdiction_id: string;
+}
+
 export interface FIJurisdictionProps {
   loadMessages: typeof sendMessage;
   messages: Message[];
