@@ -2,7 +2,7 @@ import { CellInfo, Column } from 'react-table';
 import { getIRSThresholdAdherenceIndicator } from '../../../../../helpers/indicators';
 import * as helpers from '../helpers';
 
-const NamibiaColumns = [
+const NamibiaColumns: Column[] = [
   {
     Header: 'Name',
     columns: [
@@ -104,7 +104,7 @@ const NamibiaColumns = [
   },
 ];
 
-const ZambiaFocusAreasColumns = [
+const ZambiaFocusAreasColumns: Column[] = [
   {
     Header: 'Name',
     columns: [
@@ -188,7 +188,7 @@ const ZambiaFocusAreasColumns = [
   },
 ];
 
-const ZambiaJurisdictionsColumns = [
+const ZambiaJurisdictionsColumns: Column[] = [
   {
     Header: 'Name',
     columns: [
@@ -311,19 +311,19 @@ describe('IRSTableColumns', () => {
   });
   it('it should return the correct table columns for namibia2019', () => {
     expect(JSON.stringify(helpers.IRSTableColumns.namibia2019)).toEqual(
-      JSON.stringify(NamibiaColumns as Column)
+      JSON.stringify(NamibiaColumns)
     );
   });
 
   it('should return the correct table columns for zambiaFocusArea2019', () => {
     expect(JSON.stringify(helpers.IRSTableColumns.zambiaFocusArea2019)).toEqual(
-      JSON.stringify(ZambiaFocusAreasColumns as Column)
+      JSON.stringify(ZambiaFocusAreasColumns)
     );
   });
 
   it('should return the correct columns for zambiaJurisdictions2019', () => {
     expect(JSON.stringify(helpers.IRSTableColumns.zambiaJurisdictions2019)).toEqual(
-      JSON.stringify(ZambiaJurisdictionsColumns as Column)
+      JSON.stringify(ZambiaJurisdictionsColumns)
     );
   });
 });
