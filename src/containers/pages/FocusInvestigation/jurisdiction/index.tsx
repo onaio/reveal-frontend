@@ -50,7 +50,7 @@ FIJurisdiction.defaultProps = {
   messages: [] as Message[],
 };
 
-const cbv = new ObjectList<SendMessageAction>(FIJurisdiction, options);
+const cbv = new ObjectList<SendMessageAction, typeof selectAllMessages>(FIJurisdiction, options);
 
 /** This represents a fully redux-connected component that fetches data from
  * an API.
