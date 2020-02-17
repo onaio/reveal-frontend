@@ -52,13 +52,7 @@ export class ObjectList<ActionType, SelectorType> {
    */
   public getHOC() {
     return (props: ObjectListProps) => {
-      const { actionCreator, objectList } = props;
-
-      const propsToPass = {
-        [this.options.dispatchPropName]: actionCreator,
-        [this.options.listPropName]: objectList,
-      };
-      return <this.Component {...propsToPass} />;
+      return <this.Component {...props} />;
     };
   }
 
@@ -67,7 +61,7 @@ export class ObjectList<ActionType, SelectorType> {
    * You may override this for more custom needs.
    */
   public getMapDispatchToProps() {
-    return { actionCreator: this.options.actionCreator() };
+    return { [this.options.dispatchPropName]: this.options.actionCreator };
   }
 
   /**
@@ -81,11 +75,11 @@ export class ObjectList<ActionType, SelectorType> {
       // TODO: look into whether there is a better fix for this
       if (typeof this.options.selector === 'function') {
         return {
-          objectList: this.options.selector(state),
+          [this.options.listPropName]: this.options.selector(state),
         };
       }
       // if the TypeGuard fails lets return an empty array
-      return { objectList: [] };
+      return { [this.options.listPropName]: [] };
     };
   }
 
