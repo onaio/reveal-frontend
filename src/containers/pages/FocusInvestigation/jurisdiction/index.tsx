@@ -1,14 +1,25 @@
-import * as React from 'react';
+import reducerRegistry from '@onaio/redux-reducer-registry';
+import React from 'react';
 import { ObjectList } from '../../../../helpers/cbv';
-import { Message } from '../../../../store/tests/ducks/messages';
+import reducer, {
+  Message,
+  reducerName,
+  selectAllMessages,
+  sendMessage,
+  SendMessageAction,
+} from '../../../../store/tests/ducks/messages';
+
+reducerRegistry.register(reducerName, reducer);
 
 interface Props {
   messages: Message[];
 }
 
 const options = {
+  actionCreator: sendMessage,
   dispatchPropName: 'loadMessages',
   listPropName: 'messages',
+  selector: selectAllMessages,
 };
 
 /** this is our dumb component */
@@ -39,7 +50,7 @@ FIJurisdiction.defaultProps = {
   messages: [] as Message[],
 };
 
-const cbv = new ObjectList(FIJurisdiction, options);
+const cbv = new ObjectList<SendMessageAction>(FIJurisdiction, options);
 
 /** This represents a fully redux-connected component that fetches data from
  * an API.
