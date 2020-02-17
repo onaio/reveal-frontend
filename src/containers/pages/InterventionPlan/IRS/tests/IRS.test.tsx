@@ -34,11 +34,12 @@ describe('containers/pages/IRS', () => {
       plansArray: fixtures.plans,
       plansIdArray: fixtures.plansIdArray,
     };
-    shallow(
+    const wrapper = shallow(
       <Router history={history}>
         <IrsPlans {...props} />
       </Router>
     );
+    expect(toJson(wrapper)).toMatchSnapshot();
   });
 
   it('renders plans list correctly', () => {
@@ -64,7 +65,6 @@ describe('containers/pages/IRS', () => {
     );
     const helmet = Helmet.peek();
     expect(helmet.title).toEqual(IRS_PLANS);
-    expect(toJson(wrapper)).toMatchSnapshot();
     wrapper.unmount();
   });
 });
