@@ -44,6 +44,6 @@ export const sendMessage: ActionCreator<SendMessageAction> = (newMessage: Messag
 });
 
 // selectors
-export function selectAllMessages(state: Partial<Store>) {
+export function selectAllMessages(state: Partial<Store>): Message[] {
   return (state as any)[reducerName].messages;
 }
