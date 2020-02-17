@@ -12,9 +12,9 @@ export interface ObjectListOptions<TAction, TSelector> {
 }
 
 /** interface for the props of the connected component created by ObjectList  */
-interface ObjectListProps {
-  actionCreator: any;
-  objectList: any;
+interface ObjectListProps<TAction, TObject> {
+  actionCreator: TAction;
+  objectList: TObject[];
 }
 
 /**
@@ -34,7 +34,7 @@ interface ObjectListProps {
  *
  * Every method in this class can and should be overridden to cater to custom needs.
  */
-export class ObjectList<ActionType, SelectorType> {
+export class ObjectList<ObjectType, ActionType, SelectorType> {
   public Component: React.ElementType;
   public options: ObjectListOptions<ActionType, SelectorType>;
 
@@ -51,7 +51,7 @@ export class ObjectList<ActionType, SelectorType> {
    *     - the action creator dispatch function
    */
   public getHOC() {
-    return (props: ObjectListProps) => {
+    return (props: ObjectListProps<ActionType, ObjectType>) => {
       return <this.Component {...props} />;
     };
   }
