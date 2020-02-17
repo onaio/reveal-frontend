@@ -8,17 +8,13 @@ import { displayError } from '../../../../helpers/errors';
 import supersetFetch from '../../../../services/superset';
 import plansReducer, {
   fetchPlans,
+  FetchPlansAction,
+  getPlanRecordsArray,
   InterventionType,
   Plan,
   reducerName as plansReducerName,
 } from '../../../../store/ducks/plans';
-import reducer, {
-  Message,
-  reducerName,
-  selectAllMessages,
-  sendMessage,
-  SendMessageAction,
-} from '../../../../store/tests/ducks/messages';
+import reducer, { Message, reducerName, sendMessage } from '../../../../store/tests/ducks/messages';
 
 reducerRegistry.register(reducerName, reducer);
 reducerRegistry.register(plansReducerName, plansReducer);
@@ -94,13 +90,13 @@ FIJurisdiction.defaultProps = defaultActiveFIProps;
 
 /** ObjectList options */
 const objectListOptions = {
-  actionCreator: sendMessage,
-  dispatchPropName: 'loadMessages',
-  listPropName: 'messages',
-  selector: selectAllMessages,
+  actionCreator: fetchPlans,
+  dispatchPropName: 'fetchPlansActionCreator',
+  listPropName: 'routinePlans',
+  selector: getPlanRecordsArray,
 };
 
-const cbv = new ObjectList<Message, SendMessageAction, typeof selectAllMessages>(
+const cbv = new ObjectList<Plan, FetchPlansAction, typeof getPlanRecordsArray>(
   FIJurisdiction,
   objectListOptions
 );
