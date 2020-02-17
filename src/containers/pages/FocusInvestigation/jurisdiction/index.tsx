@@ -11,7 +11,7 @@ import reducer, {
 
 reducerRegistry.register(reducerName, reducer);
 
-interface Props {
+export interface FIJurisdictionProps {
   messages: Message[];
 }
 
@@ -23,7 +23,7 @@ const options = {
 };
 
 /** this is our dumb component */
-const FIJurisdiction = (props: Props) => {
+const FIJurisdiction = (props: FIJurisdictionProps) => {
   const { messages } = props;
   const messageList =
     messages.length > 0 ? (
