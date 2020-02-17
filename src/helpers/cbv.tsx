@@ -1,6 +1,7 @@
+import { Registry } from '@onaio/redux-reducer-registry';
 import React from 'react';
 import { connect } from 'react-redux';
-import { ActionCreator, Store } from 'redux';
+import { ActionCreator } from 'redux';
 
 /** interface to describe ObjectList options */
 export interface ObjectListOptions<TAction, TSelector> {
@@ -33,7 +34,7 @@ interface ObjectListProps<TAction, TObject> {
  *
  * Every method in this class can and should be overridden to cater to custom needs.
  */
-export class ObjectList<ObjectType, ActionType, SelectorType> {
+export class ObjectList<ObjectType, ActionType, SelectorType, RootState = Registry> {
   public Component: React.ElementType;
   public options: ObjectListOptions<ActionType, SelectorType>;
 
@@ -68,7 +69,7 @@ export class ObjectList<ObjectType, ActionType, SelectorType> {
    * You may override this for more custom needs.
    */
   public getMapStateToProps() {
-    return (state: Partial<Store>) => {
+    return (state: RootState) => {
       // we have to use a Type Guard to check if this.options.selector is a
       // callable/function otherwise Typescript will infer its type as "unknown"
       // TODO: look into whether there is a better fix for this
