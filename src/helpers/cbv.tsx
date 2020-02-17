@@ -4,11 +4,11 @@ import { connect } from 'react-redux';
 import { ActionCreator, Store } from 'redux';
 
 /** interface to describe ObjectList options */
-interface ObjectListOptions<T> {
-  actionCreator: ActionCreator<T>;
+export interface ObjectListOptions<TAction, TSelector> {
+  actionCreator: ActionCreator<TAction>;
   listPropName: string;
   dispatchPropName: string;
-  selector: any;
+  selector: TSelector;
 }
 
 /** interface for the props of the connected component created by ObjectList  */
@@ -34,12 +34,12 @@ interface ObjectListProps {
  *
  * Every method in this class can and should be overridden to cater to custom needs.
  */
-export class ObjectList<ActionType> {
+export class ObjectList<ActionType, SelectorType> {
   public Component: React.ElementType;
-  public options: ObjectListOptions<ActionType>;
+  public options: ObjectListOptions<ActionType, SelectorType>;
 
   /** constructor */
-  constructor(component: React.ElementType, options: ObjectListOptions<ActionType>) {
+  constructor(component: React.ElementType, options: ObjectListOptions<ActionType, SelectorType>) {
     this.Component = component;
     this.options = options;
   }
@@ -67,7 +67,7 @@ export class ObjectList<ActionType> {
    * You may override this for more custom needs.
    */
   public getMapDispatchToProps() {
-    return { actionCreator: this.options.actionCreator };
+    return { actionCreator: this.options.actionCreator() };
   }
 
   /**
@@ -76,9 +76,16 @@ export class ObjectList<ActionType> {
    */
   public getMapStateToProps() {
     return (state: Partial<Store>): any => {
-      return {
-        objectList: this.options.selector(state),
-      };
+      // we have to use a Type Guard to check if this.options.selector is a
+      // callable/function otherwise Tyescript will infer its type as "uknown"
+      // TODO: look into whether there is a better fix for this
+      if (typeof this.options.selector === 'function') {
+        return {
+          objectList: this.options.selector(state),
+        };
+      }
+      // if the TypeGuard fails lets return an empty array
+      return { objectList: [] };
     };
   }
 
