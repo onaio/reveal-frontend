@@ -10,7 +10,7 @@ export interface Message {
   message: string;
 }
 
-interface SendMessageAction extends AnyAction {
+export interface SendMessageAction extends AnyAction {
   payload?: Message;
   type: typeof SEND_MESSAGE;
 }
