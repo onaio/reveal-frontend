@@ -1,4 +1,3 @@
-// import reducerRegistry from '@onaio/redux-reducer-registry';
 import React from 'react';
 import { connect } from 'react-redux';
 import { ActionCreator, Store } from 'redux';
@@ -69,7 +68,7 @@ export class ObjectList<ObjectType, ActionType, SelectorType> {
    * You may override this for more custom needs.
    */
   public getMapStateToProps() {
-    return (state: Partial<Store>): any => {
+    return (state: Partial<Store>) => {
       // we have to use a Type Guard to check if this.options.selector is a
       // callable/function otherwise Typescript will infer its type as "unknown"
       // TODO: look into whether there is a better fix for this
