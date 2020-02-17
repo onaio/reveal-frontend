@@ -1,9 +1,7 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { Store } from 'redux';
-import { displayError } from '../helpers/errors';
-import { getURL } from '../services/opensrp';
 import reducer, {
   reducerName,
   selectAllMessages,
@@ -52,26 +50,6 @@ export class ObjectList {
   }
 
   /**
-   * This function is used to fetch data that is to be displayed
-   *
-   * This is the default implementation of this function, the intention is that
-   * the function should be overridden to cater to specific use-cases or ways of
-   * fetching data.
-   *
-   * The only thing to keep in mind is that whatever is the output of this
-   * function will be fed directly, as is, to the action creator function.
-   */
-  public async fetchData() {
-    const requestOptions: RequestInit = {
-      method: 'GET',
-      mode: 'no-cors',
-    };
-    const params = { user: 'jaya', message: 'hello' };
-    const url = getURL('https://postman-echo.com/get', params);
-    return await fetch(url, requestOptions);
-  }
-
-  /**
    * This function returns a Higher Order component whose job is to wrap around
    * the target component, and pass on props to it.  The props in this case are:
    *     - the list of objects to be displayed
@@ -80,12 +58,6 @@ export class ObjectList {
   public getHOC() {
     return (props: ObjectListProps) => {
       const { actionCreator, objectList } = props;
-
-      useEffect(() => {
-        this.fetchData()
-          .then(result => actionCreator({ message: result.ok, user: result.type }))
-          .catch(err => displayError(err));
-      }, []);
 
       const propsToPass = {
         [this.options.dispatchPropName]: actionCreator,
