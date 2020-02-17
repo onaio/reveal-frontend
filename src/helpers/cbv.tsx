@@ -1,19 +1,14 @@
-import reducerRegistry from '@onaio/redux-reducer-registry';
+// import reducerRegistry from '@onaio/redux-reducer-registry';
 import React from 'react';
 import { connect } from 'react-redux';
-import { Store } from 'redux';
-import reducer, {
-  reducerName,
-  selectAllMessages,
-  sendMessage,
-} from '../store/tests/ducks/messages';
-
-reducerRegistry.register(reducerName, reducer);
+import { ActionCreator, Store } from 'redux';
 
 /** interface to describe ObjectList options */
-interface ObjectListOptions {
+interface ObjectListOptions<T> {
+  actionCreator: ActionCreator<T>;
   listPropName: string;
   dispatchPropName: string;
+  selector: any;
 }
 
 /** interface for the props of the connected component created by ObjectList  */
@@ -39,12 +34,12 @@ interface ObjectListProps {
  *
  * Every method in this class can and should be overridden to cater to custom needs.
  */
-export class ObjectList {
+export class ObjectList<ActionType> {
   public Component: any;
-  public options: ObjectListOptions;
+  public options: ObjectListOptions<ActionType>;
 
   /** constructor */
-  constructor(component: any, options: ObjectListOptions) {
+  constructor(component: any, options: ObjectListOptions<ActionType>) {
     this.Component = component;
     this.options = options;
   }
@@ -72,7 +67,7 @@ export class ObjectList {
    * You may override this for more custom needs.
    */
   public getMapDispatchToProps() {
-    return { actionCreator: sendMessage };
+    return { actionCreator: this.options.actionCreator };
   }
 
   /**
@@ -82,7 +77,7 @@ export class ObjectList {
   public getMapStateToProps() {
     return (state: Partial<Store>): any => {
       return {
-        objectList: selectAllMessages(state),
+        objectList: this.options.selector(state),
       };
     };
   }
