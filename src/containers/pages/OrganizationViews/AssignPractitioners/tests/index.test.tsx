@@ -9,7 +9,7 @@ import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import ConnectedAssignPractitioner, { AssignPractitioner } from '..';
 import { ASSIGN, PRACTITIONERS } from '../../../../../configs/lang';
-import { ASSIGN_PRACTITIONERS_URL } from '../../../../../constants';
+import { ASSIGN_PRACTITIONERS_URL, FI_URL } from '../../../../../constants';
 import { OpenSRPService } from '../../../../../services/opensrp';
 import store from '../../../../../store';
 import organizationsReducer, {
@@ -257,14 +257,15 @@ describe('src/pages/*/AssignPractitioners', () => {
     wrapper.update();
 
     // try navigating to login
-    history.push('/login');
-    let locIsLogin = location.pathname === '/login';
+    history.push(FI_URL);
+    let locIsLogin = location.pathname === FI_URL;
     expect(locIsLogin).toBeFalsy();
+    wrapper.update();
 
     // discard changes and try to navigate
     wrapper.find('button#discard-button').simulate('click');
-    history.push('/login');
-    locIsLogin = location.pathname === '/login';
+    history.push(FI_URL);
+    locIsLogin = location.pathname === FI_URL;
     expect(locIsLogin).toBeTruthy();
   });
 
