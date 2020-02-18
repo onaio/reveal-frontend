@@ -523,6 +523,7 @@ export function getPlanRecordById(state: Partial<Store>, id: string): PlanRecord
 export interface PlanFilters {
   interventionType?: InterventionType;
   jurisdictionId?: string;
+  statusList?: string[];
 }
 
 /** plansArraySelector select an array of all plans
@@ -534,6 +535,9 @@ export const plansArraySelector = (state: Registry): Plan[] =>
 export const getInterventionType = (_: Registry, props: PlanFilters) => props.interventionType;
 
 export const getJurisdictionId = (_: Registry, props: PlanFilters) => props.jurisdictionId;
+
+export const getStatusList = (_: Registry, props: PlanFilters) =>
+  props.statusList || [PlanStatus.ACTIVE];
 
 export const getPlansArrayByInterventionType = createSelector(
   [plansArraySelector, getInterventionType],
@@ -547,6 +551,12 @@ export const getPlansArrayByJurisdictionId = createSelector(
   [plansArraySelector, getJurisdictionId],
   (plans, jurisdictionId) =>
     jurisdictionId ? plans.filter(plan => plan.jurisdiction_id === jurisdictionId) : plans
+);
+
+export const getPlansArrayByStatus = createSelector(
+  [plansArraySelector, getStatusList],
+  (plans, statusList) =>
+    plans.filter(plan => (statusList.length ? statusList.includes(plan.plan_status) : true))
 );
 
 export const getPlansArrayByInterventionTypeAndJurisdictionId = createSelector(
