@@ -584,6 +584,11 @@ export const getPlansArrayByInterventionType = createSelector(
       : plans
 );
 
+/** getPlansArrayByJurisdictionIds
+ * Gets an array of Plan objects filtered by jurisdictionIds
+ * @param state - the redux store
+ * @param props - the plan filters object
+ */
 export const getPlansArrayByJurisdictionIds = createSelector(
   [plansArrayBaseSelector, getJurisdictionIds],
   (plans, jurisdictionIds) =>
