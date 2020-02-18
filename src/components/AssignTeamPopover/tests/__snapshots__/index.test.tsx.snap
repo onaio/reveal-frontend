@@ -182,3 +182,39 @@ exports[`/components/AssignTeamPopover renders and passes props correctly 1`] = 
   </TooltipPopoverWrapper>
 </Popover>
 `;
+
+exports[`/components/AssignTeamPopover renders correctly when organizationsById is not null: button clear props 1`] = `
+Object {
+  "children": "Clear",
+  "color": "default",
+  "onClick": [MockFunction],
+  "outline": true,
+  "size": "xs",
+  "tag": "button",
+}
+`;
+
+exports[`/components/AssignTeamPopover renders correctly when organizationsById is not null: button save props 1`] = `
+Object {
+  "children": "Save",
+  "color": "primary",
+  "onClick": [MockFunction],
+  "size": "xs",
+  "tag": "button",
+}
+`;
+
+exports[`/components/AssignTeamPopover renders correctly when organizationsById is not null: organization select props 1`] = `
+Object {
+  "assignments": Array [],
+  "fetchAssignmentsAction": [Function],
+  "fetchOrganizationsAction": [Function],
+  "jurisdictionId": "outpost-number-one",
+  "name": "plan-assignment-form-outpost-number-one",
+  "organizations": Array [],
+  "planId": "alpha",
+  "resetPlanAssignmentsAction": [Function],
+  "serviceClass": [Function],
+  "value": Array [],
+}
+`;

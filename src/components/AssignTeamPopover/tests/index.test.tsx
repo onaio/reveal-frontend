@@ -1,7 +1,10 @@
 import { mount, shallow } from 'enzyme';
 import EnzymeToJson from 'enzyme-to-json';
 import React from 'react';
+import { Provider } from 'react-redux';
 import AssignTeamPopover, { AssignTeamPopoverProps } from '..';
+import store from '../../../store';
+import { Organization } from '../../../store/ducks/opensrp/organizations';
 
 describe('/components/AssignTeamPopover', () => {
   beforeEach(() => {
@@ -20,18 +23,68 @@ describe('/components/AssignTeamPopover', () => {
     planId: 'alpha',
     target: 'plan-assignment-outpost-number-one',
   };
+  const div = document.createElement('div');
+  div.setAttribute('id', 'plan-assignment-outpost-number-one');
+  document.body.appendChild(div);
 
   it('renders without crashing', () => {
     shallow(<AssignTeamPopover {...props} />);
   });
 
   it('renders and passes props correctly', () => {
-    const div = document.createElement('div');
-    div.setAttribute('id', 'plan-assignment-outpost-number-one');
-    document.body.appendChild(div);
     const wrapper = mount(<AssignTeamPopover {...props} />);
     expect(wrapper.props()).toEqual(props);
     const tree = EnzymeToJson(wrapper.find('Popover'));
     expect(tree).toMatchSnapshot();
+  });
+
+  it('renders correctly when organizationsById is not null', () => {
+    const organization: Organization = {
+      active: true,
+      id: 1,
+      identifier: 'id',
+      name: 'name',
+    };
+    const propsOrganizationsById = {
+      ...props,
+      organizationsById: {
+        1: organization,
+      },
+    };
+    const wrapper = mount(
+      <Provider store={store}>
+        <AssignTeamPopover {...propsOrganizationsById} />
+      </Provider>
+    );
+    expect(wrapper.find('Form').length).toBe(1);
+    expect(wrapper.find('Form').prop('name')).toEqual(props.formName);
+    expect(wrapper.find('FormGroup').length).toBe(2);
+    expect(wrapper.find('OrganizationSelect').length).toBe(1);
+    expect(wrapper.find('OrganizationSelect').props()).toMatchSnapshot('organization select props');
+    expect(wrapper.find('Button').length).toBe(2);
+    expect(
+      wrapper
+        .find('Button')
+        .at(0)
+        .props()
+    ).toMatchSnapshot('button clear props');
+    expect(
+      wrapper
+        .find('Button')
+        .at(0)
+        .text()
+    ).toEqual('Clear');
+    expect(
+      wrapper
+        .find('Button')
+        .at(1)
+        .props()
+    ).toMatchSnapshot('button save props');
+    expect(
+      wrapper
+        .find('Button')
+        .at(1)
+        .text()
+    ).toEqual('Save');
   });
 });
