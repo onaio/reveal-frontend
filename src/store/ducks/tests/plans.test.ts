@@ -13,7 +13,6 @@ import reducer, {
   getPlanRecordsIdArray,
   getPlansArray,
   getPlansArrayByInterventionType,
-  getPlansArrayByInterventionTypeAndJurisdictionId,
   getPlansArrayByJurisdictionIds,
   getPlansArrayByParentJurisdictionId,
   getPlansArrayByReason,
@@ -25,6 +24,7 @@ import reducer, {
   PlanRecord,
   PlanRecordResponse,
   plansArrayBaseSelector,
+  plansArraySelector,
   PlanStatus,
   reducerName,
   removePlansAction,
@@ -157,7 +157,7 @@ describe('reducers/plans', () => {
       values(allPlans).filter(e => e.jurisdiction_path.includes('2977'))
     );
     expect(
-      getPlansArrayByInterventionTypeAndJurisdictionId(store.getState(), {
+      plansArraySelector(store.getState(), {
         ...fiFilter,
         ...jurisdictionFilter,
       })
