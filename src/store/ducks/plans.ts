@@ -622,6 +622,11 @@ export const getPlansArrayByReason = createSelector(
   (plans, reason) => (reason ? plans.filter(plan => plan.plan_fi_reason === reason) : plans)
 );
 
+/** getPlansArrayByParentJurisdictionId
+ * Gets an array of Plan objects filtered by plan jurisdiction parent_id
+ * @param state - the redux store
+ * @param props - the plan filters object
+ */
 export const getPlansArrayByParentJurisdictionId = createSelector(
   [plansArrayBaseSelector, getParentJurisdictionId],
   (plans, parentJurisdictionId) =>
