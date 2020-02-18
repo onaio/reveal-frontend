@@ -639,6 +639,21 @@ export const getPlansArrayByParentJurisdictionId = createSelector(
     )
 );
 
+/** plansArraySelector
+ * Gets an array of Plan objects filtered by one or all of the following:
+ *    - interventionType
+ *    - jurisdictionIds
+ *    - plan status
+ *    - FI plan reason
+ *    - plan jurisdiction parent_id
+ *
+ * These filter params are all optional and are supplied via the prop parameter.
+ *
+ * This selector is meant to be a memoized replacement for getPlanRecordsArray.
+ *
+ * @param state - the redux store
+ * @param props - the plan filters object
+ */
 export const plansArraySelector = createSelector(
   [
     getPlansArrayByInterventionType,
