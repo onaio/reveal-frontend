@@ -18,6 +18,7 @@ import reducer, {
   Plan,
   PlanRecord,
   PlanRecordResponse,
+  plansArraySelector,
   PlanStatus,
   reducerName,
   removePlansAction,
@@ -44,6 +45,7 @@ describe('reducers/plans', () => {
     expect(getPlanRecordsById(store.getState())).toEqual({});
     expect(getPlanRecordsIdArray(store.getState())).toEqual([]);
     expect(getPlanRecordsArray(store.getState())).toEqual([]);
+    expect(plansArraySelector(store.getState())).toEqual([]);
     expect(getPlanRecordById(store.getState(), 'somId')).toEqual(null);
     expect(getPlansArray(store.getState())).toEqual([]);
   });
