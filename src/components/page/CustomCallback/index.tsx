@@ -5,7 +5,7 @@ import querystring from 'querystring';
 import React from 'react';
 import { Redirect, RouteComponentProps, withRouter } from 'react-router';
 import { toast } from 'react-toastify';
-import { REACT_APP_EXPRESS_OAUTH_GET_STATE_URL } from '../../../configs/env';
+import { EXPRESS_OAUTH_GET_STATE_URL } from '../../../configs/env';
 import { WELCOME_BACK } from '../../../configs/lang';
 import { HOME_URL, LOGIN_URL } from '../../../constants';
 import { growl } from '../../../helpers/utils';
@@ -38,7 +38,7 @@ const CustomConnectedAPICallBack: React.FC<RouteComponentProps<RouteParams>> = p
         return <Redirect to={LOGIN_URL} />;
       }}
       SuccessfulLoginComponent={SuccessfulLoginComponent}
-      apiURL={REACT_APP_EXPRESS_OAUTH_GET_STATE_URL}
+      apiURL={EXPRESS_OAUTH_GET_STATE_URL}
       {...props}
     />
   );
