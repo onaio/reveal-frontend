@@ -37,7 +37,6 @@ const opensrpAuth = new ClientOAuth2({
 });
 
 const loginURL = EXPRESS_SESSION_LOGIN_URL || '/';
-
 const sessionName = EXPRESS_SESSION_NAME || 'session';
 
 const app = express();
@@ -68,18 +67,8 @@ if (app.get('env') === 'production') {
   sess.cookie.secure = true; // serve secure cookies
 }
 
-// app.use(express.json());
 app.use(cookieParser());
 app.use(session(sess));
-
-// This middleware will check if user's cookie is still saved in browser and
-// preloadedState is not set, then automatically remove the cookie.
-// app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
-//   if (req.cookies[sessionName] && (!req.session || !req.session.preloadedState)) {
-//     res.clearCookie(sessionName);
-//   }
-//   next();
-// });
 
 class HttpException extends Error {
   public statusCode: number;
@@ -99,21 +88,6 @@ const handleError = (err: HttpException, res: express.Response) => {
     statusCode,
   });
 };
-// middleware function to check for logged-in users
-const sessionChecker = (
-  req: express.Request,
-  res: express.Response,
-  next: express.NextFunction
-) => {
-  if (!req.session.preloadedState) {
-    res.redirect(loginURL);
-  }
-  next();
-};
-
-const router = express.Router();
-
-const PORT = EXPRESS_PORT || 3000;
 
 const BUILD_PATH = EXPRESS_REACT_BUILD_PATH || path.resolve(path.resolve(), '../build');
 const filePath = path.resolve(BUILD_PATH, 'index.html');
@@ -184,6 +158,7 @@ const logout = (req: express.Request, res: express.Response) => {
 };
 
 // OAuth views
+const router = express.Router();
 router.use('/oauth/opensrp', oauthLogin);
 router.use('/oauth/callback/OpenSRP', oauthCallback);
 router.use('/oauth/state', oauthState);
@@ -205,6 +180,7 @@ app.use(
   }
 );
 
+const PORT = EXPRESS_PORT || 3000;
 app.listen(PORT, () => {
   // tslint:disable-next-line:no-console
   console.log(`App listening on port ${PORT}!`);
