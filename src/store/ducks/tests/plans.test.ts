@@ -180,6 +180,7 @@ describe('reducers/plans', () => {
     expect(
       plansArraySelector(store.getState(), {
         interventionType: InterventionType.FI,
+        reason: FIReasons[1],
         statusList: [PlanStatus.DRAFT],
       })
     ).toEqual(values(reactiveDraftPlans));
