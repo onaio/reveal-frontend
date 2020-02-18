@@ -82,6 +82,8 @@ describe('reducers/plans', () => {
     ]);
     expect(getPlansIdArray(store.getState(), InterventionType.IRS)).toEqual(['plan-id-2']);
 
+    expect(plansArraySelector(store.getState())).toEqual(values(allPlans));
+
     expect(getPlansArray(store.getState(), InterventionType.FI, [], null)).toEqual(values(fiPlans));
     expect(getPlansArray(store.getState(), InterventionType.IRS, [], null)).toEqual(
       values(irsPlans)
