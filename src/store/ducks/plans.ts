@@ -612,6 +612,11 @@ export const getPlansArrayByStatus = createSelector(
       : plans
 );
 
+/** getPlansArrayByReason
+ * Gets an array of Plan objects filtered by FI plan reason
+ * @param state - the redux store
+ * @param props - the plan filters object
+ */
 export const getPlansArrayByReason = createSelector(
   [plansArrayBaseSelector, getReason],
   (plans, reason) => (reason ? plans.filter(plan => plan.plan_fi_reason === reason) : plans)
