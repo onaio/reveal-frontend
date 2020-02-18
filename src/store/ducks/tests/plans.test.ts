@@ -15,6 +15,7 @@ import reducer, {
   getPlansArrayByInterventionType,
   getPlansArrayByInterventionTypeAndJurisdictionId,
   getPlansArrayByJurisdictionId,
+  getPlansArrayByParentJurisdictionId,
   getPlansArrayByReason,
   getPlansArrayByStatus,
   getPlansById,
@@ -137,6 +138,9 @@ describe('reducers/plans', () => {
     const reasonFilter = {
       reason: FIReasons[1],
     };
+    const parentJurisdictionFilter = {
+      parentJurisdictionId: '2977',
+    };
 
     expect(getPlansArrayByInterventionType(store.getState(), {})).toEqual(values(allPlans));
     expect(getPlansArrayByInterventionType(store.getState(), fiFilter)).toEqual(values(fiPlans));
@@ -148,6 +152,9 @@ describe('reducers/plans', () => {
     );
     expect(getPlansArrayByReason(store.getState(), reasonFilter)).toEqual(
       values(allPlans).filter(e => e.plan_fi_reason === FIReasons[1])
+    );
+    expect(getPlansArrayByParentJurisdictionId(store.getState(), parentJurisdictionFilter)).toEqual(
+      values(allPlans).filter(e => e.jurisdiction_path.includes('2977'))
     );
     expect(
       getPlansArrayByInterventionTypeAndJurisdictionId(store.getState(), {
