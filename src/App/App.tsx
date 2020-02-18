@@ -11,12 +11,8 @@ import { toast } from 'react-toastify';
 import { Col, Container, Row } from 'reactstrap';
 import CustomConnectedAPICallBack from '../components/page/CustomCallback';
 import WithGATracker, { initGoogleAnalytics } from '../components/page/WithGATracker';
-import {
-  REACT_APP_EXPRESS_OAUTH_LOGOUT_URL,
-  TOAST_AUTO_CLOSE_DELAY,
-  WEBSITE_NAME,
-} from '../configs/env';
-import { DISABLE_LOGIN_PROTECTION, OPENSRP_LOGOUT_URL, OPENSRP_OAUTH_STATE } from '../configs/env';
+import { EXPRESS_OAUTH_LOGOUT_URL, TOAST_AUTO_CLOSE_DELAY, WEBSITE_NAME } from '../configs/env';
+import { DISABLE_LOGIN_PROTECTION } from '../configs/env';
 import { providers } from '../configs/settings';
 import {
   ACTIVE_IRS_PLAN_URL,
@@ -356,7 +352,7 @@ class App extends Component {
                   // tslint:disable-next-line: jsx-no-lambda
                   component={() => {
                     store.dispatch(logOutUser());
-                    window.location.href = REACT_APP_EXPRESS_OAUTH_LOGOUT_URL;
+                    window.location.href = EXPRESS_OAUTH_LOGOUT_URL;
                     return <></>;
                   }}
                 />
