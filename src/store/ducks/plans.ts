@@ -1,4 +1,5 @@
 import { Registry } from '@onaio/redux-reducer-registry';
+import intersect from 'fast_array_intersect';
 import { get, keyBy, keys, pickBy, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
 import { createSelector } from 'reselect';
@@ -531,7 +532,7 @@ export interface PlanFilters {
 /** plansArraySelector select an array of all plans
  * @param state - the redux store
  */
-export const plansArraySelector = (state: Registry): Plan[] =>
+export const plansArrayBaseSelector = (state: Registry): Plan[] =>
   values((state as any)[reducerName].plansById);
 
 export const getInterventionType = (_: Registry, props: PlanFilters) => props.interventionType;
@@ -547,7 +548,7 @@ export const getStatusList = (_: Registry, props: PlanFilters) =>
 export const getReason = (_: Registry, props: PlanFilters) => props.reason;
 
 export const getPlansArrayByInterventionType = createSelector(
-  [plansArraySelector, getInterventionType],
+  [plansArrayBaseSelector, getInterventionType],
   (plans, interventionType) =>
     interventionType
       ? plans.filter(plan => plan.plan_intervention_type === interventionType)
@@ -555,7 +556,7 @@ export const getPlansArrayByInterventionType = createSelector(
 );
 
 export const getPlansArrayByJurisdictionIds = createSelector(
-  [plansArraySelector, getJurisdictionIds],
+  [plansArrayBaseSelector, getJurisdictionIds],
   (plans, jurisdictionIds) =>
     jurisdictionIds
       ? plans.filter(plan =>
@@ -565,18 +566,18 @@ export const getPlansArrayByJurisdictionIds = createSelector(
 );
 
 export const getPlansArrayByStatus = createSelector(
-  [plansArraySelector, getStatusList],
+  [plansArrayBaseSelector, getStatusList],
   (plans, statusList) =>
     plans.filter(plan => (statusList.length ? statusList.includes(plan.plan_status) : true))
 );
 
 export const getPlansArrayByReason = createSelector(
-  [plansArraySelector, getReason],
+  [plansArrayBaseSelector, getReason],
   (plans, reason) => (reason ? plans.filter(plan => plan.plan_fi_reason === reason) : plans)
 );
 
 export const getPlansArrayByParentJurisdictionId = createSelector(
-  [plansArraySelector, getParentJurisdictionId],
+  [plansArrayBaseSelector, getParentJurisdictionId],
   (plans, parentJurisdictionId) =>
     plans.filter(
       plan =>
@@ -589,5 +590,5 @@ export const getPlansArrayByParentJurisdictionId = createSelector(
 
 export const getPlansArrayByInterventionTypeAndJurisdictionId = createSelector(
   [getPlansArrayByInterventionType, getPlansArrayByJurisdictionIds],
-  (plans, plans2) => plans.filter(value => plans2.includes(value))
+  (plans, plans2) => intersect([plans, plans2], JSON.stringify)
 );
