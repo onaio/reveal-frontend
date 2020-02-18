@@ -588,6 +588,18 @@ export const getPlansArrayByParentJurisdictionId = createSelector(
     )
 );
 
+export const plansArraySelector = createSelector(
+  [
+    getPlansArrayByInterventionType,
+    getPlansArrayByJurisdictionIds,
+    getPlansArrayByStatus,
+    getPlansArrayByReason,
+    getPlansArrayByParentJurisdictionId,
+  ],
+  (plans, plans2, plans3, plans4, plans5) =>
+    intersect([plans, plans2, plans3, plans4, plans5], JSON.stringify)
+);
+
 export const getPlansArrayByInterventionTypeAndJurisdictionId = createSelector(
   [getPlansArrayByInterventionType, getPlansArrayByJurisdictionIds],
   (plans, plans2) => intersect([plans, plans2], JSON.stringify)
