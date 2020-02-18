@@ -1,6 +1,7 @@
 import { Registry } from '@onaio/redux-reducer-registry';
 import { get, keyBy, keys, pickBy, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
+import { createSelector } from 'reselect';
 import SeamlessImmutable from 'seamless-immutable';
 import uuidv4 from 'uuid/v4';
 import {
@@ -519,8 +520,36 @@ export function getPlanRecordById(state: Partial<Store>, id: string): PlanRecord
 
 /** RESELECT USAGE STARTS HERE */
 
+export interface PlanFilters {
+  interventionType?: InterventionType;
+  jurisdictionId?: string;
+}
+
 /** plansArraySelector select an array of all plans
  * @param state - the redux store
  */
 export const plansArraySelector = (state: Registry): Plan[] =>
   values((state as any)[reducerName].plansById);
+
+export const getInterventionType = (_: Registry, props: PlanFilters) => props.interventionType;
+
+export const getJurisdictionId = (_: Registry, props: PlanFilters) => props.jurisdictionId;
+
+export const getPlansArrayByInterventionType = createSelector(
+  [plansArraySelector, getInterventionType],
+  (plans, interventionType) =>
+    interventionType
+      ? plans.filter(plan => plan.plan_intervention_type === interventionType)
+      : plans
+);
+
+export const getPlansArrayByJurisdictionId = createSelector(
+  [plansArraySelector, getJurisdictionId],
+  (plans, jurisdictionId) =>
+    jurisdictionId ? plans.filter(plan => plan.jurisdiction_id === jurisdictionId) : plans
+);
+
+export const getPlansArrayByInterventionTypeAndJurisdictionId = createSelector(
+  [getPlansArrayByInterventionType, getPlansArrayByJurisdictionId],
+  (plans, plans2) => plans.filter(value => plans2.includes(value))
+);

@@ -12,6 +12,9 @@ import reducer, {
   getPlanRecordsById,
   getPlanRecordsIdArray,
   getPlansArray,
+  getPlansArrayByInterventionType,
+  getPlansArrayByInterventionTypeAndJurisdictionId,
+  getPlansArrayByJurisdictionId,
   getPlansById,
   getPlansIdArray,
   InterventionType,
@@ -117,6 +120,27 @@ describe('reducers/plans', () => {
 
     expect(getPlanById(store.getState(), 'ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f')).toEqual(
       allPlans['ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f']
+    );
+
+    // RESELECT TESTS
+    const fiFilter = {
+      interventionType: InterventionType.FI,
+    };
+    const jurisdictionFilter = {
+      jurisdictionId: '450fc15b-5bd2-468a-927a-49cb10d3bcac',
+    };
+    expect(getPlansArrayByInterventionType(store.getState(), {})).toEqual(values(allPlans));
+    expect(getPlansArrayByInterventionType(store.getState(), fiFilter)).toEqual(values(fiPlans));
+    expect(getPlansArrayByJurisdictionId(store.getState(), jurisdictionFilter)).toEqual(
+      values(allPlans).filter(e => e.jurisdiction_id === '450fc15b-5bd2-468a-927a-49cb10d3bcac')
+    );
+    expect(
+      getPlansArrayByInterventionTypeAndJurisdictionId(store.getState(), {
+        ...fiFilter,
+        ...jurisdictionFilter,
+      })
+    ).toEqual(
+      values(fiPlans).filter(e => e.jurisdiction_id === '450fc15b-5bd2-468a-927a-49cb10d3bcac')
     );
   });
 
