@@ -1,3 +1,4 @@
+import { Registry } from '@onaio/redux-reducer-registry';
 import { get, keyBy, keys, pickBy, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
 import SeamlessImmutable from 'seamless-immutable';
@@ -515,3 +516,11 @@ export function getPlanRecordsIdArray(
 export function getPlanRecordById(state: Partial<Store>, id: string): PlanRecord | null {
   return get((state as any)[reducerName].planRecordsById, id) || null;
 }
+
+/** RESELECT USAGE STARTS HERE */
+
+/** plansArraySelector select an array of all plans
+ * @param state - the redux store
+ */
+export const plansArraySelector = (state: Registry): Plan[] =>
+  values((state as any)[reducerName].plansById);
