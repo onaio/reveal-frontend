@@ -2,30 +2,43 @@ import { getOpenSRPUserInfo } from '@onaio/gatekeeper';
 import ClientOAuth2 from 'client-oauth2';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
-import dotenv from 'dotenv';
 import express from 'express';
 import session from 'express-session';
 import helmet from 'helmet';
 import path from 'path';
 import request from 'request';
 import sessionFileStore from 'session-file-store';
-
-// initialize configuration
-dotenv.config();
+import {
+  EXPRESS_OPENSRP_ACCESS_TOKEN_URL,
+  EXPRESS_OPENSRP_AUTHORIZATION_URL,
+  EXPRESS_OPENSRP_CALLBACK_URL,
+  EXPRESS_OPENSRP_CLIENT_ID,
+  EXPRESS_OPENSRP_CLIENT_SECRET,
+  EXPRESS_OPENSRP_OAUTH_STATE,
+  EXPRESS_OPENSRP_USER_URL,
+  EXPRESS_PORT,
+  EXPRESS_REACT_BUILD_PATH,
+  EXPRESS_SESSION_FILESTORE_PATH,
+  EXPRESS_SESSION_LOGIN_URL,
+  EXPRESS_SESSION_NAME,
+  EXPRESS_SESSION_PATH,
+  EXPRESS_SESSION_SECRET,
+  FRONTEND_OPENSRP_CALLBACK_URL,
+} from './configs/envs';
 
 const opensrpAuth = new ClientOAuth2({
-  accessTokenUri: process.env.EXPRESS_OPENSRP_ACCESS_TOKEN_URL,
-  authorizationUri: process.env.EXPRESS_OPENSRP_AUTHORIZATION_URL,
-  clientId: process.env.EXPRESS_OPENSRP_CLIENT_ID,
-  clientSecret: process.env.EXPRESS_OPENSRP_CLIENT_SECRET,
-  redirectUri: process.env.EXPRESS_OPENSRP_CALLBACK_URL,
+  accessTokenUri: EXPRESS_OPENSRP_ACCESS_TOKEN_URL,
+  authorizationUri: EXPRESS_OPENSRP_AUTHORIZATION_URL,
+  clientId: EXPRESS_OPENSRP_CLIENT_ID,
+  clientSecret: EXPRESS_OPENSRP_CLIENT_SECRET,
+  redirectUri: EXPRESS_OPENSRP_CALLBACK_URL,
   scopes: ['read', 'write'],
-  state: process.env.EXPRESS_OPENSRP_OAUTH_STATE,
+  state: EXPRESS_OPENSRP_OAUTH_STATE,
 });
 
-const loginURL = process.env.EXPRESS_SESSION_LOGIN_URL || '/';
+const loginURL = EXPRESS_SESSION_LOGIN_URL || '/';
 
-const sessionName = process.env.EXPRESS_SESSION_NAME || 'session';
+const sessionName = EXPRESS_SESSION_NAME || 'session';
 
 const app = express();
 
@@ -34,19 +47,19 @@ app.use(helmet()); // protect against well known vulnerabilities
 
 const FileStore = sessionFileStore(session);
 const fileStoreOptions = {
-  path: process.env.EXPRESS_SESSION_FILESTORE_PATH || './sessions',
+  path: EXPRESS_SESSION_FILESTORE_PATH || './sessions',
 };
 
 const sess = {
   cookie: {
     httpOnly: true,
-    path: process.env.EXPRESS_SESSION_PATH || '/',
+    path: EXPRESS_SESSION_PATH || '/',
     secure: false,
   },
   name: sessionName,
   resave: true,
   saveUninitialized: true,
-  secret: process.env.EXPRESS_SESSION_SECRET || 'hunter2',
+  secret: EXPRESS_SESSION_SECRET || 'hunter2',
   store: new FileStore(fileStoreOptions),
 };
 
@@ -100,9 +113,9 @@ const sessionChecker = (
 
 const router = express.Router();
 
-const PORT = process.env.EXPRESS_PORT || 3000;
+const PORT = EXPRESS_PORT || 3000;
 
-const BUILD_PATH = process.env.EXPRESS_REACT_BUILD_PATH || path.resolve(path.resolve(), '../build');
+const BUILD_PATH = EXPRESS_REACT_BUILD_PATH || path.resolve(path.resolve(), '../build');
 const filePath = path.resolve(BUILD_PATH, 'index.html');
 
 // need to add docstrings and type defs
@@ -121,7 +134,7 @@ const oauthCallback = (req: express.Request, res: express.Response, next: expres
   provider.code
     .getToken(req.originalUrl)
     .then((user: ClientOAuth2.Token) => {
-      const url = process.env.EXPRESS_OPENSRP_USER_URL;
+      const url = EXPRESS_OPENSRP_USER_URL;
       request.get(
         url,
         user.sign({
@@ -145,7 +158,7 @@ const oauthCallback = (req: express.Request, res: express.Response, next: expres
             req.session.preloadedState = preloadedState;
             // you have to save the session manually for POST requests like this one
             req.session.save(() => void 0);
-            return res.redirect(process.env.FRONTEND_OPENSRP_CALLBACK_URL);
+            return res.redirect(FRONTEND_OPENSRP_CALLBACK_URL);
           }
         }
       );
