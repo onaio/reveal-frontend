@@ -256,7 +256,7 @@ describe('src/pages/*/AssignPractitioners', () => {
     });
     wrapper.update();
 
-    // try navigating to login
+    // try navigating with usaved changes
     history.push(FI_URL);
     let locIsLogin = location.pathname === FI_URL;
     expect(locIsLogin).toBeFalsy();
