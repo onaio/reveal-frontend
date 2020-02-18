@@ -521,12 +521,13 @@ export function getPlanRecordById(state: Partial<Store>, id: string): PlanRecord
 
 /** RESELECT USAGE STARTS HERE */
 
+/** This interface represents the structure of plan filter options/params */
 export interface PlanFilters {
-  interventionType?: InterventionType;
-  jurisdictionIds?: string[];
-  parentJurisdictionId?: string;
-  reason?: FIReasonType;
-  statusList?: string[];
+  interventionType?: InterventionType /** The plan intervention type */;
+  jurisdictionIds?: string[] /** an array of jurisdiction ids */;
+  parentJurisdictionId?: string /** jurisdiction parent id */;
+  reason?: FIReasonType /** plan FI reason */;
+  statusList?: string[] /** array of plan statuses */;
 }
 
 /** plansArrayBaseSelector select an array of all plans
