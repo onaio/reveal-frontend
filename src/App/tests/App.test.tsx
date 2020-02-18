@@ -35,7 +35,7 @@ describe('App', () => {
     ReactDOM.unmountComponentAtNode(div);
   });
 
-  it('renders App correctly', async () => {
+  it('integration: renders App correctly', async () => {
     fetch.mockResponse(JSON.stringify(expressAPIResponse));
     const wrapper = mount(
       <Provider store={store}>
@@ -44,10 +44,13 @@ describe('App', () => {
         </Router>
       </Provider>
     );
+    // before resolving get oauth state request, the user is logged out
+    expect(wrapper.text()).toMatchInlineSnapshot(`"HomeLogin"`);
     await new Promise(resolve => setImmediate(resolve));
     wrapper.update();
     expect(fetch.mock.calls).toEqual([['http://localhost:3000/oauth/state']]);
 
+    // after resolving get oauth state request superset user is logged in
     expect((wrapper.find('Router').props() as any).history).toMatchObject({
       location: {
         pathname: '/',
