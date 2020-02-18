@@ -571,6 +571,11 @@ export const getStatusList = (_: Registry, props: PlanFilters) => props.statusLi
  */
 export const getReason = (_: Registry, props: PlanFilters) => props.reason;
 
+/** getPlansArrayByInterventionType
+ * Gets an array of Plan objects filtered by interventionType
+ * @param state - the redux store
+ * @param props - the plan filters object
+ */
 export const getPlansArrayByInterventionType = createSelector(
   [plansArrayBaseSelector, getInterventionType],
   (plans, interventionType) =>
