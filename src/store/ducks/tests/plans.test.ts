@@ -164,6 +164,25 @@ describe('reducers/plans', () => {
     ).toEqual(
       values(fiPlans).filter(e => e.jurisdiction_id === '450fc15b-5bd2-468a-927a-49cb10d3bcac')
     );
+
+    expect(
+      plansArraySelector(store.getState(), {
+        interventionType: InterventionType.FI,
+        reason: FIReasons[1],
+      })
+    ).toEqual(values(reactivePlans));
+    expect(
+      plansArraySelector(store.getState(), {
+        interventionType: InterventionType.FI,
+        reason: FIReasons[0],
+      })
+    ).toEqual(values(routinePlans));
+    expect(
+      plansArraySelector(store.getState(), {
+        interventionType: InterventionType.FI,
+        statusList: [PlanStatus.DRAFT],
+      })
+    ).toEqual(values(reactiveDraftPlans));
   });
 
   it('filters correctly when jurisdiction_parent_id is provided', () => {
