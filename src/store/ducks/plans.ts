@@ -542,8 +542,7 @@ export const getJurisdictionIds = (_: Registry, props: PlanFilters) => props.jur
 export const getParentJurisdictionId = (_: Registry, props: PlanFilters) =>
   props.parentJurisdictionId;
 
-export const getStatusList = (_: Registry, props: PlanFilters) =>
-  props.statusList || [PlanStatus.ACTIVE];
+export const getStatusList = (_: Registry, props: PlanFilters) => props.statusList;
 
 export const getReason = (_: Registry, props: PlanFilters) => props.reason;
 
@@ -568,7 +567,9 @@ export const getPlansArrayByJurisdictionIds = createSelector(
 export const getPlansArrayByStatus = createSelector(
   [plansArrayBaseSelector, getStatusList],
   (plans, statusList) =>
-    plans.filter(plan => (statusList.length ? statusList.includes(plan.plan_status) : true))
+    statusList
+      ? plans.filter(plan => (statusList.length ? statusList.includes(plan.plan_status) : true))
+      : plans
 );
 
 export const getPlansArrayByReason = createSelector(
