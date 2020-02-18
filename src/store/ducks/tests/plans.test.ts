@@ -171,12 +171,14 @@ describe('reducers/plans', () => {
         reason: FIReasons[1],
       })
     ).toEqual(values(reactivePlans));
+
     expect(
       plansArraySelector(store.getState(), {
         interventionType: InterventionType.FI,
         reason: FIReasons[0],
       })
     ).toEqual(values(routinePlans));
+
     expect(
       plansArraySelector(store.getState(), {
         interventionType: InterventionType.FI,
@@ -184,6 +186,24 @@ describe('reducers/plans', () => {
         statusList: [PlanStatus.DRAFT],
       })
     ).toEqual(values(reactiveDraftPlans));
+
+    expect(
+      plansArraySelector(store.getState(), {
+        interventionType: InterventionType.FI,
+        jurisdictionIds: ['450fc15b-5bd2-468a-927a-49cb10d3bcac'],
+        parentJurisdictionId: '2939',
+        reason: FIReasons[0],
+        statusList: [PlanStatus.ACTIVE],
+      })
+    ).toEqual(
+      values(fiPlans).filter(
+        e =>
+          e.plan_fi_reason === FIReasons[0] &&
+          e.jurisdiction_path.includes('2939') &&
+          e.plan_status === PlanStatus.ACTIVE &&
+          e.jurisdiction_id === '450fc15b-5bd2-468a-927a-49cb10d3bcac'
+      )
+    );
   });
 
   it('filters correctly when jurisdiction_parent_id is provided', () => {
