@@ -574,8 +574,8 @@ export const getReason = (_: Registry, props: PlanFilters) => props.reason;
 
 /** getPlansArrayByInterventionType
  * Gets an array of Plan objects filtered by interventionType
- * @param state - the redux store
- * @param props - the plan filters object
+ * @param {Registry} state - the redux store
+ * @param {PlanFilters} props - the plan filters object
  */
 export const getPlansArrayByInterventionType = createSelector(
   [plansArrayBaseSelector, getInterventionType],
@@ -587,8 +587,8 @@ export const getPlansArrayByInterventionType = createSelector(
 
 /** getPlansArrayByJurisdictionIds
  * Gets an array of Plan objects filtered by jurisdictionIds
- * @param state - the redux store
- * @param props - the plan filters object
+ * @param {Registry} state - the redux store
+ * @param {PlanFilters} props - the plan filters object
  */
 export const getPlansArrayByJurisdictionIds = createSelector(
   [plansArrayBaseSelector, getJurisdictionIds],
@@ -602,8 +602,8 @@ export const getPlansArrayByJurisdictionIds = createSelector(
 
 /** getPlansArrayByStatus
  * Gets an array of Plan objects filtered by plan status
- * @param state - the redux store
- * @param props - the plan filters object
+ * @param {Registry} state - the redux store
+ * @param {PlanFilters} props - the plan filters object
  */
 export const getPlansArrayByStatus = createSelector(
   [plansArrayBaseSelector, getStatusList],
@@ -615,8 +615,8 @@ export const getPlansArrayByStatus = createSelector(
 
 /** getPlansArrayByReason
  * Gets an array of Plan objects filtered by FI plan reason
- * @param state - the redux store
- * @param props - the plan filters object
+ * @param {Registry} state - the redux store
+ * @param {PlanFilters} props - the plan filters object
  */
 export const getPlansArrayByReason = createSelector(
   [plansArrayBaseSelector, getReason],
@@ -625,8 +625,8 @@ export const getPlansArrayByReason = createSelector(
 
 /** getPlansArrayByParentJurisdictionId
  * Gets an array of Plan objects filtered by plan jurisdiction parent_id
- * @param state - the redux store
- * @param props - the plan filters object
+ * @param {Registry} state - the redux store
+ * @param {PlanFilters} props - the plan filters object
  */
 export const getPlansArrayByParentJurisdictionId = createSelector(
   [plansArrayBaseSelector, getParentJurisdictionId],
@@ -652,8 +652,8 @@ export const getPlansArrayByParentJurisdictionId = createSelector(
  *
  * This selector is meant to be a memoized replacement for getPlanRecordsArray.
  *
- * @param state - the redux store
- * @param props - the plan filters object
+ * @param {Registry} state - the redux store
+ * @param {PlanFilters} props - the plan filters object
  */
 export const plansArraySelector = createSelector(
   [
