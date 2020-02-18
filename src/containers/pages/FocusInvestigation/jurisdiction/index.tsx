@@ -9,7 +9,7 @@ import supersetFetch from '../../../../services/superset';
 import plansReducer, {
   fetchPlans,
   FetchPlansAction,
-  getPlanRecordsArray,
+  getPlansArray,
   InterventionType,
   Plan,
   reducerName as plansReducerName,
@@ -21,7 +21,7 @@ reducerRegistry.register(plansReducerName, plansReducer);
 
 /** Interface for props that come from the URL */
 export interface RouteParams {
-  jurisdiction_id: string;
+  jurisdictionId: string;
 }
 
 /** Interface for FIJurisdiction component props */
@@ -49,13 +49,14 @@ export const defaultActiveFIProps: FIJurisdictionProps = {
  * lowest level jurisdiction
  */
 const FIJurisdiction = (props: FIJurisdictionProps & RouteComponentProps<RouteParams>) => {
-  const { fetchPlansActionCreator, messages, supersetService } = props;
+  const { fetchPlansActionCreator, supersetService } = props;
 
-  const jurisdiction_id = props.match.params.jurisdiction_id;
+  const jurisdictionId =
+    '59ad4fa0-1945-4b50-a6e3-a056a7cdceb2' || props.match.params.jurisdictionId;
 
   // this gets FI plans for the current jurisdiction
   const supersetParams = superset.getFormData(2000, [
-    { comparator: jurisdiction_id, operator: '==', subject: 'jurisdiction_id' },
+    { comparator: jurisdictionId, operator: '==', subject: 'jurisdiction_id' },
     { comparator: InterventionType.FI, operator: '==', subject: 'plan_intervention_type' },
   ]);
 
@@ -65,22 +66,11 @@ const FIJurisdiction = (props: FIJurisdictionProps & RouteComponentProps<RoutePa
       .catch(err => displayError(err));
   }, []);
 
-  const messageList =
-    messages.length > 0 ? (
-      <ul>
-        {messages.map(e => (
-          <li>
-            {e.user}: {e.message}
-          </li>
-        ))}
-      </ul>
-    ) : (
-      <div>nothing</div>
-    );
+  // console.log('routinePlans >>>> ', routinePlans);
 
   return (
     <div>
-      {messageList}
+      xxx
       <hr />
     </div>
   );
@@ -93,10 +83,10 @@ const objectListOptions = {
   actionCreator: fetchPlans,
   dispatchPropName: 'fetchPlansActionCreator',
   listPropName: 'routinePlans',
-  selector: getPlanRecordsArray,
+  selector: getPlansArray,
 };
 
-const cbv = new ObjectList<Plan, FetchPlansAction, typeof getPlanRecordsArray>(
+const cbv = new ObjectList<Plan, FetchPlansAction, typeof getPlansArray>(
   FIJurisdiction,
   objectListOptions
 );
