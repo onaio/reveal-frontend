@@ -94,7 +94,7 @@ describe('App', () => {
     wrapper.update();
 
     // we should be on the login page; caveat, in production
-    // it is by the express's action that we find ourselves here
+    // it is by the express server's redirect action that we find ourselves here
     expect(wrapper.text()).toMatchSnapshot('should be login page');
     const isTheLoginPage = wrapper
       .text()
@@ -108,7 +108,7 @@ describe('App', () => {
     loggedIn = sessionDux.isAuthenticated(store.getState());
     expect(loggedIn).toBeFalsy();
 
-    // unfortunately we don't have a definitive way to test that the user session was invalid;
+    // unfortunately we don't have a definitive way to test that the user session was invalidated;
     // since the functionality that does this is in the express server and is thus out of the
     // react-app's scope.
     expect(hrefMock).toHaveBeenCalledWith('http://localhost:3000/logout');
