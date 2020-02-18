@@ -529,21 +529,46 @@ export interface PlanFilters {
   statusList?: string[];
 }
 
-/** plansArraySelector select an array of all plans
+/** plansArrayBaseSelector select an array of all plans
  * @param state - the redux store
  */
 export const plansArrayBaseSelector = (state: Registry): Plan[] =>
   values((state as any)[reducerName].plansById);
 
+/** getInterventionType
+ * Gets interventionType from PlanFilters
+ * @param state - the redux store
+ * @param props - the plan filters object
+ */
 export const getInterventionType = (_: Registry, props: PlanFilters) => props.interventionType;
 
+/** getJurisdictionIds
+ * Gets jurisdictionIds from PlanFilters
+ * @param state - the redux store
+ * @param props - the plan filters object
+ */
 export const getJurisdictionIds = (_: Registry, props: PlanFilters) => props.jurisdictionIds;
 
+/** getParentJurisdictionId
+ * Gets parentJurisdictionId from PlanFilters
+ * @param state - the redux store
+ * @param props - the plan filters object
+ */
 export const getParentJurisdictionId = (_: Registry, props: PlanFilters) =>
   props.parentJurisdictionId;
 
+/** getStatusList
+ * Gets statusList from PlanFilters
+ * @param state - the redux store
+ * @param props - the plan filters object
+ */
 export const getStatusList = (_: Registry, props: PlanFilters) => props.statusList;
 
+/** getReason
+ * Gets reason from PlanFilters
+ * @param state - the redux store
+ * @param props - the plan filters object
+ */
 export const getReason = (_: Registry, props: PlanFilters) => props.reason;
 
 export const getPlansArrayByInterventionType = createSelector(
