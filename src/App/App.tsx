@@ -16,7 +16,7 @@ import {
   TOAST_AUTO_CLOSE_DELAY,
   WEBSITE_NAME,
 } from '../configs/env';
-import { DISABLE_LOGIN_PROTECTION, OPENSRP_LOGOUT_URL, OPENSRP_OAUTH_STATE } from '../configs/env';
+import { DISABLE_LOGIN_PROTECTION } from '../configs/env';
 import { providers } from '../configs/settings';
 import {
   ACTIVE_IRS_PLAN_URL,

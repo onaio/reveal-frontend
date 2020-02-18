@@ -1,15 +1,16 @@
-import { updateExtraData } from '@onaio/session-reducer';
 import * as sessionDux from '@onaio/session-reducer';
 import { mount } from 'enzyme';
+import toJson from 'enzyme-to-json';
 import { createBrowserHistory } from 'history';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
-import { OPENSRP_LOGOUT_URL } from '../../configs/env';
 import store from '../../store';
 import App from '../App';
 import { expressAPIResponse } from './fixtures';
+
+jest.mock('../../configs/env');
 
 // tslint:disable-next-line: no-var-requires
 const fetch = require('jest-fetch-mock');
