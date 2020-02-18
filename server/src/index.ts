@@ -130,6 +130,8 @@ const oauthCallback = (req: express.Request, res: express.Response, next: expres
               session: sessionState,
             };
             req.session.preloadedState = preloadedState;
+            const expireAfterMs = sessionState.extraData.oAuth2Data.expires_in * 1000;
+            req.session.cookie.maxAge = expireAfterMs;
             // you have to save the session manually for POST requests like this one
             req.session.save(() => void 0);
             return res.redirect(FRONTEND_OPENSRP_CALLBACK_URL);
