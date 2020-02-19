@@ -34,10 +34,10 @@ describe('reducers/practitioners.reducer.fetchPractitionersAction', () => {
   });
   // should handle dispatch on initialState
   it('handles dispatch correctly on initial state', () => {
-    const action = fetchPractitioners([fixtures.practitioner1] as Practitioner[]);
+    const action = fetchPractitioners([fixtures.practitioner1]);
     const expectedState = {
       practitionerRoles: {},
-      practitionersById: generateKeyBy([fixtures.practitioner1] as Practitioner[]),
+      practitionersById: generateKeyBy([fixtures.practitioner1]),
     };
     Reducer(reducer)
       .expect(action)
@@ -47,14 +47,11 @@ describe('reducers/practitioners.reducer.fetchPractitionersAction', () => {
   // should handle dispatch on existing state
   it('handles dispatch correctly on current state', () => {
     const currentState = {
-      practitionersById: generateKeyBy([fixtures.practitioner1] as Practitioner[]),
+      practitionersById: generateKeyBy([fixtures.practitioner1]),
     };
-    const action = fetchPractitioners([fixtures.practitioner2] as Practitioner[]);
+    const action = fetchPractitioners([fixtures.practitioner2]);
     const expectedState = {
-      practitionersById: generateKeyBy([
-        fixtures.practitioner1,
-        fixtures.practitioner2,
-      ] as Practitioner[]),
+      practitionersById: generateKeyBy([fixtures.practitioner1, fixtures.practitioner2]),
     };
     Reducer(reducer)
       .withState(currentState)
@@ -64,11 +61,11 @@ describe('reducers/practitioners.reducer.fetchPractitionersAction', () => {
 
   it('handles dispatch correctly on current state with overwrite', () => {
     const currentState = {
-      practitionersById: generateKeyBy([fixtures.practitioner1] as Practitioner[]),
+      practitionersById: generateKeyBy([fixtures.practitioner1]),
     };
-    const action = fetchPractitioners([fixtures.practitioner2] as Practitioner[], true);
+    const action = fetchPractitioners([fixtures.practitioner2], true);
     const expectedState = {
-      practitionersById: generateKeyBy([fixtures.practitioner2] as Practitioner[]),
+      practitionersById: generateKeyBy([fixtures.practitioner2]),
     };
     Reducer(reducer)
       .withState(currentState)
@@ -79,7 +76,7 @@ describe('reducers/practitioners.reducer.fetchPractitionersAction', () => {
   // should return same state for non existing action
   it('returns current State for unknown action types', () => {
     const currentState = {
-      practitionersById: generateKeyBy([fixtures.practitioner1] as Practitioner[]),
+      practitionersById: generateKeyBy([fixtures.practitioner1]),
     };
     const action = { type: 'UNKNOWN_ACTION' };
     Reducer(reducer)
@@ -93,7 +90,7 @@ describe('reducers/practitioners.reducer.fetchPractitionerRolesAction', () => {
   // should handle dispatch on initialState
   it('handles dispatch correctly on initial state', () => {
     const action = fetchPractitionerRoles(
-      [fixtures.practitioner5] as Practitioner[],
+      [fixtures.practitioner5],
       fixtures.organization3.identifier
     );
     const expectedState = {
@@ -117,7 +114,7 @@ describe('reducers/practitioners.reducer.fetchPractitionerRolesAction', () => {
       practitionersById: {},
     };
     const action = fetchPractitionerRoles(
-      [fixtures.practitioner6] as Practitioner[],
+      [fixtures.practitioner6],
       fixtures.organization3.identifier
     );
     const expectedState = {
@@ -140,7 +137,7 @@ describe('reducers/practitioners.reducer.fetchPractitionerRolesAction', () => {
       practitionerRoles: {
         'd23f7350-d406-11e9-bb65-2a2ae2dbcce4': { master: fixtures.practitioner5 },
       },
-      practitionersById: generateKeyBy([fixtures.practitioner5] as Practitioner[]),
+      practitionersById: generateKeyBy([fixtures.practitioner5]),
     };
     const action = { type: 'UNKNOWN_ACTION' };
     Reducer(reducer)
@@ -165,7 +162,7 @@ describe('reducers/practitioners.reducer.removePractitionersAction', () => {
   // should handle dispatch on existing state
   it('handles dispatch correctly on current state', () => {
     const currentState = {
-      practitionersById: generateKeyBy([fixtures.practitioner1] as Practitioner[]),
+      practitionersById: generateKeyBy([fixtures.practitioner1]),
     };
     const action = removePractitionersAction;
     const expectedState = { practitionersById: {} };
@@ -180,10 +177,7 @@ describe('reducers/practitioners.reducer.removePractitionerRolesAction', () => {
   // should handle dispatch on initialState
   it('handles dispatch correctly on initial state', () => {
     const currentState = {
-      practitionersById: generateKeyBy([
-        fixtures.practitioner1,
-        fixtures.practitioner2,
-      ] as Practitioner[]),
+      practitionersById: generateKeyBy([fixtures.practitioner1, fixtures.practitioner2]),
     };
     const action = removePractitionersAction;
     const expectedState = { practitionersById: {} };
@@ -199,12 +193,12 @@ describe('reducers/practitioners.reducer.removePractitionerRolesAction', () => {
       practitionerRoles: {
         'd23f7350-d406-11e9-bb65-2a2ae2dbcce4': { master: fixtures.practitioner5 },
       },
-      practitionersById: generateKeyBy([fixtures.practitioner5] as Practitioner[]),
+      practitionersById: generateKeyBy([fixtures.practitioner5]),
     };
     const action = removePractitionerRolesAction;
     const expectedState = {
       practitionerRoles: {},
-      practitionersById: generateKeyBy([fixtures.practitioner5] as Practitioner[]),
+      practitionersById: generateKeyBy([fixtures.practitioner5]),
     };
     Reducer(reducer)
       .withState(currentState)
@@ -233,7 +227,7 @@ describe('reducers/practitioners.reducer.selectors', () => {
       practitionerRoles: {
         'd23f7350-d406-11e9-bb65-2a2ae2dbcce4': { master: fixtures.practitioner5 },
       },
-      practitionersById: generateKeyBy([fixtures.practitioner5] as Practitioner[]),
+      practitionersById: generateKeyBy([fixtures.practitioner5]),
     };
     const state = { [reducerName]: currentState };
     Selector(getPractitionersByOrgId)
@@ -244,10 +238,10 @@ describe('reducers/practitioners.reducer.selectors', () => {
   // return select on existing state
   it('returns correct data from existing state', () => {
     const currentState = {
-      practitionersById: generateKeyBy([fixtures.practitioner1] as Practitioner[]),
+      practitionersById: generateKeyBy([fixtures.practitioner1]),
     };
     const presentState = { [reducerName]: currentState };
-    const getPractitionersIdExpected = generateKeyBy([fixtures.practitioner1] as Practitioner[]);
+    const getPractitionersIdExpected = generateKeyBy([fixtures.practitioner1]);
     const getPractitionersArrayExpected = [fixtures.practitioner1];
     Selector(getPractitionersById)
       .expect(presentState)
@@ -266,9 +260,7 @@ describe('reducers/practitioners.reducer- integration test', () => {
   it('fetchedPractitioners actions actually adds data to store', () => {
     expect(getPractitionersById(store.getState())).toEqual({});
     expect(getPractitionersArray(store.getState())).toEqual([]);
-    store.dispatch(
-      fetchPractitioners([fixtures.practitioner1, fixtures.practitioner2] as Practitioner[])
-    );
+    store.dispatch(fetchPractitioners([fixtures.practitioner1, fixtures.practitioner2]));
     expect(getPractitionersById(store.getState())).toEqual({
       'd7c9c000-e9b3-427a-890e-49c301aa48e6': fixtures.practitioner2,
       p5id: fixtures.practitioner1,
@@ -279,9 +271,7 @@ describe('reducers/practitioners.reducer- integration test', () => {
   });
 
   it('removePractitioners action removes practitioners', () => {
-    store.dispatch(
-      fetchPractitioners([fixtures.practitioner1, fixtures.practitioner2] as Practitioner[])
-    );
+    store.dispatch(fetchPractitioners([fixtures.practitioner1, fixtures.practitioner2]));
     let numberOfPractitioners = getPractitionersArray(store.getState()).length;
     expect(numberOfPractitioners).toEqual(2);
 
@@ -292,22 +282,22 @@ describe('reducers/practitioners.reducer- integration test', () => {
 
   it('Adds new practitioners to store instead of overwriting existing ones', () => {
     store.dispatch(removePractitionersAction);
-    store.dispatch(fetchPractitioners([fixtures.practitioner1] as Practitioner[]));
+    store.dispatch(fetchPractitioners([fixtures.practitioner1]));
     let numberOfPractitioners = getPractitionersArray(store.getState()).length;
     expect(numberOfPractitioners).toEqual(1);
 
-    store.dispatch(fetchPractitioners([fixtures.practitioner2] as Practitioner[]));
+    store.dispatch(fetchPractitioners([fixtures.practitioner2]));
     numberOfPractitioners = getPractitionersArray(store.getState()).length;
     expect(numberOfPractitioners).toEqual(2);
   });
 
   it('overwrites stored practitioners when overwrite is true', () => {
     store.dispatch(removePractitionersAction);
-    store.dispatch(fetchPractitioners([fixtures.practitioner1] as Practitioner[]));
+    store.dispatch(fetchPractitioners([fixtures.practitioner1]));
     let numberOfPractitioners = getPractitionersArray(store.getState()).length;
     expect(numberOfPractitioners).toEqual(1);
 
-    store.dispatch(fetchPractitioners([fixtures.practitioner2] as Practitioner[], true));
+    store.dispatch(fetchPractitioners([fixtures.practitioner2], true));
     numberOfPractitioners = getPractitionersArray(store.getState()).length;
     expect(numberOfPractitioners).toEqual(1);
   });
@@ -317,10 +307,7 @@ describe('reducers/practitioners.reducer- integration test', () => {
     expect(getPractitionersArray(store.getState())).toEqual([]);
 
     store.dispatch(
-      fetchPractitionerRoles(
-        fixtures.org3Practitioners as Practitioner[],
-        fixtures.organization3.identifier
-      )
+      fetchPractitionerRoles(fixtures.org3Practitioners, fixtures.organization3.identifier)
     );
     expect(getPractitionersById(store.getState())).toEqual({});
     expect(
@@ -330,10 +317,7 @@ describe('reducers/practitioners.reducer- integration test', () => {
 
   it('removePractitionerRole action removes practitioners', () => {
     store.dispatch(
-      fetchPractitionerRoles(
-        fixtures.org3Practitioners as Practitioner[],
-        fixtures.organization3.identifier
-      )
+      fetchPractitionerRoles(fixtures.org3Practitioners, fixtures.organization3.identifier)
     );
 
     let org3Practs = getPractitionersByOrgId(store.getState(), fixtures.organization3.identifier)
@@ -349,10 +333,7 @@ describe('reducers/practitioners.reducer- integration test', () => {
   it('Adds new practitioners to store instead of overwriting existing ones', () => {
     // impact on practitionersById
     store.dispatch(
-      fetchPractitionerRoles(
-        [fixtures.practitioner4] as Practitioner[],
-        fixtures.organization3.identifier
-      )
+      fetchPractitionerRoles([fixtures.practitioner4], fixtures.organization3.identifier)
     );
 
     let org3Practs = getPractitionersByOrgId(store.getState(), fixtures.organization3.identifier)
@@ -361,10 +342,7 @@ describe('reducers/practitioners.reducer- integration test', () => {
 
     // possibilities; adding practitioners to the same organization should override
     store.dispatch(
-      fetchPractitionerRoles(
-        [fixtures.practitioner5] as Practitioner[],
-        fixtures.organization3.identifier
-      )
+      fetchPractitionerRoles([fixtures.practitioner5], fixtures.organization3.identifier)
     );
 
     org3Practs = getPractitionersByOrgId(store.getState(), fixtures.organization3.identifier)
@@ -373,10 +351,7 @@ describe('reducers/practitioners.reducer- integration test', () => {
 
     // possibilities; adding same practitioners to a different organization
     store.dispatch(
-      fetchPractitionerRoles(
-        [fixtures.practitioner5] as Practitioner[],
-        fixtures.organization2.identifier
-      )
+      fetchPractitionerRoles([fixtures.practitioner5], fixtures.organization2.identifier)
     );
 
     let org2Practs = getPractitionersByOrgId(store.getState(), fixtures.organization2.identifier)
@@ -385,10 +360,7 @@ describe('reducers/practitioners.reducer- integration test', () => {
 
     // possibilities; adding practitioners to a different organization
     store.dispatch(
-      fetchPractitionerRoles(
-        [fixtures.practitioner6] as Practitioner[],
-        fixtures.organization1.identifier
-      )
+      fetchPractitionerRoles([fixtures.practitioner6], fixtures.organization1.identifier)
     );
 
     const org1Practs = getPractitionersByOrgId(store.getState(), fixtures.organization1.identifier)

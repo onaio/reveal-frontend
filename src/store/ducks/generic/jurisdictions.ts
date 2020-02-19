@@ -136,7 +136,7 @@ export const fetchGenericJurisdictions = (
         if (typeof obj.jurisdiction_path === 'string') {
           obj.jurisdiction_path = JSON.parse(obj.jurisdiction_path);
         }
-        return obj as GenericJurisdiction;
+        return obj;
       }
     ),
     'id'

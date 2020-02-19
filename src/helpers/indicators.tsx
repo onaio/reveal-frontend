@@ -74,7 +74,7 @@ export interface GoalReport {
  */
 export function getGoalReport(goal: Goal): GoalReport {
   const percentAchieved = goalRatioAchieved(goal);
-  let targetValue = goal.task_count;
+  let targetValue;
   let goalUnit: string = goal.goal_unit;
   if (goal.goal_unit.toLowerCase() !== 'percent') {
     targetValue = goal.goal_value;

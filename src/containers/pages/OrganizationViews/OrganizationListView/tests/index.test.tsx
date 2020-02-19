@@ -90,7 +90,7 @@ describe('src/containers/TeamAssignment/OrganizationListView/', () => {
       organizations: fixtures.organizations,
       serviceClass: classMock,
     };
-    const wrapper = mount(
+    mount(
       <Router history={history}>
         <OrganizationListView {...props} />
       </Router>

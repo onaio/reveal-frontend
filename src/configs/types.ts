@@ -35,3 +35,6 @@ export type ADMN0_PCODE =
 
 export type FlexComponent<T = {}> = ComponentType<T>;
 export type ConnectedFlexComponent = ConnectedComponentClass<FlexComponent<any>, any>;
+
+// tslint:disable-next-line:no-empty-interface
+export interface EmptyObject {}

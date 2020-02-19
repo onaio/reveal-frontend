@@ -32,6 +32,7 @@ import {
 } from '../../../../configs/lang';
 import { indicatorThresholdsIRS } from '../../../../configs/settings';
 import { HOME_URL, REPORT_IRS_PLAN_URL } from '../../../../constants';
+import { displayError } from '../../../../helpers/errors';
 import ProgressBar from '../../../../helpers/ProgressBar';
 import { RouteParams } from '../../../../helpers/utils';
 import supersetFetch from '../../../../services/superset';
@@ -186,14 +187,14 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
         (result: IRSPlan[]) => fetchPlans(result)
       );
     } catch (e) {
-      // todo - handle error https://github.com/onaio/reveal-frontend/issues/300
+      displayError(e);
     } finally {
       setLoading(false);
     }
   }
 
   useEffect(() => {
-    loadData();
+    loadData().catch(e => displayError(e));
   }, []);
 
   if (!jurisdictionId || !planId) {

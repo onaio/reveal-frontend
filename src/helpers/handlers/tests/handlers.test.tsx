@@ -16,7 +16,7 @@ describe('helpers/handlers', () => {
         y: 477.1875,
       },
       target: {
-        queryRenderedFeatures: (e: any) => {
+        queryRenderedFeatures: () => {
           return [
             {
               geometry: {

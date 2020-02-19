@@ -14,7 +14,9 @@ describe('src/containers/pages/PractitionerViews/serviceHooks', () => {
       };
     });
 
-    loadPractitioner('practitionerId', mockClass, mockActionCreator);
+    loadPractitioner('practitionerId', mockClass, mockActionCreator).catch(e => {
+      throw e;
+    });
     await flushPromises();
 
     // calls the correct endpoint
@@ -36,7 +38,9 @@ describe('src/containers/pages/PractitionerViews/serviceHooks', () => {
       };
     });
 
-    loadPractitioners(mockClass, mockActionCreator);
+    loadPractitioners(mockClass, mockActionCreator).catch(e => {
+      throw e;
+    });
     await flushPromises();
 
     // calls the correct endpoint

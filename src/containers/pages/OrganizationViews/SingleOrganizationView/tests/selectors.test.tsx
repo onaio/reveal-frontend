@@ -54,7 +54,7 @@ describe('src/../singleOrganization.selectors', () => {
       </Provider>
     );
 
-    await new Promise(resolve => setImmediate(resolve));
+    await new Promise<any>(resolve => setImmediate(resolve));
 
     expect(organizationByIdMock).toHaveBeenCalledTimes(7);
     expect(organizationByIdMock.mock.calls[3][0]).toEqual(selectorState);
