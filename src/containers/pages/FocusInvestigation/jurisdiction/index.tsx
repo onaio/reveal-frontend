@@ -33,10 +33,11 @@ import {
 } from '../../../../configs/lang';
 import {
   FIClassifications,
+  FIReasons,
   locationHierarchy,
   planStatusDisplay,
 } from '../../../../configs/settings';
-import { CASE_TRIGGERED, FI_SINGLE_MAP_URL, FI_SINGLE_URL } from '../../../../constants';
+import { FI_SINGLE_MAP_URL, FI_SINGLE_URL } from '../../../../constants';
 import { displayError } from '../../../../helpers/errors';
 import { renderClassificationRow } from '../../../../helpers/indicators';
 import {
@@ -146,7 +147,7 @@ const FIJurisdiction = (props: FIJurisdictionProps & RouteComponentProps<RoutePa
           });
           /**  Handle Columns Unique for Routine and Reactive Tables */
           const columnsBasedOnReason = [];
-          plansArray.every((singlePlan: Plan) => singlePlan.plan_fi_reason === CASE_TRIGGERED)
+          plansArray.every((singlePlan: Plan) => singlePlan.plan_fi_reason === FIReasons[1])
             ? columnsBasedOnReason.push(
                 {
                   Header: CASE_NOTIF_DATE_HEADER,
@@ -280,7 +281,7 @@ const FIJurisdiction = (props: FIJurisdictionProps & RouteComponentProps<RoutePa
             useDrillDownTrProps: false,
           };
           const TableHeaderWithOptionalForm = plansArray.every(
-            d => d.plan_fi_reason === CASE_TRIGGERED
+            d => d.plan_fi_reason === FIReasons[1]
           ) ? (
             <h3 className="mb-3 mt-5 page-title">{REACTIVE}</h3>
           ) : (
