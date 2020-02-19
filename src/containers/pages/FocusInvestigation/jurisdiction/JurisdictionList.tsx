@@ -15,6 +15,9 @@ export default class JurisdictionList<
   SelectorType,
   PropsType
 > extends ObjectList<ObjectType, ActionType, SelectorType, PropsType> {
+  /** Custom getMapStateToProps
+   * Gets plans for the current jurisdiction
+   */
   public getMapStateToProps() {
     return (state: Registry, ownProps: any) => {
       const getPlansArray = makePlansArraySelector();
