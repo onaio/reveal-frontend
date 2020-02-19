@@ -12,7 +12,7 @@ import { Router } from 'react-router';
 import { CURRENT_FOCUS_INVESTIGATION } from '../../../../../configs/lang';
 import store from '../../../../../store';
 import reducer, { fetchPlans, reducerName } from '../../../../../store/ducks/plans';
-import { InterventionType, Plan } from '../../../../../store/ducks/plans';
+import { InterventionType } from '../../../../../store/ducks/plans';
 import * as fixtures from '../../../../../store/ducks/tests/fixtures';
 import ConnectedActiveFocusInvestigation, { ActiveFocusInvestigation } from '../../active';
 import { activeFocusInvestigationProps } from './fixtures';
@@ -107,7 +107,7 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
     const mock: any = jest.fn();
     mock.mockImplementation(() => Promise.resolve(fixtures.plans));
     const props = {
-      caseTriggeredPlans: [fixtures.plan2] as Plan[],
+      caseTriggeredPlans: [fixtures.plan2],
       fetchPlansActionCreator: jest.fn(),
       history,
       location: mock,

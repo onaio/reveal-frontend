@@ -9,7 +9,6 @@ import ConnectedIrsPlans, { IrsPlans } from '..';
 import { IRS_PLANS } from '../../../../../configs/lang';
 import { FI_SINGLE_URL } from '../../../../../constants';
 import store from '../../../../../store';
-import { Plan } from '../../../../../store/ducks/plans';
 import * as fixtures from '../../../../../store/ducks/tests/fixtures';
 
 jest.mock('../../../../../configs/env');
@@ -32,7 +31,7 @@ describe('containers/pages/IRS', () => {
         path: FI_SINGLE_URL,
         url: FI_SINGLE_URL,
       },
-      plansArray: fixtures.plans as Plan[],
+      plansArray: fixtures.plans,
       plansIdArray: fixtures.plansIdArray,
     };
     shallow(
@@ -52,7 +51,7 @@ describe('containers/pages/IRS', () => {
         path: FI_SINGLE_URL,
         url: FI_SINGLE_URL,
       },
-      plansArray: fixtures.plans as Plan[],
+      plansArray: fixtures.plans,
       plansIdArray: fixtures.plansIdArray,
     };
 

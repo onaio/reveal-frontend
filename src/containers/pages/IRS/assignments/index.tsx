@@ -20,6 +20,7 @@ import {
 } from '../../../../configs/lang';
 import { planStatusDisplay } from '../../../../configs/settings';
 import { ASSIGN_PLAN_URL, HOME_URL, REPORT_IRS_PLAN_URL } from '../../../../constants';
+import { displayError } from '../../../../helpers/errors';
 import { OpenSRPService } from '../../../../services/opensrp';
 import IRSPlansReducer, {
   reducerName as IRSPlansReducerName,
@@ -78,16 +79,16 @@ const IRSAssignmentPlansList = (props: PlanAssignmentsListProps) => {
           }
         })
         .catch(err => {
-          // console.log('ERR', err)
+          displayError(err);
         });
       setLoading(false);
     } catch (e) {
-      // do something with the error?
+      displayError(e);
     }
   }
 
   useEffect(() => {
-    loadData();
+    loadData().catch(error => displayError(error));
   }, []);
 
   if (loading) {

@@ -496,10 +496,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
       false,
       [POLYGON, MULTI_POLYGON]
     );
-    structures = getStructuresFCByJurisdictionId(
-      state,
-      jurisdiction && jurisdiction.jurisdiction_id
-    );
+    structures = getStructuresFCByJurisdictionId(state, jurisdiction.jurisdiction_id);
   }
   return {
     currentGoal,

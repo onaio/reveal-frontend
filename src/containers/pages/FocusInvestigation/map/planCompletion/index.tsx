@@ -56,14 +56,14 @@ export class PlanCompletion extends React.Component<
   }
 
   /** click handler for cancelling mark as complete action */
-  public cancelClickHandler = (event: any) => {
+  public cancelClickHandler = () => {
     this.props.history.replace(`${FI_SINGLE_MAP_URL}/${this.props.plan!.id}`);
   };
 
   /** Click Handler : changes status of a plan to complete and syncs
    * that in between the redux store and the openSRP api
    */
-  public async confirmClickHandler(event: any) {
+  public async confirmClickHandler() {
     const { plan, serviceClass, fetchPlansActionCreator } = this.props;
     const planToconfirm: Plan = { ...(plan as Plan), plan_status: PlanStatus.COMPLETE };
     const service = new serviceClass(`${OPENSRP_PLANS}`);
@@ -82,7 +82,7 @@ export class PlanCompletion extends React.Component<
           // update the plan with updated status
           return service
             .update(thePlan)
-            .then(response => {
+            .then(() => {
               // todo - extract Plan from PlanPayload to save to state
               fetchPlansActionCreator([planToconfirm]);
               // redirect to Focus Investigations page

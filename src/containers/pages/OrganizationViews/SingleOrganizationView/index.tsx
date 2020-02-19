@@ -41,6 +41,7 @@ import {
   ORGANIZATIONS_LIST_URL,
   SINGLE_ORGANIZATION_URL,
 } from '../../../../constants';
+import { displayError } from '../../../../helpers/errors';
 import { growl, RouteParams } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
 import organizationsReducer, {
@@ -127,19 +128,19 @@ const SingleOrganizationView = (props: SingleOrgViewPropsType) => {
           serviceClass,
           fetchPractitionerRolesAction,
           fetchPractitionersAction
-        );
+        ).catch(err => displayError(err));
       })
-      .catch((err: Error) => growl(REMOVING_PRACTITIONER_FAILED, { type: toast.TYPE.ERROR }));
+      .catch((_: Error) => growl(REMOVING_PRACTITIONER_FAILED, { type: toast.TYPE.ERROR }));
   };
 
   useEffect(() => {
-    loadOrganization(orgId, serviceClass, fetchOrganizationsAction);
+    loadOrganization(orgId, serviceClass, fetchOrganizationsAction).catch(err => displayError(err));
     loadOrgPractitioners(
       orgId,
       serviceClass,
       fetchPractitionerRolesAction,
       fetchPractitionersAction
-    );
+    ).catch(err => displayError(err));
   }, []);
 
   if (!organization) {
@@ -155,8 +156,8 @@ const SingleOrganizationView = (props: SingleOrgViewPropsType) => {
   };
   const breadcrumbProps: BreadCrumbProps = {
     currentPage: {
-      label: organization!.name,
-      url: `${SINGLE_ORGANIZATION_URL}/${organization!.identifier}`,
+      label: organization.name,
+      url: `${SINGLE_ORGANIZATION_URL}/${organization.identifier}`,
     },
     pages: [],
   };
@@ -178,7 +179,9 @@ const SingleOrganizationView = (props: SingleOrgViewPropsType) => {
           // tslint:disable-next-line: jsx-no-lambda
           onClick={e => {
             e.preventDefault();
-            unassignPractitioner(practitioner, organization, serviceClass);
+            unassignPractitioner(practitioner, organization, serviceClass).catch(err =>
+              displayError(err)
+            );
           }}
         >
           {REMOVE}
@@ -193,13 +196,13 @@ const SingleOrganizationView = (props: SingleOrgViewPropsType) => {
   // LinkAsButton Props
   const linkAsButtonProps = {
     text: `${EDIT} ${ORGANIZATION_LABEL}`,
-    to: `${EDIT_ORGANIZATION_URL}/${organization!.identifier}`,
+    to: `${EDIT_ORGANIZATION_URL}/${organization.identifier}`,
   };
 
   const assignPractitionersButton = {
     classNameProp: 'focus-investigation btn btn-primary float-right mt-5 mr-3',
     text: `${ASSIGN} ${PRACTITIONER}`,
-    to: `${ASSIGN_PRACTITIONERS_URL}/${organization!.identifier}`,
+    to: `${ASSIGN_PRACTITIONERS_URL}/${organization.identifier}`,
   };
 
   return (

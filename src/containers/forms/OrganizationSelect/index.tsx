@@ -6,6 +6,7 @@ import Select from 'react-select';
 import { Store } from 'redux';
 import { SELECT } from '../../../configs/lang';
 import { OPENSRP_ORGANIZATION_ENDPOINT } from '../../../constants';
+import { displayError } from '../../../helpers/errors';
 import { OpenSRPService } from '../../../services/opensrp';
 import store from '../../../store';
 import assignmentReducer, {
@@ -84,12 +85,12 @@ const OrganizationSelect = (props: OrganizationSelectProps) => {
       .list()
       .then((response: Organization[]) => store.dispatch(fetchOrganizationsAction(response)))
       .catch((err: Error) => {
-        /** TODO - find something to do with error */
+        displayError(err);
       });
   };
 
   useEffect(() => {
-    loadOrganizations(serviceClass);
+    loadOrganizations(serviceClass).catch(err => displayError(err));
   }, []);
 
   /** Get select options from OpenSRP as a promise */

@@ -114,8 +114,6 @@ describe('src/containers/pages/CreateEditOrganization', () => {
       </Router>
     );
 
-    await new Promise(resolve => setImmediate(resolve));
-
     expect(serviceMock).toHaveBeenCalled();
     expect(serviceMock).toHaveBeenCalledWith(OPENSRP_ORGANIZATION_ENDPOINT);
   });
@@ -210,8 +208,6 @@ it('calls selectors with the correct arguments', async () => {
       user: { email: '', gravatar: '', name: '', username: '' },
     },
   };
-
-  await new Promise(resolve => setImmediate(resolve));
 
   expect(organizationByIdMock.mock.calls[0]).toEqual([
     state,

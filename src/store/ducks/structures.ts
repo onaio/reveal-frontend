@@ -118,7 +118,7 @@ export const setStructures = (structuresList: Structure[] = []): SetStructuresAc
           if (typeof structure.geojson.geometry === 'string') {
             structure.geojson.geometry = JSON.parse(structure.geojson.geometry);
           }
-          return structure as Structure;
+          return structure;
         }
       ),
       structure => structure.id
@@ -162,8 +162,6 @@ export function getStructuresGeoJsonData(
   let results = values((state as any)[reducerName].structuresById).map(e => e.geojson);
   if (!includeNullGeoms) {
     results = results.filter(e => e && e.geometry);
-  } else {
-    results = results;
   }
   return results;
 }

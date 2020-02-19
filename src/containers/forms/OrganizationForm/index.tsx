@@ -84,7 +84,7 @@ const OrganizationForm = (props: OrganizationFormProps) => {
         initialValues={initialValues}
         validationSchema={OrgSchema}
         // tslint:disable-next-line: jsx-no-lambda
-        onSubmit={(values, { setSubmitting, setFieldValue }) => {
+        onSubmit={(values, { setSubmitting }) => {
           if (editMode) {
             const organizationService = new OpenSRPService(
               `${OPENSRP_ORGANIZATION_ENDPOINT}/${values.identifier}`

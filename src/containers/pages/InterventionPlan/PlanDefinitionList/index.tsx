@@ -20,6 +20,7 @@ import {
 } from '../../../../configs/lang';
 import { PlanDefinition, planStatusDisplay } from '../../../../configs/settings';
 import { HOME_URL, OPENSRP_PLANS, PLAN_LIST_URL, PLAN_UPDATE_URL } from '../../../../constants';
+import { displayError } from '../../../../helpers/errors';
 import { OpenSRPService } from '../../../../services/opensrp';
 import planDefinitionReducer, {
   fetchPlanDefinitions,
@@ -66,14 +67,14 @@ const PlanDefinitionList = (props: PlanListProps) => {
       const planObjects = await apiService.list();
       fetchPlans(planObjects);
     } catch (e) {
-      // do something with the error?
+      displayError(e);
     } finally {
       setLoading(false);
     }
   }
 
   useEffect(() => {
-    loadData();
+    loadData().catch(err => displayError(err));
   }, []);
 
   if (loading === true) {
