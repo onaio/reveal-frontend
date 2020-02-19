@@ -1,5 +1,8 @@
+import { Registry } from '@onaio/redux-reducer-registry';
+import intersect from 'fast_array_intersect';
 import { get, keyBy, keys, pickBy, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
+import { createSelector } from 'reselect';
 import SeamlessImmutable from 'seamless-immutable';
 import uuidv4 from 'uuid/v4';
 import {
@@ -515,3 +518,157 @@ export function getPlanRecordsIdArray(
 export function getPlanRecordById(state: Partial<Store>, id: string): PlanRecord | null {
   return get((state as any)[reducerName].planRecordsById, id) || null;
 }
+
+/** RESELECT USAGE STARTS HERE */
+
+/** This interface represents the structure of plan filter options/params */
+export interface PlanFilters {
+  interventionType?: InterventionType /** The plan intervention type */;
+  jurisdictionIds?: string[] /** an array of jurisdiction ids */;
+  parentJurisdictionId?: string /** jurisdiction parent id */;
+  reason?: FIReasonType /** plan FI reason */;
+  statusList?: string[] /** array of plan statuses */;
+}
+
+/** plansArrayBaseSelector select an array of all plans
+ * @param state - the redux store
+ */
+export const plansArrayBaseSelector = (state: Registry): Plan[] =>
+  values((state as any)[reducerName].plansById);
+
+/** getInterventionType
+ * Gets interventionType from PlanFilters
+ * @param state - the redux store
+ * @param props - the plan filters object
+ */
+export const getInterventionType = (_: Registry, props: PlanFilters) => props.interventionType;
+
+/** getJurisdictionIds
+ * Gets jurisdictionIds from PlanFilters
+ * @param state - the redux store
+ * @param props - the plan filters object
+ */
+export const getJurisdictionIds = (_: Registry, props: PlanFilters) => props.jurisdictionIds;
+
+/** getParentJurisdictionId
+ * Gets parentJurisdictionId from PlanFilters
+ * @param state - the redux store
+ * @param props - the plan filters object
+ */
+export const getParentJurisdictionId = (_: Registry, props: PlanFilters) =>
+  props.parentJurisdictionId;
+
+/** getStatusList
+ * Gets statusList from PlanFilters
+ * @param state - the redux store
+ * @param props - the plan filters object
+ */
+export const getStatusList = (_: Registry, props: PlanFilters) => props.statusList;
+
+/** getReason
+ * Gets reason from PlanFilters
+ * @param state - the redux store
+ * @param props - the plan filters object
+ */
+export const getReason = (_: Registry, props: PlanFilters) => props.reason;
+
+/** getPlansArrayByInterventionType
+ * Gets an array of Plan objects filtered by interventionType
+ * @param {Registry} state - the redux store
+ * @param {PlanFilters} props - the plan filters object
+ */
+export const getPlansArrayByInterventionType = createSelector(
+  [plansArrayBaseSelector, getInterventionType],
+  (plans, interventionType) =>
+    interventionType
+      ? plans.filter(plan => plan.plan_intervention_type === interventionType)
+      : plans
+);
+
+/** getPlansArrayByJurisdictionIds
+ * Gets an array of Plan objects filtered by jurisdictionIds
+ * @param {Registry} state - the redux store
+ * @param {PlanFilters} props - the plan filters object
+ */
+export const getPlansArrayByJurisdictionIds = createSelector(
+  [plansArrayBaseSelector, getJurisdictionIds],
+  (plans, jurisdictionIds) =>
+    jurisdictionIds
+      ? plans.filter(plan =>
+          jurisdictionIds.length ? jurisdictionIds.includes(plan.jurisdiction_id) : true
+        )
+      : plans
+);
+
+/** getPlansArrayByStatus
+ * Gets an array of Plan objects filtered by plan status
+ * @param {Registry} state - the redux store
+ * @param {PlanFilters} props - the plan filters object
+ */
+export const getPlansArrayByStatus = createSelector(
+  [plansArrayBaseSelector, getStatusList],
+  (plans, statusList) =>
+    statusList
+      ? plans.filter(plan => (statusList.length ? statusList.includes(plan.plan_status) : true))
+      : plans
+);
+
+/** getPlansArrayByReason
+ * Gets an array of Plan objects filtered by FI plan reason
+ * @param {Registry} state - the redux store
+ * @param {PlanFilters} props - the plan filters object
+ */
+export const getPlansArrayByReason = createSelector(
+  [plansArrayBaseSelector, getReason],
+  (plans, reason) => (reason ? plans.filter(plan => plan.plan_fi_reason === reason) : plans)
+);
+
+/** getPlansArrayByParentJurisdictionId
+ * Gets an array of Plan objects filtered by plan jurisdiction parent_id
+ * @param {Registry} state - the redux store
+ * @param {PlanFilters} props - the plan filters object
+ */
+export const getPlansArrayByParentJurisdictionId = createSelector(
+  [plansArrayBaseSelector, getParentJurisdictionId],
+  (plans, parentJurisdictionId) =>
+    plans.filter(
+      plan =>
+        (parentJurisdictionId && !plan.jurisdiction_path ? false : true) &&
+        (parentJurisdictionId && plan.jurisdiction_path
+          ? plan.jurisdiction_path.includes(parentJurisdictionId)
+          : true)
+    )
+);
+
+/** makePlansArraySelector
+ * Returns a selector that gets an array of Plan objects filtered by one or all
+ * of the following:
+ *    - interventionType
+ *    - jurisdictionIds
+ *    - plan status
+ *    - FI plan reason
+ *    - plan jurisdiction parent_id
+ *
+ * These filter params are all optional and are supplied via the prop parameter.
+ *
+ * This selector is meant to be a memoized replacement for getPlanRecordsArray.
+ *
+ * To use this selector, do something like:
+ *    const plansArraySelector = makePlansArraySelector();
+ *
+ * @param {Registry} state - the redux store
+ * @param {PlanFilters} props - the plan filters object
+ */
+export const makePlansArraySelector = () => {
+  return createSelector(
+    [
+      getPlansArrayByInterventionType,
+      getPlansArrayByJurisdictionIds,
+      getPlansArrayByStatus,
+      getPlansArrayByReason,
+      getPlansArrayByParentJurisdictionId,
+    ],
+    (plans, plans2, plans3, plans4, plans5) =>
+      intersect([plans, plans2, plans3, plans4, plans5], JSON.stringify)
+  );
+};

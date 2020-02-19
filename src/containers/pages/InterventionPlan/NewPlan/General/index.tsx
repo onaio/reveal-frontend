@@ -12,7 +12,7 @@ import PlanForm, { defaultInitialValues } from '../../../../forms/PlanForm';
 /** Simple component that loads the new plan form and allows you to create a new plan */
 const NewPlan = () => {
   const [formValues, setFormValues] = useState(defaultInitialValues);
-  const formValuesHandler = (curr: any, next: any) => {
+  const formValuesHandler = (_: any, next: any) => {
     setFormValues(next.values);
   };
 
