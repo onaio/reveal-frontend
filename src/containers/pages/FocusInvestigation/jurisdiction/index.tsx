@@ -1,7 +1,8 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset from '@onaio/superset-connector';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { RouteComponentProps } from 'react-router';
+import Loading from '../../../../components/page/Loading';
 import { SUPERSET_PLANS_SLICE } from '../../../../configs/env';
 import { displayError } from '../../../../helpers/errors';
 import supersetFetch from '../../../../services/superset';
@@ -49,6 +50,8 @@ export const defaultActiveFIProps: FIJurisdictionProps = {
  * lowest level jurisdiction
  */
 const FIJurisdiction = (props: FIJurisdictionProps & RouteComponentProps<RouteParams>) => {
+  const [loading, setLoading] = useState(true);
+
   const { caseTriggeredPlans, fetchPlansActionCreator, routinePlans, supersetService } = props;
 
   const jurisdictionId =
@@ -62,9 +65,20 @@ const FIJurisdiction = (props: FIJurisdictionProps & RouteComponentProps<RoutePa
 
   useEffect(() => {
     supersetService(SUPERSET_PLANS_SLICE, supersetParams)
-      .then((result: Plan[]) => fetchPlansActionCreator(result))
+      .then((result: Plan[]) => {
+        if (result) {
+          fetchPlansActionCreator(result);
+        } else {
+          displayError(new Error('An error occurred'));
+        }
+      })
+      .finally(() => setLoading(false))
       .catch(err => displayError(err));
   }, []);
+
+  if (loading === true) {
+    return <Loading />;
+  }
 
   console.log('routinePlans >>>> ', routinePlans);
   console.log('caseTriggeredPlans >>>> ', caseTriggeredPlans);
