@@ -1,10 +1,8 @@
-import reducerRegistry, { Registry } from '@onaio/redux-reducer-registry';
+import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset from '@onaio/superset-connector';
 import React, { useEffect } from 'react';
 import { RouteComponentProps } from 'react-router';
 import { SUPERSET_PLANS_SLICE } from '../../../../configs/env';
-import { FIReasons } from '../../../../configs/settings';
-import { ObjectList } from '../../../../helpers/cbv';
 import { displayError } from '../../../../helpers/errors';
 import supersetFetch from '../../../../services/superset';
 import plansReducer, {
@@ -13,11 +11,10 @@ import plansReducer, {
   InterventionType,
   makePlansArraySelector,
   Plan,
-  PlanFilters,
-  PlanStatus,
   reducerName as plansReducerName,
 } from '../../../../store/ducks/plans';
 import reducer, { Message, reducerName, sendMessage } from '../../../../store/tests/ducks/messages';
+import JurisdictionList from './JurisdictionList';
 
 reducerRegistry.register(reducerName, reducer);
 reducerRegistry.register(plansReducerName, plansReducer);
@@ -90,37 +87,6 @@ const objectListOptions = {
   listPropName: 'routinePlans',
   selector: getPlansArray,
 };
-
-class JurisdictionList<ObjectType, ActionType, SelectorType, PropsType> extends ObjectList<
-  ObjectType,
-  ActionType,
-  SelectorType,
-  PropsType
-> {
-  public getMapStateToProps() {
-    return (state: Registry, ownProps: any) => {
-      const jurisdictionId =
-        '59ad4fa0-1945-4b50-a6e3-a056a7cdceb2' || ownProps.match.params.jurisdictionId;
-
-      const caseTriggeredFilters: PlanFilters = {
-        interventionType: InterventionType.FI,
-        jurisdictionIds: [jurisdictionId],
-        reason: FIReasons[1],
-        statusList: [PlanStatus.ACTIVE, PlanStatus.COMPLETE],
-      };
-
-      const routineFilters: PlanFilters = {
-        ...caseTriggeredFilters,
-        reason: FIReasons[0],
-      };
-
-      return {
-        caseTriggeredPlans: getPlansArray(state, caseTriggeredFilters),
-        routinePlans: getPlansArray(state, routineFilters),
-      };
-    };
-  }
-}
 
 const cbv = new JurisdictionList<
   Plan,
