@@ -16,7 +16,7 @@ import {
 } from 'reactstrap';
 import { format } from 'util';
 import DatePickerWrapper from '../../../components/DatePickerWrapper';
-import FormikEffect, { FormikOnchangeFunc } from '../../../components/FormikEffect';
+import FormikEffect from '../../../components/FormikEffect';
 import {
   DATE_FORMAT,
   DEFAULT_PLAN_DURATION_DAYS,
@@ -943,7 +943,7 @@ const defaultProps: PlanFormProps = {
   cascadingSelect: true,
   disabledActivityFields: [],
   disabledFields: [],
-  formHandler: (curr, next) => void 0,
+  formHandler: (_, __) => void 0,
   initialValues: defaultInitialValues,
   jurisdictionLabel: FOCUS_AREA_HEADER,
   redirectAfterAction: PLAN_LIST_URL,
