@@ -20,11 +20,11 @@ import reducer, {
   getPlansById,
   getPlansIdArray,
   InterventionType,
+  makePlansArraySelector,
   Plan,
   PlanRecord,
   PlanRecordResponse,
   plansArrayBaseSelector,
-  plansArraySelector,
   PlanStatus,
   reducerName,
   removePlansAction,
@@ -58,6 +58,9 @@ describe('reducers/plans', () => {
 
   it('should fetch Plans', () => {
     store.dispatch(fetchPlans(fixtures.plans));
+
+    const plansArraySelector = makePlansArraySelector();
+
     const allPlans = keyBy(fixtures.plans, (plan: Plan) => plan.id);
     const fiPlans = pickBy(allPlans, (e: Plan) => e.plan_intervention_type === InterventionType.FI);
     const irsPlans = pickBy(

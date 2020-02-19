@@ -640,8 +640,9 @@ export const getPlansArrayByParentJurisdictionId = createSelector(
     )
 );
 
-/** plansArraySelector
- * Gets an array of Plan objects filtered by one or all of the following:
+/** makePlansArraySelector
+ * Returns a selector that gets an array of Plan objects filtered by one or all
+ * of the following:
  *    - interventionType
  *    - jurisdictionIds
  *    - plan status
@@ -652,17 +653,22 @@ export const getPlansArrayByParentJurisdictionId = createSelector(
  *
  * This selector is meant to be a memoized replacement for getPlanRecordsArray.
  *
+ * To use this selector, do something like:
+ *    const plansArraySelector = makePlansArraySelector();
+ *
  * @param {Registry} state - the redux store
  * @param {PlanFilters} props - the plan filters object
  */
-export const plansArraySelector = createSelector(
-  [
-    getPlansArrayByInterventionType,
-    getPlansArrayByJurisdictionIds,
-    getPlansArrayByStatus,
-    getPlansArrayByReason,
-    getPlansArrayByParentJurisdictionId,
-  ],
-  (plans, plans2, plans3, plans4, plans5) =>
-    intersect([plans, plans2, plans3, plans4, plans5], JSON.stringify)
-);
+export const makePlansArraySelector = () => {
+  return createSelector(
+    [
+      getPlansArrayByInterventionType,
+      getPlansArrayByJurisdictionIds,
+      getPlansArrayByStatus,
+      getPlansArrayByReason,
+      getPlansArrayByParentJurisdictionId,
+    ],
+    (plans, plans2, plans3, plans4, plans5) =>
+      intersect([plans, plans2, plans3, plans4, plans5], JSON.stringify)
+  );
+};
