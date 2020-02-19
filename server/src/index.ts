@@ -89,7 +89,7 @@ const handleError = (err: HttpException, res: express.Response) => {
   });
 };
 
-const BUILD_PATH = EXPRESS_REACT_BUILD_PATH || path.resolve(path.resolve(), '../build');
+const BUILD_PATH = EXPRESS_REACT_BUILD_PATH;
 const filePath = path.resolve(BUILD_PATH, 'index.html');
 
 // need to add docstrings and type defs
