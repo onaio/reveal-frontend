@@ -1,0 +1,220 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`/components/AssignTeamPopover renders and passes props correctly 1`] = `
+<Popover
+  isOpen={true}
+  onClick={[Function]}
+  placement="right"
+  placementPrefix="bs-popover"
+  style={
+    Object {
+      "minWidth": "16rem",
+    }
+  }
+  target="plan-assignment-outpost-number-one"
+  toggle={[Function]}
+  trigger="click"
+>
+  <TooltipPopoverWrapper
+    autohide={false}
+    className="popover show"
+    delay={
+      Object {
+        "hide": 250,
+        "show": 0,
+      }
+    }
+    hideArrow={false}
+    innerClassName="popover-inner"
+    isOpen={true}
+    onClick={[Function]}
+    placement="right"
+    placementPrefix="bs-popover"
+    style={
+      Object {
+        "minWidth": "16rem",
+      }
+    }
+    target="plan-assignment-outpost-number-one"
+    toggle={[Function]}
+    trigger="click"
+  >
+    <PopperContent
+      boundariesElement="scrollParent"
+      className="popover show"
+      container="body"
+      fallbackPlacement="flip"
+      flip={true}
+      hideArrow={false}
+      isOpen={true}
+      modifiers={Object {}}
+      offset={0}
+      placement="right"
+      placementPrefix="bs-popover"
+      target="plan-assignment-outpost-number-one"
+    >
+      <Portal
+        containerInfo={
+          <body>
+            <div
+              id="plan-assignment-outpost-number-one"
+            />
+            <div>
+              <div
+                class="popover show bs-popover-right"
+                style="position: absolute; pointer-events: none; opacity: 0;"
+                x-placement="right"
+              >
+                <div
+                  aria-hidden="true"
+                  class="popover-inner"
+                  role="tooltip"
+                  style="min-width: 16rem;"
+                >
+                  <h3
+                    class="popover-header"
+                  >
+                    Select Teams to Assign
+                  </h3>
+                  <div
+                    class="popover-body"
+                  >
+                    <p>
+                      No teams loaded...
+                    </p>
+                  </div>
+                </div>
+                <span
+                  class="arrow"
+                />
+              </div>
+            </div>
+          </body>
+        }
+      >
+        <div>
+          <Popper
+            className="popover show bs-popover-right"
+            component="div"
+            eventsEnabled={true}
+            modifiers={
+              Object {
+                "flip": Object {
+                  "behavior": "flip",
+                  "enabled": true,
+                },
+                "offset": Object {
+                  "offset": 0,
+                },
+                "preventOverflow": Object {
+                  "boundariesElement": "scrollParent",
+                },
+                "update": Object {
+                  "enabled": true,
+                  "fn": [Function],
+                  "order": 950,
+                },
+              }
+            }
+            placement="right"
+            positionFixed={false}
+            x-placement="right"
+          >
+            <div
+              className="popover show bs-popover-right"
+              style={
+                Object {
+                  "opacity": 0,
+                  "pointerEvents": "none",
+                  "position": "absolute",
+                }
+              }
+              x-placement="right"
+            >
+              <div
+                aria-hidden={true}
+                className="popover-inner"
+                onClick={[Function]}
+                onKeyDown={[Function]}
+                onMouseLeave={[Function]}
+                onMouseOver={[Function]}
+                role="tooltip"
+                style={
+                  Object {
+                    "minWidth": "16rem",
+                  }
+                }
+              >
+                <PopoverHeader
+                  tag="h3"
+                >
+                  <h3
+                    className="popover-header"
+                  >
+                    Select Teams to Assign
+                  </h3>
+                </PopoverHeader>
+                <PopoverBody
+                  tag="div"
+                >
+                  <div
+                    className="popover-body"
+                  >
+                    <p>
+                      No teams loaded...
+                    </p>
+                  </div>
+                </PopoverBody>
+              </div>
+              <Arrow
+                className="arrow"
+              >
+                <span
+                  className="arrow"
+                  style={Object {}}
+                />
+              </Arrow>
+            </div>
+          </Popper>
+        </div>
+      </Portal>
+    </PopperContent>
+  </TooltipPopoverWrapper>
+</Popover>
+`;
+
+exports[`/components/AssignTeamPopover renders correctly when organizationsById is not null: button clear props 1`] = `
+Object {
+  "children": "Clear",
+  "color": "default",
+  "onClick": [MockFunction],
+  "outline": true,
+  "size": "xs",
+  "tag": "button",
+}
+`;
+
+exports[`/components/AssignTeamPopover renders correctly when organizationsById is not null: button save props 1`] = `
+Object {
+  "children": "Save",
+  "color": "primary",
+  "onClick": [MockFunction],
+  "size": "xs",
+  "tag": "button",
+}
+`;
+
+exports[`/components/AssignTeamPopover renders correctly when organizationsById is not null: organization select props 1`] = `
+Object {
+  "assignments": Array [],
+  "fetchAssignmentsAction": [Function],
+  "fetchOrganizationsAction": [Function],
+  "jurisdictionId": "outpost-number-one",
+  "name": "plan-assignment-form-outpost-number-one",
+  "organizations": Array [],
+  "planId": "alpha",
+  "resetPlanAssignmentsAction": [Function],
+  "serviceClass": [Function],
+  "value": Array [],
+}
+`;
