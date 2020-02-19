@@ -9,8 +9,8 @@ import supersetFetch from '../../../../services/superset';
 import plansReducer, {
   fetchPlans,
   FetchPlansAction,
-  getPlansArray,
   InterventionType,
+  makePlansArraySelector,
   Plan,
   reducerName as plansReducerName,
 } from '../../../../store/ducks/plans';
@@ -67,7 +67,6 @@ const FIJurisdiction = (props: FIJurisdictionProps & RouteComponentProps<RoutePa
   }, []);
 
   // console.log('routinePlans >>>> ', routinePlans);
-
   return (
     <div>
       xxx
@@ -78,6 +77,8 @@ const FIJurisdiction = (props: FIJurisdictionProps & RouteComponentProps<RoutePa
 
 FIJurisdiction.defaultProps = defaultActiveFIProps;
 
+const getPlansArray = makePlansArraySelector();
+
 /** ObjectList options */
 const objectListOptions = {
   actionCreator: fetchPlans,
@@ -86,7 +87,7 @@ const objectListOptions = {
   selector: getPlansArray,
 };
 
-const cbv = new ObjectList<Plan, FetchPlansAction, typeof getPlansArray>(
+const cbv = new ObjectList<Plan, FetchPlansAction, typeof getPlansArray, FIJurisdictionProps>(
   FIJurisdiction,
   objectListOptions
 );
