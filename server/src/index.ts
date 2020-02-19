@@ -2,6 +2,7 @@ import { getOpenSRPUserInfo } from '@onaio/gatekeeper';
 import ClientOAuth2 from 'client-oauth2';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
+import cors from 'cors';
 import express from 'express';
 import session from 'express-session';
 import helmet from 'helmet';
@@ -35,12 +36,12 @@ const opensrpAuth = new ClientOAuth2({
   scopes: ['read', 'write'],
   state: EXPRESS_OPENSRP_OAUTH_STATE,
 });
-
 const loginURL = EXPRESS_SESSION_LOGIN_URL || '/';
 const sessionName = EXPRESS_SESSION_NAME || 'session';
 
 const app = express();
 
+app.use(cors());
 app.use(compression()); // Compress all routes
 app.use(helmet()); // protect against well known vulnerabilities
 
