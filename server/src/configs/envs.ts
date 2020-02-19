@@ -1,4 +1,5 @@
 import dotenv from 'dotenv';
+import path from 'path';
 
 // initialize configuration
 dotenv.config();
@@ -58,5 +59,5 @@ export const EXPRESS_SESSION_PATH = process.env.EXPRESS_SESSION_PATH || '/';
 export type EXPRESS_SESSION_PATH = typeof EXPRESS_SESSION_PATH;
 
 export const EXPRESS_REACT_BUILD_PATH =
-  process.env.EXPRESS_REACT_BUILD_PATH || '/home/peter/Desktop/onaio/reveal-frontend/build/';
+  process.env.EXPRESS_REACT_BUILD_PATH || path.resolve(path.resolve(), '../build');
 export type EXPRESS_REACT_BUILD_PATH = typeof EXPRESS_REACT_BUILD_PATH;
