@@ -34,7 +34,7 @@ interface ObjectListProps<TAction, TObject> {
  *
  * Every method in this class can and should be overridden to cater to custom needs.
  */
-export class ObjectList<ObjectType, ActionType, SelectorType, RootState = Registry> {
+export class ObjectList<ObjectType, ActionType, SelectorType, PropsType, RootState = Registry> {
   public Component: React.ElementType;
   public options: ObjectListOptions<ActionType, SelectorType>;
 
@@ -69,13 +69,13 @@ export class ObjectList<ObjectType, ActionType, SelectorType, RootState = Regist
    * You may override this for more custom needs.
    */
   public getMapStateToProps() {
-    return (state: RootState) => {
+    return (state: RootState, ownProps: PropsType) => {
       // we have to use a Type Guard to check if this.options.selector is a
       // callable/function otherwise Typescript will infer its type as "unknown"
       // TODO: look into whether there is a better fix for this
       if (typeof this.options.selector === 'function') {
         return {
-          [this.options.listPropName]: this.options.selector(state),
+          [this.options.listPropName]: this.options.selector(state, ownProps),
         };
       }
       // if the TypeGuard fails lets return an empty array
