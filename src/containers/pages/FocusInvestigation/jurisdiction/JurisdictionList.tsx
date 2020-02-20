@@ -25,21 +25,34 @@ export default class JurisdictionList<
       const jurisdictionId =
         '59ad4fa0-1945-4b50-a6e3-a056a7cdceb2' || ownProps.match.params.jurisdictionId;
 
-      const caseTriggeredFilters: PlanFilters = {
+      const reactiveFilters: PlanFilters = {
         interventionType: InterventionType.FI,
         jurisdictionIds: [jurisdictionId],
         reason: FIReasons[1],
-        statusList: [PlanStatus.ACTIVE, PlanStatus.COMPLETE],
       };
 
       const routineFilters: PlanFilters = {
-        ...caseTriggeredFilters,
+        ...reactiveFilters,
         reason: FIReasons[0],
       };
 
       return {
-        caseTriggeredPlans: getPlansArray(state, caseTriggeredFilters),
-        routinePlans: getPlansArray(state, routineFilters),
+        completeReactivePlans: getPlansArray(state, {
+          ...reactiveFilters,
+          statusList: [PlanStatus.COMPLETE],
+        }),
+        completeRoutinePlans: getPlansArray(state, {
+          ...routineFilters,
+          statusList: [PlanStatus.COMPLETE],
+        }),
+        currentReactivePlans: getPlansArray(state, {
+          ...reactiveFilters,
+          statusList: [PlanStatus.ACTIVE],
+        }),
+        currentRoutinePlans: getPlansArray(state, {
+          ...routineFilters,
+          statusList: [PlanStatus.ACTIVE],
+        }),
       };
     };
   }

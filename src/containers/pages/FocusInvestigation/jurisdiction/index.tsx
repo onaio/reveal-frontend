@@ -69,21 +69,25 @@ export interface RouteParams {
 
 /** Interface for FIJurisdiction component props */
 export interface FIJurisdictionProps {
-  caseTriggeredPlans: Plan[] | null;
+  completeReactivePlans: Plan[] | null;
+  completeRoutinePlans: Plan[] | null;
+  currentReactivePlans: Plan[] | null;
+  currentRoutinePlans: Plan[] | null;
   fetchPlansActionCreator: typeof fetchPlans;
   loadMessages: typeof sendMessage;
   messages: Message[];
-  routinePlans: Plan[] | null;
   supersetService: typeof supersetFetch;
 }
 
 /** default props for ActiveFI component */
 export const defaultActiveFIProps: FIJurisdictionProps = {
-  caseTriggeredPlans: null,
+  completeReactivePlans: null,
+  completeRoutinePlans: null,
+  currentReactivePlans: null,
+  currentRoutinePlans: null,
   fetchPlansActionCreator: fetchPlans,
   loadMessages: sendMessage,
   messages: [] as Message[],
-  routinePlans: null,
   supersetService: supersetFetch,
 };
 
@@ -94,7 +98,12 @@ export const defaultActiveFIProps: FIJurisdictionProps = {
 const FIJurisdiction = (props: FIJurisdictionProps & RouteComponentProps<RouteParams>) => {
   const [loading, setLoading] = useState(true);
 
-  const { caseTriggeredPlans, fetchPlansActionCreator, routinePlans, supersetService } = props;
+  const {
+    completeReactivePlans,
+    fetchPlansActionCreator,
+    completeRoutinePlans,
+    supersetService,
+  } = props;
 
   const jurisdictionId =
     '59ad4fa0-1945-4b50-a6e3-a056a7cdceb2' || props.match.params.jurisdictionId;
@@ -135,7 +144,7 @@ const FIJurisdiction = (props: FIJurisdictionProps & RouteComponentProps<RoutePa
       <div>Breadcrumbs</div>
       <h2 className="mb-3 mt-5 page-title">{pageTitle}</h2>
       <hr />
-      {[caseTriggeredPlans, routinePlans].forEach((plansArray: Plan[] | null, i) => {
+      {[completeReactivePlans, completeRoutinePlans].forEach((plansArray: Plan[] | null, i) => {
         const locationColumns: Column[] = getLocationColumns(locationHierarchy, true);
         if (plansArray && plansArray.length) {
           const thePlans = plansArray.map((item: Plan) => {
@@ -354,7 +363,7 @@ const getPlansArray = makePlansArraySelector();
 const objectListOptions = {
   actionCreator: fetchPlans,
   dispatchPropName: 'fetchPlansActionCreator',
-  listPropName: 'routinePlans',
+  listPropName: 'completeRoutinePlans',
   selector: getPlansArray,
 };
 
