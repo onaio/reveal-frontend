@@ -109,7 +109,7 @@ export default function reducer(
           ...state,
           planDefinitionsById: {
             ...state.planDefinitionsById,
-            [action.planObj.identifier as string]: action.planObj,
+            ...keyBy(action.planObj, 'identifier'),
           },
         });
       }

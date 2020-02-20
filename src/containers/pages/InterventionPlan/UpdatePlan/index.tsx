@@ -43,6 +43,7 @@ const UpdatePlan = (props: RouteComponentProps<RouteParams> & UpdatePlanProps) =
   if (!planIdentifier) {
     return null; /** we should make this into a better error page */
   }
+  const apiService = new service(OPENSRP_PLANS);
 
   /** async function to load the data */
   async function loadData() {
@@ -65,7 +66,6 @@ const UpdatePlan = (props: RouteComponentProps<RouteParams> & UpdatePlanProps) =
     return <Loading />;
   }
 
-  const apiService = new service(OPENSRP_PLANS);
   const pageTitle: string = plan ? `${UPDATE_PLAN}: ${plan.title}` : UPDATE_PLAN;
 
   const breadcrumbProps = {
