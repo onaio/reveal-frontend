@@ -2,7 +2,6 @@ import { getOpenSRPUserInfo } from '@onaio/gatekeeper';
 import ClientOAuth2 from 'client-oauth2';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
-import cors from 'cors';
 import express from 'express';
 import session from 'express-session';
 import helmet from 'helmet';
@@ -41,7 +40,6 @@ const sessionName = EXPRESS_SESSION_NAME || 'session';
 
 const app = express();
 
-app.use(cors());
 app.use(compression()); // Compress all routes
 app.use(helmet()); // protect against well known vulnerabilities
 
@@ -80,7 +78,7 @@ class HttpException extends Error {
     this.message = message;
   }
 }
-
+/* tslint:disable:no-unused-variable */
 const handleError = (err: HttpException, res: express.Response) => {
   const { statusCode, message } = err;
   res.status(statusCode).json({
@@ -182,6 +180,7 @@ app.use(
     handleError(err, res);
   }
 );
+/* tslint:disable:no-unused-variable */
 
 const PORT = EXPRESS_PORT || 3000;
 app.listen(PORT, () => {
