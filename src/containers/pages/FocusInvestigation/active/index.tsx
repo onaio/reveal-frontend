@@ -206,7 +206,13 @@ class ActiveFocusInvestigation extends React.Component<
             const thePlans = plansArray.map((item: Plan) => {
               let thisItem = extractPlan(item);
               // transform values of this properties if they are null
-              const propertiesToTransform = ['village', 'canton', 'district', 'province'];
+              const propertiesToTransform = [
+                'village',
+                'canton',
+                'district',
+                'province',
+                'focusArea',
+              ];
               thisItem = transformValues(thisItem, propertiesToTransform);
               return thisItem;
             });
@@ -269,7 +275,7 @@ class ActiveFocusInvestigation extends React.Component<
                     Cell: (cell: CellInfo) => {
                       return (
                         <div>
-                          {cell.original.focusArea.trim() && (
+                          {cell.value.trim() && (
                             <Link to={`${FI_SINGLE_MAP_URL}/${cell.original.id}`}>
                               {cell.value}
                             </Link>
