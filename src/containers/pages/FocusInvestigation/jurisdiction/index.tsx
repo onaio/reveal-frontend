@@ -358,7 +358,7 @@ const objectListOptions = {
   selector: getPlansArray,
 };
 
-const cbv = new JurisdictionList<
+const ConnectedFIJurisdiction = new JurisdictionList<
   Plan,
   FetchPlansAction,
   typeof getPlansArray,
@@ -368,4 +368,4 @@ const cbv = new JurisdictionList<
 /** This represents a fully redux-connected component that fetches data from
  * an API.
  */
-export default cbv.render();
+export default ConnectedFIJurisdiction.render();
