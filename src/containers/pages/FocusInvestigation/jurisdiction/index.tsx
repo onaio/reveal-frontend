@@ -56,10 +56,8 @@ import plansReducer, {
   Plan,
   reducerName as plansReducerName,
 } from '../../../../store/ducks/plans';
-import reducer, { Message, reducerName, sendMessage } from '../../../../store/tests/ducks/messages';
 import JurisdictionList from './JurisdictionList';
 
-reducerRegistry.register(reducerName, reducer);
 reducerRegistry.register(plansReducerName, plansReducer);
 
 /** Interface for props that come from the URL */
@@ -74,8 +72,6 @@ export interface FIJurisdictionProps {
   currentReactivePlans: Plan[] | null;
   currentRoutinePlans: Plan[] | null;
   fetchPlansActionCreator: typeof fetchPlans;
-  loadMessages: typeof sendMessage;
-  messages: Message[];
   supersetService: typeof supersetFetch;
 }
 
@@ -86,8 +82,6 @@ export const defaultActiveFIProps: FIJurisdictionProps = {
   currentReactivePlans: null,
   currentRoutinePlans: null,
   fetchPlansActionCreator: fetchPlans,
-  loadMessages: sendMessage,
-  messages: [] as Message[],
   supersetService: supersetFetch,
 };
 
