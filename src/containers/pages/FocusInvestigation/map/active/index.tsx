@@ -51,6 +51,7 @@ import {
   POLYGON,
   ROUTINE,
 } from '../../../../../constants';
+import { displayError } from '../../../../../helpers/errors';
 import { popupHandler } from '../../../../../helpers/handlers';
 import { getGoalReport } from '../../../../../helpers/indicators';
 import ProgressBar from '../../../../../helpers/ProgressBar';
@@ -161,7 +162,7 @@ class SingleActiveFIMap extends React.Component<
     super(props);
   }
 
-  public async componentDidMount() {
+  public componentDidMount() {
     if (!this.props.plan) {
       /**
        * Fetch plans again because on reloading the page, the state does not persist
@@ -171,15 +172,15 @@ class SingleActiveFIMap extends React.Component<
       const supersetParams = superset.getFormData(2000, [
         { comparator: InterventionType.FI, operator: '==', subject: 'plan_intervention_type' },
       ]);
-      await supersetService(SUPERSET_PLANS_SLICE, supersetParams).then((result: Plan[]) =>
-        fetchPlansActionCreator(result)
-      );
+      supersetService(SUPERSET_PLANS_SLICE, supersetParams)
+        .then((result: Plan[]) => fetchPlansActionCreator(result))
+        .catch(error => displayError(error));
     } else {
       /**
        * Plans are available in state since the plans were fetched by the
        * the previous view
        */
-      this.fetchData();
+      this.fetchData().catch(error => displayError(error));
     }
   }
 
@@ -194,9 +195,12 @@ class SingleActiveFIMap extends React.Component<
   }
 
   public componentDidUpdate(prevProps: any) {
-    if (!prevProps.plan && this.props.plan) {
+    if (
+      (!prevProps.plan && this.props.plan) ||
+      (prevProps.plan && this.props.plan && prevProps.plan.plan_id !== this.props.plan.plan_id)
+    ) {
       /** Page was reloaded, fetch data again */
-      this.fetchData();
+      this.fetchData().catch(error => displayError(error));
     }
   }
 
@@ -402,9 +406,9 @@ class SingleActiveFIMap extends React.Component<
       const jurisdictionsParams = superset.getFormData(SUPERSET_MAX_RECORDS, [
         { comparator: plan.jurisdiction_id, operator: '==', subject: 'jurisdiction_id' },
       ]);
-      await supersetService(SUPERSET_JURISDICTIONS_SLICE, jurisdictionsParams).then(
-        (result: Jurisdiction[]) => fetchJurisdictionsActionCreator(result)
-      );
+      await supersetService(SUPERSET_JURISDICTIONS_SLICE, jurisdictionsParams)
+        .then((result: Jurisdiction[]) => fetchJurisdictionsActionCreator(result))
+        .catch(error => displayError(error));
       /** define superset params for filtering by plan_id */
       const supersetParams = superset.getFormData(SUPERSET_MAX_RECORDS, [
         { comparator: plan.plan_id, operator: '==', subject: 'plan_id' },
