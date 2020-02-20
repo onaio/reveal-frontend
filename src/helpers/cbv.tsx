@@ -32,7 +32,7 @@ interface ObjectListProps<TAction, TObject> {
  * having to worry about boilerplate code that deal with fetching objects and
  * storing them in a Redux store.
  *
- * Every method in this class can and should be overridden to cater to custom needs.
+ * Every method in this class can and should be overwritten to cater to custom needs.
  */
 export class ObjectList<ObjectType, ActionType, SelectorType, PropsType, RootState = Registry> {
   public Component: React.ElementType;
