@@ -46,7 +46,7 @@ import plansReducer, {
   Plan,
   reducerName as plansReducerName,
 } from '../../../../store/ducks/plans';
-import JurisdictionList from './JurisdictionList';
+import JurisdictionList from './helpers/JurisdictionList';
 
 reducerRegistry.register(plansReducerName, plansReducer);
 

@@ -1,12 +1,12 @@
 import { Registry } from '@onaio/redux-reducer-registry';
-import { FIReasons } from '../../../../configs/settings';
-import { ObjectList } from '../../../../helpers/cbv';
+import { FIReasons } from '../../../../../configs/settings';
+import { ObjectList } from '../../../../../helpers/cbv';
 import {
   InterventionType,
   makePlansArraySelector,
   PlanFilters,
   PlanStatus,
-} from '../../../../store/ducks/plans';
+} from '../../../../../store/ducks/plans';
 
 /** Custom implementation of ObjectList where we override the getMapStateToProps method */
 export default class JurisdictionList<
