@@ -51,6 +51,7 @@ import {
   POLYGON,
   ROUTINE,
 } from '../../../../../constants';
+import { JURISDICTION_ID, PLAN_ID, PLAN_INTERVENTION_TYPE } from '../../../../../constants';
 import { displayError } from '../../../../../helpers/errors';
 import { popupHandler } from '../../../../../helpers/handlers';
 import { getGoalReport } from '../../../../../helpers/indicators';
@@ -170,7 +171,7 @@ class SingleActiveFIMap extends React.Component<
        */
       const { supersetService, fetchPlansActionCreator } = this.props;
       const supersetParams = superset.getFormData(2000, [
-        { comparator: InterventionType.FI, operator: '==', subject: 'plan_intervention_type' },
+        { comparator: InterventionType.FI, operator: '==', subject: PLAN_INTERVENTION_TYPE },
       ]);
       supersetService(SUPERSET_PLANS_SLICE, supersetParams)
         .then((result: Plan[]) => fetchPlansActionCreator(result))
@@ -404,19 +405,19 @@ class SingleActiveFIMap extends React.Component<
     if (plan && plan.plan_id) {
       /** define superset filter params for jurisdictions */
       const jurisdictionsParams = superset.getFormData(SUPERSET_MAX_RECORDS, [
-        { comparator: plan.jurisdiction_id, operator: '==', subject: 'jurisdiction_id' },
+        { comparator: plan.jurisdiction_id, operator: '==', subject: JURISDICTION_ID },
       ]);
       await supersetService(SUPERSET_JURISDICTIONS_SLICE, jurisdictionsParams)
         .then((result: Jurisdiction[]) => fetchJurisdictionsActionCreator(result))
         .catch(error => displayError(error));
       /** define superset params for filtering by plan_id */
       const supersetParams = superset.getFormData(SUPERSET_MAX_RECORDS, [
-        { comparator: plan.plan_id, operator: '==', subject: 'plan_id' },
+        { comparator: plan.plan_id, operator: '==', subject: PLAN_ID },
       ]);
       /** define superset params for goals */
       const goalsParams = superset.getFormData(
         SUPERSET_MAX_RECORDS,
-        [{ comparator: plan.plan_id, operator: '==', subject: 'plan_id' }],
+        [{ comparator: plan.plan_id, operator: '==', subject: PLAN_ID }],
         { action_prefix: true }
       );
       /** Implement Ad hoc Queries since jurisdictions have no plan_id */

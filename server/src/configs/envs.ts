@@ -47,7 +47,8 @@ export type EXPRESS_OPENSRP_CLIENT_ID = typeof EXPRESS_OPENSRP_CLIENT_ID;
 export const EXPRESS_OPENSRP_CLIENT_SECRET = process.env.EXPRESS_OPENSRP_CLIENT_SECRET;
 export type EXPRESS_OPENSRP_CLIENT_SECRET = typeof EXPRESS_OPENSRP_CLIENT_SECRET;
 
-export const EXPRESS_PORT = parseInt(process.env.EXPRESS_PORT, 10);
+export const EXPRESS_PORT = parseInt(process.env.EXPRESS_PORT || '3000', 10);
+export type EXPRESS_PORT = typeof EXPRESS_PORT;
 
 export const EXPRESS_SESSION_NAME = process.env.EXPRESS_SESSION_NAME || 'reveal-session';
 export type EXPRESS_SESSION_NAME = typeof EXPRESS_SESSION_NAME;
