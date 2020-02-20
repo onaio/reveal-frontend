@@ -30,4 +30,5 @@
 
 14. If the connected-private-route finds that the user is logged in then they let the user redirect to the route that they initially wished to view.
 
-A flow diagram representing this flow can be seen ![here](./flowDiagram.jpg).
+A flow diagram representing this flow can be seen below :
+![here](./flowDiagram.jpg).
