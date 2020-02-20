@@ -1,50 +1,40 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import DrillDownTable from '@onaio/drill-down-table';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset from '@onaio/superset-connector';
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { RouteComponentProps } from 'react-router';
-import { Link } from 'react-router-dom';
-import { CellInfo, Column } from 'react-table';
+import { Column } from 'react-table';
 import 'react-table/react-table.css';
-import { Col, Row, Table } from 'reactstrap';
-import DrillDownTableLinkedCell from '../../../../components/DrillDownTableLinkedCell';
-import LinkAsButton from '../../../../components/LinkAsButton';
-import NewRecordBadge from '../../../../components/NewRecordBadge';
 import Loading from '../../../../components/page/Loading';
 import NullDataTable from '../../../../components/Table/NullDataTable';
+import TableHeader from '../../../../components/Table/TableHeaders';
 import { SUPERSET_PLANS_SLICE } from '../../../../configs/env';
 import {
-  ADD_FOCUS_INVESTIGATION,
-  CASE_CLASSIFICATION_HEADER,
-  CASE_NOTIF_DATE_HEADER,
-  DEFINITIONS,
-  END_DATE,
-  FI_STATUS,
-  FOCUS_AREA_HEADER,
-  NAME,
-  NEXT,
-  PREVIOUS,
-  REACTIVE,
-  ROUTINE_TITLE,
-  START_DATE,
-  STATUS_HEADER,
+  COMPLETE_FOCUS_INVESTIGATION,
+  CURRENT_FOCUS_INVESTIGATION,
 } from '../../../../configs/lang';
 import {
-  FIClassifications,
+  completeReactivePlansColumn,
+  completeRoutinePlansColumn,
+  currentReactivePlansColumns,
+  currentRoutinePlansColumn,
+  dateCompletedColumn,
+  emptyCompleteReactivePlans,
+  emptyCompleteRoutinePlans,
+  emptyCurrentReactivePlans,
+  emptyCurrentRoutinePlans,
   FIReasons,
   locationHierarchy,
-  planStatusDisplay,
+  statusColumn,
 } from '../../../../configs/settings';
-import { FI_SINGLE_MAP_URL, FI_SINGLE_URL } from '../../../../constants';
 import { displayError } from '../../../../helpers/errors';
-import { renderClassificationRow } from '../../../../helpers/indicators';
 import {
   defaultTableProps,
   extractPlan,
   FlexObject,
   getLocationColumns,
+  jsxColumns,
   transformValues,
 } from '../../../../helpers/utils';
 import supersetFetch from '../../../../services/superset';
@@ -94,8 +84,10 @@ const FIJurisdiction = (props: FIJurisdictionProps & RouteComponentProps<RoutePa
 
   const {
     completeReactivePlans,
-    fetchPlansActionCreator,
     completeRoutinePlans,
+    currentReactivePlans,
+    currentRoutinePlans,
+    fetchPlansActionCreator,
     supersetService,
   } = props;
 
@@ -127,8 +119,166 @@ const FIJurisdiction = (props: FIJurisdictionProps & RouteComponentProps<RoutePa
 
   /** UNKNOWN */
   const pageTitle = 'pageTitle';
-  const routineReactivePlans: FlexObject[] = [];
   /** END */
+
+  /** currentRoutineReactivePlans array that holds current routine and reactive tables  */
+  const currentRoutineReactivePlans: FlexObject[] = [];
+  /** completeRoutineReactivePlans array that holds complete routine and reactive tables  */
+  const completeRoutineReactivePlans: FlexObject[] = [];
+  /** Check if either currentReactivePlans or currentRoutinePlans length is greater than  zero
+   * to build current section tables i.e (routine & reactive) with data
+   */
+  if (
+    (currentReactivePlans && currentReactivePlans.length > 0) ||
+    (currentRoutinePlans && currentRoutinePlans.length > 0)
+  ) {
+    [currentReactivePlans, currentRoutinePlans].forEach(plansArray => {
+      if (plansArray && plansArray.length) {
+        const thePlans = plansArray.map((item: Plan) => {
+          let thisItem = extractPlan(item);
+          // transform values of this properties if they are null
+          const columnsToTransform = ['village', 'canton', 'district', 'province'];
+          thisItem = transformValues(thisItem, columnsToTransform);
+          return thisItem;
+        });
+        const locationColumns: Column[] = getLocationColumns(locationHierarchy, true);
+        /**  Handle Columns Unique for Routine and Reactive Tables */
+        const columnsBasedOnReason = [];
+        /** If plan_fi_reason is Case Triggered then add currentReactivePlansColumns from settings */
+        if (plansArray.every(d => d.plan_fi_reason === FIReasons[1])) {
+          columnsBasedOnReason.push(...currentReactivePlansColumns);
+        } else {
+          /** Else build routine columns i.e (focusarea, locationcolumns, action and currentRoutinePlansColumn) */
+          const focusAreaColumn = jsxColumns('focusarea');
+          columnsBasedOnReason.push(
+            ...locationColumns,
+            ...focusAreaColumn,
+            ...currentRoutinePlansColumn,
+            ...jsxColumns('action')
+          );
+        }
+        /** Handle all Columns i.e columns unique for reactive and routine (once handled above) plus columns common on both (name)  */
+        const allColumns: Column[] = [
+          ...jsxColumns('name'),
+          ...statusColumn,
+          ...columnsBasedOnReason,
+        ];
+        /** Contains columns and data that will build the table */
+        const tableProps = {
+          ...defaultTableProps,
+          columns: allColumns,
+          data: thePlans,
+        };
+        /** Push current tables and respective headers with data to be rendered */
+        currentRoutineReactivePlans.push(
+          <div key={thePlans[0].id}>
+            <TableHeader plansArray={plansArray} />
+            <DrillDownTable {...tableProps} />
+          </div>
+        );
+      }
+    });
+  }
+  /** if current reactive plans array is empty build table with no data  */
+  if (!currentReactivePlans || !currentReactivePlans.length) {
+    const tableProps = {
+      ...defaultTableProps,
+      columns: emptyCurrentReactivePlans,
+    };
+    currentRoutineReactivePlans.push(
+      <NullDataTable
+        key={`${'current'}-${FIReasons[1]}`}
+        tableProps={tableProps}
+        reasonType={FIReasons[1]}
+      />
+    );
+  }
+  /** if current routine plans array is empty build table with no data  */
+  if (!currentRoutinePlans || !currentRoutinePlans.length) {
+    const tableProps = {
+      ...defaultTableProps,
+      columns: emptyCurrentRoutinePlans,
+    };
+    currentRoutineReactivePlans.push(
+      <NullDataTable
+        key={`${'current'}-${FIReasons[0]}`}
+        tableProps={tableProps}
+        reasonType={FIReasons[0]}
+      />
+    );
+  }
+
+  /** Check if either completeReactivePlans or completeRoutinePlans length is greater than  zero
+   * to build complete section tables i.e (routine & reactive) with data
+   */
+  if (
+    (completeReactivePlans && completeReactivePlans.length > 0) ||
+    (completeRoutinePlans && completeRoutinePlans.length > 0)
+  ) {
+    [completeReactivePlans, completeRoutinePlans].forEach(plansArray => {
+      if (plansArray && plansArray.length) {
+        const thePlans = plansArray.map((item: Plan) => {
+          let thisItem = extractPlan(item);
+          // transform values of this properties if they are null
+          const columnsToTransform = ['village', 'canton', 'district', 'province'];
+          thisItem = transformValues(thisItem, columnsToTransform);
+          return thisItem;
+        });
+        /**  Handle Columns Unique for Routine and Reactive Tables */
+        const columnsBasedOnReason = [];
+        plansArray.every(d => d.plan_fi_reason === FIReasons[1])
+          ? columnsBasedOnReason.push(...completeReactivePlansColumn)
+          : columnsBasedOnReason.push(...completeRoutinePlansColumn);
+        /** Handle all Columns i.e columns unique for reactive and routine (once handled above) plus columns common on both (name)  */
+        const allColumns: Column[] = [
+          ...jsxColumns('name'),
+          ...dateCompletedColumn,
+          ...columnsBasedOnReason,
+        ];
+        /** Contains columns and data that will build the table */
+        const tableProps = {
+          ...defaultTableProps,
+          columns: allColumns,
+          data: thePlans,
+        };
+        /** Push complete tables and respective headers with data to be rendered */
+        completeRoutineReactivePlans.push(
+          <div key={thePlans[0].id}>
+            <TableHeader plansArray={plansArray} />
+            <DrillDownTable {...tableProps} />
+          </div>
+        );
+      }
+    });
+  }
+  /** if complete reactive plans array is empty build table with no data  */
+  if (!completeReactivePlans || !completeReactivePlans.length) {
+    const tableProps = {
+      ...defaultTableProps,
+      columns: emptyCompleteReactivePlans,
+    };
+    completeRoutineReactivePlans.push(
+      <NullDataTable
+        key={`${'complete'}-${FIReasons[1]}`}
+        tableProps={tableProps}
+        reasonType={FIReasons[1]}
+      />
+    );
+  }
+  /** if complete routine plans array is empty build table with no data  */
+  if (!completeRoutinePlans || !completeRoutinePlans.length) {
+    const tableProps = {
+      ...defaultTableProps,
+      columns: emptyCompleteRoutinePlans,
+    };
+    completeRoutineReactivePlans.push(
+      <NullDataTable
+        key={`${'complete'}-${FIReasons[0]}`}
+        tableProps={tableProps}
+        reasonType={FIReasons[0]}
+      />
+    );
+  }
 
   return (
     <div>
@@ -138,213 +288,11 @@ const FIJurisdiction = (props: FIJurisdictionProps & RouteComponentProps<RoutePa
       <div>Breadcrumbs</div>
       <h2 className="mb-3 mt-5 page-title">{pageTitle}</h2>
       <hr />
-      {[completeReactivePlans, completeRoutinePlans].forEach((plansArray: Plan[] | null, i) => {
-        const locationColumns: Column[] = getLocationColumns(locationHierarchy, true);
-        if (plansArray && plansArray.length) {
-          const thePlans = plansArray.map((item: Plan) => {
-            let thisItem = extractPlan(item);
-            // transform values of this properties if they are null
-            const propertiesToTransform = ['village', 'canton', 'district', 'province'];
-            thisItem = transformValues(thisItem, propertiesToTransform);
-            return thisItem;
-          });
-          /**  Handle Columns Unique for Routine and Reactive Tables */
-          const columnsBasedOnReason = [];
-          plansArray.every((singlePlan: Plan) => singlePlan.plan_fi_reason === FIReasons[1])
-            ? columnsBasedOnReason.push(
-                {
-                  Header: CASE_NOTIF_DATE_HEADER,
-                  columns: [
-                    {
-                      Cell: (cell: CellInfo) => {
-                        return <div>{cell.value}</div>;
-                      },
-                      Header: '',
-                      accessor: 'caseNotificationDate',
-                      minWidth: 90,
-                    },
-                  ],
-                },
-                {
-                  Header: CASE_CLASSIFICATION_HEADER,
-                  columns: [
-                    {
-                      Header: '',
-                      accessor: 'caseClassification',
-                    },
-                  ],
-                }
-              )
-            : columnsBasedOnReason.push(
-                {
-                  Header: START_DATE,
-                  columns: [
-                    {
-                      Cell: (cell: CellInfo) => {
-                        return <div>{cell.value}</div>;
-                      },
-                      Header: '',
-                      accessor: 'plan_effective_period_start',
-                      minWidth: 80,
-                    },
-                  ],
-                },
-                {
-                  Header: END_DATE,
-                  columns: [
-                    {
-                      Header: '',
-                      accessor: 'plan_effective_period_end',
-                    },
-                  ],
-                }
-              );
-          const allColumns: Column[] = [
-            {
-              Header: NAME,
-              columns: [
-                {
-                  Cell: (cell: CellInfo) => {
-                    return (
-                      <div>
-                        {cell.original.focusArea.trim() && (
-                          <Link to={`${FI_SINGLE_MAP_URL}/${cell.original.id}`}>{cell.value}</Link>
-                        )}
-                        &nbsp;
-                        <NewRecordBadge recordDate={cell.original.plan_date} />
-                      </div>
-                    );
-                  },
-                  Header: '',
-                  accessor: 'plan_title',
-                  minWidth: 180,
-                },
-              ],
-            },
-            {
-              Header: FI_STATUS,
-              columns: [
-                {
-                  Header: '',
-                  accessor: (d: Plan) => planStatusDisplay[d.plan_status] || d.plan_status,
-                  id: 'plan_status',
-                  minWidth: 80,
-                },
-              ],
-            },
-            ...locationColumns,
-            {
-              Header: FOCUS_AREA_HEADER,
-              columns: [
-                {
-                  Cell: (cell: CellInfo) => {
-                    return (
-                      <div>
-                        {cell.original.focusArea.trim() && cell.value}
-                        &nbsp;&nbsp;
-                        {cell.original.focusArea.trim() && (
-                          <Link to={`${FI_SINGLE_URL}/${cell.original.id}`}>
-                            <FontAwesomeIcon icon={['fas', 'external-link-square-alt']} />
-                          </Link>
-                        )}
-                      </div>
-                    );
-                  },
-                  Header: '',
-                  accessor: 'focusArea',
-                  minWidth: 180,
-                },
-              ],
-            },
-            {
-              Header: STATUS_HEADER,
-              columns: [
-                {
-                  Header: '',
-                  accessor: 'status',
-                  maxWidth: 60,
-                },
-              ],
-            },
-            ...columnsBasedOnReason,
-          ];
-          const tableProps = {
-            CellComponent: DrillDownTableLinkedCell,
-            columns: allColumns,
-            data: thePlans,
-            identifierField: 'id',
-            linkerField: 'id',
-            minRows: 0,
-            nextText: NEXT,
-            parentIdentifierField: 'parent',
-            previousText: PREVIOUS,
-            rootParentId: null,
-            showPageSizeOptions: false,
-            showPagination: thePlans.length > 20,
-            useDrillDownTrProps: false,
-          };
-          const TableHeaderWithOptionalForm = plansArray.every(
-            d => d.plan_fi_reason === FIReasons[1]
-          ) ? (
-            <h3 className="mb-3 mt-5 page-title">{REACTIVE}</h3>
-          ) : (
-            <div className="routine-heading">
-              <Row>
-                <Col xs="6">
-                  <h3 className="mb-3 mt-5 page-title">{ROUTINE_TITLE}</h3>
-                </Col>
-                <Col xs="6">
-                  <LinkAsButton text={ADD_FOCUS_INVESTIGATION} />
-                </Col>
-              </Row>
-            </div>
-          );
-          routineReactivePlans.push(
-            <div key={thePlans[0].id}>
-              {TableHeaderWithOptionalForm}
-              <DrillDownTable {...tableProps} />
-            </div>
-          );
-        } else {
-          const header = i ? ROUTINE_TITLE : REACTIVE;
-          const emptyPlansColumns = [
-            {
-              Header: NAME,
-              columns: [{ minWidth: 180 }],
-            },
-            ...locationColumns,
-            {
-              Header: FOCUS_AREA_HEADER,
-              columns: [{ minWidth: 180 }],
-            },
-            {
-              Header: STATUS_HEADER,
-              columns: [{ maxWidth: 60 }],
-            },
-
-            {
-              Header: CASE_NOTIF_DATE_HEADER,
-              columns: [{ maxWidth: 90 }],
-            },
-            {
-              Header: CASE_CLASSIFICATION_HEADER,
-              columns: [{}],
-            },
-          ];
-          const tableProps = {
-            ...defaultTableProps,
-            columns: emptyPlansColumns,
-          };
-          routineReactivePlans.push(
-            <NullDataTable tableProps={tableProps} reasonType={header} key={`${'current'}`} />
-          );
-        }
-      })}
-      {routineReactivePlans}
-      <h5 className="mt-5">{DEFINITIONS}</h5>
-      <Table className="definitions">
-        <tbody>{FIClassifications.map(el => renderClassificationRow(el))}</tbody>
-      </Table>
+      <h4 className="mb-4">{CURRENT_FOCUS_INVESTIGATION}</h4>
+      {currentRoutineReactivePlans}
+      <h4 className="mb-4 complete">{COMPLETE_FOCUS_INVESTIGATION}</h4>
+      <hr />
+      {completeRoutineReactivePlans}
     </div>
   );
 };
