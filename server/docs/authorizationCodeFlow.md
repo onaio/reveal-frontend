@@ -26,8 +26,8 @@
 
 12. The component checks the reducer session store for authentication status
 
-13. If the user details are not found in the store then it directs the user to the **n0 6** .
+13. If the user details are not found in the store then it directs the user to the **no. 6** .
 
 14. If the connected-private-route finds that the user is logged in then they let the user redirect to the route that they initially wished to view.
 
-A flow diagram representing this flow can be seen ![here].(flowDiagram.jpg).
+A flow diagram representing this flow can be seen ![here](./flowDiagram.jpg).
