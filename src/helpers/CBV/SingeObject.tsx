@@ -1,7 +1,7 @@
 import { Registry } from '@onaio/redux-reducer-registry';
 import React from 'react';
 import { ActionCreator } from 'redux';
-import { Base, CBVOptions } from './Base';
+import { Base } from './Base';
 
 /** interface for the props of the connected component created by SingleObject  */
 interface SingleObjectProps<TAction, TObject> {
@@ -34,11 +34,6 @@ export class SingleObject<
   PropsType,
   RootState = Registry
 > extends Base<ActionType, SelectorType> {
-  /** constructor */
-  constructor(component: React.ElementType, options: CBVOptions<ActionType, SelectorType>) {
-    super(component, options);
-  }
-
   /**
    * This function returns a Higher Order component whose job is to wrap around
    * the target component, and pass on props to it.  The props in this case are:
