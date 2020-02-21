@@ -15,6 +15,7 @@ import {
   symbolLayerConfig,
 } from '../../configs/settings';
 import { APP, MAIN_PLAN, MAP_ID, STRUCTURE_LAYER } from '../../constants';
+import { displayError } from '../../helpers/errors';
 import { EventData } from '../../helpers/mapbox';
 import { ConfigStore, FeatureCollection, FlexObject } from '../../helpers/utils';
 import store from '../../store';
@@ -190,7 +191,7 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
           initMapWithoutFC: false,
         },
         () => {
-          this.getLocations(this.props.geoData);
+          this.getLocations(this.props.geoData).catch(error => displayError(error));
         }
       );
     }
@@ -226,7 +227,7 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
           locations: false,
         },
         () => {
-          this.getLocations(nextProps.geoData);
+          this.getLocations(nextProps.geoData).catch(error => displayError(error));
         }
       );
     }

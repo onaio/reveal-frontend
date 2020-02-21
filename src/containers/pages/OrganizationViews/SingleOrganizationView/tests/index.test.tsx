@@ -130,8 +130,6 @@ describe('src/containers/pages/OrganizationViews', () => {
       </Provider>
     );
 
-    await new Promise(resolve => setImmediate(resolve));
-
     const passedProps = wrapper.find(SingleOrganizationView).props() as any;
     expect(passedProps.organization).toEqual(fixtures.organization3);
     expect(passedProps.practitioners).toEqual(fixtures.org3Practitioners);
@@ -164,7 +162,8 @@ describe('src/containers/pages/OrganizationViews', () => {
         </Router>
       </Provider>
     );
-    await new Promise(resolve => setImmediate(resolve));
+
+    await new Promise<any>(resolve => setImmediate(resolve));
     // simulate removal action
     wrapper.update();
     const practitioner4RemoveLink = wrapper.findWhere(node => node.key() === 'healer');
@@ -174,8 +173,7 @@ describe('src/containers/pages/OrganizationViews', () => {
 
     // now search & expect a delete request from fetch
     const expectedRequest = [
-      'https://reveal-stage.smartregister.org/opensrp/rest/practitionerRole/deleteByPractitioner\
-?organization=d23f7350-d406-11e9-bb65-2a2ae2dbcce4&practitioner=healer',
+      'https://reveal-stage.smartregister.org/opensrp/rest/practitionerRole/deleteByPractitioner?organization=d23f7350-d406-11e9-bb65-2a2ae2dbcce4&practitioner=healer',
       {
         headers: {
           accept: 'application/json',

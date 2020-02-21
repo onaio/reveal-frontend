@@ -1,5 +1,6 @@
 import { getOpenSRPUserInfo } from '@onaio/gatekeeper';
 import { authenticateUser } from '@onaio/session-reducer';
+import { EmptyObject } from '../../../configs/types';
 import store from '../../../store';
 import { getDefaultHeaders, getFilterParams, getURLParams, OpenSRPService } from '../index';
 import { createPlan, plansListResponse } from './fixtures/plans';
@@ -17,7 +18,7 @@ describe('services/OpenSRP', () => {
 
   it('getDefaultHeaders works', async () => {
     const { authenticated, user, extraData } = getOpenSRPUserInfo(OpenSRPAPIResponse);
-    await store.dispatch(authenticateUser(authenticated, user, extraData));
+    store.dispatch(authenticateUser(authenticated, user, extraData));
     expect(getDefaultHeaders()).toEqual({
       accept: 'application/json',
       authorization: 'Bearer hunter2',
@@ -95,7 +96,7 @@ describe('services/OpenSRP', () => {
     fetch.mockResponseOnce(JSON.stringify({}));
     const service = new OpenSRPService('practitioners');
     const result = await service.delete({ practitioner: 'someone' });
-    expect(result).toEqual({});
+    expect(result as EmptyObject).toEqual({});
     expect(fetch.mock.calls).toEqual([
       [
         'https://test.smartregister.org/opensrp/rest/practitioners?practitioner=someone',
@@ -179,7 +180,7 @@ describe('services/OpenSRP', () => {
     fetch.mockResponseOnce(JSON.stringify({}), { status: 201 });
     const planService = new OpenSRPService('plans');
     const result = await planService.create(createPlan);
-    expect(result).toEqual({});
+    expect(result as EmptyObject).toEqual({});
     expect(fetch.mock.calls).toEqual([
       [
         'https://test.smartregister.org/opensrp/rest/plans',
@@ -227,7 +228,7 @@ describe('services/OpenSRP', () => {
       status: 'retired',
     };
     const result = await planService.update(obj);
-    expect(result).toEqual({});
+    expect(result as EmptyObject).toEqual({});
     expect(fetch.mock.calls).toEqual([
       [
         'https://test.smartregister.org/opensrp/rest/plans',

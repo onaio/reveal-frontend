@@ -17,7 +17,9 @@ describe('src/containers/pages/OrganizationViews/helpers/servicehooks', () => {
       };
     });
 
-    loadOrganization('organizationId', mockClass, mockActionCreator);
+    loadOrganization('organizationId', mockClass, mockActionCreator).catch(e => {
+      throw e;
+    });
     await flushPromises();
 
     // calls the correct endpoint
@@ -45,7 +47,9 @@ describe('src/containers/pages/OrganizationViews/helpers/servicehooks', () => {
       mockClass,
       fetchPractitionerRolesMock,
       fetchPractitionersMock
-    );
+    ).catch(e => {
+      throw e;
+    });
     await flushPromises();
 
     // calls the correct endpoint
@@ -70,7 +74,9 @@ describe('src/containers/pages/OrganizationViews/helpers/servicehooks', () => {
       };
     });
 
-    loadOrganizations(mockClass, mockActionCreator);
+    loadOrganizations(mockClass, mockActionCreator).catch(e => {
+      throw e;
+    });
     await flushPromises();
 
     // calls the correct endpoint

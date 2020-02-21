@@ -88,7 +88,7 @@
   },
   "lint-staged": {
     "*.{ts,tsx}": [
-      "tslint --fix -c tslint.json",
+      "tslint --fix -c tslint.json --project ./tsconfig.json",
       "git add"
     ],
     "*.{js,jsx}": [
@@ -142,6 +142,7 @@
     "tslint": "^5.12.1",
     "tslint-config-prettier": "^1.18.0",
     "tslint-plugin-prettier": "^2.0.1",
-    "tslint-react": "^3.6.0"
+    "tslint-react": "^3.6.0",
+    "typestrict": "^1.0.2"
   }
 }

@@ -142,10 +142,6 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
     } = this.props;
 
     if (planById && planById.plan_id) {
-      /** define superset filter params for plans */
-      const plansParams = superset.getFormData(SUPERSET_MAX_RECORDS, [
-        { comparator: planById.plan_id, operator: '==', subject: 'plan_id' },
-      ]);
       /** define superset params for goals */
       const goalsParams = superset.getFormData(
         SUPERSET_MAX_RECORDS,

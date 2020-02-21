@@ -1,7 +1,6 @@
 /** Edit / New Practitioner View page:
  * displays form that's used to create a new practitioner or update openSRP api
  */
-import { capitalize } from 'lodash';
 import React, { useEffect } from 'react';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
@@ -18,6 +17,7 @@ import {
   HOME_URL,
   PRACTITIONERS_LIST_URL,
 } from '../../../../constants';
+import { displayError } from '../../../../helpers/errors';
 import { RouteParams } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
 import {
@@ -87,7 +87,9 @@ const CreateEditPractitionerView = (props: PropsTypes) => {
     if (editing) {
       let practitionerId = props.match.params.id;
       practitionerId = practitionerId ? practitionerId : '';
-      loadPractitioner(practitionerId, serviceClass, fetchPractitionersCreator);
+      loadPractitioner(practitionerId, serviceClass, fetchPractitionersCreator).catch(error =>
+        displayError(error)
+      );
     }
   }, []);
 
