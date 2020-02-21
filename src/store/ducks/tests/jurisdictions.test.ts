@@ -11,6 +11,7 @@ import reducer, {
   getJurisdictionsById,
   getJurisdictionsIdArray,
   Jurisdiction,
+  makeJurisdictionByIdSelector,
   reducerName,
   removeAllJurisdictionIdsAction,
   removeJurisdictionsAction,
@@ -32,6 +33,9 @@ describe('reducers/jurisdictions', () => {
     expect(getJurisdictionsIdArray(store.getState())).toEqual([]);
     expect(getJurisdictionsArray(store.getState())).toEqual([]);
     expect(getJurisdictionById(store.getState(), 'someId')).toEqual(null);
+
+    const jurisdictionByIdSelector = makeJurisdictionByIdSelector();
+    expect(jurisdictionByIdSelector(store.getState(), { jurisdictionId: 'someID' })).toBeNull();
   });
 
   it('should fetch jurisdictions', () => {
@@ -46,12 +50,23 @@ describe('reducers/jurisdictions', () => {
     expect(getJurisdictionById(store.getState(), '450fc15b-5bd2-468a-927a-49cb10d3bcac')).toEqual(
       fixtures.jurisdictions[0]
     );
+
+    const jurisdictionByIdSelector = makeJurisdictionByIdSelector();
+    expect(
+      jurisdictionByIdSelector(store.getState(), {
+        jurisdictionId: '450fc15b-5bd2-468a-927a-49cb10d3bcac',
+      })
+    ).toEqual(fixtures.jurisdictions[0]);
   });
 
   it('should save jurisdictions correctly', () => {
     store.dispatch(fetchJurisdictions([fixtures.jurisdiction3] as any));
     const jurisdiction3FromStore = getJurisdictionById(store.getState(), 'abcde');
     expect(jurisdiction3FromStore).not.toBeNull();
+
+    const jurisdictionByIdSelector = makeJurisdictionByIdSelector();
+    expect(jurisdictionByIdSelector(store.getState(), { jurisdictionId: 'abcde' })).not.toBeNull();
+
     if (jurisdiction3FromStore) {
       expect(jurisdiction3FromStore).toEqual({
         geojson: {
@@ -97,6 +112,8 @@ describe('reducers/jurisdictions', () => {
   });
 
   it('can remove jurisdictions from store', () => {
+    const jurisdictionByIdSelector = makeJurisdictionByIdSelector();
+
     store.dispatch(removeJurisdictionsAction);
     let jurisdictionsInStore = getJurisdictionsById(store.getState());
     expect(jurisdictionsInStore).toEqual({});
@@ -107,11 +124,15 @@ describe('reducers/jurisdictions', () => {
     expect(jurisdiction3FromStore).not.toBeNull();
     expect(jurisdictionsInStore).not.toEqual({});
 
+    expect(jurisdictionByIdSelector(store.getState(), { jurisdictionId: 'abcde' })).not.toBeNull();
+
     store.dispatch(removeJurisdictionsAction);
     jurisdiction3FromStore = getJurisdictionById(store.getState(), 'abcde');
     jurisdictionsInStore = getJurisdictionsById(store.getState());
     expect(jurisdiction3FromStore).toBeNull();
     expect(jurisdictionsInStore).toEqual({});
+
+    expect(jurisdictionByIdSelector(store.getState(), { jurisdictionId: 'abcde' })).toBeNull();
   });
 
   it('new jurisdictions not overwrite but added to existing', () => {
@@ -123,6 +144,9 @@ describe('reducers/jurisdictions', () => {
     store.dispatch(fetchJurisdictions([fixtures.jurisdictions] as any));
     const jurisdiction3FromStore = getJurisdictionById(store.getState(), 'abcde');
     expect(jurisdiction3FromStore).not.toBeNull();
+
+    const jurisdictionByIdSelector = makeJurisdictionByIdSelector();
+    expect(jurisdictionByIdSelector(store.getState(), { jurisdictionId: 'abcde' })).not.toBeNull();
   });
 
   it('can remove allJurisdictionsIds', () => {
