@@ -324,7 +324,7 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
     wrapper.unmount();
   });
 
-  it('it displays error if errors occur when fetching data', async () => {
+  it('handles errors correctly when fetching data', async () => {
     const supersetServiceMock: any = jest.fn(() => Promise.reject('error'));
     const displayErrorMock = jest.spyOn(helperErrors, 'displayError');
     store.dispatch(fetchGoals([fixtures.goal3 as goalDucks.Goal]));
