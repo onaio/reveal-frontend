@@ -46,6 +46,9 @@ import plansReducer, {
   Plan,
   reducerName as plansReducerName,
 } from '../../../../store/ducks/plans';
+import ConnectedJurisdictionMap, {
+  defaultProps as jurisdictionMapDefaultProps,
+} from '../../../JurisdictionMap';
 import JurisdictionList from './helpers/JurisdictionList';
 
 reducerRegistry.register(plansReducerName, plansReducer);
@@ -280,6 +283,11 @@ const FIJurisdiction = (props: FIJurisdictionProps & RouteComponentProps<RoutePa
     );
   }
 
+  const jurisdictionMapProps = {
+    ...jurisdictionMapDefaultProps,
+    jurisdictionId,
+  };
+
   return (
     <div>
       <Helmet>
@@ -287,6 +295,9 @@ const FIJurisdiction = (props: FIJurisdictionProps & RouteComponentProps<RoutePa
       </Helmet>
       <div>Breadcrumbs</div>
       <h2 className="mb-3 mt-5 page-title">{pageTitle}</h2>
+      <div>
+        <ConnectedJurisdictionMap {...jurisdictionMapProps} />
+      </div>
       <hr />
       <h4 className="mb-4">{CURRENT_FOCUS_INVESTIGATION}</h4>
       {currentRoutineReactivePlans}
