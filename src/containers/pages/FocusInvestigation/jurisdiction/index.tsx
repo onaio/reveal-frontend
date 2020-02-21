@@ -8,6 +8,9 @@ import { Column } from 'react-table';
 import 'react-table/react-table.css';
 import { Col, Row } from 'reactstrap';
 import { format } from 'util';
+import HeaderBreadcrumbs, {
+  BreadCrumbProps,
+} from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
 import NullDataTable from '../../../../components/Table/NullDataTable';
 import TableHeader from '../../../../components/Table/TableHeaders';
@@ -21,7 +24,11 @@ import {
   FI_STATUS,
   FIS_IN_JURISDICTION,
   FOCUS_AREA_INFO,
+  FOCUS_INVESTIGATIONS,
+  HOME,
   PROVINCE,
+  REACTIVE,
+  ROUTINE_TITLE,
 } from '../../../../configs/lang';
 import {
   completeReactivePlansColumn,
@@ -37,11 +44,13 @@ import {
   locationHierarchy,
   statusColumn,
 } from '../../../../configs/settings';
+import { FI_SINGLE_URL, FI_URL, HOME_URL } from '../../../../constants';
 import { displayError } from '../../../../helpers/errors';
 import {
   defaultTableProps,
   extractPlan,
   FlexObject,
+  getFilteredFIPlansURL,
   getLocationColumns,
   jsxColumns,
   transformValues,
@@ -108,7 +117,7 @@ const FIJurisdiction = (props: FIJurisdictionProps & RouteComponentProps<RoutePa
   const jurisdictionId =
     '59ad4fa0-1945-4b50-a6e3-a056a7cdceb2' || props.match.params.jurisdictionId;
 
-  let onePlan = null;
+  let onePlan: Plan | null = null;
   if (
     completeReactivePlans &&
     completeRoutinePlans &&
@@ -120,9 +129,6 @@ const FIJurisdiction = (props: FIJurisdictionProps & RouteComponentProps<RoutePa
       currentReactivePlans,
       currentRoutinePlans
     )[0];
-    if (onePlan) {
-      onePlan = extractPlan(onePlan);
-    }
   }
 
   // this gets FI plans for the current jurisdiction
@@ -158,10 +164,52 @@ const FIJurisdiction = (props: FIJurisdictionProps & RouteComponentProps<RoutePa
     return <Loading />;
   }
 
-  const pageTitle =
-    jurisdiction && jurisdiction.geojson
-      ? format(FIS_IN_JURISDICTION, jurisdiction.geojson.properties.jurisdiction_name)
-      : '';
+  const jurisdictionName =
+    jurisdiction && jurisdiction.geojson ? jurisdiction.geojson.properties.jurisdiction_name : '';
+
+  const pageTitle = jurisdictionName !== '' ? format(FIS_IN_JURISDICTION, jurisdictionName) : '';
+
+  const basePage = {
+    label: FOCUS_INVESTIGATIONS,
+    url: FI_URL,
+  };
+  const homePage = {
+    label: HOME,
+    url: HOME_URL,
+  };
+  const breadCrumbProps: BreadCrumbProps = {
+    currentPage: basePage,
+    pages: [homePage, basePage],
+  };
+  if (onePlan && jurisdiction) {
+    breadCrumbProps.currentPage = {
+      label: jurisdictionName,
+      url: `${FI_SINGLE_URL}/${jurisdictionId}`,
+    };
+    const namePaths =
+      onePlan.jurisdiction_name_path instanceof Array ? onePlan.jurisdiction_name_path : [];
+
+    namePaths.forEach((namePath, i) => {
+      if (onePlan) {
+        breadCrumbProps.pages.push({
+          label: namePath,
+          url: getFilteredFIPlansURL(onePlan.jurisdiction_path[i], onePlan.id),
+        });
+      }
+    });
+  }
+
+  /** theObject holds extracted plans from superset response */
+  let theObject = onePlan ? extractPlan(onePlan) : null;
+  const propertiesToTransform = [
+    'village',
+    'canton',
+    'district',
+    'province',
+    'jurisdiction_id',
+    'focusArea',
+  ];
+  theObject = transformValues(theObject, propertiesToTransform);
 
   /** currentRoutineReactivePlans array that holds current routine and reactive tables  */
   const currentRoutineReactivePlans: FlexObject[] = [];
@@ -229,9 +277,9 @@ const FIJurisdiction = (props: FIJurisdictionProps & RouteComponentProps<RoutePa
     };
     currentRoutineReactivePlans.push(
       <NullDataTable
-        key={`${'current'}-${FIReasons[1]}`}
+        key={`${'current'}-${REACTIVE}`}
         tableProps={tableProps}
-        reasonType={FIReasons[1]}
+        reasonType={REACTIVE}
       />
     );
   }
@@ -243,9 +291,9 @@ const FIJurisdiction = (props: FIJurisdictionProps & RouteComponentProps<RoutePa
     };
     currentRoutineReactivePlans.push(
       <NullDataTable
-        key={`${'current'}-${FIReasons[0]}`}
+        key={`${'current'}-${ROUTINE_TITLE}`}
         tableProps={tableProps}
-        reasonType={FIReasons[0]}
+        reasonType={ROUTINE_TITLE}
       />
     );
   }
@@ -301,9 +349,9 @@ const FIJurisdiction = (props: FIJurisdictionProps & RouteComponentProps<RoutePa
     };
     completeRoutineReactivePlans.push(
       <NullDataTable
-        key={`${'complete'}-${FIReasons[1]}`}
+        key={`${'complete'}-${REACTIVE}`}
         tableProps={tableProps}
-        reasonType={FIReasons[1]}
+        reasonType={REACTIVE}
       />
     );
   }
@@ -315,9 +363,9 @@ const FIJurisdiction = (props: FIJurisdictionProps & RouteComponentProps<RoutePa
     };
     completeRoutineReactivePlans.push(
       <NullDataTable
-        key={`${'complete'}-${FIReasons[0]}`}
+        key={`${'complete'}-${ROUTINE_TITLE}`}
         tableProps={tableProps}
-        reasonType={FIReasons[0]}
+        reasonType={ROUTINE_TITLE}
       />
     );
   }
@@ -327,26 +375,26 @@ const FIJurisdiction = (props: FIJurisdictionProps & RouteComponentProps<RoutePa
       <Helmet>
         <title>{pageTitle}</title>
       </Helmet>
-      <div>Breadcrumbs</div>
+      <HeaderBreadcrumbs {...breadCrumbProps} />
       <h2 className="page-title mt-4 mb-5">{pageTitle}</h2>
       <Row>
         <Col className="col-6">
           <h4 className="mb-4">{FOCUS_AREA_INFO}</h4>
           <ConnectedJurisdictionMap {...jurisdictionMapProps} />
         </Col>
-        {onePlan && (
+        {theObject && (
           <Col className="col-6">
             <dl className="row mt-3">
               <dt className="col-4">{PROVINCE}</dt>
-              <dd className="col-8">{onePlan.province}</dd>
+              <dd className="col-8">{theObject.province}</dd>
               <dt className="col-4">{DISTRICT}</dt>
-              <dd className="col-8">{onePlan.district}</dd>
+              <dd className="col-8">{theObject.district}</dd>
               <dt className="col-4">{CANTON}</dt>
-              <dd className="col-8">{onePlan.canton}</dd>
+              <dd className="col-8">{theObject.canton}</dd>
               <dt className="col-4">{FI_STATUS}</dt>
-              <dd className="col-8">{onePlan.status}</dd>
+              <dd className="col-8">{theObject.status}</dd>
               <dt className="col-4">{FI_REASON}</dt>
-              <dd className="col-8">{onePlan.reason}</dd>
+              <dd className="col-8">{theObject.reason}</dd>
             </dl>
           </Col>
         )}
