@@ -108,6 +108,23 @@ const FIJurisdiction = (props: FIJurisdictionProps & RouteComponentProps<RoutePa
   const jurisdictionId =
     '59ad4fa0-1945-4b50-a6e3-a056a7cdceb2' || props.match.params.jurisdictionId;
 
+  let onePlan = null;
+  if (
+    completeReactivePlans &&
+    completeRoutinePlans &&
+    currentReactivePlans &&
+    currentRoutinePlans
+  ) {
+    onePlan = completeReactivePlans.concat(
+      completeRoutinePlans,
+      currentReactivePlans,
+      currentRoutinePlans
+    )[0];
+    if (onePlan) {
+      onePlan = extractPlan(onePlan);
+    }
+  }
+
   // this gets FI plans for the current jurisdiction
   const supersetParams = superset.getFormData(2000, [
     { comparator: jurisdictionId, operator: '==', subject: 'jurisdiction_id' },
@@ -317,20 +334,22 @@ const FIJurisdiction = (props: FIJurisdictionProps & RouteComponentProps<RoutePa
           <h4 className="mb-4">{FOCUS_AREA_INFO}</h4>
           <ConnectedJurisdictionMap {...jurisdictionMapProps} />
         </Col>
-        <Col className="col-6">
-          <dl className="row mt-3">
-            <dt className="col-4">{PROVINCE}</dt>
-            {/* <dd className="col-8">{theObject.province}</dd> */}
-            <dt className="col-4">{DISTRICT}</dt>
-            {/* <dd className="col-8">{theObject.district}</dd> */}
-            <dt className="col-4">{CANTON}</dt>
-            {/* <dd className="col-8">{theObject.canton}</dd> */}
-            <dt className="col-4">{FI_STATUS}</dt>
-            {/* <dd className="col-8">{theObject.status}</dd> */}
-            <dt className="col-4">{FI_REASON}</dt>
-            {/* <dd className="col-8">{theObject.reason}</dd> */}
-          </dl>
-        </Col>
+        {onePlan && (
+          <Col className="col-6">
+            <dl className="row mt-3">
+              <dt className="col-4">{PROVINCE}</dt>
+              <dd className="col-8">{onePlan.province}</dd>
+              <dt className="col-4">{DISTRICT}</dt>
+              <dd className="col-8">{onePlan.district}</dd>
+              <dt className="col-4">{CANTON}</dt>
+              <dd className="col-8">{onePlan.canton}</dd>
+              <dt className="col-4">{FI_STATUS}</dt>
+              <dd className="col-8">{onePlan.status}</dd>
+              <dt className="col-4">{FI_REASON}</dt>
+              <dd className="col-8">{onePlan.reason}</dd>
+            </dl>
+          </Col>
+        )}
       </Row>
       <hr />
       <h4 className="mb-4">{CURRENT_FOCUS_INVESTIGATION}</h4>
