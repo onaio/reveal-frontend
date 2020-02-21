@@ -316,7 +316,7 @@ const getPlansArray = makePlansArraySelector();
 const objectListOptions = {
   actionCreator: fetchPlans,
   dispatchPropName: 'fetchPlansActionCreator',
-  listPropName: 'completeRoutinePlans',
+  returnPropName: 'completeRoutinePlans',
   selector: getPlansArray,
 };
 
