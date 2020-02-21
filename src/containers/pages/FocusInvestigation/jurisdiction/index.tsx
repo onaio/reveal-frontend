@@ -135,6 +135,12 @@ const FIJurisdiction = (props: FIJurisdictionProps & RouteComponentProps<RoutePa
     setJurisdiction(val);
   };
 
+  const jurisdictionMapProps = {
+    ...jurisdictionMapDefaultProps,
+    callback: jurisdictionCallback,
+    jurisdictionId,
+  };
+
   useEffect(() => {
     supersetService(SUPERSET_PLANS_SLICE, supersetParams)
       .then((result: Plan[]) => {
@@ -315,12 +321,6 @@ const FIJurisdiction = (props: FIJurisdictionProps & RouteComponentProps<RoutePa
       />
     );
   }
-
-  const jurisdictionMapProps = {
-    ...jurisdictionMapDefaultProps,
-    callback: jurisdictionCallback,
-    jurisdictionId,
-  };
 
   return (
     <div className="mb-5">
