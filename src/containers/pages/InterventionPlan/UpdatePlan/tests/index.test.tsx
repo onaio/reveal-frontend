@@ -1,4 +1,3 @@
-import reducerRegistry from '@onaio/redux-reducer-registry';
 import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import { createBrowserHistory } from 'history';
@@ -7,7 +6,6 @@ import { Router } from 'react-router';
 import { UpdatePlan } from '..';
 import { PlanDefinition } from '../../../../../configs/settings';
 import { PLAN_UPDATE_URL } from '../../../../../constants';
-import store from '../../../../../store';
 import * as fixtures from '../../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
 
 /* tslint:disable-next-line no-var-requires */
