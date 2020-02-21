@@ -421,20 +421,26 @@ class SingleActiveFIMap extends React.Component<
         { action_prefix: true }
       );
       /** Implement Ad hoc Queries since jurisdictions have no plan_id */
-      await supersetService(SUPERSET_STRUCTURES_SLICE, jurisdictionsParams).then(
-        (structuresResults: Structure[]) => {
+      await supersetService(SUPERSET_STRUCTURES_SLICE, jurisdictionsParams)
+        .then((structuresResults: Structure[]) => {
           fetchStructuresActionCreator(structuresResults);
-        }
-      );
-      await supersetService(SUPERSET_PLANS_SLICE, jurisdictionsParams).then((result2: Plan[]) => {
-        fetchPlansActionCreator(result2);
-      });
-      await supersetService(SUPERSET_GOALS_SLICE, goalsParams).then((result3: Goal[]) => {
-        fetchGoalsActionCreator(result3);
-      });
-      await supersetService(SUPERSET_TASKS_SLICE, supersetParams).then((result4: Task[]) => {
-        fetchTasksActionCreator(result4);
-      });
+        })
+        .catch(error => displayError(error));
+      await supersetService(SUPERSET_PLANS_SLICE, jurisdictionsParams)
+        .then((result2: Plan[]) => {
+          fetchPlansActionCreator(result2);
+        })
+        .catch(error => displayError(error));
+      await supersetService(SUPERSET_GOALS_SLICE, goalsParams)
+        .then((result3: Goal[]) => {
+          fetchGoalsActionCreator(result3);
+        })
+        .catch(error => displayError(error));
+      await supersetService(SUPERSET_TASKS_SLICE, supersetParams)
+        .then((result4: Task[]) => {
+          fetchTasksActionCreator(result4);
+        })
+        .catch(error => displayError(error));
     }
   }
 
