@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import GisidaWrapper from '../../components/GisidaWrapper';
 import Loading from '../../components/page/Loading';
 import { SUPERSET_JURISDICTIONS_SLICE } from '../../configs/env';
-import { ObjectList } from '../../helpers/CBV';
+import { SingleObject } from '../../helpers/CBV';
 import { displayError } from '../../helpers/errors';
 import supersetFetch from '../../services/superset';
 import jurisdictionReducer, {
@@ -94,15 +94,15 @@ JurisdictionMap.defaultProps = defaultProps;
 
 const jurisdictionByIdSelector = makeJurisdictionByIdSelector();
 
-/** ObjectList options */
+/** SingleObject options */
 const objectListOptions = {
   actionCreator: fetchJurisdictions,
   dispatchPropName: 'fetchJurisdictionsActionCreator',
-  listPropName: 'jurisdiction',
+  returnPropName: 'jurisdiction',
   selector: jurisdictionByIdSelector,
 };
 
-const ConnectedJurisdictionMap = new ObjectList<
+const ConnectedJurisdictionMap = new SingleObject<
   Jurisdiction,
   any, // TODO: why does Typescript complain when we set this to FetchJurisdictionAction?
   typeof jurisdictionByIdSelector,
