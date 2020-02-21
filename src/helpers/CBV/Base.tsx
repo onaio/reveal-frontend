@@ -1,3 +1,4 @@
+import { Registry } from '@onaio/redux-reducer-registry';
 import React from 'react';
 import { connect } from 'react-redux';
 import { ActionCreator } from 'redux';
@@ -27,7 +28,7 @@ export interface CBVOptions<TAction, TSelector> {
  *
  * Every method in this class can and should be overwritten to cater to custom needs.
  */
-export abstract class Base<ActionType, SelectorType> {
+export abstract class Base<ActionType, SelectorType, PropsType, RootState = Registry> {
   public Component: React.ElementType;
   public options: CBVOptions<ActionType, SelectorType>;
 
@@ -58,7 +59,10 @@ export abstract class Base<ActionType, SelectorType> {
    *
    * This must be implemented.
    */
-  public abstract getMapStateToProps(): any; // TODO: find a way to remove any here
+  public abstract getMapStateToProps(): (
+    state: RootState,
+    ownProps: PropsType
+  ) => { [key: string]: any };
 
   /**
    * This function simply connects the Higher Order Component to the redux
