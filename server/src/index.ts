@@ -35,7 +35,6 @@ const opensrpAuth = new ClientOAuth2({
   scopes: ['read', 'write'],
   state: EXPRESS_OPENSRP_OAUTH_STATE,
 });
-
 const loginURL = EXPRESS_SESSION_LOGIN_URL || '/';
 const sessionName = EXPRESS_SESSION_NAME || 'session';
 
@@ -93,11 +92,11 @@ const BUILD_PATH = EXPRESS_REACT_BUILD_PATH;
 const filePath = path.resolve(BUILD_PATH, 'index.html');
 
 // need to add docstrings and type defs
-const renderer = (req: express.Request, res: express.Response) => {
+const renderer = (_: express.Request, res: express.Response) => {
   res.sendFile(filePath);
 };
 
-const oauthLogin = (req: express.Request, res: express.Response) => {
+const oauthLogin = (_: express.Request, res: express.Response) => {
   const provider = opensrpAuth;
   const uri = provider.code.getUri();
   res.redirect(uri);
@@ -115,7 +114,7 @@ const oauthCallback = (req: express.Request, res: express.Response, next: expres
           method: 'GET',
           url,
         }),
-        (error: Error, response: request.Response, body: string) => {
+        (error: Error, _: request.Response, body: string) => {
           if (error) {
             next(error); // pass error to express
           }
@@ -184,7 +183,7 @@ router.use('*', renderer);
 app.use(router);
 
 app.use(
-  (err: HttpException, req: express.Request, res: express.Response, next: express.NextFunction) => {
+  (err: HttpException, _: express.Request, res: express.Response, __: express.NextFunction) => {
     handleError(err, res);
   }
 );
