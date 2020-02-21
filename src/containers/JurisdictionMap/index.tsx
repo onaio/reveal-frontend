@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import GisidaWrapper from '../../components/GisidaWrapper';
 import Loading from '../../components/page/Loading';
 import { SUPERSET_JURISDICTIONS_SLICE } from '../../configs/env';
-import { ObjectList } from '../../helpers/cbv';
+import { ObjectList } from '../../helpers/CBV';
 import { displayError } from '../../helpers/errors';
 import supersetFetch from '../../services/superset';
 import jurisdictionReducer, {
