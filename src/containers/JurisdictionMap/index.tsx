@@ -104,7 +104,7 @@ const objectListOptions = {
 
 const ConnectedJurisdictionMap = new ObjectList<
   Jurisdiction,
-  any, // FetchJurisdictionAction,
+  any, // TODO: why does Typescript complain when we set this to FetchJurisdictionAction?
   typeof jurisdictionByIdSelector,
   JurisdictionMapProps
 >(JurisdictionMap, objectListOptions);
