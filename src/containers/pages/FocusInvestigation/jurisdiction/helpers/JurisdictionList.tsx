@@ -22,8 +22,7 @@ export default class JurisdictionList<
     return (state: Registry, ownProps: any) => {
       const getPlansArray = makePlansArraySelector();
 
-      const jurisdictionId =
-        '59ad4fa0-1945-4b50-a6e3-a056a7cdceb2' || ownProps.match.params.jurisdictionId;
+      const jurisdictionId = ownProps.match.params.jurisdictionId;
 
       const reactiveFilters: PlanFilters = {
         interventionType: InterventionType.FI,

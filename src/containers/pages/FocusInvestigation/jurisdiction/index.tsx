@@ -114,8 +114,7 @@ const FIJurisdiction = (props: FIJurisdictionProps & RouteComponentProps<RoutePa
     supersetService,
   } = props;
 
-  const jurisdictionId =
-    '59ad4fa0-1945-4b50-a6e3-a056a7cdceb2' || props.match.params.jurisdictionId;
+  const jurisdictionId = props.match.params.jurisdictionId;
 
   let onePlan: Plan | null = null;
   if (
