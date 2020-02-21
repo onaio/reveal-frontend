@@ -13,7 +13,7 @@ export interface ObjectListOptions<TAction, TSelector> {
 
 /** interface for the props of the connected component created by ObjectList  */
 interface ObjectListProps<TAction, TObject> {
-  actionCreator: TAction;
+  actionCreator: ActionCreator<TAction>;
   objectList: TObject[];
 }
 
@@ -51,9 +51,17 @@ export class ObjectList<ObjectType, ActionType, SelectorType, PropsType, RootSta
    *     - the action creator dispatch function
    */
   public getHOC() {
-    return (props: ObjectListProps<ActionType, ObjectType>) => {
+    const HoC = (props: ObjectListProps<ActionType, ObjectType>) => {
       return <this.Component {...props} />;
     };
+
+    /** Let's declare default props for this higher order component */
+    HoC.defaultProps = {
+      actionCreator: this.options.actionCreator,
+      objectList: [],
+    };
+
+    return HoC;
   }
 
   /**
