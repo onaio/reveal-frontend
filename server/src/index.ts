@@ -122,25 +122,18 @@ const oauthCallback = (req: express.Request, res: express.Response, next: expres
           apiResponse.oAuth2Data = user.data;
 
           const sessionState = getOpenSRPUserInfo(apiResponse);
-          if (
-            sessionState &&
-            sessionState.extraData &&
-            sessionState.extraData.oAuth2Data &&
-            sessionState.extraData.oAuth2Data.expires_in
-          ) {
+          if (sessionState) {
             const gatekeeperState = { success: true, result: sessionState.extraData };
             const preloadedState = {
               gatekeeper: gatekeeperState,
               session: sessionState,
             };
-            if (req.session && req.session.preloadedState) {
-              req.session.preloadedState = preloadedState;
-              const expireAfterMs = sessionState.extraData.oAuth2Data.expires_in * 1000;
-              req.session.cookie.maxAge = expireAfterMs;
-              // you have to save the session manually for POST requests like this one
-              req.session.save(() => void 0);
-              return res.redirect(FRONTEND_OPENSRP_CALLBACK_URL);
-            }
+            req.session.preloadedState = preloadedState;
+            const expireAfterMs = sessionState.extraData.oAuth2Data.expires_in * 1000;
+            req.session.cookie.maxAge = expireAfterMs;
+            // you have to save the session manually for POST requests like this one
+            req.session.save(() => void 0);
+            return res.redirect(FRONTEND_OPENSRP_CALLBACK_URL);
           }
         }
       );
@@ -152,20 +145,15 @@ const oauthCallback = (req: express.Request, res: express.Response, next: expres
 
 const oauthState = (req: express.Request, res: express.Response) => {
   // check if logged in
-  if (req.session) {
-    if (!req.session.preloadedState) {
-      return res.json({ error: 'Not authorized' });
-    }
-    // only return this when user has valid session
-    return res.json(req.session.preloadedState);
+  if (!req.session.preloadedState) {
+    return res.json({ error: 'Not authorized' });
   }
+  // only return this when user has valid session
+  return res.json(req.session.preloadedState);
 };
 
 const logout = (req: express.Request, res: express.Response) => {
-  if (req.session) {
-    req.session.destroy(() => void 0);
-  }
-
+  req.session.destroy(() => void 0);
   res.clearCookie(sessionName);
   res.redirect(loginURL);
 };

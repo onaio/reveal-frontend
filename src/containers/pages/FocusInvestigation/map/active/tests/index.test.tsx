@@ -35,6 +35,11 @@ const { fetchTasks } = tasksDucks;
 describe('containers/pages/FocusInvestigation/activeMap', () => {
   beforeEach(() => {
     jest.resetAllMocks();
+    store.dispatch(goalDucks.removeGoalsAction);
+    store.dispatch(jurisdictionDucks.removeJurisdictionsAction);
+    store.dispatch(planDucks.removePlansAction);
+    store.dispatch(structureDucks.removeStructuresAction);
+    store.dispatch(tasksDucks.removeTasksAction);
   });
 
   it('renders without crashing', () => {
@@ -271,6 +276,52 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
     wrapper.unmount();
   });
 
+  it('renders correctly when state is empty or page is refreshed', async () => {
+    const supersetServiceMock: any = jest.fn(async () => []);
+    const props = {
+      match: {
+        isExact: true,
+        params: { id: fixtures.plan1.id },
+      },
+      plan: null,
+      supersetService: supersetServiceMock,
+    };
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedMapSingleFI {...props} />
+        </Router>
+      </Provider>
+    );
+    await new Promise<unknown>(resolve => setImmediate(resolve));
+    expect(supersetServiceMock.mock.calls.length).toEqual(1);
+    wrapper.unmount();
+  });
+
+  it('renders correctly when state is not empty', async () => {
+    const supersetServiceMock: any = jest.fn(async () => []);
+    store.dispatch(fetchGoals([fixtures.goal3 as goalDucks.Goal]));
+    store.dispatch(fetchJurisdictions([fixtures.jurisdictions[0]]));
+    store.dispatch(fetchPlans([fixtures.plan1]));
+    store.dispatch(fetchTasks(fixtures.tasks));
+    const props = {
+      match: {
+        isExact: true,
+        params: { id: fixtures.plan1.id },
+      },
+      supersetService: supersetServiceMock,
+    };
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedMapSingleFI {...props} />
+        </Router>
+      </Provider>
+    );
+    await new Promise<unknown>(resolve => setImmediate(resolve));
+    expect(supersetServiceMock.mock.calls.length).toEqual(5);
+    wrapper.unmount();
+  });
   it('selectors get called with correct arguments', () => {
     // spy on the selectors
     const getPlansArrayMock = jest.spyOn(planDucks, 'getPlansArray');
