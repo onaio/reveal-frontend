@@ -243,9 +243,10 @@ describe('src/pages/*/AssignPractitioners', () => {
         <AssignPractitioner {...props} />
       </Router>
     );
-
     await flushPromises();
     wrapper.update();
+
+    expect((wrapper.find('Prompt') as any).props().when).toBeFalsy();
 
     const select = wrapper.find('Select');
     // simulate single value change function
@@ -256,17 +257,13 @@ describe('src/pages/*/AssignPractitioners', () => {
     });
     wrapper.update();
 
-    // try navigating with usaved changes
     history.push(FI_URL);
-    let locIsLogin = location.pathname === FI_URL;
-    expect(locIsLogin).toBeFalsy();
     wrapper.update();
-
-    // discard changes and try to navigate
-    wrapper.find('button#discard-button').simulate('click');
-    history.push(FI_URL);
-    locIsLogin = location.pathname === FI_URL;
-    expect(locIsLogin).toBeTruthy();
+    const message = `Unsaved Changes: please Save or Discard changes made [${
+      fixtures.organization3.name
+    }]`;
+    expect((wrapper.find('Prompt') as any).props().message()).toEqual(message);
+    expect((wrapper.find('Prompt') as any).props().when).toBeTruthy();
   });
 
   it('discard changes works correctly', async () => {
