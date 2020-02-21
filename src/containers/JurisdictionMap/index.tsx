@@ -19,6 +19,7 @@ reducerRegistry.register(jurisdictionReducerName, jurisdictionReducer);
 
 /** Interface for JurisdictionMap props */
 interface JurisdictionMapProps {
+  callback: (jurisdiction: Jurisdiction) => void;
   cssClass: string;
   fetchJurisdictionsActionCreator: typeof fetchJurisdictions;
   jurisdiction: Jurisdiction | null;
@@ -33,6 +34,7 @@ const JurisdictionMap = (props: JurisdictionMapProps) => {
   const [errorOcurred, setErrorOcurred] = useState(false);
 
   const {
+    callback,
     cssClass,
     fetchJurisdictionsActionCreator,
     jurisdictionId,
@@ -73,6 +75,10 @@ const JurisdictionMap = (props: JurisdictionMapProps) => {
     return <span>something bad happened</span>;
   }
 
+  if (jurisdiction) {
+    callback(jurisdiction);
+  }
+
   return (
     <div className={cssClass}>
       <GisidaWrapper geoData={jurisdiction} minHeight={minHeight} />
@@ -82,6 +88,7 @@ const JurisdictionMap = (props: JurisdictionMapProps) => {
 
 /** Default props for JurisdictionMap */
 export const defaultProps: JurisdictionMapProps = {
+  callback: (_: Jurisdiction) => void 0,
   cssClass: 'map-area',
   fetchJurisdictionsActionCreator: fetchJurisdictions,
   jurisdiction: null,
