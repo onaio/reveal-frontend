@@ -7,6 +7,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
+
 import SelectComponent from '../../../../../../components/SelectPlan';
 import { FIReasons } from '../../../../../../configs/settings';
 import { FI_SINGLE_URL } from '../../../../../../constants';
@@ -14,6 +15,7 @@ import { wrapFeatureCollection } from '../../../../../../helpers/utils';
 import store from '../../../../../../store';
 import * as goalDucks from '../../../../../../store/ducks/goals';
 import * as jurisdictionDucks from '../../../../../../store/ducks/jurisdictions';
+import { getPlanById } from '../../../../../../store/ducks/plans';
 import * as planDucks from '../../../../../../store/ducks/plans';
 import * as structureDucks from '../../../../../../store/ducks/structures';
 import * as tasksDucks from '../../../../../../store/ducks/tasks';
@@ -27,14 +29,22 @@ jest.mock('../../../../../../components/GisidaWrapper', () => {
 });
 jest.mock('../../../../../../configs/env');
 const history = createBrowserHistory();
-const { fetchGoals } = goalDucks;
-const { fetchJurisdictions } = jurisdictionDucks;
-const fetchPlans = planDucks.fetchPlans;
-const { fetchTasks } = tasksDucks;
+const { fetchGoals, removeGoalsAction } = goalDucks;
+const { fetchJurisdictions, removeJurisdictionsAction } = jurisdictionDucks;
+const { fetchPlans, removePlansAction } = planDucks;
+const { fetchTasks, removeTasksAction } = tasksDucks;
+const { setStructures, removeStructuresAction } = structureDucks;
 
 describe('containers/pages/FocusInvestigation/activeMap', () => {
   beforeEach(() => {
     jest.resetAllMocks();
+  });
+  afterEach(() => {
+    store.dispatch(removeGoalsAction);
+    store.dispatch(removeJurisdictionsAction);
+    store.dispatch(removePlansAction);
+    store.dispatch(removeTasksAction);
+    store.dispatch(removeStructuresAction);
   });
 
   it('renders without crashing', () => {
@@ -353,14 +363,19 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
     expect(FCMock).not.toBeCalled();
   });
 
-  it('renders the GisidaWrapper with structures', () => {
+  it('renders the GisidaWrapper with structures', async () => {
     const mock: any = jest.fn();
     const supersetServiceMock: any = jest.fn(async () => []);
-    store.dispatch(fetchGoals([fixtures.goal3 as goalDucks.Goal]));
+
+    store.dispatch(fetchGoals([fixtures.goal3]));
     store.dispatch(fetchJurisdictions([fixtures.jurisdictions[0]]));
-    store.dispatch(fetchPlans([fixtures.plan1 as Plan]));
+    store.dispatch(fetchPlans([fixtures.plan1]));
     store.dispatch(fetchTasks(fixtures.tasks));
-    store.dispatch(structureDucks.setStructures(structures as structureDucks.Structure[]));
+    store.dispatch(setStructures(structures as structureDucks.Structure[]));
+
+    // check that we can get a plan from the store
+    expect(store.getState().plans.plansById[fixtures.plan1.id]).toEqual(fixtures.plan1); // passes
+    expect(getPlanById(store.getState(), fixtures.plan1.id)).toEqual(fixtures.plan1); // fails
 
     const props = {
       currentGoal: fixtures.goal3,
@@ -383,7 +398,7 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
         </Router>
       </Provider>
     );
-
+    await flushPromises();
     // structures prop
     const singleActiveWrapperProps = wrapper.find('SingleActiveFIMap').props();
     expect((singleActiveWrapperProps as MapSingleFIProps).plan).toEqual(fixtures.plan1);
