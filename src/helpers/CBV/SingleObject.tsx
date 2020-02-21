@@ -33,7 +33,7 @@ export class SingleObject<
   SelectorType,
   PropsType,
   RootState = Registry
-> extends Base<ActionType, SelectorType> {
+> extends Base<ActionType, SelectorType, PropsType, RootState> {
   /**
    * This function returns a Higher Order component whose job is to wrap around
    * the target component, and pass on props to it.  The props in this case are:
