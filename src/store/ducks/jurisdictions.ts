@@ -1,5 +1,7 @@
+import { Registry } from '@onaio/redux-reducer-registry';
 import { get, keyBy, keys, pickBy, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
+import { createSelector } from 'reselect';
 import SeamlessImmutable from 'seamless-immutable';
 import { FlexObject, GeoJSON, Geometry } from '../../helpers/utils';
 import store from '../../store';
@@ -250,3 +252,36 @@ export function getAllJurisdictionsIdArray(
     )
   );
 }
+
+/** RESELECT USAGE STARTS HERE */
+
+/** This interface represents the structure of jurisdiction filter options/params */
+export interface JurisdictionFilters {
+  jurisdictionId?: string /** the jurisdiction id */;
+}
+
+/** getJurisdictionId
+ * Gets interventionType from PlanFilters
+ * @param state - the redux store
+ * @param props - the plan filters object
+ */
+export const getJurisdictionId = (_: Registry, props: JurisdictionFilters) => props.jurisdictionId;
+
+/** makeJurisdictionByIdSelector
+ * Returns a selector that gets one jurisdiction by its id
+ *
+ * This selector is meant to be a memoized replacement for getJurisdictionById.
+ *
+ * To use this selector, do something like:
+ *    const jurisdictionByIdSelector = makeJurisdictionByIdSelector();
+ *
+ * @param {Registry} state - the redux store
+ * @param {PlanFilters} props - the plan filters object
+ */
+export const makeJurisdictionByIdSelector = () => {
+  return createSelector(
+    [getJurisdictionsById, getJurisdictionId],
+    (jurisdictionsById, jurisdictionId) =>
+      jurisdictionId ? get(jurisdictionsById, jurisdictionId) || null : null
+  );
+};
