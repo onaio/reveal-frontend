@@ -21,7 +21,6 @@ describe('components/InterventionPlan/UpdatePlan', () => {
 
   function getProps() {
     const mock: any = jest.fn();
-    const serviceMock: any = jest.fn(async () => []);
     return {
       fetchPlan: mock,
       history,
@@ -33,7 +32,6 @@ describe('components/InterventionPlan/UpdatePlan', () => {
         url: `${PLAN_UPDATE_URL}/${fixtures.plans[1].identifier}`,
       },
       plan: fixtures.plans[1] as PlanDefinition,
-      service: serviceMock,
     };
   }
 
@@ -59,6 +57,34 @@ describe('components/InterventionPlan/UpdatePlan', () => {
       ...updatePlanFormProps,
       formHandler: expect.any(Function),
     });
+    wrapper.unmount();
+  });
+
+  it('pass correct data to store: API responds with array', async () => {
+    // fetch with a array response
+    fetch.mockResponseOnce(JSON.stringify([fixtures.plans[1]]));
+    const wrapper = mount(
+      <Router history={history}>
+        <UpdatePlan {...getProps()} />
+      </Router>
+    );
+    await new Promise(resolve => setImmediate(resolve));
+    const FetchPlanSpy = jest.spyOn(wrapper.props().children.props, 'fetchPlan');
+    expect(FetchPlanSpy).toHaveBeenCalledWith(fixtures.plans[1]);
+    wrapper.unmount();
+  });
+
+  it('pass correct data to store: API responds with object', async () => {
+    // fetch with an object response
+    fetch.mockResponseOnce(JSON.stringify(fixtures.plans[1]));
+    const wrapper = mount(
+      <Router history={history}>
+        <UpdatePlan {...getProps()} />
+      </Router>
+    );
+    await new Promise(resolve => setImmediate(resolve));
+    const FetchPlanSpy = jest.spyOn(wrapper.props().children.props, 'fetchPlan');
+    expect(FetchPlanSpy).toHaveBeenCalledWith(fixtures.plans[1]);
     wrapper.unmount();
   });
 });

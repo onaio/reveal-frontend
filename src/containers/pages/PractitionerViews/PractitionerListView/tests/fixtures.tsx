@@ -5,7 +5,7 @@ import {
 } from '../../../../../store/ducks/tests/fixtures';
 
 export const state = {
-  gatekeeper: { result: {}, success: null },
+  gatekeeper: { result: {}, success: null, working: false },
   practitioner: {
     practitionerRoles: {},
     practitionersById: {
