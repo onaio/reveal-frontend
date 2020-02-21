@@ -46,8 +46,6 @@ const UpdatePlan = (props: RouteComponentProps<RouteParams> & UpdatePlanProps) =
   }
   const apiService = new service(OPENSRP_PLANS);
 
-  const apiService = new service(OPENSRP_PLANS);
-
   /** async function to load the data */
   async function loadData() {
     try {

@@ -153,6 +153,11 @@ const oauthState = (req: express.Request, res: express.Response) => {
   return res.json(req.session.preloadedState);
 };
 
+const loginRedirect = (req: express.Request, res: express.Response, next: express.NextFunction) => {
+  // check if logged in and redirect
+  req.session.preloadedState ? res.redirect('/') : next();
+};
+
 const logout = (req: express.Request, res: express.Response) => {
   req.session.destroy(() => void 0);
   res.clearCookie(sessionName);
@@ -164,6 +169,8 @@ const router = express.Router();
 router.use('/oauth/opensrp', oauthLogin);
 router.use('/oauth/callback/OpenSRP', oauthCallback);
 router.use('/oauth/state', oauthState);
+// handle login
+router.use(loginURL, loginRedirect);
 // logout
 router.use('/logout', logout);
 // render React app
