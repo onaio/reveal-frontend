@@ -9,7 +9,7 @@ import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import ConnectedAssignPractitioner, { AssignPractitioner } from '..';
 import { ASSIGN, PRACTITIONERS } from '../../../../../configs/lang';
-import { ASSIGN_PRACTITIONERS_URL } from '../../../../../constants';
+import { ASSIGN_PRACTITIONERS_URL, FI_URL } from '../../../../../constants';
 import { OpenSRPService } from '../../../../../services/opensrp';
 import store from '../../../../../store';
 import organizationsReducer, {
@@ -214,6 +214,56 @@ describe('src/pages/*/AssignPractitioners', () => {
     wrapper.update();
 
     expect(wrapper.find('Select').props().value).toEqual([]);
+  });
+
+  it('Should not navigate when there are unsaved changes', async () => {
+    fetch
+      .once(JSON.stringify(fixtures.organization3))
+      .once(JSON.stringify([]))
+      .once(JSON.stringify(fixtures.allPractitioners));
+
+    const mock: any = jest.fn();
+    const props = {
+      assignedPractitioners: [],
+      fetchOrganizationsCreator: fetchOrganizations,
+      history,
+      location: mock,
+      match: {
+        isExact: true,
+        params: { id: fixtures.organization3.identifier },
+        path: `${ASSIGN_PRACTITIONERS_URL}/:id`,
+        url: `${ASSIGN_PRACTITIONERS_URL}/${fixtures.organization3.identifier}`,
+      },
+      organization: fixtures.organization3,
+      serviceClass: OpenSRPService,
+    };
+
+    const wrapper = mount(
+      <Router history={history}>
+        <AssignPractitioner {...props} />
+      </Router>
+    );
+    await flushPromises();
+    wrapper.update();
+
+    expect((wrapper.find('Prompt') as any).props().when).toBeFalsy();
+
+    const select = wrapper.find('Select');
+    // simulate single value change function
+    const entry = fixtures.practitioner2;
+    (select.instance() as any).selectOption({
+      label: `${entry.username} - ${entry.name}`,
+      value: entry.identifier,
+    });
+    wrapper.update();
+
+    history.push(FI_URL);
+    wrapper.update();
+    const message = `Unsaved Changes: please Save or Discard changes made [${
+      fixtures.organization3.name
+    }]`;
+    expect((wrapper.find('Prompt') as any).props().message()).toEqual(message);
+    expect((wrapper.find('Prompt') as any).props().when).toBeTruthy();
   });
 
   it('discard changes works correctly', async () => {
