@@ -10,6 +10,7 @@ import { Router } from 'react-router';
 import SelectComponent from '../../../../../../components/SelectPlan';
 import { FIReasons } from '../../../../../../configs/settings';
 import { FI_SINGLE_URL } from '../../../../../../constants';
+import * as helperErrors from '../../../../../../helpers/errors';
 import { wrapFeatureCollection } from '../../../../../../helpers/utils';
 import store from '../../../../../../store';
 import * as goalDucks from '../../../../../../store/ducks/goals';
@@ -322,6 +323,34 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
     expect(supersetServiceMock.mock.calls.length).toEqual(5);
     wrapper.unmount();
   });
+
+  it('it displays error if errors occur when fetching data', async () => {
+    const supersetServiceMock: any = jest.fn(() => Promise.reject('error'));
+    const displayErrorMock = jest.spyOn(helperErrors, 'displayError');
+    store.dispatch(fetchGoals([fixtures.goal3 as goalDucks.Goal]));
+    store.dispatch(fetchJurisdictions([fixtures.jurisdictions[0]]));
+    store.dispatch(fetchPlans([fixtures.plan1]));
+    store.dispatch(fetchTasks(fixtures.tasks));
+    const props = {
+      match: {
+        isExact: true,
+        params: { id: fixtures.plan1.id },
+      },
+      supersetService: supersetServiceMock,
+    };
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedMapSingleFI {...props} />
+        </Router>
+      </Provider>
+    );
+    await new Promise<unknown>(resolve => setImmediate(resolve));
+    expect(displayErrorMock.mock.calls.length).toBe(1);
+
+    wrapper.unmount();
+  });
+
   it('selectors get called with correct arguments', () => {
     // spy on the selectors
     const getPlansArrayMock = jest.spyOn(planDucks, 'getPlansArray');

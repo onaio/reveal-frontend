@@ -409,7 +409,9 @@ class SingleActiveFIMap extends React.Component<
       ]);
       await supersetService(SUPERSET_JURISDICTIONS_SLICE, jurisdictionsParams)
         .then((result: Jurisdiction[]) => fetchJurisdictionsActionCreator(result))
-        .catch(error => displayError(error));
+        .catch(error => {
+          throw error;
+        });
       /** define superset params for filtering by plan_id */
       const supersetParams = superset.getFormData(SUPERSET_MAX_RECORDS, [
         { comparator: plan.plan_id, operator: '==', subject: PLAN_ID },
@@ -425,22 +427,30 @@ class SingleActiveFIMap extends React.Component<
         .then((structuresResults: Structure[]) => {
           fetchStructuresActionCreator(structuresResults);
         })
-        .catch(error => displayError(error));
+        .catch(error => {
+          throw error;
+        });
       await supersetService(SUPERSET_PLANS_SLICE, jurisdictionsParams)
         .then((result2: Plan[]) => {
           fetchPlansActionCreator(result2);
         })
-        .catch(error => displayError(error));
+        .catch(error => {
+          throw error;
+        });
       await supersetService(SUPERSET_GOALS_SLICE, goalsParams)
         .then((result3: Goal[]) => {
           fetchGoalsActionCreator(result3);
         })
-        .catch(error => displayError(error));
+        .catch(error => {
+          throw error;
+        });
       await supersetService(SUPERSET_TASKS_SLICE, supersetParams)
         .then((result4: Task[]) => {
           fetchTasksActionCreator(result4);
         })
-        .catch(error => displayError(error));
+        .catch(error => {
+          throw error;
+        });
     }
   }
 
