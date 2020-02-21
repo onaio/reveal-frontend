@@ -103,6 +103,28 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
     wrapper.unmount();
   });
 
+  it('renders correctly when focusArea is null', () => {
+    const mock: any = jest.fn();
+    mock.mockImplementation(() => Promise.resolve(fixtures.plans));
+    const props = {
+      caseTriggeredPlans: [fixtures.plan1],
+      fetchPlansActionCreator: jest.fn(),
+      history,
+      location: mock,
+      match: mock,
+      routinePlans: [fixtures.planNullJurisdiction],
+      supersetService: mock,
+    };
+    const wrapper = mount(
+      <Router history={history}>
+        <ActiveFocusInvestigation {...props} />
+      </Router>
+    );
+    const nullIsRemoved = wrapper.text().includes('null');
+    expect(nullIsRemoved).toBeFalsy();
+    wrapper.unmount();
+  });
+
   it('renders ActiveFocusInvestigation correctly for null jurisdictions', () => {
     const mock: any = jest.fn();
     mock.mockImplementation(() => Promise.resolve(fixtures.plans));
