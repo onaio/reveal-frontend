@@ -23,7 +23,6 @@ import {
   EDIT_ORGANIZATION_URL,
   EDIT_PRACTITIONER_URL,
   FI_FILTER_URL,
-  FI_JURISDICTION_URL,
   FI_SINGLE_MAP_URL,
   FI_SINGLE_URL,
   FI_URL,
@@ -47,7 +46,6 @@ import ActiveFocusInvestigation from '../containers/pages/FocusInvestigation/act
 import FIJurisdiction from '../containers/pages/FocusInvestigation/jurisdiction';
 import SingleActiveFIMap from '../containers/pages/FocusInvestigation/map/active';
 import ConnectedPlanCompletion from '../containers/pages/FocusInvestigation/map/planCompletion';
-import SingleFI from '../containers/pages/FocusInvestigation/single';
 import Home from '../containers/pages/Home/Home';
 import IrsPlans from '../containers/pages/InterventionPlan/IRS';
 import IrsPlan from '../containers/pages/InterventionPlan/IRS/plan';
@@ -183,7 +181,7 @@ class App extends Component {
                 <ConnectedPrivateRoute
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
-                  path={`${FI_JURISDICTION_URL}`}
+                  path={`${FI_SINGLE_URL}/:jurisdictionId`}
                   component={WithGATracker(FIJurisdiction)}
                 />
                 <ConnectedPrivateRoute
@@ -191,12 +189,6 @@ class App extends Component {
                   exact={true}
                   path={`${FI_FILTER_URL}/:jurisdiction_parent_id/:plan_id?`}
                   component={WithGATracker(ActiveFocusInvestigation)}
-                />
-                <ConnectedPrivateRoute
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
-                  exact={true}
-                  path={`${FI_SINGLE_URL}/:id`}
-                  component={WithGATracker(SingleFI)}
                 />
                 {/* Focus Investigation completion confirmation view */}
                 <ConnectedPrivateRoute
