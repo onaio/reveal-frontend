@@ -1,5 +1,4 @@
 import { mount, shallow } from 'enzyme';
-import EnzymeToJson from 'enzyme-to-json';
 import React from 'react';
 import { Provider } from 'react-redux';
 import AssignTeamPopover, { AssignTeamPopoverProps } from '..';
@@ -33,9 +32,9 @@ describe('/components/AssignTeamPopover', () => {
 
   it('renders and passes props correctly', () => {
     const wrapper = mount(<AssignTeamPopover {...props} />);
-    expect(wrapper.props()).toEqual(props);
-    const tree = EnzymeToJson(wrapper.find('Popover'));
-    expect(tree).toMatchSnapshot();
+    expect(wrapper.find('Popover').length).toBe(1);
+    expect(wrapper.find('Popover').props()).toMatchSnapshot('popover props');
+    expect(wrapper.find('PopoverHeader').text()).toEqual('Select Teams to Assign');
   });
 
   it('renders correctly when organizationsById is not null', () => {

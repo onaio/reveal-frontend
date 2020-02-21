@@ -9,11 +9,11 @@
     "@fortawesome/free-solid-svg-icons": "^5.7.1",
     "@fortawesome/react-fontawesome": "^0.1.4",
     "@mapbox/geojson-extent": "^0.3.2",
-    "@onaio/connected-private-route": "^0.0.8",
+    "@onaio/connected-private-route": "^0.0.11",
     "@onaio/connected-reducer-registry": "^0.0.2",
     "@onaio/drill-down-table": "^0.0.21",
     "@onaio/element-map": "^0.0.2",
-    "@onaio/gatekeeper": "^0.0.16",
+    "@onaio/gatekeeper": "^0.0.18",
     "@onaio/list-view": "^0.0.1",
     "@onaio/redux-reducer-registry": "^0.0.9",
     "@onaio/session-reducer": "^0.0.10",
@@ -74,7 +74,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint-js": "eslint 'src/**/*.{js,jsx}'",
-    "lint-ts": "tslint -c tslint.json --project ./tsconfig.json --format stylish 'src/**/*.{ts,tsx}'"
+    "lint-ts": "tslint -c tslint.json 'src/**/*.{ts,tsx}'",
+    "serve": "yarn babel-node -r node_modules/dotenv/config server/server.ts --extensions '.ts' dotenv_config_path=server/.env"
   },
   "jest": {
     "collectCoverageFrom": [

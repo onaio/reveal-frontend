@@ -51,6 +51,8 @@ import {
   POLYGON,
   ROUTINE,
 } from '../../../../../constants';
+import { JURISDICTION_ID, PLAN_ID, PLAN_INTERVENTION_TYPE } from '../../../../../constants';
+import { displayError } from '../../../../../helpers/errors';
 import { popupHandler } from '../../../../../helpers/handlers';
 import { getGoalReport } from '../../../../../helpers/indicators';
 import ProgressBar from '../../../../../helpers/ProgressBar';
@@ -161,52 +163,28 @@ class SingleActiveFIMap extends React.Component<
     super(props);
   }
 
-  public async componentDidMount() {
-    const {
-      fetchGoalsActionCreator,
-      fetchJurisdictionsActionCreator,
-      fetchPlansActionCreator,
-      fetchStructuresActionCreator,
-      fetchTasksActionCreator,
-      plan,
-      supersetService,
-    } = this.props;
-
-    if (plan && plan.plan_id) {
-      /** define superset filter params for jurisdictions */
-      const jurisdictionsParams = superset.getFormData(SUPERSET_MAX_RECORDS, [
-        { comparator: plan.jurisdiction_id, operator: '==', subject: 'jurisdiction_id' },
+  public componentDidMount() {
+    if (!this.props.plan) {
+      /**
+       * Fetch plans again because on reloading the page, the state does not persist
+       * the plans
+       */
+      const { supersetService, fetchPlansActionCreator } = this.props;
+      const supersetParams = superset.getFormData(2000, [
+        { comparator: InterventionType.FI, operator: '==', subject: PLAN_INTERVENTION_TYPE },
       ]);
-      await supersetService(SUPERSET_JURISDICTIONS_SLICE, jurisdictionsParams).then(
-        (result: Jurisdiction[]) => fetchJurisdictionsActionCreator(result)
-      );
-      /** define superset params for filtering by plan_id */
-      const supersetParams = superset.getFormData(SUPERSET_MAX_RECORDS, [
-        { comparator: plan.plan_id, operator: '==', subject: 'plan_id' },
-      ]);
-      /** define superset params for goals */
-      const goalsParams = superset.getFormData(
-        SUPERSET_MAX_RECORDS,
-        [{ comparator: plan.plan_id, operator: '==', subject: 'plan_id' }],
-        { action_prefix: true }
-      );
-      /** Implement Ad hoc Queries since jurisdictions have no plan_id */
-      await supersetService(SUPERSET_STRUCTURES_SLICE, jurisdictionsParams).then(
-        (structuresResults: Structure[]) => {
-          fetchStructuresActionCreator(structuresResults);
-        }
-      );
-      await supersetService(SUPERSET_PLANS_SLICE, jurisdictionsParams).then((result2: Plan[]) => {
-        fetchPlansActionCreator(result2);
-      });
-      await supersetService(SUPERSET_GOALS_SLICE, goalsParams).then((result3: Goal[]) => {
-        fetchGoalsActionCreator(result3);
-      });
-      await supersetService(SUPERSET_TASKS_SLICE, supersetParams).then((result4: Task[]) => {
-        fetchTasksActionCreator(result4);
-      });
+      supersetService(SUPERSET_PLANS_SLICE, supersetParams)
+        .then((result: Plan[]) => fetchPlansActionCreator(result))
+        .catch(error => displayError(error));
+    } else {
+      /**
+       * Plans are available in state since the plans were fetched by the
+       * the previous view
+       */
+      this.fetchData().catch(error => displayError(error));
     }
   }
+
   public componentWillReceiveProps(nextProps: any) {
     const { setCurrentGoalActionCreator, match } = this.props;
 
@@ -214,6 +192,16 @@ class SingleActiveFIMap extends React.Component<
       setCurrentGoalActionCreator(
         nextProps.match.params.goalId ? nextProps.match.params.goalId : null
       );
+    }
+  }
+
+  public componentDidUpdate(prevProps: any) {
+    if (
+      (!prevProps.plan && this.props.plan) ||
+      (prevProps.plan && this.props.plan && prevProps.plan.plan_id !== this.props.plan.plan_id)
+    ) {
+      /** Page was reloaded, fetch data again */
+      this.fetchData().catch(error => displayError(error));
     }
   }
 
@@ -401,6 +389,69 @@ class SingleActiveFIMap extends React.Component<
         </div>
       </div>
     );
+  }
+
+  private async fetchData() {
+    const {
+      fetchGoalsActionCreator,
+      fetchJurisdictionsActionCreator,
+      fetchPlansActionCreator,
+      fetchStructuresActionCreator,
+      fetchTasksActionCreator,
+      plan,
+      supersetService,
+    } = this.props;
+
+    if (plan && plan.plan_id) {
+      /** define superset filter params for jurisdictions */
+      const jurisdictionsParams = superset.getFormData(SUPERSET_MAX_RECORDS, [
+        { comparator: plan.jurisdiction_id, operator: '==', subject: JURISDICTION_ID },
+      ]);
+      await supersetService(SUPERSET_JURISDICTIONS_SLICE, jurisdictionsParams)
+        .then((result: Jurisdiction[]) => fetchJurisdictionsActionCreator(result))
+        .catch(error => {
+          throw error;
+        });
+      /** define superset params for filtering by plan_id */
+      const supersetParams = superset.getFormData(SUPERSET_MAX_RECORDS, [
+        { comparator: plan.plan_id, operator: '==', subject: PLAN_ID },
+      ]);
+      /** define superset params for goals */
+      const goalsParams = superset.getFormData(
+        SUPERSET_MAX_RECORDS,
+        [{ comparator: plan.plan_id, operator: '==', subject: PLAN_ID }],
+        { action_prefix: true }
+      );
+      /** Implement Ad hoc Queries since jurisdictions have no plan_id */
+      await supersetService(SUPERSET_STRUCTURES_SLICE, jurisdictionsParams)
+        .then((structuresResults: Structure[]) => {
+          fetchStructuresActionCreator(structuresResults);
+        })
+        .catch(error => {
+          throw error;
+        });
+      await supersetService(SUPERSET_PLANS_SLICE, jurisdictionsParams)
+        .then((result2: Plan[]) => {
+          fetchPlansActionCreator(result2);
+        })
+        .catch(error => {
+          throw error;
+        });
+      await supersetService(SUPERSET_GOALS_SLICE, goalsParams)
+        .then((result3: Goal[]) => {
+          fetchGoalsActionCreator(result3);
+        })
+        .catch(error => {
+          throw error;
+        });
+      await supersetService(SUPERSET_TASKS_SLICE, supersetParams)
+        .then((result4: Task[]) => {
+          fetchTasksActionCreator(result4);
+        })
+        .catch(error => {
+          throw error;
+        });
+    }
   }
 
   /** event handlers */

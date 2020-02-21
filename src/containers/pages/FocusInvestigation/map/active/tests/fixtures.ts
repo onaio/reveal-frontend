@@ -4,7 +4,7 @@ import * as globalFixtures from '../../../../../../store/ducks/tests/fixtures';
  * relies on the passed props.
  */
 export const existingState = {
-  gatekeeper: { result: {}, success: null },
+  gatekeeper: { result: {}, success: null, working: false },
   goals: {
     currentGoal: null,
     goalsById: { '19b86421-3cb2-5698-9f11-c1bdafbe5e6d': globalFixtures.goal3 },

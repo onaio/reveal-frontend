@@ -2,30 +2,41 @@ import { getOpenSRPUserInfo } from '@onaio/gatekeeper';
 import ClientOAuth2 from 'client-oauth2';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
-import dotenv from 'dotenv';
 import express from 'express';
 import session from 'express-session';
 import helmet from 'helmet';
 import path from 'path';
 import request from 'request';
 import sessionFileStore from 'session-file-store';
-
-// initialize configuration
-dotenv.config();
+import {
+  EXPRESS_OPENSRP_ACCESS_TOKEN_URL,
+  EXPRESS_OPENSRP_AUTHORIZATION_URL,
+  EXPRESS_OPENSRP_CALLBACK_URL,
+  EXPRESS_OPENSRP_CLIENT_ID,
+  EXPRESS_OPENSRP_CLIENT_SECRET,
+  EXPRESS_OPENSRP_OAUTH_STATE,
+  EXPRESS_OPENSRP_USER_URL,
+  EXPRESS_PORT,
+  EXPRESS_REACT_BUILD_PATH,
+  EXPRESS_SESSION_FILESTORE_PATH,
+  EXPRESS_SESSION_LOGIN_URL,
+  EXPRESS_SESSION_NAME,
+  EXPRESS_SESSION_PATH,
+  EXPRESS_SESSION_SECRET,
+  FRONTEND_OPENSRP_CALLBACK_URL,
+} from './configs/envs';
 
 const opensrpAuth = new ClientOAuth2({
-  accessTokenUri: process.env.EXPRESS_OPENSRP_ACCESS_TOKEN_URL,
-  authorizationUri: process.env.EXPRESS_OPENSRP_AUTHORIZATION_URL,
-  clientId: process.env.EXPRESS_OPENSRP_CLIENT_ID,
-  clientSecret: process.env.EXPRESS_OPENSRP_CLIENT_SECRET,
-  redirectUri: process.env.EXPRESS_OPENSRP_CALLBACK_URL,
+  accessTokenUri: EXPRESS_OPENSRP_ACCESS_TOKEN_URL,
+  authorizationUri: EXPRESS_OPENSRP_AUTHORIZATION_URL,
+  clientId: EXPRESS_OPENSRP_CLIENT_ID,
+  clientSecret: EXPRESS_OPENSRP_CLIENT_SECRET,
+  redirectUri: EXPRESS_OPENSRP_CALLBACK_URL,
   scopes: ['read', 'write'],
-  state: process.env.EXPRESS_OPENSRP_OAUTH_STATE,
+  state: EXPRESS_OPENSRP_OAUTH_STATE,
 });
-
-const loginURL = process.env.EXPRESS_SESSION_LOGIN_URL || '/';
-
-const sessionName = process.env.EXPRESS_SESSION_NAME || 'session';
+const loginURL = EXPRESS_SESSION_LOGIN_URL || '/';
+const sessionName = EXPRESS_SESSION_NAME || 'session';
 
 const app = express();
 
@@ -34,19 +45,19 @@ app.use(helmet()); // protect against well known vulnerabilities
 
 const FileStore = sessionFileStore(session);
 const fileStoreOptions = {
-  path: process.env.EXPRESS_SESSION_FILESTORE_PATH || './sessions',
+  path: EXPRESS_SESSION_FILESTORE_PATH || './sessions',
 };
 
 const sess = {
   cookie: {
     httpOnly: true,
-    path: process.env.EXPRESS_SESSION_PATH || '/',
+    path: EXPRESS_SESSION_PATH || '/',
     secure: false,
   },
   name: sessionName,
   resave: true,
   saveUninitialized: true,
-  secret: process.env.EXPRESS_SESSION_SECRET || 'hunter2',
+  secret: EXPRESS_SESSION_SECRET || 'hunter2',
   store: new FileStore(fileStoreOptions),
 };
 
@@ -55,18 +66,8 @@ if (app.get('env') === 'production') {
   sess.cookie.secure = true; // serve secure cookies
 }
 
-// app.use(express.json());
 app.use(cookieParser());
 app.use(session(sess));
-
-// This middleware will check if user's cookie is still saved in browser and
-// preloadedState is not set, then automatically remove the cookie.
-// app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
-//   if (req.cookies[sessionName] && (!req.session || !req.session.preloadedState)) {
-//     res.clearCookie(sessionName);
-//   }
-//   next();
-// });
 
 class HttpException extends Error {
   public statusCode: number;
@@ -86,31 +87,16 @@ const handleError = (err: HttpException, res: express.Response) => {
     statusCode,
   });
 };
-// middleware function to check for logged-in users
-const sessionChecker = (
-  req: express.Request,
-  res: express.Response,
-  next: express.NextFunction
-) => {
-  if (!req.session.preloadedState) {
-    res.redirect(loginURL);
-  }
-  next();
-};
 
-const router = express.Router();
-
-const PORT = process.env.EXPRESS_PORT || 3000;
-
-const BUILD_PATH = process.env.EXPRESS_REACT_BUILD_PATH || path.resolve(path.resolve(), '../build');
+const BUILD_PATH = EXPRESS_REACT_BUILD_PATH;
 const filePath = path.resolve(BUILD_PATH, 'index.html');
 
 // need to add docstrings and type defs
-const renderer = (req: express.Request, res: express.Response) => {
+const renderer = (_: express.Request, res: express.Response) => {
   res.sendFile(filePath);
 };
 
-const oauthLogin = (req: express.Request, res: express.Response) => {
+const oauthLogin = (_: express.Request, res: express.Response) => {
   const provider = opensrpAuth;
   const uri = provider.code.getUri();
   res.redirect(uri);
@@ -121,14 +107,14 @@ const oauthCallback = (req: express.Request, res: express.Response, next: expres
   provider.code
     .getToken(req.originalUrl)
     .then((user: ClientOAuth2.Token) => {
-      const url = process.env.EXPRESS_OPENSRP_USER_URL;
+      const url = EXPRESS_OPENSRP_USER_URL;
       request.get(
         url,
         user.sign({
           method: 'GET',
           url,
         }),
-        (error: Error, response: request.Response, body: string) => {
+        (error: Error, _: request.Response, body: string) => {
           if (error) {
             next(error); // pass error to express
           }
@@ -143,13 +129,14 @@ const oauthCallback = (req: express.Request, res: express.Response, next: expres
               session: sessionState,
             };
             req.session.preloadedState = preloadedState;
+            const expireAfterMs = sessionState.extraData.oAuth2Data.expires_in * 1000;
+            req.session.cookie.maxAge = expireAfterMs;
             // you have to save the session manually for POST requests like this one
             req.session.save(() => void 0);
+            return res.redirect(FRONTEND_OPENSRP_CALLBACK_URL);
           }
         }
       );
-
-      return res.status(200).json('Success');
     })
     .catch((e: Error) => {
       next(e);
@@ -165,6 +152,11 @@ const oauthState = (req: express.Request, res: express.Response) => {
   return res.json(req.session.preloadedState);
 };
 
+const loginRedirect = (req: express.Request, res: express.Response, next: express.NextFunction) => {
+  // check if logged in and redirect
+  req.session.preloadedState ? res.redirect('/') : next();
+};
+
 const logout = (req: express.Request, res: express.Response) => {
   req.session.destroy(() => void 0);
   res.clearCookie(sessionName);
@@ -172,9 +164,12 @@ const logout = (req: express.Request, res: express.Response) => {
 };
 
 // OAuth views
+const router = express.Router();
 router.use('/oauth/opensrp', oauthLogin);
 router.use('/oauth/callback/OpenSRP', oauthCallback);
 router.use('/oauth/state', oauthState);
+// handle login
+router.use(loginURL, loginRedirect);
 // logout
 router.use('/logout', logout);
 // render React app
@@ -188,11 +183,12 @@ router.use('*', renderer);
 app.use(router);
 
 app.use(
-  (err: HttpException, req: express.Request, res: express.Response, next: express.NextFunction) => {
+  (err: HttpException, _: express.Request, res: express.Response, __: express.NextFunction) => {
     handleError(err, res);
   }
 );
 
+const PORT = EXPRESS_PORT || 3000;
 app.listen(PORT, () => {
   // tslint:disable-next-line:no-console
   console.log(`App listening on port ${PORT}!`);
