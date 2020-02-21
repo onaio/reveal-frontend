@@ -1,15 +1,7 @@
 import { Registry } from '@onaio/redux-reducer-registry';
 import React from 'react';
-import { connect } from 'react-redux';
 import { ActionCreator } from 'redux';
-
-/** interface to describe ObjectList options */
-export interface ObjectListOptions<TAction, TSelector> {
-  actionCreator: ActionCreator<TAction>;
-  listPropName: string;
-  dispatchPropName: string;
-  selector: TSelector;
-}
+import { Base, CBVOptions } from './Base';
 
 /** interface for the props of the connected component created by ObjectList  */
 interface ObjectListProps<TAction, TObject> {
@@ -34,14 +26,16 @@ interface ObjectListProps<TAction, TObject> {
  *
  * Every method in this class can and should be overwritten to cater to custom needs.
  */
-export class ObjectList<ObjectType, ActionType, SelectorType, PropsType, RootState = Registry> {
-  public Component: React.ElementType;
-  public options: ObjectListOptions<ActionType, SelectorType>;
-
+export class ObjectList<
+  ObjectType,
+  ActionType,
+  SelectorType,
+  PropsType,
+  RootState = Registry
+> extends Base<ActionType, SelectorType> {
   /** constructor */
-  constructor(component: React.ElementType, options: ObjectListOptions<ActionType, SelectorType>) {
-    this.Component = component;
-    this.options = options;
+  constructor(component: React.ElementType, options: CBVOptions<ActionType, SelectorType>) {
+    super(component, options);
   }
 
   /**
@@ -65,14 +59,6 @@ export class ObjectList<ObjectType, ActionType, SelectorType, PropsType, RootSta
   }
 
   /**
-   * The mapDispatchToProps function
-   * You may override this for more custom needs.
-   */
-  public getMapDispatchToProps() {
-    return { [this.options.dispatchPropName]: this.options.actionCreator };
-  }
-
-  /**
    * The mapStateToProps function
    * You may override this for more custom needs.
    */
@@ -83,34 +69,11 @@ export class ObjectList<ObjectType, ActionType, SelectorType, PropsType, RootSta
       // TODO: look into whether there is a better fix for this
       if (typeof this.options.selector === 'function') {
         return {
-          [this.options.listPropName]: this.options.selector(state, ownProps),
+          [this.options.returnPropName]: this.options.selector(state, ownProps),
         };
       }
       // if the TypeGuard fails lets return an empty array
-      return { [this.options.listPropName]: [] };
+      return { [this.options.returnPropName]: [] };
     };
-  }
-
-  /**
-   * This function simply connects the Higher Order Component to the redux
-   * store.
-   */
-  public getConnectedHOC() {
-    /** map dispatch to props */
-    const mapDispatchToProps = this.getMapDispatchToProps();
-    /** map state to props */
-    const mapStateToProps = this.getMapStateToProps();
-    /** connect to store */
-    return connect(
-      mapStateToProps,
-      mapDispatchToProps
-    )(this.getHOC());
-  }
-
-  /**
-   * This function returns the connected higher order component.
-   */
-  public render() {
-    return this.getConnectedHOC();
   }
 }
