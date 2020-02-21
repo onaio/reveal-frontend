@@ -6,13 +6,22 @@ import { Helmet } from 'react-helmet';
 import { RouteComponentProps } from 'react-router';
 import { Column } from 'react-table';
 import 'react-table/react-table.css';
+import { Col, Row } from 'reactstrap';
+import { format } from 'util';
 import Loading from '../../../../components/page/Loading';
 import NullDataTable from '../../../../components/Table/NullDataTable';
 import TableHeader from '../../../../components/Table/TableHeaders';
 import { SUPERSET_PLANS_SLICE } from '../../../../configs/env';
 import {
+  CANTON,
   COMPLETE_FOCUS_INVESTIGATION,
   CURRENT_FOCUS_INVESTIGATION,
+  DISTRICT,
+  FI_REASON,
+  FI_STATUS,
+  FIS_IN_JURISDICTION,
+  FOCUS_AREA_INFO,
+  PROVINCE,
 } from '../../../../configs/lang';
 import {
   completeReactivePlansColumn,
@@ -38,6 +47,7 @@ import {
   transformValues,
 } from '../../../../helpers/utils';
 import supersetFetch from '../../../../services/superset';
+import { Jurisdiction } from '../../../../store/ducks/jurisdictions';
 import plansReducer, {
   fetchPlans,
   FetchPlansAction,
@@ -84,6 +94,7 @@ export const defaultActiveFIProps: FIJurisdictionProps = {
  */
 const FIJurisdiction = (props: FIJurisdictionProps & RouteComponentProps<RouteParams>) => {
   const [loading, setLoading] = useState(true);
+  const [jurisdiction, setJurisdiction] = useState<Jurisdiction | null>(null);
 
   const {
     completeReactivePlans,
@@ -103,6 +114,10 @@ const FIJurisdiction = (props: FIJurisdictionProps & RouteComponentProps<RoutePa
     { comparator: InterventionType.FI, operator: '==', subject: 'plan_intervention_type' },
   ]);
 
+  const jurisdictionCallback = (val: Jurisdiction) => {
+    setJurisdiction(val);
+  };
+
   useEffect(() => {
     supersetService(SUPERSET_PLANS_SLICE, supersetParams)
       .then((result: Plan[]) => {
@@ -120,9 +135,10 @@ const FIJurisdiction = (props: FIJurisdictionProps & RouteComponentProps<RoutePa
     return <Loading />;
   }
 
-  /** UNKNOWN */
-  const pageTitle = 'pageTitle';
-  /** END */
+  const pageTitle =
+    jurisdiction && jurisdiction.geojson
+      ? format(FIS_IN_JURISDICTION, jurisdiction.geojson.properties.jurisdiction_name)
+      : '';
 
   /** currentRoutineReactivePlans array that holds current routine and reactive tables  */
   const currentRoutineReactivePlans: FlexObject[] = [];
@@ -285,19 +301,37 @@ const FIJurisdiction = (props: FIJurisdictionProps & RouteComponentProps<RoutePa
 
   const jurisdictionMapProps = {
     ...jurisdictionMapDefaultProps,
+    callback: jurisdictionCallback,
     jurisdictionId,
   };
 
   return (
-    <div>
+    <div className="mb-5">
       <Helmet>
         <title>{pageTitle}</title>
       </Helmet>
       <div>Breadcrumbs</div>
-      <h2 className="mb-3 mt-5 page-title">{pageTitle}</h2>
-      <div>
-        <ConnectedJurisdictionMap {...jurisdictionMapProps} />
-      </div>
+      <h2 className="page-title mt-4 mb-5">{pageTitle}</h2>
+      <Row>
+        <Col className="col-6">
+          <h4 className="mb-4">{FOCUS_AREA_INFO}</h4>
+          <ConnectedJurisdictionMap {...jurisdictionMapProps} />
+        </Col>
+        <Col className="col-6">
+          <dl className="row mt-3">
+            <dt className="col-4">{PROVINCE}</dt>
+            {/* <dd className="col-8">{theObject.province}</dd> */}
+            <dt className="col-4">{DISTRICT}</dt>
+            {/* <dd className="col-8">{theObject.district}</dd> */}
+            <dt className="col-4">{CANTON}</dt>
+            {/* <dd className="col-8">{theObject.canton}</dd> */}
+            <dt className="col-4">{FI_STATUS}</dt>
+            {/* <dd className="col-8">{theObject.status}</dd> */}
+            <dt className="col-4">{FI_REASON}</dt>
+            {/* <dd className="col-8">{theObject.reason}</dd> */}
+          </dl>
+        </Col>
+      </Row>
       <hr />
       <h4 className="mb-4">{CURRENT_FOCUS_INVESTIGATION}</h4>
       {currentRoutineReactivePlans}
