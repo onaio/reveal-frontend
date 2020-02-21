@@ -78,7 +78,7 @@ class HttpException extends Error {
     this.message = message;
   }
 }
-/* tslint:disable:no-unused-variable */
+
 const handleError = (err: HttpException, res: express.Response) => {
   const { statusCode, message } = err;
   res.status(statusCode).json({
@@ -180,7 +180,6 @@ app.use(
     handleError(err, res);
   }
 );
-/* tslint:disable:no-unused-variable */
 
 const PORT = EXPRESS_PORT || 3000;
 app.listen(PORT, () => {
