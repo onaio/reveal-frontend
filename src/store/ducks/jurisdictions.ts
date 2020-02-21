@@ -42,7 +42,7 @@ export const REMOVE_JURISDICTIONS = 'reveal/reducer/jurisdiction/REMOVE_JURISDIC
 export const REMOVE_ALL_JURISDICTION_IDS = 'reveal/reducer/jurisdiction/REMOVE_ALL_JURISDICTIONIDS';
 
 /** fetch jurisdiction action */
-interface FetchJurisdictionAction extends AnyAction {
+export interface FetchJurisdictionAction extends AnyAction {
   allJurisdictionIds?: AllJurisdictionIds;
   jurisdictionsById: { [key: string]: Jurisdiction };
   type: typeof FETCH_JURISDICTION;
