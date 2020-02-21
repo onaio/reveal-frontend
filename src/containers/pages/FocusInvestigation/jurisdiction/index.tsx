@@ -69,6 +69,7 @@ import ConnectedJurisdictionMap, {
   defaultProps as jurisdictionMapDefaultProps,
 } from '../../../JurisdictionMap';
 import JurisdictionList from './helpers/JurisdictionList';
+import './single.css';
 
 reducerRegistry.register(plansReducerName, plansReducer);
 

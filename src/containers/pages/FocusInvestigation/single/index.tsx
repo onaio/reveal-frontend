@@ -204,7 +204,7 @@ class SingleFI extends React.Component<RouteComponentProps<RouteParams> & Single
     const breadCrumbProps: BreadCrumbProps = {
       currentPage: {
         label: theObject.focusArea,
-        url: `${FI_SINGLE_URL}/${planById.id}`,
+        url: `${FI_SINGLE_URL}/${planById.jurisdiction_id}`,
       },
       pages: [],
     };

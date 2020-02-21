@@ -245,7 +245,7 @@ class SingleActiveFIMap extends React.Component<
     };
     const secondLastPage = {
       label: plan.jurisdiction_name,
-      url: `${FI_SINGLE_URL}/${plan.id}`,
+      url: `${FI_SINGLE_URL}/${plan.jurisdiction_id}`,
     };
     const breadCrumbProps: BreadCrumbProps = {
       currentPage: {
