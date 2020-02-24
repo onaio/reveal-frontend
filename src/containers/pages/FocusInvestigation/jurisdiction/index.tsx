@@ -138,7 +138,9 @@ export const FIJurisdiction = (props: FIJurisdictionProps & RouteComponentProps<
   ]);
 
   const jurisdictionCallback = (val: Jurisdiction) => {
-    setJurisdiction(val);
+    if (!jurisdiction) {
+      setJurisdiction(val);
+    }
   };
 
   const jurisdictionMapProps = {
