@@ -8,7 +8,7 @@ import { defaultProps, JurisdictionMap, JurisdictionMapProps } from '../index';
 /* tslint:disable-next-line no-var-requires */
 const fetch = require('jest-fetch-mock');
 
-describe('components/IRS Reports/IRSReportingMap', () => {
+describe('containers/JurisdictionMap', () => {
   beforeEach(() => {
     jest.resetAllMocks();
   });
