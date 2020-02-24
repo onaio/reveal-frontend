@@ -1,12 +1,23 @@
+import reducerRegistry from '@onaio/redux-reducer-registry';
 import { mount, shallow } from 'enzyme';
 import flushPromises from 'flush-promises';
 import React from 'react';
+import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router';
+import store from '../../../store';
+import jurisdictionReducer, {
+  fetchJurisdictions,
+  reducerName as jurisdictionReducerName,
+} from '../../../store/ducks/jurisdictions';
 import { jurisdiction1 } from '../../../store/ducks/tests/fixtures';
-import { defaultProps, JurisdictionMap, JurisdictionMapProps } from '../index';
+import ConnectedJurisdictionMap, {
+  defaultProps,
+  JurisdictionMap,
+  JurisdictionMapProps,
+} from '../index';
 
-/* tslint:disable-next-line no-var-requires */
-const fetch = require('jest-fetch-mock');
+/** register the jurisdictions reducer */
+reducerRegistry.register(jurisdictionReducerName, jurisdictionReducer);
 
 describe('containers/JurisdictionMap', () => {
   beforeEach(() => {
@@ -27,7 +38,6 @@ describe('containers/JurisdictionMap', () => {
   });
 
   it('renders correctly', async () => {
-    fetch.mockResponseOnce(JSON.stringify({}));
     const callbackMock: any = jest.fn();
     const supersetServiceMock: any = jest.fn();
     supersetServiceMock.mockImplementation(async () => []);
@@ -73,6 +83,41 @@ describe('containers/JurisdictionMap', () => {
 
     expect(callbackMock.mock.calls).toEqual([[jurisdiction1]]);
     expect(callbackMock).toHaveBeenCalledTimes(1);
+
+    expect(wrapper.find('GisidaWrapper').props()).toEqual({
+      currentGoal: null,
+      geoData: jurisdiction1,
+      goal: null,
+      handlers: [],
+      minHeight: '200px',
+      pointFeatureCollection: null,
+      polygonFeatureCollection: null,
+      structures: null,
+    });
+  });
+
+  it('works when connected to the store', async () => {
+    store.dispatch(fetchJurisdictions([jurisdiction1]));
+
+    const supersetServiceMock: any = jest.fn();
+    supersetServiceMock.mockImplementation(async () => [jurisdiction1]);
+
+    const props: JurisdictionMapProps = {
+      ...defaultProps,
+      jurisdictionId: jurisdiction1.jurisdiction_id,
+      supersetService: supersetServiceMock,
+    };
+
+    const wrapper = mount(
+      <Provider store={store}>
+        <MemoryRouter>
+          <ConnectedJurisdictionMap {...props} />
+        </MemoryRouter>
+      </Provider>
+    );
+
+    await flushPromises();
+    wrapper.update();
 
     expect(wrapper.find('GisidaWrapper').props()).toEqual({
       currentGoal: null,
