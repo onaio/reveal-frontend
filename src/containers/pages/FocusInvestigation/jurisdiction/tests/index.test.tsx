@@ -8,6 +8,7 @@ import { Helmet } from 'react-helmet';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router';
 import { FI_SINGLE_URL } from '../../../../../constants';
+import * as errorHelpers from '../../../../../helpers/errors';
 import { extractPlan, transformValues } from '../../../../../helpers/utils';
 import store from '../../../../../store';
 import jurisdictionReducer, {
@@ -396,5 +397,47 @@ describe('containers/FocusInvestigation/Jurisdiction', () => {
         .last()
         .text()
     ).toEqual('No Investigations Found');
+  });
+
+  it('renders supersetService error correctly', async () => {
+    const mockDisplayError: any = jest.fn();
+    (errorHelpers as any).displayError = mockDisplayError;
+
+    const error = new Error('Catastrophy!!');
+
+    const supersetServiceMock: any = jest.fn();
+    supersetServiceMock.mockRejectedValue(error);
+
+    const props = {
+      ...defaultActiveFIProps,
+      completeReactivePlans: [],
+      completeRoutinePlans: [],
+      currentReactivePlans: [],
+      currentRoutinePlans: [],
+      fetchPlansActionCreator: jest.fn(),
+      history,
+      location: jest.fn() as any,
+      match: {
+        isExact: true,
+        params: { jurisdictionId: fixtures.jurisdiction1.jurisdiction_id },
+        path: `${FI_SINGLE_URL}/:jurisdictionId`,
+        url: `${FI_SINGLE_URL}/${fixtures.jurisdiction1.jurisdiction_id}`,
+      },
+      supersetService: supersetServiceMock,
+    };
+
+    const wrapper = mount(
+      <Provider store={store}>
+        <MemoryRouter>
+          <FIJurisdiction {...props} />
+        </MemoryRouter>
+      </Provider>
+    );
+
+    await flushPromises();
+    wrapper.update();
+
+    expect(mockDisplayError.mock.calls).toEqual([[error]]);
+    expect(mockDisplayError).toHaveBeenCalledTimes(1);
   });
 });
