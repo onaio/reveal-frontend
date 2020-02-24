@@ -27,6 +27,7 @@ import {
   FOCUS_AREA_INFO,
   FOCUS_INVESTIGATIONS,
   HOME,
+  JURISDICTION_LOADING_ERROR,
   PROVINCE,
   REACTIVE,
   ROUTINE_TITLE,
@@ -105,6 +106,7 @@ export const defaultActiveFIProps: FIJurisdictionProps = {
  */
 export const FIJurisdiction = (props: FIJurisdictionProps & RouteComponentProps<RouteParams>) => {
   const [loading, setLoading] = useState(true);
+  const [errorOcurred, setErrorOcurred] = useState(false);
   const [jurisdiction, setJurisdiction] = useState<Jurisdiction | null>(null);
 
   const {
@@ -156,15 +158,23 @@ export const FIJurisdiction = (props: FIJurisdictionProps & RouteComponentProps<
         if (result) {
           fetchPlansActionCreator(result);
         } else {
+          setErrorOcurred(true);
           displayError(new Error(AN_ERROR_OCCURED));
         }
       })
       .finally(() => setLoading(false))
-      .catch(err => displayError(err));
+      .catch(err => {
+        setErrorOcurred(true);
+        displayError(err);
+      });
   }, []);
 
   if (loading === true) {
     return <Loading />;
+  }
+
+  if (errorOcurred === true) {
+    return <div>{JURISDICTION_LOADING_ERROR}</div>;
   }
 
   const jurisdictionName =
