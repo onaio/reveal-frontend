@@ -175,6 +175,13 @@ describe('containers/FocusInvestigation/Jurisdiction', () => {
 
     expect(toJson(wrapper.find('JurisdictionMap'))).toMatchSnapshot('JurisdictionMap');
 
+    expect(
+      wrapper
+        .find('.focus-area-info-title')
+        .last()
+        .text()
+    ).toEqual('Focus Area Information');
+
     // expect(wrapper.find('ConnectedJurisdictionMap').props()).toMatchSnapshot('ConnectedJurisdictionMap');
   });
 });
