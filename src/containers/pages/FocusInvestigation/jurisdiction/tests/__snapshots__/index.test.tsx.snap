@@ -28,3 +28,14 @@ Array [
   </a>,
 ]
 `;
+
+exports[`containers/FocusInvestigation/Jurisdiction renders correctly: JurisdictionMap 1`] = `
+<JurisdictionMap
+  callback={[Function]}
+  jurisdictionId="450fc15b-5bd2-468a-927a-49cb10d3bcac"
+>
+  <div>
+    I love oov
+  </div>
+</JurisdictionMap>
+`;

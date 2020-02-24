@@ -173,6 +173,8 @@ describe('containers/FocusInvestigation/Jurisdiction', () => {
         .text()
     ).toEqual('TLv1_01');
 
+    expect(toJson(wrapper.find('JurisdictionMap'))).toMatchSnapshot('JurisdictionMap');
+
     // expect(wrapper.find('ConnectedJurisdictionMap').props()).toMatchSnapshot('ConnectedJurisdictionMap');
   });
 });
