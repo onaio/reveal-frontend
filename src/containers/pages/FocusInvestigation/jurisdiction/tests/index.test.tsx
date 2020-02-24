@@ -439,5 +439,7 @@ describe('containers/FocusInvestigation/Jurisdiction', () => {
 
     expect(mockDisplayError.mock.calls).toEqual([[error]]);
     expect(mockDisplayError).toHaveBeenCalledTimes(1);
+
+    expect(toJson(wrapper.find('div'))).toMatchSnapshot('supersetService error');
   });
 });
