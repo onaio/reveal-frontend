@@ -650,7 +650,7 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
             currentPage={
               Object {
                 "label": "NVI_439",
-                "url": "/focus-investigation/view/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
+                "url": "/focus-investigation/view/450fc15b-5bd2-468a-927a-49cb10d3bcac",
               }
             }
             pages={
@@ -2961,10 +2961,10 @@ exports[`containers/pages/SingleFI It works with the Redux store 1`] = `
                                             
                                           <Link
                                             replace={false}
-                                            to="/focus-investigation/view/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
+                                            to="/focus-investigation/view/450fc15b-5bd2-468a-927a-49cb10d3bcac"
                                           >
                                             <a
-                                              href="/focus-investigation/view/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
+                                              href="/focus-investigation/view/450fc15b-5bd2-468a-927a-49cb10d3bcac"
                                               onClick={[Function]}
                                             >
                                               <FontAwesomeIcon
@@ -5776,7 +5776,7 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
         currentPage={
           Object {
             "label": "NVI_439",
-            "url": "/focus-investigation/view/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
+            "url": "/focus-investigation/view/450fc15b-5bd2-468a-927a-49cb10d3bcac",
           }
         }
         pages={
@@ -9127,10 +9127,10 @@ exports[`containers/pages/SingleFI renders SingleFI correctly 1`] = `
                                         
                                       <Link
                                         replace={false}
-                                        to="/focus-investigation/view/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
+                                        to="/focus-investigation/view/450fc15b-5bd2-468a-927a-49cb10d3bcac"
                                       >
                                         <a
-                                          href="/focus-investigation/view/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
+                                          href="/focus-investigation/view/450fc15b-5bd2-468a-927a-49cb10d3bcac"
                                           onClick={[Function]}
                                         >
                                           <FontAwesomeIcon
