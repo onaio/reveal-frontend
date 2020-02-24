@@ -16,6 +16,7 @@ import NullDataTable from '../../../../components/Table/NullDataTable';
 import TableHeader from '../../../../components/Table/TableHeaders';
 import { SUPERSET_PLANS_SLICE } from '../../../../configs/env';
 import {
+  AN_ERROR_OCCURED,
   CANTON,
   COMPLETE_FOCUS_INVESTIGATION,
   CURRENT_FOCUS_INVESTIGATION,
@@ -155,7 +156,7 @@ export const FIJurisdiction = (props: FIJurisdictionProps & RouteComponentProps<
         if (result) {
           fetchPlansActionCreator(result);
         } else {
-          displayError(new Error('An error occurred'));
+          displayError(new Error(AN_ERROR_OCCURED));
         }
       })
       .finally(() => setLoading(false))
