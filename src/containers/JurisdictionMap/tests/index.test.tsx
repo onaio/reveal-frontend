@@ -103,10 +103,10 @@ describe('containers/JurisdictionMap', () => {
     supersetServiceMock.mockImplementation(async () => [jurisdiction1]);
 
     const props: JurisdictionMapProps = {
-      ...defaultProps,
-      jurisdictionId: jurisdiction1.jurisdiction_id,
-      supersetService: supersetServiceMock,
-    };
+        ...defaultProps,
+        jurisdictionId: jurisdiction1.jurisdiction_id,
+        supersetService: supersetServiceMock,
+      } /** the jurisdiction is not supplied as it will be fetched from the store */;
 
     const wrapper = mount(
       <Provider store={store}>
