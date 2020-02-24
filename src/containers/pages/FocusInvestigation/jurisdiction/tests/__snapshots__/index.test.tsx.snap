@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`containers/FocusInvestigation/Jurisdiction renders correctly: HeaderBreadcrumb li a 1`] = `
+Array [
+  <a
+    href="/"
+    onClick={[Function]}
+  >
+    Home
+  </a>,
+  <a
+    href="/focus-investigation"
+    onClick={[Function]}
+  >
+    Focus Investigations
+  </a>,
+  <a
+    href="/focus-investigation/filter/2989/draftPlan-id-2"
+    onClick={[Function]}
+  >
+    Canton Tha Luang
+  </a>,
+  <a
+    href="/focus-investigation/filter/2977/draftPlan-id-2"
+    onClick={[Function]}
+  >
+    Tha Luang Village
+  </a>,
+]
+`;

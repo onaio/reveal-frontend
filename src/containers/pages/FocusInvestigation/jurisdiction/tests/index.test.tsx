@@ -1,20 +1,92 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
-import { shallow } from 'enzyme';
+import { mount, shallow } from 'enzyme';
+import toJson from 'enzyme-to-json';
+import flushPromises from 'flush-promises';
 import { createBrowserHistory } from 'history';
 import React from 'react';
+import { Helmet } from 'react-helmet';
+import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router';
 import { FI_SINGLE_URL } from '../../../../../constants';
-import plansReducer, { reducerName as plansReducerName } from '../../../../../store/ducks/plans';
+import store from '../../../../../store';
+import jurisdictionReducer, {
+  fetchJurisdictions,
+  reducerName as jurisdictionReducerName,
+} from '../../../../../store/ducks/jurisdictions';
+import plansReducer, {
+  Plan,
+  reducerName as plansReducerName,
+} from '../../../../../store/ducks/plans';
+import * as fixtures from '../../../../../store/ducks/tests/fixtures';
 import { defaultActiveFIProps, FIJurisdiction } from '../index';
 
+/** mock the envs */
 jest.mock('../../../../../configs/env');
 
-/** register the jurisdictions reducer */
+/**
+ * This mock is necessary because FIJurisdiction renders the JurisdictionMap
+ * component by passing to it a callback function that is then called with the
+ * jurisdiction object.  We have to simulate this so that JurisdictionMap can have
+ * a valid jurisdiction.
+ */
+jest.mock('../../../../JurisdictionMap', () => {
+  const JurisdictionMap = (props: any) => {
+    const { callback } = props;
+
+    // Unfortunately jest does not let us access any variables defined out of this
+    // scope
+    callback(
+      {
+        geojson: {
+          geometry: {
+            coordinates: [
+              [
+                [101.166915893555, 15.0715019595332],
+                [101.165628433228, 15.069429992157],
+                [101.164855957031, 15.0649130333519],
+                [101.164898872375, 15.061473449978],
+                [101.165843009949, 15.0585311116698],
+                [101.168718338013, 15.0577022766384],
+                [101.173524856567, 15.0577437184666],
+                [101.179447174072, 15.0583653449216],
+                [101.183996200562, 15.0589455279759],
+                [101.189103126526, 15.0597743581685],
+                [101.191892623901, 15.0629238834779],
+                [101.191549301147, 15.0671093647448],
+                [101.19086265564, 15.0727036913665],
+                [101.190605163574, 15.0748170653661],
+                [101.188631057739, 15.0768061040682],
+                [101.185412406921, 15.0769304183694],
+                [101.182150840759, 15.0772619228176],
+                [101.177172660828, 15.0780906816776],
+                [101.174211502075, 15.0777591785211],
+                [101.172151565552, 15.0765989134045],
+                [101.168503761292, 15.0753557651845],
+                [101.166915893555, 15.0715019595332],
+              ],
+            ],
+            type: 'Polygon',
+          },
+          id: '450fc15b-5bd2-468a-927a-49cb10d3bcac',
+          properties: {
+            jurisdiction_name: 'TLv1_01',
+            jurisdiction_parent_id: 'dad42fa6-b9b8-4658-bf25-bfa7ab5b16ae',
+          },
+          type: 'Feature',
+        },
+        jurisdiction_id: '450fc15b-5bd2-468a-927a-49cb10d3bcac',
+      } // TODO: find a way to call this from fixtures
+    );
+    return <div>I love oov</div>;
+  };
+  return JurisdictionMap;
+});
+
+/** register reducers */
 reducerRegistry.register(plansReducerName, plansReducer);
+reducerRegistry.register(jurisdictionReducerName, jurisdictionReducer);
 
 const history = createBrowserHistory();
-
-const jurisdictionID = '450fc15b-5bd2-468a-927a-49cb10d3bcac';
 
 describe('containers/FocusInvestigation/Jurisdiction', () => {
   beforeEach(() => {
@@ -30,9 +102,9 @@ describe('containers/FocusInvestigation/Jurisdiction', () => {
       location: mock,
       match: {
         isExact: true,
-        params: { jurisdictionId: jurisdictionID },
+        params: { jurisdictionId: fixtures.jurisdiction1.jurisdiction_id },
         path: `${FI_SINGLE_URL}/:jurisdictionId`,
-        url: `${FI_SINGLE_URL}/${jurisdictionID}`,
+        url: `${FI_SINGLE_URL}/${fixtures.jurisdiction1.jurisdiction_id}`,
       },
     };
     shallow(
@@ -40,5 +112,67 @@ describe('containers/FocusInvestigation/Jurisdiction', () => {
         <FIJurisdiction {...props} />
       </MemoryRouter>
     );
+  });
+
+  it('renders correctly', async () => {
+    store.dispatch(fetchJurisdictions([fixtures.jurisdiction1]));
+    const mock: any = jest.fn();
+
+    const supersetServiceMock: any = jest.fn();
+    supersetServiceMock.mockImplementation(async () => []);
+
+    const props = {
+      ...defaultActiveFIProps,
+      completeReactivePlans: [fixtures.completeReactivePlan as Plan],
+      completeRoutinePlans: [fixtures.completeRoutinePlan as Plan],
+      currentReactivePlans: [fixtures.plan2],
+      currentRoutinePlans: [fixtures.plan1],
+      fetchPlansActionCreator: jest.fn(),
+      history,
+      location: mock,
+      match: {
+        isExact: true,
+        params: { jurisdictionId: fixtures.jurisdiction1.jurisdiction_id },
+        path: `${FI_SINGLE_URL}/:jurisdictionId`,
+        url: `${FI_SINGLE_URL}/${fixtures.jurisdiction1.jurisdiction_id}`,
+      },
+      supersetService: supersetServiceMock,
+    };
+
+    const wrapper = mount(
+      <Provider store={store}>
+        <MemoryRouter>
+          <FIJurisdiction {...props} />
+        </MemoryRouter>
+      </Provider>
+    );
+
+    /** Show loading indicator */
+    expect(wrapper.find('FIJurisdiction>Ripple').length).toEqual(1);
+
+    await flushPromises();
+    wrapper.update();
+
+    /** No longer show loading indicator */
+    expect(wrapper.find('FIJurisdiction>Ripple').length).toEqual(0);
+
+    // check that the documents title was changed correctly
+    const helmet = Helmet.peek();
+    expect(helmet.title).toEqual('Focus Investigations in TLv1_01');
+
+    // check breadcrumbs
+    expect(wrapper.find('HeaderBreadcrumb').length).toEqual(1);
+    expect(wrapper.find('HeaderBreadcrumb li').length).toEqual(5);
+    // check the hierarchy
+    expect(toJson(wrapper.find('HeaderBreadcrumb li a'))).toMatchSnapshot('HeaderBreadcrumb li a');
+    // check last item
+    expect(
+      wrapper
+        .find('HeaderBreadcrumb li')
+        .last()
+        .text()
+    ).toEqual('TLv1_01');
+
+    // expect(wrapper.find('ConnectedJurisdictionMap').props()).toMatchSnapshot('ConnectedJurisdictionMap');
   });
 });
