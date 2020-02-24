@@ -1,5 +1,327 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`containers/FocusInvestigation/Jurisdiction renders correctly 1`] = `
+Object {
+  "CellComponent": [Function],
+  "columns": Array [
+    Object {
+      "Header": "Name",
+      "columns": Array [
+        Object {
+          "Cell": [Function],
+          "Header": "",
+          "accessor": "plan_title",
+          "minWidth": 160,
+        },
+      ],
+    },
+    Object {
+      "Header": "FI Status",
+      "columns": Array [
+        Object {
+          "Header": "",
+          "accessor": "plan_status",
+          "minWidth": 80,
+        },
+      ],
+    },
+    Object {
+      "Header": "Case Notif. Date",
+      "columns": Array [
+        Object {
+          "Header": "",
+          "accessor": "caseNotificationDate",
+          "minWidth": 90,
+        },
+      ],
+    },
+    Object {
+      "Header": "Case Class.",
+      "columns": Array [
+        Object {
+          "Header": "",
+          "accessor": "caseClassification",
+        },
+      ],
+    },
+  ],
+  "data": Any<Array>,
+  "hasChildren": [Function],
+  "identifierField": "id",
+  "linkerField": "id",
+  "minRows": 0,
+  "parentIdentifierField": "parent",
+  "rootParentId": null,
+  "shouldUseEffect": false,
+  "showPageSizeOptions": false,
+  "showPagination": false,
+  "useDrillDownTrProps": false,
+}
+`;
+
+exports[`containers/FocusInvestigation/Jurisdiction renders correctly 2`] = `
+Object {
+  "CellComponent": [Function],
+  "columns": Array [
+    Object {
+      "Header": "Name",
+      "columns": Array [
+        Object {
+          "Cell": [Function],
+          "Header": "",
+          "accessor": "plan_title",
+          "minWidth": 160,
+        },
+      ],
+    },
+    Object {
+      "Header": "FI Status",
+      "columns": Array [
+        Object {
+          "Header": "",
+          "accessor": "plan_status",
+          "minWidth": 80,
+        },
+      ],
+    },
+    Object {
+      "Header": "Province",
+      "columns": Array [
+        Object {
+          "Header": "",
+          "accessor": "province",
+        },
+      ],
+    },
+    Object {
+      "Header": "District",
+      "columns": Array [
+        Object {
+          "Header": "",
+          "accessor": "district",
+        },
+      ],
+    },
+    Object {
+      "Header": "Canton",
+      "columns": Array [
+        Object {
+          "Header": "",
+          "accessor": "canton",
+        },
+      ],
+    },
+    Object {
+      "Header": "Village",
+      "columns": Array [
+        Object {
+          "Header": "",
+          "accessor": "village",
+        },
+      ],
+    },
+    Object {
+      "Header": "Focus Area",
+      "columns": Array [
+        Object {
+          "Cell": [Function],
+          "Header": "",
+          "accessor": "focusArea",
+          "minWidth": 150,
+        },
+      ],
+    },
+    Object {
+      "Header": "Status",
+      "columns": Array [
+        Object {
+          "Header": "",
+          "accessor": "status",
+          "maxWidth": 60,
+        },
+      ],
+    },
+    Object {
+      "Header": "Start Date",
+      "columns": Array [
+        Object {
+          "Header": "",
+          "accessor": "plan_effective_period_start",
+          "minWidth": 80,
+        },
+      ],
+    },
+    Object {
+      "Header": "End Date",
+      "columns": Array [
+        Object {
+          "Header": "",
+          "accessor": "plan_effective_period_end",
+        },
+      ],
+    },
+    Object {
+      "Header": "Action",
+      "columns": Array [
+        Object {
+          "Cell": [Function],
+          "Header": "",
+          "accessor": "plan_status",
+          "minWidth": 70,
+        },
+      ],
+    },
+  ],
+  "data": Any<Array>,
+  "hasChildren": [Function],
+  "identifierField": "id",
+  "linkerField": "id",
+  "minRows": 0,
+  "parentIdentifierField": "parent",
+  "rootParentId": null,
+  "shouldUseEffect": false,
+  "showPageSizeOptions": false,
+  "showPagination": false,
+  "useDrillDownTrProps": false,
+}
+`;
+
+exports[`containers/FocusInvestigation/Jurisdiction renders correctly 3`] = `
+Object {
+  "CellComponent": [Function],
+  "columns": Array [
+    Object {
+      "Header": "Name",
+      "columns": Array [
+        Object {
+          "Cell": [Function],
+          "Header": "",
+          "accessor": "plan_title",
+          "minWidth": 160,
+        },
+      ],
+    },
+    Object {
+      "Header": "Date Completed",
+      "columns": Array [
+        Object {
+          "Header": "",
+          "accessor": "date_completed",
+          "minWidth": 80,
+        },
+      ],
+    },
+    Object {
+      "Header": "End Date",
+      "columns": Array [
+        Object {
+          "Header": "",
+          "accessor": "plan_effective_period_end",
+        },
+      ],
+    },
+    Object {
+      "Header": "Case Notif. Date",
+      "columns": Array [
+        Object {
+          "Header": "",
+          "accessor": "caseNotificationDate",
+          "minWidth": 90,
+        },
+      ],
+    },
+    Object {
+      "Header": "Case Class.",
+      "columns": Array [
+        Object {
+          "Header": "",
+          "accessor": "caseClassification",
+        },
+      ],
+    },
+  ],
+  "data": Any<Array>,
+  "hasChildren": [Function],
+  "identifierField": "id",
+  "linkerField": "id",
+  "minRows": 0,
+  "parentIdentifierField": "parent",
+  "rootParentId": null,
+  "shouldUseEffect": false,
+  "showPageSizeOptions": false,
+  "showPagination": false,
+  "useDrillDownTrProps": false,
+}
+`;
+
+exports[`containers/FocusInvestigation/Jurisdiction renders correctly 4`] = `
+Object {
+  "CellComponent": [Function],
+  "columns": Array [
+    Object {
+      "Header": "Name",
+      "columns": Array [
+        Object {
+          "Cell": [Function],
+          "Header": "",
+          "accessor": "plan_title",
+          "minWidth": 160,
+        },
+      ],
+    },
+    Object {
+      "Header": "Date Completed",
+      "columns": Array [
+        Object {
+          "Header": "",
+          "accessor": "date_completed",
+          "minWidth": 80,
+        },
+      ],
+    },
+    Object {
+      "Header": "Start Date",
+      "columns": Array [
+        Object {
+          "Header": "",
+          "accessor": "plan_effective_period_start",
+          "minWidth": 80,
+        },
+      ],
+    },
+    Object {
+      "Header": "End Date",
+      "columns": Array [
+        Object {
+          "Header": "",
+          "accessor": "plan_effective_period_end",
+        },
+      ],
+    },
+    Object {
+      "Header": "Date Completed",
+      "columns": Array [
+        Object {
+          "Header": "",
+          "accessor": "plan_effective_period_end",
+        },
+      ],
+    },
+  ],
+  "data": Any<Array>,
+  "hasChildren": [Function],
+  "identifierField": "id",
+  "linkerField": "id",
+  "minRows": 0,
+  "parentIdentifierField": "parent",
+  "rootParentId": null,
+  "shouldUseEffect": false,
+  "showPageSizeOptions": false,
+  "showPagination": false,
+  "useDrillDownTrProps": false,
+}
+`;
+
 exports[`containers/FocusInvestigation/Jurisdiction renders correctly: HeaderBreadcrumb li a 1`] = `
 Array [
   <a

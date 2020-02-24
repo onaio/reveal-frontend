@@ -8,6 +8,7 @@ import { Helmet } from 'react-helmet';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router';
 import { FI_SINGLE_URL } from '../../../../../constants';
+import { extractPlan, transformValues } from '../../../../../helpers/utils';
 import store from '../../../../../store';
 import jurisdictionReducer, {
   fetchJurisdictions,
@@ -250,6 +251,38 @@ describe('containers/FocusInvestigation/Jurisdiction', () => {
       'Link to create new plans'
     );
 
+    const columnsToTransform = ['village', 'canton', 'district', 'province'];
+
+    expect(
+      wrapper
+        .find('.current-plans DrillDownTable')
+        .first()
+        .props()
+    ).toMatchSnapshot({
+      data: expect.any(Array) /** just for purposes of making snapshot smaller */,
+    });
+    expect(
+      wrapper
+        .find('.current-plans DrillDownTable')
+        .first()
+        .props().data
+    ).toEqual([transformValues(extractPlan(fixtures.plan99 as Plan), columnsToTransform)]);
+
+    expect(
+      wrapper
+        .find('.current-plans DrillDownTable')
+        .last()
+        .props()
+    ).toMatchSnapshot({
+      data: expect.any(Array) /** just for purposes of making snapshot smaller */,
+    });
+    expect(
+      wrapper
+        .find('.current-plans DrillDownTable')
+        .last()
+        .props().data
+    ).toEqual([transformValues(extractPlan(fixtures.plan102 as Plan), columnsToTransform)]);
+
     expect(wrapper.find('.complete-plans TableHeader').length).toEqual(2);
     expect(wrapper
       .find('.complete-plans TableHeader')
@@ -266,6 +299,36 @@ describe('containers/FocusInvestigation/Jurisdiction', () => {
     expect(toJson(wrapper.find('.complete-plans LinkAsButton a').first())).toMatchSnapshot(
       'Link to create new plans'
     );
+
+    expect(
+      wrapper
+        .find('.complete-plans DrillDownTable')
+        .first()
+        .props()
+    ).toMatchSnapshot({
+      data: expect.any(Array) /** just for purposes of making snapshot smaller */,
+    });
+    expect(
+      wrapper
+        .find('.complete-plans DrillDownTable')
+        .first()
+        .props().data
+    ).toEqual([transformValues(extractPlan(fixtures.plan101 as Plan), columnsToTransform)]);
+
+    expect(
+      wrapper
+        .find('.complete-plans DrillDownTable')
+        .last()
+        .props()
+    ).toMatchSnapshot({
+      data: expect.any(Array) /** just for purposes of making snapshot smaller */,
+    });
+    expect(
+      wrapper
+        .find('.complete-plans DrillDownTable')
+        .last()
+        .props().data
+    ).toEqual([transformValues(extractPlan(fixtures.plan103 as Plan), columnsToTransform)]);
 
     // expect(toJson(wrapper.find('.current-plans'))).toMatchSnapshot('current-plans');
   });
