@@ -102,7 +102,7 @@ export const defaultActiveFIProps: FIJurisdictionProps = {
  * given jurisdiction.  It is meant to display for the focus area i.e. the
  * lowest level jurisdiction
  */
-const FIJurisdiction = (props: FIJurisdictionProps & RouteComponentProps<RouteParams>) => {
+export const FIJurisdiction = (props: FIJurisdictionProps & RouteComponentProps<RouteParams>) => {
   const [loading, setLoading] = useState(true);
   const [jurisdiction, setJurisdiction] = useState<Jurisdiction | null>(null);
 
