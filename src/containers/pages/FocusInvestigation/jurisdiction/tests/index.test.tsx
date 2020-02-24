@@ -14,6 +14,8 @@ reducerRegistry.register(plansReducerName, plansReducer);
 
 const history = createBrowserHistory();
 
+const jurisdictionID = '450fc15b-5bd2-468a-927a-49cb10d3bcac';
+
 describe('containers/FocusInvestigation/Jurisdiction', () => {
   beforeEach(() => {
     jest.resetAllMocks();
@@ -28,9 +30,9 @@ describe('containers/FocusInvestigation/Jurisdiction', () => {
       location: mock,
       match: {
         isExact: true,
-        params: { jurisdictionId: 'fixtures.plan1.id' },
+        params: { jurisdictionId: jurisdictionID },
         path: `${FI_SINGLE_URL}/:jurisdictionId`,
-        url: `${FI_SINGLE_URL}/fixtures.plan1.id`,
+        url: `${FI_SINGLE_URL}/${jurisdictionID}`,
       },
     };
     shallow(
