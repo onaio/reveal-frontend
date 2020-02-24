@@ -128,6 +128,35 @@ describe('containers/JurisdictionMap', () => {
     expect(toJson(wrapper.find('div'))).toMatchSnapshot('jurisdiction error');
   });
 
+  it('renders supersetService error correctly', async () => {
+    const mockDisplayError: any = jest.fn();
+    (errorHelpers as any).displayError = mockDisplayError;
+
+    const error = new Error('Catastrophy!!');
+
+    const supersetServiceMock: any = jest.fn();
+    supersetServiceMock.mockRejectedValue(error);
+
+    const props: JurisdictionMapProps = {
+      ...defaultProps,
+      jurisdictionId: jurisdiction1.jurisdiction_id,
+      supersetService: supersetServiceMock,
+    };
+    const wrapper = mount(
+      <MemoryRouter>
+        <JurisdictionMap {...props} />
+      </MemoryRouter>
+    );
+
+    await flushPromises();
+    wrapper.update();
+
+    expect(mockDisplayError.mock.calls).toEqual([[error]]);
+    expect(mockDisplayError).toHaveBeenCalledTimes(1);
+
+    expect(toJson(wrapper.find('div'))).toMatchSnapshot('supersetService error');
+  });
+
   it('works when connected to the store', async () => {
     store.dispatch(fetchJurisdictions([jurisdiction1]));
 
