@@ -1,15 +1,18 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import { mount, shallow } from 'enzyme';
+import toJson from 'enzyme-to-json';
 import flushPromises from 'flush-promises';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router';
+import * as errorHelpers from '../../../helpers/errors';
 import store from '../../../store';
 import jurisdictionReducer, {
   fetchJurisdictions,
   reducerName as jurisdictionReducerName,
 } from '../../../store/ducks/jurisdictions';
 import { jurisdiction1 } from '../../../store/ducks/tests/fixtures';
+import { AN_ERROR_OCCURRED } from '../.././../configs/lang';
 import ConnectedJurisdictionMap, {
   defaultProps,
   JurisdictionMap,
@@ -96,6 +99,33 @@ describe('containers/JurisdictionMap', () => {
       polygonFeatureCollection: null,
       structures: null,
     });
+  });
+
+  it('renders fetch error correctly', async () => {
+    const mockDisplayError: any = jest.fn();
+    (errorHelpers as any).displayError = mockDisplayError;
+
+    const supersetServiceMock: any = jest.fn();
+    supersetServiceMock.mockImplementation(async () => undefined);
+
+    const props: JurisdictionMapProps = {
+      ...defaultProps,
+      jurisdictionId: jurisdiction1.jurisdiction_id,
+      supersetService: supersetServiceMock,
+    };
+    const wrapper = mount(
+      <MemoryRouter>
+        <JurisdictionMap {...props} />
+      </MemoryRouter>
+    );
+
+    await flushPromises();
+    wrapper.update();
+
+    expect(mockDisplayError.mock.calls).toEqual([[new Error(AN_ERROR_OCCURRED)]]);
+    expect(mockDisplayError).toHaveBeenCalledTimes(1);
+
+    expect(toJson(wrapper.find('div'))).toMatchSnapshot('jurisdiction error');
   });
 
   it('works when connected to the store', async () => {
