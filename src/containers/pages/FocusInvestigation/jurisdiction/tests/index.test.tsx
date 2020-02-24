@@ -329,7 +329,5 @@ describe('containers/FocusInvestigation/Jurisdiction', () => {
         .last()
         .props().data
     ).toEqual([transformValues(extractPlan(fixtures.plan103 as Plan), columnsToTransform)]);
-
-    // expect(toJson(wrapper.find('.current-plans'))).toMatchSnapshot('current-plans');
   });
 });
