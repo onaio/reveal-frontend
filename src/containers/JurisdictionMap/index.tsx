@@ -4,6 +4,8 @@ import React, { useEffect, useState } from 'react';
 import GisidaWrapper from '../../components/GisidaWrapper';
 import Loading from '../../components/page/Loading';
 import { SUPERSET_JURISDICTIONS_SLICE } from '../../configs/env';
+import { AN_ERROR_OCCURRED, JURISDICTION_LOADING_ERROR } from '../../configs/lang';
+import { JURISDICTION_ID, MAP_AREA, TWO_HUNDRED_PX } from '../../constants';
 import { SingleObject } from '../../helpers/CBV';
 import { displayError } from '../../helpers/errors';
 import supersetFetch from '../../services/superset';
@@ -46,7 +48,7 @@ export const JurisdictionMap = (props: JurisdictionMapProps) => {
   /** define superset filter params for jurisdictions */
   const supersetParams = jurisdictionId
     ? superset.getFormData(1, [
-        { comparator: jurisdictionId, operator: '==', subject: 'jurisdiction_id' },
+        { comparator: jurisdictionId, operator: '==', subject: JURISDICTION_ID },
       ])
     : {};
 
@@ -57,7 +59,7 @@ export const JurisdictionMap = (props: JurisdictionMapProps) => {
           fetchJurisdictionsActionCreator(result);
         } else {
           setErrorOcurred(true);
-          displayError(new Error('An error occurred'));
+          displayError(new Error(AN_ERROR_OCCURRED));
         }
       })
       .finally(() => setLoading(false))
@@ -72,7 +74,7 @@ export const JurisdictionMap = (props: JurisdictionMapProps) => {
   }
 
   if (errorOcurred === true) {
-    return <span>something bad happened</span>;
+    return <div>{JURISDICTION_LOADING_ERROR}</div>;
   }
 
   if (jurisdiction) {
@@ -89,11 +91,11 @@ export const JurisdictionMap = (props: JurisdictionMapProps) => {
 /** Default props for JurisdictionMap */
 export const defaultProps: JurisdictionMapProps = {
   callback: (_: Jurisdiction) => void 0,
-  cssClass: 'map-area',
+  cssClass: MAP_AREA,
   fetchJurisdictionsActionCreator: fetchJurisdictions,
   jurisdiction: null,
   jurisdictionId: null,
-  minHeight: '200px',
+  minHeight: TWO_HUNDRED_PX,
   supersetService: supersetFetch,
 };
 
