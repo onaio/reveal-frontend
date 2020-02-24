@@ -191,5 +191,19 @@ describe('containers/FocusInvestigation/Jurisdiction', () => {
     expect(toJson(wrapper.find('.focus-area-info-section dl'))).toMatchSnapshot(
       'focus-area-info-section'
     );
+
+    expect(
+      wrapper
+        .find('h4.fi-table.current')
+        .last()
+        .text()
+    ).toEqual('Current Focus Investigations');
+
+    expect(
+      wrapper
+        .find('h4.fi-table.complete')
+        .last()
+        .text()
+    ).toEqual('Complete Focus Investigations');
   });
 });
