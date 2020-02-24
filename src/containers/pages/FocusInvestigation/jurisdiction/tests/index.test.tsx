@@ -160,6 +160,13 @@ describe('containers/FocusInvestigation/Jurisdiction', () => {
     const helmet = Helmet.peek();
     expect(helmet.title).toEqual('Focus Investigations in TLv1_01');
 
+    expect(
+      wrapper
+        .find('h2.page-title')
+        .last()
+        .text()
+    ).toEqual('Focus Investigations in TLv1_01');
+
     // check breadcrumbs
     expect(wrapper.find('HeaderBreadcrumb').length).toEqual(1);
     expect(wrapper.find('HeaderBreadcrumb li').length).toEqual(5);
