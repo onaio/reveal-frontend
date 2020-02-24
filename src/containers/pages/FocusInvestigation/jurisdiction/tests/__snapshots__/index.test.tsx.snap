@@ -39,3 +39,56 @@ exports[`containers/FocusInvestigation/Jurisdiction renders correctly: Jurisdict
   </div>
 </JurisdictionMap>
 `;
+
+exports[`containers/FocusInvestigation/Jurisdiction renders correctly: focus-area-info-section 1`] = `
+<dl
+  className="row mt-3"
+>
+  <dt
+    className="col-4"
+  >
+    Province
+  </dt>
+  <dd
+    className="col-8"
+  />
+  <dt
+    className="col-4"
+  >
+    District
+  </dt>
+  <dd
+    className="col-8"
+  />
+  <dt
+    className="col-4"
+  >
+    Canton
+  </dt>
+  <dd
+    className="col-8"
+  >
+    Canton Tha Luang
+  </dd>
+  <dt
+    className="col-4"
+  >
+    FI Status
+  </dt>
+  <dd
+    className="col-8"
+  >
+    A1
+  </dd>
+  <dt
+    className="col-4"
+  >
+    FI Reason
+  </dt>
+  <dd
+    className="col-8"
+  >
+    Case Triggered
+  </dd>
+</dl>
+`;

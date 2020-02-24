@@ -180,8 +180,6 @@ describe('containers/FocusInvestigation/Jurisdiction', () => {
         .text()
     ).toEqual('TLv1_01');
 
-    expect(toJson(wrapper.find('JurisdictionMap'))).toMatchSnapshot('JurisdictionMap');
-
     expect(
       wrapper
         .find('.focus-area-info-title')
@@ -189,6 +187,9 @@ describe('containers/FocusInvestigation/Jurisdiction', () => {
         .text()
     ).toEqual('Focus Area Information');
 
-    // expect(wrapper.find('ConnectedJurisdictionMap').props()).toMatchSnapshot('ConnectedJurisdictionMap');
+    expect(toJson(wrapper.find('JurisdictionMap'))).toMatchSnapshot('JurisdictionMap');
+    expect(toJson(wrapper.find('.focus-area-info-section dl'))).toMatchSnapshot(
+      'focus-area-info-section'
+    );
   });
 });
