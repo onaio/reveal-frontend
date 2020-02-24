@@ -450,3 +450,47 @@ exports[`containers/FocusInvestigation/Jurisdiction renders correctly: focus-are
   </dd>
 </dl>
 `;
+
+exports[`containers/FocusInvestigation/Jurisdiction renders empty tables correctly 1`] = `
+Object {
+  "CellComponent": [Function],
+  "NoDataComponent": [Function],
+  "columns": Array [
+    Object {
+      "Header": "Name",
+      "columns": Array [
+        Object {},
+      ],
+    },
+    Object {
+      "Header": "FI Status",
+      "columns": Array [
+        Object {},
+      ],
+    },
+    Object {
+      "Header": "Case Notif. Date",
+      "columns": Array [
+        Object {},
+      ],
+    },
+    Object {
+      "Header": "Case Class.",
+      "columns": Array [
+        Object {},
+      ],
+    },
+  ],
+  "data": Any<Array>,
+  "hasChildren": [Function],
+  "identifierField": "id",
+  "linkerField": "id",
+  "minRows": 0,
+  "parentIdentifierField": "parent",
+  "rootParentId": null,
+  "shouldUseEffect": false,
+  "showPageSizeOptions": false,
+  "showPagination": false,
+  "useDrillDownTrProps": false,
+}
+`;

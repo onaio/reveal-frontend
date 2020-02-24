@@ -330,4 +330,71 @@ describe('containers/FocusInvestigation/Jurisdiction', () => {
         .props().data
     ).toEqual([transformValues(extractPlan(fixtures.plan103 as Plan), columnsToTransform)]);
   });
+
+  it('renders empty tables correctly', async () => {
+    store.dispatch(fetchJurisdictions([fixtures.jurisdiction1]));
+    const mock: any = jest.fn();
+
+    const supersetServiceMock: any = jest.fn();
+    supersetServiceMock.mockImplementation(async () => []);
+
+    const props = {
+      ...defaultActiveFIProps,
+      completeReactivePlans: [],
+      completeRoutinePlans: [],
+      currentReactivePlans: [],
+      currentRoutinePlans: [],
+      fetchPlansActionCreator: jest.fn(),
+      history,
+      location: mock,
+      match: {
+        isExact: true,
+        params: { jurisdictionId: fixtures.jurisdiction1.jurisdiction_id },
+        path: `${FI_SINGLE_URL}/:jurisdictionId`,
+        url: `${FI_SINGLE_URL}/${fixtures.jurisdiction1.jurisdiction_id}`,
+      },
+      supersetService: supersetServiceMock,
+    };
+
+    const wrapper = mount(
+      <Provider store={store}>
+        <MemoryRouter>
+          <FIJurisdiction {...props} />
+        </MemoryRouter>
+      </Provider>
+    );
+
+    await flushPromises();
+    wrapper.update();
+
+    expect(wrapper.find('.current-plans NullDataTable').length).toEqual(2);
+
+    expect(
+      wrapper
+        .find('.current-plans NullDataTable h3.text-muted')
+        .first()
+        .text()
+    ).toEqual('No Investigations Found');
+    expect(
+      wrapper
+        .find('.current-plans NullDataTable h3.text-muted')
+        .last()
+        .text()
+    ).toEqual('No Investigations Found');
+
+    expect(wrapper.find('.complete-plans NullDataTable').length).toEqual(2);
+
+    expect(
+      wrapper
+        .find('.complete-plans NullDataTable h3.text-muted')
+        .first()
+        .text()
+    ).toEqual('No Investigations Found');
+    expect(
+      wrapper
+        .find('.complete-plans NullDataTable h3.text-muted')
+        .last()
+        .text()
+    ).toEqual('No Investigations Found');
+  });
 });
