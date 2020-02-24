@@ -61,11 +61,16 @@ describe('containers/JurisdictionMap', () => {
       </MemoryRouter>
     );
 
+    /** Show loading indicator */
+    expect(wrapper.find('JurisdictionMap>Ripple').length).toEqual(1);
+
     await flushPromises();
     wrapper.update();
 
-    const wrapperDiv = wrapper.find('div.super-custom');
-    expect(wrapperDiv.length).toEqual(1);
+    /** No longer show loading indicator */
+    expect(wrapper.find('JurisdictionMap>Ripple').length).toEqual(0);
+
+    expect(wrapper.find('div.super-custom').length).toEqual(1);
 
     expect(supersetServiceMock.mock.calls).toEqual([
       [
