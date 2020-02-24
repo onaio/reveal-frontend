@@ -19,6 +19,8 @@ import ConnectedJurisdictionMap, {
 /** register the jurisdictions reducer */
 reducerRegistry.register(jurisdictionReducerName, jurisdictionReducer);
 
+jest.mock('../../../configs/env');
+
 describe('containers/JurisdictionMap', () => {
   beforeEach(() => {
     jest.resetAllMocks();
@@ -64,7 +66,7 @@ describe('containers/JurisdictionMap', () => {
 
     expect(supersetServiceMock.mock.calls).toEqual([
       [
-        '459',
+        1 /** this comes from the envs mock */,
         {
           adhoc_filters: [
             {
