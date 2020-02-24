@@ -49,6 +49,9 @@ describe('components/IRS Reports/IRSReportingMap', () => {
     await flushPromises();
     wrapper.update();
 
+    const wrapperDiv = wrapper.find('div.super-custom');
+    expect(wrapperDiv.length).toEqual(1);
+
     expect(supersetServiceMock.mock.calls).toEqual([
       [
         '459',
