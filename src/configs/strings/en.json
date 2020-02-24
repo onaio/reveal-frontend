@@ -870,5 +870,13 @@
   "LINK": {
     "message": "Link",
     "description": "URL leading to another page"
+  },
+  "AN_ERROR_OCCURRED": {
+    "message": "An error occurred",
+    "description": "Generic error message"
+  },
+  "JURISDICTION_LOADING_ERROR": {
+    "message": "An error prevented this jurisdiction from loading.",
+    "description": "Error message displayed when jurisdiction cannot be displayed correctly"
   }
 }
