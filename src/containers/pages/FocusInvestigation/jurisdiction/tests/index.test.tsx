@@ -123,10 +123,10 @@ describe('containers/FocusInvestigation/Jurisdiction', () => {
 
     const props = {
       ...defaultActiveFIProps,
-      completeReactivePlans: [fixtures.completeReactivePlan as Plan],
-      completeRoutinePlans: [fixtures.completeRoutinePlan as Plan],
-      currentReactivePlans: [fixtures.plan2],
-      currentRoutinePlans: [fixtures.plan1],
+      completeReactivePlans: [fixtures.plan101 as Plan],
+      completeRoutinePlans: [fixtures.plan103 as Plan],
+      currentReactivePlans: [fixtures.plan99 as Plan],
+      currentRoutinePlans: [fixtures.plan102 as Plan],
       fetchPlansActionCreator: jest.fn(),
       history,
       location: mock,
@@ -169,7 +169,7 @@ describe('containers/FocusInvestigation/Jurisdiction', () => {
 
     // check breadcrumbs
     expect(wrapper.find('HeaderBreadcrumb').length).toEqual(1);
-    expect(wrapper.find('HeaderBreadcrumb li').length).toEqual(5);
+    expect(wrapper.find('HeaderBreadcrumb li').length).toEqual(7);
     // check the hierarchy
     expect(toJson(wrapper.find('HeaderBreadcrumb li a'))).toMatchSnapshot('HeaderBreadcrumb li a');
     // check last item
