@@ -15,6 +15,6 @@
     "noEmit": true,
     "jsx": "preserve"
   },
-  "include": ["src", "server"],
-  "exclude": ["server/dist"]
+  "include": ["src"],
+  "exclude": ["server"]
 }
