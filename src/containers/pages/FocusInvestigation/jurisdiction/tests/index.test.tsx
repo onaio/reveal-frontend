@@ -205,5 +205,62 @@ describe('containers/FocusInvestigation/Jurisdiction', () => {
         .last()
         .text()
     ).toEqual('Complete Focus Investigations');
+
+    // subsection titles
+    expect(
+      wrapper
+        .find('.current-plans h3.page-title')
+        .first()
+        .text()
+    ).toEqual('Reactive');
+    expect(
+      wrapper
+        .find('.current-plans h3.page-title')
+        .last()
+        .text()
+    ).toEqual('Routine');
+
+    expect(
+      wrapper
+        .find('.complete-plans h3.page-title')
+        .first()
+        .text()
+    ).toEqual('Reactive');
+    expect(
+      wrapper
+        .find('.complete-plans h3.page-title')
+        .last()
+        .text()
+    ).toEqual('Routine');
+
+    expect(wrapper.find('.current-plans TableHeader').length).toEqual(2);
+    expect(wrapper
+      .find('.current-plans TableHeader')
+      .first()
+      .props() as any).toEqual({
+      plansArray: [fixtures.plan99],
+    });
+    expect(wrapper
+      .find('.current-plans TableHeader')
+      .last()
+      .props() as any).toEqual({
+      plansArray: [fixtures.plan102],
+    });
+
+    expect(wrapper.find('.complete-plans TableHeader').length).toEqual(2);
+    expect(wrapper
+      .find('.complete-plans TableHeader')
+      .first()
+      .props() as any).toEqual({
+      plansArray: [fixtures.plan101],
+    });
+    expect(wrapper
+      .find('.complete-plans TableHeader')
+      .last()
+      .props() as any).toEqual({
+      plansArray: [fixtures.plan103],
+    });
+
+    expect(toJson(wrapper.find('.current-plans'))).toMatchSnapshot('current-plans');
   });
 });

@@ -403,10 +403,10 @@ export const FIJurisdiction = (props: FIJurisdictionProps & RouteComponentProps<
       </Row>
       <hr />
       <h4 className="mb-4 fi-table current">{CURRENT_FOCUS_INVESTIGATION}</h4>
-      {currentRoutineReactivePlans}
+      <div className="current-plans">{currentRoutineReactivePlans}</div>
       <h4 className="mb-4 fi-table complete">{COMPLETE_FOCUS_INVESTIGATION}</h4>
       <hr />
-      {completeRoutineReactivePlans}
+      <div className="complete-plans">{completeRoutineReactivePlans}</div>
     </div>
   );
 };
