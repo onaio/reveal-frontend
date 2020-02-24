@@ -18,7 +18,7 @@ import jurisdictionReducer, {
 reducerRegistry.register(jurisdictionReducerName, jurisdictionReducer);
 
 /** Interface for JurisdictionMap props */
-interface JurisdictionMapProps {
+export interface JurisdictionMapProps {
   callback: (jurisdiction: Jurisdiction) => void;
   cssClass: string;
   fetchJurisdictionsActionCreator: typeof fetchJurisdictions;
@@ -29,7 +29,7 @@ interface JurisdictionMapProps {
 }
 
 /** This component renders a map of a given jurisdiction */
-const JurisdictionMap = (props: JurisdictionMapProps) => {
+export const JurisdictionMap = (props: JurisdictionMapProps) => {
   const [loading, setLoading] = useState(true);
   const [errorOcurred, setErrorOcurred] = useState(false);
 
