@@ -135,7 +135,7 @@
     "message": "Could not load the map",
     "description": "error promt: warns user map won't load"
   },
-  "AN_ERROR_OCCURED": {
+  "AN_ERROR_OCCURRED": {
     "message": "An Error Ocurred",
     "description": "error prompt: a general warning that something went wrong"
   },
@@ -870,10 +870,6 @@
   "LINK": {
     "message": "Link",
     "description": "URL leading to another page"
-  },
-  "AN_ERROR_OCCURRED": {
-    "message": "An error occurred",
-    "description": "Generic error message"
   },
   "JURISDICTION_LOADING_ERROR": {
     "message": "An error prevented this jurisdiction from loading.",

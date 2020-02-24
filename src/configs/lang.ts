@@ -79,7 +79,7 @@ export const LOGIN = translate('LOGIN', 'Login');
 export const SIGN_OUT = translate('SIGN_OUT', 'Sign Out');
 
 export const MAP_LOAD_ERROR = translate('MAP_LOAD_ERROR', 'Could not load the map');
-export const AN_ERROR_OCCURED = translate('AN_ERROR_OCCURED', 'An Error Ocurred');
+export const AN_ERROR_OCCURRED = translate('AN_ERROR_OCCURRED', 'An Error Ocurred');
 export const PLEASE_FIX_THESE_ERRORS = translate(
   'PLEASE_FIX_THESE_ERRORS',
   'Please fix these errors'
@@ -413,7 +413,6 @@ export const IRS_RED_THRESHOLD = translate('RED_THRESHOLD', 'Red');
 export const IRS_YELLOW_THRESHOLD = translate('YELLOW_THRESHOLD', 'Yellow');
 export const IRS_LIGHT_GREEN_THRESHOLD = translate('LIGHT_GREEN_THRESHOLD', 'Light Green');
 
-export const AN_ERROR_OCCURRED = translate('AN_ERROR_OCCURRED', 'An error occurred');
 export const JURISDICTION_LOADING_ERROR = translate(
   'JURISDICTION_LOADING_ERROR',
   'An error prevented this jurisdiction from loading.'
