@@ -381,11 +381,11 @@ export const FIJurisdiction = (props: FIJurisdictionProps & RouteComponentProps<
       <h2 className="page-title mt-4 mb-5">{pageTitle}</h2>
       <Row>
         <Col className="col-6">
-          <h4 className="mb-4">{FOCUS_AREA_INFO}</h4>
+          <h4 className="mb-4 focus-area-info-title">{FOCUS_AREA_INFO}</h4>
           <ConnectedJurisdictionMap {...jurisdictionMapProps} />
         </Col>
         {theObject && (
-          <Col className="col-6">
+          <Col className="col-6 focus-area-info-section">
             <dl className="row mt-3">
               <dt className="col-4">{PROVINCE}</dt>
               <dd className="col-8">{theObject.province}</dd>
