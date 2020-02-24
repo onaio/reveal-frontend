@@ -246,6 +246,9 @@ describe('containers/FocusInvestigation/Jurisdiction', () => {
       .props() as any).toEqual({
       plansArray: [fixtures.plan102],
     });
+    expect(toJson(wrapper.find('.current-plans LinkAsButton a').first())).toMatchSnapshot(
+      'Link to create new plans'
+    );
 
     expect(wrapper.find('.complete-plans TableHeader').length).toEqual(2);
     expect(wrapper
@@ -260,7 +263,10 @@ describe('containers/FocusInvestigation/Jurisdiction', () => {
       .props() as any).toEqual({
       plansArray: [fixtures.plan103],
     });
+    expect(toJson(wrapper.find('.complete-plans LinkAsButton a').first())).toMatchSnapshot(
+      'Link to create new plans'
+    );
 
-    expect(toJson(wrapper.find('.current-plans'))).toMatchSnapshot('current-plans');
+    // expect(toJson(wrapper.find('.current-plans'))).toMatchSnapshot('current-plans');
   });
 });

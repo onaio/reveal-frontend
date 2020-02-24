@@ -52,6 +52,26 @@ exports[`containers/FocusInvestigation/Jurisdiction renders correctly: Jurisdict
 </JurisdictionMap>
 `;
 
+exports[`containers/FocusInvestigation/Jurisdiction renders correctly: Link to create new plans 1`] = `
+<a
+  className="focus-investigation btn btn-primary float-right mt-5"
+  href="/plans/new"
+  onClick={[Function]}
+>
+  Add Focus Investigation
+</a>
+`;
+
+exports[`containers/FocusInvestigation/Jurisdiction renders correctly: Link to create new plans 2`] = `
+<a
+  className="focus-investigation btn btn-primary float-right mt-5"
+  href="/plans/new"
+  onClick={[Function]}
+>
+  Add Focus Investigation
+</a>
+`;
+
 exports[`containers/FocusInvestigation/Jurisdiction renders correctly: focus-area-info-section 1`] = `
 <dl
   className="row mt-3"
