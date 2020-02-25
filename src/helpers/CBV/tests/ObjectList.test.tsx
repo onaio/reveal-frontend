@@ -1,5 +1,7 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
+import { mount } from 'enzyme';
 import React from 'react';
+import { Provider } from 'react-redux';
 import store from '../../../store';
 import reducer, {
   Message,
@@ -61,8 +63,24 @@ describe('cbv/ObjectList', () => {
     expect(mapDispatchToProps).toEqual({ actionCreator: sendMessage });
   });
 
-  // it('getHOC works as expected', () => {
-  // });
+  it('getHOC works as expected', () => {
+    const HoC = ClassBasedView.getHOC();
+
+    const wrapper = mount(
+      <Provider store={store}>
+        <HoC />
+      </Provider>
+    );
+
+    const expected = {
+      actionCreator: sendMessage,
+      objectList: [],
+    };
+
+    expect(wrapper.find('HoC').props()).toEqual(expected);
+    expect(wrapper.find('HoC>TestComponent').props()).toEqual(expected);
+  });
+
   // it('getConnectedHOC works as expected', () => {
   // });
   // it('render works as expected', () => {
