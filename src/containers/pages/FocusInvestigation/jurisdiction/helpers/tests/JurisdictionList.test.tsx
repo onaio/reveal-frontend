@@ -39,7 +39,9 @@ describe('containers/FocusInvestigation/Jurisdiction/JurisdictionList', () => {
       objectListOptions
     );
 
-    const ownProps = {
+    const mapStateToProps = ClassBasedView.getMapStateToProps();
+
+    let ownProps = {
       match: {
         isExact: true,
         params: { jurisdictionId: '4550a8ab-b310-4881-8c76-1b6a817ea63a' },
@@ -48,13 +50,27 @@ describe('containers/FocusInvestigation/Jurisdiction/JurisdictionList', () => {
       },
     };
 
-    const mapStateToProps = ClassBasedView.getMapStateToProps();
-
     expect(mapStateToProps(store.getState(), ownProps)).toEqual({
       completeReactivePlans: [plan101],
       completeRoutinePlans: [plan103],
       currentReactivePlans: [plan99],
       currentRoutinePlans: [plan102],
+    });
+
+    ownProps = {
+      match: {
+        isExact: true,
+        params: { jurisdictionId: 'some-random-jurisdiction' },
+        path: `test/:jurisdictionId`,
+        url: `test/some-random-jurisdiction`,
+      },
+    };
+
+    expect(mapStateToProps(store.getState(), ownProps)).toEqual({
+      completeReactivePlans: [],
+      completeRoutinePlans: [],
+      currentReactivePlans: [],
+      currentRoutinePlans: [],
     });
   });
 });
