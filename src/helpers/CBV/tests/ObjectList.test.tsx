@@ -54,8 +54,13 @@ describe('cbv/ObjectList', () => {
       messages: [{ user: 'bob', message: 'hello' }, { user: 'bobbie', message: 'hello hello' }],
     });
   });
-  // it('getMapDispatchToProps works as expected', () => {
-  // });
+
+  it('getMapDispatchToProps works as expected', () => {
+    const mapDispatchToProps = ClassBasedView.getMapDispatchToProps();
+    expect(typeof mapDispatchToProps === 'function').toBeFalsy();
+    expect(mapDispatchToProps).toEqual({ actionCreator: sendMessage });
+  });
+
   // it('getHOC works as expected', () => {
   // });
   // it('getConnectedHOC works as expected', () => {
