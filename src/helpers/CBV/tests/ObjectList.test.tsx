@@ -91,6 +91,7 @@ describe('cbv/ObjectList', () => {
     const toTest = [ConnectedHOCComponent, ConnectedTestComponent];
 
     for (const Element of toTest) {
+      store.dispatch(removeMessagesAction());
       store.dispatch(sendMessage({ user: 'bob', message: 'hello' }));
       store.dispatch(sendMessage({ user: 'bobbie', message: 'hello hello' }));
 
