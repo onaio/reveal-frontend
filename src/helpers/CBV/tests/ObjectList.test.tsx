@@ -119,10 +119,10 @@ describe('cbv/ObjectList', () => {
 
       const finalProps = wrapper.find('Connect(HoC)>HoC>TestComponent').props();
 
-      const dispatch = jest.fn();
+      const payload = { user: 'bob', message: 'hello' };
 
-      expect((finalProps as any).actionCreator(dispatch)).toEqual({
-        payload: dispatch,
+      expect((finalProps as any).actionCreator(payload)).toEqual({
+        payload,
         type: SEND_MESSAGE,
       });
     }
