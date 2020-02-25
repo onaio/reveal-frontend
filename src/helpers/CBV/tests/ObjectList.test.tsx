@@ -43,6 +43,7 @@ const ClassBasedView = new ObjectList<
 describe('cbv/ObjectList', () => {
   beforeEach(() => {
     jest.resetAllMocks();
+    store.dispatch(removeMessagesAction());
   });
   it('getMapStateToProps works as expected', () => {
     const mapStateToProps = ClassBasedView.getMapStateToProps();
@@ -51,7 +52,6 @@ describe('cbv/ObjectList', () => {
 
     expect(mapStateToProps(store.getState(), {} as any)).toEqual({ messages: [] });
 
-    store.dispatch(removeMessagesAction());
     store.dispatch(sendMessage({ user: 'bob', message: 'hello' }));
     store.dispatch(sendMessage({ user: 'bobbie', message: 'hello hello' }));
 
@@ -91,7 +91,6 @@ describe('cbv/ObjectList', () => {
     const toTest = [ConnectedHOCComponent, ConnectedTestComponent];
 
     for (const Element of toTest) {
-      store.dispatch(removeMessagesAction());
       store.dispatch(sendMessage({ user: 'bob', message: 'hello' }));
       store.dispatch(sendMessage({ user: 'bobbie', message: 'hello hello' }));
 
