@@ -41,6 +41,8 @@ describe('containers/FocusInvestigation/Jurisdiction/JurisdictionList', () => {
 
     const mapStateToProps = ClassBasedView.getMapStateToProps();
 
+    expect(typeof mapStateToProps === 'function').toBeTruthy();
+
     let ownProps = {
       match: {
         isExact: true,
