@@ -64,3 +64,7 @@ export const removeMessagesAction: ActionCreator<RemoveMessagesAction> = () => {
 export function selectAllMessages(state: Partial<Store>): Message[] {
   return (state as any)[reducerName].messages;
 }
+
+export function selectOneMessage(state: Partial<Store>): Message | null {
+  return (state as any)[reducerName].messages[0] || null;
+}
