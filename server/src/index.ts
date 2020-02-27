@@ -189,7 +189,9 @@ app.use(
 );
 
 const PORT = EXPRESS_PORT || 3000;
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   // tslint:disable-next-line:no-console
   console.log(`App listening on port ${PORT}!`);
 });
+
+export default server;
