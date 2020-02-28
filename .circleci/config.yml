@@ -64,3 +64,8 @@ jobs:
       - run: yarn lint-ts
       # run tests!
       - run: yarn test --runInBand --verbose --coverage=true --forceExit --detectOpenHandles
+      # run coveralls
+      - run: yarn coveralls
+  notify:
+  webhooks:
+    - url: https://coveralls.io/webhook?repo_token=$COVERALLS_REPO_TOKEN

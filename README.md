@@ -1,5 +1,7 @@
 # Reveal Frontend
 
+[![Coverage Status](https://coveralls.io/repos/github/onaio/reveal-frontend/badge.svg?branch=tests/659_coverage-report)](https://coveralls.io/github/onaio/reveal-frontend?branch=tests/659_coverage-report)
+
 This is the Reveal web application front end.
 
 The structure of this repo is inherited from [create-react-app](https://github.com/facebook/create-react-app).

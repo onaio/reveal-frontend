@@ -39,6 +39,7 @@
     "bootstrap": "^4.2.1",
     "client-oauth2": "^4.2.3",
     "connected-react-router": "^6.4.0",
+    "coveralls": "^3.0.9",
     "formik": "^1.5.8",
     "gisida": "^1.2.5",
     "gisida-react": "^1.2.8",
@@ -73,7 +74,8 @@
     "eject": "react-scripts eject",
     "lint-js": "eslint 'src/**/*.{js,jsx}'",
     "lint-ts": "tslint -c tslint.json --project ./tsconfig.json --format stylish 'src/**/*.{ts,tsx}'",
-    "test:coverage": "set CI=true && react-scripts test --coverage"
+    "test:coverage": "set CI=true && react-scripts test --coverage",
+    "coveralls": "yarn test:coverage && cat ./coverage/lcov.info | coveralls"
   },
   "jest": {
     "collectCoverageFrom": [
