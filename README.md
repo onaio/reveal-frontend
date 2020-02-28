@@ -37,3 +37,12 @@ The configurations are located in the `configs` directory and are split into two
 ```sh
 yarn test
 ```
+
+### Run test and generate coverage report
+
+Generating reports significantly slows down your tests. Therefore, use this option when you only need
+a coverage report.
+
+```sh
+yarn test:coverage
+```
