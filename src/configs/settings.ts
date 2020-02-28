@@ -16,6 +16,14 @@ import { Providers } from '@onaio/gatekeeper';
 import { Color } from 'csstype';
 import { Expression, LngLatBoundsLike } from 'mapbox-gl';
 import {
+  ActionReasonType,
+  GoalPriorityType,
+  GoalUnit,
+  PlanActionCodesType,
+  PlanActivities,
+  UseContextCodesType,
+} from '../components/forms/PlanForm/types';
+import {
   A1_DESCRIPTION,
   A1_NAME,
   A2_DESCRIPTION,
@@ -118,14 +126,6 @@ import {
   TASK_GENERATION_STATUS_CODE,
   TRUE,
 } from '../constants';
-import {
-  ActionReasonType,
-  GoalPriorityType,
-  GoalUnit,
-  PlanActionCodesType,
-  PlanActivities,
-  UseContextCodesType,
-} from '../containers/forms/PlanForm/types';
 import {
   DOMAIN_NAME,
   ENABLE_ONADATA_OAUTH,

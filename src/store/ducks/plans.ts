@@ -2,6 +2,7 @@ import { get, keyBy, keys, pickBy, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
 import SeamlessImmutable from 'seamless-immutable';
 import uuidv4 from 'uuid/v4';
+import { FIReasonType, FIStatusType } from '../../components/forms/PlanForm/types';
 import {
   FIReasons,
   FIStatuses,
@@ -9,7 +10,6 @@ import {
   planActivities,
   PlanGoal,
 } from '../../configs/settings';
-import { FIReasonType, FIStatusType } from '../../containers/forms/PlanForm/types';
 import { FlexObject, transformValues } from '../../helpers/utils';
 
 /** the reducer name */
