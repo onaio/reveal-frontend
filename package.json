@@ -75,7 +75,7 @@
     "lint-js": "eslint 'src/**/*.{js,jsx}'",
     "lint-ts": "tslint -c tslint.json --project ./tsconfig.json --format stylish 'src/**/*.{ts,tsx}'",
     "test:coverage": "set CI=true && react-scripts test --coverage",
-    "coveralls": "yarn test:coverage && cat ./coverage/lcov.info | coveralls"
+    "coveralls": "set CI=true && yarn test --runInBand --verbose --coverage=true --forceExit --detectOpenHandles && cat ./coverage/lcov.info | coveralls"
   },
   "jest": {
     "collectCoverageFrom": [
