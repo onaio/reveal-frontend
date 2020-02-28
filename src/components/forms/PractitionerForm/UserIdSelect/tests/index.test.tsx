@@ -2,8 +2,8 @@ import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import flushPromises from 'flush-promises';
 import React from 'react';
-import UserIdSelect, { thereIsNextPage } from '..';
 import { OpenSRPService } from '../../../../../services/opensrp';
+import UserIdSelect, { thereIsNextPage } from '../../UserIdSelect';
 import { openMRSUsers, practitioners, sortedUsers } from './fixtures';
 
 // tslint:disable-next-line: no-var-requires

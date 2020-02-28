@@ -7,6 +7,11 @@ import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
+import PractitionerForm, {
+  defaultInitialValues,
+  PractitionerFormFields,
+  PractitionerFormProps,
+} from '../../../../components/forms/PractitionerForm';
 import HeaderBreadcrumb, {
   BreadCrumbProps,
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
@@ -25,11 +30,6 @@ import {
   getPractitionerById,
   Practitioner,
 } from '../../../../store/ducks/opensrp/practitioners';
-import PractitionerForm, {
-  defaultInitialValues,
-  PractitionerFormFields,
-  PractitionerFormProps,
-} from '../../../forms/PractitionerForm';
 import { loadPractitioner } from '../helpers/serviceHooks';
 
 /** props for create and editing an practitioner view */
