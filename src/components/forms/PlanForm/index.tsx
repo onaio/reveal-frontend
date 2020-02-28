@@ -15,8 +15,6 @@ import {
   ModalHeader,
 } from 'reactstrap';
 import { format } from 'util';
-import DatePickerWrapper from '../../../components/DatePickerWrapper';
-import JurisdictionSelect from '../../../components/forms/JurisdictionSelect';
 import {
   DATE_FORMAT,
   DEFAULT_PLAN_DURATION_DAYS,
@@ -67,6 +65,8 @@ import {
 import { PLAN_LIST_URL } from '../../../constants';
 import { OpenSRPService } from '../../../services/opensrp';
 import { InterventionType, PlanStatus } from '../../../store/ducks/plans';
+import DatePickerWrapper from '../../DatePickerWrapper';
+import JurisdictionSelect from '../JurisdictionSelect';
 import {
   doesFieldHaveErrors,
   FIActivities,
