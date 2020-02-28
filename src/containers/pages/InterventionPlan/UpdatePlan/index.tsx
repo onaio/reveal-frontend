@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
+import PlanForm, { propsForUpdatingPlans } from '../../../../components/forms/PlanForm';
+import { getPlanFormValues } from '../../../../components/forms/PlanForm/helpers';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
 import { HOME, PLANS, UPDATE_PLAN } from '../../../../configs/lang';
@@ -17,8 +19,6 @@ import planDefinitionReducer, {
   getPlanDefinitionById,
   reducerName as planDefinitionReducerName,
 } from '../../../../store/ducks/opensrp/PlanDefinition';
-import PlanForm, { propsForUpdatingPlans } from '../../../forms/PlanForm';
-import { getPlanFormValues } from '../../../forms/PlanForm/helpers';
 
 /** register the plan definitions reducer */
 reducerRegistry.register(planDefinitionReducerName, planDefinitionReducer);

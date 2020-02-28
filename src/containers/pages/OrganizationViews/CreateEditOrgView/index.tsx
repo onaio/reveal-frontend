@@ -7,6 +7,11 @@ import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
+import OrganizationForm, {
+  defaultInitialValues,
+  OrganizationFormFields,
+  OrganizationFormProps,
+} from '../../../../components/forms/OrganizationForm';
 import HeaderBreadcrumb, {
   BreadCrumbProps,
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
@@ -25,11 +30,6 @@ import {
   getOrganizationById,
   Organization,
 } from '../../../../store/ducks/opensrp/organizations';
-import OrganizationForm, {
-  defaultInitialValues,
-  OrganizationFormFields,
-  OrganizationFormProps,
-} from '../../../forms/OrganizationForm';
 import { loadOrganization } from '../helpers/serviceHooks';
 
 /** props for create and editing an organization view */

@@ -129,8 +129,10 @@ import HeaderBreadcrumbs, {
 import Loading from '../../../../../components/page/Loading';
 
 import { format } from 'util';
+import AssignTeamTableCell, {
+  AssignTeamCellProps,
+} from '../../../../../components/forms/AssignTeamTableCell';
 import { ADMN0_PCODE, JurisdictionTypes } from '../../../../../configs/types';
-import AssignTeamTableCell, { AssignTeamCellProps } from '../../../../forms/AssignTeamTableCell';
 import './../../../../../styles/css/drill-down-table.css';
 import './style.css';
 
