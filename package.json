@@ -81,7 +81,15 @@
     "collectCoverageFrom": [
       "src/**/*.{ts,tsx}",
       "!src/index.tsx"
-    ]
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 55.83,
+        "functions": 65.58,
+        "lines": 72.36,
+        "statements": 71.93
+      }
+    }
   },
   "husky": {
     "hooks": {
