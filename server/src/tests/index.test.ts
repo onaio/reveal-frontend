@@ -106,7 +106,6 @@ describe('src/index.ts', () => {
     request(server)
       .get('/oauth/opensrp')
       .expect(302)
-      // .expect('Do you mind')
       .end((err: Error, res: any) => {
         panic(err, done);
         expect(res.headers.location).toEqual(authorizationUri);
