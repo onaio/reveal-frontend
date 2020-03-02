@@ -1,7 +1,7 @@
 import flushPromises from 'flush-promises';
+import { practitioners } from '../../../../../components/forms/PractitionerForm/UserIdSelect/tests/fixtures';
 import { OPENSRP_PRACTITIONER_ENDPOINT } from '../../../../../constants';
 import { practitioner1 } from '../../../../../store/ducks/tests/fixtures';
-import { practitioners } from '../../../../forms/PractitionerForm/UserIdSelect/tests/fixtures';
 import { loadPractitioner, loadPractitioners } from '../serviceHooks';
 
 describe('src/containers/pages/PractitionerViews/serviceHooks', () => {
