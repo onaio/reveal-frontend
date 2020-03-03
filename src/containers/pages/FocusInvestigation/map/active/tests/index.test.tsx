@@ -43,6 +43,10 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
     store.dispatch(tasksDucks.removeTasksAction);
   });
 
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   it('renders without crashing', () => {
     const mock: any = jest.fn();
     const supersetServiceMock: any = jest.fn(async () => []);
