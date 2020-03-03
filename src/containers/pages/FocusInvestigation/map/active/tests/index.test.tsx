@@ -352,6 +352,7 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
     );
     expect(wrapper.find('Badge').prop('color')).toEqual('warning');
     expect(toJson(wrapper.find('MarkCompleteLink'))).toMatchSnapshot('mark complete link');
+    wrapper.unmount();
   });
 
   it('displays the correct badge and mark complete link when the plan status is draft', () => {
