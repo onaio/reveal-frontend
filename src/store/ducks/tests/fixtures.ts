@@ -63,6 +63,7 @@ export const draftPlan = {
   plan_title: 'A1-Tha Luang Village 1 Focus 01',
   plan_version: '1',
 };
+
 export const completeRoutinePlan = {
   id: 'completedRoutinePlan-id-2',
   jurisdiction_depth: 51,
@@ -78,7 +79,7 @@ export const completeRoutinePlan = {
   plan_fi_status: 'A1' as FIStatusType,
   plan_id: 'plan-id-2',
   plan_intervention_type: InterventionType.FI,
-  plan_status: 'complete',
+  plan_status: 'complete' as PlanStatus,
   plan_title: 'A1-Tha Luang Village 1 Focus 01',
   plan_version: '1',
 };

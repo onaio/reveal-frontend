@@ -58,7 +58,6 @@ import { getGoalReport } from '../../../../../helpers/indicators';
 import ProgressBar from '../../../../../helpers/ProgressBar';
 import {
   FeatureCollection,
-  FlexObject,
   getFilteredFIPlansURL,
   RouteParams,
 } from '../../../../../helpers/utils';
@@ -153,319 +152,344 @@ export const defaultMapSingleFIProps: MapSingleFIProps = {
   supersetService: supersetFetch,
 };
 
-/** Map View for Single Active Focus Investigation */
-class SingleActiveFIMap extends React.Component<
-  RouteComponentProps<RouteParams> & MapSingleFIProps,
-  FlexObject
-> {
-  public static defaultProps = defaultMapSingleFIProps;
-  constructor(props: RouteComponentProps<RouteParams> & MapSingleFIProps) {
-    super(props);
+const fetchData = async (
+  fetchGoalsActionCreator: typeof fetchGoals,
+  fetchJurisdictionsActionCreator: typeof fetchJurisdictions,
+  fetchPlansActionCreator: typeof fetchPlans,
+  fetchStructuresActionCreator: typeof setStructures,
+  fetchTasksActionCreator: typeof fetchTasks,
+  plan: Plan,
+  supersetService: typeof supersetFetch
+): Promise<void> => {
+  if (plan && plan.plan_id) {
+    /** define superset filter params for jurisdictions */
+    const jurisdictionsParams = superset.getFormData(SUPERSET_MAX_RECORDS, [
+      { comparator: plan.jurisdiction_id, operator: '==', subject: JURISDICTION_ID },
+    ]);
+    await supersetService(SUPERSET_JURISDICTIONS_SLICE, jurisdictionsParams)
+      .then((result: Jurisdiction[]) => fetchJurisdictionsActionCreator(result))
+      .catch(error => {
+        throw error;
+      });
+    /** define superset params for filtering by plan_id */
+    const supersetParams = superset.getFormData(SUPERSET_MAX_RECORDS, [
+      { comparator: plan.plan_id, operator: '==', subject: PLAN_ID },
+    ]);
+    /** define superset params for goals */
+    const goalsParams = superset.getFormData(
+      SUPERSET_MAX_RECORDS,
+      [{ comparator: plan.plan_id, operator: '==', subject: PLAN_ID }],
+      { action_prefix: true }
+    );
+    /** Implement Ad hoc Queries since jurisdictions have no plan_id */
+    await supersetService(SUPERSET_STRUCTURES_SLICE, jurisdictionsParams)
+      .then((structuresResults: Structure[]) => {
+        fetchStructuresActionCreator(structuresResults);
+      })
+      .catch(error => {
+        throw error;
+      });
+    await supersetService(SUPERSET_PLANS_SLICE, jurisdictionsParams)
+      .then((result2: Plan[]) => {
+        fetchPlansActionCreator(result2);
+      })
+      .catch(error => {
+        throw error;
+      });
+    await supersetService(SUPERSET_GOALS_SLICE, goalsParams)
+      .then((result3: Goal[]) => {
+        fetchGoalsActionCreator(result3);
+      })
+      .catch(error => {
+        throw error;
+      });
+    await supersetService(SUPERSET_TASKS_SLICE, supersetParams)
+      .then((result4: Task[]) => {
+        fetchTasksActionCreator(result4);
+      })
+      .catch(error => {
+        throw error;
+      });
+  }
+};
+
+const buildHandlers = () => {
+  const handlers = [
+    {
+      method: popupHandler,
+      name: 'pointClick',
+      type: 'click',
+    },
+  ];
+  return handlers;
+};
+
+interface StatusBadgeProps {
+  plan: Plan;
+}
+
+const StatusBadge = (props: StatusBadgeProps) => {
+  const { plan } = props;
+  const color =
+    (plan && plan.plan_status === PlanStatus.ACTIVE) ||
+    (plan && plan.plan_status === PlanStatus.DRAFT)
+      ? 'warning'
+      : 'success';
+
+  return (
+    <Badge color={color} pill={true}>
+      {plan && plan.plan_status}
+    </Badge>
+  );
+};
+
+interface MarkCompleteLinkProps {
+  plan: Plan;
+}
+
+const MarkCompleteLink = (props: MarkCompleteLinkProps) => {
+  const { plan } = props;
+
+  if (plan && plan.plan_status === PlanStatus.ACTIVE) {
+    return (
+      <Link className="btn btn-primary" to={`${PLAN_COMPLETION_URL}/${plan.id}`} color="primary">
+        {MARK_AS_COMPLETE}
+      </Link>
+    );
   }
 
-  public componentDidMount() {
-    if (!this.props.plan) {
+  return null;
+};
+
+const getDetailViewPlanInvestigationContainer = (plan: Plan): React.ReactElement[] => {
+  const detailViewPlanInvestigationContainer: React.ReactElement[] = [];
+  /** Array that holds keys of a plan object
+   * Will be used to check plan_effective_period_end or plan_effective_period_start to build the detailview
+   */
+  const planKeysArray: string[] = Object.keys(plan);
+
+  /** alias enables assigning keys dynamically used to populate the detailview  */
+  const alias = {
+    plan_effective_period_end: END_DATE,
+    plan_effective_period_start: START_DATE,
+  };
+
+  if (plan.plan_fi_reason === ROUTINE) {
+    planKeysArray.forEach((column: string) => {
+      if (column === 'plan_effective_period_end' || column === 'plan_effective_period_start') {
+        detailViewPlanInvestigationContainer.push(
+          <span key={column} className="detailview">
+            <b>{alias[column]}:</b> &nbsp;
+            {plan && plan[column]}
+          </span>
+        );
+      }
+    });
+  } else {
+    detailViewPlanInvestigationContainer.push(
+      <span key={plan && plan.plan_id}>
+        <b>{CASE_CLASSIFICATION_LABEL}:</b>&nbsp;
+        {plan && plan.plan_intervention_type ? plan.plan_intervention_type : null}
+      </span>
+    );
+  }
+
+  return detailViewPlanInvestigationContainer;
+};
+
+/** Map View for Single Active Focus Investigation */
+const SingleActiveFIMap = (props: MapSingleFIProps & RouteComponentProps<RouteParams>) => {
+  React.useEffect(() => {
+    if (!props.plan) {
       /**
-       * Fetch plans again because on reloading the page, the state does not persist
-       * the plans
+       * Fetch plans incase the plan is not available e.g when page is refreshed
        */
-      const { supersetService, fetchPlansActionCreator } = this.props;
+      const { supersetService, fetchPlansActionCreator } = props;
       const supersetParams = superset.getFormData(2000, [
         { comparator: InterventionType.FI, operator: '==', subject: PLAN_INTERVENTION_TYPE },
       ]);
       supersetService(SUPERSET_PLANS_SLICE, supersetParams)
         .then((result: Plan[]) => fetchPlansActionCreator(result))
-        .catch(error => displayError(error));
-    } else {
-      /**
-       * Plans are available in state since the plans were fetched by the
-       * the previous view
-       */
-      this.fetchData().catch(error => displayError(error));
+        .catch((error: Error) => displayError(error));
     }
-  }
-
-  public componentWillReceiveProps(nextProps: any) {
-    const { setCurrentGoalActionCreator, match } = this.props;
-
-    if (match.params.goalId !== nextProps.match.params.goalId) {
-      setCurrentGoalActionCreator(
-        nextProps.match.params.goalId ? nextProps.match.params.goalId : null
-      );
-    }
-  }
-
-  public componentDidUpdate(prevProps: any) {
-    if (
-      (!prevProps.plan && this.props.plan) ||
-      (prevProps.plan && this.props.plan && prevProps.plan.plan_id !== this.props.plan.plan_id)
-    ) {
-      /** Page was reloaded, fetch data again */
-      this.fetchData().catch(error => displayError(error));
-    }
-  }
-
-  public render() {
-    const {
-      jurisdiction,
-      plan,
-      goals,
-      currentGoal,
-      pointFeatureCollection,
-      polygonFeatureCollection,
-      structures,
-      plansByFocusArea,
-    } = this.props;
-    if (!jurisdiction || !plan) {
-      return <Loading />;
-    }
-
-    /** filter out this plan form plans by focusArea */
-    const otherPlansByFocusArea = plansByFocusArea.filter(localPlan => localPlan.id !== plan.id);
-
-    const homePage = {
-      label: HOME,
-      url: HOME_URL,
-    };
-    const basePage = {
-      label: FOCUS_INVESTIGATIONS,
-      url: FI_URL,
-    };
-    const secondLastPage = {
-      label: plan.jurisdiction_name,
-      url: `${FI_SINGLE_URL}/${plan.id}`,
-    };
-    const breadCrumbProps: BreadCrumbProps = {
-      currentPage: {
-        label: plan.plan_title,
-        url: `${FI_SINGLE_MAP_URL}/${plan.id}`,
-      },
-      pages: [],
-    };
-    const namePaths =
-      plan.jurisdiction_name_path instanceof Array ? plan.jurisdiction_name_path : [];
-    const pages = namePaths.map((namePath, i) => {
-      // return a page object for each name path
-      return {
-        label: namePath,
-        url: getFilteredFIPlansURL(plan.jurisdiction_path[i], plan.id),
-      };
-    });
-    breadCrumbProps.pages = [homePage, basePage, ...pages, secondLastPage];
-    const statusBadge =
-      plan && plan.plan_status === (PlanStatus.ACTIVE || PlanStatus.DRAFT) ? (
-        <Badge color="warning" pill={true}>
-          {plan.plan_status}
-        </Badge>
-      ) : (
-        <Badge color="success" pill={true}>
-          {plan.plan_status}
-        </Badge>
-      );
-    const markCompleteLink =
-      plan && plan.plan_status === PlanStatus.ACTIVE ? (
-        <Link className="btn btn-primary" to={`${PLAN_COMPLETION_URL}/${plan.id}`} color="primary">
-          {MARK_AS_COMPLETE}
-        </Link>
-      ) : null;
-    /** Array that holds keys of a plan object
-     * Will be used to check plan_effective_period_end or plan_effective_period_start to build the detailview
+    /**
+     * We do not need to re-run since this effect doesn't depend on any values from props or state
      */
-    const planKeysArray: string[] = Object.keys(plan);
+  }, []);
 
-    /** alias enables assigning keys dynamically used to populate the detailview  */
-
-    const alias = {
-      plan_effective_period_end: END_DATE,
-      plan_effective_period_start: START_DATE,
-    };
-
-    const detailViewPlanInvestigationContainer: React.ReactElement[] = [];
-    if (plan.plan_fi_reason === ROUTINE) {
-      planKeysArray.forEach((column: string) => {
-        if (column === 'plan_effective_period_end' || column === 'plan_effective_period_start') {
-          detailViewPlanInvestigationContainer.push(
-            <span key={column} className="detailview">
-              <b>{alias[column]}:</b> &nbsp;
-              {plan && plan[column]}
-            </span>
-          );
-        }
-      });
-    } else {
-      detailViewPlanInvestigationContainer.push(
-        <span key={plan && plan.plan_id}>
-          <b>{CASE_CLASSIFICATION_LABEL}:</b>&nbsp;
-          {plan && plan.plan_intervention_type ? plan.plan_intervention_type : null}
-        </span>
-      );
+  React.useEffect(() => {
+    if (props.plan) {
+      /**
+       * Plans present in state e.g when accesing this view from a list of plans or
+       * when the plans are expilcity fetched as in the above if block
+       */
+      fetchData(
+        props.fetchGoalsActionCreator,
+        props.fetchJurisdictionsActionCreator,
+        props.fetchPlansActionCreator,
+        props.fetchStructuresActionCreator,
+        props.fetchTasksActionCreator,
+        props.plan,
+        props.supersetService
+      ).catch((error: Error) => displayError(error));
     }
-    return (
+    /**
+     * Only re-run effect if props.plan.plan_id changes
+     */
+  }, [props.plan && props.plan.plan_id]);
+
+  React.useEffect(() => {
+    const { setCurrentGoalActionCreator, match } = props;
+
+    setCurrentGoalActionCreator(match.params.goalId ? match.params.goalId : null);
+    /**
+     * Only re-run effect if props.match.params.goalId changes
+     */
+  }, [props.match.params.goalId]);
+
+  const {
+    jurisdiction,
+    plan,
+    goals,
+    currentGoal,
+    pointFeatureCollection,
+    polygonFeatureCollection,
+    structures,
+    plansByFocusArea,
+  } = props;
+  if (!jurisdiction || !plan) {
+    return <Loading />;
+  }
+
+  /** filter out this plan form plans by focusArea */
+  const otherPlansByFocusArea = plansByFocusArea.filter(localPlan => localPlan.id !== plan.id);
+  const homePage = {
+    label: HOME,
+    url: HOME_URL,
+  };
+  const basePage = {
+    label: FOCUS_INVESTIGATIONS,
+    url: FI_URL,
+  };
+  const secondLastPage = {
+    label: plan.jurisdiction_name,
+    url: `${FI_SINGLE_URL}/${plan.id}`,
+  };
+  const breadCrumbProps: BreadCrumbProps = {
+    currentPage: {
+      label: plan.plan_title,
+      url: `${FI_SINGLE_MAP_URL}/${plan.id}`,
+    },
+    pages: [],
+  };
+  const namePaths = plan.jurisdiction_name_path instanceof Array ? plan.jurisdiction_name_path : [];
+  const pages = namePaths.map((namePath, i) => {
+    // return a page object for each name path
+    return {
+      label: namePath,
+      url: getFilteredFIPlansURL(plan.jurisdiction_path[i], plan.id),
+    };
+  });
+  breadCrumbProps.pages = [homePage, basePage, ...pages, secondLastPage];
+  const statusBadgeProps: StatusBadgeProps = {
+    plan,
+  };
+  const markCompleteLinkProps: MarkCompleteLinkProps = {
+    plan,
+  };
+
+  return (
+    <div>
+      <Helmet>
+        <title>{`${FOCUS_INVESTIGATION}: ${plan && plan.plan_title}`}</title>
+      </Helmet>
+      <HeaderBreadcrumb {...breadCrumbProps} />
       <div>
-        <Helmet>
-          <title>{`${FOCUS_INVESTIGATION}: ${plan && plan.plan_title}`}</title>
-        </Helmet>
-        <HeaderBreadcrumb {...breadCrumbProps} />
-        <div>
-          <Row>
-            <Col xs="8">
-              <h2 className="page-title mt-4 mb-4">
-                {plan && plan.plan_title} {INVESTIGATION}{' '}
-                <p className="h5" style={{ display: 'inline' }}>
-                  {statusBadge}
-                </p>
-              </h2>
-            </Col>
-            <Col xs="4">
-              <SelectComponent
-                placeholder={PLAN_SELECT_PLACEHOLDER}
-                plansArray={otherPlansByFocusArea}
-              />
-            </Col>
-          </Row>
-        </div>
-        <div className="row no-gutters mb-5">
-          <div className="col-9">
-            <div className="map">
-              <GisidaWrapper
-                handlers={this.buildHandlers()}
-                geoData={jurisdiction}
-                goal={goals}
-                structures={structures}
-                currentGoal={currentGoal}
-                pointFeatureCollection={pointFeatureCollection}
-                polygonFeatureCollection={polygonFeatureCollection}
-              />
-            </div>
+        <Row>
+          <Col xs="8">
+            <h2 className="page-title mt-4 mb-4">
+              {plan && plan.plan_title} {INVESTIGATION}{' '}
+              <p className="h5" style={{ display: 'inline' }}>
+                <StatusBadge {...statusBadgeProps} />
+              </p>
+            </h2>
+          </Col>
+          <Col xs="4">
+            <SelectComponent
+              placeholder={PLAN_SELECT_PLACEHOLDER}
+              plansArray={otherPlansByFocusArea}
+            />
+          </Col>
+        </Row>
+      </div>
+      <div className="row no-gutters mb-5">
+        <div className="col-9">
+          <div className="map">
+            <GisidaWrapper
+              handlers={buildHandlers()}
+              geoData={jurisdiction}
+              goal={goals}
+              structures={structures}
+              currentGoal={currentGoal}
+              pointFeatureCollection={pointFeatureCollection}
+              polygonFeatureCollection={polygonFeatureCollection}
+            />
           </div>
-          <div className="col-3">
-            <div className="mapSidebar">
-              <div>
-                <h5>
-                  {plan.plan_fi_reason === CASE_TRIGGERED
-                    ? REACTIVE_INVESTIGATION
-                    : ROUTINE_INVESTIGATION_TITLE}
-                  &nbsp;
-                </h5>
-                {detailViewPlanInvestigationContainer}
-              </div>
-              {markCompleteLink}
-              <h6 />
-              <hr />
-              {goals &&
-                goals.map((item: Goal) => {
-                  const goalReport = getGoalReport(item);
-                  return (
-                    <div className="responseItem" key={item.goal_id}>
-                      <NavLink
-                        to={`${FI_SINGLE_MAP_URL}/${plan.id}/${item.goal_id}`}
-                        className="task-link"
-                        style={{ textDecoration: 'none' }}
-                      >
-                        <h6>{item.action_title}</h6>
-                      </NavLink>
-                      <div className="targetItem">
-                        <p>
-                          {MEASURE}: {item.measure}
-                        </p>
-                        <p>
-                          {PROGRESS}:{' '}
-                          {format(
-                            NUMERATOR_OF_DENOMINATOR_UNITS,
-                            item.completed_task_count,
-                            goalReport.targetValue,
-                            goalReport.goalUnit
-                          )}{' '}
-                          ({goalReport.prettyPercentAchieved})
-                        </p>
-                        <br />
-                        <ProgressBar value={goalReport.percentAchieved} max={1} />
-                      </div>
-                    </div>
-                  );
-                })}
+        </div>
+        <div className="col-3">
+          <div className="mapSidebar">
+            <div>
+              <h5>
+                {plan.plan_fi_reason === CASE_TRIGGERED
+                  ? REACTIVE_INVESTIGATION
+                  : ROUTINE_INVESTIGATION_TITLE}
+                &nbsp;
+              </h5>
+              {getDetailViewPlanInvestigationContainer(plan)}
             </div>
+            <MarkCompleteLink {...markCompleteLinkProps} />
+            <h6 />
+            <hr />
+            {goals &&
+              goals.map((item: Goal) => {
+                const goalReport = getGoalReport(item);
+                return (
+                  <div className="responseItem" key={item.goal_id}>
+                    <NavLink
+                      to={`${FI_SINGLE_MAP_URL}/${plan.id}/${item.goal_id}`}
+                      className="task-link"
+                      style={{ textDecoration: 'none' }}
+                    >
+                      <h6>{item.action_title}</h6>
+                    </NavLink>
+                    <div className="targetItem">
+                      <p>
+                        {MEASURE}: {item.measure}
+                      </p>
+                      <p>
+                        {PROGRESS}:{' '}
+                        {format(
+                          NUMERATOR_OF_DENOMINATOR_UNITS,
+                          item.completed_task_count,
+                          goalReport.targetValue,
+                          goalReport.goalUnit
+                        )}{' '}
+                        ({goalReport.prettyPercentAchieved})
+                      </p>
+                      <br />
+                      <ProgressBar value={goalReport.percentAchieved} max={1} />
+                    </div>
+                  </div>
+                );
+              })}
           </div>
         </div>
       </div>
-    );
-  }
+    </div>
+  );
+};
 
-  private async fetchData() {
-    const {
-      fetchGoalsActionCreator,
-      fetchJurisdictionsActionCreator,
-      fetchPlansActionCreator,
-      fetchStructuresActionCreator,
-      fetchTasksActionCreator,
-      plan,
-      supersetService,
-    } = this.props;
-
-    if (plan && plan.plan_id) {
-      /** define superset filter params for jurisdictions */
-      const jurisdictionsParams = superset.getFormData(SUPERSET_MAX_RECORDS, [
-        { comparator: plan.jurisdiction_id, operator: '==', subject: JURISDICTION_ID },
-      ]);
-      await supersetService(SUPERSET_JURISDICTIONS_SLICE, jurisdictionsParams)
-        .then((result: Jurisdiction[]) => fetchJurisdictionsActionCreator(result))
-        .catch(error => {
-          throw error;
-        });
-      /** define superset params for filtering by plan_id */
-      const supersetParams = superset.getFormData(SUPERSET_MAX_RECORDS, [
-        { comparator: plan.plan_id, operator: '==', subject: PLAN_ID },
-      ]);
-      /** define superset params for goals */
-      const goalsParams = superset.getFormData(
-        SUPERSET_MAX_RECORDS,
-        [{ comparator: plan.plan_id, operator: '==', subject: PLAN_ID }],
-        { action_prefix: true }
-      );
-      /** Implement Ad hoc Queries since jurisdictions have no plan_id */
-      await supersetService(SUPERSET_STRUCTURES_SLICE, jurisdictionsParams)
-        .then((structuresResults: Structure[]) => {
-          fetchStructuresActionCreator(structuresResults);
-        })
-        .catch(error => {
-          throw error;
-        });
-      await supersetService(SUPERSET_PLANS_SLICE, jurisdictionsParams)
-        .then((result2: Plan[]) => {
-          fetchPlansActionCreator(result2);
-        })
-        .catch(error => {
-          throw error;
-        });
-      await supersetService(SUPERSET_GOALS_SLICE, goalsParams)
-        .then((result3: Goal[]) => {
-          fetchGoalsActionCreator(result3);
-        })
-        .catch(error => {
-          throw error;
-        });
-      await supersetService(SUPERSET_TASKS_SLICE, supersetParams)
-        .then((result4: Task[]) => {
-          fetchTasksActionCreator(result4);
-        })
-        .catch(error => {
-          throw error;
-        });
-    }
-  }
-
-  /** event handlers */
-  private buildHandlers() {
-    const handlers = [
-      {
-        method: popupHandler,
-        name: 'pointClick',
-        type: 'click',
-      },
-    ];
-    return handlers;
-  }
-}
+SingleActiveFIMap.defaultProps = defaultMapSingleFIProps;
 
 export { SingleActiveFIMap };
 
