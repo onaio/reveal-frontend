@@ -1,7 +1,6 @@
 /** Accordion like component that can be used on the manage plans
  * page to display case Details
  */
-import reducer from '@onaio/gatekeeper/dist/types/ducks/gatekeeper';
 import reducerRegistry from '@onaio/redux-reducer-registry/dist/types';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
@@ -13,12 +12,10 @@ import { OPENSRP_FIND_EVENTS_ENDPOINT } from '../../../../../constants';
 import { growl } from '../../../../../helpers/utils';
 import { OpenSRPService } from '../../../../../services/opensrp';
 import eventReducer, {
-  fetchEvents,
   FetchEventsAction,
-  getEventById,
   reducerName,
 } from '../../../../../store/ducks/opensrp/events';
-import { Event, RawEvent } from '../../../../../store/ducks/opensrp/events/utils';
+import { Event } from '../../../../../store/ducks/opensrp/events/utils';
 
 reducerRegistry.register(reducerName, eventReducer);
 
@@ -69,9 +66,7 @@ export const CaseDetails: React.FC<CaseDetailsProps> = props => {
   );
 };
 
-const mapStateToProps = () => ({
-  
-})
+const mapStateToProps = () => ({});
 
 const ConnectedCaseDetails = connect()(CaseDetails);
 export default ConnectedCaseDetails;

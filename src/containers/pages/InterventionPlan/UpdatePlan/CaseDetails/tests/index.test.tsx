@@ -1,4 +1,4 @@
-import {mount, shallow} from 'enzyme';
+import { mount, shallow } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
 import ConnectedCaseDetails, { CaseDetails } from '..';
@@ -62,5 +62,5 @@ describe('src/containers/pages/interventionPlan/updateplan/caseDetials', () => {
     fetch.once(JSON.stringify({}));
     const wrapper = mount(<CaseDetails {...props} />);
     expect(fetch).toHaveBeenCalledWith({});
-  })
+  });
 });
