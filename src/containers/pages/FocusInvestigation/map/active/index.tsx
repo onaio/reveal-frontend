@@ -14,14 +14,7 @@ import HeaderBreadcrumb, {
 } from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../../components/page/Loading';
 import SelectComponent from '../../../../../components/SelectPlan/';
-import {
-  SUPERSET_GOALS_SLICE,
-  SUPERSET_JURISDICTIONS_SLICE,
-  SUPERSET_MAX_RECORDS,
-  SUPERSET_PLANS_SLICE,
-  SUPERSET_STRUCTURES_SLICE,
-  SUPERSET_TASKS_SLICE,
-} from '../../../../../configs/env';
+import { SUPERSET_PLANS_SLICE } from '../../../../../configs/env';
 import {
   CASE_CLASSIFICATION_LABEL,
   END_DATE,
@@ -51,9 +44,8 @@ import {
   POLYGON,
   ROUTINE,
 } from '../../../../../constants';
-import { JURISDICTION_ID, PLAN_ID, PLAN_INTERVENTION_TYPE } from '../../../../../constants';
+import { PLAN_INTERVENTION_TYPE } from '../../../../../constants';
 import { displayError } from '../../../../../helpers/errors';
-import { popupHandler } from '../../../../../helpers/handlers';
 import { getGoalReport } from '../../../../../helpers/indicators';
 import ProgressBar from '../../../../../helpers/ProgressBar';
 import {
@@ -90,17 +82,16 @@ import structuresReducer, {
   getStructuresFCByJurisdictionId,
   reducerName as structuresReducerName,
   setStructures,
-  Structure,
   StructureGeoJSON,
 } from '../../../../../store/ducks/structures';
 import tasksReducer, {
   fetchTasks,
   getFCByPlanAndGoalAndJurisdiction,
   reducerName as tasksReducerName,
-  Task,
   TaskGeoJSON,
 } from '../../../../../store/ducks/tasks';
 import './style.css';
+import { buildHandlers, fetchData } from './utils';
 /** register reducers */
 reducerRegistry.register(jurisdictionReducerName, jurisdictionReducer);
 reducerRegistry.register(goalsReducerName, goalsReducer);
@@ -150,78 +141,6 @@ export const defaultMapSingleFIProps: MapSingleFIProps = {
   setCurrentGoalActionCreator: setCurrentGoal,
   structures: null,
   supersetService: supersetFetch,
-};
-
-const fetchData = async (
-  fetchGoalsActionCreator: typeof fetchGoals,
-  fetchJurisdictionsActionCreator: typeof fetchJurisdictions,
-  fetchPlansActionCreator: typeof fetchPlans,
-  fetchStructuresActionCreator: typeof setStructures,
-  fetchTasksActionCreator: typeof fetchTasks,
-  plan: Plan,
-  supersetService: typeof supersetFetch
-): Promise<void> => {
-  if (plan && plan.plan_id) {
-    /** define superset filter params for jurisdictions */
-    const jurisdictionsParams = superset.getFormData(SUPERSET_MAX_RECORDS, [
-      { comparator: plan.jurisdiction_id, operator: '==', subject: JURISDICTION_ID },
-    ]);
-    await supersetService(SUPERSET_JURISDICTIONS_SLICE, jurisdictionsParams)
-      .then((result: Jurisdiction[]) => fetchJurisdictionsActionCreator(result))
-      .catch(error => {
-        throw error;
-      });
-    /** define superset params for filtering by plan_id */
-    const supersetParams = superset.getFormData(SUPERSET_MAX_RECORDS, [
-      { comparator: plan.plan_id, operator: '==', subject: PLAN_ID },
-    ]);
-    /** define superset params for goals */
-    const goalsParams = superset.getFormData(
-      SUPERSET_MAX_RECORDS,
-      [{ comparator: plan.plan_id, operator: '==', subject: PLAN_ID }],
-      { action_prefix: true }
-    );
-    /** Implement Ad hoc Queries since jurisdictions have no plan_id */
-    await supersetService(SUPERSET_STRUCTURES_SLICE, jurisdictionsParams)
-      .then((structuresResults: Structure[]) => {
-        fetchStructuresActionCreator(structuresResults);
-      })
-      .catch(error => {
-        throw error;
-      });
-    await supersetService(SUPERSET_PLANS_SLICE, jurisdictionsParams)
-      .then((result2: Plan[]) => {
-        fetchPlansActionCreator(result2);
-      })
-      .catch(error => {
-        throw error;
-      });
-    await supersetService(SUPERSET_GOALS_SLICE, goalsParams)
-      .then((result3: Goal[]) => {
-        fetchGoalsActionCreator(result3);
-      })
-      .catch(error => {
-        throw error;
-      });
-    await supersetService(SUPERSET_TASKS_SLICE, supersetParams)
-      .then((result4: Task[]) => {
-        fetchTasksActionCreator(result4);
-      })
-      .catch(error => {
-        throw error;
-      });
-  }
-};
-
-const buildHandlers = () => {
-  const handlers = [
-    {
-      method: popupHandler,
-      name: 'pointClick',
-      type: 'click',
-    },
-  ];
-  return handlers;
 };
 
 interface StatusBadgeProps {
