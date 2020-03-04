@@ -62,3 +62,6 @@ export type EXPRESS_SESSION_PATH = typeof EXPRESS_SESSION_PATH;
 export const EXPRESS_REACT_BUILD_PATH =
   process.env.EXPRESS_REACT_BUILD_PATH || path.resolve(path.resolve(), '../build');
 export type EXPRESS_REACT_BUILD_PATH = typeof EXPRESS_REACT_BUILD_PATH;
+
+export const FRONTEND_LOGIN_URL = process.env.FRONTEND_LOGIN_URL || '/fe/login';
+export type FRONTEND_LOGIN_URL = typeof FRONTEND_LOGIN_URL;
