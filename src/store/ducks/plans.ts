@@ -13,7 +13,7 @@ import {
   planActivities,
   PlanGoal,
 } from '../../configs/settings';
-import { FlexObject, transformValues } from '../../helpers/utils';
+import { FlexObject, removeNullJurisdictionPlans } from '../../helpers/utils';
 
 /** the reducer name */
 export const reducerName = 'plans';
@@ -330,24 +330,27 @@ export const removePlansAction: RemovePlansAction = {
 /** fetchPlans - action creator setting plansById
  * @param {Plan[]} plansList - array of plan objects
  */
-export const fetchPlans = (plansList: Plan[] = []): FetchPlansAction => ({
-  plansById: keyBy(
-    plansList.map((plan: Plan) => {
-      /** ensure jurisdiction_name_path is parsed */
-      if (typeof plan.jurisdiction_name_path === 'string') {
-        plan.jurisdiction_name_path = JSON.parse(plan.jurisdiction_name_path);
-      }
-      /** ensure jurisdiction_path is parsed */
-      if (typeof plan.jurisdiction_path === 'string') {
-        plan.jurisdiction_path = JSON.parse(plan.jurisdiction_path);
-      }
-      plan = transformValues<Plan>(plan, ['plan_fi_reason', 'plan_fi_status']);
-      return plan;
-    }),
-    plan => plan.id
-  ),
-  type: PLANS_FETCHED,
-});
+export const fetchPlans = (plansList: Plan[] = []): FetchPlansAction => {
+  const plansArray = removeNullJurisdictionPlans(plansList);
+
+  return {
+    plansById: keyBy(
+      plansArray.map((plan: Plan) => {
+        /** ensure jurisdiction_name_path is parsed */
+        if (typeof plan.jurisdiction_name_path === 'string') {
+          plan.jurisdiction_name_path = JSON.parse(plan.jurisdiction_name_path);
+        }
+        /** ensure jurisdiction_path is parsed */
+        if (typeof plan.jurisdiction_path === 'string') {
+          plan.jurisdiction_path = JSON.parse(plan.jurisdiction_path);
+        }
+        return plan;
+      }),
+      plan => plan.id
+    ),
+    type: PLANS_FETCHED,
+  };
+};
 
 /** fetchPlanRecords - action creator setting planRecordsById
  * @param {PlanRecord[]} planList - an array of plan record objects
@@ -371,7 +374,7 @@ export const fetchPlanRecords = (planList: PlanRecordResponse[] = []): FetchPlan
       if (plan.jurisdictions) {
         thePlan.plan_jurisdictions_ids = [...plan.jurisdictions];
       }
-      return transformValues<PlanRecord>(thePlan, ['plan_fi_reason', 'plan_fi_status']);
+      return thePlan;
     }),
     plan => plan.id
   ),
