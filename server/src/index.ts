@@ -9,7 +9,7 @@ import path from 'path';
 import querystring from 'querystring';
 import request from 'request';
 import sessionFileStore from 'session-file-store';
-import {parse} from 'url';
+import { parse } from 'url';
 import {
   EXPRESS_OPENSRP_ACCESS_TOKEN_URL,
   EXPRESS_OPENSRP_AUTHORIZATION_URL,
@@ -87,7 +87,7 @@ class HttpException extends Error {
 
 const handleError = (err: HttpException, res: express.Response) => {
   const { message } = err;
-  if (message.includes('resource owner or authorization server denied the request')){
+  if (message.includes('resource owner or authorization server denied the request')) {
     return res.redirect(FRONTEND_LOGIN_URL);
   }
   const statusCode = err.statusCode || 500;
