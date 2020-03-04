@@ -81,6 +81,9 @@ class HttpException extends Error {
 
 const handleError = (err: HttpException, res: express.Response) => {
   const { message } = err;
+  if (message.includes('resource owner or authorization server denied the request')){
+    return res.redirect(FRONTEND_LOGIN_URL);
+  }
   const statusCode = err.statusCode || 500;
   res.status(statusCode).json({
     message,
