@@ -15,6 +15,7 @@ import { ONADATA_OAUTH_STATE, OPENSRP_OAUTH_STATE, PLAN_UUID_NAMESPACE } from '.
 import { Plan } from '../../store/ducks/plans';
 import { InitialTask } from '../../store/ducks/tasks';
 import * as fixtures from '../../store/ducks/tests/fixtures';
+import { plan1, plan5, plan6 } from '../../store/ducks/tests/fixtures';
 import { colorMaps } from '../structureColorMaps';
 import {
   extractPlan,
@@ -23,8 +24,8 @@ import {
   getColorByValue,
   getLocationColumns,
   oAuthUserInfoGetter,
+  removeNullJurisdictionPlans,
   roundToPrecision,
-  transformValues,
 } from '../utils';
 
 interface SampleColorMap {
@@ -231,29 +232,6 @@ describe('helpers/utils', () => {
     expect(color).toEqual(YELLOW);
   });
 
-  it('updates property names correctly', () => {
-    const sample = {
-      height: 0,
-      name: null,
-      weight: '65',
-    };
-    const expected = {
-      height: '',
-      name: '',
-      weight: '65',
-    };
-    expect(transformValues(sample, ['name', 'height'])).toEqual(expected);
-    expect(transformValues(sample, ['name', 'height'], '', [0, '0', null, 'null'])).toEqual(
-      expected
-    );
-    const otherExpected = {
-      height: 0,
-      name: '',
-      weight: '65',
-    };
-    expect(transformValues(sample, ['height', 'name'], '', [null, 'null'])).toEqual(otherExpected);
-  });
-
   it('extractPlan works', () => {
     expect(extractPlan(fixtures.plan99 as Plan)).toEqual({
       ...fixtures.plan99,
@@ -323,5 +301,11 @@ describe('helpers/utils', () => {
     expect(generateNameSpacedUUID(moment().toString(), PLAN_UUID_NAMESPACE)).toEqual(
       `cd9a43dd-e408-5a4d-a360-ef59c6e7c2a6`
     );
+  });
+
+  it('filters out plans with null jurisdictions', () => {
+    const result = removeNullJurisdictionPlans([plan5, plan6, plan1] as Plan[]);
+    expect(result.length).toEqual(1);
+    expect(result).toEqual([plan1]);
   });
 });
