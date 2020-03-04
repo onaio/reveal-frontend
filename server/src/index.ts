@@ -80,7 +80,8 @@ class HttpException extends Error {
 }
 
 const handleError = (err: HttpException, res: express.Response) => {
-  const { statusCode, message } = err;
+  const { message } = err;
+  const statusCode = err.statusCode || 500;
   res.status(statusCode).json({
     message,
     status: 'error',
