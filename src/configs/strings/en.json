@@ -866,5 +866,13 @@
   "LINK": {
     "message": "Link",
     "description": "URL leading to another page"
+  },
+  "FOCI_OF_RESIDENCE": {
+    "message": "Foci of Residence",
+    "description": "Title for the type of FOCI when displaying case details for case Triggered plans"
+  },
+  "FOCI_OF_INFECTION": {
+    "message": "Foci of Infection",
+    "description": "Title for the type of FOCI when displaying case details for case Triggered plans"
   }
 }

@@ -411,3 +411,5 @@ export const IRS_GREY_THRESHOLD = translate('IRS_GREY_THRESHOLD', 'Grey');
 export const IRS_RED_THRESHOLD = translate('RED_THRESHOLD', 'Red');
 export const IRS_YELLOW_THRESHOLD = translate('YELLOW_THRESHOLD', 'Yellow');
 export const IRS_LIGHT_GREEN_THRESHOLD = translate('LIGHT_GREEN_THRESHOLD', 'Light Green');
+export const FOCI_OF_RESIDENCE = translate('FOCI_OF_RESIDENCE', 'Foci of Residence');
+export const FOCI_OF_INFECTION = translate('FOCI_OF_INFECTION', 'Foci of Infection');

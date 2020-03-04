@@ -1,3 +1,5 @@
+import { Dictionary } from 'lodash';
+import { FOCI_OF_INFECTION, FOCI_OF_RESIDENCE } from '../../../../configs/lang';
 import { FlexObject } from '../../../../helpers/utils';
 
 export type UUID = string;
@@ -45,9 +47,10 @@ export interface RawEvent extends FlexObject {
 }
 
 interface FociInformation {
-  id: string;
+  id: UUID;
   classification: string;
   name: string;
+  title: string;
 }
 
 export interface Event {
@@ -62,27 +65,32 @@ export interface Event {
   patientName: string;
   surname: string;
   age: string;
-  fociInformation: {
-    residenceFoci: FociInformation;
-    infectionFoci: FociInformation;
-  };
+  fociInformation: FociInformation;
 }
+
+const FociTitleLookup: Dictionary<string> = {
+  Site: FOCI_OF_RESIDENCE,
+  Source: FOCI_OF_INFECTION,
+};
 
 export const extractEvent = (rawEvent: RawEvent): Event => ({
   age: rawEvent.details.age,
   baseEntityId: rawEvent.baseEntityId,
-  caseClassification: rawEvent.details.focus_status,
+  caseClassification: rawEvent.details.case_classification,
   caseNumber: rawEvent.details.case_number,
-  diagnosisDate: rawEvent.eventDate,
+  diagnosisDate: rawEvent.details.ep3_create_date,
   fociInformation: {
-    infectionFoci: {},
-    residenceFoci: {},
+    classification: rawEvent.details.focus_status,
+    id: rawEvent.details.focus_id,
+    name: rawEvent.details.focus_name,
+    title: FociTitleLookup[rawEvent.details.flag],
   },
   houseNumber: rawEvent.details.house_number,
   investigationDate: rawEvent.details.investigtion_date,
-  notificationDate: '',
+  notificationDate: rawEvent.details.ep1_create_date,
   patientName: rawEvent.details.first_name,
   species: rawEvent.details.species,
+  surname: rawEvent.details.surname,
 });
 
 export const extractEvents = (rawEvents: RawEvent[]): Event[] => {
