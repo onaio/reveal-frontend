@@ -6,8 +6,10 @@ import express from 'express';
 import session from 'express-session';
 import helmet from 'helmet';
 import path from 'path';
+import querystring from 'querystring';
 import request from 'request';
 import sessionFileStore from 'session-file-store';
+import {parse} from 'url';
 import {
   EXPRESS_OPENSRP_ACCESS_TOKEN_URL,
   EXPRESS_OPENSRP_AUTHORIZATION_URL,
@@ -23,8 +25,10 @@ import {
   EXPRESS_SESSION_NAME,
   EXPRESS_SESSION_PATH,
   EXPRESS_SESSION_SECRET,
+  FRONTEND_LOGIN_URL,
   FRONTEND_OPENSRP_CALLBACK_URL,
 } from './configs/envs';
+import { trimStart } from './utils';
 
 const opensrpAuth = new ClientOAuth2({
   accessTokenUri: EXPRESS_OPENSRP_ACCESS_TOKEN_URL,
@@ -47,6 +51,8 @@ const FileStore = sessionFileStore(session);
 const fileStoreOptions = {
   path: EXPRESS_SESSION_FILESTORE_PATH || './sessions',
 };
+
+let nextPath: string | undefined;
 
 const sess = {
   cookie: {
@@ -137,6 +143,10 @@ const oauthCallback = (req: express.Request, res: express.Response, next: expres
             req.session.cookie.maxAge = expireAfterMs;
             // you have to save the session manually for POST requests like this one
             req.session.save(() => void 0);
+            if (nextPath) {
+              nextPath = undefined;
+              return res.redirect(nextPath);
+            }
             return res.redirect(FRONTEND_OPENSRP_CALLBACK_URL);
           }
         }
@@ -158,7 +168,14 @@ const oauthState = (req: express.Request, res: express.Response) => {
 
 const loginRedirect = (req: express.Request, res: express.Response, next: express.NextFunction) => {
   // check if logged in and redirect
-  req.session.preloadedState ? res.redirect('/') : next();
+  const parsedUrl = parse(req.originalUrl);
+  const searchParam = parsedUrl.search;
+  if (searchParam) {
+    const searchString = trimStart(searchParam, '?');
+    const searchParams = querystring.parse(searchString);
+    nextPath = searchParams.next as string | undefined;
+  }
+  req.session.preloadedState ? res.redirect(nextPath) : res.redirect(FRONTEND_LOGIN_URL);
 };
 
 const logout = (req: express.Request, res: express.Response) => {
