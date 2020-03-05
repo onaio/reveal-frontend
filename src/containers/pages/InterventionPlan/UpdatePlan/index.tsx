@@ -113,7 +113,7 @@ const UpdatePlan = (props: RouteComponentProps<RouteParams> & UpdatePlanProps) =
         <Col md={8}>
           <PlanForm {...planFormProps} />
         </Col>
-        <Col md={2}>
+        <Col md={4}>
           {/* Only show case details if plan is reactive */}
           {plan && planIsReactive(plan) && <ConnectedCaseDetails {...caseDetailsProps} />}
         </Col>
