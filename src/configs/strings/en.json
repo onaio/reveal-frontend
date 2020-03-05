@@ -901,7 +901,7 @@
   },
   "SPECIES": {
     "message": "Species",
-    "description": "Species reported in case Details for case triggered plans"
+    "description": "species reported in case Details for case triggered plans"
   },
   "DIAGNOSIS_DATE": {
     "message": "Date of Diagnosis",
@@ -917,6 +917,6 @@
   },
   "FAILED_TO_GET_EVENT_ID": {
     "message": "Failed to extract event id from plan",
-    "description": "Error message shown when app is unable to retrieve a value from a plan"
+    "description": "error message shown when app is unable to retrieve a value from a plan"
   }
 }
