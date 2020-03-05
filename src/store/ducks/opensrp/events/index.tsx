@@ -78,7 +78,7 @@ export const removeEventsAction: RemoveEventsAction = {
 export const fetchEvents = (eventsList: RawEvent[]): FetchEventsAction => {
   const events = extractEvents(eventsList);
   return {
-    eventsById: keyBy(events, event => event.baseEntityId),
+    eventsById: keyBy(events, event => event.id),
     type: EVENTS_FETCHED,
   };
 };

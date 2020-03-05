@@ -66,6 +66,7 @@ export interface CaseInformation {
 }
 
 export interface Event {
+  id: UUID;
   baseEntityId: UUID;
   caseNumber: string;
   caseInformation: CaseInformation;
@@ -97,6 +98,7 @@ export const extractEvent = (rawEvent: RawEvent): Event => ({
     name: rawEvent.details.focus_name,
     title: FociTitleLookup[rawEvent.details.flag],
   },
+  id: rawEvent._id,
 });
 
 export const extractEvents = (rawEvents: RawEvent[]): Event[] => {

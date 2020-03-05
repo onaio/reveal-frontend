@@ -36,9 +36,9 @@ describe('reducers/practitioners.reducer.fetchPractitionersAction', () => {
     store.dispatch(fetchEvents([rawEvent1]));
     const event1 = extractEvent(rawEvent1);
     expect(getEventsById(store.getState())).toEqual({
-      '88684506-605d-41db-b904-efbaf9795d2a': event1,
+      'd1ea0739-9f7c-4ceb-8664-24c695306bda': event1,
     });
-    expect(getEventById(store.getState(), '88684506-605d-41db-b904-efbaf9795d2a')).toEqual(event1);
+    expect(getEventById(store.getState(), 'd1ea0739-9f7c-4ceb-8664-24c695306bda')).toEqual(event1);
   });
 
   it('removes ANC correctly', () => {
@@ -57,14 +57,14 @@ describe('reducers/practitioners.reducer.fetchPractitionersAction', () => {
     const event1 = extractEvents([rawEvent1])[0];
     let clients = getEventsById(store.getState());
     expect(clients).toEqual({
-      [event2.baseEntityId]: event2,
+      [event2.id]: event2,
     });
 
     store.dispatch(fetchEvents([rawEvent1]));
     clients = getEventsById(store.getState());
     expect(clients).toEqual({
-      [event2.baseEntityId]: event2,
-      [event1.baseEntityId]: event1,
+      [event2.id]: event2,
+      [event1.id]: event1,
     });
   });
 });
