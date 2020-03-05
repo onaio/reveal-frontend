@@ -1,6 +1,6 @@
 # Reveal Frontend
 
-[![Coverage Status](https://coveralls.io/repos/github/onaio/reveal-frontend/badge.svg?branch=master)](https://coveralls.io/github/onaio/reveal-frontend?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/onaio/reveal-frontend/badge.svg?branch=tests/659_coverage-report)](https://coveralls.io/github/onaio/reveal-frontend?branch=tests/659_coverage-report)
 
 This is the Reveal web application front end.
 
