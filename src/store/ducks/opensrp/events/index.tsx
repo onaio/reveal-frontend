@@ -11,9 +11,9 @@ export const reducerName = 'events';
 // action interfaces
 
 /** action type for action that adds Events to store */
-export const EVENTS_FETCHED = 'src/store/ducks/events/reducer/TEAM_FETCHED';
+export const EVENTS_FETCHED = 'src/store/ducks/opensrp/events/reducer/EVENTS_FETCHED';
 /** action type for REMOVE_TEAMS action */
-export const EVENTS_REMOVED = 'src/store/ducks/events/reducer/REMOVE_TEAMS';
+export const EVENTS_REMOVED = 'src/store/ducks/opensrp/events/reducer/EVENTS_REMOVED';
 
 /** interface for events fetched action */
 export interface FetchEventsAction extends AnyAction {
