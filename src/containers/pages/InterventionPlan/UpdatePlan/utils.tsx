@@ -17,7 +17,10 @@ export const getEventId = (aPlan: PlanDefinition | null): string | null => {
   return contextOfInterest[0].valueCodableConcept;
 };
 
-export const planIsReactive = (aPlan: PlanDefinition): boolean => {
+export const planIsReactive = (aPlan: PlanDefinition | null): boolean => {
+  if (aPlan === null) {
+    return false;
+  }
   const contexts = aPlan.useContext;
   for (const context of contexts) {
     if (context.code === 'fiReason' && context.valueCodableConcept === 'Case Triggered') {
