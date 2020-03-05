@@ -1,16 +1,15 @@
 import { Dictionary } from 'lodash';
 import { FOCI_OF_INFECTION, FOCI_OF_RESIDENCE } from '../../../../configs/lang';
-import { FlexObject } from '../../../../helpers/utils';
 
 export type UUID = string;
 export type DateString = string;
 export type TimeStamp = number;
 
-export interface RawEvent extends FlexObject {
+export interface RawEvent {
   type: 'Event';
   dateCreated: TimeStamp;
   serverVersion: number;
-  identifiers: FlexObject;
+  identifiers: Dictionary<string>;
   baseEntityId: UUID;
   locationId: UUID;
   eventDate: TimeStamp;
@@ -53,10 +52,9 @@ interface FociInformation {
   title: string;
 }
 
-export interface Event {
-  baseEntityId: string;
+export interface CaseInformation {
   caseClassification: string;
-  caseNumber: string;
+
   diagnosisDate: DateString;
   species: string;
   notificationDate: DateString;
@@ -65,6 +63,12 @@ export interface Event {
   patientName: string;
   surname: string;
   age: string;
+}
+
+export interface Event {
+  baseEntityId: UUID;
+  caseNumber: string;
+  caseInformation: CaseInformation;
   fociInformation: FociInformation;
 }
 
@@ -74,23 +78,25 @@ const FociTitleLookup: Dictionary<string> = {
 };
 
 export const extractEvent = (rawEvent: RawEvent): Event => ({
-  age: rawEvent.details.age,
   baseEntityId: rawEvent.baseEntityId,
-  caseClassification: rawEvent.details.case_classification,
+  caseInformation: {
+    age: rawEvent.details.age,
+    caseClassification: rawEvent.details.case_classification,
+    diagnosisDate: rawEvent.details.ep3_create_date,
+    houseNumber: rawEvent.details.house_number,
+    investigationDate: rawEvent.details.investigtion_date,
+    notificationDate: rawEvent.details.ep1_create_date,
+    patientName: rawEvent.details.first_name,
+    species: rawEvent.details.species,
+    surname: rawEvent.details.surname,
+  },
   caseNumber: rawEvent.details.case_number,
-  diagnosisDate: rawEvent.details.ep3_create_date,
   fociInformation: {
     classification: rawEvent.details.focus_status,
     id: rawEvent.details.focus_id,
     name: rawEvent.details.focus_name,
     title: FociTitleLookup[rawEvent.details.flag],
   },
-  houseNumber: rawEvent.details.house_number,
-  investigationDate: rawEvent.details.investigtion_date,
-  notificationDate: rawEvent.details.ep1_create_date,
-  patientName: rawEvent.details.first_name,
-  species: rawEvent.details.species,
-  surname: rawEvent.details.surname,
 });
 
 export const extractEvents = (rawEvents: RawEvent[]): Event[] => {
