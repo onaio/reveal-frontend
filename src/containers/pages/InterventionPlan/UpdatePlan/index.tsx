@@ -14,11 +14,14 @@ import { PlanDefinition } from '../../../../configs/settings';
 import { HOME_URL, NEW_PLAN_URL, OPENSRP_PLANS, PLAN_LIST_URL } from '../../../../constants';
 import { displayError } from '../../../../helpers/errors';
 import { OpenSRPService } from '../../../../services/opensrp';
+import { fetchEvents } from '../../../../store/ducks/opensrp/events';
 import planDefinitionReducer, {
   addPlanDefinition,
   getPlanDefinitionById,
   reducerName as planDefinitionReducerName,
 } from '../../../../store/ducks/opensrp/PlanDefinition';
+import ConnectedCaseDetails, { CaseDetailsProps } from './CaseDetails';
+import { getEventId, planIsReactive } from './utils';
 
 /** register the plan definitions reducer */
 reducerRegistry.register(planDefinitionReducerName, planDefinitionReducer);
@@ -92,6 +95,13 @@ const UpdatePlan = (props: RouteComponentProps<RouteParams> & UpdatePlanProps) =
     ...(plan && { initialValues: getPlanFormValues(plan) }),
   };
 
+  const caseDetailsProps: CaseDetailsProps = {
+    event: null,
+    eventId: getEventId(plan),
+    fetchEventsCreator: fetchEvents,
+    service: OpenSRPService,
+  };
+
   return (
     <div>
       <Helmet>
@@ -102,6 +112,10 @@ const UpdatePlan = (props: RouteComponentProps<RouteParams> & UpdatePlanProps) =
       <Row>
         <Col md={8}>
           <PlanForm {...planFormProps} />
+        </Col>
+        <Col md={2}>
+          {/* Only show case details if plan is reactive */}
+          {plan && planIsReactive(plan) && <ConnectedCaseDetails {...caseDetailsProps} />}
         </Col>
       </Row>
     </div>
