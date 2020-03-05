@@ -20,6 +20,7 @@ export type UUID = string;
 export type DateString = string;
 export type TimeStamp = number;
 
+/** describes an event response from the api */
 export interface RawEvent {
   type: 'Event';
   dateCreated: TimeStamp;
@@ -60,12 +61,14 @@ export interface RawEvent {
   _rev: string;
 }
 
+/** describes the foci information property */
 interface FociInformation {
   id: UUID;
   classification: string;
   name: string;
 }
 
+/** describes the case information property for a n extracted event */
 export interface CaseInformation {
   caseClassification: string;
   diagnosisDate: DateString;
@@ -78,6 +81,7 @@ export interface CaseInformation {
   age: string;
 }
 
+/** describes the event object after extracting it from rawEvent */
 export interface Event {
   id: UUID;
   baseEntityId: UUID;
@@ -87,15 +91,25 @@ export interface Event {
   fociInformationTitle: string;
 }
 
+/** lookup table to decide the title of foci information based on events flag details */
 const FociTitleLookup: Dictionary<string> = {
   Site: FOCI_OF_RESIDENCE,
   Source: FOCI_OF_INFECTION,
 };
 
+/** Takes the iso formated date and displays a readable date format
+ * @param {DateString} dateString - the ISO formated string
+ *
+ * @return {DateString} - a human friendly related date
+ */
 export const friendlyDate = (dateString: DateString): string => {
-  return moment(dateString).format('YYYY-MM-DD');
+  return moment(dateString).format('LLL');
 };
 
+/** extract the event details we require from what we receive from the api
+ * @param {RawEvent} rawEvent - the event object from the api
+ * @return {Event} - event object with fields
+ */
 export const extractEvent = (rawEvent: RawEvent): Event => ({
   baseEntityId: rawEvent.baseEntityId,
   caseInformation: {
@@ -119,10 +133,15 @@ export const extractEvent = (rawEvent: RawEvent): Event => ({
   id: rawEvent._id,
 });
 
+/** extracts events in batch
+ * @param {RawEvents} rawEvent - the event objects from the api
+ * @return {Event} - events object with fields
+ */
 export const extractEvents = (rawEvents: RawEvent[]): Event[] => {
   return rawEvents.map<Event>(rawEvent => extractEvent(rawEvent));
 };
 
+/** describes the form an event will take after translating its properties */
 interface TranslatedEvent {
   baseEntityId: UUID;
   caseInformation: Dictionary<string>;
@@ -131,6 +150,10 @@ interface TranslatedEvent {
   fociInformationTitle: string;
 }
 
+/** translates an event
+ * @param {Event} event - an extracted event object
+ * @return {TranslatedEvent}
+ */
 export const translateEvent = (event: Event): TranslatedEvent => {
   const { caseInformation, fociInformation } = event;
   return {
