@@ -10,7 +10,7 @@ import reducer, {
   removeEventsAction,
 } from '..';
 import store from '../../../..';
-import { extractEvent, extractEvents } from '../utils';
+import { extractEvent, extractEvents, friendlyDate } from '../utils';
 import { rawEvent1, rawEvent2 } from './fixtures';
 
 reducerRegistry.register(reducerName, reducer);
@@ -65,6 +65,10 @@ describe('reducers/practitioners.reducer.fetchPractitionersAction', () => {
     expect(clients).toEqual({
       [event2.id]: event2,
       [event1.id]: event1,
+    });
+
+    it('frendlyDate returns human friendly date correctly', () => {
+      expect(friendlyDate('2019-11-01T08:10:23.867+0000')).toEqual('2019-11-02');
     });
   });
 });

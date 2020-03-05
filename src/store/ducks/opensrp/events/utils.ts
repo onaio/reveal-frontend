@@ -68,7 +68,6 @@ interface FociInformation {
 
 export interface CaseInformation {
   caseClassification: string;
-
   diagnosisDate: DateString;
   species: string;
   notificationDate: DateString;
