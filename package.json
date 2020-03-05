@@ -39,6 +39,7 @@
     "bootstrap": "^4.2.1",
     "client-oauth2": "^4.2.3",
     "connected-react-router": "^6.4.0",
+    "coveralls": "^3.0.9",
     "formik": "^1.5.8",
     "gisida": "^1.2.5",
     "gisida-react": "^1.2.8",
@@ -72,13 +73,23 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint-js": "eslint 'src/**/*.{js,jsx}'",
-    "lint-ts": "tslint -c tslint.json --project ./tsconfig.json --format stylish 'src/**/*.{ts,tsx}'"
+    "lint-ts": "tslint -c tslint.json --project ./tsconfig.json --format stylish 'src/**/*.{ts,tsx}'",
+    "test:coverage": "set CI=true && react-scripts test --coverage",
+    "coveralls": "set CI=true && yarn test --runInBand --verbose --coverage=true --forceExit --detectOpenHandles && cat ./coverage/lcov.info | coveralls"
   },
   "jest": {
     "collectCoverageFrom": [
       "src/**/*.{ts,tsx}",
       "!src/index.tsx"
-    ]
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 55,
+        "functions": 65,
+        "lines": 72,
+        "statements": 71
+      }
+    }
   },
   "husky": {
     "hooks": {
