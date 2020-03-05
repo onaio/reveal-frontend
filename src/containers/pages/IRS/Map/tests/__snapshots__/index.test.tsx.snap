@@ -197,52 +197,34 @@ exports[`components/IRS Reports/IRSReportingMap renders correctly: No sprayed re
 exports[`components/IRS Reports/IRSReportingMap renders correctly: Response item ProgressBar 1`] = `
 Array [
   <ProgressBar
+    animate={false}
+    cssClass="progress-bar-striped"
     decimalPoints={0}
     height="10px"
-    indicatorThresholds={
+    lineColor="#0000FF"
+    lineColorThresholds={
       Object {
-        "GREEN_THRESHOLD": Object {
-          "color": "#2ECC40",
-          "name": "Green",
-          "orEquals": true,
-          "value": 1,
-        },
-        "GREY_THRESHOLD": Object {
-          "color": "#dddddd",
-          "name": "Grey",
-          "value": 0.2,
-        },
-        "RED_THRESHOLD": Object {
-          "color": "#FF4136",
-          "name": "Red",
-          "orEquals": true,
-          "value": 0.75,
-        },
-        "YELLOW_THRESHOLD": Object {
-          "color": "#FFDC00",
-          "name": "Yellow",
-          "value": 0.9,
-        },
+        "#2ECC40": 100,
+        "#FF4136": 75,
+        "#FFDC00": 90,
+        "#dddddd": 20,
       }
     }
     max={100}
     min={0}
+    showLabel={false}
+    stripped={false}
     value={50}
   >
     <div
       className="progress"
-      style={
-        Object {
-          "height": "10px",
-          "marginBottom": "15px",
-        }
-      }
     >
       <div
         aria-valuemax={100}
         aria-valuemin={0}
         aria-valuenow={50}
-        className="progress-bar"
+        className="progress-bar 
+          "
         role="progressbar"
         style={
           Object {
@@ -254,52 +236,34 @@ Array [
     </div>
   </ProgressBar>,
   <ProgressBar
+    animate={false}
+    cssClass="progress-bar-striped"
     decimalPoints={0}
     height="10px"
-    indicatorThresholds={
+    lineColor="#0000FF"
+    lineColorThresholds={
       Object {
-        "GREEN_THRESHOLD": Object {
-          "color": "#2ECC40",
-          "name": "Green",
-          "orEquals": true,
-          "value": 1,
-        },
-        "GREY_THRESHOLD": Object {
-          "color": "#dddddd",
-          "name": "Grey",
-          "value": 0.2,
-        },
-        "RED_THRESHOLD": Object {
-          "color": "#FF4136",
-          "name": "Red",
-          "orEquals": true,
-          "value": 0.75,
-        },
-        "YELLOW_THRESHOLD": Object {
-          "color": "#FFDC00",
-          "name": "Yellow",
-          "value": 0.9,
-        },
+        "#2ECC40": 100,
+        "#FF4136": 75,
+        "#FFDC00": 90,
+        "#dddddd": 20,
       }
     }
     max={100}
     min={0}
+    showLabel={false}
+    stripped={false}
     value={100}
   >
     <div
       className="progress"
-      style={
-        Object {
-          "height": "10px",
-          "marginBottom": "15px",
-        }
-      }
     >
       <div
         aria-valuemax={100}
         aria-valuemin={0}
         aria-valuenow={100}
-        className="progress-bar"
+        className="progress-bar 
+          "
         role="progressbar"
         style={
           Object {
@@ -311,52 +275,34 @@ Array [
     </div>
   </ProgressBar>,
   <ProgressBar
+    animate={false}
+    cssClass="progress-bar-striped"
     decimalPoints={0}
     height="10px"
-    indicatorThresholds={
+    lineColor="#0000FF"
+    lineColorThresholds={
       Object {
-        "GREEN_THRESHOLD": Object {
-          "color": "#2ECC40",
-          "name": "Green",
-          "orEquals": true,
-          "value": 1,
-        },
-        "GREY_THRESHOLD": Object {
-          "color": "#dddddd",
-          "name": "Grey",
-          "value": 0.2,
-        },
-        "RED_THRESHOLD": Object {
-          "color": "#FF4136",
-          "name": "Red",
-          "orEquals": true,
-          "value": 0.75,
-        },
-        "YELLOW_THRESHOLD": Object {
-          "color": "#FFDC00",
-          "name": "Yellow",
-          "value": 0.9,
-        },
+        "#2ECC40": 100,
+        "#FF4136": 75,
+        "#FFDC00": 90,
+        "#dddddd": 20,
       }
     }
     max={100}
     min={0}
+    showLabel={false}
+    stripped={false}
     value={50}
   >
     <div
       className="progress"
-      style={
-        Object {
-          "height": "10px",
-          "marginBottom": "15px",
-        }
-      }
     >
       <div
         aria-valuemax={100}
         aria-valuemin={0}
         aria-valuenow={50}
-        className="progress-bar"
+        className="progress-bar 
+          "
         role="progressbar"
         style={
           Object {
@@ -368,52 +314,34 @@ Array [
     </div>
   </ProgressBar>,
   <ProgressBar
+    animate={false}
+    cssClass="progress-bar-striped"
     decimalPoints={0}
     height="10px"
-    indicatorThresholds={
+    lineColor="#0000FF"
+    lineColorThresholds={
       Object {
-        "GREEN_THRESHOLD": Object {
-          "color": "#2ECC40",
-          "name": "Green",
-          "orEquals": true,
-          "value": 1,
-        },
-        "GREY_THRESHOLD": Object {
-          "color": "#dddddd",
-          "name": "Grey",
-          "value": 0.2,
-        },
-        "RED_THRESHOLD": Object {
-          "color": "#FF4136",
-          "name": "Red",
-          "orEquals": true,
-          "value": 0.75,
-        },
-        "YELLOW_THRESHOLD": Object {
-          "color": "#FFDC00",
-          "name": "Yellow",
-          "value": 0.9,
-        },
+        "#2ECC40": 100,
+        "#FF4136": 75,
+        "#FFDC00": 90,
+        "#dddddd": 20,
       }
     }
     max={100}
     min={0}
+    showLabel={false}
+    stripped={false}
     value={86}
   >
     <div
       className="progress"
-      style={
-        Object {
-          "height": "10px",
-          "marginBottom": "15px",
-        }
-      }
     >
       <div
         aria-valuemax={100}
         aria-valuemin={0}
         aria-valuenow={86}
-        className="progress-bar"
+        className="progress-bar 
+          "
         role="progressbar"
         style={
           Object {
