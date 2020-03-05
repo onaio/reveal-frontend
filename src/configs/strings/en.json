@@ -874,5 +874,49 @@
   "FOCI_OF_INFECTION": {
     "message": "Foci of Infection",
     "description": "Title for the type of FOCI when displaying case details for case Triggered plans"
+  },
+  "CASE_DETAILS": {
+    "message": "Case Details",
+    "description": "Title for Case details section when displaying case details for case Triggered plans"
+  },
+  "CASE_INFORMATION": {
+    "message": "Case Information",
+    "description": "subtitle under CASE_DETAILS"
+  },
+  "SURNAME": {
+    "message": "Surname",
+    "description": "a hereditary name common to all members of a family,"
+  },
+  "PATIENT_NAME": {
+    "message": "Patient Name",
+    "description": "name of a patient"
+  },
+  "HOUSE_NUMBER": {
+    "message": "House Number",
+    "description": "an arbitrary umber identifying a house structure"
+  },
+  "INVESTIGATION_DATE": {
+    "message": "Investigation Date",
+    "description": "focus Investigation date"
+  },
+  "SPECIES": {
+    "message": "Species",
+    "description": "Species reported in case Details for case triggered plans"
+  },
+  "DIAGNOSIS_DATE": {
+    "message": "Date of Diagnosis",
+    "description": "date of Diagnosis"
+  },
+  "ID": {
+    "message": "Id",
+    "description": "An identifier"
+  },
+  "CLASSIFICATION": {
+    "message": "Classification",
+    "description": "category into which something is put"
+  },
+  "FAILED_TO_GET_EVENT_ID": {
+    "message": "Failed to extract event id from plan",
+    "description": "Error message shown when app is unable to retrieve a value from a plan"
   }
 }
