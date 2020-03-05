@@ -533,8 +533,8 @@ export interface PlanFilters {
 /** plansArrayBaseSelector select an array of all plans
  * @param state - the redux store
  */
-export const plansArrayBaseSelector = (state: Registry): Plan[] =>
-  values((state as any)[reducerName].plansById);
+export const plansArrayBaseSelector = (planFilter?: string) => (state: Registry): Plan[] =>
+  values((state as any)[reducerName][planFilter ? planFilter : 'plansById']);
 
 /** getInterventionType
  * Gets interventionType from PlanFilters
@@ -577,68 +577,73 @@ export const getReason = (_: Registry, props: PlanFilters) => props.reason;
  * @param {Registry} state - the redux store
  * @param {PlanFilters} props - the plan filters object
  */
-export const getPlansArrayByInterventionType = createSelector(
-  [plansArrayBaseSelector, getInterventionType],
-  (plans, interventionType) =>
-    interventionType
-      ? plans.filter(plan => plan.plan_intervention_type === interventionType)
-      : plans
-);
+export const getPlansArrayByInterventionType = (planFilter?: string) =>
+  createSelector(
+    [plansArrayBaseSelector(planFilter), getInterventionType],
+    (plans, interventionType) =>
+      interventionType
+        ? plans.filter(plan => plan.plan_intervention_type === interventionType)
+        : plans
+  );
 
 /** getPlansArrayByJurisdictionIds
  * Gets an array of Plan objects filtered by jurisdictionIds
  * @param {Registry} state - the redux store
  * @param {PlanFilters} props - the plan filters object
  */
-export const getPlansArrayByJurisdictionIds = createSelector(
-  [plansArrayBaseSelector, getJurisdictionIds],
-  (plans, jurisdictionIds) =>
-    jurisdictionIds
-      ? plans.filter(plan =>
-          jurisdictionIds.length ? jurisdictionIds.includes(plan.jurisdiction_id) : true
-        )
-      : plans
-);
+export const getPlansArrayByJurisdictionIds = (planFilter?: string) =>
+  createSelector(
+    [plansArrayBaseSelector(planFilter), getJurisdictionIds],
+    (plans, jurisdictionIds) =>
+      jurisdictionIds
+        ? plans.filter(plan =>
+            jurisdictionIds.length ? jurisdictionIds.includes(plan.jurisdiction_id) : true
+          )
+        : plans
+  );
 
 /** getPlansArrayByStatus
  * Gets an array of Plan objects filtered by plan status
  * @param {Registry} state - the redux store
  * @param {PlanFilters} props - the plan filters object
  */
-export const getPlansArrayByStatus = createSelector(
-  [plansArrayBaseSelector, getStatusList],
-  (plans, statusList) =>
-    statusList
-      ? plans.filter(plan => (statusList.length ? statusList.includes(plan.plan_status) : true))
-      : plans
-);
+export const getPlansArrayByStatus = (planFilter?: string) =>
+  createSelector(
+    [plansArrayBaseSelector(planFilter), getStatusList],
+    (plans, statusList) =>
+      statusList
+        ? plans.filter(plan => (statusList.length ? statusList.includes(plan.plan_status) : true))
+        : plans
+  );
 
 /** getPlansArrayByReason
  * Gets an array of Plan objects filtered by FI plan reason
  * @param {Registry} state - the redux store
  * @param {PlanFilters} props - the plan filters object
  */
-export const getPlansArrayByReason = createSelector(
-  [plansArrayBaseSelector, getReason],
-  (plans, reason) => (reason ? plans.filter(plan => plan.plan_fi_reason === reason) : plans)
-);
+export const getPlansArrayByReason = (planFilter?: string) =>
+  createSelector(
+    [plansArrayBaseSelector(planFilter), getReason],
+    (plans, reason) => (reason ? plans.filter(plan => plan.plan_fi_reason === reason) : plans)
+  );
 
 /** getPlansArrayByParentJurisdictionId
  * Gets an array of Plan objects filtered by plan jurisdiction parent_id
  * @param {Registry} state - the redux store
  * @param {PlanFilters} props - the plan filters object
  */
-export const getPlansArrayByParentJurisdictionId = createSelector(
-  [plansArrayBaseSelector, getParentJurisdictionId],
-  (plans, parentJurisdictionId) =>
-    plans.filter(
-      plan =>
-        (parentJurisdictionId && !plan.jurisdiction_path ? false : true) &&
-        (parentJurisdictionId && plan.jurisdiction_path
-          ? plan.jurisdiction_path.includes(parentJurisdictionId)
-          : true)
-    )
-);
+export const getPlansArrayByParentJurisdictionId = (planFilter?: string) =>
+  createSelector(
+    [plansArrayBaseSelector(planFilter), getParentJurisdictionId],
+    (plans, parentJurisdictionId) =>
+      plans.filter(
+        plan =>
+          (parentJurisdictionId && !plan.jurisdiction_path ? false : true) &&
+          (parentJurisdictionId && plan.jurisdiction_path
+            ? plan.jurisdiction_path.includes(parentJurisdictionId)
+            : true)
+      )
+  );
 
 /** makePlansArraySelector
  * Returns a selector that gets an array of Plan objects filtered by one or all
@@ -659,14 +664,14 @@ export const getPlansArrayByParentJurisdictionId = createSelector(
  * @param {Registry} state - the redux store
  * @param {PlanFilters} props - the plan filters object
  */
-export const makePlansArraySelector = () => {
+export const makePlansArraySelector = (planFilter?: string) => {
   return createSelector(
     [
-      getPlansArrayByInterventionType,
-      getPlansArrayByJurisdictionIds,
-      getPlansArrayByStatus,
-      getPlansArrayByReason,
-      getPlansArrayByParentJurisdictionId,
+      getPlansArrayByInterventionType(planFilter),
+      getPlansArrayByJurisdictionIds(planFilter),
+      getPlansArrayByStatus(planFilter),
+      getPlansArrayByReason(planFilter),
+      getPlansArrayByParentJurisdictionId(planFilter),
     ],
     (plans, plans2, plans3, plans4, plans5) =>
       intersect([plans, plans2, plans3, plans4, plans5], JSON.stringify)
