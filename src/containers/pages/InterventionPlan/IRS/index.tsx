@@ -40,9 +40,9 @@ import plansReducer, {
   extractPlanRecordResponseFromPlanPayload,
   fetchPlanRecords,
   fetchPlans,
-  getPlanRecordsArray,
   getPlansArray,
   InterventionType,
+  makePlansArraySelector,
   Plan,
   PlanPayload,
   PlanRecord,
@@ -51,6 +51,7 @@ import plansReducer, {
   reducerName as plansReducerName,
 } from '../../../../store/ducks/plans';
 
+import { Registry } from '@onaio/redux-reducer-registry';
 import { Helmet } from 'react-helmet';
 import DrillDownTableLinkedCell from '../../../../components/DrillDownTableLinkedCell';
 import HeaderBreadcrumbs, {
@@ -85,6 +86,9 @@ export const defaultIrsPlansProps: IrsPlansProps = {
   pageTitle: '',
   plansArray: [],
 };
+
+/** Plans filter selector */
+const plansArraySelector = makePlansArraySelector('planRecordsById');
 
 /** IrsPlans - component for IRS Plans page */
 class IrsPlans extends React.Component<IrsPlansProps & RouteComponentProps<RouteParams>, {}> {
@@ -243,7 +247,10 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
   const isDraftsList = ownProps.path === INTERVENTION_IRS_DRAFTS_URL;
   const planStatus = [PlanStatus.DRAFT];
   const pageTitle = `${IRS_PLANS}${isDraftsList ? ` ${DRAFTS_PARENTHESIS}` : ''}`;
-  const plansRecordsArray = getPlanRecordsArray(state, InterventionType.IRS, planStatus);
+  const plansRecordsArray = plansArraySelector(state as Registry, {
+    interventionType: InterventionType.IRS,
+    statusList: planStatus,
+  });
   const plansArray = getPlansArray(state, InterventionType.IRS, planStatus);
 
   const props = {
