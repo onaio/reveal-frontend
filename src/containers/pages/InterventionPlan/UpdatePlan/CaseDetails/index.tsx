@@ -93,9 +93,9 @@ export const CaseDetails: React.FC<CaseDetailsProps> = (props = defaultCaseDetai
   const mapObjectToElement = (obj: FlexObject) =>
     Object.entries(obj).map(([property, value], index) => {
       return (
-        <p key={index}>
-          <span className="">{property}</span>: {value}
-        </p>
+        <tr key={index}>
+          <td>{property}</td> <td>{value}</td>
+        </tr>
       );
     });
 
@@ -112,10 +112,14 @@ export const CaseDetails: React.FC<CaseDetailsProps> = (props = defaultCaseDetai
           <Collapse isOpen={isCollapsed}>
             <CardBody>
               <h5 className="mb-3">{CASE_INFORMATION}</h5>
-              {mapObjectToElement(caseInformation)}
+              <table className="table table-borderless">
+                {mapObjectToElement(caseInformation)}
+              </table>
               <hr />
               <h5 className="mb-3"> {fociInformationTitle}</h5>
-              {mapObjectToElement(fociInformation)}
+              <table className="table table-borderless">
+                {mapObjectToElement(fociInformation)}
+              </table>
             </CardBody>
           </Collapse>
         </Card>
