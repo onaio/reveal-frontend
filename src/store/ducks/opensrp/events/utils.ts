@@ -1,5 +1,20 @@
 import { Dictionary } from 'lodash';
-import { FOCI_OF_INFECTION, FOCI_OF_RESIDENCE } from '../../../../configs/lang';
+import moment from 'moment';
+import {
+  AGE,
+  CASE_CLASSIFICATION_HEADER,
+  CASE_NOTIF_DATE_HEADER,
+  CLASSIFICATION,
+  DIAGNOSIS_DATE,
+  FOCI_OF_INFECTION,
+  FOCI_OF_RESIDENCE,
+  HOUSE_NUMBER,
+  INVESTIGATION_DATE,
+  NAME,
+  PATIENT_NAME,
+  SPECIES,
+  SURNAME,
+} from '../../../../configs/lang';
 
 export type UUID = string;
 export type DateString = string;
@@ -49,7 +64,6 @@ interface FociInformation {
   id: UUID;
   classification: string;
   name: string;
-  title: string;
 }
 
 export interface CaseInformation {
@@ -71,6 +85,7 @@ export interface Event {
   caseNumber: string;
   caseInformation: CaseInformation;
   fociInformation: FociInformation;
+  fociInformationTitle: string;
 }
 
 const FociTitleLookup: Dictionary<string> = {
@@ -78,15 +93,19 @@ const FociTitleLookup: Dictionary<string> = {
   Source: FOCI_OF_INFECTION,
 };
 
+export const friendlyDate = (dateString: DateString): string => {
+  return moment(dateString).format('YYYY-MM-DD');
+};
+
 export const extractEvent = (rawEvent: RawEvent): Event => ({
   baseEntityId: rawEvent.baseEntityId,
   caseInformation: {
     age: rawEvent.details.age,
     caseClassification: rawEvent.details.case_classification,
-    diagnosisDate: rawEvent.details.ep3_create_date,
+    diagnosisDate: friendlyDate(rawEvent.details.ep3_create_date),
     houseNumber: rawEvent.details.house_number,
-    investigationDate: rawEvent.details.investigtion_date,
-    notificationDate: rawEvent.details.ep1_create_date,
+    investigationDate: friendlyDate(rawEvent.details.investigtion_date),
+    notificationDate: friendlyDate(rawEvent.details.ep1_create_date),
     patientName: rawEvent.details.first_name,
     species: rawEvent.details.species,
     surname: rawEvent.details.surname,
@@ -96,11 +115,44 @@ export const extractEvent = (rawEvent: RawEvent): Event => ({
     classification: rawEvent.details.focus_status,
     id: rawEvent.details.focus_id,
     name: rawEvent.details.focus_name,
-    title: FociTitleLookup[rawEvent.details.flag],
   },
+  fociInformationTitle: FociTitleLookup[rawEvent.details.flag],
   id: rawEvent._id,
 });
 
 export const extractEvents = (rawEvents: RawEvent[]): Event[] => {
   return rawEvents.map<Event>(rawEvent => extractEvent(rawEvent));
+};
+
+interface TranslatedEvent {
+  baseEntityId: UUID;
+  caseInformation: Dictionary<string>;
+  caseNumber: string;
+  fociInformation: Dictionary<string>;
+  fociInformationTitle: string;
+}
+
+export const translateEvent = (event: Event): TranslatedEvent => {
+  const { caseInformation, fociInformation } = event;
+  return {
+    baseEntityId: event.baseEntityId,
+    caseInformation: {
+      [AGE]: caseInformation.age,
+      [CASE_CLASSIFICATION_HEADER]: caseInformation.caseClassification,
+      [DIAGNOSIS_DATE]: caseInformation.diagnosisDate,
+      [HOUSE_NUMBER]: caseInformation.houseNumber,
+      [INVESTIGATION_DATE]: caseInformation.investigationDate,
+      [CASE_NOTIF_DATE_HEADER]: caseInformation.notificationDate,
+      [PATIENT_NAME]: caseInformation.patientName,
+      [SPECIES]: caseInformation.species,
+      [SURNAME]: caseInformation.surname,
+    },
+    caseNumber: event.caseNumber,
+    fociInformation: {
+      [CLASSIFICATION]: fociInformation.classification,
+      id: fociInformation.id,
+      [NAME]: fociInformation.name,
+    },
+    fociInformationTitle: event.fociInformationTitle,
+  };
 };
