@@ -16,6 +16,7 @@ import Loading from '../../../../../components/page/Loading';
 import SelectComponent from '../../../../../components/SelectPlan/';
 import { SUPERSET_PLANS_SLICE } from '../../../../../configs/env';
 import {
+  AN_ERROR_OCCURED,
   FOCUS_INVESTIGATION,
   FOCUS_INVESTIGATIONS,
   HOME,
@@ -152,7 +153,13 @@ const SingleActiveFIMap = (props: MapSingleFIProps & RouteComponentProps<RoutePa
         { comparator: InterventionType.FI, operator: '==', subject: PLAN_INTERVENTION_TYPE },
       ]);
       supersetService(SUPERSET_PLANS_SLICE, supersetParams)
-        .then((result: Plan[]) => fetchPlansActionCreator(result))
+        .then((result: Plan[]) => {
+          if (result) {
+            fetchPlansActionCreator(result);
+          } else {
+            displayError(new Error(AN_ERROR_OCCURED));
+          }
+        })
         .catch((error: Error) => displayError(error));
     }
     /**
