@@ -10,7 +10,12 @@ import { Card, CardBody, CardHeader, Collapse } from 'reactstrap';
 import { ActionCreator, Store } from 'redux';
 import Loading from '../../../../../components/page/Loading';
 import { OPENSRP_API_BASE_URL } from '../../../../../configs/env';
-import { CASE_DETAILS, CASE_INFORMATION, CASE_NUMBER } from '../../../../../configs/lang';
+import {
+  CASE_DETAILS,
+  CASE_INFORMATION,
+  CASE_NUMBER,
+  FAILED_TO_GET_EVENT_ID,
+} from '../../../../../configs/lang';
 import { OPENSRP_FIND_EVENTS_ENDPOINT } from '../../../../../constants';
 import { displayError } from '../../../../../helpers/errors';
 import { growl } from '../../../../../helpers/utils';
@@ -74,7 +79,8 @@ export const CaseDetails: React.FC<CaseDetailsProps> = (props = defaultCaseDetai
 
   if (eventId === null) {
     // if eventId is null return early
-    return <Loading />;
+    displayError(new Error(FAILED_TO_GET_EVENT_ID));
+    return null;
   }
 
   // make a call to the events endpoint and get event
