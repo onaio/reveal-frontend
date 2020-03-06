@@ -13,7 +13,7 @@ import { CASE_CLASSIFICATION_LABEL, END_DATE, START_DATE } from '../../../../../
 import { JURISDICTION_ID, PLAN_ID } from '../../../../../../constants';
 import { ROUTINE } from '../../../../../../constants';
 import { displayError } from '../../../../../../helpers/errors';
-import { popupHandler } from '../../../../../../helpers/handlers';
+import { PopHandler, popupHandler } from '../../../../../../helpers/handlers';
 import supersetFetch from '../../../../../../services/superset';
 import { fetchGoals, Goal } from '../../../../../../store/ducks/goals';
 import { fetchJurisdictions, Jurisdiction } from '../../../../../../store/ducks/jurisdictions';
@@ -117,7 +117,7 @@ export const fetchData = async (
  * Build mapbox component event handlers
  * @param method  Event handler
  */
-export const buildHandlers = (method: any = popupHandler) => {
+export const buildHandlers = (method: PopHandler = popupHandler) => {
   return [
     {
       method,
