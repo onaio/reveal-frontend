@@ -137,7 +137,7 @@ describe('src/index.ts', () => {
         expect(res.redirect).toBeTruthy();
         sessionString = res.header['set-cookie'][0].split(';')[0];
         cookie = extractCookies(res.header);
-        // expect that cookie will expire in:  now() + token.expires_in
+        // expect that cookie will expire in: now(a date mocked to be in the future) + token.expires_in
         expect(cookie['reveal-session'].flags).toEqual({
           Expires: 'Fri, 14 May 3019 11:55:39 GMT',
           HttpOnly: true,
