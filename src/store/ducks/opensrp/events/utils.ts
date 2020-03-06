@@ -63,7 +63,7 @@ export interface RawEvent {
 }
 
 /** describes the foci information property */
-interface FociInformation {
+export interface FociInformation {
   id: UUID;
   classification: string;
   name: string;
