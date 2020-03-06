@@ -57,7 +57,7 @@ const defaultCaseDetailsProps: CaseDetailsProps = {
  * @param {OpenSRPService} servant - the opensrp service
  * @param {ActionCreator<FetchEventsAction>} actionCreator - the actionCreator
  */
-const loadEvent = async (
+const loadEvent = (
   eventId: UUID,
   servant: typeof OpenSRPService,
   actionCreator: ActionCreator<FetchEventsAction>
