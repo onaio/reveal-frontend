@@ -147,6 +147,11 @@ interface StatusBadgeProps {
   plan: Plan;
 }
 
+/**
+ * Badge component to show the plan status
+ * @param props
+ * @returns {Badge} A Badge
+ */
 const StatusBadge = (props: StatusBadgeProps) => {
   const { plan } = props;
   const color =
@@ -166,6 +171,11 @@ interface MarkCompleteLinkProps {
   plan: Plan;
 }
 
+/**
+ * Link to mark the plan as complete
+ * @param props
+ * @returns {Link|null} Link if the plan status is active or null othewise
+ */
 const MarkCompleteLink = (props: MarkCompleteLinkProps) => {
   const { plan } = props;
 
