@@ -5,6 +5,7 @@ import { EXPRESS_SESSION_LOGIN_URL, FRONTEND_OPENSRP_CALLBACK_URL } from '../con
 import server from '../index';
 import { oauthState, parsedApiResponse, unauthorized } from './fixtures';
 
+// tslint:disable-next-line: no-var-requires
 const { extractCookies } = require('./utils');
 
 const authorizationUri = 'http://reveal-stage.smartregister.org/opensrp/oauth/';
@@ -17,13 +18,6 @@ const panic = (err: Error, done: jest.DoneCallback) => {
 };
 
 jest.mock('../configs/envs');
-// jest.mock('request', () => {
-//   return {
-//     get(url: string, options: any, callback: Function) {
-//       callback();
-//     },
-//   };
-// });
 
 jest.mock('client-oauth2', () => {
   class CodeFlow {
@@ -82,7 +76,6 @@ jest.mock('client-oauth2', () => {
 describe('src/index.ts', () => {
   const actualJsonParse = JSON.parse;
   let sessionString: string;
-  const agent = request.agent(server);
   let cookie: { [key: string]: any };
 
   afterEach(() => {
@@ -111,9 +104,9 @@ describe('src/index.ts', () => {
     request(server)
       .get('/oauth/opensrp')
       .expect(302)
-      .end((err: Error, res: any) => {
+      .end((err: Error, res) => {
         panic(err, done);
-        expect(res.headers.location).toEqual(authorizationUri);
+        expect(res.header.location).toEqual(authorizationUri);
         expect(res.notFound).toBeFalsy();
         expect(res.redirect).toBeTruthy();
         done();
@@ -130,19 +123,20 @@ describe('src/index.ts', () => {
       .get(`/opensrp/user-details`)
       .reply(200, {});
 
+    /** PS: This test will start failing on  Fri, 14 May 3019 11:55:39 GMT */
     jest
       .spyOn(global.Date, 'now')
       .mockImplementationOnce(() => new Date('3019-05-14T11:01:58.135Z').valueOf());
 
     request(server)
       .get(oauthCallbackUri)
-      .end((err, res: any) => {
+      .end((err, res: request.Response) => {
         panic(err, done);
-        expect(res.headers.location).toEqual(FRONTEND_OPENSRP_CALLBACK_URL);
+        expect(res.header.location).toEqual(FRONTEND_OPENSRP_CALLBACK_URL);
         expect(res.notFound).toBeFalsy();
         expect(res.redirect).toBeTruthy();
-        sessionString = res.headers['set-cookie'][0].split(';')[0];
-        cookie = extractCookies(res.headers);
+        sessionString = res.header['set-cookie'][0].split(';')[0];
+        cookie = extractCookies(res.header);
         // expect that cookie will expire in:  now() + token.expires_in
         expect(cookie['reveal-session'].flags).toEqual({
           Expires: 'Fri, 14 May 3019 11:55:39 GMT',
@@ -164,12 +158,12 @@ describe('src/index.ts', () => {
   });
 
   it('/oauth/state works correctly with cookie', done => {
-    agent
+    request(server)
       .get('/oauth/state')
       .set('cookie', sessionString)
       // .send()
-      .end((e: Error, res) => {
-        panic(e, done);
+      .end((err: Error, res: request.Response) => {
+        panic(err, done);
         expect(res.body).toEqual(oauthState);
         done();
       });
@@ -179,16 +173,16 @@ describe('src/index.ts', () => {
     request(server)
       .get('/logout')
       .set('Cookie', sessionString)
-      .end((err, res: any) => {
+      .end((err, res: request.Response) => {
         panic(err, done);
-        expect(res.headers.location).toEqual(EXPRESS_SESSION_LOGIN_URL);
+        expect(res.header.location).toEqual(EXPRESS_SESSION_LOGIN_URL);
         expect(res.redirect).toBeTruthy();
         // check that session is revoked
         request(server)
           .get('/oauth/state')
-          .end((err, res) => {
-            panic(err, done);
-            expect(res.body).toEqual(unauthorized);
+          .end((e: Error, r: request.Response) => {
+            panic(e, done);
+            expect(r.body).toEqual(unauthorized);
             done();
           });
       });
