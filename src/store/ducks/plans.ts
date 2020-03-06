@@ -476,26 +476,6 @@ export function getPlanRecordsById(
   );
 }
 
-/** getPlanRecordsArray - get an array of PlanRecords
- * @param {Partial<Store>} state - the redux store
- * @param {InterventionType} intervention - the intervention type
- * @param {string[]} status - the plan statuses
- * @param {string} reason - the plan reason
- */
-export function getPlanRecordsArray(
-  state: Partial<Store>,
-  intervention: InterventionType | null = null,
-  statusList: string[] = [PlanStatus.ACTIVE],
-  reason: string | null = null
-): PlanRecord[] {
-  return values((state as any)[reducerName].planRecordsById).filter(
-    (plan: PlanRecord) =>
-      (intervention ? plan.plan_intervention_type === intervention : true) &&
-      (statusList.length ? statusList.includes(plan.plan_status) : true) &&
-      (reason ? plan.plan_fi_reason === reason : true)
-  );
-}
-
 /** getPlanRecordsIdArray - get an array of PlanRecord ids
  * @param {Partial<Store>} state - the redux store
  * @param {InterventionType} intervention - the intervention type

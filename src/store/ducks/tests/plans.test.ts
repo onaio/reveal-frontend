@@ -8,7 +8,6 @@ import reducer, {
   fetchPlans,
   getPlanById,
   getPlanRecordById,
-  getPlanRecordsArray,
   getPlanRecordsById,
   getPlanRecordsIdArray,
   getPlansArray,
@@ -50,7 +49,6 @@ describe('reducers/plans', () => {
     expect(getPlanById(store.getState(), 'someId')).toEqual(null);
     expect(getPlanRecordsById(store.getState())).toEqual({});
     expect(getPlanRecordsIdArray(store.getState())).toEqual([]);
-    expect(getPlanRecordsArray(store.getState())).toEqual([]);
     expect(plansArrayBaseSelector()(store.getState())).toEqual([]);
     expect(getPlanRecordById(store.getState(), 'somId')).toEqual(null);
     expect(getPlansArray(store.getState())).toEqual([]);
@@ -288,12 +286,7 @@ describe('reducers/plans', () => {
       plansArraySelector(store.getState(), { interventionType: InterventionType.IRS })
     ).toEqual(irsPlanRecordsArray);
 
-    expect(getPlanRecordsArray(store.getState(), InterventionType.FI)).toEqual(fiPlanRecordsArray);
-    expect(getPlanRecordsArray(store.getState(), InterventionType.IRS)).toEqual(
-      irsPlanRecordsArray
-    );
-
-    const planRecordsArray = [...getPlanRecordsArray(store.getState())].sort(
+    const planRecordsArray = [...plansArraySelector(store.getState(), {})].sort(
       (a: PlanRecord, b: PlanRecord) => Date.parse(b.plan_date) - Date.parse(a.plan_date)
     );
     expect(planRecordsArray).toEqual(fixtures.sortedPlanRecordArray);
