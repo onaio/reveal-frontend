@@ -3,6 +3,8 @@ import flushPromises from 'flush-promises';
 import React from 'react';
 import { Provider } from 'react-redux';
 import ConnectedCaseDetails, { CaseDetails } from '..';
+import { FAILED_TO_GET_EVENT_ID } from '../../../../../../configs/lang';
+import * as utils from '../../../../../../helpers/errors';
 import { OpenSRPService } from '../../../../../../services/opensrp';
 import store from '../../../../../../store';
 import { fetchEvents } from '../../../../../../store/ducks/opensrp/events';
@@ -49,11 +51,15 @@ describe('src/containers/pages/interventionPlan/updateplan/caseDetials', () => {
     expect(wrapper.find('Ripple').length).toEqual(0);
     expect(wrapper.text()).toMatchSnapshot(`Case Details`);
   });
+
   it('renders nothing when eventId is null', async () => {
     const props = {
       ...globalProps,
       event: extractEvent(rawEvent1),
     };
+
+    const displayErrorMock: jest.Mock = jest.fn();
+    (utils as any).displayError = displayErrorMock;
 
     // still need to mock out service.list request
     fetch.once(JSON.stringify({}));
@@ -66,6 +72,9 @@ describe('src/containers/pages/interventionPlan/updateplan/caseDetials', () => {
     // rendered text
     expect(wrapper.find('Ripple').length).toEqual(0);
     expect(wrapper.text()).toMatchInlineSnapshot(`null`);
+
+    // expect display error was called with correct message
+    expect(displayErrorMock).toHaveBeenCalledWith(new Error(FAILED_TO_GET_EVENT_ID));
   });
 
   it('works well with store', async () => {
