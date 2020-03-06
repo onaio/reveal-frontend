@@ -49,6 +49,24 @@ describe('src/containers/pages/interventionPlan/updateplan/caseDetials', () => {
     expect(wrapper.find('Ripple').length).toEqual(0);
     expect(wrapper.text()).toMatchSnapshot(`Case Details`);
   });
+  it('renders nothing when eventId is null', async () => {
+    const props = {
+      ...globalProps,
+      event: extractEvent(rawEvent1),
+    };
+
+    // still need to mock out service.list request
+    fetch.once(JSON.stringify({}));
+    const wrapper = mount(<CaseDetails {...props} />);
+
+    // resolve promise to get event
+    await flushPromises();
+    await new Promise<unknown>(resolve => setImmediate(resolve));
+
+    // rendered text
+    expect(wrapper.find('Ripple').length).toEqual(0);
+    expect(wrapper.text()).toMatchInlineSnapshot(`null`);
+  });
 
   it('works well with store', async () => {
     // still need to mock out service.list request
