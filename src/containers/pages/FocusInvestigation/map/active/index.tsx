@@ -84,8 +84,8 @@ import tasksReducer, {
   reducerName as tasksReducerName,
   TaskGeoJSON,
 } from '../../../../../store/ducks/tasks';
-import MarkCompleteLink from './helpers/MarkCompleteLink';
-import StatusBadge from './helpers/StatusBadge';
+import MarkCompleteLink, { MarkCompleteLinkProps } from './helpers/MarkCompleteLink';
+import StatusBadge, { StatusBadgeProps } from './helpers/StatusBadge';
 import { buildHandlers, fetchData, getDetailViewPlanInvestigationContainer } from './helpers/utils';
 import './style.css';
 

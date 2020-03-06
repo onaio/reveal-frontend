@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Badge } from 'reactstrap';
 import { Plan, PlanStatus } from '../../../../../../../store/ducks/plans';
 
-interface StatusBadgeProps {
+export interface StatusBadgeProps {
   plan: Plan;
 }
 
