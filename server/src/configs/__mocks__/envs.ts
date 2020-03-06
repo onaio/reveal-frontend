@@ -1,12 +1,12 @@
 import {join} from 'path'
 export const EXPRESS_OPENSRP_ACCESS_TOKEN_URL =
   process.env.EXPRESS_OPENSRP_ACCESS_TOKEN_URL ||
-  'https://reveal-stage.smartregister.org/opensrp/oauth/token';
+  'http://reveal-stage.smartregister.org/opensrp/oauth/token';
 export type EXPRESS_OPENSRP_ACCESS_TOKEN_URL = typeof EXPRESS_OPENSRP_ACCESS_TOKEN_URL;
 
 export const EXPRESS_OPENSRP_AUTHORIZATION_URL =
   process.env.EXPRESS_OPENSRP_AUTHORIZATION_URL ||
-  'https://reveal-stage.smartregister.org/opensrp/oauth/authorize';
+  'http://reveal-stage.smartregister.org/opensrp/oauth/authorize';
 export type EXPRESS_OPENSRP_AUTHORIZATION_URL = typeof EXPRESS_OPENSRP_AUTHORIZATION_URL;
 
 export const EXPRESS_OPENSRP_CALLBACK_URL =
@@ -15,7 +15,7 @@ export type EXPRESS_OPENSRP_CALLBACK_URL = typeof EXPRESS_OPENSRP_CALLBACK_URL;
 
 export const EXPRESS_OPENSRP_USER_URL =
   process.env.EXPRESS_OPENSRP_USER_URL ||
-  'https://reveal-stage.smartregister.org/opensrp/user-details';
+  'http://reveal-stage.smartregister.org/opensrp/user-details';
 export type EXPRESS_OPENSRP_USER_URL = typeof EXPRESS_OPENSRP_USER_URL;
 
 export const EXPRESS_SESSION_FILESTORE_PATH =
