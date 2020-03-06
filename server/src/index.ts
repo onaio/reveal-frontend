@@ -144,6 +144,11 @@ const oauthCallback = (req: express.Request, res: express.Response, next: expres
             // you have to save the session manually for POST requests like this one
             req.session.save(() => void 0);
             if (nextPath) {
+              /** reset nextPath to undefined; its value once set should only be used
+               * once and invalidated after being used, which is here. Failing to invalidate the previous value
+               * would result in the user being redirected to the same url the next time they pass through
+               * here irrespective of whether they should or shouldn't
+               */
               const localNextPath = nextPath;
               nextPath = undefined;
               return res.redirect(localNextPath);
