@@ -32,6 +32,7 @@ import {
   translateEvent,
   UUID,
 } from '../../../../../store/ducks/opensrp/events/utils';
+import './index.css';
 
 reducerRegistry.register(reducerName, eventReducer);
 
@@ -112,7 +113,7 @@ export const CaseDetails: React.FC<CaseDetailsProps> = (props = defaultCaseDetai
       </h4>
       <div id="accordion">
         <Card>
-          <CardHeader onClick={toggleCollapse}>
+          <CardHeader className={'pointer'} onClick={toggleCollapse}>
             <h5>{CASE_DETAILS}</h5>
           </CardHeader>
           <Collapse isOpen={isCollapsed}>
