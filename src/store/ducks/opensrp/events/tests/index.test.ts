@@ -69,6 +69,6 @@ describe('reducers/practitioners.reducer.fetchPractitionersAction', () => {
   });
 
   it('frendlyDate returns human friendly date correctly', () => {
-    expect(friendlyDate('2019-11-01T08:10:23.867+0000')).toEqual('November 1, 2019 11:10 AM');
+    expect(friendlyDate('2019-11-01T08:10:23.867+0000')).toEqual('November 1, 2019 8:10 AM');
   });
 });
