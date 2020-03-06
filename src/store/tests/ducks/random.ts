@@ -4,6 +4,9 @@ export const reducerName = 'random';
 
 const initialState: string = '';
 
+// actions
+export const SET_RANDOM = 'reveal-test/reducer/SET_RANDOM';
+
 export default function reducer(state = initialState, action: AnyAction): string {
   switch (action.type) {
     case SET_RANDOM:
@@ -15,6 +18,3 @@ export default function reducer(state = initialState, action: AnyAction): string
       return state;
   }
 }
-
-// actions
-export const SET_RANDOM = 'reveal-test/reducer/SET_RANDOM';
