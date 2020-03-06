@@ -89,7 +89,7 @@ export const CaseDetails: React.FC<CaseDetailsProps> = (props = defaultCaseDetai
     loadEvent(eventId, service, fetchEventsCreator).catch((err: Error) =>
       growl(err.message, { type: toast.TYPE.ERROR })
     );
-  }, []);
+  }, [eventId]);
 
   if (!event) {
     return <Loading />;
