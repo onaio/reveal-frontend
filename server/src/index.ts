@@ -114,7 +114,6 @@ const oauthLogin = (_: express.Request, res: express.Response) => {
 
 const oauthCallback = (req: express.Request, res: express.Response, next: express.NextFunction) => {
   const provider = opensrpAuth;
-  console.log("Original Url", req.originalUrl);
   provider.code
     .getToken(req.originalUrl)
     .then((user: ClientOAuth2.Token) => {
