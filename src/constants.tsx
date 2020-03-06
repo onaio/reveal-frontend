@@ -46,7 +46,8 @@ export const PLAN_ID = 'plan_id';
 export const PLAN_INTERVENTION_TYPE = 'plan_intervention_type';
 
 // internal urls
-export const LOGIN_URL = '/login';
+export const LOGIN_URL = '/fe/login';
+export const EXPRESS_LOGIN_URL = '/login';
 export const LOGOUT_URL = '/logout';
 export const HOME_URL = '/';
 export const INTERVENTION_IRS_URL = '/intervention/irs';

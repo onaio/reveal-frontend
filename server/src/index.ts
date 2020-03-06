@@ -6,9 +6,13 @@ import express from 'express';
 import session from 'express-session';
 import helmet from 'helmet';
 import path from 'path';
+import querystring from 'querystring';
 import request from 'request';
 import sessionFileStore from 'session-file-store';
+import { parse } from 'url';
 import {
+  EXPRESS_FRONTEND_LOGIN_URL,
+  EXPRESS_FRONTEND_OPENSRP_CALLBACK_URL,
   EXPRESS_OPENSRP_ACCESS_TOKEN_URL,
   EXPRESS_OPENSRP_AUTHORIZATION_URL,
   EXPRESS_OPENSRP_CALLBACK_URL,
@@ -23,8 +27,8 @@ import {
   EXPRESS_SESSION_NAME,
   EXPRESS_SESSION_PATH,
   EXPRESS_SESSION_SECRET,
-  FRONTEND_OPENSRP_CALLBACK_URL,
 } from './configs/envs';
+import { trimStart } from './utils';
 
 const opensrpAuth = new ClientOAuth2({
   accessTokenUri: EXPRESS_OPENSRP_ACCESS_TOKEN_URL,
@@ -47,6 +51,8 @@ const FileStore = sessionFileStore(session);
 const fileStoreOptions = {
   path: EXPRESS_SESSION_FILESTORE_PATH || './sessions',
 };
+
+let nextPath: string | undefined;
 
 const sess = {
   cookie: {
@@ -80,7 +86,11 @@ class HttpException extends Error {
 }
 
 const handleError = (err: HttpException, res: express.Response) => {
-  const { statusCode, message } = err;
+  const { message } = err;
+  if (message.includes('resource owner or authorization server denied the request')) {
+    return res.redirect(EXPRESS_FRONTEND_LOGIN_URL);
+  }
+  const statusCode = err.statusCode || 500;
   res.status(statusCode).json({
     message,
     status: 'error',
@@ -133,7 +143,17 @@ const oauthCallback = (req: express.Request, res: express.Response, next: expres
             req.session.cookie.maxAge = expireAfterMs;
             // you have to save the session manually for POST requests like this one
             req.session.save(() => void 0);
-            return res.redirect(FRONTEND_OPENSRP_CALLBACK_URL);
+            if (nextPath) {
+              /** reset nextPath to undefined; its value once set should only be used
+               * once and invalidated after being used, which is here. Failing to invalidate the previous value
+               * would result in the user being redirected to the same url the next time they pass through
+               * here irrespective of whether they should or shouldn't
+               */
+              const localNextPath = nextPath;
+              nextPath = undefined;
+              return res.redirect(localNextPath);
+            }
+            return res.redirect(EXPRESS_FRONTEND_OPENSRP_CALLBACK_URL);
           }
         }
       );
@@ -154,7 +174,14 @@ const oauthState = (req: express.Request, res: express.Response) => {
 
 const loginRedirect = (req: express.Request, res: express.Response, next: express.NextFunction) => {
   // check if logged in and redirect
-  req.session.preloadedState ? res.redirect('/') : next();
+  const parsedUrl = parse(req.originalUrl);
+  const searchParam = parsedUrl.search;
+  if (searchParam) {
+    const searchString = trimStart(searchParam, '?');
+    const searchParams = querystring.parse(searchString);
+    nextPath = searchParams.next as string | undefined;
+  }
+  req.session.preloadedState ? res.redirect(nextPath) : res.redirect(EXPRESS_FRONTEND_LOGIN_URL);
 };
 
 const logout = (req: express.Request, res: express.Response) => {
@@ -189,7 +216,9 @@ app.use(
 );
 
 const PORT = EXPRESS_PORT || 3000;
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   // tslint:disable-next-line:no-console
   console.log(`App listening on port ${PORT}!`);
 });
+
+export default server;

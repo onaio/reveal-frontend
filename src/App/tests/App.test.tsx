@@ -6,6 +6,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
+import { DISABLE_LOGIN_PROTECTION } from '../../configs/env';
 import store from '../../store';
 import App from '../App';
 import { expressAPIResponse } from './fixtures';
@@ -96,9 +97,7 @@ describe('App', () => {
     // we should be on the login page; caveat, in production
     // it is by the express server's redirect action that we find ourselves here
     expect(wrapper.text()).toMatchSnapshot('should be login page');
-    const isTheLoginPage = wrapper
-      .text()
-      .includes('Please log in with one of the following providers');
+    const isTheLoginPage = wrapper.text().includes('Login');
     expect(isTheLoginPage).toBeTruthy();
 
     // the logout user action creator was invoked
