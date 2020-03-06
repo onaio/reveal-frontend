@@ -55,14 +55,23 @@ jobs:
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
 
-      - run: yarn install
+      - run: 
+          name: Install dependencies
+          command: yarn install
 
       - save_cache:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
-      # run linter
-      - run: yarn lint-ts
-      # run tests!
-      - run: yarn test --runInBand --verbose --coverage=true --forceExit --detectOpenHandles
+      - run: 
+          name: Run linter
+          command: yarn lint-ts
+
+      - run: 
+          name: Run tests
+          command: yarn test --runInBand --verbose --coverage=true --forceExit --detectOpenHandles
+     
+      - run: 
+          name: Run coveralls
+          command: yarn coveralls

@@ -1,12 +1,10 @@
 import * as sessionDux from '@onaio/session-reducer';
 import { mount } from 'enzyme';
-import toJson from 'enzyme-to-json';
 import { createBrowserHistory } from 'history';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
-import { DISABLE_LOGIN_PROTECTION } from '../../configs/env';
 import store from '../../store';
 import App from '../App';
 import { expressAPIResponse } from './fixtures';
@@ -47,7 +45,7 @@ describe('App', () => {
     );
     // before resolving get oauth state request, the user is logged out
     expect(wrapper.text()).toMatchInlineSnapshot(`"HomeLogin"`);
-    await new Promise(resolve => setImmediate(resolve));
+    await new Promise<unknown>(resolve => setImmediate(resolve));
     wrapper.update();
     expect(fetch.mock.calls).toEqual([['http://localhost:3000/oauth/state']]);
 
@@ -83,7 +81,7 @@ describe('App', () => {
         </Router>
       </Provider>
     );
-    await new Promise(resolve => setImmediate(resolve));
+    await new Promise<unknown>(resolve => setImmediate(resolve));
     wrapper.update();
 
     // At this point we have an authenticated user

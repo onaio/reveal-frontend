@@ -16,6 +16,14 @@ import { Providers } from '@onaio/gatekeeper';
 import { Color } from 'csstype';
 import { Expression, LngLatBoundsLike } from 'mapbox-gl';
 import {
+  ActionReasonType,
+  GoalPriorityType,
+  GoalUnit,
+  PlanActionCodesType,
+  PlanActivities,
+  UseContextCodesType,
+} from '../components/forms/PlanForm/types';
+import {
   A1_DESCRIPTION,
   A1_NAME,
   A2_DESCRIPTION,
@@ -59,7 +67,6 @@ import {
   IRS_GOAL_MEASURE,
   IRS_GREEN_THRESHOLD,
   IRS_GREY_THRESHOLD,
-  IRS_LIGHT_GREEN_THRESHOLD,
   IRS_RED_THRESHOLD,
   IRS_YELLOW_THRESHOLD,
   LARVAL_DIPPING_ACTIVITY,
@@ -118,14 +125,6 @@ import {
   TASK_GENERATION_STATUS_CODE,
   TRUE,
 } from '../constants';
-import {
-  ActionReasonType,
-  GoalPriorityType,
-  GoalUnit,
-  PlanActionCodesType,
-  PlanActivities,
-  UseContextCodesType,
-} from '../containers/forms/PlanForm/types';
 import {
   DOMAIN_NAME,
   ENABLE_ONADATA_OAUTH,
@@ -882,21 +881,21 @@ export const indicatorThresholdsIRSNamibia: IndicatorThresholds = {
     name: IRS_GREEN_THRESHOLD,
     value: 1,
   },
-  LIGHT_GREEN_THRESHOLD: {
-    color: '#76BA1B',
-    name: IRS_LIGHT_GREEN_THRESHOLD,
-    value: 0.85,
+  GREY_THRESHOLD: {
+    color: '#dddddd',
+    name: IRS_GREY_THRESHOLD,
+    value: 0.2,
   },
   RED_THRESHOLD: {
     color: '#FF4136',
     name: IRS_RED_THRESHOLD,
     orEquals: true,
-    value: 0.7,
+    value: 0.75,
   },
   YELLOW_THRESHOLD: {
     color: '#FFDC00',
     name: IRS_YELLOW_THRESHOLD,
-    value: 0.8,
+    value: 0.9,
   },
 };
 /** END Namibia IRS Reporting configs */
