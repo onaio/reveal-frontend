@@ -1,4 +1,5 @@
 import superset from '@onaio/superset-connector';
+import * as React from 'react';
 import {
   SUPERSET_GOALS_SLICE,
   SUPERSET_JURISDICTIONS_SLICE,
@@ -6,27 +7,28 @@ import {
   SUPERSET_PLANS_SLICE,
   SUPERSET_STRUCTURES_SLICE,
   SUPERSET_TASKS_SLICE,
-} from '../../../../../configs/env';
-import { AN_ERROR_OCCURED } from '../../../../../configs/lang';
-import { JURISDICTION_ID, PLAN_ID } from '../../../../../constants';
-import { displayError } from '../../../../../helpers/errors';
-import { popupHandler } from '../../../../../helpers/handlers';
-import supersetFetch from '../../../../../services/superset';
-import { fetchGoals, Goal } from '../../../../../store/ducks/goals';
-import { fetchJurisdictions, Jurisdiction } from '../../../../../store/ducks/jurisdictions';
-import { fetchPlans, Plan } from '../../../../../store/ducks/plans';
-import { setStructures, Structure } from '../../../../../store/ducks/structures';
-import { fetchTasks, Task } from '../../../../../store/ducks/tasks';
-
+} from '../../../../../../configs/env';
+import { AN_ERROR_OCCURED } from '../../../../../../configs/lang';
+import { CASE_CLASSIFICATION_LABEL, END_DATE, START_DATE } from '../../../../../../configs/lang';
+import { JURISDICTION_ID, PLAN_ID } from '../../../../../../constants';
+import { ROUTINE } from '../../../../../../constants';
+import { displayError } from '../../../../../../helpers/errors';
+import { popupHandler } from '../../../../../../helpers/handlers';
+import supersetFetch from '../../../../../../services/superset';
+import { fetchGoals, Goal } from '../../../../../../store/ducks/goals';
+import { fetchJurisdictions, Jurisdiction } from '../../../../../../store/ducks/jurisdictions';
+import { fetchPlans, Plan } from '../../../../../../store/ducks/plans';
+import { setStructures, Structure } from '../../../../../../store/ducks/structures';
+import { fetchTasks, Task } from '../../../../../../store/ducks/tasks';
 /**
  * Fetch data for the plan
- * @param fetchGoalsActionCreator // fetch goals action creator
- * @param fetchJurisdictionsActionCreator // fetch jurisdication action creator
- * @param fetchPlansActionCreator // fetch plans action creator
- * @param fetchStructuresActionCreator // fetch structures action creator
- * @param fetchTasksActionCreator // fetch tasks action creator
- * @param plan // plan object
- * @param supersetService // fetch superset promise
+ * @param fetchGoalsActionCreator Fetch goals action creator
+ * @param fetchJurisdictionsActionCreator Fetch jurisdication action creator
+ * @param fetchPlansActionCreator Fetch plans action creator
+ * @param fetchStructuresActionCreator Fetch structures action creator
+ * @param fetchTasksActionCreator Fetch tasks action creator
+ * @param plan Plan object
+ * @param supersetService Fetch superset promise
  */
 export const fetchData = async (
   fetchGoalsActionCreator: typeof fetchGoals,
@@ -113,7 +115,7 @@ export const fetchData = async (
 
 /**
  * Build mapbox component event handlers
- * @param method // Event handler
+ * @param method  Event handler
  */
 export const buildHandlers = (method: any = popupHandler) => {
   return [
@@ -123,4 +125,45 @@ export const buildHandlers = (method: any = popupHandler) => {
       type: 'click',
     },
   ];
+};
+
+/**
+ * Build detail view for the map
+ * @param plan
+ * @returns {React.ReactElement[]} Detail View elements
+ */
+export const getDetailViewPlanInvestigationContainer = (plan: Plan): React.ReactElement[] => {
+  const detailViewPlanInvestigationContainer: React.ReactElement[] = [];
+  /** Array that holds keys of a plan object
+   * Will be used to check plan_effective_period_end or plan_effective_period_start to build the detailview
+   */
+  const planKeysArray: string[] = Object.keys(plan);
+
+  /** alias enables assigning keys dynamically used to populate the detailview  */
+  const alias = {
+    plan_effective_period_end: END_DATE,
+    plan_effective_period_start: START_DATE,
+  };
+
+  if (plan.plan_fi_reason === ROUTINE) {
+    planKeysArray.forEach((column: string) => {
+      if (column === 'plan_effective_period_end' || column === 'plan_effective_period_start') {
+        detailViewPlanInvestigationContainer.push(
+          <span key={column} className="detailview">
+            <b>{alias[column]}:</b> &nbsp;
+            {plan && plan[column]}
+          </span>
+        );
+      }
+    });
+  } else {
+    detailViewPlanInvestigationContainer.push(
+      <span key={plan && plan.plan_id}>
+        <b>{CASE_CLASSIFICATION_LABEL}:</b>&nbsp;
+        {plan && plan.plan_intervention_type ? plan.plan_intervention_type : null}
+      </span>
+    );
+  }
+
+  return detailViewPlanInvestigationContainer;
 };

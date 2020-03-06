@@ -64,6 +64,26 @@ export const draftPlan = {
   plan_version: '1',
 };
 
+export const retiredPlan = {
+  id: 'draftPlan-id-2',
+  jurisdiction_depth: 41,
+  jurisdiction_id: '3380',
+  jurisdiction_name: 'TLv1_02',
+  jurisdiction_name_path: ['Canton Tha Luang', 'Tha Luang Village'],
+  jurisdiction_parent_id: '2977',
+  jurisdiction_path: ['2989', '2977'],
+  plan_date: '2019-06-18',
+  plan_effective_period_end: '2019-06-18',
+  plan_effective_period_start: '2019-07-31',
+  plan_fi_reason: 'Case Triggered' as FIReasonType,
+  plan_fi_status: 'A1' as FIStatusType,
+  plan_id: 'plan-id-2',
+  plan_intervention_type: InterventionType.IRS,
+  plan_status: PlanStatus.RETIRED,
+  plan_title: 'A1-Tha Luang Village 1 Focus 01',
+  plan_version: '1',
+};
+
 export const completeRoutinePlan = {
   id: 'completedRoutinePlan-id-2',
   jurisdiction_depth: 51,

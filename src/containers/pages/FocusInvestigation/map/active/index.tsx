@@ -4,8 +4,8 @@ import * as React from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
-import { Link, NavLink } from 'react-router-dom';
-import { Badge, Col, Row } from 'reactstrap';
+import { NavLink } from 'react-router-dom';
+import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
 import { format } from 'util';
 import GisidaWrapper from '../../../../../components/GisidaWrapper';
@@ -16,20 +16,16 @@ import Loading from '../../../../../components/page/Loading';
 import SelectComponent from '../../../../../components/SelectPlan/';
 import { SUPERSET_PLANS_SLICE } from '../../../../../configs/env';
 import {
-  CASE_CLASSIFICATION_LABEL,
-  END_DATE,
   FOCUS_INVESTIGATION,
   FOCUS_INVESTIGATIONS,
   HOME,
   INVESTIGATION,
-  MARK_AS_COMPLETE,
   MEASURE,
   NUMERATOR_OF_DENOMINATOR_UNITS,
   PLAN_SELECT_PLACEHOLDER,
   PROGRESS,
   REACTIVE_INVESTIGATION,
   ROUTINE_INVESTIGATION_TITLE,
-  START_DATE,
 } from '../../../../../configs/lang';
 import { FIReasons } from '../../../../../configs/settings';
 import {
@@ -39,10 +35,8 @@ import {
   FI_URL,
   HOME_URL,
   MULTI_POLYGON,
-  PLAN_COMPLETION_URL,
   POINT,
   POLYGON,
-  ROUTINE,
 } from '../../../../../constants';
 import { PLAN_INTERVENTION_TYPE } from '../../../../../constants';
 import { displayError } from '../../../../../helpers/errors';
@@ -90,8 +84,11 @@ import tasksReducer, {
   reducerName as tasksReducerName,
   TaskGeoJSON,
 } from '../../../../../store/ducks/tasks';
+import MarkCompleteLink from './helpers/MarkCompleteLink';
+import StatusBadge from './helpers/StatusBadge';
+import { buildHandlers, fetchData, getDetailViewPlanInvestigationContainer } from './helpers/utils';
 import './style.css';
-import { buildHandlers, fetchData } from './utils';
+
 /** register reducers */
 reducerRegistry.register(jurisdictionReducerName, jurisdictionReducer);
 reducerRegistry.register(goalsReducerName, goalsReducer);
@@ -141,89 +138,6 @@ export const defaultMapSingleFIProps: MapSingleFIProps = {
   setCurrentGoalActionCreator: setCurrentGoal,
   structures: null,
   supersetService: supersetFetch,
-};
-
-interface StatusBadgeProps {
-  plan: Plan;
-}
-
-/**
- * Badge component to show the plan status
- * @param props
- * @returns {Badge} A Badge
- */
-const StatusBadge = (props: StatusBadgeProps) => {
-  const { plan } = props;
-  const color =
-    (plan && plan.plan_status === PlanStatus.ACTIVE) ||
-    (plan && plan.plan_status === PlanStatus.DRAFT)
-      ? 'warning'
-      : 'success';
-
-  return (
-    <Badge color={color} pill={true}>
-      {plan && plan.plan_status}
-    </Badge>
-  );
-};
-
-interface MarkCompleteLinkProps {
-  plan: Plan;
-}
-
-/**
- * Link to mark the plan as complete
- * @param props
- * @returns {Link|null} Link if the plan status is active or null othewise
- */
-const MarkCompleteLink = (props: MarkCompleteLinkProps) => {
-  const { plan } = props;
-
-  if (plan && plan.plan_status === PlanStatus.ACTIVE) {
-    return (
-      <Link className="btn btn-primary" to={`${PLAN_COMPLETION_URL}/${plan.id}`} color="primary">
-        {MARK_AS_COMPLETE}
-      </Link>
-    );
-  }
-
-  return null;
-};
-
-const getDetailViewPlanInvestigationContainer = (plan: Plan): React.ReactElement[] => {
-  const detailViewPlanInvestigationContainer: React.ReactElement[] = [];
-  /** Array that holds keys of a plan object
-   * Will be used to check plan_effective_period_end or plan_effective_period_start to build the detailview
-   */
-  const planKeysArray: string[] = Object.keys(plan);
-
-  /** alias enables assigning keys dynamically used to populate the detailview  */
-  const alias = {
-    plan_effective_period_end: END_DATE,
-    plan_effective_period_start: START_DATE,
-  };
-
-  if (plan.plan_fi_reason === ROUTINE) {
-    planKeysArray.forEach((column: string) => {
-      if (column === 'plan_effective_period_end' || column === 'plan_effective_period_start') {
-        detailViewPlanInvestigationContainer.push(
-          <span key={column} className="detailview">
-            <b>{alias[column]}:</b> &nbsp;
-            {plan && plan[column]}
-          </span>
-        );
-      }
-    });
-  } else {
-    detailViewPlanInvestigationContainer.push(
-      <span key={plan && plan.plan_id}>
-        <b>{CASE_CLASSIFICATION_LABEL}:</b>&nbsp;
-        {plan && plan.plan_intervention_type ? plan.plan_intervention_type : null}
-      </span>
-    );
-  }
-
-  return detailViewPlanInvestigationContainer;
 };
 
 /** Map View for Single Active Focus Investigation */

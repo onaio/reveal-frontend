@@ -20,7 +20,7 @@ import * as structureDucks from '../../../../../../store/ducks/structures';
 import * as tasksDucks from '../../../../../../store/ducks/tasks';
 import * as fixtures from '../../../../../../store/ducks/tests/fixtures';
 import ConnectedMapSingleFI, { MapSingleFIProps, SingleActiveFIMap } from '../../active/';
-import { buildHandlers, fetchData } from './../utils';
+import { buildHandlers, fetchData } from '../helpers/utils';
 import * as fixturesMap from './fixtures';
 
 jest.mock('../../../../../../components/GisidaWrapper', () => {
