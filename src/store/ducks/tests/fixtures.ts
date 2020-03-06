@@ -1,5 +1,5 @@
 import { clone, cloneDeep } from 'lodash';
-import { FIReasonType, FIStatusType } from '../../../containers/forms/PlanForm/types';
+import { FIReasonType, FIStatusType } from '../../../components/forms/PlanForm/types';
 import { Organization } from '../opensrp/organizations';
 import { Practitioner } from '../opensrp/practitioners';
 import { InterventionType, Plan, PlanStatus } from '../plans';

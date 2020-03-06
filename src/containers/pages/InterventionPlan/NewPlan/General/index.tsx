@@ -1,10 +1,10 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Col, Row } from 'reactstrap';
+import PlanForm from '../../../../../components/forms/PlanForm';
 import HeaderBreadcrumb from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import { CREATE_NEW_PLAN, HOME, PLANS } from '../../../../../configs/lang';
 import { HOME_URL, NEW_PLAN_URL, PLAN_LIST_URL } from '../../../../../constants';
-import PlanForm from '../../../../forms/PlanForm';
 
 /** Simple component that loads the new plan form and allows you to create a new plan */
 const NewPlan = () => {
