@@ -107,22 +107,22 @@ export const CaseDetails: React.FC<CaseDetailsProps> = (props = defaultCaseDetai
 
   return (
     <>
-      <h3>
+      <h4>
         {CASE_NUMBER}: {caseNumber}
-      </h3>
+      </h4>
       <div id="accordion">
         <Card>
           <CardHeader onClick={toggleCollapse}>
-            <h4>{CASE_DETAILS}</h4>
+            <h5>{CASE_DETAILS}</h5>
           </CardHeader>
           <Collapse isOpen={isCollapsed}>
             <CardBody>
-              <h5 className="mb-3">{CASE_INFORMATION}</h5>
+              <h5 className="mb-3 bold">{CASE_INFORMATION}</h5>
               <table className="table table-borderless">
                 {mapObjectToElement(caseInformation)}
               </table>
               <hr />
-              <h5 className="mb-3"> {fociInformationTitle}</h5>
+              <h5 className="mb-3 bold"> {fociInformationTitle}</h5>
               <table className="table table-borderless">
                 {mapObjectToElement(fociInformation)}
               </table>
