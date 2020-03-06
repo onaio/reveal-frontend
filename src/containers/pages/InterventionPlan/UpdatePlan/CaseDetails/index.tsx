@@ -97,7 +97,7 @@ export const CaseDetails: React.FC<CaseDetailsProps> = (props = defaultCaseDetai
   const translatedEvent = translateEvent(event);
   const { caseInformation, fociInformation, caseNumber, fociInformationTitle } = translatedEvent;
 
-  const mapObjectToElement = (obj: FlexObject) =>
+  const mapObjectToTableRow = (obj: FlexObject) =>
     Object.entries(obj).map(([property, value], index) => {
       return (
         <tr key={index}>
@@ -120,12 +120,12 @@ export const CaseDetails: React.FC<CaseDetailsProps> = (props = defaultCaseDetai
             <CardBody>
               <h5 className="mb-3 bold">{CASE_INFORMATION}</h5>
               <table className="table table-borderless">
-                {mapObjectToElement(caseInformation)}
+                {mapObjectToTableRow(caseInformation)}
               </table>
               <hr />
               <h5 className="mb-3 bold"> {fociInformationTitle}</h5>
               <table className="table table-borderless">
-                {mapObjectToElement(fociInformation)}
+                {mapObjectToTableRow(fociInformation)}
               </table>
             </CardBody>
           </Collapse>
