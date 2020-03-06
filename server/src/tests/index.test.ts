@@ -1,7 +1,7 @@
 import ClientOauth2 from 'client-oauth2';
 import nock from 'nock';
 import request from 'supertest';
-import { EXPRESS_SESSION_LOGIN_URL, FRONTEND_OPENSRP_CALLBACK_URL } from '../configs/envs';
+import { EXPRESS_SESSION_LOGIN_URL, EXPRESS_FRONTEND_OPENSRP_CALLBACK_URL } from '../configs/envs';
 import server from '../index';
 import { oauthState, parsedApiResponse, unauthorized } from './fixtures';
 
@@ -132,7 +132,7 @@ describe('src/index.ts', () => {
       .get(oauthCallbackUri)
       .end((err, res: request.Response) => {
         panic(err, done);
-        expect(res.header.location).toEqual(FRONTEND_OPENSRP_CALLBACK_URL);
+        expect(res.header.location).toEqual(EXPRESS_FRONTEND_OPENSRP_CALLBACK_URL);
         expect(res.notFound).toBeFalsy();
         expect(res.redirect).toBeTruthy();
         sessionString = res.header['set-cookie'][0].split(';')[0];

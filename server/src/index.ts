@@ -11,6 +11,8 @@ import request from 'request';
 import sessionFileStore from 'session-file-store';
 import { parse } from 'url';
 import {
+  EXPRESS_FRONTEND_LOGIN_URL,
+  EXPRESS_FRONTEND_OPENSRP_CALLBACK_URL,
   EXPRESS_OPENSRP_ACCESS_TOKEN_URL,
   EXPRESS_OPENSRP_AUTHORIZATION_URL,
   EXPRESS_OPENSRP_CALLBACK_URL,
@@ -25,8 +27,6 @@ import {
   EXPRESS_SESSION_NAME,
   EXPRESS_SESSION_PATH,
   EXPRESS_SESSION_SECRET,
-  FRONTEND_LOGIN_URL,
-  FRONTEND_OPENSRP_CALLBACK_URL,
 } from './configs/envs';
 import { trimStart } from './utils';
 
@@ -88,7 +88,7 @@ class HttpException extends Error {
 const handleError = (err: HttpException, res: express.Response) => {
   const { message } = err;
   if (message.includes('resource owner or authorization server denied the request')) {
-    return res.redirect(FRONTEND_LOGIN_URL);
+    return res.redirect(EXPRESS_FRONTEND_LOGIN_URL);
   }
   const statusCode = err.statusCode || 500;
   res.status(statusCode).json({
@@ -147,7 +147,7 @@ const oauthCallback = (req: express.Request, res: express.Response, next: expres
               nextPath = undefined;
               return res.redirect(nextPath);
             }
-            return res.redirect(FRONTEND_OPENSRP_CALLBACK_URL);
+            return res.redirect(EXPRESS_FRONTEND_OPENSRP_CALLBACK_URL);
           }
         }
       );
@@ -175,7 +175,7 @@ const loginRedirect = (req: express.Request, res: express.Response, next: expres
     const searchParams = querystring.parse(searchString);
     nextPath = searchParams.next as string | undefined;
   }
-  req.session.preloadedState ? res.redirect(nextPath) : res.redirect(FRONTEND_LOGIN_URL);
+  req.session.preloadedState ? res.redirect(nextPath) : res.redirect(EXPRESS_FRONTEND_LOGIN_URL);
 };
 
 const logout = (req: express.Request, res: express.Response) => {
