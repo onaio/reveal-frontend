@@ -93,7 +93,7 @@ export interface Event {
 }
 
 /** lookup table to decide the title of foci information based on events flag details */
-const FociTitleLookup: Dictionary<string> = {
+const fociTitleLookup: Dictionary<string> = {
   Site: FOCI_OF_RESIDENCE,
   Source: FOCI_OF_INFECTION,
 };
@@ -130,7 +130,7 @@ export const extractEvent = (rawEvent: RawEvent): Event => ({
     id: rawEvent.details.focus_id,
     name: rawEvent.details.focus_name,
   },
-  fociInformationTitle: FociTitleLookup[rawEvent.details.flag],
+  fociInformationTitle: fociTitleLookup[rawEvent.details.flag],
   id: rawEvent._id,
 });
 

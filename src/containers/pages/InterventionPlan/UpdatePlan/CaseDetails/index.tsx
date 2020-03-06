@@ -5,7 +5,6 @@ import reducerRegistry from '@onaio/redux-reducer-registry';
 import { FlexObject } from 'gisida';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { toast } from 'react-toastify';
 import { Card, CardBody, CardHeader, Collapse } from 'reactstrap';
 import { ActionCreator, Store } from 'redux';
 import Loading from '../../../../../components/page/Loading';
@@ -18,7 +17,6 @@ import {
 } from '../../../../../configs/lang';
 import { OPENSRP_FIND_EVENTS_ENDPOINT } from '../../../../../constants';
 import { displayError } from '../../../../../helpers/errors';
-import { growl } from '../../../../../helpers/utils';
 import { OpenSRPService } from '../../../../../services/opensrp';
 import eventReducer, {
   fetchEvents,
@@ -86,9 +84,7 @@ export const CaseDetails: React.FC<CaseDetailsProps> = (props = defaultCaseDetai
 
   // make a call to the events endpoint and get event
   useEffect(() => {
-    loadEvent(eventId, service, fetchEventsCreator).catch((err: Error) =>
-      growl(err.message, { type: toast.TYPE.ERROR })
-    );
+    loadEvent(eventId, service, fetchEventsCreator);
   }, [eventId]);
 
   if (!event) {
