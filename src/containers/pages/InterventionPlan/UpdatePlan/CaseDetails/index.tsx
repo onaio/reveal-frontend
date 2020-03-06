@@ -74,7 +74,7 @@ const loadEvent = async (
 /** CaseDetails component */
 export const CaseDetails: React.FC<CaseDetailsProps> = (props = defaultCaseDetailsProps) => {
   const { eventId, service, event, fetchEventsCreator } = props;
-  const [isCollapsed, setCollapse] = React.useState<boolean>(false);
+  const [isCollapsed, setCollapse] = React.useState<boolean>(true);
   const toggleCollapse = () => setCollapse(!isCollapsed);
 
   if (eventId === null) {
