@@ -1,6 +1,5 @@
 import ListView from '@onaio/list-view';
-import reducerRegistry from '@onaio/redux-reducer-registry';
-import { Registry } from '@onaio/redux-reducer-registry';
+import reducerRegistry, { Registry } from '@onaio/redux-reducer-registry';
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';

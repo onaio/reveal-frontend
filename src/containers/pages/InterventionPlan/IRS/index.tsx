@@ -8,7 +8,7 @@ import { Button } from 'reactstrap';
 import { Store } from 'redux';
 
 import DrillDownTable from '@onaio/drill-down-table';
-import reducerRegistry from '@onaio/redux-reducer-registry';
+import reducerRegistry, { Registry } from '@onaio/redux-reducer-registry';
 import superset from '@onaio/superset-connector';
 
 import {
@@ -51,7 +51,6 @@ import plansReducer, {
   reducerName as plansReducerName,
 } from '../../../../store/ducks/plans';
 
-import { Registry } from '@onaio/redux-reducer-registry';
 import { Helmet } from 'react-helmet';
 import DrillDownTableLinkedCell from '../../../../components/DrillDownTableLinkedCell';
 import HeaderBreadcrumbs, {
