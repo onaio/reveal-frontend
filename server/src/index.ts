@@ -114,6 +114,7 @@ const oauthLogin = (_: express.Request, res: express.Response) => {
 
 const oauthCallback = (req: express.Request, res: express.Response, next: express.NextFunction) => {
   const provider = opensrpAuth;
+  console.log("Original Url", req.originalUrl);
   provider.code
     .getToken(req.originalUrl)
     .then((user: ClientOAuth2.Token) => {
@@ -144,8 +145,9 @@ const oauthCallback = (req: express.Request, res: express.Response, next: expres
             // you have to save the session manually for POST requests like this one
             req.session.save(() => void 0);
             if (nextPath) {
+              const localNextPath = nextPath;
               nextPath = undefined;
-              return res.redirect(nextPath);
+              return res.redirect(localNextPath);
             }
             return res.redirect(EXPRESS_FRONTEND_OPENSRP_CALLBACK_URL);
           }
