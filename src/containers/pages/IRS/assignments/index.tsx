@@ -1,5 +1,6 @@
 import ListView from '@onaio/list-view';
 import reducerRegistry from '@onaio/redux-reducer-registry';
+import { Registry } from '@onaio/redux-reducer-registry';
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
@@ -28,8 +29,8 @@ import IRSPlansReducer, {
 import {
   extractPlanRecordResponseFromPlanPayload,
   fetchPlanRecords,
-  getPlanRecordsArray,
   InterventionType,
+  makePlansArraySelector,
   PlanRecord,
   PlanRecordResponse,
   PlanStatus,
@@ -39,6 +40,9 @@ import {
 reducerRegistry.register(IRSPlansReducerName, IRSPlansReducer);
 
 const OpenSrpPlanService = new OpenSRPService('plans');
+
+/** Plans filter selector */
+const plansArraySelector = makePlansArraySelector('planRecordsById');
 
 /** interface for PlanAssignmentsListProps props */
 interface PlanAssignmentsListProps {
@@ -155,9 +159,18 @@ interface DispatchedStateProps {
 /** map state to props */
 const mapStateToProps = (state: Partial<Store>): DispatchedStateProps => {
   const planStatus = [PlanStatus.ACTIVE];
-  const fiPlans = getPlanRecordsArray(state, InterventionType.FI, planStatus);
-  const irsPlans = getPlanRecordsArray(state, InterventionType.IRS, planStatus);
-  const mdaPlans = getPlanRecordsArray(state, InterventionType.MDA, planStatus);
+  const fiPlans = plansArraySelector(state as Registry, {
+    interventionType: InterventionType.FI,
+    statusList: planStatus,
+  });
+  const irsPlans = plansArraySelector(state as Registry, {
+    interventionType: InterventionType.IRS,
+    statusList: planStatus,
+  });
+  const mdaPlans = plansArraySelector(state as Registry, {
+    interventionType: InterventionType.MDA,
+    statusList: planStatus,
+  });
   const plans = [...fiPlans, ...irsPlans, ...mdaPlans].sort(
     (a: PlanRecord, b: PlanRecord) => Date.parse(b.plan_date) - Date.parse(a.plan_date)
   );
