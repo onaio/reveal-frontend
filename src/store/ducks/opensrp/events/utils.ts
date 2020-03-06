@@ -142,7 +142,9 @@ export const extractEvents = (rawEvents: RawEvent[]): Event[] => {
   return rawEvents.map<Event>(rawEvent => extractEvent(rawEvent));
 };
 
-/** describes the form an event will take after translating its properties */
+/** describes the form an event will take after translating its properties , this is to
+ * be used during render time.
+ */
 interface TranslatedEvent {
   baseEntityId: UUID;
   caseInformation: Dictionary<string>;
@@ -151,7 +153,7 @@ interface TranslatedEvent {
   fociInformationTitle: string;
 }
 
-/** translates an event
+/** translates an event to be used during render time while being displayed
  * @param {Event} event - an extracted event object
  * @return {TranslatedEvent}
  */
