@@ -907,10 +907,6 @@
     "message": "Date of Diagnosis",
     "description": "date of Diagnosis"
   },
-  "ID": {
-    "message": "Id",
-    "description": "An identifier"
-  },
   "CLASSIFICATION": {
     "message": "Classification",
     "description": "category into which something is put"

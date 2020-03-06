@@ -9,6 +9,7 @@ import {
   FOCI_OF_INFECTION,
   FOCI_OF_RESIDENCE,
   HOUSE_NUMBER,
+  IDENTIFIER,
   INVESTIGATION_DATE,
   NAME,
   PATIENT_NAME,
@@ -172,7 +173,7 @@ export const translateEvent = (event: Event): TranslatedEvent => {
     caseNumber: event.caseNumber,
     fociInformation: {
       [CLASSIFICATION]: fociInformation.classification,
-      id: fociInformation.id,
+      [IDENTIFIER]: fociInformation.id,
       [NAME]: fociInformation.name,
     },
     fociInformationTitle: event.fociInformationTitle,

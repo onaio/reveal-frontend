@@ -422,7 +422,6 @@ export const HOUSE_NUMBER = translate('HOUSE_NUMBER', 'House Number');
 export const INVESTIGATION_DATE = translate('INVESTIGATION_DATE', 'Investigation Date');
 export const SPECIES = translate('SPECIES', 'Species');
 export const DIAGNOSIS_DATE = translate('DIAGNOSIS_DATE', 'Date of Diagnosis');
-export const ID = translate('ID', 'Id');
 export const CLASSIFICATION = translate('CLASSIFICATION', 'Classification');
 export const FAILED_TO_GET_EVENT_ID = translate(
   'FAILED_TO_GET_EVENT_ID',
