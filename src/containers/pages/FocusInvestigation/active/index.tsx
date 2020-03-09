@@ -209,8 +209,7 @@ class ActiveFocusInvestigation extends React.Component<
           if (plansArray && plansArray.length) {
             const jurisdictionValidPlans = removeNullJurisdictionPlans(plansArray);
             const thePlans = jurisdictionValidPlans.map((item: Plan) => {
-              const thisItem = extractPlan(item);
-              return thisItem;
+              return extractPlan(item);
             });
             /**  Handle Columns Unique for Routine and Reactive Tables */
             const columnsBasedOnReason = [];
