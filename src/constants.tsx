@@ -44,6 +44,7 @@ export const MOSQUITO_COLLECTION_ACTIVITY_CODE = 'mosquitoCollection';
 export const GA_ENV_TEST = 'test';
 export const PLAN_ID = 'plan_id';
 export const PLAN_INTERVENTION_TYPE = 'plan_intervention_type';
+export const PLAN_RECORD_BY_ID = 'planRecordsById';
 
 // internal urls
 export const LOGIN_URL = '/login';
