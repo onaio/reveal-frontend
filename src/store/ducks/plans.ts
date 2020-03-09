@@ -258,7 +258,7 @@ export const PLAN_RECORDS_FETCHED = 'reveal/reducer/plans/PLAN_RECORDS_FETCHED';
 export const REMOVE_PLANS = 'reveal/reducer/plans/REMOVE_PLANS';
 
 /** FetchPlansAction interface for PLANS_FETCHED */
-interface FetchPlansAction extends AnyAction {
+export interface FetchPlansAction extends AnyAction {
   plansById: { [key: string]: Plan };
   type: typeof PLANS_FETCHED;
 }

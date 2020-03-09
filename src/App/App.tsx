@@ -46,9 +46,9 @@ import {
 } from '../constants';
 import ConnectedHeader from '../containers/ConnectedHeader';
 import ActiveFocusInvestigation from '../containers/pages/FocusInvestigation/active';
+import FIJurisdiction from '../containers/pages/FocusInvestigation/jurisdiction';
 import SingleActiveFIMap from '../containers/pages/FocusInvestigation/map/active';
 import ConnectedPlanCompletion from '../containers/pages/FocusInvestigation/map/planCompletion';
-import SingleFI from '../containers/pages/FocusInvestigation/single';
 import Home from '../containers/pages/Home/Home';
 import IrsPlans from '../containers/pages/InterventionPlan/IRS';
 import IrsPlan from '../containers/pages/InterventionPlan/IRS/plan';
@@ -195,15 +195,15 @@ class App extends Component {
                   redirectPath={OAUTH_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
-                  path={`${FI_FILTER_URL}/:jurisdiction_parent_id/:plan_id?`}
-                  component={WithGATracker(ActiveFocusInvestigation)}
+                  path={`${FI_SINGLE_URL}/:jurisdictionId`}
+                  component={WithGATracker(FIJurisdiction)}
                 />
                 <ConnectedPrivateRoute
                   redirectPath={OAUTH_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
-                  path={`${FI_SINGLE_URL}/:id`}
-                  component={WithGATracker(SingleFI)}
+                  path={`${FI_FILTER_URL}/:jurisdiction_parent_id/:plan_id?`}
+                  component={WithGATracker(ActiveFocusInvestigation)}
                 />
                 {/* Focus Investigation completion confirmation view */}
                 <ConnectedPrivateRoute
