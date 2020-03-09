@@ -3,11 +3,11 @@ import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { Col, Row } from 'reactstrap';
 import { format } from 'util';
+import PlanForm, { defaultInitialValues } from '../../../../../components/forms/PlanForm';
 import HeaderBreadcrumb from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import { CREATE_NEW_PLAN, FIS_IN_JURISDICTION, HOME, PLANS } from '../../../../../configs/lang';
 import { FI_SINGLE_URL, HOME_URL, NEW_PLAN_URL, PLAN_LIST_URL } from '../../../../../constants';
 import { InterventionType } from '../../../../../store/ducks/plans';
-import PlanForm, { defaultInitialValues } from '../../../../forms/PlanForm';
 
 /** Simple component that loads the new plan form and allows you to create a new plan */
 const NewPlan = () => {

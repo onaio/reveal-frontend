@@ -119,3 +119,13 @@ fieldset[disabled] .gatekeeper-btn.active {
 .Toastify__toast-container {
   width: fit-content !important;
 }
+
+.ReactTable .rt-tbody {
+  border-bottom: 0.5px solid #cfcdcd42 !important;
+  min-height: 50px !important;
+}
+
+.rt-noData {
+  top: 82% !important;
+  padding: 5px !important;
+}

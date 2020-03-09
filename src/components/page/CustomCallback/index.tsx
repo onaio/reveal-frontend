@@ -7,7 +7,7 @@ import { Redirect, RouteComponentProps, withRouter } from 'react-router';
 import { toast } from 'react-toastify';
 import { EXPRESS_OAUTH_GET_STATE_URL } from '../../../configs/env';
 import { WELCOME_BACK } from '../../../configs/lang';
-import { HOME_URL, LOGIN_URL } from '../../../constants';
+import { EXPRESS_LOGIN_URL, HOME_URL } from '../../../constants';
 import { growl } from '../../../helpers/utils';
 import store from '../../../store';
 import Loading from '../Loading';
@@ -29,14 +29,19 @@ export const BaseSuccessfulLoginComponent: React.FC<RouteComponentProps> = props
 
 export const SuccessfulLoginComponent = withRouter(BaseSuccessfulLoginComponent);
 
+const BaseUnsuccessfulLogin: React.FC<RouteComponentProps> = props => {
+  window.location.href = `${EXPRESS_LOGIN_URL}${props.location.search}`;
+  return <></>;
+};
+
+export const UnSuccessfulLogin = withRouter(BaseUnsuccessfulLogin);
+
 const CustomConnectedAPICallBack: React.FC<RouteComponentProps<RouteParams>> = props => {
   return (
     <ConnectedAPICallback
       LoadingComponent={Loading}
       // tslint:disable-next-line: jsx-no-lambda
-      UnSuccessfulLoginComponent={() => {
-        return <Redirect to={LOGIN_URL} />;
-      }}
+      UnSuccessfulLoginComponent={UnSuccessfulLogin}
       SuccessfulLoginComponent={SuccessfulLoginComponent}
       apiURL={EXPRESS_OAUTH_GET_STATE_URL}
       {...props}

@@ -2,8 +2,6 @@ import reducerRegistry from '@onaio/redux-reducer-registry';
 import React, { MouseEvent, useState } from 'react';
 import { connect } from 'react-redux';
 import { Store } from 'redux';
-import AssignTeamButton, { AssignTeamButtonProps } from '../../../components/AssignTeamButton';
-import AssignTeamPopover, { AssignTeamPopoverProps } from '../../../components/AssignTeamPopover';
 import { TEAMS_ASSIGNED } from '../../../configs/lang';
 import { stopPropagationAndPreventDefault } from '../../../helpers/utils';
 import assignmentReducer, {
@@ -18,6 +16,8 @@ import organizationsReducer, {
   Organization,
   reducerName as organizationsReducerName,
 } from '../../../store/ducks/opensrp/organizations';
+import AssignTeamButton, { AssignTeamButtonProps } from '../../AssignTeamButton';
+import AssignTeamPopover, { AssignTeamPopoverProps } from '../../AssignTeamPopover';
 import { getButtonId, getFormName } from './helpers';
 import './style.css';
 

@@ -1,11 +1,8 @@
 import { mount } from 'enzyme';
-import { createMemoryHistory } from 'history';
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { Route, Switch } from 'react-router-dom';
 import { SuccessfulLoginComponent } from '..';
-
-const history = createMemoryHistory();
 
 const App = () => {
   return (

@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`containers/pages/FocusInvestigation/active/map/helpers/MarkCompleteLink renders correctly 1`] = `
+<StatusBadge
+  plan={
+    Object {
+      "id": "draftPlan-id-2",
+      "jurisdiction_depth": 41,
+      "jurisdiction_id": "3380",
+      "jurisdiction_name": "TLv1_02",
+      "jurisdiction_name_path": Array [
+        "Canton Tha Luang",
+        "Tha Luang Village",
+      ],
+      "jurisdiction_parent_id": "2977",
+      "jurisdiction_path": Array [
+        "2989",
+        "2977",
+      ],
+      "plan_date": "2019-06-18",
+      "plan_effective_period_end": "2019-06-18",
+      "plan_effective_period_start": "2019-07-31",
+      "plan_fi_reason": "Case Triggered",
+      "plan_fi_status": "A1",
+      "plan_id": "plan-id-2",
+      "plan_intervention_type": "IRS",
+      "plan_status": "draft",
+      "plan_title": "A1-Tha Luang Village 1 Focus 01",
+      "plan_version": "1",
+    }
+  }
+>
+  <Badge
+    color="warning"
+    pill={true}
+    tag="span"
+  >
+    <span
+      className="badge badge-warning badge-pill"
+    >
+      draft
+    </span>
+  </Badge>
+</StatusBadge>
+`;

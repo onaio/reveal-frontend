@@ -1,7 +1,7 @@
 import { get, keyBy, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
 import SeamlessImmutable from 'seamless-immutable';
-import { PlanActionCodesType } from '../../containers/forms/PlanForm/types';
+import { PlanActionCodesType } from '../../components/forms/PlanForm/types';
 import { FlexObject } from '../../helpers/utils';
 
 /** the reducer name */
