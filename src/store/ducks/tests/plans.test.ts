@@ -2,6 +2,7 @@ import reducerRegistry from '@onaio/redux-reducer-registry';
 import { cloneDeep, keyBy, keys, pickBy, values } from 'lodash';
 import { FlushThunks } from 'redux-testkit';
 import { FIReasons } from '../../../configs/settings';
+import { PLAN_RECORD_BY_ID } from '../../../constants';
 import store from '../../index';
 import reducer, {
   fetchPlanRecords,
@@ -256,7 +257,7 @@ describe('reducers/plans', () => {
   it('should fetch PlanRecords', () => {
     store.dispatch(fetchPlanRecords(fixtures.planRecordResponses as PlanRecordResponse[]));
     const { planRecordsById: allPlanRecords } = fixtures;
-    const plansArraySelector = makePlansArraySelector('planRecordsById');
+    const plansArraySelector = makePlansArraySelector(PLAN_RECORD_BY_ID);
 
     const fiPlanRecords = pickBy(
       allPlanRecords,

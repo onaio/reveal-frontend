@@ -30,6 +30,7 @@ import {
   INTERVENTION_IRS_URL,
   NEW,
   PLAN,
+  PLAN_RECORD_BY_ID,
   REPORT,
 } from '../../../../constants';
 
@@ -87,7 +88,7 @@ export const defaultIrsPlansProps: IrsPlansProps = {
 };
 
 /** Plans filter selector */
-const plansArraySelector = makePlansArraySelector('planRecordsById');
+const plansArraySelector = makePlansArraySelector(PLAN_RECORD_BY_ID);
 
 /** IrsPlans - component for IRS Plans page */
 class IrsPlans extends React.Component<IrsPlansProps & RouteComponentProps<RouteParams>, {}> {

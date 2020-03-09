@@ -19,7 +19,12 @@ import {
   TITLE,
 } from '../../../../configs/lang';
 import { planStatusDisplay } from '../../../../configs/settings';
-import { ASSIGN_PLAN_URL, HOME_URL, REPORT_IRS_PLAN_URL } from '../../../../constants';
+import {
+  ASSIGN_PLAN_URL,
+  HOME_URL,
+  PLAN_RECORD_BY_ID,
+  REPORT_IRS_PLAN_URL,
+} from '../../../../constants';
 import { displayError } from '../../../../helpers/errors';
 import { OpenSRPService } from '../../../../services/opensrp';
 import IRSPlansReducer, {
@@ -41,7 +46,7 @@ reducerRegistry.register(IRSPlansReducerName, IRSPlansReducer);
 const OpenSrpPlanService = new OpenSRPService('plans');
 
 /** Plans filter selector */
-const plansArraySelector = makePlansArraySelector('planRecordsById');
+const plansArraySelector = makePlansArraySelector(PLAN_RECORD_BY_ID);
 
 /** interface for PlanAssignmentsListProps props */
 interface PlanAssignmentsListProps {
