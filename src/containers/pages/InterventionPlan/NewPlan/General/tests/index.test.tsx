@@ -62,6 +62,13 @@ describe('containers/pages/NewPlan', () => {
 
     wrapper.update();
 
+    // change to IRS
+    wrapper
+      .find('select[name="interventionType"]')
+      .simulate('change', { target: { name: 'interventionType', value: 'IRS' } });
+    wrapper.update();
+    expect(wrapper.find('JurisdictionDetails').length).toEqual(0);
+
     wrapper.unmount();
   });
 });
