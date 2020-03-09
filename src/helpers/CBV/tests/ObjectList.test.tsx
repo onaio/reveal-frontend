@@ -23,7 +23,11 @@ interface TestProps {
   messages?: Message[];
 }
 
-const TestComponent = (_: TestProps) => <div>mosh</div>;
+const TestComponent = (props: TestProps) => {
+  const { messages } = props;
+  const listItems = messages ? messages.map((e, index) => <li key={index}>{e.message}</li>) : null;
+  return listItems ? <ul>{listItems}</ul> : <span>error</span>;
+};
 
 /** ObjectList options */
 const objectListOptions = {
@@ -117,6 +121,8 @@ describe('cbv/ObjectList', () => {
         actionCreator: expect.any(Function),
       });
 
+      expect(wrapper.find('li').length).toEqual(2);
+
       const finalProps = wrapper.find('Connect(HoC)>HoC>TestComponent').props();
 
       const payload = { user: 'bob', message: 'hello' };
@@ -125,6 +131,8 @@ describe('cbv/ObjectList', () => {
         payload,
         type: SEND_MESSAGE,
       });
+
+      wrapper.unmount();
     }
   });
 });
