@@ -42,6 +42,26 @@ describe('containers/pages/NewPlan', () => {
         .find('PlanForm')
     ).toHaveLength(1);
 
+    // test that JurisdictionDetails are shown
+    // set jurisdiction id ==> we use Formik coz React-Select is acting weird
+    (wrapper
+      .find('FieldInner')
+      .first()
+      .props() as any).formik.setFieldValue('jurisdictions[0].id', '1337');
+    // set jurisdiction name
+    wrapper
+      .find('input[name="jurisdictions[0].name"]')
+      .simulate('change', { target: { name: 'jurisdictions[0].name', value: 'Onyx' } });
+    wrapper
+      .find('select[name="interventionType"]')
+      .simulate('change', { target: { name: 'interventionType', value: 'FI' } });
+
+    expect(wrapper.find('JurisdictionDetails').props()).toEqual({
+      planFormJurisdiction: { id: '1337', name: 'Onyx' },
+    });
+
+    wrapper.update();
+
     wrapper.unmount();
   });
 });
