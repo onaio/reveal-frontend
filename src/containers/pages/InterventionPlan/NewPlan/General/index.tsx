@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
-import { Link } from 'react-router-dom';
 import { Col, Row } from 'reactstrap';
-import { format } from 'util';
 import PlanForm, { defaultInitialValues } from '../../../../../components/forms/PlanForm';
 import HeaderBreadcrumb from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
-import { CREATE_NEW_PLAN, FIS_IN_JURISDICTION, HOME, PLANS } from '../../../../../configs/lang';
-import { FI_SINGLE_URL, HOME_URL, NEW_PLAN_URL, PLAN_LIST_URL } from '../../../../../constants';
+import { CREATE_NEW_PLAN, HOME, PLANS } from '../../../../../configs/lang';
+import { HOME_URL, NEW_PLAN_URL, PLAN_LIST_URL } from '../../../../../constants';
 import { InterventionType } from '../../../../../store/ducks/plans';
+import { JurisdictionDetails } from './JurisdictionDetails';
 
 /** Simple component that loads the new plan form and allows you to create a new plan */
 const NewPlan = () => {
@@ -49,9 +48,7 @@ const NewPlan = () => {
         <Col md={4}>
           {formValues.interventionType === InterventionType.FI &&
             formValues.jurisdictions[0].id !== '' && (
-              <Link to={`${FI_SINGLE_URL}/${formValues.jurisdictions[0].id}`}>
-                {format(FIS_IN_JURISDICTION, formValues.jurisdictions[0].name)}
-              </Link>
+              <JurisdictionDetails planFormJurisdiction={formValues.jurisdictions[0]} />
             )}
         </Col>
       </Row>
