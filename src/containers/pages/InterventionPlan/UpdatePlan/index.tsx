@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
+import PlanForm, { propsForUpdatingPlans } from '../../../../components/forms/PlanForm';
+import { getPlanFormValues } from '../../../../components/forms/PlanForm/helpers';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
 import { HOME, PLANS, UPDATE_PLAN } from '../../../../configs/lang';
@@ -12,13 +14,14 @@ import { PlanDefinition } from '../../../../configs/settings';
 import { HOME_URL, NEW_PLAN_URL, OPENSRP_PLANS, PLAN_LIST_URL } from '../../../../constants';
 import { displayError } from '../../../../helpers/errors';
 import { OpenSRPService } from '../../../../services/opensrp';
+import { fetchEvents } from '../../../../store/ducks/opensrp/events';
 import planDefinitionReducer, {
   addPlanDefinition,
   getPlanDefinitionById,
   reducerName as planDefinitionReducerName,
 } from '../../../../store/ducks/opensrp/PlanDefinition';
-import PlanForm, { propsForUpdatingPlans } from '../../../forms/PlanForm';
-import { getPlanFormValues } from '../../../forms/PlanForm/helpers';
+import ConnectedCaseDetails, { CaseDetailsProps } from './CaseDetails';
+import { getEventId, planIsReactive } from './utils';
 
 /** register the plan definitions reducer */
 reducerRegistry.register(planDefinitionReducerName, planDefinitionReducer);
@@ -92,6 +95,13 @@ const UpdatePlan = (props: RouteComponentProps<RouteParams> & UpdatePlanProps) =
     ...(plan && { initialValues: getPlanFormValues(plan) }),
   };
 
+  const caseDetailsProps: CaseDetailsProps = {
+    event: null,
+    eventId: null,
+    fetchEventsCreator: fetchEvents,
+    service: OpenSRPService,
+  };
+
   return (
     <div>
       <Helmet>
@@ -102,6 +112,12 @@ const UpdatePlan = (props: RouteComponentProps<RouteParams> & UpdatePlanProps) =
       <Row>
         <Col md={8}>
           <PlanForm {...planFormProps} />
+        </Col>
+        <Col md={4}>
+          {/* Only show case details if plan is reactive */}
+          {planIsReactive(plan) && (
+            <ConnectedCaseDetails {...{ ...caseDetailsProps, eventId: getEventId(plan) }} />
+          )}
         </Col>
       </Row>
     </div>

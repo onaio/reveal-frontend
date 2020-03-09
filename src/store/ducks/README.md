@@ -28,8 +28,8 @@ Start by creating a basic "base selector". Ideally this base selector should be 
 and should not do any processing or filtering; it should simply be extracting data from the store.
 
 ```ts
-export const plansArrayBaseSelector = (state: Registry): Plan[] =>
-  values((state as any)[reducerName].plansById);
+export const plansArrayBaseSelector = (planKey?: string) => (state: Registry): Plan[] =>
+  values((state as any)[reducerName][planKey ? planKey : 'plansById']);
 ```
 
 If you anticipate that you will need to filter/process the data further by having your selectors take in parameters, then go ahead and create an interface to describe the kind of parameters you are expecting:
@@ -53,35 +53,40 @@ export const getJurisdictionIds = (_: Registry, props: PlanFilters) => props.jur
 Finally, you can now actually use Reselect's `createSelector` to define your memoized selectors:
 
 ```ts
+// these functions accepts one optional parameter:
+//   1.the planKey, a key of plans object
+// the functions return a selector definitions.
 // these selector definitions will result in selector functions that accept two inputs:
 //   1. the state, the global Redux state
 //   2. the props, in this case an object of shape FancyFilters
-export const getPlansArrayByInterventionType = createSelector(
-  [plansArrayBaseSelector, getInterventionType],
-  (plans, interventionType) =>
-    interventionType
-      ? plans.filter(plan => plan.plan_intervention_type === interventionType)
-      : plans
-);
-export const getPlansArrayByJurisdictionIds = createSelector(
-  [plansArrayBaseSelector, getJurisdictionIds],
-  (plans, jurisdictionIds) =>
-    jurisdictionIds
-      ? plans.filter(plan =>
-          jurisdictionIds.length ? jurisdictionIds.includes(plan.jurisdiction_id) : true
-        )
-      : plans
-);
+export const getPlansArrayByInterventionType = (planKey?: string) =>
+  createSelector(
+    [plansArrayBaseSelector(planKey), getInterventionType],
+    (plans, interventionType) =>
+      interventionType
+        ? plans.filter(plan => plan.plan_intervention_type === interventionType)
+        : plans
+  );
+export const getPlansArrayByJurisdictionIds = (planKey?: string) =>
+  createSelector(
+    [plansArrayBaseSelector(planKey), getJurisdictionIds],
+    (plans, jurisdictionIds) =>
+      jurisdictionIds
+        ? plans.filter(plan =>
+            jurisdictionIds.length ? jurisdictionIds.includes(plan.jurisdiction_id) : true
+          )
+        : plans
+  );
 ```
 
 You can compose your selectors by combining them, like so:
 
 ```ts
-export const makeComplexSelector = () => {
+export const makeComplexSelector = (planKey?: string) => {
   // this is our actual selector definition
   return createSelector(
     // the first argument is an array of the selectors that you are combining
-    [getPlansArrayByInterventionType, getPlansArrayByJurisdictionIds],
+    [getPlansArrayByInterventionType(planKey), getPlansArrayByJurisdictionIds(planKey)],
     (
       plans,
       plans2 // the 2nd argument is a callback function that takes the results of the 1st arguments

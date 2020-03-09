@@ -737,21 +737,21 @@ exports[`components/page/Header renders header correctly 1`] = `
                           activeClassName="active"
                           aria-current="page"
                           className="nav-link"
-                          to="/login"
+                          to="/fe/login"
                         >
                           <Route
-                            path="\\\\/login"
+                            path="\\\\/fe\\\\/login"
                           >
                             <Link
                               aria-current={null}
                               className="nav-link"
                               replace={false}
-                              to="/login"
+                              to="/fe/login"
                             >
                               <a
                                 aria-current={null}
                                 className="nav-link"
-                                href="/login"
+                                href="/fe/login"
                                 onClick={[Function]}
                               >
                                 Login

@@ -1,12 +1,15 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Col, Row } from 'reactstrap';
+import PlanForm, {
+  defaultInitialValues,
+  PlanFormProps,
+} from '../../../../../components/forms/PlanForm';
+import { getFormActivities, IRSActivities } from '../../../../../components/forms/PlanForm/helpers';
 import HeaderBreadcrumb from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import { COUNTRY, CREATE_NEW_IRS_PLAN, HOME, IRS_PLANS } from '../../../../../configs/lang';
 import { HOME_URL, INTERVENTION_IRS_URL, NEW_IRS_PLAN_URL } from '../../../../../constants';
 import { InterventionType } from '../../../../../store/ducks/plans';
-import PlanForm, { defaultInitialValues, PlanFormProps } from '../../../../forms/PlanForm';
-import { getFormActivities, IRSActivities } from '../../../../forms/PlanForm/helpers';
 
 /** Simple component that loads the new plan form and allows you to create a new IRS plan */
 const NewIRSPlan = () => {

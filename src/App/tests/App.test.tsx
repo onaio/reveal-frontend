@@ -1,6 +1,5 @@
 import * as sessionDux from '@onaio/session-reducer';
 import { mount } from 'enzyme';
-import toJson from 'enzyme-to-json';
 import { createBrowserHistory } from 'history';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -46,7 +45,7 @@ describe('App', () => {
     );
     // before resolving get oauth state request, the user is logged out
     expect(wrapper.text()).toMatchInlineSnapshot(`"HomeLogin"`);
-    await new Promise(resolve => setImmediate(resolve));
+    await new Promise<unknown>(resolve => setImmediate(resolve));
     wrapper.update();
     expect(fetch.mock.calls).toEqual([['http://localhost:3000/oauth/state']]);
 
@@ -82,7 +81,7 @@ describe('App', () => {
         </Router>
       </Provider>
     );
-    await new Promise(resolve => setImmediate(resolve));
+    await new Promise<unknown>(resolve => setImmediate(resolve));
     wrapper.update();
 
     // At this point we have an authenticated user
@@ -96,9 +95,7 @@ describe('App', () => {
     // we should be on the login page; caveat, in production
     // it is by the express server's redirect action that we find ourselves here
     expect(wrapper.text()).toMatchSnapshot('should be login page');
-    const isTheLoginPage = wrapper
-      .text()
-      .includes('Please log in with one of the following providers');
+    const isTheLoginPage = wrapper.text().includes('Login');
     expect(isTheLoginPage).toBeTruthy();
 
     // the logout user action creator was invoked

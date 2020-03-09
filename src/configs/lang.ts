@@ -417,3 +417,19 @@ export const JURISDICTION_LOADING_ERROR = translate(
   'JURISDICTION_LOADING_ERROR',
   'An error prevented this jurisdiction from loading.'
 );
+export const FOCI_OF_RESIDENCE = translate('FOCI_OF_RESIDENCE', 'Foci of Residence');
+export const FOCI_OF_INFECTION = translate('FOCI_OF_INFECTION', 'Foci of Infection');
+export const CASE_DETAILS = translate('CASE_DETAILS', 'Case Details');
+export const CASE_INFORMATION = translate('CASE_INFORMATION', 'Case Information');
+export const AGE = translate('AGE', 'Age');
+export const SURNAME = translate('SURNAME', 'Surname');
+export const PATIENT_NAME = translate('PATIENT_NAME', 'Patient Name');
+export const HOUSE_NUMBER = translate('HOUSE_NUMBER', 'House Number');
+export const INVESTIGATION_DATE = translate('INVESTIGATION_DATE', 'Investigation Date');
+export const SPECIES = translate('SPECIES', 'Species');
+export const DIAGNOSIS_DATE = translate('DIAGNOSIS_DATE', 'Date of Diagnosis');
+export const CLASSIFICATION = translate('CLASSIFICATION', 'Classification');
+export const FAILED_TO_GET_EVENT_ID = translate(
+  'FAILED_TO_GET_EVENT_ID',
+  'Failed to extract event Id from plan'
+);

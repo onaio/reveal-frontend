@@ -46,3 +46,11 @@ export const existingState = {
     },
   },
 };
+
+export const buildHandlers = [
+  {
+    method: jest.fn(),
+    name: 'pointClick',
+    type: 'click',
+  },
+];

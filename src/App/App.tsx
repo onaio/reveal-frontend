@@ -4,7 +4,7 @@ import { faExternalLinkSquareAlt, faMap } from '@fortawesome/free-solid-svg-icon
 import ConnectedPrivateRoute from '@onaio/connected-private-route';
 import { AuthorizationGrantType, OauthLogin } from '@onaio/gatekeeper';
 import { logOutUser } from '@onaio/session-reducer';
-import React, { Component, useEffect } from 'react';
+import React, { Component } from 'react';
 import { Helmet } from 'react-helmet';
 import { Route, Switch } from 'react-router';
 import { toast } from 'react-toastify';

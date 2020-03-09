@@ -46,9 +46,11 @@ export const GA_ENV_TEST = 'test';
 export const PLAN_ID = 'plan_id';
 export const PLAN_INTERVENTION_TYPE = 'plan_intervention_type';
 export const TWO_HUNDRED_PX = '200px';
+export const PLAN_RECORD_BY_ID = 'planRecordsById';
 
 // internal urls
-export const LOGIN_URL = '/login';
+export const LOGIN_URL = '/fe/login';
+export const EXPRESS_LOGIN_URL = '/login';
 export const LOGOUT_URL = '/logout';
 export const HOME_URL = '/';
 export const INTERVENTION_IRS_URL = '/intervention/irs';
@@ -94,6 +96,7 @@ export const OPENSRP_ORG_PRACTITIONER_ENDPOINT = 'organization/practitioner';
 export const OPENSRP_DEL_PRACTITIONER_ROLE_ENDPOINT = 'practitionerRole/deleteByPractitioner';
 export const OPENSRP_ADD_PRACTITIONER_ROLE_ENDPOINT = 'practitionerRole/add';
 export const OPENSRP_USERS_ENDPOINT = 'user';
+export const OPENSRP_FIND_EVENTS_ENDPOINT = 'event/findById';
 
 // colors
 export const GREEN = 'Green';
