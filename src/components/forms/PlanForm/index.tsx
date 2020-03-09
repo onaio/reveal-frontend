@@ -26,7 +26,7 @@ import {
   ADD,
   ADD_ACTIVITY,
   ADD_CODED_ACTIVITY,
-  AN_ERROR_OCCURED,
+  AN_ERROR_OCCURRED,
   CASE_NUMBER,
   DESCRIPTION_LABEL,
   END_DATE,
@@ -397,7 +397,7 @@ const PlanForm = (props: PlanFormProps) => {
 
                               {errors.jurisdictions && errors.jurisdictions[index] && (
                                 <small className="form-text text-danger jurisdictions-error">
-                                  {AN_ERROR_OCCURED}
+                                  {AN_ERROR_OCCURRED}
                                 </small>
                               )}
 
