@@ -270,7 +270,7 @@ class ActiveFocusInvestigation extends React.Component<
                     Cell: (cell: CellInfo) => {
                       return (
                         <div>
-                          {cell.value.trim() && (
+                          {cell.original.focusArea.trim() && (
                             <Link to={`${FI_SINGLE_MAP_URL}/${cell.original.id}`}>
                               {cell.value}
                             </Link>
