@@ -20,10 +20,11 @@ import { fetchJurisdictions, Jurisdiction } from '../../../../../../store/ducks/
 import { fetchPlans, Plan } from '../../../../../../store/ducks/plans';
 import { setStructures, Structure } from '../../../../../../store/ducks/structures';
 import { fetchTasks, Task } from '../../../../../../store/ducks/tasks';
+
 /**
  * Fetch data for the plan
  * @param fetchGoalsActionCreator Fetch goals action creator
- * @param fetchJurisdictionsActionCreator Fetch jurisdication action creator
+ * @param fetchJurisdictionsActionCreator Fetch jurisdiction action creator
  * @param fetchPlansActionCreator Fetch plans action creator
  * @param fetchStructuresActionCreator Fetch structures action creator
  * @param fetchTasksActionCreator Fetch tasks action creator
