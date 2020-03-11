@@ -7,14 +7,19 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import { OPENSRP_LOGOUT_URL } from '../../configs/env';
+import { GA_ROUTE_COMPONENT, GA_WITH_TRACKER } from '../../constants';
 import store from '../../store';
-import App from '../App';
+import App, { AppProps } from '../App';
 
 const history = createBrowserHistory();
 
 describe('App', () => {
   beforeEach(() => {
     jest.resetAllMocks();
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
   it('renders without crashing', () => {
@@ -41,6 +46,40 @@ describe('App', () => {
     expect(toJson(wrapper)).toMatchSnapshot();
     wrapper.unmount();
   });
+
+  it('renders correctly with the default props', () => {
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <App />
+        </Router>
+      </Provider>
+    );
+    expect(wrapper.find('App').props()).toEqual({
+      ga_tracking_method: GA_ROUTE_COMPONENT,
+    });
+    wrapper.unmount();
+  });
+
+  it('renders correctly if google anlytics approach is with tracker', () => {
+    const props: AppProps = {
+      ga_tracking_method: GA_WITH_TRACKER,
+    };
+
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <App {...props} />
+        </Router>
+      </Provider>
+    );
+    expect(wrapper.find('WithGATrackerHOC').exists()).toBeTruthy();
+    wrapper.unmount();
+  });
+
+  /** @todo Tests that utilize window.open have been intentionally put at the bottom
+   * since they are causing some of the tests above to fail. Investiagte why this is happening
+   */
   it('logout url is set correctly Oath provider is opensrp', () => {
     window.open = jest.fn();
     store.dispatch(
@@ -57,21 +96,21 @@ describe('App', () => {
       })
     );
 
-    mount(
+    const wrapper = mount(
       <Provider store={store}>
         <Router history={history}>
           <App />
         </Router>
       </Provider>
     );
-
     history.push('/logout');
     expect(window.open).toBeCalledWith(OPENSRP_LOGOUT_URL);
+    wrapper.unmount();
   });
 
   it('logout url is set correctly when oath provider is not opensrp', () => {
     window.open = jest.fn();
-    mount(
+    const wrapper = mount(
       <Provider store={store}>
         <Router history={history}>
           <App />
@@ -81,5 +120,6 @@ describe('App', () => {
 
     history.push('/logout');
     expect(window.open).not.toBeCalled();
+    wrapper.unmount();
   });
 });
