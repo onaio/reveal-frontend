@@ -8,7 +8,7 @@ import {
   SUPERSET_STRUCTURES_SLICE,
   SUPERSET_TASKS_SLICE,
 } from '../../../../../../configs/env';
-import { AN_ERROR_OCCURED } from '../../../../../../configs/lang';
+import { AN_ERROR_OCCURRED } from '../../../../../../configs/lang';
 import { CASE_CLASSIFICATION_LABEL, END_DATE, START_DATE } from '../../../../../../configs/lang';
 import { JURISDICTION_ID, PLAN_ID } from '../../../../../../constants';
 import { ROUTINE } from '../../../../../../constants';
@@ -49,7 +49,7 @@ export const fetchData = async (
         if (result) {
           fetchJurisdictionsActionCreator(result);
         } else {
-          displayError(new Error(AN_ERROR_OCCURED));
+          displayError(new Error(AN_ERROR_OCCURRED));
         }
       })
       .catch(error => {
@@ -71,7 +71,7 @@ export const fetchData = async (
         if (structuresResults) {
           fetchStructuresActionCreator(structuresResults);
         } else {
-          displayError(new Error(AN_ERROR_OCCURED));
+          displayError(new Error(AN_ERROR_OCCURRED));
         }
       })
       .catch(error => {
@@ -82,7 +82,7 @@ export const fetchData = async (
         if (result2) {
           fetchPlansActionCreator(result2);
         } else {
-          displayError(new Error(AN_ERROR_OCCURED));
+          displayError(new Error(AN_ERROR_OCCURRED));
         }
       })
       .catch(error => {
@@ -93,7 +93,7 @@ export const fetchData = async (
         if (result3) {
           fetchGoalsActionCreator(result3);
         } else {
-          displayError(new Error(AN_ERROR_OCCURED));
+          displayError(new Error(AN_ERROR_OCCURRED));
         }
       })
       .catch(error => {
@@ -104,7 +104,7 @@ export const fetchData = async (
         if (result4) {
           fetchTasksActionCreator(result4);
         } else {
-          displayError(new Error(AN_ERROR_OCCURED));
+          displayError(new Error(AN_ERROR_OCCURRED));
         }
       })
       .catch(error => {
