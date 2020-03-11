@@ -34,7 +34,9 @@ exports[`App renders App correctly 1`] = `
       }
     }
   >
-    <App>
+    <App
+      ga_tracking_method="Route Component"
+    >
       <Container
         fluid={true}
         tag="div"
@@ -845,6 +847,50 @@ exports[`App renders App correctly 1`] = `
                     <div
                       className="col"
                     >
+                      <RouteTracker>
+                        <Route
+                          component={[Function]}
+                        >
+                          <GARoute
+                            history={
+                              Object {
+                                "action": "POP",
+                                "block": [Function],
+                                "createHref": [Function],
+                                "go": [Function],
+                                "goBack": [Function],
+                                "goForward": [Function],
+                                "length": 1,
+                                "listen": [Function],
+                                "location": Object {
+                                  "hash": "",
+                                  "pathname": "/",
+                                  "search": "",
+                                  "state": undefined,
+                                },
+                                "push": [Function],
+                                "replace": [Function],
+                              }
+                            }
+                            location={
+                              Object {
+                                "hash": "",
+                                "pathname": "/",
+                                "search": "",
+                                "state": undefined,
+                              }
+                            }
+                            match={
+                              Object {
+                                "isExact": true,
+                                "params": Object {},
+                                "path": "/",
+                                "url": "/",
+                              }
+                            }
+                          />
+                        </Route>
+                      </RouteTracker>
                       <Switch>
                         <Connect(PrivateRoute)
                           component={[Function]}
@@ -915,7 +961,7 @@ exports[`App renders App correctly 1`] = `
                               path="/"
                               render={[Function]}
                             >
-                              <WithGATrackerHOC
+                              <Home
                                 computedMatch={
                                   Object {
                                     "isExact": true,
@@ -964,249 +1010,199 @@ exports[`App renders App correctly 1`] = `
                                 }
                                 path="/"
                               >
-                                <Home
-                                  computedMatch={
-                                    Object {
-                                      "isExact": true,
-                                      "params": Object {},
-                                      "path": "/",
-                                      "url": "/",
-                                    }
-                                  }
-                                  dispatch={[Function]}
-                                  exact={true}
-                                  history={
-                                    Object {
-                                      "action": "POP",
-                                      "block": [Function],
-                                      "createHref": [Function],
-                                      "go": [Function],
-                                      "goBack": [Function],
-                                      "goForward": [Function],
-                                      "length": 1,
-                                      "listen": [Function],
-                                      "location": Object {
-                                        "hash": "",
-                                        "pathname": "/",
-                                        "search": "",
-                                        "state": undefined,
-                                      },
-                                      "push": [Function],
-                                      "replace": [Function],
-                                    }
-                                  }
-                                  location={
-                                    Object {
-                                      "hash": "",
-                                      "pathname": "/",
-                                      "search": "",
-                                      "state": undefined,
-                                    }
-                                  }
-                                  match={
-                                    Object {
-                                      "isExact": true,
-                                      "params": Object {},
-                                      "path": "/",
-                                      "url": "/",
-                                    }
-                                  }
-                                  path="/"
+                                <div
+                                  className="text-center"
                                 >
-                                  <div
-                                    className="text-center"
+                                  <HelmetWrapper
+                                    defer={true}
+                                    encodeSpecialCharacters={true}
                                   >
-                                    <HelmetWrapper
+                                    <SideEffect(NullComponent)
                                       defer={true}
                                       encodeSpecialCharacters={true}
+                                      title="Home page"
+                                      titleAttributes={Object {}}
                                     >
-                                      <SideEffect(NullComponent)
+                                      <NullComponent
                                         defer={true}
                                         encodeSpecialCharacters={true}
                                         title="Home page"
                                         titleAttributes={Object {}}
-                                      >
-                                        <NullComponent
-                                          defer={true}
-                                          encodeSpecialCharacters={true}
-                                          title="Home page"
-                                          titleAttributes={Object {}}
-                                        />
-                                      </SideEffect(NullComponent)>
-                                    </HelmetWrapper>
-                                    <Row
-                                      className="welcome-box"
-                                      tag="div"
+                                      />
+                                    </SideEffect(NullComponent)>
+                                  </HelmetWrapper>
+                                  <Row
+                                    className="welcome-box"
+                                    tag="div"
+                                  >
+                                    <div
+                                      className="welcome-box row"
                                     >
-                                      <div
-                                        className="welcome-box row"
+                                      <Col
+                                        tag="div"
+                                        widths={
+                                          Array [
+                                            "xs",
+                                            "sm",
+                                            "md",
+                                            "lg",
+                                            "xl",
+                                          ]
+                                        }
                                       >
-                                        <Col
-                                          tag="div"
-                                          widths={
-                                            Array [
-                                              "xs",
-                                              "sm",
-                                              "md",
-                                              "lg",
-                                              "xl",
-                                            ]
-                                          }
+                                        <div
+                                          className="col"
                                         >
-                                          <div
-                                            className="col"
-                                          >
-                                            <h3>
-                                              Welcome to Reveal
-                                            </h3>
-                                            <p>
-                                              Get started by selecting an intervention below
-                                            </p>
-                                          </div>
-                                        </Col>
-                                      </div>
-                                    </Row>
-                                    <Row
-                                      className="intervention-box"
-                                      tag="div"
+                                          <h3>
+                                            Welcome to Reveal
+                                          </h3>
+                                          <p>
+                                            Get started by selecting an intervention below
+                                          </p>
+                                        </div>
+                                      </Col>
+                                    </div>
+                                  </Row>
+                                  <Row
+                                    className="intervention-box"
+                                    tag="div"
+                                  >
+                                    <div
+                                      className="intervention-box row"
                                     >
-                                      <div
-                                        className="intervention-box row"
+                                      <Col
+                                        md="6"
+                                        tag="div"
+                                        widths={
+                                          Array [
+                                            "xs",
+                                            "sm",
+                                            "md",
+                                            "lg",
+                                            "xl",
+                                          ]
+                                        }
                                       >
-                                        <Col
-                                          md="6"
-                                          tag="div"
-                                          widths={
-                                            Array [
-                                              "xs",
-                                              "sm",
-                                              "md",
-                                              "lg",
-                                              "xl",
-                                            ]
-                                          }
+                                        <div
+                                          className="col-md-6"
                                         >
-                                          <div
-                                            className="col-md-6"
+                                          <Link
+                                            className="home-link"
+                                            replace={false}
+                                            to="/intervention/irs"
                                           >
-                                            <Link
+                                            <a
                                               className="home-link"
-                                              replace={false}
-                                              to="/intervention/irs"
+                                              href="/intervention/irs"
+                                              onClick={[Function]}
                                             >
-                                              <a
-                                                className="home-link"
-                                                href="/intervention/irs"
-                                                onClick={[Function]}
+                                              <Button
+                                                className="btn-intervention btn-lg btn-block btn-outline-green"
+                                                color="outline"
+                                                tag="button"
                                               >
-                                                <Button
-                                                  className="btn-intervention btn-lg btn-block btn-outline-green"
-                                                  color="outline"
-                                                  tag="button"
+                                                <button
+                                                  aria-label={null}
+                                                  className="btn-intervention btn-lg btn-block btn-outline-green btn btn-outline"
+                                                  onClick={[Function]}
                                                 >
-                                                  <button
-                                                    aria-label={null}
-                                                    className="btn-intervention btn-lg btn-block btn-outline-green btn btn-outline"
-                                                    onClick={[Function]}
-                                                  >
-                                                    IRS
-                                                  </button>
-                                                </Button>
-                                              </a>
-                                            </Link>
-                                          </div>
-                                        </Col>
-                                        <Col
-                                          md="6"
-                                          tag="div"
-                                          widths={
-                                            Array [
-                                              "xs",
-                                              "sm",
-                                              "md",
-                                              "lg",
-                                              "xl",
-                                            ]
-                                          }
+                                                  IRS
+                                                </button>
+                                              </Button>
+                                            </a>
+                                          </Link>
+                                        </div>
+                                      </Col>
+                                      <Col
+                                        md="6"
+                                        tag="div"
+                                        widths={
+                                          Array [
+                                            "xs",
+                                            "sm",
+                                            "md",
+                                            "lg",
+                                            "xl",
+                                          ]
+                                        }
+                                      >
+                                        <div
+                                          className="col-md-6"
                                         >
-                                          <div
-                                            className="col-md-6"
+                                          <Link
+                                            className="home-link"
+                                            replace={false}
+                                            to="/focus-investigation"
                                           >
-                                            <Link
+                                            <a
                                               className="home-link"
-                                              replace={false}
-                                              to="/focus-investigation"
+                                              href="/focus-investigation"
+                                              onClick={[Function]}
                                             >
-                                              <a
-                                                className="home-link"
-                                                href="/focus-investigation"
-                                                onClick={[Function]}
+                                              <Button
+                                                className="btn-intervention btn-lg btn-block btn-outline-green"
+                                                color="outline"
+                                                tag="button"
                                               >
-                                                <Button
-                                                  className="btn-intervention btn-lg btn-block btn-outline-green"
-                                                  color="outline"
-                                                  tag="button"
+                                                <button
+                                                  aria-label={null}
+                                                  className="btn-intervention btn-lg btn-block btn-outline-green btn btn-outline"
+                                                  onClick={[Function]}
                                                 >
-                                                  <button
-                                                    aria-label={null}
-                                                    className="btn-intervention btn-lg btn-block btn-outline-green btn btn-outline"
-                                                    onClick={[Function]}
-                                                  >
-                                                    Focus Investigation
-                                                  </button>
-                                                </Button>
-                                              </a>
-                                            </Link>
-                                          </div>
-                                        </Col>
-                                        <Col
-                                          md="6"
-                                          tag="div"
-                                          widths={
-                                            Array [
-                                              "xs",
-                                              "sm",
-                                              "md",
-                                              "lg",
-                                              "xl",
-                                            ]
-                                          }
+                                                  Focus Investigation
+                                                </button>
+                                              </Button>
+                                            </a>
+                                          </Link>
+                                        </div>
+                                      </Col>
+                                      <Col
+                                        md="6"
+                                        tag="div"
+                                        widths={
+                                          Array [
+                                            "xs",
+                                            "sm",
+                                            "md",
+                                            "lg",
+                                            "xl",
+                                          ]
+                                        }
+                                      >
+                                        <div
+                                          className="col-md-6"
                                         >
-                                          <div
-                                            className="col-md-6"
+                                          <Link
+                                            className="home-link"
+                                            replace={false}
+                                            to="/teams"
                                           >
-                                            <Link
+                                            <a
                                               className="home-link"
-                                              replace={false}
-                                              to="/teams"
+                                              href="/teams"
+                                              onClick={[Function]}
                                             >
-                                              <a
-                                                className="home-link"
-                                                href="/teams"
-                                                onClick={[Function]}
+                                              <Button
+                                                className="btn-intervention btn-lg btn-block btn-outline-green"
+                                                color="outline"
+                                                tag="button"
                                               >
-                                                <Button
-                                                  className="btn-intervention btn-lg btn-block btn-outline-green"
-                                                  color="outline"
-                                                  tag="button"
+                                                <button
+                                                  aria-label={null}
+                                                  className="btn-intervention btn-lg btn-block btn-outline-green btn btn-outline"
+                                                  onClick={[Function]}
                                                 >
-                                                  <button
-                                                    aria-label={null}
-                                                    className="btn-intervention btn-lg btn-block btn-outline-green btn btn-outline"
-                                                    onClick={[Function]}
-                                                  >
-                                                    Teams
-                                                  </button>
-                                                </Button>
-                                              </a>
-                                            </Link>
-                                          </div>
-                                        </Col>
-                                      </div>
-                                    </Row>
-                                  </div>
-                                </Home>
-                              </WithGATrackerHOC>
+                                                  Teams
+                                                </button>
+                                              </Button>
+                                            </a>
+                                          </Link>
+                                        </div>
+                                      </Col>
+                                    </div>
+                                  </Row>
+                                </div>
+                              </Home>
                             </Route>
                           </PrivateRoute>
                         </Connect(PrivateRoute)>

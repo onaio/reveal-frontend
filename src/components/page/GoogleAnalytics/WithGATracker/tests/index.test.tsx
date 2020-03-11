@@ -13,15 +13,15 @@ import {
   TrackingOptions,
   trackPage,
 } from '..';
-import App from '../../../../App/App';
-import { NEW_IRS_PLAN_URL, PLAN_LIST_URL } from '../../../../constants';
-import store from '../../../../store';
+import App, { AppProps } from '../../../../../App/App';
+import { GA_WITH_TRACKER, NEW_IRS_PLAN_URL, PLAN_LIST_URL } from '../../../../../constants';
+import store from '../../../../../store';
 
-jest.mock('../../../../configs/env');
+jest.mock('../../../../../configs/env');
 
 const history = createBrowserHistory();
 
-describe('components/WithGATracker', () => {
+describe('components/GoogleAnalytics/WithGATracker', () => {
   beforeEach(() => {
     jest.resetAllMocks();
     store.dispatch(
@@ -47,6 +47,9 @@ describe('components/WithGATracker', () => {
       )
     );
   });
+  const props: AppProps = {
+    ga_tracking_method: GA_WITH_TRACKER,
+  };
 
   it('gets and sets the username dimension', () => {
     expect(getGAusername()).toBe('');
@@ -58,7 +61,7 @@ describe('components/WithGATracker', () => {
     const wrapper = mount(
       <Provider store={store}>
         <ConnectedRouter history={history}>
-          <App />
+          <App {...props} />
         </ConnectedRouter>
       </Provider>
     );
@@ -81,7 +84,7 @@ describe('components/WithGATracker', () => {
     const wrapper = mount(
       <Provider store={store}>
         <ConnectedRouter history={history}>
-          <App />
+          <App {...props} />
         </ConnectedRouter>
       </Provider>
     );

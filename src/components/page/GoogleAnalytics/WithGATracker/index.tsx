@@ -3,11 +3,11 @@ import { getUser, User } from '@onaio/session-reducer';
 import React, { Component } from 'react';
 import GoogleAnalytics from 'react-ga';
 import { RouteComponentProps } from 'react-router';
-import * as env from '../../../configs/env';
-import { ConnectedFlexComponent, FlexComponent } from '../../../configs/types';
-import { GA_ENV_TEST } from '../../../constants';
-import { RouteParams } from '../../../helpers/utils';
-import store from '../../../store';
+import * as env from '../../../../configs/env';
+import { ConnectedFlexComponent, FlexComponent } from '../../../../configs/types';
+import { GA_ENV_TEST } from '../../../../constants';
+import { RouteParams } from '../../../../helpers/utils';
+import store from '../../../../store';
 
 type Props = RouteComponentProps<RouteParams>;
 let username = (getUser(store.getState()) || {}).username || '';
