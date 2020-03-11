@@ -91,12 +91,21 @@ export const removeAssignmentsAction: RemoveAssignmentsAction = {
  * @returns {FetchAssignmentsAction} - action with assignments payload that is added to store
  */
 export const fetchAssignments = (assignmentsList: Assignment[]): FetchAssignmentsAction => {
-  const assignmentsByPlanId: AssignmentsByPlanId = {};
+  // const assignmentsByPlanId: AssignmentsByPlanId = {};
+  const defaultArrayAssignmentHandler: ProxyHandler<object> = {
+    get: (target: any, plan: any) => {
+      return plan in target ? target : (target[plan] = []);
+    },
+  };
 
+  let assignmentsByPlanId: any = {};
+  // new Proxy({}, defaultArrayAssignment);
+  assignmentsByPlanId = new Proxy(assignmentsByPlanId, defaultArrayAssignmentHandler);
   for (const assignment of assignmentsList) {
-    if (!(assignment.plan in assignmentsByPlanId)) {
-      assignmentsByPlanId[assignment.plan] = [];
-    }
+    // if (!(assignment.plan in assignmentsByPlanId)) {
+    //   assignmentsByPlanId[assignment.plan] = [];
+    // }
+    // assignmentsByPlanId = { ...assignmentsByPlanId };
     assignmentsByPlanId[assignment.plan].push(assignment);
   }
 
