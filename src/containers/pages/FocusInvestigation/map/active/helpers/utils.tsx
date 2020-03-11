@@ -8,7 +8,7 @@ import {
   SUPERSET_STRUCTURES_SLICE,
   SUPERSET_TASKS_SLICE,
 } from '../../../../../../configs/env';
-import { AN_ERROR_OCCURED } from '../../../../../../configs/lang';
+import { AN_ERROR_OCCURRED } from '../../../../../../configs/lang';
 import { CASE_CLASSIFICATION_LABEL, END_DATE, START_DATE } from '../../../../../../configs/lang';
 import { JURISDICTION_ID, PLAN_ID } from '../../../../../../constants';
 import { ROUTINE } from '../../../../../../constants';
@@ -20,10 +20,11 @@ import { fetchJurisdictions, Jurisdiction } from '../../../../../../store/ducks/
 import { fetchPlans, Plan } from '../../../../../../store/ducks/plans';
 import { setStructures, Structure } from '../../../../../../store/ducks/structures';
 import { fetchTasks, Task } from '../../../../../../store/ducks/tasks';
+
 /**
  * Fetch data for the plan
  * @param fetchGoalsActionCreator Fetch goals action creator
- * @param fetchJurisdictionsActionCreator Fetch jurisdication action creator
+ * @param fetchJurisdictionsActionCreator Fetch jurisdiction action creator
  * @param fetchPlansActionCreator Fetch plans action creator
  * @param fetchStructuresActionCreator Fetch structures action creator
  * @param fetchTasksActionCreator Fetch tasks action creator
@@ -49,7 +50,7 @@ export const fetchData = async (
         if (result) {
           fetchJurisdictionsActionCreator(result);
         } else {
-          displayError(new Error(AN_ERROR_OCCURED));
+          displayError(new Error(AN_ERROR_OCCURRED));
         }
       })
       .catch(error => {
@@ -71,7 +72,7 @@ export const fetchData = async (
         if (structuresResults) {
           fetchStructuresActionCreator(structuresResults);
         } else {
-          displayError(new Error(AN_ERROR_OCCURED));
+          displayError(new Error(AN_ERROR_OCCURRED));
         }
       })
       .catch(error => {
@@ -82,7 +83,7 @@ export const fetchData = async (
         if (result2) {
           fetchPlansActionCreator(result2);
         } else {
-          displayError(new Error(AN_ERROR_OCCURED));
+          displayError(new Error(AN_ERROR_OCCURRED));
         }
       })
       .catch(error => {
@@ -93,7 +94,7 @@ export const fetchData = async (
         if (result3) {
           fetchGoalsActionCreator(result3);
         } else {
-          displayError(new Error(AN_ERROR_OCCURED));
+          displayError(new Error(AN_ERROR_OCCURRED));
         }
       })
       .catch(error => {
@@ -104,7 +105,7 @@ export const fetchData = async (
         if (result4) {
           fetchTasksActionCreator(result4);
         } else {
-          displayError(new Error(AN_ERROR_OCCURED));
+          displayError(new Error(AN_ERROR_OCCURRED));
         }
       })
       .catch(error => {

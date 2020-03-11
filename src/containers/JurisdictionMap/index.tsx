@@ -1,3 +1,4 @@
+import { SingleObject } from '@onaio/cbv';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset from '@onaio/superset-connector';
 import React, { useEffect, useState } from 'react';
@@ -6,7 +7,6 @@ import Loading from '../../components/page/Loading';
 import { SUPERSET_JURISDICTIONS_SLICE } from '../../configs/env';
 import { AN_ERROR_OCCURRED, JURISDICTION_LOADING_ERROR } from '../../configs/lang';
 import { JURISDICTION_ID, MAP_AREA, TWO_HUNDRED_PX } from '../../constants';
-import { SingleObject } from '../../helpers/CBV';
 import { displayError } from '../../helpers/errors';
 import supersetFetch from '../../services/superset';
 import jurisdictionReducer, {
