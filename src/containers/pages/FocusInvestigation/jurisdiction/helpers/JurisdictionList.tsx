@@ -1,6 +1,6 @@
+import { ObjectList } from '@onaio/cbv';
 import { Registry } from '@onaio/redux-reducer-registry';
 import { FIReasons } from '../../../../../configs/settings';
-import { ObjectList } from '../../../../../helpers/CBV';
 import {
   InterventionType,
   makePlansArraySelector,
