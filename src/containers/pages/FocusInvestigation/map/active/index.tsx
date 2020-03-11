@@ -16,11 +16,11 @@ import Loading from '../../../../../components/page/Loading';
 import SelectComponent from '../../../../../components/SelectPlan/';
 import { SUPERSET_PLANS_SLICE } from '../../../../../configs/env';
 import {
-  AN_ERROR_OCCURED,
   FOCUS_INVESTIGATION,
   FOCUS_INVESTIGATIONS,
   HOME,
   INVESTIGATION,
+  JURISDICTION_LOADING_ERROR,
   MEASURE,
   NUMERATOR_OF_DENOMINATOR_UNITS,
   PLAN_SELECT_PLACEHOLDER,
@@ -157,7 +157,7 @@ const SingleActiveFIMap = (props: MapSingleFIProps & RouteComponentProps<RoutePa
           if (result) {
             fetchPlansActionCreator(result);
           } else {
-            displayError(new Error(AN_ERROR_OCCURED));
+            displayError(new Error(JURISDICTION_LOADING_ERROR));
           }
         })
         .catch((error: Error) => displayError(error));

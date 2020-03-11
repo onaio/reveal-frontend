@@ -1,0 +1,50 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`src/containers/pages/interventionPlan/NewPlan/JurisdictionDetials renders correctly when jurisdiction is falsey: null JurisdictionDetails 1`] = `
+<JurisdictionDetails
+  planFormJurisdiction={
+    Object {
+      "id": "",
+      "name": "",
+    }
+  }
+/>
+`;
+
+exports[`src/containers/pages/interventionPlan/NewPlan/JurisdictionDetials renders correctly: Card body 1`] = `
+<CardBody
+  tag="div"
+>
+  <div
+    className="card-body"
+  >
+    <Link
+      replace={false}
+      to="/focus-investigation/view/1337"
+    >
+      <a
+        href="/focus-investigation/view/1337"
+        onClick={[Function]}
+      >
+        Focus Investigations in Kilimani 89
+      </a>
+    </Link>
+  </div>
+</CardBody>
+`;
+
+exports[`src/containers/pages/interventionPlan/NewPlan/JurisdictionDetials renders correctly: Card header 1`] = `
+<div
+  className="card-header"
+  onClick={[Function]}
+  style={
+    Object {
+      "cursor": "pointer",
+    }
+  }
+>
+  <h5>
+    Jurisdiction
+  </h5>
+</div>
+`;

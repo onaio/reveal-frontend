@@ -307,7 +307,7 @@ class ActiveFocusInvestigation extends React.Component<
                           {cell.original.focusArea.trim() && cell.value}
                           &nbsp;&nbsp;
                           {cell.original.focusArea.trim() && (
-                            <Link to={`${FI_SINGLE_URL}/${cell.original.id}`}>
+                            <Link to={`${FI_SINGLE_URL}/${cell.original.jurisdiction_id}`}>
                               <FontAwesomeIcon icon={['fas', 'external-link-square-alt']} />
                             </Link>
                           )}

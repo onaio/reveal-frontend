@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser';
 import express from 'express';
 import session from 'express-session';
 import helmet from 'helmet';
+import { trimStart } from 'lodash';
 import path from 'path';
 import querystring from 'querystring';
 import request from 'request';
@@ -28,7 +29,6 @@ import {
   EXPRESS_SESSION_PATH,
   EXPRESS_SESSION_SECRET,
 } from './configs/envs';
-import { trimStart } from './utils';
 
 const opensrpAuth = new ClientOAuth2({
   accessTokenUri: EXPRESS_OPENSRP_ACCESS_TOKEN_URL,
