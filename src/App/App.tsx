@@ -361,11 +361,6 @@ class App extends Component {
                     />
                   )}
                 />
-                {/* <Route
-                  exact={true}
-                  path={REACT_LOGIN_URL}
-                  render={routeProps => ( <OauthLogin  providers={providers} {...routeProps} />  )}
-                /> */}
                 <Route
                   exact={true}
                   path={APP_CALLBACK_PATH}
@@ -383,18 +378,6 @@ class App extends Component {
                     );
                   }}
                 />
-                {/* <Route
-                  exact={true}
-                  path="/oauth/callback/:id"
-                  render={routeProps => (
-                    <ConnectedOauthCallback
-                      LoadingComponent={Loading}
-                      providers={providers}
-                      oAuthUserInfoGetter={oAuthUserInfoGetter}
-                      {...routeProps}
-                    />
-                  )}
-                /> */}
                 {/* tslint:enable jsx-no-lambda */}
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
