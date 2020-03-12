@@ -3,6 +3,7 @@ import { get } from 'lodash';
 import { Store } from 'redux';
 import { AnyAction } from 'redux';
 import SeamlessImmutable from 'seamless-immutable';
+import { FlexObject } from '../../../../helpers/utils';
 
 /** The reducer name */
 export const reducerName = 'assignments';
@@ -93,22 +94,26 @@ export const removeAssignmentsAction: RemoveAssignmentsAction = {
 export const fetchAssignments = (assignmentsList: Assignment[]): FetchAssignmentsAction => {
   // const assignmentsByPlanId: AssignmentsByPlanId = {};
   const defaultArrayAssignmentHandler: ProxyHandler<object> = {
-    get: (target: any, plan: any) => {
-      return plan in target ? target : (target[plan] = []);
+    get: (target: FlexObject, plan: string) => {
+      if (plan in target) {
+        return target;
+      } else {
+        target[plan] = [];
+        return { ...target };
+      }
     },
   };
 
-  let assignmentsByPlanId: any = {};
+  let assignmentsByPlanId: AssignmentsByPlanId = {};
   // new Proxy({}, defaultArrayAssignment);
-  assignmentsByPlanId = new Proxy(assignmentsByPlanId, defaultArrayAssignmentHandler);
+  const assignmentsByPlanIdProxy: ProxyConstructor = new Proxy(
+    assignmentsByPlanId,
+    defaultArrayAssignmentHandler
+  );
   for (const assignment of assignmentsList) {
-    // if (!(assignment.plan in assignmentsByPlanId)) {
-    //   assignmentsByPlanId[assignment.plan] = [];
-    // }
-    // assignmentsByPlanId = { ...assignmentsByPlanId };
+    assignmentsByPlanId = assignmentsByPlanIdProxy[assignment.plan];
     assignmentsByPlanId[assignment.plan].push(assignment);
   }
-
   return {
     assignmentsByPlanId,
     type: ASSIGNMENTS_FETCHED,
