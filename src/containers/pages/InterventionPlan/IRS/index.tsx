@@ -8,7 +8,7 @@ import { Button } from 'reactstrap';
 import { Store } from 'redux';
 
 import DrillDownTable from '@onaio/drill-down-table';
-import reducerRegistry from '@onaio/redux-reducer-registry';
+import reducerRegistry, { Registry } from '@onaio/redux-reducer-registry';
 import superset from '@onaio/superset-connector';
 
 import {
@@ -30,6 +30,7 @@ import {
   INTERVENTION_IRS_URL,
   NEW,
   PLAN,
+  PLAN_RECORD_BY_ID,
   REPORT,
 } from '../../../../constants';
 
@@ -40,9 +41,9 @@ import plansReducer, {
   extractPlanRecordResponseFromPlanPayload,
   fetchPlanRecords,
   fetchPlans,
-  getPlanRecordsArray,
   getPlansArray,
   InterventionType,
+  makePlansArraySelector,
   Plan,
   PlanPayload,
   PlanRecord,
@@ -85,6 +86,9 @@ export const defaultIrsPlansProps: IrsPlansProps = {
   pageTitle: '',
   plansArray: [],
 };
+
+/** Plans filter selector */
+const plansArraySelector = makePlansArraySelector(PLAN_RECORD_BY_ID);
 
 /** IrsPlans - component for IRS Plans page */
 class IrsPlans extends React.Component<IrsPlansProps & RouteComponentProps<RouteParams>, {}> {
@@ -243,7 +247,10 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
   const isDraftsList = ownProps.path === INTERVENTION_IRS_DRAFTS_URL;
   const planStatus = [PlanStatus.DRAFT];
   const pageTitle = `${IRS_PLANS}${isDraftsList ? ` ${DRAFTS_PARENTHESIS}` : ''}`;
-  const plansRecordsArray = getPlanRecordsArray(state, InterventionType.IRS, planStatus);
+  const plansRecordsArray = plansArraySelector(state as Registry, {
+    interventionType: InterventionType.IRS,
+    statusList: planStatus,
+  });
   const plansArray = getPlansArray(state, InterventionType.IRS, planStatus);
 
   const props = {

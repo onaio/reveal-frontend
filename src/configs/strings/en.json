@@ -135,7 +135,7 @@
     "message": "Could not load the map",
     "description": "error promt: warns user map won't load"
   },
-  "AN_ERROR_OCCURED": {
+  "AN_ERROR_OCCURRED": {
     "message": "An Error Ocurred",
     "description": "error prompt: a general warning that something went wrong"
   },
@@ -843,6 +843,10 @@
     "message": "Team Name",
     "description": "Organization list column header"
   },
+  "WELCOME_BACK": {
+    "message": "Welcome back",
+    "description": "prompt after a user has logged in"
+  },
   "IRS_GREEN_THRESHOLD": {
     "message": "Green",
     "description": "IRS legend color green"
@@ -866,6 +870,10 @@
   "LINK": {
     "message": "Link",
     "description": "URL leading to another page"
+  },
+  "JURISDICTION_LOADING_ERROR": {
+    "message": "An error prevented this jurisdiction from loading.",
+    "description": "Error message displayed when jurisdiction cannot be displayed correctly"
   },
   "FOCI_OF_RESIDENCE": {
     "message": "Foci of Residence",

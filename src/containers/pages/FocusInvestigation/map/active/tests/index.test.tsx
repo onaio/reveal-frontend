@@ -10,6 +10,7 @@ import { Router } from 'react-router';
 import SelectComponent from '../../../../../../components/SelectPlan';
 import { FIReasons } from '../../../../../../configs/settings';
 import { FI_SINGLE_URL } from '../../../../../../constants';
+import * as helperErrors from '../../../../../../helpers/errors';
 import { wrapFeatureCollection } from '../../../../../../helpers/utils';
 import store from '../../../../../../store';
 import * as goalDucks from '../../../../../../store/ducks/goals';
@@ -19,7 +20,8 @@ import * as structureDucks from '../../../../../../store/ducks/structures';
 import * as tasksDucks from '../../../../../../store/ducks/tasks';
 import * as fixtures from '../../../../../../store/ducks/tests/fixtures';
 import ConnectedMapSingleFI, { MapSingleFIProps, SingleActiveFIMap } from '../../active/';
-import { existingState } from './fixtures';
+import { buildHandlers, fetchData } from '../helpers/utils';
+import * as fixturesMap from './fixtures';
 
 jest.mock('../../../../../../components/GisidaWrapper', () => {
   const GisidaWrapperMock = () => <div>I love oov</div>;
@@ -35,6 +37,15 @@ const { fetchTasks } = tasksDucks;
 describe('containers/pages/FocusInvestigation/activeMap', () => {
   beforeEach(() => {
     jest.resetAllMocks();
+    store.dispatch(goalDucks.removeGoalsAction);
+    store.dispatch(jurisdictionDucks.removeJurisdictionsAction);
+    store.dispatch(planDucks.removePlansAction);
+    store.dispatch(structureDucks.removeStructuresAction);
+    store.dispatch(tasksDucks.removeTasksAction);
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
   it('renders without crashing', () => {
@@ -271,6 +282,319 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
     wrapper.unmount();
   });
 
+  it('renders correctly when state is empty or page is refreshed', async () => {
+    const supersetServiceMock: any = jest.fn(async () => []);
+    const props = {
+      match: {
+        isExact: true,
+        params: { id: fixtures.plan1.id },
+      },
+      plan: null,
+      supersetService: supersetServiceMock,
+    };
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedMapSingleFI {...props} />
+        </Router>
+      </Provider>
+    );
+    await new Promise<unknown>(resolve => setImmediate(resolve));
+    expect(supersetServiceMock.mock.calls.length).toEqual(1);
+    wrapper.unmount();
+  });
+
+  it('renders correctly when state is not empty', async () => {
+    const supersetServiceMock: any = jest.fn(async () => []);
+    store.dispatch(fetchGoals([fixtures.goal3 as goalDucks.Goal]));
+    store.dispatch(fetchJurisdictions([fixtures.jurisdictions[0]]));
+    store.dispatch(fetchPlans([fixtures.plan1]));
+    store.dispatch(fetchTasks(fixtures.tasks));
+    const props = {
+      match: {
+        isExact: true,
+        params: { id: fixtures.plan1.id },
+      },
+      supersetService: supersetServiceMock,
+    };
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedMapSingleFI {...props} />
+        </Router>
+      </Provider>
+    );
+    await new Promise<unknown>(resolve => setImmediate(resolve));
+    expect(supersetServiceMock.mock.calls.length).toEqual(5);
+    wrapper.unmount();
+  });
+
+  it('displays the correct badge and mark complete when plan status is active', () => {
+    const mock: any = jest.fn();
+    const supersetServiceMock: any = jest.fn(async () => []);
+    const props = {
+      currentGoal: fixtures.goal3.goal_id,
+      goals: [fixtures.goal3 as goalDucks.Goal],
+      history,
+      jurisdiction: fixtures.jurisdictions[0],
+      location: mock,
+      match: {
+        isExact: true,
+        params: { id: fixtures.plan1.id },
+        path: `${FI_SINGLE_URL}/:id`,
+        url: `${FI_SINGLE_URL}/13`,
+      },
+      plan: fixtures.plan1,
+      pointFeatureCollection: wrapFeatureCollection([fixtures.coloredTasks.task3.geojson]),
+      polygonFeatureCollection: wrapFeatureCollection([fixtures.coloredTasks.task2.geojson]),
+      structures: wrapFeatureCollection([fixtures.structure1.geojson]),
+      supersetService: supersetServiceMock,
+    };
+    const wrapper = mount(
+      <Router history={history}>
+        <SingleActiveFIMap {...props} />
+      </Router>
+    );
+    expect(wrapper.find('Badge').prop('color')).toEqual('warning');
+    expect(toJson(wrapper.find('MarkCompleteLink'))).toMatchSnapshot('mark complete link');
+    wrapper.unmount();
+  });
+
+  it('displays the correct badge and mark complete link when the plan status is draft', () => {
+    const mock: any = jest.fn();
+    const supersetServiceMock: any = jest.fn(async () => []);
+    const props = {
+      currentGoal: fixtures.goal3.goal_id,
+      goals: [fixtures.goal3 as goalDucks.Goal],
+      history,
+      jurisdiction: fixtures.jurisdictions[0],
+      location: mock,
+      match: {
+        isExact: true,
+        params: { id: fixtures.draftPlan.id },
+        path: `${FI_SINGLE_URL}/:id`,
+        url: `${FI_SINGLE_URL}/13`,
+      },
+      plan: fixtures.draftPlan,
+      pointFeatureCollection: wrapFeatureCollection([fixtures.coloredTasks.task3.geojson]),
+      polygonFeatureCollection: wrapFeatureCollection([fixtures.coloredTasks.task2.geojson]),
+      structures: wrapFeatureCollection([fixtures.structure1.geojson]),
+      supersetService: supersetServiceMock,
+    };
+    const wrapper = mount(
+      <Router history={history}>
+        <SingleActiveFIMap {...props} />
+      </Router>
+    );
+    expect(wrapper.find('Badge').prop('color')).toEqual('warning');
+    expect(wrapper.find('MarkCompleteLink').isEmptyRender()).toBe(true);
+    wrapper.unmount();
+  });
+
+  it('displays the correct badge and mark complete link when the plan status is complete', () => {
+    const mock: any = jest.fn();
+    const supersetServiceMock: any = jest.fn(async () => []);
+    const props = {
+      currentGoal: fixtures.goal3.goal_id,
+      goals: [fixtures.goal3 as goalDucks.Goal],
+      history,
+      jurisdiction: fixtures.jurisdictions[0],
+      location: mock,
+      match: {
+        isExact: true,
+        params: { id: fixtures.completeRoutinePlan.id },
+        path: `${FI_SINGLE_URL}/:id`,
+        url: `${FI_SINGLE_URL}/13`,
+      },
+      plan: fixtures.completeRoutinePlan,
+      pointFeatureCollection: wrapFeatureCollection([fixtures.coloredTasks.task3.geojson]),
+      polygonFeatureCollection: wrapFeatureCollection([fixtures.coloredTasks.task2.geojson]),
+      structures: wrapFeatureCollection([fixtures.structure1.geojson]),
+      supersetService: supersetServiceMock,
+    };
+    const wrapper = mount(
+      <Router history={history}>
+        <SingleActiveFIMap {...props} />
+      </Router>
+    );
+    expect(wrapper.find('Badge').prop('color')).toEqual('success');
+    expect(wrapper.find('MarkCompleteLink').isEmptyRender()).toBe(true);
+    wrapper.unmount();
+  });
+
+  it('renders correct detail view when plan focus investigation reason is routine', () => {
+    const mock: any = jest.fn();
+    const supersetServiceMock: any = jest.fn(async () => []);
+    const props = {
+      currentGoal: fixtures.goal3.goal_id,
+      goals: [fixtures.goal3 as goalDucks.Goal],
+      history,
+      jurisdiction: fixtures.jurisdictions[0],
+      location: mock,
+      match: {
+        isExact: true,
+        params: { id: fixtures.completeRoutinePlan.id },
+        path: `${FI_SINGLE_URL}/:id`,
+        url: `${FI_SINGLE_URL}/13`,
+      },
+      plan: fixtures.completeRoutinePlan,
+      pointFeatureCollection: wrapFeatureCollection([fixtures.coloredTasks.task3.geojson]),
+      polygonFeatureCollection: wrapFeatureCollection([fixtures.coloredTasks.task2.geojson]),
+      structures: wrapFeatureCollection([fixtures.structure1.geojson]),
+      supersetService: supersetServiceMock,
+    };
+    const wrapper = mount(
+      <Router history={history}>
+        <SingleActiveFIMap {...props} />
+      </Router>
+    );
+    expect(
+      toJson(
+        wrapper
+          .find('div.mapSidebar')
+          .find('div')
+          .at(1)
+      )
+    ).toMatchSnapshot('routine detail view');
+    wrapper.unmount();
+  });
+
+  it('renders correct detail view when plan focus investigation reason is case triggered', () => {
+    const mock: any = jest.fn();
+    const supersetServiceMock: any = jest.fn(async () => []);
+    const props = {
+      currentGoal: fixtures.goal3.goal_id,
+      goals: [fixtures.goal3 as goalDucks.Goal],
+      history,
+      jurisdiction: fixtures.jurisdictions[0],
+      location: mock,
+      match: {
+        isExact: true,
+        params: { id: fixtures.plan2.id },
+        path: `${FI_SINGLE_URL}/:id`,
+        url: `${FI_SINGLE_URL}/13`,
+      },
+      plan: fixtures.plan2,
+      pointFeatureCollection: wrapFeatureCollection([fixtures.coloredTasks.task3.geojson]),
+      polygonFeatureCollection: wrapFeatureCollection([fixtures.coloredTasks.task2.geojson]),
+      structures: wrapFeatureCollection([fixtures.structure1.geojson]),
+      supersetService: supersetServiceMock,
+    };
+    const wrapper = mount(
+      <Router history={history}>
+        <SingleActiveFIMap {...props} />
+      </Router>
+    );
+    expect(
+      toJson(
+        wrapper
+          .find('div.mapSidebar')
+          .find('div')
+          .at(1)
+      )
+    ).toMatchSnapshot('case triggered detail view');
+    wrapper.unmount();
+  });
+
+  it('should handle fetch data correctly', async () => {
+    const supersetServiceMock: any = jest.fn(async () => []);
+    const fetchGoalsActionsCreatorMock: any = jest.fn();
+    const fetchJurisdictionsActionCreatorMock: any = jest.fn();
+    const fetchPlansActionCreatorMock: any = jest.fn();
+    const fetchStructuresActionCreatorMock: any = jest.fn();
+    const fetchTasksActionCreatorMock: any = jest.fn();
+    const plan = fixtures.plan1;
+    void fetchData(
+      fetchGoalsActionsCreatorMock,
+      fetchJurisdictionsActionCreatorMock,
+      fetchPlansActionCreatorMock,
+      fetchStructuresActionCreatorMock,
+      fetchTasksActionCreatorMock,
+      plan,
+      supersetServiceMock
+    );
+    await new Promise<unknown>(resolve => setImmediate(resolve));
+    expect(supersetServiceMock.mock.calls.length).toBe(5);
+  });
+
+  it('should not fetch data if no plan id is provided', async () => {
+    const supersetServiceMock: any = jest.fn(async () => []);
+    const fetchGoalsActionsCreatorMock: any = jest.fn();
+    const fetchJurisdictionsActionCreatorMock: any = jest.fn();
+    const fetchPlansActionCreatorMock: any = jest.fn();
+    const fetchStructuresActionCreatorMock: any = jest.fn();
+    const fetchTasksActionCreatorMock: any = jest.fn();
+    void fetchData(
+      fetchGoalsActionsCreatorMock,
+      fetchJurisdictionsActionCreatorMock,
+      fetchPlansActionCreatorMock,
+      fetchStructuresActionCreatorMock,
+      fetchTasksActionCreatorMock,
+      {} as planDucks.Plan,
+      supersetServiceMock
+    );
+    await new Promise<unknown>(resolve => setImmediate(resolve));
+    expect(supersetServiceMock.mock.calls.length).toBe(0);
+  });
+
+  it('should provide the correct build handlers for the map', () => {
+    expect(JSON.stringify(buildHandlers(jest.fn()))).toEqual(
+      JSON.stringify(fixturesMap.buildHandlers)
+    );
+  });
+
+  it('should display an error if fetch data result is falsy', async () => {
+    const supersetServiceMock: any = jest.fn(async () => null);
+    const displayErrorMock = jest.spyOn(helperErrors, 'displayError');
+    const fetchGoalsActionsCreatorMock: any = jest.fn();
+    const fetchJurisdictionsActionCreatorMock: any = jest.fn();
+    const fetchPlansActionCreatorMock: any = jest.fn();
+    const fetchStructuresActionCreatorMock: any = jest.fn();
+    const fetchTasksActionCreatorMock: any = jest.fn();
+    const plan = fixtures.plan1;
+    void fetchData(
+      fetchGoalsActionsCreatorMock,
+      fetchJurisdictionsActionCreatorMock,
+      fetchPlansActionCreatorMock,
+      fetchStructuresActionCreatorMock,
+      fetchTasksActionCreatorMock,
+      plan,
+      supersetServiceMock
+    );
+    await new Promise<unknown>(resolve => setImmediate(resolve));
+    expect(displayErrorMock.mock.calls.length).toBe(5);
+  });
+
+  it('handles errors correctly when fetching data', async () => {
+    const supersetServiceMock: any = jest.fn(() => Promise.reject('error'));
+    const displayErrorMock = jest.spyOn(helperErrors, 'displayError');
+    store.dispatch(fetchGoals([fixtures.goal3 as goalDucks.Goal]));
+    store.dispatch(fetchJurisdictions([fixtures.jurisdictions[0]]));
+    store.dispatch(fetchPlans([fixtures.plan1]));
+    store.dispatch(fetchTasks(fixtures.tasks));
+    const props = {
+      match: {
+        isExact: true,
+        params: { id: fixtures.plan1.id },
+      },
+      supersetService: supersetServiceMock,
+    };
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedMapSingleFI {...props} />
+        </Router>
+      </Provider>
+    );
+    await new Promise<unknown>(resolve => setImmediate(resolve));
+    expect(displayErrorMock.mock.calls.length).toBe(1);
+    wrapper.unmount();
+  });
+
+  /**
+   * @todo Investigate why this test case that contains jest.spyon is leading to failure of other tests
+   * above. It is intentionally put at the end to eliminate this
+   */
   it('selectors get called with correct arguments', () => {
     // spy on the selectors
     const getPlansArrayMock = jest.spyOn(planDucks, 'getPlansArray');
@@ -309,36 +633,38 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
         </Router>
       </Provider>
     );
-    expect(getPlansArrayMock).toBeCalledTimes(FIReasons.length + 1);
 
     // define expected results
     const plansArrayExpected1 = [
-      existingState,
+      fixturesMap.existingState,
       'FI',
       ['active', 'complete'],
       FIReasons[0],
       ['450fc15b-5bd2-468a-927a-49cb10d3bcac'],
     ];
     const plansArrayExpected2 = [
-      existingState,
+      fixturesMap.existingState,
       'FI',
       ['active', 'complete'],
       'Case Triggered',
       ['450fc15b-5bd2-468a-927a-49cb10d3bcac'],
     ];
-    const planByIdExpected = [existingState, 'ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f'];
+    const planByIdExpected = [fixturesMap.existingState, 'ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f'];
     const goalPlanJurisdictionexpected = [
-      existingState,
+      fixturesMap.existingState,
       '10f9e9fa-ce34-4b27-a961-72fab5206ab6',
       '450fc15b-5bd2-468a-927a-49cb10d3bcac',
     ];
     const getPlansIdArrayExpected = [
-      existingState,
+      fixturesMap.existingState,
       'FI',
       [planDucks.PlanStatus.ACTIVE, planDucks.PlanStatus.DRAFT],
       null,
     ];
-    const jurisdictionIdExpected = [existingState, '450fc15b-5bd2-468a-927a-49cb10d3bcac'];
+    const jurisdictionIdExpected = [
+      fixturesMap.existingState,
+      '450fc15b-5bd2-468a-927a-49cb10d3bcac',
+    ];
 
     // perform the actual assertions
     expect(getPlansArrayMock.mock.calls[0]).toEqual(plansArrayExpected1);

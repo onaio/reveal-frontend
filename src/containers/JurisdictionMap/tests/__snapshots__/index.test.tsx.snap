@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`containers/JurisdictionMap renders fetch error correctly: jurisdiction error 1`] = `
+<div>
+  An error prevented this jurisdiction from loading.
+</div>
+`;
+
+exports[`containers/JurisdictionMap renders supersetService error correctly: supersetService error 1`] = `
+<div>
+  An error prevented this jurisdiction from loading.
+</div>
+`;

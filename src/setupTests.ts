@@ -31,3 +31,5 @@ window.maps = [
 (window.URL as any) = {
   createObjectURL: () => 'https://example.com',
 };
+
+window.__PRELOADED_STATE__ = { random: 'Preloaded state, baby!' };

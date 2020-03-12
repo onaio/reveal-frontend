@@ -63,6 +63,27 @@ export const draftPlan = {
   plan_title: 'A1-Tha Luang Village 1 Focus 01',
   plan_version: '1',
 };
+
+export const retiredPlan = {
+  id: 'draftPlan-id-2',
+  jurisdiction_depth: 41,
+  jurisdiction_id: '3380',
+  jurisdiction_name: 'TLv1_02',
+  jurisdiction_name_path: ['Canton Tha Luang', 'Tha Luang Village'],
+  jurisdiction_parent_id: '2977',
+  jurisdiction_path: ['2989', '2977'],
+  plan_date: '2019-06-18',
+  plan_effective_period_end: '2019-06-18',
+  plan_effective_period_start: '2019-07-31',
+  plan_fi_reason: 'Case Triggered' as FIReasonType,
+  plan_fi_status: 'A1' as FIStatusType,
+  plan_id: 'plan-id-2',
+  plan_intervention_type: InterventionType.IRS,
+  plan_status: PlanStatus.RETIRED,
+  plan_title: 'A1-Tha Luang Village 1 Focus 01',
+  plan_version: '1',
+};
+
 export const completeRoutinePlan = {
   id: 'completedRoutinePlan-id-2',
   jurisdiction_depth: 51,
@@ -78,7 +99,7 @@ export const completeRoutinePlan = {
   plan_fi_status: 'A1' as FIStatusType,
   plan_id: 'plan-id-2',
   plan_intervention_type: InterventionType.FI,
-  plan_status: 'complete',
+  plan_status: 'complete' as PlanStatus,
   plan_title: 'A1-Tha Luang Village 1 Focus 01',
   plan_version: '1',
 };
@@ -184,10 +205,10 @@ export const plan99 = {
   ],
   jurisdiction_parent_id: 'a14c6253-2d3d-4bcc-8c49-35f9e44c66e1',
   jurisdiction_path: [
-    '61707fc2 - c6ac - 4112 - a8d6 - 2a4861958396',
-    '8a8e4987- 95a9-4b2e - b746 - 3c9c3eec15c5',
-    '735a94f9 - 6ed2 - 4bcd - b242 - 8c2b5f714bee',
-    'a14c6253 - 2d3d - 4bcc - 8c49 - 35f9e44c66e1',
+    '61707fc2-c6ac-4112-a8d6-2a4861958396',
+    '8a8e4987-95a9-4b2e-b746-3c9c3eec15c5',
+    '735a94f9-6ed2-4bcd-b242-8c2b5f714bee',
+    'a14c6253-2d3d-4bcc-8c49-35f9e44c66e1',
   ],
   plan_date: '2019-07-03',
   plan_effective_period_end: '2019-07-30',
@@ -199,6 +220,35 @@ export const plan99 = {
   plan_name: 'A1-ThaSen8_01',
   plan_status: 'active',
   plan_title: 'A1 - Tha Sen 8- Focus 01',
+  plan_version: '1',
+};
+
+export const plan101 = {
+  ...plan99,
+  id: '236ca3fb-1b74-5028-a0c8-ab954bb28055',
+  plan_name: 'A1-ThaSen8_02',
+  plan_status: 'complete',
+  plan_title: 'A1 - Tha Sen 8- Focus 02',
+  plan_version: '1',
+};
+
+export const plan102 = {
+  ...plan99,
+  id: '236ca3fb-1b74-5028-a0c8-ab954bb28066',
+  plan_fi_reason: 'Routine' as FIReasonType,
+  plan_name: 'A1-ThaSen8_03',
+  plan_status: 'active',
+  plan_title: 'A1 - Tha Sen 8- Focus 03',
+  plan_version: '1',
+};
+
+export const plan103 = {
+  ...plan99,
+  id: '236ca3fb-1b74-5028-a0c8-ab954bb28077',
+  plan_fi_reason: 'Routine' as FIReasonType,
+  plan_name: 'A1-ThaSen8_04',
+  plan_status: 'complete',
+  plan_title: 'A1 - Tha Sen 8- Focus 04',
   plan_version: '1',
 };
 

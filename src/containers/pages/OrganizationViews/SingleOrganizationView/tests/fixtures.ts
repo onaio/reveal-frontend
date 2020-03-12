@@ -1,5 +1,5 @@
 export const selectorState = {
-  gatekeeper: { result: {}, success: null },
+  gatekeeper: { result: {}, success: null, working: false },
   organizations: {
     organizationsById: {
       'd23f7350-d406-11e9-bb65-2a2ae2dbcce4': {
