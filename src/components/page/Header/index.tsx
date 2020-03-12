@@ -16,6 +16,7 @@ import {
 } from 'reactstrap';
 import logo from '../../../assets/images/logo.png';
 import {
+  BACKEND_ACTIVE,
   ENABLE_ABOUT,
   ENABLE_ASSIGN,
   ENABLE_FI,
@@ -52,6 +53,7 @@ import {
   ORGANIZATIONS_LIST_URL,
   PLAN_LIST_URL,
   PRACTITIONERS_LIST_URL,
+  REACT_LOGIN_URL,
   REPORT_IRS_PLAN_URL,
 } from '../../../constants';
 import './Header.css';
@@ -77,6 +79,7 @@ const defaultHeaderProps: Partial<HeaderProps> = {
   },
 };
 
+const APP_LOGIN_URL = BACKEND_ACTIVE ? LOGIN_URL : REACT_LOGIN_URL;
 /** The Header component */
 export class HeaderComponent extends React.Component<HeaderProps, State> {
   public static defaultProps = defaultHeaderProps;
@@ -250,7 +253,7 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
                   </DropdownMenu>
                 </UncontrolledDropdown>
               ) : (
-                <NavLink to={LOGIN_URL} className="nav-link" activeClassName="active">
+                <NavLink to={APP_LOGIN_URL} className="nav-link" activeClassName="active">
                   {LOGIN}
                 </NavLink>
               )}
