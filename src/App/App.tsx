@@ -98,7 +98,7 @@ initGoogleAnalytics();
 
 const APP_CALLBACK_URL = BACKEND_ACTIVE ? OAUTH_CALLBACK_URL : REACT_LOGIN_URL;
 const { IMPLICIT, AUTHORIZATION_CODE } = AuthorizationGrantType;
-const AuthGrandType = BACKEND_ACTIVE ? AUTHORIZATION_CODE : IMPLICIT;
+const AuthGrantType = BACKEND_ACTIVE ? AUTHORIZATION_CODE : IMPLICIT;
 const APP_LOGIN_URL = BACKEND_ACTIVE ? LOGIN_URL : REACT_LOGIN_URL;
 const APP_CALLBACK_PATH = BACKEND_ACTIVE ? OAUTH_CALLBACK_PATH : REACT_CALLBACK_PATH;
 
@@ -358,7 +358,7 @@ class App extends Component {
                   render={routeProps => (
                     <OauthLogin
                       providers={providers}
-                      authorizationGrantType={AuthGrandType}
+                      authorizationGrantType={AuthGrantType}
                       {...routeProps}
                     />
                   )}
