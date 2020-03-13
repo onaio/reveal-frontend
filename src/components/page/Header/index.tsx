@@ -45,10 +45,10 @@ import {
 } from '../../../configs/lang';
 import {
   ASSIGN_PLAN_URL,
+  BACKEND_LOGIN_URL,
   FI_URL,
   INTERVENTION_IRS_DRAFTS_URL,
   INTERVENTION_IRS_URL,
-  LOGIN_URL,
   LOGOUT_URL,
   ORGANIZATIONS_LIST_URL,
   PLAN_LIST_URL,
@@ -79,7 +79,7 @@ const defaultHeaderProps: Partial<HeaderProps> = {
   },
 };
 
-const APP_LOGIN_URL = BACKEND_ACTIVE ? LOGIN_URL : REACT_LOGIN_URL;
+const APP_LOGIN_URL = BACKEND_ACTIVE ? BACKEND_LOGIN_URL : REACT_LOGIN_URL;
 /** The Header component */
 export class HeaderComponent extends React.Component<HeaderProps, State> {
   public static defaultProps = defaultHeaderProps;
