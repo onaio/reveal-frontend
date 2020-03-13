@@ -41,6 +41,7 @@ import {
   FI_SINGLE_MAP_URL,
   FI_SINGLE_URL,
   FI_URL,
+  HOME_URL,
   INTERVENTION_IRS_DRAFTS_URL,
   INTERVENTION_IRS_URL,
   LOGIN_URL,
@@ -372,7 +373,7 @@ class App extends Component {
                     return (
                       <ConnectedOauthCallback
                         SuccessfulLoginComponent={() => {
-                          return <Redirect to="/" />;
+                          return <Redirect to={HOME_URL} />;
                         }}
                         LoadingComponent={Loading}
                         providers={providers}
