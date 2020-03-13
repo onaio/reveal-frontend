@@ -394,7 +394,7 @@ class App extends Component {
                     if (BACKEND_ACTIVE) {
                       store.dispatch(logOutUser());
                       window.location.href = EXPRESS_OAUTH_LOGOUT_URL;
-                      return <></>;
+                      return null;
                     }
                     const state = getOauthProviderState(store.getState());
                     return (
