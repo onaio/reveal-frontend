@@ -99,17 +99,17 @@ export const fetchAssignments = (assignmentsList: Assignment[]): FetchAssignment
         return target;
       } else {
         target[plan] = [];
-        return { ...target };
+        return target;
       }
     },
   };
 
   let assignmentsByPlanId: AssignmentsByPlanId = {};
-  // new Proxy({}, defaultArrayAssignment);
-  const assignmentsByPlanIdProxy: ProxyConstructor = new Proxy(
+  /** Research on a solution  for Typescript can't infer types when using Proxy */
+  const assignmentsByPlanIdProxy = new Proxy(
     assignmentsByPlanId,
     defaultArrayAssignmentHandler
-  );
+  ) as FlexObject;
   for (const assignment of assignmentsList) {
     assignmentsByPlanId = assignmentsByPlanIdProxy[assignment.plan];
     assignmentsByPlanId[assignment.plan].push(assignment);
