@@ -12,6 +12,7 @@ import { logOutUser } from '@onaio/session-reducer';
 import React, { Component } from 'react';
 import { Helmet } from 'react-helmet';
 import { Route, Switch } from 'react-router';
+import { Redirect } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Col, Container, Row } from 'reactstrap';
 import CustomConnectedAPICallBack from '../components/page/CustomCallback';
@@ -370,6 +371,9 @@ class App extends Component {
                     }
                     return (
                       <ConnectedOauthCallback
+                        SuccessfulLoginComponent={() => {
+                          return <Redirect to="/" />;
+                        }}
                         LoadingComponent={Loading}
                         providers={providers}
                         oAuthUserInfoGetter={oAuthUserInfoGetter}
