@@ -7,7 +7,7 @@ import { Redirect, RouteComponentProps, withRouter } from 'react-router';
 import { toast } from 'react-toastify';
 import { EXPRESS_OAUTH_GET_STATE_URL } from '../../../configs/env';
 import { WELCOME_BACK } from '../../../configs/lang';
-import { EXPRESS_LOGIN_URL, HOME_URL } from '../../../constants';
+import { EXPRESS_LOGIN_URL, HOME_URL, LOGOUT_URL } from '../../../constants';
 import { growl } from '../../../helpers/utils';
 import store from '../../../store';
 import Loading from '../Loading';
@@ -30,7 +30,21 @@ export const BaseSuccessfulLoginComponent: React.FC<RouteComponentProps> = props
 export const SuccessfulLoginComponent = withRouter(BaseSuccessfulLoginComponent);
 
 const BaseUnsuccessfulLogin: React.FC<RouteComponentProps> = props => {
-  window.location.href = `${EXPRESS_LOGIN_URL}${props.location.search}`;
+  let redirectTo = `${EXPRESS_LOGIN_URL}${props.location.search}`;
+  const indirectionURLs = [LOGOUT_URL];
+  /** we should probably sieve some routes from being passed on.
+   * For instance we don't need to redirect to logout since we are already in
+   * the Unsuccessful Login component, meaning we are already logged out.
+   */
+  const stringifiedUrls = indirectionURLs.map(url => querystring.stringify({ next: url }));
+  for (const url of stringifiedUrls) {
+    if (props.location.search.includes(url)) {
+      redirectTo = EXPRESS_LOGIN_URL;
+      break;
+    }
+  }
+
+  window.location.href = redirectTo;
   return <></>;
 };
 
