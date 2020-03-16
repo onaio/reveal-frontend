@@ -1,3 +1,4 @@
+import { percentage } from '@onaio/utils';
 import { get } from 'lodash';
 import React from 'react';
 import { Col, Row, Table } from 'reactstrap';
@@ -10,7 +11,7 @@ import {
   IndicatorThresholdsLookUp,
   indicatorThresholdsLookUpIRS,
 } from '../../../configs/settings';
-import { percentage, UpdateType } from '../../../helpers/utils';
+import { UpdateType } from '../../../helpers/utils';
 
 interface Props {
   indicatorRows: string;

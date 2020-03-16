@@ -1,5 +1,5 @@
 import ElementMap from '@onaio/element-map';
-import { Dictionary } from '@onaio/utils';
+import { Dictionary, percentage } from '@onaio/utils';
 import { keys } from 'lodash';
 import * as React from 'react';
 import { CellInfo } from 'react-table';
@@ -15,7 +15,7 @@ import {
   ZERO,
 } from '../configs/settings';
 import { BLOOD_SCREENING_CODE, CASE_CONFIRMATION_CODE } from '../constants';
-import { percentage, roundToPrecision } from '../helpers/utils';
+import { roundToPrecision } from '../helpers/utils';
 import { Goal } from '../store/ducks/goals';
 
 /** Enum describing operators */
