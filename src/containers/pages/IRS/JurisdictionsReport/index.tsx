@@ -1,6 +1,7 @@
 import DrillDownTable, { hasChildrenFunc } from '@onaio/drill-down-table';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset, { SupersetFormData } from '@onaio/superset-connector';
+import { Dictionary } from '@onaio/utils';
 import { get } from 'lodash';
 import React, { SyntheticEvent, useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
@@ -26,7 +27,7 @@ import { HOME, IRS_REPORTING_TITLE } from '../../../../configs/lang';
 import { HOME_URL, REPORT_IRS_PLAN_URL } from '../../../../constants';
 import { displayError } from '../../../../helpers/errors';
 import '../../../../helpers/tables.css';
-import { FlexObject, RouteParams } from '../../../../helpers/utils';
+import { RouteParams } from '../../../../helpers/utils';
 import supersetFetch from '../../../../services/superset';
 import GenericJurisdictionsReducer, {
   fetchGenericJurisdictions,
@@ -127,7 +128,7 @@ const JurisdictionReport = (props: GenericJurisdictionProps & RouteComponentProp
 
   const data = jurisdictions || [];
 
-  const parentNodes = data.map((el: FlexObject) => el.jurisdiction_parent_id);
+  const parentNodes = data.map((el: Dictionary) => el.jurisdiction_parent_id);
 
   let pageTitle = IRS_REPORTING_TITLE;
   let baseURL = REPORT_IRS_PLAN_URL;
@@ -157,7 +158,7 @@ const JurisdictionReport = (props: GenericJurisdictionProps & RouteComponentProp
     breadcrumbProps.pages.push(basePage);
   }
 
-  const theObject = data.filter((el: FlexObject) => el.jurisdiction_id === jurisdictionId);
+  const theObject = data.filter((el: Dictionary) => el.jurisdiction_id === jurisdictionId);
 
   let currentJurisdictionName: string | null = null;
   if (theObject && theObject.length > 0) {

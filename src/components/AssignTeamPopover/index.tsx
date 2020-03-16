@@ -41,6 +41,7 @@ const AssignTeamPopover = (props: AssignTeamPopoverProps) => {
 
   // define props for the actual popover component
   const popoverProps = {
+    flip: true,
     isOpen: isActive,
     onClick: (e: React.MouseEvent) => stopPropagationAndPreventDefault(e),
     target,

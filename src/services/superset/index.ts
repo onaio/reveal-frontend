@@ -1,7 +1,7 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset, { SupersetConnectorConfig } from '@onaio/superset-connector';
+import { Dictionary } from '@onaio/utils';
 import { OPENSRP_OAUTH_STATE, SUPERSET_API_BASE, SUPERSET_API_ENDPOINT } from '../../configs/env';
-import { FlexObject } from '../../helpers/utils';
 import store from '../../store';
 import supersetReducer, {
   authorizeSuperset,
@@ -36,7 +36,7 @@ export const completeAuthZ = async (result: { [key: string]: any }) => {
 /** generic async function for fetching from superset */
 const supersetFetch = async (
   sliceId: string,
-  params: FlexObject | null = null,
+  params: Dictionary | null = null,
   callback: typeof fetchCallback = fetchCallback,
   middleware: typeof fetchMiddleware = fetchMiddleware
 ) => {

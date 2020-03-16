@@ -1,7 +1,7 @@
+import { Dictionary } from '@onaio/utils';
 import React, { MouseEvent } from 'react';
 import { Button } from 'reactstrap';
 import { ASSIGN_TEAMS } from '../../configs/lang';
-import { FlexObject } from '../../helpers/utils';
 
 /** interface describing the props of AssignTeamButton */
 export interface AssignTeamButtonProps {
@@ -11,7 +11,7 @@ export interface AssignTeamButtonProps {
   id: string; // id must match the target value of the adjacent popover
   onClick: (e: MouseEvent) => void; // what to do when button is clicked
   size?: string;
-  style?: FlexObject;
+  style?: Dictionary;
 }
 
 /** a simple button component for Team Assignment */

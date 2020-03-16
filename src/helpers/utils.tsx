@@ -59,9 +59,6 @@ import { displayError } from './errors';
 import { colorMaps, ColorMapsTypes } from './structureColorMaps';
 
 /** Interface for an object that is allowed to have any property */
-export interface FlexObject<T = any> {
-  [key: string]: T;
-}
 
 /** Route params interface */
 export interface RouteParams {
@@ -81,7 +78,7 @@ export interface Geometry {
 export interface GeoJSON {
   geometry: Geometry | null;
   id: string;
-  properties: FlexObject;
+  properties: Dictionary;
   type: string;
 }
 
@@ -169,17 +166,17 @@ export interface SiteConfig {
 }
 
 /** Creates a Gisida site configuration object
- * @param {FlexObject} options - map options
+ * @param {Dictionary} options - map options
  * @param {string} GISIDA_MAPBOX_TOKEN - mapbox token
  * @param {string} GISIDA_ONADATA_API_TOKEN - Onadata API token
  * @param {string} LayerStore - map layers
  * @return {SiteConfig} - Gisida site configuration
  */
 export const ConfigStore = (
-  options: FlexObject,
+  options: Dictionary,
   GISIDA_MAPBOX_TOKEN: string,
   GISIDA_ONADATA_API_TOKEN: string,
-  LayerStore: FlexObject
+  LayerStore: Dictionary
 ) => {
   // Define basic config properties
   const { accessToken, apiAccessToken, appName, boxZoom, mapConfig: mbConfig, layers } = options;
@@ -482,7 +479,7 @@ export function wrapFeatureCollection<T>(objFeatureCollection: T[]): FeatureColl
     type: FEATURE_COLLECTION,
   };
 }
-export function toggleLayer(allLayers: FlexObject, currentGoal: string, store: any, Actions: any) {
+export function toggleLayer(allLayers: Dictionary, currentGoal: string, store: any, Actions: any) {
   let layer;
   let eachLayer: string;
   for (eachLayer of Object.keys(allLayers)) {

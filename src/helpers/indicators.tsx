@@ -1,4 +1,5 @@
 import ElementMap from '@onaio/element-map';
+import { Dictionary } from '@onaio/utils';
 import { keys } from 'lodash';
 import * as React from 'react';
 import { CellInfo } from 'react-table';
@@ -14,7 +15,7 @@ import {
   ZERO,
 } from '../configs/settings';
 import { BLOOD_SCREENING_CODE, CASE_CONFIRMATION_CODE } from '../constants';
-import { FlexObject, percentage, roundToPrecision } from '../helpers/utils';
+import { percentage, roundToPrecision } from '../helpers/utils';
 import { Goal } from '../store/ducks/goals';
 
 /** Enum describing operators */
@@ -148,7 +149,7 @@ export function get137AdherenceIndicator(cell: CellInfo) {
 }
 
 /** Renders a row of Focus Investigation classifications */
-export function renderClassificationRow(rowObject: FlexObject) {
+export function renderClassificationRow(rowObject: Dictionary) {
   return (
     <tr key={rowObject.code} className="definitions">
       <ElementMap items={[rowObject.code, rowObject.name, rowObject.description]} HTMLTag="td" />

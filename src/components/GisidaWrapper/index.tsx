@@ -1,5 +1,6 @@
 import GeojsonExtent from '@mapbox/geojson-extent';
 import reducerRegistry from '@onaio/redux-reducer-registry';
+import { Dictionary } from '@onaio/utils';
 import { Actions, ducks, GisidaMap, loadLayers } from 'gisida';
 import { Map } from 'gisida-react';
 import { some } from 'lodash';
@@ -17,7 +18,7 @@ import {
 import { APP, MAIN_PLAN, MAP_ID, STRUCTURE_LAYER } from '../../constants';
 import { displayError } from '../../helpers/errors';
 import { EventData } from '../../helpers/mapbox';
-import { ConfigStore, FeatureCollection, FlexObject } from '../../helpers/utils';
+import { ConfigStore, FeatureCollection } from '../../helpers/utils';
 import store from '../../store';
 import { Goal, setCurrentGoal } from '../../store/ducks/goals';
 import { Jurisdiction, JurisdictionGeoJSON } from '../../store/ducks/jurisdictions';
@@ -103,14 +104,14 @@ export interface GisidaProps {
   geoData: Jurisdiction | null;
   goal?: Goal[] | null;
   handlers: Handlers[];
-  layers?: LineLayerObj[] | FillLayerObj[] | PointLayerObj[] | FlexObject[];
+  layers?: LineLayerObj[] | FillLayerObj[] | PointLayerObj[] | Dictionary[];
   structures: FeatureCollection<StructureGeoJSON> | null;
   minHeight?: string;
   basemapStyle?: string | Style;
 }
 
 /** Returns a single layer configuration */
-const LayerStore = (layer: FlexObject) => {
+const LayerStore = (layer: Dictionary) => {
   if (typeof layer === 'string') {
     return layer;
   }
@@ -264,7 +265,7 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
     }
   }
 
-  public componentWillUpdate(nextProps: FlexObject) {
+  public componentWillUpdate(nextProps: Dictionary) {
     const pointFeatures: TaskGeoJSON[] =
       (this.props.pointFeatureCollection && this.props.pointFeatureCollection.features) || [];
     const polygonFeatures: TaskGeoJSON[] =
@@ -329,7 +330,7 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
       | PointLayerObj[]
       | LineLayerObj[]
       | FillLayerObj[]
-      | FlexObject = [];
+      | Dictionary = [];
 
     /** Goals with icons array  */
     const goalsWithSymbols = [
@@ -483,7 +484,7 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
     }
     const { geoData, layers: Layers } = this.props;
     const { locations, bounds } = this.state;
-    let layers: LineLayerObj[] | FillLayerObj[] | PointLayerObj[] | FlexObject = [];
+    let layers: LineLayerObj[] | FillLayerObj[] | PointLayerObj[] | Dictionary = [];
 
     if (geoData) {
       layers = [
@@ -533,7 +534,7 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
       const currentState = store.getState();
       store.dispatch(Actions.initApp(config.APP));
       /** Make all selected tasks visible by changing the visible flag to true */
-      const visibleLayers = config.LAYERS.map((l: FlexObject) => {
+      const visibleLayers = config.LAYERS.map((l: Dictionary) => {
         layer = {
           ...l,
           id: l.id,

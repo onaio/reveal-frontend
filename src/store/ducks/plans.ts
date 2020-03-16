@@ -1,11 +1,23 @@
 import { Registry } from '@onaio/redux-reducer-registry';
+import { Dictionary } from '@onaio/utils';
 import intersect from 'fast_array_intersect';
 import { get, keyBy, keys, pickBy, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
 import { createSelector } from 'reselect';
 import SeamlessImmutable from 'seamless-immutable';
 import { FIReasonType, FIStatusType } from '../../components/forms/PlanForm/types';
+<<<<<<< HEAD
 import { descendingOrderSort, FlexObject, removeNullJurisdictionPlans } from '../../helpers/utils';
+=======
+import {
+  FIReasons,
+  FIStatuses,
+  PlanAction,
+  planActivities,
+  PlanGoal,
+} from '../../configs/settings';
+import { removeNullJurisdictionPlans } from '../../helpers/utils';
+>>>>>>> Replace FlexObject with ona utils equivalent
 
 /** the reducer name */
 export const reducerName = 'plans';
@@ -104,13 +116,13 @@ export enum PlanEventType {
 export interface PlanEventPayload {
   baseEntityId: string;
   dateCreated: string;
-  details: FlexObject;
+  details: Dictionary;
   duration: number;
   entityType: InterventionType;
   eventDate: string;
   eventType: PlanEventType;
   formSubmissionId: string;
-  identifiers: FlexObject;
+  identifiers: Dictionary;
   obs: Array<{
     fieldType: 'concept';
     fieldDataType: string;
