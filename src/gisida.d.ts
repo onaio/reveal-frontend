@@ -5,10 +5,6 @@ declare module 'gisida' {
   import { AnyAction } from 'redux';
 
   /** interface for generic object */
-  interface Dictionary {
-    [key: string]: any;
-  }
-
   export interface GisidaMap extends mbMap {
     _container: Dictionary;
   }
