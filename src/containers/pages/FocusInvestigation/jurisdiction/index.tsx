@@ -55,7 +55,7 @@ import {
   getFilteredFIPlansURL,
   getLocationColumns,
   jsxColumns,
-  transformValues,
+  removeNullJurisdictionPlans,
 } from '../../../../helpers/utils';
 import supersetFetch from '../../../../services/superset';
 import { Jurisdiction } from '../../../../store/ducks/jurisdictions';
@@ -213,16 +213,7 @@ export const FIJurisdiction = (props: FIJurisdictionProps & RouteComponentProps<
   }
 
   /** theObject holds extracted plans from superset response */
-  let theObject = onePlan ? extractPlan(onePlan) : null;
-  const propertiesToTransform = [
-    'village',
-    'canton',
-    'district',
-    'province',
-    'jurisdiction_id',
-    'focusArea',
-  ];
-  theObject = transformValues(theObject, propertiesToTransform);
+  const theObject = onePlan ? extractPlan(onePlan) : null;
 
   /** currentRoutineReactivePlans array that holds current routine and reactive tables  */
   const currentRoutineReactivePlans: FlexObject[] = [];
@@ -237,12 +228,9 @@ export const FIJurisdiction = (props: FIJurisdictionProps & RouteComponentProps<
   ) {
     [currentReactivePlans, currentRoutinePlans].forEach(plansArray => {
       if (plansArray && plansArray.length) {
-        const thePlans = plansArray.map((item: Plan) => {
-          let thisItem = extractPlan(item);
-          // transform values of this properties if they are null
-          const columnsToTransform = ['village', 'canton', 'district', 'province'];
-          thisItem = transformValues(thisItem, columnsToTransform);
-          return thisItem;
+        const jurisdictionValidPlans = removeNullJurisdictionPlans(plansArray);
+        const thePlans = jurisdictionValidPlans.map((item: Plan) => {
+          return extractPlan(item);
         });
         const locationColumns: Column[] = getLocationColumns(locationHierarchy, true);
         /**  Handle Columns Unique for Routine and Reactive Tables */
@@ -320,12 +308,9 @@ export const FIJurisdiction = (props: FIJurisdictionProps & RouteComponentProps<
   ) {
     [completeReactivePlans, completeRoutinePlans].forEach(plansArray => {
       if (plansArray && plansArray.length) {
-        const thePlans = plansArray.map((item: Plan) => {
-          let thisItem = extractPlan(item);
-          // transform values of this properties if they are null
-          const columnsToTransform = ['village', 'canton', 'district', 'province'];
-          thisItem = transformValues(thisItem, columnsToTransform);
-          return thisItem;
+        const jurisdictionValidPlans = removeNullJurisdictionPlans(plansArray);
+        const thePlans = jurisdictionValidPlans.map((item: Plan) => {
+          return extractPlan(item);
         });
         /**  Handle Columns Unique for Routine and Reactive Tables */
         const columnsBasedOnReason = [];
