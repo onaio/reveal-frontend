@@ -30,7 +30,7 @@ exports[`/components/formatting/IRSIndicatorLegend renders correctly for default
           Grey
         </td>
         <td>
-          &lt; 20%
+          &lt; [object Object]
         </td>
       </tr>
       <tr
@@ -45,7 +45,7 @@ exports[`/components/formatting/IRSIndicatorLegend renders correctly for default
           Red
         </td>
         <td>
-          20% - 75%
+          [object Object] - [object Object]
         </td>
       </tr>
       <tr
@@ -60,7 +60,7 @@ exports[`/components/formatting/IRSIndicatorLegend renders correctly for default
           Yellow
         </td>
         <td>
-          75% &gt;-&lt; 90%
+          [object Object] - [object Object]
         </td>
       </tr>
       <tr
@@ -75,7 +75,7 @@ exports[`/components/formatting/IRSIndicatorLegend renders correctly for default
           Green
         </td>
         <td>
-          90% - 100%
+          [object Object] - [object Object]
         </td>
       </tr>
     </tbody>
@@ -113,7 +113,7 @@ exports[`/components/formatting/IRSIndicatorLegend renders correctly for namibia
           Grey
         </td>
         <td>
-          &lt; 20%
+          &lt; [object Object]
         </td>
       </tr>
       <tr
@@ -128,7 +128,7 @@ exports[`/components/formatting/IRSIndicatorLegend renders correctly for namibia
           Red
         </td>
         <td>
-          20% -&lt; 75%
+          [object Object] - [object Object]
         </td>
       </tr>
       <tr
@@ -143,7 +143,7 @@ exports[`/components/formatting/IRSIndicatorLegend renders correctly for namibia
           Yellow
         </td>
         <td>
-          75% -&lt; 90%
+          [object Object] - [object Object]
         </td>
       </tr>
       <tr
@@ -158,7 +158,7 @@ exports[`/components/formatting/IRSIndicatorLegend renders correctly for namibia
           Green
         </td>
         <td>
-          90% - 100%
+          [object Object] - [object Object]
         </td>
       </tr>
     </tbody>
