@@ -94,7 +94,15 @@ export const removeAssignmentsAction: RemoveAssignmentsAction = {
 export const fetchAssignments = (assignmentsList: Assignment[]): FetchAssignmentsAction => {
   // const assignmentsByPlanId: AssignmentsByPlanId = {};
   const defaultArrayAssignmentHandler: ProxyHandler<object> = {
-    get: (target: FlexObject, plan: string) => {
+    /**
+     * The methods inside the handler object are called traps for our case we use a get trap
+     * @param {AssignmentsByPlanId} target
+     * @param {string} plan planId the assignmentsByPlanId will be updated by empty arrays keyed by the planId
+     */
+    get: (target: AssignmentsByPlanId, plan: string) => {
+      /**
+       * Check if the planId already exists then return the target else add the key with an empty array value
+       */
       if (plan in target) {
         return target;
       } else {
@@ -106,6 +114,11 @@ export const fetchAssignments = (assignmentsList: Assignment[]): FetchAssignment
 
   let assignmentsByPlanId: AssignmentsByPlanId = {};
   /** Research on a solution  for Typescript can't infer types when using Proxy */
+  /**
+   * A JavaScript Proxy is an object that wraps another object (target) and intercepts the fundamental operations of the target object
+   * @param {AssignmentsByPlanId} assignmentsByPlanId target(is an object to wrap) initial value is an empty object
+   * @param {ProxyHandler<object>} defaultArrayAssignmentHandler  object that contains methods to control the behaviors of the target
+   */
   const assignmentsByPlanIdProxy = new Proxy(
     assignmentsByPlanId,
     defaultArrayAssignmentHandler
