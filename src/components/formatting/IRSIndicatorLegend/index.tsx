@@ -1,4 +1,3 @@
-import { percentage } from '@onaio/utils';
 import { get } from 'lodash';
 import React from 'react';
 import { Col, Row, Table } from 'reactstrap';
@@ -12,6 +11,7 @@ import {
   indicatorThresholdsLookUpIRS,
 } from '../../../configs/settings';
 import { UpdateType } from '../../../helpers/utils';
+import { IndicatorThresholdItemPercentage } from '../../../helpers/utils';
 
 interface Props {
   indicatorRows: string;
@@ -103,10 +103,10 @@ const IRSIndicatorLegend = (props: Props) => {
                         <td>{item.name}</td>
                         <td>
                           {index === 0
-                            ? `< ${percentage(item.value).value}`
-                            : `${percentage(indicatorItems[index - 1].value)} - ${
-                                percentage(item.value).value
-                              }`}
+                            ? `< ${IndicatorThresholdItemPercentage(item.value)}`
+                            : `${IndicatorThresholdItemPercentage(
+                                indicatorItems[index - 1].value
+                              )} - ${IndicatorThresholdItemPercentage(item.value)}`}
                         </td>
                       </tr>
                     );

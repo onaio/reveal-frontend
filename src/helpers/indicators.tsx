@@ -1,5 +1,5 @@
 import ElementMap from '@onaio/element-map';
-import { Dictionary, percentage } from '@onaio/utils';
+import { Dictionary } from '@onaio/utils';
 import { keys } from 'lodash';
 import * as React from 'react';
 import { CellInfo } from 'react-table';
@@ -15,7 +15,7 @@ import {
   ZERO,
 } from '../configs/settings';
 import { BLOOD_SCREENING_CODE, CASE_CONFIRMATION_CODE } from '../constants';
-import { roundToPrecision } from '../helpers/utils';
+import { IndicatorThresholdItemPercentage, roundToPrecision } from '../helpers/utils';
 import { Goal } from '../store/ducks/goals';
 
 /** Enum describing operators */
@@ -95,7 +95,7 @@ export function getGoalReport(goal: Goal): GoalReport {
     achievedValue: goal.completed_task_count,
     goalUnit,
     percentAchieved,
-    prettyPercentAchieved: percentage(percentAchieved).value,
+    prettyPercentAchieved: IndicatorThresholdItemPercentage(percentAchieved),
     targetValue,
   };
 }
@@ -118,7 +118,7 @@ export function getFIAdherenceIndicator(cell: CellInfo) {
             : YELLOW,
       }}
     >
-      {percentage(cell.value).value}
+      {IndicatorThresholdItemPercentage(cell.value)}
     </div>
   );
 }
@@ -207,7 +207,7 @@ export function getThresholdAdherenceIndicator(cell: CellInfo, configId: string)
 
   return (
     <div className="irs-report-indicator-container" style={{ backgroundColor: cellColor }}>
-      {isNumber ? percentage(cell.value).value : 'NaN'}
+      {isNumber ? IndicatorThresholdItemPercentage(cell.value) : 'NaN'}
     </div>
   );
 }
@@ -228,7 +228,7 @@ export function getIRSThresholdAdherenceIndicator(
 
   return (
     <div className="irs-report-indicator-container" style={{ backgroundColor: cellColor }}>
-      {isNumber ? percentage(cell.value).value : 'NaN'}
+      {isNumber ? IndicatorThresholdItemPercentage(cell.value) : 'NaN'}
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { getOnadataUserInfo, getOpenSRPUserInfo } from '@onaio/gatekeeper';
 import { SessionState } from '@onaio/session-reducer';
-import { Dictionary } from '@onaio/utils';
+import { Dictionary, percentage } from '@onaio/utils';
 import { Color } from 'csstype';
 import { GisidaMap } from 'gisida';
 import { findKey, uniq } from 'lodash';
@@ -851,4 +851,14 @@ export const isPlanDefinitionOfType = (
       (f: UseContext) => f.code === 'interventionType' && f.valueCodableConcept === interventionType
     ).length > 0
   );
+
+/**
+ * If error exists return item and error message else return percentage value
+ * Research on Declaring number only within certain range e.g in decimalPoints case (0 - 100)
+ * @param number item
+ */
+export const IndicatorThresholdItemPercentage = (item: number, decimalPoints?: number) => {
+  return percentage(item, decimalPoints).error === null
+    ? percentage(item, decimalPoints).value
+    : `${item}${percentage(item).error}`;
 };
