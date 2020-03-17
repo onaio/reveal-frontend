@@ -64,7 +64,7 @@ export function goalRatioAchieved(goal: Goal): number {
 export interface GoalReport {
   achievedValue: number /** the achieved value */;
   percentAchieved: number /** progress towards goal achievement */;
-  prettyPercentAchieved: string /** pretty string of percentAchieved */;
+  prettyPercentAchieved: string | null /** pretty string of percentAchieved */;
   targetValue: number /** the target value */;
   goalUnit: string /** goal_unit */;
 }
@@ -95,7 +95,7 @@ export function getGoalReport(goal: Goal): GoalReport {
     achievedValue: goal.completed_task_count,
     goalUnit,
     percentAchieved,
-    prettyPercentAchieved: percentage(percentAchieved),
+    prettyPercentAchieved: percentage(percentAchieved).value,
     targetValue,
   };
 }
@@ -118,7 +118,7 @@ export function getFIAdherenceIndicator(cell: CellInfo) {
             : YELLOW,
       }}
     >
-      {percentage(cell.value)}
+      {percentage(cell.value).value}
     </div>
   );
 }
@@ -207,7 +207,7 @@ export function getThresholdAdherenceIndicator(cell: CellInfo, configId: string)
 
   return (
     <div className="irs-report-indicator-container" style={{ backgroundColor: cellColor }}>
-      {isNumber ? percentage(cell.value) : 'NaN'}
+      {isNumber ? percentage(cell.value).value : 'NaN'}
     </div>
   );
 }
@@ -228,7 +228,7 @@ export function getIRSThresholdAdherenceIndicator(
 
   return (
     <div className="irs-report-indicator-container" style={{ backgroundColor: cellColor }}>
-      {isNumber ? percentage(cell.value) : 'NaN'}
+      {isNumber ? percentage(cell.value).value : 'NaN'}
     </div>
   );
 }

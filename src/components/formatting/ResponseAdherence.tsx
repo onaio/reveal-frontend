@@ -19,22 +19,22 @@ const ResponseAdherence: React.ElementType = () => {
               <tr style={{ background: colors.GREEN }}>
                 <td>{GREEN}</td>
                 <td>>=</td>
-                <td>{percentage(GREEN_THRESHOLD)}</td>
+                <td>{percentage(GREEN_THRESHOLD).value}</td>
               </tr>
               <tr style={{ background: colors.ORANGE }}>
                 <td>{ORANGE}</td>
-                <td>{percentage(GREEN_THRESHOLD)}</td>
-                <td>{percentage(ORANGE_THRESHOLD)}</td>
+                <td>{percentage(GREEN_THRESHOLD).value}</td>
+                <td>{percentage(ORANGE_THRESHOLD).value}</td>
               </tr>
               <tr style={{ background: colors.RED }}>
                 <td>{RED}</td>
-                <td>{percentage(ORANGE_THRESHOLD)}</td>
-                <td>{percentage(YELLOW_THRESHOLD)}</td>
+                <td>{percentage(ORANGE_THRESHOLD).value}</td>
+                <td>{percentage(YELLOW_THRESHOLD).value}</td>
               </tr>
               <tr style={{ background: colors.YELLOW }}>
                 <td>{YELLOW}</td>
                 <td>>=</td>
-                <td>{percentage(YELLOW_THRESHOLD)}</td>
+                <td>{percentage(YELLOW_THRESHOLD).value}</td>
               </tr>
             </tbody>
           </Table>

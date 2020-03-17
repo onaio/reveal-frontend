@@ -1,0 +1,295 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`containers/pages/FocusInvestigation/activeMap displays the correct badge and mark complete when plan status is active: mark complete link 1`] = `
+<MarkCompleteLink
+  plan={
+    Object {
+      "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
+      "jurisdiction_depth": 2,
+      "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
+      "jurisdiction_name": "NVI_439",
+      "jurisdiction_name_path": Array [
+        "Chadiza",
+        "Naviluli",
+      ],
+      "jurisdiction_parent_id": "2944",
+      "jurisdiction_path": Array [
+        "2939",
+        "2944",
+      ],
+      "plan_date": "2019-06-18",
+      "plan_effective_period_end": "2019-06-18",
+      "plan_effective_period_start": "2019-07-31",
+      "plan_fi_reason": "Routine",
+      "plan_fi_status": "A1",
+      "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+      "plan_intervention_type": "FI",
+      "plan_status": "active",
+      "plan_title": "A1-Tha Luang Village 1 Focus 01",
+      "plan_version": "1",
+    }
+  }
+>
+  <Link
+    className="btn btn-primary"
+    color="primary"
+    replace={false}
+    to="/focus-investigation/view/complete/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
+  >
+    <a
+      className="btn btn-primary"
+      color="primary"
+      href="/focus-investigation/view/complete/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
+      onClick={[Function]}
+    >
+      Mark as complete
+    </a>
+  </Link>
+</MarkCompleteLink>
+`;
+
+exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap correctly & changes page title: Breadcrumb 1`] = `
+<Breadcrumb
+  aria-label="breadcrumb"
+  className="reveal-breadcrumb"
+  listTag="ol"
+  tag="nav"
+>
+  <nav
+    aria-label="breadcrumb"
+    className="reveal-breadcrumb"
+  >
+    <ol
+      className="breadcrumb"
+    >
+      <BreadcrumbItem
+        key="0"
+        tag="li"
+      >
+        <li
+          className="breadcrumb-item"
+        >
+          <Link
+            key="0"
+            replace={false}
+            to="/"
+          >
+            <a
+              href="/"
+              onClick={[Function]}
+            >
+              Home
+            </a>
+          </Link>
+        </li>
+      </BreadcrumbItem>
+      <BreadcrumbItem
+        key="1"
+        tag="li"
+      >
+        <li
+          className="breadcrumb-item"
+        >
+          <Link
+            key="1"
+            replace={false}
+            to="/focus-investigation"
+          >
+            <a
+              href="/focus-investigation"
+              onClick={[Function]}
+            >
+              Focus Investigations
+            </a>
+          </Link>
+        </li>
+      </BreadcrumbItem>
+      <BreadcrumbItem
+        key="2"
+        tag="li"
+      >
+        <li
+          className="breadcrumb-item"
+        >
+          <Link
+            key="2"
+            replace={false}
+            to="/focus-investigation/filter/2939/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
+          >
+            <a
+              href="/focus-investigation/filter/2939/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
+              onClick={[Function]}
+            >
+              Chadiza
+            </a>
+          </Link>
+        </li>
+      </BreadcrumbItem>
+      <BreadcrumbItem
+        key="3"
+        tag="li"
+      >
+        <li
+          className="breadcrumb-item"
+        >
+          <Link
+            key="3"
+            replace={false}
+            to="/focus-investigation/filter/2944/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
+          >
+            <a
+              href="/focus-investigation/filter/2944/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
+              onClick={[Function]}
+            >
+              Naviluli
+            </a>
+          </Link>
+        </li>
+      </BreadcrumbItem>
+      <BreadcrumbItem
+        key="4"
+        tag="li"
+      >
+        <li
+          className="breadcrumb-item"
+        >
+          <Link
+            key="4"
+            replace={false}
+            to="/focus-investigation/view/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
+          >
+            <a
+              href="/focus-investigation/view/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
+              onClick={[Function]}
+            >
+              NVI_439
+            </a>
+          </Link>
+        </li>
+      </BreadcrumbItem>
+      <BreadcrumbItem
+        active={true}
+        tag="li"
+      >
+        <li
+          aria-current="page"
+          className="active breadcrumb-item"
+        >
+          A1-Tha Luang Village 1 Focus 01
+        </li>
+      </BreadcrumbItem>
+    </ol>
+  </nav>
+</Breadcrumb>
+`;
+
+exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap correctly & changes page title: GisidaWrapperMock div 1`] = `
+<div>
+  I love oov
+</div>
+`;
+
+exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap correctly & changes page title: ProgressBar instance 1`] = `
+<div
+  className="targetItem"
+>
+  <p>
+    Measure
+    : 
+    Percent of registered people tested
+  </p>
+  <p>
+    Progress
+    :
+     
+    0 of 100 person(s)
+     
+    (
+    0%
+    )
+  </p>
+  <br />
+  <ProgressBar
+    decimalPoints={0}
+    height="10px"
+    indicatorThresholds={null}
+    max={1}
+    min={0}
+    value={0}
+  >
+    <div
+      className="progress"
+      style={
+        Object {
+          "height": "10px",
+          "marginBottom": "15px",
+        }
+      }
+    >
+      <div
+        aria-valuemax={1}
+        aria-valuemin={0}
+        aria-valuenow={0}
+        className="progress-bar"
+        role="progressbar"
+        style={
+          Object {
+            "backgroundColor": "#ff3",
+            "width": "0%",
+          }
+        }
+      />
+    </div>
+  </ProgressBar>
+</div>
+`;
+
+exports[`containers/pages/FocusInvestigation/activeMap renders correct detail view when plan focus investigation reason is case triggered: case triggered detail view 1`] = `
+<div>
+  <h5>
+    Reactive Investigation
+     
+  </h5>
+  <span
+    key="plan-id-2"
+  >
+    <b>
+      Case Classification
+      :
+    </b>
+     
+    IRS
+  </span>
+</div>
+`;
+
+exports[`containers/pages/FocusInvestigation/activeMap renders correct detail view when plan focus investigation reason is routine: routine detail view 1`] = `
+<div>
+  <h5>
+    Routine Investigation
+     
+  </h5>
+  <span
+    className="detailview"
+    key="plan_effective_period_end"
+  >
+    <b>
+      End Date
+      :
+    </b>
+      
+    2019-06-18
+  </span>
+  <span
+    className="detailview"
+    key="plan_effective_period_start"
+  >
+    <b>
+      Start Date
+      :
+    </b>
+      
+    2019-07-31
+  </span>
+</div>
+`;
