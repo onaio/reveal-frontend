@@ -1,18 +1,65 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`containers/pages/IRS/plan renders IRS Plan page correctly 1`] = `
-<Provider
-  store={
+<Connect(IrsPlan)
+  history={
     Object {
-      "dispatch": [Function],
-      "getState": [Function],
-      "replaceReducer": [Function],
-      "subscribe": [Function],
-      Symbol(observable): [Function],
+      "action": "POP",
+      "block": [Function],
+      "createHref": [Function],
+      "go": [Function],
+      "goBack": [Function],
+      "goForward": [Function],
+      "length": 1,
+      "listen": [Function],
+      "location": Object {
+        "hash": "",
+        "pathname": "/",
+        "search": "",
+        "state": undefined,
+      },
+      "push": [Function],
+      "replace": [Function],
+    }
+  }
+  location={[MockFunction]}
+  match={
+    Object {
+      "isExact": true,
+      "params": Object {
+        "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
+      },
+      "path": "/intervention/irs/plan/:id",
+      "url": "/intervention/irs/plan/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
+    }
+  }
+  supersetService={
+    [MockFunction] {
+      "calls": Array [
+        Array [
+          undefined,
+          Object {
+            "row_limit": 3000,
+          },
+        ],
+      ],
+      "results": Array [
+        Object {
+          "isThrow": false,
+          "value": Promise {},
+        },
+      ],
     }
   }
 >
-  <Router
+  <IrsPlan
+    allJurisdictionIds={Array []}
+    assignmentsArray={Array []}
+    fetchAllJurisdictionIdsActionCreator={[Function]}
+    fetchAssignmentsActionCreator={[Function]}
+    fetchJurisdictionsActionCreator={[Function]}
+    fetchOrganizationsActionCreator={[Function]}
+    fetchPlansActionCreator={[Function]}
     history={
       Object {
         "action": "POP",
@@ -33,137 +80,276 @@ exports[`containers/pages/IRS/plan renders IRS Plan page correctly 1`] = `
         "replace": [Function],
       }
     }
+    isDraftPlan={null}
+    isFinalizedPlan={null}
+    isNewPlan={false}
+    jurisdictionsById={Object {}}
+    loadedJurisdictionIds={Array []}
+    location={[MockFunction]}
+    match={
+      Object {
+        "isExact": true,
+        "params": Object {
+          "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
+        },
+        "path": "/intervention/irs/plan/:id",
+        "url": "/intervention/irs/plan/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
+      }
+    }
+    organizationsById={Object {}}
+    planById={null}
+    planId="ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
+    supersetService={
+      [MockFunction] {
+        "calls": Array [
+          Array [
+            undefined,
+            Object {
+              "row_limit": 3000,
+            },
+          ],
+        ],
+        "results": Array [
+          Object {
+            "isThrow": false,
+            "value": Promise {},
+          },
+        ],
+      }
+    }
   >
-    <Connect(IrsPlan)
-      history={
-        Object {
-          "action": "POP",
-          "block": [Function],
-          "createHref": [Function],
-          "go": [Function],
-          "goBack": [Function],
-          "goForward": [Function],
-          "length": 1,
-          "listen": [Function],
-          "location": Object {
-            "hash": "",
-            "pathname": "/",
-            "search": "",
-            "state": undefined,
-          },
-          "push": [Function],
-          "replace": [Function],
-        }
-      }
-      location={[MockFunction]}
-      match={
-        Object {
-          "isExact": true,
-          "params": Object {
-            "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
-          },
-          "path": "/intervention/irs/plan/:id",
-          "url": "/intervention/irs/plan/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
-        }
-      }
+    <Ripple
+      borderColor="#ff5d00"
+      borderStyle="solid"
+      borderWidth="4px"
+      height="64px"
+      minHeight="80vh"
+      width="64px"
     >
-      <IrsPlan
-        allJurisdictionIds={Array []}
-        assignmentsArray={Array []}
-        fetchAllJurisdictionIdsActionCreator={[Function]}
-        fetchAssignmentsActionCreator={[Function]}
-        fetchJurisdictionsActionCreator={[Function]}
-        fetchOrganizationsActionCreator={[Function]}
-        fetchPlansActionCreator={[Function]}
-        history={
+      <div
+        className="lds-ripple-parent"
+        style={
           Object {
-            "action": "POP",
-            "block": [Function],
-            "createHref": [Function],
-            "go": [Function],
-            "goBack": [Function],
-            "goForward": [Function],
-            "length": 1,
-            "listen": [Function],
-            "location": Object {
-              "hash": "",
-              "pathname": "/",
-              "search": "",
-              "state": undefined,
-            },
-            "push": [Function],
-            "replace": [Function],
+            "minHeight": "80vh",
           }
         }
-        isDraftPlan={null}
-        isFinalizedPlan={null}
-        isNewPlan={false}
-        jurisdictionsById={Object {}}
-        loadedJurisdictionIds={Array []}
-        location={[MockFunction]}
-        match={
-          Object {
-            "isExact": true,
-            "params": Object {
-              "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
-            },
-            "path": "/intervention/irs/plan/:id",
-            "url": "/intervention/irs/plan/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
-          }
-        }
-        organizationsById={Object {}}
-        planById={null}
-        planId="ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
-        supersetService={[Function]}
       >
-        <Ripple
-          borderColor="#ff5d00"
-          borderStyle="solid"
-          borderWidth="4px"
-          height="64px"
-          minHeight="80vh"
-          width="64px"
+        <div
+          className="lds-ripple"
+          style={
+            Object {
+              "height": "64px",
+              "width": "64px",
+            }
+          }
         >
           <div
-            className="lds-ripple-parent"
             style={
               Object {
-                "minHeight": "80vh",
+                "borderColor": "#ff5d00",
+                "borderStyle": "solid",
+                "borderWidth": "4px",
               }
             }
-          >
-            <div
-              className="lds-ripple"
-              style={
-                Object {
-                  "height": "64px",
-                  "width": "64px",
-                }
+          />
+          <div
+            style={
+              Object {
+                "borderColor": "#ff5d00",
+                "borderStyle": "solid",
+                "borderWidth": "4px",
               }
-            >
-              <div
-                style={
-                  Object {
-                    "borderColor": "#ff5d00",
-                    "borderStyle": "solid",
-                    "borderWidth": "4px",
-                  }
-                }
-              />
-              <div
-                style={
-                  Object {
-                    "borderColor": "#ff5d00",
-                    "borderStyle": "solid",
-                    "borderWidth": "4px",
-                  }
-                }
-              />
-            </div>
-          </div>
-        </Ripple>
-      </IrsPlan>
-    </Connect(IrsPlan)>
-  </Router>
-</Provider>
+            }
+          />
+        </div>
+      </div>
+    </Ripple>
+  </IrsPlan>
+</Connect(IrsPlan)>
+`;
+
+exports[`containers/pages/IRS/plan renders correctly if prop planById is not null 1`] = `
+<Connect(IrsPlan)
+  history={
+    Object {
+      "action": "POP",
+      "block": [Function],
+      "createHref": [Function],
+      "go": [Function],
+      "goBack": [Function],
+      "goForward": [Function],
+      "length": 1,
+      "listen": [Function],
+      "location": Object {
+        "hash": "",
+        "pathname": "/",
+        "search": "",
+        "state": undefined,
+      },
+      "push": [Function],
+      "replace": [Function],
+    }
+  }
+  location={[MockFunction]}
+  match={
+    Object {
+      "isExact": true,
+      "params": Object {
+        "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
+      },
+      "path": "/intervention/irs/plan/:id",
+      "url": "/intervention/irs/plan/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
+    }
+  }
+  planById={
+    Object {
+      "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
+      "jurisdiction_depth": 2,
+      "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
+      "jurisdiction_name": "NVI_439",
+      "jurisdiction_name_path": Array [
+        "Chadiza",
+        "Naviluli",
+      ],
+      "jurisdiction_parent_id": "2944",
+      "jurisdiction_path": Array [
+        "2939",
+        "2944",
+      ],
+      "plan_date": "2019-06-18",
+      "plan_effective_period_end": "2019-06-18",
+      "plan_effective_period_start": "2019-07-31",
+      "plan_fi_reason": "Routine",
+      "plan_fi_status": "A1",
+      "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+      "plan_intervention_type": "FI",
+      "plan_status": "active",
+      "plan_title": "A1-Tha Luang Village 1 Focus 01",
+      "plan_version": "1",
+    }
+  }
+>
+  <IrsPlan
+    allJurisdictionIds={Array []}
+    assignmentsArray={Array []}
+    fetchAllJurisdictionIdsActionCreator={[Function]}
+    fetchAssignmentsActionCreator={[Function]}
+    fetchJurisdictionsActionCreator={[Function]}
+    fetchOrganizationsActionCreator={[Function]}
+    fetchPlansActionCreator={[Function]}
+    history={
+      Object {
+        "action": "POP",
+        "block": [Function],
+        "createHref": [Function],
+        "go": [Function],
+        "goBack": [Function],
+        "goForward": [Function],
+        "length": 1,
+        "listen": [Function],
+        "location": Object {
+          "hash": "",
+          "pathname": "/",
+          "search": "",
+          "state": undefined,
+        },
+        "push": [Function],
+        "replace": [Function],
+      }
+    }
+    isDraftPlan={null}
+    isFinalizedPlan={null}
+    isNewPlan={false}
+    jurisdictionsById={Object {}}
+    loadedJurisdictionIds={Array []}
+    location={[MockFunction]}
+    match={
+      Object {
+        "isExact": true,
+        "params": Object {
+          "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
+        },
+        "path": "/intervention/irs/plan/:id",
+        "url": "/intervention/irs/plan/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
+      }
+    }
+    organizationsById={Object {}}
+    planById={
+      Object {
+        "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
+        "jurisdiction_depth": 2,
+        "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
+        "jurisdiction_name": "NVI_439",
+        "jurisdiction_name_path": Array [
+          "Chadiza",
+          "Naviluli",
+        ],
+        "jurisdiction_parent_id": "2944",
+        "jurisdiction_path": Array [
+          "2939",
+          "2944",
+        ],
+        "plan_date": "2019-06-18",
+        "plan_effective_period_end": "2019-06-18",
+        "plan_effective_period_start": "2019-07-31",
+        "plan_fi_reason": "Routine",
+        "plan_fi_status": "A1",
+        "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+        "plan_intervention_type": "FI",
+        "plan_status": "active",
+        "plan_title": "A1-Tha Luang Village 1 Focus 01",
+        "plan_version": "1",
+      }
+    }
+    planId="ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
+    supersetService={[Function]}
+  >
+    <Ripple
+      borderColor="#ff5d00"
+      borderStyle="solid"
+      borderWidth="4px"
+      height="64px"
+      minHeight="80vh"
+      width="64px"
+    >
+      <div
+        className="lds-ripple-parent"
+        style={
+          Object {
+            "minHeight": "80vh",
+          }
+        }
+      >
+        <div
+          className="lds-ripple"
+          style={
+            Object {
+              "height": "64px",
+              "width": "64px",
+            }
+          }
+        >
+          <div
+            style={
+              Object {
+                "borderColor": "#ff5d00",
+                "borderStyle": "solid",
+                "borderWidth": "4px",
+              }
+            }
+          />
+          <div
+            style={
+              Object {
+                "borderColor": "#ff5d00",
+                "borderStyle": "solid",
+                "borderWidth": "4px",
+              }
+            }
+          />
+        </div>
+      </div>
+    </Ripple>
+  </IrsPlan>
+</Connect(IrsPlan)>
 `;
