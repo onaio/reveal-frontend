@@ -81,11 +81,8 @@ import {
   PlanJurisdictionFormFields,
   PlanSchema,
 } from './helpers';
-import { PlanActionCodesType } from './types';
-
-import ConnectedPlansLocationNames from '../../pages/InterventionPlan/UpdatePlan/PlanLocationNames';
 import './style.css';
-import { valuesWithJurisdiction } from './tests/fixtures';
+import { PlanActionCodesType } from './types';
 
 /** initial values for plan jurisdiction forms */
 const initialJurisdictionValues: PlanJurisdictionFormFields = {

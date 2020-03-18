@@ -2,12 +2,14 @@
  * assigned to a specific plan
  */
 import reducerRegistry from '@onaio/redux-reducer-registry';
-import React, { Fragment, ReactElement, useEffect } from 'react';
+import React, { ReactElement, useEffect } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { Store } from 'redux';
 import Loading from '../../../../../components/page/Loading';
 import { PlanDefinition } from '../../../../../configs/settings';
-import { NO_PLAN_LOADED_MESSAGE, OPENSRP_LOCATIONS_BY_PLAN } from '../../../../../constants';
+import { FI_SINGLE_URL, OPENSRP_LOCATIONS_BY_PLAN } from '../../../../../constants';
+import { displayError } from '../../../../../helpers/errors';
 import { OpenSRPService } from '../../../../../services/opensrp';
 import store from '../../../../../store';
 import locationsReducer, {
@@ -63,14 +65,14 @@ const PlanLocationNames = (props: Props) => {
         store.dispatch(actionCreator(response, planId));
       })
       .catch((err: Error) => {
-        /** what are we doing with errors?? */
+        displayError(err);
       });
   }
 
   useEffect(() => {
     if (plan) {
       const planId = plan.identifier;
-      loadLocations(serviceClass, planId, fetchLocationsAction);
+      loadLocations(serviceClass, planId, fetchLocationsAction).catch(err => displayError(err));
     }
   }, []);
 
@@ -83,7 +85,7 @@ const PlanLocationNames = (props: Props) => {
       {props.locations.map((location, index) => {
         return (
           <li key={index}>
-            <span>{location.name}</span>
+            <Link to={`${FI_SINGLE_URL}/${location.identifier}`}>{location.name}</Link>
             {props.child && props.child(location.name, location.identifier, index)}
           </li>
         );
