@@ -9,9 +9,9 @@ import reducer, {
   removeAssignmentsAction,
   resetPlanAssignments,
 } from '..';
-import * as fixtures from '../../../tests/fixtures';
-
+import { setDefaultValues } from '../../../../../helpers/utils';
 import store from '../../../../index';
+import * as fixtures from '../../../tests/fixtures';
 reducerRegistry.register(reducerName, reducer);
 
 describe('reducers/assignments', () => {
@@ -56,5 +56,8 @@ describe('reducers/assignments', () => {
     );
     const assignments = getAssignmentsArrayByPlanId(store.getState(), fixtures.assignment1.plan);
     expect(assignments.length).toBe(1);
+  });
+  it('should set default value', () => {
+    expect(setDefaultValues({}, 'planId')).toEqual({ planId: [] });
   });
 });
