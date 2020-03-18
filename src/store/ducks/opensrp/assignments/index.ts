@@ -105,15 +105,16 @@ export const fetchAssignments = (assignmentsList: Assignment[]): FetchAssignment
        */
       if (plan in target) {
         return target;
-      } else {
-        target[plan] = [];
-        return target;
       }
+      target[plan] = [];
+      return target;
     },
   };
 
   let assignmentsByPlanId: AssignmentsByPlanId = {};
-  /** Research on a solution  for Typescript can't infer types when using Proxy */
+  /**
+   * Todo:Research on a solution  for Typescript can't infer types when using Proxy
+   */
   /**
    * A JavaScript Proxy is an object that wraps another object (target) and intercepts the fundamental operations of the target object
    * @param {AssignmentsByPlanId} assignmentsByPlanId target(is an object to wrap) initial value is an empty object
