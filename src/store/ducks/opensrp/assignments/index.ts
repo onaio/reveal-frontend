@@ -3,7 +3,7 @@ import { get } from 'lodash';
 import { Store } from 'redux';
 import { AnyAction } from 'redux';
 import SeamlessImmutable from 'seamless-immutable';
-import { FlexObject } from '../../../../helpers/utils';
+import { FlexObject, setDefaultValues } from '../../../../helpers/utils';
 
 /** The reducer name */
 export const reducerName = 'assignments';
@@ -103,11 +103,7 @@ export const fetchAssignments = (assignmentsList: Assignment[]): FetchAssignment
       /**
        * Check if the planId already exists then return the target else add the key with an empty array value
        */
-      if (plan in target) {
-        return target;
-      }
-      target[plan] = [];
-      return target;
+      return setDefaultValues(target, plan);
     },
   };
 
