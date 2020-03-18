@@ -83,6 +83,20 @@ export const irsPlanRecord1: PlanRecord = {
   plan_version: '1',
 };
 
+export const irsPlanRecordNoJurisdictionIds: PlanRecord = {
+  id: '0230f9e8-1f30-5e91-8693-4c993661785e',
+  plan_date: '2019-08-09',
+  plan_effective_period_end: '2019-08-29',
+  plan_effective_period_start: '2019-08-09',
+  plan_fi_reason: '',
+  plan_fi_status: '',
+  plan_id: '0230f9e8-1f30-5e91-8693-4c993661785e',
+  plan_intervention_type: InterventionType.IRS,
+  plan_status: PlanStatus.DRAFT,
+  plan_title: 'IRS 2019-08-09',
+  plan_version: '1',
+};
+
 export const irsPlanRecordResponse1 = {
   date: '2019-08-09',
   effective_period_end: '2019-08-29',
@@ -132,3 +146,20 @@ export const childrenByParentId = {
 export const jurisdictionIdsByPlanId = {
   [irsPlanRecord1.id]: ['1A', '1B', '1Aa', '1Ab', '1Ba', '1Bb', '3952'],
 };
+
+export const jurisidictionResults = [
+  { geographic_level: 2, id: '3952', name: '1B - 3952', parent_id: '1B' },
+];
+
+export const parentlessParentJurisdictionResults = [
+  { geographic_level: 0, id: '1B', name: '1B' },
+  { geographic_level: 1, id: '3952', name: '1B - 3952', parent_id: '1B' },
+];
+
+export const locationResults = [
+  {
+    properties: {
+      name: 'TH',
+    },
+  },
+];
