@@ -112,11 +112,8 @@ describe('containers/pages/IRS/plan', () => {
       planById: irsPlanRecord1,
       supersetService: supersetServiceMock,
     };
-    const mockRead = jest.fn();
     const mockList = jest.fn();
-    OpenSRPService.prototype.read = mockRead;
     OpenSRPService.prototype.list = mockList;
-    mockRead.mockReturnValueOnce(Promise.resolve(irsPlanDefinition1));
     mockList.mockReturnValueOnce(Promise.resolve(fixtures.organizations));
     const extractPlanRecordResponseFromPlanPayloadMock = jest.spyOn(
       planDucks,
@@ -136,7 +133,7 @@ describe('containers/pages/IRS/plan', () => {
     wrapper.unmount();
   });
 
-  it('renders parentless jurisdiction correctly', async () => {
+  it('renders correctly if a jurisidiction parent is parentless', async () => {
     const mock: any = jest.fn();
     const supersetServiceMock = jest.fn(async () => parentlessParentJurisdictionResults);
     const { id } = fixtures.plan1;
@@ -156,10 +153,7 @@ describe('containers/pages/IRS/plan', () => {
     const mockList = jest.fn();
     OpenSRPService.prototype.read = mockRead;
     OpenSRPService.prototype.list = mockList;
-    mockRead
-      .mockReturnValue(Promise.resolve(locationResults))
-      .mockReturnValueOnce(Promise.resolve(irsPlanDefinition1))
-      .mockReturnValueOnce(Promise.resolve(locationResults));
+    mockRead.mockReturnValueOnce(Promise.resolve(locationResults));
     mockList.mockReturnValueOnce(Promise.resolve(fixtures.organizations));
 
     const wrapper = mount(
@@ -190,11 +184,8 @@ describe('containers/pages/IRS/plan', () => {
       planById: irsPlanRecordNoJurisdictionIds,
       supersetService: supersetServiceMock,
     };
-    const mockRead = jest.fn();
     const mockList = jest.fn();
-    OpenSRPService.prototype.read = mockRead;
     OpenSRPService.prototype.list = mockList;
-    mockRead.mockReturnValueOnce(Promise.resolve(irsPlanDefinition1));
     mockList.mockReturnValueOnce(Promise.resolve(fixtures.organizations));
 
     const wrapper = mount(
