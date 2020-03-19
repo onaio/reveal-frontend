@@ -2,8 +2,10 @@ import reducerRegistry from '@onaio/redux-reducer-registry';
 import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import flushPromises from 'flush-promises';
+import { createBrowserHistory } from 'history';
 import React from 'react';
 import { Provider } from 'react-redux';
+import { Router } from 'react-router-dom';
 import ConnectedPlansLocationNames, { PlanLocationNames } from '..';
 import { OPENSRP_LOCATIONS_BY_PLAN } from '../../../../../../constants';
 import { OpenSRPService } from '../../../../../../services/opensrp';
@@ -18,6 +20,7 @@ import { sampleLocations } from '../../../../../../store/ducks/opensrp/locations
 import { plans } from '../../../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
 
 reducerRegistry.register(reducerName, locationReducer);
+const history = createBrowserHistory();
 
 // tslint:disable-next-line: no-var-requires
 const fetch = require('jest-fetch-mock');
@@ -37,7 +40,11 @@ describe('src/components/locationIdToNames', () => {
       serviceClass: OpenSRPService,
     };
 
-    shallow(<PlanLocationNames {...props} />);
+    shallow(
+      <Router history={history}>
+        <PlanLocationNames {...props} />
+      </Router>
+    );
   });
 
   it('Makes the correct api calls', async () => {
@@ -52,7 +59,11 @@ describe('src/components/locationIdToNames', () => {
       serviceClass: classMock,
     };
 
-    mount(<PlanLocationNames {...props} />);
+    mount(
+      <Router history={history}>
+        <PlanLocationNames {...props} />
+      </Router>
+    );
     await flushPromises();
 
     // to the correct endpoint
@@ -64,12 +75,16 @@ describe('src/components/locationIdToNames', () => {
   it('renders correctly', async () => {
     fetch.once(JSON.stringify([]));
     const props = {
-      child: () => <h2 class="mock-child">Mock child render function</h2>,
+      child: () => <h2 className="mock-child">Mock child render function</h2>,
       locations: sampleLocations,
       plan: plans[1],
     };
 
-    const wrapper = mount(<PlanLocationNames {...props} />);
+    const wrapper = mount(
+      <Router history={history}>
+        <PlanLocationNames {...props} />
+      </Router>
+    );
     await flushPromises();
     wrapper.update();
 
@@ -79,7 +94,7 @@ describe('src/components/locationIdToNames', () => {
     expect(toJson(wrapper.find('li').at(1))).toMatchSnapshot();
 
     // invokes render prop child
-    expect(wrapper.find('h2.mock-child')).toMatchSnapshot();
+    expect(toJson(wrapper.find('h2.mock-child'))).toMatchSnapshot();
   });
 
   it('works correctly with store', () => {
@@ -92,7 +107,9 @@ describe('src/components/locationIdToNames', () => {
     // should display the correct location Name
     const wrapper = mount(
       <Provider store={store}>
-        <ConnectedPlansLocationNames {...props} />
+        <Router history={history}>
+          <ConnectedPlansLocationNames {...props} />
+        </Router>
       </Provider>
     );
     wrapper.update();
