@@ -1222,10 +1222,10 @@
     client-oauth2 "^4.2.3"
     query-string "^6.4.2"
 
-"@onaio/google-analytics@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@onaio/google-analytics/-/google-analytics-0.0.1.tgz#0577803516a5cde0766bbcbed6924580a9af0925"
-  integrity sha512-RlRyEYH3hsmi3jX7+JxddZHuezkc8amcTxH8dIfAK9EqMLeQhp7CpXpBKmWCKaEm4th74zdpuAV6FMc8jgsp6Q==
+"@onaio/google-analytics@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@onaio/google-analytics/-/google-analytics-0.0.2.tgz#8c723e788a4d3d2506d8e9fa58a080e056ee6dda"
+  integrity sha512-CB5YSrFTT+7VP8VlIRbHmkuqdlT562hDEK+IpBSpJoahEoAEtsZDKUv1e8g12GtUJy1z/DF9DkM4DIZZMruqJA==
   dependencies:
     "@onaio/react-utils" "^0.0.1"
     "@onaio/utils" "^0.0.1"

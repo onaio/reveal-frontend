@@ -7,9 +7,8 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import { OPENSRP_LOGOUT_URL } from '../../configs/env';
-import { GA_ROUTE_COMPONENT, GA_WITH_TRACKER } from '../../constants';
 import store from '../../store';
-import App, { AppProps } from '../App';
+import App from '../App';
 
 const history = createBrowserHistory();
 
@@ -44,36 +43,6 @@ describe('App', () => {
       </Provider>
     );
     expect(toJson(wrapper)).toMatchSnapshot();
-    wrapper.unmount();
-  });
-
-  it('renders correctly with the default props', () => {
-    const wrapper = mount(
-      <Provider store={store}>
-        <Router history={history}>
-          <App />
-        </Router>
-      </Provider>
-    );
-    expect(wrapper.find('App').props()).toEqual({
-      ga_tracking_method: GA_ROUTE_COMPONENT,
-    });
-    wrapper.unmount();
-  });
-
-  it('renders correctly if google anlytics approach is with tracker', () => {
-    const props: AppProps = {
-      ga_tracking_method: GA_WITH_TRACKER,
-    };
-
-    const wrapper = mount(
-      <Provider store={store}>
-        <Router history={history}>
-          <App {...props} />
-        </Router>
-      </Provider>
-    );
-    expect(wrapper.find('WithGATrackerHOC').exists()).toBeTruthy();
     wrapper.unmount();
   });
 

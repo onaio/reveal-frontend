@@ -34,9 +34,7 @@ exports[`App renders App correctly 1`] = `
       }
     }
   >
-    <App
-      ga_tracking_method="Route Component"
-    >
+    <App>
       <Container
         fluid={true}
         tag="div"

@@ -86,42 +86,36 @@ import store from '../store';
 import { getOauthProviderState } from '../store/selectors';
 import './App.css';
 
-export interface AppProps {
-  foo?: string; // Will remove this dummy
-}
-
 /** Interface defining component state */
 export interface AppState {
-  username: string;
+  username?: string;
 }
 
 /** Main App component */
-class App extends Component<AppProps, AppState> {
-  constructor(props: AppProps) {
+class App extends Component<{}, AppState> {
+  constructor(props: {}) {
     super(props);
     this.state = {
       username: (getUser(store.getState()) || {}).username || '',
     };
   }
 
-  public componentDidUpdate(_: AppProps, prevState: AppState) {
+  public componentDidUpdate(_: {}, prevState: AppState) {
     const username = (getUser(store.getState()) || {}).username || '';
 
     if (prevState.username !== username) {
       this.setState({
         username,
       });
+      const dimensions = {
+        env: GA_ENV,
+        username,
+      };
+      setDimensions(dimensions);
     }
   }
 
   public render() {
-    const { username } = this.state;
-    const dimensions = {
-      env: GA_ENV,
-      username,
-    };
-    setDimensions(dimensions);
-
     return (
       <Container fluid={true}>
         <Helmet titleTemplate={`%s | ` + WEBSITE_NAME} defaultTitle="" />
