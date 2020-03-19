@@ -348,4 +348,8 @@ describe('helpers/utils', () => {
     const result = IndicatorThresholdItemPercentage(Item);
     expect(result).toEqual('60%');
   });
+  it('Should return percentage value with supplied decimal value', () => {
+    const result = IndicatorThresholdItemPercentage(Item, 1);
+    expect(result).toEqual('60.0%');
+  });
 });
