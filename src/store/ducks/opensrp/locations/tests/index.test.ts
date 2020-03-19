@@ -1,6 +1,6 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import { LocationState } from 'history';
-import { cloneDeep, keyBy } from 'lodash';
+import { cloneDeep } from 'lodash';
 import { FlushThunks, Reducer, Selector } from 'redux-testkit';
 import store from '../../../../index';
 import reducer, {
