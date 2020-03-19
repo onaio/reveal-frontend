@@ -1222,12 +1222,27 @@
     client-oauth2 "^4.2.3"
     query-string "^6.4.2"
 
+"@onaio/google-analytics@^0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@onaio/google-analytics/-/google-analytics-0.0.1.tgz#0577803516a5cde0766bbcbed6924580a9af0925"
+  integrity sha512-RlRyEYH3hsmi3jX7+JxddZHuezkc8amcTxH8dIfAK9EqMLeQhp7CpXpBKmWCKaEm4th74zdpuAV6FMc8jgsp6Q==
+  dependencies:
+    "@onaio/react-utils" "^0.0.1"
+    "@onaio/utils" "^0.0.1"
+    memoize-one "^5.1.1"
+    react-ga "^2.7.0"
+
 "@onaio/list-view@^0.0.1":
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/@onaio/list-view/-/list-view-0.0.1.tgz#575f48f8a167437974c3ea2a37c4996190ca1331"
   integrity sha512-/U5RNGIVXYTp5ecn6I/C/FErzAlYVCUAoYARyojdJjCdgo1245s/kc8R4f3VT/fztf14mQpwh1FNS+5qIjETKA==
   dependencies:
     "@onaio/element-map" "^0.0.5"
+
+"@onaio/react-utils@^0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@onaio/react-utils/-/react-utils-0.0.1.tgz#506df861bdc947ac63973d3b3f821836af39ad08"
+  integrity sha512-Bpwvgq2js2kn0KA8c3y3ClRTO3EYxGXNGipILuLUPiXua/lm7BGZ1PP1T4D8EXTDgwc4ELpL/aNM2n9NxbJ6Gw==
 
 "@onaio/redux-reducer-registry@^0.0.8":
   version "0.0.8"
@@ -1261,6 +1276,11 @@
   dependencies:
     jest-fetch-mock "^2.1.1"
     papaparse "^4.6.3"
+
+"@onaio/utils@^0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@onaio/utils/-/utils-0.0.1.tgz#c4b6b0afb3b7ad6e2b6135a160d3d79e53e286af"
+  integrity sha512-JybtApO1LqxidE+avNdu6Qq+EOvywn92/h++HIMvA5DIKMZ6e1OGdG2ZMbFkylmx8JpvVcFypSIomPzKUYvL7w==
 
 "@samverschueren/stream-to-observable@^0.3.0":
   version "0.3.0"
@@ -9221,6 +9241,11 @@ memoize-one@^5.0.0:
   version "5.0.5"
   resolved "https://registry.yarnpkg.com/memoize-one/-/memoize-one-5.0.5.tgz#8cd3809555723a07684afafcd6f756072ac75d7e"
   integrity sha512-ey6EpYv0tEaIbM/nTDOpHciXUvd+ackQrJgEzBwemhZZIWZjcyodqEcrmqDy2BKRTM3a65kKBV4WtLXJDt26SQ==
+
+memoize-one@^5.1.1:
+  version "5.1.1"
+  resolved "https://registry.yarnpkg.com/memoize-one/-/memoize-one-5.1.1.tgz#047b6e3199b508eaec03504de71229b8eb1d75c0"
+  integrity sha512-HKeeBpWvqiVJD57ZUAsJNm71eHTykffzcLZVYWiVfQeI1rJtuEaS7hQiEpWfVVk18donPwJEcFKIkCmPJNOhHA==
 
 memory-fs@^0.4.0, memory-fs@~0.4.1:
   version "0.4.1"

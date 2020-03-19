@@ -14,6 +14,7 @@
     "@onaio/drill-down-table": "^0.0.21",
     "@onaio/element-map": "^0.0.2",
     "@onaio/gatekeeper": "^0.0.16",
+    "@onaio/google-analytics": "^0.0.1",
     "@onaio/list-view": "^0.0.1",
     "@onaio/redux-reducer-registry": "^0.0.8",
     "@onaio/session-reducer": "^0.0.10",

@@ -109,7 +109,3 @@ export const MOSQUITO_COLLECTION_CODE = 'Mosquito Collection';
 export const PRACTITIONER_CODE = {
   text: 'Community Health Worker',
 };
-
-// Google analytics tracking methods
-export const GA_WITH_TRACKER = 'With Tracker';
-export const GA_ROUTE_COMPONENT = 'Route Component';
