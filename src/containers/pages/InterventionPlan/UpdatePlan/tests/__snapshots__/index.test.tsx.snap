@@ -1,5 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`components/InterventionPlan/UpdatePlan renders plan Location names component: Renders PlanLocation Mock 1`] = `
+<div
+  id="Helmuth"
+>
+   No plan survives enemy contact. 
+</div>
+`;
+
 exports[`components/InterventionPlan/UpdatePlan renders plan definition list correctly: Breadcrumb 1`] = `
 <Breadcrumb
   aria-label="breadcrumb"
