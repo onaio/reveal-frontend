@@ -21,8 +21,8 @@ import planDefinitionReducer, {
   reducerName as planDefinitionReducerName,
 } from '../../../../store/ducks/opensrp/PlanDefinition';
 import ConnectedCaseDetails, { CaseDetailsProps } from './CaseDetails';
-import { getEventId, planIsReactive } from './utils';
 import ConnectedPlanLocationNames from './PlanLocationNames';
+import { getEventId, planIsReactive } from './utils';
 
 /** register the plan definitions reducer */
 reducerRegistry.register(planDefinitionReducerName, planDefinitionReducer);
@@ -94,6 +94,11 @@ const UpdatePlan = (props: RouteComponentProps<RouteParams> & UpdatePlanProps) =
   const planFormProps = {
     ...propsForUpdatingPlans,
     ...(plan && { initialValues: getPlanFormValues(plan) }),
+    /** a renderProp prop. this tells the planForm; I will give you a component that knows of the plan you are displaying,
+     * the component will get jurisdictions associated with that plan and render them as links, what you(planForm)
+     * will do, is provide a child prop(a renderProp) that tells the mentioned component what other stuff you would wish
+     * displayed alongside the jurisdiction names links.
+     */
     renderLocationNames: (
       child?: (locationName: string, locationId: string, index: number) => JSX.Element
     ) => <ConnectedPlanLocationNames child={child} plan={plan} />,
