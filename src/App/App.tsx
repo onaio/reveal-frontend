@@ -85,12 +85,13 @@ toast.configure({
   autoClose: TOAST_AUTO_CLOSE_DELAY /** defines how long a toast remains visible on screen */,
 });
 
-const initializeOptions = {
-  testMode: GA_ENV_TEST === GA_ENV,
-};
-
 /** Initialize google analytics */
-initGoogleAnalytics(GA_CODE, initializeOptions);
+if (GA_CODE) {
+  const initiGoogleAnalyticsOptions = {
+    testMode: GA_ENV_TEST === GA_ENV,
+  };
+  initGoogleAnalytics(GA_CODE, initiGoogleAnalyticsOptions);
+}
 
 /** Interface defining component state */
 export interface AppState {
@@ -107,17 +108,19 @@ class App extends Component<{}, AppState> {
   }
 
   public componentDidUpdate(_: {}, prevState: AppState) {
-    const username = (getUser(store.getState()) || {}).username || '';
+    if (GA_CODE) {
+      const username = (getUser(store.getState()) || {}).username || '';
 
-    if (prevState.username !== username) {
-      this.setState({
-        username,
-      });
-      const dimensions = {
-        env: GA_ENV,
-        username,
-      };
-      setDimensions(dimensions);
+      if (prevState.username !== username) {
+        this.setState({
+          username,
+        });
+        const dimensions = {
+          env: GA_ENV,
+          username,
+        };
+        setDimensions(dimensions);
+      }
     }
   }
 
@@ -129,7 +132,7 @@ class App extends Component<{}, AppState> {
         <Container fluid={true}>
           <Row id="main-page-row">
             <Col>
-              {<RouteTracker />}
+              {GA_CODE && <RouteTracker />}
               <Switch>
                 {/* Home Page view */}
                 <ConnectedPrivateRoute
