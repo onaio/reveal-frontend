@@ -8,16 +8,16 @@ import { Link } from 'react-router-dom';
 import { Store } from 'redux';
 import Loading from '../../../../../components/page/Loading';
 import { PlanDefinition } from '../../../../../configs/settings';
-import { FI_SINGLE_URL, OPENSRP_LOCATIONS_BY_PLAN } from '../../../../../constants';
+import { FI_SINGLE_URL } from '../../../../../constants';
 import { displayError } from '../../../../../helpers/errors';
 import { OpenSRPService } from '../../../../../services/opensrp';
-import store from '../../../../../store';
 import locationsReducer, {
   fetchLocations,
   getLocationsByPlanId,
   Location,
   reducerName as locationsReducerName,
 } from '../../../../../store/ducks/opensrp/locations';
+import { loadLocations } from './utils';
 
 // register the locations reducer.
 reducerRegistry.register(locationsReducerName, locationsReducer);
@@ -43,31 +43,6 @@ const defaultProps: Props = {
  */
 const PlanLocationNames = (props: Props) => {
   const { serviceClass, fetchLocationsAction, plan } = props;
-
-  /** async function that takes in a planId and calls
-   * performs the api call and then updates the store
-   *
-   * @param {typeof OpenSRPService} service - the opensrp service class
-   * @param {string} planId - fetch locations attached to plan with this id
-   * @param {typeof fetchLocations} actionCreator - action creator
-   */
-  async function loadLocations(
-    service: typeof OpenSRPService,
-    planId: string,
-    actionCreator: typeof fetchLocations
-  ) {
-    // perform api call and dispatch result
-    const serve = new service(OPENSRP_LOCATIONS_BY_PLAN);
-
-    serve
-      .read(planId)
-      .then((response: Location[]) => {
-        store.dispatch(actionCreator(response, planId));
-      })
-      .catch((err: Error) => {
-        displayError(err);
-      });
-  }
 
   useEffect(() => {
     if (plan) {
