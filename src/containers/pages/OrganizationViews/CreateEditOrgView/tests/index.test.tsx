@@ -172,7 +172,7 @@ it('calls selectors with the correct arguments', async () => {
   );
 
   const state = {
-    gatekeeper: { result: {}, success: null },
+    gatekeeper: { result: {}, success: null, working: false },
     organizations: {
       organizationsById: {
         '4c506c98-d3a9-11e9-bb65-2a2ae2dbcce4': {

@@ -9,7 +9,7 @@ import { PlanDefinition } from '../../../../../configs/settings';
 import { PLAN_UPDATE_URL } from '../../../../../constants';
 import store from '../../../../../store';
 import * as fixtures from '../../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
-import { planDefinition1, planDefinition2 } from './fixtures';
+import { planDefinition1, planDefinition2, updatePlanFormProps } from './fixtures';
 
 /* tslint:disable-next-line no-var-requires */
 const fetch = require('jest-fetch-mock');
@@ -25,7 +25,6 @@ describe('components/InterventionPlan/UpdatePlan', () => {
 
   function getProps() {
     const mock: any = jest.fn();
-    const serviceMock: any = jest.fn(async () => []);
     return {
       fetchPlan: mock,
       history,
@@ -37,7 +36,6 @@ describe('components/InterventionPlan/UpdatePlan', () => {
         url: `${PLAN_UPDATE_URL}/${fixtures.plans[1].identifier}`,
       },
       plan: fixtures.plans[1] as PlanDefinition,
-      service: serviceMock,
     };
   }
 
@@ -59,8 +57,38 @@ describe('components/InterventionPlan/UpdatePlan', () => {
     );
     expect(toJson(wrapper.find('Breadcrumb'))).toMatchSnapshot('Breadcrumb');
     expect(toJson(wrapper.find('h3.page-title'))).toMatchSnapshot('Page title');
-    expect(wrapper.find('PlanForm').props()).toMatchSnapshot('PlanForm');
+    expect(wrapper.find('PlanForm').props()).toEqual({
+      ...updatePlanFormProps,
+      formHandler: expect.any(Function),
+    });
     wrapper.unmount();
+  });
+
+  it('pass correct data to store: API responds with array', async () => {
+    // fetch with a array response
+    fetch.mockResponseOnce(JSON.stringify([fixtures.plans[1]]));
+    const wrapper = mount(
+      <Router history={history}>
+        <UpdatePlan {...getProps()} />
+      </Router>
+    );
+    await new Promise<unknown>(resolve => setImmediate(resolve));
+    const FetchPlanSpy = jest.spyOn(wrapper.props().children.props, 'fetchPlan');
+    expect(FetchPlanSpy).toHaveBeenCalledWith(fixtures.plans[1]);
+    wrapper.unmount();
+  });
+
+  it('pass correct data to store: API responds with object', async () => {
+    // fetch with an object response
+    fetch.mockResponseOnce(JSON.stringify(fixtures.plans[1]));
+    const wrapper = mount(
+      <Router history={history}>
+        <UpdatePlan {...getProps()} />
+      </Router>
+    );
+    await new Promise<unknown>(resolve => setImmediate(resolve));
+    const FetchPlanSpy = jest.spyOn(wrapper.props().children.props, 'fetchPlan');
+    expect(FetchPlanSpy).toHaveBeenCalledWith(fixtures.plans[1]);
   });
 
   it('renders case details when plan is reactive', async () => {

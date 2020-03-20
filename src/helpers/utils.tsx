@@ -426,31 +426,19 @@ export function getColor(taskObject: InitialTask): Color {
     }
   }
 }
-/** Transforms values of certain keys to the specified value
- * {T} obj - object where changes will be made
- * {string[]} propertyNames - list of property names in obj whose values will change
- * {any} newValue - the value to be assigned the property names
- * {any[]} old_value - replace property name if old_value is among specified here
+
+/** filters out plans whose jurisdiction id is null
+ * @param {Plan []} plansArray - a list of pre-filtered plans
+ *
+ * @return {Plan []} - A list of filtered plans
  */
-export function transformValues<T>(
-  obj: T,
-  propertyNames: string[],
-  newValue: string = '',
-  oldValue = [0, '0', null, 'null']
-): T {
-  const thisObj: T = { ...obj };
-  propertyNames.forEach(propertyName => {
-    let preOldValue = (thisObj as any)[propertyName];
-    // preprocess received old value: trim and ensure lower case
-    if (typeof preOldValue === 'string') {
-      preOldValue = preOldValue.toLowerCase().trim();
-    }
-    if ((thisObj as any)[propertyName] !== undefined && oldValue.indexOf(preOldValue) > -1) {
-      (thisObj as any)[propertyName] = newValue;
-    }
+export const removeNullJurisdictionPlans = (plansArray: Plan[]): Plan[] => {
+  return plansArray.filter((plan: Plan) => {
+    const jurisdictionID = plan.jurisdiction_id.toLowerCase().trim();
+    return !jurisdictionID.includes('null');
   });
-  return thisObj;
-}
+};
+
 /** Generic Type for any object to be updated
  *  where T is the base interface and Y is the interface
  * to extend the base
@@ -561,7 +549,7 @@ export const jsxColumns = (colType: string): Column[] | [] => {
                   {cell.original.focusArea.trim() && cell.value}
                   &nbsp;&nbsp;
                   {cell.original.focusArea.trim() && (
-                    <Link to={`${FI_SINGLE_URL}/${cell.original.id}`}>
+                    <Link to={`${FI_SINGLE_URL}/${cell.original.jurisdiction_id}`}>
                       <FontAwesomeIcon icon={['fas', 'external-link-square-alt']} />
                     </Link>
                   )}

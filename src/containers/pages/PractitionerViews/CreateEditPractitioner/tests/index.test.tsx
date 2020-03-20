@@ -173,7 +173,7 @@ it('calls selectors with the correct arguments', async () => {
   );
 
   const state = {
-    gatekeeper: { result: {}, success: null },
+    gatekeeper: { result: {}, success: null, working: false },
     practitioner: {
       practitionerRoles: {},
       practitionersById: {

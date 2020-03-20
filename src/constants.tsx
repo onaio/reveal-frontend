@@ -18,6 +18,7 @@ export const MAP_ID = 'map-1';
 export const GEOJSON = 'geojson';
 export const STRINGIFIED_GEOJSON = 'stringified-geojson';
 export const MAP = 'map';
+export const MAP_AREA = 'map-area';
 export const DRAFT = 'draft';
 export const NEW = 'new';
 export const A1 = 'A1';
@@ -42,9 +43,14 @@ export const BEDNET_DISTRIBUTION_ACTIVITY_CODE = 'bednetDistribution';
 export const LARVAL_DIPPING_ACTIVITY_CODE = 'larvalDipping';
 export const MOSQUITO_COLLECTION_ACTIVITY_CODE = 'mosquitoCollection';
 export const GA_ENV_TEST = 'test';
+export const PLAN_ID = 'plan_id';
+export const PLAN_INTERVENTION_TYPE = 'plan_intervention_type';
+export const TWO_HUNDRED_PX = '200px';
+export const PLAN_RECORD_BY_ID = 'planRecordsById';
 
 // internal urls
-export const LOGIN_URL = '/login';
+export const LOGIN_URL = '/fe/login';
+export const EXPRESS_LOGIN_URL = '/login';
 export const LOGOUT_URL = '/logout';
 export const HOME_URL = '/';
 export const INTERVENTION_IRS_URL = '/intervention/irs';
@@ -73,6 +79,8 @@ export const PRACTITIONERS_LIST_URL = '/practitioners';
 export const ASSIGN_PRACTITIONERS_URL = '/teams/assignPractitioners';
 export const PLAN = 'plan';
 export const REPORT = 'report';
+export const OAUTH_CALLBACK_URL = '/fe/oauth/callback/opensrp';
+export const OAUTH_CALLBACK_PATH = '/fe/oauth/callback/:id';
 
 // OpenSRP API strings
 export const OPENSRP_PRACTITIONER_ENDPOINT = 'practitioner';

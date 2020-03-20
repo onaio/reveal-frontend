@@ -2,10 +2,11 @@ import DrillDownTable, { hasChildrenFunc } from '@onaio/drill-down-table';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset, { SupersetFormData } from '@onaio/superset-connector';
 import { get } from 'lodash';
-import React, { useEffect, useState } from 'react';
+import React, { SyntheticEvent, useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
+import { Column, RowInfo } from 'react-table';
 import 'react-table/react-table.css';
 import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
@@ -192,17 +193,19 @@ const JurisdictionReport = (props: GenericJurisdictionProps & RouteComponentProp
     data,
     defaultPageSize: data.length,
     extraCellProps: { urlPath: baseURL },
-    getTdProps: (_: any, rowInfo: any, column: any) => {
+    getTdProps: (_: Partial<Store>, rowInfo: RowInfo | undefined, column: Column | undefined) => {
       return {
-        onClick: (__: any, handleOriginal: any) => {
-          if (
-            column.id === 'jurisdiction_name' &&
-            hasChildren(rowInfo, parentNodes, 'jurisdiction_id')
-          ) {
-            setJurisdictionId(rowInfo.original.jurisdiction_id);
-          }
-          if (handleOriginal) {
-            handleOriginal();
+        onClick: (__: SyntheticEvent, handleOriginal: () => void) => {
+          if (rowInfo && column) {
+            if (
+              column.id === 'jurisdiction_name' &&
+              hasChildren(rowInfo, parentNodes, 'jurisdiction_id')
+            ) {
+              setJurisdictionId(rowInfo.original.jurisdiction_id);
+            }
+            if (handleOriginal) {
+              handleOriginal();
+            }
           }
         },
       };
@@ -263,9 +266,12 @@ interface DispatchedStateProps {
 }
 
 /** map state to props */
-const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateProps => {
+const mapStateToProps = (
+  state: Partial<Store>,
+  ownProps: GenericJurisdictionProps & RouteComponentProps<RouteParams>
+): DispatchedStateProps => {
   const planId = ownProps.match.params.planId || null;
-  const plan = getIRSPlanById(state, planId);
+  const plan = planId ? getIRSPlanById(state, planId) : null;
   let jurisdictions: GenericJurisdiction[] = [];
 
   slices.forEach(

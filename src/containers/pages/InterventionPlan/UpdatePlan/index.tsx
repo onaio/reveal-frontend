@@ -47,7 +47,6 @@ const UpdatePlan = (props: RouteComponentProps<RouteParams> & UpdatePlanProps) =
   if (!planIdentifier) {
     return null; /** we should make this into a better error page */
   }
-
   const apiService = new service(OPENSRP_PLANS);
 
   /** async function to load the data */
@@ -55,7 +54,8 @@ const UpdatePlan = (props: RouteComponentProps<RouteParams> & UpdatePlanProps) =
     try {
       setLoading(plan === null); // only set loading when there are no plans
       const planFromAPI = await apiService.read(planIdentifier);
-      fetchPlan(planFromAPI);
+      const currentPlan = Array.isArray(planFromAPI) ? planFromAPI[0] : planFromAPI;
+      fetchPlan(currentPlan);
     } catch (e) {
       displayError(e);
     } finally {

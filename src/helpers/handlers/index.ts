@@ -32,6 +32,9 @@ export interface FeatureWithLayer
   extends Feature<Point | MultiPoint | LineString | MultiLineString | Polygon | MultiPolygon> {
   layer: FlexObject;
 }
+
+export type PopHandler = (event: EventData) => void;
+
 export function popupHandler(event: EventData) {
   /** currentGoal is currently not being used but we  may  use it in the future  */
   const features = event.target.queryRenderedFeatures(event.point) as FeatureWithLayer[];

@@ -1,3 +1,4 @@
+import FormikEffect from '@onaio/formik-effect';
 import { ErrorMessage, Field, FieldArray, Form, Formik } from 'formik';
 import { xor } from 'lodash';
 import moment from 'moment';
@@ -26,7 +27,7 @@ import {
   ADD,
   ADD_ACTIVITY,
   ADD_CODED_ACTIVITY,
-  AN_ERROR_OCCURED,
+  AN_ERROR_OCCURRED,
   CASE_NUMBER,
   DESCRIPTION_LABEL,
   END_DATE,
@@ -119,6 +120,10 @@ export interface PlanFormProps {
   cascadingSelect: boolean /** should we use cascading selects for jurisdiction selection */;
   disabledActivityFields: string[] /** activity fields that are disabled */;
   disabledFields: string[] /** fields that are disabled */;
+  formHandler: (
+    curr: any,
+    next: any
+  ) => void /** callback to handle form values, used to pass them to parent components */;
   initialValues: PlanFormFields /** initial values for fields on the form */;
   jurisdictionLabel: string /** the label used for the jurisdiction selection */;
   redirectAfterAction: string /** the url to redirect to after form submission */;
@@ -136,6 +141,7 @@ const PlanForm = (props: PlanFormProps) => {
     cascadingSelect,
     disabledActivityFields,
     disabledFields,
+    formHandler,
     initialValues,
     jurisdictionLabel,
     redirectAfterAction,
@@ -250,6 +256,7 @@ const PlanForm = (props: PlanFormProps) => {
             }}
             className="mb-5"
           >
+            {formHandler && <FormikEffect onChange={formHandler} />}
             <FormGroup className="non-field-errors">
               {globalError !== '' && <p className="">{globalError}</p>}
               <ErrorMessage
@@ -390,7 +397,7 @@ const PlanForm = (props: PlanFormProps) => {
 
                               {errors.jurisdictions && errors.jurisdictions[index] && (
                                 <small className="form-text text-danger jurisdictions-error">
-                                  {AN_ERROR_OCCURED}
+                                  {AN_ERROR_OCCURRED}
                                 </small>
                               )}
 
@@ -936,6 +943,7 @@ const defaultProps: PlanFormProps = {
   cascadingSelect: true,
   disabledActivityFields: [],
   disabledFields: [],
+  formHandler: (_, __) => void 0,
   initialValues: defaultInitialValues,
   jurisdictionLabel: FOCUS_AREA_HEADER,
   redirectAfterAction: PLAN_LIST_URL,

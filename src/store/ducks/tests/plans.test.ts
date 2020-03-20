@@ -2,22 +2,29 @@ import reducerRegistry from '@onaio/redux-reducer-registry';
 import { cloneDeep, keyBy, keys, pickBy, values } from 'lodash';
 import { FlushThunks } from 'redux-testkit';
 import { FIReasons } from '../../../configs/settings';
+import { PLAN_RECORD_BY_ID } from '../../../constants';
 import store from '../../index';
 import reducer, {
   fetchPlanRecords,
   fetchPlans,
   getPlanById,
   getPlanRecordById,
-  getPlanRecordsArray,
   getPlanRecordsById,
   getPlanRecordsIdArray,
   getPlansArray,
+  getPlansArrayByInterventionType,
+  getPlansArrayByJurisdictionIds,
+  getPlansArrayByParentJurisdictionId,
+  getPlansArrayByReason,
+  getPlansArrayByStatus,
   getPlansById,
   getPlansIdArray,
   InterventionType,
+  makePlansArraySelector,
   Plan,
   PlanRecord,
   PlanRecordResponse,
+  plansArrayBaseSelector,
   PlanStatus,
   reducerName,
   removePlansAction,
@@ -43,13 +50,16 @@ describe('reducers/plans', () => {
     expect(getPlanById(store.getState(), 'someId')).toEqual(null);
     expect(getPlanRecordsById(store.getState())).toEqual({});
     expect(getPlanRecordsIdArray(store.getState())).toEqual([]);
-    expect(getPlanRecordsArray(store.getState())).toEqual([]);
+    expect(plansArrayBaseSelector()(store.getState())).toEqual([]);
     expect(getPlanRecordById(store.getState(), 'somId')).toEqual(null);
     expect(getPlansArray(store.getState())).toEqual([]);
   });
 
   it('should fetch Plans', () => {
     store.dispatch(fetchPlans(fixtures.plans));
+
+    const plansArraySelector = makePlansArraySelector();
+
     const allPlans = keyBy(fixtures.plans, (plan: Plan) => plan.id);
     const fiPlans = pickBy(allPlans, (e: Plan) => e.plan_intervention_type === InterventionType.FI);
     const irsPlans = pickBy(
@@ -79,6 +89,8 @@ describe('reducers/plans', () => {
       'plan-id-2',
     ]);
     expect(getPlansIdArray(store.getState(), InterventionType.IRS)).toEqual(['plan-id-2']);
+
+    expect(plansArrayBaseSelector()(store.getState())).toEqual(values(allPlans));
 
     expect(getPlansArray(store.getState(), InterventionType.FI, [], null)).toEqual(values(fiPlans));
     expect(getPlansArray(store.getState(), InterventionType.IRS, [], null)).toEqual(
@@ -113,6 +125,86 @@ describe('reducers/plans', () => {
 
     expect(getPlanById(store.getState(), 'ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f')).toEqual(
       allPlans['ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f']
+    );
+
+    // RESELECT TESTS
+    const fiFilter = {
+      interventionType: InterventionType.FI,
+    };
+    const jurisdictionFilter = {
+      jurisdictionIds: ['450fc15b-5bd2-468a-927a-49cb10d3bcac'],
+    };
+    const statusFilter = {
+      statusList: [PlanStatus.DRAFT],
+    };
+    const reasonFilter = {
+      reason: FIReasons[1],
+    };
+    const parentJurisdictionFilter = {
+      parentJurisdictionId: '2977',
+    };
+
+    expect(getPlansArrayByInterventionType()(store.getState(), {})).toEqual(values(allPlans));
+    expect(getPlansArrayByInterventionType()(store.getState(), fiFilter)).toEqual(values(fiPlans));
+    expect(getPlansArrayByJurisdictionIds()(store.getState(), jurisdictionFilter)).toEqual(
+      values(allPlans).filter(e => e.jurisdiction_id === '450fc15b-5bd2-468a-927a-49cb10d3bcac')
+    );
+    expect(getPlansArrayByStatus()(store.getState(), statusFilter)).toEqual(
+      values(allPlans).filter(e => e.plan_status === PlanStatus.DRAFT)
+    );
+    expect(getPlansArrayByReason()(store.getState(), reasonFilter)).toEqual(
+      values(allPlans).filter(e => e.plan_fi_reason === FIReasons[1])
+    );
+    expect(
+      getPlansArrayByParentJurisdictionId()(store.getState(), parentJurisdictionFilter)
+    ).toEqual(values(allPlans).filter(e => e.jurisdiction_path.includes('2977')));
+    expect(
+      plansArraySelector(store.getState(), {
+        ...fiFilter,
+        ...jurisdictionFilter,
+      })
+    ).toEqual(
+      values(fiPlans).filter(e => e.jurisdiction_id === '450fc15b-5bd2-468a-927a-49cb10d3bcac')
+    );
+
+    expect(
+      plansArraySelector(store.getState(), {
+        interventionType: InterventionType.FI,
+        reason: FIReasons[1],
+      })
+    ).toEqual(values(reactivePlans));
+
+    expect(
+      plansArraySelector(store.getState(), {
+        interventionType: InterventionType.FI,
+        reason: FIReasons[0],
+      })
+    ).toEqual(values(routinePlans));
+
+    expect(
+      plansArraySelector(store.getState(), {
+        interventionType: InterventionType.FI,
+        reason: FIReasons[1],
+        statusList: [PlanStatus.DRAFT],
+      })
+    ).toEqual(values(reactiveDraftPlans));
+
+    expect(
+      plansArraySelector(store.getState(), {
+        interventionType: InterventionType.FI,
+        jurisdictionIds: ['450fc15b-5bd2-468a-927a-49cb10d3bcac'],
+        parentJurisdictionId: '2939',
+        reason: FIReasons[0],
+        statusList: [PlanStatus.ACTIVE],
+      })
+    ).toEqual(
+      values(fiPlans).filter(
+        e =>
+          e.plan_fi_reason === FIReasons[0] &&
+          e.jurisdiction_path.includes('2939') &&
+          e.plan_status === PlanStatus.ACTIVE &&
+          e.jurisdiction_id === '450fc15b-5bd2-468a-927a-49cb10d3bcac'
+      )
     );
   });
 
@@ -165,6 +257,7 @@ describe('reducers/plans', () => {
   it('should fetch PlanRecords', () => {
     store.dispatch(fetchPlanRecords(fixtures.planRecordResponses as PlanRecordResponse[]));
     const { planRecordsById: allPlanRecords } = fixtures;
+    const plansArraySelector = makePlansArraySelector(PLAN_RECORD_BY_ID);
 
     const fiPlanRecords = pickBy(
       allPlanRecords,
@@ -186,12 +279,15 @@ describe('reducers/plans', () => {
 
     const fiPlanRecordsArray = values(fiPlanRecords);
     const irsPlanRecordsArray = values(irsPlanRecords);
-    expect(getPlanRecordsArray(store.getState(), InterventionType.FI)).toEqual(fiPlanRecordsArray);
-    expect(getPlanRecordsArray(store.getState(), InterventionType.IRS)).toEqual(
-      irsPlanRecordsArray
-    );
 
-    const planRecordsArray = [...getPlanRecordsArray(store.getState())].sort(
+    expect(plansArraySelector(store.getState(), { interventionType: InterventionType.FI })).toEqual(
+      fiPlanRecordsArray
+    );
+    expect(
+      plansArraySelector(store.getState(), { interventionType: InterventionType.IRS })
+    ).toEqual(irsPlanRecordsArray);
+
+    const planRecordsArray = [...plansArraySelector(store.getState(), {})].sort(
       (a: PlanRecord, b: PlanRecord) => Date.parse(b.plan_date) - Date.parse(a.plan_date)
     );
     expect(planRecordsArray).toEqual(fixtures.sortedPlanRecordArray);
