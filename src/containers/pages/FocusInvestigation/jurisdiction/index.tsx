@@ -56,7 +56,6 @@ import {
   getLocationColumns,
   jsxColumns,
   removeNullJurisdictionPlans,
-  reverseChronologicalSort,
 } from '../../../../helpers/utils';
 import supersetFetch from '../../../../services/superset';
 import { Jurisdiction } from '../../../../store/ducks/jurisdictions';
@@ -230,7 +229,6 @@ export const FIJurisdiction = (props: FIJurisdictionProps & RouteComponentProps<
     [currentReactivePlans, currentRoutinePlans].forEach(plansArray => {
       if (plansArray && plansArray.length) {
         /** sort in reverse chronological order */
-        plansArray = reverseChronologicalSort(plansArray);
         const jurisdictionValidPlans = removeNullJurisdictionPlans(plansArray);
         const thePlans = jurisdictionValidPlans.map((item: Plan) => {
           return extractPlan(item);
@@ -311,7 +309,6 @@ export const FIJurisdiction = (props: FIJurisdictionProps & RouteComponentProps<
   ) {
     [completeReactivePlans, completeRoutinePlans].forEach(plansArray => {
       if (plansArray && plansArray.length) {
-        plansArray = reverseChronologicalSort(plansArray);
         const jurisdictionValidPlans = removeNullJurisdictionPlans(plansArray);
         const thePlans = jurisdictionValidPlans.map((item: Plan) => {
           return extractPlan(item);
