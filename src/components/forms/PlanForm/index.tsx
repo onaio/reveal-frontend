@@ -112,6 +112,15 @@ export const defaultInitialValues: PlanFormFields = {
   version: DEFAULT_PLAN_VERSION,
 };
 
+/** render Prop interface for render function that planForm
+ * passes to Whatever component that is rendering the jurisdictionNames.
+ */
+export type LocationChildRenderProp = (
+  locationName: string,
+  locationId: string,
+  index: number
+) => JSX.Element;
+
 /** interface for plan form props */
 export interface PlanFormProps {
   allFormActivities: PlanActivityFormFields[] /** the list of all allowed activities */;
@@ -127,11 +136,7 @@ export interface PlanFormProps {
   jurisdictionLabel: string /** the label used for the jurisdiction selection */;
   redirectAfterAction: string /** the url to redirect to after form submission */;
   renderLocationNames?: (
-    child?: (
-      locationName: string,
-      locationId: string,
-      index: number
-    ) => JSX.Element /** nested render content for each location name */
+    child?: LocationChildRenderProp /** nested render content for each location name */
   ) => JSX.Element;
   /** a render prop that renders the plan's location names */
 }

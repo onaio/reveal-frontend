@@ -5,7 +5,10 @@ import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
-import PlanForm, { propsForUpdatingPlans } from '../../../../components/forms/PlanForm';
+import PlanForm, {
+  LocationChildRenderProp,
+  propsForUpdatingPlans,
+} from '../../../../components/forms/PlanForm';
 import { getPlanFormValues } from '../../../../components/forms/PlanForm/helpers';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
@@ -99,9 +102,9 @@ const UpdatePlan = (props: RouteComponentProps<RouteParams> & UpdatePlanProps) =
      * will do, is provide a child prop(a renderProp) that tells the mentioned component what other stuff you would wish
      * displayed alongside the jurisdiction names links.
      */
-    renderLocationNames: (
-      child?: (locationName: string, locationId: string, index: number) => JSX.Element
-    ) => <ConnectedPlanLocationNames child={child} plan={plan} />,
+    renderLocationNames: (child?: LocationChildRenderProp) => (
+      <ConnectedPlanLocationNames child={child} plan={plan} />
+    ),
   };
 
   const caseDetailsProps: CaseDetailsProps = {
