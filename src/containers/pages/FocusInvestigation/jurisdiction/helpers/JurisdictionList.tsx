@@ -21,7 +21,7 @@ export default class JurisdictionList<
    */
   public getMapStateToProps() {
     return (state: Registry, ownProps: any) => {
-      const getPlansArray = makePlansArraySelector('', SORT_BY_EFFECTIVE_PERIOD_START_FIELD);
+      const getPlansArray = makePlansArraySelector(undefined, SORT_BY_EFFECTIVE_PERIOD_START_FIELD);
 
       const jurisdictionId = ownProps.match.params.jurisdictionId;
 
