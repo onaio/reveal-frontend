@@ -677,9 +677,9 @@ export const setDefaultValues = (target: Dictionary, prop: string) => {
 };
 
 export function reverseChronologicalSort(arr: Plan[], sortField: string) {
-  // check if the provided field exists in the plans
+  // check if the provided field exists in the plans else return plansArray
   if (arr.every(plan => Object.keys(plan).includes(sortField))) {
-    return arr.sort((firstEl: FlexObject, secondEl: FlexObject) => {
+    return arr.sort((firstEl: Dictionary, secondEl: Dictionary) => {
       return Date.parse(secondEl[sortField]) - Date.parse(firstEl[sortField]);
     });
   }

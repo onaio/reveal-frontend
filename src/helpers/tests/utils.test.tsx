@@ -12,6 +12,7 @@ import {
   TASK_YELLOW as YELLOW,
 } from '../../colors';
 import { ONADATA_OAUTH_STATE, OPENSRP_OAUTH_STATE, PLAN_UUID_NAMESPACE } from '../../configs/env';
+import { SORT_FIELD } from '../../constants';
 import { Plan } from '../../store/ducks/plans';
 import { InitialTask } from '../../store/ducks/tasks';
 import * as fixtures from '../../store/ducks/tests/fixtures';
@@ -310,7 +311,7 @@ describe('helpers/utils', () => {
     expect(result).toEqual([plan1]);
   });
   it('sorts plans array in reverse chronological way', () => {
-    const sortedPlans = reverseChronologicalSort([plan99, plan1] as Plan[]);
+    const sortedPlans = reverseChronologicalSort([plan99, plan1] as Plan[], SORT_FIELD);
     expect(sortedPlans).toEqual(sortedPlansArray);
   });
 });
