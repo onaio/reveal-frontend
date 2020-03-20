@@ -3,6 +3,7 @@ import { mount } from 'enzyme';
 import { createBrowserHistory } from 'history';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import GoogleAnalytics from 'react-ga';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import store from '../../store';
@@ -13,12 +14,15 @@ jest.mock('../../configs/env');
 
 // tslint:disable-next-line: no-var-requires
 const fetch = require('jest-fetch-mock');
-
 const history = createBrowserHistory();
 
 describe('App', () => {
   beforeEach(() => {
     jest.resetAllMocks();
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
   it('renders without crashing', () => {
@@ -61,6 +65,19 @@ describe('App', () => {
     const supersetUserIsLogged = wrapper.text().includes('Sign Out');
     expect(supersetUserIsLogged).toBeTruthy();
     expect(supersetUserIsUser).toBeTruthy();
+    wrapper.unmount();
+  });
+
+  it('tracks pages correctly', () => {
+    GoogleAnalytics.pageview = jest.fn();
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <App />
+        </Router>
+      </Provider>
+    );
+    expect(GoogleAnalytics.pageview).toBeCalledWith('/');
     wrapper.unmount();
   });
 
