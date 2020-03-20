@@ -668,6 +668,11 @@ export function growl(message: string, options: ToastOptions = {}) {
   }
   toast(message, { ...options, className, progressClassName });
 }
+/**
+ * Creates a key with an empty array if it didn't exist
+ * @param {Dictionary} target - object to be
+ * @param {string} prop
+ */
 export const setDefaultValues = (target: Dictionary, prop: string) => {
   if (prop in target) {
     return target;
@@ -675,3 +680,17 @@ export const setDefaultValues = (target: Dictionary, prop: string) => {
   target[prop] = [];
   return target;
 };
+/**
+ * Sorts plans in descending order based on field provided
+ * @param arr
+ * @param sortField
+ */
+export function descendingOrderSort(arr: Plan[], sortField: string) {
+  // check if the provided field exists in the plans else return plansArray
+  if (arr.every(plan => Object.keys(plan).includes(sortField))) {
+    return arr.sort((firstEl: Dictionary, secondEl: Dictionary) => {
+      return Date.parse(secondEl[sortField]) - Date.parse(firstEl[sortField]);
+    });
+  }
+  return arr;
+}

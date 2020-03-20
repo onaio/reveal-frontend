@@ -13,7 +13,7 @@ import {
   planActivities,
   PlanGoal,
 } from '../../configs/settings';
-import { FlexObject, removeNullJurisdictionPlans } from '../../helpers/utils';
+import { descendingOrderSort, FlexObject, removeNullJurisdictionPlans } from '../../helpers/utils';
 
 /** the reducer name */
 export const reducerName = 'plans';
@@ -24,7 +24,6 @@ export enum InterventionType {
   IRS = 'IRS',
   MDA = 'MDA',
 }
-
 /** interface for plan Objects */
 /** Enum representing the possible intervention types */
 export enum PlanStatus {
@@ -627,7 +626,6 @@ export const getPlansArrayByParentJurisdictionId = (planKey?: string) =>
             : true)
       )
   );
-
 /** makePlansArraySelector
  * Returns a selector that gets an array of Plan objects filtered by one or all
  * of the following:
@@ -646,8 +644,9 @@ export const getPlansArrayByParentJurisdictionId = (planKey?: string) =>
  *
  * @param {Registry} state - the redux store
  * @param {PlanFilters} props - the plan filters object
+ * @param {string} sortField - sort by field
  */
-export const makePlansArraySelector = (planKey?: string) => {
+export const makePlansArraySelector = (planKey?: string, sortField?: string) => {
   return createSelector(
     [
       getPlansArrayByInterventionType(planKey),
@@ -657,6 +656,11 @@ export const makePlansArraySelector = (planKey?: string) => {
       getPlansArrayByParentJurisdictionId(planKey),
     ],
     (plans, plans2, plans3, plans4, plans5) =>
-      intersect([plans, plans2, plans3, plans4, plans5], JSON.stringify)
+      sortField
+        ? descendingOrderSort(
+            intersect([plans, plans2, plans3, plans4, plans5], JSON.stringify),
+            sortField
+          )
+        : intersect([plans, plans2, plans3, plans4, plans5], JSON.stringify)
   );
 };

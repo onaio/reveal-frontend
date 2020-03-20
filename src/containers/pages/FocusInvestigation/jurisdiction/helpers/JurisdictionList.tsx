@@ -1,6 +1,7 @@
 import { ObjectList } from '@onaio/cbv';
 import { Registry } from '@onaio/redux-reducer-registry';
 import { FIReasons } from '../../../../../configs/settings';
+import { SORT_BY_EFFECTIVE_PERIOD_START_FIELD } from '../../../../../constants';
 import {
   InterventionType,
   makePlansArraySelector,
@@ -20,7 +21,7 @@ export default class JurisdictionList<
    */
   public getMapStateToProps() {
     return (state: Registry, ownProps: any) => {
-      const getPlansArray = makePlansArraySelector();
+      const getPlansArray = makePlansArraySelector(undefined, SORT_BY_EFFECTIVE_PERIOD_START_FIELD);
 
       const jurisdictionId = ownProps.match.params.jurisdictionId;
 
