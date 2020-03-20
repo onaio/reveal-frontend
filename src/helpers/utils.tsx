@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { getOnadataUserInfo, getOpenSRPUserInfo } from '@onaio/gatekeeper';
 import { SessionState } from '@onaio/session-reducer';
+import { Dictionary } from '@onaio/utils';
 import { Color } from 'csstype';
 import { GisidaMap } from 'gisida';
 import { findKey, uniq } from 'lodash';
@@ -667,3 +668,10 @@ export function growl(message: string, options: ToastOptions = {}) {
   }
   toast(message, { ...options, className, progressClassName });
 }
+export const setDefaultValues = (target: Dictionary, prop: string) => {
+  if (prop in target) {
+    return target;
+  }
+  target[prop] = [];
+  return target;
+};
