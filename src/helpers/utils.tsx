@@ -39,8 +39,8 @@ import { InitialTask } from '../store/ducks/tasks';
 import { colorMaps, ColorMapsTypes } from './structureColorMaps';
 
 /** Interface for an object that is allowed to have any property */
-export interface FlexObject {
-  [key: string]: any;
+export interface FlexObject<T = any> {
+  [key: string]: T;
 }
 
 /** Route params interface */
