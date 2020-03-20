@@ -13,12 +13,7 @@ import {
   planActivities,
   PlanGoal,
 } from '../../configs/settings';
-import { SORT_FIELD } from '../../constants';
-import {
-  FlexObject,
-  removeNullJurisdictionPlans,
-  reverseChronologicalSort,
-} from '../../helpers/utils';
+import { descendingOrderSort, FlexObject, removeNullJurisdictionPlans } from '../../helpers/utils';
 
 /** the reducer name */
 export const reducerName = 'plans';
@@ -649,8 +644,9 @@ export const getPlansArrayByParentJurisdictionId = (planKey?: string) =>
  *
  * @param {Registry} state - the redux store
  * @param {PlanFilters} props - the plan filters object
+ * @param {string} sortField - sort by field
  */
-export const makePlansArraySelector = (planKey?: string) => {
+export const makePlansArraySelector = (planKey?: string, sortField?: string) => {
   return createSelector(
     [
       getPlansArrayByInterventionType(planKey),
@@ -660,10 +656,10 @@ export const makePlansArraySelector = (planKey?: string) => {
       getPlansArrayByParentJurisdictionId(planKey),
     ],
     (plans, plans2, plans3, plans4, plans5) =>
-      SORT_FIELD
-        ? reverseChronologicalSort(
+      sortField
+        ? descendingOrderSort(
             intersect([plans, plans2, plans3, plans4, plans5], JSON.stringify),
-            SORT_FIELD
+            sortField
           )
         : intersect([plans, plans2, plans3, plans4, plans5], JSON.stringify)
   );
