@@ -34,7 +34,7 @@ import {
   MOSQUITO_COLLECTION_CODE,
   RACD_REGISTER_FAMILY_CODE,
 } from '../constants';
-import { Plan, PlanRecord } from '../store/ducks/plans';
+import { Plan } from '../store/ducks/plans';
 import { InitialTask } from '../store/ducks/tasks';
 import { colorMaps, ColorMapsTypes } from './structureColorMaps';
 
@@ -676,11 +676,12 @@ export const setDefaultValues = (target: Dictionary, prop: string) => {
   return target;
 };
 
-export function reverseChronologicalSort(arr: Plan[]) {
-  return arr.sort((firstEl: PlanRecord, secondEl: PlanRecord) => {
-    return (
-      Date.parse(secondEl.plan_effective_period_start) -
-      Date.parse(firstEl.plan_effective_period_start)
-    );
-  });
+export function reverseChronologicalSort(arr: Plan[], sortField: string) {
+  // check if the provided field exists in the plans
+  if (arr.every(plan => Object.keys(plan).includes(sortField))) {
+    return arr.sort((firstEl: FlexObject, secondEl: FlexObject) => {
+      return Date.parse(secondEl[sortField]) - Date.parse(firstEl[sortField]);
+    });
+  }
+  return arr;
 }
