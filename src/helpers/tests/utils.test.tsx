@@ -12,13 +12,14 @@ import {
   TASK_YELLOW as YELLOW,
 } from '../../colors';
 import { ONADATA_OAUTH_STATE, OPENSRP_OAUTH_STATE, PLAN_UUID_NAMESPACE } from '../../configs/env';
-import { SORT_FIELD } from '../../constants';
+import { SORT_BY_EFFECTIVE_PERIOD_START_FIELD } from '../../constants';
 import { Plan } from '../../store/ducks/plans';
 import { InitialTask } from '../../store/ducks/tasks';
 import * as fixtures from '../../store/ducks/tests/fixtures';
 import { plan1, plan5, plan6, plan99, sortedPlansArray } from '../../store/ducks/tests/fixtures';
 import { colorMaps } from '../structureColorMaps';
 import {
+  descendingOrderSort,
   extractPlan,
   generateNameSpacedUUID,
   getColor,
@@ -26,7 +27,6 @@ import {
   getLocationColumns,
   oAuthUserInfoGetter,
   removeNullJurisdictionPlans,
-  reverseChronologicalSort,
   roundToPrecision,
 } from '../utils';
 
@@ -310,8 +310,11 @@ describe('helpers/utils', () => {
     expect(result.length).toEqual(1);
     expect(result).toEqual([plan1]);
   });
-  it('sorts plans array in reverse chronological way', () => {
-    const sortedPlans = reverseChronologicalSort([plan99, plan1] as Plan[], SORT_FIELD);
+  it('sorts plans array in descending order', () => {
+    const sortedPlans = descendingOrderSort(
+      [plan99, plan1] as Plan[],
+      SORT_BY_EFFECTIVE_PERIOD_START_FIELD
+    );
     expect(sortedPlans).toEqual(sortedPlansArray);
   });
 });
