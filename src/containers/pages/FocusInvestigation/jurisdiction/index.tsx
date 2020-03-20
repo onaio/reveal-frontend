@@ -228,7 +228,6 @@ export const FIJurisdiction = (props: FIJurisdictionProps & RouteComponentProps<
   ) {
     [currentReactivePlans, currentRoutinePlans].forEach(plansArray => {
       if (plansArray && plansArray.length) {
-        /** sort in reverse chronological order */
         const jurisdictionValidPlans = removeNullJurisdictionPlans(plansArray);
         const thePlans = jurisdictionValidPlans.map((item: Plan) => {
           return extractPlan(item);
