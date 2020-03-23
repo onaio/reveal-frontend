@@ -6,6 +6,7 @@ import ReactDOM from 'react-dom';
 import GoogleAnalytics from 'react-ga';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
+import { PLAN_LIST_URL } from '../../constants';
 import store from '../../store';
 import App from '../App';
 import { expressAPIResponse } from './fixtures';
@@ -19,10 +20,8 @@ const history = createBrowserHistory();
 describe('App', () => {
   beforeEach(() => {
     jest.resetAllMocks();
-  });
-
-  afterEach(() => {
-    jest.clearAllMocks();
+    // Reset history
+    history.push('/');
   });
 
   it('renders without crashing', () => {
@@ -36,6 +35,21 @@ describe('App', () => {
       div
     );
     ReactDOM.unmountComponentAtNode(div);
+  });
+
+  it('tracks pages correctly', () => {
+    GoogleAnalytics.pageview = jest.fn();
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <App />
+        </Router>
+      </Provider>
+    );
+    expect(GoogleAnalytics.pageview).toBeCalledWith('/');
+    history.push(PLAN_LIST_URL);
+    expect(GoogleAnalytics.pageview).toBeCalledWith(PLAN_LIST_URL);
+    wrapper.unmount();
   });
 
   it('integration: renders App correctly', async () => {
@@ -65,19 +79,6 @@ describe('App', () => {
     const supersetUserIsLogged = wrapper.text().includes('Sign Out');
     expect(supersetUserIsLogged).toBeTruthy();
     expect(supersetUserIsUser).toBeTruthy();
-    wrapper.unmount();
-  });
-
-  it('tracks pages correctly', () => {
-    GoogleAnalytics.pageview = jest.fn();
-    const wrapper = mount(
-      <Provider store={store}>
-        <Router history={history}>
-          <App />
-        </Router>
-      </Provider>
-    );
-    expect(GoogleAnalytics.pageview).toBeCalledWith('/');
     wrapper.unmount();
   });
 
