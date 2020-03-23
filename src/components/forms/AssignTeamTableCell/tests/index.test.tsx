@@ -6,11 +6,13 @@ import { Provider } from 'react-redux';
 import AssignTeamTableCell from '..';
 import store from '../../../../store';
 import assignmentReducer, {
+  fetchAssignments,
   reducerName as assignmentReducerName,
 } from '../../../../store/ducks/opensrp/assignments';
 import organizationsReducer, {
   reducerName as organizationsReducerName,
 } from '../../../../store/ducks/opensrp/organizations';
+import * as fixtures from '../../../../store/ducks/tests/fixtures';
 
 jest.mock('../../../../configs/env');
 
@@ -42,5 +44,9 @@ describe('/containers/forms/AssignTeamTableCell', () => {
       'AssignTeamButton'
     );
     expect(toJson(wrapper.find('span.assignment-label'))).toMatchSnapshot('Team Count Text');
+
+    store.dispatch(fetchAssignments(fixtures.assignments));
+    wrapper.update();
+    expect(toJson(wrapper.find('span.assignment-label'))).toMatchSnapshot('Updated teams');
   });
 });
