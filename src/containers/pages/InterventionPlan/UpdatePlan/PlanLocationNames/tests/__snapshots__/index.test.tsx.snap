@@ -4,17 +4,9 @@ exports[`src/components/locationIdToNames renders correctly 1`] = `
 <li
   key="0"
 >
-  <Link
-    replace={false}
-    to="/focus-investigation/view/f45b9380-c970-4dd1-8533-9e95ab12f128"
-  >
-    <a
-      href="/focus-investigation/view/f45b9380-c970-4dd1-8533-9e95ab12f128"
-      onClick={[Function]}
-    >
-      Namibia
-    </a>
-  </Link>
+  <span>
+    Namibia
+  </span>
   <h2
     className="mock-child"
   >
@@ -27,17 +19,9 @@ exports[`src/components/locationIdToNames renders correctly 2`] = `
 <li
   key="1"
 >
-  <Link
-    replace={false}
-    to="/focus-investigation/view/3951"
-  >
-    <a
-      href="/focus-investigation/view/3951"
-      onClick={[Function]}
-    >
-      Akros_1
-    </a>
-  </Link>
+  <span>
+    Akros_1
+  </span>
   <h2
     className="mock-child"
   >
@@ -61,7 +45,7 @@ Array [
 ]
 `;
 
-exports[`src/components/locationIdToNames works correctly with store 1`] = `
+exports[`src/components/locationIdToNames renders jurisdiction names as links for FI 1`] = `
 <li
   key="0"
 >
@@ -76,10 +60,15 @@ exports[`src/components/locationIdToNames works correctly with store 1`] = `
       Namibia
     </a>
   </Link>
+  <h2
+    className="mock-child"
+  >
+    Mock child render function
+  </h2>
 </li>
 `;
 
-exports[`src/components/locationIdToNames works correctly with store 2`] = `
+exports[`src/components/locationIdToNames renders jurisdiction names as links for FI 2`] = `
 <li
   key="1"
 >
@@ -94,5 +83,45 @@ exports[`src/components/locationIdToNames works correctly with store 2`] = `
       Akros_1
     </a>
   </Link>
+  <h2
+    className="mock-child"
+  >
+    Mock child render function
+  </h2>
+</li>
+`;
+
+exports[`src/components/locationIdToNames renders jurisdiction names as links for FI 3`] = `
+Array [
+  <h2
+    className="mock-child"
+  >
+    Mock child render function
+  </h2>,
+  <h2
+    className="mock-child"
+  >
+    Mock child render function
+  </h2>,
+]
+`;
+
+exports[`src/components/locationIdToNames works correctly with store 1`] = `
+<li
+  key="0"
+>
+  <span>
+    Namibia
+  </span>
+</li>
+`;
+
+exports[`src/components/locationIdToNames works correctly with store 2`] = `
+<li
+  key="1"
+>
+  <span>
+    Akros_1
+  </span>
 </li>
 `;

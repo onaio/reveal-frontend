@@ -88,7 +88,32 @@ describe('src/components/locationIdToNames', () => {
     await flushPromises();
     wrapper.update();
 
-    // should have at exactly 2 lis
+    // should have at exactly 2 li with children spans
+    expect(wrapper.find('li').length).toEqual(2);
+    expect(toJson(wrapper.find('li').at(0))).toMatchSnapshot();
+    expect(toJson(wrapper.find('li').at(1))).toMatchSnapshot();
+
+    // invokes render prop child
+    expect(toJson(wrapper.find('h2.mock-child'))).toMatchSnapshot();
+  });
+
+  it('renders jurisdiction names as links for FI', async () => {
+    fetch.once(JSON.stringify([]));
+    const props = {
+      child: () => <h2 className="mock-child">Mock child render function</h2>,
+      locations: sampleLocations,
+      plan: plans[0],
+    };
+
+    const wrapper = mount(
+      <Router history={history}>
+        <PlanLocationNames {...props} />
+      </Router>
+    );
+    await flushPromises();
+    wrapper.update();
+
+    // should have at exactly 2 li with children links.
     expect(wrapper.find('li').length).toEqual(2);
     expect(toJson(wrapper.find('li').at(0))).toMatchSnapshot();
     expect(toJson(wrapper.find('li').at(1))).toMatchSnapshot();
