@@ -29,6 +29,13 @@ import {
   PlanAction,
   planActivities,
   PlanGoal,
+import { ACTION, FOCUS_AREA_HEADER, NAME } from '../configs/lang';
+import {
+  imgArr,
+  locationHierarchy,
+  LocationItem,
+  PlanDefinition,
+  UseContext,
 } from '../configs/settings';
 import {
   BEDNET_DISTRIBUTION_CODE,
@@ -840,4 +847,21 @@ export const extractPlanRecordResponseFromPlanPayload = (
   }
   displayError(new Error(FAILED_TO_EXTRACT_PLAN_RECORD));
   return null;
+};
+
+/** a util to check if plan of type PlanDefinition is of the specified intervention type
+ * @param {PlanDefinition} plan - the plan of interest
+ * @param {InterventionType} interventionType if plan is of specified intervention type we return true
+ *
+ * @return {boolean} Returns true if plan is of specified intervention type else returns false
+ */
+export const isPlanDefinitionOfType = (
+  plan: PlanDefinition,
+  interventionType: InterventionType
+) => {
+  return (
+    plan.useContext.filter(
+      (f: UseContext) => f.code === 'interventionType' && f.valueCodableConcept === interventionType
+    ).length > 0
+  );
 };
