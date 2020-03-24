@@ -12,13 +12,24 @@ import { Link } from 'react-router-dom';
 import { CellInfo, Column } from 'react-table';
 import { toast, ToastOptions } from 'react-toastify';
 import SeamlessImmutable from 'seamless-immutable';
+import uuidv4 from 'uuid/v4';
 import uuidv5 from 'uuid/v5';
 import { TASK_YELLOW } from '../colors';
 import DrillDownTableLinkedCell from '../components/DrillDownTableLinkedCell';
+import { FIReasonType, FIStatusType } from '../components/forms/PlanForm/types';
 import NewRecordBadge from '../components/NewRecordBadge';
 import { DIGITAL_GLOBE_CONNECT_ID, ONADATA_OAUTH_STATE, OPENSRP_OAUTH_STATE } from '../configs/env';
-import { ACTION, FOCUS_AREA_HEADER, NAME } from '../configs/lang';
-import { imgArr, locationHierarchy, LocationItem } from '../configs/settings';
+import { ACTION, FAILED_TO_EXTRACT_PLAN_RECORD, FOCUS_AREA_HEADER, NAME } from '../configs/lang';
+import {
+  FIReasons,
+  FIStatuses,
+  imgArr,
+  locationHierarchy,
+  LocationItem,
+  PlanAction,
+  planActivities,
+  PlanGoal,
+} from '../configs/settings';
 import {
   BEDNET_DISTRIBUTION_CODE,
   BLOOD_SCREENING_CODE,
@@ -34,8 +45,15 @@ import {
   MOSQUITO_COLLECTION_CODE,
   RACD_REGISTER_FAMILY_CODE,
 } from '../constants';
-import { Plan } from '../store/ducks/plans';
+import {
+  InterventionType,
+  Plan,
+  PlanPayload,
+  PlanRecord,
+  PlanRecordResponse,
+} from '../store/ducks/plans';
 import { InitialTask } from '../store/ducks/tasks';
+import { displayError } from './errors';
 import { colorMaps, ColorMapsTypes } from './structureColorMaps';
 
 /** Interface for an object that is allowed to have any property */
@@ -694,3 +712,132 @@ export function descendingOrderSort(arr: Plan[], sortField: string) {
   }
   return arr;
 }
+
+/** extractPlanPayloadFromPlanRecord */
+export const extractPlanPayloadFromPlanRecord = (planRecord: PlanRecord): PlanPayload | null => {
+  const {
+    plan_date: date,
+    plan_id: identifier,
+    plan_effective_period_end: end,
+    plan_effective_period_start: start,
+    plan_jurisdictions_ids,
+    plan_status: status,
+    plan_title: title,
+    plan_intervention_type: interventionType,
+    plan_version,
+  } = planRecord;
+  if (plan_jurisdictions_ids) {
+    const planPayload: PlanPayload = {
+      action: [],
+      date,
+      effectivePeriod: {
+        end,
+        start,
+      },
+      goal: [],
+      identifier,
+      jurisdiction: plan_jurisdictions_ids.map(id => ({ code: id })),
+      name: title.trim().replace(/ /g, '-'),
+      serverVersion: 0,
+      status,
+      title,
+      useContext: [
+        {
+          code: 'interventionType',
+          valueCodableConcept: interventionType,
+        },
+      ],
+      version: plan_version || '1',
+    };
+
+    // build PlanActions and PlanGoals
+    let planAction: PlanAction;
+    let planGoal: PlanGoal;
+    if (interventionType === InterventionType.IRS) {
+      const { action, goal } = planActivities[InterventionType.IRS];
+      planAction = {
+        ...action,
+        identifier: uuidv4(),
+        timingPeriod: {
+          end,
+          start,
+        },
+      };
+      planGoal = {
+        ...goal,
+        target: [
+          {
+            ...goal.target[0],
+            due: end,
+          },
+        ],
+      };
+      planPayload.action.push(planAction);
+      planPayload.goal.push(planGoal);
+    }
+
+    return planPayload;
+  }
+  return null;
+};
+
+/** extracts a planRecord from the planPayload which is the object received from the opensrp service
+ * @param {PlanPayload} planPayload - payload used when creating/updating a plan via OpenSRP plans Endpoint
+ *
+ * @return {PlanRecordResponse | null} the extracted plan details or null if the plan wasn't valid
+ */
+export const extractPlanRecordResponseFromPlanPayload = (
+  planPayload: PlanPayload
+): PlanRecordResponse | null => {
+  const {
+    date,
+    effectivePeriod,
+    identifier,
+    status,
+    title,
+    useContext,
+    version,
+    name,
+  } = planPayload;
+  if (useContext && effectivePeriod) {
+    const { end, start } = effectivePeriod;
+    let planInterventionType = InterventionType.FI;
+    let planFiReason: FIReasonType = FIReasons[0];
+    let planFiStatus: FIStatusType = FIStatuses[0];
+    for (const context of useContext) {
+      switch (context.code) {
+        case 'interventionType': {
+          planInterventionType = context.valueCodableConcept as InterventionType;
+          break;
+        }
+        case 'fiReason': {
+          planFiReason = context.valueCodableConcept as FIReasonType;
+          break;
+        }
+        case 'fiStatus': {
+          planFiStatus = context.valueCodableConcept as FIStatusType;
+          break;
+        }
+      }
+    }
+    const planRecordResponse: PlanRecordResponse = {
+      date,
+      effective_period_end: end,
+      effective_period_start: start,
+      fi_reason: planFiReason,
+      fi_status: planFiStatus,
+      identifier,
+      intervention_type: planInterventionType,
+      name,
+      status,
+      title,
+      version,
+    };
+    if (planPayload.jurisdiction) {
+      planRecordResponse.jurisdictions = planPayload.jurisdiction.map(j => j.code);
+    }
+    return planRecordResponse;
+  }
+  displayError(new Error(FAILED_TO_EXTRACT_PLAN_RECORD));
+  return null;
+};

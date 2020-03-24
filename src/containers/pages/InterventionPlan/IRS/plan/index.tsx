@@ -60,6 +60,8 @@ import {
 } from '../../../../../constants';
 import { displayError } from '../../../../../helpers/errors';
 import {
+  extractPlanPayloadFromPlanRecord,
+  extractPlanRecordResponseFromPlanPayload,
   FlexObject,
   getFeatureByProperty,
   getGisidaMapById,
@@ -111,8 +113,6 @@ import organizationsReducer, {
   reducerName as organizationsReducerName,
 } from '../../../../../store/ducks/opensrp/organizations';
 import plansReducer, {
-  extractPlanPayloadFromPlanRecord,
-  extractPlanRecordResponseFromPlanPayload,
   fetchPlanRecords,
   getPlanRecordById,
   PlanRecord,

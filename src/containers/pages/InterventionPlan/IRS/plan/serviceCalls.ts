@@ -1,11 +1,8 @@
 import { OPENSRP_PLANS } from '../../../../../constants';
 import { displayError } from '../../../../../helpers/errors';
+import { extractPlanRecordResponseFromPlanPayload } from '../../../../../helpers/utils';
 import { OpenSRPService } from '../../../../../services/opensrp';
-import {
-  extractPlanRecordResponseFromPlanPayload,
-  fetchPlanRecords,
-  PlanPayload,
-} from '../../../../../store/ducks/plans';
+import { fetchPlanRecords, PlanPayload } from '../../../../../store/ducks/plans';
 
 type UUID = string;
 

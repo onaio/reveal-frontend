@@ -3,11 +3,8 @@ import { cloneDeep, keyBy, keys, pickBy, values } from 'lodash';
 import { FlushThunks } from 'redux-testkit';
 import { FIReasons } from '../../../configs/settings';
 import { PLAN_RECORD_BY_ID, SORT_BY_EFFECTIVE_PERIOD_START_FIELD } from '../../../constants';
-import { irsPlanDefinition1 } from '../../../containers/pages/InterventionPlan/IRS/tests/fixtures';
-import * as helpers from '../../../helpers/errors';
 import store from '../../index';
 import reducer, {
-  extractPlanRecordResponseFromPlanPayload,
   fetchPlanRecords,
   fetchPlans,
   getPlanById,
@@ -386,13 +383,5 @@ describe('reducers/plans', () => {
 
     const planRecordsArray = [...plansArraySelector(store.getState(), {})];
     expect(planRecordsArray).toEqual(fixtures.sortedPlanRecordArray);
-  });
-
-  it('extractPlanRecordResponseFromPlanPayload shows error as expected', () => {
-    const displayErrorMock = jest.fn();
-    (helpers as any).displayError = displayErrorMock;
-    const result = extractPlanRecordResponseFromPlanPayload([irsPlanDefinition1] as any);
-    expect(result).toBeNull();
-    expect(displayErrorMock).toHaveBeenCalledTimes(1);
   });
 });

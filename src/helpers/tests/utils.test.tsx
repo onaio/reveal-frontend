@@ -13,14 +13,17 @@ import {
 } from '../../colors';
 import { ONADATA_OAUTH_STATE, OPENSRP_OAUTH_STATE, PLAN_UUID_NAMESPACE } from '../../configs/env';
 import { SORT_BY_EFFECTIVE_PERIOD_START_FIELD } from '../../constants';
+import { irsPlanDefinition1 } from '../../containers/pages/InterventionPlan/IRS/tests/fixtures';
 import { Plan } from '../../store/ducks/plans';
 import { InitialTask } from '../../store/ducks/tasks';
 import * as fixtures from '../../store/ducks/tests/fixtures';
 import { plan1, plan5, plan6, plan99, sortedPlansArray } from '../../store/ducks/tests/fixtures';
+import * as helpers from '../errors';
 import { colorMaps } from '../structureColorMaps';
 import {
   descendingOrderSort,
   extractPlan,
+  extractPlanRecordResponseFromPlanPayload,
   generateNameSpacedUUID,
   getColor,
   getColorByValue,
@@ -316,5 +319,12 @@ describe('helpers/utils', () => {
       SORT_BY_EFFECTIVE_PERIOD_START_FIELD
     );
     expect(sortedPlans).toEqual(sortedPlansArray);
+  });
+  it('extractPlanRecordResponseFromPlanPayload shows error as expected', () => {
+    const displayErrorMock = jest.fn();
+    (helpers as any).displayError = displayErrorMock;
+    const result = extractPlanRecordResponseFromPlanPayload([irsPlanDefinition1] as any);
+    expect(result).toBeNull();
+    expect(displayErrorMock).toHaveBeenCalledTimes(1);
   });
 });
