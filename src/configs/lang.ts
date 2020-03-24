@@ -441,3 +441,7 @@ export const LOGIN_PROMPT = translate(
   'LOGIN_PROMPT',
   'Please login with one of the following providers'
 );
+export const SEARCH_ACTIVE_FOCUS_INVESTIGATIONS = translate(
+  'SEARCH_ACTIVE_FOCUS_INVESTIGATIONS',
+  'Search active focus investigations'
+);

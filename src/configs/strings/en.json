@@ -930,5 +930,9 @@
   "LOGIN_PROMPT": {
     "message": "Please login with one of the following provider prompts",
     "description": "login prompt"
+  },
+  "SEARCH_ACTIVE_FOCUS_INVESTIGATIONS": {
+    "message": "Search Active Focus Investigation",
+    "description": "placeholder text for an input element being used to search Focus Investigation plans"
   }
 }
