@@ -926,5 +926,9 @@
   "FAILED_TO_EXTRACT_PLAN_RECORD": {
     "message": "Failed to extract a plan record",
     "description": "error message shown when utils for extracting a plan from a server response fails"
+  },
+  "LOGIN_PROMPT": {
+    "message": "Please login with one of the following provider prompts",
+    "description": "login prompt"
   }
 }

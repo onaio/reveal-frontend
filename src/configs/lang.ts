@@ -437,3 +437,7 @@ export const FAILED_TO_EXTRACT_PLAN_RECORD = translate(
   'FAILED_TO_EXTRACT_PLAN_RECORD',
   'Failed to extract a plan record'
 );
+export const LOGIN_PROMPT = translate(
+  'LOGIN_PROMPT',
+  'Please login with one of the following providers'
+);
