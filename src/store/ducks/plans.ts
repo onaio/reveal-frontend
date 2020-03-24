@@ -6,6 +6,7 @@ import { createSelector } from 'reselect';
 import SeamlessImmutable from 'seamless-immutable';
 import uuidv4 from 'uuid/v4';
 import { FIReasonType, FIStatusType } from '../../components/forms/PlanForm/types';
+import { FAILED_TO_EXTRACT_PLAN_RECORD } from '../../configs/lang';
 import {
   FIReasons,
   FIStatuses,
@@ -13,6 +14,7 @@ import {
   planActivities,
   PlanGoal,
 } from '../../configs/settings';
+import { displayError } from '../../helpers/errors';
 import { descendingOrderSort, FlexObject, removeNullJurisdictionPlans } from '../../helpers/utils';
 
 /** the reducer name */
@@ -254,6 +256,7 @@ export const extractPlanRecordResponseFromPlanPayload = (
     }
     return planRecordResponse;
   }
+  displayError(new Error(FAILED_TO_EXTRACT_PLAN_RECORD));
   return null;
 };
 

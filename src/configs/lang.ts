@@ -433,3 +433,7 @@ export const FAILED_TO_GET_EVENT_ID = translate(
   'FAILED_TO_GET_EVENT_ID',
   'Failed to extract event Id from plan'
 );
+export const FAILED_TO_EXTRACT_PLAN_RECORD = translate(
+  'FAILED_TO_EXTRACT_PLAN_RECORD',
+  'Failed to extract a plan record'
+);
