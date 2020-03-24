@@ -19,6 +19,7 @@ import DrillDownTableLinkedCell from '../components/DrillDownTableLinkedCell';
 import { FIReasonType, FIStatusType } from '../components/forms/PlanForm/types';
 import NewRecordBadge from '../components/NewRecordBadge';
 import { DIGITAL_GLOBE_CONNECT_ID, ONADATA_OAUTH_STATE, OPENSRP_OAUTH_STATE } from '../configs/env';
+<<<<<<< HEAD
 import { ACTION, FAILED_TO_EXTRACT_PLAN_RECORD, FOCUS_AREA_HEADER, NAME } from '../configs/lang';
 import {
   FIReasons,
@@ -32,6 +33,10 @@ import {
   PlanGoal,
   UseContext,
 } from '../configs/settings';
+=======
+import { ACTION, FOCUS_AREA_HEADER, NAME, NO_OPTIONS, NO_OPTIONS } from '../configs/lang';
+import { imgArr, locationHierarchy, LocationItem } from '../configs/settings';
+>>>>>>> Translate no options and placeholder text for react-select
 import {
   BEDNET_DISTRIBUTION_CODE,
   BLOOD_SCREENING_CODE,
@@ -863,3 +868,5 @@ export const IndicatorThresholdItemPercentage = (item: number, decimalPoints?: n
     ? percentage(item, decimalPoints).value
     : `${item}${percentage(item).error}`;
 };
+
+export const reactSelectNoOptionsText = () => NO_OPTIONS;
