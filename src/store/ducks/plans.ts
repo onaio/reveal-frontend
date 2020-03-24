@@ -205,7 +205,16 @@ export interface PlanEventPayload {
 export const extractPlanRecordResponseFromPlanPayload = (
   planPayload: PlanPayload
 ): PlanRecordResponse | null => {
-  const { date, effectivePeriod, identifier, status, title, useContext, version } = planPayload;
+  const {
+    date,
+    effectivePeriod,
+    identifier,
+    status,
+    title,
+    useContext,
+    version,
+    name,
+  } = planPayload;
   if (useContext && effectivePeriod) {
     const { end, start } = effectivePeriod;
     let planInterventionType = InterventionType.FI;
