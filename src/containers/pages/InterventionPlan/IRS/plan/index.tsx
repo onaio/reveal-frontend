@@ -260,8 +260,8 @@ class IrsPlan extends React.Component<
     // GET PLAN
     if (planId && !planById) {
       await OpenSrpPlanService.read(planId)
-        .then((plan: PlanPayload) => {
-          const planRecord = extractPlanRecordResponseFromPlanPayload(plan);
+        .then((plan: PlanPayload[]) => {
+          const planRecord = extractPlanRecordResponseFromPlanPayload(plan[0]);
           if (planRecord) {
             return fetchPlansActionCreator([planRecord]);
           }
