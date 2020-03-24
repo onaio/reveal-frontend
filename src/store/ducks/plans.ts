@@ -204,6 +204,11 @@ export interface PlanEventPayload {
   version: number;
 }
 
+/** extracts a planRecord from the planPayload which is the object received from the opensrp service
+ * @param {PlanPayload} planPayload - payload used when creating/updating a plan via OpenSRP plans Endpoint
+ *
+ * @return {PlanRecordResponse | null} the extracted plan details or null if the plan wasn't valid
+ */
 export const extractPlanRecordResponseFromPlanPayload = (
   planPayload: PlanPayload
 ): PlanRecordResponse | null => {
