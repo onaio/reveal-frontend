@@ -60,6 +60,8 @@ import {
 } from '../../../../../constants';
 import { displayError } from '../../../../../helpers/errors';
 import {
+  extractPlanPayloadFromPlanRecord,
+  extractPlanRecordResponseFromPlanPayload,
   FlexObject,
   getFeatureByProperty,
   getGisidaMapById,
@@ -111,11 +113,8 @@ import organizationsReducer, {
   reducerName as organizationsReducerName,
 } from '../../../../../store/ducks/opensrp/organizations';
 import plansReducer, {
-  extractPlanPayloadFromPlanRecord,
-  extractPlanRecordResponseFromPlanPayload,
   fetchPlanRecords,
   getPlanRecordById,
-  PlanPayload,
   PlanRecord,
   PlanStatus,
   reducerName as plansReducerName,
@@ -134,6 +133,7 @@ import AssignTeamTableCell, {
 } from '../../../../../components/forms/AssignTeamTableCell';
 import { ADMN0_PCODE, JurisdictionTypes } from '../../../../../configs/types';
 import './../../../../../styles/css/drill-down-table.css';
+import { loadPlan } from './serviceCalls';
 import './style.css';
 
 /** register the plans reducer */
@@ -259,14 +259,9 @@ class IrsPlan extends React.Component<
 
     // GET PLAN
     if (planId && !planById) {
-      await OpenSrpPlanService.read(planId)
-        .then((plan: PlanPayload) => {
-          const planRecord = extractPlanRecordResponseFromPlanPayload(plan);
-          if (planRecord) {
-            return fetchPlansActionCreator([planRecord]);
-          }
-        })
-        .catch(err => err);
+      await loadPlan(OpenSRPService, planId, fetchPlansActionCreator).catch(err =>
+        displayError(err)
+      );
     } else if (planById) {
       this.setState({ newPlan: planById });
     }
