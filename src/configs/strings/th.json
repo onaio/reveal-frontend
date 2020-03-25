@@ -479,10 +479,6 @@
     "message": "ประเภทของแผนปฏิบัติงาน",
     "description": "form label: for the reason leading to a plan being created"
   },
-  "FOCUS_INVESTIGATION_STATUS_LABEL": {
-    "message": "ระยะท้องที่ของพื้นที่ดำเนินการ",
-    "description": "form label: for the status of a focus investigation plan"
-  },
   "INTERVENTION_TYPE_LABEL": {
     "message": "ประเภทกิจกรรม",
     "description": "form label: for the type of intervention plan"

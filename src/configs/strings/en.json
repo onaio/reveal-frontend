@@ -491,8 +491,8 @@
     "message": "Focus Investigation Reason",
     "description": "form label: for the reason leading to a plan being created"
   },
-  "FOCUS_INVESTIGATION_STATUS_LABEL": {
-    "message": "Focus Investigation Status",
+  "FOCUS_CLASSIFICATION_LABEL": {
+    "message": "Focus Classification",
     "description": "form label: for the status of a focus investigation plan"
   },
   "INTERVENTION_TYPE_LABEL": {
