@@ -826,5 +826,89 @@
   "ORGANIZATION_NAME_TITLE": {
     "message": "ทีมปฏิบัติงาน",
     "description": "Organization list column header"
+  },
+  "WELCOME_BACK": {
+    "message": "ยินดีต้อนรับกลับมา",
+    "description": "prompt after a user has logged in"
+  },
+  "IRS_GREEN_THRESHOLD": {
+    "message": "เขียว",
+    "description": "IRS legend color green"
+  },
+  "IRS_GREY_THRESHOLD": {
+    "message": "เทา",
+    "description": "IRS legend color grey"
+  },
+  "IRS_RED_THRESHOLD": {
+    "message": "แดง",
+    "description": "IRS legend color red"
+  },
+  "IRS_YELLOW_THRESHOLD": {
+    "message": "เหลือง",
+    "description": "IRS legend color yellow"
+  },
+  "IRS_LIGHT_GREEN_THRESHOLD": {
+    "message": "เขียวอ่อน",
+    "description": "IRS legend color light green"
+  },
+  "LINK": {
+    "message": "ลิงค์",
+    "description": "URL leading to another page"
+  },
+  "FOCI_OF_RESIDENCE": {
+    "message": "foci ในที่อยู่ผู้ป่วย",
+    "description": "Title for the type of FOCI when displaying case details for case Triggered plans"
+  },
+  "FOCI_OF_INFECTION": {
+    "message": "foci ในแหล่งติดเชื้อ",
+    "description": "Title for the type of FOCI when displaying case details for case Triggered plans"
+  },
+  "CASE_DETAILS": {
+    "message": "รายละเอียดผู้ป่วย",
+    "description": "Title for Case details section when displaying case details for case Triggered plans"
+  },
+  "CASE_INFORMATION": {
+    "message": "ข้อมูลผู้ป่วย",
+    "description": "subtitle under CASE_DETAILS"
+  },
+  "SURNAME": {
+    "message": "นามสกุล",
+    "description": "a hereditary name common to all members of a family,"
+  },
+  "PATIENT_NAME": {
+    "message": "ชื่อ",
+    "description": "name of a patient"
+  },
+  "HOUSE_NUMBER": {
+    "message": "บ้านเลขที่",
+    "description": "an arbitrary umber identifying a house structure"
+  },
+  "INVESTIGATION_DATE": {
+    "message": "วันที่สอบสวน",
+    "description": "focus Investigation date"
+  },
+  "SPECIES": {
+    "message": "ชนิดเชื้อ",
+    "description": "species reported in case Details for case triggered plans"
+  },
+  "DIAGNOSIS_DATE": {
+    "message": "วันที่ตรวจ",
+    "description": "date of Diagnosis"
+  },
+  "CLASSIFICATION": {
+    "message": "ชนิดการติดเชื้อ",
+    "description": "category into which something is put"
+  },
+  "FAILED_TO_GET_EVENT_ID": {
+    "message": "ไม่สามารถดึงข้อมูลแผนปฏิบัติงานได้",
+    "description": "error message shown when app is unable to retrieve a value from a plan"
+  },
+  "JURISDICTION_LOADING_ERROR": {
+    "message": "พบข้อผิดพลาด ไม่สามารถโหลดข้อมูลได้",
+    "description": "Error message displayed when jurisdiction cannot be displayed correctly"
+  },
+  "REACTIVE_INVESTIGATION": {
+    "message": "งาน RACD",
+    "description": "page title: for pages about case-triggered reactive investigations"
   }
 }
