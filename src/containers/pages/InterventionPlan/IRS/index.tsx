@@ -104,7 +104,7 @@ class IrsPlans extends React.Component<IrsPlansProps & RouteComponentProps<Route
       { comparator: 'IRS', operator: '==', subject: 'plan_intervention_type' },
     ]);
     if (isReporting) {
-      // use superset enpoint in reporting
+      // use superset endpoint in reporting
       const plansArray = await supersetFetch(SUPERSET_IRS_REPORTING_PLANS_SLICE, plansParams).then(
         (plans: Plan[]) => plans
       );
