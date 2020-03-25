@@ -182,9 +182,9 @@ export const PERSONS = translate('PERSONS', 'person(s)');
 export const FOCUS_AREA_HEADER = translate('FOCUS_AREA_HEADER', 'Focus Area');
 export const SPRAY_AREA_HEADER = translate('SPRAY_AREA_HEADER', 'Spray Area');
 export const INTERVENTION_TYPE_LABEL = translate('INTERVENTION_TYPE_LABEL', 'Intervention Type');
-export const FOCUS_INVESTIGATION_STATUS_LABEL = translate(
-  'FOCUS_INVESTIGATION_STATUS_LABEL',
-  'Focus Investigation Status'
+export const FOCUS_CLASSIFICATION_LABEL = translate(
+  'FOCUS_CLASSIFICATION_LABEL',
+  'Focus Classification'
 );
 export const FOCUS_INVESTIGATION_STATUS_REASON = translate(
   'FOCUS_INVESTIGATION_STATUS_REASON',

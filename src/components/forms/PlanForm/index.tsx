@@ -32,8 +32,8 @@ import {
   DESCRIPTION_LABEL,
   END_DATE,
   FOCUS_AREA_HEADER,
+  FOCUS_CLASSIFICATION_LABEL,
   FOCUS_INVESTIGATION,
-  FOCUS_INVESTIGATION_STATUS_LABEL,
   FOCUS_INVESTIGATION_STATUS_REASON,
   INTERVENTION_TYPE_LABEL,
   IRS_TITLE,
@@ -438,7 +438,7 @@ const PlanForm = (props: PlanFormProps) => {
 
             {values.interventionType === InterventionType.FI && (
               <FormGroup>
-                <Label for="fiStatus">{FOCUS_INVESTIGATION_STATUS_LABEL}</Label>
+                <Label for="fiStatus">{FOCUS_CLASSIFICATION_LABEL}</Label>
                 <Field
                   required={values.interventionType === InterventionType.FI}
                   component="select"
