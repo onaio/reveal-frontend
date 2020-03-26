@@ -16,6 +16,12 @@ const fetch = require('jest-fetch-mock');
 
 const history = createBrowserHistory();
 
+jest.mock('../PlanLocationNames', () => {
+  const PlanLocationNamesMock = () => <div id="Helmuth"> No plan survives enemy contact. </div>;
+
+  return PlanLocationNamesMock;
+});
+
 describe('components/InterventionPlan/UpdatePlan', () => {
   beforeEach(() => {
     jest.resetAllMocks();
@@ -60,8 +66,19 @@ describe('components/InterventionPlan/UpdatePlan', () => {
     expect(wrapper.find('PlanForm').props()).toEqual({
       ...updatePlanFormProps,
       formHandler: expect.any(Function),
+      renderLocationNames: expect.any(Function),
     });
     wrapper.unmount();
+  });
+
+  it('renders plan Location names component', () => {
+    fetch.mockResponseOnce(JSON.stringify(fixtures.plans[1]));
+    const wrapper = mount(
+      <Router history={history}>
+        <UpdatePlan {...getProps()} />
+      </Router>
+    );
+    expect(toJson(wrapper.find('#Helmuth'))).toMatchSnapshot('Renders PlanLocation Mock');
   });
 
   it('pass correct data to store: API responds with array', async () => {

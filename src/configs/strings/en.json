@@ -491,8 +491,8 @@
     "message": "Focus Investigation Reason",
     "description": "form label: for the reason leading to a plan being created"
   },
-  "FOCUS_INVESTIGATION_STATUS_LABEL": {
-    "message": "Focus Investigation Status",
+  "FOCUS_CLASSIFICATION_LABEL": {
+    "message": "Focus Classification",
     "description": "form label: for the status of a focus investigation plan"
   },
   "INTERVENTION_TYPE_LABEL": {
@@ -922,5 +922,9 @@
   "FAILED_TO_GET_EVENT_ID": {
     "message": "Failed to extract event id from plan",
     "description": "error message shown when app is unable to retrieve a value from a plan"
+  },
+  "FAILED_TO_EXTRACT_PLAN_RECORD": {
+    "message": "Failed to extract a plan record",
+    "description": "error message shown when utils for extracting a plan from a server response fails"
   }
 }

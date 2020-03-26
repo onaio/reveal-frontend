@@ -26,12 +26,12 @@ import {
   REPORT_IRS_PLAN_URL,
 } from '../../../../constants';
 import { displayError } from '../../../../helpers/errors';
+import { extractPlanRecordResponseFromPlanPayload } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
 import IRSPlansReducer, {
   reducerName as IRSPlansReducerName,
 } from '../../../../store/ducks/generic/plans';
 import {
-  extractPlanRecordResponseFromPlanPayload,
   fetchPlanRecords,
   InterventionType,
   makePlansArraySelector,

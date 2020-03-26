@@ -12,13 +12,18 @@ import {
   TASK_YELLOW as YELLOW,
 } from '../../colors';
 import { ONADATA_OAUTH_STATE, OPENSRP_OAUTH_STATE, PLAN_UUID_NAMESPACE } from '../../configs/env';
+import { SORT_BY_EFFECTIVE_PERIOD_START_FIELD } from '../../constants';
+import { irsPlanDefinition1 } from '../../containers/pages/InterventionPlan/IRS/tests/fixtures';
 import { Plan } from '../../store/ducks/plans';
 import { InitialTask } from '../../store/ducks/tasks';
 import * as fixtures from '../../store/ducks/tests/fixtures';
-import { plan1, plan5, plan6 } from '../../store/ducks/tests/fixtures';
+import { plan1, plan5, plan6, plan99, sortedPlansArray } from '../../store/ducks/tests/fixtures';
+import * as helpers from '../errors';
 import { colorMaps } from '../structureColorMaps';
 import {
+  descendingOrderSort,
   extractPlan,
+  extractPlanRecordResponseFromPlanPayload,
   generateNameSpacedUUID,
   getColor,
   getColorByValue,
@@ -248,7 +253,7 @@ describe('helpers/utils', () => {
   });
 
   it('extractPlan handles plans with null jurisdiction name path', () => {
-    const plan: Plan = cloneDeep(fixtures.plan1) as Plan;
+    const plan: Plan = cloneDeep(fixtures.plan1);
     (plan as any).jurisdiction_name_path = 'null';
     const result = extractPlan(plan);
     const expected = {
@@ -307,5 +312,19 @@ describe('helpers/utils', () => {
     const result = removeNullJurisdictionPlans([plan5, plan6, plan1] as Plan[]);
     expect(result.length).toEqual(1);
     expect(result).toEqual([plan1]);
+  });
+  it('sorts plans array in descending order', () => {
+    const sortedPlans = descendingOrderSort(
+      [plan99, plan1] as Plan[],
+      SORT_BY_EFFECTIVE_PERIOD_START_FIELD
+    );
+    expect(sortedPlans).toEqual(sortedPlansArray);
+  });
+  it('extractPlanRecordResponseFromPlanPayload shows error as expected', () => {
+    const displayErrorMock = jest.fn();
+    (helpers as any).displayError = displayErrorMock;
+    const result = extractPlanRecordResponseFromPlanPayload([irsPlanDefinition1] as any);
+    expect(result).toBeNull();
+    expect(displayErrorMock).toHaveBeenCalledTimes(1);
   });
 });
