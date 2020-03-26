@@ -128,4 +128,19 @@ describe('App', () => {
     // react-app's scope.
     expect(hrefMock).toHaveBeenCalledWith('http://localhost:3000/logout');
   });
+
+  it('tracks dimensions correctly', async () => {
+    fetch.mockResponse(JSON.stringify(expressAPIResponse));
+    GoogleAnalytics.set = jest.fn();
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <App />
+        </Router>
+      </Provider>
+    );
+    await new Promise<unknown>(resolve => setImmediate(resolve));
+    expect(GoogleAnalytics.set).toBeCalledWith({ env: 'test', username: 'superset-user' });
+    wrapper.unmount();
+  });
 });
