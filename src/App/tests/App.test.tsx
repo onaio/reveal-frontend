@@ -146,8 +146,8 @@ describe('App', () => {
 
   it('does not track dimensions of google analytics code is not set', async () => {
     fetch.mockResponse(JSON.stringify(expressAPIResponse));
-    const myModule = require('../../configs/env');
-    myModule.GA_CODE = '';
+    const envModule = require('../../configs/env');
+    envModule.GA_CODE = '';
     GoogleAnalytics.set = jest.fn();
     const wrapper = mount(
       <Provider store={store}>
@@ -163,8 +163,8 @@ describe('App', () => {
 
   it('does not track pages if google analytics code is not set', () => {
     GoogleAnalytics.pageview = jest.fn();
-    const myModule = require('../../configs/env');
-    myModule.GA_CODE = '';
+    const envModule = require('../../configs/env');
+    envModule.GA_CODE = '';
     const wrapper = mount(
       <Provider store={store}>
         <Router history={history}>
