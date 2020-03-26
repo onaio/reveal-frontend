@@ -143,4 +143,38 @@ describe('App', () => {
     expect(GoogleAnalytics.set).toBeCalledWith({ env: 'test', username: 'superset-user' });
     wrapper.unmount();
   });
+
+  it('does not track dimensions of google analytics code is not set', async () => {
+    fetch.mockResponse(JSON.stringify(expressAPIResponse));
+    const myModule = require('../../configs/env');
+    myModule.GA_CODE = '';
+    GoogleAnalytics.set = jest.fn();
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <App />
+        </Router>
+      </Provider>
+    );
+    await new Promise<unknown>(resolve => setImmediate(resolve));
+    expect(GoogleAnalytics.set).not.toBeCalled();
+    wrapper.unmount();
+  });
+
+  it('does not track pages if google analytics code is not set', () => {
+    GoogleAnalytics.pageview = jest.fn();
+    const myModule = require('../../configs/env');
+    myModule.GA_CODE = '';
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <App />
+        </Router>
+      </Provider>
+    );
+    expect(GoogleAnalytics.pageview).not.toBeCalled();
+    history.push(PLAN_LIST_URL);
+    expect(GoogleAnalytics.pageview).not.toBeCalled();
+    wrapper.unmount();
+  });
 });
