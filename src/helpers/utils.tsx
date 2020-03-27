@@ -851,11 +851,12 @@ export const isPlanDefinitionOfType = (
       (f: UseContext) => f.code === 'interventionType' && f.valueCodableConcept === interventionType
     ).length > 0
   );
-
+};
 /**
  * If error exists return item and error message else return percentage value
  * Research on Declaring number only within certain range e.g in decimalPoints case (0 - 100)
  * @param number item
+ * @param number decimalPoints
  */
 export const IndicatorThresholdItemPercentage = (item: number, decimalPoints?: number) => {
   return percentage(item, decimalPoints).error === null
