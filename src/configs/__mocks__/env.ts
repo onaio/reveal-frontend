@@ -95,3 +95,5 @@ export const DISABLE_LOGIN_PROTECTION = false;
 export const EXPRESS_OAUTH_GET_STATE_URL = 'http://localhost:3000/oauth/state';
 
 export const EXPRESS_OAUTH_LOGOUT_URL = 'http://localhost:3000/logout';
+
+export const BACKEND_ACTIVE = true;
