@@ -4,16 +4,8 @@ import { get, keyBy, keys, pickBy, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
 import { createSelector } from 'reselect';
 import SeamlessImmutable from 'seamless-immutable';
-import uuidv4 from 'uuid/v4';
 import { FIReasonType, FIStatusType } from '../../components/forms/PlanForm/types';
-import {
-  FIReasons,
-  FIStatuses,
-  PlanAction,
-  planActivities,
-  PlanGoal,
-} from '../../configs/settings';
-import { FlexObject, transformValues } from '../../helpers/utils';
+import { descendingOrderSort, FlexObject, removeNullJurisdictionPlans } from '../../helpers/utils';
 
 /** the reducer name */
 export const reducerName = 'plans';
@@ -24,7 +16,6 @@ export enum InterventionType {
   IRS = 'IRS',
   MDA = 'MDA',
 }
-
 /** interface for plan Objects */
 /** Enum representing the possible intervention types */
 export enum PlanStatus {
@@ -103,74 +94,6 @@ export interface PlanPayload {
   version: string;
 }
 
-/** extractPlanPayloadFromPlanRecord */
-export const extractPlanPayloadFromPlanRecord = (planRecord: PlanRecord): PlanPayload | null => {
-  const {
-    plan_date: date,
-    plan_id: identifier,
-    plan_effective_period_end: end,
-    plan_effective_period_start: start,
-    plan_jurisdictions_ids,
-    plan_status: status,
-    plan_title: title,
-    plan_intervention_type: interventionType,
-    plan_version,
-  } = planRecord;
-  if (plan_jurisdictions_ids) {
-    const planPayload: PlanPayload = {
-      action: [],
-      date,
-      effectivePeriod: {
-        end,
-        start,
-      },
-      goal: [],
-      identifier,
-      jurisdiction: plan_jurisdictions_ids.map(id => ({ code: id })),
-      name: title.trim().replace(/ /g, '-'),
-      serverVersion: 0,
-      status,
-      title,
-      useContext: [
-        {
-          code: 'interventionType',
-          valueCodableConcept: interventionType,
-        },
-      ],
-      version: plan_version || '1',
-    };
-
-    // build PlanActions and PlanGoals
-    let planAction: PlanAction;
-    let planGoal: PlanGoal;
-    if (interventionType === InterventionType.IRS) {
-      const { action, goal } = planActivities[InterventionType.IRS];
-      planAction = {
-        ...action,
-        identifier: uuidv4(),
-        timingPeriod: {
-          end,
-          start,
-        },
-      };
-      planGoal = {
-        ...goal,
-        target: [
-          {
-            ...goal.target[0],
-            due: end,
-          },
-        ],
-      };
-      planPayload.action.push(planAction);
-      planPayload.goal.push(planGoal);
-    }
-
-    return planPayload;
-  }
-  return null;
-};
-
 /** PlanEventType - enum for Plan Event logging */
 export enum PlanEventType {
   CREATE = 'Create Plan',
@@ -202,52 +125,6 @@ export interface PlanEventPayload {
   type: 'Event';
   version: number;
 }
-
-export const extractPlanRecordResponseFromPlanPayload = (
-  planPayload: PlanPayload
-): PlanRecordResponse | null => {
-  const { date, effectivePeriod, identifier, status, title, useContext, version } = planPayload;
-  if (useContext && effectivePeriod) {
-    const { end, start } = effectivePeriod;
-    let planInterventionType = InterventionType.FI;
-    let planFiReason: FIReasonType = FIReasons[0];
-    let planFiStatus: FIStatusType = FIStatuses[0];
-    for (const context of useContext) {
-      switch (context.code) {
-        case 'interventionType': {
-          planInterventionType = context.valueCodableConcept as InterventionType;
-          break;
-        }
-        case 'fiReason': {
-          planFiReason = context.valueCodableConcept as FIReasonType;
-          break;
-        }
-        case 'fiStatus': {
-          planFiStatus = context.valueCodableConcept as FIStatusType;
-          break;
-        }
-      }
-    }
-    const planRecordResponse: PlanRecordResponse = {
-      date,
-      effective_period_end: end,
-      effective_period_start: start,
-      fi_reason: planFiReason,
-      fi_status: planFiStatus,
-      identifier,
-      intervention_type: planInterventionType,
-      name,
-      status,
-      title,
-      version,
-    };
-    if (planPayload.jurisdiction) {
-      planRecordResponse.jurisdictions = planPayload.jurisdiction.map(j => j.code);
-    }
-    return planRecordResponse;
-  }
-  return null;
-};
 
 // actions
 /** PLANS_FETCHED action type */
@@ -330,24 +207,27 @@ export const removePlansAction: RemovePlansAction = {
 /** fetchPlans - action creator setting plansById
  * @param {Plan[]} plansList - array of plan objects
  */
-export const fetchPlans = (plansList: Plan[] = []): FetchPlansAction => ({
-  plansById: keyBy(
-    plansList.map((plan: Plan) => {
-      /** ensure jurisdiction_name_path is parsed */
-      if (typeof plan.jurisdiction_name_path === 'string') {
-        plan.jurisdiction_name_path = JSON.parse(plan.jurisdiction_name_path);
-      }
-      /** ensure jurisdiction_path is parsed */
-      if (typeof plan.jurisdiction_path === 'string') {
-        plan.jurisdiction_path = JSON.parse(plan.jurisdiction_path);
-      }
-      plan = transformValues<Plan>(plan, ['plan_fi_reason', 'plan_fi_status']);
-      return plan;
-    }),
-    plan => plan.id
-  ),
-  type: PLANS_FETCHED,
-});
+export const fetchPlans = (plansList: Plan[] = []): FetchPlansAction => {
+  const plansArray = removeNullJurisdictionPlans(plansList);
+
+  return {
+    plansById: keyBy(
+      plansArray.map((plan: Plan) => {
+        /** ensure jurisdiction_name_path is parsed */
+        if (typeof plan.jurisdiction_name_path === 'string') {
+          plan.jurisdiction_name_path = JSON.parse(plan.jurisdiction_name_path);
+        }
+        /** ensure jurisdiction_path is parsed */
+        if (typeof plan.jurisdiction_path === 'string') {
+          plan.jurisdiction_path = JSON.parse(plan.jurisdiction_path);
+        }
+        return plan;
+      }),
+      plan => plan.id
+    ),
+    type: PLANS_FETCHED,
+  };
+};
 
 /** fetchPlanRecords - action creator setting planRecordsById
  * @param {PlanRecord[]} planList - an array of plan record objects
@@ -371,7 +251,7 @@ export const fetchPlanRecords = (planList: PlanRecordResponse[] = []): FetchPlan
       if (plan.jurisdictions) {
         thePlan.plan_jurisdictions_ids = [...plan.jurisdictions];
       }
-      return transformValues<PlanRecord>(thePlan, ['plan_fi_reason', 'plan_fi_status']);
+      return thePlan;
     }),
     plan => plan.id
   ),
@@ -624,7 +504,6 @@ export const getPlansArrayByParentJurisdictionId = (planKey?: string) =>
             : true)
       )
   );
-
 /** makePlansArraySelector
  * Returns a selector that gets an array of Plan objects filtered by one or all
  * of the following:
@@ -643,8 +522,9 @@ export const getPlansArrayByParentJurisdictionId = (planKey?: string) =>
  *
  * @param {Registry} state - the redux store
  * @param {PlanFilters} props - the plan filters object
+ * @param {string} sortField - sort by field
  */
-export const makePlansArraySelector = (planKey?: string) => {
+export const makePlansArraySelector = (planKey?: string, sortField?: string) => {
   return createSelector(
     [
       getPlansArrayByInterventionType(planKey),
@@ -654,6 +534,11 @@ export const makePlansArraySelector = (planKey?: string) => {
       getPlansArrayByParentJurisdictionId(planKey),
     ],
     (plans, plans2, plans3, plans4, plans5) =>
-      intersect([plans, plans2, plans3, plans4, plans5], JSON.stringify)
+      sortField
+        ? descendingOrderSort(
+            intersect([plans, plans2, plans3, plans4, plans5], JSON.stringify),
+            sortField
+          )
+        : intersect([plans, plans2, plans3, plans4, plans5], JSON.stringify)
   );
 };

@@ -5,7 +5,10 @@ import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
-import PlanForm, { propsForUpdatingPlans } from '../../../../components/forms/PlanForm';
+import PlanForm, {
+  LocationChildRenderProp,
+  propsForUpdatingPlans,
+} from '../../../../components/forms/PlanForm';
 import { getPlanFormValues } from '../../../../components/forms/PlanForm/helpers';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
@@ -21,6 +24,7 @@ import planDefinitionReducer, {
   reducerName as planDefinitionReducerName,
 } from '../../../../store/ducks/opensrp/PlanDefinition';
 import ConnectedCaseDetails, { CaseDetailsProps } from './CaseDetails';
+import ConnectedPlanLocationNames from './PlanLocationNames';
 import { getEventId, planIsReactive } from './utils';
 
 /** register the plan definitions reducer */
@@ -93,6 +97,14 @@ const UpdatePlan = (props: RouteComponentProps<RouteParams> & UpdatePlanProps) =
   const planFormProps = {
     ...propsForUpdatingPlans,
     ...(plan && { initialValues: getPlanFormValues(plan) }),
+    /** a renderProp prop. this tells the planForm; I will give you a component that knows of the plan you are displaying,
+     * the component will get jurisdictions associated with that plan and render them as links, what you(planForm)
+     * will do, is provide a child prop(a renderProp) that tells the mentioned component what other stuff you would wish
+     * displayed alongside the jurisdiction names links.
+     */
+    renderLocationNames: (child?: LocationChildRenderProp) => (
+      <ConnectedPlanLocationNames child={child} plan={plan} />
+    ),
   };
 
   const caseDetailsProps: CaseDetailsProps = {

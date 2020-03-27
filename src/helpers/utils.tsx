@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { getOnadataUserInfo, getOpenSRPUserInfo } from '@onaio/gatekeeper';
 import { SessionState } from '@onaio/session-reducer';
+import { Dictionary } from '@onaio/utils';
 import { Color } from 'csstype';
 import { GisidaMap } from 'gisida';
 import { findKey, uniq } from 'lodash';
@@ -11,13 +12,24 @@ import { Link } from 'react-router-dom';
 import { CellInfo, Column } from 'react-table';
 import { toast, ToastOptions } from 'react-toastify';
 import SeamlessImmutable from 'seamless-immutable';
+import uuidv4 from 'uuid/v4';
 import uuidv5 from 'uuid/v5';
 import { TASK_YELLOW } from '../colors';
 import DrillDownTableLinkedCell from '../components/DrillDownTableLinkedCell';
+import { FIReasonType, FIStatusType } from '../components/forms/PlanForm/types';
 import NewRecordBadge from '../components/NewRecordBadge';
 import { DIGITAL_GLOBE_CONNECT_ID, ONADATA_OAUTH_STATE, OPENSRP_OAUTH_STATE } from '../configs/env';
-import { ACTION, FOCUS_AREA_HEADER, NAME } from '../configs/lang';
-import { imgArr, locationHierarchy, LocationItem } from '../configs/settings';
+import { ACTION, FAILED_TO_EXTRACT_PLAN_RECORD, FOCUS_AREA_HEADER, NAME } from '../configs/lang';
+import {
+  FIReasons,
+  FIStatuses,
+  imgArr,
+  locationHierarchy,
+  LocationItem,
+  PlanAction,
+  planActivities,
+  PlanGoal,
+} from '../configs/settings';
 import {
   BEDNET_DISTRIBUTION_CODE,
   BLOOD_SCREENING_CODE,
@@ -33,13 +45,20 @@ import {
   MOSQUITO_COLLECTION_CODE,
   RACD_REGISTER_FAMILY_CODE,
 } from '../constants';
-import { Plan } from '../store/ducks/plans';
+import {
+  InterventionType,
+  Plan,
+  PlanPayload,
+  PlanRecord,
+  PlanRecordResponse,
+} from '../store/ducks/plans';
 import { InitialTask } from '../store/ducks/tasks';
+import { displayError } from './errors';
 import { colorMaps, ColorMapsTypes } from './structureColorMaps';
 
 /** Interface for an object that is allowed to have any property */
-export interface FlexObject {
-  [key: string]: any;
+export interface FlexObject<T = any> {
+  [key: string]: T;
 }
 
 /** Route params interface */
@@ -426,31 +445,19 @@ export function getColor(taskObject: InitialTask): Color {
     }
   }
 }
-/** Transforms values of certain keys to the specified value
- * {T} obj - object where changes will be made
- * {string[]} propertyNames - list of property names in obj whose values will change
- * {any} newValue - the value to be assigned the property names
- * {any[]} old_value - replace property name if old_value is among specified here
+
+/** filters out plans whose jurisdiction id is null
+ * @param {Plan []} plansArray - a list of pre-filtered plans
+ *
+ * @return {Plan []} - A list of filtered plans
  */
-export function transformValues<T>(
-  obj: T,
-  propertyNames: string[],
-  newValue: string = '',
-  oldValue = [0, '0', null, 'null']
-): T {
-  const thisObj: T = { ...obj };
-  propertyNames.forEach(propertyName => {
-    let preOldValue = (thisObj as any)[propertyName];
-    // preprocess received old value: trim and ensure lower case
-    if (typeof preOldValue === 'string') {
-      preOldValue = preOldValue.toLowerCase().trim();
-    }
-    if ((thisObj as any)[propertyName] !== undefined && oldValue.indexOf(preOldValue) > -1) {
-      (thisObj as any)[propertyName] = newValue;
-    }
+export const removeNullJurisdictionPlans = (plansArray: Plan[]): Plan[] => {
+  return plansArray.filter((plan: Plan) => {
+    const jurisdictionID = plan.jurisdiction_id.toLowerCase().trim();
+    return !jurisdictionID.includes('null');
   });
-  return thisObj;
-}
+};
+
 /** Generic Type for any object to be updated
  *  where T is the base interface and Y is the interface
  * to extend the base
@@ -679,3 +686,158 @@ export function growl(message: string, options: ToastOptions = {}) {
   }
   toast(message, { ...options, className, progressClassName });
 }
+/**
+ * Creates a key with an empty array if it didn't exist
+ * @param {Dictionary} target - object to be
+ * @param {string} prop
+ */
+export const setDefaultValues = (target: Dictionary, prop: string) => {
+  if (prop in target) {
+    return target;
+  }
+  target[prop] = [];
+  return target;
+};
+/**
+ * Sorts plans in descending order based on field provided
+ * @param arr
+ * @param sortField
+ */
+export function descendingOrderSort(arr: Plan[], sortField: string) {
+  // check if the provided field exists in the plans else return plansArray
+  if (arr.every(plan => Object.keys(plan).includes(sortField))) {
+    return arr.sort((firstEl: Dictionary, secondEl: Dictionary) => {
+      return Date.parse(secondEl[sortField]) - Date.parse(firstEl[sortField]);
+    });
+  }
+  return arr;
+}
+
+/** extractPlanPayloadFromPlanRecord */
+export const extractPlanPayloadFromPlanRecord = (planRecord: PlanRecord): PlanPayload | null => {
+  const {
+    plan_date: date,
+    plan_id: identifier,
+    plan_effective_period_end: end,
+    plan_effective_period_start: start,
+    plan_jurisdictions_ids,
+    plan_status: status,
+    plan_title: title,
+    plan_intervention_type: interventionType,
+    plan_version,
+  } = planRecord;
+  if (plan_jurisdictions_ids) {
+    const planPayload: PlanPayload = {
+      action: [],
+      date,
+      effectivePeriod: {
+        end,
+        start,
+      },
+      goal: [],
+      identifier,
+      jurisdiction: plan_jurisdictions_ids.map(id => ({ code: id })),
+      name: title.trim().replace(/ /g, '-'),
+      serverVersion: 0,
+      status,
+      title,
+      useContext: [
+        {
+          code: 'interventionType',
+          valueCodableConcept: interventionType,
+        },
+      ],
+      version: plan_version || '1',
+    };
+
+    // build PlanActions and PlanGoals
+    let planAction: PlanAction;
+    let planGoal: PlanGoal;
+    if (interventionType === InterventionType.IRS) {
+      const { action, goal } = planActivities[InterventionType.IRS];
+      planAction = {
+        ...action,
+        identifier: uuidv4(),
+        timingPeriod: {
+          end,
+          start,
+        },
+      };
+      planGoal = {
+        ...goal,
+        target: [
+          {
+            ...goal.target[0],
+            due: end,
+          },
+        ],
+      };
+      planPayload.action.push(planAction);
+      planPayload.goal.push(planGoal);
+    }
+
+    return planPayload;
+  }
+  return null;
+};
+
+/** extracts a planRecord from the planPayload which is the object received from the opensrp service
+ * @param {PlanPayload} planPayload - payload used when creating/updating a plan via OpenSRP plans Endpoint
+ *
+ * @return {PlanRecordResponse | null} the extracted plan details or null if the plan wasn't valid
+ */
+export const extractPlanRecordResponseFromPlanPayload = (
+  planPayload: PlanPayload
+): PlanRecordResponse | null => {
+  const {
+    date,
+    effectivePeriod,
+    identifier,
+    status,
+    title,
+    useContext,
+    version,
+    name,
+  } = planPayload;
+  if (useContext && effectivePeriod) {
+    const { end, start } = effectivePeriod;
+    let planInterventionType = InterventionType.FI;
+    let planFiReason: FIReasonType = FIReasons[0];
+    let planFiStatus: FIStatusType = FIStatuses[0];
+    for (const context of useContext) {
+      switch (context.code) {
+        case 'interventionType': {
+          planInterventionType = context.valueCodableConcept as InterventionType;
+          break;
+        }
+        case 'fiReason': {
+          planFiReason = context.valueCodableConcept as FIReasonType;
+          break;
+        }
+        case 'fiStatus': {
+          planFiStatus = context.valueCodableConcept as FIStatusType;
+          break;
+        }
+      }
+    }
+    const planRecordResponse: PlanRecordResponse = {
+      date,
+      effective_period_end: end,
+      effective_period_start: start,
+      fi_reason: planFiReason,
+      fi_status: planFiStatus,
+      identifier,
+      intervention_type: planInterventionType,
+      name,
+      status,
+      title,
+      version,
+    };
+    if (planPayload.jurisdiction) {
+      planRecordResponse.jurisdictions = planPayload.jurisdiction.map(j => j.code);
+    }
+    return planRecordResponse;
+  }
+  displayError(new Error(FAILED_TO_EXTRACT_PLAN_RECORD));
+  return null;
+};

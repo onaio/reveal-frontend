@@ -1,5 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`containers/forms/PlanForm - Edit Uses Custom component for rendering locationNames: Render Location Names 1`] = `
+<div
+  id="mock-component"
+>
+   This Component renders jurisdictions
+</div>
+`;
+
 exports[`containers/forms/PlanForm - Edit renders activity fields correctly: activities[0].actionCode field 1`] = `
 <input
   id="activities-0-actionCode"
@@ -656,96 +664,6 @@ exports[`containers/forms/PlanForm - Edit renders conditional fields correctly i
   type="hidden"
   value="True"
 />
-`;
-
-exports[`containers/forms/PlanForm - Edit renders jurisdictions fields correctly: jurisdictions[0].id field 1`] = `
-<input
-  id="jurisdictions-0-id"
-  name="jurisdictions[0].id"
-  onBlur={[Function]}
-  onChange={[Function]}
-  readOnly={true}
-  type="hidden"
-  value="35968df5-f335-44ae-8ae5-25804caa2d86"
-/>
-`;
-
-exports[`containers/forms/PlanForm - Edit renders jurisdictions fields correctly: jurisdictions[0].name field 1`] = `
-<input
-  id="jurisdictions-0-name"
-  name="jurisdictions[0].name"
-  onBlur={[Function]}
-  onChange={[Function]}
-  readOnly={true}
-  type="hidden"
-  value="35968df5-f335-44ae-8ae5-25804caa2d86"
-/>
-`;
-
-exports[`containers/forms/PlanForm - Edit renders jurisdictions fields correctly: jurisdictions[1].id field 1`] = `
-<input
-  id="jurisdictions-1-id"
-  name="jurisdictions[1].id"
-  onBlur={[Function]}
-  onChange={[Function]}
-  readOnly={true}
-  type="hidden"
-  value="3952"
-/>
-`;
-
-exports[`containers/forms/PlanForm - Edit renders jurisdictions fields correctly: jurisdictions[1].name field 1`] = `
-<input
-  id="jurisdictions-1-name"
-  name="jurisdictions[1].name"
-  onBlur={[Function]}
-  onChange={[Function]}
-  readOnly={true}
-  type="hidden"
-  value="3952"
-/>
-`;
-
-exports[`containers/forms/PlanForm - Edit renders jurisdictions fields correctly: jurisdictions[2].id field 1`] = `
-<input
-  id="jurisdictions-2-id"
-  name="jurisdictions[2].id"
-  onBlur={[Function]}
-  onChange={[Function]}
-  readOnly={true}
-  type="hidden"
-  value="ac7ba751-35e8-4b46-9e53-3cbaad193697"
-/>
-`;
-
-exports[`containers/forms/PlanForm - Edit renders jurisdictions fields correctly: jurisdictions[2].name field 1`] = `
-<input
-  id="jurisdictions-2-name"
-  name="jurisdictions[2].name"
-  onBlur={[Function]}
-  onChange={[Function]}
-  readOnly={true}
-  type="hidden"
-  value="ac7ba751-35e8-4b46-9e53-3cbaad193697"
-/>
-`;
-
-exports[`containers/forms/PlanForm - Edit renders jurisdictions fields correctly: jurisdictions[3].id field 1`] = `null`;
-
-exports[`containers/forms/PlanForm - Edit renders jurisdictions fields correctly: jurisdictions[3].name field 1`] = `null`;
-
-exports[`containers/forms/PlanForm - Edit renders jurisdictions fields correctly: selected jurisdictions 1`] = `
-Array [
-  <span>
-    35968df5-f335-44ae-8ae5-25804caa2d86
-  </span>,
-  <span>
-    3952
-  </span>,
-  <span>
-    ac7ba751-35e8-4b46-9e53-3cbaad193697
-  </span>,
-]
 `;
 
 exports[`containers/forms/PlanForm - Submission Form validation works for activity fields: activities-0 errors 1`] = `

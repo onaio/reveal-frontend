@@ -3,6 +3,7 @@ import { get } from 'lodash';
 import { Store } from 'redux';
 import { AnyAction } from 'redux';
 import SeamlessImmutable from 'seamless-immutable';
+import { FlexObject, setDefaultValues } from '../../../../helpers/utils';
 
 /** The reducer name */
 export const reducerName = 'assignments';
@@ -91,15 +92,38 @@ export const removeAssignmentsAction: RemoveAssignmentsAction = {
  * @returns {FetchAssignmentsAction} - action with assignments payload that is added to store
  */
 export const fetchAssignments = (assignmentsList: Assignment[]): FetchAssignmentsAction => {
-  const assignmentsByPlanId: AssignmentsByPlanId = {};
+  // const assignmentsByPlanId: AssignmentsByPlanId = {};
+  const defaultArrayAssignmentHandler: ProxyHandler<object> = {
+    /**
+     * The methods inside the handler object are called traps for our case we use a get trap
+     * @param {AssignmentsByPlanId} target
+     * @param {string} plan planId the assignmentsByPlanId will be updated by empty arrays keyed by the planId
+     */
+    get: (target: AssignmentsByPlanId, plan: string) => {
+      /**
+       * Check if the planId already exists then return the target else add the key with an empty array value
+       */
+      return setDefaultValues(target, plan);
+    },
+  };
 
+  let assignmentsByPlanId: AssignmentsByPlanId = {};
+  /**
+   * Todo:Research on a solution  for Typescript can't infer types when using Proxy
+   */
+  /**
+   * A JavaScript Proxy is an object that wraps another object (target) and intercepts the fundamental operations of the target object
+   * @param {AssignmentsByPlanId} assignmentsByPlanId target(is an object to wrap) initial value is an empty object
+   * @param {ProxyHandler<object>} defaultArrayAssignmentHandler  object that contains methods to control the behaviors of the target
+   */
+  const assignmentsByPlanIdProxy = new Proxy(
+    assignmentsByPlanId,
+    defaultArrayAssignmentHandler
+  ) as FlexObject;
   for (const assignment of assignmentsList) {
-    if (!(assignment.plan in assignmentsByPlanId)) {
-      assignmentsByPlanId[assignment.plan] = [];
-    }
+    assignmentsByPlanId = assignmentsByPlanIdProxy[assignment.plan];
     assignmentsByPlanId[assignment.plan].push(assignment);
   }
-
   return {
     assignmentsByPlanId,
     type: ASSIGNMENTS_FETCHED,

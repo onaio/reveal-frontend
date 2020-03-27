@@ -99,6 +99,7 @@ export const OPENSRP_DEL_PRACTITIONER_ROLE_ENDPOINT = 'practitionerRole/deleteBy
 export const OPENSRP_ADD_PRACTITIONER_ROLE_ENDPOINT = 'practitionerRole/add';
 export const OPENSRP_USERS_ENDPOINT = 'user';
 export const OPENSRP_FIND_EVENTS_ENDPOINT = 'event/findById';
+export const OPENSRP_LOCATIONS_BY_PLAN = 'plans/findLocationNames';
 
 // colors
 export const GREEN = 'Green';
@@ -119,3 +120,5 @@ export const MOSQUITO_COLLECTION_CODE = 'Mosquito Collection';
 export const PRACTITIONER_CODE = {
   text: 'Community Health Worker',
 };
+/** Field to sort plans by */
+export const SORT_BY_EFFECTIVE_PERIOD_START_FIELD = 'plan_effective_period_start';
