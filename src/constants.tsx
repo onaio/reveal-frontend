@@ -49,8 +49,9 @@ export const TWO_HUNDRED_PX = '200px';
 export const PLAN_RECORD_BY_ID = 'planRecordsById';
 
 // internal urls
-export const LOGIN_URL = '/fe/login';
+export const BACKEND_LOGIN_URL = '/fe/login';
 export const EXPRESS_LOGIN_URL = '/login';
+export const REACT_LOGIN_URL = '/login';
 export const LOGOUT_URL = '/logout';
 export const HOME_URL = '/';
 export const INTERVENTION_IRS_URL = '/intervention/irs';
@@ -79,8 +80,9 @@ export const PRACTITIONERS_LIST_URL = '/practitioners';
 export const ASSIGN_PRACTITIONERS_URL = '/teams/assignPractitioners';
 export const PLAN = 'plan';
 export const REPORT = 'report';
-export const OAUTH_CALLBACK_URL = '/fe/oauth/callback/opensrp';
-export const OAUTH_CALLBACK_PATH = '/fe/oauth/callback/:id';
+export const BACKEND_CALLBACK_URL = '/fe/oauth/callback/opensrp';
+export const BACKEND_CALLBACK_PATH = '/fe/oauth/callback/:id';
+export const REACT_CALLBACK_PATH = '/oauth/callback/:id';
 
 // OpenSRP API strings
 export const OPENSRP_PRACTITIONER_ENDPOINT = 'practitioner';
