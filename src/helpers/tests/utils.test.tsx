@@ -14,7 +14,6 @@ import {
 import { ONADATA_OAUTH_STATE, OPENSRP_OAUTH_STATE, PLAN_UUID_NAMESPACE } from '../../configs/env';
 import { SORT_BY_EFFECTIVE_PERIOD_START_FIELD } from '../../constants';
 import { irsPlanDefinition1 } from '../../containers/pages/InterventionPlan/IRS/tests/fixtures';
-import { Plan } from '../../store/ducks/plans';
 import * as planDefinitionFixtures from '../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
 import { InterventionType, Plan } from '../../store/ducks/plans';
 import { InitialTask } from '../../store/ducks/tasks';

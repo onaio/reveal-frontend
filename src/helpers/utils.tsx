@@ -28,13 +28,8 @@ import {
   LocationItem,
   PlanAction,
   planActivities,
-  PlanGoal,
-import { ACTION, FOCUS_AREA_HEADER, NAME } from '../configs/lang';
-import {
-  imgArr,
-  locationHierarchy,
-  LocationItem,
   PlanDefinition,
+  PlanGoal,
   UseContext,
 } from '../configs/settings';
 import {
