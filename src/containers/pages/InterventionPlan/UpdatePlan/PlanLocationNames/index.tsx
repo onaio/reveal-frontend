@@ -10,6 +10,7 @@ import Loading from '../../../../../components/page/Loading';
 import { PlanDefinition } from '../../../../../configs/settings';
 import { FI_SINGLE_URL } from '../../../../../constants';
 import { displayError } from '../../../../../helpers/errors';
+import { isPlanDefinitionOfType } from '../../../../../helpers/utils';
 import { OpenSRPService } from '../../../../../services/opensrp';
 import locationsReducer, {
   fetchLocations,
@@ -17,6 +18,7 @@ import locationsReducer, {
   Location,
   reducerName as locationsReducerName,
 } from '../../../../../store/ducks/opensrp/locations';
+import { InterventionType } from '../../../../../store/ducks/plans';
 import { loadLocations } from './utils';
 
 // register the locations reducer.
@@ -51,7 +53,7 @@ const PlanLocationNames = (props: Props) => {
     }
   }, []);
 
-  if (props.locations.length < 1) {
+  if (plan === null || props.locations.length < 1) {
     return <Loading minHeight={'5vh'} />;
   }
 
@@ -60,7 +62,11 @@ const PlanLocationNames = (props: Props) => {
       {props.locations.map((location, index) => {
         return (
           <li key={index}>
-            <Link to={`${FI_SINGLE_URL}/${location.identifier}`}>{location.name}</Link>
+            {isPlanDefinitionOfType(plan, InterventionType.FI) ? (
+              <Link to={`${FI_SINGLE_URL}/${location.identifier}`}>{location.name}</Link>
+            ) : (
+              <span>{location.name}</span>
+            )}
             {props.child && props.child(location.name, location.identifier, index)}
           </li>
         );

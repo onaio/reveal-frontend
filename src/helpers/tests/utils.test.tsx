@@ -14,7 +14,8 @@ import {
 import { ONADATA_OAUTH_STATE, OPENSRP_OAUTH_STATE, PLAN_UUID_NAMESPACE } from '../../configs/env';
 import { SORT_BY_EFFECTIVE_PERIOD_START_FIELD } from '../../constants';
 import { irsPlanDefinition1 } from '../../containers/pages/InterventionPlan/IRS/tests/fixtures';
-import { Plan } from '../../store/ducks/plans';
+import * as planDefinitionFixtures from '../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
+import { InterventionType, Plan } from '../../store/ducks/plans';
 import { InitialTask } from '../../store/ducks/tasks';
 import * as fixtures from '../../store/ducks/tests/fixtures';
 import { plan1, plan5, plan6, plan99, sortedPlansArray } from '../../store/ducks/tests/fixtures';
@@ -28,11 +29,11 @@ import {
   getColor,
   getColorByValue,
   getLocationColumns,
+  isPlanDefinitionOfType,
   oAuthUserInfoGetter,
   removeNullJurisdictionPlans,
   roundToPrecision,
 } from '../utils';
-
 interface SampleColorMap {
   [key: string]: string;
 }
@@ -313,6 +314,7 @@ describe('helpers/utils', () => {
     expect(result.length).toEqual(1);
     expect(result).toEqual([plan1]);
   });
+
   it('sorts plans array in descending order', () => {
     const sortedPlans = descendingOrderSort(
       [plan99, plan1] as Plan[],
@@ -320,11 +322,25 @@ describe('helpers/utils', () => {
     );
     expect(sortedPlans).toEqual(sortedPlansArray);
   });
+
   it('extractPlanRecordResponseFromPlanPayload shows error as expected', () => {
     const displayErrorMock = jest.fn();
     (helpers as any).displayError = displayErrorMock;
     const result = extractPlanRecordResponseFromPlanPayload([irsPlanDefinition1] as any);
     expect(result).toBeNull();
     expect(displayErrorMock).toHaveBeenCalledTimes(1);
+  });
+
+  it('computes the interventionType of a planDefinition correctly', () => {
+    const sampleFIPlan = planDefinitionFixtures.plans[0];
+    let result = isPlanDefinitionOfType(sampleFIPlan, InterventionType.FI);
+    expect(result).toBeTruthy();
+    result = isPlanDefinitionOfType(sampleFIPlan, InterventionType.IRS);
+    expect(result).toBeFalsy();
+    const sampleIRSPlan = planDefinitionFixtures.plans[1];
+    result = isPlanDefinitionOfType(sampleIRSPlan, InterventionType.FI);
+    expect(result).toBeFalsy();
+    result = isPlanDefinitionOfType(sampleIRSPlan, InterventionType.IRS);
+    expect(result).toBeTruthy();
   });
 });
