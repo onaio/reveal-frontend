@@ -35,10 +35,9 @@ import {
 } from '../../../../constants';
 
 import { displayError } from '../../../../helpers/errors';
-import { RouteParams } from '../../../../helpers/utils';
+import { extractPlanRecordResponseFromPlanPayload, RouteParams } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
 import plansReducer, {
-  extractPlanRecordResponseFromPlanPayload,
   fetchPlanRecords,
   fetchPlans,
   getPlansArray,
