@@ -1,5 +1,7 @@
+import reducerRegistry from '@onaio/redux-reducer-registry';
 import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
+import flushPromises from 'flush-promises';
 import { createBrowserHistory } from 'history';
 import React from 'react';
 import { Provider } from 'react-redux';
@@ -7,22 +9,24 @@ import { Router } from 'react-router';
 import { INTERVENTION_IRS_URL } from '../../../../../../constants';
 import { OpenSRPService } from '../../../../../../services/opensrp';
 import store from '../../../../../../store';
-import * as planDucks from '../../../../../../store/ducks/plans';
+import jurisdictionReducer, {
+  reducerName as jurisdictionReducerName,
+} from '../../../../../../store/ducks/jurisdictions';
+import plansReducer, {
+  fetchPlanRecords,
+  PlanRecordResponse,
+  reducerName as plansReducerName,
+} from '../../../../../../store/ducks/plans';
 import * as fixtures from '../../../../../../store/ducks/tests/fixtures';
-import {
-  irsPlanDefinition1,
-  irsPlanRecord1,
-  irsPlanRecordNoJurisdictionIds,
-  irsPlanRecordResponse1,
-  jurisdictionsById,
-  jurisidictionResults,
-  locationResults,
-  parentlessParentJurisdictionResults,
-} from '../../tests/fixtures';
+import { irsPlanRecordResponse1, jurisdictionsById } from '../../tests/fixtures';
+import { irsPlanDefinition1, jurisidictionResults } from '../../tests/fixtures';
 import ConnectedIrsPlan, { IrsPlan } from './..';
+import * as serviceCalls from './../serviceCalls';
+
+reducerRegistry.register(jurisdictionReducerName, jurisdictionReducer);
+reducerRegistry.register(plansReducerName, plansReducer);
 
 jest.mock('../../../../../../configs/env');
-
 const history = createBrowserHistory();
 
 /* tslint:disable-next-line no-var-requires */
@@ -57,14 +61,59 @@ describe('containers/pages/IRS/plan', () => {
     );
   });
 
-  it('renders without crashing when loading plans with invalid jurisdiction ids', () => {
-    store.dispatch(
-      planDucks.fetchPlanRecords([irsPlanRecordResponse1 as planDucks.PlanRecordResponse])
+  it('renders IRS Plan page correctly', async () => {
+    const mock: any = jest.fn();
+    const mockList = jest.fn();
+    const mockRead = jest.fn();
+    OpenSRPService.prototype.list = mockList;
+    OpenSRPService.prototype.read = mockRead;
+    mockRead.mockReturnValueOnce(Promise.resolve(irsPlanDefinition1));
+    mockList.mockReturnValueOnce(Promise.resolve(fixtures.organizations));
+    const supersetServiceMock: any = jest.fn(async () => jurisidictionResults);
+    // const fetchJurisdictionMock: any = jest.spyOn(jurisdictionDucks, 'fetchJurisdictions');
+    const loadPlanMock: any = jest.spyOn(serviceCalls, 'loadPlan');
+
+    const { id } = fixtures.plan1;
+    const props = {
+      history,
+      location: mock,
+      match: {
+        isExact: true,
+        params: { id },
+        path: `${INTERVENTION_IRS_URL}/plan/:id`,
+        url: `${INTERVENTION_IRS_URL}/plan/${id}`,
+      },
+      supersetService: supersetServiceMock,
+    };
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedIrsPlan {...props} />
+        </Router>
+      </Provider>
     );
+    await flushPromises();
+    // check that the page title is rendered correctly
+    expect(toJson(wrapper)).toMatchSnapshot();
+    expect(loadPlanMock).toBeCalled();
+    expect(supersetServiceMock.mock.calls.length).toBe(1);
+    // console.log("JAHAJHAJ", fetchJurisdictionMock.mock.calls.length)
+    /*expect(fetchJurisdictionMock.mock.calls[1]).toEqual( {
+      geographic_level: 2,
+      jurisdiction_id: '3952',
+      name: '1B - 3952',
+      parent_id: '1B'
+    });
+    wrapper.unmount();*/
+  });
+
+  it('renders without crashing when loading plans with invlaid jurisdiction ids', () => {
+    store.dispatch(fetchPlanRecords([irsPlanRecordResponse1 as PlanRecordResponse]));
 
     fetch.mockResponseOnce(JSON.stringify({}));
     const mock: any = jest.fn();
     const { identifier: id } = irsPlanRecordResponse1;
+
     const supersetServiceMock: any = jest.fn();
     supersetServiceMock.mockImplementation(async () => [
       jurisdictionsById['0'],
@@ -75,6 +124,7 @@ describe('containers/pages/IRS/plan', () => {
       jurisdictionsById['1Ba'],
       jurisdictionsById['1Bb'],
     ]);
+
     const props = {
       history,
       location: mock,
@@ -93,152 +143,7 @@ describe('containers/pages/IRS/plan', () => {
         </Router>
       </Provider>
     );
-    wrapper.unmount();
-  });
 
-  it('renders correctly if prop planById is not null', async () => {
-    const mock: any = jest.fn();
-    const supersetServiceMock = jest.fn(async () => jurisidictionResults);
-    const { id } = fixtures.plan1;
-    const props = {
-      history,
-      location: mock,
-      match: {
-        isExact: true,
-        params: { id },
-        path: `${INTERVENTION_IRS_URL}/plan/:id`,
-        url: `${INTERVENTION_IRS_URL}/plan/${id}`,
-      },
-      planById: irsPlanRecord1,
-      supersetService: supersetServiceMock,
-    };
-    const mockList = jest.fn();
-    OpenSRPService.prototype.list = mockList;
-    mockList.mockReturnValueOnce(Promise.resolve(fixtures.organizations));
-    const extractPlanRecordResponseFromPlanPayloadMock = jest.spyOn(
-      planDucks,
-      'extractPlanRecordResponseFromPlanPayload'
-    );
-
-    const wrapper = mount(
-      <Provider store={store}>
-        <Router history={history}>
-          <ConnectedIrsPlan {...props} />
-        </Router>
-      </Provider>
-    );
-    await new Promise<unknown>(resolve => setImmediate(resolve));
-    expect(toJson(wrapper.find('Connect(IrsPlan)'))).toMatchSnapshot();
-    expect(extractPlanRecordResponseFromPlanPayloadMock).not.toBeCalled();
-    wrapper.unmount();
-  });
-
-  it('renders correctly if a jurisidiction parent is parentless', async () => {
-    const mock: any = jest.fn();
-    const supersetServiceMock = jest.fn(async () => parentlessParentJurisdictionResults);
-    const { id } = fixtures.plan1;
-    const props = {
-      history,
-      location: mock,
-      match: {
-        isExact: true,
-        params: { id },
-        path: `${INTERVENTION_IRS_URL}/plan/:id`,
-        url: `${INTERVENTION_IRS_URL}/plan/${id}`,
-      },
-      planById: irsPlanRecord1,
-      supersetService: supersetServiceMock,
-    };
-    const mockRead = jest.fn();
-    const mockList = jest.fn();
-    OpenSRPService.prototype.read = mockRead;
-    OpenSRPService.prototype.list = mockList;
-    mockRead.mockReturnValueOnce(Promise.resolve(locationResults));
-    mockList.mockReturnValueOnce(Promise.resolve(fixtures.organizations));
-
-    const wrapper = mount(
-      <Provider store={store}>
-        <Router history={history}>
-          <ConnectedIrsPlan {...props} />
-        </Router>
-      </Provider>
-    );
-    await new Promise<unknown>(resolve => setImmediate(resolve));
-    expect(toJson(wrapper.find('Connect(IrsPlan)'))).toMatchSnapshot();
-    wrapper.unmount();
-  });
-
-  it('renders correctly if planById.plan_jurisdictions_ids is undefined', async () => {
-    const mock: any = jest.fn();
-    const supersetServiceMock = jest.fn(async () => jurisidictionResults);
-    const { id } = fixtures.plan1;
-    const props = {
-      history,
-      location: mock,
-      match: {
-        isExact: true,
-        params: { id },
-        path: `${INTERVENTION_IRS_URL}/plan/:id`,
-        url: `${INTERVENTION_IRS_URL}/plan/${id}`,
-      },
-      planById: irsPlanRecordNoJurisdictionIds,
-      supersetService: supersetServiceMock,
-    };
-    const mockList = jest.fn();
-    OpenSRPService.prototype.list = mockList;
-    mockList.mockReturnValueOnce(Promise.resolve(fixtures.organizations));
-
-    const wrapper = mount(
-      <Provider store={store}>
-        <Router history={history}>
-          <ConnectedIrsPlan {...props} />
-        </Router>
-      </Provider>
-    );
-    await new Promise<unknown>(resolve => setImmediate(resolve));
-    expect(toJson(wrapper.find('Connect(IrsPlan)'))).toMatchSnapshot();
-    wrapper.unmount();
-  });
-
-  it('renders IRS Plan page correctly', async () => {
-    const mock: any = jest.fn();
-    const supersetServiceMock: any = jest.fn(async () => jurisidictionResults);
-    const { id } = fixtures.plan1;
-    const props = {
-      history,
-      location: mock,
-      match: {
-        isExact: true,
-        params: { id },
-        path: `${INTERVENTION_IRS_URL}/plan/:id`,
-        url: `${INTERVENTION_IRS_URL}/plan/${id}`,
-      },
-      supersetService: supersetServiceMock,
-    };
-
-    const mockRead = jest.fn();
-    const mockList = jest.fn();
-    OpenSRPService.prototype.read = mockRead;
-    OpenSRPService.prototype.list = mockList;
-    mockRead.mockReturnValueOnce(Promise.resolve(irsPlanDefinition1));
-    mockList.mockReturnValueOnce(Promise.resolve(fixtures.organizations));
-    const extractPlanRecordResponseFromPlanPayloadMock = jest.spyOn(
-      planDucks,
-      'extractPlanRecordResponseFromPlanPayload'
-    );
-
-    const wrapper = mount(
-      <Provider store={store}>
-        <Router history={history}>
-          <ConnectedIrsPlan {...props} />
-        </Router>
-      </Provider>
-    );
-    await new Promise<unknown>(resolve => setImmediate(resolve));
-    expect(toJson(wrapper.find('Connect(IrsPlan)'))).toMatchSnapshot();
-    expect(extractPlanRecordResponseFromPlanPayloadMock.mock.calls.length).toBe(1);
-    expect(mockList.mock.calls.length).toBe(1);
-    expect(supersetServiceMock.mock.calls.length).toBe(1);
     wrapper.unmount();
   });
 });

@@ -1,69 +1,18 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`containers/pages/IRS/plan renders IRS Plan page correctly 1`] = `
-<Connect(IrsPlan)
-  history={
+<Provider
+  store={
     Object {
-      "action": "POP",
-      "block": [Function],
-      "createHref": [Function],
-      "go": [Function],
-      "goBack": [Function],
-      "goForward": [Function],
-      "length": 1,
-      "listen": [Function],
-      "location": Object {
-        "hash": "",
-        "pathname": "/",
-        "search": "",
-        "state": undefined,
-      },
-      "push": [Function],
-      "replace": [Function],
-    }
-  }
-  location={[MockFunction]}
-  match={
-    Object {
-      "isExact": true,
-      "params": Object {
-        "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
-      },
-      "path": "/intervention/irs/plan/:id",
-      "url": "/intervention/irs/plan/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
-    }
-  }
-  supersetService={
-    [MockFunction] {
-      "calls": Array [
-        Array [
-          undefined,
-          Object {
-            "row_limit": 3000,
-          },
-        ],
-      ],
-      "results": Array [
-        Object {
-          "isThrow": false,
-          "value": Promise {},
-        },
-      ],
+      "dispatch": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+      Symbol(observable): [Function],
     }
   }
 >
-  <IrsPlan
-    allJurisdictionIds={
-      Array [
-        "3952",
-      ]
-    }
-    assignmentsArray={Array []}
-    fetchAllJurisdictionIdsActionCreator={[Function]}
-    fetchAssignmentsActionCreator={[Function]}
-    fetchJurisdictionsActionCreator={[Function]}
-    fetchOrganizationsActionCreator={[Function]}
-    fetchPlansActionCreator={[Function]}
+  <Router
     history={
       Object {
         "action": "POP",
@@ -84,812 +33,172 @@ exports[`containers/pages/IRS/plan renders IRS Plan page correctly 1`] = `
         "replace": [Function],
       }
     }
-    isDraftPlan={null}
-    isFinalizedPlan={null}
-    isNewPlan={false}
-    jurisdictionsById={
-      Object {
-        "3952": Object {
-          "geographic_level": 2,
-          "jurisdiction_id": "3952",
-          "name": "1B - 3952",
-          "parent_id": "1B",
-        },
+  >
+    <Connect(IrsPlan)
+      history={
+        Object {
+          "action": "POP",
+          "block": [Function],
+          "createHref": [Function],
+          "go": [Function],
+          "goBack": [Function],
+          "goForward": [Function],
+          "length": 1,
+          "listen": [Function],
+          "location": Object {
+            "hash": "",
+            "pathname": "/",
+            "search": "",
+            "state": undefined,
+          },
+          "push": [Function],
+          "replace": [Function],
+        }
       }
-    }
-    loadedJurisdictionIds={
-      Array [
-        "3952",
-      ]
-    }
-    location={[MockFunction]}
-    match={
-      Object {
-        "isExact": true,
-        "params": Object {
-          "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
-        },
-        "path": "/intervention/irs/plan/:id",
-        "url": "/intervention/irs/plan/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
+      location={[MockFunction]}
+      match={
+        Object {
+          "isExact": true,
+          "params": Object {
+            "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
+          },
+          "path": "/intervention/irs/plan/:id",
+          "url": "/intervention/irs/plan/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
+        }
       }
-    }
-    organizationsById={
-      Object {
-        "4c506c98-d3a9-11e9-bb65-2a2ae2dbcce4": Object {
-          "active": true,
-          "id": 3,
-          "identifier": "4c506c98-d3a9-11e9-bb65-2a2ae2dbcce4",
-          "name": "Demo Team",
-        },
-        "fcc19470-d599-11e9-bb65-2a2ae2dbcce4": Object {
-          "active": true,
-          "id": 1,
-          "identifier": "fcc19470-d599-11e9-bb65-2a2ae2dbcce4",
-          "name": "The Luang",
-          "type": Object {
-            "coding": Array [
+      supersetService={
+        [MockFunction] {
+          "calls": Array [
+            Array [
+              undefined,
               Object {
-                "code": "team",
-                "display": "Team",
-                "system": "http://terminology.hl7.org/CodeSystem/organization-type",
+                "row_limit": 3000,
               },
             ],
-          },
-        },
-      }
-    }
-    planById={null}
-    planId="ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
-    supersetService={
-      [MockFunction] {
-        "calls": Array [
-          Array [
-            undefined,
+          ],
+          "results": Array [
             Object {
-              "row_limit": 3000,
+              "isThrow": false,
+              "value": Promise {},
             },
           ],
-        ],
-        "results": Array [
-          Object {
-            "isThrow": false,
-            "value": Promise {},
-          },
-        ],
+        }
       }
-    }
-  >
-    <Ripple
-      borderColor="#ff5d00"
-      borderStyle="solid"
-      borderWidth="4px"
-      height="64px"
-      minHeight="80vh"
-      width="64px"
     >
-      <div
-        className="lds-ripple-parent"
-        style={
+      <IrsPlan
+        allJurisdictionIds={Array []}
+        assignmentsArray={Array []}
+        fetchAllJurisdictionIdsActionCreator={[Function]}
+        fetchAssignmentsActionCreator={[Function]}
+        fetchJurisdictionsActionCreator={[Function]}
+        fetchOrganizationsActionCreator={[Function]}
+        fetchPlansActionCreator={[Function]}
+        history={
           Object {
-            "minHeight": "80vh",
+            "action": "POP",
+            "block": [Function],
+            "createHref": [Function],
+            "go": [Function],
+            "goBack": [Function],
+            "goForward": [Function],
+            "length": 1,
+            "listen": [Function],
+            "location": Object {
+              "hash": "",
+              "pathname": "/",
+              "search": "",
+              "state": undefined,
+            },
+            "push": [Function],
+            "replace": [Function],
           }
         }
-      >
-        <div
-          className="lds-ripple"
-          style={
-            Object {
-              "height": "64px",
-              "width": "64px",
-            }
-          }
-        >
-          <div
-            style={
-              Object {
-                "borderColor": "#ff5d00",
-                "borderStyle": "solid",
-                "borderWidth": "4px",
-              }
-            }
-          />
-          <div
-            style={
-              Object {
-                "borderColor": "#ff5d00",
-                "borderStyle": "solid",
-                "borderWidth": "4px",
-              }
-            }
-          />
-        </div>
-      </div>
-    </Ripple>
-  </IrsPlan>
-</Connect(IrsPlan)>
-`;
-
-exports[`containers/pages/IRS/plan renders correctly if a jurisidiction parent is parentless 1`] = `
-<Connect(IrsPlan)
-  history={
-    Object {
-      "action": "POP",
-      "block": [Function],
-      "createHref": [Function],
-      "go": [Function],
-      "goBack": [Function],
-      "goForward": [Function],
-      "length": 1,
-      "listen": [Function],
-      "location": Object {
-        "hash": "",
-        "pathname": "/",
-        "search": "",
-        "state": undefined,
-      },
-      "push": [Function],
-      "replace": [Function],
-    }
-  }
-  location={[MockFunction]}
-  match={
-    Object {
-      "isExact": true,
-      "params": Object {
-        "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
-      },
-      "path": "/intervention/irs/plan/:id",
-      "url": "/intervention/irs/plan/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
-    }
-  }
-  planById={
-    Object {
-      "id": "0230f9e8-1f30-5e91-8693-4c993661785e",
-      "plan_date": "2019-08-09",
-      "plan_effective_period_end": "2019-08-29",
-      "plan_effective_period_start": "2019-08-09",
-      "plan_fi_reason": "",
-      "plan_fi_status": "",
-      "plan_id": "0230f9e8-1f30-5e91-8693-4c993661785e",
-      "plan_intervention_type": "IRS",
-      "plan_jurisdictions_ids": Array [
-        "3952",
-      ],
-      "plan_status": "draft",
-      "plan_title": "IRS 2019-08-09",
-      "plan_version": "1",
-    }
-  }
-  supersetService={
-    [MockFunction] {
-      "calls": Array [
-        Array [
-          undefined,
+        isDraftPlan={null}
+        isFinalizedPlan={null}
+        isNewPlan={false}
+        jurisdictionsById={Object {}}
+        loadedJurisdictionIds={Array []}
+        location={[MockFunction]}
+        match={
           Object {
-            "row_limit": 3000,
-          },
-        ],
-      ],
-      "results": Array [
-        Object {
-          "isThrow": false,
-          "value": Promise {},
-        },
-      ],
-    }
-  }
->
-  <IrsPlan
-    allJurisdictionIds={
-      Array [
-        "3952",
-      ]
-    }
-    assignmentsArray={Array []}
-    fetchAllJurisdictionIdsActionCreator={[Function]}
-    fetchAssignmentsActionCreator={[Function]}
-    fetchJurisdictionsActionCreator={[Function]}
-    fetchOrganizationsActionCreator={[Function]}
-    fetchPlansActionCreator={[Function]}
-    history={
-      Object {
-        "action": "POP",
-        "block": [Function],
-        "createHref": [Function],
-        "go": [Function],
-        "goBack": [Function],
-        "goForward": [Function],
-        "length": 1,
-        "listen": [Function],
-        "location": Object {
-          "hash": "",
-          "pathname": "/",
-          "search": "",
-          "state": undefined,
-        },
-        "push": [Function],
-        "replace": [Function],
-      }
-    }
-    isDraftPlan={null}
-    isFinalizedPlan={null}
-    isNewPlan={false}
-    jurisdictionsById={
-      Object {
-        "3952": Object {
-          "geographic_level": 2,
-          "jurisdiction_id": "3952",
-          "name": "1B - 3952",
-          "parent_id": "1B",
-        },
-      }
-    }
-    loadedJurisdictionIds={
-      Array [
-        "3952",
-      ]
-    }
-    location={[MockFunction]}
-    match={
-      Object {
-        "isExact": true,
-        "params": Object {
-          "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
-        },
-        "path": "/intervention/irs/plan/:id",
-        "url": "/intervention/irs/plan/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
-      }
-    }
-    organizationsById={
-      Object {
-        "4c506c98-d3a9-11e9-bb65-2a2ae2dbcce4": Object {
-          "active": true,
-          "id": 3,
-          "identifier": "4c506c98-d3a9-11e9-bb65-2a2ae2dbcce4",
-          "name": "Demo Team",
-        },
-        "fcc19470-d599-11e9-bb65-2a2ae2dbcce4": Object {
-          "active": true,
-          "id": 1,
-          "identifier": "fcc19470-d599-11e9-bb65-2a2ae2dbcce4",
-          "name": "The Luang",
-          "type": Object {
-            "coding": Array [
+            "isExact": true,
+            "params": Object {
+              "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
+            },
+            "path": "/intervention/irs/plan/:id",
+            "url": "/intervention/irs/plan/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
+          }
+        }
+        organizationsById={Object {}}
+        planById={null}
+        planId="ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
+        supersetService={
+          [MockFunction] {
+            "calls": Array [
+              Array [
+                undefined,
+                Object {
+                  "row_limit": 3000,
+                },
+              ],
+            ],
+            "results": Array [
               Object {
-                "code": "team",
-                "display": "Team",
-                "system": "http://terminology.hl7.org/CodeSystem/organization-type",
+                "isThrow": false,
+                "value": Promise {},
               },
             ],
-          },
-        },
-      }
-    }
-    planById={
-      Object {
-        "id": "0230f9e8-1f30-5e91-8693-4c993661785e",
-        "plan_date": "2019-08-09",
-        "plan_effective_period_end": "2019-08-29",
-        "plan_effective_period_start": "2019-08-09",
-        "plan_fi_reason": "",
-        "plan_fi_status": "",
-        "plan_id": "0230f9e8-1f30-5e91-8693-4c993661785e",
-        "plan_intervention_type": "IRS",
-        "plan_jurisdictions_ids": Array [
-          "3952",
-        ],
-        "plan_status": "draft",
-        "plan_title": "IRS 2019-08-09",
-        "plan_version": "1",
-      }
-    }
-    planId="ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
-    supersetService={
-      [MockFunction] {
-        "calls": Array [
-          Array [
-            undefined,
-            Object {
-              "row_limit": 3000,
-            },
-          ],
-        ],
-        "results": Array [
-          Object {
-            "isThrow": false,
-            "value": Promise {},
-          },
-        ],
-      }
-    }
-  >
-    <Ripple
-      borderColor="#ff5d00"
-      borderStyle="solid"
-      borderWidth="4px"
-      height="64px"
-      minHeight="80vh"
-      width="64px"
-    >
-      <div
-        className="lds-ripple-parent"
-        style={
-          Object {
-            "minHeight": "80vh",
           }
         }
       >
-        <div
-          className="lds-ripple"
-          style={
-            Object {
-              "height": "64px",
-              "width": "64px",
-            }
-          }
+        <Ripple
+          borderColor="#ff5d00"
+          borderStyle="solid"
+          borderWidth="4px"
+          height="64px"
+          minHeight="80vh"
+          width="64px"
         >
           <div
+            className="lds-ripple-parent"
             style={
               Object {
-                "borderColor": "#ff5d00",
-                "borderStyle": "solid",
-                "borderWidth": "4px",
+                "minHeight": "80vh",
               }
             }
-          />
-          <div
-            style={
-              Object {
-                "borderColor": "#ff5d00",
-                "borderStyle": "solid",
-                "borderWidth": "4px",
+          >
+            <div
+              className="lds-ripple"
+              style={
+                Object {
+                  "height": "64px",
+                  "width": "64px",
+                }
               }
-            }
-          />
-        </div>
-      </div>
-    </Ripple>
-  </IrsPlan>
-</Connect(IrsPlan)>
-`;
-
-exports[`containers/pages/IRS/plan renders correctly if planById.plan_jurisdictions_ids is undefined 1`] = `
-<Connect(IrsPlan)
-  history={
-    Object {
-      "action": "POP",
-      "block": [Function],
-      "createHref": [Function],
-      "go": [Function],
-      "goBack": [Function],
-      "goForward": [Function],
-      "length": 1,
-      "listen": [Function],
-      "location": Object {
-        "hash": "",
-        "pathname": "/",
-        "search": "",
-        "state": undefined,
-      },
-      "push": [Function],
-      "replace": [Function],
-    }
-  }
-  location={[MockFunction]}
-  match={
-    Object {
-      "isExact": true,
-      "params": Object {
-        "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
-      },
-      "path": "/intervention/irs/plan/:id",
-      "url": "/intervention/irs/plan/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
-    }
-  }
-  planById={
-    Object {
-      "id": "0230f9e8-1f30-5e91-8693-4c993661785e",
-      "plan_date": "2019-08-09",
-      "plan_effective_period_end": "2019-08-29",
-      "plan_effective_period_start": "2019-08-09",
-      "plan_fi_reason": "",
-      "plan_fi_status": "",
-      "plan_id": "0230f9e8-1f30-5e91-8693-4c993661785e",
-      "plan_intervention_type": "IRS",
-      "plan_status": "draft",
-      "plan_title": "IRS 2019-08-09",
-      "plan_version": "1",
-    }
-  }
-  supersetService={
-    [MockFunction] {
-      "calls": Array [
-        Array [
-          undefined,
-          Object {
-            "row_limit": 3000,
-          },
-        ],
-      ],
-      "results": Array [
-        Object {
-          "isThrow": false,
-          "value": Promise {},
-        },
-      ],
-    }
-  }
->
-  <IrsPlan
-    allJurisdictionIds={
-      Array [
-        "3952",
-      ]
-    }
-    assignmentsArray={Array []}
-    fetchAllJurisdictionIdsActionCreator={[Function]}
-    fetchAssignmentsActionCreator={[Function]}
-    fetchJurisdictionsActionCreator={[Function]}
-    fetchOrganizationsActionCreator={[Function]}
-    fetchPlansActionCreator={[Function]}
-    history={
-      Object {
-        "action": "POP",
-        "block": [Function],
-        "createHref": [Function],
-        "go": [Function],
-        "goBack": [Function],
-        "goForward": [Function],
-        "length": 1,
-        "listen": [Function],
-        "location": Object {
-          "hash": "",
-          "pathname": "/",
-          "search": "",
-          "state": undefined,
-        },
-        "push": [Function],
-        "replace": [Function],
-      }
-    }
-    isDraftPlan={null}
-    isFinalizedPlan={null}
-    isNewPlan={false}
-    jurisdictionsById={
-      Object {
-        "3952": Object {
-          "geographic_level": 2,
-          "jurisdiction_id": "3952",
-          "name": "1B - 3952",
-          "parent_id": "1B",
-        },
-      }
-    }
-    loadedJurisdictionIds={
-      Array [
-        "3952",
-      ]
-    }
-    location={[MockFunction]}
-    match={
-      Object {
-        "isExact": true,
-        "params": Object {
-          "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
-        },
-        "path": "/intervention/irs/plan/:id",
-        "url": "/intervention/irs/plan/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
-      }
-    }
-    organizationsById={
-      Object {
-        "4c506c98-d3a9-11e9-bb65-2a2ae2dbcce4": Object {
-          "active": true,
-          "id": 3,
-          "identifier": "4c506c98-d3a9-11e9-bb65-2a2ae2dbcce4",
-          "name": "Demo Team",
-        },
-        "fcc19470-d599-11e9-bb65-2a2ae2dbcce4": Object {
-          "active": true,
-          "id": 1,
-          "identifier": "fcc19470-d599-11e9-bb65-2a2ae2dbcce4",
-          "name": "The Luang",
-          "type": Object {
-            "coding": Array [
-              Object {
-                "code": "team",
-                "display": "Team",
-                "system": "http://terminology.hl7.org/CodeSystem/organization-type",
-              },
-            ],
-          },
-        },
-      }
-    }
-    planById={
-      Object {
-        "id": "0230f9e8-1f30-5e91-8693-4c993661785e",
-        "plan_date": "2019-08-09",
-        "plan_effective_period_end": "2019-08-29",
-        "plan_effective_period_start": "2019-08-09",
-        "plan_fi_reason": "",
-        "plan_fi_status": "",
-        "plan_id": "0230f9e8-1f30-5e91-8693-4c993661785e",
-        "plan_intervention_type": "IRS",
-        "plan_status": "draft",
-        "plan_title": "IRS 2019-08-09",
-        "plan_version": "1",
-      }
-    }
-    planId="ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
-    supersetService={
-      [MockFunction] {
-        "calls": Array [
-          Array [
-            undefined,
-            Object {
-              "row_limit": 3000,
-            },
-          ],
-        ],
-        "results": Array [
-          Object {
-            "isThrow": false,
-            "value": Promise {},
-          },
-        ],
-      }
-    }
-  >
-    <Ripple
-      borderColor="#ff5d00"
-      borderStyle="solid"
-      borderWidth="4px"
-      height="64px"
-      minHeight="80vh"
-      width="64px"
-    >
-      <div
-        className="lds-ripple-parent"
-        style={
-          Object {
-            "minHeight": "80vh",
-          }
-        }
-      >
-        <div
-          className="lds-ripple"
-          style={
-            Object {
-              "height": "64px",
-              "width": "64px",
-            }
-          }
-        >
-          <div
-            style={
-              Object {
-                "borderColor": "#ff5d00",
-                "borderStyle": "solid",
-                "borderWidth": "4px",
-              }
-            }
-          />
-          <div
-            style={
-              Object {
-                "borderColor": "#ff5d00",
-                "borderStyle": "solid",
-                "borderWidth": "4px",
-              }
-            }
-          />
-        </div>
-      </div>
-    </Ripple>
-  </IrsPlan>
-</Connect(IrsPlan)>
-`;
-
-exports[`containers/pages/IRS/plan renders correctly if prop planById is not null 1`] = `
-<Connect(IrsPlan)
-  history={
-    Object {
-      "action": "POP",
-      "block": [Function],
-      "createHref": [Function],
-      "go": [Function],
-      "goBack": [Function],
-      "goForward": [Function],
-      "length": 1,
-      "listen": [Function],
-      "location": Object {
-        "hash": "",
-        "pathname": "/",
-        "search": "",
-        "state": undefined,
-      },
-      "push": [Function],
-      "replace": [Function],
-    }
-  }
-  location={[MockFunction]}
-  match={
-    Object {
-      "isExact": true,
-      "params": Object {
-        "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
-      },
-      "path": "/intervention/irs/plan/:id",
-      "url": "/intervention/irs/plan/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
-    }
-  }
-  planById={
-    Object {
-      "id": "0230f9e8-1f30-5e91-8693-4c993661785e",
-      "plan_date": "2019-08-09",
-      "plan_effective_period_end": "2019-08-29",
-      "plan_effective_period_start": "2019-08-09",
-      "plan_fi_reason": "",
-      "plan_fi_status": "",
-      "plan_id": "0230f9e8-1f30-5e91-8693-4c993661785e",
-      "plan_intervention_type": "IRS",
-      "plan_jurisdictions_ids": Array [
-        "3952",
-      ],
-      "plan_status": "draft",
-      "plan_title": "IRS 2019-08-09",
-      "plan_version": "1",
-    }
-  }
-  supersetService={
-    [MockFunction] {
-      "calls": Array [
-        Array [
-          undefined,
-          Object {
-            "row_limit": 3000,
-          },
-        ],
-      ],
-      "results": Array [
-        Object {
-          "isThrow": false,
-          "value": Promise {},
-        },
-      ],
-    }
-  }
->
-  <IrsPlan
-    allJurisdictionIds={Array []}
-    assignmentsArray={Array []}
-    fetchAllJurisdictionIdsActionCreator={[Function]}
-    fetchAssignmentsActionCreator={[Function]}
-    fetchJurisdictionsActionCreator={[Function]}
-    fetchOrganizationsActionCreator={[Function]}
-    fetchPlansActionCreator={[Function]}
-    history={
-      Object {
-        "action": "POP",
-        "block": [Function],
-        "createHref": [Function],
-        "go": [Function],
-        "goBack": [Function],
-        "goForward": [Function],
-        "length": 1,
-        "listen": [Function],
-        "location": Object {
-          "hash": "",
-          "pathname": "/",
-          "search": "",
-          "state": undefined,
-        },
-        "push": [Function],
-        "replace": [Function],
-      }
-    }
-    isDraftPlan={null}
-    isFinalizedPlan={null}
-    isNewPlan={false}
-    jurisdictionsById={Object {}}
-    loadedJurisdictionIds={Array []}
-    location={[MockFunction]}
-    match={
-      Object {
-        "isExact": true,
-        "params": Object {
-          "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
-        },
-        "path": "/intervention/irs/plan/:id",
-        "url": "/intervention/irs/plan/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
-      }
-    }
-    organizationsById={Object {}}
-    planById={
-      Object {
-        "id": "0230f9e8-1f30-5e91-8693-4c993661785e",
-        "plan_date": "2019-08-09",
-        "plan_effective_period_end": "2019-08-29",
-        "plan_effective_period_start": "2019-08-09",
-        "plan_fi_reason": "",
-        "plan_fi_status": "",
-        "plan_id": "0230f9e8-1f30-5e91-8693-4c993661785e",
-        "plan_intervention_type": "IRS",
-        "plan_jurisdictions_ids": Array [
-          "3952",
-        ],
-        "plan_status": "draft",
-        "plan_title": "IRS 2019-08-09",
-        "plan_version": "1",
-      }
-    }
-    planId="ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
-    supersetService={
-      [MockFunction] {
-        "calls": Array [
-          Array [
-            undefined,
-            Object {
-              "row_limit": 3000,
-            },
-          ],
-        ],
-        "results": Array [
-          Object {
-            "isThrow": false,
-            "value": Promise {},
-          },
-        ],
-      }
-    }
-  >
-    <Ripple
-      borderColor="#ff5d00"
-      borderStyle="solid"
-      borderWidth="4px"
-      height="64px"
-      minHeight="80vh"
-      width="64px"
-    >
-      <div
-        className="lds-ripple-parent"
-        style={
-          Object {
-            "minHeight": "80vh",
-          }
-        }
-      >
-        <div
-          className="lds-ripple"
-          style={
-            Object {
-              "height": "64px",
-              "width": "64px",
-            }
-          }
-        >
-          <div
-            style={
-              Object {
-                "borderColor": "#ff5d00",
-                "borderStyle": "solid",
-                "borderWidth": "4px",
-              }
-            }
-          />
-          <div
-            style={
-              Object {
-                "borderColor": "#ff5d00",
-                "borderStyle": "solid",
-                "borderWidth": "4px",
-              }
-            }
-          />
-        </div>
-      </div>
-    </Ripple>
-  </IrsPlan>
-</Connect(IrsPlan)>
+            >
+              <div
+                style={
+                  Object {
+                    "borderColor": "#ff5d00",
+                    "borderStyle": "solid",
+                    "borderWidth": "4px",
+                  }
+                }
+              />
+              <div
+                style={
+                  Object {
+                    "borderColor": "#ff5d00",
+                    "borderStyle": "solid",
+                    "borderWidth": "4px",
+                  }
+                }
+              />
+            </div>
+          </div>
+        </Ripple>
+      </IrsPlan>
+    </Connect(IrsPlan)>
+  </Router>
+</Provider>
 `;
