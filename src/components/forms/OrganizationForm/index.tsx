@@ -66,6 +66,52 @@ export const defaultInitialValues: OrganizationFormFields = {
   type: defaultOrganizationType,
 };
 
+export const handleSubmit = (
+  values: OrganizationFormFields,
+  setSubmitting: (isSubmitting: boolean) => void,
+  editMode: boolean,
+  setGlobalError: (errorMessage: string) => void,
+  setIfDoneHere: (closeSubmissionCycle: boolean) => void
+) => {
+  if (editMode) {
+    const organizationService = new OpenSRPService(
+      `${OPENSRP_ORGANIZATION_ENDPOINT}/${values.identifier}`
+    );
+    organizationService
+      .update(values)
+      .then(() => {
+        setSubmitting(false);
+        growl(ORGANIZATION_EDITED_SUCCESSFULLY, {
+          onClose: () => setIfDoneHere(true),
+          type: toast.TYPE.SUCCESS,
+        });
+      })
+      .catch((e: Error) => {
+        setGlobalError(e.message);
+        setSubmitting(false);
+      });
+  } else {
+    const organizationService = new OpenSRPService(OPENSRP_ORGANIZATION_ENDPOINT);
+    const identifier = generateNameSpacedUUID(`${moment().toString()}`, OrgFormNameSpace);
+    const valuesToSend = {
+      ...values,
+      identifier,
+    };
+    organizationService
+      .create(valuesToSend)
+      .then(() => {
+        setSubmitting(false);
+        growl(ORGANIZATION_CREATED_SUCCESSFULLY, {
+          onClose: () => setIfDoneHere(true),
+          type: toast.TYPE.SUCCESS,
+        });
+      })
+      .catch((e: Error) => {
+        setGlobalError(e.message);
+        setSubmitting(false);
+      });
+  }
+};
 // TODO - indicator that a team has been added to store??
 /** Organization form component */
 const OrganizationForm = (props: OrganizationFormProps) => {
@@ -84,50 +130,12 @@ const OrganizationForm = (props: OrganizationFormProps) => {
         initialValues={initialValues}
         validationSchema={OrgSchema}
         // tslint:disable-next-line: jsx-no-lambda
-        onSubmit={(values, { setSubmitting }) => {
-          if (editMode) {
-            const organizationService = new OpenSRPService(
-              `${OPENSRP_ORGANIZATION_ENDPOINT}/${values.identifier}`
-            );
-
-            organizationService
-              .update(values)
-              .then(() => {
-                setSubmitting(false);
-                growl(ORGANIZATION_EDITED_SUCCESSFULLY, {
-                  onClose: () => setIfDoneHere(true),
-                  type: toast.TYPE.SUCCESS,
-                });
-              })
-              .catch((e: Error) => {
-                setGlobalError(e.message);
-                setSubmitting(false);
-              });
-          } else {
-            const organizationService = new OpenSRPService(OPENSRP_ORGANIZATION_ENDPOINT);
-            const identifier = generateNameSpacedUUID(`${moment().toString()}`, OrgFormNameSpace);
-            const valuesToSend = {
-              ...values,
-              identifier,
-            };
-            organizationService
-              .create(valuesToSend)
-              .then(() => {
-                setSubmitting(false);
-                growl(ORGANIZATION_CREATED_SUCCESSFULLY, {
-                  onClose: () => setIfDoneHere(true),
-                  type: toast.TYPE.SUCCESS,
-                });
-              })
-              .catch((e: Error) => {
-                setGlobalError(e.message);
-                setSubmitting(false);
-              });
-          }
-        }}
+        onSubmit={(values, { setSubmitting }) =>
+          handleSubmit(values, setSubmitting, editMode, setGlobalError, setIfDoneHere)
+        }
       >
         {({ errors, isSubmitting, setFieldValue, values }) => (
-          <Form className="mb-5">
+          <Form className="mb-5" data-testid="form">
             <FormGroup className="non-field-errors">
               {globalError !== '' && <p className="form-text text-danger">{globalError}</p>}
             </FormGroup>
