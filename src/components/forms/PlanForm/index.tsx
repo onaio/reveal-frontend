@@ -32,8 +32,8 @@ import {
   DESCRIPTION_LABEL,
   END_DATE,
   FOCUS_AREA_HEADER,
+  FOCUS_CLASSIFICATION_LABEL,
   FOCUS_INVESTIGATION,
-  FOCUS_INVESTIGATION_STATUS_LABEL,
   FOCUS_INVESTIGATION_STATUS_REASON,
   INTERVENTION_TYPE_LABEL,
   IRS_TITLE,
@@ -81,9 +81,8 @@ import {
   PlanJurisdictionFormFields,
   PlanSchema,
 } from './helpers';
-import { PlanActionCodesType } from './types';
-
 import './style.css';
+import { PlanActionCodesType } from './types';
 
 /** initial values for plan jurisdiction forms */
 const initialJurisdictionValues: PlanJurisdictionFormFields = {
@@ -113,6 +112,15 @@ export const defaultInitialValues: PlanFormFields = {
   version: DEFAULT_PLAN_VERSION,
 };
 
+/** render Prop interface for render function that planForm
+ * passes to Whatever component that is rendering the jurisdictionNames.
+ */
+export type LocationChildRenderProp = (
+  locationName: string,
+  locationId: string,
+  index: number
+) => JSX.Element;
+
 /** interface for plan form props */
 export interface PlanFormProps {
   allFormActivities: PlanActivityFormFields[] /** the list of all allowed activities */;
@@ -127,6 +135,10 @@ export interface PlanFormProps {
   initialValues: PlanFormFields /** initial values for fields on the form */;
   jurisdictionLabel: string /** the label used for the jurisdiction selection */;
   redirectAfterAction: string /** the url to redirect to after form submission */;
+  renderLocationNames?: (
+    child?: LocationChildRenderProp /** nested render content for each location name */
+  ) => JSX.Element;
+  /** a render prop that renders the plan's location names */
 }
 
 /** Plan Form component */
@@ -310,29 +322,27 @@ const PlanForm = (props: PlanFormProps) => {
                 <div>
                   {editMode ? (
                     <div id="jurisdictions-display-container" className="mb-5">
-                      <ul id="selected-jurisdiction-list">
-                        {values.jurisdictions.map((jurisdiction, index) => (
-                          <li key={index}>
-                            <span>{jurisdiction.name}</span>
+                      {props.renderLocationNames &&
+                        props.renderLocationNames(
+                          (locationName: string, locationId: string, index: number) => (
                             <fieldset>
                               <Field
                                 type="hidden"
                                 readOnly={true}
                                 name={`jurisdictions[${index}].id`}
                                 id={`jurisdictions-${index}-id`}
-                                value={jurisdiction.id}
+                                value={locationId}
                               />
                               <Field
                                 type="hidden"
                                 readOnly={true}
                                 name={`jurisdictions[${index}].name`}
                                 id={`jurisdictions-${index}-name`}
-                                value={jurisdiction.name}
+                                value={locationName}
                               />
                             </fieldset>
-                          </li>
-                        ))}
-                      </ul>
+                          )
+                        )}
                     </div>
                   ) : (
                     <div id="jurisdictions-select-container" className="mb-5">
@@ -428,7 +438,7 @@ const PlanForm = (props: PlanFormProps) => {
 
             {values.interventionType === InterventionType.FI && (
               <FormGroup>
-                <Label for="fiStatus">{FOCUS_INVESTIGATION_STATUS_LABEL}</Label>
+                <Label for="fiStatus">{FOCUS_CLASSIFICATION_LABEL}</Label>
                 <Field
                   required={values.interventionType === InterventionType.FI}
                   component="select"

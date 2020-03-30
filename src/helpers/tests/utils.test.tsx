@@ -12,21 +12,28 @@ import {
   TASK_YELLOW as YELLOW,
 } from '../../colors';
 import { ONADATA_OAUTH_STATE, OPENSRP_OAUTH_STATE, PLAN_UUID_NAMESPACE } from '../../configs/env';
-import { Plan } from '../../store/ducks/plans';
+import { SORT_BY_EFFECTIVE_PERIOD_START_FIELD } from '../../constants';
+import { irsPlanDefinition1 } from '../../containers/pages/InterventionPlan/IRS/tests/fixtures';
+import * as planDefinitionFixtures from '../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
+import { InterventionType, Plan } from '../../store/ducks/plans';
 import { InitialTask } from '../../store/ducks/tasks';
 import * as fixtures from '../../store/ducks/tests/fixtures';
+import { plan1, plan5, plan6, plan99, sortedPlansArray } from '../../store/ducks/tests/fixtures';
+import * as helpers from '../errors';
 import { colorMaps } from '../structureColorMaps';
 import {
+  descendingOrderSort,
   extractPlan,
+  extractPlanRecordResponseFromPlanPayload,
   generateNameSpacedUUID,
   getColor,
   getColorByValue,
   getLocationColumns,
+  isPlanDefinitionOfType,
   oAuthUserInfoGetter,
+  removeNullJurisdictionPlans,
   roundToPrecision,
-  transformValues,
 } from '../utils';
-
 interface SampleColorMap {
   [key: string]: string;
 }
@@ -231,29 +238,6 @@ describe('helpers/utils', () => {
     expect(color).toEqual(YELLOW);
   });
 
-  it('updates property names correctly', () => {
-    const sample = {
-      height: 0,
-      name: null,
-      weight: '65',
-    };
-    const expected = {
-      height: '',
-      name: '',
-      weight: '65',
-    };
-    expect(transformValues(sample, ['name', 'height'])).toEqual(expected);
-    expect(transformValues(sample, ['name', 'height'], '', [0, '0', null, 'null'])).toEqual(
-      expected
-    );
-    const otherExpected = {
-      height: 0,
-      name: '',
-      weight: '65',
-    };
-    expect(transformValues(sample, ['height', 'name'], '', [null, 'null'])).toEqual(otherExpected);
-  });
-
   it('extractPlan works', () => {
     expect(extractPlan(fixtures.plan99 as Plan)).toEqual({
       ...fixtures.plan99,
@@ -270,7 +254,7 @@ describe('helpers/utils', () => {
   });
 
   it('extractPlan handles plans with null jurisdiction name path', () => {
-    const plan: Plan = cloneDeep(fixtures.plan1) as Plan;
+    const plan: Plan = cloneDeep(fixtures.plan1);
     (plan as any).jurisdiction_name_path = 'null';
     const result = extractPlan(plan);
     const expected = {
@@ -323,5 +307,40 @@ describe('helpers/utils', () => {
     expect(generateNameSpacedUUID(moment().toString(), PLAN_UUID_NAMESPACE)).toEqual(
       `cd9a43dd-e408-5a4d-a360-ef59c6e7c2a6`
     );
+  });
+
+  it('filters out plans with null jurisdictions', () => {
+    const result = removeNullJurisdictionPlans([plan5, plan6, plan1] as Plan[]);
+    expect(result.length).toEqual(1);
+    expect(result).toEqual([plan1]);
+  });
+
+  it('sorts plans array in descending order', () => {
+    const sortedPlans = descendingOrderSort(
+      [plan99, plan1] as Plan[],
+      SORT_BY_EFFECTIVE_PERIOD_START_FIELD
+    );
+    expect(sortedPlans).toEqual(sortedPlansArray);
+  });
+
+  it('extractPlanRecordResponseFromPlanPayload shows error as expected', () => {
+    const displayErrorMock = jest.fn();
+    (helpers as any).displayError = displayErrorMock;
+    const result = extractPlanRecordResponseFromPlanPayload([irsPlanDefinition1] as any);
+    expect(result).toBeNull();
+    expect(displayErrorMock).toHaveBeenCalledTimes(1);
+  });
+
+  it('computes the interventionType of a planDefinition correctly', () => {
+    const sampleFIPlan = planDefinitionFixtures.plans[0];
+    let result = isPlanDefinitionOfType(sampleFIPlan, InterventionType.FI);
+    expect(result).toBeTruthy();
+    result = isPlanDefinitionOfType(sampleFIPlan, InterventionType.IRS);
+    expect(result).toBeFalsy();
+    const sampleIRSPlan = planDefinitionFixtures.plans[1];
+    result = isPlanDefinitionOfType(sampleIRSPlan, InterventionType.FI);
+    expect(result).toBeFalsy();
+    result = isPlanDefinitionOfType(sampleIRSPlan, InterventionType.IRS);
+    expect(result).toBeTruthy();
   });
 });

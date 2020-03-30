@@ -1,7 +1,7 @@
 import ClientOauth2 from 'client-oauth2';
 import nock from 'nock';
 import request from 'supertest';
-import { EXPRESS_SESSION_LOGIN_URL, EXPRESS_FRONTEND_OPENSRP_CALLBACK_URL } from '../configs/envs';
+import { EXPRESS_FRONTEND_OPENSRP_CALLBACK_URL, EXPRESS_SESSION_LOGIN_URL } from '../configs/envs';
 import server from '../index';
 import { oauthState, parsedApiResponse, unauthorized } from './fixtures';
 
@@ -46,12 +46,12 @@ jest.mock('client-oauth2', () => {
       };
     })();
 
-    private client: ClientOauth2;
+    public client: ClientOauth2;
     public constructor(client: ClientOauth2) {
       this.client = client;
     }
 
-    public sign(options: any) {
+    public sign(_: any) {
       return { url: 'http://someUrl.com' };
     }
   }
@@ -64,11 +64,11 @@ jest.mock('client-oauth2', () => {
     public token = (() => {
       return new TokenFlow(this as any);
     })();
-    private options: ClientOauth2.Options;
-    private request: ClientOauth2.Request;
-    public constructor(options: ClientOauth2.Options, request: ClientOauth2.Request) {
+    public options: ClientOauth2.Options;
+    public request: ClientOauth2.Request;
+    public constructor(options: ClientOauth2.Options, req: ClientOauth2.Request) {
       this.options = options;
-      this.request = request;
+      this.request = req;
     }
   };
 });
@@ -92,7 +92,7 @@ describe('src/index.ts', () => {
       .get('/')
       .expect(200)
       .expect('Do you mind')
-      .end((err: Error, res: Express.Response) => {
+      .end((err: Error, _: Express.Response) => {
         if (err) {
           throw err;
         }

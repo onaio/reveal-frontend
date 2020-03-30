@@ -247,3 +247,6 @@ export type EXPRESS_OAUTH_GET_STATE_URL = typeof EXPRESS_OAUTH_GET_STATE_URL;
 export const EXPRESS_OAUTH_LOGOUT_URL =
   process.env.REACT_APP_EXPRESS_OAUTH_LOGOUT_URL || 'http://localhost:3000/logout';
 export type EXPRESS_OAUTH_LOGOUT_URL = typeof EXPRESS_OAUTH_LOGOUT_URL;
+
+export const BACKEND_ACTIVE = process.env.REACT_APP_BACKEND_ACTIVE === 'true';
+export type BACKEND_ACTIVE = typeof BACKEND_ACTIVE;

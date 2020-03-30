@@ -1,8 +1,8 @@
 // tslint:disable: -literal-sort-keys
 export const parsedApiResponse = {
-  userName: 'superset-user',
-  roles: ['Provider'],
   preferredName: 'Superset User',
+  roles: ['Provider'],
+  userName: 'superset-user',
 };
 
 export const oauthState = {
@@ -46,4 +46,4 @@ export const oauthState = {
 
 export const unauthorized = {
   error: 'Not authorized',
-}
+};

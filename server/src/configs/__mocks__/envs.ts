@@ -1,4 +1,4 @@
-import { join } from "path";
+import { join } from 'path';
 
 export const EXPRESS_OPENSRP_ACCESS_TOKEN_URL =
   'http://reveal-stage.smartregister.org/opensrp/oauth/token';

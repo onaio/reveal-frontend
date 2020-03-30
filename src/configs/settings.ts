@@ -987,6 +987,15 @@ export const ZambiaAdmin0: JurisdictionsByCountry = {
   jurisdictionIds: ['2939', '2940', '2942', '2942', '2953', '2954'],
   tilesets: [],
 };
+/** Country Jurisdictions definition for Zambia */
+export const ZambiaAdminRA0: JurisdictionsByCountry = {
+  ADMN0_EN: 'ra Zambia',
+  ADMN0_PCODE: 'ZMra',
+  bounds: [28.20209213900005, -15.549759923999941, 32.755632835000085, -13.718855579980357],
+  jurisdictionId: '0ddd9ad1-452b-4825-a92a-49cb9fc82d18',
+  jurisdictionIds: [],
+  tilesets: [],
+};
 
 /** Country Jurisdictions definition for Thailand */
 export const ThailandAdmin0: JurisdictionsByCountry = {
@@ -1155,6 +1164,7 @@ export const CountriesAdmin0 = {
   TH: ThailandAdmin0,
   Tak: TakAdmin0,
   ZM: ZambiaAdmin0,
+  ['ra Zambia']: ZambiaAdminRA0,
   ราชอาณาจักรไทย: ราชอาณาจักรไทยAdmin0,
 };
 /** Columns for various Plans */

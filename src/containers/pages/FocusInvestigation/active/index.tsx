@@ -60,8 +60,12 @@ import {
 import { displayError } from '../../../../helpers/errors';
 import { renderClassificationRow } from '../../../../helpers/indicators';
 import '../../../../helpers/tables.css';
-import { defaultTableProps, getFilteredFIPlansURL } from '../../../../helpers/utils';
-import { extractPlan, getLocationColumns, transformValues } from '../../../../helpers/utils';
+import {
+  defaultTableProps,
+  getFilteredFIPlansURL,
+  removeNullJurisdictionPlans,
+} from '../../../../helpers/utils';
+import { extractPlan, getLocationColumns } from '../../../../helpers/utils';
 import supersetFetch from '../../../../services/superset';
 import plansReducer, {
   fetchPlans,
@@ -203,12 +207,9 @@ class ActiveFocusInvestigation extends React.Component<
         {[caseTriggeredPlans, routinePlans].forEach((plansArray: Plan[] | null, i) => {
           const locationColumns: Column[] = getLocationColumns(locationHierarchy, true);
           if (plansArray && plansArray.length) {
-            const thePlans = plansArray.map((item: Plan) => {
-              let thisItem = extractPlan(item);
-              // transform values of this properties if they are null
-              const propertiesToTransform = ['village', 'canton', 'district', 'province'];
-              thisItem = transformValues(thisItem, propertiesToTransform);
-              return thisItem;
+            const jurisdictionValidPlans = removeNullJurisdictionPlans(plansArray);
+            const thePlans = jurisdictionValidPlans.map((item: Plan) => {
+              return extractPlan(item);
             });
             /**  Handle Columns Unique for Routine and Reactive Tables */
             const columnsBasedOnReason = [];

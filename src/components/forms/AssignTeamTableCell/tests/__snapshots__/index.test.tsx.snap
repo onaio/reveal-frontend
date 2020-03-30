@@ -23,3 +23,10 @@ exports[`/containers/forms/AssignTeamTableCell renders correctly: Team Count Tex
   title="0 Teams Assigned"
 />
 `;
+
+exports[`/containers/forms/AssignTeamTableCell renders correctly: Updated teams 1`] = `
+<span
+  className="assignment-label"
+  title="2 Teams Assigned"
+/>
+`;

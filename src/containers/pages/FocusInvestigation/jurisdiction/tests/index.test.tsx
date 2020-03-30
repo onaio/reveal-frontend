@@ -10,7 +10,7 @@ import { MemoryRouter } from 'react-router';
 import { AN_ERROR_OCCURRED } from '../../../../../configs/lang';
 import { FI_SINGLE_URL } from '../../../../../constants';
 import * as errorHelpers from '../../../../../helpers/errors';
-import { extractPlan, transformValues } from '../../../../../helpers/utils';
+import { extractPlan } from '../../../../../helpers/utils';
 import store from '../../../../../store';
 import jurisdictionReducer, {
   fetchJurisdictions,
@@ -253,8 +253,6 @@ describe('containers/FocusInvestigation/Jurisdiction', () => {
       'Link to create new plans'
     );
 
-    const columnsToTransform = ['village', 'canton', 'district', 'province'];
-
     expect(
       wrapper
         .find('.current-plans DrillDownTable')
@@ -268,7 +266,7 @@ describe('containers/FocusInvestigation/Jurisdiction', () => {
         .find('.current-plans DrillDownTable')
         .first()
         .props().data
-    ).toEqual([transformValues(extractPlan(fixtures.plan99 as Plan), columnsToTransform)]);
+    ).toEqual([extractPlan(fixtures.plan99 as Plan)]);
 
     expect(
       wrapper
@@ -283,7 +281,7 @@ describe('containers/FocusInvestigation/Jurisdiction', () => {
         .find('.current-plans DrillDownTable')
         .last()
         .props().data
-    ).toEqual([transformValues(extractPlan(fixtures.plan102 as Plan), columnsToTransform)]);
+    ).toEqual([extractPlan(fixtures.plan102 as Plan)]);
 
     expect(wrapper.find('.complete-plans TableHeader').length).toEqual(2);
     expect(wrapper
@@ -315,7 +313,7 @@ describe('containers/FocusInvestigation/Jurisdiction', () => {
         .find('.complete-plans DrillDownTable')
         .first()
         .props().data
-    ).toEqual([transformValues(extractPlan(fixtures.plan101 as Plan), columnsToTransform)]);
+    ).toEqual([extractPlan(fixtures.plan101 as Plan)]);
 
     expect(
       wrapper
@@ -330,7 +328,7 @@ describe('containers/FocusInvestigation/Jurisdiction', () => {
         .find('.complete-plans DrillDownTable')
         .last()
         .props().data
-    ).toEqual([transformValues(extractPlan(fixtures.plan103 as Plan), columnsToTransform)]);
+    ).toEqual([extractPlan(fixtures.plan103 as Plan)]);
   });
 
   it('renders empty tables correctly', async () => {

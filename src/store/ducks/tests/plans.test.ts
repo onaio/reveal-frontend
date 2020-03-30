@@ -2,7 +2,7 @@ import reducerRegistry from '@onaio/redux-reducer-registry';
 import { cloneDeep, keyBy, keys, pickBy, values } from 'lodash';
 import { FlushThunks } from 'redux-testkit';
 import { FIReasons } from '../../../configs/settings';
-import { PLAN_RECORD_BY_ID } from '../../../constants';
+import { PLAN_RECORD_BY_ID, SORT_BY_EFFECTIVE_PERIOD_START_FIELD } from '../../../constants';
 import store from '../../index';
 import reducer, {
   fetchPlanRecords,
@@ -372,5 +372,16 @@ describe('reducers/plans', () => {
         null
       )
     );
+  });
+  it('should sort planrecords', () => {
+    store.dispatch(fetchPlanRecords(fixtures.planRecordResponses as PlanRecordResponse[]));
+
+    const plansArraySelector = makePlansArraySelector(
+      PLAN_RECORD_BY_ID,
+      SORT_BY_EFFECTIVE_PERIOD_START_FIELD
+    );
+
+    const planRecordsArray = [...plansArraySelector(store.getState(), {})];
+    expect(planRecordsArray).toEqual(fixtures.sortedPlanRecordArray);
   });
 });
