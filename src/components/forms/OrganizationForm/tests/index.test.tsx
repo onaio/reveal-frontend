@@ -1,6 +1,5 @@
-// import { toBeDisabled } from '@testing-library/jest-dom/matchers';
-// import { toBeInTheDocument, toHaveClass } from '@testing-library/jest-dom/matchers';
-import { fireEvent, queryByText, render, waitFor } from '@testing-library/react';
+import { fireEvent, queryByText, render, waitFor, waitForElement } from '@testing-library/react';
+import { Field, Form, Formik } from 'formik';
 import React from 'react';
 import Teamform from '..';
 import TeamForm from '..';
@@ -49,38 +48,29 @@ describe('components/forms/OrganizationForm', () => {
       expect(getByText('Save Team')).toBeDisabled();
     });
   });
-  it('submits correct values', async () => {
-    const { container } = render(<TeamForm />);
-    const teamName = container.querySelector('input[name="name"]');
-    const teamStatus = container.querySelector('input[name="active"]');
-    const submit = container.querySelector('button[type="submit"]');
+  it('submits values and fires handler', async () => {
+    const mock = jest.fn();
+    const { getByText, getByTestId } = render(
+      <Formik initialValues={{ name: '' }} onSubmit={mock}>
+        <Form>
+          <Field name="name" data-testid="Input" />
+          <button type="submit">Submit</button>
+        </Form>
+      </Formik>
+    );
+    const input = await waitForElement(() => getByTestId('Input'));
+    const button = await waitForElement(() => getByText('Submit'));
+    fireEvent.change(input, {
+      target: {
+        value: 'Akuko',
+      },
+    });
 
-    if (teamName && teamStatus && submit) {
-      // teamName && await wait(() => {
-      fireEvent.change(teamName, {
-        target: {
-          value: 'mockname',
-        },
-      });
-      // });
-      // teamStatus && await wait(() => {
-      fireEvent.change(teamStatus, {
-        target: {
-          value: 'yes',
-        },
-      });
-      // });
-      // submit && await wait(() => {
-      fireEvent.click(submit);
-      // });
-      expect(teamName.getAttribute('value')).toBe('mockname');
-      expect(teamStatus.getAttribute('value')).toBe('yes');
-      // expect(submitHandler).toBeCalled();
-      // await wait(() => {
-      //   expect(teamName.getAttribute('value')).toBe('mockname');
-      //   expect(teamStatus.getAttribute('value')).toBe('no');
-      //   expect(handleSubmit).toHaveBeenCalledTimes(1);
-      // });
-    }
+    fireEvent.click(button);
+
+    await waitFor(() => {
+      expect(mock).toBeCalled();
+      expect(mock.mock.calls[0][0].name).toBe('Akuko');
+    });
   });
 });
