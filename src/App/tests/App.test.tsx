@@ -3,8 +3,10 @@ import { mount } from 'enzyme';
 import { createBrowserHistory } from 'history';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import GoogleAnalytics from 'react-ga';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
+import { PLAN_LIST_URL } from '../../constants';
 import store from '../../store';
 import App from '../App';
 import { expressAPIResponse } from './fixtures';
@@ -13,12 +15,13 @@ jest.mock('../../configs/env');
 
 // tslint:disable-next-line: no-var-requires
 const fetch = require('jest-fetch-mock');
-
 const history = createBrowserHistory();
 
 describe('App', () => {
   beforeEach(() => {
     jest.resetAllMocks();
+    // Reset history
+    history.push('/');
   });
 
   it('renders without crashing', () => {
@@ -32,6 +35,21 @@ describe('App', () => {
       div
     );
     ReactDOM.unmountComponentAtNode(div);
+  });
+
+  it('tracks pages correctly', () => {
+    GoogleAnalytics.pageview = jest.fn();
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <App />
+        </Router>
+      </Provider>
+    );
+    expect(GoogleAnalytics.pageview).toBeCalledWith('/');
+    history.push(PLAN_LIST_URL);
+    expect(GoogleAnalytics.pageview).toBeCalledWith(PLAN_LIST_URL);
+    wrapper.unmount();
   });
 
   it('integration: renders App correctly', async () => {
@@ -109,5 +127,54 @@ describe('App', () => {
     // since the functionality that does this is in the express server and is thus out of the
     // react-app's scope.
     expect(hrefMock).toHaveBeenCalledWith('http://localhost:3000/logout');
+  });
+
+  it('tracks dimensions correctly', async () => {
+    fetch.mockResponse(JSON.stringify(expressAPIResponse));
+    GoogleAnalytics.set = jest.fn();
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <App />
+        </Router>
+      </Provider>
+    );
+    await new Promise<unknown>(resolve => setImmediate(resolve));
+    expect(GoogleAnalytics.set).toBeCalledWith({ env: 'test', username: 'superset-user' });
+    wrapper.unmount();
+  });
+
+  it('does not track dimensions of google analytics code is not set', async () => {
+    fetch.mockResponse(JSON.stringify(expressAPIResponse));
+    const envModule = require('../../configs/env');
+    envModule.GA_CODE = '';
+    GoogleAnalytics.set = jest.fn();
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <App />
+        </Router>
+      </Provider>
+    );
+    await new Promise<unknown>(resolve => setImmediate(resolve));
+    expect(GoogleAnalytics.set).not.toBeCalled();
+    wrapper.unmount();
+  });
+
+  it('does not track pages if google analytics code is not set', () => {
+    GoogleAnalytics.pageview = jest.fn();
+    const envModule = require('../../configs/env');
+    envModule.GA_CODE = '';
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <App />
+        </Router>
+      </Provider>
+    );
+    expect(GoogleAnalytics.pageview).not.toBeCalled();
+    history.push(PLAN_LIST_URL);
+    expect(GoogleAnalytics.pageview).not.toBeCalled();
+    wrapper.unmount();
   });
 });

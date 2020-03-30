@@ -1235,12 +1235,27 @@
     client-oauth2 "^4.2.3"
     query-string "^6.4.2"
 
+"@onaio/google-analytics@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@onaio/google-analytics/-/google-analytics-0.0.2.tgz#8c723e788a4d3d2506d8e9fa58a080e056ee6dda"
+  integrity sha512-CB5YSrFTT+7VP8VlIRbHmkuqdlT562hDEK+IpBSpJoahEoAEtsZDKUv1e8g12GtUJy1z/DF9DkM4DIZZMruqJA==
+  dependencies:
+    "@onaio/react-utils" "^0.0.1"
+    "@onaio/utils" "^0.0.1"
+    memoize-one "^5.1.1"
+    react-ga "^2.7.0"
+
 "@onaio/list-view@^0.0.1":
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/@onaio/list-view/-/list-view-0.0.1.tgz#575f48f8a167437974c3ea2a37c4996190ca1331"
   integrity sha512-/U5RNGIVXYTp5ecn6I/C/FErzAlYVCUAoYARyojdJjCdgo1245s/kc8R4f3VT/fztf14mQpwh1FNS+5qIjETKA==
   dependencies:
     "@onaio/element-map" "^0.0.5"
+
+"@onaio/react-utils@^0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@onaio/react-utils/-/react-utils-0.0.1.tgz#506df861bdc947ac63973d3b3f821836af39ad08"
+  integrity sha512-Bpwvgq2js2kn0KA8c3y3ClRTO3EYxGXNGipILuLUPiXua/lm7BGZ1PP1T4D8EXTDgwc4ELpL/aNM2n9NxbJ6Gw==
 
 "@onaio/redux-reducer-registry@^0.0.9":
   version "0.0.9"
@@ -9250,6 +9265,11 @@ memoize-one@^5.0.0:
   resolved "https://registry.yarnpkg.com/memoize-one/-/memoize-one-5.0.5.tgz#8cd3809555723a07684afafcd6f756072ac75d7e"
   integrity sha512-ey6EpYv0tEaIbM/nTDOpHciXUvd+ackQrJgEzBwemhZZIWZjcyodqEcrmqDy2BKRTM3a65kKBV4WtLXJDt26SQ==
 
+memoize-one@^5.1.1:
+  version "5.1.1"
+  resolved "https://registry.yarnpkg.com/memoize-one/-/memoize-one-5.1.1.tgz#047b6e3199b508eaec03504de71229b8eb1d75c0"
+  integrity sha512-HKeeBpWvqiVJD57ZUAsJNm71eHTykffzcLZVYWiVfQeI1rJtuEaS7hQiEpWfVVk18donPwJEcFKIkCmPJNOhHA==
+
 memory-fs@^0.4.0, memory-fs@~0.4.1:
   version "0.4.1"
   resolved "https://registry.yarnpkg.com/memory-fs/-/memory-fs-0.4.1.tgz#3a9a20b8462523e447cfbc7e8bb80ed667bfc552"
@@ -11302,9 +11322,9 @@ qs@~6.5.2:
   integrity sha512-N5ZAX4/LxJmF+7wN74pUD6qAh9/wnvdQcjq9TZjevvXzSUo7bfmw91saqMjzGS2xq91/odN2dW/WOl7qQHNDGA==
 
 query-string@^6.4.2:
-  version "6.10.1"
-  resolved "https://registry.yarnpkg.com/query-string/-/query-string-6.10.1.tgz#30b3505f6fca741d5ae541964d1b3ae9dc2a0de8"
-  integrity sha512-SHTUV6gDlgMXg/AQUuLpTiBtW/etZ9JT6k6RCtCyqADquApLX0Aq5oK/s5UeTUAWBG50IExjIr587GqfXRfM4A==
+  version "6.5.0"
+  resolved "https://registry.yarnpkg.com/query-string/-/query-string-6.5.0.tgz#2e1a70125af01f6f04573692d02c09302a1d8bfc"
+  integrity sha512-TYC4hDjZSvVxLMEucDMySkuAS9UIzSbAiYGyA9GWCjLKB8fQpviFbjd20fD7uejCDxZS+ftSdBKE6DS+xucJFg==
   dependencies:
     decode-uri-component "^0.2.0"
     split-on-first "^1.0.0"
@@ -13587,9 +13607,9 @@ typedarray@^0.0.6:
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
 typescript@^3.7.5:
-  version "3.7.5"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.7.5.tgz#0692e21f65fd4108b9330238aac11dd2e177a1ae"
-  integrity sha512-/P5lkRXkWHNAbcJIiHPfRoKqyd7bsyCma1hZNUGfn20qm64T6ZBlrzprymeu918H+mB/0rIg2gGK/BXkhhYgBw==
+  version "3.8.3"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.8.3.tgz#409eb8544ea0335711205869ec458ab109ee1061"
+  integrity sha512-MYlEfn5VrLNsgudQTVJeNaQFUAI7DkhnOjdpAp4T+ku1TfQClewlbSuTVHiA+8skNBgaf02TL/kLOvig4y3G8w==
 
 typestrict@^1.0.2:
   version "1.0.2"

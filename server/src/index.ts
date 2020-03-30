@@ -172,7 +172,7 @@ const oauthState = (req: express.Request, res: express.Response) => {
   return res.json(req.session.preloadedState);
 };
 
-const loginRedirect = (req: express.Request, res: express.Response, next: express.NextFunction) => {
+const loginRedirect = (req: express.Request, res: express.Response, _: express.NextFunction) => {
   // check if logged in and redirect
   const parsedUrl = parse(req.originalUrl);
   const searchParam = parsedUrl.search;
