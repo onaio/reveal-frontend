@@ -1,7 +1,8 @@
 import { get, keyBy, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
 import SeamlessImmutable from 'seamless-immutable';
-import { PlanDefinition, UseContext } from '../../../../configs/settings';
+import { PlanDefinition } from '../../../../configs/settings';
+import { isPlanDefinitionOfType } from '../../../../helpers/utils';
 import { InterventionType } from '../../plans';
 
 /** the reducer name */
@@ -161,13 +162,7 @@ export function getPlanDefinitionsArray(
 ): PlanDefinition[] {
   const result = values((state as any)[reducerName].planDefinitionsById);
   if (interventionType) {
-    return result.filter(
-      (e: PlanDefinition) =>
-        e.useContext.filter(
-          (f: UseContext) =>
-            f.code === 'interventionType' && f.valueCodableConcept === interventionType
-        ).length > 0
-    );
+    return result.filter((e: PlanDefinition) => isPlanDefinitionOfType(e, interventionType));
   }
   return result;
 }

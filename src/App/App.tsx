@@ -2,21 +2,31 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { faUser } from '@fortawesome/free-regular-svg-icons';
 import { faExternalLinkSquareAlt, faMap } from '@fortawesome/free-solid-svg-icons';
 import ConnectedPrivateRoute from '@onaio/connected-private-route';
-import { AuthorizationGrantType, OauthLogin } from '@onaio/gatekeeper';
+import {
+  AuthorizationGrantType,
+  ConnectedLogout,
+  ConnectedOauthCallback,
+  OauthLogin,
+} from '@onaio/gatekeeper';
 import { initGoogleAnalytics, RouteTracker, setDimensions } from '@onaio/google-analytics';
 import { getUser } from '@onaio/session-reducer';
 import { logOutUser } from '@onaio/session-reducer';
 import React, { Component } from 'react';
 import { Helmet } from 'react-helmet';
 import { Route, Switch } from 'react-router';
+import { Redirect } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Col, Container, Row } from 'reactstrap';
 import CustomConnectedAPICallBack from '../components/page/CustomCallback';
+import Loading from '../components/page/Loading';
 import {
+  BACKEND_ACTIVE,
   DISABLE_LOGIN_PROTECTION,
   EXPRESS_OAUTH_LOGOUT_URL,
   GA_CODE,
   GA_ENV,
+  OPENSRP_LOGOUT_URL,
+  OPENSRP_OAUTH_STATE,
   TOAST_AUTO_CLOSE_DELAY,
   WEBSITE_NAME,
 } from '../configs/env';
@@ -26,6 +36,9 @@ import {
   ACTIVE_IRS_PLAN_URL,
   ASSIGN_PLAN_URL,
   ASSIGN_PRACTITIONERS_URL,
+  BACKEND_CALLBACK_PATH,
+  BACKEND_CALLBACK_URL,
+  BACKEND_LOGIN_URL,
   CREATE_ORGANIZATION_URL,
   CREATE_PRACTITIONER_URL,
   DRAFT_IRS_PLAN_URL,
@@ -36,20 +49,20 @@ import {
   FI_SINGLE_URL,
   FI_URL,
   GA_ENV_TEST,
+  HOME_URL,
   INTERVENTION_IRS_DRAFTS_URL,
   INTERVENTION_IRS_URL,
-  LOGIN_URL,
   LOGOUT_URL,
   MAP,
   NEW_IRS_PLAN_URL,
   NEW_PLAN_URL,
-  OAUTH_CALLBACK_PATH,
-  OAUTH_CALLBACK_URL,
   ORGANIZATIONS_LIST_URL,
   PLAN_COMPLETION_URL,
   PLAN_LIST_URL,
   PLAN_UPDATE_URL,
   PRACTITIONERS_LIST_URL,
+  REACT_CALLBACK_PATH,
+  REACT_LOGIN_URL,
   REPORT_IRS_PLAN_URL,
   SINGLE_ORGANIZATION_URL,
 } from '../constants';
@@ -75,7 +88,9 @@ import ConnectedOrgsListView from '../containers/pages/OrganizationViews/Organiz
 import ConnectedSingleOrgView from '../containers/pages/OrganizationViews/SingleOrganizationView';
 import ConnectedCreateEditPractitionerView from '../containers/pages/PractitionerViews/CreateEditPractitioner';
 import ConnectedPractitionersListView from '../containers/pages/PractitionerViews/PractitionerListView';
+import { oAuthUserInfoGetter } from '../helpers/utils';
 import store from '../store';
+import { getOauthProviderState } from '../store/selectors';
 import './App.css';
 
 library.add(faMap);
@@ -97,6 +112,12 @@ if (GA_CODE) {
 export interface AppState {
   username?: string;
 }
+
+const APP_CALLBACK_URL = BACKEND_ACTIVE ? BACKEND_CALLBACK_URL : REACT_LOGIN_URL;
+const { IMPLICIT, AUTHORIZATION_CODE } = AuthorizationGrantType;
+const AuthGrantType = BACKEND_ACTIVE ? AUTHORIZATION_CODE : IMPLICIT;
+const APP_LOGIN_URL = BACKEND_ACTIVE ? BACKEND_LOGIN_URL : REACT_LOGIN_URL;
+const APP_CALLBACK_PATH = BACKEND_ACTIVE ? BACKEND_CALLBACK_PATH : REACT_CALLBACK_PATH;
 
 /** Main App component */
 class App extends Component<{}, AppState> {
@@ -136,7 +157,7 @@ class App extends Component<{}, AppState> {
               <Switch>
                 {/* Home Page view */}
                 <ConnectedPrivateRoute
-                  redirectPath={OAUTH_CALLBACK_URL}
+                  redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path="/"
@@ -144,7 +165,7 @@ class App extends Component<{}, AppState> {
                 />
                 {/* Active IRS Plans list view */}
                 <ConnectedPrivateRoute
-                  redirectPath={OAUTH_CALLBACK_URL}
+                  redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={INTERVENTION_IRS_URL}
@@ -153,7 +174,7 @@ class App extends Component<{}, AppState> {
                 />
                 {/* Draft IRS Plans list view */}
                 <ConnectedPrivateRoute
-                  redirectPath={OAUTH_CALLBACK_URL}
+                  redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={INTERVENTION_IRS_DRAFTS_URL}
@@ -161,7 +182,7 @@ class App extends Component<{}, AppState> {
                 />
                 {/* New IRS Plan form view */}
                 <ConnectedPrivateRoute
-                  redirectPath={OAUTH_CALLBACK_URL}
+                  redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={NEW_IRS_PLAN_URL}
@@ -169,7 +190,7 @@ class App extends Component<{}, AppState> {
                 />
                 {/* Draft IRS Plan Jurisdiction Selection view */}
                 <ConnectedPrivateRoute
-                  redirectPath={OAUTH_CALLBACK_URL}
+                  redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={`${DRAFT_IRS_PLAN_URL}/:id`}
@@ -177,7 +198,7 @@ class App extends Component<{}, AppState> {
                 />
                 {/* Draft IRS Plan Team Assignment view */}
                 <ConnectedPrivateRoute
-                  redirectPath={OAUTH_CALLBACK_URL}
+                  redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={`${ACTIVE_IRS_PLAN_URL}/:id`}
@@ -185,21 +206,21 @@ class App extends Component<{}, AppState> {
                 />
                 {/* IRS Reporting plan table view */}
                 <ConnectedPrivateRoute
-                  redirectPath={OAUTH_CALLBACK_URL}
+                  redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={REPORT_IRS_PLAN_URL}
                   component={ConnectedIRSPlansList}
                 />
                 <ConnectedPrivateRoute
-                  redirectPath={OAUTH_CALLBACK_URL}
+                  redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={`${REPORT_IRS_PLAN_URL}/:planId`}
                   component={ConnectedJurisdictionReport}
                 />
                 <ConnectedPrivateRoute
-                  redirectPath={OAUTH_CALLBACK_URL}
+                  redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={`${REPORT_IRS_PLAN_URL}/:planId/:jurisdictionId`}
@@ -207,7 +228,7 @@ class App extends Component<{}, AppState> {
                 />
                 {/* IRS Reporting Map view */}
                 <ConnectedPrivateRoute
-                  redirectPath={OAUTH_CALLBACK_URL}
+                  redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={`${REPORT_IRS_PLAN_URL}/:planId/:jurisdictionId/${MAP}`}
@@ -215,14 +236,14 @@ class App extends Component<{}, AppState> {
                 />
                 {/* IRS Assignment views */}
                 <ConnectedPrivateRoute
-                  redirectPath={OAUTH_CALLBACK_URL}
+                  redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={`${ASSIGN_PLAN_URL}`}
                   component={ConnectedIRSAssignmentPlansList}
                 />
                 <ConnectedPrivateRoute
-                  redirectPath={OAUTH_CALLBACK_URL}
+                  redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={`${ASSIGN_PLAN_URL}/:id`}
@@ -230,7 +251,7 @@ class App extends Component<{}, AppState> {
                 />
                 {/* Focus Investigation Reporting list view */}
                 <ConnectedPrivateRoute
-                  redirectPath={OAUTH_CALLBACK_URL}
+                  redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={FI_URL}
@@ -238,14 +259,14 @@ class App extends Component<{}, AppState> {
                 />
                 {/* Focus Area detail view */}
                 <ConnectedPrivateRoute
-                  redirectPath={OAUTH_CALLBACK_URL}
+                  redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={`${FI_SINGLE_URL}/:jurisdictionId`}
                   component={FIJurisdiction}
                 />
                 <ConnectedPrivateRoute
-                  redirectPath={OAUTH_CALLBACK_URL}
+                  redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={`${FI_FILTER_URL}/:jurisdiction_parent_id/:plan_id?`}
@@ -253,7 +274,7 @@ class App extends Component<{}, AppState> {
                 />
                 {/* Focus Investigation completion confirmation view */}
                 <ConnectedPrivateRoute
-                  redirectPath={OAUTH_CALLBACK_URL}
+                  redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={`${PLAN_COMPLETION_URL}/:id`}
@@ -261,7 +282,7 @@ class App extends Component<{}, AppState> {
                 />
                 {/* Focus Investigation Reporting map view */}
                 <ConnectedPrivateRoute
-                  redirectPath={OAUTH_CALLBACK_URL}
+                  redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={`${FI_SINGLE_MAP_URL}/:id/`}
@@ -269,7 +290,7 @@ class App extends Component<{}, AppState> {
                 />
                 {/* Focus Investigation Reporting map view (with goal layers) */}
                 <ConnectedPrivateRoute
-                  redirectPath={OAUTH_CALLBACK_URL}
+                  redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={`${FI_SINGLE_MAP_URL}/:id/:goalId`}
@@ -277,7 +298,7 @@ class App extends Component<{}, AppState> {
                 />
                 {/* New Focus Investigation Plan form view */}
                 <ConnectedPrivateRoute
-                  redirectPath={OAUTH_CALLBACK_URL}
+                  redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={NEW_PLAN_URL}
@@ -285,7 +306,7 @@ class App extends Component<{}, AppState> {
                 />
                 {/* Edit Focus Investigation Plan form view */}
                 <ConnectedPrivateRoute
-                  redirectPath={OAUTH_CALLBACK_URL}
+                  redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={`${PLAN_UPDATE_URL}/:id`}
@@ -293,7 +314,7 @@ class App extends Component<{}, AppState> {
                 />
                 {/* Manage Plans list view */}
                 <ConnectedPrivateRoute
-                  redirectPath={OAUTH_CALLBACK_URL}
+                  redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={PLAN_LIST_URL}
@@ -301,7 +322,7 @@ class App extends Component<{}, AppState> {
                 />
                 {/** Organization list view */}
                 <ConnectedPrivateRoute
-                  redirectPath={OAUTH_CALLBACK_URL}
+                  redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={ORGANIZATIONS_LIST_URL}
@@ -309,7 +330,7 @@ class App extends Component<{}, AppState> {
                 />
                 {/** organization create view */}
                 <ConnectedPrivateRoute
-                  redirectPath={OAUTH_CALLBACK_URL}
+                  redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={CREATE_ORGANIZATION_URL}
@@ -317,7 +338,7 @@ class App extends Component<{}, AppState> {
                 />
                 {/** Organization edit view */}
                 <ConnectedPrivateRoute
-                  redirectPath={OAUTH_CALLBACK_URL}
+                  redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={`${EDIT_ORGANIZATION_URL}/:id`}
@@ -325,7 +346,7 @@ class App extends Component<{}, AppState> {
                 />
                 {/* single organization view */}
                 <ConnectedPrivateRoute
-                  redirectPath={OAUTH_CALLBACK_URL}
+                  redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={`${SINGLE_ORGANIZATION_URL}/:id`}
@@ -333,7 +354,7 @@ class App extends Component<{}, AppState> {
                 />
                 {/* single organization view */}
                 <ConnectedPrivateRoute
-                  redirectPath={OAUTH_CALLBACK_URL}
+                  redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={`${SINGLE_ORGANIZATION_URL}/:id`}
@@ -341,7 +362,7 @@ class App extends Component<{}, AppState> {
                 />
                 {/* Practitioner listing page */}
                 <ConnectedPrivateRoute
-                  redirectPath={OAUTH_CALLBACK_URL}
+                  redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={PRACTITIONERS_LIST_URL}
@@ -349,7 +370,7 @@ class App extends Component<{}, AppState> {
                 />
                 {/** practitioner create view */}
                 <ConnectedPrivateRoute
-                  redirectPath={OAUTH_CALLBACK_URL}
+                  redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={CREATE_PRACTITIONER_URL}
@@ -357,7 +378,7 @@ class App extends Component<{}, AppState> {
                 />
                 {/** Practitioner edit view */}
                 <ConnectedPrivateRoute
-                  redirectPath={OAUTH_CALLBACK_URL}
+                  redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={`${EDIT_PRACTITIONER_URL}/:id`}
@@ -366,7 +387,7 @@ class App extends Component<{}, AppState> {
                 {/** Assign practitioners to organization view */}
                 />
                 <ConnectedPrivateRoute
-                  redirectPath={OAUTH_CALLBACK_URL}
+                  redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={`${ASSIGN_PRACTITIONERS_URL}/:id`}
@@ -375,31 +396,56 @@ class App extends Component<{}, AppState> {
                 {/* tslint:disable jsx-no-lambda */}
                 <Route
                   exact={true}
-                  path={LOGIN_URL}
+                  path={APP_LOGIN_URL}
                   render={routeProps => (
                     <OauthLogin
                       providers={providers}
-                      authorizationGrantType={AuthorizationGrantType.AUTHORIZATION_CODE}
+                      authorizationGrantType={AuthGrantType}
                       {...routeProps}
                     />
                   )}
                 />
                 <Route
                   exact={true}
-                  path={OAUTH_CALLBACK_PATH}
-                  render={routeProps => <CustomConnectedAPICallBack {...routeProps} />}
+                  path={APP_CALLBACK_PATH}
+                  render={routeProps => {
+                    if (BACKEND_ACTIVE) {
+                      return <CustomConnectedAPICallBack {...routeProps} />;
+                    }
+                    return (
+                      <ConnectedOauthCallback
+                        SuccessfulLoginComponent={() => {
+                          return <Redirect to={HOME_URL} />;
+                        }}
+                        LoadingComponent={Loading}
+                        providers={providers}
+                        oAuthUserInfoGetter={oAuthUserInfoGetter}
+                        {...routeProps}
+                      />
+                    );
+                  }}
                 />
                 {/* tslint:enable jsx-no-lambda */}
                 <ConnectedPrivateRoute
-                  redirectPath={OAUTH_CALLBACK_URL}
+                  redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={LOGOUT_URL}
                   // tslint:disable-next-line: jsx-no-lambda
                   component={() => {
-                    store.dispatch(logOutUser());
-                    window.location.href = EXPRESS_OAUTH_LOGOUT_URL;
-                    return <></>;
+                    if (BACKEND_ACTIVE) {
+                      store.dispatch(logOutUser());
+                      window.location.href = EXPRESS_OAUTH_LOGOUT_URL;
+                      return null;
+                    }
+                    const state = getOauthProviderState(store.getState());
+                    return (
+                      <ConnectedLogout
+                        {...{
+                          logoutURL: state === OPENSRP_OAUTH_STATE ? OPENSRP_LOGOUT_URL : null,
+                        }}
+                      />
+                    );
                   }}
                 />
               </Switch>

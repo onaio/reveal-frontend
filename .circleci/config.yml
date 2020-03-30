@@ -42,6 +42,7 @@ jobs:
           REACT_APP_IRS_PLAN_COUNTRIES: "NA,TH"
           REACT_APP_EXPRESS_OAUTH_GET_STATE_URL: "http://localhost:3000/oauth/state"
           REACT_APP_EXPRESS_OAUTH_LOGOUT_URL: "http://localhost:3000/logout"
+          REACT_APP_BACKEND_ACTIVE: true
 
     working_directory: ~/repo
 
