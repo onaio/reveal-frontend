@@ -1,59 +1,86 @@
-import { mount, shallow } from 'enzyme';
-import toJson from 'enzyme-to-json';
+// import { toBeDisabled } from '@testing-library/jest-dom/matchers';
+// import { toBeInTheDocument, toHaveClass } from '@testing-library/jest-dom/matchers';
+import { fireEvent, queryByText, render, waitFor } from '@testing-library/react';
 import React from 'react';
-import snapshotDiff from 'snapshot-diff';
 import Teamform from '..';
 import TeamForm from '..';
 import * as fixtures from '../../../../store/ducks/tests/fixtures';
 
-describe('containers/forms/Teamform', () => {
+describe('components/forms/OrganizationForm', () => {
   beforeEach(() => {
     jest.resetAllMocks();
   });
 
   it('renders without crashing', () => {
-    shallow(<Teamform />);
+    render(<Teamform />);
   });
 
-  it('renders correctly', () => {
-    // emphasizes on fields showing up
-    const wrapper = mount(<Teamform />);
+  it('renders team form correctly', () => {
+    /** emphasizes on fields showing up  */
+    const { container } = render(<TeamForm />);
 
-    // identifier field
-    expect(toJson(wrapper.find('input#identifier'))).toMatchSnapshot('Team identifier');
+    expect(container.querySelector('input[name="name"]')).toMatchSnapshot('Team name');
 
-    // team name field
-    expect(toJson(wrapper.find('input#name'))).toMatchSnapshot('Team name');
+    expect(container.querySelector('input[id="yes"]')).toMatchSnapshot('Active');
+
+    expect(container.querySelector('input[id="no"]')).toMatchSnapshot('Not active');
+
+    expect(container.querySelector('button')).toMatchSnapshot('Submit Button');
+    /** should always be null unless on edit view */
+    expect(container.querySelector('input#identifier')).toMatchSnapshot('Null Identifier');
   });
 
   it('renders fields correctly in edit mode', () => {
     const props = {
       initialValues: fixtures.organization1,
     };
-    const createModeWrapper = mount(<TeamForm />);
-    const editModewrapper = mount(<TeamForm {...props} />);
-
-    // identifier field
-    const createModeIdInput = createModeWrapper.find('input#identifier');
-    const editModeIdInput = editModewrapper.find('input#identifier');
-    expect(snapshotDiff(toJson(createModeIdInput), toJson(editModeIdInput))).toMatchSnapshot(
-      'Id field should have value in edit mode'
-    );
-
-    // identifier field
-    const createModeNameInput = createModeWrapper.find('input#name');
-    const editModeNameInput = editModewrapper.find('input#name');
-    expect(snapshotDiff(toJson(createModeNameInput), toJson(editModeNameInput))).toMatchSnapshot(
-      'Should not be different'
-    );
+    const { container } = render(<TeamForm {...props} />);
+    /** Team name Input should have a value in edit view */
+    const teamName = container.querySelector('input[name="name"]');
+    expect(teamName && teamName.getAttribute('value')).toBe('The Luang');
   });
 
   it('form validation works', async () => {
-    const wrapper = mount(<TeamForm />);
-    wrapper.find('form').simulate('submit');
-    await new Promise<any>(resolve => setImmediate(resolve));
-    wrapper.update();
+    const { container, getByText, getByTestId } = render(<TeamForm />);
+    fireEvent.submit(getByTestId('form'));
+    /** Assert Validation Response and Button disable */
+    await waitFor(() => {
+      expect(queryByText(container, 'Required')).not.toBeNull();
+      expect(getByText('Save Team')).toBeDisabled();
+    });
+  });
+  it('submits correct values', async () => {
+    const { container } = render(<TeamForm />);
+    const teamName = container.querySelector('input[name="name"]');
+    const teamStatus = container.querySelector('input[name="active"]');
+    const submit = container.querySelector('button[type="submit"]');
 
-    expect(wrapper.find('small.name-error').text()).toEqual('Required');
+    if (teamName && teamStatus && submit) {
+      // teamName && await wait(() => {
+      fireEvent.change(teamName, {
+        target: {
+          value: 'mockname',
+        },
+      });
+      // });
+      // teamStatus && await wait(() => {
+      fireEvent.change(teamStatus, {
+        target: {
+          value: 'yes',
+        },
+      });
+      // });
+      // submit && await wait(() => {
+      fireEvent.click(submit);
+      // });
+      expect(teamName.getAttribute('value')).toBe('mockname');
+      expect(teamStatus.getAttribute('value')).toBe('yes');
+      // expect(submitHandler).toBeCalled();
+      // await wait(() => {
+      //   expect(teamName.getAttribute('value')).toBe('mockname');
+      //   expect(teamStatus.getAttribute('value')).toBe('no');
+      //   expect(handleSubmit).toHaveBeenCalledTimes(1);
+      // });
+    }
   });
 });
