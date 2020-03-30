@@ -70,7 +70,6 @@ describe('containers/pages/IRS/plan', () => {
     mockRead.mockReturnValueOnce(Promise.resolve(irsPlanDefinition1));
     mockList.mockReturnValueOnce(Promise.resolve(fixtures.organizations));
     const supersetServiceMock: any = jest.fn(async () => jurisidictionResults);
-    // const fetchJurisdictionMock: any = jest.spyOn(jurisdictionDucks, 'fetchJurisdictions');
     const loadPlanMock: any = jest.spyOn(serviceCalls, 'loadPlan');
 
     const { id } = fixtures.plan1;
@@ -97,14 +96,7 @@ describe('containers/pages/IRS/plan', () => {
     expect(toJson(wrapper)).toMatchSnapshot();
     expect(loadPlanMock).toBeCalled();
     expect(supersetServiceMock.mock.calls.length).toBe(1);
-    // console.log("JAHAJHAJ", fetchJurisdictionMock.mock.calls.length)
-    /*expect(fetchJurisdictionMock.mock.calls[1]).toEqual( {
-      geographic_level: 2,
-      jurisdiction_id: '3952',
-      name: '1B - 3952',
-      parent_id: '1B'
-    });
-    wrapper.unmount();*/
+    wrapper.unmount();
   });
 
   it('renders without crashing when loading plans with invlaid jurisdiction ids', () => {
