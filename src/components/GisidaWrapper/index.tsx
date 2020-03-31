@@ -275,8 +275,7 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
      */
     if (
       (some(pointFeatures) || some(polygonFeatures)) &&
-      nextProps.currentGoal !== this.props.currentGoal &&
-      (this.state.locations || this.state.doInitMap)
+      nextProps.currentGoal !== this.props.currentGoal
     ) {
       this.setState({ doInitMap: false, initMapWithoutFC: false }, () => {
         this.initMap(
