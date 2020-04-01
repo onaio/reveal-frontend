@@ -1,4 +1,5 @@
 import { clone, cloneDeep } from 'lodash';
+import { OrganizationFormFields } from '../../../components/forms/OrganizationForm';
 import { FIReasonType, FIStatusType } from '../../../components/forms/PlanForm/types';
 import { Organization } from '../opensrp/organizations';
 import { Practitioner } from '../opensrp/practitioners';
@@ -1328,6 +1329,21 @@ export const organization3: Organization = {
 };
 
 export const organizations: Organization[] = [organization1, organization2];
+
+export const organizationFormObject: OrganizationFormFields = {
+  active: true,
+  identifier: 'd23f7350-d406-11e9-bb65-2a2ae2dbcce4',
+  name: 'Takang 1',
+  type: {
+    coding: [
+      {
+        code: 'team',
+        display: 'Team',
+        system: 'http://terminology.hl7.org/CodeSystem/organization-type',
+      },
+    ],
+  },
+};
 
 export const practitioner1: Practitioner = {
   active: true,
