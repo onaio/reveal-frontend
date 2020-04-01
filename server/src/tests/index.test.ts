@@ -1,21 +1,15 @@
 import ClientOauth2 from 'client-oauth2';
 import nock from 'nock';
 import request from 'supertest';
-import { EXPRESS_SESSION_LOGIN_URL, EXPRESS_FRONTEND_OPENSRP_CALLBACK_URL } from '../configs/envs';
+import { EXPRESS_FRONTEND_OPENSRP_CALLBACK_URL, EXPRESS_SESSION_LOGIN_URL } from '../configs/envs';
 import server from '../index';
 import { oauthState, parsedApiResponse, unauthorized } from './fixtures';
 
 // tslint:disable-next-line: no-var-requires
-const { extractCookies } = require('./utils');
+const { extractCookies, panic } = require('./utils');
 
 const authorizationUri = 'http://reveal-stage.smartregister.org/opensrp/oauth/';
 const oauthCallbackUri = '/oauth/callback/OpenSRP/?code=Boi4Wz&state=opensrp';
-
-const panic = (err: Error, done: jest.DoneCallback) => {
-  if (err) {
-    done(err);
-  }
-};
 
 jest.mock('../configs/envs');
 
@@ -123,10 +117,13 @@ describe('src/index.ts', () => {
       .get(`/opensrp/user-details`)
       .reply(200, {});
 
+    nock('https://reveal-stage.smartregister.org')
+      .persist()
+      .get('/opensrp')
+      .reply(200, {}, {});
+
     /** PS: This test will start failing on  Fri, 14 May 3019 11:55:39 GMT */
-    jest
-      .spyOn(global.Date, 'now')
-      .mockImplementationOnce(() => new Date('3019-05-14T11:01:58.135Z').valueOf());
+    global.Date.now = () => new Date('3019-05-14T11:01:58.135Z').valueOf();
 
     request(server)
       .get(oauthCallbackUri)

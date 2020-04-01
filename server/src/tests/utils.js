@@ -17,7 +17,17 @@ const extractCookies = headers => {
   }, {});
 };
 
+/** util func for tests, evaluates a nock-type response for err
+ * and fails test if err.
+ */
+const panic = (err, done) => {
+  if (err) {
+    done(err);
+  }
+};
+
 module.exports = {
   shapeFlags,
   extractCookies,
+  panic,
 };
