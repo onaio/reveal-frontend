@@ -95,7 +95,7 @@ interface IRSPlanState {
 export type ImmutableIRSPlanState = IRSPlanState & SeamlessImmutable.ImmutableObject<IRSPlanState>;
 
 /** initial IRSPlan state */
-const initialState: ImmutableIRSPlanState = SeamlessImmutable({
+const initialState: any = SeamlessImmutable({
   IRSPlansById: {},
 });
 

@@ -71,7 +71,7 @@ interface GoalState {
 export type ImmutableGoalState = GoalState & SeamlessImmutable.ImmutableObject<GoalState>;
 
 /** initial Goal state */
-const initialState: ImmutableGoalState = SeamlessImmutable({
+const initialState: any = SeamlessImmutable({
   currentGoal: null,
   goalsById: {},
 });

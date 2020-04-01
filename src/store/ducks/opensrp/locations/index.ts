@@ -57,7 +57,7 @@ export type ImmutableLocationsState = LocationsState &
   SeamlessImmutable.ImmutableObject<LocationsState>;
 
 /** initial state */
-const initialState: ImmutableLocationsState = SeamlessImmutable({
+const initialState: any = SeamlessImmutable({
   locationsByPlanId: {},
 });
 

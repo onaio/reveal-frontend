@@ -72,7 +72,7 @@ export type ImmutableStructureState = StructureState &
   SeamlessImmutable.ImmutableObject<StructureState>;
 
 /** initial Structure state */
-const initialState: ImmutableStructureState = SeamlessImmutable({
+const initialState: any = SeamlessImmutable({
   structuresById: {},
 });
 
