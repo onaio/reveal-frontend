@@ -1,4 +1,6 @@
 // this is the IRS LIST view page component
+import DrillDownTable from '@onaio/drill-down-table';
+import reducerRegistry, { Registry } from '@onaio/redux-reducer-registry';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
@@ -6,9 +8,6 @@ import { Link } from 'react-router-dom';
 import { CellInfo, Column } from 'react-table';
 import { Button } from 'reactstrap';
 import { Store } from 'redux';
-
-import DrillDownTable from '@onaio/drill-down-table';
-import reducerRegistry, { Registry } from '@onaio/redux-reducer-registry';
 
 import {
   CREATE_NEW_PLAN,
@@ -188,6 +187,8 @@ export const IrsPlans = (props: IrsPlansProps & RouteComponentProps<RouteParams>
     </div>
   );
 };
+
+IrsPlans.defaultProps = defaultIrsPlansProps;
 
 interface DispatchedStateProps {
   plansArray: PlanRecord[];
