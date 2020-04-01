@@ -1,15 +1,10 @@
-import { fireEvent, queryByText, render, waitFor, waitForElement } from '@testing-library/react';
-import { Field, Form, Formik } from 'formik';
+import { cleanup, fireEvent, queryByText, render, waitFor } from '@testing-library/react';
 import React from 'react';
 import Teamform from '..';
-import TeamForm from '..';
 import * as fixtures from '../../../../store/ducks/tests/fixtures';
 
+afterEach(cleanup);
 describe('components/forms/OrganizationForm', () => {
-  beforeEach(() => {
-    jest.resetAllMocks();
-  });
-
   it('renders without crashing', () => {
     render(<Teamform />);
   });
@@ -48,29 +43,28 @@ describe('components/forms/OrganizationForm', () => {
       expect(getByText('Save Team')).toBeDisabled();
     });
   });
-  it('submits values and fires handler', async () => {
-    const mock = jest.fn();
-    const { getByText, getByTestId } = render(
-      <Formik initialValues={{ name: '' }} onSubmit={mock}>
-        <Form>
-          <Field name="name" data-testid="Input" />
-          <button type="submit">Submit</button>
-        </Form>
-      </Formik>
-    );
-    const input = await waitForElement(() => getByTestId('Input'));
-    const button = await waitForElement(() => getByText('Submit'));
-    fireEvent.change(input, {
-      target: {
-        value: 'Akuko',
-      },
-    });
-
-    fireEvent.click(button);
-
+  it('handleSubmit create a team', () => {
+    // handleSubmit(() => {}, );
+  });
+  it('calles submission handler', async () => {
+    let submitForm: () => void;
+    // Here's my submitHandler mock that isn't getting called
+    submitForm = jest.fn();
+    const props = {
+      initialValues: fixtures.organization1,
+      submitForm,
+    };
+    const wrapper = render(<TeamForm {...props} />);
+    const emailNode = wrapper.getByTestId('name') as HTMLInputElement;
+    const loginButtonNode = wrapper.getByText('Save Team') as HTMLInputElement;
+    // Act--------------
+    // Change the input values
+    fireEvent.change(emailNode, { target: { value: 'Akuko' } });
+    // This should submit the form?
+    fireEvent.click(loginButtonNode);
+    // Assert--------------
     await waitFor(() => {
-      expect(mock).toBeCalled();
-      expect(mock.mock.calls[0][0].name).toBe('Akuko');
+      expect(submitForm).toHaveBeenCalledTimes(1);
     });
   });
 });

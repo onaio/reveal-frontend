@@ -34,6 +34,7 @@ exports[`components/forms/OrganizationForm renders team form correctly: Submit B
 exports[`components/forms/OrganizationForm renders team form correctly: Team name 1`] = `
 <input
   class="form-control"
+  data-testid="name"
   id="name"
   name="name"
   type="text"
