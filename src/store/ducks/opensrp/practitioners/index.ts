@@ -137,7 +137,7 @@ export type ImmutablePractitionersState = PractitionerState &
   SeamlessImmutable.ImmutableObject<PractitionerState>;
 
 /** initial practitioners-state state */
-export const initialState: ImmutablePractitionersState = SeamlessImmutable({
+export const initialState: any = SeamlessImmutable({
   practitionerRoles: {},
   practitionersById: {},
 });

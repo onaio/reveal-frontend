@@ -108,7 +108,7 @@ interface TaskState {
 export type ImmutableTaskState = TaskState & SeamlessImmutable.ImmutableObject<TaskState>;
 
 /** initial Task state */
-const initialState: ImmutableTaskState = SeamlessImmutable({
+const initialState: any = SeamlessImmutable({
   tasksById: {},
 });
 

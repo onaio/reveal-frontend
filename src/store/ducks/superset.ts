@@ -35,7 +35,7 @@ export type ImmutableSupersetState = SupersetState &
   SeamlessImmutable.ImmutableObject<SupersetState>;
 
 /** initial Superset state */
-const initialState: ImmutableSupersetState = SeamlessImmutable({
+const initialState: any = SeamlessImmutable({
   authorized: null,
 });
 
