@@ -11,6 +11,9 @@ export type EXPRESS_OPENSRP_AUTHORIZATION_URL = typeof EXPRESS_OPENSRP_AUTHORIZA
 export const EXPRESS_OPENSRP_CALLBACK_URL = 'http://localhost:3000/oauth/callback/OpenSRP/';
 export type EXPRESS_OPENSRP_CALLBACK_URL = typeof EXPRESS_OPENSRP_CALLBACK_URL;
 
+export const EXPRESS_FRONTEND_OPENSRP_CALLBACK_URL = '/fe/oauth/callback/opensrp';
+export type EXPRESS_FRONTEND_OPENSRP_CALLBACK_URL = typeof EXPRESS_FRONTEND_OPENSRP_CALLBACK_URL;
+
 export const EXPRESS_OPENSRP_USER_URL =
   'http://reveal-stage.smartregister.org/opensrp/user-details';
 export type EXPRESS_OPENSRP_USER_URL = typeof EXPRESS_OPENSRP_USER_URL;
@@ -36,7 +39,7 @@ export type EXPRESS_OPENSRP_CLIENT_ID = typeof EXPRESS_OPENSRP_CLIENT_ID;
 export const EXPRESS_OPENSRP_CLIENT_SECRET = process.env.EXPRESS_OPENSRP_CLIENT_SECRET;
 export type EXPRESS_OPENSRP_CLIENT_SECRET = typeof EXPRESS_OPENSRP_CLIENT_SECRET;
 
-export const EXPRESS_PORT = 3000;
+export const EXPRESS_PORT = 3001;
 export type EXPRESS_PORT = typeof EXPRESS_PORT;
 
 export const EXPRESS_SESSION_NAME = 'reveal-session';
