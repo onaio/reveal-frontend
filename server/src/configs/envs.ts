@@ -18,6 +18,10 @@ export const EXPRESS_OPENSRP_CALLBACK_URL =
   process.env.EXPRESS_OPENSRP_CALLBACK_URL || 'http://localhost:3000/oauth/callback/OpenSRP/';
 export type EXPRESS_OPENSRP_CALLBACK_URL = typeof EXPRESS_OPENSRP_CALLBACK_URL;
 
+export const EXPRESS_OPENSRP_BASE_URL =
+  process.env.EXPRESS_OPENSRP_BASE_URL || 'https://reveal-stage.smartregister.org/opensrp';
+export type EXPRESS_OPENSRP_BASE_URL = typeof EXPRESS_OPENSRP_BASE_URL;
+
 export const EXPRESS_OPENSRP_USER_URL =
   process.env.EXPRESS_OPENSRP_USER_URL ||
   'https://reveal-stage.smartregister.org/opensrp/user-details';

@@ -28,6 +28,7 @@ import {
   EXPRESS_SESSION_NAME,
   EXPRESS_SESSION_PATH,
   EXPRESS_SESSION_SECRET,
+  EXPRESS_OPENSRP_BASE_URL,
 } from './configs/envs';
 import { clientOauthRequest, cookieJar } from './utils';
 
@@ -119,7 +120,7 @@ const oauthLogin = (_: express.Request, res: express.Response) => {
 
 const oauthCallback = (req: express.Request, res: express.Response, next: express.NextFunction) => {
   const provider = opensrpAuth;
-  customRequest.get('https://reveal-stage.smartregister.org/opensrp', () => {
+  customRequest.get(EXPRESS_OPENSRP_BASE_URL, () => {
     /** start of previous implementation */
     provider.code
       .getToken(req.originalUrl)
