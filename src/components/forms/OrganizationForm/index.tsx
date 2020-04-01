@@ -1,3 +1,4 @@
+import { Dictionary } from '@onaio/utils/dist/types/types';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import moment from 'moment';
 import React, { useState } from 'react';
@@ -55,6 +56,13 @@ export interface OrganizationFormFields {
 /** interface for Organization form props */
 export interface OrganizationFormProps {
   disabledFields: string[];
+  submitForm?: (
+    values: OrganizationFormFields,
+    setSubmitting: (isSubmitting: boolean) => void,
+    editMode: boolean,
+    setGlobalError: (errorMessage: string) => void,
+    setIfDoneHere: (closeSubmissionCycle: boolean) => void
+  ) => void | Dictionary;
   initialValues: OrganizationFormFields;
   redirectAfterAction: string;
 }
@@ -67,15 +75,15 @@ export const defaultInitialValues: OrganizationFormFields = {
 };
 
 export const handleSubmit = (
-  values: OrganizationFormFields,
   setSubmitting: (isSubmitting: boolean) => void,
   editMode: boolean,
   setGlobalError: (errorMessage: string) => void,
-  setIfDoneHere: (closeSubmissionCycle: boolean) => void
+  setIfDoneHere: (closeSubmissionCycle: boolean) => void,
+  values?: OrganizationFormFields
 ) => {
   if (editMode) {
     const organizationService = new OpenSRPService(
-      `${OPENSRP_ORGANIZATION_ENDPOINT}/${values.identifier}`
+      `${OPENSRP_ORGANIZATION_ENDPOINT}/${values && values.identifier}`
     );
     organizationService
       .update(values)
@@ -117,7 +125,7 @@ export const handleSubmit = (
 const OrganizationForm = (props: OrganizationFormProps) => {
   /** track when redirection from this form page should occur */
   const [ifDoneHere, setIfDoneHere] = useState<boolean>(false);
-  const { initialValues, redirectAfterAction, disabledFields } = props;
+  const { initialValues, redirectAfterAction, disabledFields, submitForm } = props;
   const [globalError, setGlobalError] = useState<string>('');
 
   /** edit mode set to true if we are updating a team data. */
@@ -130,9 +138,11 @@ const OrganizationForm = (props: OrganizationFormProps) => {
         initialValues={initialValues}
         validationSchema={OrgSchema}
         // tslint:disable-next-line: jsx-no-lambda
-        onSubmit={(values, { setSubmitting }) =>
-          handleSubmit(values, setSubmitting, editMode, setGlobalError, setIfDoneHere)
-        }
+        onSubmit={(values, { setSubmitting }) => {
+          if (submitForm) {
+            submitForm(values, setSubmitting, editMode, setGlobalError, setIfDoneHere);
+          }
+        }}
       >
         {({ errors, isSubmitting, setFieldValue, values }) => (
           <Form className="mb-5" data-testid="form">
@@ -147,6 +157,7 @@ const OrganizationForm = (props: OrganizationFormProps) => {
                 id="name"
                 disabled={disabledFields.includes('name')}
                 className={errors.name ? `form-control is-invalid` : `form-control`}
+                data-testid="name"
               />
               <ErrorMessage
                 name="name"
