@@ -71,7 +71,6 @@ describe('src/index.ts.awscookies', () => {
         expect(res.header.location).toEqual(EXPRESS_FRONTEND_OPENSRP_CALLBACK_URL);
         expect(res.notFound).toBeFalsy();
         expect(res.redirect).toBeTruthy();
-        // server.close();
         done();
       });
   });
