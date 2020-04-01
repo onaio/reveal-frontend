@@ -88,11 +88,11 @@ export const addIRSPlan = (IRSPlanObj: IRSPlan): AddIRSPlanAction => ({
 
 /** interface for IRSPlan state */
 interface IRSPlanState {
-  IRSPlansById: { [key: string]: IRSPlan };
+  IRSPlansById: { [key: string]: IRSPlan } | {};
 }
 
 /** immutable IRSPlan state */
-export type ImmutableIRSPlanState = IRSPlanState & SeamlessImmutable.ImmutableObject<IRSPlanState>;
+export type ImmutableIRSPlanState = SeamlessImmutable.ImmutableObject<IRSPlanState> & IRSPlanState;
 
 /** initial IRSPlan state */
 const initialState: ImmutableIRSPlanState = SeamlessImmutable({

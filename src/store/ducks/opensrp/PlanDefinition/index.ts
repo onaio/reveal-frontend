@@ -78,7 +78,7 @@ export const addPlanDefinition = (planObj: PlanDefinition): AddPlanDefinitionAct
 
 /** interface for PlanDefinition state */
 interface PlanDefinitionState {
-  planDefinitionsById: { [key: string]: PlanDefinition };
+  planDefinitionsById: { [key: string]: PlanDefinition } | {};
 }
 
 /** immutable PlanDefinition state */

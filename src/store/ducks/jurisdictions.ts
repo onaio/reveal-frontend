@@ -76,8 +76,8 @@ export type JurisdictionActionTypes =
 
 /** interface to describe jurisdiction state */
 interface JurisdictionState {
-  allJurisdictionIds: AllJurisdictionIds;
-  jurisdictionsById: { [key: string]: Jurisdiction };
+  allJurisdictionIds: AllJurisdictionIds | {};
+  jurisdictionsById: { [key: string]: Jurisdiction } | {};
 }
 
 /** immutable Jurisdiction state */

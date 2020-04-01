@@ -64,7 +64,7 @@ export type StructureActionTypes = SetStructuresAction | RemoveStructuresAction 
 
 /** interface for Structure state */
 interface StructureState {
-  structuresById: { [key: string]: Structure };
+  structuresById: { [key: string]: Structure } | {};
 }
 
 /** immutable Structure state */

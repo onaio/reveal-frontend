@@ -177,9 +177,11 @@ interface GenericJurisdictionState {
   };
 }
 
+type FullGenericJurisdictionState = GenericJurisdictionState | {};
+
 /** immutable GenericJurisdiction state */
-export type ImmutableGenericJurisdictionState = GenericJurisdictionState &
-  SeamlessImmutable.ImmutableObject<GenericJurisdictionState>;
+export type ImmutableGenericJurisdictionState = FullGenericJurisdictionState &
+  SeamlessImmutable.ImmutableObject<FullGenericJurisdictionState>;
 
 /** initial GenericJurisdiction state */
 const initialState: ImmutableGenericJurisdictionState = SeamlessImmutable({});

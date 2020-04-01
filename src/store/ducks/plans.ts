@@ -160,8 +160,8 @@ export type PlanActionTypes =
 
 /** interface for Plan state */
 interface PlanState {
-  planRecordsById: { [key: string]: PlanRecord };
-  plansById: { [key: string]: Plan };
+  planRecordsById: { [key: string]: PlanRecord } | {};
+  plansById: { [key: string]: Plan } | {};
 }
 
 /** immutable Plan state */
