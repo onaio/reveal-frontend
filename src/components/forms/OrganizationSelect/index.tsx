@@ -84,18 +84,20 @@ export const OrganizationSelect = (props: OrganizationSelectProps) => {
 
   /** Get select options from OpenSRP as a promise */
 
-  /**
+  /**handleChange
    * onChange callback
+   * @param {any} nextValues - state of values after a change event on select
    */
   const handleChange = (nextValues: any) => {
     /** get assignments not assigned to this jurisdiction */
     const filteredAssignments: Assignment[] = assignments.filter(
       (a: Assignment) => a.jurisdiction !== jurisdictionId
     );
+    /** nextValues is an empty array -> means change-event was a remove-options-event */
     if (!nextValues) {
       resetPlanAssignmentsAction({ [planId]: filteredAssignments });
     } else {
-      const newAssignments: Assignment[] = (nextValues || []).map(
+      const newAssignments: Assignment[] = nextValues.map(
         (v: SelectOption) =>
           ({
             jurisdiction: jurisdictionId,
