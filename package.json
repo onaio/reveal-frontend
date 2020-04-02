@@ -75,6 +75,7 @@
     "yup": "^0.27.0"
   },
   "scripts": {
+    "test:types": "yarn run tsd",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "TZ=UTC react-scripts test --env=jest-environment-jsdom-sixteen",
@@ -83,6 +84,9 @@
     "lint-ts": "tslint -c tslint.json --project ./tsconfig.json --format stylish 'src/**/*.{ts,tsx}'",
     "test:coverage": "set CI=true && react-scripts test --coverage",
     "coveralls": "set CI=true && yarn test --runInBand --verbose --coverage=true --forceExit --detectOpenHandles && cat ./coverage/lcov.info | coveralls"
+  },
+  "tsd": {
+    "directory": "src/test-d"
   },
   "jest": {
     "collectCoverageFrom": [
