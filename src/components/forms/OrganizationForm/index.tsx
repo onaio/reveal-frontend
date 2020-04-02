@@ -1,4 +1,3 @@
-import { Dictionary } from '@onaio/utils/dist/types/types';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import moment from 'moment';
 import React, { useState } from 'react';
@@ -56,13 +55,15 @@ export interface OrganizationFormFields {
 /** interface for Organization form props */
 export interface OrganizationFormProps {
   disabledFields: string[];
-  submitForm?: (
-    values: OrganizationFormFields,
+  OpenSRPService: new (...args: any[]) => any;
+  submitForm: (
     setSubmitting: (isSubmitting: boolean) => void,
     editMode: boolean,
     setGlobalError: (errorMessage: string) => void,
-    setIfDoneHere: (closeSubmissionCycle: boolean) => void
-  ) => void | Dictionary;
+    setIfDoneHere: (closeSubmissionCycle: boolean) => void,
+    props: OrganizationFormProps,
+    values?: OrganizationFormFields
+  ) => void;
   initialValues: OrganizationFormFields;
   redirectAfterAction: string;
 }
@@ -74,15 +75,16 @@ export const defaultInitialValues: OrganizationFormFields = {
   type: defaultOrganizationType,
 };
 
-export const handleSubmit = (
+export const submitForm = (
   setSubmitting: (isSubmitting: boolean) => void,
   editMode: boolean,
   setGlobalError: (errorMessage: string) => void,
   setIfDoneHere: (closeSubmissionCycle: boolean) => void,
+  props: OrganizationFormProps,
   values?: OrganizationFormFields
 ) => {
   if (editMode) {
-    const organizationService = new OpenSRPService(
+    const organizationService = new props.OpenSRPService(
       `${OPENSRP_ORGANIZATION_ENDPOINT}/${values && values.identifier}`
     );
     organizationService
@@ -99,7 +101,7 @@ export const handleSubmit = (
         setSubmitting(false);
       });
   } else {
-    const organizationService = new OpenSRPService(OPENSRP_ORGANIZATION_ENDPOINT);
+    const organizationService = new props.OpenSRPService(OPENSRP_ORGANIZATION_ENDPOINT);
     const identifier = generateNameSpacedUUID(`${moment().toString()}`, OrgFormNameSpace);
     const valuesToSend = {
       ...values,
@@ -125,7 +127,7 @@ export const handleSubmit = (
 const OrganizationForm = (props: OrganizationFormProps) => {
   /** track when redirection from this form page should occur */
   const [ifDoneHere, setIfDoneHere] = useState<boolean>(false);
-  const { initialValues, redirectAfterAction, disabledFields, submitForm } = props;
+  const { initialValues, redirectAfterAction, disabledFields } = props;
   const [globalError, setGlobalError] = useState<string>('');
 
   /** edit mode set to true if we are updating a team data. */
@@ -139,9 +141,7 @@ const OrganizationForm = (props: OrganizationFormProps) => {
         validationSchema={OrgSchema}
         // tslint:disable-next-line: jsx-no-lambda
         onSubmit={(values, { setSubmitting }) => {
-          if (submitForm) {
-            submitForm(values, setSubmitting, editMode, setGlobalError, setIfDoneHere);
-          }
+          props.submitForm(setSubmitting, editMode, setGlobalError, setIfDoneHere, props, values);
         }}
       >
         {({ errors, isSubmitting, setFieldValue, values }) => (
@@ -218,9 +218,11 @@ const OrganizationForm = (props: OrganizationFormProps) => {
 };
 
 const defaultProps: OrganizationFormProps = {
+  OpenSRPService,
   disabledFields: [],
   initialValues: defaultInitialValues,
   redirectAfterAction: ORGANIZATIONS_LIST_URL,
+  submitForm,
 };
 
 OrganizationForm.defaultProps = defaultProps;
