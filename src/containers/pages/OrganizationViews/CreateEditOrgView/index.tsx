@@ -11,6 +11,7 @@ import OrganizationForm, {
   defaultInitialValues,
   OrganizationFormFields,
   OrganizationFormProps,
+  submitForm,
 } from '../../../../components/forms/OrganizationForm';
 import HeaderBreadcrumb, {
   BreadCrumbProps,
@@ -77,9 +78,11 @@ const CreateEditOrgView = (props: CreateEditTeamViewTypes) => {
 
   /** props for the organization form */
   const organizationFormProps: OrganizationFormProps = {
+    OpenSRPService,
     disabledFields: [],
     initialValues: editing ? (organization as OrganizationFormFields) : defaultInitialValues,
     redirectAfterAction: ORGANIZATIONS_LIST_URL,
+    submitForm,
   };
 
   useEffect(() => {
