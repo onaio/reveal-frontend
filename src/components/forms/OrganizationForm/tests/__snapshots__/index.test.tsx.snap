@@ -1,5 +1,42 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`components/forms/OrganizationForm renders correctly: Team identifier 1`] = `null`;
+
+exports[`components/forms/OrganizationForm renders correctly: Team name 1`] = `
+<input
+  className="form-control"
+  data-testid="name"
+  disabled={false}
+  id="name"
+  name="name"
+  onBlur={[Function]}
+  onChange={[Function]}
+  type="text"
+  value=""
+/>
+`;
+
+exports[`components/forms/OrganizationForm renders fields correctly in edit mode: Id field should have value in edit mode 1`] = `
+"Snapshot Diff:
+Compared values have no visual difference."
+`;
+
+exports[`components/forms/OrganizationForm renders fields correctly in edit mode: Should not be different 1`] = `
+"Snapshot Diff:
+- First value
++ Second value
+
+@@ -5,7 +5,7 @@
+    id=\\"name\\"
+    name=\\"name\\"
+    onBlur={[Function anonymous]}
+    onChange={[Function anonymous]}
+    type=\\"text\\"
+-   value=\\"\\"
++   value=\\"The Luang\\"
+  />"
+`;
+
 exports[`components/forms/OrganizationForm renders team form correctly: Active 1`] = `
 <input
   id="yes"

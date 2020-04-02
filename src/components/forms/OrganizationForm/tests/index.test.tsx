@@ -1,13 +1,61 @@
-import { cleanup, fireEvent, queryByText, render, waitFor } from '@testing-library/react';
+import { fireEvent, queryByText, render, waitFor } from '@testing-library/react';
+import { mount } from 'enzyme';
+import toJson from 'enzyme-to-json';
 import React from 'react';
+import snapshotDiff from 'snapshot-diff';
 import TeamForm, { submitForm } from '..';
 import * as helperUtils from '../../../../helpers/utils';
 import * as fixtures from '../../../../store/ducks/tests/fixtures';
 
-afterEach(cleanup);
 describe('components/forms/OrganizationForm', () => {
+  beforeEach(() => {
+    jest.resetAllMocks();
+  });
+
   it('renders without crashing', () => {
     render(<TeamForm />);
+  });
+
+  it('renders correctly', () => {
+    // emphasizes on fields showing up
+    const wrapper = mount(<TeamForm />);
+
+    // identifier field
+    expect(toJson(wrapper.find('input#identifier'))).toMatchSnapshot('Team identifier');
+
+    // team name field
+    expect(toJson(wrapper.find('input#name'))).toMatchSnapshot('Team name');
+  });
+
+  it('renders fields correctly in edit mode', () => {
+    const props = {
+      initialValues: fixtures.organization1,
+    };
+    const createModeWrapper = mount(<TeamForm />);
+    const editModewrapper = mount(<TeamForm {...props} />);
+
+    // identifier field
+    const createModeIdInput = createModeWrapper.find('input#identifier');
+    const editModeIdInput = editModewrapper.find('input#identifier');
+    expect(snapshotDiff(toJson(createModeIdInput), toJson(editModeIdInput))).toMatchSnapshot(
+      'Id field should have value in edit mode'
+    );
+
+    // identifier field
+    const createModeNameInput = createModeWrapper.find('input#name');
+    const editModeNameInput = editModewrapper.find('input#name');
+    expect(snapshotDiff(toJson(createModeNameInput), toJson(editModeNameInput))).toMatchSnapshot(
+      'Should not be different'
+    );
+  });
+
+  it('form validation works', async () => {
+    const wrapper = mount(<TeamForm />);
+    wrapper.find('form').simulate('submit');
+    await new Promise<any>(resolve => setImmediate(resolve));
+    wrapper.update();
+
+    expect(wrapper.find('small.name-error').text()).toEqual('Required');
   });
 
   it('renders team form correctly', () => {
