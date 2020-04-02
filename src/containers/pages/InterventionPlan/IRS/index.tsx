@@ -7,8 +7,14 @@ import { RouteComponentProps } from 'react-router';
 import { Link } from 'react-router-dom';
 import { CellInfo, Column } from 'react-table';
 import { Button } from 'reactstrap';
-import { Store } from 'redux';
+import { ActionCreator, Store } from 'redux';
 
+import { Helmet } from 'react-helmet';
+import DrillDownTableLinkedCell from '../../../../components/DrillDownTableLinkedCell';
+import HeaderBreadcrumbs, {
+  BreadCrumbProps,
+} from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
+import Loading from '../../../../components/page/Loading';
 import {
   CREATE_NEW_PLAN,
   DATE_CREATED,
@@ -21,6 +27,7 @@ import {
   PREVIOUS,
   STATUS_HEADER,
 } from '../../../../configs/lang';
+import { planStatusDisplay } from '../../../../configs/settings';
 import {
   DRAFT_IRS_PLAN_URL,
   HOME_URL,
@@ -30,13 +37,12 @@ import {
   OPENSRP_PLANS,
   PLAN_RECORD_BY_ID,
 } from '../../../../constants';
-
 import { displayError } from '../../../../helpers/errors';
 import { extractPlanRecordResponseFromPlanPayload, RouteParams } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
 import plansReducer, {
   fetchPlanRecords,
-  fetchPlans,
+  FetchPlanRecordsAction,
   InterventionType,
   makePlansArraySelector,
   PlanPayload,
@@ -45,14 +51,6 @@ import plansReducer, {
   PlanStatus,
   reducerName as plansReducerName,
 } from '../../../../store/ducks/plans';
-
-import { Helmet } from 'react-helmet';
-import DrillDownTableLinkedCell from '../../../../components/DrillDownTableLinkedCell';
-import HeaderBreadcrumbs, {
-  BreadCrumbProps,
-} from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
-import Loading from '../../../../components/page/Loading';
-import { planStatusDisplay } from '../../../../configs/settings';
 import './../../../../styles/css/drill-down-table.css';
 
 /** register the plans reducer */
@@ -63,7 +61,6 @@ reducerRegistry.register(plansReducerName, plansReducer);
 /** IrsPlansProps - interface for IRS Plans page */
 export interface IrsPlansProps {
   fetchPlanRecordsActionCreator: typeof fetchPlanRecords;
-  fetchPlansActionCreator: typeof fetchPlans;
   service: typeof OpenSRPService;
   plansArray: PlanRecord[];
 }
@@ -71,30 +68,75 @@ export interface IrsPlansProps {
 /** defaultIrsPlansProps - default props for IRS Plans page */
 export const defaultIrsPlansProps: IrsPlansProps = {
   fetchPlanRecordsActionCreator: fetchPlanRecords,
-  fetchPlansActionCreator: fetchPlans,
   plansArray: [],
   service: OpenSRPService,
 };
 
-/** Plans filter selector */
-const plansArraySelector = makePlansArraySelector(PLAN_RECORD_BY_ID);
+/** Columns definition for IRS drafts page table */
+const columns: Column[] = [
+  {
+    Header: NAME,
+    columns: [
+      {
+        Cell: (cell: CellInfo) => {
+          return (
+            <div>
+              <Link to={`${DRAFT_IRS_PLAN_URL}/${cell.original.id || cell.original.plan_id}`}>
+                {cell.value}
+              </Link>
+            </div>
+          );
+        },
+        Header: '',
+        accessor: 'plan_title',
+        minWidth: 200,
+      },
+    ],
+  },
+  {
+    Header: DATE_CREATED,
+    columns: [
+      {
+        Header: '',
+        accessor: 'plan_date',
+      },
+    ],
+  },
+  {
+    Header: STATUS_HEADER,
+    columns: [
+      {
+        Header: '',
+        accessor: (d: PlanRecord) => planStatusDisplay[d.plan_status] || d.plan_status,
+        id: 'plan_status',
+      },
+    ],
+  },
+];
 
-/** fetch all types of plans */
-const loadOpenSRPPlans = (service: typeof OpenSRPService) => {
+/** fetch plans payload form the opensrp api
+ * @param {OpenSRPService} service - openSRPService
+ * @param {ActionCreator<FetchPlanRecordsAction>} actionCreator - action creator for fetchPlanRecords
+ */
+const loadOpenSRPPlans = (
+  service: typeof OpenSRPService,
+  actionCreator: ActionCreator<FetchPlanRecordsAction>
+) => {
   const OpenSrpPlanService = new service(OPENSRP_PLANS);
   OpenSrpPlanService.list()
     .then((plans: PlanPayload[]) => {
       const extractedPlanRecords = plans
         .map(plan => extractPlanRecordResponseFromPlanPayload(plan))
         .filter(plan => !!plan);
-      fetchPlanRecords(extractedPlanRecords as PlanRecordResponse[]);
+      actionCreator(extractedPlanRecords as PlanRecordResponse[]);
     })
     .catch(err => displayError(err));
 };
 
+/** IrsPlans presentation component */
 export const IrsPlans = (props: IrsPlansProps & RouteComponentProps<RouteParams>) => {
   React.useEffect(() => {
-    loadOpenSRPPlans(props.service);
+    loadOpenSRPPlans(props.service, props.fetchPlanRecordsActionCreator);
   }, []);
 
   const pageTitle = `${IRS_PLANS}${DRAFTS_PARENTHESIS}`;
@@ -114,47 +156,6 @@ export const IrsPlans = (props: IrsPlansProps & RouteComponentProps<RouteParams>
   if (plansArray.length === 0) {
     return <Loading />;
   }
-
-  const columns: Column[] = [
-    {
-      Header: NAME,
-      columns: [
-        {
-          Cell: (cell: CellInfo) => {
-            return (
-              <div>
-                <Link to={`${DRAFT_IRS_PLAN_URL}/${cell.original.id || cell.original.plan_id}`}>
-                  {cell.value}
-                </Link>
-              </div>
-            );
-          },
-          Header: '',
-          accessor: 'plan_title',
-          minWidth: 200,
-        },
-      ],
-    },
-    {
-      Header: DATE_CREATED,
-      columns: [
-        {
-          Header: '',
-          accessor: 'plan_date',
-        },
-      ],
-    },
-    {
-      Header: STATUS_HEADER,
-      columns: [
-        {
-          Header: '',
-          accessor: (d: PlanRecord) => planStatusDisplay[d.plan_status] || d.plan_status,
-          id: 'plan_status',
-        },
-      ],
-    },
-  ];
 
   /** tableProps - props for DrillDownTable component */
   const tableProps = {
@@ -190,11 +191,13 @@ export const IrsPlans = (props: IrsPlansProps & RouteComponentProps<RouteParams>
 
 IrsPlans.defaultProps = defaultIrsPlansProps;
 
-interface DispatchedStateProps {
-  plansArray: PlanRecord[];
-}
+/** describes props returned by mapStateToProps */
+type DispatchedStateProps = Pick<IrsPlansProps, 'plansArray'>;
+/** describe mapDispatchToProps object */
+type MapDispatchToProps = Pick<IrsPlansProps, 'fetchPlanRecordsActionCreator'>;
 
-const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateProps => {
+const mapStateToProps = (state: Partial<Store>): DispatchedStateProps => {
+  const plansArraySelector = makePlansArraySelector(PLAN_RECORD_BY_ID);
   const planStatus = [PlanStatus.DRAFT];
   const plansRecordsArray = plansArraySelector(state as Registry, {
     interventionType: InterventionType.IRS,
@@ -202,14 +205,12 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
   });
   const props = {
     plansArray: plansRecordsArray,
-    ...ownProps,
   };
   return props;
 };
 
-const mapDispatchToProps = {
+const mapDispatchToProps: MapDispatchToProps = {
   fetchPlanRecordsActionCreator: fetchPlanRecords,
-  fetchPlansActionCreator: fetchPlans,
 };
 
 const ConnectedIrsPlans = connect(
