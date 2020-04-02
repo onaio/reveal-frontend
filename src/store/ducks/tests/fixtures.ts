@@ -1344,6 +1344,20 @@ export const organizationFormObject: OrganizationFormFields = {
     ],
   },
 };
+export const createOrganizationFormObject: OrganizationFormFields = {
+  active: false,
+  identifier: '',
+  name: 'test-01',
+  type: {
+    coding: [
+      {
+        code: 'team',
+        display: 'Team',
+        system: 'http://terminology.hl7.org/CodeSystem/organization-type',
+      },
+    ],
+  },
+};
 
 export const practitioner1: Practitioner = {
   active: true,
