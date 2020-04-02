@@ -158,6 +158,7 @@
     "react-test-renderer": "^16.8.1",
     "redux-testkit": "^1.0.6",
     "snapshot-diff": "^0.5.2",
+    "tsd": "^0.11.0",
     "tslint": "^5.12.1",
     "tslint-config-prettier": "^1.18.0",
     "tslint-plugin-prettier": "^2.0.1",
