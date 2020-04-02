@@ -83,6 +83,21 @@ export const irsPlanRecord1: PlanRecord = {
   plan_version: '1',
 };
 
+export const irsPlanRecordActive: PlanRecord = {
+  id: '0230f9e8-1f30-5e91-8693-4c993661785e',
+  plan_date: '2019-08-09',
+  plan_effective_period_end: '2019-08-29',
+  plan_effective_period_start: '2019-08-09',
+  plan_fi_reason: '',
+  plan_fi_status: '',
+  plan_id: '0230f9e8-1f30-5e91-8693-4c993661785e',
+  plan_intervention_type: InterventionType.IRS,
+  plan_jurisdictions_ids: ['3952'],
+  plan_status: PlanStatus.ACTIVE,
+  plan_title: 'IRS 2019-08-09',
+  plan_version: '1',
+};
+
 export const irsPlanRecordNoJurisdictionIds: PlanRecord = {
   id: '0230f9e8-1f30-5e91-8693-4c993661785e',
   plan_date: '2019-08-09',
@@ -108,6 +123,21 @@ export const irsPlanRecordResponse1 = {
   jurisdictions: ['3952'],
   name: 'IRS 2019-08-09',
   status: PlanStatus.DRAFT,
+  title: 'IRS 2019-08-09',
+  version: '1',
+};
+
+export const irsPlanRecordActiveResponse = {
+  date: '2019-08-09',
+  effective_period_end: '2019-08-29',
+  effective_period_start: '2019-08-09',
+  fi_reason: '',
+  fi_status: '',
+  identifier: '0230f9e8-1f30-5e91-8693-4c993661785e',
+  intervention_type: InterventionType.IRS,
+  jurisdictions: ['3952'],
+  name: 'IRS 2019-08-09',
+  status: PlanStatus.ACTIVE,
   title: 'IRS 2019-08-09',
   version: '1',
 };
@@ -148,12 +178,14 @@ export const jurisdictionIdsByPlanId = {
 };
 
 export const jurisidictionResults = [
+  { geographic_level: 0, id: '0', name: '0' },
+  { geographic_level: 1, id: '1A', name: '1A', parent_id: '0' },
+  { geographic_level: 2, id: '1Aa', name: '1Aa', parent_id: '1A' },
+  { geographic_level: 2, id: '1Ab', name: '1Ab', parent_id: '1A' },
+  { geographic_level: 1, id: '1B', name: '1B', parent_id: '0' },
+  { geographic_level: 2, id: '1Ba', name: '1Ba', parent_id: '1B' },
+  { geographic_level: 2, id: '1Bb', name: '1Bb', parent_id: '1B' },
   { geographic_level: 2, id: '3952', name: '1B - 3952', parent_id: '1B' },
-];
-
-export const parentlessParentJurisdictionResults = [
-  { geographic_level: 0, id: '1B', name: '1B' },
-  { geographic_level: 1, id: '3952', name: '1B - 3952', parent_id: '1B' },
 ];
 
 export const locationResults = [

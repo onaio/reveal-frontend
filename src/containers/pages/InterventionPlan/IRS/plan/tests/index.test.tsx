@@ -19,7 +19,13 @@ import plansReducer, {
 } from '../../../../../../store/ducks/plans';
 import * as fixtures from '../../../../../../store/ducks/tests/fixtures';
 import { irsPlanRecordResponse1, jurisdictionsById } from '../../tests/fixtures';
-import { irsPlanDefinition1, jurisidictionResults } from '../../tests/fixtures';
+import {
+  irsPlanDefinition1,
+  irsPlanRecord1,
+  irsPlanRecordActive,
+  irsPlanRecordActiveResponse,
+  jurisidictionResults,
+} from '../../tests/fixtures';
 import ConnectedIrsPlan, { IrsPlan } from './..';
 import * as serviceCalls from './../serviceCalls';
 
@@ -34,9 +40,12 @@ const fetch = require('jest-fetch-mock');
 
 describe('containers/pages/IRS/plan', () => {
   beforeEach(() => {
-    jest.resetAllMocks();
+    // There will be only one call to get organizations
+    // so we can be sure to mock once for each
+    const mockList = jest.fn();
+    OpenSRPService.prototype.list = mockList;
+    mockList.mockReturnValueOnce(Promise.resolve(fixtures.organizations));
   });
-
   afterEach(() => {
     jest.clearAllMocks();
   });
@@ -63,13 +72,10 @@ describe('containers/pages/IRS/plan', () => {
 
   it('renders IRS Plan page correctly', async () => {
     const mock: any = jest.fn();
-    const mockList = jest.fn();
     const mockRead = jest.fn();
-    OpenSRPService.prototype.list = mockList;
     OpenSRPService.prototype.read = mockRead;
     mockRead.mockReturnValueOnce(Promise.resolve(irsPlanDefinition1));
-    mockList.mockReturnValueOnce(Promise.resolve(fixtures.organizations));
-    const supersetServiceMock: any = jest.fn(async () => jurisidictionResults);
+    const supersetServiceMock: any = jest.fn(() => Promise.resolve(jurisidictionResults));
     const loadPlanMock: any = jest.spyOn(serviceCalls, 'loadPlan');
 
     const { id } = fixtures.plan1;
@@ -92,8 +98,7 @@ describe('containers/pages/IRS/plan', () => {
       </Provider>
     );
     await flushPromises();
-    // check that the page title is rendered correctly
-    expect(toJson(wrapper)).toMatchSnapshot();
+    expect(toJson(wrapper.find('Connect(IrsPlan'))).toMatchSnapshot();
     expect(loadPlanMock).toBeCalled();
     expect(supersetServiceMock.mock.calls.length).toBe(1);
     wrapper.unmount();
@@ -136,6 +141,68 @@ describe('containers/pages/IRS/plan', () => {
       </Provider>
     );
 
+    wrapper.unmount();
+  });
+
+  it('renders correctly if props.planById.plan_status is draft', async () => {
+    const supersetServiceMock: any = jest.fn(() => Promise.resolve(jurisidictionResults));
+    const loadPlanMock: any = jest.spyOn(serviceCalls, 'loadPlan');
+
+    const { id } = irsPlanRecord1;
+    const props = {
+      history,
+      location: jest.fn(),
+      match: {
+        isExact: true,
+        params: { id },
+        path: `${INTERVENTION_IRS_URL}/plan/:id`,
+        url: `${INTERVENTION_IRS_URL}/plan/${id}`,
+      },
+      planById: irsPlanRecord1,
+      supersetService: supersetServiceMock,
+    };
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedIrsPlan {...props} />
+        </Router>
+      </Provider>
+    );
+    await flushPromises();
+    expect(toJson(wrapper.find('Connect(IrsPlan)'))).toMatchSnapshot();
+    expect(loadPlanMock).not.toBeCalled();
+    expect(supersetServiceMock.mock.calls.length).toBe(1);
+    wrapper.unmount();
+  });
+
+  it('renders correctly if props.planById.plan_status is active', async () => {
+    store.dispatch(fetchPlanRecords([irsPlanRecordActiveResponse as PlanRecordResponse]));
+    const supersetServiceMock: any = jest.fn(() => Promise.resolve(jurisidictionResults));
+    const loadPlanMock: any = jest.spyOn(serviceCalls, 'loadPlan');
+
+    const { id } = irsPlanRecordActive;
+    const props = {
+      history,
+      location: jest.fn(),
+      match: {
+        isExact: true,
+        params: { id },
+        path: `${INTERVENTION_IRS_URL}/plan/:id`,
+        url: `${INTERVENTION_IRS_URL}/plan/${id}`,
+      },
+      supersetService: supersetServiceMock,
+    };
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedIrsPlan {...props} />
+        </Router>
+      </Provider>
+    );
+    await flushPromises();
+    expect(toJson(wrapper.find('Connect(IrsPlan)'))).toMatchSnapshot();
+    expect(loadPlanMock).not.toBeCalled();
+    expect(supersetServiceMock.mock.calls.length).toBe(1);
     wrapper.unmount();
   });
 });

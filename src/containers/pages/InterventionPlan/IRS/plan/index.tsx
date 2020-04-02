@@ -348,6 +348,7 @@ class IrsPlan extends React.Component<
               return_geometry: false,
             })
               .then(results => {
+                // console.log('Locations', results);
                 const result = results[0];
                 if (result && result.properties) {
                   // Define which country settings to use
