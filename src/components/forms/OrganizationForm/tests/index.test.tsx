@@ -1,12 +1,13 @@
 import { cleanup, fireEvent, queryByText, render, waitFor } from '@testing-library/react';
 import React from 'react';
-import Teamform from '..';
+import TeamForm, { submitForm } from '..';
+import * as helperUtils from '../../../../helpers/utils';
 import * as fixtures from '../../../../store/ducks/tests/fixtures';
 
 afterEach(cleanup);
 describe('components/forms/OrganizationForm', () => {
   it('renders without crashing', () => {
-    render(<Teamform />);
+    render(<TeamForm />);
   });
 
   it('renders team form correctly', () => {
@@ -43,16 +44,83 @@ describe('components/forms/OrganizationForm', () => {
       expect(getByText('Save Team')).toBeDisabled();
     });
   });
-  it('handleSubmit create a team', () => {
-    // handleSubmit(() => {}, );
+  it('submitForm create a team', async () => {
+    const setSubmitting = jest.fn();
+    const setGlobalError = jest.fn();
+    const setIfDoneHere = jest.fn();
+    const mockGrowl: any = jest.fn().mockName('onClose');
+    (helperUtils as any).growl = mockGrowl;
+    const mockedOpenSRPservice = jest.fn().mockImplementation(() => {
+      return {
+        create: () => {
+          return Promise.resolve({});
+        },
+      };
+    });
+    const props = {
+      OpenSRPService: mockedOpenSRPservice,
+      initialValues: fixtures.organization1,
+    };
+    submitForm(
+      setSubmitting,
+      false,
+      setGlobalError,
+      setIfDoneHere,
+      props as any,
+      fixtures.createOrganizationFormObject
+    );
+    await waitFor(() => {
+      expect(mockedOpenSRPservice).toHaveBeenCalledTimes(1);
+      expect(mockGrowl).toBeCalled();
+      expect(mockGrowl.mock.calls[0][1].type).toEqual('success');
+    });
+  });
+  it('submitForm update team', async () => {
+    const setSubmitting = jest.fn();
+    const setGlobalError = jest.fn();
+    const setIfDoneHere = jest.fn();
+    const mockGrowl: any = jest.fn().mockName('onClose');
+    (helperUtils as any).growl = mockGrowl;
+    const mockedOpenSRPservice = jest.fn().mockImplementation(() => {
+      return {
+        update: () => {
+          return Promise.resolve({});
+        },
+      };
+    });
+    const props = {
+      OpenSRPService: mockedOpenSRPservice,
+      initialValues: fixtures.organization1,
+    };
+    submitForm(
+      setSubmitting,
+      true,
+      setGlobalError,
+      setIfDoneHere,
+      props as any,
+      fixtures.createOrganizationFormObject
+    );
+    await waitFor(() => {
+      expect(mockedOpenSRPservice).toHaveBeenCalledTimes(1);
+      expect(mockGrowl.mock.calls[0][1].type).toEqual('success');
+      expect(mockGrowl).toBeCalled();
+    });
   });
   it('calles submission handler', async () => {
-    let submitForm: () => void;
     // Here's my submitHandler mock that isn't getting called
-    submitForm = jest.fn();
+    // const mockedsubmitForm = jest.fn();
+    const mockOpenSRPService = jest.fn().mockImplementation(() => {
+      return {
+        create: () => {
+          return Promise.resolve({});
+        },
+      };
+    });
+    const mockedsubmitForm = jest.fn();
     const props = {
+      OpenSRPService: mockOpenSRPService,
       initialValues: fixtures.organization1,
-      submitForm,
+      submitForm: mockedsubmitForm,
     };
     const wrapper = render(<TeamForm {...props} />);
     const emailNode = wrapper.getByTestId('name') as HTMLInputElement;
@@ -64,7 +132,7 @@ describe('components/forms/OrganizationForm', () => {
     fireEvent.click(loginButtonNode);
     // Assert--------------
     await waitFor(() => {
-      expect(submitForm).toHaveBeenCalledTimes(1);
+      expect(mockedsubmitForm).toHaveBeenCalledTimes(1);
     });
   });
 });
