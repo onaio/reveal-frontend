@@ -132,7 +132,7 @@ const oauthCallback = (req: express.Request, res: express.Response, next: expres
           apiResponse.oAuth2Data = user.data;
 
           const sessionState = getOpenSRPUserInfo(apiResponse);
-          if (sessionState) {
+          if (sessionState && sessionState.extraData && req.session) {
             const gatekeeperState = { success: true, result: sessionState.extraData };
             const preloadedState = {
               gatekeeper: gatekeeperState,
@@ -165,27 +165,38 @@ const oauthCallback = (req: express.Request, res: express.Response, next: expres
 
 const oauthState = (req: express.Request, res: express.Response) => {
   // check if logged in
-  if (!req.session.preloadedState) {
-    return res.json({ error: 'Not authorized' });
+  if (req.session) {
+    if (!req.session.preloadedState) {
+      return res.json({ error: 'Not authorized' });
+    }
+    // only return this when user has valid session
+    return res.json(req.session.preloadedState);
   }
-  // only return this when user has valid session
-  return res.json(req.session.preloadedState);
 };
 
 const loginRedirect = (req: express.Request, res: express.Response, _: express.NextFunction) => {
-  // check if logged in and redirect
-  const parsedUrl = parse(req.originalUrl);
-  const searchParam = parsedUrl.search;
-  if (searchParam) {
-    const searchString = trimStart(searchParam, '?');
-    const searchParams = querystring.parse(searchString);
-    nextPath = searchParams.next as string | undefined;
+  // check if logged in and redirectif
+  if (req.session) {
+    const parsedUrl = parse(req.originalUrl);
+    const searchParam = parsedUrl.search;
+    if (searchParam) {
+      const searchString = trimStart(searchParam, '?');
+      const searchParams = querystring.parse(searchString);
+      nextPath = searchParams.next as string | undefined;
+      if (nextPath) {
+        req.session.preloadedState
+          ? res.redirect(nextPath)
+          : res.redirect(EXPRESS_FRONTEND_LOGIN_URL);
+      }
+    }
   }
-  req.session.preloadedState ? res.redirect(nextPath) : res.redirect(EXPRESS_FRONTEND_LOGIN_URL);
 };
 
 const logout = (req: express.Request, res: express.Response) => {
-  req.session.destroy(() => void 0);
+  if (req.session) {
+    req.session.destroy(() => void 0);
+  }
+
   res.clearCookie(sessionName);
   res.redirect(loginURL);
 };
