@@ -891,7 +891,6 @@ export const indicatorThresholdsIRSNamibia: IndicatorThresholds = {
   RED_THRESHOLD: {
     color: '#FF4136',
     name: IRS_RED_THRESHOLD,
-    orEquals: true,
     value: 0.75,
   },
   YELLOW_THRESHOLD: {
