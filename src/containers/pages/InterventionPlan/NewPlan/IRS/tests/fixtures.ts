@@ -1,4 +1,5 @@
 import { parseISO } from 'date-fns';
+import { INTERVENTION_IRS_DRAFTS_URL } from '../../../../../../constants';
 import { planFormProps as newPlanFormProps } from '../../General/tests/fixtures';
 
 export const planFormProps = {
@@ -26,5 +27,5 @@ export const planFormProps = {
     interventionType: 'IRS',
   },
   jurisdictionLabel: 'Country',
-  redirectAfterAction: '/intervention/irs',
+  redirectAfterAction: INTERVENTION_IRS_DRAFTS_URL,
 };

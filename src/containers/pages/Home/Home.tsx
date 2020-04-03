@@ -12,7 +12,7 @@ import {
   ORGANIZATIONS_LABEL,
   WELCOME_TO_REVEAL,
 } from '../../../configs/lang';
-import { FI_URL, INTERVENTION_IRS_URL, ORGANIZATIONS_LIST_URL } from '../../../constants';
+import { FI_URL, INTERVENTION_IRS_DRAFTS_URL, ORGANIZATIONS_LIST_URL } from '../../../constants';
 import './Home.css';
 
 class Home extends React.Component<{}, {}> {
@@ -35,7 +35,7 @@ class Home extends React.Component<{}, {}> {
         <Row className="intervention-box">
           {ENABLE_IRS && (
             <Col md="6">
-              <Link to={INTERVENTION_IRS_URL} className="home-link">
+              <Link to={INTERVENTION_IRS_DRAFTS_URL} className="home-link">
                 <Button
                   color="outline"
                   className="btn-intervention btn-lg btn-block btn-outline-green"

@@ -8,7 +8,7 @@ import PlanForm, {
 import { getFormActivities, IRSActivities } from '../../../../../components/forms/PlanForm/helpers';
 import HeaderBreadcrumb from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import { COUNTRY, CREATE_NEW_IRS_PLAN, HOME, IRS_PLANS } from '../../../../../configs/lang';
-import { HOME_URL, INTERVENTION_IRS_URL, NEW_IRS_PLAN_URL } from '../../../../../constants';
+import { HOME_URL, INTERVENTION_IRS_DRAFTS_URL, NEW_IRS_PLAN_URL } from '../../../../../constants';
 import { InterventionType } from '../../../../../store/ducks/plans';
 
 /** Simple component that loads the new plan form and allows you to create a new IRS plan */
@@ -27,7 +27,7 @@ const NewIRSPlan = () => {
       },
       {
         label: IRS_PLANS,
-        url: INTERVENTION_IRS_URL,
+        url: INTERVENTION_IRS_DRAFTS_URL,
       },
     ],
   };
@@ -42,7 +42,7 @@ const NewIRSPlan = () => {
       interventionType: InterventionType.IRS,
     },
     jurisdictionLabel: COUNTRY,
-    redirectAfterAction: INTERVENTION_IRS_URL,
+    redirectAfterAction: INTERVENTION_IRS_DRAFTS_URL,
   };
 
   return (

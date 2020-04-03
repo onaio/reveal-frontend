@@ -45,7 +45,7 @@ interface AssignmentsByPlanId {
 }
 /** interface for Assignments state in store */
 interface AssignmentsStoreState {
-  assignmentsByPlanId: AssignmentsByPlanId;
+  assignmentsByPlanId: AssignmentsByPlanId | {};
 }
 
 // immutable assignments state in dux

@@ -140,7 +140,7 @@ export interface FetchPlansAction extends AnyAction {
   type: typeof PLANS_FETCHED;
 }
 /** FetchPlanRecordsAction interface for PLAN_RECORDS_FETCHED */
-interface FetchPlanRecordsAction extends AnyAction {
+export interface FetchPlanRecordsAction extends AnyAction {
   planRecordsById: { [key: string]: PlanRecord };
   type: typeof PLAN_RECORDS_FETCHED;
 }
@@ -160,8 +160,8 @@ export type PlanActionTypes =
 
 /** interface for Plan state */
 interface PlanState {
-  planRecordsById: { [key: string]: PlanRecord };
-  plansById: { [key: string]: Plan };
+  planRecordsById: { [key: string]: PlanRecord } | {};
+  plansById: { [key: string]: Plan } | {};
 }
 
 /** immutable Plan state */
@@ -184,7 +184,7 @@ export default function reducer(state = initialState, action: PlanActionTypes): 
     case PLAN_RECORDS_FETCHED:
       return SeamlessImmutable({
         ...state,
-        planRecordsById: action.planRecordsById,
+        planRecordsById: { ...state.planRecordsById, ...action.planRecordsById },
       });
     case REMOVE_PLANS:
       return SeamlessImmutable({

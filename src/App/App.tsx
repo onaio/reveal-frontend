@@ -51,7 +51,6 @@ import {
   GA_ENV_TEST,
   HOME_URL,
   INTERVENTION_IRS_DRAFTS_URL,
-  INTERVENTION_IRS_URL,
   LOGOUT_URL,
   MAP,
   NEW_IRS_PLAN_URL,
@@ -162,15 +161,6 @@ class App extends Component<{}, AppState> {
                   exact={true}
                   path="/"
                   component={Home}
-                />
-                {/* Active IRS Plans list view */}
-                <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
-                  exact={true}
-                  path={INTERVENTION_IRS_URL}
-                  ConnectedOrgTeamView={true}
-                  component={IrsPlans}
                 />
                 {/* Draft IRS Plans list view */}
                 <ConnectedPrivateRoute
