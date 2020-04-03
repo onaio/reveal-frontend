@@ -1,169 +1,100 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`containers/pages/IRS/plan renders IRS Plan page correctly 1`] = `
-<Provider
-  store={
+<IrsPlan
+  allJurisdictionIds={Array []}
+  assignmentsArray={Array []}
+  fetchAllJurisdictionIdsActionCreator={[Function]}
+  fetchAssignmentsActionCreator={[Function]}
+  fetchJurisdictionsActionCreator={[Function]}
+  fetchOrganizationsActionCreator={[Function]}
+  fetchPlansActionCreator={[Function]}
+  history={
     Object {
-      "dispatch": [Function],
-      "getState": [Function],
-      "replaceReducer": [Function],
-      "subscribe": [Function],
-      Symbol(observable): [Function],
+      "action": "POP",
+      "block": [Function],
+      "createHref": [Function],
+      "go": [Function],
+      "goBack": [Function],
+      "goForward": [Function],
+      "length": 1,
+      "listen": [Function],
+      "location": Object {
+        "hash": "",
+        "pathname": "/",
+        "search": "",
+        "state": undefined,
+      },
+      "push": [Function],
+      "replace": [Function],
     }
   }
->
-  <Router
-    history={
-      Object {
-        "action": "POP",
-        "block": [Function],
-        "createHref": [Function],
-        "go": [Function],
-        "goBack": [Function],
-        "goForward": [Function],
-        "length": 1,
-        "listen": [Function],
-        "location": Object {
-          "hash": "",
-          "pathname": "/",
-          "search": "",
-          "state": undefined,
-        },
-        "push": [Function],
-        "replace": [Function],
-      }
+  isDraftPlan={null}
+  isFinalizedPlan={null}
+  isNewPlan={false}
+  jurisdictionsById={Object {}}
+  loadedJurisdictionIds={Array []}
+  location={[MockFunction]}
+  match={
+    Object {
+      "isExact": true,
+      "params": Object {
+        "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
+      },
+      "path": "/intervention/irs/plan/:id",
+      "url": "/intervention/irs/plan/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
     }
+  }
+  organizationsById={Object {}}
+  planById={null}
+  planId="ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
+  supersetService={[Function]}
+>
+  <Ripple
+    borderColor="#ff5d00"
+    borderStyle="solid"
+    borderWidth="4px"
+    height="64px"
+    minHeight="80vh"
+    width="64px"
   >
-    <Connect(IrsPlan)
-      history={
+    <div
+      className="lds-ripple-parent"
+      style={
         Object {
-          "action": "POP",
-          "block": [Function],
-          "createHref": [Function],
-          "go": [Function],
-          "goBack": [Function],
-          "goForward": [Function],
-          "length": 1,
-          "listen": [Function],
-          "location": Object {
-            "hash": "",
-            "pathname": "/",
-            "search": "",
-            "state": undefined,
-          },
-          "push": [Function],
-          "replace": [Function],
-        }
-      }
-      location={[MockFunction]}
-      match={
-        Object {
-          "isExact": true,
-          "params": Object {
-            "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
-          },
-          "path": "/intervention/irs/plan/:id",
-          "url": "/intervention/irs/plan/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
+          "minHeight": "80vh",
         }
       }
     >
-      <IrsPlan
-        allJurisdictionIds={Array []}
-        assignmentsArray={Array []}
-        fetchAllJurisdictionIdsActionCreator={[Function]}
-        fetchAssignmentsActionCreator={[Function]}
-        fetchJurisdictionsActionCreator={[Function]}
-        fetchOrganizationsActionCreator={[Function]}
-        fetchPlansActionCreator={[Function]}
-        history={
+      <div
+        className="lds-ripple"
+        style={
           Object {
-            "action": "POP",
-            "block": [Function],
-            "createHref": [Function],
-            "go": [Function],
-            "goBack": [Function],
-            "goForward": [Function],
-            "length": 1,
-            "listen": [Function],
-            "location": Object {
-              "hash": "",
-              "pathname": "/",
-              "search": "",
-              "state": undefined,
-            },
-            "push": [Function],
-            "replace": [Function],
+            "height": "64px",
+            "width": "64px",
           }
         }
-        isDraftPlan={null}
-        isFinalizedPlan={null}
-        isNewPlan={false}
-        jurisdictionsById={Object {}}
-        loadedJurisdictionIds={Array []}
-        location={[MockFunction]}
-        match={
-          Object {
-            "isExact": true,
-            "params": Object {
-              "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
-            },
-            "path": "/intervention/irs/plan/:id",
-            "url": "/intervention/irs/plan/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
-          }
-        }
-        organizationsById={Object {}}
-        planById={null}
-        planId="ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
-        supersetService={[Function]}
       >
-        <Ripple
-          borderColor="#ff5d00"
-          borderStyle="solid"
-          borderWidth="4px"
-          height="64px"
-          minHeight="80vh"
-          width="64px"
-        >
-          <div
-            className="lds-ripple-parent"
-            style={
-              Object {
-                "minHeight": "80vh",
-              }
+        <div
+          style={
+            Object {
+              "borderColor": "#ff5d00",
+              "borderStyle": "solid",
+              "borderWidth": "4px",
             }
-          >
-            <div
-              className="lds-ripple"
-              style={
-                Object {
-                  "height": "64px",
-                  "width": "64px",
-                }
-              }
-            >
-              <div
-                style={
-                  Object {
-                    "borderColor": "#ff5d00",
-                    "borderStyle": "solid",
-                    "borderWidth": "4px",
-                  }
-                }
-              />
-              <div
-                style={
-                  Object {
-                    "borderColor": "#ff5d00",
-                    "borderStyle": "solid",
-                    "borderWidth": "4px",
-                  }
-                }
-              />
-            </div>
-          </div>
-        </Ripple>
-      </IrsPlan>
-    </Connect(IrsPlan)>
-  </Router>
-</Provider>
+          }
+        />
+        <div
+          style={
+            Object {
+              "borderColor": "#ff5d00",
+              "borderStyle": "solid",
+              "borderWidth": "4px",
+            }
+          }
+        />
+      </div>
+    </div>
+  </Ripple>
+</IrsPlan>
 `;
