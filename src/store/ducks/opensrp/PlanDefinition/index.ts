@@ -86,7 +86,7 @@ export type ImmutablePlanDefinitionState = PlanDefinitionState &
   SeamlessImmutable.ImmutableObject<PlanDefinitionState>;
 
 /** initial PlanDefinition state */
-const initialState: any = SeamlessImmutable({
+const initialState: ImmutablePlanDefinitionState = SeamlessImmutable({
   planDefinitionsById: {},
 });
 

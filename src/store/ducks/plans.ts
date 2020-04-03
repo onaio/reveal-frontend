@@ -168,7 +168,7 @@ interface PlanState {
 export type ImmutablePlanState = PlanState & SeamlessImmutable.ImmutableObject<PlanState>;
 
 /** initial Plan state */
-const initialState: any = SeamlessImmutable({
+const initialState: ImmutablePlanState = SeamlessImmutable({
   planRecordsById: {},
   plansById: {},
 });

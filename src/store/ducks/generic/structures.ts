@@ -148,7 +148,7 @@ export type ImmutableGenericStructureState = FullGenericStructureState &
   SeamlessImmutable.ImmutableObject<FullGenericStructureState>;
 
 /** initial GenericStructure state */
-const initialState: any = SeamlessImmutable({});
+const initialState: ImmutableGenericStructureState = SeamlessImmutable({});
 
 /** the GenericStructure reducer function */
 export default function reducer(

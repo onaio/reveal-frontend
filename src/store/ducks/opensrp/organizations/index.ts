@@ -55,7 +55,7 @@ interface OrgsStoreState {
 }
 
 /** initial state for Organizations records in store */
-const initialOrgsStoreState: any = SeamlessImmutable({
+const initialOrgsStoreState: ImmutableOrgsStoreState = SeamlessImmutable({
   organizationsById: {},
 });
 

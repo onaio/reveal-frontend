@@ -53,7 +53,7 @@ export type ImmutableAssignmentsStoreState = AssignmentsStoreState &
   SeamlessImmutable.ImmutableObject<AssignmentsStoreState>;
 
 /** initial state for Assignments records in store */
-const initialOrgsStoreState: any = SeamlessImmutable({
+const initialOrgsStoreState: ImmutableAssignmentsStoreState = SeamlessImmutable({
   assignmentsByPlanId: {},
 });
 

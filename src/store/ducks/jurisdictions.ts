@@ -85,7 +85,7 @@ export type ImmutableJurisdictionState = JurisdictionState &
   SeamlessImmutable.ImmutableObject<JurisdictionState>;
 
 /** initial state */
-const initialState: any = SeamlessImmutable({
+const initialState: ImmutableJurisdictionState = SeamlessImmutable({
   allJurisdictionIds: {} as AllJurisdictionIds,
   jurisdictionsById: {},
 });

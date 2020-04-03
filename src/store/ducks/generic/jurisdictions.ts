@@ -184,7 +184,7 @@ export type ImmutableGenericJurisdictionState = FullGenericJurisdictionState &
   SeamlessImmutable.ImmutableObject<FullGenericJurisdictionState>;
 
 /** initial GenericJurisdiction state */
-const initialState: any = SeamlessImmutable({});
+const initialState: ImmutableGenericJurisdictionState = SeamlessImmutable({});
 
 /** the GenericJurisdiction reducer function */
 export default function reducer(

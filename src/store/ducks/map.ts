@@ -27,7 +27,7 @@ interface MapState {
 type ImmutableMapState = MapState & SeamlessImmutable.ImmutableObject<MapState>;
 
 /** Initial state */
-const initialState: any = SeamlessImmutable({
+const initialState: ImmutableMapState = SeamlessImmutable({
   Admins: {},
   adminLevelIndex: 0,
 });

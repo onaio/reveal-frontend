@@ -32,7 +32,7 @@ interface EventStoreState {
 }
 
 /** initial state for Events records in store */
-const initialEventStoreState: any = SeamlessImmutable({
+const initialEventStoreState: ImmutableEventsStoreState = SeamlessImmutable({
   eventsById: {},
 });
 
