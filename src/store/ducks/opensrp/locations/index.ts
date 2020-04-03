@@ -49,7 +49,7 @@ export type LocationsActionTypes = FetchLocationsAction | RemoveLocationsAction 
 
 /** interface to describe location state */
 export interface LocationsState {
-  locationsByPlanId: FlexObject<Location[]>;
+  locationsByPlanId: FlexObject<Location[]> | {};
 }
 
 /** immutable Location state */

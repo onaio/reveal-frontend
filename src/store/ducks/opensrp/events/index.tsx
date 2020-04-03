@@ -28,7 +28,7 @@ interface RemoveEventsAction extends AnyAction {
 
 /** interface for Events state in store */
 interface EventStoreState {
-  eventsById: Dictionary<Event>;
+  eventsById: Dictionary<Event> | {};
 }
 
 /** initial state for Events records in store */

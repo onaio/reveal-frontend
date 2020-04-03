@@ -141,9 +141,11 @@ interface GenericStructureState {
   };
 }
 
+type FullGenericStructureState = GenericStructureState | {};
+
 /** immutable GenericStructure state */
-export type ImmutableGenericStructureState = GenericStructureState &
-  SeamlessImmutable.ImmutableObject<GenericStructureState>;
+export type ImmutableGenericStructureState = FullGenericStructureState &
+  SeamlessImmutable.ImmutableObject<FullGenericStructureState>;
 
 /** initial GenericStructure state */
 const initialState: any = SeamlessImmutable({});

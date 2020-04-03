@@ -51,7 +51,7 @@ interface RemoveOrganizationsAction extends AnyAction {
 
 /** interface for Organizations state in store */
 interface OrgsStoreState {
-  organizationsById: { [key: string]: Organization };
+  organizationsById: { [key: string]: Organization } | {};
 }
 
 /** initial state for Organizations records in store */

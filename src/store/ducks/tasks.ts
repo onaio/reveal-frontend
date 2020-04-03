@@ -101,7 +101,7 @@ export type TaskActionTypes = FetchTasksAction | ResetTaskAction | AnyAction;
 
 /** interface for Task state */
 interface TaskState {
-  tasksById: { [key: string]: Task };
+  tasksById: { [key: string]: Task } | {};
 }
 
 /** immutable Task state */

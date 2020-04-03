@@ -63,7 +63,7 @@ export type GoalActionTypes =
 
 /** interface for Goal state */
 interface GoalState {
-  goalsById: { [key: string]: Goal[] };
+  goalsById: { [key: string]: Goal[] } | {};
   currentGoal: string | null;
 }
 

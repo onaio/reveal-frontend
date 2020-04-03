@@ -128,8 +128,8 @@ export const removePractitionerRolesAction: RemovePractitionerRolesAction = {
 
 /** interface for practitioners state in redux store */
 interface PractitionerState {
-  practitionersById: { [key: string]: Practitioner };
-  practitionerRoles: PractitionerRole;
+  practitionersById: { [key: string]: Practitioner } | {};
+  practitionerRoles: PractitionerRole | {};
 }
 
 /** Create an immutable practitioners state */

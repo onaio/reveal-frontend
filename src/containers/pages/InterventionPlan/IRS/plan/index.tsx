@@ -45,6 +45,7 @@ import {
   ASSIGN_PLAN_URL,
   DRAFT,
   HOME_URL,
+  INTERVENTION_IRS_DRAFTS_URL,
   INTERVENTION_IRS_URL,
   JURISDICTION_ID,
   MAP_ID,
@@ -2046,7 +2047,7 @@ class IrsPlan extends React.Component<
     };
     const basePage = {
       label: this.state.isAssignView ? ASSIGN_PLANS : IRS_TITLE,
-      url: isDraftPlan ? INTERVENTION_IRS_URL : ASSIGN_PLAN_URL,
+      url: isDraftPlan ? INTERVENTION_IRS_DRAFTS_URL : ASSIGN_PLAN_URL,
     };
     const urlPathAppend =
       (isFinalizedPlan && `${planId}`) || (isDraftPlan && `${DRAFT}/${planId}`) || NEW;
