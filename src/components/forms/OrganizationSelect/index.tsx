@@ -1,14 +1,12 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
-import { keyBy, values } from 'lodash';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import Select from 'react-select';
 import { Store } from 'redux';
 import { SELECT } from '../../../configs/lang';
-import { OPENSRP_ORGANIZATION_ENDPOINT } from '../../../constants';
+import { loadOrganizations } from '../../../containers/pages/OrganizationViews/helpers/serviceHooks';
 import { displayError } from '../../../helpers/errors';
 import { OpenSRPService } from '../../../services/opensrp';
-import store from '../../../store';
 import assignmentReducer, {
   Assignment,
   fetchAssignments,
@@ -19,6 +17,7 @@ import assignmentReducer, {
 import organizationsReducer, {
   fetchOrganizations,
   getOrganizationsArray,
+  getOrganizationsById,
   Organization,
   reducerName as organizationsReducerName,
 } from '../../../store/ducks/opensrp/organizations';
@@ -65,7 +64,7 @@ const defaultProps: OrganizationSelectProps = {
  * Allows you to Select Organizations to be assigned to the plan-jurisdiction
  * On selection update the `handleChange` method updates the Assignments store
  */
-const OrganizationSelect = (props: OrganizationSelectProps) => {
+export const OrganizationSelect = (props: OrganizationSelectProps) => {
   const {
     assignments,
     fetchAssignmentsAction,
@@ -79,33 +78,26 @@ const OrganizationSelect = (props: OrganizationSelectProps) => {
     value: selectOptions,
   } = props;
 
-  const loadOrganizations = async (service: typeof serviceClass) => {
-    const serve = new service(OPENSRP_ORGANIZATION_ENDPOINT);
-    serve
-      .list()
-      .then((response: Organization[]) => store.dispatch(fetchOrganizationsAction(response)))
-      .catch((err: Error) => {
-        displayError(err);
-      });
-  };
-
   useEffect(() => {
-    loadOrganizations(serviceClass).catch(err => displayError(err));
+    loadOrganizations(serviceClass, fetchOrganizationsAction).catch(err => displayError(err));
   }, []);
 
   /** Get select options from OpenSRP as a promise */
 
-  /**
+  /**handleChange
    * onChange callback
+   * @param {any} nextValues - state of values after a change event on select
    */
   const handleChange = (nextValues: any) => {
+    /** get assignments not assigned to this jurisdiction */
     const filteredAssignments: Assignment[] = assignments.filter(
       (a: Assignment) => a.jurisdiction !== jurisdictionId
     );
+    /** nextValues is an empty array -> means change-event was a remove-options-event */
     if (!nextValues) {
       resetPlanAssignmentsAction({ [planId]: filteredAssignments });
     } else {
-      const newAssignments: Assignment[] = (nextValues || []).map(
+      const newAssignments: Assignment[] = nextValues.map(
         (v: SelectOption) =>
           ({
             jurisdiction: jurisdictionId,
@@ -145,26 +137,26 @@ const OrganizationSelect = (props: OrganizationSelectProps) => {
 
 OrganizationSelect.defaultProps = defaultProps;
 
-export { OrganizationSelect };
-
 // connect to store
 const mapStateToProps = (state: Partial<Store>, ownProps: OrganizationSelectProps) => {
-  const organizations = keyBy(getOrganizationsArray(state), (o: Organization) => o.identifier);
+  const organizationsById = getOrganizationsById(state);
   const assignments = getAssignmentsArrayByPlanId(state, ownProps.planId);
+  const organizations = getOrganizationsArray(state);
   const selectOptions = assignments
     .filter((a: Assignment) => a.jurisdiction === ownProps.jurisdictionId)
     .map(
       (a: Assignment) =>
         ({
           label:
-            (organizations[a.organization] && organizations[a.organization].name) || a.organization,
+            (organizationsById[a.organization] && organizationsById[a.organization].name) ||
+            a.organization,
           value: a.organization,
         } as SelectOption)
     );
   return {
     ...ownProps,
     assignments,
-    organizations: values(organizations),
+    organizations,
     value: selectOptions,
   };
 };
