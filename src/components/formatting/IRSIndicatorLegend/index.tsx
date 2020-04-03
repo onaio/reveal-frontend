@@ -10,7 +10,7 @@ import {
   IndicatorThresholdsLookUp,
   indicatorThresholdsLookUpIRS,
 } from '../../../configs/settings';
-import { percentage } from '../../../helpers/utils';
+import { percentage, UpdateType } from '../../../helpers/utils';
 
 interface Props {
   indicatorRows: string;
@@ -36,8 +36,45 @@ const getIndicatorItems = (props: Props) => {
   return indicatorItems;
 };
 
+/** take indicator threshold and return an array of the strings representing
+ * the percentage ranges.
+ * @param {IndicatorThresholdItem[]} indicatorItems - The indicator threshold configurations
+ */
+export const generateRangeStrings = (indicatorItems: IndicatorThresholdItem[]) => {
+  // sorted indicator items in ascending threshold values
+  const sortedThresholds = indicatorItems.sort(
+    (a: IndicatorThresholdItem, b: IndicatorThresholdItem) => (a.value > b.value ? 1 : -1)
+  );
+
+  const rangesText: Array<UpdateType<IndicatorThresholdItem, { text: string }>> = [];
+  sortedThresholds.forEach((thresholdItem: IndicatorThresholdItem, index) => {
+    if (index === 0) {
+      // for the range on the lowest end, if threshold item includes orEqual then the range
+      // symbol shall be - otherwise if orEqual is not included the range symbol shall be -<
+      rangesText.push({
+        ...thresholdItem,
+        text: `${thresholdItem.orEquals ? '-' : '<'} ${percentage(thresholdItem.value)}`,
+      });
+      return;
+    }
+    const previousThreshold = indicatorItems[index - 1];
+    /** for all other ranges, the range symbols are both dependent on this thresholdItem's
+     * orEqual as well as the previous thresholdItem's orEqual boolean value.
+     */
+    rangesText.push({
+      ...thresholdItem,
+      text: `${percentage(previousThreshold.value)} ${previousThreshold.orEquals ? '>' : ''}-${
+        thresholdItem.orEquals ? '' : '<'
+      } ${percentage(thresholdItem.value)}`,
+    });
+  });
+
+  return rangesText;
+};
+
 const IRSIndicatorLegend = (props: Props) => {
   const indicatorItems = getIndicatorItems(props);
+  const reportingTableText = generateRangeStrings(indicatorItems);
 
   return (
     <div className="card mt-5 mb-5">
@@ -47,24 +84,14 @@ const IRSIndicatorLegend = (props: Props) => {
           <Col sm="12" md={{ size: 4, offset: 4 }}>
             <Table className="text-center">
               <tbody>
-                {indicatorItems
-                  .sort((a: IndicatorThresholdItem, b: IndicatorThresholdItem) =>
-                    a.value > b.value ? 1 : -1
-                  )
-                  .map((item, index) => {
-                    return (
-                      <tr key={index} style={{ background: item.color }}>
-                        <td>{item.name}</td>
-                        <td>
-                          {index === 0
-                            ? `< ${percentage(item.value)}`
-                            : `${percentage(indicatorItems[index - 1].value)} - ${percentage(
-                                item.value
-                              )}`}
-                        </td>
-                      </tr>
-                    );
-                  })}
+                {reportingTableText.map((item, index: number) => {
+                  return (
+                    <tr key={index} style={{ background: item.color }}>
+                      <td>{item.name}</td>
+                      <td>{item.text}</td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </Table>
           </Col>
