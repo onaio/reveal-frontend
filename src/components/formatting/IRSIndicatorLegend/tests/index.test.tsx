@@ -1,7 +1,8 @@
 import { mount } from 'enzyme';
 import toJson from 'enzyme-to-json';
+import { values } from 'lodash';
 import React from 'react';
-import IRSIndicatorLegend from '..';
+import IRSIndicatorLegend, { generateRangeStrings } from '..';
 import { indicatorThresholdsIRS, indicatorThresholdsLookUpIRS } from '../../../../configs/settings';
 
 const zambiaIndicatorRows = 'zambia2019';
@@ -30,5 +31,17 @@ describe('/components/formatting/IRSIndicatorLegend', () => {
     expect(toJson(wrapper.find('.card-header'))).toMatchSnapshot('header');
     expect(toJson(wrapper.find('Table'))).toMatchSnapshot('indicator table namibia');
     wrapper.unmount();
+  });
+  it('generateRangeStrings works correctly nominal case', () => {
+    const sampleThresholds = indicatorThresholdsIRS;
+
+    const indicatorItems = values(sampleThresholds);
+    const response = generateRangeStrings(indicatorItems);
+    expect(response).toEqual([
+      { color: '#dddddd', name: 'Grey', text: '< 20%', value: 0.2 },
+      { color: '#FF4136', name: 'Red', orEquals: true, text: '20% - 75%', value: 0.75 },
+      { color: '#FFDC00', name: 'Yellow', text: '75% >-< 90%', value: 0.9 },
+      { color: '#2ECC40', name: 'Green', orEquals: true, text: '90% - 100%', value: 1 },
+    ]);
   });
 });

@@ -853,6 +853,7 @@ export const indicatorThresholdsIRS: IndicatorThresholds = {
   GREEN_THRESHOLD: {
     color: '#2ECC40',
     name: IRS_GREEN_THRESHOLD,
+    orEquals: true,
     value: 1,
   },
   GREY_THRESHOLD: {
@@ -879,6 +880,7 @@ export const indicatorThresholdsIRSNamibia: IndicatorThresholds = {
   GREEN_THRESHOLD: {
     color: '#4C9A2A',
     name: IRS_GREEN_THRESHOLD,
+    orEquals: true,
     value: 1,
   },
   GREY_THRESHOLD: {
@@ -889,7 +891,6 @@ export const indicatorThresholdsIRSNamibia: IndicatorThresholds = {
   RED_THRESHOLD: {
     color: '#FF4136',
     name: IRS_RED_THRESHOLD,
-    orEquals: true,
     value: 0.75,
   },
   YELLOW_THRESHOLD: {
