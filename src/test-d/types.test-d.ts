@@ -1,10 +1,8 @@
-import * as React from 'react';
 import { expectAssignable, expectType } from 'tsd';
 import {
   adminLayerColorsType,
   ADMN0_PCODE,
   EmptyObject,
-  FlexComponent,
   GREEN_THRESHOLD,
   JurisdictionTypes,
   ORANGE_THRESHOLD,
@@ -38,11 +36,3 @@ expectAssignable<adminLayerColorsType>('green');
 
 expectAssignable<JurisdictionTypes>('administrative');
 expectAssignable<JurisdictionTypes>('operational');
-
-class SampleComponent extends React.Component<{}> {
-  public render() {
-    return null;
-  }
-}
-
-expectAssignable<FlexComponent<{}>>(SampleComponent);

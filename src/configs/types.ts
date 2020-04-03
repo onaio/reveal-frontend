@@ -1,4 +1,3 @@
-import { ComponentType } from 'react';
 import {
   adminLayerColors,
   GREEN_THRESHOLD,
@@ -33,6 +32,5 @@ export type ADMN0_PCODE =
   | 'Oddar Meanchey Province'
   | 'Lusaka';
 
-export type FlexComponent<T = {}> = ComponentType<T>;
 // tslint:disable-next-line:no-empty-interface
 export interface EmptyObject {}
