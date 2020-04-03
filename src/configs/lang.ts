@@ -439,7 +439,7 @@ export const FAILED_TO_EXTRACT_PLAN_RECORD = translate(
 );
 export const LOGIN_PROMPT = translate(
   'LOGIN_PROMPT',
-  'Please login with one of the following providers'
+  'Please log in with one of the following providers'
 );
 export const SEARCH_ACTIVE_FOCUS_INVESTIGATIONS = translate(
   'SEARCH_ACTIVE_FOCUS_INVESTIGATIONS',
