@@ -2,6 +2,7 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faUser } from '@fortawesome/free-regular-svg-icons';
 import { faExternalLinkSquareAlt, faMap } from '@fortawesome/free-solid-svg-icons';
+import '@testing-library/jest-dom';
 import enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import { GlobalWithFetchMock } from 'jest-fetch-mock';

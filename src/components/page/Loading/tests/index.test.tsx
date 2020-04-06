@@ -3,7 +3,7 @@ import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import React from 'react';
 
-import Loading from '../';
+import Loading from '../index';
 
 describe('components/Loading', () => {
   it('renders without crashing', () => {

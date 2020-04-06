@@ -1,10 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`containers/forms/Teamform renders correctly: Team identifier 1`] = `null`;
+exports[`components/forms/OrganizationForm renders correctly: Team identifier 1`] = `null`;
 
-exports[`containers/forms/Teamform renders correctly: Team name 1`] = `
+exports[`components/forms/OrganizationForm renders correctly: Team name 1`] = `
 <input
   className="form-control"
+  data-testid="name"
   disabled={false}
   id="name"
   name="name"
@@ -15,17 +16,17 @@ exports[`containers/forms/Teamform renders correctly: Team name 1`] = `
 />
 `;
 
-exports[`containers/forms/Teamform renders fields correctly in edit mode: Id field should have value in edit mode 1`] = `
+exports[`components/forms/OrganizationForm renders fields correctly in edit mode: Id field should have value in edit mode 1`] = `
 "Snapshot Diff:
 Compared values have no visual difference."
 `;
 
-exports[`containers/forms/Teamform renders fields correctly in edit mode: Should not be different 1`] = `
+exports[`components/forms/OrganizationForm renders fields correctly in edit mode: Should not be different 1`] = `
 "Snapshot Diff:
 - First value
 + Second value
 
-@@ -4,7 +4,7 @@
+@@ -5,7 +5,7 @@
     id=\\"name\\"
     name=\\"name\\"
     onBlur={[Function anonymous]}
@@ -34,4 +35,46 @@ exports[`containers/forms/Teamform renders fields correctly in edit mode: Should
 -   value=\\"\\"
 +   value=\\"The Luang\\"
   />"
+`;
+
+exports[`components/forms/OrganizationForm renders team form correctly: Active 1`] = `
+<input
+  id="yes"
+  name="active"
+  type="radio"
+  value=""
+/>
+`;
+
+exports[`components/forms/OrganizationForm renders team form correctly: Not active 1`] = `
+<input
+  id="no"
+  name="active"
+  type="radio"
+  value=""
+/>
+`;
+
+exports[`components/forms/OrganizationForm renders team form correctly: Null Identifier 1`] = `null`;
+
+exports[`components/forms/OrganizationForm renders team form correctly: Submit Button 1`] = `
+<button
+  aria-label="Save Team"
+  class="btn btn-block btn btn-primary btn btn-secondary"
+  id="team-form-submit-button"
+  type="submit"
+>
+  Save Team
+</button>
+`;
+
+exports[`components/forms/OrganizationForm renders team form correctly: Team name 1`] = `
+<input
+  class="form-control"
+  data-testid="name"
+  id="name"
+  name="name"
+  type="text"
+  value=""
+/>
 `;
