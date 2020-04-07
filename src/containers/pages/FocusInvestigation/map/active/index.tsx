@@ -423,9 +423,6 @@ const mapDispatchToProps = {
 };
 
 /** Create connected SingleActiveFIMAP */
-const ConnectedMapSingleFI = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(SingleActiveFIMap);
+const ConnectedMapSingleFI = connect(mapStateToProps, mapDispatchToProps)(SingleActiveFIMap);
 
 export default ConnectedMapSingleFI;

@@ -134,8 +134,10 @@ describe('reducers/IRS/GenericJurisdiction', () => {
 
     // add one IRS jurisdiction objects
     store.dispatch(
-      addGenericJurisdiction('na-jurisdictions', fixtures
-        .namibiaIRSJurisdictions[2] as NamibiaJurisdiction)
+      addGenericJurisdiction(
+        'na-jurisdictions',
+        fixtures.namibiaIRSJurisdictions[2] as NamibiaJurisdiction
+      )
     );
     // we should have it in the store
     expect(getGenericJurisdictionsArray(store.getState(), 'na-jurisdictions')).toEqual([
@@ -144,8 +146,10 @@ describe('reducers/IRS/GenericJurisdiction', () => {
 
     // fetch one more IRS jurisdiction objects
     store.dispatch(
-      addGenericJurisdiction('na-jurisdictions', fixtures
-        .namibiaIRSJurisdictions[1] as NamibiaJurisdiction)
+      addGenericJurisdiction(
+        'na-jurisdictions',
+        fixtures.namibiaIRSJurisdictions[1] as NamibiaJurisdiction
+      )
     );
     // we should now have a total of three IRS jurisdiction objects in the store
     expect(getGenericJurisdictionsArray(store.getState(), 'na-jurisdictions')).toEqual([
@@ -155,8 +159,10 @@ describe('reducers/IRS/GenericJurisdiction', () => {
 
     // add an existing plan again
     store.dispatch(
-      addGenericJurisdiction('na-jurisdictions', fixtures
-        .namibiaIRSJurisdictions[2] as NamibiaJurisdiction)
+      addGenericJurisdiction(
+        'na-jurisdictions',
+        fixtures.namibiaIRSJurisdictions[2] as NamibiaJurisdiction
+      )
     );
     // nothing should have changed in the store
     // we should now have a total of three IRS jurisdiction objects in the store

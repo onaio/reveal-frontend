@@ -1002,7 +1002,10 @@ export const ZambiaAdminRA0: JurisdictionsByCountry = {
 export const ThailandAdmin0: JurisdictionsByCountry = {
   ADMN0_EN: 'Thailand',
   ADMN0_PCODE: 'TH',
-  bounds: [[105.63681192, 5.61285098], [97.34380713, 20.46483364]],
+  bounds: [
+    [105.63681192, 5.61285098],
+    [97.34380713, 20.46483364],
+  ],
   jurisdictionId: '',
   jurisdictionIds: [
     '64301afa-e973-447b-a88c-4da20025c76f',
@@ -1033,7 +1036,10 @@ export const ThailandAdmin0: JurisdictionsByCountry = {
 const NamibiaAdmin0: JurisdictionsByCountry = {
   ADMN0_EN: 'Namibia',
   ADMN0_PCODE: 'NA',
-  bounds: [[11.76, -28.97], [25.26, -16.95]],
+  bounds: [
+    [11.76, -28.97],
+    [25.26, -16.95],
+  ],
   jurisdictionId: 'f45b9380-c970-4dd1-8533-9e95ab12f128',
   jurisdictionIds: [],
   tilesets: [

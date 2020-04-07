@@ -259,9 +259,7 @@ describe('src/pages/*/AssignPractitioners', () => {
 
     history.push(FI_URL);
     wrapper.update();
-    const message = `Unsaved Changes: please Save or Discard changes made [${
-      fixtures.organization3.name
-    }]`;
+    const message = `Unsaved Changes: please Save or Discard changes made [${fixtures.organization3.name}]`;
     expect((wrapper.find('Prompt') as any).props().message()).toEqual(message);
     expect((wrapper.find('Prompt') as any).props().when).toBeTruthy();
   });
