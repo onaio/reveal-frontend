@@ -37,7 +37,7 @@ export interface JurisdictionSelectProps<T = SelectOption> extends AsyncSelectPr
 }
 
 /** default props for JurisdictionSelect */
-const defaultProps: Partial<JurisdictionSelectProps> = {
+export const defaultProps: Partial<JurisdictionSelectProps> = {
   apiEndpoint: 'location/findByProperties',
   cascadingSelect: true,
   params: {
