@@ -52,9 +52,9 @@ describe('containers/pages/NewPlan', () => {
     wrapper
       .find('input[name="jurisdictions[0].name"]')
       .simulate('change', { target: { name: 'jurisdictions[0].name', value: 'Onyx' } });
-    wrapper
-      .find('select[name="interventionType"]')
-      .simulate('change', { target: { name: 'interventionType', value: 'FI' } });
+    // wrapper
+    //   .find('select[name="interventionType"]')
+    //   .simulate('change', { target: { name: 'interventionType', value: 'FI' } });
 
     expect(wrapper.find('JurisdictionDetails').props()).toEqual({
       planFormJurisdiction: { id: '1337', name: 'Onyx' },
