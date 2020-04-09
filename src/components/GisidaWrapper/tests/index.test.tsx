@@ -52,8 +52,8 @@ describe('components/GisidaWrapper', () => {
     wrapper.setProps({ ...props });
     wrapper.setState({ doRenderMap: true });
     jest.runOnlyPendingTimers();
-    // expect(setTimeout).toHaveBeenCalledTimes(1);
-    // expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 3000);
+    expect(setTimeout).toHaveBeenCalledTimes(1);
+    expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 3000);
     expect(toJson(wrapper)).toMatchSnapshot();
     expect(wrapper.find('MapComponent').props()).toMatchSnapshot();
     store.dispatch((Actions as any).mapRendered('map-1', true));
@@ -63,10 +63,10 @@ describe('components/GisidaWrapper', () => {
       apiAccessToken: expect.any(String),
     });
     jest.runOnlyPendingTimers();
-    // expect(store.getState()['map-1']).toMatchSnapshot({
-    //   currentRegion: expect.any(Number),
-    //   reloadLayers: expect.any(Number),
-    // });
+    expect(store.getState()['map-1']).toMatchSnapshot({
+      currentRegion: expect.any(Number),
+      reloadLayers: expect.any(Number),
+    });
     const componentWillUnmount = jest.spyOn(wrapper.instance(), 'componentWillUnmount');
     wrapper.unmount();
     expect(componentWillUnmount).toHaveBeenCalled();
@@ -124,10 +124,10 @@ describe('components/GisidaWrapper', () => {
      */
     const allLayers = store.getState()['map-1'].layers;
     toggleLayer(allLayers, props.currentGoal, store, Actions);
-    // expect(store.getState()['map-1']).toMatchSnapshot({
-    //   currentRegion: expect.any(Number),
-    //   reloadLayers: expect.any(Number),
-    // });
+    expect(store.getState()['map-1']).toMatchSnapshot({
+      currentRegion: expect.any(Number),
+      reloadLayers: expect.any(Number),
+    });
     const componentWillUnmount = jest.spyOn(wrapper.instance(), 'componentWillUnmount');
     wrapper.unmount();
     expect(componentWillUnmount).toHaveBeenCalled();
@@ -242,10 +242,10 @@ describe('components/GisidaWrapper', () => {
 
     const allLayers = store.getState()['map-1'].layers;
     toggleLayer(allLayers, props.currentGoal, store, Actions);
-    // expect(store.getState()['map-1']).toMatchSnapshot({
-    //   currentRegion: expect.any(Number),
-    //   reloadLayers: expect.any(Number),
-    // });
+    expect(store.getState()['map-1']).toMatchSnapshot({
+      currentRegion: expect.any(Number),
+      reloadLayers: expect.any(Number),
+    });
     const componentWillUnmount = jest.spyOn(wrapper.instance(), 'componentWillUnmount');
     wrapper.unmount();
     expect(componentWillUnmount).toHaveBeenCalled();
