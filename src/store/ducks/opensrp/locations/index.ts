@@ -1,4 +1,3 @@
-import { LocationState } from 'history';
 import { get } from 'lodash';
 import { AnyAction, Store } from 'redux';
 import SeamlessImmutable from 'seamless-immutable';
@@ -70,7 +69,7 @@ export default function reducer(
 ): ImmutableLocationsState {
   switch (action.type) {
     case FETCH_LOCATIONS:
-      const fetchLocationsState: LocationState = {
+      const fetchLocationsState: LocationsState = {
         ...state,
         locationsByPlanId: {
           ...state.locationsByPlanId,
@@ -79,7 +78,7 @@ export default function reducer(
       };
       return SeamlessImmutable(fetchLocationsState);
     case REMOVE_LOCATIONS:
-      const removeLocationsState: LocationState = {
+      const removeLocationsState: LocationsState = {
         ...state,
         locationsByPlanId: {
           ...state.locationsByPlanId,
@@ -88,7 +87,7 @@ export default function reducer(
       };
       return SeamlessImmutable(removeLocationsState);
     case REMOVE_ALL_PLANS_LOCATIONS:
-      const removeAllPlansLocationsState: LocationState = {
+      const removeAllPlansLocationsState: LocationsState = {
         ...state,
         locationsByPlanId: action.locationsByPlanId,
       };
