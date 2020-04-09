@@ -121,11 +121,11 @@ const APP_CALLBACK_PATH = BACKEND_ACTIVE ? BACKEND_CALLBACK_PATH : REACT_CALLBAC
 /** Main App component */
 const App = () => {
   useEffect(() => {
-    const user = (getUser(store.getState()) || {}).username || '';
-    if (GA_CODE && user) {
+    const username = (getUser(store.getState()) || {}).username || '';
+    if (GA_CODE && username) {
       const dimensions = {
         env: GA_ENV,
-        username: user,
+        username,
       };
       setDimensions(dimensions);
     }
