@@ -11,7 +11,7 @@ import {
 import { initGoogleAnalytics, RouteTracker, setDimensions } from '@onaio/google-analytics';
 import { getUser } from '@onaio/session-reducer';
 import { logOutUser } from '@onaio/session-reducer';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { Route, Switch } from 'react-router';
 import { Redirect } from 'react-router-dom';
@@ -120,14 +120,12 @@ const APP_CALLBACK_PATH = BACKEND_ACTIVE ? BACKEND_CALLBACK_PATH : REACT_CALLBAC
 
 /** Main App component */
 const App = () => {
-  const [username, setUsername] = useState('');
-
   useEffect(() => {
-    setUsername((getUser(store.getState()) || {}).username || '');
-    if (GA_CODE && username) {
+    const user = (getUser(store.getState()) || {}).username || '';
+    if (GA_CODE && user) {
       const dimensions = {
         env: GA_ENV,
-        username,
+        username: user,
       };
       setDimensions(dimensions);
     }
