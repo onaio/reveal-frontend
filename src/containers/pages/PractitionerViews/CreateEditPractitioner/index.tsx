@@ -89,9 +89,12 @@ const CreateEditPractitionerView = (props: PropsTypes) => {
     if (editing) {
       let practitionerId = props.match.params.id;
       practitionerId = practitionerId ? practitionerId : '';
-      loadPractitioner(practitionerId, serviceClass, fetchPractitionersCreator, signal).catch(
-        error => displayError(error)
-      );
+      loadPractitioner(
+        practitionerId,
+        serviceClass,
+        fetchPractitionersCreator,
+        signal
+      ).catch(error => displayError(error));
     }
     return () => {
       abortFetch({ controller });
