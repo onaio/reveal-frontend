@@ -300,4 +300,74 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
         .prop('data')
     ).toMatchSnapshot('routine-table');
   });
+
+  it('handles case insensitive searches correctly', () => {
+    const mock: any = jest.fn();
+    const props = {
+      caseTriggeredPlans: [fixtures.plan2, fixtures.plan23],
+      fetchPlansActionCreator: jest.fn(),
+      history,
+      location: mock,
+      match: mock,
+      routinePlans: [fixtures.plan1],
+      supersetService: jest.fn().mockImplementationOnce(() => Promise.resolve([])),
+    };
+    const wrapper = mount(
+      <Router history={history}>
+        <ActiveFocusInvestigation {...props} />
+      </Router>
+    );
+    wrapper
+      .find('Input')
+      .at(0)
+      .simulate('change', { target: { value: 'RANDOM' } });
+    wrapper.update();
+    expect(
+      wrapper
+        .find('ReactTable')
+        .at(0)
+        .prop('data')
+    ).toMatchSnapshot('case-triggered-table');
+    expect(
+      wrapper
+        .find('ReactTable')
+        .at(1)
+        .prop('data')
+    ).toMatchSnapshot('routine-table');
+  });
+
+  it('renders empty tables if search query does not match any case trigger or routine plans', () => {
+    const mock: any = jest.fn();
+    const props = {
+      caseTriggeredPlans: [fixtures.plan2, fixtures.plan23],
+      fetchPlansActionCreator: jest.fn(),
+      history,
+      location: mock,
+      match: mock,
+      routinePlans: [fixtures.plan1],
+      supersetService: jest.fn().mockImplementationOnce(() => Promise.resolve([])),
+    };
+    const wrapper = mount(
+      <Router history={history}>
+        <ActiveFocusInvestigation {...props} />
+      </Router>
+    );
+    wrapper
+      .find('Input')
+      .at(0)
+      .simulate('change', { target: { value: 'kajkajakjTTyaa' } });
+    wrapper.update();
+    expect(
+      wrapper
+        .find('ReactTable')
+        .at(0)
+        .prop('data')
+    ).toEqual([]);
+    expect(
+      wrapper
+        .find('ReactTable')
+        .at(1)
+        .prop('data')
+    ).toEqual([]);
+  });
 });

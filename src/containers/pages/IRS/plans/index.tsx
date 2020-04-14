@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Col, Row } from 'reactstrap';
+import { Col, Form, FormGroup, Input, Row } from 'reactstrap';
 import { Store } from 'redux';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
@@ -42,7 +42,10 @@ interface PlanListProps {
 /** Simple component that loads the new plan form and allows you to create a new plan */
 const IRSPlansList = (props: PlanListProps) => {
   const { fetchPlans, plans, service } = props;
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
+  const defaultSearchedPlans: IRSPlan[] = [];
+  const [searchedPlans, setSearchedPlans] = useState(defaultSearchedPlans);
+  const [searchQuery, setSearchQuery] = useState('');
 
   const pageTitle: string = IRS_PLANS;
 
@@ -73,16 +76,26 @@ const IRSPlansList = (props: PlanListProps) => {
     }
   }
 
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(event.target.value);
+  };
+
   useEffect(() => {
     loadData().catch(error => displayError(error));
   }, []);
 
-  if (loading === true) {
-    return <Loading />;
-  }
+  useEffect(() => {
+    if (plans) {
+      setSearchedPlans(
+        plans.filter((plan: IRSPlan) =>
+          searchQuery ? plan.plan_title.toLowerCase().includes(searchQuery.toLowerCase()) : true
+        )
+      );
+    }
+  }, [searchQuery]);
 
-  const listViewProps = {
-    data: plans.map(planObj => {
+  const listViewData = (planList: IRSPlan[]) =>
+    planList.map(planObj => {
       return [
         <Link to={`${REPORT_IRS_PLAN_URL}/${planObj.plan_id}`} key={planObj.plan_id}>
           {planObj.plan_title}
@@ -92,7 +105,14 @@ const IRSPlansList = (props: PlanListProps) => {
         planObj.plan_effective_period_end,
         planStatusDisplay[planObj.plan_status] || planObj.plan_status,
       ];
-    }),
+    });
+
+  if (loading === true) {
+    return <Loading />;
+  }
+
+  const listViewProps = {
+    data: listViewData(searchQuery ? searchedPlans : plans),
     headerItems: [TITLE, DATE_CREATED, START_DATE, END_DATE, STATUS_HEADER],
     tableClass: 'table table-bordered plans-list',
   };
@@ -108,6 +128,12 @@ const IRSPlansList = (props: PlanListProps) => {
           <h3 className="mt-3 mb-3 page-title">{pageTitle}</h3>
         </Col>
       </Row>
+      <hr />
+      <Form inline={true}>
+        <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
+          <Input type="text" name="search" placeholder="Search" onChange={handleSearchChange} />
+        </FormGroup>
+      </Form>
       <Row>
         <Col>
           <ListView {...listViewProps} />

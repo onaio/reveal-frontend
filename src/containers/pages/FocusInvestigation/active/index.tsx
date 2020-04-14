@@ -229,13 +229,12 @@ class ActiveFocusInvestigation extends React.Component<
         <HeaderBreadCrumb {...breadcrumbProps} />
         <h2 className="mb-3 mt-5 page-title">{pageTitle}</h2>
         <hr />
-        <Form inline={true} onSubmit={this.handleSubmit}>
+        <Form inline={true}>
           <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
             <Input
               type="text"
               name="search"
-              id="exampleEmail"
-              placeholder="Search active focus investigations"
+              placeholder="Search"
               onChange={this.handleSearchChange}
             />
           </FormGroup>

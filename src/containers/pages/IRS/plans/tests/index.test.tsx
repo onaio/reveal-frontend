@@ -44,4 +44,73 @@ describe('components/IRS Reports/IRSPlansList', () => {
     expect(toJson(wrapper.find('tbody tr td'))).toMatchSnapshot('table rows');
     wrapper.unmount();
   });
+
+  it('handles search correctly', () => {
+    const props = {
+      fetchPlans: jest.fn(),
+      plans: fixtures.plans as IRSPlan[],
+      service: jest.fn().mockImplementationOnce(() => Promise.resolve([])),
+    };
+    const wrapper = mount(
+      <Router history={history}>
+        <IRSPlansList {...props} />
+      </Router>
+    );
+    wrapper
+      .find('Input')
+      .at(0)
+      .simulate('change', { target: { value: 'Berg' } });
+    wrapper.mount();
+    expect(
+      wrapper
+        .find('tbody tr td')
+        .find('Link')
+        .at(0)
+        .text()
+    ).toEqual('Berg Namibia 2019');
+  });
+
+  it('handles a case insensitive search', () => {
+    const props = {
+      fetchPlans: jest.fn(),
+      plans: fixtures.plans as IRSPlan[],
+      service: jest.fn().mockImplementationOnce(() => Promise.resolve([])),
+    };
+    const wrapper = mount(
+      <Router history={history}>
+        <IRSPlansList {...props} />
+      </Router>
+    );
+    wrapper
+      .find('Input')
+      .at(0)
+      .simulate('change', { target: { value: 'BERG' } });
+    wrapper.mount();
+    expect(
+      wrapper
+        .find('tbody tr td')
+        .find('Link')
+        .at(0)
+        .text()
+    ).toEqual('Berg Namibia 2019');
+  });
+
+  it('renders empty table if no search matches', () => {
+    const props = {
+      fetchPlans: jest.fn(),
+      plans: fixtures.plans as IRSPlan[],
+      service: jest.fn().mockImplementationOnce(() => Promise.resolve([])),
+    };
+    const wrapper = mount(
+      <Router history={history}>
+        <IRSPlansList {...props} />
+      </Router>
+    );
+    wrapper
+      .find('Input')
+      .at(0)
+      .simulate('change', { target: { value: 'OOOOOOOPPOAPOPAO' } });
+    wrapper.mount();
+    expect(toJson(wrapper.find('tbody tr'))).toEqual(null);
+  });
 });
