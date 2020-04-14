@@ -1,6 +1,6 @@
 import ListView from '@onaio/list-view';
 import reducerRegistry, { Registry } from '@onaio/redux-reducer-registry';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -27,7 +27,7 @@ import {
   REPORT_IRS_PLAN_URL,
 } from '../../../../constants';
 import { displayError } from '../../../../helpers/errors';
-import { extractPlanRecordResponseFromPlanPayload } from '../../../../helpers/utils';
+import { abortFetch, extractPlanRecordResponseFromPlanPayload } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
 import IRSPlansReducer, {
   reducerName as IRSPlansReducerName,
@@ -98,7 +98,7 @@ const IRSAssignmentPlansList = (props: PlanAssignmentsListProps) => {
 
   useEffect(() => {
     loadData().catch(error => displayError(error));
-    return () => controller.abort();
+    return () => abortFetch({ controller });
   }, []);
 
   if (plans.length < 1) {

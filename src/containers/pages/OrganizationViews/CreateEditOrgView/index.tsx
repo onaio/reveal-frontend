@@ -24,7 +24,7 @@ import {
   ORGANIZATIONS_LIST_URL,
 } from '../../../../constants';
 import { displayError } from '../../../../helpers/errors';
-import { RouteParams } from '../../../../helpers/utils';
+import { abortFetch, RouteParams } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
 import {
   fetchOrganizations,
@@ -97,7 +97,7 @@ const CreateEditOrgView = (props: CreateEditTeamViewTypes) => {
       );
     }
     return () => {
-      controller.abort();
+      abortFetch({ controller });
     };
   }, []);
 

@@ -23,7 +23,7 @@ import {
   PRACTITIONERS_LIST_URL,
 } from '../../../../constants';
 import { displayError } from '../../../../helpers/errors';
-import { RouteParams } from '../../../../helpers/utils';
+import { abortFetch, RouteParams } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
 import {
   fetchPractitioners,
@@ -89,15 +89,12 @@ const CreateEditPractitionerView = (props: PropsTypes) => {
     if (editing) {
       let practitionerId = props.match.params.id;
       practitionerId = practitionerId ? practitionerId : '';
-      loadPractitioner(
-        practitionerId,
-        serviceClass,
-        fetchPractitionersCreator,
-        signal
-      ).catch(error => displayError(error));
+      loadPractitioner(practitionerId, serviceClass, fetchPractitionersCreator, signal).catch(
+        error => displayError(error)
+      );
     }
     return () => {
-      controller.abort();
+      abortFetch({ controller });
     };
   }, []);
 

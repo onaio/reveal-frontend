@@ -44,7 +44,7 @@ import {
 } from '../../../../constants';
 import { displayError } from '../../../../helpers/errors';
 import { useConfirmOnBrowserUnload } from '../../../../helpers/hooks';
-import { generateNameSpacedUUID, growl } from '../../../../helpers/utils';
+import { abortFetch, generateNameSpacedUUID, growl } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
 import organizationsReducer, {
   fetchOrganizations,
@@ -116,7 +116,7 @@ const AssignPractitioner = (props: PropsTypes) => {
       signal
     ).catch(err => displayError(err));
     return () => {
-      controller.abort();
+      abortFetch({ controller });
     };
   }, []);
 

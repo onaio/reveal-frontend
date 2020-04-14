@@ -35,6 +35,7 @@ import {
   SINGLE_ORGANIZATION_URL,
 } from '../../../../constants';
 import { displayError } from '../../../../helpers/errors';
+import { abortFetch } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
 import organizationsReducer, {
   fetchOrganizations,
@@ -131,7 +132,7 @@ const OrganizationListView = (props: OrgsListViewPropsType) => {
       displayError(err)
     );
     return () => {
-      controller.abort();
+      abortFetch({ controller });
     };
   }, []);
 
@@ -149,7 +150,9 @@ const OrganizationListView = (props: OrgsListViewPropsType) => {
       <HeaderBreadcrumb {...breadcrumbProps} />
       <Row id="header-row">
         <Col className="xs">
-          <h2 className="mb-3 mt-5 page-title">{`${ORGANIZATIONS_LABEL} (${organizations.length})`}</h2>
+          <h2 className="mb-3 mt-5 page-title">{`${ORGANIZATIONS_LABEL} (${
+            organizations.length
+          })`}</h2>
         </Col>
         <Col className="xs">
           <LinkAsButton {...linkAsButtonProps} />

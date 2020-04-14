@@ -36,6 +36,7 @@ import {
   PRACTITIONERS_LIST_URL,
 } from '../../../../constants';
 import { displayError } from '../../../../helpers/errors';
+import { abortFetch } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
 import practitionersReducer, {
   fetchPractitioners,
@@ -126,7 +127,7 @@ const PractitionersListView = (props: PropsTypes) => {
       displayError(error)
     );
     return () => {
-      controller.abort();
+      abortFetch({ controller });
     };
   }, []);
 

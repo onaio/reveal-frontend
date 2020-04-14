@@ -860,3 +860,11 @@ export const isPlanDefinitionOfType = (
     ).length > 0
   );
 };
+
+export interface AbortFetchOptions {
+  controller: AbortController;
+}
+export function abortFetch(options: AbortFetchOptions): void {
+  const { controller } = options;
+  controller.abort();
+}

@@ -38,7 +38,11 @@ import {
   PLAN_RECORD_BY_ID,
 } from '../../../../constants';
 import { displayError } from '../../../../helpers/errors';
-import { extractPlanRecordResponseFromPlanPayload, RouteParams } from '../../../../helpers/utils';
+import {
+  abortFetch,
+  extractPlanRecordResponseFromPlanPayload,
+  RouteParams,
+} from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
 import plansReducer, {
   fetchPlanRecords,
@@ -120,9 +124,10 @@ const columns: Column[] = [
  */
 const loadOpenSRPPlans = (
   service: typeof OpenSRPService,
-  actionCreator: ActionCreator<FetchPlanRecordsAction>
+  actionCreator: ActionCreator<FetchPlanRecordsAction>,
+  signal: AbortSignal = new AbortController().signal
 ) => {
-  const OpenSrpPlanService = new service(OPENSRP_PLANS);
+  const OpenSrpPlanService = new service(OPENSRP_PLANS, signal);
   OpenSrpPlanService.list()
     .then((plans: PlanPayload[]) => {
       const extractedPlanRecords = plans
@@ -135,8 +140,10 @@ const loadOpenSRPPlans = (
 
 /** IrsPlans presentation component */
 export const IrsPlans = (props: IrsPlansProps & RouteComponentProps<RouteParams>) => {
+  const controller = new AbortController();
   React.useEffect(() => {
-    loadOpenSRPPlans(props.service, props.fetchPlanRecordsActionCreator);
+    loadOpenSRPPlans(props.service, props.fetchPlanRecordsActionCreator, controller.signal);
+    return () => abortFetch({ controller });
   }, []);
 
   const pageTitle = `${IRS_PLANS}${DRAFTS_PARENTHESIS}`;

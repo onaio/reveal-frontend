@@ -21,6 +21,7 @@ import {
 import { PlanDefinition, planStatusDisplay } from '../../../../configs/settings';
 import { HOME_URL, OPENSRP_PLANS, PLAN_LIST_URL, PLAN_UPDATE_URL } from '../../../../constants';
 import { displayError } from '../../../../helpers/errors';
+import { abortFetch } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
 import planDefinitionReducer, {
   fetchPlanDefinitions,
@@ -73,7 +74,7 @@ const PlanDefinitionList = (props: PlanListProps) => {
 
   useEffect(() => {
     loadData().catch(err => displayError(err));
-    return () => controller.abort();
+    return () => abortFetch({ controller });
   }, []);
 
   if (plans.length < 1) {

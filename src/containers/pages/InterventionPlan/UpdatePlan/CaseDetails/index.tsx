@@ -58,9 +58,10 @@ const defaultCaseDetailsProps: CaseDetailsProps = {
 const loadEvent = (
   eventId: UUID,
   servant: typeof OpenSRPService,
-  actionCreator: ActionCreator<FetchEventsAction>
+  actionCreator: ActionCreator<FetchEventsAction>,
+  signal: AbortSignal = new AbortController().signal
 ) => {
-  const service = new servant(OPENSRP_FIND_EVENTS_ENDPOINT, OPENSRP_API_BASE_URL);
+  const service = new servant(OPENSRP_FIND_EVENTS_ENDPOINT, signal, OPENSRP_API_BASE_URL);
   const filterParams = {
     id: eventId,
   };
@@ -73,6 +74,7 @@ const loadEvent = (
 /** CaseDetails component */
 export const CaseDetails: React.FC<CaseDetailsProps> = (props = defaultCaseDetailsProps) => {
   const { eventId, service, event, fetchEventsCreator } = props;
+  const controller = new AbortController();
   const [isCollapsed, setCollapse] = React.useState<boolean>(true);
   const toggleCollapse = () => setCollapse(!isCollapsed);
 
@@ -84,7 +86,8 @@ export const CaseDetails: React.FC<CaseDetailsProps> = (props = defaultCaseDetai
 
   // make a call to the events endpoint and get event
   useEffect(() => {
-    loadEvent(eventId, service, fetchEventsCreator);
+    loadEvent(eventId, service, fetchEventsCreator, controller.signal);
+    return controller.abort();
   }, [eventId]);
 
   if (!event) {
