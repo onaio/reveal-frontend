@@ -45,6 +45,26 @@ export const plan2: Plan = {
   plan_version: '1',
 };
 
+export const plan23: Plan = {
+  id: 'plan-id-3',
+  jurisdiction_depth: 2,
+  jurisdiction_id: '450fc15b-5bd2-468a-927a-49cb10d3bcac',
+  jurisdiction_name: 'NVI_439',
+  jurisdiction_name_path: ['Chadiza', 'Naviluli'],
+  jurisdiction_parent_id: '2944',
+  jurisdiction_path: ['2939', '2944'],
+  plan_date: '2019-06-18',
+  plan_effective_period_end: '2019-06-18',
+  plan_effective_period_start: '2019-07-31',
+  plan_fi_reason: 'Case Triggered' as FIReasonType,
+  plan_fi_status: 'A1' as FIStatusType,
+  plan_id: '10f9e9fa-ce34-4b27-a961-72fab5206ab6',
+  plan_intervention_type: InterventionType.FI,
+  plan_status: PlanStatus.ACTIVE,
+  plan_title: 'Random plan',
+  plan_version: '1',
+};
+
 export const draftPlan = {
   id: 'draftPlan-id-2',
   jurisdiction_depth: 41,

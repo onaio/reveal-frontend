@@ -11,7 +11,7 @@ import { RouteComponentProps } from 'react-router';
 import { Link } from 'react-router-dom';
 import { CellInfo, Column } from 'react-table';
 import 'react-table/react-table.css';
-import { Button, Col, Form, FormGroup, Input, Row, Table } from 'reactstrap';
+import { Col, Form, FormGroup, Input, Row, Table } from 'reactstrap';
 import { Store } from 'redux';
 import { format } from 'util';
 import DrillDownTableLinkedCell from '../../../../components/DrillDownTableLinkedCell';
@@ -40,7 +40,6 @@ import {
   PREVIOUS,
   REACTIVE,
   ROUTINE_TITLE,
-  SEARCH,
   START_DATE,
   STATUS_HEADER,
 } from '../../../../configs/lang';
@@ -96,6 +95,13 @@ export interface ActiveFIProps {
   plan: Plan | null;
 }
 
+/** Interface defining component state */
+export interface ActiveFIState {
+  search?: string;
+  searchedCaseTriggeredPlans: Plan[];
+  searchedRoutinePlans: Plan[];
+}
+
 /** default props for ActiveFI component */
 export const defaultActiveFIProps: ActiveFIProps = {
   caseTriggeredPlans: null,
@@ -108,11 +114,18 @@ export const defaultActiveFIProps: ActiveFIProps = {
 /** Reporting for Active Focus Investigations */
 class ActiveFocusInvestigation extends React.Component<
   ActiveFIProps & RouteComponentProps<RouteParams>,
-  {}
+  ActiveFIState
 > {
   public static defaultProps: ActiveFIProps = defaultActiveFIProps;
   constructor(props: ActiveFIProps & RouteComponentProps<RouteParams>) {
     super(props);
+    this.state = {
+      search: '',
+      searchedCaseTriggeredPlans: [],
+      searchedRoutinePlans: [],
+    };
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleSearchChange = this.handleSearchChange.bind(this);
   }
 
   public componentDidMount() {
@@ -124,8 +137,32 @@ class ActiveFocusInvestigation extends React.Component<
       .then((result: Plan[]) => fetchPlansActionCreator(result))
       .catch(err => displayError(err));
   }
+
   public handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+  }
+
+  public handleSearchChange(event: React.ChangeEvent<HTMLInputElement>) {
+    this.setState({ search: event.target.value }, () => {
+      const { search } = this.state;
+      const { caseTriggeredPlans, routinePlans } = this.props;
+
+      if (caseTriggeredPlans) {
+        this.setState({
+          searchedCaseTriggeredPlans: caseTriggeredPlans.filter((plan: Plan) =>
+            search ? plan.plan_title.toLowerCase().includes(search.toLowerCase()) : true
+          ),
+        });
+      }
+
+      if (routinePlans) {
+        this.setState({
+          searchedRoutinePlans: routinePlans.filter((plan: Plan) =>
+            search ? plan.plan_title.toLowerCase().includes(search.toLowerCase()) : true
+          ),
+        });
+      }
+    });
   }
   public render() {
     const breadcrumbProps: BreadCrumbProps = {
@@ -146,6 +183,7 @@ class ActiveFocusInvestigation extends React.Component<
     };
 
     const { caseTriggeredPlans, routinePlans, plan } = this.props;
+    const { searchedCaseTriggeredPlans, searchedRoutinePlans, search } = this.state;
     // We need to initialize jurisdictionName to a falsy value
     let jurisdictionName = null;
 
@@ -198,13 +236,14 @@ class ActiveFocusInvestigation extends React.Component<
               name="search"
               id="exampleEmail"
               placeholder="Search active focus investigations"
+              onChange={this.handleSearchChange}
             />
           </FormGroup>
-          <Button outline={true} color="success">
-            {SEARCH}
-          </Button>
         </Form>
-        {[caseTriggeredPlans, routinePlans].forEach((plansArray: Plan[] | null, i) => {
+        {[
+          search ? searchedCaseTriggeredPlans : caseTriggeredPlans,
+          search ? searchedRoutinePlans : routinePlans,
+        ].forEach((plansArray: Plan[] | null, i) => {
           const locationColumns: Column[] = getLocationColumns(locationHierarchy, true);
           if (plansArray && plansArray.length) {
             const jurisdictionValidPlans = removeNullJurisdictionPlans(plansArray);
@@ -401,7 +440,7 @@ class ActiveFocusInvestigation extends React.Component<
               columns: emptyPlansColumns,
             };
             routineReactivePlans.push(
-              <NullDataTable tableProps={tableProps} reasonType={header} key={`${'current'}`} />
+              <NullDataTable tableProps={tableProps} reasonType={header} key={i} />
             );
           }
         })}

@@ -230,4 +230,74 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
     expect(supersetMock).toHaveBeenCalledWith(0, supersetParams);
     wrapper.unmount();
   });
+
+  it('handles search correctly for case triggered plans', () => {
+    const mock: any = jest.fn();
+    const props = {
+      caseTriggeredPlans: [fixtures.plan2, fixtures.plan23],
+      fetchPlansActionCreator: jest.fn(),
+      history,
+      location: mock,
+      match: mock,
+      routinePlans: [fixtures.plan1],
+      supersetService: jest.fn().mockImplementationOnce(() => Promise.resolve([])),
+    };
+    const wrapper = mount(
+      <Router history={history}>
+        <ActiveFocusInvestigation {...props} />
+      </Router>
+    );
+    wrapper
+      .find('Input')
+      .at(0)
+      .simulate('change', { target: { value: 'random' } });
+    wrapper.update();
+    expect(
+      wrapper
+        .find('ReactTable')
+        .at(0)
+        .prop('data')
+    ).toMatchSnapshot('case-triggered-table');
+    expect(
+      wrapper
+        .find('ReactTable')
+        .at(1)
+        .prop('data')
+    ).toMatchSnapshot('routine-table');
+  });
+
+  it('handles search correctly for routine plans', () => {
+    const mock: any = jest.fn();
+    const props = {
+      caseTriggeredPlans: [fixtures.plan2, fixtures.plan23],
+      fetchPlansActionCreator: jest.fn(),
+      history,
+      location: mock,
+      match: mock,
+      routinePlans: [fixtures.plan1],
+      supersetService: jest.fn().mockImplementationOnce(() => Promise.resolve([])),
+    };
+    const wrapper = mount(
+      <Router history={history}>
+        <ActiveFocusInvestigation {...props} />
+      </Router>
+    );
+    wrapper
+      .find('Input')
+      .at(0)
+      .simulate('change', { target: { value: 'Luang' } });
+    wrapper.update();
+    expect(
+      wrapper
+        .find('ReactTable')
+        .at(0)
+        .prop('data')
+    ).toMatchSnapshot('case-triggered-table');
+    expect(
+      wrapper
+        .find('ReactTable')
+        .at(1)
+        .prop('data')
+    ).toMatchSnapshot('routine-table');
+  });
 });

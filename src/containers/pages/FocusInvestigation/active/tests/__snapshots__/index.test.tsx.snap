@@ -1,5 +1,124 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`containers/pages/ActiveFocusInvestigation handles search correctly for case triggered plans: case-triggered-table 1`] = `
+Array [
+  Object {
+    "canton": "Chadiza",
+    "caseClassification": null,
+    "caseNotificationDate": "2019-06-18",
+    "district": null,
+    "focusArea": "NVI_439",
+    "id": "plan-id-3",
+    "jurisdiction_depth": 2,
+    "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
+    "jurisdiction_name": "NVI_439",
+    "jurisdiction_name_path": Array [
+      "Chadiza",
+      "Naviluli",
+    ],
+    "jurisdiction_parent_id": "2944",
+    "jurisdiction_path": Array [
+      "2939",
+      "2944",
+    ],
+    "plan_date": "2019-06-18",
+    "plan_effective_period_end": "2019-06-18",
+    "plan_effective_period_start": "2019-07-31",
+    "plan_fi_reason": "Case Triggered",
+    "plan_fi_status": "A1",
+    "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+    "plan_intervention_type": "FI",
+    "plan_status": "active",
+    "plan_title": "Random plan",
+    "plan_version": "1",
+    "province": null,
+    "reason": "Case Triggered",
+    "status": "A1",
+    "village": "Naviluli",
+  },
+]
+`;
+
+exports[`containers/pages/ActiveFocusInvestigation handles search correctly for case triggered plans: routine-table 1`] = `Array []`;
+
+exports[`containers/pages/ActiveFocusInvestigation handles search correctly for routine plans: case-triggered-table 1`] = `
+Array [
+  Object {
+    "canton": "Canton Tha Luang",
+    "caseClassification": null,
+    "caseNotificationDate": "2019-06-18",
+    "district": null,
+    "focusArea": "TLv1_02",
+    "id": "plan-id-2",
+    "jurisdiction_depth": 2,
+    "jurisdiction_id": "3378",
+    "jurisdiction_name": "TLv1_02",
+    "jurisdiction_name_path": Array [
+      "Canton Tha Luang",
+      "Tha Luang Village",
+    ],
+    "jurisdiction_parent_id": "2977",
+    "jurisdiction_path": Array [
+      "2989",
+      "2977",
+    ],
+    "plan_date": "2019-06-18",
+    "plan_effective_period_end": "2019-06-18",
+    "plan_effective_period_start": "2019-07-31",
+    "plan_fi_reason": "Case Triggered",
+    "plan_fi_status": "A1",
+    "plan_id": "plan-id-2",
+    "plan_intervention_type": "IRS",
+    "plan_status": "active",
+    "plan_title": "A1-Tha Luang Village 1 Focus 01",
+    "plan_version": "1",
+    "province": null,
+    "reason": "Case Triggered",
+    "status": "A1",
+    "village": "Tha Luang Village",
+  },
+]
+`;
+
+exports[`containers/pages/ActiveFocusInvestigation handles search correctly for routine plans: routine-table 1`] = `
+Array [
+  Object {
+    "canton": "Chadiza",
+    "caseClassification": null,
+    "caseNotificationDate": null,
+    "district": null,
+    "focusArea": "NVI_439",
+    "id": "ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
+    "jurisdiction_depth": 2,
+    "jurisdiction_id": "450fc15b-5bd2-468a-927a-49cb10d3bcac",
+    "jurisdiction_name": "NVI_439",
+    "jurisdiction_name_path": Array [
+      "Chadiza",
+      "Naviluli",
+    ],
+    "jurisdiction_parent_id": "2944",
+    "jurisdiction_path": Array [
+      "2939",
+      "2944",
+    ],
+    "plan_date": "2019-06-18",
+    "plan_effective_period_end": "2019-06-18",
+    "plan_effective_period_start": "2019-07-31",
+    "plan_fi_reason": "Routine",
+    "plan_fi_status": "A1",
+    "plan_id": "10f9e9fa-ce34-4b27-a961-72fab5206ab6",
+    "plan_intervention_type": "FI",
+    "plan_status": "active",
+    "plan_title": "A1-Tha Luang Village 1 Focus 01",
+    "plan_version": "1",
+    "province": null,
+    "reason": "Routine",
+    "status": "A1",
+    "village": "Naviluli",
+  },
+]
+`;
+
 exports[`containers/pages/ActiveFocusInvestigation works with the Redux store 1`] = `
 Object {
   "aggregated": undefined,
