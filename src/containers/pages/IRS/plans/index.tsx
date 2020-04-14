@@ -4,8 +4,9 @@ import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Col, Form, FormGroup, Input, Row } from 'reactstrap';
+import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
+import { SearchForm } from '../../../../components/forms/Search';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
 import { SUPERSET_IRS_REPORTING_PLANS_SLICE } from '../../../../configs/env';
@@ -129,11 +130,7 @@ const IRSPlansList = (props: PlanListProps) => {
         </Col>
       </Row>
       <hr />
-      <Form inline={true}>
-        <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
-          <Input type="text" name="search" placeholder="Search" onChange={handleSearchChange} />
-        </FormGroup>
-      </Form>
+      <SearchForm handleSearchChange={handleSearchChange} />
       <Row>
         <Col>
           <ListView {...listViewProps} />

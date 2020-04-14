@@ -11,10 +11,11 @@ import { RouteComponentProps } from 'react-router';
 import { Link } from 'react-router-dom';
 import { CellInfo, Column } from 'react-table';
 import 'react-table/react-table.css';
-import { Col, Form, FormGroup, Input, Row, Table } from 'reactstrap';
+import { Col, Row, Table } from 'reactstrap';
 import { Store } from 'redux';
 import { format } from 'util';
 import DrillDownTableLinkedCell from '../../../../components/DrillDownTableLinkedCell';
+import { SearchForm } from '../../../../components/forms/Search';
 import LinkAsButton from '../../../../components/LinkAsButton';
 import NewRecordBadge from '../../../../components/NewRecordBadge';
 import HeaderBreadCrumb, {
@@ -229,16 +230,7 @@ class ActiveFocusInvestigation extends React.Component<
         <HeaderBreadCrumb {...breadcrumbProps} />
         <h2 className="mb-3 mt-5 page-title">{pageTitle}</h2>
         <hr />
-        <Form inline={true}>
-          <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
-            <Input
-              type="text"
-              name="search"
-              placeholder="Search"
-              onChange={this.handleSearchChange}
-            />
-          </FormGroup>
-        </Form>
+        <SearchForm handleSearchChange={this.handleSearchChange} />
         {[
           search ? searchedCaseTriggeredPlans : caseTriggeredPlans,
           search ? searchedRoutinePlans : routinePlans,
