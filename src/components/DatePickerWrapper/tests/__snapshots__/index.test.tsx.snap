@@ -253,14 +253,17 @@ exports[`components/DatePickerWrapper matches snapshot 1`] = `
   selected={2015-01-29T09:46:45.305Z}
   type="date"
 >
-  <DatePicker
+  <t
     allowSameDay={false}
     className="form-control"
+    customTimeInput={null}
     dateFormat="yyyy-MM-dd"
     dateFormatCalendar="LLLL yyyy"
     disabled={false}
     disabledKeyboardNavigation={false}
     dropdownMode="scroll"
+    enableTabLoop={true}
+    excludeScrollbar={true}
     field={
       Object {
         "name": "start",
@@ -506,8 +509,11 @@ exports[`components/DatePickerWrapper matches snapshot 1`] = `
     id="start"
     inlineFocusSelectedMonth={false}
     monthsShown={1}
-    nextMonthButtonLabel="Next month"
+    nextMonthButtonLabel="Next Month"
+    nextYearButtonLabel="Next Year"
     onBlur={[Function]}
+    onCalendarClose={[Function]}
+    onCalendarOpen={[Function]}
     onChange={[MockFunction]}
     onClickOutside={[Function]}
     onFocus={[Function]}
@@ -519,12 +525,16 @@ exports[`components/DatePickerWrapper matches snapshot 1`] = `
     onYearChange={[Function]}
     preventOpenOnFocus={false}
     previousMonthButtonLabel="Previous Month"
+    previousYearButtonLabel="Previous Year"
     readOnly={false}
     renderDayContents={[Function]}
     required={true}
     selected={2015-01-29T09:46:45.305Z}
     shouldCloseOnSelect={true}
     showMonthYearPicker={false}
+    showPopperArrow={true}
+    showPreviousMonths={false}
+    showQuarterYearPicker={false}
     showTimeInput={false}
     showTimeSelect={false}
     strictParsing={false}
@@ -534,7 +544,8 @@ exports[`components/DatePickerWrapper matches snapshot 1`] = `
     type="date"
     withPortal={false}
   >
-    <PopperComponent
+    <t
+      enableTabLoop={true}
       hidePopper={true}
       popperComponent={null}
       popperModifiers={
@@ -546,6 +557,7 @@ exports[`components/DatePickerWrapper matches snapshot 1`] = `
           },
         }
       }
+      popperOnKeyDown={[Function]}
       popperPlacement="bottom-start"
       popperProps={Object {}}
       targetComponent={
@@ -569,7 +581,9 @@ exports[`components/DatePickerWrapper matches snapshot 1`] = `
         </div>
       }
     >
-      <Manager>
+      <Manager
+        className="react-datepicker-manager"
+      >
         <Reference>
           <InnerReference
             setReferenceNode={[Function]}
@@ -599,8 +613,8 @@ exports[`components/DatePickerWrapper matches snapshot 1`] = `
           </InnerReference>
         </Reference>
       </Manager>
-    </PopperComponent>
-  </DatePicker>
+    </t>
+  </t>
 </DatePickerWrapper>
 `;
 
@@ -718,13 +732,16 @@ exports[`components/DatePickerWrapper matches snapshot with FieldComponent 1`] =
         required={true}
         type="date"
       >
-        <DatePicker
+        <t
           allowSameDay={false}
+          customTimeInput={null}
           dateFormat="yyyy-MM-dd"
           dateFormatCalendar="LLLL yyyy"
           disabled={false}
           disabledKeyboardNavigation={false}
           dropdownMode="scroll"
+          enableTabLoop={true}
+          excludeScrollbar={true}
           field={
             Object {
               "name": "start",
@@ -772,8 +789,11 @@ exports[`components/DatePickerWrapper matches snapshot with FieldComponent 1`] =
           id="start"
           inlineFocusSelectedMonth={false}
           monthsShown={1}
-          nextMonthButtonLabel="Next month"
+          nextMonthButtonLabel="Next Month"
+          nextYearButtonLabel="Next Year"
           onBlur={[Function]}
+          onCalendarClose={[Function]}
+          onCalendarOpen={[Function]}
           onChange={[MockFunction]}
           onClickOutside={[Function]}
           onFocus={[Function]}
@@ -785,11 +805,15 @@ exports[`components/DatePickerWrapper matches snapshot with FieldComponent 1`] =
           onYearChange={[Function]}
           preventOpenOnFocus={false}
           previousMonthButtonLabel="Previous Month"
+          previousYearButtonLabel="Previous Year"
           readOnly={false}
           renderDayContents={[Function]}
           required={true}
           shouldCloseOnSelect={true}
           showMonthYearPicker={false}
+          showPopperArrow={true}
+          showPreviousMonths={false}
+          showQuarterYearPicker={false}
           showTimeInput={false}
           showTimeSelect={false}
           strictParsing={false}
@@ -799,7 +823,8 @@ exports[`components/DatePickerWrapper matches snapshot with FieldComponent 1`] =
           type="date"
           withPortal={false}
         >
-          <PopperComponent
+          <t
+            enableTabLoop={true}
             hidePopper={true}
             popperComponent={null}
             popperModifiers={
@@ -811,6 +836,7 @@ exports[`components/DatePickerWrapper matches snapshot with FieldComponent 1`] =
                 },
               }
             }
+            popperOnKeyDown={[Function]}
             popperPlacement="bottom-start"
             popperProps={Object {}}
             targetComponent={
@@ -834,7 +860,9 @@ exports[`components/DatePickerWrapper matches snapshot with FieldComponent 1`] =
               </div>
             }
           >
-            <Manager>
+            <Manager
+              className="react-datepicker-manager"
+            >
               <Reference>
                 <InnerReference
                   setReferenceNode={[Function]}
@@ -864,8 +892,8 @@ exports[`components/DatePickerWrapper matches snapshot with FieldComponent 1`] =
                 </InnerReference>
               </Reference>
             </Manager>
-          </PopperComponent>
-        </DatePicker>
+          </t>
+        </t>
       </DatePickerWrapper>
     </FieldInner>
   </FormikConnect(FieldInner)>

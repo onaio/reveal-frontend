@@ -28,7 +28,7 @@ export const existingState = {
   },
   router: {
     action: 'POP',
-    location: { hash: '', pathname: '/', search: '', state: undefined },
+    location: { hash: '', pathname: '/', search: '', state: undefined, query: {} },
   },
   session: {
     authenticated: false,

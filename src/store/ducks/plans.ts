@@ -452,14 +452,12 @@ export const getPlansArrayByInterventionType = (planKey?: string) =>
  * @param {PlanFilters} props - the plan filters object
  */
 export const getPlansArrayByJurisdictionIds = (planKey?: string) =>
-  createSelector(
-    [plansArrayBaseSelector(planKey), getJurisdictionIds],
-    (plans, jurisdictionIds) =>
-      jurisdictionIds
-        ? plans.filter(plan =>
-            jurisdictionIds.length ? jurisdictionIds.includes(plan.jurisdiction_id) : true
-          )
-        : plans
+  createSelector([plansArrayBaseSelector(planKey), getJurisdictionIds], (plans, jurisdictionIds) =>
+    jurisdictionIds
+      ? plans.filter(plan =>
+          jurisdictionIds.length ? jurisdictionIds.includes(plan.jurisdiction_id) : true
+        )
+      : plans
   );
 
 /** getPlansArrayByStatus
@@ -468,12 +466,10 @@ export const getPlansArrayByJurisdictionIds = (planKey?: string) =>
  * @param {PlanFilters} props - the plan filters object
  */
 export const getPlansArrayByStatus = (plantype?: string) =>
-  createSelector(
-    [plansArrayBaseSelector(plantype), getStatusList],
-    (plans, statusList) =>
-      statusList
-        ? plans.filter(plan => (statusList.length ? statusList.includes(plan.plan_status) : true))
-        : plans
+  createSelector([plansArrayBaseSelector(plantype), getStatusList], (plans, statusList) =>
+    statusList
+      ? plans.filter(plan => (statusList.length ? statusList.includes(plan.plan_status) : true))
+      : plans
   );
 
 /** getPlansArrayByReason
@@ -482,9 +478,8 @@ export const getPlansArrayByStatus = (plantype?: string) =>
  * @param {PlanFilters} props - the plan filters object
  */
 export const getPlansArrayByReason = (planKey?: string) =>
-  createSelector(
-    [plansArrayBaseSelector(planKey), getReason],
-    (plans, reason) => (reason ? plans.filter(plan => plan.plan_fi_reason === reason) : plans)
+  createSelector([plansArrayBaseSelector(planKey), getReason], (plans, reason) =>
+    reason ? plans.filter(plan => plan.plan_fi_reason === reason) : plans
   );
 
 /** getPlansArrayByParentJurisdictionId

@@ -202,7 +202,7 @@ it('calls selectors with the correct arguments', async () => {
     },
     router: {
       action: 'POP',
-      location: { hash: '', pathname: '/', search: '', state: undefined },
+      location: { hash: '', pathname: '/', search: '', state: undefined, query: {} },
     },
     session: {
       authenticated: false,

@@ -156,8 +156,5 @@ const mapDispatchToProps: DispatchToProps = {
   fetchEventsCreator: fetchEvents,
 };
 
-const ConnectedCaseDetails = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(CaseDetails);
+const ConnectedCaseDetails = connect(mapStateToProps, mapDispatchToProps)(CaseDetails);
 export default ConnectedCaseDetails;

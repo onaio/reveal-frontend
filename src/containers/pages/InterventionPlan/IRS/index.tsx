@@ -220,9 +220,6 @@ const mapDispatchToProps: MapDispatchToProps = {
   fetchPlanRecordsActionCreator: fetchPlanRecords,
 };
 
-const ConnectedIrsPlans = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(IrsPlans);
+const ConnectedIrsPlans = connect(mapStateToProps, mapDispatchToProps)(IrsPlans);
 
 export default ConnectedIrsPlans;

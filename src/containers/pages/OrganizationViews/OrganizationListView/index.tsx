@@ -150,9 +150,7 @@ const OrganizationListView = (props: OrgsListViewPropsType) => {
       <HeaderBreadcrumb {...breadcrumbProps} />
       <Row id="header-row">
         <Col className="xs">
-          <h2 className="mb-3 mt-5 page-title">{`${ORGANIZATIONS_LABEL} (${
-            organizations.length
-          })`}</h2>
+          <h2 className="mb-3 mt-5 page-title">{`${ORGANIZATIONS_LABEL} (${organizations.length})`}</h2>
         </Col>
         <Col className="xs">
           <LinkAsButton {...linkAsButtonProps} />

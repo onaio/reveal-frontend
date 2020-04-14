@@ -14,7 +14,10 @@ export const state = {
       p5id: practitioner1,
     },
   },
-  router: { action: 'POP', location: { hash: '', pathname: '/', search: '', state: undefined } },
+  router: {
+    action: 'POP',
+    location: { hash: '', pathname: '/', search: '', state: undefined, query: {} },
+  },
   session: {
     authenticated: false,
     extraData: {},
