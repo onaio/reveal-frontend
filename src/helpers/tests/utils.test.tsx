@@ -18,7 +18,14 @@ import * as planDefinitionFixtures from '../../store/ducks/opensrp/PlanDefinitio
 import { InterventionType, Plan } from '../../store/ducks/plans';
 import { InitialTask } from '../../store/ducks/tasks';
 import * as fixtures from '../../store/ducks/tests/fixtures';
-import { Item, plan1, plan5, plan6, plan99, sortedPlansArray } from '../../store/ducks/tests/fixtures';
+import {
+  Item,
+  plan1,
+  plan5,
+  plan6,
+  plan99,
+  sortedPlansArray,
+} from '../../store/ducks/tests/fixtures';
 import * as helpers from '../errors';
 import { colorMaps } from '../structureColorMaps';
 import {
@@ -342,7 +349,7 @@ describe('helpers/utils', () => {
     result = isPlanDefinitionOfType(sampleIRSPlan, InterventionType.FI);
     expect(result).toBeFalsy();
     result = isPlanDefinitionOfType(sampleIRSPlan, InterventionType.IRS);
-    expect(result).toBeTruthy(); 
+    expect(result).toBeTruthy();
   });
   it('Returns percentage value', () => {
     const result = IndicatorThresholdItemPercentage(Item);
