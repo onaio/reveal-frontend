@@ -22,6 +22,7 @@ import {
 import { planStatusDisplay } from '../../../../configs/settings';
 import { HOME_URL, REPORT_IRS_PLAN_URL } from '../../../../constants';
 import { displayError } from '../../../../helpers/errors';
+import { useDebounce } from '../../../../helpers/hooks';
 import supersetFetch from '../../../../services/superset';
 import IRSPlansReducer, {
   fetchIRSPlans,
@@ -46,8 +47,10 @@ const IRSPlansList = (props: PlanListProps) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [searchedPlans, setSearchedPlans] = useState<IRSPlan[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
-
   const pageTitle: string = IRS_PLANS;
+  // Return the latest search query if it's been more than 1s since
+  // it was last called
+  const debouncedSearchQuery = useDebounce(searchQuery);
 
   const breadcrumbProps = {
     currentPage: {
@@ -88,11 +91,13 @@ const IRSPlansList = (props: PlanListProps) => {
     if (plans) {
       setSearchedPlans(
         plans.filter((plan: IRSPlan) =>
-          searchQuery ? plan.plan_title.toLowerCase().includes(searchQuery.toLowerCase()) : true
+          debouncedSearchQuery
+            ? plan.plan_title.toLowerCase().includes(debouncedSearchQuery.toLowerCase())
+            : true
         )
       );
     }
-  }, [searchQuery]);
+  }, [debouncedSearchQuery]);
 
   const listViewData = (planList: IRSPlan[]) =>
     planList.map(planObj => {

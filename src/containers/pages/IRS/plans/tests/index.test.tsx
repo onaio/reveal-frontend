@@ -45,7 +45,7 @@ describe('components/IRS Reports/IRSPlansList', () => {
     wrapper.unmount();
   });
 
-  it('handles search correctly', () => {
+  it('handles search correctly', async () => {
     const props = {
       fetchPlans: jest.fn(),
       plans: fixtures.plans as IRSPlan[],
@@ -60,6 +60,8 @@ describe('components/IRS Reports/IRSPlansList', () => {
       .find('Input')
       .at(0)
       .simulate('change', { target: { value: 'Berg' } });
+    // Wait for debounce
+    await new Promise(r => setTimeout(r, 1500));
     wrapper.mount();
     expect(
       wrapper
@@ -70,7 +72,7 @@ describe('components/IRS Reports/IRSPlansList', () => {
     ).toEqual('Berg Namibia 2019');
   });
 
-  it('handles a case insensitive search', () => {
+  it('handles a case insensitive search', async () => {
     const props = {
       fetchPlans: jest.fn(),
       plans: fixtures.plans as IRSPlan[],
@@ -85,6 +87,8 @@ describe('components/IRS Reports/IRSPlansList', () => {
       .find('Input')
       .at(0)
       .simulate('change', { target: { value: 'BERG' } });
+    // Wait for debounce
+    await new Promise(r => setTimeout(r, 1500));
     wrapper.mount();
     expect(
       wrapper
@@ -95,7 +99,7 @@ describe('components/IRS Reports/IRSPlansList', () => {
     ).toEqual('Berg Namibia 2019');
   });
 
-  it('renders empty table if no search matches', () => {
+  it('renders empty table if no search matches', async () => {
     const props = {
       fetchPlans: jest.fn(),
       plans: fixtures.plans as IRSPlan[],
@@ -110,6 +114,8 @@ describe('components/IRS Reports/IRSPlansList', () => {
       .find('Input')
       .at(0)
       .simulate('change', { target: { value: 'OOOOOOOPPOAPOPAO' } });
+    // Wait for debounce
+    await new Promise(r => setTimeout(r, 1500));
     wrapper.mount();
     expect(toJson(wrapper.find('tbody tr'))).toEqual(null);
   });

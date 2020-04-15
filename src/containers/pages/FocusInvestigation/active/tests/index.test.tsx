@@ -231,7 +231,7 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
     wrapper.unmount();
   });
 
-  it('handles search correctly for case triggered plans', () => {
+  it('handles search correctly for case triggered plans', async () => {
     const mock: any = jest.fn();
     const props = {
       caseTriggeredPlans: [fixtures.plan2, fixtures.plan23],
@@ -251,6 +251,8 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
       .find('Input')
       .at(0)
       .simulate('change', { target: { value: 'random' } });
+    // Wait for debounce
+    await new Promise(r => setTimeout(r, 1000));
     wrapper.update();
     expect(
       wrapper
@@ -266,7 +268,7 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
     ).toMatchSnapshot('routine-table');
   });
 
-  it('handles search correctly for routine plans', () => {
+  it('handles search correctly for routine plans', async () => {
     const mock: any = jest.fn();
     const props = {
       caseTriggeredPlans: [fixtures.plan2, fixtures.plan23],
@@ -286,6 +288,8 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
       .find('Input')
       .at(0)
       .simulate('change', { target: { value: 'Luang' } });
+    // Wait for debounce
+    await new Promise(r => setTimeout(r, 1000));
     wrapper.update();
     expect(
       wrapper
@@ -301,7 +305,7 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
     ).toMatchSnapshot('routine-table');
   });
 
-  it('handles case insensitive searches correctly', () => {
+  it('handles case insensitive searches correctly', async () => {
     const mock: any = jest.fn();
     const props = {
       caseTriggeredPlans: [fixtures.plan2, fixtures.plan23],
@@ -321,6 +325,8 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
       .find('Input')
       .at(0)
       .simulate('change', { target: { value: 'RANDOM' } });
+    // Wait for debounce
+    await new Promise(r => setTimeout(r, 1000));
     wrapper.update();
     expect(
       wrapper
@@ -336,7 +342,7 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
     ).toMatchSnapshot('routine-table');
   });
 
-  it('renders empty tables if search query does not match any case trigger or routine plans', () => {
+  it('renders empty tables if search query does not match any case trigger or routine plans', async () => {
     const mock: any = jest.fn();
     const props = {
       caseTriggeredPlans: [fixtures.plan2, fixtures.plan23],
@@ -356,6 +362,8 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
       .find('Input')
       .at(0)
       .simulate('change', { target: { value: 'kajkajakjTTyaa' } });
+    // Wait for debounce
+    await new Promise(r => setTimeout(r, 1000));
     wrapper.update();
     expect(
       wrapper

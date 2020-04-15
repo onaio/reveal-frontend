@@ -4,6 +4,7 @@ import DrillDownTable from '@onaio/drill-down-table';
 import { FlexObject } from '@onaio/drill-down-table/dist/types/helpers/utils';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset from '@onaio/superset-connector';
+import _ from 'lodash';
 import * as React from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
@@ -118,6 +119,8 @@ class ActiveFocusInvestigation extends React.Component<
   ActiveFIState
 > {
   public static defaultProps: ActiveFIProps = defaultActiveFIProps;
+
+  public debouncedSearchCallback = _.debounce(this.debouncedSearch, 1000);
   constructor(props: ActiveFIProps & RouteComponentProps<RouteParams>) {
     super(props);
     this.state = {
@@ -125,8 +128,8 @@ class ActiveFocusInvestigation extends React.Component<
       searchedCaseTriggeredPlans: [],
       searchedRoutinePlans: [],
     };
-    this.handleSubmit = this.handleSubmit.bind(this);
     this.handleSearchChange = this.handleSearchChange.bind(this);
+    this.debouncedSearchCallback = _.debounce(this.debouncedSearch, 1000);
   }
 
   public componentDidMount() {
@@ -139,11 +142,7 @@ class ActiveFocusInvestigation extends React.Component<
       .catch(err => displayError(err));
   }
 
-  public handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-  }
-
-  public handleSearchChange(event: React.ChangeEvent<HTMLInputElement>) {
+  public debouncedSearch(event: React.ChangeEvent<HTMLInputElement>) {
     this.setState({ search: event.target.value }, () => {
       const { search } = this.state;
       const { caseTriggeredPlans, routinePlans } = this.props;
@@ -164,6 +163,11 @@ class ActiveFocusInvestigation extends React.Component<
         });
       }
     });
+  }
+
+  public handleSearchChange(event: React.ChangeEvent<HTMLInputElement>) {
+    event.persist(); // This will ensure that the event is not pooled for more details https://reactjs.org/docs/events.html
+    this.debouncedSearchCallback(event);
   }
   public render() {
     const breadcrumbProps: BreadCrumbProps = {

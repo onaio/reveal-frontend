@@ -22,6 +22,7 @@ import {
 import { PlanDefinition, planStatusDisplay } from '../../../../configs/settings';
 import { HOME_URL, OPENSRP_PLANS, PLAN_LIST_URL, PLAN_UPDATE_URL } from '../../../../constants';
 import { displayError } from '../../../../helpers/errors';
+import { useDebounce } from '../../../../helpers/hooks';
 import { OpenSRPService } from '../../../../services/opensrp';
 import planDefinitionReducer, {
   fetchPlanDefinitions,
@@ -45,10 +46,11 @@ const PlanDefinitionList = (props: PlanListProps) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [searchedPlans, setSearchedPlans] = useState<PlanDefinition[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
-
   const apiService = new service(OPENSRP_PLANS);
-
   const pageTitle: string = PLANS;
+  // Return the latest search query if it's been more than 1s since
+  // it was last called
+  const debouncedSearchQuery = useDebounce(searchQuery);
 
   const breadcrumbProps = {
     currentPage: {
@@ -84,11 +86,13 @@ const PlanDefinitionList = (props: PlanListProps) => {
     if (plans) {
       setSearchedPlans(
         plans.filter((plan: PlanDefinition) =>
-          searchQuery ? plan.name.toLowerCase().includes(searchQuery.toLowerCase()) : true
+          debouncedSearchQuery
+            ? plan.name.toLowerCase().includes(debouncedSearchQuery.toLowerCase())
+            : true
         )
       );
     }
-  }, [searchQuery]);
+  }, [debouncedSearchQuery]);
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(event.target.value);
