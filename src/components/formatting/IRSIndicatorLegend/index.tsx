@@ -1,4 +1,3 @@
-import { percentage } from '@onaio/utils';
 import { get } from 'lodash';
 import React from 'react';
 import { Col, Row, Table } from 'reactstrap';
@@ -55,7 +54,9 @@ export const generateRangeStrings = (indicatorItems: IndicatorThresholdItem[]) =
       // symbol shall be - otherwise if orEqual is not included the range symbol shall be -<
       rangesText.push({
         ...thresholdItem,
-        text: `${thresholdItem.orEquals ? '-' : '<'} ${percentage(thresholdItem.value)}`,
+        text: `${thresholdItem.orEquals ? '-' : '<'} ${IndicatorThresholdItemPercentage(
+          thresholdItem.value
+        )}`,
       });
       return;
     }
@@ -65,9 +66,11 @@ export const generateRangeStrings = (indicatorItems: IndicatorThresholdItem[]) =
      */
     rangesText.push({
       ...thresholdItem,
-      text: `${percentage(previousThreshold.value)} ${previousThreshold.orEquals ? '>' : ''}-${
-        thresholdItem.orEquals ? '' : '<'
-      } ${percentage(thresholdItem.value)}`,
+      text: `${IndicatorThresholdItemPercentage(previousThreshold.value)} ${
+        previousThreshold.orEquals ? '>' : ''
+      }-${thresholdItem.orEquals ? '' : '<'} ${IndicatorThresholdItemPercentage(
+        thresholdItem.value
+      )}`,
     });
   });
 

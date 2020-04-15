@@ -6,18 +6,7 @@ import { AnyAction, Store } from 'redux';
 import { createSelector } from 'reselect';
 import SeamlessImmutable from 'seamless-immutable';
 import { FIReasonType, FIStatusType } from '../../components/forms/PlanForm/types';
-<<<<<<< HEAD
-import { descendingOrderSort, FlexObject, removeNullJurisdictionPlans } from '../../helpers/utils';
-=======
-import {
-  FIReasons,
-  FIStatuses,
-  PlanAction,
-  planActivities,
-  PlanGoal,
-} from '../../configs/settings';
-import { removeNullJurisdictionPlans } from '../../helpers/utils';
->>>>>>> Replace FlexObject with ona utils equivalent
+import { descendingOrderSort, removeNullJurisdictionPlans } from '../../helpers/utils';
 
 /** the reducer name */
 export const reducerName = 'plans';
