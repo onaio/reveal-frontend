@@ -1,3 +1,4 @@
+import { percentage } from '@onaio/utils';
 import { get } from 'lodash';
 import React from 'react';
 import { Col, Row, Table } from 'reactstrap';
