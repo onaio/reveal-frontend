@@ -4,7 +4,7 @@ import * as colors from '../../colors';
 import { CONDITIONAL_FORMATTING_TITLE, FI_RESPONSE_ADHERENCE_TITLE } from '../../configs/lang';
 import { GREEN_THRESHOLD, ORANGE_THRESHOLD, YELLOW_THRESHOLD } from '../../configs/settings';
 import { GREEN, ORANGE, RED, YELLOW } from '../../constants';
-import { percentage } from '../../helpers/utils';
+import { IndicatorThresholdItemPercentage } from '../../helpers/utils';
 
 /** Displays conditional formatting guide for Focus Investigation Response Adherence */
 const ResponseAdherence: React.ElementType = () => {
@@ -19,22 +19,22 @@ const ResponseAdherence: React.ElementType = () => {
               <tr style={{ background: colors.GREEN }}>
                 <td>{GREEN}</td>
                 <td>>=</td>
-                <td>{percentage(GREEN_THRESHOLD)}</td>
+                <td>{IndicatorThresholdItemPercentage(GREEN_THRESHOLD)}</td>
               </tr>
               <tr style={{ background: colors.ORANGE }}>
                 <td>{ORANGE}</td>
-                <td>{percentage(GREEN_THRESHOLD)}</td>
-                <td>{percentage(ORANGE_THRESHOLD)}</td>
+                <td>{IndicatorThresholdItemPercentage(GREEN_THRESHOLD)}</td>
+                <td>{IndicatorThresholdItemPercentage(ORANGE_THRESHOLD)}</td>
               </tr>
               <tr style={{ background: colors.RED }}>
                 <td>{RED}</td>
-                <td>{percentage(ORANGE_THRESHOLD)}</td>
-                <td>{percentage(YELLOW_THRESHOLD)}</td>
+                <td>{IndicatorThresholdItemPercentage(ORANGE_THRESHOLD)}</td>
+                <td>{IndicatorThresholdItemPercentage(YELLOW_THRESHOLD)}</td>
               </tr>
               <tr style={{ background: colors.YELLOW }}>
                 <td>{YELLOW}</td>
                 <td>>=</td>
-                <td>{percentage(YELLOW_THRESHOLD)}</td>
+                <td>{IndicatorThresholdItemPercentage(YELLOW_THRESHOLD)}</td>
               </tr>
             </tbody>
           </Table>

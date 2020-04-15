@@ -10,7 +10,8 @@ import {
   IndicatorThresholdsLookUp,
   indicatorThresholdsLookUpIRS,
 } from '../../../configs/settings';
-import { percentage, UpdateType } from '../../../helpers/utils';
+import { UpdateType } from '../../../helpers/utils';
+import { IndicatorThresholdItemPercentage } from '../../../helpers/utils';
 
 interface Props {
   indicatorRows: string;
@@ -53,7 +54,9 @@ export const generateRangeStrings = (indicatorItems: IndicatorThresholdItem[]) =
       // symbol shall be - otherwise if orEqual is not included the range symbol shall be -<
       rangesText.push({
         ...thresholdItem,
-        text: `${thresholdItem.orEquals ? '-' : '<'} ${percentage(thresholdItem.value)}`,
+        text: `${thresholdItem.orEquals ? '-' : '<'} ${IndicatorThresholdItemPercentage(
+          thresholdItem.value
+        )}`,
       });
       return;
     }
@@ -63,9 +66,11 @@ export const generateRangeStrings = (indicatorItems: IndicatorThresholdItem[]) =
      */
     rangesText.push({
       ...thresholdItem,
-      text: `${percentage(previousThreshold.value)} ${previousThreshold.orEquals ? '>' : ''}-${
-        thresholdItem.orEquals ? '' : '<'
-      } ${percentage(thresholdItem.value)}`,
+      text: `${IndicatorThresholdItemPercentage(previousThreshold.value)} ${
+        previousThreshold.orEquals ? '>' : ''
+      }-${thresholdItem.orEquals ? '' : '<'} ${IndicatorThresholdItemPercentage(
+        thresholdItem.value
+      )}`,
     });
   });
 
@@ -92,6 +97,24 @@ const IRSIndicatorLegend = (props: Props) => {
                     </tr>
                   );
                 })}
+                {indicatorItems
+                  .sort((a: IndicatorThresholdItem, b: IndicatorThresholdItem) =>
+                    a.value > b.value ? 1 : -1
+                  )
+                  .map((item, index) => {
+                    return (
+                      <tr key={index} style={{ background: item.color }}>
+                        <td>{item.name}</td>
+                        <td>
+                          {index === 0
+                            ? `< ${IndicatorThresholdItemPercentage(item.value)}`
+                            : `${IndicatorThresholdItemPercentage(
+                                indicatorItems[index - 1].value
+                              )} - ${IndicatorThresholdItemPercentage(item.value)}`}
+                        </td>
+                      </tr>
+                    );
+                  })}
               </tbody>
             </Table>
           </Col>
