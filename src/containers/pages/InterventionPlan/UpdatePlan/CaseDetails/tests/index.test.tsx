@@ -71,7 +71,7 @@ describe('src/containers/pages/interventionPlan/updateplan/caseDetials', () => {
 
     // rendered text
     expect(wrapper.find('Ripple').length).toEqual(0);
-    expect(wrapper.text()).toMatchInlineSnapshot(`null`);
+    expect(wrapper.text()).toMatchInlineSnapshot(`""`);
 
     // expect display error was called with correct message
     expect(displayErrorMock).toHaveBeenCalledWith(new Error(FAILED_TO_GET_EVENT_ID));

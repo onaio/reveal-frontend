@@ -20,9 +20,6 @@ const mapDispatchToProps = { logOutUser };
 
 /** Connected Header component
  */
-const ConnectedHeader = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Header);
+const ConnectedHeader = connect(mapStateToProps, mapDispatchToProps)(Header);
 
 export default ConnectedHeader;

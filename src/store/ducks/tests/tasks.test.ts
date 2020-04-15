@@ -84,9 +84,9 @@ describe('reducers/tasks', () => {
     expect(
       getStructuresByJurisdictionId(store.getState(), '450fc15b-5bd2-468a-927a-49cb10d3bcac')
     ).toEqual([fixtures.coloredTasks.task1, fixtures.coloredTasks.task2]);
-    expect(getTasksByStructureId(store.getState(), 'a19eeb63-45d0-4744-9a9d-76d0694103f6')).toEqual(
-      [fixtures.coloredTasks.task1]
-    );
+    expect(
+      getTasksByStructureId(store.getState(), 'a19eeb63-45d0-4744-9a9d-76d0694103f6')
+    ).toEqual([fixtures.coloredTasks.task1]);
     expect(
       getTasksByPlanAndJurisdiction(
         store.getState(),

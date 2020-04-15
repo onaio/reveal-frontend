@@ -237,16 +237,20 @@ describe('containers/FocusInvestigation/Jurisdiction', () => {
     ).toEqual('Routine');
 
     expect(wrapper.find('.current-plans TableHeader').length).toEqual(2);
-    expect(wrapper
-      .find('.current-plans TableHeader')
-      .first()
-      .props() as any).toEqual({
+    expect(
+      wrapper
+        .find('.current-plans TableHeader')
+        .first()
+        .props() as any
+    ).toEqual({
       plansArray: [fixtures.plan99],
     });
-    expect(wrapper
-      .find('.current-plans TableHeader')
-      .last()
-      .props() as any).toEqual({
+    expect(
+      wrapper
+        .find('.current-plans TableHeader')
+        .last()
+        .props() as any
+    ).toEqual({
       plansArray: [fixtures.plan102],
     });
     expect(toJson(wrapper.find('.current-plans LinkAsButton a').first())).toMatchSnapshot(
@@ -284,16 +288,20 @@ describe('containers/FocusInvestigation/Jurisdiction', () => {
     ).toEqual([extractPlan(fixtures.plan102 as Plan)]);
 
     expect(wrapper.find('.complete-plans TableHeader').length).toEqual(2);
-    expect(wrapper
-      .find('.complete-plans TableHeader')
-      .first()
-      .props() as any).toEqual({
+    expect(
+      wrapper
+        .find('.complete-plans TableHeader')
+        .first()
+        .props() as any
+    ).toEqual({
       plansArray: [fixtures.plan101],
     });
-    expect(wrapper
-      .find('.complete-plans TableHeader')
-      .last()
-      .props() as any).toEqual({
+    expect(
+      wrapper
+        .find('.complete-plans TableHeader')
+        .last()
+        .props() as any
+    ).toEqual({
       plansArray: [fixtures.plan103],
     });
     expect(toJson(wrapper.find('.complete-plans LinkAsButton a').first())).toMatchSnapshot(

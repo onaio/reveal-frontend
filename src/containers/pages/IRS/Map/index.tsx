@@ -144,9 +144,10 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
       }
 
       // get the jurisdiction
-      await service(SUPERSET_JURISDICTIONS_SLICE, fetchLocationParams).then(
-        (result: Jurisdiction[]) => fetchJurisdictionsAction(result)
-      );
+      await service(
+        SUPERSET_JURISDICTIONS_SLICE,
+        fetchLocationParams
+      ).then((result: Jurisdiction[]) => fetchJurisdictionsAction(result));
 
       let fetchStructureParams: SupersetFormData | null = null;
       if (jurisdictionId) {
@@ -156,9 +157,11 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
       }
 
       // get the structures
-      await service(SUPERSET_IRS_REPORTING_STRUCTURES_DATA_SLICE, fetchStructureParams).then(
-        (result: GenericStructure[]) =>
-          fetchStructures(SUPERSET_IRS_REPORTING_STRUCTURES_DATA_SLICE, result)
+      await service(
+        SUPERSET_IRS_REPORTING_STRUCTURES_DATA_SLICE,
+        fetchStructureParams
+      ).then((result: GenericStructure[]) =>
+        fetchStructures(SUPERSET_IRS_REPORTING_STRUCTURES_DATA_SLICE, result)
       );
 
       if (focusAreaSlice) {
@@ -183,9 +186,10 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
       }
 
       // get the plan
-      await service(SUPERSET_IRS_REPORTING_PLANS_SLICE, fetchPlansParams).then(
-        (result: IRSPlan[]) => fetchPlans(result)
-      );
+      await service(
+        SUPERSET_IRS_REPORTING_PLANS_SLICE,
+        fetchPlansParams
+      ).then((result: IRSPlan[]) => fetchPlans(result));
     } catch (e) {
       displayError(e);
     } finally {
@@ -364,9 +368,6 @@ const mapDispatchToProps = {
 };
 
 /** Connected IRSReportingMap component */
-const ConnectedIRSReportingMap = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(IRSReportingMap);
+const ConnectedIRSReportingMap = connect(mapStateToProps, mapDispatchToProps)(IRSReportingMap);
 
 export default ConnectedIRSReportingMap;

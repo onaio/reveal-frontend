@@ -201,7 +201,10 @@ it('calls selectors with the correct arguments', async () => {
         undefined: [],
       },
     },
-    router: { action: 'POP', location: { hash: '', pathname: '/', search: '', state: undefined } },
+    router: {
+      action: 'POP',
+      location: { hash: '', pathname: '/', search: '', state: undefined, query: {} },
+    },
     session: {
       authenticated: false,
       extraData: {},

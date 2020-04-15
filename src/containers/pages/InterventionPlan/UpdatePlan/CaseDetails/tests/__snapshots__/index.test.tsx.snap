@@ -2,4 +2,4 @@
 
 exports[`src/containers/pages/interventionPlan/updateplan/caseDetials renders correctly: Case Details 1`] = `"Case Number: 191316000004593200125140915723Case DetailsCase InformationAge 13Case Class. ADate of Diagnosis January 25, 2020 12:00 AMHouse Number Investigation Date January 24, 2020 12:00 AMCase Notif. Date January 25, 2020 12:00 AMPatient Name ชาวาดีSpecies VSurname ดารากมล Foci of ResidenceClassification A1Identifier 88684506-605d-41db-b904-efbaf9795d2aName แม่หิต (6305010804)"`;
 
-exports[`src/containers/pages/interventionPlan/updateplan/caseDetials works well with store: Case Details 1`] = `"Case Number: 191316000004593200125140915723"`;
+exports[`src/containers/pages/interventionPlan/updateplan/caseDetials works well with store: Case Details 1`] = `"Case Number: 191316000004593200125140915723Case DetailsCase InformationAge 13Case Class. ADate of Diagnosis January 25, 2020 12:00 AMHouse Number Investigation Date January 24, 2020 12:00 AMCase Notif. Date January 25, 2020 12:00 AMPatient Name ชาวาดีSpecies VSurname ดารากมล Foci of ResidenceClassification A1Identifier 88684506-605d-41db-b904-efbaf9795d2aName แม่หิต (6305010804)"`;

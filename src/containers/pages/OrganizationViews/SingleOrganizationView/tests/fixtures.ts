@@ -48,7 +48,10 @@ export const selectorState = {
     },
     practitionersById: {},
   },
-  router: { action: 'POP', location: { hash: '', pathname: '/', search: '', state: undefined } },
+  router: {
+    action: 'POP',
+    location: { hash: '', pathname: '/', search: '', state: undefined, query: {} },
+  },
   session: {
     authenticated: false,
     extraData: {},
