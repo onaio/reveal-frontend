@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
+import { SearchForm } from '../../../../components/forms/Search';
 import LinkAsButton from '../../../../components/LinkAsButton';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
@@ -42,6 +43,8 @@ interface PlanListProps {
 const PlanDefinitionList = (props: PlanListProps) => {
   const { fetchPlans, plans, service } = props;
   const [loading, setLoading] = useState<boolean>(true);
+  const [searchedPlans, setSearchedPlans] = useState<PlanDefinition[]>([]);
+  const [searchQuery, setSearchQuery] = useState('');
 
   const apiService = new service(OPENSRP_PLANS);
 
@@ -77,12 +80,22 @@ const PlanDefinitionList = (props: PlanListProps) => {
     loadData().catch(err => displayError(err));
   }, []);
 
-  if (loading === true) {
-    return <Loading />;
-  }
+  useEffect(() => {
+    if (plans) {
+      setSearchedPlans(
+        plans.filter((plan: PlanDefinition) =>
+          searchQuery ? plan.name.toLowerCase().includes(searchQuery.toLowerCase()) : true
+        )
+      );
+    }
+  }, [searchQuery]);
 
-  const listViewProps = {
-    data: plans.map(planObj => {
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(event.target.value);
+  };
+
+  const listViewData = (data: PlanDefinition[]) =>
+    data.map(planObj => {
       const typeUseContext = planObj.useContext.filter(e => e.code === 'interventionType');
 
       return [
@@ -93,7 +106,14 @@ const PlanDefinitionList = (props: PlanListProps) => {
         planStatusDisplay[planObj.status] || planObj.status,
         planObj.date,
       ];
-    }),
+    });
+
+  if (loading === true) {
+    return <Loading />;
+  }
+
+  const listViewProps = {
+    data: listViewData(searchQuery ? searchedPlans : plans),
     headerItems: [TITLE, INTERVENTION_TYPE_LABEL, STATUS_HEADER, LAST_MODIFIED],
     tableClass: 'table table-bordered plans-list',
   };
@@ -115,6 +135,8 @@ const PlanDefinitionList = (props: PlanListProps) => {
           />
         </Col>
       </Row>
+      <hr />
+      <SearchForm handleSearchChange={handleSearchChange} />
       <Row>
         <Col>
           <ListView {...listViewProps} />

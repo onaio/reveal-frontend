@@ -44,8 +44,7 @@ interface PlanListProps {
 const IRSPlansList = (props: PlanListProps) => {
   const { fetchPlans, plans, service } = props;
   const [loading, setLoading] = useState<boolean>(false);
-  const defaultSearchedPlans: IRSPlan[] = [];
-  const [searchedPlans, setSearchedPlans] = useState(defaultSearchedPlans);
+  const [searchedPlans, setSearchedPlans] = useState<IRSPlan[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
 
   const pageTitle: string = IRS_PLANS;

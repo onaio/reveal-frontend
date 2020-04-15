@@ -1036,6 +1036,43 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
           </Col>
         </div>
       </Row>
+      <hr />
+      <SearchForm
+        handleSearchChange={[Function]}
+      >
+        <Form
+          inline={true}
+          tag="form"
+        >
+          <form
+            className="form-inline"
+          >
+            <FormGroup
+              className="mb-2 mr-sm-2 mb-sm-0"
+              tag="div"
+            >
+              <div
+                className="mb-2 mr-sm-2 mb-sm-0 form-group"
+              >
+                <Input
+                  name="search"
+                  onChange={[Function]}
+                  placeholder="Search"
+                  type="text"
+                >
+                  <input
+                    className="form-control"
+                    name="search"
+                    onChange={[Function]}
+                    placeholder="Search"
+                    type="text"
+                  />
+                </Input>
+              </div>
+            </FormGroup>
+          </form>
+        </Form>
+      </SearchForm>
       <Row
         tag="div"
       >
