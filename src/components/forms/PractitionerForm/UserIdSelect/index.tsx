@@ -8,7 +8,6 @@ import { ValueType } from 'react-select/src/types';
 import { OPENMRS_USERS_REQUEST_PAGE_SIZE } from '../../../../configs/env';
 import { OPENSRP_PRACTITIONER_ENDPOINT, OPENSRP_USERS_ENDPOINT } from '../../../../constants';
 import { displayError } from '../../../../helpers/errors';
-import { abortFetch } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
 import { Practitioner } from '../../../../store/ducks/opensrp/practitioners';
 
@@ -55,7 +54,6 @@ export const UserIdSelect: React.FC<Props> = props => {
   const { onChangeHandler } = props;
   const [openMRSUsers, setOpenMRSUsers] = useState<OpenMRSUser[]>([]);
   const [selectIsLoading, setSelectIsLoading] = useState<boolean>(true);
-  const controller = new AbortController();
 
   /** calls the prop.onChange with the selected option as argument
    * @param {ValueType<Option>} option - the value in the react-select
@@ -117,7 +115,6 @@ export const UserIdSelect: React.FC<Props> = props => {
     } catch (err) {
       displayError(err);
     }
-    return () => abortFetch({ controller });
   }, []);
 
   const options = React.useMemo(() => {

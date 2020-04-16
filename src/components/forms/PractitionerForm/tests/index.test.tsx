@@ -62,7 +62,6 @@ describe('src/components/PractitionerForm', () => {
             'content-type': 'application/json;charset=UTF-8',
           },
           method: 'GET',
-          signal,
         },
       ],
       [
@@ -74,7 +73,6 @@ describe('src/components/PractitionerForm', () => {
             'content-type': 'application/json;charset=UTF-8',
           },
           method: 'GET',
-          signal,
         },
       ],
     ]);
@@ -149,7 +147,6 @@ describe('src/components/PractitionerForm', () => {
           'content-type': 'application/json;charset=UTF-8',
         },
         method: 'POST',
-        signal,
       },
     ]);
   });
@@ -191,7 +188,6 @@ describe('src/components/PractitionerForm', () => {
             'content-type': 'application/json;charset=UTF-8',
           },
           method: 'PUT',
-          signal,
         },
       ],
     ]);

@@ -103,7 +103,7 @@ const AssignPractitioner = (props: PropsTypes) => {
   useConfirmOnBrowserUnload(selectedOptions.length > 0);
   useEffect(() => {
     const organizationId = props.match.params.id;
-    loadOrganization(organizationId, serviceClass, fetchOrganizationsCreator, signal).catch(err =>
+    loadOrganization(organizationId, serviceClass, fetchOrganizationsCreator).catch(err =>
       displayError(err)
     );
     loadOrgPractitioners(

@@ -762,7 +762,6 @@ describe('containers/forms/PlanForm - Submission', () => {
           'content-type': 'application/json;charset=UTF-8',
         },
         method: 'POST',
-        signal,
       },
     ]);
   });
@@ -803,7 +802,6 @@ describe('containers/forms/PlanForm - Submission', () => {
           'content-type': 'application/json;charset=UTF-8',
         },
         method: 'PUT',
-        signal,
       },
     ]);
   });
