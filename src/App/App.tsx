@@ -17,12 +17,12 @@ import { Route, Switch } from 'react-router';
 import { Redirect } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Col, Container, Row } from 'reactstrap';
+import Logout from '../components/Logout';
 import CustomConnectedAPICallBack from '../components/page/CustomCallback';
 import Loading from '../components/page/Loading';
 import {
   BACKEND_ACTIVE,
   DISABLE_LOGIN_PROTECTION,
-  EXPRESS_OAUTH_LOGOUT_URL,
   GA_CODE,
   GA_ENV,
   OPENSRP_LOGOUT_URL,
@@ -411,7 +411,10 @@ const App = () => {
                 component={() => {
                   if (BACKEND_ACTIVE) {
                     store.dispatch(logOutUser());
-                    window.location.href = EXPRESS_OAUTH_LOGOUT_URL;
+                    return (
+                      <Logout logoutURL="https://reveal-stage.smartregister.org/opensrp/logout.do" />
+                    );
+                    // window.location.href = EXPRESS_OAUTH_LOGOUT_URL;
                     return null;
                   }
                   const state = getOauthProviderState(store.getState());
