@@ -52,11 +52,12 @@ export function getFilterParams(obj: URLParams | {}): string {
  * @param {AbortSignal} signal - used to communicate with/abort a DOM request.
  * @returns the payload
  */
-export function getPayload(method: HTTPMethod, signal: AbortSignal) {
+export function getPayload(method: HTTPMethod, signal: AbortSignal | null) {
+  const applySignal = signal ? { signal } : {};
   return {
     headers: getDefaultHeaders() as HeadersInit,
     method,
-    signal,
+    ...applySignal,
   };
 }
 
@@ -91,11 +92,11 @@ export class OpenSRPService {
   public baseURL: string;
   public endpoint: string;
   public generalURL: string;
-  public signal: AbortSignal;
+  public signal: AbortSignal | null;
 
   constructor(
     endpoint: string,
-    signal: AbortSignal = new AbortController().signal,
+    signal: AbortSignal | null = null,
     baseURL: string = OPENSRP_API_BASE_URL
   ) {
     this.endpoint = endpoint;

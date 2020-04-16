@@ -53,7 +53,7 @@ describe('services/OpenSRP', () => {
 
   it('OpenSRPService list method works', async () => {
     fetch.mockResponseOnce(JSON.stringify(plansListResponse));
-    const planService = new OpenSRPService('plans', signal);
+    const planService = new OpenSRPService('plans');
     const result = await planService.list();
     expect(result).toEqual(plansListResponse);
     expect(fetch.mock.calls).toEqual([
@@ -66,7 +66,6 @@ describe('services/OpenSRP', () => {
             'content-type': 'application/json;charset=UTF-8',
           },
           method: 'GET',
-          signal,
         },
       ],
     ]);
@@ -97,7 +96,7 @@ describe('services/OpenSRP', () => {
 
   it('OpenSRPService delete method works', async () => {
     fetch.mockResponseOnce(JSON.stringify({}));
-    const service = new OpenSRPService('practitioners');
+    const service = new OpenSRPService('practitioners', signal);
     const result = await service.delete({ practitioner: 'someone' });
     expect(result as EmptyObject).toEqual({});
     expect(fetch.mock.calls).toEqual([
@@ -134,7 +133,7 @@ describe('services/OpenSRP', () => {
 
   it('OpenSRPService read method works', async () => {
     fetch.mockResponseOnce(JSON.stringify(plansListResponse[0]));
-    const planService = new OpenSRPService('plans');
+    const planService = new OpenSRPService('plans', signal);
     const result = await planService.read('0e85c238-39c1-4cea-a926-3d89f0c98427');
     expect(result).toEqual(plansListResponse[0]);
     expect(fetch.mock.calls).toEqual([
@@ -199,7 +198,6 @@ describe('services/OpenSRP', () => {
             'content-type': 'application/json;charset=UTF-8',
           },
           method: 'POST',
-          signal,
         },
       ],
     ]);
@@ -248,7 +246,6 @@ describe('services/OpenSRP', () => {
             'content-type': 'application/json;charset=UTF-8',
           },
           method: 'PUT',
-          signal,
         },
       ],
     ]);
