@@ -1,9 +1,10 @@
 /** Assignments redux module */
+import { Dictionary } from '@onaio/utils';
 import { get } from 'lodash';
 import { Store } from 'redux';
 import { AnyAction } from 'redux';
 import SeamlessImmutable from 'seamless-immutable';
-import { FlexObject, setDefaultValues } from '../../../../helpers/utils';
+import { setDefaultValues } from '../../../../helpers/utils';
 
 /** The reducer name */
 export const reducerName = 'assignments';
@@ -119,7 +120,7 @@ export const fetchAssignments = (assignmentsList: Assignment[]): FetchAssignment
   const assignmentsByPlanIdProxy = new Proxy(
     assignmentsByPlanId,
     defaultArrayAssignmentHandler
-  ) as FlexObject;
+  ) as Dictionary;
   for (const assignment of assignmentsList) {
     assignmentsByPlanId = assignmentsByPlanIdProxy[assignment.plan];
     assignmentsByPlanId[assignment.plan].push(assignment);
