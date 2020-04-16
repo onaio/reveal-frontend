@@ -1,4 +1,5 @@
 import ElementMap from '@onaio/element-map';
+import { Dictionary } from '@onaio/utils';
 import { keys } from 'lodash';
 import * as React from 'react';
 import { CellInfo } from 'react-table';
@@ -14,7 +15,7 @@ import {
   ZERO,
 } from '../configs/settings';
 import { BLOOD_SCREENING_CODE, CASE_CONFIRMATION_CODE } from '../constants';
-import { FlexObject, percentage, roundToPrecision } from '../helpers/utils';
+import { IndicatorThresholdItemPercentage, roundToPrecision } from '../helpers/utils';
 import { Goal } from '../store/ducks/goals';
 
 /** Enum describing operators */
@@ -63,7 +64,7 @@ export function goalRatioAchieved(goal: Goal): number {
 export interface GoalReport {
   achievedValue: number /** the achieved value */;
   percentAchieved: number /** progress towards goal achievement */;
-  prettyPercentAchieved: string /** pretty string of percentAchieved */;
+  prettyPercentAchieved: string | null /** pretty string of percentAchieved */;
   targetValue: number /** the target value */;
   goalUnit: string /** goal_unit */;
 }
@@ -94,7 +95,7 @@ export function getGoalReport(goal: Goal): GoalReport {
     achievedValue: goal.completed_task_count,
     goalUnit,
     percentAchieved,
-    prettyPercentAchieved: percentage(percentAchieved),
+    prettyPercentAchieved: IndicatorThresholdItemPercentage(percentAchieved),
     targetValue,
   };
 }
@@ -117,7 +118,7 @@ export function getFIAdherenceIndicator(cell: CellInfo) {
             : YELLOW,
       }}
     >
-      {percentage(cell.value)}
+      {IndicatorThresholdItemPercentage(cell.value)}
     </div>
   );
 }
@@ -148,7 +149,7 @@ export function get137AdherenceIndicator(cell: CellInfo) {
 }
 
 /** Renders a row of Focus Investigation classifications */
-export function renderClassificationRow(rowObject: FlexObject) {
+export function renderClassificationRow(rowObject: Dictionary) {
   return (
     <tr key={rowObject.code} className="definitions">
       <ElementMap items={[rowObject.code, rowObject.name, rowObject.description]} HTMLTag="td" />
@@ -206,7 +207,7 @@ export function getThresholdAdherenceIndicator(cell: CellInfo, configId: string)
 
   return (
     <div className="irs-report-indicator-container" style={{ backgroundColor: cellColor }}>
-      {isNumber ? percentage(cell.value) : 'NaN'}
+      {isNumber ? IndicatorThresholdItemPercentage(cell.value) : 'NaN'}
     </div>
   );
 }
@@ -227,7 +228,7 @@ export function getIRSThresholdAdherenceIndicator(
 
   return (
     <div className="irs-report-indicator-container" style={{ backgroundColor: cellColor }}>
-      {isNumber ? percentage(cell.value) : 'NaN'}
+      {isNumber ? IndicatorThresholdItemPercentage(cell.value) : 'NaN'}
     </div>
   );
 }

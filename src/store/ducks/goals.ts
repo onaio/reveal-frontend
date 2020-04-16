@@ -1,8 +1,8 @@
+import { Dictionary } from '@onaio/utils';
 import { get, keyBy, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
 import SeamlessImmutable from 'seamless-immutable';
 import { PlanActionCodesType } from '../../components/forms/PlanForm/types';
-import { FlexObject } from '../../helpers/utils';
 
 /** the reducer name */
 export const reducerName = 'goals';
@@ -23,7 +23,7 @@ export interface Goal {
   jurisdiction_id: string;
   measure: string;
   plan_id: string;
-  task_business_status_map: FlexObject;
+  task_business_status_map: Dictionary;
   task_count: number;
 }
 // actions

@@ -1,4 +1,5 @@
 import { RouteParams } from '@onaio/gatekeeper/dist/types';
+import { Dictionary } from '@onaio/utils';
 import * as React from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
@@ -16,7 +17,6 @@ import {
   PLAN_STATUS_UPDATE_ERROR,
 } from '../../../../../configs/lang';
 import { FI_SINGLE_MAP_URL, OPENSRP_PLANS, PLAN_LIST_URL } from '../../../../../constants';
-import { FlexObject } from '../../../../../helpers/utils';
 import { growl } from '../../../../../helpers/utils';
 import { OpenSRPService } from '../../../../../services/opensrp';
 import {
@@ -44,7 +44,7 @@ export const defaultPlanCompletionProps: PlanCompletionProps = {
 
 export class PlanCompletion extends React.Component<
   RouteComponentProps<RouteParams> & PlanCompletionProps,
-  FlexObject
+  Dictionary
 > {
   public static defaultProps = defaultPlanCompletionProps;
   constructor(props: RouteComponentProps<RouteParams> & PlanCompletionProps) {

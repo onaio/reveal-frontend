@@ -1,3 +1,4 @@
+import { Dictionary } from '@onaio/utils';
 import {
   Feature,
   LineString,
@@ -11,7 +12,6 @@ import { GisidaMap } from 'gisida';
 import { LngLat, Map } from 'mapbox-gl';
 import { MAP_ID } from '../../constants';
 import { EventData } from '../mapbox';
-import { FlexObject } from '../utils';
 import './handlers.css';
 
 /** declare globals interface */
@@ -30,7 +30,7 @@ declare global {
  */
 export interface FeatureWithLayer
   extends Feature<Point | MultiPoint | LineString | MultiLineString | Polygon | MultiPolygon> {
-  layer: FlexObject;
+  layer: Dictionary;
 }
 
 export type PopHandler = (event: EventData) => void;

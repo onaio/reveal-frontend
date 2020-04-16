@@ -1,9 +1,9 @@
 import GeojsonExtent from '@mapbox/geojson-extent';
+import { Dictionary } from '@onaio/utils';
 import { BLACK, GREY, TASK_GREEN, TASK_ORANGE, TASK_RED, TASK_YELLOW } from '../../../../colors';
 import { GisidaProps } from '../../../../components/GisidaWrapper';
 import { circleLayerConfig, fillLayerConfig, lineLayerConfig } from '../../../../configs/settings';
 import { MAIN_PLAN, STRUCTURE_LAYER } from '../../../../constants';
-import { FlexObject } from '../../../../helpers/utils';
 import { GenericJurisdiction } from '../../../../store/ducks/generic/jurisdictions';
 import { StructureFeatureCollection } from '../../../../store/ducks/generic/structures';
 import { Jurisdiction } from '../../../../store/ducks/jurisdictions';
@@ -107,9 +107,9 @@ export const structuresLayerBuilder = (
   structures: StructureFeatureCollection,
   indicatorStops: string[][] = defaultIndicatorStop
 ) => {
-  const structuresLayers: FlexObject[] = [];
+  const structuresLayers: Dictionary[] = [];
 
-  const structuresPopup: FlexObject = {
+  const structuresPopup: Dictionary = {
     body: `<div>
           <p class="heading">{{structure_type}}</p>
           <p>Status: {{business_status}}</p>
@@ -206,7 +206,7 @@ export const getGisidaWrapperProps = (
   if (!jurisdiction.geojson) {
     return null;
   }
-  const layers: FlexObject[] = [];
+  const layers: Dictionary[] = [];
 
   // define line layer for Jurisdiction outline
   const jurisdictionLineLayer = {
@@ -224,7 +224,7 @@ export const getGisidaWrapperProps = (
   layers.push(jurisdictionLineLayer);
 
   // Define structures layers
-  let structuresLayers: FlexObject[] = [];
+  let structuresLayers: Dictionary[] = [];
   if (structures) {
     structuresLayers = structuresLayerBuilder(structures, indicatorStops);
   }
@@ -285,7 +285,7 @@ export const getJurisdictionBreadcrumbs = (
 };
 
 /** Get indicator rows */
-export const getIndicatorRows = (defaultRows: IndicatorRows, focusArea: FlexObject) => {
+export const getIndicatorRows = (defaultRows: IndicatorRows, focusArea: Dictionary) => {
   return defaultRows.map((row: IndicatorRowItem) => {
     const value = focusArea ? (focusArea as any)[row.value] || 0 : 0;
     return {

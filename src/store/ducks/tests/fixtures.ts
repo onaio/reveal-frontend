@@ -1487,3 +1487,5 @@ export const sortedPlansArray = [
     plan_version: '1',
   },
 ];
+
+export const Item = 0.6;

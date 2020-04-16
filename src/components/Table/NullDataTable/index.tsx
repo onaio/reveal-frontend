@@ -1,12 +1,12 @@
 import DrillDownTable from '@onaio/drill-down-table';
+import { Dictionary } from '@onaio/utils';
 import * as React from 'react';
 import { Column } from 'react-table';
 import { NO_INVESTIGATIONS_FOUND } from '../../../configs/lang';
-import { FlexObject } from '../../../helpers/utils';
 
 /** Interface to describe props for TableProps */
 export interface TableProps {
-  data: FlexObject[];
+  data: Dictionary[];
   columns: Column[];
   state?: any;
   debug?: boolean;

@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { getOnadataUserInfo, getOpenSRPUserInfo } from '@onaio/gatekeeper';
 import { SessionState } from '@onaio/session-reducer';
-import { Dictionary } from '@onaio/utils';
+import { Dictionary, percentage } from '@onaio/utils';
 import { Color } from 'csstype';
 import { GisidaMap } from 'gisida';
 import { findKey, uniq } from 'lodash';
@@ -59,9 +59,6 @@ import { displayError } from './errors';
 import { colorMaps, ColorMapsTypes } from './structureColorMaps';
 
 /** Interface for an object that is allowed to have any property */
-export interface FlexObject<T = any> {
-  [key: string]: T;
-}
 
 /** Route params interface */
 export interface RouteParams {
@@ -81,13 +78,8 @@ export interface Geometry {
 export interface GeoJSON {
   geometry: Geometry | null;
   id: string;
-  properties: FlexObject;
+  properties: Dictionary;
   type: string;
-}
-
-/** Returns a number as a decimal e.g. 0.18 becomes 18% */
-export function percentage(num: number, decimalPoints: number = 0) {
-  return `${(num * 100).toFixed(decimalPoints)}%`;
 }
 
 /** Gets react table columns from the location hierarchy in configs */
@@ -169,17 +161,17 @@ export interface SiteConfig {
 }
 
 /** Creates a Gisida site configuration object
- * @param {FlexObject} options - map options
+ * @param {Dictionary} options - map options
  * @param {string} GISIDA_MAPBOX_TOKEN - mapbox token
  * @param {string} GISIDA_ONADATA_API_TOKEN - Onadata API token
  * @param {string} LayerStore - map layers
  * @return {SiteConfig} - Gisida site configuration
  */
 export const ConfigStore = (
-  options: FlexObject,
+  options: Dictionary,
   GISIDA_MAPBOX_TOKEN: string,
   GISIDA_ONADATA_API_TOKEN: string,
-  LayerStore: FlexObject
+  LayerStore: Dictionary
 ) => {
   // Define basic config properties
   const { accessToken, apiAccessToken, appName, boxZoom, mapConfig: mbConfig, layers } = options;
@@ -482,7 +474,7 @@ export function wrapFeatureCollection<T>(objFeatureCollection: T[]): FeatureColl
     type: FEATURE_COLLECTION,
   };
 }
-export function toggleLayer(allLayers: FlexObject, currentGoal: string, store: any, Actions: any) {
+export function toggleLayer(allLayers: Dictionary, currentGoal: string, store: any, Actions: any) {
   let layer;
   let eachLayer: string;
   for (eachLayer of Object.keys(allLayers)) {
@@ -859,4 +851,15 @@ export const isPlanDefinitionOfType = (
       (f: UseContext) => f.code === 'interventionType' && f.valueCodableConcept === interventionType
     ).length > 0
   );
+};
+/**
+ * If error exists return item and error message else return percentage value
+ * Research on Declaring number only within certain range e.g in decimalPoints case (0 - 100)
+ * @param number item
+ * @param number decimalPoints
+ */
+export const IndicatorThresholdItemPercentage = (item: number, decimalPoints?: number) => {
+  return percentage(item, decimalPoints).error === null
+    ? percentage(item, decimalPoints).value
+    : `${item}${percentage(item).error}`;
 };

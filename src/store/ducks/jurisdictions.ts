@@ -1,9 +1,10 @@
 import { Registry } from '@onaio/redux-reducer-registry';
+import { Dictionary } from '@onaio/utils';
 import { get, keyBy, keys, pickBy, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
 import { createSelector } from 'reselect';
 import SeamlessImmutable from 'seamless-immutable';
-import { FlexObject, GeoJSON, Geometry } from '../../helpers/utils';
+import { GeoJSON, Geometry } from '../../helpers/utils';
 import store from '../../store';
 
 export const reducerName = 'jurisdictions';
@@ -247,7 +248,7 @@ export function getAllJurisdictionsIdArray(
     return keys((state as any)[reducerName].allJurisdictionIds);
   }
   return keys(
-    pickBy((state as any)[reducerName].allJurisdictionIds, (j: FlexObject) =>
+    pickBy((state as any)[reducerName].allJurisdictionIds, (j: Dictionary) =>
       isLoaded ? j.isLoaded : !j.isLoaded
     )
   );

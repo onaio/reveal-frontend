@@ -14,6 +14,7 @@ import GeojsonExtent from '@mapbox/geojson-extent';
 import DrillDownTable, { DrillDownProps, DropDownCell } from '@onaio/drill-down-table';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 
+import { Dictionary } from '@onaio/utils';
 import {
   DATE_FORMAT,
   SUPERSET_JURISDICTIONS_DATA_SLICE,
@@ -63,7 +64,6 @@ import { displayError } from '../../../../../helpers/errors';
 import {
   extractPlanPayloadFromPlanRecord,
   extractPlanRecordResponseFromPlanPayload,
-  FlexObject,
   getFeatureByProperty,
   getGisidaMapById,
   preventDefault,
@@ -288,7 +288,7 @@ class IrsPlan extends React.Component<
 
     // GET FULL JURISDICTION HIERARCHY
     await supersetService(SUPERSET_JURISDICTIONS_DATA_SLICE, otherJurisdictionSupersetParams)
-      .then((jurisdictionResults: FlexObject[] = []) => {
+      .then((jurisdictionResults: Dictionary[] = []) => {
         const jurisdictionsArray: Jurisdiction[] = jurisdictionResults
           .map(j => {
             const { id, parent_id, name, geographic_level } = j;
@@ -1189,12 +1189,12 @@ class IrsPlan extends React.Component<
   /** utility for getting opacity stops based on selection
    * @param {string[]} selectedIds - Ids of all selected Juristictions
    * @param {Jurisdiction[]} jurisdictions - all Jurisdictions filtered by geographic level
-   * @param {FlexObject | undefined} tileset - the coorisponding tileset
+   * @param {Dictionary | undefined} tileset - the coorisponding tileset
    */
   private getJurisdictionSelectionStops(
     selectedIds: string[],
     jurisdictions: Jurisdiction[],
-    tileset: FlexObject | undefined
+    tileset: Dictionary | undefined
   ) {
     const { childrenByParentId } = this.state;
     const uniqueKeys: string[] = [];
@@ -1263,7 +1263,7 @@ class IrsPlan extends React.Component<
       return null;
     }
 
-    const ADMIN_LINE_LAYERS: FlexObject[] = [];
+    const ADMIN_LINE_LAYERS: Dictionary[] = [];
     const adminBorderWidths: number[] = [1.5, 1, 0.75, 0.5];
     for (let t = 0; t < tilesets.length; t += 1) {
       if (tilesets[t].jurisdictionType === JurisdictionLevels[0]) {
@@ -1287,7 +1287,7 @@ class IrsPlan extends React.Component<
     }
 
     const ADMIN_FILL_LAYER_IDS: string[] = [];
-    const ADMIN_FILL_LAYERS: FlexObject[] = [];
+    const ADMIN_FILL_LAYERS: Dictionary[] = [];
     const selectedJurisdictionsIds =
       newPlan && newPlan.plan_jurisdictions_ids
         ? [...newPlan.plan_jurisdictions_ids]
@@ -1340,7 +1340,7 @@ class IrsPlan extends React.Component<
     function getJurisdictionFillLayers(jurisdictions: Jurisdiction[], tiles: Tileset[]) {
       const filteredJurisdictionsById = keyBy(jurisdictions, j => j.jurisdiction_id);
       const jurisdictionIds = jurisdictions.map(j => j.jurisdiction_id);
-      const layers: FlexObject[] = [];
+      const layers: Dictionary[] = [];
       const geoGraphicLevels: number[] = [];
       const layerIds: string[] = [];
       const adminLayerIds: string[] = [];
