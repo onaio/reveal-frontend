@@ -1,7 +1,7 @@
+import { Dictionary } from '@onaio/utils';
 import { get } from 'lodash';
 import { AnyAction, Store } from 'redux';
 import SeamlessImmutable from 'seamless-immutable';
-import { FlexObject } from '../../../../helpers/utils';
 
 export const reducerName = 'Locations';
 
@@ -48,7 +48,7 @@ export type LocationsActionTypes = FetchLocationsAction | RemoveLocationsAction 
 
 /** interface to describe location state */
 export interface LocationsState {
-  locationsByPlanId: FlexObject<Location[]> | {};
+  locationsByPlanId: Dictionary<Location[]> | {};
 }
 
 /** immutable Location state */
