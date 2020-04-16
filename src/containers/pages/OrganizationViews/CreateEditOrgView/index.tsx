@@ -24,7 +24,7 @@ import {
   ORGANIZATIONS_LIST_URL,
 } from '../../../../constants';
 import { displayError } from '../../../../helpers/errors';
-import { abortFetch, RouteParams } from '../../../../helpers/utils';
+import { RouteParams } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
 import {
   fetchOrganizations,
@@ -53,8 +53,6 @@ export type CreateEditTeamViewTypes = Props & RouteComponentProps<RouteParams>;
 /** CreateEditTeamView component */
 const CreateEditOrgView = (props: CreateEditTeamViewTypes) => {
   const { organization, serviceClass, fetchOrganizationsCreator } = props;
-  const controller = new AbortController();
-  const signal = controller.signal;
 
   // use route to know if we are editing team or creating team
   const editing = !!props.match.params.id;
@@ -92,13 +90,10 @@ const CreateEditOrgView = (props: CreateEditTeamViewTypes) => {
     if (editing) {
       let organizationId = props.match.params.id;
       organizationId = organizationId ? organizationId : '';
-      loadOrganization(organizationId, serviceClass, fetchOrganizationsCreator, signal).catch(err =>
+      loadOrganization(organizationId, serviceClass, fetchOrganizationsCreator).catch(err =>
         displayError(err)
       );
     }
-    return () => {
-      abortFetch({ controller });
-    };
   }, []);
 
   return (

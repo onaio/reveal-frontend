@@ -21,7 +21,6 @@ import {
 import { PlanDefinition, planStatusDisplay } from '../../../../configs/settings';
 import { HOME_URL, OPENSRP_PLANS, PLAN_LIST_URL, PLAN_UPDATE_URL } from '../../../../constants';
 import { displayError } from '../../../../helpers/errors';
-import { abortFetch } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
 import planDefinitionReducer, {
   fetchPlanDefinitions,
@@ -42,10 +41,8 @@ interface PlanListProps {
 /** Simple component that loads the new plan form and allows you to create a new plan */
 const PlanDefinitionList = (props: PlanListProps) => {
   const { fetchPlans, plans, service } = props;
-  const controller = new AbortController();
-  const signal = controller.signal;
 
-  const apiService = new service(OPENSRP_PLANS, signal);
+  const apiService = new service(OPENSRP_PLANS);
 
   const pageTitle: string = PLANS;
 
@@ -74,7 +71,6 @@ const PlanDefinitionList = (props: PlanListProps) => {
 
   useEffect(() => {
     loadData().catch(err => displayError(err));
-    return () => abortFetch({ controller });
   }, []);
 
   if (plans.length < 1) {

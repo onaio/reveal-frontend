@@ -27,7 +27,7 @@ import {
   REPORT_IRS_PLAN_URL,
 } from '../../../../constants';
 import { displayError } from '../../../../helpers/errors';
-import { abortFetch, extractPlanRecordResponseFromPlanPayload } from '../../../../helpers/utils';
+import { extractPlanRecordResponseFromPlanPayload } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
 import IRSPlansReducer, {
   reducerName as IRSPlansReducerName,
@@ -57,10 +57,8 @@ interface PlanAssignmentsListProps {
 /** Simple component that loads plans and allows you to manage plan-jurisdiction-organization assignments */
 const IRSAssignmentPlansList = (props: PlanAssignmentsListProps) => {
   const { fetchPlans, plans, service } = props;
-  const controller = new AbortController();
-  const signal = controller.signal;
 
-  const OpenSrpPlanService = new service(OPENSRP_PLANS, signal);
+  const OpenSrpPlanService = new service(OPENSRP_PLANS);
 
   const pageTitle: string = `${ASSIGN_PLANS}`;
 
@@ -98,7 +96,6 @@ const IRSAssignmentPlansList = (props: PlanAssignmentsListProps) => {
 
   useEffect(() => {
     loadData().catch(error => displayError(error));
-    return () => abortFetch({ controller });
   }, []);
 
   if (plans.length < 1) {

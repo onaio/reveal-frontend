@@ -44,7 +44,7 @@ import {
 } from '../../../../constants';
 import { displayError } from '../../../../helpers/errors';
 import { useConfirmOnBrowserUnload } from '../../../../helpers/hooks';
-import { abortFetch, generateNameSpacedUUID, growl } from '../../../../helpers/utils';
+import { generateNameSpacedUUID, growl } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
 import organizationsReducer, {
   fetchOrganizations,
@@ -99,8 +99,6 @@ const AssignPractitioner = (props: PropsTypes) => {
     assignedPractitioners,
   } = props;
   const [selectedOptions, setSelectedOptions] = useState<OptionsType<SelectOption>>([]);
-  const controller = new AbortController();
-  const signal = controller.signal;
 
   useConfirmOnBrowserUnload(selectedOptions.length > 0);
   useEffect(() => {
@@ -112,12 +110,8 @@ const AssignPractitioner = (props: PropsTypes) => {
       organizationId,
       serviceClass,
       fetchPractitionerRolesCreator,
-      fetchPractitionersCreator,
-      signal
+      fetchPractitionersCreator
     ).catch(err => displayError(err));
-    return () => {
-      abortFetch({ controller });
-    };
   }, []);
 
   if (!organization) {
@@ -193,8 +187,7 @@ const AssignPractitioner = (props: PropsTypes) => {
           organization.identifier,
           serviceClass,
           fetchPractitionerRolesCreator,
-          fetchPractitionersCreator,
-          signal
+          fetchPractitionersCreator
         ).catch(err => displayError(err));
 
         growl(format(PRACTITIONERS_ASSIGNED_TO_ORG, jsonArrayPayload.length, organization.name), {

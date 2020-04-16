@@ -78,13 +78,8 @@ export const OrganizationSelect = (props: OrganizationSelectProps) => {
     value: selectOptions,
   } = props;
 
-  const controller = new AbortController();
-  const signal = controller.signal;
-
   useEffect(() => {
-    loadOrganizations(serviceClass, fetchOrganizationsAction, signal).catch(err =>
-      displayError(err)
-    );
+    loadOrganizations(serviceClass, fetchOrganizationsAction).catch(err => displayError(err));
   }, []);
 
   /** Get select options from OpenSRP as a promise */

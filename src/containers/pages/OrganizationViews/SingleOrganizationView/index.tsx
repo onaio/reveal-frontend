@@ -96,8 +96,6 @@ const SingleOrganizationView = (props: SingleOrgViewPropsType) => {
     fetchPractitionerRolesAction,
     fetchPractitionersAction,
   } = props;
-  const controller = new AbortController();
-  const signal = controller.signal;
 
   const orgId = props.match.params.id ? props.match.params.id : '';
 
@@ -107,15 +105,13 @@ const SingleOrganizationView = (props: SingleOrgViewPropsType) => {
    * @param {practitionerId} practitioner - the practitioner
    * @param {organizationId} org - the organization
    * @param {serviceClass} service - the openSRP service
-   * @param {AbortSignal} abortSignal - used to communicate with/abort a DOM request.
    */
   const unassignPractitioner = async (
     practitioner: Practitioner,
     org: Organization,
-    service: typeof serviceClass = OpenSRPService,
-    abortSignal: AbortSignal
+    service: typeof serviceClass = OpenSRPService
   ) => {
-    const serve = new service(OPENSRP_DEL_PRACTITIONER_ROLE_ENDPOINT, abortSignal);
+    const serve = new service(OPENSRP_DEL_PRACTITIONER_ROLE_ENDPOINT);
     const params = { organization: org.identifier, practitioner: practitioner.identifier };
     serve
       .delete(params)
@@ -131,23 +127,19 @@ const SingleOrganizationView = (props: SingleOrgViewPropsType) => {
           orgId,
           serviceClass,
           fetchPractitionerRolesAction,
-          fetchPractitionersAction,
-          abortSignal
+          fetchPractitionersAction
         ).catch(err => displayError(err));
       })
       .catch((_: Error) => growl(REMOVING_PRACTITIONER_FAILED, { type: toast.TYPE.ERROR }));
   };
 
   useEffect(() => {
-    loadOrganization(orgId, serviceClass, fetchOrganizationsAction, signal).catch(err =>
-      displayError(err)
-    );
+    loadOrganization(orgId, serviceClass, fetchOrganizationsAction).catch(err => displayError(err));
     loadOrgPractitioners(
       orgId,
       serviceClass,
       fetchPractitionerRolesAction,
-      fetchPractitionersAction,
-      signal
+      fetchPractitionersAction
     ).catch(err => displayError(err));
   }, []);
 
@@ -187,7 +179,7 @@ const SingleOrganizationView = (props: SingleOrgViewPropsType) => {
           // tslint:disable-next-line: jsx-no-lambda
           onClick={e => {
             e.preventDefault();
-            unassignPractitioner(practitioner, organization, serviceClass, signal).catch(err =>
+            unassignPractitioner(practitioner, organization, serviceClass).catch(err =>
               displayError(err)
             );
           }}

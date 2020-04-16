@@ -2,6 +2,7 @@ import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import flushPromises from 'flush-promises';
 import React from 'react';
+import * as utils from '../../../../../helpers/utils';
 import { OpenSRPService } from '../../../../../services/opensrp';
 import UserIdSelect, { thereIsNextPage } from '../../UserIdSelect';
 import { openMRSUsers, practitioners, sortedUsers } from './fixtures';
@@ -40,6 +41,17 @@ describe('src/*/forms/userIdSelect', () => {
     wrapper.update();
     const inputSelect = wrapper.find('input');
     expect(toJson(inputSelect)).toMatchSnapshot('Selector Input');
+  });
+
+  it('renders correctly', async () => {
+    fetch.once(JSON.stringify(practitioners)).once(JSON.stringify(openMRSUsers));
+    const abortFetchSpy = jest.spyOn(utils, 'abortFetch');
+    const props = {
+      serviceClass: OpenSRPService,
+    };
+    const wrapper = mount(<UserIdSelect {...props} />);
+    wrapper.unmount();
+    expect(abortFetchSpy).toBeCalledTimes(1);
   });
 
   it('calls to fetch', async () => {

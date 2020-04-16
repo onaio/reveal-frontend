@@ -10,7 +10,7 @@ import Loading from '../../../../../components/page/Loading';
 import { PlanDefinition } from '../../../../../configs/settings';
 import { FI_SINGLE_URL } from '../../../../../constants';
 import { displayError } from '../../../../../helpers/errors';
-import { abortFetch, isPlanDefinitionOfType } from '../../../../../helpers/utils';
+import { isPlanDefinitionOfType } from '../../../../../helpers/utils';
 import { OpenSRPService } from '../../../../../services/opensrp';
 import locationsReducer, {
   fetchLocations,
@@ -45,16 +45,12 @@ const defaultProps: Props = {
  */
 const PlanLocationNames = (props: Props) => {
   const { serviceClass, fetchLocationsAction, plan } = props;
-  const controller = new AbortController();
 
   useEffect(() => {
     if (plan) {
       const planId = plan.identifier;
-      loadLocations(serviceClass, planId, fetchLocationsAction, controller.signal).catch(err =>
-        displayError(err)
-      );
+      loadLocations(serviceClass, planId, fetchLocationsAction).catch(err => displayError(err));
     }
-    return abortFetch({ controller });
   }, []);
 
   if (plan === null || props.locations.length < 1) {

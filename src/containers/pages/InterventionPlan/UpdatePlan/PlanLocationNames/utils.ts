@@ -14,11 +14,10 @@ import { fetchLocations, Location } from '../../../../../store/ducks/opensrp/loc
 export async function loadLocations(
   service: typeof OpenSRPService,
   planId: string,
-  actionCreator: typeof fetchLocations,
-  signal: AbortSignal = new AbortController().signal
+  actionCreator: typeof fetchLocations
 ) {
   // perform api call and dispatch result
-  const serve = new service(OPENSRP_LOCATIONS_BY_PLAN, signal);
+  const serve = new service(OPENSRP_LOCATIONS_BY_PLAN);
 
   serve
     .read(planId)

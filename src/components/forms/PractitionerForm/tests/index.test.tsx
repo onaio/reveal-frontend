@@ -11,9 +11,6 @@ import { openMRSUsers, practitioners } from '../UserIdSelect/tests/fixtures';
 const fetch = require('jest-fetch-mock');
 jest.mock('../../../../configs/env');
 
-const controller = new AbortController();
-const signal = controller.signal;
-
 describe('src/components/PractitionerForm', () => {
   beforeEach(() => {
     jest.resetAllMocks();

@@ -16,7 +16,6 @@ import { HOME, PLANS, UPDATE_PLAN } from '../../../../configs/lang';
 import { PlanDefinition } from '../../../../configs/settings';
 import { HOME_URL, NEW_PLAN_URL, OPENSRP_PLANS, PLAN_LIST_URL } from '../../../../constants';
 import { displayError } from '../../../../helpers/errors';
-import { abortFetch } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
 import { fetchEvents } from '../../../../store/ducks/opensrp/events';
 import planDefinitionReducer, {
@@ -47,13 +46,11 @@ export interface RouteParams {
 const UpdatePlan = (props: RouteComponentProps<RouteParams> & UpdatePlanProps) => {
   const { fetchPlan, plan, service } = props;
   const planIdentifier = props.match.params.id;
-  const controller = new AbortController();
-  const signal = controller.signal;
 
   if (!planIdentifier) {
     return null; /** we should make this into a better error page */
   }
-  const apiService = new service(OPENSRP_PLANS, signal);
+  const apiService = new service(OPENSRP_PLANS);
 
   /** async function to load the data */
   async function loadData() {
@@ -68,7 +65,6 @@ const UpdatePlan = (props: RouteComponentProps<RouteParams> & UpdatePlanProps) =
 
   useEffect(() => {
     loadData().catch(err => displayError(err));
-    return () => abortFetch({ controller });
   }, []);
 
   if (plan === null) {

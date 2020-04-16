@@ -35,7 +35,6 @@ import {
   SINGLE_ORGANIZATION_URL,
 } from '../../../../constants';
 import { displayError } from '../../../../helpers/errors';
-import { abortFetch } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
 import organizationsReducer, {
   fetchOrganizations,
@@ -67,8 +66,6 @@ export type OrgsListViewPropsType = OrganizationsListViewProps & RouteComponentP
 
 const OrganizationListView = (props: OrgsListViewPropsType) => {
   const { organizations, serviceClass, fetchOrganizationsAction } = props;
-  const controller = new AbortController();
-  const signal = controller.signal;
 
   // functions/methods
 
@@ -128,12 +125,7 @@ const OrganizationListView = (props: OrgsListViewPropsType) => {
   };
 
   useEffect(() => {
-    loadOrganizations(serviceClass, fetchOrganizationsAction, signal).catch(err =>
-      displayError(err)
-    );
-    return () => {
-      abortFetch({ controller });
-    };
+    loadOrganizations(serviceClass, fetchOrganizationsAction).catch(err => displayError(err));
   }, []);
 
   // break early if organizations are absent
