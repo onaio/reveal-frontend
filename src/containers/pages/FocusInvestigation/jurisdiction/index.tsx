@@ -1,6 +1,7 @@
 import DrillDownTable from '@onaio/drill-down-table';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset from '@onaio/superset-connector';
+import { Dictionary } from '@onaio/utils';
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { RouteComponentProps } from 'react-router';
@@ -51,12 +52,12 @@ import { displayError } from '../../../../helpers/errors';
 import {
   defaultTableProps,
   extractPlan,
-  FlexObject,
   getFilteredFIPlansURL,
   getLocationColumns,
   jsxColumns,
   removeNullJurisdictionPlans,
 } from '../../../../helpers/utils';
+
 import supersetFetch from '../../../../services/superset';
 import { Jurisdiction } from '../../../../store/ducks/jurisdictions';
 import plansReducer, {
@@ -216,9 +217,9 @@ export const FIJurisdiction = (props: FIJurisdictionProps & RouteComponentProps<
   const theObject = onePlan ? extractPlan(onePlan) : null;
 
   /** currentRoutineReactivePlans array that holds current routine and reactive tables  */
-  const currentRoutineReactivePlans: FlexObject[] = [];
+  const currentRoutineReactivePlans: Dictionary[] = [];
   /** completeRoutineReactivePlans array that holds complete routine and reactive tables  */
-  const completeRoutineReactivePlans: FlexObject[] = [];
+  const completeRoutineReactivePlans: Dictionary[] = [];
   /** Check if either currentReactivePlans or currentRoutinePlans length is greater than  zero
    * to build current section tables i.e (routine & reactive) with data
    */

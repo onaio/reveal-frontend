@@ -2,7 +2,7 @@
  * page to display case Details
  */
 import reducerRegistry from '@onaio/redux-reducer-registry';
-import { FlexObject } from 'gisida';
+import { Dictionary } from '@onaio/utils';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Card, CardBody, CardHeader, Collapse } from 'reactstrap';
@@ -93,7 +93,7 @@ export const CaseDetails: React.FC<CaseDetailsProps> = (props = defaultCaseDetai
   const translatedEvent = translateEvent(event);
   const { caseInformation, fociInformation, caseNumber, fociInformationTitle } = translatedEvent;
 
-  const mapObjectToTableRow = (obj: FlexObject) =>
+  const mapObjectToTableRow = (obj: Dictionary) =>
     Object.entries(obj).map(([property, value], index) => {
       return (
         <tr key={index}>

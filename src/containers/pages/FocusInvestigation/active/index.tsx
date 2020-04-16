@@ -1,9 +1,9 @@
 // this is the FocusInvestigation "active" page component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import DrillDownTable from '@onaio/drill-down-table';
-import { FlexObject } from '@onaio/drill-down-table/dist/types/helpers/utils';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset from '@onaio/superset-connector';
+import { Dictionary } from '@onaio/utils';
 import _ from 'lodash';
 import * as React from 'react';
 import { Helmet } from 'react-helmet';
@@ -222,7 +222,7 @@ class ActiveFocusInvestigation extends React.Component<
     ) {
       return <Loading />;
     }
-    const routineReactivePlans: FlexObject[] = [];
+    const routineReactivePlans: Dictionary[] = [];
     const pageTitle = jurisdictionName
       ? format(FI_IN_JURISDICTION, jurisdictionName)
       : CURRENT_FOCUS_INVESTIGATION;

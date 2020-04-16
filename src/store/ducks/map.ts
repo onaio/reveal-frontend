@@ -1,6 +1,6 @@
+import { Dictionary } from '@onaio/utils';
 import { ActionCreator, AnyAction, Store } from 'redux';
 import SeamlessImmutable from 'seamless-immutable';
-import { FlexObject } from '../../helpers/utils';
 
 export const reducerName = 'map';
 
@@ -19,7 +19,7 @@ export type MapActionTypes = UpdateAdminLevelAction | AnyAction;
 
 /** interface to describe user state */
 interface MapState {
-  Admins: FlexObject;
+  Admins: Dictionary;
   adminLevelIndex: number;
 }
 

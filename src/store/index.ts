@@ -2,12 +2,12 @@ import { connectReducer, getConnectedStore } from '@onaio/connected-reducer-regi
 import { gateKeeperReducer, gateKeeperReducerName } from '@onaio/gatekeeper';
 import reducerRegistry, { combine, Registry } from '@onaio/redux-reducer-registry';
 import session, { reducerName as sessionReducer } from '@onaio/session-reducer';
-import { FlexObject } from '../helpers/utils';
+import { Dictionary } from '@onaio/utils';
 
 /** declare globals interface */
 declare global {
   interface Window {
-    __PRELOADED_STATE__: FlexObject;
+    __PRELOADED_STATE__: Dictionary;
   }
 }
 

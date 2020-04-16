@@ -1,16 +1,10 @@
+import { UpdateType } from '@onaio/utils';
 import { Color } from 'csstype';
 import { get, keyBy, keys, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
 import SeamlessImmutable from 'seamless-immutable';
 import { MULTI_POLYGON, POLYGON } from '../../constants';
-import {
-  FeatureCollection,
-  GeoJSON,
-  getColor,
-  UpdateType,
-  wrapFeatureCollection,
-} from '../../helpers/utils';
-
+import { FeatureCollection, GeoJSON, getColor, wrapFeatureCollection } from '../../helpers/utils';
 /** the reducer name */
 export const reducerName = 'tasks';
 
