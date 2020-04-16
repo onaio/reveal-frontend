@@ -1,12 +1,11 @@
 import { Registry } from '@onaio/redux-reducer-registry';
-import { Dictionary } from '@onaio/utils';
 import intersect from 'fast_array_intersect';
 import { get, keyBy, keys, pickBy, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
 import { createSelector } from 'reselect';
 import SeamlessImmutable from 'seamless-immutable';
 import { FIReasonType, FIStatusType } from '../../components/forms/PlanForm/types';
-import { descendingOrderSort, removeNullJurisdictionPlans } from '../../helpers/utils';
+import { descendingOrderSort, FlexObject, removeNullJurisdictionPlans } from '../../helpers/utils';
 
 /** the reducer name */
 export const reducerName = 'plans';
@@ -105,13 +104,13 @@ export enum PlanEventType {
 export interface PlanEventPayload {
   baseEntityId: string;
   dateCreated: string;
-  details: Dictionary;
+  details: FlexObject;
   duration: number;
   entityType: InterventionType;
   eventDate: string;
   eventType: PlanEventType;
   formSubmissionId: string;
-  identifiers: Dictionary;
+  identifiers: FlexObject;
   obs: Array<{
     fieldType: 'concept';
     fieldDataType: string;
@@ -389,6 +388,7 @@ export interface PlanFilters {
   parentJurisdictionId?: string /** jurisdiction parent id */;
   reason?: FIReasonType /** plan FI reason */;
   statusList?: string[] /** array of plan statuses */;
+  title?: string /** plan title */;
 }
 
 /** plansArrayBaseSelector select an array of all plans
@@ -432,6 +432,13 @@ export const getStatusList = (_: Registry, props: PlanFilters) => props.statusLi
  * @param props - the plan filters object
  */
 export const getReason = (_: Registry, props: PlanFilters) => props.reason;
+
+/** getTitle
+ * Gets title from PlanFilters
+ * @param state - the redux store
+ * @param props - the plan filters object
+ */
+export const getTitle = (_: Registry, props: PlanFilters) => props.title;
 
 /** getPlansArrayByInterventionType
  * Gets an array of Plan objects filtered by interventionType
@@ -500,6 +507,19 @@ export const getPlansArrayByParentJurisdictionId = (planKey?: string) =>
             : true)
       )
   );
+
+/** getPlansArrayByTitle
+ * Gets an array of Plan objects filtered by plan title
+ * @param {Registry} state - the redux store
+ * @param {PlanFilters} props - the plan filters object
+ */
+export const getPlansArrayByTitle = (planKey?: string) =>
+  createSelector([plansArrayBaseSelector(planKey), getTitle], (plans, title) =>
+    title
+      ? plans.filter(plan => plan.plan_title.toLowerCase().includes(title.toLowerCase()))
+      : plans
+  );
+
 /** makePlansArraySelector
  * Returns a selector that gets an array of Plan objects filtered by one or all
  * of the following:
@@ -508,6 +528,7 @@ export const getPlansArrayByParentJurisdictionId = (planKey?: string) =>
  *    - plan status
  *    - FI plan reason
  *    - plan jurisdiction parent_id
+ *    - plan title
  *
  * These filter params are all optional and are supplied via the prop parameter.
  *
@@ -528,6 +549,7 @@ export const makePlansArraySelector = (planKey?: string, sortField?: string) => 
       getPlansArrayByStatus(planKey),
       getPlansArrayByReason(planKey),
       getPlansArrayByParentJurisdictionId(planKey),
+      getPlansArrayByTitle(planKey),
     ],
     (plans, plans2, plans3, plans4, plans5) =>
       sortField

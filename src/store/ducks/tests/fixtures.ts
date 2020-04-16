@@ -46,7 +46,7 @@ export const plan2: Plan = {
 };
 
 export const plan23: Plan = {
-  id: 'plan-id-3',
+  id: 'plan-id-23',
   jurisdiction_depth: 2,
   jurisdiction_id: '450fc15b-5bd2-468a-927a-49cb10d3bcac',
   jurisdiction_name: 'NVI_439',

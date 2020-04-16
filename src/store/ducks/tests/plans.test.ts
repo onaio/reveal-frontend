@@ -17,6 +17,7 @@ import reducer, {
   getPlansArrayByParentJurisdictionId,
   getPlansArrayByReason,
   getPlansArrayByStatus,
+  getPlansArrayByTitle,
   getPlansById,
   getPlansIdArray,
   InterventionType,
@@ -39,6 +40,7 @@ describe('reducers/plans', () => {
   beforeEach(() => {
     flushThunks = FlushThunks.createMiddleware();
     jest.resetAllMocks();
+    store.dispatch(removePlansAction);
   });
 
   it('should have initial state', () => {
@@ -56,11 +58,11 @@ describe('reducers/plans', () => {
   });
 
   it('should fetch Plans', () => {
-    store.dispatch(fetchPlans(fixtures.plans));
+    store.dispatch(fetchPlans([...fixtures.plans, fixtures.plan23]));
 
     const plansArraySelector = makePlansArraySelector();
 
-    const allPlans = keyBy(fixtures.plans, (plan: Plan) => plan.id);
+    const allPlans = keyBy([...fixtures.plans, fixtures.plan23], (plan: Plan) => plan.id);
     const fiPlans = pickBy(allPlans, (e: Plan) => e.plan_intervention_type === InterventionType.FI);
     const irsPlans = pickBy(
       allPlans,
@@ -87,6 +89,7 @@ describe('reducers/plans', () => {
     expect(getPlansIdArray(store.getState())).toEqual([
       'ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f',
       'plan-id-2',
+      'plan-id-23',
     ]);
     expect(getPlansIdArray(store.getState(), InterventionType.IRS)).toEqual(['plan-id-2']);
 
@@ -143,6 +146,12 @@ describe('reducers/plans', () => {
     const parentJurisdictionFilter = {
       parentJurisdictionId: '2977',
     };
+    const titleFilter = {
+      title: 'Random',
+    };
+    const titleUpperFilter = {
+      title: 'RANDOM',
+    };
 
     expect(getPlansArrayByInterventionType()(store.getState(), {})).toEqual(values(allPlans));
     expect(getPlansArrayByInterventionType()(store.getState(), fiFilter)).toEqual(values(fiPlans));
@@ -158,6 +167,8 @@ describe('reducers/plans', () => {
     expect(
       getPlansArrayByParentJurisdictionId()(store.getState(), parentJurisdictionFilter)
     ).toEqual(values(allPlans).filter(e => e.jurisdiction_path.includes('2977')));
+    expect(getPlansArrayByTitle()(store.getState(), titleFilter)).toEqual([fixtures.plan23]);
+    expect(getPlansArrayByTitle()(store.getState(), titleUpperFilter)).toEqual([fixtures.plan23]);
     expect(
       plansArraySelector(store.getState(), {
         ...fiFilter,
