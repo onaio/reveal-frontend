@@ -29,6 +29,7 @@ import { IRSTableColumns } from '../helpers';
 
 /* tslint:disable-next-line no-var-requires */
 const fetch = require('jest-fetch-mock');
+(global as any).mapboxgl = {};
 
 jest.mock('../../../../../configs/env', () => ({
   SUPERSET_IRS_REPORTING_FOCUS_AREAS_COLUMNS: 'namibia2019',
