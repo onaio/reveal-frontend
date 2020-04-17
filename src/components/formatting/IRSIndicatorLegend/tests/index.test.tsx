@@ -3,7 +3,11 @@ import toJson from 'enzyme-to-json';
 import { values } from 'lodash';
 import React from 'react';
 import IRSIndicatorLegend, { generateRangeStrings } from '..';
-import { indicatorThresholdsIRS, indicatorThresholdsLookUpIRS } from '../../../../configs/settings';
+import {
+  indicatorThresholdsIRS,
+  indicatorThresholdsIRSNamibia,
+  indicatorThresholdsLookUpIRS,
+} from '../../../../configs/settings';
 
 const zambiaIndicatorRows = 'zambia2019';
 const namibiaIndicatorRows = 'namibia2019';
@@ -22,10 +26,15 @@ describe('/components/formatting/IRSIndicatorLegend', () => {
   });
 
   it('renders correctly for namibia indicator colors', () => {
-    const wrapper = mount(<IRSIndicatorLegend indicatorRows={namibiaIndicatorRows} />);
+    const wrapper = mount(
+      <IRSIndicatorLegend
+        indicatorRows={namibiaIndicatorRows}
+        indicatorThresholds={indicatorThresholdsIRSNamibia}
+      />
+    );
     expect(wrapper.props()).toEqual({
       indicatorRows: namibiaIndicatorRows,
-      indicatorThresholds: indicatorThresholdsIRS,
+      indicatorThresholds: indicatorThresholdsIRSNamibia,
       indicatorThresholdsLookUp: indicatorThresholdsLookUpIRS,
     });
     expect(toJson(wrapper.find('.card-header'))).toMatchSnapshot('header');
