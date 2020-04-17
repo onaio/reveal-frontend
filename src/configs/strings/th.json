@@ -910,5 +910,41 @@
   "REACTIVE_INVESTIGATION": {
     "message": "งาน RACD",
     "description": "page title: for pages about case-triggered reactive investigations"
+  },
+  "LOGIN_PROMPT": {
+    "message": "กรุณาเข้าสู่ระบบด้วยหนึ่งในผู้ให้บริการต่อไปนี้",
+    "description": "login prompt for Oauth providers"
+  },
+  "SEARCH_ACTIVE_FOCUS_INVESTIGATIONS": {
+    "message": "ค้นหาแผนปฏิบัติงาน",
+    "description": "placeholder text for an input element being used to search Focus Investigation plans"
+  },
+  "PROGRESS": {
+    "message": "ความคืบหน้า",
+    "description": "development towards an improved or more advanced condition"
+  },
+  "SAVE_PRACTITIONER": {
+    "message": "บันทึก",
+    "description": "button message that when clicked sends data to opensrp"
+  },
+  "AGE": {
+    "message": "อายุ",
+    "description": "the length of time that a person has lived or a thing has existed"
+  },
+  "NO_OPTIONS": {
+    "message": "ไม่มีข้อมูล",
+    "description": "prompt shown when a search yields no results"
+  },
+  "DATE_COMPLETED": {
+    "message": "วันที่ดำเนินการเสร็จ",
+    "description": "column header: date a plan was completed"
+  },
+  "ADD_FOCUS_INVESTIGATION": {
+    "message": "สร้างแผนปฏิบัติงานใหม่",
+    "description": "button text: create a new focus investigation plan"
+  },
+  "FOCUS_CLASSIFICATION_LABEL": {
+    "message": "การตัดสินแหล่งแพร่เชื้อ",
+    "description": "form label: for the status of a focus investigation plan"
   }
 }
