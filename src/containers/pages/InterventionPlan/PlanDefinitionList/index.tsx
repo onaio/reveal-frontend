@@ -86,7 +86,7 @@ const PlanDefinitionList = (props: PlanListProps) => {
     if (plans && debouncedSearchQuery) {
       setSearchedPlans(
         plans.filter((plan: PlanDefinition) =>
-          plan.name.toLowerCase().includes(debouncedSearchQuery.toLowerCase())
+          plan.title.toLowerCase().includes(debouncedSearchQuery.toLowerCase())
         )
       );
     }
