@@ -7,6 +7,7 @@ import { createBrowserHistory } from 'history';
 import React from 'react';
 import { Router } from 'react-router';
 import { IRSReportingMap } from '../';
+import { SUPERSET_IRS_REPORTING_INDICATOR_STOPS } from '../../../../../configs/env';
 import { INTERVENTION_IRS_URL, MAP } from '../../../../../constants';
 import store from '../../../../../store';
 import GenericJurisdictionsReducer, {
@@ -26,14 +27,18 @@ import { plans } from '../../../../../store/ducks/generic/tests/fixtures';
 import jurisdictionReducer, {
   fetchJurisdictions,
   getJurisdictionById,
+  Jurisdiction,
   reducerName as jurisdictionReducerName,
 } from '../../../../../store/ducks/jurisdictions';
-import * as fixtures from '../../JurisdictionsReport/tests/fixtures';
+import * as fixtures from '../../JurisdictionsReport/fixtures';
+import { getGisidaWrapperProps, IRSIndicatorStops } from '../helpers';
 
 /* tslint:disable-next-line no-var-requires */
 const fetch = require('jest-fetch-mock');
 
 jest.mock('../../../../../configs/env', () => ({
+  GISIDA_MAPBOX_TOKEN: 'hunter2',
+  GISIDA_TIMEOUT: 3000,
   SUPERSET_IRS_REPORTING_INDICATOR_ROWS: 'namibia2019',
   SUPERSET_IRS_REPORTING_INDICATOR_STOPS: 'namibia2019',
   SUPERSET_IRS_REPORTING_JURISDICTIONS_DATA_SLICES: '11,12',
@@ -53,7 +58,7 @@ reducerRegistry.register(genericStructuresReducerName, genericStructuresReducer)
 const focusAreaData = superset.processData(fixtures.NamibiaFocusAreasJSON) || [];
 const jurisdictionData = superset.processData(fixtures.ZambiaAkros1JSON) || [];
 
-store.dispatch(fetchGenericJurisdictions('zm-focusAreas', focusAreaData));
+store.dispatch(fetchGenericJurisdictions('na-focusAreas', focusAreaData));
 store.dispatch(fetchJurisdictions(jurisdictionData));
 
 const history = createBrowserHistory();
@@ -72,13 +77,13 @@ describe('Namibia configs: components/IRS Reports/IRSReportingMap', () => {
 
     const focusArea = getGenericJurisdictionByJurisdictionId(
       store.getState(),
-      'zm-focusAreas',
+      'na-focusAreas',
       '0dc2d15b-be1d-45d3-93d8-043a3a916f30'
     );
 
     const structures = getGenericStructures(
       store.getState(),
-      'zm-structures',
+      'na-structures',
       '0dc2d15b-be1d-45d3-93d8-043a3a916f30'
     );
 
@@ -113,8 +118,12 @@ describe('Namibia configs: components/IRS Reports/IRSReportingMap', () => {
       </Router>
     );
     await flushPromises();
-    expect(toJson(wrapper.find('.sidebar-legend-item'))).toMatchSnapshot('Legend items');
-    expect(toJson(wrapper.find('.responseItem h6'))).toMatchSnapshot('Response item titles');
+    expect(toJson(wrapper.find('.sidebar-legend-item'))).toMatchSnapshot(
+      'Namibia configs: Legend items'
+    );
+    expect(toJson(wrapper.find('.responseItem h6'))).toMatchSnapshot(
+      'Namibia configs: Response item titles'
+    );
     expect(toJson(wrapper.find('.responseItem p.indicator-description'))).toMatchSnapshot(
       'Namibia configs: Namibia configs: Response item descriptions'
     );
@@ -124,6 +133,83 @@ describe('Namibia configs: components/IRS Reports/IRSReportingMap', () => {
     expect(toJson(wrapper.find('.responseItem ProgressBar'))).toMatchSnapshot(
       'Namibia configs: Response item ProgressBar'
     );
+
+    const indicatorStops = IRSIndicatorStops[SUPERSET_IRS_REPORTING_INDICATOR_STOPS];
+
+    expect(wrapper.find('GisidaWrapper').props()).toEqual(
+      getGisidaWrapperProps(jurisdiction as Jurisdiction, structures, indicatorStops)
+    );
+
+    // superset called with expected parameters
+    expect(supersetServiceMock.mock.calls).toEqual([
+      [
+        1,
+        {
+          adhoc_filters: [
+            {
+              clause: 'WHERE',
+              comparator: '0dc2d15b-be1d-45d3-93d8-043a3a916f30',
+              expressionType: 'SIMPLE',
+              operator: '==',
+              subject: 'jurisdiction_id',
+            },
+          ],
+          row_limit: 1,
+        },
+      ],
+      [
+        '14',
+        {
+          adhoc_filters: [
+            {
+              clause: 'WHERE',
+              comparator: '0dc2d15b-be1d-45d3-93d8-043a3a916f30',
+              expressionType: 'SIMPLE',
+              operator: '==',
+              subject: 'jurisdiction_id',
+            },
+          ],
+          row_limit: 2000,
+        },
+      ],
+      [
+        '12',
+        {
+          adhoc_filters: [
+            {
+              clause: 'WHERE',
+              comparator: '0dc2d15b-be1d-45d3-93d8-043a3a916f30',
+              expressionType: 'SIMPLE',
+              operator: '==',
+              subject: 'jurisdiction_id',
+            },
+            {
+              clause: 'WHERE',
+              comparator: '727c3d40-e118-564a-b231-aac633e6abce',
+              expressionType: 'SIMPLE',
+              operator: '==',
+              subject: 'plan_id',
+            },
+          ],
+          row_limit: 1,
+        },
+      ],
+      [
+        '13',
+        {
+          adhoc_filters: [
+            {
+              clause: 'WHERE',
+              comparator: '727c3d40-e118-564a-b231-aac633e6abce',
+              expressionType: 'SIMPLE',
+              operator: '==',
+              subject: 'plan_id',
+            },
+          ],
+          row_limit: 1,
+        },
+      ],
+    ]);
     wrapper.unmount();
   });
 });

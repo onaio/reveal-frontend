@@ -1,6 +1,35 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Namibia configs: components/IRS Reports/IRSReportingMap Namibia configs: renders correctly: Legend items 1`] = `
+exports[`Namibia configs: components/IRS Reports/IRSReportingMap Namibia configs: renders correctly: Namibia configs: Indicator item breakdown 1`] = `
+Array [
+  <p
+    className="indicator-breakdown"
+  >
+    Progress
+    :
+     
+    7 of 14 room(s)
+     
+    (
+    50
+    %)
+  </p>,
+  <p
+    className="indicator-breakdown"
+  >
+    Progress
+    :
+     
+    7 of 14 room(s)
+     
+    (
+    50
+    %)
+  </p>,
+]
+`;
+
+exports[`Namibia configs: components/IRS Reports/IRSReportingMap Namibia configs: renders correctly: Namibia configs: Legend items 1`] = `
 Array [
   <div
     className="sidebar-legend-item"
@@ -92,35 +121,6 @@ Array [
       Not Eligible
     </span>
   </div>,
-]
-`;
-
-exports[`Namibia configs: components/IRS Reports/IRSReportingMap Namibia configs: renders correctly: Namibia configs: Indicator item breakdown 1`] = `
-Array [
-  <p
-    className="indicator-breakdown"
-  >
-    Progress
-    :
-     
-    7 of 14 room(s)
-     
-    (
-    50
-    %)
-  </p>,
-  <p
-    className="indicator-breakdown"
-  >
-    Progress
-    :
-     
-    7 of 14 room(s)
-     
-    (
-    50
-    %)
-  </p>,
 ]
 `;
 
@@ -258,7 +258,7 @@ Array [
 ]
 `;
 
-exports[`Namibia configs: components/IRS Reports/IRSReportingMap Namibia configs: renders correctly: Response item titles 1`] = `
+exports[`Namibia configs: components/IRS Reports/IRSReportingMap Namibia configs: renders correctly: Namibia configs: Response item titles 1`] = `
 Array [
   <h6>
     Target Coverage
