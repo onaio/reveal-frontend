@@ -412,7 +412,7 @@ const App = (props: AppProps) => {
                 path={LOGOUT_URL}
                 // tslint:disable-next-line: jsx-no-lambda
                 component={() => {
-                  if (BACKEND_ACTIVE && props.logoutComponent) {
+                  if (BACKEND_ACTIVE) {
                     store.dispatch(logOutUser());
                     /** returns logout component responsible for opensrp logot and moving execution to express server */
                     return <props.logoutComponent logoutURL={OPENSRP_LOGOUT_URL} />;
