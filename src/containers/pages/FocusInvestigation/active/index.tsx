@@ -147,26 +147,22 @@ class ActiveFocusInvestigation extends React.Component<
   }
 
   public debouncedSearch(event: React.ChangeEvent<HTMLInputElement>) {
-    this.setState({ search: event.target.value }, () => {
-      this.setState({
-        searchedCaseTriggeredPlans: makePlansArraySelector()(store.getState(), {
-          interventionType: InterventionType.FI,
-          parentJurisdictionId: this.props.jurisdictionParentId,
-          reason: CASE_TRIGGERED,
-          statusList: [PlanStatus.ACTIVE, PlanStatus.COMPLETE],
-          title: event.target.value,
-        }),
-      });
-
-      this.setState({
-        searchedRoutinePlans: makePlansArraySelector()(store.getState(), {
-          interventionType: InterventionType.FI,
-          parentJurisdictionId: this.props.jurisdictionParentId,
-          reason: ROUTINE,
-          statusList: [PlanStatus.ACTIVE, PlanStatus.COMPLETE],
-          title: event.target.value,
-        }),
-      });
+    this.setState({
+      search: event.target.value,
+      searchedCaseTriggeredPlans: makePlansArraySelector()(store.getState(), {
+        interventionType: InterventionType.FI,
+        parentJurisdictionId: this.props.jurisdictionParentId,
+        reason: CASE_TRIGGERED,
+        statusList: [PlanStatus.ACTIVE, PlanStatus.COMPLETE],
+        title: event.target.value,
+      }),
+      searchedRoutinePlans: makePlansArraySelector()(store.getState(), {
+        interventionType: InterventionType.FI,
+        parentJurisdictionId: this.props.jurisdictionParentId,
+        reason: ROUTINE,
+        statusList: [PlanStatus.ACTIVE, PlanStatus.COMPLETE],
+        title: event.target.value,
+      }),
     });
   }
 
