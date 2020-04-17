@@ -411,11 +411,7 @@ const App = () => {
                 component={() => {
                   if (BACKEND_ACTIVE) {
                     store.dispatch(logOutUser());
-                    return (
-                      <Logout logoutURL="https://reveal-stage.smartregister.org/opensrp/logout.do" />
-                    );
-                    // window.location.href = EXPRESS_OAUTH_LOGOUT_URL;
-                    return null;
+                    return <Logout logoutURL={OPENSRP_LOGOUT_URL} />;
                   }
                   const state = getOauthProviderState(store.getState());
                   return (
