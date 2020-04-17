@@ -83,12 +83,10 @@ const PlanDefinitionList = (props: PlanListProps) => {
   }, []);
 
   useEffect(() => {
-    if (plans) {
+    if (plans && debouncedSearchQuery) {
       setSearchedPlans(
         plans.filter((plan: PlanDefinition) =>
-          debouncedSearchQuery
-            ? plan.name.toLowerCase().includes(debouncedSearchQuery.toLowerCase())
-            : true
+          plan.name.toLowerCase().includes(debouncedSearchQuery.toLowerCase())
         )
       );
     }

@@ -88,12 +88,10 @@ const IRSPlansList = (props: PlanListProps) => {
   }, []);
 
   useEffect(() => {
-    if (plans) {
+    if (plans && debouncedSearchQuery) {
       setSearchedPlans(
         plans.filter((plan: IRSPlan) =>
-          debouncedSearchQuery
-            ? plan.plan_title.toLowerCase().includes(debouncedSearchQuery.toLowerCase())
-            : true
+          plan.plan_title.toLowerCase().includes(debouncedSearchQuery.toLowerCase())
         )
       );
     }
