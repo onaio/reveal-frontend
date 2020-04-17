@@ -92,10 +92,11 @@ describe('App', () => {
       },
     };
     const logoutUserMock = jest.spyOn(sessionDux, 'logOutUser');
+    const mockLogout = jest.fn(() => null);
     const wrapper = mount(
       <Provider store={store}>
         <Router history={history}>
-          <App />
+          <App logoutComponent={mockLogout} />
         </Router>
       </Provider>
     );
@@ -126,9 +127,9 @@ describe('App', () => {
     // unfortunately we don't have a definitive way to test that the user session was invalidated;
     // since the functionality that does this is in the express server and is thus out of the
     // react-app's scope.
-    expect(hrefMock).toHaveBeenCalledWith('http://localhost:3000/logout');
+    // ensure we are calling the logout component which handles opensrp logout and redirects to backend
+    expect(mockLogout).toBeCalled();
   });
-
   it('tracks dimensions correctly', async () => {
     fetch.mockResponse(JSON.stringify(expressAPIResponse));
     GoogleAnalytics.set = jest.fn();

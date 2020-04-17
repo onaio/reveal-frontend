@@ -17,12 +17,12 @@ import { Route, Switch } from 'react-router';
 import { Redirect } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Col, Container, Row } from 'reactstrap';
+import { LogoutProps } from '../components/Logout';
 import CustomConnectedAPICallBack from '../components/page/CustomCallback';
 import Loading from '../components/page/Loading';
 import {
   BACKEND_ACTIVE,
   DISABLE_LOGIN_PROTECTION,
-  EXPRESS_OAUTH_LOGOUT_URL,
   GA_CODE,
   GA_ENV,
   OPENSRP_LOGOUT_URL,
@@ -111,6 +111,10 @@ if (GA_CODE) {
 export interface AppState {
   username?: string;
 }
+/** Interface defining component props */
+interface AppProps {
+  logoutComponent: (props: LogoutProps) => null;
+}
 
 const APP_CALLBACK_URL = BACKEND_ACTIVE ? BACKEND_CALLBACK_URL : REACT_LOGIN_URL;
 const { IMPLICIT, AUTHORIZATION_CODE } = AuthorizationGrantType;
@@ -119,7 +123,7 @@ const APP_LOGIN_URL = BACKEND_ACTIVE ? BACKEND_LOGIN_URL : REACT_LOGIN_URL;
 const APP_CALLBACK_PATH = BACKEND_ACTIVE ? BACKEND_CALLBACK_PATH : REACT_CALLBACK_PATH;
 
 /** Main App component */
-const App = () => {
+const App = (props: AppProps) => {
   useEffect(() => {
     const username = (getUser(store.getState()) || {}).username || '';
     if (GA_CODE && username) {
@@ -130,7 +134,6 @@ const App = () => {
       setDimensions(dimensions);
     }
   }, [getUser(store.getState()).username]);
-
   return (
     <Container fluid={true}>
       <Helmet titleTemplate={`%s | ` + WEBSITE_NAME} defaultTitle="" />
@@ -411,8 +414,8 @@ const App = () => {
                 component={() => {
                   if (BACKEND_ACTIVE) {
                     store.dispatch(logOutUser());
-                    window.location.href = EXPRESS_OAUTH_LOGOUT_URL;
-                    return null;
+                    /** returns logout component responsible for opensrp logot and moving execution to express server */
+                    return <props.logoutComponent logoutURL={OPENSRP_LOGOUT_URL} />;
                   }
                   const state = getOauthProviderState(store.getState());
                   return (

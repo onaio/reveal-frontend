@@ -4,6 +4,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import App from './App/App';
+import Logout from './components/Logout';
 import * as serviceWorker from './serviceWorker';
 import store from './store';
 
@@ -15,7 +16,7 @@ import './styles/css/index.css';
 ReactDOM.render(
   <Provider store={store}>
     <ConnectedRouter history={history}>
-      <App />
+      <App logoutComponent={Logout} />
     </ConnectedRouter>
   </Provider>,
   document.getElementById('reveal-root')
