@@ -17,7 +17,7 @@ import { Route, Switch } from 'react-router';
 import { Redirect } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Col, Container, Row } from 'reactstrap';
-import Logout from '../components/Logout';
+import { LogoutProps } from '../components/Logout';
 import CustomConnectedAPICallBack from '../components/page/CustomCallback';
 import Loading from '../components/page/Loading';
 import {
@@ -111,6 +111,9 @@ if (GA_CODE) {
 export interface AppState {
   username?: string;
 }
+interface AppProps {
+  logoutComponent?: (props: LogoutProps) => null;
+}
 
 const APP_CALLBACK_URL = BACKEND_ACTIVE ? BACKEND_CALLBACK_URL : REACT_LOGIN_URL;
 const { IMPLICIT, AUTHORIZATION_CODE } = AuthorizationGrantType;
@@ -119,7 +122,7 @@ const APP_LOGIN_URL = BACKEND_ACTIVE ? BACKEND_LOGIN_URL : REACT_LOGIN_URL;
 const APP_CALLBACK_PATH = BACKEND_ACTIVE ? BACKEND_CALLBACK_PATH : REACT_CALLBACK_PATH;
 
 /** Main App component */
-const App = () => {
+const App = (props: AppProps) => {
   useEffect(() => {
     const username = (getUser(store.getState()) || {}).username || '';
     if (GA_CODE && username) {
@@ -130,7 +133,6 @@ const App = () => {
       setDimensions(dimensions);
     }
   }, [getUser(store.getState()).username]);
-
   return (
     <Container fluid={true}>
       <Helmet titleTemplate={`%s | ` + WEBSITE_NAME} defaultTitle="" />
@@ -409,9 +411,9 @@ const App = () => {
                 path={LOGOUT_URL}
                 // tslint:disable-next-line: jsx-no-lambda
                 component={() => {
-                  if (BACKEND_ACTIVE) {
+                  if (BACKEND_ACTIVE && props.logoutComponent) {
                     store.dispatch(logOutUser());
-                    return <Logout logoutURL={OPENSRP_LOGOUT_URL} />;
+                    return <props.logoutComponent logoutURL={OPENSRP_LOGOUT_URL} />;
                   }
                   const state = getOauthProviderState(store.getState());
                   return (
