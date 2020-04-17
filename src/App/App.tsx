@@ -111,8 +111,9 @@ if (GA_CODE) {
 export interface AppState {
   username?: string;
 }
+/** Interface defining component props */
 interface AppProps {
-  logoutComponent?: (props: LogoutProps) => null;
+  logoutComponent: (props: LogoutProps) => null;
 }
 
 const APP_CALLBACK_URL = BACKEND_ACTIVE ? BACKEND_CALLBACK_URL : REACT_LOGIN_URL;
@@ -413,6 +414,7 @@ const App = (props: AppProps) => {
                 component={() => {
                   if (BACKEND_ACTIVE && props.logoutComponent) {
                     store.dispatch(logOutUser());
+                    /** returns logout component responsible for opensrp logot and moving execution to express server */
                     return <props.logoutComponent logoutURL={OPENSRP_LOGOUT_URL} />;
                   }
                   const state = getOauthProviderState(store.getState());
