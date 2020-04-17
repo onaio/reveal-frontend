@@ -1,0 +1,75 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components/IRS Reports/JurisdictionReport renders correctly 1`] = `
+Object {
+  "CellComponent": [Function],
+  "columns": Any<Object>,
+  "data": Any<Object>,
+  "defaultPageSize": 108,
+  "extraCellProps": Object {
+    "urlPath": "/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce",
+  },
+  "getTdProps": [Function],
+  "hasChildren": [Function],
+  "identifierField": "jurisdiction_id",
+  "linkerField": "jurisdiction_name",
+  "minRows": 0,
+  "parentIdentifierField": "jurisdiction_parent_id",
+  "resizable": true,
+  "rootParentId": "",
+  "shouldUseEffect": false,
+  "showPagination": false,
+  "useDrillDownTrProps": false,
+}
+`;
+
+exports[`components/IRS Reports/JurisdictionReport renders correctly: breadcrumbs 1`] = `
+Array [
+  <li
+    className="breadcrumb-item"
+  >
+    <Link
+      key="0"
+      replace={false}
+      to="/"
+    >
+      <a
+        href="/"
+        onClick={[Function]}
+      >
+        Home
+      </a>
+    </Link>
+  </li>,
+  <li
+    className="breadcrumb-item"
+  >
+    <Link
+      key="1"
+      replace={false}
+      to="/intervention/irs/report"
+    >
+      <a
+        href="/intervention/irs/report"
+        onClick={[Function]}
+      >
+        IRS Reporting
+      </a>
+    </Link>
+  </li>,
+  <li
+    aria-current="page"
+    className="active breadcrumb-item"
+  >
+    IRS 2019-09-05 TEST
+  </li>,
+]
+`;
+
+exports[`components/IRS Reports/JurisdictionReport renders correctly: page title 1`] = `
+<h3
+  className="mb-3 page-title"
+>
+  IRS Reporting: IRS 2019-09-05 TEST
+</h3>
+`;

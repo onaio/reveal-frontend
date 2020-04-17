@@ -3,6 +3,7 @@ import { getIRSThresholdAdherenceIndicator } from '../../../../../helpers/indica
 
 /* tslint:disable no-var-requires */
 export const ZambiaJurisdictionsJSON = require('./zambia_jurisdictions.json');
+export const NamibiaJurisdictionsJSON = require('./namibia_jurisdictions.json');
 export const ZambiaFocusAreasJSON = require('./zambia_focus_areas.json');
 export const NamibiaFocusAreasJSON = require('./namibia_focus_areas.json');
 export const ZambiaStructuresJSON = require('./zambia_structures.json');
