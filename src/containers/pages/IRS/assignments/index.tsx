@@ -1,6 +1,6 @@
 import ListView from '@onaio/list-view';
 import reducerRegistry, { Registry } from '@onaio/redux-reducer-registry';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -58,6 +58,7 @@ interface PlanAssignmentsListProps {
 const IRSAssignmentPlansList = (props: PlanAssignmentsListProps) => {
   const { fetchPlans, plans } = props;
   const [loading, setLoading] = useState<boolean>(plans.length < 1);
+  const isMounted = useRef<boolean>(false);
 
   const pageTitle: string = `${ASSIGN_PLANS}`;
 
@@ -89,14 +90,20 @@ const IRSAssignmentPlansList = (props: PlanAssignmentsListProps) => {
         .catch(err => {
           displayError(err);
         });
-      setLoading(false);
+      if (isMounted.current) {
+        setLoading(false);
+      }
     } catch (e) {
       displayError(e);
     }
   }
 
   useEffect(() => {
+    isMounted.current = true;
     loadData().catch(error => displayError(error));
+    return () => {
+      isMounted.current = false;
+    };
   }, []);
 
   if (loading) {
