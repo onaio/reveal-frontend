@@ -11,7 +11,11 @@ import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import { CURRENT_FOCUS_INVESTIGATION } from '../../../../../configs/lang';
 import store from '../../../../../store';
-import reducer, { fetchPlans, reducerName } from '../../../../../store/ducks/plans';
+import reducer, {
+  fetchPlans,
+  reducerName,
+  removePlansAction,
+} from '../../../../../store/ducks/plans';
 import { InterventionType } from '../../../../../store/ducks/plans';
 import * as fixtures from '../../../../../store/ducks/tests/fixtures';
 import ConnectedActiveFocusInvestigation, { ActiveFocusInvestigation } from '../../active';
@@ -25,6 +29,7 @@ jest.mock('../../../../../configs/env');
 describe('containers/pages/ActiveFocusInvestigation', () => {
   beforeEach(() => {
     jest.resetAllMocks();
+    store.dispatch(removePlansAction);
     MockDate.reset();
   });
 
@@ -232,25 +237,23 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
   });
 
   it('handles search correctly for case triggered plans', async () => {
+    store.dispatch(fetchPlans([fixtures.plan24, fixtures.plan25]));
+
     const mock: any = jest.fn();
     const props = {
-      caseTriggeredPlans: [fixtures.plan2, fixtures.plan23],
-      fetchPlansActionCreator: jest.fn(),
       history,
       location: mock,
       match: mock,
-      routinePlans: [fixtures.plan1],
       supersetService: jest.fn().mockImplementationOnce(() => Promise.resolve([])),
     };
     const wrapper = mount(
-      <Router history={history}>
-        <ActiveFocusInvestigation {...props} />
-      </Router>
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedActiveFocusInvestigation {...props} />
+        </Router>
+      </Provider>
     );
-    wrapper
-      .find('Input')
-      .at(0)
-      .simulate('change', { target: { value: 'random' } });
+    wrapper.find('Input').simulate('change', { target: { value: 'Jane' } });
     // Wait for debounce
     await new Promise(r => setTimeout(r, 1000));
     wrapper.update();
@@ -259,30 +262,25 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
         .find('ReactTable')
         .at(0)
         .prop('data')
-    ).toMatchSnapshot('case-triggered-table');
-    expect(
-      wrapper
-        .find('ReactTable')
-        .at(1)
-        .prop('data')
-    ).toMatchSnapshot('routine-table');
+    ).toMatchSnapshot();
   });
 
   it('handles search correctly for routine plans', async () => {
+    store.dispatch(fetchPlans([fixtures.plan1, fixtures.plan22]));
+
     const mock: any = jest.fn();
     const props = {
-      caseTriggeredPlans: [fixtures.plan2, fixtures.plan23],
-      fetchPlansActionCreator: jest.fn(),
       history,
       location: mock,
       match: mock,
-      routinePlans: [fixtures.plan1],
       supersetService: jest.fn().mockImplementationOnce(() => Promise.resolve([])),
     };
     const wrapper = mount(
-      <Router history={history}>
-        <ActiveFocusInvestigation {...props} />
-      </Router>
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedActiveFocusInvestigation {...props} />
+        </Router>
+      </Provider>
     );
     wrapper
       .find('Input')
@@ -294,76 +292,69 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
     expect(
       wrapper
         .find('ReactTable')
-        .at(0)
-        .prop('data')
-    ).toMatchSnapshot('case-triggered-table');
-    expect(
-      wrapper
-        .find('ReactTable')
         .at(1)
         .prop('data')
-    ).toMatchSnapshot('routine-table');
+    ).toMatchSnapshot();
+    wrapper.unmount();
   });
 
   it('handles case insensitive searches correctly', async () => {
+    store.dispatch(fetchPlans([fixtures.plan1, fixtures.plan22]));
+
     const mock: any = jest.fn();
     const props = {
-      caseTriggeredPlans: [fixtures.plan2, fixtures.plan23],
-      fetchPlansActionCreator: jest.fn(),
       history,
       location: mock,
       match: mock,
-      routinePlans: [fixtures.plan1],
       supersetService: jest.fn().mockImplementationOnce(() => Promise.resolve([])),
     };
     const wrapper = mount(
-      <Router history={history}>
-        <ActiveFocusInvestigation {...props} />
-      </Router>
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedActiveFocusInvestigation {...props} />
+        </Router>
+      </Provider>
     );
     wrapper
       .find('Input')
       .at(0)
-      .simulate('change', { target: { value: 'RANDOM' } });
+      .simulate('change', { target: { value: 'LUANG' } });
     // Wait for debounce
     await new Promise(r => setTimeout(r, 1000));
     wrapper.update();
     expect(
       wrapper
         .find('ReactTable')
-        .at(0)
-        .prop('data')
-    ).toMatchSnapshot('case-triggered-table');
-    expect(
-      wrapper
-        .find('ReactTable')
         .at(1)
         .prop('data')
-    ).toMatchSnapshot('routine-table');
+    ).toMatchSnapshot();
+    wrapper.unmount();
   });
 
   it('renders empty tables if search query does not match any case trigger or routine plans', async () => {
+    store.dispatch(fetchPlans([fixtures.plan1, fixtures.plan22, fixtures.plan24, fixtures.plan25]));
+
     const mock: any = jest.fn();
     const props = {
-      caseTriggeredPlans: [fixtures.plan2, fixtures.plan23],
-      fetchPlansActionCreator: jest.fn(),
       history,
       location: mock,
       match: mock,
-      routinePlans: [fixtures.plan1],
       supersetService: jest.fn().mockImplementationOnce(() => Promise.resolve([])),
     };
     const wrapper = mount(
-      <Router history={history}>
-        <ActiveFocusInvestigation {...props} />
-      </Router>
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedActiveFocusInvestigation {...props} />
+        </Router>
+      </Provider>
     );
     wrapper
       .find('Input')
       .at(0)
-      .simulate('change', { target: { value: 'kajkajakjTTyaa' } });
+      .simulate('change', { target: { value: 'UUOAIO' } });
     // Wait for debounce
     await new Promise(r => setTimeout(r, 1000));
+    wrapper.update();
     wrapper.update();
     expect(
       wrapper

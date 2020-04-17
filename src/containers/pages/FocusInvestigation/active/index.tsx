@@ -68,11 +68,13 @@ import {
 } from '../../../../helpers/utils';
 import { extractPlan, getLocationColumns } from '../../../../helpers/utils';
 import supersetFetch from '../../../../services/superset';
+import store from '../../../../store';
 import plansReducer, {
   fetchPlans,
   getPlanById,
   getPlansArray,
   InterventionType,
+  makePlansArraySelector,
   Plan,
   PlanStatus,
   reducerName as plansReducerName,
@@ -95,6 +97,7 @@ export interface ActiveFIProps {
   routinePlans: Plan[] | null;
   supersetService: typeof supersetFetch;
   plan: Plan | null;
+  jurisdictionParentId: string;
 }
 
 /** Interface defining component state */
@@ -108,6 +111,7 @@ export interface ActiveFIState {
 export const defaultActiveFIProps: ActiveFIProps = {
   caseTriggeredPlans: null,
   fetchPlansActionCreator: fetchPlans,
+  jurisdictionParentId: '',
   plan: null,
   routinePlans: null,
   supersetService: supersetFetch,
@@ -144,24 +148,25 @@ class ActiveFocusInvestigation extends React.Component<
 
   public debouncedSearch(event: React.ChangeEvent<HTMLInputElement>) {
     this.setState({ search: event.target.value }, () => {
-      const { search } = this.state;
-      const { caseTriggeredPlans, routinePlans } = this.props;
+      this.setState({
+        searchedCaseTriggeredPlans: makePlansArraySelector()(store.getState(), {
+          interventionType: InterventionType.FI,
+          parentJurisdictionId: this.props.jurisdictionParentId,
+          reason: CASE_TRIGGERED,
+          statusList: [PlanStatus.ACTIVE, PlanStatus.COMPLETE],
+          title: event.target.value,
+        }),
+      });
 
-      if (caseTriggeredPlans) {
-        this.setState({
-          searchedCaseTriggeredPlans: caseTriggeredPlans.filter((plan: Plan) =>
-            search ? plan.plan_title.toLowerCase().includes(search.toLowerCase()) : true
-          ),
-        });
-      }
-
-      if (routinePlans) {
-        this.setState({
-          searchedRoutinePlans: routinePlans.filter((plan: Plan) =>
-            search ? plan.plan_title.toLowerCase().includes(search.toLowerCase()) : true
-          ),
-        });
-      }
+      this.setState({
+        searchedRoutinePlans: makePlansArraySelector()(store.getState(), {
+          interventionType: InterventionType.FI,
+          parentJurisdictionId: this.props.jurisdictionParentId,
+          reason: ROUTINE,
+          statusList: [PlanStatus.ACTIVE, PlanStatus.COMPLETE],
+          title: event.target.value,
+        }),
+      });
     });
   }
 
@@ -455,6 +460,7 @@ export { ActiveFocusInvestigation };
 
 /** interface to describe props from mapStateToProps */
 interface DispatchedStateProps {
+  jurisdictionParentId: string;
   plan: Plan | null;
   caseTriggeredPlans: Plan[] | null;
   routinePlans: Plan[] | null;
@@ -487,6 +493,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
   );
   return {
     caseTriggeredPlans,
+    jurisdictionParentId,
     plan,
     routinePlans,
   };
