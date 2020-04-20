@@ -49,7 +49,6 @@ describe('components/InterventionPlan/PlanDefinitionList', () => {
 
     const props = {
       fetchPlans: jest.fn(),
-      plans: fixtures.plans,
       service: jest.fn().mockImplementationOnce(() => Promise.resolve([])),
     };
     const wrapper = mount(
@@ -80,7 +79,6 @@ describe('components/InterventionPlan/PlanDefinitionList', () => {
 
     const props = {
       fetchPlans: jest.fn(),
-      plans: fixtures.plans,
       service: jest.fn().mockImplementationOnce(() => Promise.resolve([])),
     };
     const wrapper = mount(
@@ -111,7 +109,6 @@ describe('components/InterventionPlan/PlanDefinitionList', () => {
 
     const props = {
       fetchPlans: jest.fn(),
-      plans: fixtures.plans,
       service: jest.fn().mockImplementationOnce(() => Promise.resolve([])),
     };
     const wrapper = mount(

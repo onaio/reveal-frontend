@@ -24,9 +24,11 @@ import { HOME_URL, REPORT_IRS_PLAN_URL } from '../../../../constants';
 import { displayError } from '../../../../helpers/errors';
 import { useDebounce } from '../../../../helpers/hooks';
 import supersetFetch from '../../../../services/superset';
+import store from '../../../../store';
 import IRSPlansReducer, {
   fetchIRSPlans,
   getIRSPlansArray,
+  getIRSPlansArrayByTitle,
   IRSPlan,
   reducerName as IRSPlansReducerName,
 } from '../../../../store/ducks/generic/plans';
@@ -88,11 +90,9 @@ const IRSPlansList = (props: PlanListProps) => {
   }, []);
 
   useEffect(() => {
-    if (plans && debouncedSearchQuery) {
+    if (debouncedSearchQuery) {
       setSearchedPlans(
-        plans.filter((plan: IRSPlan) =>
-          plan.plan_title.toLowerCase().includes(debouncedSearchQuery.toLowerCase())
-        )
+        getIRSPlansArrayByTitle()(store.getState(), { plan_title: debouncedSearchQuery })
       );
     }
   }, [debouncedSearchQuery]);

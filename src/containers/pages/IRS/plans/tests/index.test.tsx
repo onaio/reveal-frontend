@@ -2,9 +2,12 @@ import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import { createBrowserHistory } from 'history';
 import React from 'react';
+import { Provider } from 'react-redux';
 import { Router } from 'react-router';
-import { IRSPlansList } from '../';
+import ConnectedIRSPlansList, { IRSPlansList } from '../';
+import store from '../../../../../store';
 import { IRSPlan } from '../../../../../store/ducks/generic/plans';
+import { fetchIRSPlans } from '../../../../../store/ducks/generic/plans';
 import * as fixtures from '../../../../../store/ducks/generic/tests/fixtures';
 
 /* tslint:disable-next-line no-var-requires */
@@ -46,15 +49,18 @@ describe('components/IRS Reports/IRSPlansList', () => {
   });
 
   it('handles search correctly', async () => {
+    store.dispatch(fetchIRSPlans(fixtures.plans as IRSPlan[]));
+
     const props = {
       fetchPlans: jest.fn(),
-      plans: fixtures.plans as IRSPlan[],
       service: jest.fn().mockImplementationOnce(() => Promise.resolve([])),
     };
     const wrapper = mount(
-      <Router history={history}>
-        <IRSPlansList {...props} />
-      </Router>
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedIRSPlansList {...props} />
+        </Router>
+      </Provider>
     );
     wrapper
       .find('Input')
@@ -73,15 +79,18 @@ describe('components/IRS Reports/IRSPlansList', () => {
   });
 
   it('handles a case insensitive search', async () => {
+    store.dispatch(fetchIRSPlans(fixtures.plans as IRSPlan[]));
+
     const props = {
       fetchPlans: jest.fn(),
-      plans: fixtures.plans as IRSPlan[],
       service: jest.fn().mockImplementationOnce(() => Promise.resolve([])),
     };
     const wrapper = mount(
-      <Router history={history}>
-        <IRSPlansList {...props} />
-      </Router>
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedIRSPlansList {...props} />
+        </Router>
+      </Provider>
     );
     wrapper
       .find('Input')
@@ -100,15 +109,18 @@ describe('components/IRS Reports/IRSPlansList', () => {
   });
 
   it('renders empty table if no search matches', async () => {
+    store.dispatch(fetchIRSPlans(fixtures.plans as IRSPlan[]));
+
     const props = {
       fetchPlans: jest.fn(),
-      plans: fixtures.plans as IRSPlan[],
       service: jest.fn().mockImplementationOnce(() => Promise.resolve([])),
     };
     const wrapper = mount(
-      <Router history={history}>
-        <IRSPlansList {...props} />
-      </Router>
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedIRSPlansList {...props} />
+        </Router>
+      </Provider>
     );
     wrapper
       .find('Input')

@@ -1,5 +1,7 @@
+import { Registry } from '@onaio/redux-reducer-registry';
 import { get, keyBy, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
+import { createSelector } from 'reselect';
 import SeamlessImmutable from 'seamless-immutable';
 import { InterventionType, PlanStatus } from '../plans';
 
@@ -172,3 +174,35 @@ export function getIRSPlansArray(
   const result = values((state as any)[reducerName].IRSPlansById);
   return result.filter((e: IRSPlan) => e.plan_intervention_type === interventionType);
 }
+
+/** RESELECT USAGE STARTS HERE */
+
+/** This interface represents the structure of IRS plan filter options/params */
+export interface IRSPlanFilters {
+  plan_title?: string /** IRS plan title */;
+}
+
+/** IRSPlansArrayBaseSelector select an array of all plans
+ * @param state - the redux store
+ */
+export const IRSPlansArrayBaseSelector = (planKey?: string) => (state: Registry): IRSPlan[] =>
+  values((state as any)[reducerName][planKey ? planKey : 'IRSPlansById']);
+
+/** getIRSPlansArrayByTitle
+ * Gets title from PlanFilters
+ * @param state - the redux store
+ * @param props - the plan filters object
+ */
+export const getTitle = (_: Registry, props: IRSPlanFilters) => props.plan_title;
+
+/** getPlansArrayByTitle
+ * Gets an array of Plan objects filtered by plan title
+ * @param {Registry} state - the redux store
+ * @param {PlanDefinitionFilters} props - the plan defintion filters object
+ */
+export const getIRSPlansArrayByTitle = (planKey?: string) =>
+  createSelector([IRSPlansArrayBaseSelector(planKey), getTitle], (plans, title) =>
+    title
+      ? plans.filter(plan => plan.plan_title.toLowerCase().includes(title.toLowerCase()))
+      : plans
+  );

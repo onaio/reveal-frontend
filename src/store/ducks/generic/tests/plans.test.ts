@@ -8,6 +8,7 @@ import reducer, {
   fetchIRSPlans,
   getIRSPlanById,
   getIRSPlansArray,
+  getIRSPlansArrayByTitle,
   getIRSPlansById,
   IRSPlan,
   reducerName,
@@ -55,6 +56,18 @@ describe('reducers/IRS/IRSPlan', () => {
     expect(getIRSPlansById(store.getState(), InterventionType.IRS)).toEqual(
       keyBy([fixtures.plans[0], fixtures.plans[1], fixtures.plans[2]], 'plan_id')
     );
+
+    // RESELECT TESTS
+    const titleFilter = {
+      plan_title: 'Berg',
+    };
+    const titleUpperFilter = {
+      plan_title: 'BERG',
+    };
+    expect(getIRSPlansArrayByTitle()(store.getState(), titleFilter)).toEqual([fixtures.plans[2]]);
+    expect(getIRSPlansArrayByTitle()(store.getState(), titleUpperFilter)).toEqual([
+      fixtures.plans[2],
+    ]);
 
     // reset
     store.dispatch(removeIRSPlans());
