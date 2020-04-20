@@ -1,5 +1,7 @@
+import { Registry } from '@onaio/redux-reducer-registry';
 import { get, keyBy, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
+import { createSelector } from 'reselect';
 import SeamlessImmutable from 'seamless-immutable';
 import { PlanDefinition } from '../../../../configs/settings';
 import { isPlanDefinitionOfType } from '../../../../helpers/utils';
@@ -166,3 +168,35 @@ export function getPlanDefinitionsArray(
   }
   return result;
 }
+
+/** RESELECT USAGE STARTS HERE */
+
+/** This interface represents the structure of plan definition filter options/params */
+export interface PlanDefinitionFilters {
+  title?: string /** plan object title */;
+}
+
+/** planDefinitionsArrayBaseSelector select an array of all plans
+ * @param state - the redux store
+ */
+export const planDefinitionsArrayBaseSelector = (planKey?: string) => (
+  state: Registry
+): PlanDefinition[] =>
+  values((state as any)[reducerName][planKey ? planKey : 'planDefinitionsById']);
+
+/** getPlanDefinitionsArrayByTitle
+ * Gets title from PlanFilters
+ * @param state - the redux store
+ * @param props - the plan filters object
+ */
+export const getTitle = (_: Registry, props: PlanDefinitionFilters) => props.title;
+
+/** getPlansArrayByTitle
+ * Gets an array of Plan objects filtered by plan title
+ * @param {Registry} state - the redux store
+ * @param {PlanDefinitionFilters} props - the plan defintion filters object
+ */
+export const getPlanDefinitionsArrayByTitle = (planKey?: string) =>
+  createSelector([planDefinitionsArrayBaseSelector(planKey), getTitle], (plans, title) =>
+    title ? plans.filter(plan => plan.title.toLowerCase().includes(title.toLowerCase())) : plans
+  );

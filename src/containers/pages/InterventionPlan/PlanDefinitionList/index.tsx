@@ -24,12 +24,13 @@ import { HOME_URL, OPENSRP_PLANS, PLAN_LIST_URL, PLAN_UPDATE_URL } from '../../.
 import { displayError } from '../../../../helpers/errors';
 import { useDebounce } from '../../../../helpers/hooks';
 import { OpenSRPService } from '../../../../services/opensrp';
+import store from '../../../../store';
 import planDefinitionReducer, {
   fetchPlanDefinitions,
   getPlanDefinitionsArray,
+  getPlanDefinitionsArrayByTitle,
   reducerName as planDefinitionReducerName,
 } from '../../../../store/ducks/opensrp/PlanDefinition';
-
 /** register the plan definitions reducer */
 reducerRegistry.register(planDefinitionReducerName, planDefinitionReducer);
 
@@ -83,11 +84,9 @@ const PlanDefinitionList = (props: PlanListProps) => {
   }, []);
 
   useEffect(() => {
-    if (plans && debouncedSearchQuery) {
+    if (debouncedSearchQuery) {
       setSearchedPlans(
-        plans.filter((plan: PlanDefinition) =>
-          plan.title.toLowerCase().includes(debouncedSearchQuery.toLowerCase())
-        )
+        getPlanDefinitionsArrayByTitle()(store.getState(), { title: debouncedSearchQuery })
       );
     }
   }, [debouncedSearchQuery]);

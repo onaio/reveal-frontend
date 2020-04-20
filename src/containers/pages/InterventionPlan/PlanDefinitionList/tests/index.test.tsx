@@ -2,8 +2,11 @@ import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import { createBrowserHistory } from 'history';
 import React from 'react';
+import { Provider } from 'react-redux';
 import { Router } from 'react-router';
-import { PlanDefinitionList } from '../';
+import ConnectedPlanDefinitionList, { PlanDefinitionList } from '../';
+import store from '../../../../../store';
+import { fetchPlanDefinitions } from '../../../../../store/ducks/opensrp/PlanDefinition';
 import * as fixtures from '../../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
 
 /* tslint:disable-next-line no-var-requires */
@@ -42,15 +45,19 @@ describe('components/InterventionPlan/PlanDefinitionList', () => {
   });
 
   it('handles search correctly', async () => {
+    store.dispatch(fetchPlanDefinitions(fixtures.plans));
+
     const props = {
       fetchPlans: jest.fn(),
       plans: fixtures.plans,
       service: jest.fn().mockImplementationOnce(() => Promise.resolve([])),
     };
     const wrapper = mount(
-      <Router history={history}>
-        <PlanDefinitionList {...props} />
-      </Router>
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedPlanDefinitionList {...props} />
+        </Router>
+      </Provider>
     );
     wrapper
       .find('Input')
@@ -69,15 +76,19 @@ describe('components/InterventionPlan/PlanDefinitionList', () => {
   });
 
   it('handles a case insensitive search', async () => {
+    store.dispatch(fetchPlanDefinitions(fixtures.plans));
+
     const props = {
       fetchPlans: jest.fn(),
       plans: fixtures.plans,
       service: jest.fn().mockImplementationOnce(() => Promise.resolve([])),
     };
     const wrapper = mount(
-      <Router history={history}>
-        <PlanDefinitionList {...props} />
-      </Router>
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedPlanDefinitionList {...props} />
+        </Router>
+      </Provider>
     );
     wrapper
       .find('Input')
@@ -96,15 +107,19 @@ describe('components/InterventionPlan/PlanDefinitionList', () => {
   });
 
   it('renders empty table if no search matches', async () => {
+    store.dispatch(fetchPlanDefinitions(fixtures.plans));
+
     const props = {
       fetchPlans: jest.fn(),
       plans: fixtures.plans,
       service: jest.fn().mockImplementationOnce(() => Promise.resolve([])),
     };
     const wrapper = mount(
-      <Router history={history}>
-        <PlanDefinitionList {...props} />
-      </Router>
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedPlanDefinitionList {...props} />
+        </Router>
+      </Provider>
     );
     wrapper
       .find('Input')

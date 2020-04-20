@@ -9,6 +9,7 @@ import reducer, {
   fetchPlanDefinitions,
   getPlanDefinitionById,
   getPlanDefinitionsArray,
+  getPlanDefinitionsArrayByTitle,
   getPlanDefinitionsById,
   reducerName,
   removePlanDefinitions,
@@ -23,6 +24,7 @@ describe('reducers/opensrp/PlanDefinition', () => {
   beforeEach(() => {
     flushThunks = FlushThunks.createMiddleware();
     jest.resetAllMocks();
+    store.dispatch(removePlanDefinitions());
   });
 
   it('should have initial state', () => {
@@ -59,6 +61,20 @@ describe('reducers/opensrp/PlanDefinition', () => {
     expect(getPlanDefinitionsById(store.getState(), InterventionType.FI)).toEqual(
       keyBy([fixtures.plans[0], fixtures.plans[2], fixtures.plans[3]], 'identifier')
     );
+
+    // RESELECT TESTS
+    const titleFilter = {
+      title: 'mosh',
+    };
+    const titleUpperFilter = {
+      title: 'MOSH',
+    };
+    expect(getPlanDefinitionsArrayByTitle()(store.getState(), titleFilter)).toEqual([
+      fixtures.plans[3],
+    ]);
+    expect(getPlanDefinitionsArrayByTitle()(store.getState(), titleUpperFilter)).toEqual([
+      fixtures.plans[3],
+    ]);
 
     // reset
     store.dispatch(removePlanDefinitions());
