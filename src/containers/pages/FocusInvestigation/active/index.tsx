@@ -5,6 +5,8 @@ import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset from '@onaio/superset-connector';
 import { Dictionary } from '@onaio/utils';
 import _ from 'lodash';
+import { trimStart } from 'lodash';
+import querystring from 'querystring';
 import * as React from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
@@ -98,13 +100,7 @@ export interface ActiveFIProps {
   supersetService: typeof supersetFetch;
   plan: Plan | null;
   jurisdictionParentId: string;
-}
-
-/** Interface defining component state */
-export interface ActiveFIState {
-  search?: string;
-  searchedCaseTriggeredPlans: Plan[];
-  searchedRoutinePlans: Plan[];
+  searchedTitle: string | null;
 }
 
 /** default props for ActiveFI component */
@@ -114,24 +110,20 @@ export const defaultActiveFIProps: ActiveFIProps = {
   jurisdictionParentId: '',
   plan: null,
   routinePlans: null,
+  searchedTitle: null,
   supersetService: supersetFetch,
 };
 
 /** Reporting for Active Focus Investigations */
 class ActiveFocusInvestigation extends React.Component<
   ActiveFIProps & RouteComponentProps<RouteParams>,
-  ActiveFIState
+  {}
 > {
   public static defaultProps: ActiveFIProps = defaultActiveFIProps;
 
   public debouncedSearchCallback = _.debounce(this.debouncedSearch, 1000);
   constructor(props: ActiveFIProps & RouteComponentProps<RouteParams>) {
     super(props);
-    this.state = {
-      search: '',
-      searchedCaseTriggeredPlans: [],
-      searchedRoutinePlans: [],
-    };
     this.handleSearchChange = this.handleSearchChange.bind(this);
     this.debouncedSearchCallback = _.debounce(this.debouncedSearch, 1000);
   }
@@ -147,28 +139,10 @@ class ActiveFocusInvestigation extends React.Component<
   }
 
   public debouncedSearch(event: React.ChangeEvent<HTMLInputElement>) {
-    this.setState({
-      search: event.target.value,
+    this.props.history.push({
+      pathname: this.props.location.pathname,
+      search: `?search=${event.target.value}`,
     });
-
-    if (event.target.value) {
-      this.setState({
-        searchedCaseTriggeredPlans: makePlansArraySelector()(store.getState(), {
-          interventionType: InterventionType.FI,
-          parentJurisdictionId: this.props.jurisdictionParentId,
-          reason: CASE_TRIGGERED,
-          statusList: [PlanStatus.ACTIVE, PlanStatus.COMPLETE],
-          title: event.target.value,
-        }),
-        searchedRoutinePlans: makePlansArraySelector()(store.getState(), {
-          interventionType: InterventionType.FI,
-          parentJurisdictionId: this.props.jurisdictionParentId,
-          reason: ROUTINE,
-          statusList: [PlanStatus.ACTIVE, PlanStatus.COMPLETE],
-          title: event.target.value,
-        }),
-      });
-    }
   }
 
   public handleSearchChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -193,8 +167,7 @@ class ActiveFocusInvestigation extends React.Component<
       url: HOME_URL,
     };
 
-    const { caseTriggeredPlans, routinePlans, plan } = this.props;
-    const { searchedCaseTriggeredPlans, searchedRoutinePlans, search } = this.state;
+    const { caseTriggeredPlans, routinePlans, plan, searchedTitle } = this.props;
     // We need to initialize jurisdictionName to a falsy value
     let jurisdictionName = null;
 
@@ -224,7 +197,8 @@ class ActiveFocusInvestigation extends React.Component<
       caseTriggeredPlans &&
       caseTriggeredPlans.length === 0 &&
       routinePlans &&
-      routinePlans.length === 0
+      routinePlans.length === 0 &&
+      searchedTitle === null
     ) {
       return <Loading />;
     }
@@ -241,10 +215,7 @@ class ActiveFocusInvestigation extends React.Component<
         <h2 className="mb-3 mt-5 page-title">{pageTitle}</h2>
         <hr />
         <SearchForm handleSearchChange={this.handleSearchChange} />
-        {[
-          search ? searchedCaseTriggeredPlans : caseTriggeredPlans,
-          search ? searchedRoutinePlans : routinePlans,
-        ].forEach((plansArray: Plan[] | null, i) => {
+        {[caseTriggeredPlans, routinePlans].forEach((plansArray: Plan[] | null, i) => {
           const locationColumns: Column[] = getLocationColumns(locationHierarchy, true);
           if (plansArray && plansArray.length) {
             const jurisdictionValidPlans = removeNullJurisdictionPlans(plansArray);
@@ -461,10 +432,10 @@ export { ActiveFocusInvestigation };
 
 /** interface to describe props from mapStateToProps */
 interface DispatchedStateProps {
-  jurisdictionParentId: string;
   plan: Plan | null;
   caseTriggeredPlans: Plan[] | null;
   routinePlans: Plan[] | null;
+  searchedTitle: string;
 }
 
 /** map state to props */
@@ -476,27 +447,52 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
     ownProps.match.params && ownProps.match.params.jurisdiction_parent_id
       ? ownProps.match.params.jurisdiction_parent_id
       : null;
-  const caseTriggeredPlans = getPlansArray(
-    state,
-    InterventionType.FI,
-    [PlanStatus.ACTIVE, PlanStatus.COMPLETE],
-    CASE_TRIGGERED,
-    [],
-    jurisdictionParentId
-  );
-  const routinePlans = getPlansArray(
-    state,
-    InterventionType.FI,
-    [PlanStatus.ACTIVE, PlanStatus.COMPLETE],
-    ROUTINE,
-    [],
-    jurisdictionParentId
-  );
+
+  const searchString = trimStart(ownProps.location.search, '?');
+  const queryParams = querystring.parse(searchString);
+  const searchedTitle = queryParams.search as string;
+  let caseTriggeredPlans = [];
+  let routinePlans = [];
+
+  if (searchedTitle) {
+    caseTriggeredPlans = makePlansArraySelector()(store.getState(), {
+      interventionType: InterventionType.FI,
+      parentJurisdictionId: jurisdictionParentId,
+      reason: CASE_TRIGGERED,
+      statusList: [PlanStatus.ACTIVE, PlanStatus.COMPLETE],
+      title: searchedTitle,
+    });
+    routinePlans = makePlansArraySelector()(store.getState(), {
+      interventionType: InterventionType.FI,
+      parentJurisdictionId: jurisdictionParentId,
+      reason: ROUTINE,
+      statusList: [PlanStatus.ACTIVE, PlanStatus.COMPLETE],
+      title: searchedTitle,
+    });
+  } else {
+    caseTriggeredPlans = getPlansArray(
+      state,
+      InterventionType.FI,
+      [PlanStatus.ACTIVE, PlanStatus.COMPLETE],
+      CASE_TRIGGERED,
+      [],
+      jurisdictionParentId
+    );
+    routinePlans = getPlansArray(
+      state,
+      InterventionType.FI,
+      [PlanStatus.ACTIVE, PlanStatus.COMPLETE],
+      ROUTINE,
+      [],
+      jurisdictionParentId
+    );
+  }
+
   return {
     caseTriggeredPlans,
-    jurisdictionParentId,
     plan,
     routinePlans,
+    searchedTitle,
   };
 };
 
