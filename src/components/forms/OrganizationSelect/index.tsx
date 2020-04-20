@@ -119,6 +119,7 @@ export const OrganizationSelect = (props: OrganizationSelectProps) => {
 
   return (
     <Select
+      menuPlacement="auto"
       name={name}
       bsSize="lg"
       placeholder={SELECT}
