@@ -6,8 +6,10 @@ import React, { useEffect, useState } from 'react';
 import Select from 'react-select';
 import { ValueType } from 'react-select/src/types';
 import { OPENMRS_USERS_REQUEST_PAGE_SIZE } from '../../../../configs/env';
+import { SELECT } from '../../../../configs/lang';
 import { OPENSRP_PRACTITIONER_ENDPOINT, OPENSRP_USERS_ENDPOINT } from '../../../../constants';
 import { displayError } from '../../../../helpers/errors';
+import { reactSelectNoOptionsText } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
 import { Practitioner } from '../../../../store/ducks/opensrp/practitioners';
 
@@ -134,6 +136,8 @@ export const UserIdSelect: React.FC<Props> = props => {
       options={options}
       onChange={changeHandler}
       isSearchable={true}
+      placeholder={SELECT}
+      noOptionsMessage={reactSelectNoOptionsText}
     />
   );
 };

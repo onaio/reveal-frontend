@@ -409,9 +409,9 @@ export const WELCOME_BACK = translate('WELCOME_BACK', 'Welcome back');
 export const LINK = translate('LINK', 'Link');
 export const IRS_GREEN_THRESHOLD = translate('IRS_GREEN_THRESHOLD', 'Green');
 export const IRS_GREY_THRESHOLD = translate('IRS_GREY_THRESHOLD', 'Grey');
-export const IRS_RED_THRESHOLD = translate('RED_THRESHOLD', 'Red');
-export const IRS_YELLOW_THRESHOLD = translate('YELLOW_THRESHOLD', 'Yellow');
-export const IRS_LIGHT_GREEN_THRESHOLD = translate('LIGHT_GREEN_THRESHOLD', 'Light Green');
+export const IRS_RED_THRESHOLD = translate('IRS_RED_THRESHOLD', 'Red');
+export const IRS_YELLOW_THRESHOLD = translate('IRS_YELLOW_THRESHOLD', 'Yellow');
+export const IRS_LIGHT_GREEN_THRESHOLD = translate('IRS_LIGHT_GREEN_THRESHOLD', 'Light Green');
 
 export const JURISDICTION_LOADING_ERROR = translate(
   'JURISDICTION_LOADING_ERROR',
@@ -437,3 +437,12 @@ export const FAILED_TO_EXTRACT_PLAN_RECORD = translate(
   'FAILED_TO_EXTRACT_PLAN_RECORD',
   'Failed to extract a plan record'
 );
+export const LOGIN_PROMPT = translate(
+  'LOGIN_PROMPT',
+  'Please log in with one of the following providers'
+);
+export const SEARCH_ACTIVE_FOCUS_INVESTIGATIONS = translate(
+  'SEARCH_ACTIVE_FOCUS_INVESTIGATIONS',
+  'Search active focus investigations'
+);
+export const NO_OPTIONS = translate('NO_OPTIONS', 'No Options');

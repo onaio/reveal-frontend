@@ -30,6 +30,7 @@ import {
   TOAST_AUTO_CLOSE_DELAY,
   WEBSITE_NAME,
 } from '../configs/env';
+import { LOGIN_PROMPT } from '../configs/lang';
 import { providers } from '../configs/settings';
 
 import {
@@ -380,6 +381,7 @@ const App = (props: AppProps) => {
                   <OauthLogin
                     providers={providers}
                     authorizationGrantType={AuthGrantType}
+                    OAuthLoginPromptMessage={LOGIN_PROMPT}
                     {...routeProps}
                   />
                 )}
