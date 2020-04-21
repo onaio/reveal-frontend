@@ -29,7 +29,6 @@ import { OpenSRPService } from '../../../../services/opensrp';
 import store from '../../../../store';
 import planDefinitionReducer, {
   fetchPlanDefinitions,
-  getPlanDefinitionsArray,
   getPlanDefinitionsArrayByTitle,
   reducerName as planDefinitionReducerName,
 } from '../../../../store/ducks/opensrp/PlanDefinition';
@@ -150,13 +149,13 @@ interface DispatchedStateProps {
 }
 
 /** map state to props */
-const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateProps => {
+const mapStateToProps = (_: Partial<Store>, ownProps: any): DispatchedStateProps => {
   const searchString = trimStart(ownProps.location.search, '?');
   const queryParams = querystring.parse(searchString);
   const searchedTitle = queryParams.search as string;
-  const planDefinitionsArray = !searchedTitle
-    ? getPlanDefinitionsArray(state)
-    : getPlanDefinitionsArrayByTitle()(store.getState(), { title: searchedTitle });
+  const planDefinitionsArray = getPlanDefinitionsArrayByTitle()(store.getState(), {
+    title: searchedTitle,
+  });
 
   return {
     plans: planDefinitionsArray,

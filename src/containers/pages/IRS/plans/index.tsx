@@ -29,7 +29,6 @@ import supersetFetch from '../../../../services/superset';
 import store from '../../../../store';
 import IRSPlansReducer, {
   fetchIRSPlans,
-  getIRSPlansArray,
   getIRSPlansArrayByTitle,
   IRSPlan,
   reducerName as IRSPlansReducerName,
@@ -146,13 +145,11 @@ interface DispatchedStateProps {
 }
 
 /** map state to props */
-const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateProps => {
+const mapStateToProps = (_: Partial<Store>, ownProps: any): DispatchedStateProps => {
   const searchString = trimStart(ownProps.location.search, '?');
   const queryParams = querystring.parse(searchString);
   const searchedTitle = queryParams.search as string;
-  const IRSPlansArray = !searchedTitle
-    ? getIRSPlansArray(state)
-    : getIRSPlansArrayByTitle()(store.getState(), { plan_title: searchedTitle });
+  const IRSPlansArray = getIRSPlansArrayByTitle()(store.getState(), { plan_title: searchedTitle });
 
   return {
     plans: IRSPlansArray,

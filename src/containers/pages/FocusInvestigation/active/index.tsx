@@ -74,7 +74,6 @@ import store from '../../../../store';
 import plansReducer, {
   fetchPlans,
   getPlanById,
-  getPlansArray,
   InterventionType,
   makePlansArraySelector,
   Plan,
@@ -433,46 +432,23 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
     ownProps.match.params && ownProps.match.params.jurisdiction_parent_id
       ? ownProps.match.params.jurisdiction_parent_id
       : null;
-
   const searchString = trimStart(ownProps.location.search, '?');
   const queryParams = querystring.parse(searchString);
   const searchedTitle = queryParams.search as string;
-  let caseTriggeredPlans = [];
-  let routinePlans = [];
-
-  if (searchedTitle) {
-    caseTriggeredPlans = makePlansArraySelector()(store.getState(), {
-      interventionType: InterventionType.FI,
-      parentJurisdictionId: jurisdictionParentId,
-      reason: CASE_TRIGGERED,
-      statusList: [PlanStatus.ACTIVE, PlanStatus.COMPLETE],
-      title: searchedTitle,
-    });
-    routinePlans = makePlansArraySelector()(store.getState(), {
-      interventionType: InterventionType.FI,
-      parentJurisdictionId: jurisdictionParentId,
-      reason: ROUTINE,
-      statusList: [PlanStatus.ACTIVE, PlanStatus.COMPLETE],
-      title: searchedTitle,
-    });
-  } else {
-    caseTriggeredPlans = getPlansArray(
-      state,
-      InterventionType.FI,
-      [PlanStatus.ACTIVE, PlanStatus.COMPLETE],
-      CASE_TRIGGERED,
-      [],
-      jurisdictionParentId
-    );
-    routinePlans = getPlansArray(
-      state,
-      InterventionType.FI,
-      [PlanStatus.ACTIVE, PlanStatus.COMPLETE],
-      ROUTINE,
-      [],
-      jurisdictionParentId
-    );
-  }
+  const caseTriggeredPlans = makePlansArraySelector()(store.getState(), {
+    interventionType: InterventionType.FI,
+    parentJurisdictionId: jurisdictionParentId,
+    reason: CASE_TRIGGERED,
+    statusList: [PlanStatus.ACTIVE, PlanStatus.COMPLETE],
+    title: searchedTitle,
+  });
+  const routinePlans = makePlansArraySelector()(store.getState(), {
+    interventionType: InterventionType.FI,
+    parentJurisdictionId: jurisdictionParentId,
+    reason: ROUTINE,
+    statusList: [PlanStatus.ACTIVE, PlanStatus.COMPLETE],
+    title: searchedTitle,
+  });
 
   return {
     caseTriggeredPlans,
