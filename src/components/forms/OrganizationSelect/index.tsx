@@ -6,6 +6,7 @@ import { Store } from 'redux';
 import { SELECT } from '../../../configs/lang';
 import { loadOrganizations } from '../../../containers/pages/OrganizationViews/helpers/serviceHooks';
 import { displayError } from '../../../helpers/errors';
+import { reactSelectNoOptionsText } from '../../../helpers/utils';
 import { OpenSRPService } from '../../../services/opensrp';
 import assignmentReducer, {
   Assignment,
@@ -131,6 +132,7 @@ export const OrganizationSelect = (props: OrganizationSelectProps) => {
       isClearable={true}
       isMulti={true}
       value={selectOptions}
+      noOptionsMessage={reactSelectNoOptionsText}
     />
   );
 };

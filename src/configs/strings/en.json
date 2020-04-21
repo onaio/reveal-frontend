@@ -926,5 +926,29 @@
   "FAILED_TO_EXTRACT_PLAN_RECORD": {
     "message": "Failed to extract a plan record",
     "description": "error message shown when utils for extracting a plan from a server response fails"
+  },
+  "LOGIN_PROMPT": {
+    "message": "Please login with one of the following provider prompts",
+    "description": "login prompt for Oauth providers"
+  },
+  "SEARCH_ACTIVE_FOCUS_INVESTIGATIONS": {
+    "message": "Search Active Focus Investigation",
+    "description": "placeholder text for an input element being used to search Focus Investigation plans"
+  },
+  "PROGRESS": {
+    "message": "Progress",
+    "description": "development towards an improved or more advanced condition"
+  },
+  "SAVE_PRACTITIONER": {
+    "message": "Save Practitioner",
+    "description": "button message that when clicked sends data to opensrp"
+  },
+  "AGE": {
+    "message": "Age",
+    "description": "the length of time that a person has lived or a thing has existed"
+  },
+  "NO_OPTIONS": {
+    "message": "No Options",
+    "description": "prompt shown when a search yields no results"
   }
 }

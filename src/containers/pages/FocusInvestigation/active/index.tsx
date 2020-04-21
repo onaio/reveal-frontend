@@ -41,6 +41,7 @@ import {
   REACTIVE,
   ROUTINE_TITLE,
   SEARCH,
+  SEARCH_ACTIVE_FOCUS_INVESTIGATIONS,
   START_DATE,
   STATUS_HEADER,
 } from '../../../../configs/lang';
@@ -197,7 +198,7 @@ class ActiveFocusInvestigation extends React.Component<
               type="text"
               name="search"
               id="exampleEmail"
-              placeholder="Search active focus investigations"
+              placeholder={SEARCH_ACTIVE_FOCUS_INVESTIGATIONS}
             />
           </FormGroup>
           <Button outline={true} color="success">

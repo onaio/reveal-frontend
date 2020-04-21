@@ -32,6 +32,7 @@ import {
   PRACTITIONERS,
   PRACTITIONERS_ASSIGNED_TO_ORG,
   SAVE_CHANGES,
+  SELECT,
 } from '../../../../configs/lang';
 import {
   ASSIGN_PRACTITIONERS_URL,
@@ -44,7 +45,7 @@ import {
 } from '../../../../constants';
 import { displayError } from '../../../../helpers/errors';
 import { useConfirmOnBrowserUnload } from '../../../../helpers/hooks';
-import { generateNameSpacedUUID, growl } from '../../../../helpers/utils';
+import { generateNameSpacedUUID, growl, reactSelectNoOptionsText } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
 import organizationsReducer, {
   fetchOrganizations,
@@ -290,6 +291,8 @@ const AssignPractitioner = (props: PropsTypes) => {
         defaultOptions={true}
         loadOptions={throttledPromiseOptions}
         onChange={changeHandler}
+        noOptionsMessage={reactSelectNoOptionsText}
+        placeholder={SELECT}
         value={value}
       />
       <br />
