@@ -5,6 +5,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import ConnectedIRSPlansList, { IRSPlansList } from '../';
+import { REPORT_IRS_PLAN_URL } from '../../../../../constants';
 import store from '../../../../../store';
 import { IRSPlan } from '../../../../../store/ducks/generic/plans';
 import { fetchIRSPlans } from '../../../../../store/ducks/generic/plans';
@@ -22,6 +23,19 @@ describe('components/IRS Reports/IRSPlansList', () => {
 
   it('renders without crashing', () => {
     const props = {
+      history,
+      location: {
+        hash: '',
+        pathname: REPORT_IRS_PLAN_URL,
+        search: '',
+        state: undefined,
+      },
+      match: {
+        isExact: true,
+        params: {},
+        path: `${REPORT_IRS_PLAN_URL}/`,
+        url: `${REPORT_IRS_PLAN_URL}/`,
+      },
       plans: fixtures.plans as IRSPlan[],
     };
     shallow(
@@ -34,6 +48,19 @@ describe('components/IRS Reports/IRSPlansList', () => {
   it('renders plan definition list correctly', () => {
     fetch.mockResponseOnce(JSON.stringify({}));
     const props = {
+      history,
+      location: {
+        hash: '',
+        pathname: REPORT_IRS_PLAN_URL,
+        search: '',
+        state: undefined,
+      },
+      match: {
+        isExact: true,
+        params: {},
+        path: `${REPORT_IRS_PLAN_URL}/`,
+        url: `${REPORT_IRS_PLAN_URL}/`,
+      },
       plans: fixtures.plans as IRSPlan[],
     };
     const wrapper = mount(
@@ -53,6 +80,17 @@ describe('components/IRS Reports/IRSPlansList', () => {
 
     const props = {
       fetchPlans: jest.fn(),
+      history,
+      location: {
+        pathname: REPORT_IRS_PLAN_URL,
+        search: '?search=Berg',
+      },
+      match: {
+        isExact: true,
+        params: {},
+        path: `${REPORT_IRS_PLAN_URL}`,
+        url: `${REPORT_IRS_PLAN_URL}`,
+      },
       service: jest.fn().mockImplementationOnce(() => Promise.resolve([])),
     };
     const wrapper = mount(
@@ -62,13 +100,6 @@ describe('components/IRS Reports/IRSPlansList', () => {
         </Router>
       </Provider>
     );
-    wrapper
-      .find('Input')
-      .at(0)
-      .simulate('change', { target: { value: 'Berg' } });
-    // Wait for debounce
-    await new Promise(r => setTimeout(r, 1500));
-    wrapper.mount();
     expect(
       wrapper
         .find('tbody tr td')
@@ -83,6 +114,17 @@ describe('components/IRS Reports/IRSPlansList', () => {
 
     const props = {
       fetchPlans: jest.fn(),
+      history,
+      location: {
+        pathname: REPORT_IRS_PLAN_URL,
+        search: '?search=BERG',
+      },
+      match: {
+        isExact: true,
+        params: {},
+        path: `${REPORT_IRS_PLAN_URL}`,
+        url: `${REPORT_IRS_PLAN_URL}`,
+      },
       service: jest.fn().mockImplementationOnce(() => Promise.resolve([])),
     };
     const wrapper = mount(
@@ -92,13 +134,6 @@ describe('components/IRS Reports/IRSPlansList', () => {
         </Router>
       </Provider>
     );
-    wrapper
-      .find('Input')
-      .at(0)
-      .simulate('change', { target: { value: 'BERG' } });
-    // Wait for debounce
-    await new Promise(r => setTimeout(r, 1500));
-    wrapper.mount();
     expect(
       wrapper
         .find('tbody tr td')
@@ -113,6 +148,17 @@ describe('components/IRS Reports/IRSPlansList', () => {
 
     const props = {
       fetchPlans: jest.fn(),
+      history,
+      location: {
+        pathname: REPORT_IRS_PLAN_URL,
+        search: '?search=Amazon',
+      },
+      match: {
+        isExact: true,
+        params: {},
+        path: `${REPORT_IRS_PLAN_URL}`,
+        url: `${REPORT_IRS_PLAN_URL}`,
+      },
       service: jest.fn().mockImplementationOnce(() => Promise.resolve([])),
     };
     const wrapper = mount(
@@ -122,13 +168,6 @@ describe('components/IRS Reports/IRSPlansList', () => {
         </Router>
       </Provider>
     );
-    wrapper
-      .find('Input')
-      .at(0)
-      .simulate('change', { target: { value: 'OOOOOOOPPOAPOPAO' } });
-    // Wait for debounce
-    await new Promise(r => setTimeout(r, 1500));
-    wrapper.mount();
     expect(toJson(wrapper.find('tbody tr'))).toEqual(null);
   });
 });

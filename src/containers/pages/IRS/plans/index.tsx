@@ -1,8 +1,11 @@
 import ListView from '@onaio/list-view';
 import reducerRegistry from '@onaio/redux-reducer-registry';
+import { trimStart } from 'lodash';
+import querystring from 'querystring';
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
+import { RouteComponentProps } from 'react-router';
 import { Link } from 'react-router-dom';
 import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
@@ -22,7 +25,6 @@ import {
 import { planStatusDisplay } from '../../../../configs/settings';
 import { HOME_URL, REPORT_IRS_PLAN_URL } from '../../../../constants';
 import { displayError } from '../../../../helpers/errors';
-import { useDebounce } from '../../../../helpers/hooks';
 import supersetFetch from '../../../../services/superset';
 import store from '../../../../store';
 import IRSPlansReducer, {
@@ -44,16 +46,10 @@ interface PlanListProps {
 }
 
 /** Simple component that loads the new plan form and allows you to create a new plan */
-const IRSPlansList = (props: PlanListProps) => {
+const IRSPlansList = (props: PlanListProps & RouteComponentProps) => {
   const { fetchPlans, plans, service } = props;
   const [loading, setLoading] = useState<boolean>(false);
-  const [searchedPlans, setSearchedPlans] = useState<IRSPlan[]>([]);
-  const [searchQuery, setSearchQuery] = useState('');
   const pageTitle: string = IRS_PLANS;
-  // Return the latest search query if it's been more than 1s since
-  // it was last called
-  const debouncedSearchQuery = useDebounce(searchQuery);
-
   const breadcrumbProps = {
     currentPage: {
       label: pageTitle,
@@ -81,21 +77,9 @@ const IRSPlansList = (props: PlanListProps) => {
     }
   }
 
-  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(event.target.value);
-  };
-
   useEffect(() => {
     loadData().catch(error => displayError(error));
   }, []);
-
-  useEffect(() => {
-    if (debouncedSearchQuery) {
-      setSearchedPlans(
-        getIRSPlansArrayByTitle()(store.getState(), { plan_title: debouncedSearchQuery })
-      );
-    }
-  }, [debouncedSearchQuery]);
 
   const listViewData = (planList: IRSPlan[]) =>
     planList.map(planObj => {
@@ -115,7 +99,7 @@ const IRSPlansList = (props: PlanListProps) => {
   }
 
   const listViewProps = {
-    data: listViewData(searchQuery ? searchedPlans : plans),
+    data: listViewData(plans),
     headerItems: [TITLE, DATE_CREATED, START_DATE, END_DATE, STATUS_HEADER],
     tableClass: 'table table-bordered plans-list',
   };
@@ -132,7 +116,8 @@ const IRSPlansList = (props: PlanListProps) => {
         </Col>
       </Row>
       <hr />
-      <SearchForm handleSearchChange={handleSearchChange} />
+      <SearchForm history={props.history} />
+
       <Row>
         <Col>
           <ListView {...listViewProps} />
@@ -161,11 +146,17 @@ interface DispatchedStateProps {
 }
 
 /** map state to props */
-const mapStateToProps = (state: Partial<Store>): DispatchedStateProps => {
-  const planDefinitionsArray = getIRSPlansArray(state);
+const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateProps => {
+  const searchString = trimStart(ownProps.location.search, '?');
+  const queryParams = querystring.parse(searchString);
+
+  const searchedTitle = queryParams.search as string;
+  const IRSPlansArray = !searchedTitle
+    ? getIRSPlansArray(state)
+    : getIRSPlansArrayByTitle()(store.getState(), { plan_title: searchedTitle });
 
   return {
-    plans: planDefinitionsArray,
+    plans: IRSPlansArray,
   };
 };
 

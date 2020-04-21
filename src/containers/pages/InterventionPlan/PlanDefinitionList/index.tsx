@@ -1,8 +1,11 @@
 import ListView from '@onaio/list-view';
 import reducerRegistry from '@onaio/redux-reducer-registry';
+import { trimStart } from 'lodash';
+import querystring from 'querystring';
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
+import { RouteComponentProps } from 'react-router';
 import { Link } from 'react-router-dom';
 import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
@@ -22,7 +25,6 @@ import {
 import { PlanDefinition, planStatusDisplay } from '../../../../configs/settings';
 import { HOME_URL, OPENSRP_PLANS, PLAN_LIST_URL, PLAN_UPDATE_URL } from '../../../../constants';
 import { displayError } from '../../../../helpers/errors';
-import { useDebounce } from '../../../../helpers/hooks';
 import { OpenSRPService } from '../../../../services/opensrp';
 import store from '../../../../store';
 import planDefinitionReducer, {
@@ -42,17 +44,11 @@ interface PlanListProps {
 }
 
 /** Simple component that loads the new plan form and allows you to create a new plan */
-const PlanDefinitionList = (props: PlanListProps) => {
+const PlanDefinitionList = (props: PlanListProps & RouteComponentProps) => {
   const { fetchPlans, plans, service } = props;
   const [loading, setLoading] = useState<boolean>(true);
-  const [searchedPlans, setSearchedPlans] = useState<PlanDefinition[]>([]);
-  const [searchQuery, setSearchQuery] = useState('');
   const apiService = new service(OPENSRP_PLANS);
   const pageTitle: string = PLANS;
-  // Return the latest search query if it's been more than 1s since
-  // it was last called
-  const debouncedSearchQuery = useDebounce(searchQuery);
-
   const breadcrumbProps = {
     currentPage: {
       label: pageTitle,
@@ -83,18 +79,6 @@ const PlanDefinitionList = (props: PlanListProps) => {
     loadData().catch(err => displayError(err));
   }, []);
 
-  useEffect(() => {
-    if (debouncedSearchQuery) {
-      setSearchedPlans(
-        getPlanDefinitionsArrayByTitle()(store.getState(), { title: debouncedSearchQuery })
-      );
-    }
-  }, [debouncedSearchQuery]);
-
-  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(event.target.value);
-  };
-
   const listViewData = (data: PlanDefinition[]) =>
     data.map(planObj => {
       const typeUseContext = planObj.useContext.filter(e => e.code === 'interventionType');
@@ -114,7 +98,7 @@ const PlanDefinitionList = (props: PlanListProps) => {
   }
 
   const listViewProps = {
-    data: listViewData(searchQuery ? searchedPlans : plans),
+    data: listViewData(plans),
     headerItems: [TITLE, INTERVENTION_TYPE_LABEL, STATUS_HEADER, LAST_MODIFIED],
     tableClass: 'table table-bordered plans-list',
   };
@@ -137,7 +121,7 @@ const PlanDefinitionList = (props: PlanListProps) => {
         </Col>
       </Row>
       <hr />
-      <SearchForm handleSearchChange={handleSearchChange} />
+      <SearchForm history={props.history} />
       <Row>
         <Col>
           <ListView {...listViewProps} />
@@ -166,8 +150,13 @@ interface DispatchedStateProps {
 }
 
 /** map state to props */
-const mapStateToProps = (state: Partial<Store>): DispatchedStateProps => {
-  const planDefinitionsArray = getPlanDefinitionsArray(state);
+const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateProps => {
+  const searchString = trimStart(ownProps.location.search, '?');
+  const queryParams = querystring.parse(searchString);
+  const searchedTitle = queryParams.search as string;
+  const planDefinitionsArray = !searchedTitle
+    ? getPlanDefinitionsArray(state)
+    : getPlanDefinitionsArrayByTitle()(store.getState(), { title: searchedTitle });
 
   return {
     plans: planDefinitionsArray,

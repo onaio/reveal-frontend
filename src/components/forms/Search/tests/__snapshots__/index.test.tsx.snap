@@ -3,13 +3,35 @@
 exports[`src/components/SearchForm renders correctly 1`] = `
 <SearchForm
   handleSearchChange={[MockFunction]}
+  history={
+    Object {
+      "action": "POP",
+      "block": [Function],
+      "createHref": [Function],
+      "go": [Function],
+      "goBack": [Function],
+      "goForward": [Function],
+      "length": 1,
+      "listen": [Function],
+      "location": Object {
+        "hash": "",
+        "pathname": "/",
+        "search": "",
+        "state": undefined,
+      },
+      "push": [Function],
+      "replace": [Function],
+    }
+  }
 >
   <Form
     inline={true}
+    onSubmit={[Function]}
     tag="form"
   >
     <form
       className="form-inline"
+      onSubmit={[Function]}
     >
       <FormGroup
         className="mb-2 mr-sm-2 mb-sm-0"
@@ -20,20 +42,33 @@ exports[`src/components/SearchForm renders correctly 1`] = `
         >
           <Input
             name="search"
-            onChange={[MockFunction]}
+            onChange={[Function]}
             placeholder="Search"
             type="text"
           >
             <input
               className="form-control"
               name="search"
-              onChange={[MockFunction]}
+              onChange={[Function]}
               placeholder="Search"
               type="text"
             />
           </Input>
         </div>
       </FormGroup>
+      <Button
+        color="success"
+        outline={true}
+        tag="button"
+      >
+        <button
+          aria-label={null}
+          className="btn btn-outline-success"
+          onClick={[Function]}
+        >
+          Search
+        </button>
+      </Button>
     </form>
   </Form>
 </SearchForm>

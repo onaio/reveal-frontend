@@ -121,11 +121,8 @@ class ActiveFocusInvestigation extends React.Component<
 > {
   public static defaultProps: ActiveFIProps = defaultActiveFIProps;
 
-  public debouncedSearchCallback = _.debounce(this.debouncedSearch, 1000);
   constructor(props: ActiveFIProps & RouteComponentProps<RouteParams>) {
     super(props);
-    this.handleSearchChange = this.handleSearchChange.bind(this);
-    this.debouncedSearchCallback = _.debounce(this.debouncedSearch, 1000);
   }
 
   public componentDidMount() {
@@ -138,17 +135,6 @@ class ActiveFocusInvestigation extends React.Component<
       .catch(err => displayError(err));
   }
 
-  public debouncedSearch(event: React.ChangeEvent<HTMLInputElement>) {
-    this.props.history.push({
-      pathname: this.props.location.pathname,
-      search: `?search=${event.target.value}`,
-    });
-  }
-
-  public handleSearchChange(event: React.ChangeEvent<HTMLInputElement>) {
-    event.persist(); // This will ensure that the event is not pooled for more details https://reactjs.org/docs/events.html
-    this.debouncedSearchCallback(event);
-  }
   public render() {
     const breadcrumbProps: BreadCrumbProps = {
       currentPage: {
@@ -214,7 +200,7 @@ class ActiveFocusInvestigation extends React.Component<
         <HeaderBreadCrumb {...breadcrumbProps} />
         <h2 className="mb-3 mt-5 page-title">{pageTitle}</h2>
         <hr />
-        <SearchForm handleSearchChange={this.handleSearchChange} />
+        <SearchForm history={this.props.history} />
         {[caseTriggeredPlans, routinePlans].forEach((plansArray: Plan[] | null, i) => {
           const locationColumns: Column[] = getLocationColumns(locationHierarchy, true);
           if (plansArray && plansArray.length) {

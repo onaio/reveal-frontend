@@ -5,6 +5,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import ConnectedPlanDefinitionList, { PlanDefinitionList } from '../';
+import { PLAN_LIST_URL } from '../../../../../constants';
 import store from '../../../../../store';
 import { fetchPlanDefinitions } from '../../../../../store/ducks/opensrp/PlanDefinition';
 import * as fixtures from '../../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
@@ -19,8 +20,25 @@ describe('components/InterventionPlan/PlanDefinitionList', () => {
     jest.resetAllMocks();
   });
 
+  beforeAll(() => {
+    global.Date.now = jest.fn(() => new Date('2019-04-07T10:20:30Z').getTime());
+  });
+
   it('renders without crashing', () => {
     const props = {
+      history,
+      location: {
+        hash: '',
+        pathname: PLAN_LIST_URL,
+        search: '',
+        state: undefined,
+      },
+      match: {
+        isExact: true,
+        params: {},
+        path: `${PLAN_LIST_URL}/`,
+        url: `${PLAN_LIST_URL}/`,
+      },
       plans: fixtures.plans,
     };
     shallow(
@@ -33,6 +51,20 @@ describe('components/InterventionPlan/PlanDefinitionList', () => {
   it('renders plan definition list correctly', () => {
     fetch.mockResponseOnce(fixtures.plansJSON);
     const props = {
+      history,
+      location: {
+        hash: '',
+        key: 'key',
+        pathname: PLAN_LIST_URL,
+        search: '',
+        state: undefined,
+      },
+      match: {
+        isExact: true,
+        params: {},
+        path: `${PLAN_LIST_URL}/`,
+        url: `${PLAN_LIST_URL}/`,
+      },
       plans: fixtures.plans,
     };
     const wrapper = mount(
@@ -40,7 +72,7 @@ describe('components/InterventionPlan/PlanDefinitionList', () => {
         <PlanDefinitionList {...props} />
       </Router>
     );
-    expect(toJson(wrapper)).toMatchSnapshot();
+    expect(toJson(wrapper.find('PlanDefinitionList'))).toMatchSnapshot();
     wrapper.unmount();
   });
 
@@ -49,6 +81,17 @@ describe('components/InterventionPlan/PlanDefinitionList', () => {
 
     const props = {
       fetchPlans: jest.fn(),
+      history,
+      location: {
+        pathname: PLAN_LIST_URL,
+        search: '?search=Mosh',
+      },
+      match: {
+        isExact: true,
+        params: {},
+        path: `${PLAN_LIST_URL}`,
+        url: `${PLAN_LIST_URL}`,
+      },
       service: jest.fn().mockImplementationOnce(() => Promise.resolve([])),
     };
     const wrapper = mount(
@@ -58,12 +101,6 @@ describe('components/InterventionPlan/PlanDefinitionList', () => {
         </Router>
       </Provider>
     );
-    wrapper
-      .find('Input')
-      .at(0)
-      .simulate('change', { target: { value: 'Mosh' } });
-    // Wait for debounce
-    await new Promise(r => setTimeout(r, 1500));
     wrapper.mount();
     expect(
       wrapper
@@ -79,6 +116,17 @@ describe('components/InterventionPlan/PlanDefinitionList', () => {
 
     const props = {
       fetchPlans: jest.fn(),
+      history,
+      location: {
+        pathname: PLAN_LIST_URL,
+        search: '?search=MOSH',
+      },
+      match: {
+        isExact: true,
+        params: {},
+        path: `${PLAN_LIST_URL}`,
+        url: `${PLAN_LIST_URL}`,
+      },
       service: jest.fn().mockImplementationOnce(() => Promise.resolve([])),
     };
     const wrapper = mount(
@@ -88,12 +136,6 @@ describe('components/InterventionPlan/PlanDefinitionList', () => {
         </Router>
       </Provider>
     );
-    wrapper
-      .find('Input')
-      .at(0)
-      .simulate('change', { target: { value: 'MOsh' } });
-    // Wait for debounce
-    await new Promise(r => setTimeout(r, 1500));
     wrapper.mount();
     expect(
       wrapper
@@ -109,6 +151,17 @@ describe('components/InterventionPlan/PlanDefinitionList', () => {
 
     const props = {
       fetchPlans: jest.fn(),
+      history,
+      location: {
+        pathname: PLAN_LIST_URL,
+        search: '?search=Amazon',
+      },
+      match: {
+        isExact: true,
+        params: {},
+        path: `${PLAN_LIST_URL}`,
+        url: `${PLAN_LIST_URL}`,
+      },
       service: jest.fn().mockImplementationOnce(() => Promise.resolve([])),
     };
     const wrapper = mount(
@@ -118,12 +171,6 @@ describe('components/InterventionPlan/PlanDefinitionList', () => {
         </Router>
       </Provider>
     );
-    wrapper
-      .find('Input')
-      .at(0)
-      .simulate('change', { target: { value: 'OOOOOOOPPOAPOPAO' } });
-    // Wait for debounce
-    await new Promise(r => setTimeout(r, 1500));
     wrapper.mount();
     expect(toJson(wrapper.find('tbody tr'))).toEqual(null);
   });

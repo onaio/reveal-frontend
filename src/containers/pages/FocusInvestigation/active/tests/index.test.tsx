@@ -10,6 +10,7 @@ import { Helmet } from 'react-helmet';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import { CURRENT_FOCUS_INVESTIGATION } from '../../../../../configs/lang';
+import { FI_URL } from '../../../../../constants';
 import store from '../../../../../store';
 import reducer, {
   fetchPlans,
@@ -239,11 +240,18 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
   it('handles search correctly for case triggered plans', async () => {
     store.dispatch(fetchPlans([fixtures.plan24, fixtures.plan25]));
 
-    const mock: any = jest.fn();
     const props = {
       history,
-      location: mock,
-      match: mock,
+      location: {
+        pathname: FI_URL,
+        search: '?search=Jane',
+      },
+      match: {
+        isExact: true,
+        params: {},
+        path: `${FI_URL}`,
+        url: `${FI_URL}`,
+      },
       supersetService: jest.fn().mockImplementationOnce(() => Promise.resolve([])),
     };
     const wrapper = mount(
@@ -253,10 +261,6 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
         </Router>
       </Provider>
     );
-    wrapper.find('Input').simulate('change', { target: { value: 'Jane' } });
-    // Wait for debounce
-    await new Promise(r => setTimeout(r, 1000));
-    wrapper.update();
     expect(
       wrapper
         .find('ReactTable')
@@ -268,11 +272,18 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
   it('handles search correctly for routine plans', async () => {
     store.dispatch(fetchPlans([fixtures.plan1, fixtures.plan22]));
 
-    const mock: any = jest.fn();
     const props = {
       history,
-      location: mock,
-      match: mock,
+      location: {
+        pathname: FI_URL,
+        search: '?search=Luang',
+      },
+      match: {
+        isExact: true,
+        params: {},
+        path: `${FI_URL}`,
+        url: `${FI_URL}`,
+      },
       supersetService: jest.fn().mockImplementationOnce(() => Promise.resolve([])),
     };
     const wrapper = mount(
@@ -282,13 +293,6 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
         </Router>
       </Provider>
     );
-    wrapper
-      .find('Input')
-      .at(0)
-      .simulate('change', { target: { value: 'Luang' } });
-    // Wait for debounce
-    await new Promise(r => setTimeout(r, 1000));
-    wrapper.update();
     expect(
       wrapper
         .find('ReactTable')
@@ -301,11 +305,18 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
   it('handles case insensitive searches correctly', async () => {
     store.dispatch(fetchPlans([fixtures.plan1, fixtures.plan22]));
 
-    const mock: any = jest.fn();
     const props = {
       history,
-      location: mock,
-      match: mock,
+      location: {
+        pathname: FI_URL,
+        search: '?search=LUANG',
+      },
+      match: {
+        isExact: true,
+        params: {},
+        path: `${FI_URL}`,
+        url: `${FI_URL}`,
+      },
       supersetService: jest.fn().mockImplementationOnce(() => Promise.resolve([])),
     };
     const wrapper = mount(
@@ -315,13 +326,6 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
         </Router>
       </Provider>
     );
-    wrapper
-      .find('Input')
-      .at(0)
-      .simulate('change', { target: { value: 'LUANG' } });
-    // Wait for debounce
-    await new Promise(r => setTimeout(r, 1000));
-    wrapper.update();
     expect(
       wrapper
         .find('ReactTable')
@@ -334,11 +338,18 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
   it('renders empty tables if search query does not match any case trigger or routine plans', async () => {
     store.dispatch(fetchPlans([fixtures.plan1, fixtures.plan22, fixtures.plan24, fixtures.plan25]));
 
-    const mock: any = jest.fn();
     const props = {
       history,
-      location: mock,
-      match: mock,
+      location: {
+        pathname: FI_URL,
+        search: '?search=Amazon',
+      },
+      match: {
+        isExact: true,
+        params: {},
+        path: `${FI_URL}`,
+        url: `${FI_URL}`,
+      },
       supersetService: jest.fn().mockImplementationOnce(() => Promise.resolve([])),
     };
     const wrapper = mount(
@@ -348,14 +359,6 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
         </Router>
       </Provider>
     );
-    wrapper
-      .find('Input')
-      .at(0)
-      .simulate('change', { target: { value: 'UUOAIO' } });
-    // Wait for debounce
-    await new Promise(r => setTimeout(r, 1000));
-    wrapper.update();
-    wrapper.update();
     expect(
       wrapper
         .find('ReactTable')
