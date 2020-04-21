@@ -29,4 +29,15 @@ describe('src/components/SearchForm', () => {
     expect(history.push).toBeCalledWith({ search: '?search=test' });
     wrapper.unmount();
   });
+
+  it('displays placeholder correctly', () => {
+    const props = {
+      handleSearchChange: jest.fn(),
+      history,
+      placeholder: 'Search me',
+    };
+    const wrapper = mount(<SearchForm {...props} />);
+    expect(wrapper.find('Input').prop('placeholder')).toEqual('Search me');
+    wrapper.unmount();
+  });
 });

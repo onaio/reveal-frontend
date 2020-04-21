@@ -18,6 +18,7 @@ export type Submit = (event: React.FormEvent<HTMLFormElement>) => void;
  */
 export interface SearchFormProps {
   history: History;
+  placeholder?: string;
 }
 
 /** Search Form component */
@@ -38,7 +39,12 @@ export const SearchForm = (props: SearchFormProps) => {
   return (
     <Form inline={true} onSubmit={handleSubmit}>
       <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
-        <Input type="text" name="search" placeholder="Search" onChange={handleSearchChange} />
+        <Input
+          type="text"
+          name="search"
+          placeholder={props.placeholder ? props.placeholder : SEARCH}
+          onChange={handleSearchChange}
+        />
       </FormGroup>
       <Button outline={true} color="success">
         {SEARCH}

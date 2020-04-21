@@ -28,7 +28,6 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
       "hash": "",
       "key": "key",
       "pathname": "/plans/list",
-      "query": Object {},
       "search": "",
       "state": undefined,
     }
