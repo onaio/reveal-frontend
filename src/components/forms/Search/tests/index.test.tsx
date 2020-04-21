@@ -11,6 +11,7 @@ describe('src/components/SearchForm', () => {
     const props = {
       handleSearchChange: jest.fn(),
       history,
+      location: { hash: '', pathname: '/', search: '', state: undefined, query: {} },
     };
     const wrapper = mount(<SearchForm {...props} />);
     expect(toJson(wrapper)).toMatchSnapshot();
@@ -22,6 +23,7 @@ describe('src/components/SearchForm', () => {
     const props = {
       handleSearchChange: jest.fn(),
       history,
+      location: { hash: '', pathname: '/', search: '', state: undefined, query: {} },
     };
     const wrapper = mount(<SearchForm {...props} />);
     wrapper.find('Input').simulate('change', { target: { value: 'test' } });
@@ -34,6 +36,7 @@ describe('src/components/SearchForm', () => {
     const props = {
       handleSearchChange: jest.fn(),
       history,
+      location: { hash: '', pathname: '/', search: '', state: undefined, query: {} },
       placeholder: 'Search me',
     };
     const wrapper = mount(<SearchForm {...props} />);

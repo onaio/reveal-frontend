@@ -116,7 +116,7 @@ const IRSPlansList = (props: PlanListProps & RouteComponentProps) => {
         </Col>
       </Row>
       <hr />
-      <SearchForm history={props.history} />
+      <SearchForm history={props.history} location={props.location} />
 
       <Row>
         <Col>
@@ -149,7 +149,6 @@ interface DispatchedStateProps {
 const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateProps => {
   const searchString = trimStart(ownProps.location.search, '?');
   const queryParams = querystring.parse(searchString);
-
   const searchedTitle = queryParams.search as string;
   const IRSPlansArray = !searchedTitle
     ? getIRSPlansArray(state)

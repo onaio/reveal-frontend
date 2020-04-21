@@ -23,6 +23,15 @@ exports[`src/components/SearchForm renders correctly 1`] = `
       "replace": [Function],
     }
   }
+  location={
+    Object {
+      "hash": "",
+      "pathname": "/",
+      "query": Object {},
+      "search": "",
+      "state": undefined,
+    }
+  }
 >
   <Form
     inline={true}

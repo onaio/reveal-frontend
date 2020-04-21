@@ -121,7 +121,7 @@ const PlanDefinitionList = (props: PlanListProps & RouteComponentProps) => {
         </Col>
       </Row>
       <hr />
-      <SearchForm history={props.history} />
+      <SearchForm history={props.history} location={props.location} />
       <Row>
         <Col>
           <ListView {...listViewProps} />

@@ -1,5 +1,7 @@
-import { History } from 'history';
-import React, { useState } from 'react';
+import { History, Location } from 'history';
+import { trimStart } from 'lodash';
+import querystring from 'querystring';
+import React, { useEffect, useState } from 'react';
 import { Button, Form, FormGroup, Input } from 'reactstrap';
 import { SEARCH } from '../../../configs/lang';
 
@@ -18,12 +20,20 @@ export type Submit = (event: React.FormEvent<HTMLFormElement>) => void;
  */
 export interface SearchFormProps {
   history: History;
+  location: Location;
   placeholder?: string;
 }
 
 /** Search Form component */
 export const SearchForm = (props: SearchFormProps) => {
   const [searchQuery, setSearchQuery] = useState('');
+
+  useEffect(() => {
+    const searchString = trimStart(props.location.search, '?');
+    const queryParams = querystring.parse(searchString);
+    const searchedTitle = queryParams.search as string;
+    setSearchQuery(searchedTitle);
+  }, []);
 
   const handleSearchChange: Change = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(event.target.value);
@@ -44,6 +54,7 @@ export const SearchForm = (props: SearchFormProps) => {
           name="search"
           placeholder={props.placeholder ? props.placeholder : SEARCH}
           onChange={handleSearchChange}
+          value={searchQuery}
         />
       </FormGroup>
       <Button outline={true} color="success">

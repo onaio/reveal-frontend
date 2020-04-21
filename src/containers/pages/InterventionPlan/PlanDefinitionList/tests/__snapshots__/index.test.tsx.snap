@@ -1073,6 +1073,15 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
           "replace": [Function],
         }
       }
+      location={
+        Object {
+          "hash": "",
+          "key": "key",
+          "pathname": "/plans/list",
+          "search": "",
+          "state": undefined,
+        }
+      }
     >
       <Form
         inline={true}
