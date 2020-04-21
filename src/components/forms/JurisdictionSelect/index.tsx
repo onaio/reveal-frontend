@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import AsyncSelect, { Props as AsyncSelectProps } from 'react-select/async';
 import { SELECT } from '../../../configs/lang';
 import { displayError } from '../../../helpers/errors';
-import { ReactSelectNoOptions } from '../../../helpers/utils';
+import { reactSelectNoOptionsText } from '../../../helpers/utils';
 import { getFilterParams, OpenSRPService, URLParams } from '../../../services/opensrp';
 import './style.css';
 
@@ -158,7 +158,7 @@ const JurisdictionSelect = (props: JurisdictionSelectProps & FieldProps) => {
       defaultMenuIsOpen={shouldMenuOpen}
       closeMenuOnSelect={closeMenuOnSelect}
       placeholder={props.placeholder ? props.placeholder : SELECT}
-      noOptionsMessage={ReactSelectNoOptions}
+      noOptionsMessage={reactSelectNoOptionsText}
       aria-label={props['aria-label'] ? props['aria-label'] : SELECT}
       onChange={handleChange()}
       defaultOptions={true}
