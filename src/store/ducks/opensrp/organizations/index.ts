@@ -37,14 +37,14 @@ export const ORGANIZATIONS_FETCHED = 'src/store/ducks/organizations/reducer/TEAM
 export const REMOVE_ORGANIZATIONS = 'src/store/ducks/organizations/reducer/REMOVE_TEAMS';
 
 /** interface for organizations fetched action */
-interface FetchOrganizationsAction extends AnyAction {
+export interface FetchOrganizationsAction extends AnyAction {
   overwrite: boolean;
   organizationsById: { [key: string]: Organization };
   type: typeof ORGANIZATIONS_FETCHED;
 }
 
 /** interface for action that removes organizations from store */
-interface RemoveOrganizationsAction extends AnyAction {
+export interface RemoveOrganizationsAction extends AnyAction {
   organizationsById: { [key: string]: Organization };
   type: typeof REMOVE_ORGANIZATIONS;
 }
