@@ -2,6 +2,7 @@
 import ListView from '@onaio/list-view';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import React, { useEffect } from 'react';
+import { IfFulfilled, IfPending, IfRejected, useAsync } from 'react-async';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
@@ -24,6 +25,7 @@ import {
   HOME,
   IDENTIFIER,
   NAME,
+  NO_DATA_TO_SHOW,
   PRACTITIONER,
   PRACTITIONERS,
   SEARCH,
@@ -35,7 +37,6 @@ import {
   HOME_URL,
   PRACTITIONERS_LIST_URL,
 } from '../../../../constants';
-import { displayError } from '../../../../helpers/errors';
 import { OpenSRPService } from '../../../../services/opensrp';
 import practitionersReducer, {
   fetchPractitioners,
@@ -43,7 +44,7 @@ import practitionersReducer, {
   Practitioner,
   reducerName as practitionersReducerName,
 } from '../../../../store/ducks/opensrp/practitioners';
-import { loadPractitioners } from '../helpers/serviceHooks';
+import { asyncGetPractitioners } from '../helpers/serviceHooks';
 
 reducerRegistry.register(practitionersReducerName, practitionersReducer);
 
@@ -118,16 +119,16 @@ const PractitionersListView = (props: PropsTypes) => {
     to: CREATE_PRACTITIONER_URL,
   };
 
-  /** hook to load all practitioners and dispatch to them to store */
-  useEffect(() => {
-    loadPractitioners(serviceClass, fetchPractitionersCreator).catch(error => displayError(error));
-  }, []);
+  const loadPractitionersState = useAsync<Practitioner[]>(asyncGetPractitioners, {
+    fetchPractitionersCreator,
+    service: serviceClass,
+  });
 
-  // break early if practitioners are absent
-  const isLoading = practitioners.length < 1;
-  if (isLoading) {
-    return <Loading />;
-  }
+  useEffect(() => {
+    if (props.practitioners.length > 0) {
+      loadPractitionersState.setData(props.practitioners);
+    }
+  }, []);
 
   return (
     <div>
@@ -145,8 +146,19 @@ const PractitionersListView = (props: PropsTypes) => {
       </Row>
       <hr />
       <InlineSearchForm {...inlineSearchFormProps} />
-
-      <ListView {...listViewProps} />
+      <IfPending state={loadPractitionersState}>
+        <Loading />
+      </IfPending>
+      <IfRejected state={loadPractitionersState}>
+        <p> An Error Occurred</p>
+      </IfRejected>
+      <IfFulfilled state={loadPractitionersState} persist={true}>
+        {props.practitioners.length < 1 ? (
+          <p>{NO_DATA_TO_SHOW}</p>
+        ) : (
+          <ListView {...listViewProps} />
+        )}
+      </IfFulfilled>
     </div>
   );
 };

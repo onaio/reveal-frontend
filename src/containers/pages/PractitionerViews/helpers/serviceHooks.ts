@@ -1,3 +1,4 @@
+import { PromiseFn } from 'react-async';
 import { toast } from 'react-toastify';
 import { OPENSRP_PRACTITIONER_ENDPOINT } from '../../../../constants';
 import { growl } from '../../../../helpers/utils';
@@ -19,6 +20,31 @@ export const loadPractitioners = async (
     .then((response: Practitioner[]) => store.dispatch(fetchPractitionersCreator(response, true)))
     .catch((err: Error) => {
       growl(err.message, { type: toast.TYPE.ERROR });
+    });
+};
+
+// asyncGetPractitioners is functionally similar to loadPractitioners , the difference in structure
+// is to allow for it to be used by react-async hooks. The previous implementation is yet to be
+// removed to allow for the transition process to be in bits.
+
+/** loads all practitioners returned in within a single request from practitioners endpoint
+ * @param {typeof OpenSRPService} service -  the OpenSRP service
+ * @param {typeof fetchPractitioners} fetchPractitionersActionCreator - action creator for adding practitioners to store
+ */
+export const asyncGetPractitioners: PromiseFn<Practitioner[]> = async (
+  { service, fetchPractitionersCreator },
+  { signal } = new AbortController()
+) => {
+  const serve = new service(OPENSRP_PRACTITIONER_ENDPOINT, signal);
+  return serve
+    .list()
+    .then((response: Practitioner[]) => {
+      store.dispatch(fetchPractitionersCreator(response, true));
+      return response;
+    })
+    .catch((err: Error) => {
+      growl(err.message, { type: toast.TYPE.ERROR });
+      return [];
     });
 };
 

@@ -437,3 +437,4 @@ export const FAILED_TO_EXTRACT_PLAN_RECORD = translate(
   'FAILED_TO_EXTRACT_PLAN_RECORD',
   'Failed to extract a plan record'
 );
+export const NO_DATA_TO_SHOW = translate('NO_DATA_TO_SHOW', 'No data to show');
