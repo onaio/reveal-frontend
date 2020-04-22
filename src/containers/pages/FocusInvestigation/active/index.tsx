@@ -98,7 +98,6 @@ export interface ActiveFIProps {
   routinePlans: Plan[] | null;
   supersetService: typeof supersetFetch;
   plan: Plan | null;
-  jurisdictionParentId: string;
   searchedTitle: string | null;
 }
 
@@ -106,7 +105,6 @@ export interface ActiveFIProps {
 export const defaultActiveFIProps: ActiveFIProps = {
   caseTriggeredPlans: null,
   fetchPlansActionCreator: fetchPlans,
-  jurisdictionParentId: '',
   plan: null,
   routinePlans: null,
   searchedTitle: null,
