@@ -15,6 +15,27 @@ Object {
 }
 `;
 
+exports[`components/InterventionPlan/PlanDefinitionList renders plan definition list correctly: helmet 1`] = `
+<HelmetWrapper
+  defer={true}
+  encodeSpecialCharacters={true}
+>
+  <SideEffect(NullComponent)
+    defer={true}
+    encodeSpecialCharacters={true}
+    title="Manage Plans"
+    titleAttributes={Object {}}
+  >
+    <NullComponent
+      defer={true}
+      encodeSpecialCharacters={true}
+      title="Manage Plans"
+      titleAttributes={Object {}}
+    />
+  </SideEffect(NullComponent)>
+</HelmetWrapper>
+`;
+
 exports[`components/InterventionPlan/PlanDefinitionList renders plan definition list correctly: list view props 1`] = `
 Object {
   "data": Array [
