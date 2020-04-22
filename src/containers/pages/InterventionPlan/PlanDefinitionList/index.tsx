@@ -3,9 +3,11 @@ import reducerRegistry from '@onaio/redux-reducer-registry';
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
+import { RouteComponentProps } from 'react-router';
 import { Link } from 'react-router-dom';
 import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
+import { SearchForm } from '../../../../components/forms/Search';
 import LinkAsButton from '../../../../components/LinkAsButton';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
@@ -19,15 +21,21 @@ import {
   TITLE,
 } from '../../../../configs/lang';
 import { PlanDefinition, planStatusDisplay } from '../../../../configs/settings';
-import { HOME_URL, OPENSRP_PLANS, PLAN_LIST_URL, PLAN_UPDATE_URL } from '../../../../constants';
+import {
+  HOME_URL,
+  OPENSRP_PLANS,
+  PLAN_LIST_URL,
+  PLAN_UPDATE_URL,
+  QUERY_PARAM_TITLE,
+} from '../../../../constants';
 import { displayError } from '../../../../helpers/errors';
+import { getQueryParams } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
 import planDefinitionReducer, {
   fetchPlanDefinitions,
-  getPlanDefinitionsArray,
+  makePlanDefinitionsArraySelector,
   reducerName as planDefinitionReducerName,
 } from '../../../../store/ducks/opensrp/PlanDefinition';
-
 /** register the plan definitions reducer */
 reducerRegistry.register(planDefinitionReducerName, planDefinitionReducer);
 
@@ -39,14 +47,11 @@ interface PlanListProps {
 }
 
 /** Simple component that loads the new plan form and allows you to create a new plan */
-const PlanDefinitionList = (props: PlanListProps) => {
+const PlanDefinitionList = (props: PlanListProps & RouteComponentProps) => {
   const { fetchPlans, plans, service } = props;
   const [loading, setLoading] = useState<boolean>(true);
-
   const apiService = new service(OPENSRP_PLANS);
-
   const pageTitle: string = PLANS;
-
   const breadcrumbProps = {
     currentPage: {
       label: pageTitle,
@@ -77,12 +82,8 @@ const PlanDefinitionList = (props: PlanListProps) => {
     loadData().catch(err => displayError(err));
   }, []);
 
-  if (loading === true) {
-    return <Loading />;
-  }
-
-  const listViewProps = {
-    data: plans.map(planObj => {
+  const listViewData = (data: PlanDefinition[]) =>
+    data.map(planObj => {
       const typeUseContext = planObj.useContext.filter(e => e.code === 'interventionType');
 
       return [
@@ -93,7 +94,14 @@ const PlanDefinitionList = (props: PlanListProps) => {
         planStatusDisplay[planObj.status] || planObj.status,
         planObj.date,
       ];
-    }),
+    });
+
+  if (loading === true) {
+    return <Loading />;
+  }
+
+  const listViewProps = {
+    data: listViewData(plans),
     headerItems: [TITLE, INTERVENTION_TYPE_LABEL, STATUS_HEADER, LAST_MODIFIED],
     tableClass: 'table table-bordered plans-list',
   };
@@ -115,6 +123,8 @@ const PlanDefinitionList = (props: PlanListProps) => {
           />
         </Col>
       </Row>
+      <hr />
+      <SearchForm history={props.history} location={props.location} />
       <Row>
         <Col>
           <ListView {...listViewProps} />
@@ -143,8 +153,11 @@ interface DispatchedStateProps {
 }
 
 /** map state to props */
-const mapStateToProps = (state: Partial<Store>): DispatchedStateProps => {
-  const planDefinitionsArray = getPlanDefinitionsArray(state);
+const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateProps => {
+  const searchedTitle = getQueryParams(ownProps.location)[QUERY_PARAM_TITLE] as string;
+  const planDefinitionsArray = makePlanDefinitionsArraySelector()(state, {
+    title: searchedTitle,
+  });
 
   return {
     plans: planDefinitionsArray,
