@@ -1,76 +1,21 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`components/InterventionPlan/PlanDefinitionList renders plan definition list correctly: header bread crumb 1`] = `
-<HeaderBreadcrumb
-  currentPage={
+exports[`components/InterventionPlan/PlanDefinitionList renders plan definition list correctly: bread crumb props 1`] = `
+Object {
+  "currentPage": Object {
+    "label": "Manage Plans",
+    "url": "/plans/list",
+  },
+  "pages": Array [
     Object {
-      "label": "Manage Plans",
-      "url": "/plans/list",
-    }
-  }
-  pages={
-    Array [
-      Object {
-        "label": "Home",
-        "url": "/",
-      },
-    ]
-  }
->
-  <div>
-    <Breadcrumb
-      aria-label="breadcrumb"
-      className="reveal-breadcrumb"
-      listTag="ol"
-      tag="nav"
-    >
-      <nav
-        aria-label="breadcrumb"
-        className="reveal-breadcrumb"
-      >
-        <ol
-          className="breadcrumb"
-        >
-          <BreadcrumbItem
-            key="0"
-            tag="li"
-          >
-            <li
-              className="breadcrumb-item"
-            >
-              <Link
-                key="0"
-                replace={false}
-                to="/"
-              >
-                <a
-                  href="/"
-                  onClick={[Function]}
-                >
-                  Home
-                </a>
-              </Link>
-            </li>
-          </BreadcrumbItem>
-          <BreadcrumbItem
-            active={true}
-            tag="li"
-          >
-            <li
-              aria-current="page"
-              className="active breadcrumb-item"
-            >
-              Manage Plans
-            </li>
-          </BreadcrumbItem>
-        </ol>
-      </nav>
-    </Breadcrumb>
-  </div>
-</HeaderBreadcrumb>
+      "label": "Home",
+      "url": "/",
+    },
+  ],
+}
 `;
 
-exports[`components/InterventionPlan/PlanDefinitionList renders plan definition list correctly: list view data 1`] = `
+exports[`components/InterventionPlan/PlanDefinitionList renders plan definition list correctly: list view props 1`] = `
 Object {
   "data": Array [
     Array [
@@ -217,85 +162,33 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
 </Row>
 `;
 
-exports[`components/InterventionPlan/PlanDefinitionList renders plan definition list correctly: search form 1`] = `
-<SearchForm
-  history={
-    Object {
-      "action": "POP",
-      "block": [Function],
-      "createHref": [Function],
-      "go": [Function],
-      "goBack": [Function],
-      "goForward": [Function],
-      "length": 1,
-      "listen": [Function],
-      "location": Object {
-        "hash": "",
-        "pathname": "/",
-        "search": "",
-        "state": undefined,
-      },
-      "push": [Function],
-      "replace": [Function],
-    }
-  }
-  location={
-    Object {
+exports[`components/InterventionPlan/PlanDefinitionList renders plan definition list correctly: search form props 1`] = `
+Object {
+  "history": Object {
+    "action": "POP",
+    "block": [Function],
+    "createHref": [Function],
+    "go": [Function],
+    "goBack": [Function],
+    "goForward": [Function],
+    "length": 1,
+    "listen": [Function],
+    "location": Object {
       "hash": "",
-      "key": "key",
-      "pathname": "/plans/list",
+      "pathname": "/",
       "search": "",
       "state": undefined,
-    }
-  }
-  placeholder="Search"
->
-  <Form
-    inline={true}
-    onSubmit={[Function]}
-    tag="form"
-  >
-    <form
-      className="form-inline"
-      onSubmit={[Function]}
-    >
-      <FormGroup
-        className="mb-2 mr-sm-2 mb-sm-0"
-        tag="div"
-      >
-        <div
-          className="mb-2 mr-sm-2 mb-sm-0 form-group"
-        >
-          <Input
-            name="search"
-            onChange={[Function]}
-            placeholder="Search"
-            type="text"
-          >
-            <input
-              className="form-control"
-              name="search"
-              onChange={[Function]}
-              placeholder="Search"
-              type="text"
-            />
-          </Input>
-        </div>
-      </FormGroup>
-      <Button
-        color="success"
-        outline={true}
-        tag="button"
-      >
-        <button
-          aria-label={null}
-          className="btn btn-outline-success"
-          onClick={[Function]}
-        >
-          Search
-        </button>
-      </Button>
-    </form>
-  </Form>
-</SearchForm>
+    },
+    "push": [Function],
+    "replace": [Function],
+  },
+  "location": Object {
+    "hash": "",
+    "key": "key",
+    "pathname": "/plans/list",
+    "search": "",
+    "state": undefined,
+  },
+  "placeholder": "Search",
+}
 `;
