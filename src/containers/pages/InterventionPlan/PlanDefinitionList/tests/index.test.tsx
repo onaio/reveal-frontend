@@ -72,7 +72,10 @@ describe('components/InterventionPlan/PlanDefinitionList', () => {
         <PlanDefinitionList {...props} />
       </Router>
     );
-    expect(toJson(wrapper.find('PlanDefinitionList'))).toMatchSnapshot();
+    expect(toJson(wrapper.find('HeaderBreadcrumb'))).toMatchSnapshot('header bread crumb');
+    expect(toJson(wrapper.find('Row').at(0))).toMatchSnapshot('row heading');
+    expect(toJson(wrapper.find('SearchForm'))).toMatchSnapshot('search form');
+    expect(wrapper.find('ListView').props()).toMatchSnapshot('list view data');
     wrapper.unmount();
   });
 
