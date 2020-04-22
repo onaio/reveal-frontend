@@ -8,6 +8,7 @@ import { RouteComponentProps } from 'react-router';
 import { Link } from 'react-router-dom';
 import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
+import { AsyncRenderer } from '../../../../components/AsyncRenderer';
 import InlineSearchForm, {
   FieldProps,
   Props as InlineSearchFormProps,
@@ -22,6 +23,7 @@ import {
   HOME,
   IDENTIFIER,
   NEW_TEAM,
+  NO_DATA_TO_SHOW,
   ORGANIZATION_LABEL,
   ORGANIZATION_NAME_TITLE,
   ORGANIZATIONS_LABEL,
@@ -42,7 +44,11 @@ import organizationsReducer, {
   Organization,
   reducerName as organizationsReducerName,
 } from '../../../../store/ducks/opensrp/organizations';
-import { loadOrganizations } from '../helpers/serviceHooks';
+import {
+  asyncGetOrganizations,
+  AsyncGetOrganizationsOptions,
+  loadOrganizations,
+} from '../helpers/serviceHooks';
 import './index.css';
 
 reducerRegistry.register(organizationsReducerName, organizationsReducer);
@@ -124,6 +130,25 @@ const OrganizationListView = (props: OrgsListViewPropsType) => {
     to: CREATE_ORGANIZATION_URL,
   };
 
+  const asyncRendererProps = {
+    data: props.organizations,
+    ifFulfilledRender: () => (
+      <div>
+        {props.organizations.length < 1 ? (
+          <p>{NO_DATA_TO_SHOW}</p>
+        ) : (
+          <ListView {...listViewProps} />
+        )}
+      </div>
+    ),
+    ifLoadingRender: () => <Loading />,
+    promiseFn: asyncGetOrganizations,
+    promiseFnProps: {
+      fetchOrganizationsCreator: fetchOrganizationsAction,
+      service: serviceClass,
+    },
+  };
+
   useEffect(() => {
     loadOrganizations(serviceClass, fetchOrganizationsAction).catch(err => displayError(err));
   }, []);
@@ -152,6 +177,7 @@ const OrganizationListView = (props: OrgsListViewPropsType) => {
       <InlineSearchForm {...inlineSearchFormProps} />
 
       <ListView {...listViewProps} />
+      <AsyncRenderer<Organization, AsyncGetOrganizationsOptions> {...asyncRendererProps} />
     </div>
   );
 };

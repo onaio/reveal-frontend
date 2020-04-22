@@ -1,4 +1,6 @@
+import { PromiseFn } from 'react-async';
 import { toast } from 'react-toastify';
+import { ActionCreator } from 'redux';
 import {
   OPENSRP_ORG_PRACTITIONER_ENDPOINT,
   OPENSRP_ORGANIZATION_ENDPOINT,
@@ -6,7 +8,11 @@ import {
 import { growl } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
 import store from '../../../../store';
-import { fetchOrganizations, Organization } from '../../../../store/ducks/opensrp/organizations';
+import {
+  fetchOrganizations,
+  FetchOrganizationsAction,
+  Organization,
+} from '../../../../store/ducks/opensrp/organizations';
 import {
   fetchPractitionerRoles,
   fetchPractitioners,
@@ -74,5 +80,38 @@ export const loadOrganizations = async (
     .then((response: Organization[]) => store.dispatch(fetchOrganizationsCreator(response, true)))
     .catch((err: Error) => {
       growl(err.message, { type: toast.TYPE.ERROR });
+    });
+};
+
+// asyncGetOrganizations is functionally similar to loadOrganizations , the difference in structure
+// is to allow for it to be used by react-async hooks. The previous implementation is yet to be
+// removed to allow for the transition process to be in bits.
+
+/** options to pass to asyncGetPractitioners as first argument
+ * These options are passed indirectly through the react-async interface
+ */
+export interface AsyncGetOrganizationsOptions {
+  service: typeof OpenSRPService;
+  fetchOrganizationsCreator: ActionCreator<FetchOrganizationsAction>;
+}
+
+/** loads all practitioners returned in within a single request from practitioners endpoint
+ * @param {typeof OpenSRPService} service -  the OpenSRP service
+ * @param {typeof fetchPractitioners} fetchPractitionersActionCreator - action creator for adding practitioners to store
+ */
+export const asyncGetOrganizations: PromiseFn<Organization[]> = async (
+  { service, fetchOrganizationsCreator },
+  { signal } = new AbortController()
+) => {
+  const serve = new service(OPENSRP_ORGANIZATION_ENDPOINT, signal);
+  return serve
+    .list()
+    .then((response: Organization[]) => {
+      store.dispatch(fetchOrganizationsCreator(response, true));
+      return response;
+    })
+    .catch((err: Error) => {
+      growl(err.message, { type: toast.TYPE.ERROR });
+      return [];
     });
 };
