@@ -69,7 +69,6 @@ import {
 } from '../../../../helpers/utils';
 import { extractPlan, getLocationColumns } from '../../../../helpers/utils';
 import supersetFetch from '../../../../services/superset';
-import store from '../../../../store';
 import plansReducer, {
   fetchPlans,
   getPlanById,
@@ -431,14 +430,14 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
       : null;
 
   const searchedTitle = getQueryParams(ownProps.location)[QUERY_PARAM_TITLE] as string;
-  const caseTriggeredPlans = makePlansArraySelector()(store.getState(), {
+  const caseTriggeredPlans = makePlansArraySelector()(state, {
     interventionType: InterventionType.FI,
     parentJurisdictionId: jurisdictionParentId,
     reason: CASE_TRIGGERED,
     statusList: [PlanStatus.ACTIVE, PlanStatus.COMPLETE],
     title: searchedTitle,
   });
-  const routinePlans = makePlansArraySelector()(store.getState(), {
+  const routinePlans = makePlansArraySelector()(state, {
     interventionType: InterventionType.FI,
     parentJurisdictionId: jurisdictionParentId,
     reason: ROUTINE,
