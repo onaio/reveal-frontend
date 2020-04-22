@@ -21,7 +21,7 @@ export type Submit = (event: React.FormEvent<HTMLFormElement>) => void;
 export interface SearchFormProps {
   history: History;
   location: Location;
-  placeholder?: string;
+  placeholder: string;
 }
 
 /**
