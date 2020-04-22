@@ -54,6 +54,7 @@
     "moment": "^2.24.0",
     "prop-types": "^15.6.2",
     "react": "^16.8.1",
+    "react-async": "^10.0.1",
     "react-datepicker": "^2.8.0",
     "react-dom": "^16.8.1",
     "react-ga": "^2.7.0",
