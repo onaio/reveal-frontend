@@ -2,7 +2,7 @@
 import ListView from '@onaio/list-view';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import React, { useEffect } from 'react';
-import { IfFulfilled, IfPending, IfRejected, useAsync } from 'react-async';
+import { IfFulfilled, IfPending, useAsync } from 'react-async';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
@@ -149,9 +149,6 @@ const PractitionersListView = (props: PropsTypes) => {
       <IfPending state={loadPractitionersState}>
         <Loading />
       </IfPending>
-      <IfRejected state={loadPractitionersState}>
-        <p> An Error Occurred</p>
-      </IfRejected>
       <IfFulfilled state={loadPractitionersState} persist={true}>
         {props.practitioners.length < 1 ? (
           <p>{NO_DATA_TO_SHOW}</p>
