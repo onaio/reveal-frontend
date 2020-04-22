@@ -25,11 +25,10 @@ import { HOME_URL, QUERY_PARAM_TITLE, REPORT_IRS_PLAN_URL } from '../../../../co
 import { displayError } from '../../../../helpers/errors';
 import { getQueryParams } from '../../../../helpers/utils';
 import supersetFetch from '../../../../services/superset';
-import store from '../../../../store';
 import IRSPlansReducer, {
   fetchIRSPlans,
-  getIRSPlansArrayByTitle,
   IRSPlan,
+  makeIRSPlansArraySelector,
   reducerName as IRSPlansReducerName,
 } from '../../../../store/ducks/generic/plans';
 
@@ -144,9 +143,9 @@ interface DispatchedStateProps {
 }
 
 /** map state to props */
-const mapStateToProps = (_: Partial<Store>, ownProps: any): DispatchedStateProps => {
+const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateProps => {
   const searchedTitle = getQueryParams(ownProps.location)[QUERY_PARAM_TITLE] as string;
-  const IRSPlansArray = getIRSPlansArrayByTitle()(store.getState(), { plan_title: searchedTitle });
+  const IRSPlansArray = makeIRSPlansArraySelector()(state, { plan_title: searchedTitle });
 
   return {
     plans: IRSPlansArray,
