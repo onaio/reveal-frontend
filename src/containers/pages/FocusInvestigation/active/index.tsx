@@ -4,9 +4,6 @@ import DrillDownTable from '@onaio/drill-down-table';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset from '@onaio/superset-connector';
 import { Dictionary } from '@onaio/utils';
-import _ from 'lodash';
-import { trimStart } from 'lodash';
-import querystring from 'querystring';
 import * as React from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
@@ -58,6 +55,7 @@ import {
   FI_SINGLE_URL,
   FI_URL,
   HOME_URL,
+  QUERY_PARAM_TITLE,
   ROUTINE,
 } from '../../../../constants';
 import { displayError } from '../../../../helpers/errors';
@@ -66,6 +64,7 @@ import '../../../../helpers/tables.css';
 import {
   defaultTableProps,
   getFilteredFIPlansURL,
+  getQueryParams,
   removeNullJurisdictionPlans,
 } from '../../../../helpers/utils';
 import { extractPlan, getLocationColumns } from '../../../../helpers/utils';
@@ -430,9 +429,8 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
     ownProps.match.params && ownProps.match.params.jurisdiction_parent_id
       ? ownProps.match.params.jurisdiction_parent_id
       : null;
-  const searchString = trimStart(ownProps.location.search, '?');
-  const queryParams = querystring.parse(searchString);
-  const searchedTitle = queryParams.search as string;
+
+  const searchedTitle = getQueryParams(ownProps.location)[QUERY_PARAM_TITLE] as string;
   const caseTriggeredPlans = makePlansArraySelector()(store.getState(), {
     interventionType: InterventionType.FI,
     parentJurisdictionId: jurisdictionParentId,

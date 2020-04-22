@@ -83,7 +83,7 @@ describe('components/IRS Reports/IRSPlansList', () => {
       history,
       location: {
         pathname: REPORT_IRS_PLAN_URL,
-        search: '?search=Berg',
+        search: '?title=Berg',
       },
       match: {
         isExact: true,
@@ -117,7 +117,7 @@ describe('components/IRS Reports/IRSPlansList', () => {
       history,
       location: {
         pathname: REPORT_IRS_PLAN_URL,
-        search: '?search=BERG',
+        search: '?title=BERG',
       },
       match: {
         isExact: true,
@@ -151,7 +151,7 @@ describe('components/IRS Reports/IRSPlansList', () => {
       history,
       location: {
         pathname: REPORT_IRS_PLAN_URL,
-        search: '?search=Amazon',
+        search: '?title=Amazon',
       },
       match: {
         isExact: true,

@@ -4,8 +4,10 @@ import { SessionState } from '@onaio/session-reducer';
 import { Dictionary, percentage } from '@onaio/utils';
 import { Color } from 'csstype';
 import { GisidaMap } from 'gisida';
-import { findKey, uniq } from 'lodash';
+import { Location } from 'history';
+import { findKey, trimStart, uniq } from 'lodash';
 import { FitBoundsOptions, Layer, LngLatBoundsLike, LngLatLike, Map, Style } from 'mapbox-gl';
+import querystring from 'querystring';
 import { MouseEvent } from 'react';
 import React from 'react';
 import { Link } from 'react-router-dom';
@@ -871,3 +873,11 @@ export const IndicatorThresholdItemPercentage = (item: number, decimalPoints?: n
 };
 
 export const reactSelectNoOptionsText = () => NO_OPTIONS;
+
+/**
+ * Get query params from URL
+ * @param {Location} location location object from props
+ */
+export const getQueryParams = (location: Location) => {
+  return querystring.parse(trimStart(location.search, '?'));
+};

@@ -84,7 +84,7 @@ describe('components/InterventionPlan/PlanDefinitionList', () => {
       history,
       location: {
         pathname: PLAN_LIST_URL,
-        search: '?search=Mosh',
+        search: '?title=Mosh',
       },
       match: {
         isExact: true,
@@ -119,7 +119,7 @@ describe('components/InterventionPlan/PlanDefinitionList', () => {
       history,
       location: {
         pathname: PLAN_LIST_URL,
-        search: '?search=MOSH',
+        search: '?title=MOSH',
       },
       match: {
         isExact: true,
@@ -154,7 +154,7 @@ describe('components/InterventionPlan/PlanDefinitionList', () => {
       history,
       location: {
         pathname: PLAN_LIST_URL,
-        search: '?search=Amazon',
+        search: '?title=Amazon',
       },
       match: {
         isExact: true,

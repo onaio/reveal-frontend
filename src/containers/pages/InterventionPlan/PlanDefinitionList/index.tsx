@@ -1,7 +1,5 @@
 import ListView from '@onaio/list-view';
 import reducerRegistry from '@onaio/redux-reducer-registry';
-import { trimStart } from 'lodash';
-import querystring from 'querystring';
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
@@ -23,8 +21,15 @@ import {
   TITLE,
 } from '../../../../configs/lang';
 import { PlanDefinition, planStatusDisplay } from '../../../../configs/settings';
-import { HOME_URL, OPENSRP_PLANS, PLAN_LIST_URL, PLAN_UPDATE_URL } from '../../../../constants';
+import {
+  HOME_URL,
+  OPENSRP_PLANS,
+  PLAN_LIST_URL,
+  PLAN_UPDATE_URL,
+  QUERY_PARAM_TITLE,
+} from '../../../../constants';
 import { displayError } from '../../../../helpers/errors';
+import { getQueryParams } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
 import store from '../../../../store';
 import planDefinitionReducer, {
@@ -150,9 +155,7 @@ interface DispatchedStateProps {
 
 /** map state to props */
 const mapStateToProps = (_: Partial<Store>, ownProps: any): DispatchedStateProps => {
-  const searchString = trimStart(ownProps.location.search, '?');
-  const queryParams = querystring.parse(searchString);
-  const searchedTitle = queryParams.search as string;
+  const searchedTitle = getQueryParams(ownProps.location)[QUERY_PARAM_TITLE] as string;
   const planDefinitionsArray = getPlanDefinitionsArrayByTitle()(store.getState(), {
     title: searchedTitle,
   });

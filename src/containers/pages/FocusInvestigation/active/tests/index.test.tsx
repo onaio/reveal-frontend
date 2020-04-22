@@ -244,7 +244,7 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
       history,
       location: {
         pathname: FI_URL,
-        search: '?search=Jane',
+        search: '?title=Jane',
       },
       match: {
         isExact: true,
@@ -276,7 +276,7 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
       history,
       location: {
         pathname: FI_URL,
-        search: '?search=Luang',
+        search: '?title=Luang',
       },
       match: {
         isExact: true,
@@ -309,7 +309,7 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
       history,
       location: {
         pathname: FI_URL,
-        search: '?search=LUANG',
+        search: '?title=LUANG',
       },
       match: {
         isExact: true,
@@ -342,7 +342,7 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
       history,
       location: {
         pathname: FI_URL,
-        search: '?search=Amazon',
+        search: '?title=Amazon',
       },
       match: {
         isExact: true,

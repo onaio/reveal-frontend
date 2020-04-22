@@ -28,7 +28,7 @@ describe('src/components/SearchForm', () => {
     const wrapper = mount(<SearchForm {...props} />);
     wrapper.find('Input').simulate('change', { target: { value: 'test' } });
     wrapper.find('Form').simulate('submit');
-    expect(history.push).toBeCalledWith({ search: '?search=test' });
+    expect(history.push).toBeCalledWith({ search: '?title=test' });
     wrapper.unmount();
   });
 

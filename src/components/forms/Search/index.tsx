@@ -1,9 +1,9 @@
 import { History, Location } from 'history';
-import { trimStart } from 'lodash';
-import querystring from 'querystring';
 import React, { useEffect, useState } from 'react';
 import { Button, Form, FormGroup, Input } from 'reactstrap';
 import { SEARCH } from '../../../configs/lang';
+import { QUERY_PARAM_TITLE } from '../../../constants';
+import { getQueryParams } from '../../../helpers/utils';
 
 /**
  * Interface for handleSearchChange event handler
@@ -36,10 +36,7 @@ export const SearchForm = (props: SearchFormProps) => {
   const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
-    const searchString = trimStart(props.location.search, '?');
-    const queryParams = querystring.parse(searchString);
-    const searchedTitle = queryParams.search as string;
-    setSearchQuery(searchedTitle);
+    setSearchQuery(getQueryParams(props.location)[QUERY_PARAM_TITLE] as string);
   }, []);
 
   const handleSearchChange: Change = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -49,7 +46,7 @@ export const SearchForm = (props: SearchFormProps) => {
   const handleSubmit: Submit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     props.history.push({
-      search: `?search=${searchQuery}`,
+      search: `?${QUERY_PARAM_TITLE}=${searchQuery}`,
     });
   };
 
