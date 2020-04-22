@@ -876,7 +876,7 @@ export const reactSelectNoOptionsText = () => NO_OPTIONS;
 
 /**
  * Get query params from URL
- * @param {Location} location location object from props
+ * @param {Location} location from props
  */
 export const getQueryParams = (location: Location) => {
   return querystring.parse(trimStart(location.search, '?'));
