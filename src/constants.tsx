@@ -120,5 +120,8 @@ export const MOSQUITO_COLLECTION_CODE = 'Mosquito Collection';
 export const PRACTITIONER_CODE = {
   text: 'Community Health Worker',
 };
+
 /** Field to sort plans by */
 export const SORT_BY_EFFECTIVE_PERIOD_START_FIELD = 'plan_effective_period_start';
+export const PLEASE_PROVIDE_CUSTOM_COMPONENT_TO_RENDER =
+  'Please provide a custom component to be rendered';

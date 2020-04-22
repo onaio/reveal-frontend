@@ -1,10 +1,15 @@
 import { PromiseFn } from 'react-async';
 import { toast } from 'react-toastify';
+import { ActionCreator } from 'redux';
 import { OPENSRP_PRACTITIONER_ENDPOINT } from '../../../../constants';
 import { growl } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
 import store from '../../../../store';
-import { fetchPractitioners, Practitioner } from '../../../../store/ducks/opensrp/practitioners';
+import {
+  fetchPractitioners,
+  FetchPractitionersAction,
+  Practitioner,
+} from '../../../../store/ducks/opensrp/practitioners';
 
 /** loads all practitioners returned in within a single request from practitioners endpoint
  * @param {typeof OpenSRPService} service -  the OpenSRP service
@@ -26,6 +31,14 @@ export const loadPractitioners = async (
 // asyncGetPractitioners is functionally similar to loadPractitioners , the difference in structure
 // is to allow for it to be used by react-async hooks. The previous implementation is yet to be
 // removed to allow for the transition process to be in bits.
+
+/** options to pass to asyncGetPractitioners as first argument
+ * These options are passed indirectly through the react-async interface
+ */
+export interface AsyncGetPractitionersOptions {
+  service: typeof OpenSRPService;
+  fetchPractitionersCreator: ActionCreator<FetchPractitionersAction>;
+}
 
 /** loads all practitioners returned in within a single request from practitioners endpoint
  * @param {typeof OpenSRPService} service -  the OpenSRP service

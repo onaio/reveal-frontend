@@ -1,14 +1,14 @@
 /** Practitioner Assignment component for listing all practitioners */
 import ListView from '@onaio/list-view';
 import reducerRegistry from '@onaio/redux-reducer-registry';
-import React, { useEffect } from 'react';
-import { IfFulfilled, IfPending, useAsync } from 'react-async';
+import React from 'react';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { Link } from 'react-router-dom';
 import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
+import { AsyncRenderer } from '../../../../components/AsyncRenderer';
 import InlineSearchForm, {
   FieldProps,
   Props as InlineSearchFormProps,
@@ -44,7 +44,7 @@ import practitionersReducer, {
   Practitioner,
   reducerName as practitionersReducerName,
 } from '../../../../store/ducks/opensrp/practitioners';
-import { asyncGetPractitioners } from '../helpers/serviceHooks';
+import { asyncGetPractitioners, AsyncGetPractitionersOptions } from '../helpers/serviceHooks';
 
 reducerRegistry.register(practitionersReducerName, practitionersReducer);
 
@@ -119,16 +119,24 @@ const PractitionersListView = (props: PropsTypes) => {
     to: CREATE_PRACTITIONER_URL,
   };
 
-  const loadPractitionersState = useAsync<Practitioner[]>(asyncGetPractitioners, {
-    fetchPractitionersCreator,
-    service: serviceClass,
-  });
-
-  useEffect(() => {
-    if (props.practitioners.length > 0) {
-      loadPractitionersState.setData(props.practitioners);
-    }
-  }, []);
+  const asyncRendererProps = {
+    data: props.practitioners,
+    ifFulfilledRender: () => (
+      <div>
+        {props.practitioners.length < 1 ? (
+          <p>{NO_DATA_TO_SHOW}</p>
+        ) : (
+          <ListView {...listViewProps} />
+        )}
+      </div>
+    ),
+    ifLoadingRender: () => <Loading />,
+    promiseFn: asyncGetPractitioners,
+    promiseFnProps: {
+      fetchPractitionersCreator,
+      service: serviceClass,
+    },
+  };
 
   return (
     <div>
@@ -146,16 +154,7 @@ const PractitionersListView = (props: PropsTypes) => {
       </Row>
       <hr />
       <InlineSearchForm {...inlineSearchFormProps} />
-      <IfPending state={loadPractitionersState}>
-        <Loading />
-      </IfPending>
-      <IfFulfilled state={loadPractitionersState} persist={true}>
-        {props.practitioners.length < 1 ? (
-          <p>{NO_DATA_TO_SHOW}</p>
-        ) : (
-          <ListView {...listViewProps} />
-        )}
-      </IfFulfilled>
+      <AsyncRenderer<Practitioner, AsyncGetPractitionersOptions> {...asyncRendererProps} />
     </div>
   );
 };
