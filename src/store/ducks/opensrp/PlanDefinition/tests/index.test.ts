@@ -11,6 +11,7 @@ import reducer, {
   getPlanDefinitionsArray,
   getPlanDefinitionsArrayByTitle,
   getPlanDefinitionsById,
+  makePlanDefinitionsArraySelector,
   reducerName,
   removePlanDefinitions,
 } from '../index';
@@ -69,10 +70,15 @@ describe('reducers/opensrp/PlanDefinition', () => {
     const titleUpperFilter = {
       title: 'MOSH',
     };
+    const PlanDefinitionsArraySelector = makePlanDefinitionsArraySelector();
+
     expect(getPlanDefinitionsArrayByTitle()(store.getState(), titleFilter)).toEqual([
       fixtures.plans[3],
     ]);
     expect(getPlanDefinitionsArrayByTitle()(store.getState(), titleUpperFilter)).toEqual([
+      fixtures.plans[3],
+    ]);
+    expect(PlanDefinitionsArraySelector(store.getState(), { title: 'Mosh' })).toEqual([
       fixtures.plans[3],
     ]);
 

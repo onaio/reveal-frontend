@@ -1,4 +1,4 @@
-import { Registry } from '@onaio/redux-reducer-registry';
+import intersect from 'fast_array_intersect';
 import { get, keyBy, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
 import { createSelector } from 'reselect';
@@ -180,7 +180,7 @@ export interface PlanDefinitionFilters {
  * @param state - the redux store
  */
 export const planDefinitionsArrayBaseSelector = (planKey?: string) => (
-  state: Registry
+  state: Partial<Store>
 ): PlanDefinition[] =>
   values((state as any)[reducerName][planKey ? planKey : 'planDefinitionsById']);
 
@@ -189,7 +189,7 @@ export const planDefinitionsArrayBaseSelector = (planKey?: string) => (
  * @param state - the redux store
  * @param props - the plan filters object
  */
-export const getTitle = (_: Registry, props: PlanDefinitionFilters) => props.title;
+export const getTitle = (_: Partial<Store>, props: PlanDefinitionFilters) => props.title;
 
 /** getPlansArrayByTitle
  * Gets an array of Plan objects filtered by plan title
@@ -200,3 +200,25 @@ export const getPlanDefinitionsArrayByTitle = (planKey?: string) =>
   createSelector([planDefinitionsArrayBaseSelector(planKey), getTitle], (plans, title) =>
     title ? plans.filter(plan => plan.title.toLowerCase().includes(title.toLowerCase())) : plans
   );
+
+/** makePlanDefinitionsArraySelector
+ * Returns a selector that gets an array of IRSPlan objects filtered by one or all
+ * of the following:
+ *    - title
+ *
+ * These filter params are all optional and are supplied via the prop parameter.
+ *
+ * This selector is meant to be a memoized replacement for getPlanDefinitionsArray.
+ *
+ * To use this selector, do something like:
+ *    const PlanDefinitionsArraySelector = makeIRSPlansArraySelector();
+ *
+ * @param {Partial<Store>} state - the redux store
+ * @param {PlanFilters} props - the plan filters object
+ * @param {string} sortField - sort by field
+ */
+export const makePlanDefinitionsArraySelector = (planKey?: string) => {
+  return createSelector([getPlanDefinitionsArrayByTitle(planKey)], plans =>
+    intersect([plans], JSON.stringify)
+  );
+};

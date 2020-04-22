@@ -11,6 +11,7 @@ import reducer, {
   getIRSPlansArrayByTitle,
   getIRSPlansById,
   IRSPlan,
+  makeIRSPlansArraySelector,
   reducerName,
   removeIRSPlans,
 } from '../plans';
@@ -64,8 +65,12 @@ describe('reducers/IRS/IRSPlan', () => {
     const titleUpperFilter = {
       plan_title: 'BERG',
     };
+    const IRSPlansArraySelector = makeIRSPlansArraySelector();
     expect(getIRSPlansArrayByTitle()(store.getState(), titleFilter)).toEqual([fixtures.plans[2]]);
     expect(getIRSPlansArrayByTitle()(store.getState(), titleUpperFilter)).toEqual([
+      fixtures.plans[2],
+    ]);
+    expect(IRSPlansArraySelector(store.getState(), { plan_title: 'Berg' })).toEqual([
       fixtures.plans[2],
     ]);
 
