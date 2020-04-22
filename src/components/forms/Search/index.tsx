@@ -24,7 +24,14 @@ export interface SearchFormProps {
   placeholder?: string;
 }
 
-/** Search Form component */
+/**
+ * default props for SerchForm component
+ */
+export const defaultSearchFormProps = {
+  placeholder: SEARCH,
+};
+
+/** SearchForm component */
 export const SearchForm = (props: SearchFormProps) => {
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -52,7 +59,7 @@ export const SearchForm = (props: SearchFormProps) => {
         <Input
           type="text"
           name="search"
-          placeholder={props.placeholder ? props.placeholder : SEARCH}
+          placeholder={props.placeholder}
           onChange={handleSearchChange}
           value={searchQuery}
         />
@@ -63,3 +70,5 @@ export const SearchForm = (props: SearchFormProps) => {
     </Form>
   );
 };
+
+SearchForm.defaultProps = defaultSearchFormProps;

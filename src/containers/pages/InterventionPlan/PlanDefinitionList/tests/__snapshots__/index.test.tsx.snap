@@ -1082,6 +1082,7 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
           "state": undefined,
         }
       }
+      placeholder="Search"
     >
       <Form
         inline={true}
