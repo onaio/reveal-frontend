@@ -97,24 +97,6 @@ const IRSIndicatorLegend = (props: Props) => {
                     </tr>
                   );
                 })}
-                {indicatorItems
-                  .sort((a: IndicatorThresholdItem, b: IndicatorThresholdItem) =>
-                    a.value > b.value ? 1 : -1
-                  )
-                  .map((item, index) => {
-                    return (
-                      <tr key={index} style={{ background: item.color }}>
-                        <td>{item.name}</td>
-                        <td>
-                          {index === 0
-                            ? `< ${IndicatorThresholdItemPercentage(item.value)}`
-                            : `${IndicatorThresholdItemPercentage(
-                                indicatorItems[index - 1].value
-                              )} - ${IndicatorThresholdItemPercentage(item.value)}`}
-                        </td>
-                      </tr>
-                    );
-                  })}
               </tbody>
             </Table>
           </Col>
