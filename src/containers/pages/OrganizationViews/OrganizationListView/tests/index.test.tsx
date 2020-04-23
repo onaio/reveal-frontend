@@ -97,7 +97,7 @@ describe('src/containers/TeamAssignment/OrganizationListView/', () => {
     );
 
     await flushPromises();
-    expect(classMock).toBeCalledWith(OPENSRP_ORGANIZATION_ENDPOINT);
+    expect(classMock.mock.calls[0][0]).toEqual(OPENSRP_ORGANIZATION_ENDPOINT);
     expect(mockList).toHaveBeenCalled();
     expect(fetchedOrgsMock).toHaveBeenCalledWith(fixtures.organizations, true);
   });

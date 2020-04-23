@@ -1,7 +1,7 @@
 /** Organization Assignment component for listing all organizations */
 import ListView from '@onaio/list-view';
 import reducerRegistry from '@onaio/redux-reducer-registry';
-import React, { useEffect } from 'react';
+import React from 'react';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
@@ -36,7 +36,6 @@ import {
   ORGANIZATIONS_LIST_URL,
   SINGLE_ORGANIZATION_URL,
 } from '../../../../constants';
-import { displayError } from '../../../../helpers/errors';
 import { OpenSRPService } from '../../../../services/opensrp';
 import organizationsReducer, {
   fetchOrganizations,
@@ -44,11 +43,7 @@ import organizationsReducer, {
   Organization,
   reducerName as organizationsReducerName,
 } from '../../../../store/ducks/opensrp/organizations';
-import {
-  asyncGetOrganizations,
-  AsyncGetOrganizationsOptions,
-  loadOrganizations,
-} from '../helpers/serviceHooks';
+import { asyncGetOrganizations, AsyncGetOrganizationsOptions } from '../helpers/serviceHooks';
 import './index.css';
 
 reducerRegistry.register(organizationsReducerName, organizationsReducer);
@@ -148,16 +143,6 @@ const OrganizationListView = (props: OrgsListViewPropsType) => {
       service: serviceClass,
     },
   };
-
-  useEffect(() => {
-    loadOrganizations(serviceClass, fetchOrganizationsAction).catch(err => displayError(err));
-  }, []);
-
-  // break early if organizations are absent
-  const isLoading = organizations.length < 1;
-  if (isLoading) {
-    return <Loading />;
-  }
 
   return (
     <div>
