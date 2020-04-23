@@ -1,3 +1,4 @@
+import { OpenSRPService as OpenSRPServiceWeb } from '@opensrp/server-service';
 import { IncomingHttpHeaders } from 'http';
 import { OPENSRP_API_BASE_URL } from '../../configs/env';
 import store from '../../store';
@@ -58,6 +59,19 @@ export function getPayload(method: HTTPMethod) {
   };
 }
 
+/** get payload for fetch
+ * @param {AbortSignal} signal - signal object that allows you to communicate with a DOM request
+ * @param {HTTPMethod} method - the HTTP method
+ * @returns the payload
+ */
+/* tslint:disable-next-line: no-unused-variable */
+export function getPayloadOptions(signal: AbortSignal, method: HTTPMethod) {
+  return {
+    headers: getDefaultHeaders() as HeadersInit,
+    method,
+  };
+}
+
 /** Get URL
  * @param {string} url - the url
  * @param {paramType} params - the url params object
@@ -105,22 +119,8 @@ export class OpenSRPService {
    * @returns the object returned by API
    */
   public async create<T>(data: T, params: paramsType = null, method: HTTPMethod = 'POST') {
-    const url = getURL(this.generalURL, params);
-    const payload = {
-      ...getPayload(method),
-      'Cache-Control': 'no-cache',
-      Pragma: 'no-cache',
-      body: JSON.stringify(data),
-    };
-    const response = await fetch(url, payload);
-
-    if (!response.ok || response.status !== 201) {
-      throw new Error(
-        `OpenSRPService create on ${this.endpoint} failed, HTTP status ${response.status}`
-      );
-    }
-
-    return {};
+    const service = new OpenSRPServiceWeb(this.baseURL, this.endpoint, getPayloadOptions);
+    return await service.create(data, params, method);
   }
 
   /** read method
@@ -131,16 +131,8 @@ export class OpenSRPService {
    * @returns the object returned by API
    */
   public async read(id: string | number, params: paramsType = null, method: HTTPMethod = 'GET') {
-    const url = getURL(`${this.generalURL}/${id}`, params);
-    const response = await fetch(url, getPayload(method));
-
-    if (!response.ok) {
-      throw new Error(
-        `OpenSRPService read on ${this.endpoint} failed, HTTP status ${response.status}`
-      );
-    }
-
-    return await response.json();
+    const service = new OpenSRPServiceWeb(this.baseURL, this.endpoint, getPayloadOptions);
+    return await service.read(id, params, method);
   }
 
   /** update method
@@ -152,22 +144,8 @@ export class OpenSRPService {
    * @returns the object returned by API
    */
   public async update<T>(data: T, params: paramsType = null, method: HTTPMethod = 'PUT') {
-    const url = getURL(this.generalURL, params);
-    const payload = {
-      ...getPayload(method),
-      'Cache-Control': 'no-cache',
-      Pragma: 'no-cache',
-      body: JSON.stringify(data),
-    };
-    const response = await fetch(url, payload);
-
-    if (!response.ok) {
-      throw new Error(
-        `OpenSRPService update on ${this.endpoint} failed, HTTP status ${response.status}`
-      );
-    }
-
-    return {};
+    const service = new OpenSRPServiceWeb(this.baseURL, this.endpoint, getPayloadOptions);
+    return await service.update(data, params, method);
   }
 
   /** list method
@@ -177,16 +155,8 @@ export class OpenSRPService {
    * @returns list of objects returned by API
    */
   public async list(params: paramsType = null, method: HTTPMethod = 'GET') {
-    const url = getURL(this.generalURL, params);
-    const response = await fetch(url, getPayload(method));
-
-    if (!response.ok) {
-      throw new Error(
-        `OpenSRPService list on ${this.endpoint} failed, HTTP status ${response.status}`
-      );
-    }
-
-    return await response.json();
+    const service = new OpenSRPServiceWeb(this.baseURL, this.endpoint, getPayloadOptions);
+    return await service.list(params, method);
   }
 
   /** delete method
@@ -197,15 +167,7 @@ export class OpenSRPService {
    * @returns the object returned by API
    */
   public async delete(params: paramsType = null, method: HTTPMethod = 'DELETE') {
-    const url = getURL(this.generalURL, params);
-    const response = await fetch(url, getPayload(method));
-
-    if (response.ok || response.status === 204 || response.status === 200) {
-      return {};
-    } else {
-      throw new Error(
-        `OpenSRPService delete on ${this.endpoint} failed, HTTP status ${response.status}`
-      );
-    }
+    const service = new OpenSRPServiceWeb(this.baseURL, this.endpoint, getPayloadOptions);
+    return await service.delete(params, method);
   }
 }
