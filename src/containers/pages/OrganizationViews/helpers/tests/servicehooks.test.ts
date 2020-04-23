@@ -5,8 +5,12 @@ import {
   OPENSRP_ORGANIZATION_ENDPOINT,
 } from '../../../../../constants';
 import * as fixtures from '../../../../../store/ducks/tests/fixtures';
-import { asyncGetPractitioners } from '../../../PractitionerViews/helpers/serviceHooks';
-import { loadOrganization, loadOrganizations, loadOrgPractitioners } from '../serviceHooks';
+import {
+  asyncGetOrganizations,
+  loadOrganization,
+  loadOrganizations,
+  loadOrgPractitioners,
+} from '../serviceHooks';
 
 describe('src/containers/pages/OrganizationViews/helpers/servicehooks', () => {
   it('loadOrganization works correctly', async () => {
@@ -99,7 +103,7 @@ describe('src/containers/pages/OrganizationViews/helpers/servicehooks', () => {
 
     const controller = new AbortController();
 
-    asyncGetPractitioners(
+    asyncGetOrganizations(
       { service: mockClass, fetchOrganizationsCreator: mockActionCreator },
       controller
     ).catch(e => {
