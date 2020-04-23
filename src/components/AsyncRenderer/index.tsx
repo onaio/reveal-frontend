@@ -4,7 +4,7 @@ import { PLEASE_PROVIDE_CUSTOM_COMPONENT_TO_RENDER } from '../../constants';
 import Loading from '../page/Loading';
 
 /** props for AsyncRender component */
-export interface AsyncRenderProps<TData, TPromiseFunctionProps> {
+export interface AsyncRendererProps<TData, TPromiseFunctionProps> {
   data: TData[] /** interface describing data to be consumed by render component */;
   promiseFn: PromiseFn<TData[]> /** react-async-type asynchronous function */;
   promiseFnProps: TPromiseFunctionProps /** options to be passed to promiseFn */;
@@ -20,7 +20,7 @@ export interface AsyncRenderProps<TData, TPromiseFunctionProps> {
 const defaultPromiseFn = async ({}) => [];
 
 /** default props for AsyncRenderer */
-const defaultAsyncRenderProps: AsyncRenderProps<any, any> = {
+const defaultAsyncRenderProps: AsyncRendererProps<any, any> = {
   data: [],
   ifFulfilledRender: () => <div>{PLEASE_PROVIDE_CUSTOM_COMPONENT_TO_RENDER}</div>,
   ifLoadingRender: () => <Loading />,
@@ -35,7 +35,9 @@ export const AsyncRenderer = <TData, TPromiseFunctionProps>({
   ifLoadingRender,
   promiseFn,
   promiseFnProps,
-}: PropsWithChildren<AsyncRenderProps<TData, TPromiseFunctionProps>> = defaultAsyncRenderProps) => {
+}: PropsWithChildren<
+  AsyncRendererProps<TData, TPromiseFunctionProps>
+> = defaultAsyncRenderProps) => {
   const loadPractitionersState = useAsync<TData[]>(promiseFn, promiseFnProps);
 
   React.useEffect(() => {
