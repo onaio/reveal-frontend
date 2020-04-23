@@ -64,8 +64,8 @@ export function getPayload(method: HTTPMethod) {
  * @param {HTTPMethod} method - the HTTP method
  * @returns the payload
  */
-/* tslint:disable-next-line: no-unused-variable */
-export function getPayloadOptions(signal: AbortSignal, method: HTTPMethod) {
+
+export function getPayloadOptions(_: AbortSignal, method: HTTPMethod) {
   return {
     headers: getDefaultHeaders() as HeadersInit,
     method,
