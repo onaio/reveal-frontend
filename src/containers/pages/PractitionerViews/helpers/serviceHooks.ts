@@ -30,7 +30,7 @@ export const loadPractitioners = async (
 
 // asyncGetPractitioners is functionally similar to loadPractitioners , the difference in structure
 // is to allow for it to be used by react-async hooks. The previous implementation is yet to be
-// removed to allow for the transition process to be in bits.
+// removed so that the transition process to be in bits.
 
 /** options to pass to asyncGetPractitioners as first argument
  * These options are passed indirectly through the react-async interface
@@ -40,7 +40,7 @@ export interface AsyncGetPractitionersOptions {
   fetchPractitionersCreator: ActionCreator<FetchPractitionersAction>;
 }
 
-/** loads all practitioners returned in within a single request from practitioners endpoint
+/** make fetch request to OpenSRP practitioners endpoint
  * @param {typeof OpenSRPService} service -  the OpenSRP service
  * @param {typeof fetchPractitioners} fetchPractitionersActionCreator - action creator for adding practitioners to store
  */
