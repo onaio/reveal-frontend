@@ -2,7 +2,13 @@ import { getOpenSRPUserInfo } from '@onaio/gatekeeper';
 import { authenticateUser } from '@onaio/session-reducer';
 import { EmptyObject } from '../../../configs/types';
 import store from '../../../store';
-import { getDefaultHeaders, getFilterParams, getURLParams, OpenSRPService } from '../index';
+import {
+  getDefaultHeaders,
+  getFilterParams,
+  getPayloadOptions,
+  getURLParams,
+  OpenSRPService,
+} from '../index';
 import { createPlan, plansListResponse } from './fixtures/plans';
 import { OpenSRPAPIResponse } from './fixtures/session';
 /* tslint:disable-next-line no-var-requires */
@@ -23,6 +29,18 @@ describe('services/OpenSRP', () => {
       accept: 'application/json',
       authorization: 'Bearer hunter2',
       'content-type': 'application/json;charset=UTF-8',
+    });
+  });
+
+  it('getPayloadOptions works', async () => {
+    const signal = new AbortController().signal;
+    expect(getPayloadOptions(signal, 'POST')).toEqual({
+      headers: {
+        accept: 'application/json',
+        authorization: 'Bearer hunter2',
+        'content-type': 'application/json;charset=UTF-8',
+      },
+      method: 'POST',
     });
   });
 
