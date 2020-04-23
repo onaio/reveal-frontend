@@ -5,6 +5,7 @@ import {
   OPENSRP_ORGANIZATION_ENDPOINT,
 } from '../../../../../constants';
 import * as fixtures from '../../../../../store/ducks/tests/fixtures';
+import { asyncGetPractitioners } from '../../../PractitionerViews/helpers/serviceHooks';
 import { loadOrganization, loadOrganizations, loadOrgPractitioners } from '../serviceHooks';
 
 describe('src/containers/pages/OrganizationViews/helpers/servicehooks', () => {
@@ -79,6 +80,35 @@ describe('src/containers/pages/OrganizationViews/helpers/servicehooks', () => {
 
     // calls the correct endpoint
     expect(mockClass).toHaveBeenCalledWith(OPENSRP_ORGANIZATION_ENDPOINT);
+
+    // Uses the correct service method
+    expect(mockList).toHaveBeenCalledTimes(1);
+
+    // calls action creator correctly.
+    expect(mockActionCreator).toHaveBeenCalledWith(fixtures.organizations, true);
+  });
+
+  it('asyncGetOrganizations works correctly', async () => {
+    const mockList = jest.fn(async () => fixtures.organizations);
+    const mockActionCreator = jest.fn();
+    const mockClass = jest.fn().mockImplementation(() => {
+      return {
+        list: mockList,
+      };
+    });
+
+    const controller = new AbortController();
+
+    asyncGetPractitioners(
+      { service: mockClass, fetchOrganizationsCreator: mockActionCreator },
+      controller
+    ).catch(e => {
+      throw e;
+    });
+    await flushPromises();
+
+    // calls the correct endpoint
+    expect(mockClass).toHaveBeenCalledWith(OPENSRP_ORGANIZATION_ENDPOINT, controller.signal);
 
     // Uses the correct service method
     expect(mockList).toHaveBeenCalledTimes(1);

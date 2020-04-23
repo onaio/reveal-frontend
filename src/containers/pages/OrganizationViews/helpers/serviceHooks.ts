@@ -18,6 +18,7 @@ import {
   fetchPractitioners,
   Practitioner,
 } from '../../../../store/ducks/opensrp/practitioners';
+import { defaultAsyncPractitionersOptions } from '../../PractitionerViews/helpers/serviceHooks';
 
 /** loads the organization data
  * @param {string} organizationId - the organization id
@@ -85,7 +86,7 @@ export const loadOrganizations = async (
 
 // asyncGetOrganizations is functionally similar to loadOrganizations , the difference in structure
 // is to allow for it to be used by react-async hooks. The previous implementation is yet to be
-// removed to allow for the transition process to be in bits.
+// removed so that the transition process can be in bits.
 
 /** options to pass to asyncGetPractitioners as first argument
  * These options are passed indirectly through the react-async interface
@@ -95,12 +96,18 @@ export interface AsyncGetOrganizationsOptions {
   fetchOrganizationsCreator: ActionCreator<FetchOrganizationsAction>;
 }
 
-/** loads all practitioners returned in within a single request from practitioners endpoint
+/** default arguments for asyncGetOrganizations first argument */
+export const defaultGetOrgsOptions = {
+  fetchOrganizationsCreator: fetchOrganizations,
+  service: OpenSRPService,
+};
+
+/** makes a single get request to OpenSRP organizations endpoint
  * @param {typeof OpenSRPService} service -  the OpenSRP service
  * @param {typeof fetchPractitioners} fetchPractitionersActionCreator - action creator for adding practitioners to store
  */
 export const asyncGetOrganizations: PromiseFn<Organization[]> = async (
-  { service, fetchOrganizationsCreator },
+  { service, fetchOrganizationsCreator } = defaultAsyncPractitionersOptions,
   { signal } = new AbortController()
 ) => {
   const serve = new service(OPENSRP_ORGANIZATION_ENDPOINT, signal);
