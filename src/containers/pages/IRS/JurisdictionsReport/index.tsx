@@ -2,7 +2,7 @@ import DrillDownTable, { hasChildrenFunc } from '@onaio/drill-down-table';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset, { SupersetFormData } from '@onaio/superset-connector';
 import { get } from 'lodash';
-import React, { SyntheticEvent, useEffect, useState } from 'react';
+import React, { SyntheticEvent, useEffect, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
@@ -66,6 +66,7 @@ const JurisdictionReport = (props: GenericJurisdictionProps & RouteComponentProp
     (props.match && props.match.params && props.match.params.jurisdictionId) || null
   );
   const [loading, setLoading] = useState<boolean>(true);
+  const isMounted = useRef<boolean>(true);
 
   let planId: string | null = null;
   if (props.match && props.match.params && props.match.params.planId) {
@@ -103,14 +104,20 @@ const JurisdictionReport = (props: GenericJurisdictionProps & RouteComponentProp
         );
       });
     } catch (e) {
-      // todo - handle error https://github.com/onaio/reveal-frontend/issues/300
+      displayError(e);
     } finally {
-      setLoading(false);
+      if (isMounted.current) {
+        setLoading(false);
+      }
     }
   }
 
   useEffect(() => {
+    isMounted.current = true;
     loadData().catch(err => displayError(err));
+    return () => {
+      isMounted.current = false;
+    };
   }, []);
 
   useEffect(() => {
