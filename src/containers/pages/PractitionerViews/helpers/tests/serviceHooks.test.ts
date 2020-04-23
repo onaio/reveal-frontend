@@ -2,7 +2,7 @@ import flushPromises from 'flush-promises';
 import { practitioners } from '../../../../../components/forms/PractitionerForm/UserIdSelect/tests/fixtures';
 import { OPENSRP_PRACTITIONER_ENDPOINT } from '../../../../../constants';
 import { practitioner1 } from '../../../../../store/ducks/tests/fixtures';
-import { loadPractitioner, loadPractitioners } from '../serviceHooks';
+import { asyncGetPractitioners, loadPractitioner, loadPractitioners } from '../serviceHooks';
 
 describe('src/containers/pages/PractitionerViews/serviceHooks', () => {
   it('loadPractitioner works correctly', async () => {
@@ -45,6 +45,34 @@ describe('src/containers/pages/PractitionerViews/serviceHooks', () => {
 
     // calls the correct endpoint
     expect(mockClass).toHaveBeenCalledWith(OPENSRP_PRACTITIONER_ENDPOINT);
+
+    // Uses the correct service method
+    expect(mockList).toHaveBeenCalledTimes(1);
+
+    // calls action creator correctly.
+    expect(mockActionCreator).toHaveBeenCalledWith(practitioners, true);
+  });
+
+  it('asyncGetPractitioners works correctly', async () => {
+    const mockList = jest.fn(async () => practitioners);
+    const mockActionCreator = jest.fn();
+    const mockClass = jest.fn().mockImplementation(() => {
+      return {
+        list: mockList,
+      };
+    });
+    const controller = new AbortController();
+
+    asyncGetPractitioners(
+      { service: mockClass, fetchPractitionersCreator: mockActionCreator },
+      controller
+    ).catch(e => {
+      throw e;
+    });
+    await flushPromises();
+
+    // calls the correct endpoint
+    expect(mockClass).toHaveBeenCalledWith(OPENSRP_PRACTITIONER_ENDPOINT, controller.signal);
 
     // Uses the correct service method
     expect(mockList).toHaveBeenCalledTimes(1);

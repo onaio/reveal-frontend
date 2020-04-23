@@ -40,12 +40,18 @@ export interface AsyncGetPractitionersOptions {
   fetchPractitionersCreator: ActionCreator<FetchPractitionersAction>;
 }
 
+/** default options to asyncGetPractitioners */
+export const defaultAsyncPractitionersOptions = {
+  fetchPractitionersCreator: fetchPractitioners,
+  service: OpenSRPService,
+};
+
 /** make fetch request to OpenSRP practitioners endpoint
  * @param {typeof OpenSRPService} service -  the OpenSRP service
  * @param {typeof fetchPractitioners} fetchPractitionersActionCreator - action creator for adding practitioners to store
  */
 export const asyncGetPractitioners: PromiseFn<Practitioner[]> = async (
-  { service, fetchPractitionersCreator },
+  { service, fetchPractitionersCreator } = defaultAsyncPractitionersOptions,
   { signal } = new AbortController()
 ) => {
   const serve = new service(OPENSRP_PRACTITIONER_ENDPOINT, signal);
