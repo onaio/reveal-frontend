@@ -93,7 +93,7 @@ describe('src/containers/TeamAssignment/PractitionersListView/', () => {
     );
 
     await flushPromises();
-    expect(classMock).toBeCalledWith(OPENSRP_PRACTITIONER_ENDPOINT);
+    expect(classMock.mock.calls[0][0]).toEqual(OPENSRP_PRACTITIONER_ENDPOINT);
     expect(mockList).toHaveBeenCalled();
     expect(fetchedMock).toHaveBeenCalledWith(fixtures.practitioners, true);
   });
