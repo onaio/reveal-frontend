@@ -17,7 +17,7 @@ export interface AsyncRenderProps<TData, TPromiseFunctionProps> {
 }
 
 // tslint:disable-next-line: no-empty-destructuring
-const defaultPromiseFn = async ({}, { signal }: AbortController) => [signal];
+const defaultPromiseFn = async ({}) => [];
 
 /** default props for AsyncRenderer */
 const defaultAsyncRenderProps: AsyncRenderProps<any, any> = {
@@ -39,7 +39,7 @@ export const AsyncRenderer = <TData, TPromiseFunctionProps>({
   const loadPractitionersState = useAsync<TData[]>(promiseFn, promiseFnProps);
 
   React.useEffect(() => {
-    if (data.length > 1) {
+    if (data.length > 0) {
       loadPractitionersState.setData(data);
     }
   }, []);

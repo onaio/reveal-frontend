@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`src/components/AsyncRenderer AsyncRenderer loads correctly: after Promise resolution 1`] = `"Promise Resolved with 200);"`;
+
+exports[`src/components/AsyncRenderer AsyncRenderer loads correctly: before promise resolution 1`] = `"Promise Pending);"`;
+
+exports[`src/components/AsyncRenderer Does not load when there is pre-populated data: after Promise resolution 1`] = `"Promise Resolved with 200);"`;
+
+exports[`src/components/AsyncRenderer Does not load when there is pre-populated data: before promise resolution 1`] = `"Promise Resolved with 100);"`;
