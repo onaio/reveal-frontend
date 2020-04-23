@@ -1,11 +1,12 @@
 import ListView from '@onaio/list-view';
 import reducerRegistry, { Registry } from '@onaio/redux-reducer-registry';
-import React, { useEffect, useRef, useState } from 'react';
+import React from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
+import { AsyncRenderer, AsyncRendererProps } from '../../../../components/AsyncRenderer';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
 import {
@@ -25,8 +26,10 @@ import {
   PLAN_RECORD_BY_ID,
   REPORT_IRS_PLAN_URL,
 } from '../../../../constants';
-import { displayError } from '../../../../helpers/errors';
-import { extractPlanRecordResponseFromPlanPayload } from '../../../../helpers/utils';
+import {
+  asyncGetPlanRecords,
+  AsyncGetPlanRecordsOptions,
+} from '../../../../helpers/dataLoadingUtils/plansService';
 import { OpenSRPService } from '../../../../services/opensrp';
 import IRSPlansReducer, {
   reducerName as IRSPlansReducerName,
@@ -36,14 +39,11 @@ import {
   InterventionType,
   makePlansArraySelector,
   PlanRecord,
-  PlanRecordResponse,
   PlanStatus,
 } from '../../../../store/ducks/plans';
 
 /** register the plan definitions reducer */
 reducerRegistry.register(IRSPlansReducerName, IRSPlansReducer);
-
-const OpenSrpPlanService = new OpenSRPService('plans');
 
 /** Plans filter selector */
 const plansArraySelector = makePlansArraySelector(PLAN_RECORD_BY_ID);
@@ -52,13 +52,12 @@ const plansArraySelector = makePlansArraySelector(PLAN_RECORD_BY_ID);
 interface PlanAssignmentsListProps {
   fetchPlans: typeof fetchPlanRecords;
   plans: PlanRecord[];
+  service: typeof OpenSRPService;
 }
 
 /** Simple component that loads plans and allows you to manage plan-jurisdiciton-organization assignments */
 const IRSAssignmentPlansList = (props: PlanAssignmentsListProps) => {
   const { fetchPlans, plans } = props;
-  const [loading, setLoading] = useState<boolean>(plans.length < 1);
-  const isMounted = useRef<boolean>(false);
 
   const pageTitle: string = `${ASSIGN_PLANS}`;
 
@@ -74,41 +73,6 @@ const IRSAssignmentPlansList = (props: PlanAssignmentsListProps) => {
       },
     ],
   };
-
-  /** async function to load the data */
-  async function loadData() {
-    try {
-      setLoading(plans.length < 1); // only set loading when there are no plans
-      await OpenSrpPlanService.list()
-        .then(planResults => {
-          if (planResults) {
-            const planRecords: PlanRecordResponse[] =
-              planResults.map(extractPlanRecordResponseFromPlanPayload) || [];
-            return fetchPlans(planRecords);
-          }
-        })
-        .catch(err => {
-          displayError(err);
-        });
-      if (isMounted.current) {
-        setLoading(false);
-      }
-    } catch (e) {
-      displayError(e);
-    }
-  }
-
-  useEffect(() => {
-    isMounted.current = true;
-    loadData().catch(error => displayError(error));
-    return () => {
-      isMounted.current = false;
-    };
-  }, []);
-
-  if (loading) {
-    return <Loading />;
-  }
 
   const listViewProps = {
     data: plans.map(planObj => {
@@ -126,6 +90,27 @@ const IRSAssignmentPlansList = (props: PlanAssignmentsListProps) => {
     tableClass: 'table table-bordered plans-list',
   };
 
+  const asyncRendererProps: AsyncRendererProps<PlanRecord, AsyncGetPlanRecordsOptions> = {
+    data: plans,
+    ifFulfilledRender: () => (
+      <Row>
+        <Col>
+          {plans.length < 1 ? (
+            <span>{NO_PLANS_LOADED_MESSAGE}</span>
+          ) : (
+            <ListView {...listViewProps} />
+          )}
+        </Col>
+      </Row>
+    ),
+    ifLoadingRender: () => <Loading />,
+    promiseFn: asyncGetPlanRecords,
+    promiseFnProps: {
+      fetchPlansCreator: fetchPlans,
+      service: props.service,
+    },
+  };
+
   return (
     <div>
       <Helmet>
@@ -137,15 +122,7 @@ const IRSAssignmentPlansList = (props: PlanAssignmentsListProps) => {
           <h3 className="mt-3 mb-3 page-title">{pageTitle}</h3>
         </Col>
       </Row>
-      <Row>
-        <Col>
-          {plans.length < 1 ? (
-            <span>{NO_PLANS_LOADED_MESSAGE}</span>
-          ) : (
-            <ListView {...listViewProps} />
-          )}
-        </Col>
-      </Row>
+      <AsyncRenderer<PlanRecord, AsyncGetPlanRecordsOptions> {...asyncRendererProps} />
     </div>
   );
 };
@@ -154,6 +131,7 @@ const IRSAssignmentPlansList = (props: PlanAssignmentsListProps) => {
 const defaultProps: PlanAssignmentsListProps = {
   fetchPlans: fetchPlanRecords,
   plans: [],
+  service: OpenSRPService,
 };
 
 IRSAssignmentPlansList.defaultProps = defaultProps;

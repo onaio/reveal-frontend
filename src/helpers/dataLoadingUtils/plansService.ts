@@ -52,7 +52,6 @@ export const asyncGetPlanRecords: PromiseFn<PlanRecord[]> = async (
     })
     .catch((err: Error) => {
       growl(err.message, { type: toast.TYPE.ERROR });
-      throw err;
       return [];
     });
 };

@@ -215,7 +215,7 @@ const App = () => {
                 redirectPath={APP_CALLBACK_URL}
                 disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                 exact={true}
-                path={`${ASSIGN_PLAN_URL}`}
+                path={ASSIGN_PLAN_URL}
                 component={ConnectedIRSAssignmentPlansList}
               />
               <ConnectedPrivateRoute

@@ -5,7 +5,12 @@ import { AnyAction, Store } from 'redux';
 import { createSelector } from 'reselect';
 import SeamlessImmutable from 'seamless-immutable';
 import { FIReasonType, FIStatusType } from '../../components/forms/PlanForm/types';
-import { descendingOrderSort, FlexObject, removeNullJurisdictionPlans } from '../../helpers/utils';
+import {
+  descendingOrderSort,
+  FlexObject,
+  planRecordResponseToPlanRecord,
+  removeNullJurisdictionPlans,
+} from '../../helpers/utils';
 
 /** the reducer name */
 export const reducerName = 'plans';
@@ -233,28 +238,7 @@ export const fetchPlans = (plansList: Plan[] = []): FetchPlansAction => {
  * @param {PlanRecord[]} planList - an array of plan record objects
  */
 export const fetchPlanRecords = (planList: PlanRecordResponse[] = []): FetchPlanRecordsAction => ({
-  planRecordsById: keyBy(
-    planList.map((plan: PlanRecordResponse) => {
-      const thePlan: PlanRecord = {
-        id: plan.identifier,
-        plan_date: plan.date,
-        plan_effective_period_end: plan.effective_period_end,
-        plan_effective_period_start: plan.effective_period_start,
-        plan_fi_reason: plan.fi_reason,
-        plan_fi_status: plan.fi_status,
-        plan_id: plan.identifier,
-        plan_intervention_type: plan.intervention_type,
-        plan_status: plan.status as PlanStatus,
-        plan_title: plan.title,
-        plan_version: plan.version,
-      };
-      if (plan.jurisdictions) {
-        thePlan.plan_jurisdictions_ids = [...plan.jurisdictions];
-      }
-      return thePlan;
-    }),
-    plan => plan.id
-  ),
+  planRecordsById: keyBy(planList.map(planRecordResponseToPlanRecord), plan => plan.id),
   type: PLAN_RECORDS_FETCHED,
 });
 
