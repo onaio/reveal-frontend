@@ -5,7 +5,9 @@ import store from '../../../store';
 import {
   getDefaultHeaders,
   getFilterParams,
+  getPayload,
   getPayloadOptions,
+  getURL,
   getURLParams,
   OpenSRPService,
 } from '../index';
@@ -32,16 +34,18 @@ describe('services/OpenSRP', () => {
     });
   });
 
-  it('getPayloadOptions works', async () => {
-    const signal = new AbortController().signal;
-    expect(getPayloadOptions(signal, 'POST')).toEqual({
+  it('getPayloadOptions and getPayload works', async () => {
+    const output = {
       headers: {
         accept: 'application/json',
         authorization: 'Bearer hunter2',
         'content-type': 'application/json;charset=UTF-8',
       },
       method: 'POST',
-    });
+    };
+    const signal = new AbortController().signal;
+    expect(getPayloadOptions(signal, 'POST')).toEqual({ ...output });
+    expect(getPayload('POST')).toEqual({ ...output });
   });
 
   it('OpenSRPService constructor works', async () => {
@@ -55,6 +59,14 @@ describe('services/OpenSRP', () => {
     expect(getURLParams({})).toEqual('');
     expect(getURLParams({ foo: 'bar', leet: 1337, mosh: 'pitt' })).toEqual(
       'foo=bar&leet=1337&mosh=pitt'
+    );
+  });
+
+  it('getURL works', async () => {
+    const url = 'https://test.smartregister.org/opensrp/rest/plans';
+    expect(getURL(url)).toEqual(url);
+    expect(getURL(url, { foo: 'bar', leet: 1337, mosh: 'pitt' })).toEqual(
+      `${url}?foo=bar&leet=1337&mosh=pitt`
     );
   });
 
