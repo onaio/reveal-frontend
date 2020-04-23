@@ -160,8 +160,6 @@ const OrganizationListView = (props: OrgsListViewPropsType) => {
       </Row>
       <hr />
       <InlineSearchForm {...inlineSearchFormProps} />
-
-      <ListView {...listViewProps} />
       <AsyncRenderer<Organization, AsyncGetOrganizationsOptions> {...asyncRendererProps} />
     </div>
   );
