@@ -1,5 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`components/IRS Reports/IRSPlansList Does not show loader when store has data: First table rows 1`] = `"IRS 2019-09-05 TEST"`;
+
+exports[`components/IRS Reports/IRSPlansList Works with store: First table row 1`] = `"IRS 2019-09-05 TEST"`;
+
 exports[`components/IRS Reports/IRSPlansList renders plan definition list correctly: breadcrumbs 1`] = `
 Array [
   <li

@@ -1,6 +1,6 @@
 import ListView from '@onaio/list-view';
 import reducerRegistry from '@onaio/redux-reducer-registry';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -14,13 +14,13 @@ import {
   END_DATE,
   HOME,
   IRS_PLANS,
+  NO_PLANS_LOADED_MESSAGE,
   START_DATE,
   STATUS_HEADER,
   TITLE,
 } from '../../../../configs/lang';
 import { planStatusDisplay } from '../../../../configs/settings';
 import { HOME_URL, REPORT_IRS_PLAN_URL } from '../../../../constants';
-import { displayError } from '../../../../helpers/errors';
 import supersetFetch from '../../../../services/superset';
 import IRSPlansReducer, {
   fetchIRSPlans,
@@ -28,6 +28,7 @@ import IRSPlansReducer, {
   IRSPlan,
   reducerName as IRSPlansReducerName,
 } from '../../../../store/ducks/generic/plans';
+import { useAsyncSupersetPlans } from './hooks';
 
 /** register the plan definitions reducer */
 reducerRegistry.register(IRSPlansReducerName, IRSPlansReducer);
@@ -42,7 +43,7 @@ interface PlanListProps {
 /** Simple component that loads the new plan form and allows you to create a new plan */
 const IRSPlansList = (props: PlanListProps) => {
   const { fetchPlans, plans, service } = props;
-  const [loading, setLoading] = useState<boolean>(true);
+  // const [loading, setLoading] = useState<boolean>(true);
 
   const pageTitle: string = IRS_PLANS;
 
@@ -59,27 +60,15 @@ const IRSPlansList = (props: PlanListProps) => {
     ],
   };
 
-  /** async function to load the data */
-  async function loadData() {
-    try {
-      setLoading(plans.length < 1); // only set loading when there are no plans
-      await service(SUPERSET_IRS_REPORTING_PLANS_SLICE).then((result: IRSPlan[]) =>
-        fetchPlans(result)
-      );
-    } catch (e) {
-      // do something with the error?
-    } finally {
-      setLoading(false);
-    }
-  }
+  const asyncSupersetOptions = {
+    data: plans,
+    fetchPlans,
+    superset: service,
+    supersetOptions: null,
+    supersetSlice: SUPERSET_IRS_REPORTING_PLANS_SLICE,
+  };
 
-  useEffect(() => {
-    loadData().catch(error => displayError(error));
-  }, []);
-
-  if (loading === true) {
-    return <Loading />;
-  }
+  const loading = useAsyncSupersetPlans(asyncSupersetOptions);
 
   const listViewProps = {
     data: plans.map(planObj => {
@@ -108,11 +97,15 @@ const IRSPlansList = (props: PlanListProps) => {
           <h3 className="mt-3 mb-3 page-title">{pageTitle}</h3>
         </Col>
       </Row>
-      <Row>
-        <Col>
-          <ListView {...listViewProps} />
-        </Col>
-      </Row>
+      {loading ? (
+        <Loading />
+      ) : (
+        <Row>
+          <Col>
+            {plans.length > 0 ? <ListView {...listViewProps} /> : <p>{NO_PLANS_LOADED_MESSAGE}</p>}
+          </Col>
+        </Row>
+      )}
     </div>
   );
 };
