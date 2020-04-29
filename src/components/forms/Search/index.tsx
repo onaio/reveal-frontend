@@ -1,71 +1,84 @@
-import { History, Location } from 'history';
-import React, { useEffect, useState } from 'react';
-import { Button, Form, FormGroup, Input } from 'reactstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { debounce } from 'lodash';
+import queryString from 'querystring';
+import React from 'react';
+import { RouteComponentProps, withRouter } from 'react-router';
+import { Input } from 'reactstrap';
 import { SEARCH } from '../../../configs/lang';
 import { QUERY_PARAM_TITLE } from '../../../constants';
 import { getQueryParams } from '../../../helpers/utils';
+import './index.css';
 
-/**
- * Interface for handleSearchChange event handler
- */
-export type Change = (event: React.ChangeEvent<HTMLInputElement>) => void;
+/** call handler function after this many milliseconds since when it was last invoked */
+export const DEBOUNCE_HANDLER_MS = 1000;
 
-/**
- * Interface for handleSubmit event handler
- */
-export type Submit = (event: React.FormEvent<HTMLFormElement>) => void;
+/** function type for custom onChangeHandler functions */
+export type OnChangeType = (event: React.ChangeEvent<HTMLInputElement>) => void;
 
 /**
  * Interface for SearchForm props
  */
-export interface SearchFormProps {
-  history: History;
-  location: Location;
+export interface BaseSearchFormProps {
   placeholder: string;
+  queryParam: string;
+  onChangeHandler?: OnChangeType;
 }
 
 /**
  * default props for SerchForm component
  */
-export const defaultSearchFormProps = {
+export const defaultSearchProps = {
   placeholder: SEARCH,
+  queryParam: QUERY_PARAM_TITLE,
 };
 
-/** SearchForm component */
-export const SearchForm = (props: SearchFormProps) => {
-  const [searchQuery, setSearchQuery] = useState('');
+type SeachInputPropsType = BaseSearchFormProps & RouteComponentProps<{}>;
 
-  useEffect(() => {
-    setSearchQuery(getQueryParams(props.location)[QUERY_PARAM_TITLE] as string);
-  }, []);
+/** Base SearchForm component */
+const BaseSearchForm = (props: SeachInputPropsType) => {
+  const { placeholder, queryParam, onChangeHandler } = props;
 
-  const handleSearchChange: Change = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(event.target.value);
+  const onchangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const targetValue = event.target.value;
+    if (onChangeHandler) {
+      onChangeHandler(event);
+      return;
+    }
+    const allQueryParams = getQueryParams(props.location);
+    if (targetValue) {
+      allQueryParams[queryParam] = targetValue;
+    } else {
+      delete allQueryParams[queryParam];
+    }
+
+    props.history.push(`${props.match.url}?${queryString.stringify(allQueryParams)}`);
   };
 
-  const handleSubmit: Submit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    props.history.push({
-      search: `?${QUERY_PARAM_TITLE}=${searchQuery}`,
-    });
+  const debouncedOnChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    event.persist();
+    const debouncedFn = debounce(
+      (ev: React.ChangeEvent<HTMLInputElement>) => onchangeHandler(ev),
+      DEBOUNCE_HANDLER_MS
+    );
+    debouncedFn(event);
   };
 
   return (
-    <Form inline={true} onSubmit={handleSubmit}>
-      <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
-        <Input
-          type="text"
-          name="search"
-          placeholder={props.placeholder}
-          onChange={handleSearchChange}
-          value={searchQuery}
-        />
-      </FormGroup>
-      <Button outline={true} color="success">
-        {SEARCH}
-      </Button>
-    </Form>
+    <div className="search-input-wrapper">
+      <FontAwesomeIcon className="search-icon" icon="search" />
+      <Input
+        className="form-control search-input"
+        type="text"
+        name="search"
+        placeholder={placeholder}
+        onInput={debouncedOnChangeHandler}
+      />
+    </div>
   );
 };
 
-SearchForm.defaultProps = defaultSearchFormProps;
+BaseSearchForm.defaultProps = defaultSearchProps;
+
+const SearchForm = withRouter(BaseSearchForm);
+
+export default SearchForm;
