@@ -71,13 +71,12 @@ const JurisdictionSelect = (props: JurisdictionSelectProps & FieldProps) => {
       properties_filter: getFilterParams(propertiesToFilter),
     }),
   };
-
   /** Get select options from OpenSRP as a promise */
-  const promiseOptions = () =>
+  const promiseOptions = (openSrpService = service) =>
     // tslint:disable-next-line:no-inferred-empty-object-type
     new Promise(resolve =>
       resolve(
-        service.list(paramsToUse).then((e: JurisdictionOption[]) => {
+        openSrpService.list(paramsToUse).then((e: JurisdictionOption[]) => {
           const options = e.map(item => {
             return { label: item.properties.name, value: item.id };
           });
@@ -157,6 +156,7 @@ const JurisdictionSelect = (props: JurisdictionSelectProps & FieldProps) => {
       bsSize="lg"
       defaultMenuIsOpen={shouldMenuOpen}
       closeMenuOnSelect={closeMenuOnSelect}
+      classNamePrefix="jurisdiction"
       placeholder={props.placeholder ? props.placeholder : SELECT}
       noOptionsMessage={reactSelectNoOptionsText}
       aria-label={props['aria-label'] ? props['aria-label'] : SELECT}
