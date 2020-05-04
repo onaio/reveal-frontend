@@ -25,19 +25,6 @@ export interface URLParams {
   [key: string]: string | number | boolean;
 }
 
-/** params option type */
-type paramsType = URLParams | null;
-
-/** converts URL params object to string
- * @param {URLParams} obj - the object representing URL params
- * @returns {string} URL params as a string
- */
-export function getURLParams(obj: URLParams | {}): string {
-  return Object.entries(obj)
-    .map(([key, val]) => `${key}=${val}`)
-    .join('&');
-}
-
 /** converts filter params object to string
  * @param {URLParams} obj - the object representing filter params
  * @returns {string} filter params as a string
@@ -46,17 +33,6 @@ export function getFilterParams(obj: URLParams | {}): string {
   return Object.entries(obj)
     .map(([key, val]) => `${key}:${val}`)
     .join(',');
-}
-
-/** get payload for fetch
- * @param {HTTPMethod} method - the HTTP method
- * @returns the payload
- */
-export function getPayload(method: HTTPMethod) {
-  return {
-    headers: getDefaultHeaders() as HeadersInit,
-    method,
-  };
 }
 
 /** get payload for fetch
@@ -72,21 +48,8 @@ export function getPayloadOptions(_: AbortSignal, method: HTTPMethod) {
   };
 }
 
-/** Get URL
- * @param {string} url - the url
- * @param {paramType} params - the url params object
- * @returns {string} the final url
- */
-export function getURL(url: string, params: paramsType = null): string {
-  let result = url;
-  if (params) {
-    result = `${result}?${getURLParams(params)}`;
-  }
-  return result;
-}
-
 /** The OpenSRP service class
- *
+ * Extends class OpenSRPService from OpenSRPService web
  * Sample usage:
  * -------------
  * const service = new OpenSRPService('the-endpoint');
@@ -99,75 +62,12 @@ export function getURL(url: string, params: paramsType = null): string {
  *
  * **To update an object**: service.update(theObject)
  */
-export class OpenSRPService {
-  public baseURL: string;
-  public endpoint: string;
-  public generalURL: string;
-
-  constructor(endpoint: string, baseURL: string = OPENSRP_API_BASE_URL) {
-    this.endpoint = endpoint;
-    this.baseURL = baseURL;
-    this.generalURL = `${this.baseURL}${this.endpoint}`;
-  }
-
-  /** create method
-   * Send a POST request to the general endpoint containing the new object data
-   * Successful requests will result in a HTTP status 201 response with no body
-   * @param {T} data - the data to be POSTed
-   * @param {params} params - the url params object
-   * @param {HTTPMethod} method - the HTTP method
-   * @returns the object returned by API
-   */
-  public async create<T>(data: T, params: paramsType = null, method: HTTPMethod = 'POST') {
-    const service = new OpenSRPServiceWeb(this.baseURL, this.endpoint, getPayloadOptions);
-    return await service.create(data, params, method);
-  }
-
-  /** read method
-   * Send a GET request to the url for the specific object
-   * @param {string|number} id - the identifier of the object
-   * @param {params} params - the url params object
-   * @param {HTTPMethod} method - the HTTP method
-   * @returns the object returned by API
-   */
-  public async read(id: string | number, params: paramsType = null, method: HTTPMethod = 'GET') {
-    const service = new OpenSRPServiceWeb(this.baseURL, this.endpoint, getPayloadOptions);
-    return await service.read(id, params, method);
-  }
-
-  /** update method
-   * Simply send the updated object as PUT request to the general endpoint URL
-   * Successful requests will result in a HTTP status 200/201 response with no body
-   * @param {T} data - the data to be POSTed
-   * @param {params} params - the url params object
-   * @param {HTTPMethod} method - the HTTP method
-   * @returns the object returned by API
-   */
-  public async update<T>(data: T, params: paramsType = null, method: HTTPMethod = 'PUT') {
-    const service = new OpenSRPServiceWeb(this.baseURL, this.endpoint, getPayloadOptions);
-    return await service.update(data, params, method);
-  }
-
-  /** list method
-   * Send a GET request to the general API endpoint
-   * @param {params} params - the url params object
-   * @param {HTTPMethod} method - the HTTP method
-   * @returns list of objects returned by API
-   */
-  public async list(params: paramsType = null, method: HTTPMethod = 'GET') {
-    const service = new OpenSRPServiceWeb(this.baseURL, this.endpoint, getPayloadOptions);
-    return await service.list(params, method);
-  }
-
-  /** delete method
-   * Send a DELETE request to the general endpoint
-   * Successful requests will result in a HTTP status 204
-   * @param {params} params - the url params object
-   * @param {HTTPMethod} method - the HTTP method
-   * @returns the object returned by API
-   */
-  public async delete(params: paramsType = null, method: HTTPMethod = 'DELETE') {
-    const service = new OpenSRPServiceWeb(this.baseURL, this.endpoint, getPayloadOptions);
-    return await service.delete(params, method);
+export class OpenSRPService extends OpenSRPServiceWeb {
+  constructor(
+    endpoint: string,
+    baseURL: string = OPENSRP_API_BASE_URL,
+    getPayload: typeof getPayloadOptions = getPayloadOptions
+  ) {
+    super(baseURL, endpoint, getPayload);
   }
 }
