@@ -446,3 +446,21 @@ export const SEARCH_ACTIVE_FOCUS_INVESTIGATIONS = translate(
   'Search active focus investigations'
 );
 export const NO_OPTIONS = translate('NO_OPTIONS', 'No Options');
+
+export const FILTER = translate('FILTER', 'Filter');
+
+export const USER = translate('USER', 'user');
+
+export const ROW_HEIGHT = translate('ROW_HEIGHT', 'Row Height');
+
+export const ROWS_TO_DISPLAY = translate('ROWS_TO_DISPLAY', 'Rows to display');
+
+export const PAGE = translate('PAGE', 'page');
+
+export const OF = translate('OF', 'of');
+
+export const DEFAULT = translate('DEFAULT', 'default');
+
+export const SHORT = translate('SHORT', 'short');
+
+export const TALL = translate('TALL', 'tall');
