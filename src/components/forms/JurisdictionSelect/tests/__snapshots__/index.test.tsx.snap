@@ -52,6 +52,7 @@ Object {
     "return_geometry": false,
   },
   "placeholder": "Select",
+  "promiseOptions": [Function],
   "screenReaderStatus": [Function],
   "serviceClass": [Function],
   "styles": Object {},
@@ -77,12 +78,16 @@ Object {
   "isLoading": false,
   "loadOptions": [Function],
   "name": "jurisdiction",
+  "noOptionsMessage": [Function],
   "onChange": [Function],
   "params": Object {
     "is_jurisdiction": true,
     "return_geometry": false,
   },
   "placeholder": "Select",
+  "promiseOptions": [Function],
   "serviceClass": [Function],
 }
 `;
+
+exports[`components/forms/JurisdictionSelect select various selections: test props 1`] = `ReactWrapper {}`;

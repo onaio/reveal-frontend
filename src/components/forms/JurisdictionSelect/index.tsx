@@ -1,3 +1,4 @@
+import { Dictionary } from '@onaio/utils/dist/types/types';
 import { FieldProps } from 'formik';
 import React, { useState } from 'react';
 import AsyncSelect, { Props as AsyncSelectProps } from 'react-select/async';
@@ -34,16 +35,40 @@ export interface JurisdictionSelectProps<T = SelectOption> extends AsyncSelectPr
   cascadingSelect: boolean /** should we have a cascading select or not */;
   params: URLParams /** extra URL params to send to OpenSRP */;
   serviceClass: typeof OpenSRPService /** the OpenSRP service */;
+  promiseOptions: any;
 }
 
+export const promiseOptions = (service: any, paramsToUse: Dictionary, hierarchy: SelectOption[]) =>
+  // tslint:disable-next-line:no-inferred-empty-object-type
+  new Promise(resolve =>
+    resolve(
+      service.list(paramsToUse).then((e: JurisdictionOption[]) => {
+        const options = e.map(item => {
+          return { label: item.properties.name, value: item.id };
+        });
+        if (hierarchy.length > 0) {
+          const labels = hierarchy.map(j => j.label).join(' > ');
+          return [
+            {
+              label: labels,
+              options,
+            },
+          ];
+        }
+        return options;
+      })
+    )
+  );
+
 /** default props for JurisdictionSelect */
-export const defaultProps: Partial<JurisdictionSelectProps> = {
+const defaultProps: Partial<JurisdictionSelectProps> = {
   apiEndpoint: 'location/findByProperties',
   cascadingSelect: true,
   params: {
     is_jurisdiction: true,
     return_geometry: false,
   },
+  promiseOptions,
   serviceClass: OpenSRPService,
 };
 
@@ -71,29 +96,32 @@ const JurisdictionSelect = (props: JurisdictionSelectProps & FieldProps) => {
       properties_filter: getFilterParams(propertiesToFilter),
     }),
   };
-  /** Get select options from OpenSRP as a promise */
-  const promiseOptions = (openSrpService = service) =>
-    // tslint:disable-next-line:no-inferred-empty-object-type
-    new Promise(resolve =>
-      resolve(
-        openSrpService.list(paramsToUse).then((e: JurisdictionOption[]) => {
-          const options = e.map(item => {
-            return { label: item.properties.name, value: item.id };
-          });
-          if (hierarchy.length > 0) {
-            const labels = hierarchy.map(j => j.label).join(' > ');
-            return [
-              {
-                label: labels,
-                options,
-              },
-            ];
-          }
-          return options;
-        })
-      )
-    );
 
+  /** Get select options from OpenSRP as a promise */
+  // const promiseOptions = () =>
+  //   // tslint:disable-next-line:no-inferred-empty-object-type
+  //   new Promise(resolve =>
+  //     resolve(
+  //       service.list(paramsToUse).then((e: JurisdictionOption[]) => {
+  //         const options = e.map(item => {
+  //           return { label: item.properties.name, value: item.id };
+  //         });
+  //         if (hierarchy.length > 0) {
+  //           const labels = hierarchy.map(j => j.label).join(' > ');
+  //           return [
+  //             {
+  //               label: labels,
+  //               options,
+  //             },
+  //           ];
+  //         }
+  //         return options;
+  //       })
+  //     )
+  //   );
+  const wrapperPromiseOptions = () => {
+    return promiseOptions(service, paramsToUse, hierarchy);
+  };
   /**
    * onChange callback
    * unfortunately we have to set the type of option as any (for now)
@@ -156,15 +184,15 @@ const JurisdictionSelect = (props: JurisdictionSelectProps & FieldProps) => {
       bsSize="lg"
       defaultMenuIsOpen={shouldMenuOpen}
       closeMenuOnSelect={closeMenuOnSelect}
-      classNamePrefix="jurisdiction"
       placeholder={props.placeholder ? props.placeholder : SELECT}
       noOptionsMessage={reactSelectNoOptionsText}
       aria-label={props['aria-label'] ? props['aria-label'] : SELECT}
       onChange={handleChange()}
       defaultOptions={true}
-      loadOptions={promiseOptions}
+      loadOptions={wrapperPromiseOptions}
       isClearable={true}
       cacheOptions={true}
+      classNamePrefix="jurisdiction"
       {...props}
     />
   );
