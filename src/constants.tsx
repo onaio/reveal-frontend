@@ -125,3 +125,7 @@ export const SORT_BY_EFFECTIVE_PERIOD_START_FIELD = 'plan_effective_period_start
 
 /** Query Params */
 export const QUERY_PARAM_TITLE = 'title';
+export const QUERY_PARAM_USER = 'user';
+export const REACTIVE_QUERY_PARAM = 'reactive_plans';
+export const ROUTINE_QUERY_PARAM = 'routine_plans';
+export const ROW_HEIGHT_KEY = 'rowHeight';
