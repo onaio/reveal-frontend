@@ -50,6 +50,7 @@ import {
   CASE_NOTIF_DATE_HEADER,
   CASE_TRIGGERED_TITLE,
   DATE_COMPLETED,
+  DEFAULT,
   DISTRICT,
   END_DATE,
   FI_STATUS,
@@ -87,8 +88,10 @@ import {
   REGISTER_FAMILY_ACTIVITY_DESCRIPTION,
   REGISTER_FAMILY_ACTIVITY_GOAL_MEASURE,
   ROUTINE_TITLE,
+  SHORT,
   START_DATE,
   STATUS_HEADER,
+  TALL,
   VILLAGE,
 } from '../configs/lang';
 import {
@@ -1436,3 +1439,19 @@ export const imgArr = [
       'https://raw.githubusercontent.com/onaio/reveal-frontend/master/src/assets/images/mosquito.png',
   },
 ];
+
+/** possible row height choices for the rowHeight filter */
+export const rowHeights = {
+  DEFAULT: {
+    label: DEFAULT,
+    value: '2em',
+  },
+  SHORT: {
+    label: SHORT,
+    value: '1em',
+  },
+  TALL: {
+    label: TALL,
+    value: '3em',
+  },
+};
