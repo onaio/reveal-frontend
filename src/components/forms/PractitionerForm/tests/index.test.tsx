@@ -17,12 +17,12 @@ describe('src/components/PractitionerForm', () => {
     fetch.resetMocks();
   });
   it('renders without crashing', () => {
-    fetch.once(JSON.stringify(practitioners)).once(JSON.stringify(openMRSUsers));
+    fetch.once(JSON.stringify(openMRSUsers)).once(JSON.stringify(practitioners));
     shallow(<PractitionerForm />);
   });
 
   it('renders correctly', () => {
-    fetch.once(JSON.stringify(practitioners)).once(JSON.stringify(openMRSUsers));
+    fetch.once(JSON.stringify(openMRSUsers)).once(JSON.stringify(practitioners));
     // looking for each fields
     const wrapper = mount(<PractitionerForm />);
 
@@ -46,7 +46,7 @@ describe('src/components/PractitionerForm', () => {
   });
 
   it('yup validates correctly', async () => {
-    fetch.once(JSON.stringify(practitioners)).once(JSON.stringify(openMRSUsers));
+    fetch.once(JSON.stringify(openMRSUsers)).once(JSON.stringify(practitioners));
     // fetch.mockResponse(JSON.stringify([]))
     // looking for each fields
     const wrapper = mount(<PractitionerForm />);
@@ -54,7 +54,7 @@ describe('src/components/PractitionerForm', () => {
     await flushPromises();
     expect(fetch.mock.calls).toEqual([
       [
-        'https://test.smartregister.org/opensrp/rest/practitioner',
+        'https://test.smartregister.org/opensrp/rest/user?page_size=51&start_index=0',
         {
           headers: {
             accept: 'application/json',
@@ -65,7 +65,7 @@ describe('src/components/PractitionerForm', () => {
         },
       ],
       [
-        'https://test.smartregister.org/opensrp/rest/user?page_size=51&start_index=0',
+        'https://test.smartregister.org/opensrp/rest/practitioner',
         {
           headers: {
             accept: 'application/json',
@@ -115,7 +115,7 @@ describe('src/components/PractitionerForm', () => {
   });
 
   it('creates object to send correctly for creating new practitioner', async () => {
-    fetch.once(JSON.stringify(practitioners)).once(JSON.stringify(openMRSUsers));
+    fetch.once(JSON.stringify(openMRSUsers)).once(JSON.stringify(practitioners));
     (helpers as any).generateNameSpacedUUID = jest.fn(() => 'someUUId');
     const wrapper = mount(<PractitionerForm />);
 
@@ -152,7 +152,7 @@ describe('src/components/PractitionerForm', () => {
   });
 
   it('creates object to send correctly for editing practitioner', async () => {
-    fetch.once(JSON.stringify(practitioners)).once(JSON.stringify(openMRSUsers));
+    fetch.once(JSON.stringify(openMRSUsers)).once(JSON.stringify(practitioners));
     const props = {
       initialValues: {
         active: false,
