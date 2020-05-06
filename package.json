@@ -65,6 +65,7 @@
     "react-scripts": "2.1.3",
     "react-select": "^3.0.4",
     "react-table": "^7.0.4",
+    "react-table-v6": "^6.8.6",
     "react-toastify": "^5.4.1",
     "reactstrap": "^7.1.0",
     "redux": "^4.0.1",
