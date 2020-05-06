@@ -368,7 +368,15 @@ export const MDA_POINT_DISPENSE_ACTIVITY_DESCRIPTION = translate(
 );
 export const MDA_POINT_DISPENSE_COLLECTION_GOAL = translate(
   'MDA_POINT_DISPENSE_ACTIVITY_DESCRIPTION',
-  'Number of drugs dispensed'
+  'Percent of eligible people'
+);
+export const MDA_POINT_ADVERSE_EFFECT_ACTIVITY_DESCRIPTION = translate(
+  'MDA_POINT_ADVERSE_EFFECT_ACTIVITY_DESCRIPTION',
+  'Report any adverse events from medication'
+);
+export const MDA_POINT_ADVERSE_EFFECT_COLLECTION_GOAL = translate(
+  'MDA_POINT_ADVERSE_EFFECT_COLLECTION_GOAL',
+  'Percent of people who reported adverse events'
 );
 
 export const A1_DESCRIPTION = translate(

@@ -432,6 +432,43 @@ export const planActivityWithEmptyfields: PlanActivities = {
       ],
     },
   },
+  pointAdverseMDA: {
+    action: {
+      code: 'MDA Adverse Event(s)',
+      description: '',
+      goalId: 'Point_adverse_effect_MDA',
+      identifier: '',
+      prefix: 6,
+      reason: 'Routine',
+      subjectCodableConcept: {
+        text: 'MDA_Point_Adverse_Event',
+      },
+      taskTemplate: 'MDA_Point_Adverse_Event',
+      timingPeriod: {
+        end: '',
+        start: '',
+      },
+      title: 'MDA Adverse Event(s)',
+    },
+    goal: {
+      description: '',
+      id: 'Point_adverse_effect_MDA',
+      priority: 'medium-priority',
+      target: [
+        {
+          detail: {
+            detailQuantity: {
+              comparator: '>=',
+              unit: GoalUnit.PERCENT,
+              value: 2,
+            },
+          },
+          due: '',
+          measure: 'Percent of people who reported adverse events',
+        },
+      ],
+    },
+  },
   pointDispenseMDA: {
     action: {
       code: 'MDA Dispense',
@@ -464,7 +501,7 @@ export const planActivityWithEmptyfields: PlanActivities = {
             },
           },
           due: goalDue.toISOString(),
-          measure: 'Number of drugs dispensed',
+          measure: 'Percent of eligible people',
         },
       ],
     },
@@ -997,6 +1034,44 @@ export const planActivities: PlanActivities = {
       ],
     },
   },
+
+  pointAdverseMDA: {
+    action: {
+      code: 'MDA Adverse Event(s)',
+      description: '',
+      goalId: 'Point_adverse_effect_MDA',
+      identifier: '',
+      prefix: 6,
+      reason: 'Routine',
+      subjectCodableConcept: {
+        text: 'MDA_Point_Adverse_Event',
+      },
+      taskTemplate: 'MDA_Point_Adverse_Event',
+      timingPeriod: {
+        end: '',
+        start: '',
+      },
+      title: 'MDA Adverse Event(s)',
+    },
+    goal: {
+      description: '',
+      id: 'Point_adverse_effect_MDA',
+      priority: 'medium-priority',
+      target: [
+        {
+          detail: {
+            detailQuantity: {
+              comparator: '>=',
+              unit: GoalUnit.PERCENT,
+              value: 2,
+            },
+          },
+          due: '',
+          measure: 'Percent of people who reported adverse events',
+        },
+      ],
+    },
+  },
   pointDispenseMDA: {
     action: {
       code: 'MDA Dispense',
@@ -1029,7 +1104,7 @@ export const planActivities: PlanActivities = {
             },
           },
           due: '',
-          measure: 'Number of drugs dispensed',
+          measure: 'Percent of eligible people',
         },
       ],
     },

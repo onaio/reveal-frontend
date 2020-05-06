@@ -44,7 +44,7 @@ import {
 } from './types';
 
 /** separate FI and IRS activities */
-export const FIActivities = omit(planActivities, ['IRS', 'pointDispenseMDA']);
+export const FIActivities = omit(planActivities, ['IRS']);
 export const IRSActivities = pick(planActivities, ['IRS']);
 
 /** Array of FI Statuses */
