@@ -15,7 +15,7 @@ import {
   lineLayerConfig,
   symbolLayerConfig,
 } from '../../configs/settings';
-import { APP, MAIN_PLAN, MAP_ID, STRUCTURE_LAYER } from '../../constants';
+import { APP, MAIN_PLAN, MAP_ID, MAPBOXGL_POPUP, STRUCTURE_LAYER } from '../../constants';
 import { displayError } from '../../helpers/errors';
 import { EventData } from '../../helpers/mapbox';
 import { ConfigStore, FeatureCollection } from '../../helpers/utils';
@@ -279,8 +279,8 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
       nextProps.currentGoal !== this.props.currentGoal &&
       (this.state.locations || this.state.doInitMap)
     ) {
-      if (document.querySelectorAll('.mapboxgl-popup').length) {
-        document.querySelectorAll('.mapboxgl-popup').forEach(el => el.remove());
+      if (document.querySelectorAll(MAPBOXGL_POPUP).length) {
+        document.querySelectorAll(MAPBOXGL_POPUP).forEach(el => el.remove());
       }
       this.setState({ doInitMap: false, initMapWithoutFC: false }, () => {
         this.initMap(
