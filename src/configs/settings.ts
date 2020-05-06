@@ -73,6 +73,8 @@ import {
   LARVAL_DIPPING_ACTIVITY_DESCRIPTION,
   LARVAL_DIPPING_GOAL_MEASURE,
   LOW_PRIORITY_LABEL,
+  MDA_POINT_DISPENSE_ACTIVITY_DESCRIPTION,
+  MDA_POINT_DISPENSE_COLLECTION_GOAL,
   MEDIUM_PRIORITY_LABEL,
   MOSQUITO_COLLECTION_ACTIVITY,
   MOSQUITO_COLLECTION_ACTIVITY_DESCRIPTION,
@@ -116,6 +118,8 @@ import {
   LARVAL_DIPPING_ACTIVITY_CODE,
   LARVAL_DIPPING_CODE,
   LOW_PRIORITY,
+  MDA_POINT_DISPENSE_ACTIVITY_CODE,
+  MDA_POINT_DISPENSE_CODE,
   MEDIUM_PRIORITY,
   MOSQUITO_COLLECTION_ACTIVITY_CODE,
   MOSQUITO_COLLECTION_CODE,
@@ -275,6 +279,7 @@ export const PlanActionCodes = [
   RACD_REGISTER_FAMILY_CODE,
   LARVAL_DIPPING_CODE,
   MOSQUITO_COLLECTION_CODE,
+  MDA_POINT_DISPENSE_CODE,
 ] as const;
 
 /** Allowed taskGenerationStatus values */
@@ -348,6 +353,7 @@ export const PlanActivityTitles = [
   MOSQUITO_COLLECTION_ACTIVITY_CODE,
   BCC_CODE,
   IRS_CODE,
+  MDA_POINT_DISPENSE_ACTIVITY_CODE,
 ] as const;
 
 /** default plan activities */
@@ -644,6 +650,43 @@ export const planActivities: PlanActivities = {
           },
           due: '',
           measure: MOSQUITO_COLLECTION_GOAL_MEASURE,
+        },
+      ],
+    },
+  },
+  pointDispenseMDA: {
+    action: {
+      code: 'MDA Dispense',
+      description: MDA_POINT_DISPENSE_ACTIVITY_DESCRIPTION,
+      goalId: 'Point_dispense_MDA',
+      identifier: '',
+      prefix: 6,
+      reason: ROUTINE,
+      subjectCodableConcept: {
+        text: 'MDA_Point_Dispense',
+      },
+      taskTemplate: 'MDA_Point_Dispense',
+      timingPeriod: {
+        end: '',
+        start: '',
+      },
+      title: MDA_POINT_DISPENSE_CODE,
+    },
+    goal: {
+      description: MDA_POINT_DISPENSE_ACTIVITY_DESCRIPTION,
+      id: 'Point_dispense_MDA',
+      priority: MEDIUM_PRIORITY,
+      target: [
+        {
+          detail: {
+            detailQuantity: {
+              comparator: '>=',
+              unit: GoalUnit.PERCENT,
+              value: 100,
+            },
+          },
+          due: '',
+          measure: MDA_POINT_DISPENSE_COLLECTION_GOAL,
         },
       ],
     },

@@ -362,6 +362,14 @@ export const MOSQUITO_COLLECTION_GOAL_MEASURE = translate(
   'MOSQUITO_COLLECTION_GOAL_MEASURE',
   'Number of mosquito collection activities completed'
 );
+export const MDA_POINT_DISPENSE_ACTIVITY_DESCRIPTION = translate(
+  'MDA_POINT_DISPENSE_ACTIVITY_DESCRIPTION',
+  'Dispense medication to each eligible person'
+);
+export const MDA_POINT_DISPENSE_COLLECTION_GOAL = translate(
+  'MDA_POINT_DISPENSE_ACTIVITY_DESCRIPTION',
+  'Number of drugs dispensed'
+);
 
 export const A1_DESCRIPTION = translate(
   'A1_DESCRIPTION',

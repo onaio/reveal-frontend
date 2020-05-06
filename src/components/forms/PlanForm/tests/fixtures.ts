@@ -432,6 +432,43 @@ export const planActivityWithEmptyfields: PlanActivities = {
       ],
     },
   },
+  pointDispenseMDA: {
+    action: {
+      code: 'MDA Dispense',
+      description: '',
+      goalId: 'Point_dispense_MDA',
+      identifier: '',
+      prefix: 6,
+      reason: 'Routine',
+      subjectCodableConcept: {
+        text: 'MDA_Point_Dispense',
+      },
+      taskTemplate: 'MDA_Point_Dispense',
+      timingPeriod: {
+        end: '',
+        start: '',
+      },
+      title: 'MDA Dispense',
+    },
+    goal: {
+      description: '',
+      id: 'Point_dispense_MDA',
+      priority: 'medium-priority',
+      target: [
+        {
+          detail: {
+            detailQuantity: {
+              comparator: '>=',
+              unit: GoalUnit.PERCENT,
+              value: 2,
+            },
+          },
+          due: goalDue.toISOString(),
+          measure: 'Number of drugs dispensed',
+        },
+      ],
+    },
+  },
 };
 
 export const expectedActivityEmptyField = {
@@ -956,6 +993,43 @@ export const planActivities: PlanActivities = {
           },
           due: goalDue.toISOString(),
           measure: 'Number of mosquito collection activities completed',
+        },
+      ],
+    },
+  },
+  pointDispenseMDA: {
+    action: {
+      code: 'MDA Dispense',
+      description: '',
+      goalId: 'Point_dispense_MDA',
+      identifier: '',
+      prefix: 6,
+      reason: 'Routine',
+      subjectCodableConcept: {
+        text: 'MDA_Point_Dispense',
+      },
+      taskTemplate: 'MDA_Point_Dispense',
+      timingPeriod: {
+        end: '',
+        start: '',
+      },
+      title: 'MDA Dispense',
+    },
+    goal: {
+      description: '',
+      id: 'Point_dispense_MDA',
+      priority: 'medium-priority',
+      target: [
+        {
+          detail: {
+            detailQuantity: {
+              comparator: '>=',
+              unit: GoalUnit.PERCENT,
+              value: 2,
+            },
+          },
+          due: '',
+          measure: 'Number of drugs dispensed',
         },
       ],
     },
