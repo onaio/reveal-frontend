@@ -17,7 +17,7 @@ describe('src/*/forms/userIdSelect', () => {
   });
 
   it('renders without crashing', async () => {
-    fetch.once(JSON.stringify(practitioners)).once(JSON.stringify(openMRSUsers));
+    fetch.once(JSON.stringify(openMRSUsers)).once(JSON.stringify(practitioners));
     const props = {
       serviceClass: OpenSRPService,
     };
@@ -28,7 +28,7 @@ describe('src/*/forms/userIdSelect', () => {
   });
 
   it('renders correctly', async () => {
-    fetch.once(JSON.stringify(practitioners)).once(JSON.stringify(openMRSUsers));
+    fetch.once(JSON.stringify(openMRSUsers)).once(JSON.stringify(practitioners));
     const props = {
       serviceClass: OpenSRPService,
     };
@@ -41,7 +41,7 @@ describe('src/*/forms/userIdSelect', () => {
   });
 
   it('calls to fetch', async () => {
-    fetch.once(JSON.stringify(practitioners)).once(JSON.stringify(openMRSUsers));
+    fetch.once(JSON.stringify(openMRSUsers)).once(JSON.stringify(practitioners));
 
     const props = {
       serviceClass: OpenSRPService,
@@ -50,9 +50,10 @@ describe('src/*/forms/userIdSelect', () => {
     // tslint:disable-next-line:promise-must-complete
     await new Promise<any>(resolve => new Promise<any>(resolve));
     await flushPromises();
+    await new Promise(resolve => setImmediate(resolve));
     const calls = [
       [
-        'https://test.smartregister.org/opensrp/rest/practitioner',
+        'https://test.smartregister.org/opensrp/rest/user?page_size=51&start_index=0',
         {
           headers: {
             accept: 'application/json',
@@ -63,7 +64,7 @@ describe('src/*/forms/userIdSelect', () => {
         },
       ],
       [
-        'https://test.smartregister.org/opensrp/rest/user?page_size=51&start_index=0',
+        'https://test.smartregister.org/opensrp/rest/practitioner',
         {
           headers: {
             accept: 'application/json',
@@ -80,7 +81,7 @@ describe('src/*/forms/userIdSelect', () => {
   it('should not reselect an already matched user', async () => {
     // openMRs users (options) shown in select dropdown
     // should not be already mapped to a practitioner entity in opensrp
-    fetch.once(JSON.stringify(practitioners)).once(JSON.stringify(openMRSUsers));
+    fetch.once(JSON.stringify(openMRSUsers)).once(JSON.stringify(practitioners));
     const props = {
       serviceClass: OpenSRPService,
     };
@@ -103,8 +104,32 @@ describe('src/*/forms/userIdSelect', () => {
     expect(optionNames.includes('negonga.zatias')).toBeFalsy();
   });
 
+  it('displays all users even those matched to practitioner', async () => {
+    // shows all openMRs users (options) shown in select dropdown
+    // if showPracitioners props is true
+    fetch.once(JSON.stringify(openMRSUsers)).once(JSON.stringify(practitioners));
+    const props = {
+      serviceClass: OpenSRPService,
+      showPractitioners: true,
+    };
+    const wrapper = mount(<UserIdSelect {...props} />);
+
+    await flushPromises();
+    wrapper.update();
+
+    // now look at passed options to Select
+    const selectWrapperProps = wrapper.find('Select').props();
+    const selectWrapperOptions = (selectWrapperProps as any).options;
+
+    expect(selectWrapperOptions.length).toEqual(openMRSUsers.results.length);
+
+    const optionNames = selectWrapperOptions.map((option: any) => option.label);
+    expect(optionNames.includes('superset-user')).toBeTruthy();
+    expect(optionNames.includes('negonga.zatias')).toBeTruthy();
+  });
+
   it('calls onchangeHandler callback correctly with correct arguments', async () => {
-    fetch.once(JSON.stringify(practitioners)).once(JSON.stringify(openMRSUsers));
+    fetch.once(JSON.stringify(openMRSUsers)).once(JSON.stringify(practitioners));
     const mock: any = jest.fn();
     const props = {
       onChangeHandler: mock,
@@ -133,7 +158,7 @@ describe('src/*/forms/userIdSelect', () => {
   });
 
   it('options are sorted in descending', async () => {
-    fetch.once(JSON.stringify(practitioners)).once(JSON.stringify(openMRSUsers));
+    fetch.once(JSON.stringify(openMRSUsers)).once(JSON.stringify(practitioners));
     const props = {
       serviceClass: OpenSRPService,
     };

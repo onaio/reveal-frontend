@@ -2,7 +2,7 @@
  * to select a single user from openMRS. the selected openMRs user
  * should not be mapped to any existing practitioner
  */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Select from 'react-select';
 import { ValueType } from 'react-select/src/types';
 import { OPENMRS_USERS_REQUEST_PAGE_SIZE } from '../../../../configs/env';
@@ -17,11 +17,15 @@ import { Practitioner } from '../../../../store/ducks/opensrp/practitioners';
 export interface Props {
   onChangeHandler?: (value: Option) => void;
   serviceClass: typeof OpenSRPService;
+  showPractitioners: boolean /** show users that are already mapped to a practitioner */;
+  className: string;
 }
 
 /** default props for UserIdSelect component */
 export const defaultProps = {
+  className: '',
   serviceClass: OpenSRPService,
+  showPractitioners: false,
 };
 
 /** interface for each select dropdown option */
@@ -52,10 +56,11 @@ export const thereIsNextPage = (response: OpenMRSResponse): boolean => {
 };
 
 /** The UserIdSelect component */
-export const UserIdSelect: React.FC<Props> = props => {
+export const UserIdSelect = (props: Props) => {
   const { onChangeHandler } = props;
   const [openMRSUsers, setOpenMRSUsers] = useState<OpenMRSUser[]>([]);
   const [selectIsLoading, setSelectIsLoading] = useState<boolean>(true);
+  const isMounted = useRef<boolean>(true);
 
   /** calls the prop.onChange with the selected option as argument
    * @param {ValueType<Option>} option - the value in the react-select
@@ -91,28 +96,42 @@ export const UserIdSelect: React.FC<Props> = props => {
     return allOpenMRSUsers;
   };
 
-  /** filters out openMRs User objects that have already been mapped to an existing
-   * practitioner, this is an effort towards ensuring a 1-1 mapping between an openMRS user
-   * and a practitioner entity
+  /** depending on the value of showPracitioners; it filters out openMRs User objects that have
+   * already been mapped to an existing practitioner, this is an effort towards ensuring a 1-1
+   * mapping between an openMRS user and a practitioner entity
    */
-  const loadUnmatchedUsers = async () => {
+  const loadUsers = async () => {
+    const allOpenMRSUsers = await loadOpenMRSUsers();
+    if (props.showPractitioners && isMounted.current) {
+      // setState with all unfiltered openMRS users if component is mounted
+      setOpenMRSUsers(allOpenMRSUsers);
+      setSelectIsLoading(false);
+    }
+    // cease execution irregardless of whether component is mounted
+    if (props.showPractitioners) {
+      return;
+    }
     const practitioners: Practitioner[] = await new props.serviceClass(
       OPENSRP_PRACTITIONER_ENDPOINT
     ).list();
-    const allOpenMRSUsers = await loadOpenMRSUsers();
 
     const practitionerUserIds = practitioners.map(practitioner => practitioner.userId);
     const unMatchedUsers = allOpenMRSUsers.filter(user => !practitionerUserIds.includes(user.uuid));
-    setOpenMRSUsers(unMatchedUsers);
-    setSelectIsLoading(false);
+    if (isMounted.current) {
+      setOpenMRSUsers(unMatchedUsers);
+      setSelectIsLoading(false);
+    }
   };
 
   useEffect(() => {
     try {
-      loadUnmatchedUsers().catch(err => displayError(err));
+      loadUsers().catch(err => displayError(err));
     } catch (err) {
       displayError(err);
     }
+    return () => {
+      isMounted.current = false;
+    };
   }, []);
 
   const options = React.useMemo(() => {
@@ -130,6 +149,7 @@ export const UserIdSelect: React.FC<Props> = props => {
 
   return (
     <Select
+      className={props.className}
       cacheOptions={true}
       isLoading={selectIsLoading}
       defaultOptions={true}
@@ -141,6 +161,7 @@ export const UserIdSelect: React.FC<Props> = props => {
     />
   );
 };
+
 UserIdSelect.defaultProps = defaultProps;
 export default UserIdSelect;
 
