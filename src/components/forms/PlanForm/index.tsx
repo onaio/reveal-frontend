@@ -38,6 +38,7 @@ import {
   INTERVENTION_TYPE_LABEL,
   IRS_TITLE,
   LOCATIONS,
+  MDA_POINT_TITLE,
   PLAN_END_DATE_LABEL,
   PLAN_START_DATE_LABEL,
   PLAN_TITLE_LABEL,
@@ -76,6 +77,7 @@ import {
   getGoalUnitFromActionCode,
   getNameTitle,
   IRSActivities,
+  MDAPointActivities,
   PlanActivityFormFields,
   PlanFormFields,
   PlanJurisdictionFormFields,
@@ -162,6 +164,7 @@ const PlanForm = (props: PlanFormProps) => {
   const editMode: boolean = initialValues.identifier !== '';
   const irsActivities = getFormActivities(IRSActivities);
   const fiActivities = getFormActivities(FIActivities);
+  const mdaPointActivities = getFormActivities(MDAPointActivities);
 
   const disAllowedStatusChoices: string[] = [];
   if (editMode) {
@@ -193,6 +196,9 @@ const PlanForm = (props: PlanFormProps) => {
     }
     if (values.interventionType === InterventionType.IRS) {
       return irsActivities;
+    }
+    if (values.interventionType === InterventionType.MDAPoint) {
+      return mdaPointActivities;
     }
 
     return allFormActivities;
@@ -295,8 +301,12 @@ const PlanForm = (props: PlanFormProps) => {
                   const target = e.target as HTMLInputElement;
                   if (target.value === InterventionType.IRS) {
                     setFieldValue('activities', irsActivities);
-                  } else {
+                  }
+                  if (target.value === InterventionType.FI) {
                     setFieldValue('activities', fiActivities);
+                  }
+                  if (target.value === InterventionType.MDAPoint) {
+                    setFieldValue('activities', mdaPointActivities);
                   }
                   setFieldValue('jurisdictions', [initialJurisdictionValues]);
                   handleChange(e);
@@ -305,6 +315,7 @@ const PlanForm = (props: PlanFormProps) => {
               >
                 <option value={InterventionType.FI}>{FOCUS_INVESTIGATION}</option>
                 <option value={InterventionType.IRS}>{IRS_TITLE}</option>
+                <option value={InterventionType.MDAPoint}>{MDA_POINT_TITLE}</option>
               </Field>
               <ErrorMessage
                 name="interventionType"

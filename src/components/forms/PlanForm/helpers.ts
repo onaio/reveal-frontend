@@ -44,8 +44,9 @@ import {
 } from './types';
 
 /** separate FI and IRS activities */
-export const FIActivities = omit(planActivities, ['IRS']);
+export const FIActivities = omit(planActivities, ['IRS', 'pointAdverseMDA', 'pointDispenseMDA']);
 export const IRSActivities = pick(planActivities, ['IRS']);
+export const MDAPointActivities = pick(planActivities, ['pointAdverseMDA', 'pointDispenseMDA']);
 
 /** Array of FI Statuses */
 export const fiStatusCodes = Object.values(FIClassifications).map(e => e.code as FIStatusType);
@@ -188,7 +189,9 @@ export function extractActivityForForm(activityObj: PlanActivity): PlanActivityF
  * Converts a plan activities objects to a list of activities for use on PlanForm
  * @param items - plan activities
  */
-export function getFormActivities(items: typeof FIActivities | typeof IRSActivities) {
+export function getFormActivities(
+  items: typeof FIActivities | typeof IRSActivities | typeof MDAPointActivities
+) {
   return Object.values(items)
     .sort((a, b) => a.action.prefix - b.action.prefix)
     .map(e => extractActivityForForm(e));
@@ -551,10 +554,15 @@ export function getPlanFormValues(planObject: PlanDefinition): PlanFormFields {
   );
 
   if (activities.length < 1) {
-    activities =
-      interventionType === InterventionType.IRS
-        ? getFormActivities(IRSActivities)
-        : getFormActivities(FIActivities);
+    if (interventionType === InterventionType.IRS) {
+      activities = getFormActivities(IRSActivities);
+    }
+    if (interventionType === InterventionType.FI) {
+      activities = getFormActivities(FIActivities);
+    }
+    if (interventionType === InterventionType.MDAPoint) {
+      activities = getFormActivities(MDAPointActivities);
+    }
   }
 
   return {
