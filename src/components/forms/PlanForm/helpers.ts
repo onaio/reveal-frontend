@@ -252,6 +252,12 @@ export function getPlanActivityFromActionCode(
   if (actionCode === 'Mosquito Collection') {
     return planActivities.mosquitoCollection;
   }
+  if (actionCode === 'MDA Adverse Event(s)') {
+    return planActivities.pointAdverseMDA;
+  }
+  if (actionCode === 'MDA Dispense') {
+    return planActivities.pointDispenseMDA;
+  }
 
   return null;
 }

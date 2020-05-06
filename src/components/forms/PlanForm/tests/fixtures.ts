@@ -704,6 +704,32 @@ export const extractedActivitiesFromForms = [
     timingPeriodStart: timingPeriodStart.toISOString(),
   },
   {
+    actionCode: 'MDA Adverse Event(s)',
+    actionDescription: 'Report any adverse events from medication',
+    actionIdentifier: '',
+    actionReason: 'Routine',
+    actionTitle: 'MDA Adverse Event(s)',
+    goalDescription: 'Report any adverse events from medication',
+    goalDue: goalDue.toISOString(),
+    goalPriority: 'medium-priority',
+    goalValue: 2,
+    timingPeriodEnd: timingPeriodEnd.toISOString(),
+    timingPeriodStart: timingPeriodStart.toISOString(),
+  },
+  {
+    actionCode: 'MDA Dispense',
+    actionDescription: 'Dispense medication to each eligible person',
+    actionIdentifier: '',
+    actionReason: 'Routine',
+    actionTitle: 'MDA Dispense',
+    goalDescription: 'Dispense medication to each eligible person',
+    goalDue: goalDue.toISOString(),
+    goalPriority: 'medium-priority',
+    goalValue: 2,
+    timingPeriodEnd: timingPeriodEnd.toISOString(),
+    timingPeriodStart: timingPeriodStart.toISOString(),
+  },
+  {
     actionCode: 'IRS',
     actionDescription: 'Visit each structure in the operational area and attempt to spray',
     actionIdentifier: '',
@@ -1038,7 +1064,7 @@ export const planActivities: PlanActivities = {
   pointAdverseMDA: {
     action: {
       code: 'MDA Adverse Event(s)',
-      description: '',
+      description: 'Report any adverse events from medication',
       goalId: 'Point_adverse_effect_MDA',
       identifier: '',
       prefix: 6,
@@ -1048,13 +1074,13 @@ export const planActivities: PlanActivities = {
       },
       taskTemplate: 'MDA_Point_Adverse_Event',
       timingPeriod: {
-        end: '',
-        start: '',
+        end: timingPeriodEnd.toISOString(),
+        start: timingPeriodStart.toISOString(),
       },
       title: 'MDA Adverse Event(s)',
     },
     goal: {
-      description: '',
+      description: 'Report any adverse events from medication',
       id: 'Point_adverse_effect_MDA',
       priority: 'medium-priority',
       target: [
@@ -1066,7 +1092,7 @@ export const planActivities: PlanActivities = {
               value: 2,
             },
           },
-          due: '',
+          due: timingPeriodEnd.toISOString(),
           measure: 'Percent of people who reported adverse events',
         },
       ],
@@ -1075,7 +1101,7 @@ export const planActivities: PlanActivities = {
   pointDispenseMDA: {
     action: {
       code: 'MDA Dispense',
-      description: '',
+      description: 'Dispense medication to each eligible person',
       goalId: 'Point_dispense_MDA',
       identifier: '',
       prefix: 6,
@@ -1085,13 +1111,13 @@ export const planActivities: PlanActivities = {
       },
       taskTemplate: 'MDA_Point_Dispense',
       timingPeriod: {
-        end: '',
-        start: '',
+        end: timingPeriodEnd.toISOString(),
+        start: timingPeriodStart.toISOString(),
       },
       title: 'MDA Dispense',
     },
     goal: {
-      description: '',
+      description: 'Dispense medication to each eligible person',
       id: 'Point_dispense_MDA',
       priority: 'medium-priority',
       target: [
@@ -1103,7 +1129,7 @@ export const planActivities: PlanActivities = {
               value: 2,
             },
           },
-          due: '',
+          due: timingPeriodEnd.toISOString(),
           measure: 'Percent of eligible people',
         },
       ],

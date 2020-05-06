@@ -496,7 +496,7 @@ describe('containers/forms/PlanForm - Submission', () => {
 
     // interventionType should be as expected
     expect(wrapper.find('small.interventionType-error').text()).toEqual(
-      'interventionType must be one of the following values: FI, IRS, MDA'
+      'interventionType must be one of the following values: FI, IRS, MDA, MDA-Point'
     );
 
     // Set FI for interventionType field value so that we can test the other fields
