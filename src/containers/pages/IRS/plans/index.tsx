@@ -7,7 +7,7 @@ import { RouteComponentProps } from 'react-router';
 import { Link } from 'react-router-dom';
 import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
-import { SearchForm } from '../../../../components/forms/Search';
+import SearchForm from '../../../../components/forms/Search';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
 import { SUPERSET_IRS_REPORTING_PLANS_SLICE } from '../../../../configs/env';
@@ -16,6 +16,7 @@ import {
   END_DATE,
   HOME,
   IRS_PLANS,
+  SEARCH,
   START_DATE,
   STATUS_HEADER,
   TITLE,
@@ -113,7 +114,7 @@ const IRSPlansList = (props: PlanListProps & RouteComponentProps) => {
         </Col>
       </Row>
       <hr />
-      <SearchForm history={props.history} location={props.location} />
+      <SearchForm placeholder={SEARCH} queryParam={QUERY_PARAM_TITLE} />
 
       <Row>
         <Col>

@@ -7,7 +7,7 @@ import { RouteComponentProps } from 'react-router';
 import { Link } from 'react-router-dom';
 import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
-import { SearchForm } from '../../../../components/forms/Search';
+import SearchForm from '../../../../components/forms/Search';
 import LinkAsButton from '../../../../components/LinkAsButton';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
@@ -17,6 +17,7 @@ import {
   INTERVENTION_TYPE_LABEL,
   LAST_MODIFIED,
   PLANS,
+  SEARCH,
   STATUS_HEADER,
   TITLE,
 } from '../../../../configs/lang';
@@ -124,7 +125,7 @@ const PlanDefinitionList = (props: PlanListProps & RouteComponentProps) => {
         </Col>
       </Row>
       <hr />
-      <SearchForm history={props.history} location={props.location} />
+      <SearchForm placeholder={SEARCH} queryParam={QUERY_PARAM_TITLE} />
       <Row>
         <Col>
           <ListView {...listViewProps} />

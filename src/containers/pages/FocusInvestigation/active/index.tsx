@@ -9,13 +9,13 @@ import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { Link } from 'react-router-dom';
-import { CellInfo, Column } from 'react-table';
-import 'react-table/react-table.css';
+import { CellInfo, Column } from 'react-table-v6';
+import 'react-table-v6/react-table.css';
 import { Col, Row, Table } from 'reactstrap';
 import { Store } from 'redux';
 import { format } from 'util';
 import DrillDownTableLinkedCell from '../../../../components/DrillDownTableLinkedCell';
-import { SearchForm } from '../../../../components/forms/Search';
+import SearchForm from '../../../../components/forms/Search';
 import LinkAsButton from '../../../../components/LinkAsButton';
 import NewRecordBadge from '../../../../components/NewRecordBadge';
 import HeaderBreadCrumb, {
@@ -41,6 +41,7 @@ import {
   PREVIOUS,
   REACTIVE,
   ROUTINE_TITLE,
+  SEARCH,
   START_DATE,
   STATUS_HEADER,
 } from '../../../../configs/lang';
@@ -195,7 +196,7 @@ class ActiveFocusInvestigation extends React.Component<
         <HeaderBreadCrumb {...breadcrumbProps} />
         <h2 className="mb-3 mt-5 page-title">{pageTitle}</h2>
         <hr />
-        <SearchForm history={this.props.history} location={this.props.location} />
+        <SearchForm placeholder={SEARCH} queryParam={QUERY_PARAM_TITLE} />
         {[caseTriggeredPlans, routinePlans].forEach((plansArray: Plan[] | null, i) => {
           const locationColumns: Column[] = getLocationColumns(locationHierarchy, true);
           if (plansArray && plansArray.length) {

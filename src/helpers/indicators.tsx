@@ -2,7 +2,7 @@ import ElementMap from '@onaio/element-map';
 import { Dictionary } from '@onaio/utils';
 import { keys } from 'lodash';
 import * as React from 'react';
-import { CellInfo } from 'react-table';
+import { CellInfo } from 'react-table-v6';
 import { GREEN, ORANGE, RED, WHITE, YELLOW } from '../colors';
 import { PERSONS, STRUCTURES } from '../configs/lang';
 import {

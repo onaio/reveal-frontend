@@ -11,7 +11,7 @@ import querystring from 'querystring';
 import { MouseEvent } from 'react';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { CellInfo, Column } from 'react-table';
+import { CellInfo, Column } from 'react-table-v6';
 import { toast, ToastOptions } from 'react-toastify';
 import SeamlessImmutable from 'seamless-immutable';
 import uuidv4 from 'uuid/v4';
