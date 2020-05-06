@@ -1,6 +1,13 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faUser } from '@fortawesome/free-regular-svg-icons';
-import { faExternalLinkSquareAlt, faMap } from '@fortawesome/free-solid-svg-icons';
+import {
+  faCog,
+  faExternalLinkSquareAlt,
+  faMap,
+  faSearch,
+  faSlidersH,
+  faTextHeight,
+} from '@fortawesome/free-solid-svg-icons';
 import ConnectedPrivateRoute from '@onaio/connected-private-route';
 import {
   AuthorizationGrantType,
@@ -93,9 +100,7 @@ import store from '../store';
 import { getOauthProviderState } from '../store/selectors';
 import './App.css';
 
-library.add(faMap);
-library.add(faUser);
-library.add(faExternalLinkSquareAlt);
+library.add(faExternalLinkSquareAlt, faMap, faUser, faSlidersH, faCog, faTextHeight, faSearch);
 toast.configure({
   autoClose: TOAST_AUTO_CLOSE_DELAY /** defines how long a toast remains visible on screen */,
 });
