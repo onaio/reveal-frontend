@@ -1,5 +1,4 @@
-import { mount, shallow } from 'enzyme';
-import toJson from 'enzyme-to-json';
+import { shallow } from 'enzyme';
 import React from 'react';
 import { Table } from '..';
 // import { data, dataLowestLevel } from './fixtures';
@@ -11,69 +10,69 @@ describe('DrillDownTable', () => {
 
   it('renders without crashing', () => {
     const props = {
-      data:[],
-      linkerField: 'location'
+      data: [],
+      linkerField: 'location',
     };
     shallow(<Table {...props} />);
   });
 
-//   it('renders correctly even with invalid linkerField', () => {
-//     const props = {
-//       data,
-//       linkerField: 'fakeColumn'
-//     };
-//     const wrapper = mount(<DrillDownTable {...props} />);
+  //   it('renders correctly even with invalid linkerField', () => {
+  //     const props = {
+  //       data,
+  //       linkerField: 'fakeColumn'
+  //     };
+  //     const wrapper = mount(<DrillDownTable {...props} />);
 
-//     expect(wrapper.find('ReactTable').props().data).toEqual(data.filter(e => e.parent_id === null));
-//     // expect((wrapper.find('ReactTable').props() as any).linkerField).toEqual('location');
-//     wrapper.unmount();
-//   });
+  //     expect(wrapper.find('ReactTable').props().data).toEqual(data.filter(e => e.parent_id === null));
+  //     // expect((wrapper.find('ReactTable').props() as any).linkerField).toEqual('location');
+  //     wrapper.unmount();
+  //   });
 
-//   it('renders correctly with derived columns', () => {
-//     const props = {
-//       data
-//     };
-//     const wrapper = mount(<DrillDownTable {...props} />);
-//     expect((wrapper.find('ReactTable').props() as any).columns).toMatchSnapshot([
-//       { Cell: expect.any(Function), Header: 'id', accessor: 'id' },
-//       { Header: 'location', accessor: 'location' },
-//       {
-//         Header: 'parent_id',
-//         accessor: 'parent_id'
-//       },
-//       { Header: 'spray_coverage', accessor: 'spray_coverage' },
-//       { Header: 'spray_effectiveness', accessor: 'spray_effectiveness' }
-//     ]);
-//     wrapper.unmount();
-//   });
+  //   it('renders correctly with derived columns', () => {
+  //     const props = {
+  //       data
+  //     };
+  //     const wrapper = mount(<DrillDownTable {...props} />);
+  //     expect((wrapper.find('ReactTable').props() as any).columns).toMatchSnapshot([
+  //       { Cell: expect.any(Function), Header: 'id', accessor: 'id' },
+  //       { Header: 'location', accessor: 'location' },
+  //       {
+  //         Header: 'parent_id',
+  //         accessor: 'parent_id'
+  //       },
+  //       { Header: 'spray_coverage', accessor: 'spray_coverage' },
+  //       { Header: 'spray_effectiveness', accessor: 'spray_effectiveness' }
+  //     ]);
+  //     wrapper.unmount();
+  //   });
 
-//   it('renders correctly with custom columns', () => {
-//     const columns = [
-//       {
-//         Header: 'Name',
-//         accessor: 'location'
-//       },
-//       {
-//         Header: 'ID',
-//         accessor: 'id'
-//       },
-//       {
-//         Header: 'Parent ID',
-//         accessor: 'parent_id'
-//       },
-//       {
-//         Header: 'Spray Coverage',
-//         accessor: 'spray_coverage'
-//       }
-//     ];
-//     const props = {
-//       columns,
-//       data
-//     };
-//     const wrapper = mount(<DrillDownTable {...props} />);
-//     expect((wrapper.find('ReactTable').props() as any).columns).toMatchSnapshot(columns);
-//     wrapper.unmount();
-//   });
+  //   it('renders correctly with custom columns', () => {
+  //     const columns = [
+  //       {
+  //         Header: 'Name',
+  //         accessor: 'location'
+  //       },
+  //       {
+  //         Header: 'ID',
+  //         accessor: 'id'
+  //       },
+  //       {
+  //         Header: 'Parent ID',
+  //         accessor: 'parent_id'
+  //       },
+  //       {
+  //         Header: 'Spray Coverage',
+  //         accessor: 'spray_coverage'
+  //       }
+  //     ];
+  //     const props = {
+  //       columns,
+  //       data
+  //     };
+  //     const wrapper = mount(<DrillDownTable {...props} />);
+  //     expect((wrapper.find('ReactTable').props() as any).columns).toMatchSnapshot(columns);
+  //     wrapper.unmount();
+  //   });
 
   // it('click to drill down works', () => {
   //   const props = {

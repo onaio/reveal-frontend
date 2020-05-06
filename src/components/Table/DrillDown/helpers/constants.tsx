@@ -1,5 +1,6 @@
 /** Constants */
 import React from 'react';
+
 export const ID = 'id';
 export type ID = typeof ID;
 
@@ -21,11 +22,5 @@ export type CARET_CSS_CLASS = typeof CARET_CSS_CLASS;
 export const CARET = <span className={CARET_CSS_CLASS}>&nbsp;&#9660;</span>;
 export type CARET = typeof CARET;
 
-export const ROWS_TO_DISPLAY = 'Rows to display';
-export type ROWS_TO_DISPLAY = typeof ROWS_TO_DISPLAY;
-
-export const PAGE = 'page';
-export type PAGE = typeof PAGE;
-
-export const OF = 'of';
-export type OF = typeof OF;
+export const NO_DATA_FOUND = 'No Data Found';
+export type NO_DATA_FOUND = typeof NO_DATA_FOUND;
