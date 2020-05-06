@@ -279,6 +279,9 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
       nextProps.currentGoal !== this.props.currentGoal &&
       (this.state.locations || this.state.doInitMap)
     ) {
+      if (document.querySelectorAll('.mapboxgl-popup').length) {
+        document.querySelectorAll('.mapboxgl-popup').forEach(el => el.remove());
+      }
       this.setState({ doInitMap: false, initMapWithoutFC: false }, () => {
         this.initMap(
           pointFeatures.length ? nextProps.pointFeatureCollection : null,
