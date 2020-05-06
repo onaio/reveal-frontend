@@ -2,6 +2,7 @@ import { Dictionary } from '@onaio/utils';
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import {
   Cell,
+  Column,
   ColumnInstance,
   Row,
   usePagination,
@@ -10,37 +11,36 @@ import {
   UseSortByColumnProps,
   useTable,
   UseTableHeaderGroupProps,
+  UseTableOptions,
 } from 'react-table';
 import { rowHeights } from '../../../configs/settings';
 import { ROW_HEIGHT_KEY } from '../../../constants';
-import { ID, NO_DATA_FOUND, PARENT_ID } from './helpers/constants';
+import { ID, NO_DATA_FOUND, PARENT_ID, ROOT_PARENT_ID } from './helpers/constants';
 import { renderPaginationFun } from './helpers/Pagination/pagination';
 import { SortIcon } from './helpers/SortIcon/sortIcon';
 
 /** Type definition for hasChildrenFunc */
-export type HasChildrenFuncType = (
-  cellObject: Cell,
+export type HasChildrenFuncType = <D extends object>(
+  cellObject: Cell<D>,
   parentIdList: number[] | string[],
   idField: string | number
 ) => boolean;
 
 /** Check if a Cell  is part of a row whose data entry can be considered to have children */
-export function hasChildrenFunc(
-  cellObject: Cell,
+export function hasChildrenFunc<D extends object>(
+  cellObject: Cell<D>,
   parentIdList: Array<number | string>,
   idField: string | number = 'id'
 ) {
-  if (cellObject.row === undefined) {
-    console.log(cellObject);
-    // return false;
-  }
   return parentIdList.includes((cellObject.row.original as Dictionary)[idField]);
 }
 
+/** props for render Prop used to render filters in the top filter bar */
 export interface RenderFiltersInBarOptions {
   setRowHeight: Dispatch<SetStateAction<string>>;
 }
 
+/** the custom default options that will be given to a render prop that renders the pagination */
 export interface RenderPaginationOptions<T extends object> extends UsePaginationInstanceProps<T> {
   pageSize: number;
   pageIndex: number;
@@ -48,9 +48,8 @@ export interface RenderPaginationOptions<T extends object> extends UsePagination
 
 /** describes props for the underlying Table component */
 export interface TableJSXProps<TData extends object> {
-  columns: Array<ColumnInstance<TData>>;
+  columns: Array<Column<TData>>;
   data: TData[];
-  pgCount: number;
   fetchData: (options: Dictionary) => void;
   identifierField: string;
   parentNodes: Array<string | number>;
@@ -59,28 +58,40 @@ export interface TableJSXProps<TData extends object> {
   showBottomPagination: boolean;
   renderPagination: (props: RenderPaginationOptions<TData>) => React.ElementType;
   showTopPagination: boolean;
+  renderFilterBar: true;
   renderInFilterBar: (prop: RenderFiltersInBarOptions) => React.ElementType;
   rootParentId: string;
   renderNullDataComponent: () => React.ElementType;
+  linkerField?: string;
+  useDrillDown: boolean /** whether component can act as a normal table */;
 }
 
-const defaultTableProps = {
+/** default props for TableJSX */
+export const defaultTableProps = {
   hasChildren: hasChildrenFunc,
   identifierField: ID,
+  linkerField: ID,
   parentIdentifierField: PARENT_ID,
+  renderFilterBar: true,
+  renderInFilterBar: () => null,
+  renderNullDataComponent: () => (
+    <div className="jumbotron">
+      <p>{NO_DATA_FOUND}</p>
+    </div>
+  ),
   renderPagination: renderPaginationFun,
-  showBottomPagination: true,
+  rootParentId: ROOT_PARENT_ID,
   rowHeight: rowHeights.DEFAULT.value,
+  showBottomPagination: true,
   showTopPagination: true,
-  renderInFilterBar: (props: any) => null,
-  renderNullDataComponent: () => <h2>{NO_DATA_FOUND}</h2>,
+  useDrillDown: true,
 };
 
 /** the underlying Table component
  * its seprarate since we want to control some of its aspects, specifically pagination
  */
 function Table<D extends object>(props: TableJSXProps<D>) {
-  const { columns, data, pgCount, fetchData, identifierField } = props;
+  const { columns, data, fetchData, identifierField } = props;
 
   const skipPageResetRef = React.useRef<boolean>();
   const defaultRowHeight = window.localStorage.getItem(ROW_HEIGHT_KEY) || rowHeights.DEFAULT.value;
@@ -88,10 +99,10 @@ function Table<D extends object>(props: TableJSXProps<D>) {
   const [currentParentId, setCurrentParentId] = useState<string>(props.rootParentId);
 
   /** describe the column instance after including hooks. */
-  interface ActualColumnInstance<D extends object>
-    extends ColumnInstance<D>,
-      UseSortByColumnProps<D>,
-      UsePaginationInstanceProps<D> {}
+  interface ActualColumnInstance<T extends object>
+    extends ColumnInstance<T>,
+      UseSortByColumnProps<T>,
+      UsePaginationInstanceProps<T> {}
 
   const {
     getTableProps,
@@ -117,38 +128,41 @@ function Table<D extends object>(props: TableJSXProps<D>) {
       columns,
       data,
       initialState: { pageIndex: 0 },
-      // manualPagination: true,
-      // pageCount: pgCount,
-    } as any,
+    } as UseTableOptions<D>,
     useSortBy,
     usePagination
   );
 
   React.useEffect(() => {
-    fetchData({ pageSize, pageIndex, skipPageResetRef, currentParentId });
+    // data passed to this component is controlled by the component that defines fetchData.
+    // the controllign component filters the data based onthe current parent id and then passes it
+    // on down to this component as the data prop.
+    fetchData({ skipPageResetRef, currentParentId });
     skipPageResetRef.current = false;
-  }, [fetchData, pageSize, pageIndex, currentParentId]);
+  }, [fetchData, currentParentId]);
 
   return (
     <div className="table-container mb-3">
       <div className="row">
-        <div className="col">
-          {props.renderInFilterBar({ setRowHeight })}
-          {props.showTopPagination &&
-            props.renderPagination({
-              canNextPage,
-              canPreviousPage,
-              gotoPage,
-              nextPage,
-              page,
-              pageCount,
-              pageIndex,
-              pageOptions,
-              pageSize,
-              previousPage,
-              setPageSize,
-            })}
-        </div>
+        {props.renderFilterBar && (
+          <div className="col">
+            {props.renderInFilterBar({ setRowHeight })}
+            {props.showTopPagination &&
+              props.renderPagination({
+                canNextPage,
+                canPreviousPage,
+                gotoPage,
+                nextPage,
+                page,
+                pageCount,
+                pageIndex,
+                pageOptions,
+                pageSize,
+                previousPage,
+                setPageSize,
+              })}
+          </div>
+        )}
       </div>
       <table className="table table-striped table-bordered drill-down-table" {...getTableProps()}>
         <thead>
@@ -172,39 +186,41 @@ function Table<D extends object>(props: TableJSXProps<D>) {
             </tr>
           ))}
         </thead>
-        {data.length === 0 && props.renderNullDataComponent()}
         {data.length > 0 && (
           <tbody {...getTableBodyProps([{ style: { lineHeight: rHeight } }])}>
             {page.map((row: Row<D>, idx: number) => {
               prepareRow(row);
               return (
                 // Merge user row props in
-                <tr
-                  key={`tbody-tr-${idx}`}
-                  {...row.getRowProps([
-                    {
-                      onClick: (cell: Cell) => {
-                        if (props.identifierField && props.parentIdentifierField) {
-                          if (
-                            props.hasChildren &&
-                            hasChildrenFunc(cell, props.parentNodes, props.identifierField)
-                          ) {
-                            const newParentId: string = (row.original as Dictionary)[
-                              identifierField
-                            ];
-                            setCurrentParentId(newParentId);
-                          }
-                        }
-                      },
-                    },
-                  ] as any)}
-                >
+                <tr key={`tbody-tr-${idx}`} {...row.getRowProps()}>
                   {row.cells.map((cell: Cell<D>, i: number) => {
                     return (
                       <td
                         key={`td-${i}`}
                         // Return an array of prop objects and react-table will merge them appropriately
-                        {...cell.getCellProps()}
+                        {...cell.getCellProps([
+                          {
+                            // onclickHandler updates the curentParentId, i.e if the clicked on cell has children
+                            onClick: (e: React.MouseEvent<HTMLElement>) => {
+                              e.stopPropagation();
+                              // onClick will be effective only when drilldingDown and if columnId is the same as linkerField
+                              if (!(props.useDrillDown && cell.column.id === props.linkerField)) {
+                                return;
+                              }
+                              if (props.identifierField && props.parentIdentifierField) {
+                                if (
+                                  props.hasChildren &&
+                                  hasChildrenFunc<D>(cell, props.parentNodes, props.identifierField)
+                                ) {
+                                  const newParentId: string = (row.original as Dictionary)[
+                                    identifierField
+                                  ];
+                                  setCurrentParentId(newParentId);
+                                }
+                              }
+                            },
+                          },
+                        ] as any)}
                       >
                         {cell.render('Cell')}
                       </td>
@@ -214,8 +230,9 @@ function Table<D extends object>(props: TableJSXProps<D>) {
               );
             })}
           </tbody>
-        )}{' '}
+        )}
       </table>
+      {data.length === 0 && props.renderNullDataComponent()}
       <div className="row">
         <div className="col">
           {props.showBottomPagination &&

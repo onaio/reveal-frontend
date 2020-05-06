@@ -1,62 +1,49 @@
 import { Dictionary } from '@onaio/utils';
 import React, { useState } from 'react';
-import { Cell, ColumnInstance } from 'react-table';
+import { Cell, Column } from 'react-table';
 import Ripple from '../../page/Loading';
-import { ID, PARENT_ID, ROOT_PARENT_ID } from './helpers/constants';
 import DropDownCell, { DropDownCellProps } from './helpers/DefaultDropDownCell/DropDownCell';
-import { hasChildrenFunc, Table, TableJSXProps } from './TableJSX';
+import { defaultTableProps, Table, TableJSXProps } from './TableJSX';
 
 /** describes props for the DrillDownTable component */
 interface DrillDownTableProps<D extends object>
-  extends Omit<TableJSXProps<D>, 'pgCount' | 'fetchData'> {
-  linkerField?: string /** the field to be used to drill down the data */;
+  extends Omit<TableJSXProps<D>, 'fetchData' | 'parentNodes'> {
+  // linkerField?: string /** the field to be used to drill down the data */;
   extraCellProps?: Dictionary /** props to be given to CellComponent */;
-  CellComponent: React.ElementType;
-  useDrillDown: boolean;
-  loading: boolean;
-  LoadingComponent: React.ElementType;
+  CellComponent: React.ElementType /** The component used to render the cell that has the drill down */;
+  loading: boolean /** if loading */;
+  LoadingComponent: React.ElementType /** custom component to show whilst loading is true */;
 }
 
 /** only provide defaults for the props that are actionable as part of this HOC */
-const defautlDrillDownTableProps = {
+export const defautlDrillDownTableProps = {
+  ...defaultTableProps,
   CellComponent: DropDownCell,
   LoadingComponent: Ripple,
-  hasChildren: hasChildrenFunc,
-  identifierField: ID,
-  linkerField: ID,
-  parentIdentifierField: PARENT_ID,
-  rootParentId: ROOT_PARENT_ID,
-  useDrillDown: false,
+  loading: false,
 };
 
+/** HOC component; wraps around and controls a component that makes use of react-table hooks
+ * its main goal is to filter data based on set current parent id to controlled presentational component
+ */
 function DrillDownTable<D extends object>(props: DrillDownTableProps<D>) {
   const { columns, data, parentIdentifierField, hasChildren, LoadingComponent } = props;
   const parentNodes =
     data && parentIdentifierField ? data.map((el: Dictionary) => el[parentIdentifierField]) : [];
   const [pageData, setpageData] = useState<D[]>([]);
-  const [pgCount, setPageCount] = useState<number>(0);
-  const mutatedColumns = React.useMemo(() => columns.map(mutateColumns), []) as Array<
-    ColumnInstance<D>
-  >;
+
+  const mutatedColumns = React.useMemo(() => columns.map(mutateColumns), []) as Array<Column<D>>;
 
   const fetchData = React.useCallback(
-    ({ pageSize, pageIndex, skipPageResetRef, currentParentId: parentId }) => {
+    ({ skipPageResetRef, currentParentId: parentId }) => {
       skipPageResetRef.current = true;
-      const startRow = pageSize * pageIndex;
-      // TODO - enforce typings for the above parameters
-      // tslint:disable-next-line: restrict-plus-operands
-      const endRow = startRow + pageSize;
       let filterByLevel = props.data;
       if (props.useDrillDown) {
-        filterByLevel = props.data.filter((row: any) => {
+        filterByLevel = props.data.filter((row: Dictionary) => {
           return row[parentIdentifierField] === parentId;
         });
       }
-
-      // const filterByPage = filterByLevel.slice(startRow, endRow);
-
       setpageData(filterByLevel);
-      setPageCount(Math.ceil(filterByLevel.length / pageSize));
     },
     [data]
   );
@@ -98,25 +85,17 @@ function DrillDownTable<D extends object>(props: DrillDownTableProps<D>) {
     return el;
   }
 
-  return (
-    <>
-      {!props.loading ? (
-        <Table
-          columns={mutatedColumns}
-          data={pageData}
-          pgCount={pgCount}
-          fetchData={fetchData}
-          parentNodes={parentNodes}
-          renderInFilterBar={props.renderInFilterBar}
-          rootParentId={props.rootParentId}
-        />
-      ) : (
-        <LoadingComponent />
-      )}
-    </>
-  );
+  const TableProps = {
+    ...props,
+    columns: mutatedColumns,
+    data: pageData,
+    fetchData,
+    parentNodes,
+  };
+
+  return <>{!props.loading ? <Table {...TableProps} /> : <LoadingComponent />}</>;
 }
 
 DrillDownTable.defaultProps = defautlDrillDownTableProps;
 
-export { DrillDownTable };
+export { DrillDownTable as DrillDownTablev7 };

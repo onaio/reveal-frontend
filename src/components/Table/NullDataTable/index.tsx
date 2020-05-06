@@ -1,7 +1,7 @@
 import DrillDownTable from '@onaio/drill-down-table';
 import { Dictionary } from '@onaio/utils';
 import * as React from 'react';
-import { Column } from 'react-table';
+import { Column } from 'react-table-v6';
 import { NO_INVESTIGATIONS_FOUND } from '../../../configs/lang';
 
 /** Interface to describe props for TableProps */
