@@ -47,6 +47,7 @@ export const PLAN_ID = 'plan_id';
 export const PLAN_INTERVENTION_TYPE = 'plan_intervention_type';
 export const TWO_HUNDRED_PX = '200px';
 export const PLAN_RECORD_BY_ID = 'planRecordsById';
+export const MAPBOXGL_POPUP = '.mapboxgl-popup';
 
 // internal urls
 export const BACKEND_LOGIN_URL = '/fe/login';
