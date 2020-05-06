@@ -1,0 +1,11 @@
+.adhoc-filters {
+  min-width: 300px !important;
+  padding: 10px 15px !important;
+  font-size: 0.9em !important;
+}
+
+.adhoc-filters label {
+  vertical-align: text-bottom !important;
+  font-size: 1.2em !important;
+  margin-top: 22px !important;
+}
