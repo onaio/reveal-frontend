@@ -651,10 +651,6 @@
     "message": "ให้สุขศึกษาในพื้นที่ปฏิบัติงานอย่างน้อย 1 ครั้ง",
     "description": ""
   },
-  "BCC_GOAL_MEASURE": {
-    "message": "จำนวนกิจกรรมการให้สุขศึกษา",
-    "description": ""
-  },
   "IRS_ACTIVITY_DESCRIPTION": {
     "message": "บ้าน/สิ่งปลูกสร้าง ในพื้นที่ปฏิบัติงานที่ได้พ่นสารเคมี",
     "description": ""
