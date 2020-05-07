@@ -39,6 +39,7 @@ export type StudentActionTypes = FetchStudentsAction | RemoveStudentsAction | An
 
 /** Fetch students action creator
  * @param {Practitioner []} studentsList - students array to add to store
+ * @param {Student[]} studentsList - students array to add to store
  * @param {boolean} overwrite - whether to replace the records in store for students
  * @return {FetchStudentsAction} - an action to add students to redux store
  */
