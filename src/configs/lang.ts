@@ -467,3 +467,4 @@ export const TEAM_ASSIGNEMENT_SUCCESSFUL = translate(
   'TEAM_ASSIGNEMENT_SUCCESSFUL',
   'Team(s) assignment updated successfully'
 );
+export const STUDENTS_TITLE = translate('STUDENTS_TITLE', 'Students');
