@@ -9,7 +9,7 @@ describe('gatekeeper/utils/logoutFromAuthServer', () => {
     shallow(<Logout logoutURL={OPENSRP_LOGOUT_URL} />);
   });
 
-  it('Matches snapshot', () => {
+  it('Renders Logout button correctly', () => {
     const wrapper = mount(<Logout logoutURL={OPENSRP_LOGOUT_URL} />);
     expect(toJson(wrapper.find('Logout'))).toMatchSnapshot();
     wrapper.unmount();
