@@ -947,6 +947,10 @@
     "message": "Age",
     "description": "the length of time that a person has lived or a thing has existed"
   },
+  "STUDENTS_TITLE": {
+    "message": "Students",
+    "description": "title: the children receiving MDA"
+  },
   "NO_OPTIONS": {
     "message": "No Options",
     "description": "prompt shown when a search yields no results"

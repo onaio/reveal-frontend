@@ -446,3 +446,5 @@ export const SEARCH_ACTIVE_FOCUS_INVESTIGATIONS = translate(
   'Search active focus investigations'
 );
 export const NO_OPTIONS = translate('NO_OPTIONS', 'No Options');
+
+export const STUDENTS_TITLE = translate('STUDENTS_TITLE', 'Students');
