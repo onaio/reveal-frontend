@@ -465,3 +465,6 @@ export const NO_OPTIONS = translate('NO_OPTIONS', 'No Options');
 export const MDA_POINT_TITLE = translate('MDA_POINT_TITLE', 'MDA Point');
 
 export const STUDENTS_TITLE = translate('STUDENTS_TITLE', 'Students');
+export const UPLOADED_STUDENT_LISTS = translate('UPLOADED_STUDENT_LISTS', 'Uploaded Student Lists');
+export const EXPORT_STUDENT_LIST = translate('EXPORT_STUDENT_LIST', 'Export Student List');
+export const ADD_NEW_CSV = translate('ADD_NEW_CSV', 'Add New CSV');

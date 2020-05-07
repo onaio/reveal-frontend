@@ -951,6 +951,18 @@
     "message": "Students",
     "description": "title: the children receiving MDA"
   },
+  "UPLOADED_STUDENT_LISTS": {
+    "message": "Uploaded Student Lists",
+    "description": "Export Student List"
+  },
+  "EXPORT_STUDENT_LIST": {
+    "message": "Export Student List",
+    "description": "button text: to download a CSV of students per jurisdiction"
+  },
+  "ADD_NEW_CSV": {
+    "message": "Add New CSV",
+    "description": "button text: upload a new CSV file to the server"
+  },
   "NO_OPTIONS": {
     "message": "No Options",
     "description": "prompt shown when a search yields no results"
