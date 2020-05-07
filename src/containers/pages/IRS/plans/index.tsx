@@ -1,15 +1,18 @@
-import ListView from '@onaio/list-view';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { Link } from 'react-router-dom';
+import { Cell, Column } from 'react-table';
 import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
+import { RowHeightFilter } from '../../../../components/forms/FilterForm/RowHeightFilter';
 import SearchForm from '../../../../components/forms/Search';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
+import { DrillDownTablev7 } from '../../../../components/Table/DrillDown';
+import { RenderFiltersInBarOptions } from '../../../../components/Table/DrillDown/TableJSX';
 import { SUPERSET_IRS_REPORTING_PLANS_SLICE } from '../../../../configs/env';
 import {
   DATE_CREATED,
@@ -79,27 +82,49 @@ const IRSPlansList = (props: PlanListProps & RouteComponentProps) => {
     loadData().catch(error => displayError(error));
   }, []);
 
-  const listViewData = (planList: IRSPlan[]) =>
-    planList.map(planObj => {
-      return [
-        <Link to={`${REPORT_IRS_PLAN_URL}/${planObj.plan_id}`} key={planObj.plan_id}>
-          {planObj.plan_title}
-        </Link>,
-        planObj.plan_date,
-        planObj.plan_effective_period_start,
-        planObj.plan_effective_period_end,
-        planStatusDisplay[planObj.plan_status] || planObj.plan_status,
-      ];
-    });
+  const columns: Array<Column<IRSPlan>> = [
+    {
+      Cell: (cell: Cell<IRSPlan>) => {
+        const original = cell.row.original;
+        return <Link to={`${REPORT_IRS_PLAN_URL}/${original.plan_id}`}>{cell.value}</Link>;
+      },
+      Header: TITLE,
+      accessor: 'plan_title',
+    },
+    {
+      Header: DATE_CREATED,
+      accessor: 'plan_date',
+    },
+    {
+      Header: START_DATE,
+      accessor: 'plan_effective_period_start',
+    },
+    {
+      Header: END_DATE,
+      accessor: 'plan_effective_period_end',
+    },
+    {
+      Header: STATUS_HEADER,
+      accessor: (d: IRSPlan) => planStatusDisplay[d.plan_status] || d.plan_status,
+      id: 'plan_status',
+    },
+  ];
 
-  if (loading === true) {
-    return <Loading />;
-  }
-
-  const listViewProps = {
-    data: listViewData(plans),
-    headerItems: [TITLE, DATE_CREATED, START_DATE, END_DATE, STATUS_HEADER],
-    tableClass: 'table table-bordered plans-list',
+  const tableProps = {
+    LoadingComponent: Loading,
+    columns,
+    data: plans,
+    loading,
+    renderInFilterBar: (options: RenderFiltersInBarOptions) => {
+      const changeHandler = (value: string) => options.setRowHeight(value);
+      return (
+        <>
+          <SearchForm placeholder={SEARCH} queryParam={QUERY_PARAM_TITLE} />
+          <RowHeightFilter changeHandler={changeHandler} />
+        </>
+      );
+    },
+    useDrillDown: false,
   };
 
   return (
@@ -114,11 +139,9 @@ const IRSPlansList = (props: PlanListProps & RouteComponentProps) => {
         </Col>
       </Row>
       <hr />
-      <SearchForm placeholder={SEARCH} queryParam={QUERY_PARAM_TITLE} />
-
       <Row>
         <Col>
-          <ListView {...listViewProps} />
+          <DrillDownTablev7 {...tableProps} />
         </Col>
       </Row>
     </div>

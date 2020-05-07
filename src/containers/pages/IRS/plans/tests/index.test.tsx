@@ -5,7 +5,9 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import ConnectedIRSPlansList, { IRSPlansList } from '../';
+import { NO_DATA_FOUND } from '../../../../../components/Table/DrillDown/helpers/constants';
 import { REPORT_IRS_PLAN_URL } from '../../../../../constants';
+import { renderTable } from '../../../../../helpers/test-utils';
 import store from '../../../../../store';
 import { IRSPlan } from '../../../../../store/ducks/generic/plans';
 import { fetchIRSPlans } from '../../../../../store/ducks/generic/plans';
@@ -45,7 +47,7 @@ describe('components/IRS Reports/IRSPlansList', () => {
     );
   });
 
-  it('renders plan definition list correctly', () => {
+  it('renders plan definition list correctly', async () => {
     fetch.mockResponseOnce(JSON.stringify({}));
     const props = {
       history,
@@ -68,10 +70,11 @@ describe('components/IRS Reports/IRSPlansList', () => {
         <IRSPlansList {...props} />
       </Router>
     );
+    await new Promise(resolve => setImmediate(resolve));
+    wrapper.update();
     expect(toJson(wrapper.find('BreadcrumbItem li'))).toMatchSnapshot('breadcrumbs');
     expect(toJson(wrapper.find('h3.page-title'))).toMatchSnapshot('page title');
-    expect(toJson(wrapper.find('thead tr th'))).toMatchSnapshot('table headers');
-    expect(toJson(wrapper.find('tbody tr td'))).toMatchSnapshot('table rows');
+    renderTable(wrapper, 'the full rendered rows');
     wrapper.unmount();
   });
 
@@ -100,6 +103,8 @@ describe('components/IRS Reports/IRSPlansList', () => {
         </Router>
       </Provider>
     );
+    await new Promise(resolve => setImmediate(resolve));
+    wrapper.update();
     expect(
       wrapper
         .find('tbody tr td')
@@ -134,6 +139,8 @@ describe('components/IRS Reports/IRSPlansList', () => {
         </Router>
       </Provider>
     );
+    await new Promise(resolve => setImmediate(resolve));
+    wrapper.update();
     expect(
       wrapper
         .find('tbody tr td')
@@ -168,6 +175,8 @@ describe('components/IRS Reports/IRSPlansList', () => {
         </Router>
       </Provider>
     );
-    expect(toJson(wrapper.find('tbody tr'))).toEqual(null);
+    await new Promise(resolve => setImmediate(resolve));
+    wrapper.update();
+    expect(wrapper.text().includes(NO_DATA_FOUND)).toBeTruthy();
   });
 });
