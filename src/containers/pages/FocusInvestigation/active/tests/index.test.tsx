@@ -237,6 +237,28 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
     wrapper.unmount();
   });
 
+  it('does not show loading when we have resoled promises', () => {
+    // resolve superset's request with empty data, it should not show the loader.
+    const mock: any = jest.fn();
+    const supersetMock: any = jest.fn();
+    supersetMock.mockImplementation(() => Promise.resolve([]));
+    const props = {
+      history,
+      location: mock,
+      match: mock,
+      supersetService: supersetMock,
+    };
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedActiveFocusInvestigation {...props} />
+        </Router>
+      </Provider>
+    );
+    expect(wrapper.find('Ripple').length).toEqual(0);
+    wrapper.unmount();
+  });
+
   it('handles search correctly for case triggered plans', async () => {
     store.dispatch(fetchPlans([fixtures.plan24, fixtures.plan25]));
 

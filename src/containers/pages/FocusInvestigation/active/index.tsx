@@ -110,15 +110,33 @@ export const defaultActiveFIProps: ActiveFIProps = {
   supersetService: supersetFetch,
 };
 
+interface ActiveFIState {
+  loading: boolean;
+}
+
+const defaultActiveFIState = {
+  loading: true,
+};
+
 /** Reporting for Active Focus Investigations */
 class ActiveFocusInvestigation extends React.Component<
   ActiveFIProps & RouteComponentProps<RouteParams>,
-  {}
+  ActiveFIState
 > {
   public static defaultProps: ActiveFIProps = defaultActiveFIProps;
 
   constructor(props: ActiveFIProps & RouteComponentProps<RouteParams>) {
     super(props);
+    const { caseTriggeredPlans, routinePlans } = props;
+    const thereIsntData: boolean =
+      (caseTriggeredPlans &&
+        caseTriggeredPlans.length === 0 &&
+        routinePlans &&
+        routinePlans.length === 0) ||
+      true;
+    this.state = {
+      loading: thereIsntData,
+    };
   }
 
   public componentDidMount() {
@@ -128,7 +146,8 @@ class ActiveFocusInvestigation extends React.Component<
     ]);
     supersetService(SUPERSET_PLANS_SLICE, supersetParams)
       .then((result: Plan[]) => fetchPlansActionCreator(result))
-      .catch(err => displayError(err));
+      .catch(err => displayError(err))
+      .finally(() => this.setState({ loading: false }));
   }
 
   public render() {
@@ -175,13 +194,7 @@ class ActiveFocusInvestigation extends React.Component<
       breadcrumbProps.pages = [homePage];
     }
 
-    if (
-      caseTriggeredPlans &&
-      caseTriggeredPlans.length === 0 &&
-      routinePlans &&
-      routinePlans.length === 0 &&
-      searchedTitle === null
-    ) {
+    if (this.state.loading) {
       return <Loading />;
     }
     const routineReactivePlans: Dictionary[] = [];
