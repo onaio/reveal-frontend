@@ -11,7 +11,6 @@ import querystring from 'querystring';
 import { MouseEvent } from 'react';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Column as ColumnType } from 'react-table';
 import { CellInfo, Column } from 'react-table-v6';
 import { toast, ToastOptions } from 'react-toastify';
 import SeamlessImmutable from 'seamless-immutable';
@@ -92,10 +91,10 @@ export interface GeoJSON {
 }
 
 /** Gets react table columns from the location hierarchy in configs */
-export function getLocationColumns<D extends object>(
+export function getLocationColumns(
   locations: LocationItem[] = locationHierarchy,
   padHeader: boolean = false
-): Array<ColumnType<D>> {
+) {
   // sort locations using the level field and then remove duplicates
   const locationSet = uniq(locations.sort((a, b) => (a.level > b.level ? 1 : -1)));
 
@@ -103,8 +102,13 @@ export function getLocationColumns<D extends object>(
     return locationSet.map(el => {
       return {
         Header: el.name,
-        accessor: el.identifier,
-      } as ColumnType<D>;
+        columns: [
+          {
+            Header: '',
+            accessor: el.identifier,
+          },
+        ],
+      };
     });
   }
 
@@ -112,7 +116,7 @@ export function getLocationColumns<D extends object>(
     return {
       Header: el.name,
       accessor: el.identifier,
-    } as ColumnType<D>;
+    };
   });
 }
 
