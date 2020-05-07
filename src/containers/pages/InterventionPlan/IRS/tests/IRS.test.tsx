@@ -7,7 +7,8 @@ import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import ConnectedIrsPlans, { IrsPlans } from '..';
 import { DRAFTS_PARENTHESIS, IRS_PLANS } from '../../../../../configs/lang';
-import { INTERVENTION_IRS_DRAFTS_URL } from '../../../../../constants';
+import { INTERVENTION_IRS_DRAFTS_URL, QUERY_PARAM_TITLE } from '../../../../../constants';
+import { renderTable } from '../../../../../helpers/test-utils';
 import store from '../../../../../store';
 import { plansJSON } from '../../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
 import plansReducer, {
@@ -81,8 +82,8 @@ describe('containers/pages/IRS', () => {
     const helmet = Helmet.peek();
     expect(helmet.title).toEqual(`${IRS_PLANS}${DRAFTS_PARENTHESIS}`);
     expect(wrapper.find('DrillDownTable').props()).toMatchSnapshot('drill down table props');
-    expect(wrapper.find('Button').text()).toEqual('Create New Plan');
-    expect(wrapper.find('Button').props()).toMatchSnapshot('button props');
+    expect(wrapper.find('Button.create-plan').text()).toEqual('Create New Plan');
+    expect(wrapper.find('Button.create-plan').props()).toMatchSnapshot('button props');
     wrapper.unmount();
   });
 
@@ -121,6 +122,39 @@ describe('containers/pages/IRS', () => {
     wrapper.update();
 
     expect((wrapper.find('IrsPlans').props() as any).plansArray.length).toEqual(1);
+    wrapper.unmount();
+  });
+
+  it('Search works correctly', async () => {
+    fetch.mockResponse(plansJSON);
+    const props = {
+      history,
+      location: {
+        hash: '',
+        pathname: '',
+        search: `${QUERY_PARAM_TITLE}=usaka`,
+        state: '',
+      },
+      match: {
+        isExact: true,
+        params: {},
+        path: INTERVENTION_IRS_DRAFTS_URL,
+        url: INTERVENTION_IRS_DRAFTS_URL,
+      },
+    };
+
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedIrsPlans {...props} />
+        </Router>
+      </Provider>
+    );
+
+    await new Promise(resolve => setImmediate(resolve));
+    wrapper.update();
+
+    renderTable(wrapper, 'find single row for A2-Lusaka Akros Test Focus 2');
     wrapper.unmount();
   });
 });
