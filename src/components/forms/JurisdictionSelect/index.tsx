@@ -1,3 +1,4 @@
+import { Dictionary } from '@onaio/utils/dist/types/types';
 import { FieldProps } from 'formik';
 import React, { useState } from 'react';
 import AsyncSelect, { Props as AsyncSelectProps } from 'react-select/async';
@@ -34,7 +35,42 @@ export interface JurisdictionSelectProps<T = SelectOption> extends AsyncSelectPr
   cascadingSelect: boolean /** should we have a cascading select or not */;
   params: URLParams /** extra URL params to send to OpenSRP */;
   serviceClass: typeof OpenSRPService /** the OpenSRP service */;
+  promiseOptions: any;
 }
+/**
+ * Loads options from opensrp
+ * @param service Opensrp service class
+ * @param paramsToUse params to be used when making the call
+ * @param hierarchy async select order
+ */
+export const promiseOptions = (
+  service: OpenSRPService,
+  paramsToUse: Dictionary,
+  hierarchy: SelectOption[]
+) =>
+  // tslint:disable-next-line:no-inferred-empty-object-type
+  new Promise((resolve, reject) =>
+    service
+      .list(paramsToUse)
+      .then((e: JurisdictionOption[]) => {
+        const options = e.map(item => {
+          return { label: item.properties.name, value: item.id };
+        });
+        if (hierarchy.length > 0) {
+          const labels = hierarchy.map(j => j.label).join(' > ');
+          resolve([
+            {
+              label: labels,
+              options,
+            },
+          ]);
+        }
+        resolve(options);
+      })
+      .catch(error => {
+        reject(`Opensrp service Error ${error}`);
+      })
+  );
 
 /** default props for JurisdictionSelect */
 const defaultProps: Partial<JurisdictionSelectProps> = {
@@ -44,6 +80,7 @@ const defaultProps: Partial<JurisdictionSelectProps> = {
     is_jurisdiction: true,
     return_geometry: false,
   },
+  promiseOptions,
   serviceClass: OpenSRPService,
 };
 
@@ -71,30 +108,9 @@ const JurisdictionSelect = (props: JurisdictionSelectProps & FieldProps) => {
       properties_filter: getFilterParams(propertiesToFilter),
     }),
   };
-
-  /** Get select options from OpenSRP as a promise */
-  const promiseOptions = () =>
-    // tslint:disable-next-line:no-inferred-empty-object-type
-    new Promise(resolve =>
-      resolve(
-        service.list(paramsToUse).then((e: JurisdictionOption[]) => {
-          const options = e.map(item => {
-            return { label: item.properties.name, value: item.id };
-          });
-          if (hierarchy.length > 0) {
-            const labels = hierarchy.map(j => j.label).join(' > ');
-            return [
-              {
-                label: labels,
-                options,
-              },
-            ];
-          }
-          return options;
-        })
-      )
-    );
-
+  const wrapperPromiseOptions: () => Promise<() => {}> = async () => {
+    return await props.promiseOptions(service, paramsToUse, hierarchy);
+  };
   /**
    * onChange callback
    * unfortunately we have to set the type of option as any (for now)
@@ -162,9 +178,10 @@ const JurisdictionSelect = (props: JurisdictionSelectProps & FieldProps) => {
       aria-label={props['aria-label'] ? props['aria-label'] : SELECT}
       onChange={handleChange()}
       defaultOptions={true}
-      loadOptions={promiseOptions}
+      loadOptions={wrapperPromiseOptions}
       isClearable={true}
       cacheOptions={true}
+      classNamePrefix="jurisdiction"
       {...props}
     />
   );
