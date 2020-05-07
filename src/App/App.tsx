@@ -65,6 +65,7 @@ import {
   REACT_LOGIN_URL,
   REPORT_IRS_PLAN_URL,
   SINGLE_ORGANIZATION_URL,
+  STUDENTS_LIST_URL,
 } from '../constants';
 import ConnectedHeader from '../containers/ConnectedHeader';
 import ActiveFocusInvestigation from '../containers/pages/FocusInvestigation/active';
@@ -82,6 +83,7 @@ import ConnectedIRSAssignmentPlansList from '../containers/pages/IRS/assignments
 import ConnectedJurisdictionReport from '../containers/pages/IRS/JurisdictionsReport';
 import ConnectedIRSReportingMap from '../containers/pages/IRS/Map';
 import ConnectedIRSPlansList from '../containers/pages/IRS/plans';
+import ConnectedStudentListView from '../containers/pages/MDAPoint/StudentListView';
 import ConnectedAssignPractitioner from '../containers/pages/OrganizationViews/AssignPractitioners';
 import ConnectedCreateEditOrgView from '../containers/pages/OrganizationViews/CreateEditOrgView';
 import ConnectedOrgsListView from '../containers/pages/OrganizationViews/OrganizationListView';
@@ -339,6 +341,14 @@ const App = (props: AppProps) => {
                 exact={true}
                 path={`${SINGLE_ORGANIZATION_URL}/:id`}
                 component={ConnectedSingleOrgView}
+              />
+              {/* Student listing page */}
+              <ConnectedPrivateRoute
+                redirectPath={APP_CALLBACK_URL}
+                disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                exact={false}
+                path={STUDENTS_LIST_URL}
+                component={ConnectedStudentListView}
               />
               {/* Practitioner listing page */}
               <ConnectedPrivateRoute
