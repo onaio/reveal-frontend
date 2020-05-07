@@ -5,6 +5,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import ConnectedPlanDefinitionList, { PlanDefinitionList } from '../';
+import { NO_DATA_FOUND } from '../../../../../configs/lang';
 import { PLAN_LIST_URL } from '../../../../../constants';
 import store from '../../../../../store';
 import { fetchPlanDefinitions } from '../../../../../store/ducks/opensrp/PlanDefinition';
@@ -74,7 +75,6 @@ describe('components/InterventionPlan/PlanDefinitionList', () => {
     );
     expect(wrapper.find('HeaderBreadcrumb').props()).toMatchSnapshot('bread crumb props');
     expect(toJson(wrapper.find('Row').at(0))).toMatchSnapshot('row heading');
-    expect(wrapper.find('ListView').props()).toMatchSnapshot('list view props');
     expect(toJson(wrapper.find('HelmetWrapper'))).toMatchSnapshot('helmet');
     wrapper.unmount();
   });
@@ -175,6 +175,6 @@ describe('components/InterventionPlan/PlanDefinitionList', () => {
       </Provider>
     );
     wrapper.mount();
-    expect(toJson(wrapper.find('tbody tr'))).toEqual(null);
+    expect(wrapper.text().includes(NO_DATA_FOUND)).toBeTruthy();
   });
 });
