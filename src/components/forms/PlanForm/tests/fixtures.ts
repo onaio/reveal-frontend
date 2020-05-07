@@ -1387,7 +1387,7 @@ export const expectedExtractActivityFromPlanformResult = {
             },
           },
           due: '2019-08-16',
-          measure: 'Number of BCC Activities Completed',
+          measure: 'BCC Activities Completed',
         },
       ],
     },

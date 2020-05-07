@@ -288,7 +288,7 @@ export const BCC_GOAL_DESCRIPTION = translate(
   'BCC_GOAL_DESCRIPTION',
   'Complete at least 1 BCC activity for the operational area'
 );
-export const BCC_GOAL_MEASURE = translate('BCC_GOAL_MEASURE', 'Number of BCC Activities Completed');
+export const BCC_GOAL_MEASURE = translate('BCC_GOAL_MEASURE', 'BCC Activities Complete');
 export const IRS_ACTIVITY = translate('IRS_ACTIVITY', 'Spray Structures');
 export const IRS_ACTIVITY_DESCRIPTION = translate(
   'IRS_ACTIVITY_DESCRIPTION',
