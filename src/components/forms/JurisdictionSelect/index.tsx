@@ -49,24 +49,27 @@ export const promiseOptions = (
   hierarchy: SelectOption[]
 ) =>
   // tslint:disable-next-line:no-inferred-empty-object-type
-  new Promise(resolve =>
-    resolve(
-      service.list(paramsToUse).then((e: JurisdictionOption[]) => {
+  new Promise((resolve, reject) =>
+    service
+      .list(paramsToUse)
+      .then((e: JurisdictionOption[]) => {
         const options = e.map(item => {
           return { label: item.properties.name, value: item.id };
         });
         if (hierarchy.length > 0) {
           const labels = hierarchy.map(j => j.label).join(' > ');
-          return [
+          resolve([
             {
               label: labels,
               options,
             },
-          ];
+          ]);
         }
-        return options;
+        resolve(options);
       })
-    )
+      .catch(error => {
+        reject(`Opensrp service Error ${error}`);
+      })
   );
 
 /** default props for JurisdictionSelect */
@@ -105,7 +108,7 @@ const JurisdictionSelect = (props: JurisdictionSelectProps & FieldProps) => {
       properties_filter: getFilterParams(propertiesToFilter),
     }),
   };
-  const wrapperPromiseOptions = async () => {
+  const wrapperPromiseOptions: () => Promise<() => {}> = async () => {
     return await props.promiseOptions(service, paramsToUse, hierarchy);
   };
   /**
