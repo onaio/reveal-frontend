@@ -37,8 +37,17 @@ export interface JurisdictionSelectProps<T = SelectOption> extends AsyncSelectPr
   serviceClass: typeof OpenSRPService /** the OpenSRP service */;
   promiseOptions: any;
 }
-
-export const promiseOptions = (service: any, paramsToUse: Dictionary, hierarchy: SelectOption[]) =>
+/**
+ * Loads options from opensrp
+ * @param service Opensrp service class
+ * @param paramsToUse params to be used when making the call
+ * @param hierarchy async select order
+ */
+export const promiseOptions = (
+  service: OpenSRPService,
+  paramsToUse: Dictionary,
+  hierarchy: SelectOption[]
+) =>
   // tslint:disable-next-line:no-inferred-empty-object-type
   new Promise(resolve =>
     resolve(
@@ -96,31 +105,8 @@ const JurisdictionSelect = (props: JurisdictionSelectProps & FieldProps) => {
       properties_filter: getFilterParams(propertiesToFilter),
     }),
   };
-
-  /** Get select options from OpenSRP as a promise */
-  // const promiseOptions = () =>
-  //   // tslint:disable-next-line:no-inferred-empty-object-type
-  //   new Promise(resolve =>
-  //     resolve(
-  //       service.list(paramsToUse).then((e: JurisdictionOption[]) => {
-  //         const options = e.map(item => {
-  //           return { label: item.properties.name, value: item.id };
-  //         });
-  //         if (hierarchy.length > 0) {
-  //           const labels = hierarchy.map(j => j.label).join(' > ');
-  //           return [
-  //             {
-  //               label: labels,
-  //               options,
-  //             },
-  //           ];
-  //         }
-  //         return options;
-  //       })
-  //     )
-  //   );
-  const wrapperPromiseOptions = () => {
-    return promiseOptions(service, paramsToUse, hierarchy);
+  const wrapperPromiseOptions = async () => {
+    return await props.promiseOptions(service, paramsToUse, hierarchy);
   };
   /**
    * onChange callback
