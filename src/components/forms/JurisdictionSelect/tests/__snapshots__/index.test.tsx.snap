@@ -1,5 +1,30 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`components/forms/JurisdictionSelect handleChange works correctly: Jurisdiction Menu 1`] = `
+<div
+  class="jurisdiction__menu css-26l3qy-menu"
+>
+  <div
+    class="jurisdiction__menu-list css-4ljt47-MenuList"
+  >
+    <div
+      class="jurisdiction__option jurisdiction__option--is-focused css-1n7v3ny-option"
+      id="react-select-5-option-0"
+      tabindex="-1"
+    >
+      Siavonga
+    </div>
+    <div
+      class="jurisdiction__option css-yt9ioa-option"
+      id="react-select-5-option-1"
+      tabindex="-1"
+    >
+      Sinda
+    </div>
+  </div>
+</div>
+`;
+
 exports[`components/forms/JurisdictionSelect renders select options correctly: Jurisdiction Select Props 1`] = `
 Object {
   "apiEndpoint": "location/findByProperties",
@@ -16,6 +41,16 @@ Object {
   "components": Object {},
   "controlShouldRenderValue": true,
   "defaultOptions": true,
+  "defaultProps": Object {
+    "apiEndpoint": "location/findByProperties",
+    "cascadingSelect": true,
+    "params": Object {
+      "is_jurisdiction": true,
+      "return_geometry": false,
+    },
+    "promiseOptions": [Function],
+    "serviceClass": [Function],
+  },
   "escapeClearsValue": false,
   "filterOption": null,
   "formatGroupLabel": [Function],
@@ -73,6 +108,16 @@ Object {
   "closeMenuOnSelect": false,
   "defaultMenuIsOpen": false,
   "defaultOptions": true,
+  "defaultProps": Object {
+    "apiEndpoint": "location/findByProperties",
+    "cascadingSelect": true,
+    "params": Object {
+      "is_jurisdiction": true,
+      "return_geometry": false,
+    },
+    "promiseOptions": [Function],
+    "serviceClass": [Function],
+  },
   "filterOption": null,
   "isClearable": true,
   "isLoading": false,
@@ -89,5 +134,3 @@ Object {
   "serviceClass": [Function],
 }
 `;
-
-exports[`components/forms/JurisdictionSelect select various selections: test props 1`] = `ReactWrapper {}`;
