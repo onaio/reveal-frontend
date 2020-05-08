@@ -23,7 +23,7 @@ import HeaderBreadCrumb, {
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
 import { DrillDownTablev7 } from '../../../../components/Table/DrillDown';
-import { RenderFiltersInBarOptions } from '../../../../components/Table/DrillDown/TableJSX';
+import { RenderFiltersInBarOptions } from '../../../../components/Table/DrillDown';
 import { SUPERSET_PLANS_SLICE } from '../../../../configs/env';
 import {
   ADD_FOCUS_INVESTIGATION,

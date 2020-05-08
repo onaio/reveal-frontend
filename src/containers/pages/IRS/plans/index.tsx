@@ -12,7 +12,7 @@ import SearchForm from '../../../../components/forms/Search';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
 import { DrillDownTablev7 } from '../../../../components/Table/DrillDown';
-import { RenderFiltersInBarOptions } from '../../../../components/Table/DrillDown/TableJSX';
+import { RenderFiltersInBarOptions } from '../../../../components/Table/DrillDown';
 import { SUPERSET_IRS_REPORTING_PLANS_SLICE } from '../../../../configs/env';
 import {
   DATE_CREATED,

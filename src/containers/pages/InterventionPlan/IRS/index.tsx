@@ -16,7 +16,7 @@ import HeaderBreadcrumbs, {
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
 import { DrillDownTablev7 } from '../../../../components/Table/DrillDown';
-import { RenderFiltersInBarOptions } from '../../../../components/Table/DrillDown/TableJSX';
+import { RenderFiltersInBarOptions } from '../../../../components/Table/DrillDown';
 import {
   CREATE_NEW_PLAN,
   DATE_CREATED,

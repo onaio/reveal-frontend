@@ -9,13 +9,12 @@ import { Cell, Row as RowType, UseTableOptions } from 'react-table';
 import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
 import { RowHeightFilter } from '../../../../components/forms/FilterForm/RowHeightFilter';
-import UserSelectFilter from '../../../../components/forms/FilterForm/UserFilter';
 import SearchForm from '../../../../components/forms/Search';
 import LinkAsButton from '../../../../components/LinkAsButton';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
 import { DrillDownTablev7 } from '../../../../components/Table/DrillDown';
-import { RenderFiltersInBarOptions } from '../../../../components/Table/DrillDown/TableJSX';
+import { RenderFiltersInBarOptions } from '../../../../components/Table/DrillDown';
 import {
   ADD_PLAN,
   HOME,
@@ -146,7 +145,6 @@ const PlanDefinitionList = (props: PlanListProps & RouteComponentProps) => {
       return (
         <>
           <SearchForm placeholder={SEARCH} queryParam={QUERY_PARAM_TITLE} />
-          <UserSelectFilter serviceClass={service} />
           <RowHeightFilter changeHandler={changeHandler} />
         </>
       );
