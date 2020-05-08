@@ -13,9 +13,6 @@ import 'react-table-v6/react-table.css';
 import { Col, Row, Table } from 'reactstrap';
 import { Store } from 'redux';
 import { format } from 'util';
-import DrillDownTableLinkedCell from '../../../../components/DrillDownTableLinkedCell';
-import { RowHeightFilter } from '../../../../components/forms/FilterForm/RowHeightFilter';
-import SearchForm from '../../../../components/forms/Search';
 import LinkAsButton from '../../../../components/LinkAsButton';
 import NewRecordBadge from '../../../../components/NewRecordBadge';
 import HeaderBreadCrumb, {
@@ -23,7 +20,6 @@ import HeaderBreadCrumb, {
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
 import { DrillDownTablev7 } from '../../../../components/Table/DrillDown';
-import { RenderFiltersInBarOptions } from '../../../../components/Table/DrillDown';
 import { SUPERSET_PLANS_SLICE } from '../../../../configs/env';
 import {
   ADD_FOCUS_INVESTIGATION,
@@ -40,7 +36,6 @@ import {
   NAME,
   REACTIVE,
   ROUTINE_TITLE,
-  SEARCH,
   START_DATE,
   STATUS_HEADER,
 } from '../../../../configs/lang';
@@ -62,12 +57,8 @@ import {
 import { displayError } from '../../../../helpers/errors';
 import { renderClassificationRow } from '../../../../helpers/indicators';
 import '../../../../helpers/tables.css';
-import {
-  getFilteredFIPlansURL,
-  getQueryParams,
-  removeNullJurisdictionPlans,
-} from '../../../../helpers/utils';
-import { extractPlan, getLocationColumns } from '../../../../helpers/utils';
+import { getFilteredFIPlansURL, getQueryParams } from '../../../../helpers/utils';
+import { getLocationColumns } from '../../../../helpers/utils';
 import supersetFetch from '../../../../services/superset';
 import plansReducer, {
   fetchPlans,
@@ -80,6 +71,7 @@ import plansReducer, {
 } from '../../../../store/ducks/plans';
 import './../../../../styles/css/drill-down-table.css';
 import './style.css';
+import { createTableProps } from './utils';
 
 /** register the plans reducer */
 reducerRegistry.register(plansReducerName, plansReducer);
@@ -287,31 +279,6 @@ class ActiveFocusInvestigation extends React.Component<
       },
     ];
 
-    const createTableProps = <D extends object>(
-      columns: Array<Column<D>>,
-      data: Plan[] | null,
-      queryParam: string
-    ) => {
-      const cleanedData = data !== null ? data : [];
-      const jurisdictionValidPlans = removeNullJurisdictionPlans(cleanedData);
-      const thePlans = jurisdictionValidPlans.map(extractPlan);
-
-      return {
-        CellComponent: DrillDownTableLinkedCell,
-        columns,
-        data: thePlans,
-        renderInFilterBar: (options: RenderFiltersInBarOptions) => {
-          const changeHandler = (value: string) => options.setRowHeight(value);
-          return (
-            <>
-              <SearchForm placeholder={SEARCH} queryParam={queryParam} />
-              <RowHeightFilter changeHandler={changeHandler} />
-            </>
-          );
-        },
-        useDrillDown: false,
-      };
-    };
     return (
       <div>
         <Helmet>
