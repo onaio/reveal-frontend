@@ -90,7 +90,13 @@ export interface GeoJSON {
   type: string;
 }
 
-/** Gets react table columns from the location hierarchy in configs */
+/** Gets react table columns from the location hierarchy in configs
+ * @param {LocationItem} - the location hierarchy to be used to create table columns
+ * @param {boolean} - whether to nest the column definition under a parent column
+ *
+ * @return {Column} - column instance compatible with both react-table and react-table-v6
+ *   however for some reason, setting Column from one version breaks the other version.
+ */
 export function getLocationColumns(
   locations: LocationItem[] = locationHierarchy,
   padHeader: boolean = false
