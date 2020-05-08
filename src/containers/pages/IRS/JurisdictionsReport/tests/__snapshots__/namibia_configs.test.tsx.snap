@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`components/IRS Reports/JurisdictionReport renders correctly 1`] = `
+exports[`Namibia configs: components/IRS Reports/JurisdictionReport Namibia configs: renders correctly 1`] = `
 Object {
   "CellComponent": [Function],
   "columns": Any<Object>,
@@ -23,7 +23,7 @@ Object {
 }
 `;
 
-exports[`components/IRS Reports/JurisdictionReport renders correctly: breadcrumbs 1`] = `
+exports[`Namibia configs: components/IRS Reports/JurisdictionReport Namibia configs: renders correctly: Namibia configs: breadcrumbs 1`] = `
 Array [
   <li
     className="breadcrumb-item"
@@ -66,7 +66,7 @@ Array [
 ]
 `;
 
-exports[`components/IRS Reports/JurisdictionReport renders correctly: page title 1`] = `
+exports[`Namibia configs: components/IRS Reports/JurisdictionReport Namibia configs: renders correctly: Namibia configs: page title 1`] = `
 <h3
   className="mb-3 page-title"
 >

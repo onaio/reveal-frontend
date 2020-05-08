@@ -53,12 +53,12 @@ store.dispatch(fetchGenericJurisdictions('na-focusAreas', focusAreaData));
 
 const history = createBrowserHistory();
 
-describe('components/IRS Reports/JurisdictionReport', () => {
+describe('Namibia configs: components/IRS Reports/JurisdictionReport', () => {
   beforeEach(() => {
     jest.resetAllMocks();
   });
 
-  it('renders correctly', async () => {
+  it('Namibia configs: renders correctly', async () => {
     fetch.mockResponseOnce(JSON.stringify({}));
     const mock: any = jest.fn();
 
@@ -102,8 +102,10 @@ describe('components/IRS Reports/JurisdictionReport', () => {
     );
     const helmet = Helmet.peek();
     await flushPromises();
-    expect(toJson(wrapper.find('BreadcrumbItem li'))).toMatchSnapshot('breadcrumbs');
-    expect(toJson(wrapper.find('h3.page-title'))).toMatchSnapshot('page title');
+    expect(toJson(wrapper.find('BreadcrumbItem li'))).toMatchSnapshot(
+      'Namibia configs: breadcrumbs'
+    );
+    expect(toJson(wrapper.find('h3.page-title'))).toMatchSnapshot('Namibia configs: page title');
     expect(helmet.title).toEqual('IRS Reporting: IRS 2019-09-05 TEST');
     expect(wrapper.find('DrillDownTable').props()).toMatchSnapshot({
       columns: expect.any(Object) /** just for purposes of making snapshot smaller */,
