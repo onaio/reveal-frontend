@@ -37,6 +37,7 @@ jest.mock('../../../../../configs/env', () => ({
   SUPERSET_IRS_REPORTING_INDICATOR_STOPS: 'namibia2019',
   SUPERSET_IRS_REPORTING_JURISDICTIONS_COLUMNS: 'namibia2019',
   SUPERSET_IRS_REPORTING_JURISDICTIONS_DATA_SLICES: '11,12',
+  SUPERSET_IRS_REPORTING_PLANS_SLICE: '13',
 }));
 
 /** register the reducers */
@@ -47,8 +48,8 @@ reducerRegistry.register(GenericJurisdictionsReducerName, GenericJurisdictionsRe
 const focusAreaData = superset.processData(fixtures.ZambiaJurisdictionsJSON) || [];
 const jurisdictionData = superset.processData(fixtures.ZambiaJurisdictionsJSON) || [];
 
-store.dispatch(fetchGenericJurisdictions('nm-jurisdictions', jurisdictionData));
-store.dispatch(fetchGenericJurisdictions('nm-focusAreas', focusAreaData));
+store.dispatch(fetchGenericJurisdictions('na-jurisdictions', jurisdictionData));
+store.dispatch(fetchGenericJurisdictions('na-focusAreas', focusAreaData));
 
 const history = createBrowserHistory();
 
@@ -67,13 +68,13 @@ describe('components/IRS Reports/JurisdictionReport', () => {
     let jurisdictions =
       getGenericJurisdictionsArray(
         store.getState(),
-        'nm-jurisdictions',
+        'na-jurisdictions',
         '9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d'
       ) || [];
     jurisdictions = jurisdictions.concat(
       getGenericJurisdictionsArray(
         store.getState(),
-        'nm-focusAreas',
+        'na-focusAreas',
         '9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d'
       )
     );
@@ -118,6 +119,57 @@ describe('components/IRS Reports/JurisdictionReport', () => {
       indicatorThresholds: indicatorThresholdsIRS,
       indicatorThresholdsLookUp: indicatorThresholdsLookUpIRS,
     });
+
+    expect(supersetServiceMock.mock.calls).toEqual([
+      [
+        '13',
+        {
+          adhoc_filters: [
+            {
+              clause: 'WHERE',
+              comparator: '727c3d40-e118-564a-b231-aac633e6abce',
+              expressionType: 'SIMPLE',
+              operator: '==',
+              subject: 'plan_id',
+            },
+          ],
+          row_limit: 1,
+        },
+      ],
+      [
+        '11',
+        {
+          adhoc_filters: [
+            {
+              clause: 'WHERE',
+              comparator: '727c3d40-e118-564a-b231-aac633e6abce',
+              expressionType: 'SIMPLE',
+              operator: '==',
+              subject: 'plan_id',
+            },
+          ],
+          order_by_cols: ['["jurisdiction_depth",+true]', '["jurisdiction_name",+true]'],
+          row_limit: 1000,
+        },
+      ],
+      [
+        '12',
+        {
+          adhoc_filters: [
+            {
+              clause: 'WHERE',
+              comparator: '727c3d40-e118-564a-b231-aac633e6abce',
+              expressionType: 'SIMPLE',
+              operator: '==',
+              subject: 'plan_id',
+            },
+          ],
+          order_by_cols: ['["jurisdiction_depth",+true]', '["jurisdiction_name",+true]'],
+          row_limit: 1000,
+        },
+      ],
+    ]);
+
     expect(supersetServiceMock).toHaveBeenCalledTimes(3);
     wrapper.unmount();
   });
