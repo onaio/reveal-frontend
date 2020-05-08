@@ -47,23 +47,29 @@ export interface RenderPaginationOptions<T extends object> extends UsePagination
   pageIndex: number;
 }
 
-/** describes props for the underlying Table component */
+/** describes props for the underlying Table component : TData is the type of data to be rendered in table */
 export interface TableJSXProps<TData extends object> {
-  columns: Array<Column<TData>>;
-  data: TData[];
-  fetchData: (options: Dictionary) => void;
-  identifierField: string;
-  parentNodes: Array<string | number>;
-  parentIdentifierField: string;
-  hasChildren: HasChildrenFuncType;
-  showBottomPagination: boolean;
-  renderPagination: (props: RenderPaginationOptions<TData>) => React.ElementType;
-  showTopPagination: boolean;
-  renderFilterBar: true;
-  renderInFilterBar: (prop: RenderFiltersInBarOptions) => React.ElementType;
-  rootParentId: string;
-  renderNullDataComponent: () => React.ElementType;
-  linkerField?: string;
+  columns: Array<Column<TData>> /** columns as per react-table format */;
+  data: TData[] /** array of data */;
+  fetchData: (
+    options: Dictionary
+  ) => void /** function that dynamically changes the chunk of data given to react-table */;
+  identifierField: string /** unique identifier for a row */;
+  parentNodes: Array<string | number> /** array of identifiers for all rows that have children */;
+  parentIdentifierField: string /** the field to identify a row's parent */;
+  hasChildren: HasChildrenFuncType /** function to check if a row of data has children or not */;
+  showBottomPagination: boolean /** whether to show pagination below table */;
+  renderPagination: (
+    props: RenderPaginationOptions<TData>
+  ) => React.ElementType /** renderProp to for custom pagination */;
+  showTopPagination: boolean /** show pagination above table */;
+  renderFilterBar: true /** whether to show the filter components */;
+  renderInFilterBar: (
+    prop: RenderFiltersInBarOptions
+  ) => React.ElementType /** add a section to the left of top pagination for filter components */;
+  rootParentId: string /** the value of parentIdentifierField for rows that have not parent */;
+  renderNullDataComponent: () => React.ElementType /** component to render if data is empty array */;
+  linkerField?: string /** the field to be used to drill down the data */;
   useDrillDown: boolean /** whether component can act as a normal table */;
 }
 
@@ -136,7 +142,7 @@ function Table<D extends object>(props: TableJSXProps<D>) {
 
   React.useEffect(() => {
     // data passed to this component is controlled by the component that defines fetchData.
-    // the controllign component filters the data based onthe current parent id and then passes it
+    // the controlling component filters the data based on the current parent id and then passes it
     // on down to this component as the data prop.
     fetchData({ skipPageResetRef, currentParentId });
     skipPageResetRef.current = false;
