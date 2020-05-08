@@ -5,7 +5,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import ConnectedIRSPlansList, { IRSPlansList } from '../';
-import { NO_DATA_FOUND } from '../../../../../components/Table/DrillDown/helpers/constants';
+import { NO_DATA_FOUND } from '../../../../../configs/lang';
 import { REPORT_IRS_PLAN_URL } from '../../../../../constants';
 import { renderTable } from '../../../../../helpers/test-utils';
 import store from '../../../../../store';
