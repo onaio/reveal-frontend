@@ -128,4 +128,3 @@ export const QUERY_PARAM_TITLE = 'title';
 export const QUERY_PARAM_USER = 'user';
 export const REACTIVE_QUERY_PARAM = 'reactive_plans';
 export const ROUTINE_QUERY_PARAM = 'routine_plans';
-export const ROW_HEIGHT_KEY = 'rowHeight';
