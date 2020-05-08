@@ -4,7 +4,7 @@ import React from 'react';
 import DropdownMenu from 'reactstrap/lib/DropdownMenu';
 import { ROW_HEIGHT } from '../../../../configs/lang';
 import { rowHeights } from '../../../../configs/settings';
-import { DropDownRenderer } from '../utilComponents';
+import { DropDownRenderer } from '../helpers/utilComponents';
 import './index.css';
 
 /** render prop for the call to action button */

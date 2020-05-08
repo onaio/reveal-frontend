@@ -2,16 +2,19 @@ import * as React from 'react';
 import { Dropdown, DropdownToggle } from 'reactstrap';
 import './util.css';
 
-interface DropDownRendererProps {
+/** DropDownRenderer props */
+export interface DropDownRendererProps {
   renderMenu: () => React.ReactNode;
   renderToggle: () => React.ReactNode;
 }
 
-const defaultDropDownRenderProps = {
+/** default props */
+export const defaultDropDownRenderProps = {
   renderMenu: () => null,
   renderToggle: () => null,
 };
 
+/** a wrapper used to render filter buttons on the table's filter bar */
 export const DropDownRenderer = (props: DropDownRendererProps = defaultDropDownRenderProps) => {
   const [isOpen, setIsOpen] = React.useState(false);
   const toggle = () => setIsOpen(!isOpen);
