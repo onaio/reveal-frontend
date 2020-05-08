@@ -1,5 +1,5 @@
 import React from 'react';
-import { CARET, CLICKABLE_CSS_CLASS, LINKER_ITEM_CSS_CLASS } from '../constants';
+import { CARET_SPAN, CLICKABLE_CSS_CLASS, LINKER_ITEM_CSS_CLASS } from '../constants';
 
 /** Interface for DropDown cell props */
 export interface DropDownCellProps {
@@ -16,7 +16,7 @@ const DropDownCell: React.ElementType = (props: DropDownCellProps) => {
     <div className={hasChildren ? CLICKABLE_CSS_CLASS : LINKER_ITEM_CSS_CLASS}>
       <span>
         {cellValue}
-        {hasChildren && CARET}
+        {hasChildren && CARET_SPAN}
       </span>
     </div>
   );
