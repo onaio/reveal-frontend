@@ -4,8 +4,10 @@ import { SessionState } from '@onaio/session-reducer';
 import { Dictionary, percentage } from '@onaio/utils';
 import { Color } from 'csstype';
 import { GisidaMap } from 'gisida';
-import { findKey, uniq } from 'lodash';
+import { Location } from 'history';
+import { findKey, trimStart, uniq } from 'lodash';
 import { FitBoundsOptions, Layer, LngLatBoundsLike, LngLatLike, Map, Style } from 'mapbox-gl';
+import querystring from 'querystring';
 import { MouseEvent } from 'react';
 import React from 'react';
 import { Link } from 'react-router-dom';
@@ -19,7 +21,13 @@ import DrillDownTableLinkedCell from '../components/DrillDownTableLinkedCell';
 import { FIReasonType, FIStatusType } from '../components/forms/PlanForm/types';
 import NewRecordBadge from '../components/NewRecordBadge';
 import { DIGITAL_GLOBE_CONNECT_ID, ONADATA_OAUTH_STATE, OPENSRP_OAUTH_STATE } from '../configs/env';
-import { ACTION, FAILED_TO_EXTRACT_PLAN_RECORD, FOCUS_AREA_HEADER, NAME } from '../configs/lang';
+import {
+  ACTION,
+  FAILED_TO_EXTRACT_PLAN_RECORD,
+  FOCUS_AREA_HEADER,
+  NAME,
+  NO_OPTIONS,
+} from '../configs/lang';
 import {
   FIReasons,
   FIStatuses,
@@ -862,4 +870,14 @@ export const IndicatorThresholdItemPercentage = (item: number, decimalPoints?: n
   return percentage(item, decimalPoints).error === null
     ? percentage(item, decimalPoints).value
     : `${item}${percentage(item).error}`;
+};
+
+export const reactSelectNoOptionsText = () => NO_OPTIONS;
+
+/**
+ * Get query params from URL
+ * @param {Location} location from props
+ */
+export const getQueryParams = (location: Location) => {
+  return querystring.parse(trimStart(location.search, '?'));
 };

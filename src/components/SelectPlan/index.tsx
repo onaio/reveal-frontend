@@ -1,7 +1,9 @@
 import * as React from 'react';
 import { RouteComponentProps, withRouter } from 'react-router';
 import Select from 'react-select';
+import { SELECT } from '../../configs/lang';
 import { FI_SINGLE_MAP_URL } from '../../constants';
+import { reactSelectNoOptionsText } from '../../helpers/utils';
 import { Plan } from '../../store/ducks/plans';
 
 export interface SelectPlanProps extends RouteComponentProps {
@@ -30,8 +32,10 @@ class SelectPlan extends React.Component<SelectPlanProps, {}> {
       return { value: element.id, label: element.plan_title };
     });
     const selectProps: any = {
+      noOptionsMessage: reactSelectNoOptionsText,
       onChange: this.change,
       options,
+      placeholder: SELECT,
     };
     if (placeholder) {
       selectProps.placeholder = placeholder;

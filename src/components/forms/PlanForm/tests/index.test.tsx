@@ -805,4 +805,49 @@ describe('containers/forms/PlanForm - Submission', () => {
       },
     ]);
   });
+
+  it('renders correctly if initial FI reason is missing or invalid', () => {
+    const [interventionType, fiStatus] = plans[0].useContext;
+    const planMissingFIReason = {
+      ...plans[0],
+      useContext: [interventionType, fiStatus],
+    };
+    const propsMissingFiReason = {
+      ...propsForUpdatingPlans,
+      initialValues: getPlanFormValues(planMissingFIReason),
+    };
+    const wrapper = mount(<PlanForm {...propsMissingFiReason} />);
+    expect(wrapper.find('Formik').prop('initialValues')).toEqual({
+      ...propsMissingFiReason.initialValues,
+      fiReason: 'Routine',
+    });
+
+    wrapper.unmount();
+  });
+
+  it('renders correctly if initial FI reason is invalid', () => {
+    const [interventionType, fiStatus] = plans[0].useContext;
+    const planInvalidFiReason = {
+      ...plans[0],
+      useContext: [
+        interventionType,
+        fiStatus,
+        {
+          code: 'fiReason',
+          valueCodableConcept: 'InvalidFIReason',
+        },
+      ],
+    };
+    const propsInvalidFiReason = {
+      ...propsForUpdatingPlans,
+      initialValues: getPlanFormValues(planInvalidFiReason),
+    };
+    const wrapper = mount(<PlanForm {...propsInvalidFiReason} />);
+    expect(wrapper.find('Formik').prop('initialValues')).toEqual({
+      ...propsInvalidFiReason.initialValues,
+      fiReason: 'Routine',
+    });
+
+    wrapper.unmount();
+  });
 });

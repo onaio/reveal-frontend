@@ -1,1488 +1,215 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`components/InterventionPlan/PlanDefinitionList renders plan definition list correctly 1`] = `
-<Router
-  history={
+exports[`components/InterventionPlan/PlanDefinitionList renders plan definition list correctly: bread crumb props 1`] = `
+Object {
+  "currentPage": Object {
+    "label": "Manage Plans",
+    "url": "/plans/list",
+  },
+  "pages": Array [
     Object {
-      "action": "POP",
-      "block": [Function],
-      "createHref": [Function],
-      "go": [Function],
-      "goBack": [Function],
-      "goForward": [Function],
-      "length": 1,
-      "listen": [Function],
-      "location": Object {
-        "hash": "",
-        "pathname": "/",
-        "search": "",
-        "state": undefined,
-      },
-      "push": [Function],
-      "replace": [Function],
-    }
-  }
+      "label": "Home",
+      "url": "/",
+    },
+  ],
+}
+`;
+
+exports[`components/InterventionPlan/PlanDefinitionList renders plan definition list correctly: helmet 1`] = `
+<HelmetWrapper
+  defer={true}
+  encodeSpecialCharacters={true}
 >
-  <PlanDefinitionList
-    fetchPlans={[Function]}
-    plans={
-      Array [
-        Object {
-          "action": Array [
-            Object {
-              "code": "Case Confirmation",
-              "description": "Confirm the index case",
-              "goalId": "Case_Confirmation",
-              "identifier": "c711ae51-6432-4b68-84c3-d2b5b1fd1948",
-              "prefix": 1,
-              "reason": "Investigation",
-              "subjectCodableConcept": Object {
-                "text": "Person",
-              },
-              "taskTemplate": "Case_Confirmation",
-              "timingPeriod": Object {
-                "end": "2019-05-24",
-                "start": "2019-05-21",
-              },
-              "title": "Case Confirmation",
-            },
-            Object {
-              "code": "RACD Register Family",
-              "description": "Register all families & famiy members in all residential structures enumerated (100%) within the operational area",
-              "goalId": "RACD_register_all_families",
-              "identifier": "402b8c13-6774-4515-929f-48e71a61a379",
-              "prefix": 2,
-              "reason": "Investigation",
-              "subjectCodableConcept": Object {
-                "text": "Residential_Structure",
-              },
-              "taskTemplate": "RACD_register_families",
-              "timingPeriod": Object {
-                "end": "2019-08-30",
-                "start": "2019-05-21",
-              },
-              "title": "Family Registration",
-            },
-            Object {
-              "code": "Bednet Distribution",
-              "description": "Visit 100% of residential structures in the operational area and provide nets",
-              "goalId": "RACD_bednet_dist_1km_radius",
-              "identifier": "1bd830ea-50e3-44dc-b855-9d5e9339e2be",
-              "prefix": 3,
-              "reason": "Routine",
-              "subjectCodableConcept": Object {
-                "text": "Residential_Structure",
-              },
-              "taskTemplate": "ITN_Visit_Structures",
-              "timingPeriod": Object {
-                "end": "2019-08-30",
-                "start": "2019-05-21",
-              },
-              "title": "Bednet Distribution",
-            },
-            Object {
-              "code": "Blood Screening",
-              "description": "Visit all residential structures (100%) within a 1 km radius of a confirmed index case and test each registered person",
-              "goalId": "RACD_blood_screening_1km_radius",
-              "identifier": "2303a70e-4e3f-4fb9-a430-f0476010bfb5",
-              "prefix": 4,
-              "reason": "Investigation",
-              "subjectCodableConcept": Object {
-                "text": "Person",
-              },
-              "taskTemplate": "RACD_Blood_Screening",
-              "timingPeriod": Object {
-                "end": "2019-05-28",
-                "start": "2019-05-21",
-              },
-              "title": "RACD Blood screening",
-            },
-            Object {
-              "code": "Larval Dipping",
-              "description": "Perform a minimum of three larval dipping activities in the operational area",
-              "goalId": "Larval_Dipping_Min_3_Sites",
-              "identifier": "2482dfd7-8284-43c6-bea1-a03dcda71ff4",
-              "prefix": 5,
-              "reason": "Investigation",
-              "subjectCodableConcept": Object {
-                "text": "Breeding_Site",
-              },
-              "taskTemplate": "Larval_Dipping",
-              "timingPeriod": Object {
-                "end": "2019-05-28",
-                "start": "2019-05-21",
-              },
-              "title": "Larval Dipping",
-            },
-            Object {
-              "code": "Mosquito Collection",
-              "description": "Set a minimum of three mosquito collection traps and complete the mosquito collection process",
-              "goalId": "Mosquito_Collection_Min_3_Traps",
-              "identifier": "423f6665-5367-40be-855e-7c5e6941a0c3",
-              "prefix": 6,
-              "reason": "Investigation",
-              "subjectCodableConcept": Object {
-                "text": "Mosquito_Collection_Point",
-              },
-              "taskTemplate": "Mosquito_Collection_Point",
-              "timingPeriod": Object {
-                "end": "2019-05-28",
-                "start": "2019-05-21",
-              },
-              "title": "Mosquito Collection",
-            },
-            Object {
-              "code": "BCC",
-              "description": "Conduct BCC activity",
-              "goalId": "BCC_Focus",
-              "identifier": "c8fc89a9-cdd2-4746-8272-650883ae380e",
-              "prefix": 7,
-              "reason": "Investigation",
-              "subjectCodableConcept": Object {
-                "text": "Operational_Area",
-              },
-              "taskTemplate": "BCC_Focus",
-              "timingPeriod": Object {
-                "end": "2019-06-21",
-                "start": "2019-05-21",
-              },
-              "title": "Behaviour Change Communication",
-            },
-          ],
-          "date": "2019-05-19",
-          "effectivePeriod": Object {
-            "end": "2019-08-30",
-            "start": "2019-05-20",
-          },
-          "goal": Array [
-            Object {
-              "description": "Confirm the index case",
-              "id": "Case_Confirmation",
-              "priority": "medium-priority",
-              "target": Array [
-                Object {
-                  "detail": Object {
-                    "detailQuantity": Object {
-                      "comparator": ">=",
-                      "unit": "form(s)",
-                      "value": 1,
-                    },
-                  },
-                  "due": "2019-05-21",
-                  "measure": "Number of case confirmation forms complete",
-                },
-              ],
-            },
-            Object {
-              "description": "Register all families and family members in all residential structures enumerated or added (100%) within operational area",
-              "id": "RACD_register_all_families",
-              "priority": "medium-priority",
-              "target": Array [
-                Object {
-                  "detail": Object {
-                    "detailQuantity": Object {
-                      "comparator": ">=",
-                      "unit": "Percent",
-                      "value": 100,
-                    },
-                  },
-                  "due": "2019-08-30",
-                  "measure": "Percent of residential structures with full family registration",
-                },
-              ],
-            },
-            Object {
-              "description": "Visit 100% of residential structures in the operational area and provide nets",
-              "id": "RACD_bednet_dist_1km_radius",
-              "priority": "medium-priority",
-              "target": Array [
-                Object {
-                  "detail": Object {
-                    "detailQuantity": Object {
-                      "comparator": ">=",
-                      "unit": "Percent",
-                      "value": 100,
-                    },
-                  },
-                  "due": "2019-08-30",
-                  "measure": "Percent of residential structures received nets",
-                },
-              ],
-            },
-            Object {
-              "description": "Visit all residential structures (100%) within a 1 km radius of a confirmed index case and test each registered person",
-              "id": "RACD_blood_screening_1km_radius",
-              "priority": "medium-priority",
-              "target": Array [
-                Object {
-                  "detail": Object {
-                    "detailQuantity": Object {
-                      "comparator": ">=",
-                      "unit": "Percent",
-                      "value": 100,
-                    },
-                  },
-                  "due": "2019-05-28",
-                  "measure": "Percent of registered people tested",
-                },
-              ],
-            },
-            Object {
-              "description": "Perform a minimum of three larval dipping activities in the operational area",
-              "id": "Larval_Dipping_Min_3_Sites",
-              "priority": "medium-priority",
-              "target": Array [
-                Object {
-                  "detail": Object {
-                    "detailQuantity": Object {
-                      "comparator": ">=",
-                      "unit": "form(s)",
-                      "value": 3,
-                    },
-                  },
-                  "due": "2019-05-28",
-                  "measure": "Number of larval dipping forms submitted",
-                },
-              ],
-            },
-            Object {
-              "description": "Set a minimum of three mosquito collection traps and complete the mosquito collection process",
-              "id": "Mosquito_Collection_Min_3_Traps",
-              "priority": "medium-priority",
-              "target": Array [
-                Object {
-                  "detail": Object {
-                    "detailQuantity": Object {
-                      "comparator": ">=",
-                      "unit": "form(s)",
-                      "value": 3,
-                    },
-                  },
-                  "due": "2019-05-28",
-                  "measure": "Number of mosquito collection forms submitted",
-                },
-              ],
-            },
-            Object {
-              "description": "Complete at least 1 BCC activity for the operational area",
-              "id": "BCC_Focus",
-              "priority": "medium-priority",
-              "target": Array [
-                Object {
-                  "detail": Object {
-                    "detailQuantity": Object {
-                      "comparator": ">=",
-                      "unit": "form(s)",
-                      "value": 1,
-                    },
-                  },
-                  "due": "2019-06-21",
-                  "measure": "Number of BCC forms submitted",
-                },
-              ],
-            },
-          ],
-          "identifier": "356b6b84-fc36-4389-a44a-2b038ed2f38d",
-          "jurisdiction": Array [
-            Object {
-              "code": "3952",
-            },
-          ],
-          "name": "A2-Lusaka_Akros_Focus_2",
-          "serverVersion": 1563303150422,
-          "status": "active",
-          "title": "A2-Lusaka Akros Test Focus 2",
-          "useContext": Array [
-            Object {
-              "code": "interventionType",
-              "valueCodableConcept": "FI",
-            },
-            Object {
-              "code": "fiStatus",
-              "valueCodableConcept": "A2",
-            },
-            Object {
-              "code": "fiReason",
-              "valueCodableConcept": "Routine",
-            },
-          ],
-          "version": "1",
-        },
-        Object {
-          "action": Array [
-            Object {
-              "code": "BCC",
-              "description": "Perform BCC for the operational area",
-              "goalId": "BCC_complete",
-              "identifier": "3f2eef38-38fe-4108-abb3-4e896b880302",
-              "prefix": 1,
-              "reason": "Routine",
-              "subjectCodableConcept": Object {
-                "text": "Operational_Area",
-              },
-              "taskTemplate": "Action1_Perform_BCC",
-              "timingPeriod": Object {
-                "end": "2019-07-30",
-                "start": "2019-07-10",
-              },
-              "title": "Perform BCC",
-            },
-            Object {
-              "code": "IRS",
-              "description": "Visit each structure in the operational area and attempt to spray",
-              "goalId": "90_percent_of_structures_sprayed",
-              "identifier": "95a5a00f-a411-4fe5-bd9c-460a856239c9",
-              "prefix": 2,
-              "reason": "Routine",
-              "subjectCodableConcept": Object {
-                "text": "Residential_Structure",
-              },
-              "taskTemplate": "Action2_Spray_Structures",
-              "timingPeriod": Object {
-                "end": "2019-07-30",
-                "start": "2019-07-10",
-              },
-              "title": "Spray Structures",
-            },
-          ],
-          "date": "2019-07-10",
-          "effectivePeriod": Object {
-            "end": "2019-07-30",
-            "start": "2019-07-10",
-          },
-          "goal": Array [
-            Object {
-              "description": "Complete BCC for the operational area",
-              "id": "BCC_complete",
-              "priority": "medium-priority",
-              "target": Array [
-                Object {
-                  "detail": Object {
-                    "detailQuantity": Object {
-                      "comparator": ">=",
-                      "unit": "each",
-                      "value": 1,
-                    },
-                  },
-                  "due": "2019-07-10",
-                  "measure": "Number of BCC communication activities that happened",
-                },
-              ],
-            },
-            Object {
-              "description": "Spray 90 % of structures in the operational area",
-              "id": "90_percent_of_structures_sprayed",
-              "priority": "medium-priority",
-              "target": Array [
-                Object {
-                  "detail": Object {
-                    "detailQuantity": Object {
-                      "comparator": ">=",
-                      "unit": "percent",
-                      "value": 90,
-                    },
-                  },
-                  "due": "2019-07-30",
-                  "measure": "Percent of structures sprayed",
-                },
-              ],
-            },
-          ],
-          "identifier": "8fa7eb32-99d7-4b49-8332-9ecedd6d51ae",
-          "jurisdiction": Array [
-            Object {
-              "code": "35968df5-f335-44ae-8ae5-25804caa2d86",
-            },
-            Object {
-              "code": "3952",
-            },
-            Object {
-              "code": "ac7ba751-35e8-4b46-9e53-3cbaad193697",
-            },
-          ],
-          "name": "TwoTwoOne_01_IRS_2019-07-10",
-          "serverVersion": 1563303151426,
-          "status": "active",
-          "title": "TwoTwoOne_01 IRS 2019-07-10",
-          "useContext": Array [
-            Object {
-              "code": "interventionType",
-              "valueCodableConcept": "IRS",
-            },
-          ],
-          "version": "1",
-        },
-        Object {
-          "action": Array [
-            Object {
-              "code": "Case Confirmation",
-              "description": "Confirm the index case",
-              "goalId": "Case_Confirmation",
-              "identifier": "031f3d7f-e222-459e-9fcc-da63d04dba4b",
-              "prefix": 1,
-              "reason": "Investigation",
-              "subjectCodableConcept": Object {
-                "text": "Operational Area",
-              },
-              "taskTemplate": "Case_Confirmation",
-              "timingPeriod": Object {
-                "end": "2019-07-28",
-                "start": "2019-07-18",
-              },
-              "title": "Case Confirmation",
-            },
-            Object {
-              "code": "RACD Register Family",
-              "description": "Register all families u0026 family members in all residential structures enumerated (100%) within the operational area",
-              "goalId": "RACD_register_all_families",
-              "identifier": "6729612a-9e83-4d72-a8c6-da518e530190",
-              "prefix": 2,
-              "reason": "Investigation",
-              "subjectCodableConcept": Object {
-                "text": "Residential_Structure",
-              },
-              "taskTemplate": "RACD_register_families",
-              "timingPeriod": Object {
-                "end": "2019-08-07",
-                "start": "2019-07-18",
-              },
-              "title": "Family Registration",
-            },
-            Object {
-              "code": "Blood Screening",
-              "description": "Visit all residential structures (100%) within a 1 km radius of a confirmed index case and test each registered person",
-              "goalId": "RACD_blood_screening_1km_radius",
-              "identifier": "6c3637dd-b36d-4137-8df2-1efc6d8d858f",
-              "prefix": 3,
-              "reason": "Investigation",
-              "subjectCodableConcept": Object {
-                "text": "Person",
-              },
-              "taskTemplate": "RACD_Blood_Screening",
-              "timingPeriod": Object {
-                "end": "2019-08-07",
-                "start": "2019-07-18",
-              },
-              "title": "Blood screening",
-            },
-            Object {
-              "code": "Bednet Distribution",
-              "description": "Visit 100% of residential structures in the operational area and provide nets",
-              "goalId": "RACD_bednet_dist_1km_radius",
-              "identifier": "eb85377d-9333-407c-88de-155410fbfd88",
-              "prefix": 4,
-              "reason": "Routine",
-              "subjectCodableConcept": Object {
-                "text": "Residential_Structure",
-              },
-              "taskTemplate": "ITN_Visit_Structures",
-              "timingPeriod": Object {
-                "end": "2019-08-07",
-                "start": "2019-07-18",
-              },
-              "title": "Bednet Distribution",
-            },
-            Object {
-              "code": "Larval Dipping",
-              "description": "Perform a minimum of three larval dipping activities in the operational area",
-              "goalId": "Larval_Dipping_Min_3_Sites",
-              "identifier": "01369e56-7e72-4b2e-9f4e-9e3c2beda706",
-              "prefix": 5,
-              "reason": "Investigation",
-              "subjectCodableConcept": Object {
-                "text": "Breeding_Site",
-              },
-              "taskTemplate": "Larval_Dipping",
-              "timingPeriod": Object {
-                "end": "2019-08-07",
-                "start": "2019-07-18",
-              },
-              "title": "Larval Dipping",
-            },
-            Object {
-              "code": "Mosquito Collection",
-              "description": "Set a minimum of three mosquito collection traps and complete the mosquito collection process",
-              "goalId": "Mosquito_Collection_Min_3_Traps",
-              "identifier": "6bd72f5b-1043-4905-bcf2-ef62c34f606f",
-              "prefix": 6,
-              "reason": "Investigation",
-              "subjectCodableConcept": Object {
-                "text": "Mosquito_Collection_Point",
-              },
-              "taskTemplate": "Mosquito_Collection_Point",
-              "timingPeriod": Object {
-                "end": "2019-08-07",
-                "start": "2019-07-18",
-              },
-              "title": "Mosquito Collection",
-            },
-            Object {
-              "code": "BCC",
-              "description": "Conduct BCC activity",
-              "goalId": "BCC_Focus",
-              "identifier": "40b046a5-18bd-4f26-b3aa-87a0d3787377",
-              "prefix": 7,
-              "reason": "Investigation",
-              "subjectCodableConcept": Object {
-                "text": "Operational_Area",
-              },
-              "taskTemplate": "BCC_Focus",
-              "timingPeriod": Object {
-                "end": "2019-08-07",
-                "start": "2019-07-18",
-              },
-              "title": "Behaviour Change Communication",
-            },
-          ],
-          "date": "2019-07-18",
-          "effectivePeriod": Object {
-            "end": "2019-08-07",
-            "start": "2019-07-18",
-          },
-          "goal": Array [
-            Object {
-              "description": "Confirm the index case",
-              "id": "Case_Confirmation",
-              "priority": "medium-priority",
-              "target": Array [
-                Object {
-                  "detail": Object {
-                    "detailQuantity": Object {
-                      "comparator": "u003eu003d",
-                      "unit": "form(s)",
-                      "value": 1,
-                    },
-                  },
-                  "due": "2019-07-28",
-                  "measure": "Number of case confirmation forms complete",
-                },
-              ],
-            },
-            Object {
-              "description": "Register all families and family members in all residential structures enumerated or added (100%) within operational area",
-              "id": "RACD_register_all_families",
-              "priority": "medium-priority",
-              "target": Array [
-                Object {
-                  "detail": Object {
-                    "detailQuantity": Object {
-                      "comparator": "u003eu003d",
-                      "unit": "Percent",
-                      "value": 100,
-                    },
-                  },
-                  "due": "2019-08-07",
-                  "measure": "Percent of residential structures with full family registration",
-                },
-              ],
-            },
-            Object {
-              "description": "Visit all residential structures (100%) within a 1 km radius of a confirmed index case and test each registered person",
-              "id": "RACD_blood_screening_1km_radius",
-              "priority": "medium-priority",
-              "target": Array [
-                Object {
-                  "detail": Object {
-                    "detailQuantity": Object {
-                      "comparator": "u003eu003d",
-                      "unit": "person(s)",
-                      "value": 50,
-                    },
-                  },
-                  "due": "2019-08-07",
-                  "measure": "Number of registered people tested",
-                },
-              ],
-            },
-            Object {
-              "description": "Visit 100% of residential structures in the operational area and provide nets",
-              "id": "RACD_bednet_dist_1km_radius",
-              "priority": "medium-priority",
-              "target": Array [
-                Object {
-                  "detail": Object {
-                    "detailQuantity": Object {
-                      "comparator": "u003eu003d",
-                      "unit": "Percent",
-                      "value": 90,
-                    },
-                  },
-                  "due": "2019-08-07",
-                  "measure": "Percent of residential structures received nets",
-                },
-              ],
-            },
-            Object {
-              "description": "Perform a minimum of three larval dipping activities in the operational area",
-              "id": "Larval_Dipping_Min_3_Sites",
-              "priority": "medium-priority",
-              "target": Array [
-                Object {
-                  "detail": Object {
-                    "detailQuantity": Object {
-                      "comparator": "u003eu003d",
-                      "unit": "form(s)",
-                      "value": 3,
-                    },
-                  },
-                  "due": "2019-08-07",
-                  "measure": "Number of larval dipping forms submitted",
-                },
-              ],
-            },
-            Object {
-              "description": "Set a minimum of three mosquito collection traps and complete the mosquito collection process",
-              "id": "Mosquito_Collection_Min_3_Traps",
-              "priority": "medium-priority",
-              "target": Array [
-                Object {
-                  "detail": Object {
-                    "detailQuantity": Object {
-                      "comparator": "u003eu003d",
-                      "unit": "form(s)",
-                      "value": 3,
-                    },
-                  },
-                  "due": "2019-08-07",
-                  "measure": "Number of mosquito collection forms submitted",
-                },
-              ],
-            },
-            Object {
-              "description": "Complete at least 1 BCC activity for the operational area",
-              "id": "BCC_Focus",
-              "priority": "medium-priority",
-              "target": Array [
-                Object {
-                  "detail": Object {
-                    "detailQuantity": Object {
-                      "comparator": "u003eu003d",
-                      "unit": "form(s)",
-                      "value": 1,
-                    },
-                  },
-                  "due": "2019-08-07",
-                  "measure": "Number of BCC forms submitted",
-                },
-              ],
-            },
-          ],
-          "identifier": "f0558ad1-396d-4d97-9fff-c46cf92b6ce6",
-          "jurisdiction": Array [
-            Object {
-              "code": "ac7ba751-35e8-4b46-9e53-3cbaad193697",
-            },
-          ],
-          "name": "A1-TwoTwoTwo_03-2019-07-18",
-          "serverVersion": 1563494230144,
-          "status": "active",
-          "title": "A1 - TwoTwoTwo_03 - 2019-07-18",
-          "useContext": Array [
-            Object {
-              "code": "interventionType",
-              "valueCodableConcept": "FI",
-            },
-            Object {
-              "code": "fiStatus",
-              "valueCodableConcept": "A1",
-            },
-            Object {
-              "code": "fiReason",
-              "valueCodableConcept": "Case Triggered",
-            },
-            Object {
-              "code": "caseNum",
-              "valueCodableConcept": "1",
-            },
-            Object {
-              "code": "opensrpEventId",
-              "valueCodableConcept": "1",
-            },
-            Object {
-              "code": "taskGenerationStatus",
-              "valueCodableConcept": "True",
-            },
-          ],
-          "version": "1",
-        },
-        Object {
-          "action": Array [],
-          "date": "2019-05-19",
-          "effectivePeriod": Object {
-            "end": "2019-08-30",
-            "start": "2019-05-20",
-          },
-          "goal": Array [],
-          "identifier": "0e85c238-39c1-4cea-a926-3d89f0c98429",
-          "jurisdiction": Array [
-            Object {
-              "code": "3952",
-            },
-          ],
-          "name": "mosh-test",
-          "serverVersion": 1563807467576,
-          "status": "draft",
-          "title": "A Test By Mosh",
-          "useContext": Array [
-            Object {
-              "code": "interventionType",
-              "valueCodableConcept": "FI",
-            },
-            Object {
-              "code": "fiStatus",
-              "valueCodableConcept": "A2",
-            },
-            Object {
-              "code": "fiReason",
-              "valueCodableConcept": "Routine",
-            },
-          ],
-        },
-        Object {
-          "action": Array [
-            Object {
-              "code": "RACD Register Family",
-              "description": "Register all families & family members in all residential structures enumerated (100%) within the operational area",
-              "goalId": "RACD_register_all_families",
-              "identifier": "2df855c3-3179-41f1-b8d8-7f84de7fa684",
-              "prefix": 1,
-              "reason": "Investigation",
-              "subjectCodableConcept": Object {
-                "text": "Residential_Structure",
-              },
-              "taskTemplate": "RACD_register_families",
-              "timingPeriod": Object {
-                "end": "2019-12-31",
-                "start": "2019-10-18",
-              },
-              "title": "Family Registration",
-            },
-            Object {
-              "code": "MDA Dispense",
-              "description": "Visit all residential structures (100%) and dispense prophylaxis to each registered person",
-              "goalId": "MDA_Dispense",
-              "identifier": "da253449-8a89-46ea-8cdf-d4159240edae",
-              "prefix": 2,
-              "reason": "Routine",
-              "subjectCodableConcept": Object {
-                "text": "Person",
-              },
-              "taskTemplate": "MDA_Dispense",
-              "timingPeriod": Object {
-                "end": "2019-12-31",
-                "start": "2019-10-18",
-              },
-              "title": "MDA Round 1 Dispense",
-            },
-            Object {
-              "code": "MDA Adherence",
-              "description": "Visit all residential structures (100%) and confirm adherence of each registered person",
-              "goalId": "MDA_Dispense",
-              "identifier": "1c688154-e025-4a40-91fd-9baed25a0ba4",
-              "prefix": 3,
-              "reason": "Routine",
-              "subjectCodableConcept": Object {
-                "text": "Person",
-              },
-              "taskTemplate": "MDA_Adherence",
-              "timingPeriod": Object {
-                "end": "2019-12-31",
-                "start": "2019-10-18",
-              },
-              "title": "MDA Round 1 Adherence",
-            },
-          ],
-          "date": "2019-10-18",
-          "effectivePeriod": Object {
-            "end": "2019-12-31",
-            "start": "2019-10-18",
-          },
-          "goal": Array [
-            Object {
-              "description": "Register all families and family members in all residential structures enumerated or added (100%) within operational area",
-              "id": "RACD_register_all_families",
-              "priority": "medium-priority",
-              "target": Array [
-                Object {
-                  "detail": Object {
-                    "detailQuantity": Object {
-                      "comparator": ">=",
-                      "unit": "Percent",
-                      "value": 100,
-                    },
-                  },
-                  "due": "2019-12-31",
-                  "measure": "Percent of residential structures with full family registration",
-                },
-              ],
-            },
-            Object {
-              "description": "Visit all residential structures (100%) dispense prophylaxis to each registered person",
-              "id": "MDA_Dispense",
-              "priority": "medium-priority",
-              "target": Array [
-                Object {
-                  "detail": Object {
-                    "detailQuantity": Object {
-                      "comparator": ">=",
-                      "unit": "percent",
-                      "value": 100,
-                    },
-                  },
-                  "due": "2019-12-31",
-                  "measure": "Percent of Registered person(s)",
-                },
-              ],
-            },
-            Object {
-              "description": "Visit all residential structures (100%) and confirm adherence of each registered person",
-              "id": "MDA_Adherence",
-              "priority": "medium-priority",
-              "target": Array [
-                Object {
-                  "detail": Object {
-                    "detailQuantity": Object {
-                      "comparator": ">=",
-                      "unit": "percent",
-                      "value": 100,
-                    },
-                  },
-                  "due": "2019-12-31",
-                  "measure": "Percent of dispense recipients",
-                },
-              ],
-            },
-          ],
-          "identifier": "f3da140c-2d2c-4bf7-8189-c2349f143a72",
-          "jurisdiction": Array [
-            Object {
-              "code": "3951",
-            },
-            Object {
-              "code": "3952",
-            },
-          ],
-          "name": "Macepa-MDA-Campaign-2019-10-18",
-          "serverVersion": 1571406689603,
-          "status": "active",
-          "title": "Macepa MDA Campaign",
-          "useContext": Array [
-            Object {
-              "code": "interventionType",
-              "valueCodableConcept": "MDA",
-            },
-            Object {
-              "code": "taskGenerationStatus",
-              "valueCodableConcept": "True",
-            },
-          ],
-          "version": "1",
-        },
-      ]
-    }
-    service={[Function]}
+  <SideEffect(NullComponent)
+    defer={true}
+    encodeSpecialCharacters={true}
+    title="Manage Plans"
+    titleAttributes={Object {}}
   >
-    <div>
-      <HelmetWrapper
-        defer={true}
-        encodeSpecialCharacters={true}
+    <NullComponent
+      defer={true}
+      encodeSpecialCharacters={true}
+      title="Manage Plans"
+      titleAttributes={Object {}}
+    />
+  </SideEffect(NullComponent)>
+</HelmetWrapper>
+`;
+
+exports[`components/InterventionPlan/PlanDefinitionList renders plan definition list correctly: list view props 1`] = `
+Object {
+  "data": Array [
+    Array [
+      <Link
+        replace={false}
+        to="/plans/update/356b6b84-fc36-4389-a44a-2b038ed2f38d"
       >
-        <SideEffect(NullComponent)
-          defer={true}
-          encodeSpecialCharacters={true}
-          title="Manage Plans"
-          titleAttributes={Object {}}
+        A2-Lusaka Akros Test Focus 2
+      </Link>,
+      "FI",
+      "active",
+      "2019-05-19",
+    ],
+    Array [
+      <Link
+        replace={false}
+        to="/plans/update/8fa7eb32-99d7-4b49-8332-9ecedd6d51ae"
+      >
+        TwoTwoOne_01 IRS 2019-07-10
+      </Link>,
+      "IRS",
+      "active",
+      "2019-07-10",
+    ],
+    Array [
+      <Link
+        replace={false}
+        to="/plans/update/f0558ad1-396d-4d97-9fff-c46cf92b6ce6"
+      >
+        A1 - TwoTwoTwo_03 - 2019-07-18
+      </Link>,
+      "FI",
+      "active",
+      "2019-07-18",
+    ],
+    Array [
+      <Link
+        replace={false}
+        to="/plans/update/0e85c238-39c1-4cea-a926-3d89f0c98429"
+      >
+        A Test By Mosh
+      </Link>,
+      "FI",
+      "draft",
+      "2019-05-19",
+    ],
+    Array [
+      <Link
+        replace={false}
+        to="/plans/update/f3da140c-2d2c-4bf7-8189-c2349f143a72"
+      >
+        Macepa MDA Campaign
+      </Link>,
+      "MDA",
+      "active",
+      "2019-10-18",
+    ],
+  ],
+  "headerItems": Array [
+    "Title",
+    "Intervention Type",
+    "Status",
+    "Last Modified",
+  ],
+  "renderHeaders": [Function],
+  "renderRows": [Function],
+  "tableClass": "table table-bordered plans-list",
+  "tbodyClass": "listview-tbody",
+  "tdClass": "listview-td",
+  "thClass": "listview-th",
+  "theadClass": "listview-thead",
+  "trClass": "listview-tr",
+}
+`;
+
+exports[`components/InterventionPlan/PlanDefinitionList renders plan definition list correctly: row heading 1`] = `
+<Row
+  tag="div"
+>
+  <div
+    className="row"
+  >
+    <Col
+      md={8}
+      tag="div"
+      widths={
+        Array [
+          "xs",
+          "sm",
+          "md",
+          "lg",
+          "xl",
+        ]
+      }
+    >
+      <div
+        className="col-md-8"
+      >
+        <h3
+          className="mt-3 mb-3 page-title"
         >
-          <NullComponent
-            defer={true}
-            encodeSpecialCharacters={true}
-            title="Manage Plans"
-            titleAttributes={Object {}}
-          />
-        </SideEffect(NullComponent)>
-      </HelmetWrapper>
-      <HeaderBreadcrumb
-        currentPage={
-          Object {
-            "label": "Manage Plans",
-            "url": "/plans/list",
-          }
-        }
-        pages={
-          Array [
-            Object {
-              "label": "Home",
-              "url": "/",
-            },
-          ]
-        }
+          Manage Plans
+        </h3>
+      </div>
+    </Col>
+    <Col
+      md={4}
+      tag="div"
+      widths={
+        Array [
+          "xs",
+          "sm",
+          "md",
+          "lg",
+          "xl",
+        ]
+      }
+    >
+      <div
+        className="col-md-4"
       >
-        <div>
-          <Breadcrumb
-            aria-label="breadcrumb"
-            className="reveal-breadcrumb"
-            listTag="ol"
-            tag="nav"
-          >
-            <nav
-              aria-label="breadcrumb"
-              className="reveal-breadcrumb"
-            >
-              <ol
-                className="breadcrumb"
-              >
-                <BreadcrumbItem
-                  key="0"
-                  tag="li"
-                >
-                  <li
-                    className="breadcrumb-item"
-                  >
-                    <Link
-                      key="0"
-                      replace={false}
-                      to="/"
-                    >
-                      <a
-                        href="/"
-                        onClick={[Function]}
-                      >
-                        Home
-                      </a>
-                    </Link>
-                  </li>
-                </BreadcrumbItem>
-                <BreadcrumbItem
-                  active={true}
-                  tag="li"
-                >
-                  <li
-                    aria-current="page"
-                    className="active breadcrumb-item"
-                  >
-                    Manage Plans
-                  </li>
-                </BreadcrumbItem>
-              </ol>
-            </nav>
-          </Breadcrumb>
-        </div>
-      </HeaderBreadcrumb>
-      <Row
-        tag="div"
-      >
-        <div
-          className="row"
+        <LinkAsButton
+          classNameProp="focus-investigation btn btn-primary float-right mt-3 mb-3"
+          text="Add Plan"
+          to="/plans/new"
         >
-          <Col
-            md={8}
-            tag="div"
-            widths={
-              Array [
-                "xs",
-                "sm",
-                "md",
-                "lg",
-                "xl",
-              ]
-            }
+          <Link
+            className="focus-investigation btn btn-primary float-right mt-3 mb-3"
+            replace={false}
+            to="/plans/new"
           >
-            <div
-              className="col-md-8"
+            <a
+              className="focus-investigation btn btn-primary float-right mt-3 mb-3"
+              href="/plans/new"
+              onClick={[Function]}
             >
-              <h3
-                className="mt-3 mb-3 page-title"
-              >
-                Manage Plans
-              </h3>
-            </div>
-          </Col>
-          <Col
-            md={4}
-            tag="div"
-            widths={
-              Array [
-                "xs",
-                "sm",
-                "md",
-                "lg",
-                "xl",
-              ]
-            }
-          >
-            <div
-              className="col-md-4"
-            >
-              <LinkAsButton
-                classNameProp="focus-investigation btn btn-primary float-right mt-3 mb-3"
-                text="Add Plan"
-                to="/plans/new"
-              >
-                <Link
-                  className="focus-investigation btn btn-primary float-right mt-3 mb-3"
-                  replace={false}
-                  to="/plans/new"
-                >
-                  <a
-                    className="focus-investigation btn btn-primary float-right mt-3 mb-3"
-                    href="/plans/new"
-                    onClick={[Function]}
-                  >
-                    Add Plan
-                  </a>
-                </Link>
-              </LinkAsButton>
-            </div>
-          </Col>
-        </div>
-      </Row>
-      <Row
-        tag="div"
-      >
-        <div
-          className="row"
-        >
-          <Col
-            tag="div"
-            widths={
-              Array [
-                "xs",
-                "sm",
-                "md",
-                "lg",
-                "xl",
-              ]
-            }
-          >
-            <div
-              className="col"
-            >
-              <ListView
-                data={
-                  Array [
-                    Array [
-                      <Link
-                        replace={false}
-                        to="/plans/update/356b6b84-fc36-4389-a44a-2b038ed2f38d"
-                      >
-                        A2-Lusaka Akros Test Focus 2
-                      </Link>,
-                      "FI",
-                      "active",
-                      "2019-05-19",
-                    ],
-                    Array [
-                      <Link
-                        replace={false}
-                        to="/plans/update/8fa7eb32-99d7-4b49-8332-9ecedd6d51ae"
-                      >
-                        TwoTwoOne_01 IRS 2019-07-10
-                      </Link>,
-                      "IRS",
-                      "active",
-                      "2019-07-10",
-                    ],
-                    Array [
-                      <Link
-                        replace={false}
-                        to="/plans/update/f0558ad1-396d-4d97-9fff-c46cf92b6ce6"
-                      >
-                        A1 - TwoTwoTwo_03 - 2019-07-18
-                      </Link>,
-                      "FI",
-                      "active",
-                      "2019-07-18",
-                    ],
-                    Array [
-                      <Link
-                        replace={false}
-                        to="/plans/update/0e85c238-39c1-4cea-a926-3d89f0c98429"
-                      >
-                        A Test By Mosh
-                      </Link>,
-                      "FI",
-                      "draft",
-                      "2019-05-19",
-                    ],
-                    Array [
-                      <Link
-                        replace={false}
-                        to="/plans/update/f3da140c-2d2c-4bf7-8189-c2349f143a72"
-                      >
-                        Macepa MDA Campaign
-                      </Link>,
-                      "MDA",
-                      "active",
-                      "2019-10-18",
-                    ],
-                  ]
-                }
-                headerItems={
-                  Array [
-                    "Title",
-                    "Intervention Type",
-                    "Status",
-                    "Last Modified",
-                  ]
-                }
-                renderHeaders={[Function]}
-                renderRows={[Function]}
-                tableClass="table table-bordered plans-list"
-                tbodyClass="listview-tbody"
-                tdClass="listview-td"
-                thClass="listview-th"
-                theadClass="listview-thead"
-                trClass="listview-tr"
-              >
-                <table
-                  className="table table-bordered plans-list"
-                >
-                  <thead
-                    className="listview-thead"
-                  >
-                    <tr
-                      className="listview-tr"
-                    >
-                      <ElementMap
-                        HTMLTag="th"
-                        className="listview-td"
-                        items={
-                          Array [
-                            "Title",
-                            "Intervention Type",
-                            "Status",
-                            "Last Modified",
-                          ]
-                        }
-                      >
-                        <th
-                          className="listview-td"
-                          key="0"
-                        >
-                          Title
-                        </th>
-                        <th
-                          className="listview-td"
-                          key="1"
-                        >
-                          Intervention Type
-                        </th>
-                        <th
-                          className="listview-td"
-                          key="2"
-                        >
-                          Status
-                        </th>
-                        <th
-                          className="listview-td"
-                          key="3"
-                        >
-                          Last Modified
-                        </th>
-                      </ElementMap>
-                    </tr>
-                  </thead>
-                  <tbody
-                    className="listview-tbody"
-                  >
-                    <tr
-                      className="listview-tr"
-                      key="0"
-                    >
-                      <ElementMap
-                        HTMLTag="td"
-                        className="listview-th"
-                        items={
-                          Array [
-                            <Link
-                              replace={false}
-                              to="/plans/update/356b6b84-fc36-4389-a44a-2b038ed2f38d"
-                            >
-                              A2-Lusaka Akros Test Focus 2
-                            </Link>,
-                            "FI",
-                            "active",
-                            "2019-05-19",
-                          ]
-                        }
-                      >
-                        <td
-                          className="listview-th"
-                          key="0"
-                        >
-                          <Link
-                            key="356b6b84-fc36-4389-a44a-2b038ed2f38d"
-                            replace={false}
-                            to="/plans/update/356b6b84-fc36-4389-a44a-2b038ed2f38d"
-                          >
-                            <a
-                              href="/plans/update/356b6b84-fc36-4389-a44a-2b038ed2f38d"
-                              onClick={[Function]}
-                            >
-                              A2-Lusaka Akros Test Focus 2
-                            </a>
-                          </Link>
-                        </td>
-                        <td
-                          className="listview-th"
-                          key="1"
-                        >
-                          FI
-                        </td>
-                        <td
-                          className="listview-th"
-                          key="2"
-                        >
-                          active
-                        </td>
-                        <td
-                          className="listview-th"
-                          key="3"
-                        >
-                          2019-05-19
-                        </td>
-                      </ElementMap>
-                    </tr>
-                    <tr
-                      className="listview-tr"
-                      key="1"
-                    >
-                      <ElementMap
-                        HTMLTag="td"
-                        className="listview-th"
-                        items={
-                          Array [
-                            <Link
-                              replace={false}
-                              to="/plans/update/8fa7eb32-99d7-4b49-8332-9ecedd6d51ae"
-                            >
-                              TwoTwoOne_01 IRS 2019-07-10
-                            </Link>,
-                            "IRS",
-                            "active",
-                            "2019-07-10",
-                          ]
-                        }
-                      >
-                        <td
-                          className="listview-th"
-                          key="0"
-                        >
-                          <Link
-                            key="8fa7eb32-99d7-4b49-8332-9ecedd6d51ae"
-                            replace={false}
-                            to="/plans/update/8fa7eb32-99d7-4b49-8332-9ecedd6d51ae"
-                          >
-                            <a
-                              href="/plans/update/8fa7eb32-99d7-4b49-8332-9ecedd6d51ae"
-                              onClick={[Function]}
-                            >
-                              TwoTwoOne_01 IRS 2019-07-10
-                            </a>
-                          </Link>
-                        </td>
-                        <td
-                          className="listview-th"
-                          key="1"
-                        >
-                          IRS
-                        </td>
-                        <td
-                          className="listview-th"
-                          key="2"
-                        >
-                          active
-                        </td>
-                        <td
-                          className="listview-th"
-                          key="3"
-                        >
-                          2019-07-10
-                        </td>
-                      </ElementMap>
-                    </tr>
-                    <tr
-                      className="listview-tr"
-                      key="2"
-                    >
-                      <ElementMap
-                        HTMLTag="td"
-                        className="listview-th"
-                        items={
-                          Array [
-                            <Link
-                              replace={false}
-                              to="/plans/update/f0558ad1-396d-4d97-9fff-c46cf92b6ce6"
-                            >
-                              A1 - TwoTwoTwo_03 - 2019-07-18
-                            </Link>,
-                            "FI",
-                            "active",
-                            "2019-07-18",
-                          ]
-                        }
-                      >
-                        <td
-                          className="listview-th"
-                          key="0"
-                        >
-                          <Link
-                            key="f0558ad1-396d-4d97-9fff-c46cf92b6ce6"
-                            replace={false}
-                            to="/plans/update/f0558ad1-396d-4d97-9fff-c46cf92b6ce6"
-                          >
-                            <a
-                              href="/plans/update/f0558ad1-396d-4d97-9fff-c46cf92b6ce6"
-                              onClick={[Function]}
-                            >
-                              A1 - TwoTwoTwo_03 - 2019-07-18
-                            </a>
-                          </Link>
-                        </td>
-                        <td
-                          className="listview-th"
-                          key="1"
-                        >
-                          FI
-                        </td>
-                        <td
-                          className="listview-th"
-                          key="2"
-                        >
-                          active
-                        </td>
-                        <td
-                          className="listview-th"
-                          key="3"
-                        >
-                          2019-07-18
-                        </td>
-                      </ElementMap>
-                    </tr>
-                    <tr
-                      className="listview-tr"
-                      key="3"
-                    >
-                      <ElementMap
-                        HTMLTag="td"
-                        className="listview-th"
-                        items={
-                          Array [
-                            <Link
-                              replace={false}
-                              to="/plans/update/0e85c238-39c1-4cea-a926-3d89f0c98429"
-                            >
-                              A Test By Mosh
-                            </Link>,
-                            "FI",
-                            "draft",
-                            "2019-05-19",
-                          ]
-                        }
-                      >
-                        <td
-                          className="listview-th"
-                          key="0"
-                        >
-                          <Link
-                            key="0e85c238-39c1-4cea-a926-3d89f0c98429"
-                            replace={false}
-                            to="/plans/update/0e85c238-39c1-4cea-a926-3d89f0c98429"
-                          >
-                            <a
-                              href="/plans/update/0e85c238-39c1-4cea-a926-3d89f0c98429"
-                              onClick={[Function]}
-                            >
-                              A Test By Mosh
-                            </a>
-                          </Link>
-                        </td>
-                        <td
-                          className="listview-th"
-                          key="1"
-                        >
-                          FI
-                        </td>
-                        <td
-                          className="listview-th"
-                          key="2"
-                        >
-                          draft
-                        </td>
-                        <td
-                          className="listview-th"
-                          key="3"
-                        >
-                          2019-05-19
-                        </td>
-                      </ElementMap>
-                    </tr>
-                    <tr
-                      className="listview-tr"
-                      key="4"
-                    >
-                      <ElementMap
-                        HTMLTag="td"
-                        className="listview-th"
-                        items={
-                          Array [
-                            <Link
-                              replace={false}
-                              to="/plans/update/f3da140c-2d2c-4bf7-8189-c2349f143a72"
-                            >
-                              Macepa MDA Campaign
-                            </Link>,
-                            "MDA",
-                            "active",
-                            "2019-10-18",
-                          ]
-                        }
-                      >
-                        <td
-                          className="listview-th"
-                          key="0"
-                        >
-                          <Link
-                            key="f3da140c-2d2c-4bf7-8189-c2349f143a72"
-                            replace={false}
-                            to="/plans/update/f3da140c-2d2c-4bf7-8189-c2349f143a72"
-                          >
-                            <a
-                              href="/plans/update/f3da140c-2d2c-4bf7-8189-c2349f143a72"
-                              onClick={[Function]}
-                            >
-                              Macepa MDA Campaign
-                            </a>
-                          </Link>
-                        </td>
-                        <td
-                          className="listview-th"
-                          key="1"
-                        >
-                          MDA
-                        </td>
-                        <td
-                          className="listview-th"
-                          key="2"
-                        >
-                          active
-                        </td>
-                        <td
-                          className="listview-th"
-                          key="3"
-                        >
-                          2019-10-18
-                        </td>
-                      </ElementMap>
-                    </tr>
-                  </tbody>
-                </table>
-              </ListView>
-            </div>
-          </Col>
-        </div>
-      </Row>
-    </div>
-  </PlanDefinitionList>
-</Router>
+              Add Plan
+            </a>
+          </Link>
+        </LinkAsButton>
+      </div>
+    </Col>
+  </div>
+</Row>
+`;
+
+exports[`components/InterventionPlan/PlanDefinitionList renders plan definition list correctly: search form props 1`] = `
+Object {
+  "history": Object {
+    "action": "POP",
+    "block": [Function],
+    "createHref": [Function],
+    "go": [Function],
+    "goBack": [Function],
+    "goForward": [Function],
+    "length": 1,
+    "listen": [Function],
+    "location": Object {
+      "hash": "",
+      "pathname": "/",
+      "search": "",
+      "state": undefined,
+    },
+    "push": [Function],
+    "replace": [Function],
+  },
+  "location": Object {
+    "hash": "",
+    "key": "key",
+    "pathname": "/plans/list",
+    "search": "",
+    "state": undefined,
+  },
+  "placeholder": "Search",
+}
 `;

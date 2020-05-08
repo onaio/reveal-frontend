@@ -3,9 +3,11 @@ import reducerRegistry from '@onaio/redux-reducer-registry';
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
+import { RouteComponentProps } from 'react-router';
 import { Link } from 'react-router-dom';
 import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
+import { SearchForm } from '../../../../components/forms/Search';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
 import { SUPERSET_IRS_REPORTING_PLANS_SLICE } from '../../../../configs/env';
@@ -19,13 +21,14 @@ import {
   TITLE,
 } from '../../../../configs/lang';
 import { planStatusDisplay } from '../../../../configs/settings';
-import { HOME_URL, REPORT_IRS_PLAN_URL } from '../../../../constants';
+import { HOME_URL, QUERY_PARAM_TITLE, REPORT_IRS_PLAN_URL } from '../../../../constants';
 import { displayError } from '../../../../helpers/errors';
+import { getQueryParams } from '../../../../helpers/utils';
 import supersetFetch from '../../../../services/superset';
 import IRSPlansReducer, {
   fetchIRSPlans,
-  getIRSPlansArray,
   IRSPlan,
+  makeIRSPlansArraySelector,
   reducerName as IRSPlansReducerName,
 } from '../../../../store/ducks/generic/plans';
 
@@ -40,12 +43,10 @@ interface PlanListProps {
 }
 
 /** Simple component that loads the new plan form and allows you to create a new plan */
-const IRSPlansList = (props: PlanListProps) => {
+const IRSPlansList = (props: PlanListProps & RouteComponentProps) => {
   const { fetchPlans, plans, service } = props;
-  const [loading, setLoading] = useState<boolean>(true);
-
+  const [loading, setLoading] = useState<boolean>(false);
   const pageTitle: string = IRS_PLANS;
-
   const breadcrumbProps = {
     currentPage: {
       label: pageTitle,
@@ -77,12 +78,8 @@ const IRSPlansList = (props: PlanListProps) => {
     loadData().catch(error => displayError(error));
   }, []);
 
-  if (loading === true) {
-    return <Loading />;
-  }
-
-  const listViewProps = {
-    data: plans.map(planObj => {
+  const listViewData = (planList: IRSPlan[]) =>
+    planList.map(planObj => {
       return [
         <Link to={`${REPORT_IRS_PLAN_URL}/${planObj.plan_id}`} key={planObj.plan_id}>
           {planObj.plan_title}
@@ -92,7 +89,14 @@ const IRSPlansList = (props: PlanListProps) => {
         planObj.plan_effective_period_end,
         planStatusDisplay[planObj.plan_status] || planObj.plan_status,
       ];
-    }),
+    });
+
+  if (loading === true) {
+    return <Loading />;
+  }
+
+  const listViewProps = {
+    data: listViewData(plans),
     headerItems: [TITLE, DATE_CREATED, START_DATE, END_DATE, STATUS_HEADER],
     tableClass: 'table table-bordered plans-list',
   };
@@ -108,6 +112,9 @@ const IRSPlansList = (props: PlanListProps) => {
           <h3 className="mt-3 mb-3 page-title">{pageTitle}</h3>
         </Col>
       </Row>
+      <hr />
+      <SearchForm history={props.history} location={props.location} />
+
       <Row>
         <Col>
           <ListView {...listViewProps} />
@@ -136,11 +143,12 @@ interface DispatchedStateProps {
 }
 
 /** map state to props */
-const mapStateToProps = (state: Partial<Store>): DispatchedStateProps => {
-  const planDefinitionsArray = getIRSPlansArray(state);
+const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateProps => {
+  const searchedTitle = getQueryParams(ownProps.location)[QUERY_PARAM_TITLE] as string;
+  const IRSPlansArray = makeIRSPlansArraySelector()(state, { plan_title: searchedTitle });
 
   return {
-    plans: planDefinitionsArray,
+    plans: IRSPlansArray,
   };
 };
 

@@ -10,8 +10,13 @@ import { Helmet } from 'react-helmet';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import { CURRENT_FOCUS_INVESTIGATION } from '../../../../../configs/lang';
+import { FI_URL } from '../../../../../constants';
 import store from '../../../../../store';
-import reducer, { fetchPlans, reducerName } from '../../../../../store/ducks/plans';
+import reducer, {
+  fetchPlans,
+  reducerName,
+  removePlansAction,
+} from '../../../../../store/ducks/plans';
 import { InterventionType } from '../../../../../store/ducks/plans';
 import * as fixtures from '../../../../../store/ducks/tests/fixtures';
 import ConnectedActiveFocusInvestigation, { ActiveFocusInvestigation } from '../../active';
@@ -25,6 +30,7 @@ jest.mock('../../../../../configs/env');
 describe('containers/pages/ActiveFocusInvestigation', () => {
   beforeEach(() => {
     jest.resetAllMocks();
+    store.dispatch(removePlansAction);
     MockDate.reset();
   });
 
@@ -229,5 +235,141 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
     expect((superset.getFormData as any).mock.calls).toEqual(supersetCallList);
     expect(supersetMock).toHaveBeenCalledWith(0, supersetParams);
     wrapper.unmount();
+  });
+
+  it('handles search correctly for case triggered plans', async () => {
+    store.dispatch(fetchPlans([fixtures.plan24, fixtures.plan25]));
+
+    const props = {
+      history,
+      location: {
+        pathname: FI_URL,
+        search: '?title=Jane',
+      },
+      match: {
+        isExact: true,
+        params: {},
+        path: `${FI_URL}`,
+        url: `${FI_URL}`,
+      },
+      supersetService: jest.fn().mockImplementationOnce(() => Promise.resolve([])),
+    };
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedActiveFocusInvestigation {...props} />
+        </Router>
+      </Provider>
+    );
+    expect(
+      wrapper
+        .find('ReactTable')
+        .at(0)
+        .prop('data')
+    ).toMatchSnapshot();
+  });
+
+  it('handles search correctly for routine plans', async () => {
+    store.dispatch(fetchPlans([fixtures.plan1, fixtures.plan22]));
+
+    const props = {
+      history,
+      location: {
+        pathname: FI_URL,
+        search: '?title=Luang',
+      },
+      match: {
+        isExact: true,
+        params: {},
+        path: `${FI_URL}`,
+        url: `${FI_URL}`,
+      },
+      supersetService: jest.fn().mockImplementationOnce(() => Promise.resolve([])),
+    };
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedActiveFocusInvestigation {...props} />
+        </Router>
+      </Provider>
+    );
+    expect(
+      wrapper
+        .find('ReactTable')
+        .at(1)
+        .prop('data')
+    ).toMatchSnapshot();
+    wrapper.unmount();
+  });
+
+  it('handles case insensitive searches correctly', async () => {
+    store.dispatch(fetchPlans([fixtures.plan1, fixtures.plan22]));
+
+    const props = {
+      history,
+      location: {
+        pathname: FI_URL,
+        search: '?title=LUANG',
+      },
+      match: {
+        isExact: true,
+        params: {},
+        path: `${FI_URL}`,
+        url: `${FI_URL}`,
+      },
+      supersetService: jest.fn().mockImplementationOnce(() => Promise.resolve([])),
+    };
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedActiveFocusInvestigation {...props} />
+        </Router>
+      </Provider>
+    );
+    expect(
+      wrapper
+        .find('ReactTable')
+        .at(1)
+        .prop('data')
+    ).toMatchSnapshot();
+    wrapper.unmount();
+  });
+
+  it('renders empty tables if search query does not match any case trigger or routine plans', async () => {
+    store.dispatch(fetchPlans([fixtures.plan1, fixtures.plan22, fixtures.plan24, fixtures.plan25]));
+
+    const props = {
+      history,
+      location: {
+        pathname: FI_URL,
+        search: '?title=Amazon',
+      },
+      match: {
+        isExact: true,
+        params: {},
+        path: `${FI_URL}`,
+        url: `${FI_URL}`,
+      },
+      supersetService: jest.fn().mockImplementationOnce(() => Promise.resolve([])),
+    };
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedActiveFocusInvestigation {...props} />
+        </Router>
+      </Provider>
+    );
+    expect(
+      wrapper
+        .find('ReactTable')
+        .at(0)
+        .prop('data')
+    ).toEqual([]);
+    expect(
+      wrapper
+        .find('ReactTable')
+        .at(1)
+        .prop('data')
+    ).toEqual([]);
   });
 });

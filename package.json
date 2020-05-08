@@ -90,7 +90,9 @@
   "jest": {
     "collectCoverageFrom": [
       "src/**/*.{ts,tsx}",
-      "!src/index.tsx"
+      "!src/index.tsx",
+      "!src/serviceWorker.ts",
+      "!**/tests/**"
     ],
     "coverageThreshold": {
       "global": {

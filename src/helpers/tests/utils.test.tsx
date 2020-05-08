@@ -36,6 +36,7 @@ import {
   getColor,
   getColorByValue,
   getLocationColumns,
+  getQueryParams,
   IndicatorThresholdItemPercentage,
   isPlanDefinitionOfType,
   oAuthUserInfoGetter,
@@ -358,5 +359,18 @@ describe('helpers/utils', () => {
   it('Should return percentage value with supplied decimal value', () => {
     const result = IndicatorThresholdItemPercentage(Item, 1);
     expect(result).toEqual('60.0%');
+  });
+
+  it('gets query params from URL correctly', () => {
+    const location = {
+      hash: '',
+      pathname: '/foo',
+      query: {},
+      search: '?q=venom',
+      state: undefined,
+    };
+    expect(getQueryParams(location)).toEqual({
+      q: 'venom',
+    });
   });
 });

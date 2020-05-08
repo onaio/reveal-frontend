@@ -1,5 +1,7 @@
+import intersect from 'fast_array_intersect';
 import { get, keyBy, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
+import { createSelector } from 'reselect';
 import SeamlessImmutable from 'seamless-immutable';
 import { InterventionType, PlanStatus } from '../plans';
 
@@ -172,3 +174,57 @@ export function getIRSPlansArray(
   const result = values((state as any)[reducerName].IRSPlansById);
   return result.filter((e: IRSPlan) => e.plan_intervention_type === interventionType);
 }
+
+/** RESELECT USAGE STARTS HERE */
+
+/** This interface represents the structure of IRS plan filter options/params */
+export interface IRSPlanFilters {
+  plan_title?: string /** IRS plan title */;
+}
+
+/** IRSPlansArrayBaseSelector select an array of all plans
+ * @param state - the redux store
+ */
+export const IRSPlansArrayBaseSelector = (planKey?: string) => (state: Partial<Store>): IRSPlan[] =>
+  values((state as any)[reducerName][planKey ? planKey : 'IRSPlansById']);
+
+/** getIRSPlansArrayByTitle
+ * Gets title from PlanFilters
+ * @param state - the redux store
+ * @param props - the plan filters object
+ */
+export const getTitle = (_: Partial<Store>, props: IRSPlanFilters) => props.plan_title;
+
+/** getPlansArrayByTitle
+ * Gets an array of Plan objects filtered by plan title
+ * @param {Partial<Store>} state - the redux store
+ * @param {PlanDefinitionFilters} props - the plan defintion filters object
+ */
+export const getIRSPlansArrayByTitle = (planKey?: string) =>
+  createSelector([IRSPlansArrayBaseSelector(planKey), getTitle], (plans, title) =>
+    title
+      ? plans.filter(plan => plan.plan_title.toLowerCase().includes(title.toLowerCase()))
+      : plans
+  );
+
+/** makeIRSPlansArraySelector
+ * Returns a selector that gets an array of IRSPlan objects filtered by one or all
+ * of the following:
+ *    - plan_title
+ *
+ * These filter params are all optional and are supplied via the prop parameter.
+ *
+ * This selector is meant to be a memoized replacement for getIRSPlansArray.
+ *
+ * To use this selector, do something like:
+ *    const IRSPlansArraySelector = makeIRSPlansArraySelector();
+ *
+ * @param {Partial<Store>} state - the redux store
+ * @param {PlanFilters} props - the plan filters object
+ * @param {string} sortField - sort by field
+ */
+export const makeIRSPlansArraySelector = (planKey?: string) => {
+  return createSelector([getIRSPlansArrayByTitle(planKey)], plans =>
+    intersect([plans], JSON.stringify)
+  );
+};

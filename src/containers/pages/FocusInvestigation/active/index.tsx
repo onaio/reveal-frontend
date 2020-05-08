@@ -11,10 +11,11 @@ import { RouteComponentProps } from 'react-router';
 import { Link } from 'react-router-dom';
 import { CellInfo, Column } from 'react-table';
 import 'react-table/react-table.css';
-import { Button, Col, Form, FormGroup, Input, Row, Table } from 'reactstrap';
+import { Col, Row, Table } from 'reactstrap';
 import { Store } from 'redux';
 import { format } from 'util';
 import DrillDownTableLinkedCell from '../../../../components/DrillDownTableLinkedCell';
+import { SearchForm } from '../../../../components/forms/Search';
 import LinkAsButton from '../../../../components/LinkAsButton';
 import NewRecordBadge from '../../../../components/NewRecordBadge';
 import HeaderBreadCrumb, {
@@ -40,7 +41,6 @@ import {
   PREVIOUS,
   REACTIVE,
   ROUTINE_TITLE,
-  SEARCH,
   START_DATE,
   STATUS_HEADER,
 } from '../../../../configs/lang';
@@ -55,6 +55,7 @@ import {
   FI_SINGLE_URL,
   FI_URL,
   HOME_URL,
+  QUERY_PARAM_TITLE,
   ROUTINE,
 } from '../../../../constants';
 import { displayError } from '../../../../helpers/errors';
@@ -63,6 +64,7 @@ import '../../../../helpers/tables.css';
 import {
   defaultTableProps,
   getFilteredFIPlansURL,
+  getQueryParams,
   removeNullJurisdictionPlans,
 } from '../../../../helpers/utils';
 import { extractPlan, getLocationColumns } from '../../../../helpers/utils';
@@ -70,8 +72,8 @@ import supersetFetch from '../../../../services/superset';
 import plansReducer, {
   fetchPlans,
   getPlanById,
-  getPlansArray,
   InterventionType,
+  makePlansArraySelector,
   Plan,
   PlanStatus,
   reducerName as plansReducerName,
@@ -94,6 +96,7 @@ export interface ActiveFIProps {
   routinePlans: Plan[] | null;
   supersetService: typeof supersetFetch;
   plan: Plan | null;
+  searchedTitle: string | null;
 }
 
 /** default props for ActiveFI component */
@@ -102,6 +105,7 @@ export const defaultActiveFIProps: ActiveFIProps = {
   fetchPlansActionCreator: fetchPlans,
   plan: null,
   routinePlans: null,
+  searchedTitle: null,
   supersetService: supersetFetch,
 };
 
@@ -111,6 +115,7 @@ class ActiveFocusInvestigation extends React.Component<
   {}
 > {
   public static defaultProps: ActiveFIProps = defaultActiveFIProps;
+
   constructor(props: ActiveFIProps & RouteComponentProps<RouteParams>) {
     super(props);
   }
@@ -124,9 +129,7 @@ class ActiveFocusInvestigation extends React.Component<
       .then((result: Plan[]) => fetchPlansActionCreator(result))
       .catch(err => displayError(err));
   }
-  public handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-  }
+
   public render() {
     const breadcrumbProps: BreadCrumbProps = {
       currentPage: {
@@ -145,7 +148,7 @@ class ActiveFocusInvestigation extends React.Component<
       url: HOME_URL,
     };
 
-    const { caseTriggeredPlans, routinePlans, plan } = this.props;
+    const { caseTriggeredPlans, routinePlans, plan, searchedTitle } = this.props;
     // We need to initialize jurisdictionName to a falsy value
     let jurisdictionName = null;
 
@@ -175,7 +178,8 @@ class ActiveFocusInvestigation extends React.Component<
       caseTriggeredPlans &&
       caseTriggeredPlans.length === 0 &&
       routinePlans &&
-      routinePlans.length === 0
+      routinePlans.length === 0 &&
+      searchedTitle === null
     ) {
       return <Loading />;
     }
@@ -191,19 +195,7 @@ class ActiveFocusInvestigation extends React.Component<
         <HeaderBreadCrumb {...breadcrumbProps} />
         <h2 className="mb-3 mt-5 page-title">{pageTitle}</h2>
         <hr />
-        <Form inline={true} onSubmit={this.handleSubmit}>
-          <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
-            <Input
-              type="text"
-              name="search"
-              id="exampleEmail"
-              placeholder="Search active focus investigations"
-            />
-          </FormGroup>
-          <Button outline={true} color="success">
-            {SEARCH}
-          </Button>
-        </Form>
+        <SearchForm history={this.props.history} location={this.props.location} />
         {[caseTriggeredPlans, routinePlans].forEach((plansArray: Plan[] | null, i) => {
           const locationColumns: Column[] = getLocationColumns(locationHierarchy, true);
           if (plansArray && plansArray.length) {
@@ -401,7 +393,7 @@ class ActiveFocusInvestigation extends React.Component<
               columns: emptyPlansColumns,
             };
             routineReactivePlans.push(
-              <NullDataTable tableProps={tableProps} reasonType={header} key={`${'current'}`} />
+              <NullDataTable tableProps={tableProps} reasonType={header} key={i} />
             );
           }
         })}
@@ -424,6 +416,7 @@ interface DispatchedStateProps {
   plan: Plan | null;
   caseTriggeredPlans: Plan[] | null;
   routinePlans: Plan[] | null;
+  searchedTitle: string;
 }
 
 /** map state to props */
@@ -435,26 +428,28 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
     ownProps.match.params && ownProps.match.params.jurisdiction_parent_id
       ? ownProps.match.params.jurisdiction_parent_id
       : null;
-  const caseTriggeredPlans = getPlansArray(
-    state,
-    InterventionType.FI,
-    [PlanStatus.ACTIVE, PlanStatus.COMPLETE],
-    CASE_TRIGGERED,
-    [],
-    jurisdictionParentId
-  );
-  const routinePlans = getPlansArray(
-    state,
-    InterventionType.FI,
-    [PlanStatus.ACTIVE, PlanStatus.COMPLETE],
-    ROUTINE,
-    [],
-    jurisdictionParentId
-  );
+
+  const searchedTitle = getQueryParams(ownProps.location)[QUERY_PARAM_TITLE] as string;
+  const caseTriggeredPlans = makePlansArraySelector()(state, {
+    interventionType: InterventionType.FI,
+    parentJurisdictionId: jurisdictionParentId,
+    reason: CASE_TRIGGERED,
+    statusList: [PlanStatus.ACTIVE, PlanStatus.COMPLETE],
+    title: searchedTitle,
+  });
+  const routinePlans = makePlansArraySelector()(state, {
+    interventionType: InterventionType.FI,
+    parentJurisdictionId: jurisdictionParentId,
+    reason: ROUTINE,
+    statusList: [PlanStatus.ACTIVE, PlanStatus.COMPLETE],
+    title: searchedTitle,
+  });
+
   return {
     caseTriggeredPlans,
     plan,
     routinePlans,
+    searchedTitle,
   };
 };
 
