@@ -6,6 +6,6 @@ export * from './components/TableJSX';
 export * from './helpers/utils';
 
 /** Reasonable defaults */
-export * from './helpers/Pagination/pagination';
-export * from './helpers/DefaultDropDownCell';
-export * from './helpers/SortIcon/sortIcon';
+export * from './components/Pagination/pagination';
+export * from './components/DefaultDropDownCell';
+export * from './components/SortIcon/sortIcon';

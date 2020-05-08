@@ -16,8 +16,8 @@ import {
 import { NO_DATA_FOUND } from '../../../../configs/lang';
 import { rowHeights } from '../../../../configs/settings';
 import { ID, PARENT_ID, ROOT_PARENT_ID } from '../helpers/constants';
-import { renderPaginationFun } from '../helpers/Pagination/pagination';
-import { SortIcon } from '../helpers/SortIcon/sortIcon';
+import { renderPaginationFun } from './Pagination/pagination';
+import { SortIcon } from './SortIcon/sortIcon';
 
 /** Type definition for hasChildrenFunc */
 export type HasChildrenFuncType = <D extends object>(

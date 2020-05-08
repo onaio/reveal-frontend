@@ -2,7 +2,7 @@
 import { Dictionary } from '@onaio/utils';
 import React from 'react';
 import { NEXT, OF, PAGE, PREVIOUS, ROWS_TO_DISPLAY } from '../../../../../configs/lang';
-import { RenderPaginationOptions } from '../../components/TableJSX';
+import { RenderPaginationOptions } from '../TableJSX';
 import './pagination.css';
 
 /** interface describes props for Reveal Custom Pagination */

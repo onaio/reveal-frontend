@@ -1,5 +1,5 @@
 import React from 'react';
-import { CARET_SPAN, CLICKABLE_CSS_CLASS, LINKER_ITEM_CSS_CLASS } from '../constants';
+import { CARET_SPAN, CLICKABLE_CSS_CLASS, LINKER_ITEM_CSS_CLASS } from '../../helpers/constants';
 
 /** Interface for DropDown cell props */
 export interface DropDownCellProps {
