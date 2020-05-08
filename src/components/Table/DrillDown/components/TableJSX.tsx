@@ -15,7 +15,6 @@ import {
 } from 'react-table';
 import { NO_DATA_FOUND } from '../../../../configs/lang';
 import { rowHeights } from '../../../../configs/settings';
-import { ROW_HEIGHT_KEY } from '../../../../constants';
 import { ID, PARENT_ID, ROOT_PARENT_ID } from '../helpers/constants';
 import { renderPaginationFun } from '../helpers/Pagination/pagination';
 import { SortIcon } from '../helpers/SortIcon/sortIcon';
@@ -101,7 +100,7 @@ function Table<D extends object>(props: TableJSXProps<D>) {
   const { columns, data, fetchData, identifierField } = props;
 
   const skipPageResetRef = React.useRef<boolean>();
-  const defaultRowHeight = window.localStorage.getItem(ROW_HEIGHT_KEY) || rowHeights.DEFAULT.value;
+  const defaultRowHeight = rowHeights.DEFAULT.value;
   const [rHeight, setRowHeight] = React.useState<string>(defaultRowHeight);
   const [currentParentId, setCurrentParentId] = useState<string>(props.rootParentId);
 

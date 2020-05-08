@@ -30,12 +30,10 @@ export const defaultProps = {
 };
 
 /** renders a Dropdown ui from which users can customize the density-feel of
- * table rows. I resorted to using windows.localstorage so that it can act as a cache
- * for such a decision that would possible affect all future user sesssions on the web-app
+ * table rows.
  */
 const RowHeightFilter = (props: Props) => {
-  const rowHeightValue = window.localStorage.getItem('rowHeight') || '';
-  const [rowHeight, setRowHeight] = React.useState<string>(rowHeightValue);
+  const [rowHeight, setRowHeight] = React.useState<string>('');
 
   const onClickHandler = (value: string) => {
     window.localStorage.setItem('rowHeight', value);
