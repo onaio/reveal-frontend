@@ -46,7 +46,7 @@ function RevealPagination<T extends object = Dictionary>(props: PaginationProps<
 
   return (
     <div className="pagination">
-      <span className="page-sizes-text mr-2">{ROWS_TO_DISPLAY}</span>
+      <span className="mr-2">{ROWS_TO_DISPLAY}</span>
       <select className="page-sizes-select mr-4" value={pageSize} onChange={onChangePageSize}>
         {pageSizeCategories.map(pgSize => (
           <option key={pgSize} value={pgSize}>
