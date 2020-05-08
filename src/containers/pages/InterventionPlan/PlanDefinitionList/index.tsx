@@ -1,16 +1,20 @@
-import ListView from '@onaio/list-view';
 import reducerRegistry from '@onaio/redux-reducer-registry';
+import { Dictionary } from '@onaio/utils/dist/types/types';
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { Link } from 'react-router-dom';
+import { Cell, Row as RowType, UseTableOptions } from 'react-table';
 import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
+import { RowHeightFilter } from '../../../../components/forms/FilterForm/RowHeightFilter';
 import SearchForm from '../../../../components/forms/Search';
 import LinkAsButton from '../../../../components/LinkAsButton';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
+import { DrillDownTablev7 } from '../../../../components/Table/DrillDown';
+import { RenderFiltersInBarOptions } from '../../../../components/Table/DrillDown';
 import {
   ADD_PLAN,
   HOME,
@@ -21,7 +25,7 @@ import {
   STATUS_HEADER,
   TITLE,
 } from '../../../../configs/lang';
-import { PlanDefinition, planStatusDisplay } from '../../../../configs/settings';
+import { PlanDefinition, planStatusDisplay, UseContext } from '../../../../configs/settings';
 import {
   HOME_URL,
   OPENSRP_PLANS,
@@ -83,29 +87,74 @@ const PlanDefinitionList = (props: PlanListProps & RouteComponentProps) => {
     loadData().catch(err => displayError(err));
   }, []);
 
-  const listViewData = (data: PlanDefinition[]) =>
-    data.map(planObj => {
-      const typeUseContext = planObj.useContext.filter(e => e.code === 'interventionType');
+  const TableColumns = React.useMemo(
+    () => [
+      {
+        Cell: (cell: Cell<PlanDefinition>) => {
+          const original = cell.row.original;
+          return (
+            <Link to={`${PLAN_UPDATE_URL}/${original.identifier}`} key={original.identifier}>
+              {cell.value}
+            </Link>
+          );
+        },
+        Header: TITLE,
+        accessor: 'title',
+      },
+      {
+        Cell: ({ value }: Cell<PlanDefinition>) => {
+          const typeUseContext = value.filter((e: any) => e.code === 'interventionType');
+          return typeUseContext.length > 0 ? typeUseContext[0].valueCodableConcept : null;
+        },
+        Header: INTERVENTION_TYPE_LABEL,
+        accessor: 'useContext',
+        sortType: (rowA: RowType, rowB: RowType, columnId: string) => {
+          const getIntervention = (row: RowType) => {
+            const interventionPlanContext = (row.original as Dictionary)[columnId].filter(
+              (context: UseContext) => context.code === 'interventionType'
+            );
+            return interventionPlanContext.length > 0
+              ? interventionPlanContext[0].valueCodableConcept
+              : '';
+          };
+          return getIntervention(rowA) > getIntervention(rowB) ? 1 : -1;
+        },
+      },
+      {
+        Cell: (cell: Cell<PlanDefinition>) => {
+          return planStatusDisplay[cell.value] || null;
+        },
+        Header: STATUS_HEADER,
+        accessor: 'status',
+      },
+      {
+        Header: LAST_MODIFIED,
+        accessor: 'date',
+      },
+    ],
+    []
+  );
 
-      return [
-        <Link to={`${PLAN_UPDATE_URL}/${planObj.identifier}`} key={planObj.identifier}>
-          {planObj.title}
-        </Link>,
-        typeUseContext.length > 0 ? typeUseContext[0].valueCodableConcept : '',
-        planStatusDisplay[planObj.status] || planObj.status,
-        planObj.date,
-      ];
-    });
+  const DrillDownTableProps = {
+    columns: TableColumns,
+    data: plans,
+    loading,
+    loadingComponent: Loading,
+    renderInFilterBar: (options: RenderFiltersInBarOptions) => {
+      const changeHandler = (value: string) => options.setRowHeight(value);
+      return (
+        <>
+          <SearchForm placeholder={SEARCH} queryParam={QUERY_PARAM_TITLE} />
+          <RowHeightFilter changeHandler={changeHandler} />
+        </>
+      );
+    },
+    useDrillDown: false,
+  };
 
   if (loading === true) {
     return <Loading />;
   }
-
-  const listViewProps = {
-    data: listViewData(plans),
-    headerItems: [TITLE, INTERVENTION_TYPE_LABEL, STATUS_HEADER, LAST_MODIFIED],
-    tableClass: 'table table-bordered plans-list',
-  };
 
   return (
     <div>
@@ -125,10 +174,9 @@ const PlanDefinitionList = (props: PlanListProps & RouteComponentProps) => {
         </Col>
       </Row>
       <hr />
-      <SearchForm placeholder={SEARCH} queryParam={QUERY_PARAM_TITLE} />
       <Row>
         <Col>
-          <ListView {...listViewProps} />
+          <DrillDownTablev7 {...(DrillDownTableProps as UseTableOptions<PlanDefinition>)} />
         </Col>
       </Row>
     </div>

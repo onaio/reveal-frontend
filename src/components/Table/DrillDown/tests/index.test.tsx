@@ -1,8 +1,8 @@
 import { mount, ReactWrapper, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import React from 'react';
+import { DropDownCellProps } from '../components/DefaultDropDownCell';
 import { DrillDownTablev7 } from '../components/DrillDownTable';
-import { DropDownCellProps } from '../helpers/DefaultDropDownCell';
 import { columnsFromObject } from '../helpers/utils';
 import { data, dataLowestLevel } from './fixtures';
 

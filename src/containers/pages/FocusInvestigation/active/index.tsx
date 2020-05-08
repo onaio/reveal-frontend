@@ -1,6 +1,5 @@
 // this is the FocusInvestigation "active" page component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import DrillDownTable from '@onaio/drill-down-table';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset from '@onaio/superset-connector';
 import { Dictionary } from '@onaio/utils';
@@ -9,20 +8,18 @@ import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { Link } from 'react-router-dom';
-import { CellInfo, Column } from 'react-table-v6';
+import { Cell, Column } from 'react-table';
 import 'react-table-v6/react-table.css';
 import { Col, Row, Table } from 'reactstrap';
 import { Store } from 'redux';
 import { format } from 'util';
-import DrillDownTableLinkedCell from '../../../../components/DrillDownTableLinkedCell';
-import SearchForm from '../../../../components/forms/Search';
 import LinkAsButton from '../../../../components/LinkAsButton';
 import NewRecordBadge from '../../../../components/NewRecordBadge';
 import HeaderBreadCrumb, {
   BreadCrumbProps,
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
-import NullDataTable from '../../../../components/Table/NullDataTable';
+import { DrillDownTablev7 } from '../../../../components/Table/DrillDown';
 import { SUPERSET_PLANS_SLICE } from '../../../../configs/env';
 import {
   ADD_FOCUS_INVESTIGATION,
@@ -37,11 +34,8 @@ import {
   FOCUS_INVESTIGATIONS,
   HOME,
   NAME,
-  NEXT,
-  PREVIOUS,
   REACTIVE,
   ROUTINE_TITLE,
-  SEARCH,
   START_DATE,
   STATUS_HEADER,
 } from '../../../../configs/lang';
@@ -56,19 +50,15 @@ import {
   FI_SINGLE_URL,
   FI_URL,
   HOME_URL,
-  QUERY_PARAM_TITLE,
+  REACTIVE_QUERY_PARAM,
   ROUTINE,
+  ROUTINE_QUERY_PARAM,
 } from '../../../../constants';
 import { displayError } from '../../../../helpers/errors';
 import { renderClassificationRow } from '../../../../helpers/indicators';
 import '../../../../helpers/tables.css';
-import {
-  defaultTableProps,
-  getFilteredFIPlansURL,
-  getQueryParams,
-  removeNullJurisdictionPlans,
-} from '../../../../helpers/utils';
-import { extractPlan, getLocationColumns } from '../../../../helpers/utils';
+import { getFilteredFIPlansURL, getQueryParams } from '../../../../helpers/utils';
+import { getLocationColumns } from '../../../../helpers/utils';
 import supersetFetch from '../../../../services/superset';
 import plansReducer, {
   fetchPlans,
@@ -81,6 +71,7 @@ import plansReducer, {
 } from '../../../../store/ducks/plans';
 import './../../../../styles/css/drill-down-table.css';
 import './style.css';
+import { createTableProps } from './utils';
 
 /** register the plans reducer */
 reducerRegistry.register(plansReducerName, plansReducer);
@@ -97,7 +88,6 @@ export interface ActiveFIProps {
   routinePlans: Plan[] | null;
   supersetService: typeof supersetFetch;
   plan: Plan | null;
-  searchedTitle: string | null;
 }
 
 /** default props for ActiveFI component */
@@ -106,19 +96,32 @@ export const defaultActiveFIProps: ActiveFIProps = {
   fetchPlansActionCreator: fetchPlans,
   plan: null,
   routinePlans: null,
-  searchedTitle: null,
   supersetService: supersetFetch,
 };
+
+interface ActiveFIState {
+  loading: boolean;
+}
 
 /** Reporting for Active Focus Investigations */
 class ActiveFocusInvestigation extends React.Component<
   ActiveFIProps & RouteComponentProps<RouteParams>,
-  {}
+  ActiveFIState
 > {
   public static defaultProps: ActiveFIProps = defaultActiveFIProps;
 
   constructor(props: ActiveFIProps & RouteComponentProps<RouteParams>) {
     super(props);
+    const { caseTriggeredPlans, routinePlans } = props;
+    const thereIsntData: boolean =
+      (caseTriggeredPlans &&
+        caseTriggeredPlans.length === 0 &&
+        routinePlans &&
+        routinePlans.length === 0) ||
+      true;
+    this.state = {
+      loading: thereIsntData,
+    };
   }
 
   public componentDidMount() {
@@ -127,8 +130,18 @@ class ActiveFocusInvestigation extends React.Component<
       { comparator: InterventionType.FI, operator: '==', subject: 'plan_intervention_type' },
     ]);
     supersetService(SUPERSET_PLANS_SLICE, supersetParams)
-      .then((result: Plan[]) => fetchPlansActionCreator(result))
-      .catch(err => displayError(err));
+      .then((result: Plan[]) => {
+        fetchPlansActionCreator(result);
+        this.setState({
+          loading: false,
+        });
+      })
+      .catch(err => {
+        displayError(err);
+        this.setState({
+          loading: false,
+        });
+      });
   }
 
   public render() {
@@ -149,7 +162,7 @@ class ActiveFocusInvestigation extends React.Component<
       url: HOME_URL,
     };
 
-    const { caseTriggeredPlans, routinePlans, plan, searchedTitle } = this.props;
+    const { caseTriggeredPlans, routinePlans, plan } = this.props;
     // We need to initialize jurisdictionName to a falsy value
     let jurisdictionName = null;
 
@@ -175,19 +188,97 @@ class ActiveFocusInvestigation extends React.Component<
       breadcrumbProps.pages = [homePage];
     }
 
-    if (
-      caseTriggeredPlans &&
-      caseTriggeredPlans.length === 0 &&
-      routinePlans &&
-      routinePlans.length === 0 &&
-      searchedTitle === null
-    ) {
+    if (this.state.loading) {
       return <Loading />;
     }
-    const routineReactivePlans: Dictionary[] = [];
+
     const pageTitle = jurisdictionName
       ? format(FI_IN_JURISDICTION, jurisdictionName)
       : CURRENT_FOCUS_INVESTIGATION;
+
+    const locationColumns: Array<Column<Dictionary>> = getLocationColumns(locationHierarchy);
+    const commonColumns: Array<Column<Dictionary>> = [
+      {
+        Cell: (cell: Cell<Dictionary>) => {
+          const original = cell.row.original;
+          return (
+            <div>
+              {original.focusArea.trim() && (
+                <Link to={`${FI_SINGLE_MAP_URL}/${original.id}`}>{cell.value}</Link>
+              )}
+              &nbsp;
+              <NewRecordBadge recordDate={original.plan_date} />
+            </div>
+          );
+        },
+        Header: NAME,
+        accessor: 'plan_title',
+        minWidth: 180,
+      },
+      {
+        Header: FI_STATUS,
+        accessor: (d: Dictionary) => planStatusDisplay[d.plan_status] || d.plan_status,
+        id: 'plan_status',
+        minWidth: 80,
+      },
+      ...locationColumns,
+      {
+        Cell: (cell: Cell<Dictionary>) => {
+          const original = cell.row.original;
+          return (
+            <div>
+              {original.focusArea.trim() && cell.value}
+              &nbsp;&nbsp;
+              {original.focusArea.trim() && (
+                <Link to={`${FI_SINGLE_URL}/${original.jurisdiction_id}`}>
+                  <FontAwesomeIcon icon={['fas', 'external-link-square-alt']} />
+                </Link>
+              )}
+            </div>
+          );
+        },
+        Header: FOCUS_AREA_HEADER,
+        accessor: 'focusArea',
+        minWidth: 180,
+      },
+      {
+        Header: STATUS_HEADER,
+        accessor: 'status',
+        maxWidth: 60,
+      },
+    ];
+
+    const caseTriggeredColumns = [
+      ...commonColumns,
+      {
+        Cell: ({ value }: Cell<Dictionary>) => {
+          return <div>{value}</div>;
+        },
+        Header: CASE_NOTIF_DATE_HEADER,
+        accessor: 'caseNotificationDate',
+        minWidth: 90,
+      },
+      {
+        Header: CASE_CLASSIFICATION_HEADER,
+        accessor: 'caseClassification',
+      },
+    ];
+    const RoutineColumns = [
+      ...commonColumns,
+      {
+        Cell: ({ value }: Cell<Dictionary>) => {
+          return <div>{value}</div>;
+        },
+        Header: START_DATE,
+        accessor: 'plan_effective_period_start',
+        minWidth: 80,
+      },
+      {
+        Header: END_DATE,
+        accessor: 'plan_effective_period_end',
+      },
+    ];
+
     return (
       <div>
         <Helmet>
@@ -196,209 +287,27 @@ class ActiveFocusInvestigation extends React.Component<
         <HeaderBreadCrumb {...breadcrumbProps} />
         <h2 className="mb-3 mt-5 page-title">{pageTitle}</h2>
         <hr />
-        <SearchForm placeholder={SEARCH} queryParam={QUERY_PARAM_TITLE} />
-        {[caseTriggeredPlans, routinePlans].forEach((plansArray: Plan[] | null, i) => {
-          const locationColumns: Column[] = getLocationColumns(locationHierarchy, true);
-          if (plansArray && plansArray.length) {
-            const jurisdictionValidPlans = removeNullJurisdictionPlans(plansArray);
-            const thePlans = jurisdictionValidPlans.map((item: Plan) => {
-              return extractPlan(item);
-            });
-            /**  Handle Columns Unique for Routine and Reactive Tables */
-            const columnsBasedOnReason = [];
-            plansArray.every((singlePlan: Plan) => singlePlan.plan_fi_reason === CASE_TRIGGERED)
-              ? columnsBasedOnReason.push(
-                  {
-                    Header: CASE_NOTIF_DATE_HEADER,
-                    columns: [
-                      {
-                        Cell: (cell: CellInfo) => {
-                          return <div>{cell.value}</div>;
-                        },
-                        Header: '',
-                        accessor: 'caseNotificationDate',
-                        minWidth: 90,
-                      },
-                    ],
-                  },
-                  {
-                    Header: CASE_CLASSIFICATION_HEADER,
-                    columns: [
-                      {
-                        Header: '',
-                        accessor: 'caseClassification',
-                      },
-                    ],
-                  }
-                )
-              : columnsBasedOnReason.push(
-                  {
-                    Header: START_DATE,
-                    columns: [
-                      {
-                        Cell: (cell: CellInfo) => {
-                          return <div>{cell.value}</div>;
-                        },
-                        Header: '',
-                        accessor: 'plan_effective_period_start',
-                        minWidth: 80,
-                      },
-                    ],
-                  },
-                  {
-                    Header: END_DATE,
-                    columns: [
-                      {
-                        Header: '',
-                        accessor: 'plan_effective_period_end',
-                      },
-                    ],
-                  }
-                );
-            const allColumns: Column[] = [
-              {
-                Header: NAME,
-                columns: [
-                  {
-                    Cell: (cell: CellInfo) => {
-                      return (
-                        <div>
-                          {cell.original.focusArea.trim() && (
-                            <Link to={`${FI_SINGLE_MAP_URL}/${cell.original.id}`}>
-                              {cell.value}
-                            </Link>
-                          )}
-                          &nbsp;
-                          <NewRecordBadge recordDate={cell.original.plan_date} />
-                        </div>
-                      );
-                    },
-                    Header: '',
-                    accessor: 'plan_title',
-                    minWidth: 180,
-                  },
-                ],
-              },
-              {
-                Header: FI_STATUS,
-                columns: [
-                  {
-                    Header: '',
-                    accessor: (d: Plan) => planStatusDisplay[d.plan_status] || d.plan_status,
-                    id: 'plan_status',
-                    minWidth: 80,
-                  },
-                ],
-              },
-              ...locationColumns,
-              {
-                Header: FOCUS_AREA_HEADER,
-                columns: [
-                  {
-                    Cell: (cell: CellInfo) => {
-                      return (
-                        <div>
-                          {cell.original.focusArea.trim() && cell.value}
-                          &nbsp;&nbsp;
-                          {cell.original.focusArea.trim() && (
-                            <Link to={`${FI_SINGLE_URL}/${cell.original.jurisdiction_id}`}>
-                              <FontAwesomeIcon icon={['fas', 'external-link-square-alt']} />
-                            </Link>
-                          )}
-                        </div>
-                      );
-                    },
-                    Header: '',
-                    accessor: 'focusArea',
-                    minWidth: 180,
-                  },
-                ],
-              },
-              {
-                Header: STATUS_HEADER,
-                columns: [
-                  {
-                    Header: '',
-                    accessor: 'status',
-                    maxWidth: 60,
-                  },
-                ],
-              },
-              ...columnsBasedOnReason,
-            ];
-            const tableProps = {
-              CellComponent: DrillDownTableLinkedCell,
-              columns: allColumns,
-              data: thePlans,
-              identifierField: 'id',
-              linkerField: 'id',
-              minRows: 0,
-              nextText: NEXT,
-              parentIdentifierField: 'parent',
-              previousText: PREVIOUS,
-              rootParentId: null,
-              showPageSizeOptions: false,
-              showPagination: thePlans.length > 20,
-              useDrillDownTrProps: false,
-            };
-            const TableHeaderWithOptionalForm = plansArray.every(
-              d => d.plan_fi_reason === CASE_TRIGGERED
-            ) ? (
-              <h3 className="mb-3 mt-5 page-title">{REACTIVE}</h3>
-            ) : (
-              <div className="routine-heading">
-                <Row>
-                  <Col xs="6">
-                    <h3 className="mb-3 mt-5 page-title">{ROUTINE_TITLE}</h3>
-                  </Col>
-                  <Col xs="6">
-                    <LinkAsButton text={ADD_FOCUS_INVESTIGATION} />
-                  </Col>
-                </Row>
-              </div>
-            );
-            routineReactivePlans.push(
-              <div key={thePlans[0].id}>
-                {TableHeaderWithOptionalForm}
-                <DrillDownTable {...tableProps} />
-              </div>
-            );
-          } else {
-            const header = i ? ROUTINE_TITLE : REACTIVE;
-            const emptyPlansColumns = [
-              {
-                Header: NAME,
-                columns: [{ minWidth: 180 }],
-              },
-              ...locationColumns,
-              {
-                Header: FOCUS_AREA_HEADER,
-                columns: [{ minWidth: 180 }],
-              },
-              {
-                Header: STATUS_HEADER,
-                columns: [{ maxWidth: 60 }],
-              },
-
-              {
-                Header: CASE_NOTIF_DATE_HEADER,
-                columns: [{ maxWidth: 90 }],
-              },
-              {
-                Header: CASE_CLASSIFICATION_HEADER,
-                columns: [{}],
-              },
-            ];
-            const tableProps = {
-              ...defaultTableProps,
-              columns: emptyPlansColumns,
-            };
-            routineReactivePlans.push(
-              <NullDataTable tableProps={tableProps} reasonType={header} key={i} />
-            );
-          }
-        })}
-        {routineReactivePlans}
+        <h3 className="mb-3 mt-5 page-title">{REACTIVE}</h3>
+        <div>
+          <DrillDownTablev7
+            {...createTableProps(caseTriggeredColumns, caseTriggeredPlans, REACTIVE_QUERY_PARAM)}
+          />
+        </div>
+        <div className="routine-heading">
+          <Row className="mb-2">
+            <Col xs="6">
+              <h3 className="mb-3 mt-5 page-title">{ROUTINE_TITLE}</h3>
+            </Col>
+            <Col xs="6">
+              <LinkAsButton text={ADD_FOCUS_INVESTIGATION} />
+            </Col>
+          </Row>
+        </div>
+        <div>
+          <DrillDownTablev7
+            {...createTableProps(RoutineColumns, routinePlans, ROUTINE_QUERY_PARAM)}
+          />
+        </div>
         <h5 className="mt-5">{DEFINITIONS}</h5>
         <Table className="definitions">
           <tbody>{FIClassifications.map(el => renderClassificationRow(el))}</tbody>
@@ -417,7 +326,6 @@ interface DispatchedStateProps {
   plan: Plan | null;
   caseTriggeredPlans: Plan[] | null;
   routinePlans: Plan[] | null;
-  searchedTitle: string;
 }
 
 /** map state to props */
@@ -430,27 +338,27 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
       ? ownProps.match.params.jurisdiction_parent_id
       : null;
 
-  const searchedTitle = getQueryParams(ownProps.location)[QUERY_PARAM_TITLE] as string;
+  const reactiveSearchString = getQueryParams(ownProps.location)[REACTIVE_QUERY_PARAM] as string;
+  const routineSearchString = getQueryParams(ownProps.location)[ROUTINE_QUERY_PARAM] as string;
   const caseTriggeredPlans = makePlansArraySelector()(state, {
     interventionType: InterventionType.FI,
     parentJurisdictionId: jurisdictionParentId,
     reason: CASE_TRIGGERED,
     statusList: [PlanStatus.ACTIVE, PlanStatus.COMPLETE],
-    title: searchedTitle,
+    title: reactiveSearchString,
   });
   const routinePlans = makePlansArraySelector()(state, {
     interventionType: InterventionType.FI,
     parentJurisdictionId: jurisdictionParentId,
     reason: ROUTINE,
     statusList: [PlanStatus.ACTIVE, PlanStatus.COMPLETE],
-    title: searchedTitle,
+    title: routineSearchString,
   });
 
   return {
     caseTriggeredPlans,
     plan,
     routinePlans,
-    searchedTitle,
   };
 };
 

@@ -16,8 +16,8 @@ import {
 import { NO_DATA_FOUND } from '../../../../configs/lang';
 import { rowHeights } from '../../../../configs/settings';
 import { ID, PARENT_ID, ROOT_PARENT_ID } from '../helpers/constants';
-import { renderPaginationFun } from '../helpers/Pagination/pagination';
-import { SortIcon } from '../helpers/SortIcon/sortIcon';
+import { renderPaginationFun } from './Pagination/pagination';
+import { SortIcon } from './SortIcon/sortIcon';
 
 /** Type definition for hasChildrenFunc */
 export type HasChildrenFuncType = <D extends object>(
@@ -65,9 +65,9 @@ export interface TableJSXProps<TData extends object> {
   renderFilterBar: true /** whether to show the filter components */;
   renderInFilterBar: (
     prop: RenderFiltersInBarOptions
-  ) => React.ElementType /** add a section to the left of top pagination for filter components */;
+  ) => JSX.Element /** add a section to the left of top pagination for filter components */;
   rootParentId: string /** the value of parentIdentifierField for rows that have not parent */;
-  renderNullDataComponent: () => React.ElementType /** component to render if data is empty array */;
+  renderNullDataComponent: () => JSX.Element /** component to render if data is empty array */;
   linkerField?: string /** the field to be used to drill down the data */;
   useDrillDown: boolean /** whether component can act as a normal table */;
 }
