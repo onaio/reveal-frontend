@@ -124,21 +124,6 @@ Array [
 ]
 `;
 
-exports[`Namibia configs: components/IRS Reports/IRSReportingMap Namibia configs: renders correctly: Namibia configs: Namibia configs: Response item descriptions 1`] = `
-Array [
-  <p
-    className="indicator-description"
-  >
-    Percent of structures sprayed over targeted
-  </p>,
-  <p
-    className="indicator-description"
-  >
-    Percent of structures sprayed over found
-  </p>,
-]
-`;
-
 exports[`Namibia configs: components/IRS Reports/IRSReportingMap Namibia configs: renders correctly: Namibia configs: Response item ProgressBar 1`] = `
 Array [
   <ProgressBar
@@ -255,6 +240,21 @@ Array [
       />
     </div>
   </ProgressBar>,
+]
+`;
+
+exports[`Namibia configs: components/IRS Reports/IRSReportingMap Namibia configs: renders correctly: Namibia configs: Response item descriptions 1`] = `
+Array [
+  <p
+    className="indicator-description"
+  >
+    Percent of structures sprayed over targeted
+  </p>,
+  <p
+    className="indicator-description"
+  >
+    Percent of structures sprayed over found
+  </p>,
 ]
 `;
 

@@ -56,7 +56,7 @@ reducerRegistry.register(genericStructuresReducerName, genericStructuresReducer)
 
 /** set up data in the store needed for this view */
 const focusAreaData = superset.processData(fixtures.NamibiaFocusAreasJSON) || [];
-const jurisdictionData = superset.processData(fixtures.ZambiaAkros1JSON) || [];
+const jurisdictionData = superset.processData(fixtures.NamibiaAkros1JSON) || [];
 
 store.dispatch(fetchGenericJurisdictions('na-focusAreas', focusAreaData));
 store.dispatch(fetchJurisdictions(jurisdictionData));
@@ -125,7 +125,7 @@ describe('Namibia configs: components/IRS Reports/IRSReportingMap', () => {
       'Namibia configs: Response item titles'
     );
     expect(toJson(wrapper.find('.responseItem p.indicator-description'))).toMatchSnapshot(
-      'Namibia configs: Namibia configs: Response item descriptions'
+      'Namibia configs: Response item descriptions'
     );
     expect(toJson(wrapper.find('p.indicator-breakdown'))).toMatchSnapshot(
       'Namibia configs: Indicator item breakdown'
