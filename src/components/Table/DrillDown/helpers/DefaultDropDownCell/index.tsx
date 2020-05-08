@@ -10,7 +10,7 @@ export interface DropDownCellProps {
 /** Component that will be rendered in drop-down table cells showing a caret
  * that indicates if you can drill-down a row of data or not.
  */
-const DropDownCell: React.ElementType = (props: DropDownCellProps) => {
+export const DropDownCell: React.ElementType = (props: DropDownCellProps) => {
   const { cellValue, hasChildren } = props;
   return (
     <div className={hasChildren ? CLICKABLE_CSS_CLASS : LINKER_ITEM_CSS_CLASS}>
@@ -21,5 +21,3 @@ const DropDownCell: React.ElementType = (props: DropDownCellProps) => {
     </div>
   );
 };
-
-export default DropDownCell;

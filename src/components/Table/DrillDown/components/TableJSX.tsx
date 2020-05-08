@@ -13,11 +13,12 @@ import {
   UseTableHeaderGroupProps,
   UseTableOptions,
 } from 'react-table';
-import { rowHeights } from '../../../configs/settings';
-import { ROW_HEIGHT_KEY } from '../../../constants';
-import { ID, NO_DATA_FOUND, PARENT_ID, ROOT_PARENT_ID } from './helpers/constants';
-import { renderPaginationFun } from './helpers/Pagination/pagination';
-import { SortIcon } from './helpers/SortIcon/sortIcon';
+import { NO_DATA_FOUND } from '../../../../configs/lang';
+import { rowHeights } from '../../../../configs/settings';
+import { ROW_HEIGHT_KEY } from '../../../../constants';
+import { ID, PARENT_ID, ROOT_PARENT_ID } from '../helpers/constants';
+import { renderPaginationFun } from '../helpers/Pagination/pagination';
+import { SortIcon } from '../helpers/SortIcon/sortIcon';
 
 /** Type definition for hasChildrenFunc */
 export type HasChildrenFuncType = <D extends object>(
@@ -30,7 +31,7 @@ export type HasChildrenFuncType = <D extends object>(
 export function hasChildrenFunc<D extends object>(
   cellObject: Cell<D>,
   parentIdList: Array<number | string>,
-  idField: string | number = 'id'
+  idField: string | number = ID
 ) {
   return parentIdList.includes((cellObject.row.original as Dictionary)[idField]);
 }

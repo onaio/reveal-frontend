@@ -464,3 +464,5 @@ export const DEFAULT = translate('DEFAULT', 'default');
 export const SHORT = translate('SHORT', 'short');
 
 export const TALL = translate('TALL', 'tall');
+
+export const NO_DATA_FOUND = translate('NO_DATA_FOUND', 'No Data Found');

@@ -1,101 +1,11 @@
-import { Dictionary } from '@onaio/utils';
-import React, { useState } from 'react';
-import { Cell, Column } from 'react-table';
-import Ripple from '../../page/Loading';
-import DropDownCell, { DropDownCellProps } from './helpers/DefaultDropDownCell/DropDownCell';
-import { defaultTableProps, Table, TableJSXProps } from './TableJSX';
+/** primary components and their props */
+export * from './components/DrillDownTable';
+export * from './components/TableJSX';
 
-/** describes props for the DrillDownTable component */
-interface DrillDownTableProps<D extends object>
-  extends Omit<TableJSXProps<D>, 'fetchData' | 'parentNodes'> {
-  // linkerField?: string /** the field to be used to drill down the data */;
-  extraCellProps?: Dictionary /** props to be given to CellComponent */;
-  CellComponent: React.ElementType /** The component used to render the cell that has the drill down */;
-  loading: boolean /** if loading */;
-  LoadingComponent: React.ElementType /** custom component to show whilst loading is true */;
-}
+/** primary utils */
+export * from './helpers/utils';
 
-/** only provide defaults for the props that are actionable as part of this HOC */
-export const defautlDrillDownTableProps = {
-  ...defaultTableProps,
-  CellComponent: DropDownCell,
-  LoadingComponent: Ripple,
-  loading: false,
-};
-
-/** HOC component; wraps around and controls a component that makes use of react-table hooks
- * its main goal is to filter data based on set current parent id to controlled presentational component
- */
-function DrillDownTable<D extends object>(props: DrillDownTableProps<D>) {
-  const { columns, data, parentIdentifierField, hasChildren, LoadingComponent } = props;
-  const parentNodes =
-    data && parentIdentifierField ? data.map((el: Dictionary) => el[parentIdentifierField]) : [];
-  const [pageData, setpageData] = useState<D[]>([]);
-
-  const mutatedColumns = React.useMemo(() => columns.map(mutateColumns), []) as Array<Column<D>>;
-
-  const fetchData = React.useCallback(
-    ({ skipPageResetRef, currentParentId: parentId }) => {
-      skipPageResetRef.current = true;
-      let filterByLevel = props.data;
-      if (props.useDrillDown) {
-        filterByLevel = props.data.filter((row: Dictionary) => {
-          return row[parentIdentifierField] === parentId;
-        });
-      }
-      setpageData(filterByLevel);
-    },
-    [data]
-  );
-
-  /** Get modified columns
-   * Modify the linker column to include an indicator that you can use to
-   * drill-down
-   */
-  function mutateColumns(el: Dictionary) {
-    const { linkerField, CellComponent, extraCellProps } = props;
-    if (el.hasOwnProperty('columns') && el.columns && el.columns.length > 0) {
-      const newColumns = el.columns.map(mutateColumns);
-      el.columns = newColumns;
-    }
-
-    if (el.accessor === linkerField) {
-      el.Cell = (cell: Cell) => {
-        if (CellComponent !== undefined) {
-          const { identifierField } = props;
-
-          let thisCellHasChildren = false;
-          if (hasChildren && identifierField && hasChildren(cell, parentNodes, identifierField)) {
-            thisCellHasChildren = true;
-          }
-
-          const cellProps: DropDownCellProps = {
-            cellValue: cell.value,
-            hasChildren: thisCellHasChildren,
-          };
-
-          if (extraCellProps !== undefined) {
-            Object.assign(cellProps, extraCellProps);
-          }
-          return <CellComponent {...cellProps} />;
-        }
-        return cell.value;
-      };
-    }
-    return el;
-  }
-
-  const TableProps = {
-    ...props,
-    columns: mutatedColumns,
-    data: pageData,
-    fetchData,
-    parentNodes,
-  };
-
-  return <>{!props.loading ? <Table {...TableProps} /> : <LoadingComponent />}</>;
-}
-
-DrillDownTable.defaultProps = defautlDrillDownTableProps;
-
-export { DrillDownTable as DrillDownTablev7 };
+/** Reasonable defaults */
+export * from './helpers/Pagination/pagination';
+export * from './helpers/DefaultDropDownCell';
+export * from './helpers/SortIcon/sortIcon';

@@ -21,6 +21,3 @@ export type CARET_CSS_CLASS = typeof CARET_CSS_CLASS;
 
 export const CARET_SPAN = <span className={CARET_CSS_CLASS}>&nbsp;&#9660;</span>;
 export type CARET_SPAN = typeof CARET_SPAN;
-
-export const NO_DATA_FOUND = 'No Data Found';
-export type NO_DATA_FOUND = typeof NO_DATA_FOUND;

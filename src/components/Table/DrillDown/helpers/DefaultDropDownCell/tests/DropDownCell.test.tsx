@@ -1,6 +1,6 @@
 import { mount } from 'enzyme';
 import React from 'react';
-import DropDownCell from '../DropDownCell';
+import DropDownCell from '..';
 
 describe('src/components/Table', () => {
   it('renders correctly when with children', () => {
