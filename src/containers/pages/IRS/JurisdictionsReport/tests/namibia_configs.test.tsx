@@ -45,8 +45,8 @@ reducerRegistry.register(IRSPlansReducerName, IRSPlansReducer);
 reducerRegistry.register(GenericJurisdictionsReducerName, GenericJurisdictionsReducer);
 
 /** set up data in the store needed for this view */
-const focusAreaData = superset.processData(fixtures.ZambiaJurisdictionsJSON) || [];
-const jurisdictionData = superset.processData(fixtures.ZambiaJurisdictionsJSON) || [];
+const focusAreaData = superset.processData(fixtures.NamibiaFocusAreasJSON) || [];
+const jurisdictionData = superset.processData(fixtures.NamibiaJurisdictionsJSON) || [];
 
 store.dispatch(fetchGenericJurisdictions('na-jurisdictions', jurisdictionData));
 store.dispatch(fetchGenericJurisdictions('na-focusAreas', focusAreaData));
@@ -174,5 +174,121 @@ describe('Namibia configs: components/IRS Reports/JurisdictionReport', () => {
 
     expect(supersetServiceMock).toHaveBeenCalledTimes(3);
     wrapper.unmount();
+  });
+
+  it('drills down correctly', async () => {
+    fetch.mockResponseOnce(JSON.stringify({}));
+    const mock: any = jest.fn();
+
+    const supersetServiceMock: any = jest.fn();
+    supersetServiceMock.mockImplementation(async () => []);
+
+    let jurisdictions =
+      getGenericJurisdictionsArray(
+        store.getState(),
+        'na-jurisdictions',
+        '9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d'
+      ) || [];
+    jurisdictions = jurisdictions.concat(
+      getGenericJurisdictionsArray(
+        store.getState(),
+        'na-focusAreas',
+        '9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d'
+      )
+    );
+
+    const props = {
+      history,
+      jurisdictions,
+      location: mock,
+      match: {
+        isExact: true,
+        params: {
+          planId: (plans[0] as IRSPlan).plan_id,
+        },
+        path: `${REPORT_IRS_PLAN_URL}/:planId`,
+        url: `${REPORT_IRS_PLAN_URL}/${(plans[0] as IRSPlan).plan_id}`,
+      },
+      plan: plans[0] as IRSPlan,
+      service: supersetServiceMock,
+    };
+
+    const wrapper = mount(
+      <Router history={history}>
+        <JurisdictionReport {...props} />
+      </Router>
+    );
+
+    const baseURL = `${REPORT_IRS_PLAN_URL}/727c3d40-e118-564a-b231-aac633e6abce`;
+
+    expect(wrapper.find('HeaderBreadcrumb li').length).toEqual(3);
+    expect(
+      wrapper
+        .find('HeaderBreadcrumb li')
+        .first()
+        .text()
+    ).toEqual('Home');
+    expect(
+      wrapper
+        .find('HeaderBreadcrumb a')
+        .last()
+        .text()
+    ).toEqual('IRS Reporting');
+    expect(
+      wrapper
+        .find('HeaderBreadcrumb li')
+        .last()
+        .text()
+    ).toEqual('IRS 2019-09-05 TEST');
+    expect(wrapper.find('HeaderBreadcrumb a').length).toEqual(2);
+    expect(wrapper.find('h3.page-title').text()).toEqual('IRS Reporting: IRS 2019-09-05 TEST');
+    expect(wrapper.find('DrillDownTable').props()).toMatchSnapshot({
+      columns: expect.any(Object) /** just for purposes of making snapshot smaller */,
+      data: expect.any(Object) /** just for purposes of making snapshot smaller */,
+    });
+
+    expect(wrapper.find('DrillDownTable').props().data).toEqual(jurisdictions);
+    expect((wrapper.find('DrillDownTable').props() as any).columns).toEqual(
+      IRSTableColumns.namibia2019
+    );
+
+    // namibia URL
+    expect(
+      wrapper.find(`a[href$="${baseURL}/0dc2d15b-be1d-45d3-93d8-043a3a916f30"]`).length
+    ).toEqual(1);
+    wrapper
+      .find(`a[href$="${baseURL}/0dc2d15b-be1d-45d3-93d8-043a3a916f30"]`)
+      .first()
+      .simulate('click', { button: 0 });
+    expect(wrapper.find('HeaderBreadcrumb li').length).toEqual(4);
+    expect(wrapper.find('HeaderBreadcrumb a').length).toEqual(3);
+    expect(
+      wrapper
+        .find('HeaderBreadcrumb a')
+        .last()
+        .text()
+    ).toEqual('IRS 2019-09-05 TEST');
+    expect(
+      wrapper
+        .find('HeaderBreadcrumb li')
+        .last()
+        .text()
+    ).toEqual('Namibia');
+    expect(wrapper.find('h3.page-title').text()).toEqual(
+      'IRS Reporting: IRS 2019-09-05 TEST: Namibia'
+    );
+    expect(wrapper.find('DrillDownTable').props()).toMatchSnapshot({
+      columns: expect.any(Object) /** just for purposes of making snapshot smaller */,
+      data: expect.any(Object) /** just for purposes of making snapshot smaller */,
+    });
+    expect(wrapper.find('DrillDownTable').props().data).toEqual(jurisdictions);
+    expect((wrapper.find('DrillDownTable').props() as any).columns).toEqual(
+      IRSTableColumns.namibia2019
+    );
+
+    expect(wrapper.find('DrillDownTable a').map(e => e.props().href)).toEqual([
+      `${baseURL}/0b142aff-341c-4d15-878e-55942bc873aa/map`,
+      `${baseURL}/0b142aff-341c-4d15-878e-55942bc873aa/map`,
+    ]);
   });
 });

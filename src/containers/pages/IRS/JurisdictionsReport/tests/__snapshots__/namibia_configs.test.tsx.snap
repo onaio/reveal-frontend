@@ -5,7 +5,7 @@ Object {
   "CellComponent": [Function],
   "columns": Any<Object>,
   "data": Any<Object>,
-  "defaultPageSize": 108,
+  "defaultPageSize": 4,
   "extraCellProps": Object {
     "urlPath": "/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce",
   },
@@ -72,4 +72,50 @@ exports[`Namibia configs: components/IRS Reports/JurisdictionReport Namibia conf
 >
   IRS Reporting: IRS 2019-09-05 TEST
 </h3>
+`;
+
+exports[`Namibia configs: components/IRS Reports/JurisdictionReport drills down correctly 1`] = `
+Object {
+  "CellComponent": [Function],
+  "columns": Any<Object>,
+  "data": Any<Object>,
+  "defaultPageSize": 4,
+  "extraCellProps": Object {
+    "urlPath": "/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce",
+  },
+  "getTdProps": [Function],
+  "hasChildren": [Function],
+  "identifierField": "jurisdiction_id",
+  "linkerField": "jurisdiction_name",
+  "minRows": 0,
+  "parentIdentifierField": "jurisdiction_parent_id",
+  "resizable": true,
+  "rootParentId": "",
+  "shouldUseEffect": false,
+  "showPagination": false,
+  "useDrillDownTrProps": false,
+}
+`;
+
+exports[`Namibia configs: components/IRS Reports/JurisdictionReport drills down correctly 2`] = `
+Object {
+  "CellComponent": [Function],
+  "columns": Any<Object>,
+  "data": Any<Object>,
+  "defaultPageSize": 4,
+  "extraCellProps": Object {
+    "urlPath": "/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce",
+  },
+  "getTdProps": [Function],
+  "hasChildren": [Function],
+  "identifierField": "jurisdiction_id",
+  "linkerField": "jurisdiction_name",
+  "minRows": 0,
+  "parentIdentifierField": "jurisdiction_parent_id",
+  "resizable": true,
+  "rootParentId": "0dc2d15b-be1d-45d3-93d8-043a3a916f30",
+  "shouldUseEffect": false,
+  "showPagination": false,
+  "useDrillDownTrProps": false,
+}
 `;
