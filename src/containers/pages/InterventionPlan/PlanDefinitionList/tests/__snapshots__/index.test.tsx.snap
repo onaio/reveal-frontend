@@ -182,34 +182,3 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
   </div>
 </Row>
 `;
-
-exports[`components/InterventionPlan/PlanDefinitionList renders plan definition list correctly: search form props 1`] = `
-Object {
-  "history": Object {
-    "action": "POP",
-    "block": [Function],
-    "createHref": [Function],
-    "go": [Function],
-    "goBack": [Function],
-    "goForward": [Function],
-    "length": 1,
-    "listen": [Function],
-    "location": Object {
-      "hash": "",
-      "pathname": "/",
-      "search": "",
-      "state": undefined,
-    },
-    "push": [Function],
-    "replace": [Function],
-  },
-  "location": Object {
-    "hash": "",
-    "key": "key",
-    "pathname": "/plans/list",
-    "search": "",
-    "state": undefined,
-  },
-  "placeholder": "Search",
-}
-`;

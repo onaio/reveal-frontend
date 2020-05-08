@@ -74,7 +74,6 @@ describe('components/InterventionPlan/PlanDefinitionList', () => {
     );
     expect(wrapper.find('HeaderBreadcrumb').props()).toMatchSnapshot('bread crumb props');
     expect(toJson(wrapper.find('Row').at(0))).toMatchSnapshot('row heading');
-    expect(wrapper.find('SearchForm').props()).toMatchSnapshot('search form props');
     expect(wrapper.find('ListView').props()).toMatchSnapshot('list view props');
     expect(toJson(wrapper.find('HelmetWrapper'))).toMatchSnapshot('helmet');
     wrapper.unmount();
