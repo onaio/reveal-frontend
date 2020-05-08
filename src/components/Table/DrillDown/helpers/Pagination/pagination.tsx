@@ -1,7 +1,7 @@
 /** The default custom pagination component for drillDown v7  */
 import { Dictionary } from '@onaio/utils';
 import React from 'react';
-import { OF, PAGE, ROWS_TO_DISPLAY } from '../../../../../configs/lang';
+import { NEXT, OF, PAGE, PREVIOUS, ROWS_TO_DISPLAY } from '../../../../../configs/lang';
 import { RenderPaginationOptions } from '../../components/TableJSX';
 import './pagination.css';
 
@@ -52,7 +52,7 @@ function RevealPagination<T extends object = Dictionary>(props: PaginationProps<
         onClick={() => previousPage()}
         disabled={!canPreviousPage}
       >
-        {'prev'}
+        {PREVIOUS}
       </button>
       <span>
         {PAGE} {'  '}
@@ -70,7 +70,7 @@ function RevealPagination<T extends object = Dictionary>(props: PaginationProps<
       </span>
       {/* tslint:disable-next-line:jsx-no-lambda */}
       <button className="ml-2" onClick={() => nextPage()} disabled={!canNextPage}>
-        {'next'}
+        {NEXT}
       </button>{' '}
     </div>
   );
