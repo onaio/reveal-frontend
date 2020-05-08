@@ -92,7 +92,8 @@
     "collectCoverageFrom": [
       "src/**/*.{ts,tsx}",
       "!src/index.tsx",
-      "!src/serviceWorker.ts"
+      "!src/serviceWorker.ts",
+      "!**/tests/**"
     ],
     "coverageThreshold": {
       "global": {
