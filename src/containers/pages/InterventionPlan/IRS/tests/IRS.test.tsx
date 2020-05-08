@@ -132,7 +132,7 @@ describe('containers/pages/IRS', () => {
       location: {
         hash: '',
         pathname: '',
-        search: `${QUERY_PARAM_TITLE}=usaka`,
+        search: `${QUERY_PARAM_TITLE}=Khlong `,
         state: '',
       },
       match: {
@@ -154,7 +154,43 @@ describe('containers/pages/IRS', () => {
     await new Promise(resolve => setImmediate(resolve));
     wrapper.update();
 
-    renderTable(wrapper, 'find single row for A2-Lusaka Akros Test Focus 2');
+    renderTable(wrapper, 'find single row for entry with Khlong ');
+    wrapper.unmount();
+  });
+
+  it('does not show loader for no data', async () => {
+    fetch.mockResponse(plansJSON);
+    const props = {
+      history,
+      location: {
+        hash: '',
+        pathname: '',
+        search: `${QUERY_PARAM_TITLE}=usadafasdgaka`,
+        state: '',
+      },
+      match: {
+        isExact: true,
+        params: {},
+        path: INTERVENTION_IRS_DRAFTS_URL,
+        url: INTERVENTION_IRS_DRAFTS_URL,
+      },
+    };
+
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedIrsPlans {...props} />
+        </Router>
+      </Provider>
+    );
+
+    expect(wrapper.find('Ripple').length).toEqual(1);
+
+    await new Promise(resolve => setImmediate(resolve));
+    wrapper.update();
+
+    renderTable(wrapper, 'find No Data Found text');
+    // expect(wrapper.text().includes(NO_DATA_FOUND)).toBeTruthy();
     wrapper.unmount();
   });
 });

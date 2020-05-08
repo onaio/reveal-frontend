@@ -107,10 +107,12 @@ const columns: Array<Column<PlanRecord>> = [
 /** fetch plans payload form the opensrp api
  * @param {OpenSRPService} service - openSRPService
  * @param {ActionCreator<FetchPlanRecordsAction>} actionCreator - action creator for fetchPlanRecords
+ * @param {Dispatch<SetStateAction<boolean>>} - setState function
  */
 const loadOpenSRPPlans = (
   service: typeof OpenSRPService,
-  actionCreator: ActionCreator<FetchPlanRecordsAction>
+  actionCreator: ActionCreator<FetchPlanRecordsAction>,
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
   const OpenSrpPlanService = new service(OPENSRP_PLANS);
   OpenSrpPlanService.list()
@@ -119,14 +121,19 @@ const loadOpenSRPPlans = (
         .map(plan => extractPlanRecordResponseFromPlanPayload(plan))
         .filter(plan => !!plan);
       actionCreator(extractedPlanRecords as PlanRecordResponse[]);
+      setLoading(false);
     })
-    .catch(err => displayError(err));
+    .catch(err => {
+      setLoading(false);
+      displayError(err);
+    });
 };
 
 /** IrsPlans presentation component */
 export const IrsPlans = (props: IrsPlansProps & RouteComponentProps<RouteParams>) => {
+  const [loading, setLoading] = React.useState<boolean>(props.plansArray.length === 0);
   React.useEffect(() => {
-    loadOpenSRPPlans(props.service, props.fetchPlanRecordsActionCreator);
+    loadOpenSRPPlans(props.service, props.fetchPlanRecordsActionCreator, setLoading);
   }, []);
 
   const pageTitle = `${IRS_PLANS}${DRAFTS_PARENTHESIS}`;
@@ -143,14 +150,13 @@ export const IrsPlans = (props: IrsPlansProps & RouteComponentProps<RouteParams>
   };
 
   const { plansArray } = props;
-  if (plansArray.length === 0) {
-    return <Loading />;
-  }
 
   /** tableProps - props for DrillDownTable component */
   const tableProps = {
+    LoadingComponent: Loading,
     columns,
     data: plansArray,
+    loading,
     renderInFilterBar: (options: RenderFiltersInBarOptions) => {
       const changeHandler = (value: string) => options.setRowHeight(value);
       return (
