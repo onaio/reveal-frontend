@@ -11,7 +11,7 @@ export interface LogoutProps {
  * This function takes the approach of opening a new window and navigating to the logout
  * url of the authentication server in order to go around the browser's CORS policy.
  */
-export function logoutFromAuthServer(logoutURL: string) {
+export const logoutFromAuthServer = (logoutURL: string) => {
   const logoutWindow: Window | null = window.open(logoutURL);
   const timer: NodeJS.Timeout = setInterval(() => {
     if (logoutWindow) {
@@ -20,7 +20,7 @@ export function logoutFromAuthServer(logoutURL: string) {
     }
     clearInterval(timer);
   }, 20);
-}
+};
 
 /** Component handles opensrp logout and goes to express serve */
 const Logout = (props: LogoutProps) => {
