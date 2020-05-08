@@ -26,21 +26,17 @@ describe('/components/formatting/IRSIndicatorLegend', () => {
   });
 
   it('renders correctly for namibia indicator colors', () => {
-    const wrapper = mount(
-      <IRSIndicatorLegend
-        indicatorRows={namibiaIndicatorRows}
-        indicatorThresholds={indicatorThresholdsIRSNamibia}
-      />
-    );
+    const wrapper = mount(<IRSIndicatorLegend indicatorRows={namibiaIndicatorRows} />);
     expect(wrapper.props()).toEqual({
       indicatorRows: namibiaIndicatorRows,
-      indicatorThresholds: indicatorThresholdsIRSNamibia,
+      indicatorThresholds: indicatorThresholdsIRS,
       indicatorThresholdsLookUp: indicatorThresholdsLookUpIRS,
     });
     expect(toJson(wrapper.find('.card-header'))).toMatchSnapshot('header');
     expect(toJson(wrapper.find('Table'))).toMatchSnapshot('indicator table namibia');
     wrapper.unmount();
   });
+
   it('generateRangeStrings works correctly nominal case', () => {
     const sampleThresholds = indicatorThresholdsIRS;
 
@@ -52,5 +48,19 @@ describe('/components/formatting/IRSIndicatorLegend', () => {
       { color: '#FFDC00', name: 'Yellow', text: '75% >-< 90%', value: 0.9 },
       { color: '#2ECC40', name: 'Green', orEquals: true, text: '90% - 100%', value: 1 },
     ]);
+  });
+
+  it('renders correctly for namibia indicator colors with namibia indicatorThresholds', () => {
+    const wrapper = mount(
+      <IRSIndicatorLegend
+        indicatorRows={namibiaIndicatorRows}
+        indicatorThresholds={indicatorThresholdsIRSNamibia}
+      />
+    );
+    expect(wrapper.props()).toEqual({
+      indicatorRows: namibiaIndicatorRows,
+      indicatorThresholds: indicatorThresholdsIRSNamibia,
+      indicatorThresholdsLookUp: indicatorThresholdsLookUpIRS,
+    });
   });
 });
