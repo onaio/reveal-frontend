@@ -29,29 +29,32 @@ function RevealPagination<T extends object = Dictionary>(props: PaginationProps<
     setPageSize,
     pageSizeCategories,
   } = props;
+
+  const onChangePageSize = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setPageSize(Number(e.target.value));
+  };
+  const onClickPrevious = () => {
+    previousPage();
+  };
+  const onChangePageIndex = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const page = e.target.value ? Number(e.target.value) - 1 : 0;
+    gotoPage(page);
+  };
+  const onClickNext = () => {
+    nextPage();
+  };
+
   return (
     <div className="pagination">
       <span className="page-sizes-text mr-2">{ROWS_TO_DISPLAY}</span>
-      <select
-        className="page-sizes-select mr-4"
-        value={pageSize}
-        // tslint:disable-next-line: jsx-no-lambda
-        onChange={e => {
-          setPageSize(Number(e.target.value));
-        }}
-      >
+      <select className="page-sizes-select mr-4" value={pageSize} onChange={onChangePageSize}>
         {pageSizeCategories.map(pgSize => (
           <option key={pgSize} value={pgSize}>
             {pgSize}
           </option>
         ))}
       </select>
-      <button
-        className="mr-2"
-        // tslint:disable-next-line: jsx-no-lambda
-        onClick={() => previousPage()}
-        disabled={!canPreviousPage}
-      >
+      <button className="mr-2" onClick={onClickPrevious} disabled={!canPreviousPage}>
         {PREVIOUS}
       </button>
       <span>
@@ -59,17 +62,12 @@ function RevealPagination<T extends object = Dictionary>(props: PaginationProps<
         <input
           type="text"
           value={pageIndex + 1}
-          // tslint:disable-next-line: jsx-no-lambda
-          onChange={e => {
-            const page = e.target.value ? Number(e.target.value) - 1 : 0;
-            gotoPage(page);
-          }}
+          onChange={onChangePageIndex}
           style={{ width: '40px' }}
         />{' '}
         {OF} {pageOptions.length}
       </span>
-      {/* tslint:disable-next-line:jsx-no-lambda */}
-      <button className="ml-2" onClick={() => nextPage()} disabled={!canNextPage}>
+      <button className="ml-2" onClick={onClickNext} disabled={!canNextPage}>
         {NEXT}
       </button>{' '}
     </div>
