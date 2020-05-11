@@ -580,3 +580,18 @@ export const JURISDICTION_ID = translate('JURISDICTION_ID', 'jurisdiction_id');
 export const JURISDICTION_NAME = translate('JURISDICTION_NAME', 'jurisdiction_name');
 export const INVALID_CSV = translate('INVALID_CSV', 'Invalid CSV');
 export const CSV_ONLY = translate('CSV_ONLY', 'CSV Files Only');
+export const ROW_HEIGHT = translate('ROW_HEIGHT', 'Row Height');
+
+export const ROWS_TO_DISPLAY = translate('ROWS_TO_DISPLAY', 'Rows to display');
+
+export const PAGE = translate('PAGE', 'page');
+
+export const OF = translate('OF', 'of');
+
+export const DEFAULT = translate('DEFAULT', 'default');
+
+export const SHORT = translate('SHORT', 'short');
+
+export const TALL = translate('TALL', 'tall');
+
+export const NO_DATA_FOUND = translate('NO_DATA_FOUND', 'No Data Found');

@@ -1,5 +1,6 @@
 import React from 'react';
 import { NO_DATA_FOUND } from '../../../../../configs/lang';
+import { NO_DATA_FOUND } from '../../../../../configs/lang';
 import { CARET_SPAN, CLICKABLE_CSS_CLASS, LINKER_ITEM_CSS_CLASS } from '../../helpers/constants';
 
 /** Rendered component when there is no data for table component to render */
