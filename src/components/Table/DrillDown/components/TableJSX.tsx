@@ -172,9 +172,9 @@ function Table<D extends object>(props: TableJSXProps<D>) {
                 const column = (c as unknown) as ActualColumnInstance<D>;
                 return (
                   <th
-                    key={`thead-th-${index}`}
                     // Return an array of prop objects and react-table will merge them appropriately
                     {...column.getHeaderProps(column.getSortByToggleProps())}
+                    key={`thead-th-${index}`}
                   >
                     {column.render('Header')}
                     {column.canSort && (
@@ -192,11 +192,10 @@ function Table<D extends object>(props: TableJSXProps<D>) {
               prepareRow(row);
               return (
                 // Merge user row props in
-                <tr key={`tbody-tr-${idx}`} {...row.getRowProps()}>
+                <tr {...row.getRowProps()} key={`tbody-tr-${idx}`}>
                   {row.cells.map((cell: Cell<D>, i: number) => {
                     return (
                       <td
-                        key={`td-${i}`}
                         // Return an array of prop objects and react-table will merge them appropriately
                         {...cell.getCellProps([
                           {
@@ -221,6 +220,7 @@ function Table<D extends object>(props: TableJSXProps<D>) {
                             },
                           },
                         ] as any)}
+                        key={`td-${i}`}
                       >
                         {cell.render('Cell')}
                       </td>
