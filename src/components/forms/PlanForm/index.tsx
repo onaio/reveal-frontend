@@ -68,7 +68,10 @@ import { MDA_POINT_ADVERSE_EFFECTS_CODE, PLAN_LIST_URL } from '../../../constant
 import { OpenSRPService } from '../../../services/opensrp';
 import { InterventionType, PlanStatus } from '../../../store/ducks/plans';
 import DatePickerWrapper from '../../DatePickerWrapper';
-import JurisdictionSelect from '../JurisdictionSelect';
+import JurisdictionSelect, {
+  defaultProps as JurisdictionDefaultProps,
+  JurisdictionSelectProps,
+} from '../JurisdictionSelect';
 import {
   doesFieldHaveErrors,
   FIActivities,
@@ -123,6 +126,10 @@ export type LocationChildRenderProp = (
   index: number
 ) => JSX.Element;
 
+// /** intervention types */
+// const { FI, IRS, MDA, MDAPoint } = InterventionType;
+
+// const currentInterventionType: typeof FI | typeof IRS | typeof MDA | typeof MDAPoint = InterventionType.FI;
 /** interface for plan form props */
 export interface PlanFormProps {
   allFormActivities: PlanActivityFormFields[] /** the list of all allowed activities */;
@@ -148,6 +155,9 @@ const PlanForm = (props: PlanFormProps) => {
   const [globalError, setGlobalError] = useState<string>('');
   const [areWeDoneHere, setAreWeDoneHere] = useState<boolean>(false);
   const [activityModal, setActivityModal] = useState<boolean>(false);
+  const [selectedIntervention, setSelectedIntervention] = useState<InterventionType>(
+    InterventionType.FI
+  );
 
   const {
     allFormActivities,
@@ -165,6 +175,23 @@ const PlanForm = (props: PlanFormProps) => {
   const irsActivities = getFormActivities(IRSActivities);
   const fiActivities = getFormActivities(FIActivities);
   const mdaPointActivities = getFormActivities(MDAPointActivities);
+
+  if (selectedIntervention === InterventionType.MDAPoint) {
+    const jurisdictionSelectProp: Partial<JurisdictionSelectProps> = {
+      apiEndpoint: 'location/findByProperties',
+      cascadingSelect: true,
+      interventionType: selectedIntervention,
+      params: {
+        is_jurisdiction: true,
+        return_geometry: false,
+      },
+      serviceClass: OpenSRPService,
+    };
+    // update JurisdictionSelect component default props
+    JurisdictionSelect.defaultProps = jurisdictionSelectProp;
+  } else {
+    JurisdictionSelect.defaultProps = JurisdictionDefaultProps;
+  }
 
   const disAllowedStatusChoices: string[] = [];
   if (editMode) {
@@ -308,6 +335,7 @@ const PlanForm = (props: PlanFormProps) => {
                   if (target.value === InterventionType.MDAPoint) {
                     setFieldValue('activities', mdaPointActivities);
                   }
+                  setSelectedIntervention(target.value as InterventionType);
                   setFieldValue('jurisdictions', [initialJurisdictionValues]);
                   handleChange(e);
                 }}
