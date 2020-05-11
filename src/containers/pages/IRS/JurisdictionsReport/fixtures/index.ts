@@ -1,4 +1,4 @@
-import { CellInfo, Column } from 'react-table';
+import { CellInfo, Column } from 'react-table-v6';
 import { getIRSThresholdAdherenceIndicator } from '../../../../../helpers/indicators';
 
 /* tslint:disable no-var-requires */

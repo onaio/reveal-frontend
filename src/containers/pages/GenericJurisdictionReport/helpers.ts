@@ -1,4 +1,4 @@
-import { CellInfo, Column } from 'react-table';
+import { Cell, Column } from 'react-table';
 import { getIRSThresholdAdherenceIndicator } from '../../../helpers/indicators';
 
 /** columns for Namibia IRS jurisdictions */
