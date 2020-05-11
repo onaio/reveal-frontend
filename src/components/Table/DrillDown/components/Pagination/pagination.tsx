@@ -79,7 +79,6 @@ RevealPagination.defaultProps = defaultPaginationProps;
 export { RevealPagination };
 
 /** function that can be used as a render prop */
-export const renderPaginationFun = <T extends object>(props: PaginationProps<T>) => {
-  const revealProps = props;
-  return <RevealPagination {...revealProps} />;
+export const renderPaginationFun = <T extends object>(props: RenderPaginationOptions<T>) => {
+  return <RevealPagination {...props} />;
 };
