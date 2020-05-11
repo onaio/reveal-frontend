@@ -64,7 +64,7 @@ import {
   planActivities,
   planStatusDisplay,
 } from '../../../configs/settings';
-import { PLAN_LIST_URL } from '../../../constants';
+import { MDA_POINT_ADVERSE_EFFECTS_CODE, PLAN_LIST_URL } from '../../../constants';
 import { OpenSRPService } from '../../../services/opensrp';
 import { InterventionType, PlanStatus } from '../../../store/ducks/plans';
 import DatePickerWrapper from '../../DatePickerWrapper';
@@ -716,43 +716,46 @@ const PlanForm = (props: PlanFormProps) => {
                               value={values.activities[index].actionDescription}
                             />
                           </FormGroup>
-                          <FormGroup>
-                            <Label for={`activities-${index}-goalValue`}>{QUANTITY_LABEL}</Label>
-                            <InputGroup id={`activities-${index}-goalValue-input-group`}>
-                              <Field
-                                type="number"
-                                name={`activities[${index}].goalValue`}
-                                id={`activities-${index}-goalValue`}
-                                required={true}
-                                disabled={
-                                  disabledFields.includes('activities') ||
-                                  disabledActivityFields.includes('goalValue')
-                                }
-                                className={
-                                  errors.activities &&
-                                  doesFieldHaveErrors('goalValue', index, errors.activities)
-                                    ? 'form-control is-invalid'
-                                    : 'form-control'
-                                }
-                              />
-                              <InputGroupAddon addonType="append">
-                                <InputGroupText>
-                                  {
-                                    goalUnitDisplay[
-                                      getGoalUnitFromActionCode(
-                                        values.activities[index].actionCode as PlanActionCodesType
-                                      )
-                                    ]
+                          {values.activities[index].actionCode !==
+                            MDA_POINT_ADVERSE_EFFECTS_CODE && (
+                            <FormGroup>
+                              <Label for={`activities-${index}-goalValue`}>{QUANTITY_LABEL}</Label>
+                              <InputGroup id={`activities-${index}-goalValue-input-group`}>
+                                <Field
+                                  type="number"
+                                  name={`activities[${index}].goalValue`}
+                                  id={`activities-${index}-goalValue`}
+                                  required={true}
+                                  disabled={
+                                    disabledFields.includes('activities') ||
+                                    disabledActivityFields.includes('goalValue')
                                   }
-                                </InputGroupText>
-                              </InputGroupAddon>
-                            </InputGroup>
-                            <ErrorMessage
-                              name={`activities[${index}].goalValue`}
-                              component="small"
-                              className="form-text text-danger"
-                            />
-                          </FormGroup>
+                                  className={
+                                    errors.activities &&
+                                    doesFieldHaveErrors('goalValue', index, errors.activities)
+                                      ? 'form-control is-invalid'
+                                      : 'form-control'
+                                  }
+                                />
+                                <InputGroupAddon addonType="append">
+                                  <InputGroupText>
+                                    {
+                                      goalUnitDisplay[
+                                        getGoalUnitFromActionCode(
+                                          values.activities[index].actionCode as PlanActionCodesType
+                                        )
+                                      ]
+                                    }
+                                  </InputGroupText>
+                                </InputGroupAddon>
+                              </InputGroup>
+                              <ErrorMessage
+                                name={`activities[${index}].goalValue`}
+                                component="small"
+                                className="form-text text-danger"
+                              />
+                            </FormGroup>
+                          )}
                           <FormGroup>
                             <Label for={`activities-${index}-timingPeriodStart`}>
                               {START_DATE}
