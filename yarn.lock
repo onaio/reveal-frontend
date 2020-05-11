@@ -1745,6 +1745,11 @@
   dependencies:
     any-observable "^0.3.0"
 
+"@scarf/scarf@^0.1.5":
+  version "0.1.7"
+  resolved "https://registry.yarnpkg.com/@scarf/scarf/-/scarf-0.1.7.tgz#e6ffb3660bda77f96037f8c4e21174177fed2d97"
+  integrity sha512-XUBa8nl9J1XGyyA+wul1ko5v5ioNU1s/pUPODnPzJ4+uUOwwYZm197KQoxxzOAsypldlFGnAlQ8nkjTjoQV9GQ==
+
 "@servie/events@^1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@servie/events/-/events-1.0.0.tgz#8258684b52d418ab7b86533e861186638ecc5dc1"
@@ -2100,6 +2105,13 @@
   version "6.8.7"
   resolved "https://registry.yarnpkg.com/@types/react-table/-/react-table-6.8.7.tgz#210ffa2862dd3711350676c0bdbbfbff45f14b84"
   integrity sha512-1U0xl47jk0BzE+HNHgxZYSLvtybSvnlLhOpW9Mfqf9iuRm/fGqgRab3TKivPCY6Tl7WPFM2hWEJ1GnsuSFc9AQ==
+  dependencies:
+    "@types/react" "*"
+
+"@types/react-table@^7.0.17":
+  version "7.0.17"
+  resolved "https://registry.yarnpkg.com/@types/react-table/-/react-table-7.0.17.tgz#95628adcebcbd4c66f6da33d9177b82436822052"
+  integrity sha512-4C5w0FQTfE/jwAl1qI58ndOL9SEqfVQN8JP+SggPXpKUzwy/7Gmat7OgjITkw+VQ85tCySRFif3HBqo04h0mDA==
   dependencies:
     "@types/react" "*"
 
@@ -13206,6 +13218,13 @@ react-side-effect@^1.1.0:
   dependencies:
     shallowequal "^1.0.1"
 
+react-table-v6@^6.8.6:
+  version "6.8.6"
+  resolved "https://registry.yarnpkg.com/react-table-v6/-/react-table-v6-6.8.6.tgz#8362230caa16f8d6abefeedb2d95dd1adb2741e5"
+  integrity sha512-jxo20BTIU/tQxToOZFnfr0V123VSQ2kNdxR+JbA7V4Zfj1jNtBaiFW/lYgVwejnbnUOuj96pV8Dd+yXXMdAMDA==
+  dependencies:
+    classnames "^2.2.5"
+
 react-table@^6.9.2:
   version "6.11.5"
   resolved "https://registry.yarnpkg.com/react-table/-/react-table-6.11.5.tgz#84e52885db426a07a6c4ce2c7e942f2cd4e2aa58"
@@ -13214,6 +13233,13 @@ react-table@^6.9.2:
     "@types/react-table" "^6.8.5"
     classnames "^2.2.5"
     react-is "^16.8.1"
+
+react-table@^7.0.4:
+  version "7.0.4"
+  resolved "https://registry.yarnpkg.com/react-table/-/react-table-7.0.4.tgz#456838661982c83c3682f156c59a41b4339a2120"
+  integrity sha512-Uqpj+VnUIvsNWNtNFD1z2i7OCHdlhoJtQt0DWx3XOkZnvDyI/eCghK8YBfA9mY4TW7vEgCDLaRCcREC/fmcx6Q==
+  dependencies:
+    "@scarf/scarf" "^0.1.5"
 
 react-test-renderer@^16.0.0-0, react-test-renderer@^16.8.1:
   version "16.13.1"
