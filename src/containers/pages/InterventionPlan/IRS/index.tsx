@@ -5,7 +5,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { Link } from 'react-router-dom';
-import { CellInfo, Column } from 'react-table';
+import { CellInfo, Column } from 'react-table-v6';
 import { Button } from 'reactstrap';
 import { ActionCreator, Store } from 'redux';
 

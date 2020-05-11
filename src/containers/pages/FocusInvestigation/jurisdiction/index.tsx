@@ -5,8 +5,8 @@ import { Dictionary } from '@onaio/utils';
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { RouteComponentProps } from 'react-router';
-import { Column } from 'react-table';
-import 'react-table/react-table.css';
+import { Column } from 'react-table-v6';
+import 'react-table-v6/react-table.css';
 import { Col, Row } from 'reactstrap';
 import { format } from 'util';
 import HeaderBreadcrumbs, {
