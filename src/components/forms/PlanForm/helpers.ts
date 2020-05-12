@@ -43,7 +43,7 @@ import {
   taskGenerationStatusType,
 } from './types';
 
-/** separate FI and IRS activities */
+/** separate FI, IRS and MDA point activities */
 export const FIActivities = omit(planActivities, ['IRS', 'pointAdverseMDA', 'pointDispenseMDA']);
 export const IRSActivities = pick(planActivities, ['IRS']);
 export const MDAPointActivities = pick(planActivities, ['pointAdverseMDA', 'pointDispenseMDA']);
