@@ -129,9 +129,7 @@ import HeaderBreadcrumbs, {
 import Loading from '../../../../../components/page/Loading';
 
 import { format } from 'util';
-import AssignTeamTableCell, {
-  AssignTeamCellProps,
-} from '../../../../../components/forms/AssignTeamTableCell';
+import AssignTeamTableCell from '../../../../../components/forms/AssignTeamTableCell';
 import { ADMN0_PCODE, JurisdictionTypes } from '../../../../../configs/types';
 import './../../../../../styles/css/drill-down-table.css';
 import { loadPlan } from './serviceCalls';
@@ -1948,8 +1946,9 @@ class IrsPlan extends React.Component<
               }
               const cellProps = {
                 jurisdictionId: j.jurisdiction_id,
+                jurisdictionName: j.name,
                 planId: j.planId,
-              } as AssignTeamCellProps;
+              } as any;
               return <AssignTeamTableCell {...cellProps} />;
             },
             id: 'teams_assigned',
