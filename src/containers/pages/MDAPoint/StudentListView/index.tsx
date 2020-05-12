@@ -66,10 +66,11 @@ export const StudentListView = (props: any) => {
   const selectProps: any = {
     noOptionsMessage: 'No options',
     // onChange: this.change,
-    options: {
-      hello: '123',
-      holla: '1234',
-    },
+    options: [
+      { value: 'chocolate', label: 'Chocolate' },
+      { value: 'strawberry', label: 'Strawberry' },
+      { value: 'vanilla', label: 'Vanilla' },
+    ],
     placeholder: 'Select',
   };
   /** Overide renderRows to render html inside td */
@@ -86,7 +87,9 @@ export const StudentListView = (props: any) => {
                 <td>
                   {value}
                   &nbsp;
-                  <a href={items.url}>(Downloads)</a>
+                  <a href={items.url} download={true}>
+                    (Downloads)
+                  </a>
                   {/* {delete items.url}
                   {delete items.identifier} */}
                 </td>
