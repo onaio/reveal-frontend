@@ -189,6 +189,18 @@ const SingleActiveFIMap = (props: MapSingleFIProps & RouteComponentProps<RoutePa
   }, [props.plan && props.plan.plan_id]);
 
   React.useEffect(() => {
+    /** after execution of this, we want to get the goal action,
+     * - see if its Case Confirmation
+     * - if no ; do nothing for this flow
+     * - if yes:
+     *    - we will make 2 calls:
+     *      1. one to update all plans ducks
+     *      2. second to get tasks_structures
+     *    - from here henceforth we should be able to query the ducks for :
+     *      1. get task_stuctures where actioncode='Case Confirmation'& task_business_status = 'complete and plan.jurisdiction_id
+     *      2. out of these we want those whose plan id points to a plan with plan_status='complete'
+     *        - get all plans with plan_status='complete' then do an intersect with task_structures, based on same plan_id.
+     */
     const { setCurrentGoalActionCreator, match } = props;
 
     setCurrentGoalActionCreator(match.params.goalId ? match.params.goalId : null);
