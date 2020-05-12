@@ -48,7 +48,7 @@ export const STRUCTURES_SET = 'reveal/reducer/structures/STRUCTURES_SET';
 export const REMOVE_STRUCTURES = 'reveal/reducer/structures/REMOVE_STRUCTURES';
 
 /** interface for setStructure action */
-interface SetStructuresAction extends AnyAction {
+export interface SetStructuresAction extends AnyAction {
   structuresById: { [key: string]: Structure };
   type: typeof STRUCTURES_SET;
 }
