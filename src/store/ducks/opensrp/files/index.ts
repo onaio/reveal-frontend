@@ -9,7 +9,7 @@ export const reducerName = 'files';
 export interface File {
   identifier: string; // the unique identifier of the file
   fileLength: number; // the length of the file (lines / rows)
-  fileName: number; // the name of the file
+  fileName: string; // the name of the file
   fileSize: string; // the of the file
   lastUpdated: string; // the date of the latest file update
   owner: string; // the username of the file creator
