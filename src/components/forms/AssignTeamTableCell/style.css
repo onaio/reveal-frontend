@@ -5,3 +5,22 @@
   display: inline-block;
   overflow: hidden;
 }
+
+.assignment-drop-down {
+  display: inline-block;
+}
+
+.assignment-drop-down .assignment-drop-down-menu {
+  width: 350px;
+  padding: 0;
+  margin: 0;
+}
+
+.ReactTable .rt-td {
+  overflow: visible;
+}
+
+.assignment-drop-down .card-body {
+  padding: 0 15px;
+  margin: 0;
+}
