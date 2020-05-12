@@ -39,6 +39,7 @@ import {
   SAVE_PLAN_NO_JURISDICTIONS_ERROR,
   SELECT_JURISDICTIONS,
   SPRAY_AREA_HEADER,
+  STUDENTS_LABEL,
   TEAMS_ASSIGNMENT,
   TYPE_LABEL,
 } from '../../../../../configs/lang';
@@ -116,6 +117,7 @@ import organizationsReducer, {
 import plansReducer, {
   fetchPlanRecords,
   getPlanRecordById,
+  InterventionType,
   PlanRecord,
   PlanStatus,
   reducerName as plansReducerName,
@@ -1832,6 +1834,8 @@ class IrsPlan extends React.Component<
       return null;
     }
 
+    const isMdaPoint = newPlan.plan_intervention_type === InterventionType.MDAPoint;
+
     // finalized plans should only show rows for jurisdictions selected in the plan
     const filteredJurisdictionIds =
       (!isDraftPlan && state.newPlan!.plan_jurisdictions_ids) || state.filteredJurisdictionIds;
@@ -1918,11 +1922,14 @@ class IrsPlan extends React.Component<
         ],
       },
       {
-        Header: TYPE_LABEL,
+        Header: isMdaPoint ? STUDENTS_LABEL : TYPE_LABEL,
         columns: [
           {
             Header: '',
             accessor: (j: JurisdictionRow) => {
+              if (isMdaPoint) {
+                return <span onClick={stopPropagationAndPreventDefault}>{j.planId}</span>;
+              }
               return (
                 <span onClick={stopPropagationAndPreventDefault}>
                   {j.isChildless ? SPRAY_AREA_HEADER : `${ADMIN_LEVEL} ${j.geographic_level}`}
