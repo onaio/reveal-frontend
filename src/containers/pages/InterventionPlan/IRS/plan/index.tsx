@@ -504,6 +504,8 @@ class IrsPlan extends React.Component<
       return <Loading />;
     }
 
+    const hideMap = newPlan.plan_intervention_type === InterventionType.MDAPoint;
+
     const pageLabel =
       (isFinalizedPlan && planById && planById.plan_title) ||
       (isDraftPlan && planById && format(DRAFT_PLAN_TITLE, planById.plan_title)) ||
@@ -590,7 +592,7 @@ class IrsPlan extends React.Component<
         <HeaderBreadcrumbs {...breadCrumbProps} />
         {planHeaderRow}
 
-        {gisidaWrapperProps ? (
+        {gisidaWrapperProps && !hideMap ? (
           <Row>
             <Col>
               <div className="map irs-plan-map">
