@@ -16,10 +16,9 @@ import organizationsReducer, {
   Organization,
   reducerName as organizationsReducerName,
 } from '../../../store/ducks/opensrp/organizations';
-import AssignTeamButton, { AssignTeamButtonProps } from '../../AssignTeamButton';
-import AssignTeamPopover, { AssignTeamPopoverProps } from '../../AssignTeamPopover';
 import { getButtonId, getFormName } from './helpers';
 import './style.css';
+import AssignTeamDropDown from '../../AssignTeamDropDown';
 
 reducerRegistry.register(assignmentReducerName, assignmentReducer);
 reducerRegistry.register(organizationsReducerName, organizationsReducer);
@@ -28,12 +27,9 @@ reducerRegistry.register(organizationsReducerName, organizationsReducer);
 export interface AssignTeamCellProps {
   assignments: Assignment[]; // all the assignments for the plan-jurisdiction
   assignmentsArray: Assignment[]; // all the assignments for the plan
-  assignButton?: React.ElementType;
-  assignButtonProps?: AssignTeamButtonProps;
-  assignPopover?: React.ElementType;
-  assignPopoverProps?: AssignTeamPopoverProps;
   resetPlanAssignmentsAction: typeof resetPlanAssignments;
   jurisdictionId: string;
+  jurisdictionName: string
   organizationsById: { [key: string]: Organization } | null;
   planId: string;
 }
@@ -45,8 +41,6 @@ const AssignTeamTableCell = (props: AssignTeamCellProps) => {
   const {
     assignments,
     assignmentsArray,
-    assignButton,
-    assignPopover,
     resetPlanAssignmentsAction,
     jurisdictionId,
     organizationsById,
@@ -77,17 +71,13 @@ const AssignTeamTableCell = (props: AssignTeamCellProps) => {
     setIsActive(!isActive);
   };
 
-  // define the props being passed to the default AssignTeamButton
-  const assignTeamButtonProps: AssignTeamButtonProps = props.assignButtonProps || {
-    id: getButtonId(jurisdictionId),
-    onClick: onPlanAssignmentButtonClick,
-  };
 
   // define the props for the default AssignTeamPopover
-  const assignTeamPopoverProps: AssignTeamPopoverProps = props.assignPopoverProps || {
+  const assignTeamPopoverProps = {
     formName: getFormName(jurisdictionId),
     isActive,
     jurisdictionId,
+    jurisdictionName: props.jurisdictionName,
     onClearAssignmentsButtonClick,
     onSaveAssignmentsButtonClick,
     onToggle: () => setIsActive(!isActive),
@@ -111,8 +101,7 @@ const AssignTeamTableCell = (props: AssignTeamCellProps) => {
       <span className="assignment-label" title={`${assignments.length} ${TEAMS_ASSIGNED}`}>
         {assignedOrganizations}
       </span>
-      {assignButton || <AssignTeamButton {...assignTeamButtonProps} />}
-      {assignPopover || <AssignTeamPopover {...assignTeamPopoverProps} />}
+      {<AssignTeamDropDown {...assignTeamPopoverProps as any}/> }
     </div>
   );
 };
