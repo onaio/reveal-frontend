@@ -126,10 +126,6 @@ export type LocationChildRenderProp = (
   index: number
 ) => JSX.Element;
 
-// /** intervention types */
-// const { FI, IRS, MDA, MDAPoint } = InterventionType;
-
-// const currentInterventionType: typeof FI | typeof IRS | typeof MDA | typeof MDAPoint = InterventionType.FI;
 /** interface for plan form props */
 export interface PlanFormProps {
   allFormActivities: PlanActivityFormFields[] /** the list of all allowed activities */;
