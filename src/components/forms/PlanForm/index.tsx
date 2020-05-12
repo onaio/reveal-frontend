@@ -64,7 +64,11 @@ import {
   planActivities,
   planStatusDisplay,
 } from '../../../configs/settings';
-import { MDA_POINT_ADVERSE_EFFECTS_CODE, PLAN_LIST_URL } from '../../../constants';
+import {
+  MDA_LOCATIONS_ENDPOINT,
+  MDA_POINT_ADVERSE_EFFECTS_CODE,
+  PLAN_LIST_URL,
+} from '../../../constants';
 import { OpenSRPService } from '../../../services/opensrp';
 import { InterventionType, PlanStatus } from '../../../store/ducks/plans';
 import DatePickerWrapper from '../../DatePickerWrapper';
@@ -174,7 +178,7 @@ const PlanForm = (props: PlanFormProps) => {
 
   if (selectedIntervention === InterventionType.MDAPoint) {
     const jurisdictionSelectProp: Partial<JurisdictionSelectProps> = {
-      apiEndpoint: 'location/findByProperties',
+      apiEndpoint: MDA_LOCATIONS_ENDPOINT,
       cascadingSelect: true,
       interventionType: selectedIntervention,
       params: {
