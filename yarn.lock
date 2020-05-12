@@ -1681,10 +1681,10 @@
     memoize-one "^5.1.1"
     react-ga "^2.7.0"
 
-"@onaio/list-view@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@onaio/list-view/-/list-view-0.0.1.tgz#575f48f8a167437974c3ea2a37c4996190ca1331"
-  integrity sha512-/U5RNGIVXYTp5ecn6I/C/FErzAlYVCUAoYARyojdJjCdgo1245s/kc8R4f3VT/fztf14mQpwh1FNS+5qIjETKA==
+"@onaio/list-view@^0.0.3":
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/@onaio/list-view/-/list-view-0.0.3.tgz#18cb78a0721fd30d331c9c267d242d838e58f623"
+  integrity sha512-vY8//UU2ZIuslzrFJC6NwnymZHh2+9EG7hwo87dlaX6p2bmZcYr44uzchNvFwNvW3C3xx3GV4LWkpU+WO95LCw==
   dependencies:
     "@onaio/element-map" "^0.0.5"
 
