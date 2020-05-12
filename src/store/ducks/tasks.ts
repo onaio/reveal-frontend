@@ -79,13 +79,13 @@ export const TASKS_FETCHED = 'reveal/reducer/tasks/TASKS_FETCHED';
 export const REMOVE_TASKS = 'reveal/reducer/tasks/REMOVE_TASKS';
 
 /** interface for authorize action */
-interface FetchTasksAction extends AnyAction {
+export interface FetchTasksAction extends AnyAction {
   tasksById: { [key: string]: Task };
   type: typeof TASKS_FETCHED;
 }
 
 /** Interface for reset tasks action */
-interface ResetTaskAction extends AnyAction {
+export interface ResetTaskAction extends AnyAction {
   tasksById: {};
   type: typeof REMOVE_TASKS;
 }
