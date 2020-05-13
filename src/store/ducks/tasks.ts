@@ -441,7 +441,7 @@ export function getFCByPlanAndJurisdiction(
   return wrapFeatureCollection(geoJsonFeatures);
 }
 
-/** get tasks as FeatureCollection filtered by structure_id
+/** get tasks as FeatureCollection filtered by plan_id & goal_id & jurisdiction_id
  * @param {partial<Store>} state - the redux store
  * @param {string} planId - the plan id
  * @param {string} goalId - the goal id
