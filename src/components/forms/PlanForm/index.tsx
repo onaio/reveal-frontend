@@ -64,18 +64,11 @@ import {
   planActivities,
   planStatusDisplay,
 } from '../../../configs/settings';
-import {
-  MDA_LOCATIONS_ENDPOINT,
-  MDA_POINT_ADVERSE_EFFECTS_CODE,
-  PLAN_LIST_URL,
-} from '../../../constants';
+import { MDA_POINT_ADVERSE_EFFECTS_CODE, PLAN_LIST_URL } from '../../../constants';
 import { OpenSRPService } from '../../../services/opensrp';
 import { InterventionType, PlanStatus } from '../../../store/ducks/plans';
 import DatePickerWrapper from '../../DatePickerWrapper';
-import JurisdictionSelect, {
-  defaultProps as JurisdictionDefaultProps,
-  JurisdictionSelectProps,
-} from '../JurisdictionSelect';
+import JurisdictionSelect from '../JurisdictionSelect';
 import {
   doesFieldHaveErrors,
   FIActivities,
@@ -155,9 +148,6 @@ const PlanForm = (props: PlanFormProps) => {
   const [globalError, setGlobalError] = useState<string>('');
   const [areWeDoneHere, setAreWeDoneHere] = useState<boolean>(false);
   const [activityModal, setActivityModal] = useState<boolean>(false);
-  const [selectedIntervention, setSelectedIntervention] = useState<InterventionType>(
-    InterventionType.FI
-  );
 
   const {
     allFormActivities,
@@ -175,23 +165,6 @@ const PlanForm = (props: PlanFormProps) => {
   const irsActivities = getFormActivities(IRSActivities);
   const fiActivities = getFormActivities(FIActivities);
   const mdaPointActivities = getFormActivities(MDAPointActivities);
-
-  if (selectedIntervention === InterventionType.MDAPoint) {
-    const jurisdictionSelectProp: Partial<JurisdictionSelectProps> = {
-      apiEndpoint: MDA_LOCATIONS_ENDPOINT,
-      cascadingSelect: true,
-      interventionType: selectedIntervention,
-      params: {
-        is_jurisdiction: true,
-        return_geometry: false,
-      },
-      serviceClass: OpenSRPService,
-    };
-    // update JurisdictionSelect component default props
-    JurisdictionSelect.defaultProps = jurisdictionSelectProp;
-  } else {
-    JurisdictionSelect.defaultProps = JurisdictionDefaultProps;
-  }
 
   const disAllowedStatusChoices: string[] = [];
   if (editMode) {
@@ -335,7 +308,6 @@ const PlanForm = (props: PlanFormProps) => {
                   if (target.value === InterventionType.MDAPoint) {
                     setFieldValue('activities', mdaPointActivities);
                   }
-                  setSelectedIntervention(target.value as InterventionType);
                   setFieldValue('jurisdictions', [initialJurisdictionValues]);
                   handleChange(e);
                 }}
@@ -459,7 +431,8 @@ const PlanForm = (props: PlanFormProps) => {
                           </div>
                         </fieldset>
                       ))}
-                      {values.interventionType === InterventionType.IRS &&
+                      {(values.interventionType === InterventionType.IRS ||
+                        values.interventionType === InterventionType.MDAPoint) &&
                         allowMoreJurisdictions === true && (
                           <button
                             type="button"

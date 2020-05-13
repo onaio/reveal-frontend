@@ -121,7 +121,6 @@ export const LARVAL_DIPPING_CODE = 'Larval Dipping';
 export const MOSQUITO_COLLECTION_CODE = 'Mosquito Collection';
 export const MDA_POINT_DISPENSE_CODE = 'MDA Dispense';
 export const MDA_POINT_ADVERSE_EFFECTS_CODE = 'MDA Adverse Event(s)';
-export const MDA_LOCATIONS_ENDPOINT = 'locations/findByProperties';
 
 export const PRACTITIONER_CODE = {
   text: 'Community Health Worker',

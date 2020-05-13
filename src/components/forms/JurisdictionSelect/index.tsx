@@ -1,12 +1,11 @@
 import { Dictionary } from '@onaio/utils/dist/types/types';
 import { FieldProps } from 'formik';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import AsyncSelect, { Props as AsyncSelectProps } from 'react-select/async';
 import { SELECT } from '../../../configs/lang';
 import { displayError } from '../../../helpers/errors';
 import { reactSelectNoOptionsText } from '../../../helpers/utils';
 import { getFilterParams, OpenSRPService, URLParams } from '../../../services/opensrp';
-import { InterventionType } from '../../../store/ducks/plans';
 import './style.css';
 
 /** interface for jurisdiction options
@@ -77,7 +76,6 @@ export const promiseOptions = (
 export const defaultProps: Partial<JurisdictionSelectProps> = {
   apiEndpoint: 'location/findByProperties',
   cascadingSelect: true,
-  interventionType: null,
   params: {
     is_jurisdiction: true,
     return_geometry: false,
@@ -92,40 +90,12 @@ export const defaultProps: Partial<JurisdictionSelectProps> = {
  * This is simply a Higher Order Component that wraps around AsyncSelect
  */
 const JurisdictionSelect = (props: JurisdictionSelectProps & FieldProps) => {
-  const {
-    apiEndpoint,
-    cascadingSelect,
-    field,
-    form,
-    labelFieldName,
-    params,
-    serviceClass,
-    interventionType,
-  } = props;
+  const { apiEndpoint, cascadingSelect, field, form, labelFieldName, params, serviceClass } = props;
 
   const [parentId, setParentId] = useState<string>('');
   const [hierarchy, setHierarchy] = useState<SelectOption[]>([]);
   const [shouldMenuOpen, setShouldMenuOpen] = useState<boolean>(false);
   const [closeMenuOnSelect, setCloseMenuOnSelect] = useState<boolean>(false);
-
-  /** set state variables to default and clear form input */
-  const resetStateVars = () => {
-    // reset the state vars
-    setParentId('');
-    setHierarchy([]);
-    setShouldMenuOpen(false);
-    setCloseMenuOnSelect(false);
-    // set the Formik field value
-    if (form && field) {
-      form.setFieldValue(field.name, '');
-    }
-  };
-
-  useEffect(() => {
-    if (interventionType === InterventionType.MDAPoint) {
-      resetStateVars();
-    }
-  }, [interventionType]);
 
   const service = new serviceClass(apiEndpoint);
   const propertiesToFilter = {
@@ -183,8 +153,15 @@ const JurisdictionSelect = (props: JurisdictionSelectProps & FieldProps) => {
         })
         .catch(error => displayError(error));
     } else {
-      // most probably the select element was reset
-      resetStateVars();
+      // most probably the select element was reset, so we reset the state vars
+      setParentId('');
+      setHierarchy([]);
+      setShouldMenuOpen(false);
+      setCloseMenuOnSelect(false);
+      // set the Formik field value
+      if (form && field) {
+        form.setFieldValue(field.name, '');
+      }
     }
   };
 
