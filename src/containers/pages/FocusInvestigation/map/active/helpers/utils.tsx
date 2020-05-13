@@ -1,5 +1,6 @@
-import superset from '@onaio/superset-connector';
+import superset, { SupersetFormData } from '@onaio/superset-connector';
 import * as React from 'react';
+import { ActionCreator } from 'redux';
 import {
   SUPERSET_GOALS_SLICE,
   SUPERSET_JURISDICTIONS_SLICE,
@@ -15,11 +16,34 @@ import { ROUTINE } from '../../../../../../constants';
 import { displayError } from '../../../../../../helpers/errors';
 import { PopHandler, popupHandler } from '../../../../../../helpers/handlers';
 import supersetFetch from '../../../../../../services/superset';
-import { fetchGoals, Goal } from '../../../../../../store/ducks/goals';
+import { fetchGoals, FetchGoalsAction } from '../../../../../../store/ducks/goals';
 import { fetchJurisdictions, Jurisdiction } from '../../../../../../store/ducks/jurisdictions';
-import { fetchPlans, Plan } from '../../../../../../store/ducks/plans';
-import { setStructures, Structure } from '../../../../../../store/ducks/structures';
-import { fetchTasks, Task } from '../../../../../../store/ducks/tasks';
+import { fetchPlans, FetchPlansAction, Plan } from '../../../../../../store/ducks/plans';
+import { setStructures, SetStructuresAction } from '../../../../../../store/ducks/structures';
+import { fetchTasks, FetchTasksAction } from '../../../../../../store/ducks/tasks';
+
+/** abstracts code that actually makes the superset Call since it is quite similar */
+export async function supersetCall<TAction>(
+  supersetSlice: string,
+  actionCreator: ActionCreator<TAction>,
+  supersetService: typeof supersetFetch = supersetFetch,
+  supersetOptions: SupersetFormData | null = null
+) {
+  const asyncOperation = supersetOptions
+    ? supersetService(supersetSlice, supersetOptions)
+    : supersetService(supersetSlice);
+  return asyncOperation
+    .then((result: Jurisdiction[]) => {
+      if (result) {
+        actionCreator(result);
+      } else {
+        throw new Error(AN_ERROR_OCCURRED);
+      }
+    })
+    .catch(error => {
+      throw error;
+    });
+}
 
 /**
  * Fetch data for the plan
@@ -45,72 +69,53 @@ export const fetchData = async (
     const jurisdictionsParams = superset.getFormData(SUPERSET_MAX_RECORDS, [
       { comparator: plan.jurisdiction_id, operator: '==', subject: JURISDICTION_ID },
     ]);
-    await supersetService(SUPERSET_JURISDICTIONS_SLICE, jurisdictionsParams)
-      .then((result: Jurisdiction[]) => {
-        if (result) {
-          fetchJurisdictionsActionCreator(result);
-        } else {
-          displayError(new Error(AN_ERROR_OCCURRED));
-        }
-      })
-      .catch(error => {
-        throw error;
-      });
+
     /** define superset params for filtering by plan_id */
     const supersetParams = superset.getFormData(SUPERSET_MAX_RECORDS, [
       { comparator: plan.plan_id, operator: '==', subject: PLAN_ID },
     ]);
+
     /** define superset params for goals */
     const goalsParams = superset.getFormData(
       SUPERSET_MAX_RECORDS,
       [{ comparator: plan.plan_id, operator: '==', subject: PLAN_ID }],
       { action_prefix: true }
     );
-    /** Implement Ad hoc Queries since jurisdictions have no plan_id */
-    await supersetService(SUPERSET_STRUCTURES_SLICE, jurisdictionsParams)
-      .then((structuresResults: Structure[]) => {
-        if (structuresResults) {
-          fetchStructuresActionCreator(structuresResults);
-        } else {
-          displayError(new Error(AN_ERROR_OCCURRED));
-        }
-      })
-      .catch(error => {
-        throw error;
-      });
-    await supersetService(SUPERSET_PLANS_SLICE, jurisdictionsParams)
-      .then((result2: Plan[]) => {
-        if (result2) {
-          fetchPlansActionCreator(result2);
-        } else {
-          displayError(new Error(AN_ERROR_OCCURRED));
-        }
-      })
-      .catch(error => {
-        throw error;
-      });
-    await supersetService(SUPERSET_GOALS_SLICE, goalsParams)
-      .then((result3: Goal[]) => {
-        if (result3) {
-          fetchGoalsActionCreator(result3);
-        } else {
-          displayError(new Error(AN_ERROR_OCCURRED));
-        }
-      })
-      .catch(error => {
-        throw error;
-      });
-    await supersetService(SUPERSET_TASKS_SLICE, supersetParams)
-      .then((result4: Task[]) => {
-        if (result4) {
-          fetchTasksActionCreator(result4);
-        } else {
-          displayError(new Error(AN_ERROR_OCCURRED));
-        }
-      })
-      .catch(error => {
-        throw error;
-      });
+
+    supersetCall(
+      SUPERSET_JURISDICTIONS_SLICE,
+      fetchJurisdictionsActionCreator,
+      supersetService,
+      jurisdictionsParams
+    ).catch(() => displayError(new Error(AN_ERROR_OCCURRED)));
+
+    supersetCall<SetStructuresAction>(
+      SUPERSET_STRUCTURES_SLICE,
+      fetchStructuresActionCreator,
+      supersetService,
+      jurisdictionsParams
+    ).catch(() => displayError(new Error(AN_ERROR_OCCURRED)));
+
+    supersetCall<FetchPlansAction>(
+      SUPERSET_PLANS_SLICE,
+      fetchPlansActionCreator,
+      supersetService,
+      jurisdictionsParams
+    ).catch(() => displayError(new Error(AN_ERROR_OCCURRED)));
+
+    supersetCall<FetchGoalsAction>(
+      SUPERSET_GOALS_SLICE,
+      fetchGoalsActionCreator,
+      supersetService,
+      goalsParams
+    ).catch(() => displayError(new Error(AN_ERROR_OCCURRED)));
+
+    supersetCall<FetchTasksAction>(
+      SUPERSET_TASKS_SLICE,
+      fetchTasksActionCreator,
+      supersetService,
+      supersetParams
+    ).catch(() => displayError(new Error(AN_ERROR_OCCURRED)));
   }
 };
 
