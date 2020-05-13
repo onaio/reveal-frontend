@@ -17,6 +17,7 @@ import reducerRegistry from '@onaio/redux-reducer-registry';
 import { Dictionary } from '@onaio/utils';
 import {
   DATE_FORMAT,
+  HIDE_MAP_FOR_INTERVENTIONS,
   SUPERSET_JURISDICTIONS_DATA_SLICE,
   SUPERSET_MAX_RECORDS,
 } from '../../../../../configs/env';
@@ -504,7 +505,7 @@ class IrsPlan extends React.Component<
       return <Loading />;
     }
 
-    const hideMap = newPlan.plan_intervention_type === InterventionType.MDAPoint;
+    const hideMap = HIDE_MAP_FOR_INTERVENTIONS.includes(newPlan.plan_intervention_type);
 
     const pageLabel =
       (isFinalizedPlan && planById && planById.plan_title) ||
